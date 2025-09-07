@@ -1,0 +1,12 @@
+# Node / Next / tooling
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+.DS_Store
+.vscode/
