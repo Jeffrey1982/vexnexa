@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,18 +26,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Pricing - TutusPorta",
-  description: "Kies het juiste plan voor je accessibility scans. Van gratis single scans tot team-collaboratie met prioriteit support.",
-  openGraph: {
-    title: "Pricing - TutusPorta", 
-    description: "Kies het juiste plan voor je accessibility scans. Van gratis single scans tot team-collaboratie met prioriteit support.",
-    url: "https://tutusporta.com/pricing",
-  },
-  alternates: {
-    canonical: "https://tutusporta.com/pricing",
-  },
-};
+// Metadata handled by layout since this is a Client Component
 
 const plans = [
   {
@@ -227,13 +217,13 @@ function PricingCards() {
                   className="w-full"
                   variant={plan.ctaVariant}
                   size="lg"
-                  asChild
-                  onClick={() => handleCtaClick(plan.name.toLowerCase())}
+                  onClick={() => {
+                    handleCtaClick(plan.name.toLowerCase());
+                    window.location.href = plan.ctaHref;
+                  }}
                 >
-                  <Link href={plan.ctaHref}>
-                    {plan.cta}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  {plan.cta}
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
             </Card>

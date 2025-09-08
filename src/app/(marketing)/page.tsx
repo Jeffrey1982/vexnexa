@@ -113,24 +113,24 @@ function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               size="lg" 
-              asChild
-              onClick={() => handleCtaClick("hero_primary")}
+              onClick={() => {
+                handleCtaClick("hero_primary");
+                window.location.href = '/dashboard';
+              }}
             >
-              <Link href="/dashboard">
-                Start gratis scan
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              Start gratis scan
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             
             <Button 
               variant="outline" 
               size="lg" 
-              asChild
-              onClick={() => handleCtaClick("hero_secondary")}
+              onClick={() => {
+                handleCtaClick("hero_secondary");
+                window.location.href = '/features';
+              }}
             >
-              <Link href="/features">
-                Bekijk features
-              </Link>
+              Bekijk features
             </Button>
           </div>
           
@@ -321,13 +321,13 @@ function CTASection() {
             <Button 
               size="lg" 
               variant="secondary" 
-              asChild
-              onClick={handleCtaClick}
+              onClick={() => {
+                handleCtaClick();
+                window.location.href = '/dashboard';
+              }}
             >
-              <Link href="/dashboard">
-                Start nu je eerste scan
-                <Zap className="ml-2 h-4 w-4" />
-              </Link>
+              Start nu je eerste scan
+              <Zap className="ml-2 h-4 w-4" />
             </Button>
             
             <Button 
