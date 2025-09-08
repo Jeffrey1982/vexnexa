@@ -1,5 +1,6 @@
+"use client";
+
 import Link from "next/link";
-import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,25 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "TutusPorta - WCAG-scans die wél inzicht geven",
-  description: "Voer een URL in en krijg een concreet rapport met prioriteiten, voorbeelden en quick wins. Export als PDF of Word.",
-  openGraph: {
-    title: "TutusPorta - WCAG-scans die wél inzicht geven",
-    description: "Voer een URL in en krijg een concreet rapport met prioriteiten, voorbeelden en quick wins. Export als PDF of Word.",
-    url: "https://tutusporta.com",
-    siteName: "TutusPorta",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "TutusPorta - WCAG-scans die wél inzicht geven",
-    description: "Voer een URL in en krijg een concreet rapport met prioriteiten, voorbeelden en quick wins. Export als PDF of Word.",
-  },
-  alternates: {
-    canonical: "https://tutusporta.com",
-  },
-};
+// Metadata is handled by the layout since this is a Client Component
 
 const features = [
   {
