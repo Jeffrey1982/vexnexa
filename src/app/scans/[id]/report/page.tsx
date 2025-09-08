@@ -5,8 +5,7 @@ import { ImpactBadge } from "@/components/ImpactBadge";
 import { KeyValue } from "@/components/KeyValue";
 import { formatDate } from "@/lib/format";
 import { computeIssueStats, Violation, getTopViolations, normalizeImpact } from "@/lib/axe-types";
-import { Printer } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PrintButton } from "@/components/PrintButton";
 
 interface PageProps {
   params: {
@@ -34,20 +33,6 @@ async function getScanDetails(id: string) {
   }
 }
 
-function PrintButton() {
-  return (
-    <div className="no-print mb-4 text-right">
-      <Button 
-        onClick={() => window.print()}
-        variant="outline"
-        className="flex items-center gap-2"
-      >
-        <Printer className="w-4 h-4" />
-        Print Report
-      </Button>
-    </div>
-  );
-}
 
 export default async function PrintReportPage({ params }: PageProps) {
   const scan = await getScanDetails(params.id);
@@ -68,66 +53,20 @@ export default async function PrintReportPage({ params }: PageProps) {
 
   return (
     <>
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media print {
-          .no-print {
-            display: none !important;
-          }
-          
-          body {
-            background: white !important;
-            font-size: 12pt;
-            line-height: 1.4;
-          }
-          
-          .print-page-break {
-            page-break-before: always;
-          }
-          
-          h1 {
-            font-size: 24pt;
-            color: #1f2937 !important;
-          }
-          
-          h2 {
-            font-size: 18pt;
-            color: #374151 !important;
-            margin-top: 20pt;
-            margin-bottom: 10pt;
-          }
-          
-          h3 {
-            font-size: 14pt;
-            color: #4b5563 !important;
-            margin-top: 15pt;
-            margin-bottom: 8pt;
-          }
-          
-          .print-table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 15pt;
-          }
-          
-          .print-table th,
-          .print-table td {
-            border: 1pt solid #e5e7eb;
-            padding: 8pt;
-            text-align: left;
-            vertical-align: top;
-          }
-          
-          .print-table th {
-            background-color: #f9fafb;
-            font-weight: bold;
-          }
+          .no-print { display: none !important; }
+          body { background: white !important; font-size: 12pt; line-height: 1.4; }
+          .print-page-break { page-break-before: always; }
+          h1 { font-size: 24pt; color: #1f2937 !important; }
+          h2 { font-size: 18pt; color: #374151 !important; margin-top: 20pt; margin-bottom: 10pt; }
+          h3 { font-size: 14pt; color: #4b5563 !important; margin-top: 15pt; margin-bottom: 8pt; }
+          .print-table { border-collapse: collapse; width: 100%; margin-bottom: 15pt; }
+          .print-table th, .print-table td { border: 1pt solid #e5e7eb; padding: 8pt; text-align: left; vertical-align: top; }
+          .print-table th { background-color: #f9fafb; font-weight: bold; }
         }
-        
-        @page {
-          margin: 1in;
-          size: A4;
-        }
-      `}</style>
+        @page { margin: 1in; size: A4; }
+      `}} />
 
       <div className="max-w-4xl mx-auto p-8 bg-white min-h-screen">
         <PrintButton />

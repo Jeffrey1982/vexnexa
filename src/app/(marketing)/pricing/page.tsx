@@ -381,7 +381,7 @@ function CTASection() {
             Begin vandaag nog met scannen
           </h2>
           <p className="text-xl opacity-90">
-            Kies je plan en start direct met het verbeteren van je website's accessibility. 
+            Kies je plan en start direct met het verbeteren van je website&apos;s accessibility. 
             Geen setup, geen verrassingen.
           </p>
           
