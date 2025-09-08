@@ -1,0 +1,119 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { FileText, Download, Loader2 } from "lucide-react";
+
+interface ExportButtonsProps {
+  scanId: string;
+  className?: string;
+}
+
+export function ExportButtons({ scanId, className }: ExportButtonsProps) {
+  const [exportingPdf, setExportingPdf] = useState(false);
+  const [exportingWord, setExportingWord] = useState(false);
+
+  const downloadBlob = (blob: Blob, filename: string) => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportPdf = async () => {
+    setExportingPdf(true);
+    try {
+      // Open the HTML report in a new window for printing to PDF
+      const response = await fetch("/api/export/pdf-simple", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ scanId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate report");
+      }
+
+      const htmlContent = await response.text();
+      const printWindow = window.open("", "_blank");
+      if (printWindow) {
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+        printWindow.focus();
+        
+        // Give the content time to load, then trigger print
+        setTimeout(() => {
+          printWindow.print();
+        }, 500);
+      }
+    } catch (error) {
+      console.error("PDF export failed:", error);
+      alert("Failed to export PDF. Please try again.");
+    } finally {
+      setExportingPdf(false);
+    }
+  };
+
+  const exportWord = async () => {
+    setExportingWord(true);
+    try {
+      const response = await fetch("/api/export/docx", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ scanId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to export Word document");
+      }
+
+      const blob = await response.blob();
+      downloadBlob(blob, `tutusporta-${scanId}.docx`);
+    } catch (error) {
+      console.error("Word export failed:", error);
+      alert("Failed to export Word document. Please try again.");
+    } finally {
+      setExportingWord(false);
+    }
+  };
+
+  return (
+    <div className={`flex gap-2 ${className}`}>
+      <Button
+        variant="outline"
+        onClick={exportPdf}
+        disabled={exportingPdf}
+        className="flex items-center gap-2"
+      >
+        {exportingPdf ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          <FileText className="w-4 h-4" />
+        )}
+        {exportingPdf ? "Exporting..." : "Export PDF"}
+      </Button>
+
+      <Button
+        variant="outline"
+        onClick={exportWord}
+        disabled={exportingWord}
+        className="flex items-center gap-2"
+      >
+        {exportingWord ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          <Download className="w-4 h-4" />
+        )}
+        {exportingWord ? "Exporting..." : "Export Word"}
+      </Button>
+    </div>
+  );
+}

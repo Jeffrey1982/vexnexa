@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // runtime (can be Supabase pooler 6543)
+  directUrl = env("DIRECT_URL")   // migrations (direct 5432)
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  sites     Site[]
+  createdAt DateTime @default(now())
+}
+
+model Site {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  url       String
+  pages     Page[]
+  scans     Scan[]
+  createdAt DateTime @default(now())
+
+  @@unique([userId, url]) // enables where: { userId_url: { ... } }
+  @@index([userId])
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  siteId    String
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  url       String
+  scans     Scan[]
+  createdAt DateTime @default(now())
+
+  @@unique([siteId, url]) // enables where: { siteId_url: { ... } }
+  @@index([siteId])
+}
+
+model Scan {
+  id        String   @id @default(cuid())
+  siteId    String
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  // NEW: optional link to Page
+  pageId    String?
+  page      Page?    @relation(fields: [pageId], references: [id], onDelete: SetNull)
+
+  status    String
+  score     Int?
+  issues    Int?
+  reportUrl String?
+  
+  // Impact counts
+  impactCritical Int @default(0)
+  impactSerious  Int @default(0) 
+  impactModerate Int @default(0)
+  impactMinor    Int @default(0)
+  
+  // Raw scan data
+  raw       Json?
+  
+  createdAt DateTime @default(now())
+
+  @@index([siteId])
+  @@index([pageId])
+}

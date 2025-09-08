@@ -10,3 +10,9 @@ yarn-error.log*
 pnpm-lock.yaml
 .DS_Store
 .vscode/
+.vercel
+
+# environment variables
+.env*
+
+/generated/prisma

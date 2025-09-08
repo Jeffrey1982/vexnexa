@@ -2,26 +2,140 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+
+
+@layer base {
+  :root {
+    /* Typography */
+    --font-sans: var(--font-inter);
+    --font-display: var(--font-plus-jakarta-sans);
+
+    /* Conversion-Focused Colors */
+    --background: 0 0% 100%;
+    --foreground: 213 27% 8%;
+    
+    /* Cards & Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 213 27% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 27% 8%;
+    
+    /* Trust-building Dark Blue CTA */
+    --primary: 215 84% 18%;
+    --primary-foreground: 0 0% 98%;
+    
+    /* Subtle grays for secondary elements */
+    --secondary: 213 27% 96%;
+    --secondary-foreground: 213 27% 18%;
+    
+    --muted: 213 27% 96%;
+    --muted-foreground: 213 27% 45%;
+    
+    --accent: 213 27% 96%;
+    --accent-foreground: 213 27% 18%;
+    
+    /* Error states */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* UI Elements */
+    --border: 213 27% 89%;
+    --input: 213 27% 89%;
+    --ring: 215 84% 18%;
+    
+    /* Success Green */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+    
+    /* Warning Amber */
+    --warning: 43 96% 56%;
+    --warning-foreground: 25 95% 7%;
+    
+    /* Status Colors */
+    --critical: 0 84% 60%;
+    --critical-foreground: 0 0% 98%;
+    --serious: 25 95% 53%;
+    --serious-foreground: 0 0% 98%;
+    --moderate: 43 96% 56%;
+    --moderate-foreground: 25 95% 7%;
+    --minor: 213 27% 45%;
+    --minor-foreground: 0 0% 98%;
+    
+    /* Charts */
+    --chart-1: 215 84% 18%;
+    --chart-2: 142 76% 36%;
+    --chart-3: 43 96% 56%;
+    --chart-4: 25 95% 53%;
+    --chart-5: 0 84% 60%;
+    
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --background: 213 27% 3%;
+    --foreground: 0 0% 98%;
+    
+    --card: 213 27% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 213 27% 6%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Lighter blue for dark mode CTA */
+    --primary: 215 84% 65%;
+    --primary-foreground: 213 27% 8%;
+    
+    --secondary: 213 27% 15%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 213 27% 15%;
+    --muted-foreground: 213 27% 65%;
+    
+    --accent: 213 27% 15%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 213 27% 15%;
+    --input: 213 27% 15%;
+    --ring: 215 84% 65%;
+    
+    --success: 142 70% 45%;
+    --success-foreground: 142 76% 5%;
+    
+    --warning: 43 89% 65%;
+    --warning-foreground: 25 95% 7%;
+    
+    --critical: 0 84% 65%;
+    --critical-foreground: 0 84% 5%;
+    --serious: 25 90% 60%;
+    --serious-foreground: 25 95% 7%;
+    --moderate: 43 89% 65%;
+    --moderate-foreground: 25 95% 7%;
+    --minor: 213 27% 65%;
+    --minor-foreground: 213 27% 8%;
+    
+    --chart-1: 215 84% 65%;
+    --chart-2: 142 70% 45%;
+    --chart-3: 43 89% 65%;
+    --chart-4: 25 90% 60%;
+    --chart-5: 0 84% 65%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
