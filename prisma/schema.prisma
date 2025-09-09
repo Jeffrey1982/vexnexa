@@ -13,6 +13,22 @@ model User {
   email     String   @unique
   sites     Site[]
   
+  // Personal information
+  firstName    String?
+  lastName     String?
+  company      String?
+  jobTitle     String?
+  phoneNumber  String?
+  website      String?
+  country      String?
+  
+  // Marketing preferences
+  marketingEmails Boolean @default(true)
+  productUpdates  Boolean @default(true)
+  
+  // Profile completion
+  profileCompleted Boolean @default(false)
+  
   // Billing fields
   plan               Plan     @default(TRIAL)  // TRIAL, STARTER, PRO, BUSINESS
   subscriptionStatus String   @default("inactive") // active, canceled, past_due, inactive

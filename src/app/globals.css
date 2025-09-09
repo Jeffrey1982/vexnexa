@@ -16,116 +16,124 @@
     --font-sans: var(--font-inter);
     --font-display: var(--font-plus-jakarta-sans);
 
-    /* Conversion-Focused Colors */
-    --background: 0 0% 100%;
-    --foreground: 213 27% 8%;
+    /* Modern Business Colors - Sophisticated Blue Palette */
+    --background: 0 0% 99%;
+    --foreground: 220 15% 12%;
     
-    /* Cards & Surfaces */
+    /* Cards & Surfaces - Subtle elevation */
     --card: 0 0% 100%;
-    --card-foreground: 213 27% 8%;
+    --card-foreground: 220 15% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 213 27% 8%;
+    --popover-foreground: 220 15% 12%;
     
-    /* Trust-building Dark Blue CTA */
-    --primary: 215 84% 18%;
-    --primary-foreground: 0 0% 98%;
+    /* Premium Blue - Professional & Trustworthy */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 99%;
     
-    /* Subtle grays for secondary elements */
-    --secondary: 213 27% 96%;
-    --secondary-foreground: 213 27% 18%;
+    /* Sophisticated Gray System */
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 20%;
     
-    --muted: 213 27% 96%;
-    --muted-foreground: 213 27% 45%;
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 8% 46%;
     
-    --accent: 213 27% 96%;
-    --accent-foreground: 213 27% 18%;
+    --accent: 217 91% 95%;
+    --accent-foreground: 217 91% 15%;
     
     /* Error states */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 99%;
     
-    /* UI Elements */
-    --border: 213 27% 89%;
-    --input: 213 27% 89%;
-    --ring: 215 84% 18%;
+    /* UI Elements - Refined borders */
+    --border: 220 10% 88%;
+    --input: 220 10% 92%;
+    --ring: 217 91% 60%;
     
-    /* Success Green */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 98%;
+    /* Status Colors - More refined palette */
+    --success: 142 69% 58%;
+    --success-foreground: 0 0% 99%;
     
-    /* Warning Amber */
-    --warning: 43 96% 56%;
-    --warning-foreground: 25 95% 7%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 48 96% 9%;
     
-    /* Status Colors */
-    --critical: 0 84% 60%;
-    --critical-foreground: 0 0% 98%;
+    --critical: 0 72% 51%;
+    --critical-foreground: 0 0% 99%;
     --serious: 25 95% 53%;
-    --serious-foreground: 0 0% 98%;
-    --moderate: 43 96% 56%;
-    --moderate-foreground: 25 95% 7%;
-    --minor: 213 27% 45%;
-    --minor-foreground: 0 0% 98%;
+    --serious-foreground: 0 0% 99%;
+    --moderate: 38 92% 50%;
+    --moderate-foreground: 48 96% 9%;
+    --minor: 220 8% 46%;
+    --minor-foreground: 0 0% 99%;
     
-    /* Charts */
-    --chart-1: 215 84% 18%;
-    --chart-2: 142 76% 36%;
-    --chart-3: 43 96% 56%;
+    /* Charts - Harmonious palette */
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 69% 58%;
+    --chart-3: 38 92% 50%;
     --chart-4: 25 95% 53%;
-    --chart-5: 0 84% 60%;
+    --chart-5: 0 72% 51%;
     
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+    
+    /* Custom gradient variables for modern look */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 45%) 100%);
+    --gradient-subtle: linear-gradient(135deg, hsl(220 10% 99%) 0%, hsl(220 10% 96%) 100%);
+    --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
   
   .dark {
-    --background: 213 27% 3%;
+    --background: 220 15% 5%;
     --foreground: 0 0% 98%;
     
-    --card: 213 27% 6%;
+    --card: 220 15% 8%;
     --card-foreground: 0 0% 98%;
-    --popover: 213 27% 6%;
+    --popover: 220 15% 8%;
     --popover-foreground: 0 0% 98%;
     
-    /* Lighter blue for dark mode CTA */
-    --primary: 215 84% 65%;
-    --primary-foreground: 213 27% 8%;
+    /* Elegant blue for dark mode */
+    --primary: 217 91% 75%;
+    --primary-foreground: 220 15% 8%;
     
-    --secondary: 213 27% 15%;
+    --secondary: 220 15% 15%;
     --secondary-foreground: 0 0% 98%;
     
-    --muted: 213 27% 15%;
-    --muted-foreground: 213 27% 65%;
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 8% 60%;
     
-    --accent: 213 27% 15%;
+    --accent: 217 91% 20%;
     --accent-foreground: 0 0% 98%;
     
-    --destructive: 0 62% 30%;
+    --destructive: 0 72% 65%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 213 27% 15%;
-    --input: 213 27% 15%;
-    --ring: 215 84% 65%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 217 91% 75%;
     
-    --success: 142 70% 45%;
-    --success-foreground: 142 76% 5%;
+    --success: 142 69% 65%;
+    --success-foreground: 142 69% 8%;
     
-    --warning: 43 89% 65%;
-    --warning-foreground: 25 95% 7%;
+    --warning: 38 92% 65%;
+    --warning-foreground: 48 96% 9%;
     
-    --critical: 0 84% 65%;
-    --critical-foreground: 0 84% 5%;
-    --serious: 25 90% 60%;
-    --serious-foreground: 25 95% 7%;
-    --moderate: 43 89% 65%;
-    --moderate-foreground: 25 95% 7%;
-    --minor: 213 27% 65%;
-    --minor-foreground: 213 27% 8%;
+    --critical: 0 72% 65%;
+    --critical-foreground: 0 72% 8%;
+    --serious: 25 95% 65%;
+    --serious-foreground: 25 95% 8%;
+    --moderate: 38 92% 65%;
+    --moderate-foreground: 48 96% 9%;
+    --minor: 220 8% 60%;
+    --minor-foreground: 220 8% 8%;
     
-    --chart-1: 215 84% 65%;
-    --chart-2: 142 70% 45%;
-    --chart-3: 43 89% 65%;
-    --chart-4: 25 90% 60%;
-    --chart-5: 0 84% 65%;
+    --chart-1: 217 91% 75%;
+    --chart-2: 142 69% 65%;
+    --chart-3: 38 92% 65%;
+    --chart-4: 25 95% 65%;
+    --chart-5: 0 72% 65%;
+    
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 75%) 0%, hsl(217 91% 60%) 100%);
+    --gradient-subtle: linear-gradient(135deg, hsl(220 15% 8%) 0%, hsl(220 15% 12%) 100%);
   }
 }
 
@@ -135,7 +143,154 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    background-image: 
+      radial-gradient(circle at 1px 1px, hsl(var(--muted)) 1px, transparent 0);
+    background-size: 20px 20px;
+    background-attachment: fixed;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Enhanced typography scale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+  
+  h1 {
+    @apply text-4xl lg:text-6xl font-bold;
+  }
+  
+  h2 {
+    @apply text-3xl lg:text-4xl font-bold;
+  }
+  
+  h3 {
+    @apply text-2xl lg:text-3xl font-semibold;
+  }
+  
+  /* Enhanced focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  
+  /* Improved selection */
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary-foreground));
+  }
+  
+  /* Enhanced scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+}
+
+/* Modern component utilities */
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-sm bg-background/80 border border-border/50;
+  }
+  
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+  
+  /* Interactive elements */
+  .interactive-hover {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  .interactive-hover:hover {
+    @apply transform -translate-y-0.5 shadow-soft;
+  }
+  
+  .button-hover {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  .button-hover:hover {
+    @apply transform -translate-y-px shadow-soft;
+  }
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

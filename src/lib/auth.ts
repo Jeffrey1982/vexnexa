@@ -30,9 +30,13 @@ export async function getCurrentUser() {
   return {
     id: dbUser.id,
     email: dbUser.email,
+    firstName: dbUser.firstName,
+    lastName: dbUser.lastName,
+    company: dbUser.company,
     plan: dbUser.plan,
     subscriptionStatus: dbUser.subscriptionStatus,
-    trialEndsAt: dbUser.trialEndsAt
+    trialEndsAt: dbUser.trialEndsAt,
+    profileCompleted: dbUser.profileCompleted
   }
 }
 

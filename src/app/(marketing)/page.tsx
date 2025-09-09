@@ -93,38 +93,54 @@ function HeroSection() {
   };
 
   return (
-    <section className="py-20 lg:py-32">
+    <section className="relative py-20 lg:py-32 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+      
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
-          <Badge variant="outline" className="mb-4">
+          <Badge 
+            variant="outline" 
+            className="mb-4 animate-fade-in shadow-elegant border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors"
+          >
             🚀 Nieuw: Site-wide crawling in beta
           </Badge>
           
-          <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
+          <h1 className="animate-slide-up text-4xl lg:text-6xl font-bold font-display tracking-tight leading-tight">
             WCAG-scans die wél{" "}
-            <span className="text-primary">inzicht geven</span>
+            <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              inzicht geven
+            </span>
           </h1>
           
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Voer een URL in en krijg een concreet rapport met prioriteiten, voorbeelden en quick wins. 
             Export als PDF of Word.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Button 
               size="lg" 
+              className="button-hover gradient-primary text-white border-0 shadow-soft relative overflow-hidden group px-8 py-3"
               onClick={() => {
                 handleCtaClick("hero_primary");
                 window.location.href = '/dashboard';
               }}
             >
-              Start gratis scan
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <span className="relative z-10 flex items-center">
+                Start gratis scan
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             </Button>
             
             <Button 
               variant="outline" 
               size="lg" 
+              className="button-hover border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 px-8 py-3"
               onClick={() => {
                 handleCtaClick("hero_secondary");
                 window.location.href = '/features';
@@ -134,7 +150,7 @@ function HeroSection() {
             </Button>
           </div>
           
-          <p className="text-sm text-muted-foreground">
+          <p className="animate-fade-in text-sm text-muted-foreground pt-4">
             Gratis voor 1 scan per week • Geen creditcard vereist
           </p>
         </div>
@@ -171,13 +187,13 @@ function SocialProofSection() {
 
 function FeaturesSection() {
   return (
-    <section className="py-20">
+    <section className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4 animate-slide-up">
             Alles wat je nodig hebt voor WCAG-compliance
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-slide-up leading-relaxed">
             Van snelle single-page scans tot complete site-analyses. 
             Ideaal voor marketing, development en compliance teams.
           </p>
@@ -185,17 +201,21 @@ function FeaturesSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="p-8">
+            <Card 
+              key={index} 
+              className="text-center interactive-hover border-0 shadow-elegant bg-card/80 backdrop-blur-sm group"
+              style={{ animationDelay: `${index * 200}ms` }}
+            >
+              <CardContent className="p-8 h-full flex flex-col">
                 <div className="mb-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                    <feature.icon className="h-6 w-6 text-primary" />
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:scale-110">
+                    <feature.icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold font-display mb-3">
+                <h3 className="text-xl font-semibold font-display mb-4 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed flex-1">
                   {feature.description}
                 </p>
               </CardContent>
@@ -306,21 +326,29 @@ function CTASection() {
   };
 
   return (
-    <section className="py-20 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 text-center">
+    <section className="py-20 gradient-primary text-primary-foreground relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-10 left-10 w-32 h-32 border border-primary-foreground/20 rounded-full"></div>
+        <div className="absolute bottom-10 right-10 w-48 h-48 border border-primary-foreground/10 rounded-full"></div>
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 border border-primary-foreground/15 rounded-full"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display animate-slide-up">
             Start gratis – 1 scan per week
           </h2>
-          <p className="text-xl opacity-90">
+          <p className="text-xl opacity-90 animate-slide-up leading-relaxed">
             Geen creditcard nodig. Upgrade wanneer je meer scans nodig hebt. 
             Maandelijks opzegbaar.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button 
               size="lg" 
               variant="secondary" 
+              className="button-hover bg-white text-primary hover:bg-white/90 shadow-soft px-8 py-3"
               onClick={() => {
                 handleCtaClick();
                 window.location.href = '/dashboard';
@@ -333,7 +361,7 @@ function CTASection() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+              className="button-hover bg-transparent border-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:border-primary-foreground px-8 py-3"
               asChild
             >
               <Link href="/pricing">

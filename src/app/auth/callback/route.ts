@@ -11,14 +11,28 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error && data.user) {
+      // Extract user metadata from the signup
+      const metadata = data.user.user_metadata || {}
+      
       // Create or update user in our database
       await prisma.user.upsert({
         where: { email: data.user.email! },
         update: {
-          // Update any existing user info if needed
+          // Update profile completion status
+          profileCompleted: !!(metadata.first_name && metadata.last_name)
         },
         create: {
           email: data.user.email!,
+          firstName: metadata.first_name || null,
+          lastName: metadata.last_name || null,
+          company: metadata.company || null,
+          jobTitle: metadata.job_title || null,
+          phoneNumber: metadata.phone_number || null,
+          website: metadata.website || null,
+          country: metadata.country || null,
+          marketingEmails: metadata.marketing_emails !== false, // default true
+          productUpdates: metadata.product_updates !== false, // default true
+          profileCompleted: !!(metadata.first_name && metadata.last_name),
           plan: 'TRIAL',
           subscriptionStatus: 'trialing',
           trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial

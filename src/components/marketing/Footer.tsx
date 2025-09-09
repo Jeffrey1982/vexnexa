@@ -62,7 +62,7 @@ export function Footer({ className }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={cn("border-t bg-muted/50", className)}>
+    <footer className={cn("border-t border-border/50 gradient-subtle shadow-elegant", className)}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand & Newsletter */}
