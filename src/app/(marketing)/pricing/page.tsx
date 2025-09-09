@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Table,
   TableBody,
@@ -18,113 +20,132 @@ import {
   Zap, 
   Star, 
   Users,
-  Mail,
-  Clock,
-  FileText,
-  Globe,
-  ArrowRight
+  ArrowRight,
+  Loader2,
+  AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ENTITLEMENTS, PLAN_NAMES, formatPrice } from "@/lib/billing/plans";
 
 // Metadata handled by layout since this is a Client Component
 
 const plans = [
   {
-    name: "Free",
+    key: "TRIAL" as const,
+    name: "Trial", 
     price: "€0",
     period: "",
     description: "Perfect om te starten met accessibility scanning",
     highlighted: false,
     features: [
-      "1 scan per week",
+      `${ENTITLEMENTS.TRIAL.pagesPerMonth} pagina's per maand`,
+      `${ENTITLEMENTS.TRIAL.sites} website`,
       "PDF export",
-      "Basis rapport",
-      "E-mail support in 72u",
-      "WCAG 2.2 compliance check",
+      "Basis rapport", 
+      "14 dagen gratis",
     ],
     limitations: [
-      "Geen site-wide crawling",
-      "Beperkte historie",
-      "Geen team features",
+      "Geen Word export",
+      "Geen scheduling",
+      "Beperkte integraties",
     ],
-    cta: "Start gratis",
+    cta: "Start gratis trial",
     ctaHref: "/dashboard",
     ctaVariant: "outline" as const,
+    isTrial: true,
   },
   {
+    key: "STARTER" as const,
+    name: "Starter",
+    price: formatPrice("STARTER"),
+    period: "",
+    description: "Voor kleine websites en persoonlijk gebruik",
+    highlighted: false,
+    features: [
+      `${ENTITLEMENTS.STARTER.pagesPerMonth} pagina's per maand`,
+      `${ENTITLEMENTS.STARTER.sites} website`,
+      "PDF export",
+      "Basis rapporten",
+      "E-mail support",
+    ],
+    limitations: [
+      "Geen Word export", 
+      "Geen scheduling",
+      "Beperkte integraties",
+    ],
+    cta: "Upgrade naar Starter",
+    ctaVariant: "default" as const,
+    isTrial: false,
+  },
+  {
+    key: "PRO" as const,
     name: "Pro",
-    price: "€19",
-    period: "/maand",
+    price: formatPrice("PRO"), 
+    period: "",
     description: "Voor professionals die regelmatig scannen",
     highlighted: true,
     features: [
-      "100 scans per maand", 
-      "Site-wide crawl (beta)",
+      `${ENTITLEMENTS.PRO.pagesPerMonth} pagina's per maand`,
+      `${ENTITLEMENTS.PRO.sites} websites`,
+      `${ENTITLEMENTS.PRO.users} gebruikers`,
       "PDF + Word export",
-      "Uitgebreide rapporten",
-      "E-mail support in 24u",
-      "Scan historie",
+      "Uitgebreide rapporten", 
+      "Scheduling",
+      "Slack & Jira integratie",
       "Priority support",
     ],
     limitations: [],
-    cta: "Proberen",
-    ctaHref: "/contact",
+    cta: "Upgrade naar Pro",
     ctaVariant: "default" as const,
+    isTrial: false,
   },
   {
-    name: "Team", 
-    price: "€79",
-    period: "/maand",
-    description: "Voor teams die samen werken aan accessibility",
+    key: "BUSINESS" as const,
+    name: "Business",
+    price: formatPrice("BUSINESS"),
+    period: "",
+    description: "Voor teams en enterprise gebruik",
     highlighted: false,
     features: [
-      "1.000 scans per maand",
-      "Onbeperkte teamleden",
-      "Gedeelde workspaces",
-      "Advanced analytics",
-      "Prioriteit support in 4u",
-      "Custom branding",
-      "API toegang (binnenkort)",
+      `${ENTITLEMENTS.BUSINESS.pagesPerMonth} pagina's per maand`,
+      `${ENTITLEMENTS.BUSINESS.sites} websites`,
+      `${ENTITLEMENTS.BUSINESS.users} gebruikers`,
+      "Alle exports (PDF + Word)",
+      "White label rapporten",
+      "Advanced scheduling",
+      "Alle integraties",
+      "Priority support (4u response)",
     ],
     limitations: [],
-    cta: "Plan demo",
-    ctaHref: "/contact",
-    ctaVariant: "outline" as const,
+    cta: "Upgrade naar Business",
+    ctaVariant: "default" as const,
+    isTrial: false,
   },
 ];
 
 const comparisonFeatures = [
   { 
-    category: "Scans & Limieten",
+    category: "Gebruikslimiet",
     features: [
-      { name: "Scans per maand", free: "4 (1/week)", pro: "100", team: "1.000" },
-      { name: "Site-wide crawling", free: false, pro: "Beta", team: "Beta" },
-      { name: "Scan historie", free: "7 dagen", pro: "1 jaar", team: "Onbeperkt" },
+      { name: "Pagina's per maand", trial: ENTITLEMENTS.TRIAL.pagesPerMonth, starter: ENTITLEMENTS.STARTER.pagesPerMonth, pro: ENTITLEMENTS.PRO.pagesPerMonth, business: ENTITLEMENTS.BUSINESS.pagesPerMonth },
+      { name: "Websites", trial: ENTITLEMENTS.TRIAL.sites, starter: ENTITLEMENTS.STARTER.sites, pro: ENTITLEMENTS.PRO.sites, business: ENTITLEMENTS.BUSINESS.sites },
+      { name: "Gebruikers", trial: ENTITLEMENTS.TRIAL.users, starter: ENTITLEMENTS.STARTER.users, pro: ENTITLEMENTS.PRO.users, business: ENTITLEMENTS.BUSINESS.users },
     ]
   },
   {
-    category: "Rapporten & Export",
+    category: "Rapporten & Export", 
     features: [
-      { name: "PDF export", free: true, pro: true, team: true },
-      { name: "Word export", free: false, pro: true, team: true },
-      { name: "Custom branding", free: false, pro: false, team: true },
-      { name: "Executive summary", free: false, pro: true, team: true },
+      { name: "PDF export", trial: ENTITLEMENTS.TRIAL.pdf, starter: ENTITLEMENTS.STARTER.pdf, pro: ENTITLEMENTS.PRO.pdf, business: ENTITLEMENTS.BUSINESS.pdf },
+      { name: "Word export", trial: ENTITLEMENTS.TRIAL.word, starter: ENTITLEMENTS.STARTER.word, pro: ENTITLEMENTS.PRO.word, business: ENTITLEMENTS.BUSINESS.word },
+      { name: "White label", trial: ENTITLEMENTS.TRIAL.whiteLabel || false, starter: ENTITLEMENTS.STARTER.whiteLabel || false, pro: ENTITLEMENTS.PRO.whiteLabel || false, business: ENTITLEMENTS.BUSINESS.whiteLabel || false },
     ]
   },
   {
-    category: "Team & Collaboration",
+    category: "Features",
     features: [
-      { name: "Teamleden", free: "1", pro: "1", team: "Onbeperkt" },
-      { name: "Gedeelde workspaces", free: false, pro: false, team: true },
-      { name: "Role management", free: false, pro: false, team: true },
-    ]
-  },
-  {
-    category: "Support",
-    features: [
-      { name: "E-mail support", free: "72u", pro: "24u", team: "4u priority" },
-      { name: "Live chat", free: false, pro: false, team: true },
-      { name: "Phone support", free: false, pro: false, team: true },
+      { name: "Scheduling", trial: ENTITLEMENTS.TRIAL.schedule, starter: ENTITLEMENTS.STARTER.schedule, pro: ENTITLEMENTS.PRO.schedule, business: ENTITLEMENTS.BUSINESS.schedule },
+      { name: "Slack integratie", trial: ENTITLEMENTS.TRIAL.integrations.includes("slack"), starter: ENTITLEMENTS.STARTER.integrations.includes("slack"), pro: ENTITLEMENTS.PRO.integrations.includes("slack"), business: ENTITLEMENTS.BUSINESS.integrations.includes("slack") },
+      { name: "Jira integratie", trial: ENTITLEMENTS.TRIAL.integrations.includes("jira"), starter: ENTITLEMENTS.STARTER.integrations.includes("jira"), pro: ENTITLEMENTS.PRO.integrations.includes("jira"), business: ENTITLEMENTS.BUSINESS.integrations.includes("jira") },
     ]
   },
 ];
@@ -140,11 +161,11 @@ function HeroSection() {
           
           <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
             Kies het juiste plan voor{" "}
-            <span className="text-primary">jouw team</span>
+            <span className="text-primary">jouw project</span>
           </h1>
           
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            Van gratis single scans tot enterprise team-collaboration. 
+            Van gratis trial tot enterprise features. 
             Alle prijzen zijn transparant en maandelijks opzegbaar.
           </p>
           
@@ -160,19 +181,54 @@ function HeroSection() {
 }
 
 function PricingCards() {
-  const handleCtaClick = (plan: string) => {
-    if (typeof window !== 'undefined' && window.va) {
-      window.va.track("pricing_cta_click", { plan });
+  const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleUpgrade = async (planKey: string) => {
+    if (planKey === "TRIAL") return;
+    
+    setLoading(planKey);
+    setError(null);
+    
+    try {
+      const response = await fetch("/api/mollie/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ plan: planKey }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create checkout");
+      }
+      
+      // Redirect to Mollie checkout
+      window.location.href = data.url;
+      
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError(err instanceof Error ? err.message : "Er ging iets mis. Probeer opnieuw.");
+      setLoading(null);
     }
   };
 
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
+        {error && (
+          <Alert className="mb-8 max-w-md mx-auto" variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {plans.map((plan) => (
             <Card 
-              key={index} 
+              key={plan.key} 
               className={cn(
                 "relative",
                 plan.highlighted && "border-primary shadow-xl scale-105"
@@ -182,7 +238,7 @@ function PricingCards() {
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-primary text-primary-foreground">
                     <Star className="w-3 h-3 mr-1" />
-                    Meest populair
+                    Populair
                   </Badge>
                 </div>
               )}
@@ -217,13 +273,20 @@ function PricingCards() {
                   className="w-full"
                   variant={plan.ctaVariant}
                   size="lg"
-                  onClick={() => {
-                    handleCtaClick(plan.name.toLowerCase());
-                    window.location.href = plan.ctaHref;
-                  }}
+                  onClick={() => plan.isTrial && plan.ctaHref ? window.location.href = plan.ctaHref : handleUpgrade(plan.key)}
+                  disabled={loading === plan.key}
                 >
-                  {plan.cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  {loading === plan.key ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Laden...
+                    </>
+                  ) : (
+                    <>
+                      {plan.cta}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </>
+                  )}
                 </Button>
               </CardContent>
             </Card>
@@ -234,7 +297,7 @@ function PricingCards() {
           <p className="text-muted-foreground">
             Prijzen exclusief btw. Maandelijks opzegbaar. 
             <Link href="/contact" className="text-primary hover:underline ml-1">
-              Enterprise? Neem contact op.
+              Vragen? Neem contact op.
             </Link>
           </p>
         </div>
@@ -258,7 +321,7 @@ function ComparisonTable() {
   return (
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
               Vergelijk alle features
@@ -279,23 +342,25 @@ function ComparisonTable() {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Feature</TableHead>
-                        <TableHead className="text-center">Free</TableHead>
+                        <TableHead className="text-center">Trial</TableHead>
+                        <TableHead className="text-center">Starter</TableHead>
                         <TableHead className="text-center">
                           <div className="flex items-center justify-center space-x-1">
                             <span>Pro</span>
                             <Star className="h-3 w-3 text-primary" />
                           </div>
                         </TableHead>
-                        <TableHead className="text-center">Team</TableHead>
+                        <TableHead className="text-center">Business</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {category.features.map((feature, featureIndex) => (
                         <TableRow key={featureIndex}>
                           <TableCell className="font-medium">{feature.name}</TableCell>
-                          <TableCell className="text-center">{renderValue(feature.free)}</TableCell>
+                          <TableCell className="text-center">{renderValue(feature.trial)}</TableCell>
+                          <TableCell className="text-center">{renderValue(feature.starter)}</TableCell>
                           <TableCell className="text-center">{renderValue(feature.pro)}</TableCell>
-                          <TableCell className="text-center">{renderValue(feature.team)}</TableCell>
+                          <TableCell className="text-center">{renderValue(feature.business)}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -303,68 +368,6 @@ function ComparisonTable() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FAQSection() {
-  const faqItems = [
-    {
-      question: "Kan ik mijn plan later upgraden of downgraden?",
-      answer: "Ja, je kunt elk moment van plan wisselen. Bij upgrade wordt de nieuwe prijs direct berekend. Bij downgrade gaat de wijziging in bij je volgende factuurperiode."
-    },
-    {
-      question: "Wat gebeurt er als ik mijn scan-limiet overschrijd?",
-      answer: "Je ontvangt een melding wanneer je 80% van je limiet bereikt. Bij overschrijding kun je extra scan-pakketten bijkopen of upgraden naar een hoger plan."
-    },
-    {
-      question: "Is er een student- of nonprofit korting?",
-      answer: "Ja! Studenten en nonprofit organisaties krijgen 50% korting op alle betaalde plannen. Stuur ons een berichtje met verificatie voor je korting."
-    },
-    {
-      question: "Kan ik jaarlijks betalen voor extra korting?",
-      answer: "Absoluut! Bij jaarlijkse betaling krijg je 2 maanden gratis (16,7% korting). De jaarlijkse optie verschijnt in je dashboard na aanmelding."
-    },
-  ];
-
-  return (
-    <section className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Pricing FAQ
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Veelgestelde vragen over onze prijzen en plannen
-            </p>
-          </div>
-          
-          <div className="space-y-6">
-            {faqItems.map((item, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle className="text-lg">{item.question}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{item.answer}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <p className="text-muted-foreground mb-4">
-              Heb je nog andere vragen over pricing?
-            </p>
-            <Button asChild>
-              <Link href="/contact">
-                Neem contact op
-              </Link>
-            </Button>
           </div>
         </div>
       </div>
@@ -381,14 +384,14 @@ function CTASection() {
             Begin vandaag nog met scannen
           </h2>
           <p className="text-xl opacity-90">
-            Kies je plan en start direct met het verbeteren van je website&apos;s accessibility. 
+            Start met een gratis trial en upgrade wanneer je meer functionaliteit nodig hebt. 
             Geen setup, geen verrassingen.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
               <Link href="/dashboard">
-                Start gratis scan
+                Start gratis trial
                 <Zap className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -400,7 +403,7 @@ function CTASection() {
               asChild
             >
               <Link href="/contact">
-                Plan een demo
+                Neem contact op
                 <Users className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -417,7 +420,6 @@ export default function PricingPage() {
       <HeroSection />
       <PricingCards />
       <ComparisonTable />
-      <FAQSection />
       <CTASection />
     </>
   );

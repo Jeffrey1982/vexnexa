@@ -3,7 +3,9 @@ import fetch from "node-fetch";
 export async function isAllowedByRobots(siteRoot: string, path: string): Promise<boolean> {
   try {
     const robotsUrl = new URL("/robots.txt", siteRoot).toString();
-    const res = await fetch(robotsUrl, { timeout: 5000 as any });
+    const res = await fetch(robotsUrl, { 
+      signal: AbortSignal.timeout(5000)
+    });
     if (!res.ok) return true; // geen robots: ga door
     const txt = await res.text();
     const lines = txt.split(/\r?\n/).map(l => l.trim());

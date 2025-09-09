@@ -221,7 +221,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 text-muted-foreground space-y-1">
               <li>Source code en algoritmes</li>
               <li>User interface en designs</li>
-              <li>Logo's en branding</li>
+              <li>Logo&apos;s en branding</li>
               <li>Documentatie en tutorials</li>
             </ul>
 
@@ -290,7 +290,7 @@ export default function TermsPage() {
             
             <h3 className="font-semibold text-lg">Beperkte garantie</h3>
             <p className="text-muted-foreground">
-              TutusPorta wordt aangeboden "as is" met beperkte garanties:
+              TutusPorta wordt aangeboden &quot;as is&quot; met beperkte garanties:
             </p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-1">
               <li>We streven naar accurate WCAG 2.2 compliance testing</li>
@@ -333,7 +333,7 @@ export default function TermsPage() {
             </p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-1">
               <li>We scannen alleen publiek toegankelijke content</li>
-              <li>Persoonlijke gegevens uit pagina's worden niet opgeslagen</li>
+              <li>Persoonlijke gegevens uit pagina&apos;s worden niet opgeslagen</li>
               <li>Alle data wordt veilig bewaard in Europa</li>
               <li>Je hebt volledige controle over je account data</li>
               <li>We zijn volledig GDPR compliant</li>

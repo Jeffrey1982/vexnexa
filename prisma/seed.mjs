@@ -6,11 +6,15 @@ async function main() {
   const email = process.env.DEV_USER_EMAIL ?? "dev@tutusporta.local";
   const siteUrl = process.env.SEED_SITE_URL ?? "https://example.com/";
 
-  // user
+  // user with trial plan
   const user = await prisma.user.upsert({
     where: { email },
     update: {},
-    create: { email },
+    create: { 
+      email,
+      plan: "TRIAL",
+      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
+    },
   });
 
   // site

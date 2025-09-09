@@ -84,7 +84,7 @@ export function IssuesByImpactChart({ stats, className }: IssuesByImpactChartPro
           <Legend 
             formatter={(value, entry) => (
               <span style={{ color: entry.color }}>
-                {value} ({entry.payload.value})
+                {value} ({entry.payload?.value || 0})
               </span>
             )}
           />

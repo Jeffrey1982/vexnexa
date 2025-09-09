@@ -4,8 +4,8 @@ import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'TutusPorta',
-  description: 'Professional accessibility scanning and reporting',
+  title: 'TutusPorta by Vexnexa',
+  description: 'Professional accessibility scanning and reporting by Vexnexa',
 }
 
 export default function RootLayout({

@@ -17,7 +17,7 @@ export async function GET() {
       WHERE table_schema='public' ORDER BY 1
     `;
 
-    return NextResponse.json({ ok: true, dbHost: host, tables: rows.map((r: any) => r.table_name) });
+    return NextResponse.json({ ok: true, dbHost: host, tables: (rows as any[]).map((r: any) => r.table_name) });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
   }

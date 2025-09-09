@@ -71,7 +71,10 @@ export function Footer({ className }: FooterProps) {
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">T</span>
               </div>
-              <span className="font-display font-bold text-xl">TutusPorta</span>
+              <div className="flex flex-col">
+                <span className="font-display font-bold text-xl">TutusPorta</span>
+                <span className="text-xs text-muted-foreground">by Vexnexa</span>
+              </div>
             </Link>
             
             <p className="text-muted-foreground max-w-md">
@@ -154,7 +157,7 @@ export function Footer({ className }: FooterProps) {
             </div>
             
             <div className="text-xs text-muted-foreground max-w-md text-center md:text-right">
-              Wij scannen publiek toegankelijke content en slaan geen persoonsgegevens op vanuit pagina's.
+              Wij scannen publiek toegankelijke content en slaan geen persoonsgegevens op vanuit pagina&apos;s.
             </div>
           </div>
         </div>

@@ -2,9 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types";
 import { formatDate } from "@/lib/format";
+import { requireAuth } from "@/lib/auth";
+import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 
 export async function POST(req: NextRequest) {
   try {
+    // Check authentication and limits
+    const user = await requireAuth();
+    
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_pdf",
+      pages: 1
+    });
+
     const { scanId } = await req.json();
 
     if (!scanId) {
@@ -246,6 +257,9 @@ export async function POST(req: NextRequest) {
     `;
 
     // Return HTML content that can be converted to PDF by the browser
+    // Track usage
+    await addPageUsage(user.id, 1);
+
     return new NextResponse(htmlContent, {
       headers: {
         "Content-Type": "text/html",
@@ -255,6 +269,43 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     console.error("Report generation failed:", error);
+    
+    // Handle billing errors
+    if (error instanceof Error) {
+      if ((error as any).code === "UPGRADE_REQUIRED") {
+        return NextResponse.json(
+          { 
+            error: error.message,
+            code: "UPGRADE_REQUIRED",
+            feature: (error as any).feature
+          },
+          { status: 402 }
+        );
+      }
+      
+      if ((error as any).code === "LIMIT_REACHED") {
+        return NextResponse.json(
+          { 
+            error: error.message,
+            code: "LIMIT_REACHED",
+            limit: (error as any).limit,
+            current: (error as any).current
+          },
+          { status: 429 }
+        );
+      }
+      
+      if ((error as any).code === "TRIAL_EXPIRED") {
+        return NextResponse.json(
+          { 
+            error: error.message,
+            code: "TRIAL_EXPIRED"
+          },
+          { status: 402 }
+        );
+      }
+    }
+    
     return NextResponse.json(
       { error: "Failed to generate report" },
       { status: 500 }

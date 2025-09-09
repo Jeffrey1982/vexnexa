@@ -12,7 +12,19 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   sites     Site[]
+  
+  // Billing fields
+  plan               Plan     @default(TRIAL)  // TRIAL, STARTER, PRO, BUSINESS
+  subscriptionStatus String   @default("inactive") // active, canceled, past_due, inactive
+  trialEndsAt        DateTime?
+
+  // Mollie koppelingen
+  mollieCustomerId      String? @unique
+  mollieSubscriptionId  String? // actuele sub (1 actief tegelijk)
+
+  usages             Usage[]
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Site {
@@ -67,4 +79,25 @@ model Scan {
 
   @@index([siteId])
   @@index([pageId])
+}
+
+enum Plan {
+  TRIAL
+  STARTER
+  PRO
+  BUSINESS
+}
+
+model Usage {
+  id        String   @id @default(cuid())
+  userId    String
+  period    String   // "2025-09"
+  pages     Int      @default(0)
+  sites     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, period])
 }

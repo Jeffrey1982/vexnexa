@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { runAccessibilityScan } from "@/lib/scanner";
+import { requireAuth } from "@/lib/auth";
+import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,6 +10,15 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
+    // Check authentication and limits first
+    const user = await requireAuth();
+    
+    await assertWithinLimits({
+      userId: user.id,
+      action: "scan",
+      pages: 1
+    });
+
     const { url } = await req.json();
     
     if (!url) {
@@ -27,12 +38,12 @@ export async function POST(req: Request) {
     }
 
     // Find-or-create User (fallback op demo user)
-    let user = await prisma.user.findUnique({ 
+    let demoUser = await prisma.user.findUnique({ 
       where: { email: "demo@tutusporta.com" } 
     });
     
-    if (!user) {
-      user = await prisma.user.create({
+    if (!demoUser) {
+      demoUser = await prisma.user.create({
         data: { email: "demo@tutusporta.com" }
       });
     }
@@ -41,7 +52,7 @@ export async function POST(req: Request) {
     let site = await prisma.site.findUnique({
       where: { 
         userId_url: {
-          userId: user.id,
+          userId: demoUser.id,
           url: siteUrl
         }
       }
@@ -50,7 +61,7 @@ export async function POST(req: Request) {
     if (!site) {
       site = await prisma.site.create({
         data: {
-          userId: user.id,
+          userId: demoUser.id,
           url: siteUrl
         }
       });
@@ -135,6 +146,9 @@ export async function POST(req: Request) {
       }
     });
 
+    // Track usage for successful scan
+    await addPageUsage(user.id, 1);
+
     return NextResponse.json({
       ok: true,
       scan: completedScan,
@@ -148,6 +162,46 @@ export async function POST(req: Request) {
 
   } catch (e: any) {
     console.error("Scan failed:", e);
+    
+    // Handle billing errors
+    if (e instanceof Error) {
+      if ((e as any).code === "UPGRADE_REQUIRED") {
+        return NextResponse.json(
+          { 
+            ok: false,
+            error: e.message,
+            code: "UPGRADE_REQUIRED",
+            feature: (e as any).feature
+          },
+          { status: 402 }
+        );
+      }
+      
+      if ((e as any).code === "LIMIT_REACHED") {
+        return NextResponse.json(
+          { 
+            ok: false,
+            error: e.message,
+            code: "LIMIT_REACHED",
+            limit: (e as any).limit,
+            current: (e as any).current
+          },
+          { status: 429 }
+        );
+      }
+      
+      if ((e as any).code === "TRIAL_EXPIRED") {
+        return NextResponse.json(
+          { 
+            ok: false,
+            error: e.message,
+            code: "TRIAL_EXPIRED"
+          },
+          { status: 402 }
+        );
+      }
+    }
+    
     return NextResponse.json({ 
       ok: false, 
       error: e?.message ?? "Scan failed" 

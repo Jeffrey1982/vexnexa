@@ -28,7 +28,7 @@ export function ScoreBadge({ score, size = "md", showLabel = true, className }: 
     <Badge
       variant="outline"
       className={cn(
-        colorClasses[color],
+        colorClasses[color as keyof typeof colorClasses],
         sizeClasses[size],
         "flex items-center gap-1",
         className

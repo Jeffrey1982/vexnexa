@@ -74,7 +74,7 @@ export default function PrivacyPage() {
               <div>
                 <h3 className="font-semibold text-sm">✅ Wat we WEL doen:</h3>
                 <ul className="text-sm text-muted-foreground space-y-1 mt-2">
-                  <li>• Alleen publiek toegankelijke pagina's scannen</li>
+                  <li>• Alleen publiek toegankelijke pagina&apos;s scannen</li>
                   <li>• Data veilig opslaan in Europa</li>
                   <li>• Minimale gegevens bewaren</li>
                   <li>• Transparant zijn over data gebruik</li>
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
               <div>
                 <h3 className="font-semibold text-sm">❌ Wat we NIET doen:</h3>
                 <ul className="text-sm text-muted-foreground space-y-1 mt-2">
-                  <li>• Persoonlijke gegevens uit pagina's opslaan</li>
+                  <li>• Persoonlijke gegevens uit pagina&apos;s opslaan</li>
                   <li>• Data verkopen aan derden</li>
                   <li>• Cookies zonder toestemming plaatsen</li>
                   <li>• Data buiten Europa bewaren</li>
@@ -125,7 +125,7 @@ export default function PrivacyPage() {
               <li>IP-adres voor rate limiting en misbruik preventie</li>
             </ul>
             <p className="text-muted-foreground">
-              <strong>Belangrijk:</strong> We slaan GEEN persoonlijke gegevens op die we in pagina's aantreffen 
+              <strong>Belangrijk:</strong> We slaan GEEN persoonlijke gegevens op die we in pagina&apos;s aantreffen 
               (zoals namen, e-mailadressen, telefoonnummers). We analyseren alleen HTML structuur en toegankelijkheid.
             </p>
 
@@ -170,7 +170,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-1">
               <li>Bezoekersstatistieken (anoniem)</li>
-              <li>Populaire pagina's en features</li>
+              <li>Populaire pagina&apos;s en features</li>
               <li>Technische prestaties</li>
             </ul>
             <p className="text-muted-foreground">
@@ -296,7 +296,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 text-muted-foreground space-y-1">
               <li>E-mail naar geregistreerde gebruikers</li>
               <li>Melding op onze website</li>
-              <li>Update van de "laatst bijgewerkt" datum</li>
+              <li>Update van de &quot;laatst bijgewerkt&quot; datum</li>
             </ul>
           </section>
 

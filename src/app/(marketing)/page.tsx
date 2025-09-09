@@ -65,8 +65,8 @@ function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "TutusPorta",
-    description: "WCAG accessibility scanning tool for websites",
+    name: "TutusPorta by Vexnexa",
+    description: "WCAG accessibility scanning tool for websites by Vexnexa",
     url: "https://tutusporta.com",
     logo: "https://tutusporta.com/logo.png",
     sameAs: [],

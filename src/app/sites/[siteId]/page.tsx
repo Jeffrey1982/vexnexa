@@ -20,13 +20,16 @@ export default async function SitePage({ params }: PageProps) {
     include: {
       pages: {
         include: {
-          latestScan: true
+          scans: {
+            orderBy: { createdAt: "desc" },
+            take: 1
+          }
         },
         orderBy: { createdAt: "desc" }
       },
-      crawls: {
-        orderBy: { startedAt: "desc" },
-        take: 5
+      scans: {
+        orderBy: { createdAt: "desc" },
+        take: 10
       }
     }
   });
@@ -35,7 +38,7 @@ export default async function SitePage({ params }: PageProps) {
     notFound();
   }
 
-  const latestCrawl = site.crawls[0];
+  const latestScan = site.scans[0];
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -65,34 +68,34 @@ export default async function SitePage({ params }: PageProps) {
         </div>
 
         {/* Crawl Status */}
-        {latestCrawl && (
+        {latestScan && (
           <div className="bg-white rounded-lg shadow p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Latest Crawl</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Status</p>
                 <p className={`font-medium ${
-                  latestCrawl.status === 'done' ? 'text-green-600' :
-                  latestCrawl.status === 'running' ? 'text-blue-600' :
-                  latestCrawl.status === 'error' ? 'text-red-600' :
+                  latestScan.status === 'done' ? 'text-green-600' :
+                  latestScan.status === 'running' ? 'text-blue-600' :
+                  latestScan.status === 'error' ? 'text-red-600' :
                   'text-yellow-600'
                 }`}>
-                  {latestCrawl.status}
+                  {latestScan.status}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Pages Done</p>
-                <p className="font-medium">{latestCrawl.pagesDone}/{latestCrawl.maxPages}</p>
+                <p className="text-sm text-gray-500">Score</p>
+                <p className="font-medium">{latestScan.score || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Started</p>
+                <p className="text-sm text-gray-500">Issues</p>
+                <p className="font-medium">{latestScan.issues || 0}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Created</p>
                 <p className="font-medium">
-                  {new Date(latestCrawl.startedAt).toLocaleString()}
+                  {new Date(latestScan.createdAt).toLocaleString()}
                 </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Max Depth</p>
-                <p className="font-medium">{latestCrawl.maxDepth}</p>
               </div>
             </div>
           </div>
@@ -117,9 +120,9 @@ export default async function SitePage({ params }: PageProps) {
               {site.pages.length > 0 
                 ? Math.round(
                     site.pages
-                      .filter(p => p.latestScan)
-                      .reduce((sum, p) => sum + (p.latestScan?.score || 0), 0) /
-                    site.pages.filter(p => p.latestScan).length
+                      .filter(p => p.scans.length > 0)
+                      .reduce((sum, p) => sum + (p.scans[0]?.score || 0), 0) /
+                    site.pages.filter(p => p.scans.length > 0).length
                   ) || 0
                 : 0
               }
@@ -132,8 +135,8 @@ export default async function SitePage({ params }: PageProps) {
             </h3>
             <p className="text-3xl font-bold text-red-600">
               {site.pages
-                .filter(p => p.latestScan)
-                .reduce((sum, p) => sum + (p.latestScan?.impactCritical || 0), 0)
+                .filter(p => p.scans.length > 0)
+                .reduce((sum, p) => sum + (p.scans[0]?.impactCritical || 0), 0)
               }
             </p>
           </div>
@@ -144,8 +147,8 @@ export default async function SitePage({ params }: PageProps) {
             </h3>
             <p className="text-3xl font-bold text-yellow-600">
               {site.pages
-                .filter(p => p.latestScan)
-                .reduce((sum, p) => sum + (p.latestScan?.issues || 0), 0)
+                .filter(p => p.scans.length > 0)
+                .reduce((sum, p) => sum + (p.scans[0]?.issues || 0), 0)
               }
             </p>
           </div>
@@ -162,7 +165,7 @@ export default async function SitePage({ params }: PageProps) {
         </div>
 
         {/* Recent Crawls */}
-        {site.crawls.length > 0 && (
+        {site.scans.length > 0 && (
           <div className="mt-8 bg-white rounded-lg shadow overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900">
@@ -180,40 +183,37 @@ export default async function SitePage({ params }: PageProps) {
                       Status
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Progress
+                      Score
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Duration
+                      Issues
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {site.crawls.map((crawl) => (
-                    <tr key={crawl.id}>
+                  {site.scans.map((scan) => (
+                    <tr key={scan.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(crawl.startedAt).toLocaleString()}
+                        {new Date(scan.createdAt).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                          crawl.status === 'done' 
+                          scan.status === 'done' 
                             ? 'bg-green-100 text-green-800'
-                            : crawl.status === 'running'
+                            : scan.status === 'running'
                             ? 'bg-blue-100 text-blue-800'
-                            : crawl.status === 'error'
+                            : scan.status === 'error'
                             ? 'bg-red-100 text-red-800'
                             : 'bg-yellow-100 text-yellow-800'
                         }`}>
-                          {crawl.status}
+                          {scan.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {crawl.pagesDone}/{crawl.maxPages}
+                        {scan.score || 'N/A'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {crawl.finishedAt 
-                          ? Math.round((new Date(crawl.finishedAt).getTime() - new Date(crawl.startedAt).getTime()) / 60000) + 'm'
-                          : '-'
-                        }
+                        {scan.issues || 0}
                       </td>
                     </tr>
                   ))}

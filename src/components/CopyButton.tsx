@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 interface CopyButtonProps {
   text: string;
   variant?: "default" | "outline" | "ghost" | "secondary";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "lg";
   className?: string;
   children?: React.ReactNode;
 }

@@ -28,15 +28,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if there's already a running crawl for this site
-    const existingCrawl = await prisma.crawl.findFirst({
+    // Check if there's already a running scan for this site
+    const existingScan = await prisma.scan.findFirst({
       where: {
         siteId,
         status: { in: ["queued", "running"] }
       }
     });
 
-    if (existingCrawl) {
+    if (existingScan) {
       return NextResponse.json(
         { error: "A crawl is already running for this site" },
         { status: 409 }
@@ -75,38 +75,37 @@ export async function GET(request: NextRequest) {
     }
 
     if (crawlId) {
-      // Get specific crawl details
-      const crawl = await prisma.crawl.findUnique({
+      // Get specific scan details
+      const scan = await prisma.scan.findUnique({
         where: { id: crawlId },
         include: {
           site: true,
-          urls: {
-            orderBy: { createdAt: "asc" }
-          }
+          page: true
         }
       });
 
-      if (!crawl) {
+      if (!scan) {
         return NextResponse.json(
-          { error: "Crawl not found" },
+          { error: "Scan not found" },
           { status: 404 }
         );
       }
 
-      return NextResponse.json(crawl);
+      return NextResponse.json(scan);
     }
 
     if (siteId) {
-      // Get all crawls for a site
-      const crawls = await prisma.crawl.findMany({
+      // Get all scans for a site
+      const scans = await prisma.scan.findMany({
         where: { siteId },
-        orderBy: { startedAt: "desc" },
+        orderBy: { createdAt: "desc" },
         include: {
-          site: true
+          site: true,
+          page: true
         }
       });
 
-      return NextResponse.json(crawls);
+      return NextResponse.json(scans);
     }
 
   } catch (error) {

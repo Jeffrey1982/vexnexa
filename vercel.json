@@ -1,0 +1,14 @@
+{
+  "build": {
+    "env": {
+      "NEXT_PHASE": "next-build"
+    }
+  },
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 60
+    }
+  },
+  "regions": ["fra1"],
+  "framework": "nextjs"
+}

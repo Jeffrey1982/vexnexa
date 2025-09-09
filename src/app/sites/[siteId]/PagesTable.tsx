@@ -1,7 +1,7 @@
 import { Page, Scan } from "@prisma/client";
 
 interface PageWithScan extends Page {
-  latestScan: Scan | null;
+  scans: Scan[];
 }
 
 interface PagesTableProps {
@@ -67,70 +67,70 @@ export default function PagesTable({ pages }: PagesTableProps) {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="max-w-xs">
                   <p className="text-sm font-medium text-gray-900 truncate">
-                    {page.title || "Untitled"}
+                    {new URL(page.url).pathname}
                   </p>
                   <p className="text-xs text-gray-500 truncate" title={page.url}>
-                    {new URL(page.url).pathname}
+                    {page.url}
                   </p>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {page.latestScan ? (
-                  <span className={`text-lg font-bold ${getScoreColor(page.latestScan.score)}`}>
-                    {page.latestScan.score}
+                {page.scans[0] ? (
+                  <span className={`text-lg font-bold ${getScoreColor(page.scans[0].score || 0)}`}>
+                    {page.scans[0].score || 'N/A'}
                   </span>
                 ) : (
                   <span className="text-gray-400">-</span>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {page.latestScan ? (
+                {page.scans[0] ? (
                   <span className="text-sm font-medium text-gray-900">
-                    {page.latestScan.issues}
+                    {page.scans[0].issues}
                   </span>
                 ) : (
                   <span className="text-gray-400">-</span>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {page.latestScan ? (
-                  <span className={`text-sm font-medium ${getImpactColor(page.latestScan.impactCritical)}`}>
-                    {page.latestScan.impactCritical}
+                {page.scans[0] ? (
+                  <span className={`text-sm font-medium ${getImpactColor(page.scans[0].impactCritical)}`}>
+                    {page.scans[0].impactCritical}
                   </span>
                 ) : (
                   <span className="text-gray-400">-</span>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {page.latestScan ? (
-                  <span className={`text-sm font-medium ${getImpactColor(page.latestScan.impactSerious)}`}>
-                    {page.latestScan.impactSerious}
+                {page.scans[0] ? (
+                  <span className={`text-sm font-medium ${getImpactColor(page.scans[0].impactSerious)}`}>
+                    {page.scans[0].impactSerious}
                   </span>
                 ) : (
                   <span className="text-gray-400">-</span>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {page.latestScan ? (
-                  <span className={`text-sm font-medium ${getImpactColor(page.latestScan.impactModerate)}`}>
-                    {page.latestScan.impactModerate}
+                {page.scans[0] ? (
+                  <span className={`text-sm font-medium ${getImpactColor(page.scans[0].impactModerate)}`}>
+                    {page.scans[0].impactModerate}
                   </span>
                 ) : (
                   <span className="text-gray-400">-</span>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {page.latestScan ? (
-                  <span className={`text-sm font-medium ${getImpactColor(page.latestScan.impactMinor)}`}>
-                    {page.latestScan.impactMinor}
+                {page.scans[0] ? (
+                  <span className={`text-sm font-medium ${getImpactColor(page.scans[0].impactMinor)}`}>
+                    {page.scans[0].impactMinor}
                   </span>
                 ) : (
                   <span className="text-gray-400">-</span>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {page.latestScan 
-                  ? new Date(page.latestScan.createdAt).toLocaleDateString()
+                {page.scans[0] 
+                  ? new Date(page.scans[0].createdAt).toLocaleDateString()
                   : "Never"
                 }
               </td>

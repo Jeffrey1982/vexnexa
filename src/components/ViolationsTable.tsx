@@ -21,7 +21,7 @@ interface ViolationsTableProps {
 export function ViolationsTable({ violations, className }: ViolationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedImpacts, setSelectedImpacts] = useState<Set<ImpactLevel>>(
-    new Set(["critical", "serious", "moderate", "minor"])
+    new Set(["critical", "serious", "moderate", "minor"] as ImpactLevel[])
   );
   const [minNodes, setMinNodes] = useState(0);
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
@@ -156,7 +156,7 @@ export function ViolationsTable({ violations, className }: ViolationsTableProps)
               <TableHead>Impact</TableHead>
               <TableHead>Nodes</TableHead>
               <TableHead>Description</TableHead>
-              <TableHead width="80">Actions</TableHead>
+              <TableHead className="w-20">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

@@ -16,9 +16,20 @@ import {
 } from "docx";
 import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types";
 import { formatDate } from "@/lib/format";
+import { requireAuth } from "@/lib/auth";
+import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 
 export async function POST(req: NextRequest) {
   try {
+    // Check authentication and limits
+    const user = await requireAuth();
+    
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_word",
+      pages: 1
+    });
+
     const { scanId } = await req.json();
 
     if (!scanId) {
@@ -475,7 +486,10 @@ export async function POST(req: NextRequest) {
     // Generate buffer
     const buffer = await Packer.toBuffer(doc);
 
-    return new NextResponse(buffer, {
+    // Track usage
+    await addPageUsage(user.id, 1);
+
+    return new NextResponse(buffer as BodyInit, {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "Content-Disposition": `attachment; filename="tutusporta-${scanId}.docx"`,
@@ -484,6 +498,43 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     console.error("Word export failed:", error);
+    
+    // Handle billing errors
+    if (error instanceof Error) {
+      if ((error as any).code === "UPGRADE_REQUIRED") {
+        return NextResponse.json(
+          { 
+            error: error.message,
+            code: "UPGRADE_REQUIRED",
+            feature: (error as any).feature
+          },
+          { status: 402 }
+        );
+      }
+      
+      if ((error as any).code === "LIMIT_REACHED") {
+        return NextResponse.json(
+          { 
+            error: error.message,
+            code: "LIMIT_REACHED",
+            limit: (error as any).limit,
+            current: (error as any).current
+          },
+          { status: 429 }
+        );
+      }
+      
+      if ((error as any).code === "TRIAL_EXPIRED") {
+        return NextResponse.json(
+          { 
+            error: error.message,
+            code: "TRIAL_EXPIRED"
+          },
+          { status: 402 }
+        );
+      }
+    }
+    
     return NextResponse.json(
       { error: "Failed to generate Word document" },
       { status: 500 }

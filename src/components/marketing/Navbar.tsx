@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import AuthButton from "@/components/auth/AuthButton";
+import { createClient } from "@/lib/supabase/client";
+import { User } from "@supabase/supabase-js";
 import {
   Sheet,
   SheetContent,
@@ -28,6 +31,23 @@ interface NavbarProps {
 
 export function Navbar({ className }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
 
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {
@@ -44,7 +64,10 @@ export function Navbar({ className }: NavbarProps) {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">T</span>
             </div>
-            <span className="font-display font-bold text-xl">TutusPorta</span>
+            <div className="flex flex-col">
+              <span className="font-display font-bold text-xl">TutusPorta</span>
+              <span className="text-xs text-muted-foreground">by Vexnexa</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -60,21 +83,33 @@ export function Navbar({ className }: NavbarProps) {
             ))}
           </div>
 
-          {/* Desktop CTA Buttons */}
+          {/* Desktop Auth/CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button 
-              variant="ghost" 
-              asChild
-              onClick={() => handleCtaClick("navbar_demo")}
-            >
-              <Link href="/dashboard">Demo</Link>
-            </Button>
-            <Button 
-              asChild
-              onClick={() => handleCtaClick("navbar_primary")}
-            >
-              <Link href="/dashboard">Start gratis scan</Link>
-            </Button>
+            {user ? (
+              <Button 
+                asChild
+                onClick={() => handleCtaClick("navbar_dashboard")}
+              >
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  asChild
+                  onClick={() => handleCtaClick("navbar_demo")}
+                >
+                  <Link href="/dashboard">Demo</Link>
+                </Button>
+                <Button 
+                  asChild
+                  onClick={() => handleCtaClick("navbar_primary")}
+                >
+                  <Link href="/auth/register">Start gratis scan</Link>
+                </Button>
+              </>
+            )}
+            <AuthButton user={user} />
           </div>
 
           {/* Mobile Menu */}
@@ -92,7 +127,10 @@ export function Navbar({ className }: NavbarProps) {
                     <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                       <span className="text-primary-foreground font-bold text-sm">T</span>
                     </div>
-                    <span className="font-display font-bold text-xl">TutusPorta</span>
+                    <div className="flex flex-col">
+              <span className="font-display font-bold text-xl">TutusPorta</span>
+              <span className="text-xs text-muted-foreground">by Vexnexa</span>
+            </div>
                   </Link>
                 </SheetTitle>
                 <SheetDescription>
