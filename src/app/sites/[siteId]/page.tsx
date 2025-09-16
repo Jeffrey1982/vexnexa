@@ -30,6 +30,10 @@ export default async function SitePage({ params }: PageProps) {
       scans: {
         orderBy: { createdAt: "desc" },
         take: 10
+      },
+      crawls: {
+        orderBy: { createdAt: "desc" },
+        take: 5
       }
     }
   });
@@ -39,6 +43,7 @@ export default async function SitePage({ params }: PageProps) {
   }
 
   const latestScan = site.scans[0];
+  const latestCrawl = site.crawls[0];
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -63,39 +68,66 @@ export default async function SitePage({ params }: PageProps) {
                 {site.pages.length} pages discovered
               </p>
             </div>
-            <StartCrawlButton siteId={siteId} />
+            <div className="flex gap-3">
+              <Link href={`/sites/${siteId}/structure`}>
+                <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                  🔮 3D Structure
+                </button>
+              </Link>
+              <StartCrawlButton siteId={siteId} />
+            </div>
           </div>
         </div>
 
         {/* Crawl Status */}
-        {latestScan && (
+        {latestCrawl && (
           <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Latest Crawl</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <h2 className="text-xl font-semibold mb-4">Latest Site Crawl</h2>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Status</p>
                 <p className={`font-medium ${
-                  latestScan.status === 'done' ? 'text-green-600' :
-                  latestScan.status === 'running' ? 'text-blue-600' :
-                  latestScan.status === 'error' ? 'text-red-600' :
+                  latestCrawl.status === 'done' ? 'text-green-600' :
+                  latestCrawl.status === 'running' ? 'text-blue-600' :
+                  latestCrawl.status === 'error' ? 'text-red-600' :
                   'text-yellow-600'
                 }`}>
-                  {latestScan.status}
+                  {latestCrawl.status}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Score</p>
-                <p className="font-medium">{latestScan.score || 'N/A'}</p>
+                <p className="text-sm text-gray-500">Pages Queued</p>
+                <p className="font-medium">{latestCrawl.pagesQueued}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Issues</p>
-                <p className="font-medium">{latestScan.issues || 0}</p>
+                <p className="text-sm text-gray-500">Pages Done</p>
+                <p className="font-medium">{latestCrawl.pagesDone}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Created</p>
+                <p className="text-sm text-gray-500">Max Pages</p>
+                <p className="font-medium">{latestCrawl.maxPages}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Started</p>
                 <p className="font-medium">
-                  {new Date(latestScan.createdAt).toLocaleString()}
+                  {new Date(latestCrawl.startedAt).toLocaleString()}
                 </p>
+              </div>
+            </div>
+            
+            {/* Progress bar */}
+            <div className="mt-4">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>Progress</span>
+                <span>{latestCrawl.pagesDone} / {latestCrawl.maxPages}</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  style={{
+                    width: `${Math.min(100, (latestCrawl.pagesDone / Math.max(1, latestCrawl.maxPages)) * 100)}%`
+                  }}
+                ></div>
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { requireAuth } from "@/lib/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,10 +18,31 @@ import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
+import BrandedHeader from "@/components/white-label/BrandedHeader";
+import BrandedFooter from "@/components/white-label/BrandedFooter";
+import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
+import { BeforeAfterComparison } from "@/components/enhanced/BeforeAfterComparison";
+import { DragDropDashboard } from "@/components/enhanced/DragDropDashboard";
+import { TrendAnalysis } from "@/components/enhanced/TrendAnalysis";
+import { CompetitorBenchmark } from "@/components/enhanced/CompetitorBenchmark";
+import { ROICalculator } from "@/components/enhanced/ROICalculator";
+import { ExecutiveSummary } from "@/components/enhanced/ExecutiveSummary";
+import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
+import { MultiFormatExporter } from "@/components/enhanced/MultiFormatExporter";
+import { AIInsights } from "@/components/enhanced/AIInsights";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-async function getRecentScans() {
+async function getRecentScans(userId: string) {
   try {
     const scans = await prisma.scan.findMany({
+      where: {
+        site: {
+          userId: userId,
+        },
+      },
       include: {
         site: {
           include: {
@@ -41,12 +63,15 @@ async function getRecentScans() {
   }
 }
 
-async function getDashboardStats() {
+async function getDashboardStats(userId: string) {
   try {
     const lastTenScans = await prisma.scan.findMany({
       where: {
         status: "done",
         score: { not: null },
+        site: {
+          userId: userId,
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -119,13 +144,23 @@ function EmptyState() {
 }
 
 export default async function DashboardPage() {
+  // Require authentication to access dashboard
+  let user;
+  try {
+    user = await requireAuth();
+  } catch (error) {
+    redirect("/auth/register");
+  }
+
   const [scans, stats] = await Promise.all([
-    getRecentScans(),
-    getDashboardStats(),
+    getRecentScans(user.id),
+    getDashboardStats(user.id),
   ]);
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="min-h-screen bg-gray-50">
+      <BrandedHeader />
+      <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -134,6 +169,7 @@ export default async function DashboardPage() {
             Monitor your website accessibility scans and improvements
           </p>
         </div>
+        <ThemeToggle />
       </div>
 
       {/* New Scan Card */}
@@ -152,60 +188,127 @@ export default async function DashboardPage() {
         </CardContent>
       </Card>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Average Score"
-          value={`${stats.avgScore}/100`}
-          subtitle="Based on last 10 scans"
-          iconName="TrendingUp"
-          variant={stats.avgScore >= 80 ? "success" : stats.avgScore >= 60 ? "warning" : "critical"}
-          trend={stats.trendData.length >= 2 ? {
-            value: Math.round(((stats.trendData[stats.trendData.length - 1]?.score || 0) - (stats.trendData[stats.trendData.length - 2]?.score || 0)) / (stats.trendData[stats.trendData.length - 2]?.score || 1) * 100),
-            label: "from last scan"
-          } : undefined}
-        />
-        
-        <StatCard
-          title="Total Issues"
-          value={stats.impactStats.total}
-          subtitle="Across all scans"
-          iconName="AlertTriangle"
-          variant={stats.impactStats.critical > 0 ? "critical" : stats.impactStats.serious > 0 ? "warning" : "default"}
-        />
-        
-        <StatCard
-          title="Critical Issues"
-          value={stats.impactStats.critical}
-          subtitle="Requiring immediate attention"
-          iconName="Shield"
-          variant="critical"
-        />
-        
-        <StatCard
-          title="Sites Scanned"
-          value={scans.length}
-          subtitle="Total accessibility checks"
-          iconName="Users"
-          variant="default"
-        />
-      </div>
+      {/* Enhanced Dashboard with Tabs */}
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsTrigger value="tools">Tools</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-6">
+          {/* Animated Stats Cards */}
+          <ProgressAnimations
+            score={stats.avgScore}
+            issues={stats.impactStats}
+          />
+
+          {/* Interactive Heatmap - Featured on Overview */}
+          {scans.length > 0 ? (
+            <InteractiveHeatmap
+              violations={(scans[0].raw as any)?.violations || []}
+              websiteUrl={scans[0].site.url}
+            />
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  🗺️ Interactive Accessibility Heatmap
+                </CardTitle>
+                <CardDescription>
+                  Visualize accessibility issues directly on your website screenshots
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center py-8">
+                <div className="max-w-md mx-auto">
+                  <div className="text-6xl mb-4">📸</div>
+                  <h3 className="text-lg font-semibold mb-2">Real Website Heatmaps</h3>
+                  <p className="text-muted-foreground mb-4">
+                    See exactly where accessibility issues are located on your actual website with interactive heatmap overlays.
+                  </p>
+                  <div className="text-sm text-blue-600 mb-6">
+                    ✨ Features real screenshots + precise DOM element mapping
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Run your first accessibility scan above to see the interactive heatmap in action!
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Drag and Drop Dashboard */}
+          <DragDropDashboard />
+        </TabsContent>
+
+        <TabsContent value="analytics" className="space-y-6">
+          {/* Interactive Heatmap for latest scan */}
+          <InteractiveHeatmap
+            violations={(scans.length > 0 && scans[0].raw) ? (scans[0].raw as any)?.violations || [] : []}
+            websiteUrl={scans[0]?.site?.url || 'https://example.com'}
+          />
+
+          {/* Issues by Impact Chart */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-display">
+                <AlertTriangle className="w-5 h-5 text-primary" />
+                Issues by Impact Level
+              </CardTitle>
+              <CardDescription>
+                Distribution of accessibility issues across severity levels
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pb-2">
+              <IssuesByImpactChart stats={stats.impactStats} className="h-64" />
+            </CardContent>
+          </Card>
+
+          {/* Competitor Benchmark */}
+          <CompetitorBenchmark currentScore={stats.avgScore} websiteUrl={scans[0]?.site?.url || ''} />
+        </TabsContent>
+
+        <TabsContent value="reports" className="space-y-6">
+          {/* Multi-Format Export */}
+          <MultiFormatExporter
+            scanData={{
+              id: 'dashboard-summary',
+              url: scans[0]?.site?.url || '',
+              score: stats.avgScore,
+              issues: stats.impactStats,
+              violations: [],
+              createdAt: new Date()
+            }}
+          />
+        </TabsContent>
+
+        <TabsContent value="tools" className="space-y-6">
+          {/* AI-Powered Insights */}
+          {scans.length > 0 && scans[0].raw && (
+            <AIInsights
+              violations={(scans[0].raw as any)?.violations || []}
+              currentScore={stats.avgScore}
+              trend={stats.trendData.length >= 2 ?
+                stats.trendData[stats.trendData.length - 1]?.score - stats.trendData[stats.trendData.length - 2]?.score :
+                undefined
+              }
+            />
+          )}
+
+          {/* ROI Calculator */}
+          <ROICalculator />
+
+          {/* Interactive Heatmap for latest scan */}
+          {scans.length > 0 && scans[0].raw && (
+            <InteractiveHeatmap
+              violations={(scans[0].raw as any)?.violations || []}
+              websiteUrl={scans[0].site.url}
+            />
+          )}
+        </TabsContent>
+      </Tabs>
       
-      {/* Issues by Impact Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-display">
-            <AlertTriangle className="w-5 h-5 text-primary" />
-            Issues by Impact Level
-          </CardTitle>
-          <CardDescription>
-            Distribution of accessibility issues across severity levels
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pb-2">
-          <IssuesByImpactChart stats={stats.impactStats} className="h-64" />
-        </CardContent>
-      </Card>
 
       {/* Recent Scans */}
       <Card>
@@ -294,6 +397,8 @@ export default async function DashboardPage() {
           )}
         </CardContent>
       </Card>
+      </div>
+      <BrandedFooter />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { fontSans, fontDisplay } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
+import ClientLayout from '@/components/ClientLayout'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,8 +17,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${fontSans.variable} ${fontDisplay.variable}`}>
+      <head>
+        {/* Default favicon - will be replaced by white label if configured */}
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className="font-sans antialiased">
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

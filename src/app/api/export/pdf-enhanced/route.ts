@@ -1,0 +1,620 @@
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types";
+import { formatDate } from "@/lib/format";
+import { requireAuth } from "@/lib/auth";
+import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
+import {
+  getScanTrendData,
+  getBenchmarkComparison,
+  getScanComparison,
+  calculateWCAGCompliance
+} from "@/lib/analytics";
+
+export async function POST(req: NextRequest) {
+  try {
+    // Check authentication and limits
+    const user = await requireAuth();
+
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_pdf",
+      pages: 1
+    });
+
+    const { scanId } = await req.json();
+
+    if (!scanId) {
+      return NextResponse.json({ error: "Scan ID is required" }, { status: 400 });
+    }
+
+    // Fetch scan data
+    const scan = await prisma.scan.findUnique({
+      where: { id: scanId },
+      include: {
+        site: {
+          include: {
+            user: true,
+          },
+        },
+        page: true,
+      },
+    });
+
+    if (!scan) {
+      return NextResponse.json({ error: "Scan not found" }, { status: 404 });
+    }
+
+    // Extract violations
+    let violations: Violation[] = [];
+    if (scan.raw && typeof scan.raw === 'object' && 'violations' in scan.raw) {
+      violations = (scan.raw as any).violations || [];
+    }
+
+    const stats = computeIssueStats(violations);
+    const topViolations = getTopViolations(violations, 10);
+
+    // Calculate WCAG compliance
+    const wcagAACompliance = calculateWCAGCompliance(violations, "AA");
+    const wcagAAACompliance = calculateWCAGCompliance(violations, "AAA");
+
+    // Get score category and description
+    const getScoreInfo = (score: number) => {
+      if (score >= 90) return { category: 'score-excellent', label: 'Excellent', description: 'Your website meets most accessibility standards with minimal issues.' };
+      if (score >= 75) return { category: 'score-good', label: 'Good', description: 'Your website has good accessibility with some areas for improvement.' };
+      if (score >= 60) return { category: 'score-fair', label: 'Fair', description: 'Your website has moderate accessibility issues that should be addressed.' };
+      if (score >= 40) return { category: 'score-poor', label: 'Poor', description: 'Your website has significant accessibility barriers that need attention.' };
+      return { category: 'score-critical', label: 'Critical', description: 'Your website has serious accessibility issues requiring immediate action.' };
+    };
+
+    const scoreInfo = getScoreInfo(scan.score || 0);
+    const siteUrl = scan.page?.url || scan.site.url;
+
+    // Generate beautiful HTML for PDF conversion
+    const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <style>
+            @page {
+                margin: 15mm;
+                size: A4;
+                @top-center {
+                    content: "TutusPorta Accessibility Report";
+                    font-size: 10px;
+                    color: #6b7280;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                }
+                @bottom-center {
+                    content: "Page " counter(page) " of " counter(pages);
+                    font-size: 10px;
+                    color: #6b7280;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                }
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                color: #1f2937;
+                line-height: 1.6;
+                background: white;
+            }
+
+            /* Header Section */
+            .header {
+                background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+                color: white;
+                padding: 40px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .logo {
+                font-size: 32px;
+                font-weight: 800;
+                letter-spacing: -1px;
+                margin-bottom: 16px;
+            }
+
+            .logo::before {
+                content: '🛡️';
+                margin-right: 12px;
+                font-size: 28px;
+            }
+
+            .report-title {
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .report-subtitle {
+                font-size: 16px;
+                opacity: 0.9;
+                font-weight: 300;
+            }
+
+            /* Score Hero Section */
+            .score-hero {
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                border-radius: 16px;
+                padding: 40px;
+                text-align: center;
+                margin-bottom: 40px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                border: 1px solid #e2e8f0;
+            }
+
+            .score-circle {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                font-weight: 800;
+                color: white;
+                position: relative;
+            }
+
+            .score-excellent { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+            .score-good { background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); }
+            .score-fair { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); }
+            .score-poor { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+            .score-critical { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+
+            .score-label {
+                font-size: 24px;
+                font-weight: 600;
+                color: #1f2937;
+                margin-bottom: 8px;
+            }
+
+            .score-description {
+                font-size: 14px;
+                color: #6b7280;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            /* Metrics Grid */
+            .metrics-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+
+            .metric-card {
+                background: white;
+                border-radius: 12px;
+                padding: 24px;
+                text-align: center;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+                border: 1px solid #e5e7eb;
+                position: relative;
+            }
+
+            .metric-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                border-radius: 12px 12px 0 0;
+            }
+
+            .metric-card.wcag::before { background: linear-gradient(90deg, #3b82f6, #1e40af); }
+            .metric-card.performance::before { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+            .metric-card.seo::before { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+            .metric-card.issues::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+
+            .metric-icon {
+                font-size: 20px;
+                margin-bottom: 8px;
+                display: block;
+                opacity: 0.8;
+            }
+
+            .metric-value {
+                font-size: 24px;
+                font-weight: 800;
+                color: #1f2937;
+                margin-bottom: 4px;
+                line-height: 1;
+            }
+
+            .metric-label {
+                font-size: 11px;
+                color: #6b7280;
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            /* Section Styling */
+            .section {
+                margin-bottom: 40px;
+            }
+
+            .section-title {
+                font-size: 24px;
+                font-weight: 700;
+                color: #1f2937;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .section-title::before {
+                content: '';
+                width: 4px;
+                height: 24px;
+                background: linear-gradient(135deg, #3b82f6, #1e40af);
+                border-radius: 2px;
+            }
+
+            /* Impact Cards */
+            .impact-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+                margin-bottom: 30px;
+            }
+
+            .impact-card {
+                background: white;
+                border-radius: 12px;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                border: 2px solid transparent;
+            }
+
+            .impact-icon {
+                font-size: 16px;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .impact-value {
+                font-size: 28px;
+                font-weight: 800;
+                margin-bottom: 4px;
+                line-height: 1;
+            }
+
+            .impact-label {
+                font-size: 10px;
+                text-transform: uppercase;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+
+            .critical {
+                color: #dc2626;
+                border-color: #fecaca;
+                background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            }
+
+            .serious {
+                color: #ea580c;
+                border-color: #fed7aa;
+                background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            }
+
+            .moderate {
+                color: #d97706;
+                border-color: #fde68a;
+                background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            }
+
+            .minor {
+                color: #6b7280;
+                border-color: #e5e7eb;
+                background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            }
+
+            /* Violations Section */
+            .violations-container {
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+                border: 1px solid #e5e7eb;
+                margin-bottom: 30px;
+            }
+
+            .violations-header {
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                padding: 16px 20px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .violations-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #1f2937;
+                margin: 0;
+            }
+
+            .violation-item {
+                padding: 20px;
+                border-bottom: 1px solid #f1f5f9;
+            }
+
+            .violation-item:last-child {
+                border-bottom: none;
+            }
+
+            .violation-header {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+
+            .violation-impact-badge {
+                flex-shrink: 0;
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 9px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .violation-impact-badge.critical {
+                background: #fef2f2;
+                color: #dc2626;
+                border: 1px solid #fecaca;
+            }
+
+            .violation-impact-badge.serious {
+                background: #fff7ed;
+                color: #ea580c;
+                border: 1px solid #fed7aa;
+            }
+
+            .violation-impact-badge.moderate {
+                background: #fffbeb;
+                color: #d97706;
+                border: 1px solid #fde68a;
+            }
+
+            .violation-impact-badge.minor {
+                background: #f9fafb;
+                color: #6b7280;
+                border: 1px solid #e5e7eb;
+            }
+
+            .violation-content {
+                flex: 1;
+            }
+
+            .violation-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1f2937;
+                margin-bottom: 6px;
+                line-height: 1.4;
+            }
+
+            .violation-description {
+                font-size: 13px;
+                color: #6b7280;
+                line-height: 1.5;
+                margin-bottom: 10px;
+            }
+
+            .violation-elements {
+                font-size: 11px;
+                color: #9ca3af;
+                background: #f9fafb;
+                padding: 6px 10px;
+                border-radius: 6px;
+                border-left: 3px solid #e5e7eb;
+                font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            }
+
+            /* Website Info */
+            .website-info {
+                background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 30px;
+                border: 1px solid #bfdbfe;
+            }
+
+            .website-url {
+                font-size: 14px;
+                color: #1e40af;
+                font-weight: 500;
+                word-break: break-all;
+            }
+
+            .scan-date {
+                font-size: 12px;
+                color: #6b7280;
+                margin-top: 4px;
+            }
+
+            /* Footer */
+            .footer {
+                margin-top: 60px;
+                padding-top: 20px;
+                border-top: 1px solid #e5e7eb;
+                text-align: center;
+                color: #6b7280;
+                font-size: 11px;
+            }
+
+            .footer-logo {
+                font-weight: 600;
+                color: #3b82f6;
+                margin-bottom: 4px;
+            }
+
+            /* Page Break */
+            .page-break {
+                page-break-before: always;
+            }
+
+            /* Print optimizations */
+            @media print {
+                .score-hero,
+                .metric-card,
+                .violations-container,
+                .website-info {
+                    box-shadow: none !important;
+                }
+            }
+            </style>
+        </head>
+        <body>
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">TutusPorta</div>
+                <div class="report-title">Accessibility Compliance Report</div>
+                <div class="report-subtitle">Comprehensive WCAG Analysis & Remediation Guide</div>
+            </div>
+
+            <!-- Website Info -->
+            <div class="website-info">
+                <div class="website-url">${siteUrl}</div>
+                <div class="scan-date">Scanned on ${formatDate(scan.createdAt)} • Generated on ${formatDate(new Date())}</div>
+            </div>
+
+            <!-- Score Hero -->
+            <div class="score-hero">
+                <div class="score-circle ${scoreInfo.category}">
+                    ${scan.score || 0}
+                </div>
+                <div class="score-label">${scoreInfo.label} Accessibility Score</div>
+                <div class="score-description">${scoreInfo.description}</div>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="metrics-grid">
+                <div class="metric-card wcag">
+                    <div class="metric-icon">📋</div>
+                    <div class="metric-value">${wcagAACompliance}%</div>
+                    <div class="metric-label">WCAG 2.1 AA</div>
+                </div>
+                <div class="metric-card performance">
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-value">${scan.performanceScore || 'N/A'}</div>
+                    <div class="metric-label">Performance</div>
+                </div>
+                <div class="metric-card seo">
+                    <div class="metric-icon">🔍</div>
+                    <div class="metric-value">${scan.seoScore || 'N/A'}</div>
+                    <div class="metric-label">SEO Score</div>
+                </div>
+                <div class="metric-card issues">
+                    <div class="metric-icon">⚠️</div>
+                    <div class="metric-value">${stats.total}</div>
+                    <div class="metric-label">Total Issues</div>
+                </div>
+            </div>
+
+            <!-- Impact Breakdown -->
+            <div class="section">
+                <div class="section-title">Issue Severity Breakdown</div>
+                <div class="impact-grid">
+                    <div class="impact-card critical">
+                        <div class="impact-icon">🔴</div>
+                        <div class="impact-value">${stats.critical}</div>
+                        <div class="impact-label">Critical</div>
+                    </div>
+                    <div class="impact-card serious">
+                        <div class="impact-icon">🟠</div>
+                        <div class="impact-value">${stats.serious}</div>
+                        <div class="impact-label">Serious</div>
+                    </div>
+                    <div class="impact-card moderate">
+                        <div class="impact-icon">🟡</div>
+                        <div class="impact-value">${stats.moderate}</div>
+                        <div class="impact-label">Moderate</div>
+                    </div>
+                    <div class="impact-card minor">
+                        <div class="impact-icon">⚪</div>
+                        <div class="impact-value">${stats.minor}</div>
+                        <div class="impact-label">Minor</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Issues -->
+            ${topViolations.length > 0 ? `
+            <div class="page-break"></div>
+            <div class="section">
+                <div class="section-title">Priority Issues Requiring Attention</div>
+                <div class="violations-container">
+                    <div class="violations-header">
+                        <div class="violations-title">Top ${topViolations.length} Most Critical Issues</div>
+                    </div>
+                    ${topViolations.map((violation, index) => `
+                        <div class="violation-item">
+                            <div class="violation-header">
+                                <div class="violation-impact-badge ${violation.impact?.toLowerCase() || 'minor'}">${violation.impact || 'Minor'}</div>
+                                <div class="violation-content">
+                                    <div class="violation-title">${index + 1}. ${violation.help || 'Accessibility Issue'}</div>
+                                    <div class="violation-description">${violation.description || 'No description available.'}</div>
+                                    <div class="violation-elements">
+                                        Affects ${violation.nodes?.length || 0} element${(violation.nodes?.length || 0) !== 1 ? 's' : ''}: ${violation.nodes?.slice(0, 3).map(node => node.target.join(' > ')).join(', ') || 'No selectors available'}${(violation.nodes?.length || 0) > 3 ? ` and ${(violation.nodes?.length || 0) - 3} more...` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            ` : ''}
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-logo">🛡️ TutusPorta Accessibility Platform</div>
+                <div>This report was generated automatically using axe-core accessibility testing engine.</div>
+                <div>For detailed remediation guidance, visit your dashboard or contact our accessibility experts.</div>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // Record usage
+    await addPageUsage(user.id, "export_pdf", 1);
+
+    // Return HTML response (client-side will handle PDF generation)
+    return NextResponse.json({
+      success: true,
+      html: html,
+      filename: `accessibility-report-${scan.site.url.replace(/https?:\/\//, '').replace(/[^a-zA-Z0-9]/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`
+    });
+
+  } catch (error: any) {
+    console.error("PDF export error:", error);
+
+    if (error.code === "TRIAL_EXPIRED") {
+      return NextResponse.json(
+        {
+          error: error.message,
+          code: "TRIAL_EXPIRED"
+        },
+        { status: 402 }
+      );
+    }
+
+    return NextResponse.json(
+      { error: "Failed to generate PDF" },
+      { status: 500 }
+    );
+  }
+}

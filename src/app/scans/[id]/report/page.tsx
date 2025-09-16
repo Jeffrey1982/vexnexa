@@ -6,6 +6,29 @@ import { KeyValue } from "@/components/KeyValue";
 import { formatDate } from "@/lib/format";
 import { computeIssueStats, Violation, getTopViolations, normalizeImpact } from "@/lib/axe-types";
 import { PrintButton } from "@/components/PrintButton";
+import {
+  getScanTrendData,
+  getBenchmarkComparison,
+  getScanComparison,
+  getViolationTrends,
+  calculateWCAGCompliance
+} from "@/lib/analytics";
+import {
+  ScoreTrendChart,
+  IssuesTrendChart,
+  BenchmarkChart,
+  ViolationDistributionChart,
+  ViolationTrendChart,
+  ComparisonCard
+} from "@/components/charts";
+import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
+import { BeforeAfterComparison } from "@/components/enhanced/BeforeAfterComparison";
+import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
+import { MultiFormatExporter } from "@/components/enhanced/MultiFormatExporter";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import BrandedHeader from "@/components/white-label/BrandedHeader";
+import BrandedFooter from "@/components/white-label/BrandedFooter";
 
 interface PageProps {
   params: {
@@ -33,6 +56,51 @@ async function getScanDetails(id: string) {
   }
 }
 
+async function getEnhancedAnalytics(scan: any) {
+  try {
+    // Get trend data for the last 30 days
+    const trendData = await getScanTrendData(
+      scan.siteId,
+      scan.pageId,
+      30
+    );
+
+    // Get benchmark comparison
+    const benchmarkComparison = await getBenchmarkComparison({
+      score: scan.score || 0,
+      impactCritical: scan.impactCritical,
+      impactSerious: scan.impactSerious,
+      impactModerate: scan.impactModerate,
+      impactMinor: scan.impactMinor,
+    });
+
+    // Get scan comparison
+    const scanComparison = await getScanComparison(scan.id);
+
+    // Get violation trends
+    const violationTrends = await getViolationTrends(
+      scan.siteId,
+      scan.pageId,
+      30
+    );
+
+    return {
+      trendData,
+      benchmarkComparison,
+      scanComparison,
+      violationTrends,
+    };
+  } catch (error) {
+    console.error("Failed to get enhanced analytics:", error);
+    return {
+      trendData: [],
+      benchmarkComparison: null,
+      scanComparison: { current: { score: scan.score || 0, issues: scan.issues || 0, critical: scan.impactCritical, serious: scan.impactSerious, moderate: scan.impactModerate, minor: scan.impactMinor } },
+      violationTrends: [],
+    };
+  }
+}
+
 
 export default async function PrintReportPage({ params }: PageProps) {
   const scan = await getScanDetails(params.id);
@@ -51,8 +119,16 @@ export default async function PrintReportPage({ params }: PageProps) {
   const topViolations = getTopViolations(violations, 20);
   const siteUrl = scan.page?.url || scan.site.url;
 
+  // Get enhanced analytics
+  const analytics = await getEnhancedAnalytics(scan);
+
+  // Calculate WCAG compliance
+  const wcagAACompliance = (scan as any).wcagAACompliance || calculateWCAGCompliance(violations, "AA");
+  const wcagAAACompliance = (scan as any).wcagAAACompliance || calculateWCAGCompliance(violations, "AAA");
+
   return (
     <>
+      <BrandedHeader />
       <style dangerouslySetInnerHTML={{ __html: `
         @media print {
           .no-print { display: none !important; }
@@ -69,7 +145,10 @@ export default async function PrintReportPage({ params }: PageProps) {
       `}} />
 
       <div className="max-w-4xl mx-auto p-8 bg-white min-h-screen">
-        <PrintButton />
+        <div className="flex justify-between items-center mb-6 no-print">
+          <PrintButton />
+          <ThemeToggle />
+        </div>
 
         {/* Header */}
         <div className="text-center mb-8">
@@ -84,7 +163,7 @@ export default async function PrintReportPage({ params }: PageProps) {
         {/* Summary */}
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Executive Summary</h2>
-          
+
           <table className="print-table w-full mb-6">
             <tbody>
               <tr>
@@ -98,6 +177,12 @@ export default async function PrintReportPage({ params }: PageProps) {
                 <td className="uppercase">{scan.status}</td>
                 <td className="font-semibold bg-gray-50">Total Issues</td>
                 <td className="font-bold text-lg">{stats.total}</td>
+              </tr>
+              <tr>
+                <td className="font-semibold bg-gray-50">WCAG AA Compliance</td>
+                <td className="font-bold text-lg">{wcagAACompliance}%</td>
+                <td className="font-semibold bg-gray-50">WCAG AAA Compliance</td>
+                <td className="font-bold text-lg">{wcagAAACompliance}%</td>
               </tr>
             </tbody>
           </table>
@@ -121,6 +206,182 @@ export default async function PrintReportPage({ params }: PageProps) {
               </tr>
             </tbody>
           </table>
+        </div>
+
+        {/* Enhanced Analytics Section */}
+        <div className="no-print mb-8">
+          <Tabs defaultValue="analytics" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
+              <TabsTrigger value="interactive">Interactive</TabsTrigger>
+              <TabsTrigger value="comparison">Comparison</TabsTrigger>
+              <TabsTrigger value="export">Export</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="analytics" className="space-y-8">
+              {/* Scan Comparison */}
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Comparison Analysis</h2>
+                <ComparisonCard comparison={analytics.scanComparison} />
+              </div>
+
+              {/* Benchmark Comparison */}
+              {analytics.benchmarkComparison && (
+                <div>
+                  <h2 className="text-2xl font-semibold mb-4">Industry Benchmark</h2>
+                  <div className="bg-white border border-gray-200 rounded-lg p-6">
+                    <BenchmarkChart
+                      comparison={analytics.benchmarkComparison}
+                      height={250}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Violation Distribution */}
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Issues Distribution</h2>
+                <div className="bg-white border border-gray-200 rounded-lg p-6">
+                  <ViolationDistributionChart
+                    data={{
+                      critical: stats.critical,
+                      serious: stats.serious,
+                      moderate: stats.moderate,
+                      minor: stats.minor
+                    }}
+                    height={300}
+                  />
+                </div>
+              </div>
+
+              {/* Historical Trends */}
+              {analytics.trendData.length > 1 && (
+                <div>
+                  <h2 className="text-2xl font-semibold mb-4">Historical Trends</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white border border-gray-200 rounded-lg p-6">
+                      <h3 className="text-lg font-semibold mb-4">Score Trend</h3>
+                      <ScoreTrendChart
+                        data={analytics.trendData}
+                        height={250}
+                        showLegend={false}
+                      />
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-6">
+                      <h3 className="text-lg font-semibold mb-4">Issues Trend</h3>
+                      <IssuesTrendChart
+                        data={analytics.trendData}
+                        height={250}
+                        showLegend={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Violation Trends */}
+              {analytics.violationTrends.length > 0 && (
+                <div>
+                  <h2 className="text-2xl font-semibold mb-4">Violation Trends</h2>
+                  <div className="bg-white border border-gray-200 rounded-lg p-6">
+                    <ViolationTrendChart
+                      violations={analytics.violationTrends}
+                      height={350}
+                      maxRules={6}
+                    />
+                  </div>
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="interactive" className="space-y-6">
+              {/* Interactive Heatmap */}
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Interactive Accessibility Heatmap</h2>
+                <InteractiveHeatmap
+                  violations={violations}
+                  websiteUrl={siteUrl}
+                  className="min-h-[600px]"
+                />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="comparison" className="space-y-6">
+              {/* Before/After Comparison */}
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Before/After Analysis</h2>
+                <BeforeAfterComparison
+                  beforeScan={{
+                    id: 'previous',
+                    score: ('previous' in analytics.scanComparison && analytics.scanComparison.previous?.score) || 0,
+                    date: new Date(),
+                    issues: {
+                      total: ('previous' in analytics.scanComparison && analytics.scanComparison.previous?.issues) || 0,
+                      critical: ('previous' in analytics.scanComparison && analytics.scanComparison.previous?.critical) || 0,
+                      serious: ('previous' in analytics.scanComparison && analytics.scanComparison.previous?.serious) || 0,
+                      moderate: ('previous' in analytics.scanComparison && analytics.scanComparison.previous?.moderate) || 0,
+                      minor: ('previous' in analytics.scanComparison && analytics.scanComparison.previous?.minor) || 0
+                    },
+                    violations: []
+                  }}
+                  afterScan={{
+                    id: scan.id,
+                    score: scan.score || 0,
+                    date: scan.createdAt,
+                    issues: stats,
+                    violations: violations.map(v => ({
+                      id: v.id,
+                      impact: v.impact || 'minor',
+                      description: v.description,
+                      nodes: v.nodes.map(n => ({ target: n.target }))
+                    }))
+                  }}
+                />
+              </div>
+
+              {/* Remediation Matrix */}
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Remediation Priority Matrix</h2>
+                <RemediationMatrix
+                  issues={violations.map((v, i) => ({
+                    id: `${v.id}-${i}`,
+                    rule: v.id,
+                    description: v.description,
+                    impact: (v.impact as 'critical' | 'serious' | 'moderate' | 'minor') || 'minor',
+                    effort: 'medium' as const,
+                    category: 'structure' as const,
+                    elementsAffected: v.nodes.length,
+                    estimatedHours: 2,
+                    dependencies: [],
+                    businessValue: v.impact === 'critical' ? 100 : v.impact === 'serious' ? 75 : 50,
+                    wcagLevel: 'AA' as const,
+                    testability: 'automated' as const,
+                    assignee: '',
+                    status: 'not-started' as const,
+                    dueDate: new Date()
+                  }))}
+                  onUpdateIssue={() => {}}
+                />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="export" className="space-y-6">
+              {/* Multi-Format Export */}
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Export Options</h2>
+                <MultiFormatExporter
+                  scanData={{
+                    id: scan.id,
+                    url: scan.site.url,
+                    score: scan.score || 0,
+                    issues: stats,
+                    violations: violations,
+                    createdAt: scan.createdAt
+                  }}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
 
         {/* Top Issues */}
@@ -228,6 +489,7 @@ export default async function PrintReportPage({ params }: PageProps) {
           <p>Report ID: {scan.id.slice(-8)}</p>
         </div>
       </div>
+      <BrandedFooter />
     </>
   );
 }

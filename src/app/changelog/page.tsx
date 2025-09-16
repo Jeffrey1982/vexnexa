@@ -99,7 +99,7 @@ export default function ChangelogPage() {
         
         <div className="text-center pt-12">
           <Button asChild>
-            <Link href="/dashboard">
+            <Link href="/auth/register">
               Start gratis scan
             </Link>
           </Button>

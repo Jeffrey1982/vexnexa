@@ -125,16 +125,18 @@ function HeroSection() {
             <Button 
               size="lg" 
               className="button-hover gradient-primary text-white border-0 shadow-soft relative overflow-hidden group px-8 py-3"
-              onClick={() => {
-                handleCtaClick("hero_primary");
-                window.location.href = '/dashboard';
-              }}
+              asChild
             >
-              <span className="relative z-10 flex items-center">
-                Start gratis scan
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+              <Link 
+                href="/auth/register"
+                onClick={() => handleCtaClick("hero_primary")}
+              >
+                <span className="relative z-10 flex items-center">
+                  Start gratis scan
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+              </Link>
             </Button>
             
             <Button 
@@ -151,7 +153,7 @@ function HeroSection() {
           </div>
           
           <p className="animate-fade-in text-sm text-muted-foreground pt-4">
-            Gratis voor 1 scan per week • Geen creditcard vereist
+            Gratis voor 1 scan per week • Alleen registratie vereist
           </p>
         </div>
       </div>
@@ -257,7 +259,7 @@ function VisualSection() {
             </div>
             
             <Button asChild className="mt-6">
-              <Link href="/dashboard">
+              <Link href="/auth/register">
                 Probeer nu gratis
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
@@ -349,13 +351,15 @@ function CTASection() {
               size="lg" 
               variant="secondary" 
               className="button-hover bg-white text-primary hover:bg-white/90 shadow-soft px-8 py-3"
-              onClick={() => {
-                handleCtaClick();
-                window.location.href = '/dashboard';
-              }}
+              asChild
             >
-              Start nu je eerste scan
-              <Zap className="ml-2 h-4 w-4" />
+              <Link 
+                href="/auth/register"
+                onClick={() => handleCtaClick()}
+              >
+                Start nu je eerste scan
+                <Zap className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
             
             <Button 

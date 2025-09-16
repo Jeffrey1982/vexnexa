@@ -11,15 +11,16 @@ export type Entitlements = {
   pdf: boolean; 
   word: boolean; 
   schedule: boolean;
+  crawl: boolean;
   integrations: string[]; 
   whiteLabel?: boolean;
 }
 
 export const ENTITLEMENTS: Record<"TRIAL"|"STARTER"|"PRO"|"BUSINESS", Entitlements> = {
-  TRIAL:     { sites: 1,  pagesPerMonth: 100,   users: 1,  pdf: true,  word: false, schedule: false, integrations: [] },
-  STARTER:   { sites: 1,  pagesPerMonth: 500,   users: 1,  pdf: true,  word: false, schedule: false, integrations: [] },
-  PRO:       { sites: 5,  pagesPerMonth: 2000,  users: 5,  pdf: true,  word: true,  schedule: true,  integrations: ["slack","jira"] },
-  BUSINESS:  { sites: 20, pagesPerMonth: 10000, users: 20, pdf: true,  word: true,  schedule: true,  integrations: ["slack","jira","teams"], whiteLabel: true },
+  TRIAL:     { sites: 1,  pagesPerMonth: 100,   users: 1,  pdf: true,  word: false, schedule: false, crawl: false, integrations: [] },
+  STARTER:   { sites: 1,  pagesPerMonth: 500,   users: 1,  pdf: true,  word: false, schedule: false, crawl: true,  integrations: [] },
+  PRO:       { sites: 5,  pagesPerMonth: 2000,  users: 5,  pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira"] },
+  BUSINESS:  { sites: 20, pagesPerMonth: 10000, users: 20, pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira","teams"], whiteLabel: true },
 }
 
 export function planKeyFromString(p: string) {

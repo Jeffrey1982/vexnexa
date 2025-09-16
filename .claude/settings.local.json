@@ -24,7 +24,16 @@
       "Bash(node:*)",
       "Bash(npx vercel:*)",
       "Bash(npx tsc:*)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(ls:*)",
+      "Bash(npm run prisma:push:*)",
+      "Bash(npx tsx:*)",
+      "Bash(psql:*)",
+      "Bash(find:*)",
+      "Bash(npm ci:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:tutusporta-5lnr57bwp-jeffreyaay-gmailcoms-projects.vercel.app)",
+      "WebFetch(domain:tutusporta.com)"
     ],
     "deny": [],
     "ask": []

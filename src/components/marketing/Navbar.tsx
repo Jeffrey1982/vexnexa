@@ -18,7 +18,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
-  { name: "Functies", href: "/features" },
+  { name: "Features", href: "/features" },
   { name: "Prijzen", href: "/pricing" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
@@ -98,7 +98,7 @@ export function Navbar({ className }: NavbarProps) {
                 className="button-hover gradient-primary shadow-elegant font-medium text-sm relative overflow-hidden group"
                 onClick={() => handleCtaClick("navbar_primary")}
               >
-                <Link href="/dashboard">
+                <Link href="/auth/register">
                   <span className="relative z-10">Start Gratis</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                 </Link>
@@ -154,7 +154,7 @@ export function Navbar({ className }: NavbarProps) {
                       handleCtaClick("mobile_primary");
                     }}
                   >
-                    <Link href="/dashboard">Start Gratis</Link>
+                    <Link href="/auth/register">Start Gratis</Link>
                   </Button>
                 </div>
               </div>

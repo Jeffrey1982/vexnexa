@@ -390,7 +390,7 @@ function CTASection() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/dashboard">
+              <Link href="/auth/register">
                 Start gratis trial
                 <Zap className="ml-2 h-4 w-4" />
               </Link>

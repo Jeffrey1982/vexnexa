@@ -30,6 +30,18 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
       const data = await response.json();
 
       if (!response.ok) {
+        // Handle billing errors specifically
+        if (response.status === 402) {
+          if (data.code === "UPGRADE_REQUIRED") {
+            throw new Error(`Upgrade Required: ${data.error}`);
+          }
+          if (data.code === "TRIAL_EXPIRED") {
+            throw new Error(`Trial Expired: ${data.error}`);
+          }
+        }
+        if (response.status === 429 && data.code === "LIMIT_REACHED") {
+          throw new Error(`Limit Reached: ${data.error}`);
+        }
         throw new Error(data.error || 'Failed to start crawl');
       }
 

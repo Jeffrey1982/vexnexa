@@ -59,13 +59,14 @@ export function middleware(request: NextRequest) {
     'camera=(), microphone=(), geolocation=()'
   )
   
-  // CSP header for additional security
+  // CSP header for additional security with Supabase support
   const cspHeader = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com",
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' blob: data: https:",
-    "font-src 'self'",
+    "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co",
+    "img-src 'self' blob: data: https: https://*.supabase.co",
+    "font-src 'self' data:",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",

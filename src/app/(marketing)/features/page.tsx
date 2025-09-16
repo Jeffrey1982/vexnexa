@@ -158,7 +158,7 @@ function HeroSection() {
           </p>
           
           <Button size="lg" asChild>
-            <Link href="/dashboard">
+            <Link href="/auth/register">
               Start gratis scan
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
@@ -375,12 +375,12 @@ function CTASection() {
           </h2>
           <p className="text-xl opacity-90">
             Start vandaag nog met het verbeteren van je website&apos;s accessibility. 
-            Gratis voor 1 scan per week.
+            Gratis voor 1 scan per week (registratie vereist).
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/dashboard">
+              <Link href="/auth/register">
                 Start gratis scan
                 <Zap className="ml-2 h-4 w-4" />
               </Link>

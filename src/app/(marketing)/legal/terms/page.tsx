@@ -3,477 +3,458 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Scale, Mail, Calendar, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, Scale, Mail, Calendar, AlertTriangle, ListTree } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Algemene Voorwaarden - TutusPorta',
-  description: 'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
-  keywords: 'algemene voorwaarden, terms of service, gebruiksvoorwaarden, servicevoorwaarden, aansprakelijkheid',
+  description:
+    'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
+  keywords: [
+    'algemene voorwaarden',
+    'terms of service',
+    'gebruiksvoorwaarden',
+    'servicevoorwaarden',
+    'aansprakelijkheid',
+  ],
   openGraph: {
     title: 'Algemene Voorwaarden - TutusPorta',
-    description: 'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
+    description:
+      'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
     url: 'https://tutusporta.com/legal/terms',
     siteName: 'TutusPorta',
     type: 'website',
+    locale: 'nl_NL',
   },
   twitter: {
     card: 'summary',
     title: 'Algemene Voorwaarden - TutusPorta',
-    description: 'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
+    description:
+      'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
   },
   alternates: {
     canonical: 'https://tutusporta.com/legal/terms',
+    languages: { 'nl-NL': 'https://tutusporta.com/legal/terms' },
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 }
 
-const lastUpdated = "8 december 2024"
+const lastUpdated = '8 december 2024'
+const policyVersion = 'v1.1'
+
+const sections = [
+  { id: 'toepassing', label: '1. Definities & toepasselijkheid' },
+  { id: 'gebruik', label: '2. Gebruik van de service' },
+  { id: 'api', label: '3. API & fair use' },
+  { id: 'betalingen', label: '4. Betalingen & abonnementen' },
+  { id: 'beschikbaarheid', label: '5. Beschikbaarheid & support' },
+  { id: 'ip', label: '6. Intellectueel eigendom' },
+  { id: 'aansprakelijkheid', label: '7. Garanties & aansprakelijkheid' },
+  { id: 'privacy', label: '8. Privacy & gegevensbescherming' },
+  { id: 'beindiging', label: '9. Beëindiging' },
+  { id: 'recht', label: '10. Toepasselijk recht & geschillen' },
+  { id: 'wijzigingen', label: '11. Wijzigingen & slotbepalingen' },
+  { id: 'contact', label: '12. Contact' },
+]
 
 export default function TermsPage() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-12">
-          <Link href="/" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Terug naar home
+    <div className="container mx-auto px-4 py-12 sm:py-16">
+      {/* Skip link */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
+      >
+        Ga naar hoofdinhoud
+      </a>
+
+      {/* Hero */}
+      <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-b from-primary/5 via-transparent to-transparent">
+        <div className="absolute -top-24 -right-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+        <div className="relative p-6 sm:p-10">
+          <Link
+            href="/"
+            className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+            Terug naar startpagina
           </Link>
-          
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <h1 className="font-display text-4xl font-bold">Algemene Voorwaarden</h1>
-              <Badge variant="outline" className="flex items-center gap-2">
-                <Calendar className="h-3 w-3" />
-                Laatst bijgewerkt: {lastUpdated}
-              </Badge>
-            </div>
-            <p className="text-xl text-muted-foreground">
-              Deze algemene voorwaarden zijn van toepassing op het gebruik van TutusPorta 
-              accessibility scanning service.
-            </p>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Algemene Voorwaarden</h1>
+            <Badge variant="outline" className="flex items-center gap-2">
+              <Calendar className="h-3 w-3" aria-hidden="true" />
+              Laatst bijgewerkt: {lastUpdated}
+            </Badge>
+            <Badge variant="secondary" aria-label={`Beleidsversie ${policyVersion}`}>
+              {policyVersion}
+            </Badge>
+          </div>
+          <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
+            Deze voorwaarden zijn van toepassing op het gebruik van de TutusPorta accessibility-scanning service.
+          </p>
+
+          {/* Summary */}
+          <div className="mt-8">
+            <Card className="border-warning/30 bg-warning/10">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Scale className="h-5 w-5" aria-hidden="true" />
+                  Samenvatting (niet juridisch bindend)
+                </CardTitle>
+                <CardDescription>In gewone taal — lees ook de volledige voorwaarden hieronder.</CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-6 sm:grid-cols-2">
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p className="font-medium text-foreground">✅ Wat je mag</p>
+                  <ul className="list-disc pl-5 space-y-1 leading-relaxed">
+                    <li>Je eigen sites scannen (of met toestemming van de eigenaar)</li>
+                    <li>Rapporten delen met je team/klanten</li>
+                    <li>Abonnement opzeggen wanneer je wilt</li>
+                    <li>Bij vragen support inschakelen</li>
+                  </ul>
+                </div>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p className="font-medium text-foreground">❌ Niet toegestaan</p>
+                  <ul className="list-disc pl-5 space-y-1 leading-relaxed">
+                    <li>Scannen zonder toestemming van de eigenaar</li>
+                    <li>Misbruik/rate-limits omzeilen of reverse-engineeren</li>
+                    <li>Onrechtmatig of schadelijk gebruik (bv. scraping van persoonsgegevens)</li>
+                  </ul>
+                </div>
+                <div className="sm:col-span-2">
+                  <p className="text-sm text-muted-foreground border-t pt-3">
+                    <AlertTriangle className="inline h-4 w-4 mr-1" aria-hidden="true" />
+                    Door TutusPorta te gebruiken ga je akkoord met deze voorwaarden.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
+      </div>
 
-        {/* Quick Summary */}
-        <Card className="mb-12 border-warning/20 bg-warning/5">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Scale className="h-5 w-5 text-warning" />
-              Samenvatting van je rechten en plichten
-            </CardTitle>
-            <CardDescription>
-              De belangrijkste punten uit onze voorwaarden in begrijpelijke taal
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-semibold text-sm text-success">✅ Wat je mag doen:</h3>
-                <ul className="text-sm text-muted-foreground space-y-1 mt-2">
-                  <li>• Onze service gebruiken voor accessibility testing</li>
-                  <li>• Rapporten delen met je team en klanten</li>
-                  <li>• Je account op elk moment opzeggen</li>
-                  <li>• Support vragen als je hulp nodig hebt</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-critical">❌ Wat niet is toegestaan:</h3>
-                <ul className="text-sm text-muted-foreground space-y-1 mt-2">
-                  <li>• Misbruik maken van onze service</li>
-                  <li>• Andermans websites scannen zonder toestemming</li>
-                  <li>• Ons aansprakelijk stellen voor externe schade</li>
-                  <li>• Reverse engineering van onze software</li>
-                </ul>
-              </div>
-            </div>
-            <div className="pt-4 border-t border-warning/20">
+      {/* Content + Aside */}
+      <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_300px]">
+        {/* Main */}
+        <main
+          id="main"
+          className={[
+            'prose prose-slate max-w-none',
+            '[&_h2]:mt-14 [&&_h2]:mb-5 [&&_h2]:scroll-mt-24',
+            '[&_h3]:mt-9  [&&_h3]:mb-3',
+            '[&_ul]:my-5 [&&_ul>li]:my-2 [&&_ol]:my-5 [&&_ol>li]:my-2 leading-relaxed',
+            '[&_h2]:pb-2 [&&_h2]:border-b [&&_h2]:border-muted',
+          ].join(' ')}
+        >
+          {/* helper dividers */}
+          {/* 1 */}
+          <section id="toepassing">
+            <h2>1. Definities & toepasselijkheid</h2>
+            <h3>Definities</h3>
+            <ul>
+              <li><strong>TutusPorta</strong>: de accessibility-scanning service op tutusporta.com.</li>
+              <li><strong>Wij/Ons</strong>: de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.).</li>
+              <li><strong>Gebruiker</strong>: iedere natuurlijke of rechtspersoon die de service gebruikt.</li>
+              <li><strong>Account</strong>: je persoonlijke of zakelijke toegang tot functies en historie.</li>
+              <li><strong>Scan</strong>: een geautomatiseerde test van een webpagina op toegankelijkheid.</li>
+              <li><strong>API</strong>: programmeerinterface voor geautomatiseerde toegang tot de service.</li>
+            </ul>
+            <h3>Toepasselijkheid</h3>
+            <p>
+              Deze voorwaarden gelden voor al het gebruik van TutusPorta, inclusief gratis en betaalde accounts, de API,
+              proefperiodes en alle bijbehorende communicatie. Afwijkingen zijn alleen geldig indien schriftelijk overeengekomen.
+            </p>
+            <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
+              <p className="font-medium">Juridische gegevens (dienstverlener)</p>
               <p className="text-sm text-muted-foreground">
-                <AlertTriangle className="inline h-4 w-4 mr-1" />
-                <strong>Let op:</strong> Door TutusPorta te gebruiken ga je akkoord met deze voorwaarden. 
-                Lees ze daarom zorgvuldig door.
+                <strong>Bedrijfsnaam:</strong> VexNexa B.V. (TutusPorta is onderdeel van VexNexa) <br />
+                <strong>Adres:</strong> {/* TODO: adres */} &nbsp; <strong>KvK:</strong> {/* TODO */} &nbsp; <strong>BTW:</strong> {/* TODO */} <br />
+                <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        {/* Content */}
-        <div className="prose prose-slate max-w-none">
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">1. Definities en toepasselijkheid</h2>
-            
-            <h3 className="font-semibold text-lg">Definities</h3>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li><strong>TutusPorta:</strong> de accessibility scanning service beschikbaar op tutusporta.com</li>
-              <li><strong>Gebruiker:</strong> elke persoon die TutusPorta gebruikt, met of zonder account</li>
-              <li><strong>Service:</strong> alle functionaliteiten en diensten aangeboden door TutusPorta</li>
-              <li><strong>Account:</strong> persoonlijke toegang tot extra features en scan historie</li>
-              <li><strong>Scan:</strong> een accessibility test van een webpagina uitgevoerd door onze software</li>
+          <div className="h-px bg-border my-10 not-prose" />
+
+          {/* 2 */}
+          <section id="gebruik">
+            <h2>2. Gebruik van de service</h2>
+            <h3>Toegestaan gebruik</h3>
+            <ul>
+              <li>Scannen van websites die je bezit of waarvoor je aantoonbare toestemming hebt</li>
+              <li>Interne en klantprojecten (rapporten delen is toegestaan)</li>
+              <li>Onderwijs/onderzoek en commercieel gebruik binnen je bundellimieten</li>
             </ul>
-
-            <h3 className="font-semibold text-lg">Toepasselijkheid</h3>
-            <p className="text-muted-foreground">
-              Deze algemene voorwaarden zijn van toepassing op alle gebruik van TutusPorta, inclusief:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Gratis scans zonder account</li>
-              <li>Accounts (Free, Pro, Team)</li>
-              <li>API toegang</li>
-              <li>Alle communicatie via onze website</li>
+            <h3>Verboden gebruik</h3>
+            <ul>
+              <li>Scans op sites zonder toestemming van de eigenaar of beheerder</li>
+              <li>Omzeilen van rate-limits, DDoS-achtig gedrag, scraping van persoonsgegevens</li>
+              <li>Reverse-engineering, kopiëren of herverpakken van onze software of output als eigen tool</li>
+              <li>Gebruik in strijd met wet- en regelgeving (o.a. auteursrecht, privacy, computercriminaliteit)</li>
+            </ul>
+            <h3>Account & beveiliging</h3>
+            <ul>
+              <li>Beheer je inloggegevens zorgvuldig; elke activiteit onder je account wordt aan jou toegerekend</li>
+              <li>Meld misbruik of vermoeden van een datalek direct via <a href="mailto:security@tutusporta.com">security@tutusporta.com</a></li>
+              <li>Wij mogen accounts tijdelijk blokkeren bij vermoeden van misbruik of veiligheidsrisico’s</li>
             </ul>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">2. Gebruik van de service</h2>
-            
-            <h3 className="font-semibold text-lg">Toegestaan gebruik</h3>
-            <p className="text-muted-foreground">Je mag TutusPorta gebruiken voor:</p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Accessibility testing van websites waar je eigenaar van bent</li>
-              <li>Testing van websites waarvoor je toestemming hebt</li>
-              <li>Educatieve doeleinden en onderzoek</li>
-              <li>Commerciële doeleinden binnen je account limieten</li>
-              <li>Delen van scan resultaten met klanten en teamleden</li>
-            </ul>
+          <div className="h-px bg-border my-10 not-prose" />
 
-            <h3 className="font-semibold text-lg">Verboden gebruik</h3>
-            <p className="text-muted-foreground">Het is niet toegestaan om:</p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Websites te scannen zonder eigenaar toestemming</li>
-              <li>Onze service te gebruiken voor illegale activiteiten</li>
-              <li>Rate limits te omzeilen of misbruik te maken van gratis accounts</li>
-              <li>Onze software te reverse engineeren of te kopiëren</li>
-              <li>Malware, phishing of andere schadelijke content te scannen</li>
-              <li>De service te gebruiken om anderen te schaden</li>
-            </ul>
-
-            <h3 className="font-semibold text-lg">Account verantwoordelijkheden</h3>
-            <p className="text-muted-foreground">
-              Als je een account hebt, ben je verantwoordelijk voor:
+          {/* 3 */}
+          <section id="api">
+            <h2>3. API & fair use</h2>
+            <p>
+              API-toegang is beschikbaar voor geschikte abonnementen. We hanteren fair-use en technische limieten
+              (verzoeken per minuut/dag, gelijktijdige jobs). Details staan in je dashboard.
             </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Het veilig houden van je inloggegevens</li>
-              <li>Alle activiteiten onder je account</li>
-              <li>Het direct melden van verdachte activiteiten</li>
-              <li>Het up-to-date houden van je contactgegevens</li>
+            <ul>
+              <li>API-sleutels zijn persoonlijk; delen of open-sourcen is niet toegestaan</li>
+              <li>Resultaten mogen in je eigen tooling worden getoond, mits bronvermelding “TutusPorta” bij geautomatiseerde rapportage</li>
+              <li>Wijzigingen aan endpoints of limieten kunnen zonder voorafgaande kennisgeving plaatsvinden bij misbruik of storingen</li>
             </ul>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">3. Betalingen en abonnementen</h2>
-            
-            <h3 className="font-semibold text-lg">Gratis service</h3>
-            <p className="text-muted-foreground">
-              Onze Free tier is gratis voor altijd en bevat:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>1 scan per week</li>
-              <li>PDF export functionaliteit</li>
-              <li>Basis e-mail support</li>
-            </ul>
+          <div className="h-px bg-border my-10 not-prose" />
 
-            <h3 className="font-semibold text-lg">Betaalde abonnementen</h3>
-            <p className="text-muted-foreground">
-              Voor Pro en Team accounts geldt:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Prijzen zijn exclusief BTW</li>
-              <li>Betaling vooraf via credit card of iDEAL</li>
-              <li>Automatische verlenging elke maand</li>
-              <li>Geen setup kosten of verborgen fees</li>
-              <li>Opzegging mogelijk tot laatste dag van factuurperiode</li>
+          {/* 4 */}
+          <section id="betalingen">
+            <h2>4. Betalingen & abonnementen</h2>
+            <h3>Gratis tier</h3>
+            <ul>
+              <li>Free blijft gratis; limieten staan in het dashboard</li>
+              <li>Functies kunnen wijzigen — we communiceren substantiële wijzigingen vooraf</li>
             </ul>
-
-            <h3 className="font-semibold text-lg">Limiet overschrijdingen</h3>
-            <p className="text-muted-foreground">
-              Bij overschrijding van je scan limiet:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Free accounts: verdere scans worden geblokkeerd</li>
-              <li>Betaalde accounts: extra scans tegen €0.25 per stuk</li>
-              <li>Waarschuwingen bij 80% en 100% van je limiet</li>
-              <li>Mogelijkheid om mid-cycle te upgraden</li>
+            <h3>Betaalde abonnementen</h3>
+            <ul>
+              <li>Prijzen excl. btw; afrekening via o.a. Mollie (bijv. iDEAL/kaart)</li>
+              <li>Prepaid per maand; automatische verlenging</li>
+              <li>Opzeggen kan tot de laatste dag van de lopende periode (service loopt door tot einde termijn)</li>
+              <li>Mid-cycle upgrades zijn mogelijk; kosten worden pro-rato verrekend</li>
             </ul>
-
-            <h3 className="font-semibold text-lg">Opzegging en restitutie</h3>
-            <p className="text-muted-foreground">
-              Voor opzegging en restitutie geldt:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Opzegging mogelijk via account instellingen</li>
-              <li>Service blijft beschikbaar tot einde factuurperiode</li>
-              <li>Geen automatische restitutie bij vroegtijdige opzegging</li>
-              <li>Restitutie alleen bij technische problemen langer dan 48 uur</li>
+            <h3>Limieten & overage</h3>
+            <ul>
+              <li>Bij overschrijding: blokkade of bijkoop per scan (tarief in je plan), met waarschuwingen bij 80% en 100%</li>
             </ul>
-          </section>
-
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">4. Intellectueel eigendom</h2>
-            
-            <h3 className="font-semibold text-lg">TutusPorta eigendom</h3>
-            <p className="text-muted-foreground">
-              Alle rechten op TutusPorta software, designs, content en merken behoren toe aan ons. 
-              Dit omvat:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Source code en algoritmes</li>
-              <li>User interface en designs</li>
-              <li>Logo&apos;s en branding</li>
-              <li>Documentatie en tutorials</li>
+            <h3>Restituties & chargebacks</h3>
+            <ul>
+              <li>Geen restitutie bij voortijdige opzegging, tenzij wettelijk verplicht</li>
+              <li>Bij langdurige algemene storing (&gt;48 uur) kan een evenredige creditering worden aangeboden</li>
+              <li>Onterechte chargebacks kunnen leiden tot (tijdelijke) blokkade en kosten doorbelasting</li>
             </ul>
-
-            <h3 className="font-semibold text-lg">Je content en data</h3>
-            <p className="text-muted-foreground">
-              Voor content en data die je via TutusPorta verwerkt geldt:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Jij behoudt alle rechten op je eigen websites en content</li>
-              <li>Je geeft ons beperkte rechten om scans uit te voeren</li>
-              <li>We claimen geen eigendom op je scan data</li>
-              <li>Je bent verantwoordelijk voor rechtmatigheid van gescande content</li>
-            </ul>
-
-            <h3 className="font-semibold text-lg">Scan rapporten</h3>
-            <p className="text-muted-foreground">
-              Voor de gegenereerde scan rapporten geldt:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Je mag rapporten vrij delen en gebruiken</li>
-              <li>Commercieel gebruik van rapporten is toegestaan</li>
-              <li>Je mag rapporten aanpassen voor je eigen doeleinden</li>
-              <li>Vermeld TutusPorta als bron waar mogelijk (niet verplicht)</li>
-            </ul>
-          </section>
-
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibent">5. Beschikbaarheid en ondersteuning</h2>
-            
-            <h3 className="font-semibold text-lg">Service beschikbaarheid</h3>
-            <p className="text-muted-foreground">
-              We streven naar maximale beschikbaarheid, maar kunnen niet garanderen:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>100% uptime (onderhoud en updates zijn nodig)</li>
-              <li>Ononderbroken service tijdens technische problemen</li>
-              <li>Dat alle websites scanbaar zijn (firewall/rate limits)</li>
-              <li>Specifieke response tijden voor scans</li>
-            </ul>
-
-            <h3 className="font-semibold text-lg">Ondersteuning</h3>
-            <p className="text-muted-foreground">Support wordt geboden conform je account type:</p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li><strong>Free:</strong> E-mail support binnen 72 uur</li>
-              <li><strong>Pro:</strong> E-mail support binnen 24 uur</li>
-              <li><strong>Team:</strong> Priority support binnen 4 uur, telefoon support</li>
-            </ul>
-
-            <h3 className="font-semibold text-lg">Updates en wijzigingen</h3>
-            <p className="text-muted-foreground">
-              We kunnen TutusPorta op elk moment updaten met:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Nieuwe features en verbeteringen</li>
-              <li>Security updates en bugfixes</li>
-              <li>Wijzigingen in de user interface</li>
-              <li>Aanpassingen aan scan algoritmes</li>
-            </ul>
-            <p className="text-muted-foreground">
-              Belangrijke wijzigingen communiceren we vooraf via e-mail en onze changelog.
+            <h3>Consumentenherroeping</h3>
+            <p>
+              Voor consumenten binnen de EU kan het herroepingsrecht gelden. Door directe levering van de digitale dienst
+              binnen de herroepingstermijn kan (na expliciete instemming) het herroepingsrecht vervallen voor de geleverde periode.
             </p>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">6. Aansprakelijkheid en garanties</h2>
-            
-            <h3 className="font-semibold text-lg">Beperkte garantie</h3>
-            <p className="text-muted-foreground">
-              TutusPorta wordt aangeboden &quot;as is&quot; met beperkte garanties:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>We streven naar accurate WCAG 2.2 compliance testing</li>
-              <li>Scans zijn gebaseerd op industry-standard axe-core library</li>
-              <li>We kunnen niet garanderen dat alle issues worden gevonden</li>
-              <li>False positives kunnen voorkomen</li>
-              <li>Menselijke expertise blijft nodig voor volledige compliance</li>
-            </ul>
+          <div className="h-px bg-border my-10 not-prose" />
 
-            <h3 className="font-semibold text-lg">Aansprakelijkheidsbeperking</h3>
-            <p className="text-muted-foreground">
-              Onze aansprakelijkheid is beperkt tot:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Maximaal het bedrag dat je in de afgelopen 12 maanden hebt betaald</li>
-              <li>Directe schade als gevolg van onze nalatigheid</li>
-              <li>We zijn niet aansprakelijk voor indirecte of gevolgschade</li>
-              <li>Verlies van inkomsten, data of zakelijke kansen valt buiten onze aansprakelijkheid</li>
+          {/* 5 */}
+          <section id="beschikbaarheid">
+            <h2>5. Beschikbaarheid & support</h2>
+            <h3>SLA & onderhoud</h3>
+            <ul>
+              <li>We streven naar hoge beschikbaarheid, maar 100% uptime is niet gegarandeerd</li>
+              <li>Gepland onderhoud wordt waar mogelijk vooraf aangekondigd</li>
+              <li>Externe factoren (firewalls, robots.txt, rate-limits) kunnen scans verhinderen</li>
             </ul>
+            <h3>Support</h3>
+            <ul>
+              <li><strong>Free:</strong> e-mail binnen 72 uur</li>
+              <li><strong>Pro:</strong> e-mail binnen 24 uur</li>
+              <li><strong>Team:</strong> prioriteit (doorgaans &lt; 4 uur), optioneel telefonisch</li>
+            </ul>
+            <h3>Wijzigingen</h3>
+            <p>We kunnen functies, algoritmes of UI aanpassen; bij materiële impact communiceren we tijdig.</p>
+          </section>
 
-            <h3 className="font-semibold text-lg">Overmacht</h3>
-            <p className="text-muted-foreground">
-              We zijn niet aansprakelijk voor service onderbrekingen door:
+          <div className="h-px bg-border my-10 not-prose" />
+
+          {/* 6 */}
+          <section id="ip">
+            <h2>6. Intellectueel eigendom</h2>
+            <h3>Onze rechten</h3>
+            <ul>
+              <li>Software, algoritmen, UI, merken en documentatie blijven eigendom van ons (en/of licentiegevers)</li>
+              <li>Geen overdracht van IP-rechten; alleen beperkte, herroepbare gebruikslicentie</li>
+            </ul>
+            <h3>Jouw content & rapporten</h3>
+            <ul>
+              <li>Je behoudt rechten op je eigen websites en materiaal</li>
+              <li>Je verleent ons de noodzakelijke licentie om scans uit te voeren en resultaten te tonen</li>
+              <li>Rapporten mag je intern en commercieel gebruiken; bronvermelding wordt gewaardeerd maar is niet verplicht</li>
+            </ul>
+            <h3>Kennisgevingen</h3>
+            <p>
+              Vermoed je een inbreuk (bijv. onrechtmatig gebruik van je merk)? Mail{' '}
+              <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>.
             </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Natuurrampen, oorlog, terrorisme</li>
-              <li>Internet storingen of provider problemen</li>
-              <li>Overheidsmaatregelen of wetgeving</li>
-              <li>Cyberattacks of security incidents</li>
+          </section>
+
+          <div className="h-px bg-border my-10 not-prose" />
+
+          {/* 7 */}
+          <section id="aansprakelijkheid">
+            <h2>7. Garanties & aansprakelijkheid</h2>
+            <h3>Beperkte garantie</h3>
+            <ul>
+              <li>Scans volgen gangbare methoden (o.a. regels vergelijkbaar met axe-core), maar dekt niet alle WCAG-criteria in alle contexten</li>
+              <li>False positives/negatives kunnen voorkomen; menselijke review blijft noodzakelijk</li>
+            </ul>
+            <h3>Aansprakelijkheidsbeperking</h3>
+            <ul>
+              <li>Onze totale aansprakelijkheid is beperkt tot het bedrag dat je in de laatste 12 maanden hebt betaald</li>
+              <li>Geen aansprakelijkheid voor indirecte/gevolgschade, winstderving, dataverlies of reputatieschade</li>
+              <li>Uitsluitingen gelden niet bij opzet of bewuste roekeloosheid voor zover wettelijk toegestaan</li>
+            </ul>
+            <h3>Overmacht</h3>
+            <ul>
+              <li>Geen aansprakelijkheid bij gebeurtenissen buiten onze redelijke controle (o.a. storing bij derden, oorlog, natuurrampen, cyberaanval)</li>
             </ul>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">7. Privacy en gegevensbescherming</h2>
-            <p className="text-muted-foreground">
-              Voor privacy en gegevensbescherming verwijzen we naar ons uitgebreide{' '}
-              <Link href="/legal/privacy" className="text-primary hover:underline">
-                privacybeleid
-              </Link>. De belangrijkste punten:
+          <div className="h-px bg-border my-10 not-prose" />
+
+          {/* 8 */}
+          <section id="privacy">
+            <h2>8. Privacy & gegevensbescherming</h2>
+            <p>
+              We verwerken persoonsgegevens conform ons{' '}
+              <Link className="text-primary hover:underline" href="/legal/privacy">privacybeleid</Link>.
+              Dat beleid maakt integraal deel uit van deze voorwaarden.
             </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>We scannen alleen publiek toegankelijke content</li>
-              <li>Persoonlijke gegevens uit pagina&apos;s worden niet opgeslagen</li>
-              <li>Alle data wordt veilig bewaard in Europa</li>
-              <li>Je hebt volledige controle over je account data</li>
-              <li>We zijn volledig GDPR compliant</li>
+          </section>
+
+          <div className="h-px bg-border my-10 not-prose" />
+
+          {/* 9 */}
+          <section id="beindiging">
+            <h2>9. Beëindiging</h2>
+            <h3>Door jou</h3>
+            <ul>
+              <li>Opzeggen via je account; toegang blijft tot einde factuurperiode</li>
+              <li>Je kunt verwijdering van accountdata verzoeken conform het privacybeleid</li>
+            </ul>
+            <h3>Door ons</h3>
+            <ul>
+              <li>Bij schending van voorwaarden, misbruik, niet-betaling of veiligheidsrisico’s kunnen we (tijdelijk) beëindigen</li>
+              <li>Waar redelijk geven we eerst een waarschuwing en hersteltermijn</li>
+            </ul>
+            <h3>Gevolgen</h3>
+            <ul>
+              <li>Toegang vervalt; dataretentie volgt het privacybeleid</li>
+              <li>Openstaande bedragen blijven verschuldigd</li>
             </ul>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">8. Beëindiging</h2>
-            
-            <h3 className="font-semibold text-lg">Beëindiging door jou</h3>
-            <p className="text-muted-foreground">
-              Je kunt je gebruik van TutusPorta op elk moment beëindigen door:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Je account op te zeggen via account instellingen</li>
-              <li>Stoppen met het gebruik van onze service</li>
-              <li>Ons te verzoeken je account data te verwijderen</li>
-            </ul>
+          <div className="h-px bg-border my-10 not-prose" />
 
-            <h3 className="font-semibold text-lg">Beëindiging door ons</h3>
-            <p className="text-muted-foreground">
-              We kunnen je toegang beëindigen bij:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Schending van deze voorwaarden</li>
-              <li>Misbruik van onze service</li>
-              <li>Niet-betaling van verschuldigde bedragen</li>
-              <li>Illegaal of schadelijk gebruik</li>
-            </ul>
-            <p className="text-muted-foreground">
-              We sturen waar mogelijk eerst een waarschuwing met gelegenheid tot herstel.
-            </p>
-
-            <h3 className="font-semibold text-lg">Gevolgen van beëindiging</h3>
-            <p className="text-muted-foreground">
-              Na beëindiging:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Verlies je toegang tot je account en scan historie</li>
-              <li>Lopende abonnementen worden niet gerestitueerd</li>
-              <li>We bewaren data conform ons retentiebeleid</li>
-              <li>Deze voorwaarden blijven van kracht voor afwikkeling</li>
-            </ul>
-          </section>
-
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">9. Toepasselijk recht en geschillen</h2>
-            
-            <h3 className="font-semibold text-lg">Toepasselijk recht</h3>
-            <p className="text-muted-foreground">
-              Op deze voorwaarden is Nederlands recht van toepassing. Voor internationale 
-              gebruikers blijft Nederlands recht gelden voor alle geschillen.
-            </p>
-
-            <h3 className="font-semibold text-lg">Geschillenbeslechting</h3>
-            <p className="text-muted-foreground">
-              Voor geschillenbeslechting geldt de volgende procedure:
-            </p>
-            <ol className="list-decimal pl-6 text-muted-foreground space-y-1">
-              <li>Probeer eerst direct contact op te nemen via privacy@tutusporta.com</li>
-              <li>Geef ons 30 dagen om een oplossing te vinden</li>
-              <li>Bij geen oplossing: bemiddeling via geschillencommissie</li>
-              <li>Laatste optie: gerechtelijke procedure bij rechtbank Amsterdam</li>
+          {/* 10 */}
+          <section id="recht">
+            <h2>10. Toepasselijk recht & geschillen</h2>
+            <h3>Recht</h3>
+            <p>Nederlands recht is van toepassing, met uitzondering van conflictregels.</p>
+            <h3>Geschillenbeslechting</h3>
+            <ol>
+              <li>Eerst intern proberen op te lossen: mail <a href="mailto:legal@tutusporta.com">legal@tutusporta.com</a></li>
+              <li>Reactietermijn: 30 dagen om een oplossing te vinden</li>
+              <li>Bij uitblijven oplossing: bemiddeling (indien beide partijen instemmen)</li>
+              <li>Bevoegde rechter: rechtbank Amsterdam</li>
             </ol>
-
-            <h3 className="font-semibold text-lg">Consumentenrechten</h3>
-            <p className="text-muted-foreground">
-              Als consument behoud je alle wettelijke rechten die niet kunnen worden uitgesloten, 
-              ook als deze voorwaarden anders bepalen.
-            </p>
+            <h3>Consumentenrechten</h3>
+            <p>Consumenten behouden wettelijke rechten die niet contractueel kunnen worden uitgesloten.</p>
           </section>
 
-          <section className="space-y-6">
-            <h2 className="font-display text-2xl font-semibold">10. Wijzigingen en slotbepalingen</h2>
-            
-            <h3 className="font-semibold text-lg">Wijzigingen in voorwaarden</h3>
-            <p className="text-muted-foreground">
-              We kunnen deze voorwaarden wijzigen wanneer:
-            </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Nieuwe features worden toegevoegd</li>
-              <li>Wettelijke vereisten wijzigen</li>
-              <li>Bedrijfsmodel aanpassingen nodig zijn</li>
-              <li>Misbruik moet worden tegengegaan</li>
-            </ul>
-            <p className="text-muted-foreground">
-              Belangrijke wijzigingen communiceren we 30 dagen vooraf via e-mail. 
-              Gebruik na wijzigingen betekent acceptatie van de nieuwe voorwaarden.
-            </p>
+          <div className="h-px bg-border my-10 not-prose" />
 
-            <h3 className="font-semibold text-lg">Rechtsgeldigheid</h3>
-            <p className="text-muted-foreground">
-              Als een bepaling van deze voorwaarden nietig wordt verklaard:
+          {/* 11 */}
+          <section id="wijzigingen">
+            <h2>11. Wijzigingen & slotbepalingen</h2>
+            <h3>Wijzigingen</h3>
+            <p>
+              We kunnen deze voorwaarden aanpassen (bijv. wetgeving, functies, misbruik-preventie). Bij materiële wijzigingen
+              informeren we je — doorgaans 30 dagen vooraf. Verder gebruik na ingangsdatum geldt als acceptatie.
             </p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
-              <li>Blijven de overige bepalingen volledig van kracht</li>
-              <li>Vervangen we de nietige bepaling door een vergelijkbare geldige bepaling</li>
-              <li>Blijft de bedoeling van de oorspronkelijke bepaling behouden</li>
+            <h3>Scheidsclausule & volledige overeenkomst</h3>
+            <ul>
+              <li>Als een bepaling nietig/ongedaan gemaakt wordt, blijven overige bepalingen van kracht</li>
+              <li>We vervangen een nietige bepaling door een geldige bepaling met vergelijkbare strekking</li>
+              <li>Deze voorwaarden + privacybeleid vormen de volledige overeenkomst en vervangen eerdere uitingen</li>
             </ul>
-
-            <h3 className="font-semibold text-lg">Volledige overeenkomst</h3>
-            <p className="text-muted-foreground">
-              Deze voorwaarden, samen met ons privacybeleid, vormen de volledige overeenkomst 
-              tussen jou en TutusPorta. Eerdere afspraken of communicatie worden vervangen 
-              door deze voorwaarden.
-            </p>
           </section>
-        </div>
 
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              Laatst bijgewerkt: {lastUpdated}
-            </p>
-            <div className="flex gap-4">
-              <Button variant="outline" asChild>
-                <Link href="/legal/privacy">
-                  Privacybeleid
-                </Link>
-              </Button>
-              <Button asChild>
-                <Link href="/contact">
-                  Vragen? Neem contact op
-                </Link>
-              </Button>
+          <div className="h-px bg-border my-10 not-prose" />
+
+          {/* 12 */}
+          <section id="contact">
+            <h2>12. Contact</h2>
+            <div className="not-prose rounded-lg border bg-muted/40 p-4 space-y-2">
+              <p className="font-medium">Juridische vragen</p>
+              <p className="text-sm text-muted-foreground">
+                <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
+                E-mail: <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>
+              </p>
+            </div>
+          </section>
+
+          {/* Footer strip */}
+          <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-muted-foreground">Laatst bijgewerkt: {lastUpdated}</p>
+              <div className="flex gap-3">
+                <Button variant="outline" asChild>
+                  <Link href="/legal/privacy">Privacybeleid</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/contact">Vragen? Neem contact op</Link>
+                </Button>
+              </div>
             </div>
           </div>
+        </main>
 
-          <div className="mt-8 p-4 bg-muted/50 rounded-lg">
-            <p className="text-sm text-muted-foreground">
-              <Mail className="inline h-4 w-4 mr-1" />
-              <strong>Juridische vragen?</strong> Stuur een e-mail naar{' '}
-              <a href="mailto:legal@tutusporta.com" className="text-primary hover:underline">
-                legal@tutusporta.com
-              </a>{' '}
-              voor specifieke juridische vragen over deze voorwaarden.
-            </p>
-          </div>
-        </div>
+        {/* Aside */}
+        <aside className="lg:sticky lg:top-24 lg:h-fit">
+          <Card className="mb-6">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <ListTree className="h-4 w-4" />
+                Op deze pagina
+              </CardTitle>
+              <CardDescription>Snel naar een sectie</CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm">
+              <nav aria-label="Inhoudsopgave" className="space-y-2">
+                {sections.map((s) => (
+                  <div key={s.id}>
+                    <Link
+                      href={`#${s.id}`}
+                      className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded"
+                    >
+                      {s.label}
+                    </Link>
+                  </div>
+                ))}
+              </nav>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">Hulp nodig?</CardTitle>
+              <CardDescription>We reageren meestal binnen 1 werkdag.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex gap-2">
+              <Button asChild className="w-full">
+                <Link href="/contact">Contact opnemen</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </aside>
       </div>
     </div>
   )

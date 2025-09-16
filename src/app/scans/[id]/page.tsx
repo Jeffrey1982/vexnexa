@@ -20,6 +20,24 @@ import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Za
 import { SiteImage } from "@/components/SiteImage";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import BrandedHeader from "@/components/white-label/BrandedHeader";
+import BrandedFooter from "@/components/white-label/BrandedFooter";
+import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
+import {
+  getScanTrendData,
+  getBenchmarkComparison,
+  getScanComparison,
+  getViolationTrends,
+  calculateWCAGCompliance
+} from "@/lib/analytics";
+import {
+  ScoreTrendChart,
+  IssuesTrendChart,
+  BenchmarkChart,
+  ViolationDistributionChart,
+  ViolationTrendChart,
+  ComparisonCard
+} from "@/components/charts";
 
 interface PageProps {
   params: {
@@ -45,6 +63,60 @@ async function getScanDetails(id: string) {
   } catch (error) {
     console.error("Failed to fetch scan:", error);
     return null;
+  }
+}
+
+async function getEnhancedAnalytics(scan: any) {
+  try {
+    // Get trend data for the last 30 days
+    const trendData = await getScanTrendData(
+      scan.siteId,
+      scan.pageId,
+      30
+    );
+
+    // Get benchmark comparison
+    const benchmarkComparison = await getBenchmarkComparison({
+      score: scan.score || 0,
+      impactCritical: scan.impactCritical,
+      impactSerious: scan.impactSerious,
+      impactModerate: scan.impactModerate,
+      impactMinor: scan.impactMinor,
+    });
+
+    // Get scan comparison
+    const scanComparison = await getScanComparison(scan.id);
+
+    // Get violation trends
+    const violationTrends = await getViolationTrends(
+      scan.siteId,
+      scan.pageId,
+      30
+    );
+
+    return {
+      trendData,
+      benchmarkComparison,
+      scanComparison,
+      violationTrends,
+    };
+  } catch (error) {
+    console.error("Failed to get enhanced analytics:", error);
+    return {
+      trendData: [],
+      benchmarkComparison: null,
+      scanComparison: {
+        current: {
+          score: scan.score || 0,
+          issues: scan.issues || 0,
+          critical: scan.impactCritical,
+          serious: scan.impactSerious,
+          moderate: scan.impactModerate,
+          minor: scan.impactMinor
+        }
+      },
+      violationTrends: [],
+    };
   }
 }
 
@@ -86,8 +158,17 @@ export default async function ScanDetailPage({ params }: PageProps) {
   const siteUrl = scan.page?.url || scan.site.url;
   const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/scans/${scan.id}`;
 
+  // Get enhanced analytics
+  const analytics = await getEnhancedAnalytics(scan);
+
+  // Calculate WCAG compliance
+  const wcagAACompliance = (scan as any).wcagAACompliance || calculateWCAGCompliance(violations, "AA");
+  const wcagAAACompliance = (scan as any).wcagAAACompliance || calculateWCAGCompliance(violations, "AAA");
+
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="min-h-screen bg-gray-50">
+      <BrandedHeader />
+      <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Link href="/dashboard" className="hover:text-foreground">
@@ -179,8 +260,10 @@ export default async function ScanDetailPage({ params }: PageProps) {
         {/* Left Column - Main Content */}
         <div className="lg:col-span-2 space-y-6">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="heatmap">🗺️ Heatmap</TabsTrigger>
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
               <TabsTrigger value="violations">Violations</TabsTrigger>
               <TabsTrigger value="raw">Raw JSON</TabsTrigger>
             </TabsList>
@@ -238,6 +321,154 @@ export default async function ScanDetailPage({ params }: PageProps) {
                   />
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            <TabsContent value="heatmap" className="mt-6">
+              <InteractiveHeatmap
+                violations={violations}
+                websiteUrl={siteUrl}
+                className="min-h-[600px]"
+              />
+            </TabsContent>
+
+            <TabsContent value="analytics" className="space-y-6 mt-6">
+              {/* WCAG Compliance */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 font-display">
+                    <CheckCircle className="w-5 h-5 text-primary" />
+                    WCAG Compliance
+                  </CardTitle>
+                  <CardDescription>
+                    Compliance with Web Content Accessibility Guidelines
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center p-4 border border-border rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600 mb-1">{wcagAACompliance}%</div>
+                      <div className="text-sm font-medium text-muted-foreground">WCAG 2.1 AA</div>
+                    </div>
+                    <div className="text-center p-4 border border-border rounded-lg">
+                      <div className="text-2xl font-bold text-purple-600 mb-1">{wcagAAACompliance}%</div>
+                      <div className="text-sm font-medium text-muted-foreground">WCAG 2.1 AAA</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Scan Comparison */}
+              <ComparisonCard comparison={analytics.scanComparison} />
+
+              {/* Benchmark Comparison */}
+              {analytics.benchmarkComparison && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 font-display">
+                      <Target className="w-5 h-5 text-primary" />
+                      Industry Benchmark
+                    </CardTitle>
+                    <CardDescription>
+                      How your site compares to industry averages
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <BenchmarkChart
+                      comparison={analytics.benchmarkComparison}
+                      height={250}
+                    />
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Violation Distribution */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 font-display">
+                    <AlertTriangle className="w-5 h-5 text-primary" />
+                    Issues Distribution
+                  </CardTitle>
+                  <CardDescription>
+                    Visual breakdown of accessibility issues by severity
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ViolationDistributionChart
+                    data={{
+                      critical: stats.critical,
+                      serious: stats.serious,
+                      moderate: stats.moderate,
+                      minor: stats.minor
+                    }}
+                    height={300}
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Historical Trends */}
+              {analytics.trendData.length > 1 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 font-display">
+                        <TrendingUp className="w-5 h-5 text-primary" />
+                        Score Trend
+                      </CardTitle>
+                      <CardDescription>
+                        Accessibility score over time
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ScoreTrendChart
+                        data={analytics.trendData}
+                        height={250}
+                        showLegend={false}
+                      />
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 font-display">
+                        <Zap className="w-5 h-5 text-primary" />
+                        Issues Trend
+                      </CardTitle>
+                      <CardDescription>
+                        Issue counts by severity over time
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <IssuesTrendChart
+                        data={analytics.trendData}
+                        height={250}
+                        showLegend={true}
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+
+              {/* Violation Trends */}
+              {analytics.violationTrends.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 font-display">
+                      <AlertTriangle className="w-5 h-5 text-primary" />
+                      Violation Trends
+                    </CardTitle>
+                    <CardDescription>
+                      Track specific accessibility rule violations over time
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ViolationTrendChart
+                      violations={analytics.violationTrends}
+                      height={350}
+                      maxRules={6}
+                    />
+                  </CardContent>
+                </Card>
+              )}
             </TabsContent>
 
             <TabsContent value="violations" className="mt-6">
@@ -368,6 +599,8 @@ export default async function ScanDetailPage({ params }: PageProps) {
           </Card>
         </div>
       </div>
+      </div>
+      <BrandedFooter />
     </div>
   );
 }
