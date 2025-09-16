@@ -28,6 +28,7 @@ import { BeforeAfterComparison } from "@/components/enhanced/BeforeAfterComparis
 import { DragDropDashboard } from "@/components/enhanced/DragDropDashboard";
 import { TrendAnalysis } from "@/components/enhanced/TrendAnalysis";
 import { CompetitorBenchmark } from "@/components/enhanced/CompetitorBenchmark";
+import { ScanDebugger } from "@/components/ScanDebugger";
 import { ROICalculator } from "@/components/enhanced/ROICalculator";
 import { ExecutiveSummary } from "@/components/enhanced/ExecutiveSummary";
 import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
@@ -185,6 +186,11 @@ export default async function DashboardPage() {
         </CardHeader>
         <CardContent>
           <NewScanForm />
+
+          {/* Debug Component - Remove after fixing */}
+          <div className="mt-6">
+            <ScanDebugger />
+          </div>
         </CardContent>
       </Card>
 

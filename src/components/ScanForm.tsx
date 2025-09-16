@@ -13,15 +13,27 @@ export default function ScanForm() {
     setRes(null);
     setError(null);
     try {
+      console.log('🔍 [ScanForm] Starting scan for URL:', url);
+
       const r = await fetch("/api/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
+
+      console.log('🔍 [ScanForm] Response status:', r.status);
+
       const data = await r.json();
-      if (!r.ok || !data.ok) throw new Error(data.error || "Scan mislukt");
+      console.log('🔍 [ScanForm] Response data:', data);
+
+      if (!r.ok || !data.ok) {
+        console.error('🔍 [ScanForm] Request failed:', data);
+        throw new Error(data.error || "Scan mislukt");
+      }
+
       setRes(data);
     } catch (err: any) {
+      console.error('🔍 [ScanForm] Error:', err);
       setError(err.message ?? "Onbekende fout");
     } finally {
       setLoading(false);

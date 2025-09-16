@@ -21,6 +21,9 @@ export function NewScanForm() {
     setError("");
 
     try {
+      console.log('🔍 Starting scan for URL:', url.trim());
+      console.log('🔍 Sending request to /api/scan...');
+
       const response = await fetch("/api/scan", {
         method: "POST",
         headers: {
@@ -29,19 +32,27 @@ export function NewScanForm() {
         body: JSON.stringify({ url: url.trim() }),
       });
 
+      console.log('🔍 Response status:', response.status);
+      console.log('🔍 Response headers:', Object.fromEntries(response.headers.entries()));
+
       const data = await response.json();
+      console.log('🔍 Response data:', data);
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to start scan");
+        console.error('🔍 Request failed with status:', response.status, 'data:', data);
+        throw new Error(data.error || `Failed to start scan (${response.status})`);
       }
 
       if (data.scanId) {
+        console.log('🔍 Scan started successfully, redirecting to:', `/scans/${data.scanId}`);
         router.push(`/scans/${data.scanId}`);
       } else {
+        console.error('🔍 No scan ID in response:', data);
         throw new Error("No scan ID returned");
       }
     } catch (err: any) {
-      setError(err.message);
+      console.error('🔍 Scan request failed:', err);
+      setError(err.message || 'An unknown error occurred');
     } finally {
       setIsLoading(false);
     }
