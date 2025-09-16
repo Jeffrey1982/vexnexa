@@ -90,7 +90,7 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
       decliningSites,
       priorityMatrix: priorityMatrix.slice(0, 10) // Top 10 priorities
     };
-  }, [sites]);
+  }, [sites, calculatePriority]);
 
   // Calculate impact score (0-10)
   function calculateImpact(site: PortfolioSite): number {

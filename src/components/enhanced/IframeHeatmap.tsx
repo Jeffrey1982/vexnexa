@@ -255,7 +255,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
                 <div className="text-6xl mb-4">🌐</div>
                 <h3 className="text-lg font-semibold mb-2">Live Website Heatmap</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Click "Load Website" to display your actual website in an iframe with accessibility violations overlaid on approximate locations.
+                  Click &quot;Load Website&quot; to display your actual website in an iframe with accessibility violations overlaid on approximate locations.
                 </p>
 
                 <div className="text-sm space-y-2 mb-4">

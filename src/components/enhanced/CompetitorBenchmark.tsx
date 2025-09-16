@@ -59,7 +59,7 @@ export function CompetitorBenchmark({ currentScore, websiteUrl = '', className }
   const performance = calculatePerformanceRank(currentScore, category);
 
   // Create mock data structure for existing component logic
-  const data = {
+  const data = useMemo(() => ({
     yourSite: {
       name: 'Your Website',
       domain: websiteUrl.replace(/^https?:\/\//, ''),
@@ -108,7 +108,7 @@ export function CompetitorBenchmark({ currentScore, websiteUrl = '', className }
       wcagAA: benchmarkData.averageWcagAA,
       wcagAAA: benchmarkData.averageWcagAA - 20
     }
-  };
+  }), [websiteUrl, currentScore, competitors, benchmarkData]);
 
   const [industryFilter, setIndustryFilter] = useState<string>(category);
 
