@@ -10,18 +10,22 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       console.error('Logout error:', error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.redirect(new URL('/?error=logout_failed', req.url))
     }
 
-    // Redirect to the home page after successful logout
-    return NextResponse.redirect(new URL('/', req.url))
+    // Create redirect response to home page
+    const response = NextResponse.redirect(new URL('/', req.url))
+
+    // Clear any cookies and set cache headers
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+    response.headers.set('Pragma', 'no-cache')
+    response.headers.set('Expires', '0')
+
+    return response
 
   } catch (error: any) {
     console.error('Logout failed:', error)
-    return NextResponse.json({
-      error: 'Logout failed',
-      details: error.message
-    }, { status: 500 })
+    return NextResponse.redirect(new URL('/?error=logout_failed', req.url))
   }
 }
 
