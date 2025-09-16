@@ -184,10 +184,10 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
       create: {
         siteId: crawl.siteId,
         url,
-        title: scanResult.title || extractTitleFromUrl(url)
+        title: extractTitleFromUrl(url)
       },
       update: {
-        title: scanResult.title || undefined
+        title: extractTitleFromUrl(url)
       }
     });
 
@@ -252,9 +252,9 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
         legalRiskScore: complianceRisk.legalRiskScore,
 
         // Performance metrics
-        scanDuration: scanResult.scanDuration || null,
-        pageLoadTime: scanResult.pageLoadTime || null,
-        elementsScanned: scanResult.elementsScanned || null,
+        scanDuration: null,
+        pageLoadTime: null,
+        elementsScanned: null,
 
         raw: scanResult.axe || scanResult // Save the complete axe results
       }

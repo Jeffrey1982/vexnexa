@@ -62,9 +62,9 @@ export function ScanDebugger() {
         }
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('🧪 Test failed:', error);
-      setResults({ error: error.message });
+      setResults({ error: error?.message || 'Unknown error' });
     } finally {
       setLoading(false);
     }
@@ -82,9 +82,9 @@ export function ScanDebugger() {
 
       console.log('🧪 Fetch result:', response.status);
       setResults({ fetchTest: 'Success', status: response.status });
-    } catch (error) {
+    } catch (error: any) {
       console.error('🧪 Fetch failed:', error);
-      setResults({ fetchTest: 'Failed', error: error.message });
+      setResults({ fetchTest: 'Failed', error: error?.message || 'Unknown error' });
     } finally {
       setLoading(false);
     }
@@ -105,9 +105,9 @@ export function ScanDebugger() {
       console.log('🧪 Simple scan result:', data);
 
       setResults({ simpleScan: data, status: response.status });
-    } catch (error) {
+    } catch (error: any) {
       console.error('🧪 Simple scan failed:', error);
-      setResults({ simpleScan: 'Failed', error: error.message });
+      setResults({ simpleScan: 'Failed', error: error?.message || 'Unknown error' });
     } finally {
       setLoading(false);
     }

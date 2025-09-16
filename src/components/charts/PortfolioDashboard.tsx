@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import {
   BarChart,
   Bar,
@@ -48,6 +48,38 @@ interface PortfolioDashboardProps {
 export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboardProps) {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'low' | 'medium' | 'high' | 'critical'>('all');
 
+  // Calculate impact score (0-10)
+  function calculateImpact(site: PortfolioSite): number {
+    const riskMultiplier = {
+      'CRITICAL': 10,
+      'HIGH': 7,
+      'MEDIUM': 4,
+      'LOW': 1
+    };
+
+    return Math.min(10,
+      (riskMultiplier[site.riskLevel] * 0.4) +
+      (Math.max(0, 100 - site.score) * 0.05) +
+      (Math.min(site.issues, 50) * 0.1)
+    );
+  }
+
+  // Calculate effort score (0-10)
+  function calculateEffort(site: PortfolioSite): number {
+    return Math.min(10,
+      Math.sqrt(site.issues) * 0.8 +
+      (site.performanceScore < 50 ? 2 : 0) +
+      (site.seoScore < 50 ? 1 : 0)
+    );
+  }
+
+  // Calculate priority (impact/effort ratio)
+  const calculatePriority = useCallback((site: PortfolioSite): number => {
+    const impact = calculateImpact(site);
+    const effort = Math.max(1, calculateEffort(site)); // Avoid division by zero
+    return Math.round((impact / effort) * 100) / 100;
+  }, []);
+
   // Calculate portfolio analytics
   const analytics = useMemo(() => {
     if (sites.length === 0) return null;
@@ -91,38 +123,6 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
       priorityMatrix: priorityMatrix.slice(0, 10) // Top 10 priorities
     };
   }, [sites, calculatePriority]);
-
-  // Calculate impact score (0-10)
-  function calculateImpact(site: PortfolioSite): number {
-    const riskMultiplier = {
-      'CRITICAL': 10,
-      'HIGH': 7,
-      'MEDIUM': 4,
-      'LOW': 1
-    };
-
-    return Math.min(10,
-      (riskMultiplier[site.riskLevel] * 0.4) +
-      (Math.max(0, 100 - site.score) * 0.05) +
-      (Math.min(site.issues, 50) * 0.1)
-    );
-  }
-
-  // Calculate effort score (0-10)
-  function calculateEffort(site: PortfolioSite): number {
-    return Math.min(10,
-      Math.sqrt(site.issues) * 0.8 +
-      (site.performanceScore < 50 ? 2 : 0) +
-      (site.seoScore < 50 ? 1 : 0)
-    );
-  }
-
-  // Calculate priority (impact/effort ratio)
-  function calculatePriority(site: PortfolioSite): number {
-    const impact = calculateImpact(site);
-    const effort = Math.max(1, calculateEffort(site)); // Avoid division by zero
-    return Math.round((impact / effort) * 100) / 100;
-  }
 
   function calculateCorrelation(x: number[], y: number[]): number {
     const n = x.length;

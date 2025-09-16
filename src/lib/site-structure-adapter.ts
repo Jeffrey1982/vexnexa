@@ -186,7 +186,8 @@ function buildPageStructure(site: SiteWithScans): PageNode {
 }
 
 function hasParent(page: PageNode, pageMap: Map<string, PageNode>): boolean {
-  for (const [, parentCandidate] of pageMap) {
+  const parentCandidates = Array.from(pageMap.values());
+  for (const parentCandidate of parentCandidates) {
     if (parentCandidate.children.includes(page)) {
       return true;
     }

@@ -47,7 +47,6 @@ export async function getPerformanceMetrics(url: string): Promise<PerformanceMet
       const response = await fetch(
         `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&strategy=desktop&category=PERFORMANCE`,
         {
-          timeout: 30000,
           headers: {
             'User-Agent': 'TutusPorta Performance Analyzer'
           }
