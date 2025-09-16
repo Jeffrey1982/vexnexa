@@ -126,34 +126,43 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
               Settings
             </Link>
             
-            <form
-              action="/auth/logout"
-              method="post"
-              onSubmit={(e) => {
-                // Clear client-side storage before logout
+            <button
+              onClick={async () => {
+                // Clear client-side storage
                 if (typeof window !== 'undefined') {
                   localStorage.clear();
                   sessionStorage.clear();
                 }
+
+                // Submit logout request
+                try {
+                  const response = await fetch('/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                  });
+
+                  // Always redirect to home regardless of response
+                  window.location.href = '/';
+                } catch (error) {
+                  console.error('Logout error:', error);
+                  // Force redirect even on error
+                  window.location.href = '/';
+                }
+              }}
+              className="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors"
+              style={{
+                backgroundColor: settings?.primaryColor || '#3B82F6'
+              }}
+              onMouseEnter={(e) => {
+                const color = settings?.primaryColor || '#3B82F6';
+                e.currentTarget.style.backgroundColor = darkenColor(color, 0.1);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = settings?.primaryColor || '#3B82F6';
               }}
             >
-              <button
-                type="submit"
-                className="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors"
-                style={{
-                  backgroundColor: settings?.primaryColor || '#3B82F6'
-                }}
-                onMouseEnter={(e) => {
-                  const color = settings?.primaryColor || '#3B82F6';
-                  e.currentTarget.style.backgroundColor = darkenColor(color, 0.1);
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = settings?.primaryColor || '#3B82F6';
-                }}
-              >
-                Sign Out
-              </button>
-            </form>
+              Sign Out
+            </button>
           </div>
         </div>
       </div>
