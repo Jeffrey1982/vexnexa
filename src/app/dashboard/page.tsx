@@ -35,6 +35,8 @@ import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
 import { MultiFormatExporter } from "@/components/enhanced/MultiFormatExporter";
 import { AIInsights } from "@/components/enhanced/AIInsights";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getEntitlements } from "@/lib/billing/entitlements";
+import { ENTITLEMENTS } from "@/lib/billing/plans";
 
 async function getRecentScans(userId: string) {
   try {
@@ -158,6 +160,10 @@ export default async function DashboardPage() {
     getDashboardStats(user.id),
   ]);
 
+  // Check if user has white label access
+  const userEntitlements = getEntitlements(user.plan as keyof typeof ENTITLEMENTS);
+  const hasWhiteLabelAccess = userEntitlements.whiteLabel;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <BrandedHeader />
@@ -203,11 +209,14 @@ export default async function DashboardPage() {
 
       {/* Enhanced Dashboard with Tabs */}
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className={`grid w-full ${hasWhiteLabelAccess ? 'grid-cols-5' : 'grid-cols-4'}`}>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
           <TabsTrigger value="tools">Tools</TabsTrigger>
+          {hasWhiteLabelAccess && (
+            <TabsTrigger value="white-label">White Label</TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -320,6 +329,123 @@ export default async function DashboardPage() {
             />
           )}
         </TabsContent>
+
+        {/* White Label Tab - Only for Business Plan Users */}
+        {hasWhiteLabelAccess && (
+          <TabsContent value="white-label" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display text-xl flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">WL</span>
+                  </div>
+                  White Label Management
+                </CardTitle>
+                <CardDescription className="text-base">
+                  Customize your brand appearance, logo, colors, and contact information for your Business plan.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Quick Access Links */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Link href="/settings/white-label" className="group">
+                    <div className="border rounded-lg p-4 hover:border-blue-500 transition-colors">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                          <span className="text-blue-600 font-semibold">⚙️</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">Full Settings</h3>
+                          <p className="text-sm text-gray-500">Complete white-label configuration</p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-400">Logo, colors, contact info, domain settings</p>
+                    </div>
+                  </Link>
+
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
+                        <span className="text-green-600 font-semibold">📱</span>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">Live Preview</h3>
+                        <p className="text-sm text-gray-500">See your customizations</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-400">Your site already shows your branding!</p>
+                  </div>
+
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <span className="text-purple-600 font-semibold">📈</span>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">Custom Reports</h3>
+                        <p className="text-sm text-gray-500">Branded PDF exports</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-400">Coming soon - Reports with your branding</p>
+                  </div>
+                </div>
+
+                {/* White Label Features Overview */}
+                <div className="border rounded-lg p-6 bg-gradient-to-br from-blue-50 to-purple-50">
+                  <h4 className="text-lg font-semibold text-gray-900 mb-4">🎨 Your White Label Features</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        <span>Custom company logo & favicon</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        <span>Brand colors (primary, secondary, accent)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        <span>Custom contact information</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        <span>Remove &quot;Powered by TutusPorta&quot;</span>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        <span>Custom footer text</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-500">✓</span>
+                        <span>Subdomain (yourcompany.tutusporta.com)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-blue-500">📞</span>
+                        <span>Custom domain (contact support)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-purple-500">🔜</span>
+                        <span>Branded PDF reports (coming soon)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="text-center">
+                  <Link
+                    href="/settings/white-label"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  >
+                    🎨 Customize Your Brand
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        )}
       </Tabs>
       
 
