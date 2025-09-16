@@ -18,7 +18,7 @@
     "db:reset": "prisma migrate reset --force",
     "db:migrate": "prisma migrate dev -n site-wide-crawl",
     "worker:crawl": "tsx scripts/run-crawl.ts",
-    "postinstall": "prisma generate && playwright install chromium"
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "node prisma/seed.mjs"

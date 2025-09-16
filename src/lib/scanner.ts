@@ -145,6 +145,37 @@ export async function scanUrl(url: string): Promise<ScanResult> {
 
 // Legacy export for existing API compatibility
 export async function runAccessibilityScan(url: string): Promise<ScanOutput> {
+  // Check if we're in a serverless environment where Playwright won't work
+  const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NETLIFY;
+
+  if (isServerless || process.env.PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD === "1") {
+    console.log('Serverless environment detected, using headless scanner');
+    try {
+      const headlessResult = await runRobustAccessibilityScan(url);
+      return {
+        score: headlessResult.score,
+        axe: {
+          violations: headlessResult.violations,
+          passes: [],
+          serverless: true
+        },
+        summary: {
+          violations: headlessResult.issues,
+          passes: 0,
+          total: headlessResult.issues,
+          serverless: true
+        }
+      };
+    } catch (error: any) {
+      console.error('Headless scan failed:', error.message);
+      return {
+        score: 0,
+        axe: { violations: [], passes: [], error: error.message },
+        summary: { violations: 0, passes: 0, total: 0, error: error.message }
+      };
+    }
+  }
+
   let browser: Browser | null = null;
   try {
     // Try different launch configurations based on environment
