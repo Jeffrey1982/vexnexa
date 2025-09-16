@@ -17,30 +17,49 @@ export function ScanDebugger() {
     try {
       console.log('🧪 Testing direct API call...');
 
-      // Test 1: Basic connectivity
+      // Test 1: Basic connectivity test
       const testResponse = await fetch('/api/test-scan?url=https://example.com');
       const testData = await testResponse.json();
       console.log('🧪 Test scan result:', testData);
 
-      // Test 2: Debug info
+      // Test 2: Auth and database connectivity
       const debugResponse = await fetch('/api/debug-scan');
-      const debugData = await debugResponse.json();
-      console.log('🧪 Debug scan result:', debugData);
+      const debugStatus = debugResponse.status;
+      let debugData;
+      try {
+        debugData = await debugResponse.json();
+        console.log('🧪 Debug scan result:', debugData);
+      } catch {
+        debugData = { error: 'Failed to parse debug response', status: debugStatus };
+      }
 
-      // Test 3: Actual scan
+      // Test 3: Actual scan endpoint
       const scanResponse = await fetch('/api/scan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: 'https://example.com' })
       });
-      const scanData = await scanResponse.json();
-      console.log('🧪 Actual scan result:', scanData);
+      const scanStatus = scanResponse.status;
+      let scanData;
+      try {
+        scanData = await scanResponse.json();
+        console.log('🧪 Actual scan result:', scanData);
+      } catch {
+        scanData = { error: 'Failed to parse scan response', status: scanStatus };
+      }
 
       setResults({
         test: testData,
+        testStatus: testResponse.status,
         debug: debugData,
+        debugStatus: debugStatus,
         scan: scanData,
-        scanStatus: scanResponse.status
+        scanStatus: scanStatus,
+        summary: {
+          testScan: testResponse.status === 200 ? '✅ PASS' : `❌ FAIL (${testResponse.status})`,
+          debugScan: debugStatus === 200 ? '✅ PASS' : `❌ FAIL (${debugStatus})`,
+          actualScan: scanStatus === 200 ? '✅ PASS' : `❌ FAIL (${scanStatus})`
+        }
       });
 
     } catch (error) {
