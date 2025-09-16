@@ -17,9 +17,26 @@ export default function AuthButton({ user }: AuthButtonProps) {
 
   const handleSignOut = async () => {
     setLoading(true)
-    await supabase.auth.signOut()
-    router.refresh()
-    setLoading(false)
+    try {
+      // Sign out from Supabase
+      await supabase.auth.signOut()
+
+      // Clear localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.clear()
+        sessionStorage.clear()
+      }
+
+      // Redirect to home page
+      router.push('/')
+      router.refresh()
+    } catch (error) {
+      console.error('Sign out error:', error)
+      // Force redirect even if signout fails
+      router.push('/')
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (user) {

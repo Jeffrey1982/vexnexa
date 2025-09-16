@@ -126,7 +126,17 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
               Settings
             </Link>
             
-            <form action="/auth/logout" method="post">
+            <form
+              action="/auth/logout"
+              method="post"
+              onSubmit={(e) => {
+                // Clear client-side storage before logout
+                if (typeof window !== 'undefined') {
+                  localStorage.clear();
+                  sessionStorage.clear();
+                }
+              }}
+            >
               <button
                 type="submit"
                 className="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors"
