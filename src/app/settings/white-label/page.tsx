@@ -248,11 +248,9 @@ export default function WhiteLabelPage() {
                 </label>
                 <div className="flex items-center space-x-4">
                   {settings.logoUrl && (
-                    <Image
+                    <img
                       src={settings.logoUrl}
                       alt="Logo"
-                      width={48}
-                      height={48}
                       className="h-12 w-12 object-contain border rounded"
                     />
                   )}
@@ -277,11 +275,9 @@ export default function WhiteLabelPage() {
               </label>
               <div className="flex items-center space-x-4">
                 {settings.faviconUrl && (
-                  <Image
+                  <img
                     src={settings.faviconUrl}
                     alt="Favicon"
-                    width={24}
-                    height={24}
                     className="h-6 w-6 object-contain border rounded"
                   />
                 )}

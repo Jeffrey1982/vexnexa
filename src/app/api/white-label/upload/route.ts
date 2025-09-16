@@ -56,35 +56,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For this implementation, we'll save files to a public directory
-    // In production, you might want to use a cloud storage service like AWS S3 or Cloudinary
+    // Convert image to base64 data URL for serverless compatibility
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64}`;
 
-    // Generate unique filename
-    const timestamp = Date.now();
-    const fileExtension = file.name.split('.').pop();
-    const filename = `${user.id}_${type}_${timestamp}.${fileExtension}`;
-    const publicPath = `/uploads/white-label/${filename}`;
-    
-    // Create directory if it doesn't exist
-    const fs = require('fs');
-    const path = require('path');
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'white-label');
-    
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
+    // Update the white label settings with the new image
+    const fieldName = type === 'logo' ? 'logoUrl' : 'faviconUrl';
 
-    // Write file
-    const filePath = path.join(uploadDir, filename);
-    fs.writeFileSync(filePath, buffer);
+    const whiteLabel = await prisma.whiteLabel.upsert({
+      where: { userId: user.id },
+      create: {
+        userId: user.id,
+        [fieldName]: dataUrl,
+        primaryColor: "#3B82F6",
+        secondaryColor: "#1F2937",
+        accentColor: "#10B981",
+        showPoweredBy: true
+      },
+      update: {
+        [fieldName]: dataUrl
+      }
+    });
 
     return NextResponse.json({
       success: true,
-      url: publicPath,
-      filename,
-      type
+      url: dataUrl,
+      type,
+      message: `${type === 'logo' ? 'Logo' : 'Favicon'} uploaded successfully`
     });
 
   } catch (error: any) {
