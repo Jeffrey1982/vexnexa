@@ -590,7 +590,7 @@ export async function POST(req: NextRequest) {
     `;
 
     // Record usage
-    await addPageUsage(user.id, "export_pdf", 1);
+    await addPageUsage(user.id, 1);
 
     // Return HTML response (client-side will handle PDF generation)
     return NextResponse.json({
