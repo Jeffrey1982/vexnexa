@@ -7,6 +7,9 @@ export function ScanDebugger() {
   const [results, setResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
+  // Log when component mounts
+  console.log('🔧 ScanDebugger component loaded');
+
   const testDirectScan = async () => {
     setLoading(true);
     setResults(null);
@@ -68,6 +71,29 @@ export function ScanDebugger() {
     }
   };
 
+  const testSimpleScan = async () => {
+    setLoading(true);
+    try {
+      console.log('🧪 Testing simple scan API...');
+
+      const response = await fetch('/api/simple-scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: 'https://example.com' })
+      });
+
+      const data = await response.json();
+      console.log('🧪 Simple scan result:', data);
+
+      setResults({ simpleScan: data, status: response.status });
+    } catch (error) {
+      console.error('🧪 Simple scan failed:', error);
+      setResults({ simpleScan: 'Failed', error: error.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="border rounded-lg p-4 bg-gray-50">
       <h3 className="font-semibold mb-4">🔧 Scan Debugger</h3>
@@ -77,8 +103,12 @@ export function ScanDebugger() {
           {loading ? 'Testing...' : 'Test All APIs'}
         </Button>
 
+        <Button onClick={testSimpleScan} disabled={loading} variant="outline">
+          Test Simple Scan
+        </Button>
+
         <Button onClick={testSimpleFetch} disabled={loading} variant="outline">
-          Test Simple Fetch
+          Test Fetch
         </Button>
       </div>
 

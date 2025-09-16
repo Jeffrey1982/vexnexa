@@ -54,7 +54,7 @@ async function getRecentScans(userId: string) {
       orderBy: {
         createdAt: "desc",
       },
-      take: 20,
+      take: 10,
     });
 
     return scans;
@@ -162,6 +162,13 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-gray-50">
       <BrandedHeader />
       <div className="container mx-auto px-4 py-8 space-y-8">
+
+      {/* Temporary Debug Section - Remove after fixing */}
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <h2 className="text-red-800 font-bold mb-2">🔧 DEBUG MODE</h2>
+        <ScanDebugger />
+      </div>
+
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>

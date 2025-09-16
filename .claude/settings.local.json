@@ -34,7 +34,8 @@
       "Bash(npm uninstall:*)",
       "WebFetch(domain:tutusporta-5lnr57bwp-jeffreyaay-gmailcoms-projects.vercel.app)",
       "WebFetch(domain:tutusporta.com)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npx prisma:*)"
     ],
     "deny": [],
     "ask": []
