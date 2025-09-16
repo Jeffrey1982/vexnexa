@@ -33,7 +33,8 @@
       "Bash(npm ci:*)",
       "Bash(npm uninstall:*)",
       "WebFetch(domain:tutusporta-5lnr57bwp-jeffreyaay-gmailcoms-projects.vercel.app)",
-      "WebFetch(domain:tutusporta.com)"
+      "WebFetch(domain:tutusporta.com)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

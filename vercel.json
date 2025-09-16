@@ -1,14 +1,17 @@
 {
   "build": {
     "env": {
-      "NEXT_PHASE": "next-build"
+      "NEXT_PHASE": "next-build",
+      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
     }
   },
   "functions": {
     "src/app/api/**/*.ts": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "runtime": "nodejs20.x"
     }
   },
   "regions": ["fra1"],
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "installCommand": "npm install && npx playwright install chromium --with-deps"
 }

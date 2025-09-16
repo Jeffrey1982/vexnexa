@@ -2,6 +2,7 @@ import { chromium, Browser } from "playwright";
 import { AxeBuilder } from "@axe-core/playwright";
 import * as fs from "fs";
 import path from "path";
+import { runRobustAccessibilityScan } from "./scanner-headless";
 
 // Types for crawler compatibility
 type AxeViolation = {
@@ -198,13 +199,34 @@ export async function runAccessibilityScan(url: string): Promise<ScanOutput> {
     const { score, summary } = localScoreFromAxe(axeResults);
     return { score, axe: axeResults, summary };
   } catch (error: any) {
-    // If browser fails, return a fallback result indicating the error
-    console.error('Browser scan failed, returning fallback:', error.message);
-    return {
-      score: 0,
-      axe: { violations: [], passes: [], error: error.message },
-      summary: { violations: 0, passes: 0, total: 0, error: error.message }
-    };
+    // If browser fails, try headless fallback
+    console.warn('Browser scan failed, trying headless fallback:', error.message);
+    try {
+      const headlessResult = await runRobustAccessibilityScan(url);
+      // Convert to legacy format
+      return {
+        score: headlessResult.score,
+        axe: {
+          violations: headlessResult.violations,
+          passes: [], // Headless doesn't track passes
+          fallback: true,
+          originalError: error.message
+        },
+        summary: {
+          violations: headlessResult.issues,
+          passes: 0,
+          total: headlessResult.issues,
+          fallback: true
+        }
+      };
+    } catch (fallbackError: any) {
+      console.error('Both browser and headless scans failed:', fallbackError.message);
+      return {
+        score: 0,
+        axe: { violations: [], passes: [], error: error.message, fallbackError: fallbackError.message },
+        summary: { violations: 0, passes: 0, total: 0, error: error.message }
+      };
+    }
   } finally {
     try {
       await browser?.close();
