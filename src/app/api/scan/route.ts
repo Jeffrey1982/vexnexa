@@ -91,21 +91,26 @@ export async function POST(req: Request) {
     // Run accessibility scan
     let result;
     try {
+      console.log('Starting accessibility scan for:', fullPageUrl);
       result = await runAccessibilityScan(fullPageUrl);
+      console.log('Scan completed successfully with score:', result.score);
     } catch (scanError: any) {
+      console.error('Accessibility scan failed:', scanError);
+
       // Update scan with error status
       await prisma.scan.update({
         where: { id: runningScan.id },
         data: {
           status: "failed",
-          raw: { error: scanError.message }
+          raw: { error: scanError.message, stack: scanError.stack }
         }
       });
-      
-      return NextResponse.json({ 
-        ok: false, 
+
+      return NextResponse.json({
+        ok: false,
         error: `Accessibility scan failed: ${scanError.message}`,
-        scanId: runningScan.id
+        scanId: runningScan.id,
+        details: scanError.stack
       }, { status: 500 });
     }
 

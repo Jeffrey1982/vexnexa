@@ -68,23 +68,34 @@ const generateMockScanResult = (url: string): ScanResult => {
 
 export async function runHeadlessAccessibilityScan(options: HeadlessScanOptions): Promise<ScanResult> {
   try {
-    // Try to validate the URL first
-    const response = await fetch(options.url, {
-      method: 'HEAD',
-      headers: {
-        'User-Agent': 'TutusPorta Accessibility Scanner 1.0'
-      },
-      signal: AbortSignal.timeout(options.timeout || 30000)
-    });
+    // Create a timeout controller for older Node.js versions
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), options.timeout || 30000);
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    try {
+      // Try to validate the URL first
+      const response = await fetch(options.url, {
+        method: 'HEAD',
+        headers: {
+          'User-Agent': 'TutusPorta Accessibility Scanner 1.0'
+        },
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      // For now, return mock data
+      // In a production environment, this could integrate with external APIs
+      // like axe DevTools API, WebAIM WAVE API, or similar services
+      return generateMockScanResult(options.url);
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      throw fetchError;
     }
-
-    // For now, return mock data
-    // In a production environment, this could integrate with external APIs
-    // like axe DevTools API, WebAIM WAVE API, or similar services
-    return generateMockScanResult(options.url);
 
   } catch (error) {
     console.error('Headless scan failed:', error);
@@ -113,11 +124,18 @@ export async function runHeadlessAccessibilityScan(options: HeadlessScanOptions)
 
 // Enhanced scanner that tries multiple approaches
 export async function runRobustAccessibilityScan(url: string): Promise<ScanResult> {
+  console.log('Starting robust accessibility scan for:', url);
+
   // First try the headless approach
   try {
-    return await runHeadlessAccessibilityScan({ url, timeout: 30000 });
+    console.log('Attempting headless scan...');
+    const result = await runHeadlessAccessibilityScan({ url, timeout: 30000 });
+    console.log('Headless scan successful, score:', result.score);
+    return result;
   } catch (error) {
-    console.warn('Headless scan failed, using fallback:', error);
-    return generateMockScanResult(url);
+    console.warn('Headless scan failed, using mock fallback:', error);
+    const fallbackResult = generateMockScanResult(url);
+    console.log('Using mock fallback with score:', fallbackResult.score);
+    return fallbackResult;
   }
 }
