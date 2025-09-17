@@ -45,6 +45,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Scan not found" }, { status: 404 });
     }
 
+    // Get white-label settings for branding
+    const whiteLabel = await prisma.whiteLabel.findUnique({
+      where: { userId: user.id }
+    });
+
+    // Use white-label branding or fallback to TutusPorta
+    const brandName = whiteLabel?.companyName || 'TutusPorta';
+    const brandLogo = whiteLabel?.logoUrl;
+    const primaryColor = whiteLabel?.primaryColor || '#3b82f6';
+    const secondaryColor = whiteLabel?.secondaryColor || '#1e40af';
+
     // Extract violations
     let violations: Violation[] = [];
     if (scan.raw && typeof scan.raw === 'object' && 'violations' in scan.raw) {
@@ -81,7 +92,7 @@ export async function POST(req: NextRequest) {
                 margin: 15mm;
                 size: A4;
                 @top-center {
-                    content: "TutusPorta Accessibility Report";
+                    content: "${brandName} Accessibility Report";
                     font-size: 10px;
                     color: #6b7280;
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -105,7 +116,7 @@ export async function POST(req: NextRequest) {
 
             /* Header Section */
             .header {
-                background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+                background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%);
                 color: white;
                 padding: 40px;
                 text-align: center;
@@ -210,7 +221,7 @@ export async function POST(req: NextRequest) {
                 border-radius: 12px 12px 0 0;
             }
 
-            .metric-card.wcag::before { background: linear-gradient(90deg, #3b82f6, #1e40af); }
+            .metric-card.wcag::before { background: linear-gradient(90deg, ${primaryColor}, ${secondaryColor}); }
             .metric-card.performance::before { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
             .metric-card.seo::before { background: linear-gradient(90deg, #06b6d4, #0891b2); }
             .metric-card.issues::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
@@ -257,7 +268,7 @@ export async function POST(req: NextRequest) {
                 content: '';
                 width: 4px;
                 height: 24px;
-                background: linear-gradient(135deg, #3b82f6, #1e40af);
+                background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
                 border-radius: 2px;
             }
 
@@ -458,7 +469,7 @@ export async function POST(req: NextRequest) {
 
             .footer-logo {
                 font-weight: 600;
-                color: #3b82f6;
+                color: ${primaryColor};
                 margin-bottom: 4px;
             }
 
@@ -481,7 +492,7 @@ export async function POST(req: NextRequest) {
         <body>
             <!-- Header -->
             <div class="header">
-                <div class="logo">TutusPorta</div>
+                <div class="logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 40px; width: auto; margin-bottom: 12px;" />` : brandName}</div>
                 <div class="report-title">Accessibility Compliance Report</div>
                 <div class="report-subtitle">Comprehensive WCAG Analysis & Remediation Guide</div>
             </div>
@@ -581,9 +592,9 @@ export async function POST(req: NextRequest) {
 
             <!-- Footer -->
             <div class="footer">
-                <div class="footer-logo">🛡️ TutusPorta Accessibility Platform</div>
+                <div class="footer-logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 16px; width: auto; margin-right: 8px; vertical-align: middle;" />` : '🛡️'} ${brandName} Accessibility Platform</div>
                 <div>This report was generated automatically using axe-core accessibility testing engine.</div>
-                <div>For detailed remediation guidance, visit your dashboard or contact our accessibility experts.</div>
+                <div>For detailed remediation guidance, visit your dashboard${whiteLabel?.supportEmail ? ` or contact ${whiteLabel.supportEmail}` : ' or contact our accessibility experts'}.</div>
             </div>
         </body>
         </html>
