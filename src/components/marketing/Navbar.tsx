@@ -46,7 +46,7 @@ export function Navbar({ className }: NavbarProps) {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, []); // ← Lege dependency array!
 
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {
