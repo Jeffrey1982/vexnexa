@@ -1,7 +1,6 @@
 'use client';
 
-// TEMPORARILY DISABLED: WhiteLabelProvider causing auth loops
-// import { WhiteLabelProvider } from '@/lib/white-label/context';
+import { WhiteLabelProvider } from '@/lib/white-label/context';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -9,8 +8,8 @@ interface ClientLayoutProps {
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
-    <>
+    <WhiteLabelProvider>
       {children}
-    </>
+    </WhiteLabelProvider>
   );
 }

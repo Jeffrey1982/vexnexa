@@ -34,9 +34,19 @@ export function Navbar({ className }: NavbarProps) {
   const supabase = createClient();
 
   useEffect(() => {
-    // EMERGENCY: Auth disabled, set dummy user
-    setUser(null);
-  }, []);
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []); // Fixed: empty dependency array instead of [supabase.auth]
 
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {

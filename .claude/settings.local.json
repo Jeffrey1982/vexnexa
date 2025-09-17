@@ -35,7 +35,9 @@
       "WebFetch(domain:tutusporta-5lnr57bwp-jeffreyaay-gmailcoms-projects.vercel.app)",
       "WebFetch(domain:tutusporta.com)",
       "Bash(curl:*)",
-      "Bash(npx prisma:*)"
+      "Bash(npx prisma:*)",
+      "Bash(xargs kill:*)",
+      "Bash(netstat:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,18 +1,42 @@
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from "./prisma"
 
-export async function getCurrentUser(): Promise<any> {
-  // EMERGENCY: Return dummy user to prevent build errors
+export async function getCurrentUser() {
+  const supabase = createClient()
+
+  const { data: { user }, error } = await supabase.auth.getUser()
+
+  if (error || !user) {
+    throw new Error("Authentication required")
+  }
+
+  // Get or create user in our database
+  let dbUser = await prisma.user.findUnique({
+    where: { email: user.email! }
+  })
+
+  if (!dbUser) {
+    // Create new user with trial plan
+    dbUser = await prisma.user.create({
+      data: {
+        email: user.email!,
+        plan: "TRIAL",
+        subscriptionStatus: "trialing",
+        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // 14 days
+      }
+    })
+  }
+
   return {
-    id: "emergency-disabled",
-    email: "disabled@example.com",
-    firstName: null,
-    lastName: null,
-    company: null,
-    plan: "STARTER" as any,
-    subscriptionStatus: "active" as any,
-    trialEndsAt: new Date(),
-    profileCompleted: false
+    id: dbUser.id,
+    email: dbUser.email,
+    firstName: dbUser.firstName,
+    lastName: dbUser.lastName,
+    company: dbUser.company,
+    plan: dbUser.plan,
+    subscriptionStatus: dbUser.subscriptionStatus,
+    trialEndsAt: dbUser.trialEndsAt,
+    profileCompleted: dbUser.profileCompleted
   }
 }
 

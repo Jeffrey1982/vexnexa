@@ -4,13 +4,6 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
-    // TEMPORARY: Disable white-label loading to stop infinite auth requests
-    return NextResponse.json({
-      success: true,
-      whiteLabel: null,
-      hasAccess: false
-    });
-
     // Try to get user, but don't fail if not authenticated
     let user = null;
     try {
