@@ -46,7 +46,7 @@ export function Navbar({ className }: NavbarProps) {
     });
 
     return () => subscription.unsubscribe();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps - Fixed: empty dependency to prevent infinite auth loops
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {
