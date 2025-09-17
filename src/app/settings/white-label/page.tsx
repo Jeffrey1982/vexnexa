@@ -208,302 +208,491 @@ export default function WhiteLabelPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <nav className="mb-6">
-          <Link href="/dashboard" className="text-blue-600 hover:text-blue-800 text-sm">
-            ← Back to Dashboard
-          </Link>
-        </nav>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Custom Header for Branding Page */}
+      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-4">
+              <Link href="/dashboard" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Dashboard
+              </Link>
+              <div className="h-4 w-px bg-gray-300"></div>
+              <h1 className="text-lg font-semibold text-gray-900">Brand Settings</h1>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="text-sm text-gray-500">Business Plan</div>
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </header>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">White Label Settings</h1>
-          <p className="text-gray-600">
-            Customize your brand appearance and contact information for your Business plan.
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+            White Label <span className="text-indigo-600">Branding</span>
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl">
+            Customize your brand appearance and contact information. Make TutusPorta truly yours with personalized branding.
           </p>
         </div>
 
-        <div className="space-y-6">
-          {/* Branding Section */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Branding</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Company Name
-                </label>
-                <input
-                  type="text"
-                  value={settings.companyName || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, companyName: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Your Company Name"
-                />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Branding Section */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center mr-4">
+                  <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Company Branding</h2>
+                  <p className="text-gray-600">Upload your logo and set your company name</p>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Logo
-                </label>
-                <div className="flex items-center space-x-4">
-                  {settings.logoUrl && (
-                    <img
-                      src={settings.logoUrl}
-                      alt="Logo"
-                      className="h-12 w-12 object-contain border rounded"
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Company Name
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.companyName || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, companyName: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    placeholder="Enter your company name"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      Company Logo
+                    </label>
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors">
+                      {settings.logoUrl ? (
+                        <div className="space-y-4">
+                          <img
+                            src={settings.logoUrl}
+                            alt="Company Logo"
+                            className="h-16 w-16 object-contain mx-auto border rounded-lg shadow-sm"
+                          />
+                          <p className="text-sm text-gray-500">Click to replace</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          <div className="w-16 h-16 bg-gray-100 rounded-lg mx-auto flex items-center justify-center">
+                            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <p className="text-sm text-gray-500">Upload your logo</p>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) handleFileUpload(file, 'logo');
+                        }}
+                        disabled={isUploading.logo}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                      {isUploading.logo && (
+                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl">
+                          <div className="text-indigo-600 flex items-center">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Uploading...
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      Favicon (16x16)
+                    </label>
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors">
+                      {settings.faviconUrl ? (
+                        <div className="space-y-4">
+                          <img
+                            src={settings.faviconUrl}
+                            alt="Favicon"
+                            className="h-8 w-8 object-contain mx-auto border rounded shadow-sm"
+                          />
+                          <p className="text-sm text-gray-500">Click to replace</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          <div className="w-8 h-8 bg-gray-100 rounded mx-auto flex items-center justify-center">
+                            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <p className="text-sm text-gray-500">Upload favicon</p>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) handleFileUpload(file, 'favicon');
+                        }}
+                        disabled={isUploading.favicon}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                      {isUploading.favicon && (
+                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl">
+                          <div className="text-indigo-600 flex items-center">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Uploading...
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Colors Section */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
+                  <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Brand Colors</h2>
+                  <p className="text-gray-600">Define your brand's color palette</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Primary Color
+                  </label>
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <input
+                        type="color"
+                        value={settings.primaryColor}
+                        onChange={(e) => setSettings(prev => ({ ...prev, primaryColor: e.target.value }))}
+                        className="w-full h-12 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-300 transition-colors"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      value={settings.primaryColor}
+                      onChange={(e) => setSettings(prev => ({ ...prev, primaryColor: e.target.value }))}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                      placeholder="#3B82F6"
                     />
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handleFileUpload(file, 'logo');
-                    }}
-                    disabled={isUploading.logo}
-                    className="text-sm"
-                  />
-                  {isUploading.logo && <span className="text-blue-600">Uploading...</span>}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Secondary Color
+                  </label>
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <input
+                        type="color"
+                        value={settings.secondaryColor}
+                        onChange={(e) => setSettings(prev => ({ ...prev, secondaryColor: e.target.value }))}
+                        className="w-full h-12 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-300 transition-colors"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      value={settings.secondaryColor}
+                      onChange={(e) => setSettings(prev => ({ ...prev, secondaryColor: e.target.value }))}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                      placeholder="#1F2937"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Accent Color
+                  </label>
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <input
+                        type="color"
+                        value={settings.accentColor}
+                        onChange={(e) => setSettings(prev => ({ ...prev, accentColor: e.target.value }))}
+                        className="w-full h-12 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-300 transition-colors"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      value={settings.accentColor}
+                      onChange={(e) => setSettings(prev => ({ ...prev, accentColor: e.target.value }))}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                      placeholder="#10B981"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Favicon
-              </label>
-              <div className="flex items-center space-x-4">
-                {settings.faviconUrl && (
-                  <img
-                    src={settings.faviconUrl}
-                    alt="Favicon"
-                    className="h-6 w-6 object-contain border rounded"
+            {/* Contact Information */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
+                  <p className="text-gray-600">Set your support contact details</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Support Email
+                  </label>
+                  <input
+                    type="email"
+                    value={settings.supportEmail || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, supportEmail: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    placeholder="support@yourcompany.com"
                   />
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) handleFileUpload(file, 'favicon');
-                  }}
-                  disabled={isUploading.favicon}
-                  className="text-sm"
-                />
-                {isUploading.favicon && <span className="text-blue-600">Uploading...</span>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Website URL
+                  </label>
+                  <input
+                    type="url"
+                    value={settings.website || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, website: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    placeholder="https://yourcompany.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={settings.phone || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, phone: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Footer Text
+                  </label>
+                  <textarea
+                    value={settings.footerText || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, footerText: e.target.value }))}
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 resize-none"
+                    placeholder="Copyright © 2025 Your Company. All rights reserved."
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="flex items-center">
+                  <input
+                    id="showPoweredBy"
+                    type="checkbox"
+                    checked={settings.showPoweredBy}
+                    onChange={(e) => setSettings(prev => ({ ...prev, showPoweredBy: e.target.checked }))}
+                    className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="showPoweredBy" className="ml-3 block text-sm font-medium text-gray-900">
+                    Show "Powered by TutusPorta" in footer
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Colors Section */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Brand Colors</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Primary Color
-                </label>
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="color"
-                    value={settings.primaryColor}
-                    onChange={(e) => setSettings(prev => ({ ...prev, primaryColor: e.target.value }))}
-                    className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
-                  />
+            {/* Domain Settings */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Domain Settings</h2>
+                  <p className="text-gray-600">Configure your custom domain and subdomain</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Custom Domain
+                  </label>
                   <input
                     type="text"
-                    value={settings.primaryColor}
-                    onChange={(e) => setSettings(prev => ({ ...prev, primaryColor: e.target.value }))}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="#3B82F6"
+                    value={settings.customDomain || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, customDomain: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    placeholder="accessibility.yourcompany.com"
                   />
+                  <p className="text-xs text-gray-500 mt-2 flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Contact support to set up custom domains
+                  </p>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Secondary Color
-                </label>
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="color"
-                    value={settings.secondaryColor}
-                    onChange={(e) => setSettings(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                    className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
-                  />
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Subdomain
+                  </label>
                   <input
                     type="text"
-                    value={settings.secondaryColor}
-                    onChange={(e) => setSettings(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="#1F2937"
+                    value={settings.subdomain || ''}
+                    onChange={(e) => setSettings(prev => ({ ...prev, subdomain: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    placeholder="yourcompany"
                   />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Accent Color
-                </label>
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="color"
-                    value={settings.accentColor}
-                    onChange={(e) => setSettings(prev => ({ ...prev, accentColor: e.target.value }))}
-                    className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={settings.accentColor}
-                    onChange={(e) => setSettings(prev => ({ ...prev, accentColor: e.target.value }))}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="#10B981"
-                  />
+                  <p className="text-xs text-gray-500 mt-2">
+                    Will be available at: yourcompany.tutusporta.com
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Support Email
-                </label>
-                <input
-                  type="email"
-                  value={settings.supportEmail || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, supportEmail: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="support@yourcompany.com"
-                />
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              {/* Preview Card */}
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Live Preview</h3>
+                <div className="space-y-4">
+                  <div className="p-4 border border-gray-200 rounded-lg bg-white/50">
+                    <div className="flex items-center space-x-3 mb-2">
+                      {settings.logoUrl ? (
+                        <img src={settings.logoUrl} alt="Logo" className="h-8 w-8 object-contain" />
+                      ) : (
+                        <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                      )}
+                      <span className="font-semibold">{settings.companyName || 'Your Company'}</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      <div className="h-4 rounded" style={{ backgroundColor: settings.primaryColor }}></div>
+                      <div className="h-4 rounded" style={{ backgroundColor: settings.secondaryColor }}></div>
+                      <div className="h-4 rounded" style={{ backgroundColor: settings.accentColor }}></div>
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      {settings.supportEmail || 'support@company.com'}
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Website
-                </label>
-                <input
-                  type="url"
-                  value={settings.website || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, website: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="https://yourcompany.com"
-                />
+              {/* Actions Card */}
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Actions</h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={handleSave}
+                    disabled={isSaving}
+                    className="w-full px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 font-semibold shadow-lg"
+                  >
+                    {isSaving ? (
+                      <div className="flex items-center justify-center">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Saving...
+                      </div>
+                    ) : (
+                      'Save Settings'
+                    )}
+                  </button>
+
+                  <button
+                    onClick={handleReset}
+                    className="w-full px-6 py-3 text-red-600 border-2 border-red-200 rounded-xl hover:bg-red-50 hover:border-red-300 transition-all font-semibold"
+                  >
+                    Reset to Default
+                  </button>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  value={settings.phone || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Customization */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Customization</h2>
-            
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Footer Text
-                </label>
-                <textarea
-                  value={settings.footerText || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, footerText: e.target.value }))}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Copyright © 2025 Your Company. All rights reserved."
-                />
-              </div>
-
-              <div className="flex items-center">
-                <input
-                  id="showPoweredBy"
-                  type="checkbox"
-                  checked={settings.showPoweredBy}
-                  onChange={(e) => setSettings(prev => ({ ...prev, showPoweredBy: e.target.checked }))}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <label htmlFor="showPoweredBy" className="ml-2 block text-sm text-gray-900">
-                  Show &quot;Powered by TutusPorta&quot; in footer
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Domain Settings */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Domain Settings</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Custom Domain
-                </label>
-                <input
-                  type="text"
-                  value={settings.customDomain || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, customDomain: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="accessibility.yourcompany.com"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Contact support to set up custom domains
+              {/* Help Card */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200">
+                <h3 className="text-lg font-bold text-blue-900 mb-2">Need Help?</h3>
+                <p className="text-blue-700 text-sm mb-4">
+                  Customize your TutusPorta experience with white-label branding. Contact our support team for assistance.
                 </p>
+                <a
+                  href="/contact"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm"
+                >
+                  Contact Support
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Subdomain
-                </label>
-                <input
-                  type="text"
-                  value={settings.subdomain || ''}
-                  onChange={(e) => setSettings(prev => ({ ...prev, subdomain: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="yourcompany"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  yourcompany.tutusporta.com
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-center">
-              <button
-                onClick={handleReset}
-                className="px-4 py-2 text-red-600 border border-red-300 rounded-md hover:bg-red-50"
-              >
-                Reset to Default
-              </button>
-              
-              <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-              >
-                {isSaving ? 'Saving...' : 'Save Settings'}
-              </button>
             </div>
           </div>
         </div>
+
+        {/* Custom Footer for Branding Page */}
+        <footer className="mt-16 bg-white/80 backdrop-blur-sm border-t border-gray-200/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">T</span>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">TutusPorta</div>
+                  <div className="text-xs text-gray-500">by Vexnexa</div>
+                </div>
+              </div>
+              <div className="text-sm text-gray-500">
+                © 2025 TutusPorta. White-label branding available on Business plans.
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
