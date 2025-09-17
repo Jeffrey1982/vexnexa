@@ -4,43 +4,6 @@ import { prisma } from "./prisma"
 export async function getCurrentUser() {
   // EMERGENCY: Temporarily disable all server auth to stop infinite loops
   throw new Error("Server authentication temporarily disabled")
-
-  const supabase = createClient()
-
-  const { data: { user }, error } = await supabase.auth.getUser()
-
-  if (error || !user) {
-    throw new Error("Authentication required")
-  }
-
-  // Get or create user in our database
-  let dbUser = await prisma.user.findUnique({
-    where: { email: user.email! }
-  })
-
-  if (!dbUser) {
-    // Create new user with trial plan
-    dbUser = await prisma.user.create({
-      data: {
-        email: user.email!,
-        plan: "TRIAL",
-        subscriptionStatus: "trialing",
-        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // 14 days
-      }
-    })
-  }
-
-  return {
-    id: dbUser.id,
-    email: dbUser.email,
-    firstName: dbUser.firstName,
-    lastName: dbUser.lastName,
-    company: dbUser.company,
-    plan: dbUser.plan,
-    subscriptionStatus: dbUser.subscriptionStatus,
-    trialEndsAt: dbUser.trialEndsAt,
-    profileCompleted: dbUser.profileCompleted
-  }
 }
 
 export async function requireAuth() {
