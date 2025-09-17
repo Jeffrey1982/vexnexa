@@ -65,23 +65,35 @@ export function WhiteLabelProvider({ children }: WhiteLabelProviderProps) {
           root.style.setProperty('--color-primary', data.whiteLabel.primaryColor);
           root.style.setProperty('--color-secondary', data.whiteLabel.secondaryColor);
           root.style.setProperty('--color-accent', data.whiteLabel.accentColor);
-          
-          // Update favicon if provided
-          if (data.whiteLabel.faviconUrl) {
-            const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
-            if (favicon) {
-              favicon.href = data.whiteLabel.faviconUrl;
-            } else {
-              const newFavicon = document.createElement('link');
-              newFavicon.rel = 'icon';
-              newFavicon.href = data.whiteLabel.faviconUrl;
-              document.head.appendChild(newFavicon);
-            }
-          }
 
-          // Update page title if company name is provided
-          if (data.whiteLabel.companyName && !document.title.includes(data.whiteLabel.companyName)) {
-            document.title = `${data.whiteLabel.companyName} - Accessibility Dashboard`;
+          // Only apply favicon and title changes on dashboard/app routes, not marketing pages
+          const isMarketingPage = window.location.pathname === '/' ||
+                                window.location.pathname.startsWith('/about') ||
+                                window.location.pathname.startsWith('/contact') ||
+                                window.location.pathname.startsWith('/features') ||
+                                window.location.pathname.startsWith('/pricing') ||
+                                window.location.pathname.startsWith('/legal') ||
+                                window.location.pathname.startsWith('/test') ||
+                                window.location.pathname.startsWith('/blog');
+
+          if (!isMarketingPage) {
+            // Update favicon if provided (only for dashboard/app pages)
+            if (data.whiteLabel.faviconUrl) {
+              const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
+              if (favicon) {
+                favicon.href = data.whiteLabel.faviconUrl;
+              } else {
+                const newFavicon = document.createElement('link');
+                newFavicon.rel = 'icon';
+                newFavicon.href = data.whiteLabel.faviconUrl;
+                document.head.appendChild(newFavicon);
+              }
+            }
+
+            // Update page title if company name is provided (only for dashboard/app pages)
+            if (data.whiteLabel.companyName && !document.title.includes(data.whiteLabel.companyName)) {
+              document.title = `${data.whiteLabel.companyName} - Accessibility Dashboard`;
+            }
           }
         }
       } else {

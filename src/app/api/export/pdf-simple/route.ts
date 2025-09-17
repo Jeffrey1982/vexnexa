@@ -578,7 +578,7 @@ export async function POST(req: NextRequest) {
         <body>
             <!-- Header -->
             <div class="header">
-                <div class="logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 40px; width: auto; margin-bottom: 12px;" />` : brandName}</div>
+                <div class="logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 40px; width: auto; margin-bottom: 12px;" />` : (whiteLabel ? brandName : '🛡️ ' + brandName)}</div>
                 <div class="report-title">Accessibility Compliance Report</div>
                 <div class="report-subtitle">Comprehensive WCAG Analysis & Remediation Guide</div>
             </div>
@@ -796,9 +796,9 @@ export async function POST(req: NextRequest) {
 
             <!-- Footer -->
             <div class="footer">
-                <div class="footer-logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 16px; width: auto; margin-right: 8px; vertical-align: middle;" />` : '🛡️'} ${brandName} Accessibility Platform</div>
+                <div class="footer-logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 16px; width: auto; margin-right: 8px; vertical-align: middle;" />` : (whiteLabel ? '' : '🛡️ ')}${brandName} Accessibility Platform</div>
                 <div>This report was generated automatically using axe-core accessibility testing engine.</div>
-                <div>For detailed remediation guidance, visit your dashboard${whiteLabel?.supportEmail ? ` or contact ${whiteLabel.supportEmail}` : ' or contact our accessibility experts'}.</div>
+                <div>For detailed remediation guidance, visit your dashboard${whiteLabel?.supportEmail ? ` or contact ${whiteLabel.supportEmail}` : (whiteLabel ? '' : ' or contact our accessibility experts')}.</div>
             </div>
         </body>
         </html>
