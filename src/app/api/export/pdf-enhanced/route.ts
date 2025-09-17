@@ -119,6 +119,217 @@ export async function POST(req: NextRequest) {
 
     const businessImpact = calculateBusinessImpact(scan.score || 0, violations);
 
+    // Generate detailed improvement guidance
+    const generateImprovementGuidance = (score: number, violations: Violation[]) => {
+      const criticalViolations = violations.filter(v => v.impact === 'critical');
+      const seriousViolations = violations.filter(v => v.impact === 'serious');
+      const moderateViolations = violations.filter(v => v.impact === 'moderate');
+
+      // Score improvement analysis
+      const getScoreBlockers = (currentScore: number) => {
+        if (currentScore < 40) {
+          return {
+            mainBlocker: "Critical accessibility violations are severely impacting your score",
+            targetScore: 70,
+            improvementPotential: "30-40 point improvement possible",
+            timeframe: "2-4 weeks with focused effort",
+            priority: "EMERGENCY - Immediate action required"
+          };
+        } else if (currentScore < 60) {
+          return {
+            mainBlocker: "Multiple serious violations preventing good accessibility",
+            targetScore: 85,
+            improvementPotential: "20-30 point improvement possible",
+            timeframe: "3-6 weeks with systematic approach",
+            priority: "HIGH - Significant issues need resolution"
+          };
+        } else if (currentScore < 75) {
+          return {
+            mainBlocker: "Moderate violations and missing accessibility features",
+            targetScore: 90,
+            improvementPotential: "15-20 point improvement possible",
+            timeframe: "4-8 weeks with detailed remediation",
+            priority: "MEDIUM - Good foundation, needs enhancement"
+          };
+        } else {
+          return {
+            mainBlocker: "Minor violations and optimization opportunities",
+            targetScore: 95,
+            improvementPotential: "5-15 point improvement possible",
+            timeframe: "2-4 weeks for fine-tuning",
+            priority: "LOW - Excellent accessibility, minor improvements"
+          };
+        }
+      };
+
+      // Generate specific remediation strategies
+      const getCommonRemediationStrategies = (violations: Violation[]) => {
+        const strategies = [];
+        const violationTypes = violations.map(v => v.id).slice(0, 10);
+
+        // Image accessibility
+        if (violationTypes.some(id => id?.includes('image') || id?.includes('alt'))) {
+          strategies.push({
+            category: "Image Accessibility",
+            icon: "🖼️",
+            description: "Images without proper alt text prevent screen readers from describing visual content to blind users",
+            impact: "Excludes 2.2 billion people with vision impairments worldwide",
+            solutions: [
+              "Add descriptive alt text to all informational images",
+              "Use empty alt=\"\" for decorative images",
+              "Implement proper figure and figcaption elements",
+              "Ensure alt text describes the image's purpose, not just its appearance"
+            ],
+            timeToFix: "1-2 days",
+            difficulty: "Easy",
+            wcagLevel: "WCAG 2.1 AA"
+          });
+        }
+
+        // Color contrast
+        if (violationTypes.some(id => id?.includes('color-contrast'))) {
+          strategies.push({
+            category: "Color Contrast",
+            icon: "🎨",
+            description: "Poor color contrast makes text difficult or impossible to read for users with vision impairments",
+            impact: "Affects 300 million people with color vision deficiency",
+            solutions: [
+              "Ensure text has minimum 4.5:1 contrast ratio against background",
+              "Use 3:1 contrast ratio for large text (18pt+ or 14pt+ bold)",
+              "Test with color contrast analyzers and browser dev tools",
+              "Avoid relying solely on color to convey information"
+            ],
+            timeToFix: "2-3 days",
+            difficulty: "Easy to Medium",
+            wcagLevel: "WCAG 2.1 AA"
+          });
+        }
+
+        // Form accessibility
+        if (violationTypes.some(id => id?.includes('label') || id?.includes('form'))) {
+          strategies.push({
+            category: "Form Accessibility",
+            icon: "📝",
+            description: "Forms without proper labels prevent screen reader users from understanding input purposes",
+            impact: "Blocks user registration, contact forms, and e-commerce transactions",
+            solutions: [
+              "Associate every input field with a descriptive label",
+              "Provide clear error messages and validation feedback",
+              "Group related fields with fieldset and legend elements",
+              "Include helpful instructions and format requirements"
+            ],
+            timeToFix: "1-3 days",
+            difficulty: "Easy to Medium",
+            wcagLevel: "WCAG 2.1 AA"
+          });
+        }
+
+        // Keyboard navigation
+        if (violationTypes.some(id => id?.includes('focus') || id?.includes('keyboard'))) {
+          strategies.push({
+            category: "Keyboard Navigation",
+            icon: "⌨️",
+            description: "Interactive elements that can't be accessed via keyboard exclude users who cannot use a mouse",
+            impact: "Prevents access for users with motor disabilities and assistive technology users",
+            solutions: [
+              "Ensure all interactive elements are keyboard accessible",
+              "Provide visible focus indicators on all focusable elements",
+              "Implement logical tab order throughout the page",
+              "Add skip links for main navigation and content areas"
+            ],
+            timeToFix: "3-5 days",
+            difficulty: "Medium",
+            wcagLevel: "WCAG 2.1 AA"
+          });
+        }
+
+        // Heading structure
+        if (violationTypes.some(id => id?.includes('heading'))) {
+          strategies.push({
+            category: "Heading Structure",
+            icon: "📋",
+            description: "Improper heading hierarchy confuses screen reader users who rely on headings for navigation",
+            impact: "Makes content difficult to navigate and understand for assistive technology users",
+            solutions: [
+              "Use heading tags (h1-h6) in logical, hierarchical order",
+              "Ensure each page has exactly one h1 tag",
+              "Don't skip heading levels (h1 to h3 without h2)",
+              "Make headings descriptive and meaningful"
+            ],
+            timeToFix: "1-2 days",
+            difficulty: "Easy",
+            wcagLevel: "WCAG 2.1 AA"
+          });
+        }
+
+        // Link accessibility
+        if (violationTypes.some(id => id?.includes('link'))) {
+          strategies.push({
+            category: "Link Accessibility",
+            icon: "🔗",
+            description: "Links without descriptive text prevent users from understanding their purpose",
+            impact: "Creates confusion and navigation barriers for screen reader users",
+            solutions: [
+              "Write descriptive link text that explains the link's purpose",
+              "Avoid generic text like 'click here' or 'read more'",
+              "Ensure link purpose is clear from the link text alone",
+              "Use aria-label for links that need additional context"
+            ],
+            timeToFix: "1-2 days",
+            difficulty: "Easy",
+            wcagLevel: "WCAG 2.1 AA"
+          });
+        }
+
+        return strategies.slice(0, 6); // Limit to top 6 most relevant strategies
+      };
+
+      const scoreBlockers = getScoreBlockers(score);
+      const remediationStrategies = getCommonRemediationStrategies(violations);
+
+      return {
+        scoreBlockers,
+        remediationStrategies,
+        implementationTimeline: generateImplementationTimeline(violations),
+        quickWins: generateQuickWins(violations)
+      };
+    };
+
+    const generateImplementationTimeline = (violations: Violation[]) => {
+      const critical = violations.filter(v => v.impact === 'critical').length;
+      const serious = violations.filter(v => v.impact === 'serious').length;
+      const moderate = violations.filter(v => v.impact === 'moderate').length;
+
+      return {
+        week1: `Focus on ${critical} critical issues - these are blocking users right now`,
+        week2: `Address ${serious} serious violations - major accessibility barriers`,
+        week3: `Resolve ${moderate} moderate issues - improving user experience`,
+        week4: "Testing, validation, and user feedback collection",
+        ongoing: "Implement accessibility monitoring and staff training"
+      };
+    };
+
+    const generateQuickWins = (violations: Violation[]) => {
+      const quickFixes = [];
+
+      if (violations.some(v => v.id?.includes('alt'))) {
+        quickFixes.push("Add alt text to images (1-2 hours impact)");
+      }
+      if (violations.some(v => v.id?.includes('label'))) {
+        quickFixes.push("Label form inputs properly (2-3 hours impact)");
+      }
+      if (violations.some(v => v.id?.includes('heading'))) {
+        quickFixes.push("Fix heading hierarchy (1 hour impact)");
+      }
+      if (violations.some(v => v.id?.includes('color-contrast'))) {
+        quickFixes.push("Adjust text colors for contrast (2-4 hours impact)");
+      }
+
+      return quickFixes.slice(0, 4);
+    };
+
+    const improvementGuidance = generateImprovementGuidance(scan.score || 0, violations);
+
     // Generate beautiful HTML for PDF conversion
     const html = `
         <!DOCTYPE html>
@@ -457,6 +668,130 @@ export async function POST(req: NextRequest) {
                 font-weight: 600;
             }
 
+            /* Improvement Guidance Styling */
+            .score-improvement {
+                background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+                border: 2px solid #0ea5e9;
+                border-radius: 16px;
+                padding: 25px;
+                margin: 25px 0;
+            }
+
+            .remediation-strategy {
+                background: white;
+                border-radius: 12px;
+                padding: 20px;
+                margin: 16px 0;
+                border-left: 4px solid #059669;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            }
+
+            .strategy-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+            }
+
+            .strategy-icon {
+                font-size: 24px;
+                margin-right: 12px;
+            }
+
+            .strategy-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #1f2937;
+                flex: 1;
+            }
+
+            .strategy-meta {
+                font-size: 11px;
+                color: #6b7280;
+                background: #f3f4f6;
+                padding: 4px 8px;
+                border-radius: 12px;
+                margin-left: 8px;
+            }
+
+            .strategy-description {
+                font-size: 14px;
+                color: #374151;
+                margin-bottom: 12px;
+                line-height: 1.5;
+            }
+
+            .strategy-impact {
+                font-size: 13px;
+                color: #dc2626;
+                font-weight: 500;
+                margin-bottom: 12px;
+            }
+
+            .solution-list {
+                list-style: none;
+                padding: 0;
+                margin: 12px 0;
+            }
+
+            .solution-item {
+                background: #f8fafc;
+                padding: 8px 12px;
+                margin: 6px 0;
+                border-radius: 6px;
+                border-left: 3px solid #0ea5e9;
+                font-size: 13px;
+                color: #374151;
+            }
+
+            .timeline-section {
+                background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);
+                border: 1px solid #c084fc;
+                border-radius: 12px;
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .timeline-item {
+                display: flex;
+                align-items: flex-start;
+                margin: 12px 0;
+                padding: 12px;
+                background: white;
+                border-radius: 8px;
+                border-left: 3px solid #8b5cf6;
+            }
+
+            .timeline-week {
+                background: #8b5cf6;
+                color: white;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 600;
+                margin-right: 12px;
+                min-width: 60px;
+                text-align: center;
+            }
+
+            .quick-wins {
+                background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+                border: 1px solid #a7f3d0;
+                border-radius: 12px;
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .quick-win-item {
+                background: white;
+                padding: 12px;
+                margin: 8px 0;
+                border-radius: 8px;
+                border-left: 3px solid #10b981;
+                font-size: 14px;
+                color: #374151;
+                font-weight: 500;
+            }
+
             /* Violations Section */
             .violations-container {
                 background: white;
@@ -779,6 +1114,129 @@ export async function POST(req: NextRequest) {
                 </div>
             </div>
             ` : ''}
+
+            <!-- Score Improvement Analysis -->
+            <div class="page-break"></div>
+            <div class="section">
+                <div class="section-title">🎯 What's Blocking Your Score Improvement</div>
+
+                <div class="score-improvement">
+                    <h3 style="color: #0369a1; font-size: 20px; margin-bottom: 16px; text-align: center;">📈 Score Improvement Potential</h3>
+
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 8px;">Current Score</div>
+                        <div style="font-size: 48px; font-weight: 800; color: #0369a1; margin-bottom: 8px;">${scan.score || 0}</div>
+                        <div style="font-size: 18px; color: #059669; font-weight: 600;">Target Score: ${improvementGuidance.scoreBlockers.targetScore}</div>
+                        <div style="font-size: 14px; color: #6b7280; margin-top: 8px;">${improvementGuidance.scoreBlockers.improvementPotential}</div>
+                    </div>
+
+                    <div style="background: white; padding: 20px; border-radius: 12px; margin: 16px 0;">
+                        <h4 style="color: #dc2626; font-size: 16px; margin-bottom: 12px;">🚧 Main Score Blocker</h4>
+                        <p style="font-size: 14px; color: #374151; margin-bottom: 12px;"><strong>${improvementGuidance.scoreBlockers.mainBlocker}</strong></p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div>
+                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Timeframe</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #1f2937;">${improvementGuidance.scoreBlockers.timeframe}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Priority</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #dc2626;">${improvementGuidance.scoreBlockers.priority}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Wins Section -->
+                ${improvementGuidance.quickWins.length > 0 ? `
+                <div class="quick-wins">
+                    <h3 style="color: #059669; font-size: 18px; margin-bottom: 16px;">⚡ Quick Wins (Start Here!)</h3>
+                    <p style="font-size: 14px; color: #374151; margin-bottom: 16px;">These fixes will provide immediate score improvements with minimal effort:</p>
+                    ${improvementGuidance.quickWins.map(win => `
+                        <div class="quick-win-item">✅ ${win}</div>
+                    `).join('')}
+                </div>
+                ` : ''}
+            </div>
+
+            <!-- Detailed Remediation Strategies -->
+            <div class="page-break"></div>
+            <div class="section">
+                <div class="section-title">🛠️ Detailed Remediation Strategies</div>
+
+                ${improvementGuidance.remediationStrategies.map(strategy => `
+                    <div class="remediation-strategy">
+                        <div class="strategy-header">
+                            <div class="strategy-icon">${strategy.icon}</div>
+                            <div class="strategy-title">${strategy.category}</div>
+                            <div class="strategy-meta">${strategy.difficulty}</div>
+                            <div class="strategy-meta">${strategy.timeToFix}</div>
+                            <div class="strategy-meta">${strategy.wcagLevel}</div>
+                        </div>
+
+                        <div class="strategy-description">${strategy.description}</div>
+
+                        <div class="strategy-impact">👥 Impact: ${strategy.impact}</div>
+
+                        <div style="margin-top: 16px;">
+                            <div style="font-size: 14px; font-weight: 600; color: #1f2937; margin-bottom: 8px;">🔧 How to Fix:</div>
+                            <ul class="solution-list">
+                                ${strategy.solutions.map(solution => `
+                                    <li class="solution-item">${solution}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Implementation Timeline -->
+            <div class="section">
+                <div class="section-title">📅 4-Week Implementation Timeline</div>
+
+                <div class="timeline-section">
+                    <h3 style="color: #7c3aed; font-size: 18px; margin-bottom: 16px;">⏰ Recommended Implementation Schedule</h3>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">WEEK 1</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Critical Issues</div>
+                            <div style="font-size: 13px; color: #6b7280;">${improvementGuidance.implementationTimeline.week1}</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">WEEK 2</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Serious Violations</div>
+                            <div style="font-size: 13px; color: #6b7280;">${improvementGuidance.implementationTimeline.week2}</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">WEEK 3</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Moderate Issues</div>
+                            <div style="font-size: 13px; color: #6b7280;">${improvementGuidance.implementationTimeline.week3}</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">WEEK 4</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Testing & Validation</div>
+                            <div style="font-size: 13px; color: #6b7280;">${improvementGuidance.implementationTimeline.week4}</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week" style="background: #059669;">ONGOING</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Maintenance</div>
+                            <div style="font-size: 13px; color: #6b7280;">${improvementGuidance.implementationTimeline.ongoing}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Actionable Recommendations -->
             <div class="page-break"></div>
