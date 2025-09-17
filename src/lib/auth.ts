@@ -2,10 +2,13 @@ import { createClient } from '@/lib/supabase/server'
 import { prisma } from "./prisma"
 
 export async function getCurrentUser() {
+  // EMERGENCY: Temporarily disable all server auth to stop infinite loops
+  throw new Error("Server authentication temporarily disabled")
+
   const supabase = createClient()
-  
+
   const { data: { user }, error } = await supabase.auth.getUser()
-  
+
   if (error || !user) {
     throw new Error("Authentication required")
   }
