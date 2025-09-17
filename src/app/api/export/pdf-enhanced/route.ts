@@ -923,211 +923,166 @@ export async function POST(req: NextRequest) {
                 font-weight: 500;
             }
 
-            /* Advanced Analysis Sections Styling */
-            .advanced-roi {
-                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-                border: 2px solid #22c55e;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
-            }
-
-            .roi-metric {
-                background: white;
+            /* Print-Optimized Advanced Analysis Sections */
+            .advanced-section {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
                 padding: 20px;
-                border-radius: 12px;
-                margin: 16px 0;
+                margin: 20px 0;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .section-header {
+                border-bottom: 2px solid ${primaryColor};
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            .section-header h3 {
+                font-size: 20px;
+                font-weight: 700;
+                color: ${primaryColor};
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .metrics-grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin: 20px 0;
+            }
+
+            .metrics-grid-4 {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .metric-box {
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 6px;
+                padding: 16px;
                 text-align: center;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                page-break-inside: avoid;
             }
 
-            .roi-value {
-                font-size: 32px;
+            .metric-value {
+                font-size: 24px;
                 font-weight: 800;
-                color: #059669;
-                margin-bottom: 8px;
+                margin-bottom: 6px;
+                line-height: 1;
             }
 
-            .roi-label {
-                font-size: 14px;
+            .metric-label {
+                font-size: 12px;
                 color: #6b7280;
                 font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
 
-            .legal-assessment {
-                background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-                border: 2px solid #ef4444;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
-            }
-
-            .risk-indicator {
-                display: inline-block;
-                padding: 8px 16px;
-                border-radius: 20px;
-                font-weight: 600;
-                font-size: 14px;
-                color: white;
-                margin: 8px 4px;
-            }
-
-            .competitive-analysis {
-                background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-                border: 2px solid #3b82f6;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
-            }
-
-            .market-position {
-                text-align: center;
-                padding: 20px;
-                margin: 16px 0;
-                border-radius: 12px;
-                font-weight: 600;
-                font-size: 18px;
-                color: white;
-            }
-
-            .ux-impact {
-                background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);
-                border: 2px solid #8b5cf6;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
-            }
-
-            .ux-metric {
-                background: white;
+            .highlight-box {
+                background: #fffbeb;
+                border: 1px solid #fbbf24;
+                border-left: 4px solid #f59e0b;
+                border-radius: 6px;
                 padding: 16px;
-                border-radius: 8px;
-                margin: 12px 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-left: 4px solid #8b5cf6;
+                margin: 16px 0;
             }
 
-            .seo-analysis {
-                background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
-                border: 2px solid #f97316;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
+            .warning-box {
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                border-left: 4px solid #ef4444;
+                border-radius: 6px;
+                padding: 16px;
+                margin: 16px 0;
             }
 
-            .industry-compliance {
-                background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
-                border: 2px solid #eab308;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
+            .success-box {
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                border-left: 4px solid #22c55e;
+                border-radius: 6px;
+                padding: 16px;
+                margin: 16px 0;
             }
 
-            .compliance-status {
+            .info-box {
+                background: #eff6ff;
+                border: 1px solid #bfdbfe;
+                border-left: 4px solid #3b82f6;
+                border-radius: 6px;
+                padding: 16px;
+                margin: 16px 0;
+            }
+
+            .status-badge {
                 display: inline-block;
-                padding: 8px 16px;
-                border-radius: 12px;
+                padding: 6px 12px;
+                border-radius: 4px;
                 font-weight: 600;
-                font-size: 14px;
-                margin: 8px 0;
-            }
-
-            .implementation-phases {
-                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-                border: 2px solid #64748b;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 25px 0;
-            }
-
-            .phase-card {
-                background: white;
-                border-radius: 12px;
-                padding: 24px;
-                margin: 20px 0;
-                border-left: 6px solid #3b82f6;
-                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            }
-
-            .phase-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 16px;
-            }
-
-            .phase-title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #1f2937;
-            }
-
-            .phase-duration {
-                background: #3b82f6;
-                color: white;
-                padding: 4px 12px;
-                border-radius: 12px;
                 font-size: 12px;
-                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin: 4px 0;
             }
 
-            .phase-cost {
-                background: #f3f4f6;
-                color: #1f2937;
-                padding: 8px 16px;
-                border-radius: 8px;
-                font-weight: 600;
-                text-align: center;
-                margin: 12px 0;
+            .status-critical { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+            .status-high { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
+            .status-medium { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+            .status-low { background: #f0fdf4; color: #059669; border: 1px solid #bbf7d0; }
+
+            .two-column {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                margin: 20px 0;
             }
 
-            .task-list {
+            .simple-list {
                 list-style: none;
                 padding: 0;
-                margin: 16px 0;
+                margin: 12px 0;
             }
 
-            .task-item {
-                background: #f8fafc;
-                padding: 8px 12px;
-                margin: 6px 0;
-                border-radius: 6px;
-                border-left: 3px solid #3b82f6;
+            .simple-list li {
+                padding: 8px 0;
+                border-bottom: 1px solid #f1f5f9;
                 font-size: 14px;
-                color: #374151;
+                line-height: 1.5;
             }
 
-            /* Executive Summary Styling */
-            .executive-summary {
-                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-                color: white;
-                border-radius: 16px;
-                padding: 40px;
-                margin: 30px 0;
-                text-align: center;
+            .simple-list li:last-child {
+                border-bottom: none;
             }
 
-            .exec-metric {
-                display: inline-block;
-                margin: 16px 20px;
-                text-align: center;
-            }
+            .text-large { font-size: 32px; font-weight: 800; line-height: 1; }
+            .text-medium { font-size: 20px; font-weight: 600; line-height: 1.2; }
+            .text-small { font-size: 14px; line-height: 1.4; }
+            .text-tiny { font-size: 12px; line-height: 1.3; }
 
-            .exec-value {
-                font-size: 36px;
-                font-weight: 800;
-                color: #60a5fa;
-                display: block;
-            }
+            .color-primary { color: ${primaryColor}; }
+            .color-success { color: #059669; }
+            .color-warning { color: #d97706; }
+            .color-danger { color: #dc2626; }
+            .color-muted { color: #6b7280; }
 
-            .exec-label {
-                font-size: 14px;
-                color: #cbd5e1;
-                font-weight: 500;
-                margin-top: 8px;
-            }
+            .mb-10 { margin-bottom: 10px; }
+            .mb-20 { margin-bottom: 20px; }
+            .mt-10 { margin-top: 10px; }
+            .mt-20 { margin-top: 20px; }
+
+            .text-center { text-align: center; }
+            .font-bold { font-weight: 700; }
+            .font-semibold { font-weight: 600; }
 
             /* Violations Section */
             .violations-container {
@@ -1430,27 +1385,31 @@ export async function POST(req: NextRequest) {
             <div class="section">
                 <div class="section-title">📈 Executive Summary Dashboard</div>
 
-                <div class="executive-summary">
-                    <h2 style="font-size: 28px; margin-bottom: 30px; color: #f1f5f9;">Key Business Metrics at a Glance</h2>
-
-                    <div class="exec-metric">
-                        <span class="exec-value">$${comprehensiveAnalysis.advancedROI.annualRevenueLift.toLocaleString()}</span>
-                        <div class="exec-label">Annual Revenue Opportunity</div>
+                <div class="advanced-section">
+                    <div class="section-header">
+                        <h3>💼 Key Business Metrics at a Glance</h3>
                     </div>
 
-                    <div class="exec-metric">
-                        <span class="exec-value">${comprehensiveAnalysis.legalRisk.riskScore}%</span>
-                        <div class="exec-label">Legal Risk Score</div>
-                    </div>
+                    <div class="metrics-grid-4">
+                        <div class="metric-box">
+                            <div class="metric-value color-success">$${comprehensiveAnalysis.advancedROI.annualRevenueLift.toLocaleString()}</div>
+                            <div class="metric-label">Annual Revenue Opportunity</div>
+                        </div>
 
-                    <div class="exec-metric">
-                        <span class="exec-value">${comprehensiveAnalysis.uxImpact.userExclusionRate}%</span>
-                        <div class="exec-label">Users Currently Excluded</div>
-                    </div>
+                        <div class="metric-box">
+                            <div class="metric-value color-danger">${comprehensiveAnalysis.legalRisk.riskScore}%</div>
+                            <div class="metric-label">Legal Risk Score</div>
+                        </div>
 
-                    <div class="exec-metric">
-                        <span class="exec-value">${comprehensiveAnalysis.advancedROI.breakEvenMonths}</span>
-                        <div class="exec-label">Months to Break Even</div>
+                        <div class="metric-box">
+                            <div class="metric-value color-warning">${comprehensiveAnalysis.uxImpact.userExclusionRate}%</div>
+                            <div class="metric-label">Users Currently Excluded</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="metric-value color-primary">${comprehensiveAnalysis.advancedROI.breakEvenMonths}</div>
+                            <div class="metric-label">Months to Break Even</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1460,32 +1419,32 @@ export async function POST(req: NextRequest) {
             <div class="section">
                 <div class="section-title">💎 Advanced ROI & Financial Projections</div>
 
-                <div class="advanced-roi">
-                    <h3 style="color: #059669; font-size: 22px; margin-bottom: 20px; text-align: center;">💰 5-Year Financial Impact Analysis</h3>
+                <div class="advanced-section">
+                    <div class="section-header">
+                        <h3>💰 5-Year Financial Impact Analysis</h3>
+                    </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
-                        <div class="roi-metric">
-                            <div class="roi-value">$${comprehensiveAnalysis.advancedROI.monthlyRevenueLift.toLocaleString()}</div>
-                            <div class="roi-label">Monthly Revenue Lift</div>
+                    <div class="metrics-grid-2">
+                        <div class="metric-box">
+                            <div class="metric-value color-success">$${comprehensiveAnalysis.advancedROI.monthlyRevenueLift.toLocaleString()}</div>
+                            <div class="metric-label">Monthly Revenue Lift</div>
                         </div>
-                        <div class="roi-metric">
-                            <div class="roi-value">$${comprehensiveAnalysis.advancedROI.fiveYearProjection.toLocaleString()}</div>
-                            <div class="roi-label">5-Year Revenue Projection</div>
+                        <div class="metric-box">
+                            <div class="metric-value color-success">$${comprehensiveAnalysis.advancedROI.fiveYearProjection.toLocaleString()}</div>
+                            <div class="metric-label">5-Year Revenue Projection</div>
                         </div>
                     </div>
 
-                    <div style="background: white; padding: 24px; border-radius: 12px; margin: 20px 0;">
-                        <h4 style="color: #1f2937; font-size: 18px; margin-bottom: 16px;">📊 Market Expansion Opportunities</h4>
-                        <div style="font-size: 14px; color: #374151; line-height: 1.6;">
-                            <p><strong>Untapped Revenue Stream: $${comprehensiveAnalysis.advancedROI.marketExpansionRevenue.toLocaleString()}/year</strong></p>
-                            <ul style="margin: 16px 0; padding-left: 20px;">
-                                <li>${comprehensiveAnalysis.advancedROI.customerLifetimeValueIncrease * 100}% increase in customer lifetime value</li>
-                                <li>Access to ${comprehensiveAnalysis.advancedROI.disabledUserMarketShare * 100}% disabled user market (61 million Americans)</li>
-                                <li>Government contract eligibility worth millions in potential revenue</li>
-                                <li>Premium pricing justified by accessible, inclusive design</li>
-                                <li>Reduced customer acquisition costs through improved retention</li>
-                            </ul>
-                        </div>
+                    <div class="success-box">
+                        <h4 class="text-medium color-success mb-10">📊 Market Expansion Opportunities</h4>
+                        <p class="text-small mb-10"><strong>Untapped Revenue Stream: $${comprehensiveAnalysis.advancedROI.marketExpansionRevenue.toLocaleString()}/year</strong></p>
+                        <ul class="simple-list">
+                            <li>${comprehensiveAnalysis.advancedROI.customerLifetimeValueIncrease * 100}% increase in customer lifetime value</li>
+                            <li>Access to ${comprehensiveAnalysis.advancedROI.disabledUserMarketShare * 100}% disabled user market (61 million Americans)</li>
+                            <li>Government contract eligibility worth millions in potential revenue</li>
+                            <li>Premium pricing justified by accessible, inclusive design</li>
+                            <li>Reduced customer acquisition costs through improved retention</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -1494,28 +1453,28 @@ export async function POST(req: NextRequest) {
             <div class="section">
                 <div class="section-title">⚖️ Comprehensive Legal Risk Assessment</div>
 
-                <div class="legal-assessment">
-                    <h3 style="color: #dc2626; font-size: 22px; margin-bottom: 20px; text-align: center;">🚨 Litigation Risk Analysis</h3>
+                <div class="advanced-section">
+                    <div class="section-header">
+                        <h3>🚨 Litigation Risk Analysis</h3>
+                    </div>
 
-                    <div style="text-align: center; margin: 20px 0;">
-                        <div style="font-size: 48px; font-weight: 800; color: #dc2626; margin-bottom: 8px;">${comprehensiveAnalysis.legalRisk.riskScore}%</div>
-                        <div style="font-size: 18px; color: #6b7280;">Legal Risk Score</div>
-                        <div class="risk-indicator" style="background: ${comprehensiveAnalysis.legalRisk.riskScore > 70 ? '#dc2626' : comprehensiveAnalysis.legalRisk.riskScore > 40 ? '#f59e0b' : '#059669'};">
+                    <div class="text-center mb-20">
+                        <div class="text-large color-danger mb-10">${comprehensiveAnalysis.legalRisk.riskScore}%</div>
+                        <div class="text-small color-muted mb-10">Legal Risk Score</div>
+                        <div class="status-badge ${comprehensiveAnalysis.legalRisk.riskScore > 70 ? 'status-critical' : comprehensiveAnalysis.legalRisk.riskScore > 40 ? 'status-high' : 'status-low'}">
                             Lawsuit Probability: ${comprehensiveAnalysis.legalRisk.lawsuitProbability}
                         </div>
                     </div>
 
-                    <div style="background: white; padding: 24px; border-radius: 12px; margin: 20px 0;">
-                        <h4 style="color: #dc2626; font-size: 18px; margin-bottom: 16px;">💸 Financial Exposure</h4>
-                        <div style="font-size: 24px; font-weight: 700; color: #dc2626; text-align: center; margin: 16px 0;">
+                    <div class="warning-box">
+                        <h4 class="text-medium color-danger mb-10">💸 Financial Exposure</h4>
+                        <div class="text-medium font-bold color-danger text-center mb-10">
                             ${comprehensiveAnalysis.legalRisk.estimatedLegalCosts}
                         </div>
-                        <div style="font-size: 14px; color: #374151;">
-                            <p><strong>Compliance Timeline:</strong> ${comprehensiveAnalysis.legalRisk.timeToCompliance}</p>
-                            <p style="font-weight: 600; color: #dc2626; margin-top: 12px;">
-                                Warning: This documented accessibility analysis could be used as evidence of known violations in legal proceedings.
-                            </p>
-                        </div>
+                        <p class="text-small mb-10"><strong>Compliance Timeline:</strong> ${comprehensiveAnalysis.legalRisk.timeToCompliance}</p>
+                        <p class="text-small font-semibold color-danger">
+                            ⚠️ Warning: This documented accessibility analysis could be used as evidence of known violations in legal proceedings.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1524,22 +1483,27 @@ export async function POST(req: NextRequest) {
             <div class="section">
                 <div class="section-title">🏛️ ${comprehensiveAnalysis.industryCompliance.industry} Compliance Analysis</div>
 
-                <div class="industry-compliance">
-                    <div style="text-align: center; margin: 20px 0;">
-                        <div class="compliance-status" style="background: ${comprehensiveAnalysis.industryCompliance.complianceLevel === 'Compliant' ? '#059669' : '#dc2626'}; color: white;">
+                <div class="advanced-section">
+                    <div class="section-header">
+                        <h3>📋 Industry-Specific Requirements</h3>
+                    </div>
+
+                    <div class="text-center mb-20">
+                        <div class="status-badge ${comprehensiveAnalysis.industryCompliance.complianceLevel === 'Compliant' ? 'status-low' : 'status-critical'}">
                             Current Status: ${comprehensiveAnalysis.industryCompliance.complianceLevel}
                         </div>
                     </div>
 
-                    <div style="background: white; padding: 24px; border-radius: 12px; margin: 20px 0;">
-                        <h4 style="color: #ca8a04; font-size: 18px; margin-bottom: 16px;">📋 Industry-Specific Requirements</h4>
-                        <ul style="font-size: 14px; color: #374151; margin: 16px 0; padding-left: 20px;">
+                    <div class="info-box">
+                        <h4 class="text-medium color-primary mb-10">📋 Required Compliance Standards</h4>
+                        <ul class="simple-list">
                             ${comprehensiveAnalysis.industryCompliance.specificRequirements.map(req => `<li>${req}</li>`).join('')}
                         </ul>
-                        <div style="margin-top: 20px; padding: 16px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                            <strong style="color: #92400e;">Non-Compliance Penalties:</strong>
-                            <div style="color: #78350f; margin-top: 8px;">${comprehensiveAnalysis.industryCompliance.penalties}</div>
-                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <p class="text-small font-semibold color-warning mb-10">⚠️ Non-Compliance Penalties:</p>
+                        <p class="text-small">${comprehensiveAnalysis.industryCompliance.penalties}</p>
                     </div>
                 </div>
             </div>
