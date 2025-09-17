@@ -28,7 +28,6 @@ import { BeforeAfterComparison } from "@/components/enhanced/BeforeAfterComparis
 import { DragDropDashboard } from "@/components/enhanced/DragDropDashboard";
 import { TrendAnalysis } from "@/components/enhanced/TrendAnalysis";
 import { CompetitorBenchmark } from "@/components/enhanced/CompetitorBenchmark";
-import { ScanDebugger } from "@/components/ScanDebugger";
 import { ROICalculator } from "@/components/enhanced/ROICalculator";
 import { ExecutiveSummary } from "@/components/enhanced/ExecutiveSummary";
 import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
@@ -169,11 +168,6 @@ export default async function DashboardPage() {
       <BrandedHeader />
       <div className="container mx-auto px-4 py-8 space-y-8">
 
-      {/* Temporary Debug Section - Remove after fixing */}
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h2 className="text-red-800 font-bold mb-2">🔧 DEBUG MODE</h2>
-        <ScanDebugger />
-      </div>
 
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -200,10 +194,6 @@ export default async function DashboardPage() {
         <CardContent>
           <NewScanForm />
 
-          {/* Debug Component - Remove after fixing */}
-          <div className="mt-6">
-            <ScanDebugger />
-          </div>
         </CardContent>
       </Card>
 
