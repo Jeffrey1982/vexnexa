@@ -17,7 +17,6 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
       return customer
     } catch (error) {
       // Customer doesn't exist anymore, create a new one
-      console.warn("Mollie customer not found, creating new one:", error)
     }
   }
   
@@ -100,7 +99,7 @@ export async function createSubscription(opts: {
     try {
       await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, { customerId })
     } catch (error) {
-      console.warn("Failed to cancel existing subscription:", error)
+      // Failed to cancel existing subscription
     }
   }
   
@@ -216,7 +215,7 @@ export async function processWebhookPayment(paymentId: string) {
   const plan = planKeyFromString((payment.metadata as any).plan)
   
   if (payment.status !== "paid") {
-    console.log("Payment not paid yet:", payment.id, payment.status)
+    // Payment not paid yet
     return
   }
   
