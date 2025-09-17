@@ -34,19 +34,9 @@ export function Navbar({ className }: NavbarProps) {
   const supabase = createClient();
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    };
-
-    getUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []); // ← Lege dependency array!
+    // EMERGENCY: Auth disabled, set dummy user
+    setUser(null);
+  }, []);
 
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {
