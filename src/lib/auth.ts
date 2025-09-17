@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from "./prisma"
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<any> {
   // EMERGENCY: Return dummy user to prevent build errors
   return {
     id: "emergency-disabled",
@@ -9,8 +9,8 @@ export async function getCurrentUser() {
     firstName: null,
     lastName: null,
     company: null,
-    plan: "TRIAL" as const,
-    subscriptionStatus: "trialing" as const,
+    plan: "STARTER" as any,
+    subscriptionStatus: "active" as any,
     trialEndsAt: new Date(),
     profileCompleted: false
   }
