@@ -28,7 +28,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
     setExportingPdf(true);
     try {
       // Open the HTML report in a new window for printing to PDF
-      const response = await fetch("/api/export/pdf-simple", {
+      const response = await fetch("/api/export/pdf-enhanced", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
