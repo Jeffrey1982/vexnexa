@@ -81,6 +81,44 @@ export async function POST(req: NextRequest) {
     const scoreInfo = getScoreInfo(scan.score || 0);
     const siteUrl = scan.page?.url || scan.site.url;
 
+    // Calculate business impact metrics for sales-focused reporting
+    const calculateBusinessImpact = (score: number, violations: Violation[]) => {
+      const criticalCount = violations.filter(v => v.impact === 'critical').length;
+      const seriousCount = violations.filter(v => v.impact === 'serious').length;
+
+      // Estimate potential revenue impact (conservative estimates)
+      const estimatedMonthlyVisitors = 10000; // Conservative baseline
+      const averageConversionRate = 2.5; // Industry average
+      const averageOrderValue = 150; // Conservative estimate
+
+      // Accessibility barriers typically reduce conversion by 20-40%
+      const conversionReduction = Math.min(40, (criticalCount * 5) + (seriousCount * 2));
+      const monthlyRevenueLoss = Math.round(
+        (estimatedMonthlyVisitors * (averageConversionRate / 100) * averageOrderValue * (conversionReduction / 100))
+      );
+
+      // Legal risk assessment
+      const getRiskLevel = () => {
+        if (criticalCount > 5 || score < 40) return { level: 'CRITICAL', color: '#dc2626', description: 'High lawsuit risk' };
+        if (criticalCount > 2 || score < 60) return { level: 'HIGH', color: '#ea580c', description: 'Significant legal exposure' };
+        if (criticalCount > 0 || score < 75) return { level: 'MEDIUM', color: '#d97706', description: 'Moderate risk level' };
+        return { level: 'LOW', color: '#059669', description: 'Minimal legal risk' };
+      };
+
+      const riskAssessment = getRiskLevel();
+
+      return {
+        monthlyRevenueLoss,
+        annualRevenueLoss: monthlyRevenueLoss * 12,
+        riskAssessment,
+        conversionReduction,
+        userExclusionPercentage: Math.min(25, criticalCount * 2 + seriousCount),
+        seoImpact: score < 70 ? 'Negative SEO impact likely' : 'Minimal SEO impact'
+      };
+    };
+
+    const businessImpact = calculateBusinessImpact(scan.score || 0, violations);
+
     // Generate beautiful HTML for PDF conversion
     const html = `
         <!DOCTYPE html>
@@ -333,6 +371,92 @@ export async function POST(req: NextRequest) {
                 background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
             }
 
+            /* Business Impact Styling */
+            .business-impact {
+                background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+                border: 2px solid #fecaca;
+                border-radius: 16px;
+                padding: 30px;
+                margin-bottom: 30px;
+            }
+
+            .impact-highlight {
+                background: white;
+                border-radius: 12px;
+                padding: 20px;
+                margin: 20px 0;
+                border-left: 4px solid #dc2626;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+
+            .revenue-loss {
+                font-size: 32px;
+                font-weight: 800;
+                color: #dc2626;
+                text-align: center;
+                margin: 16px 0;
+            }
+
+            .risk-badge {
+                display: inline-block;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: white;
+                margin: 8px 0;
+            }
+
+            .competitive-analysis {
+                background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+                border: 1px solid #bfdbfe;
+                border-radius: 12px;
+                padding: 25px;
+                margin: 20px 0;
+            }
+
+            .action-items {
+                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+                border: 1px solid #bbf7d0;
+                border-radius: 12px;
+                padding: 25px;
+                margin: 20px 0;
+            }
+
+            .action-item {
+                display: flex;
+                align-items: flex-start;
+                margin: 12px 0;
+                padding: 12px;
+                background: white;
+                border-radius: 8px;
+                border-left: 3px solid #22c55e;
+            }
+
+            .action-priority {
+                background: #22c55e;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 10px;
+                font-weight: 600;
+                margin-right: 12px;
+                min-width: 50px;
+                text-align: center;
+            }
+
+            .urgency-banner {
+                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+                color: white;
+                padding: 20px;
+                text-align: center;
+                border-radius: 12px;
+                margin: 20px 0;
+                font-weight: 600;
+            }
+
             /* Violations Section */
             .violations-container {
                 background: white;
@@ -563,6 +687,72 @@ export async function POST(req: NextRequest) {
                 </div>
             </div>
 
+            <!-- Business Impact Analysis -->
+            <div class="page-break"></div>
+            <div class="section">
+                <div class="section-title">📊 Business Impact Analysis</div>
+
+                ${businessImpact.riskAssessment.level !== 'LOW' ? `
+                <div class="urgency-banner">
+                    ⚠️ IMMEDIATE ACTION REQUIRED: Your website accessibility issues are costing you customers and creating legal liability
+                </div>
+                ` : ''}
+
+                <div class="business-impact">
+                    <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 16px; text-align: center;">💰 Revenue Impact Assessment</h3>
+
+                    <div class="impact-highlight">
+                        <div style="text-align: center;">
+                            <div style="font-size: 16px; color: #6b7280; margin-bottom: 8px;">Estimated Monthly Revenue Loss</div>
+                            <div class="revenue-loss">$${businessImpact.monthlyRevenueLoss.toLocaleString()}</div>
+                            <div style="font-size: 20px; font-weight: 600; color: #dc2626;">Annual Loss: $${businessImpact.annualRevenueLoss.toLocaleString()}</div>
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: #fef2f2; border-radius: 8px;">
+                            <div style="font-size: 14px; color: #374151;">
+                                <strong>Why you're losing money:</strong><br>
+                                • ${businessImpact.conversionReduction}% reduction in conversion rates<br>
+                                • ${businessImpact.userExclusionPercentage}% of potential customers cannot properly use your site<br>
+                                • ${businessImpact.seoImpact}<br>
+                                • Damaged brand reputation and customer trust
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="competitive-analysis">
+                    <h3 style="color: #1e40af; font-size: 18px; margin-bottom: 16px;">🏆 Competitive Disadvantage</h3>
+                    <div style="font-size: 14px; color: #374151; line-height: 1.6;">
+                        <p><strong>Your competitors with accessible websites are:</strong></p>
+                        <ul style="margin: 16px 0; padding-left: 20px;">
+                            <li>Capturing customers you're losing to accessibility barriers</li>
+                            <li>Ranking higher in search results (Google prioritizes accessible sites)</li>
+                            <li>Building stronger brand reputation and customer loyalty</li>
+                            <li>Avoiding costly lawsuits and legal fees</li>
+                            <li>Expanding their market reach to disabled users (26% of population)</li>
+                        </ul>
+                        <p style="font-weight: 600; color: #dc2626;">Every day you delay accessibility improvements, you're handing revenue to competitors.</p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border: 2px solid #fecaca; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                    <h3 style="color: #dc2626; font-size: 18px; margin-bottom: 16px;">⚖️ Legal Risk Assessment</h3>
+                    <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600; margin-right: 12px;">Risk Level:</span>
+                        <span class="risk-badge" style="background-color: ${businessImpact.riskAssessment.color};">${businessImpact.riskAssessment.level}</span>
+                    </div>
+                    <div style="font-size: 14px; color: #374151;">
+                        <p><strong>${businessImpact.riskAssessment.description}</strong></p>
+                        <ul style="margin: 12px 0; padding-left: 20px;">
+                            <li>ADA lawsuit filings increased 320% in recent years</li>
+                            <li>Average lawsuit settlement: $75,000 - $400,000</li>
+                            <li>Legal fees typically range from $50,000 - $150,000</li>
+                            <li>Businesses often forced to rebuild entire website</li>
+                        </ul>
+                        <p style="font-weight: 600;">Note: This report can serve as evidence of known accessibility issues in legal proceedings.</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Top Issues -->
             ${topViolations.length > 0 ? `
             <div class="page-break"></div>
@@ -589,6 +779,76 @@ export async function POST(req: NextRequest) {
                 </div>
             </div>
             ` : ''}
+
+            <!-- Actionable Recommendations -->
+            <div class="page-break"></div>
+            <div class="section">
+                <div class="section-title">🚀 Immediate Action Plan & ROI Projections</div>
+
+                <div class="action-items">
+                    <h3 style="color: #059669; font-size: 18px; margin-bottom: 20px;">✅ Recommended Next Steps</h3>
+
+                    <div class="action-item">
+                        <div class="action-priority" style="background: #dc2626;">HIGH</div>
+                        <div>
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Immediate Critical Issue Resolution</div>
+                            <div style="font-size: 13px; color: #6b7280;">Address ${stats.critical} critical and ${stats.serious} serious accessibility violations within 30 days</div>
+                        </div>
+                    </div>
+
+                    <div class="action-item">
+                        <div class="action-priority" style="background: #f59e0b;">MED</div>
+                        <div>
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Comprehensive Accessibility Audit</div>
+                            <div style="font-size: 13px; color: #6b7280;">Full website audit including user testing with disabled users</div>
+                        </div>
+                    </div>
+
+                    <div class="action-item">
+                        <div class="action-priority" style="background: #22c55e;">LOW</div>
+                        <div>
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px;">Ongoing Accessibility Monitoring</div>
+                            <div style="font-size: 13px; color: #6b7280;">Implement automated testing and staff training programs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 1px solid #7dd3fc; border-radius: 12px; padding: 25px; margin: 20px 0;">
+                    <h3 style="color: #0369a1; font-size: 18px; margin-bottom: 16px;">💎 Investment ROI Analysis</h3>
+                    <div style="font-size: 14px; color: #374151;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0;">
+                            <div style="background: white; padding: 16px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 24px; font-weight: 800; color: #0369a1;">$${(businessImpact.annualRevenueLoss * 0.7).toLocaleString()}</div>
+                                <div style="font-size: 12px; color: #6b7280;">Potential Annual Revenue Recovery</div>
+                            </div>
+                            <div style="background: white; padding: 16px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 24px; font-weight: 800; color: #059669;">3-6 months</div>
+                                <div style="font-size: 12px; color: #6b7280;">Typical ROI Payback Period</div>
+                            </div>
+                        </div>
+                        <p><strong>Why accessibility improvements pay for themselves:</strong></p>
+                        <ul style="margin: 12px 0; padding-left: 20px;">
+                            <li>Increased conversion rates (typically 20-30% improvement)</li>
+                            <li>Expanded customer base (+26% potential market reach)</li>
+                            <li>Improved SEO rankings and organic traffic</li>
+                            <li>Enhanced brand reputation and customer loyalty</li>
+                            <li>Legal protection and risk mitigation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                ${whiteLabel ? `
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #f59e0b; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <h3 style="color: #92400e; font-size: 16px; margin-bottom: 12px;">📞 Ready to Get Started?</h3>
+                    <div style="font-size: 14px; color: #78350f;">
+                        <p style="margin-bottom: 8px;"><strong>Contact ${brandName} for a free consultation:</strong></p>
+                        ${whiteLabel.supportEmail ? `<p>Email: ${whiteLabel.supportEmail}</p>` : ''}
+                        ${whiteLabel.phone ? `<p>Phone: ${whiteLabel.phone}</p>` : ''}
+                        ${whiteLabel.website ? `<p>Website: ${whiteLabel.website}</p>` : ''}
+                    </div>
+                </div>
+                ` : ''}
+            </div>
 
             <!-- Footer -->
             <div class="footer">
