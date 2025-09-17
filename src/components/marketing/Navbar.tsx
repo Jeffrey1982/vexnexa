@@ -46,7 +46,7 @@ export function Navbar({ className }: NavbarProps) {
     });
 
     return () => subscription.unsubscribe();
-  }, []); // Fixed: empty dependency array instead of [supabase.auth]
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps - Fixed: empty dependency to prevent infinite auth loops
 
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {

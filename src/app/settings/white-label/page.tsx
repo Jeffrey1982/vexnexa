@@ -280,9 +280,11 @@ export default function WhiteLabelPage() {
                     <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors">
                       {settings.logoUrl ? (
                         <div className="space-y-4">
-                          <img
+                          <Image
                             src={settings.logoUrl}
                             alt="Company Logo"
+                            width={64}
+                            height={64}
                             className="h-16 w-16 object-contain mx-auto border rounded-lg shadow-sm"
                           />
                           <p className="text-sm text-gray-500">Click to replace</p>
@@ -328,9 +330,11 @@ export default function WhiteLabelPage() {
                     <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors">
                       {settings.faviconUrl ? (
                         <div className="space-y-4">
-                          <img
+                          <Image
                             src={settings.faviconUrl}
                             alt="Favicon"
+                            width={32}
+                            height={32}
                             className="h-8 w-8 object-contain mx-auto border rounded shadow-sm"
                           />
                           <p className="text-sm text-gray-500">Click to replace</p>
@@ -382,7 +386,7 @@ export default function WhiteLabelPage() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Brand Colors</h2>
-                  <p className="text-gray-600">Define your brand's color palette</p>
+                  <p className="text-gray-600">Define your brand&apos;s color palette</p>
                 </div>
               </div>
 
@@ -536,7 +540,7 @@ export default function WhiteLabelPage() {
                     className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                   />
                   <label htmlFor="showPoweredBy" className="ml-3 block text-sm font-medium text-gray-900">
-                    Show "Powered by TutusPorta" in footer
+                    Show &quot;Powered by TutusPorta&quot; in footer
                   </label>
                 </div>
               </div>
@@ -605,7 +609,7 @@ export default function WhiteLabelPage() {
                   <div className="p-4 border border-gray-200 rounded-lg bg-white/50">
                     <div className="flex items-center space-x-3 mb-2">
                       {settings.logoUrl ? (
-                        <img src={settings.logoUrl} alt="Logo" className="h-8 w-8 object-contain" />
+                        <Image src={settings.logoUrl} alt="Logo" width={32} height={32} className="h-8 w-8 object-contain" />
                       ) : (
                         <div className="w-8 h-8 bg-gray-200 rounded"></div>
                       )}

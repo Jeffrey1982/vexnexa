@@ -34,9 +34,11 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
           <div className="flex items-center">
             <Link href="/dashboard" className="flex items-center space-x-3">
               {logoUrl ? (
-                <img
+                <Image
                   src={logoUrl}
                   alt={`${companyName} Logo`}
+                  width={120}
+                  height={32}
                   className="h-8 w-auto max-w-[120px] object-contain"
                 />
               ) : (
