@@ -114,92 +114,187 @@ export async function POST(req: NextRequest) {
                 }
             }
 
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                color: #1f2937;
-                line-height: 1.6;
-                background: white;
+            :root {
+                --primary: ${primaryColor};
+                --secondary: ${secondaryColor};
+                --surface: #ffffff;
+                --text-primary: #0f172a;
+                --text-secondary: #475569;
+                --text-muted: #64748b;
+                --border: #e2e8f0;
+                --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+                --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+                --border-radius: 12px;
             }
 
-            /* Header Section */
+            body {
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                color: var(--text-primary);
+                line-height: 1.6;
+                background: var(--surface);
+                font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            /* Professional Header */
             .header {
-                background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%);
+                background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
                 color: white;
-                padding: 40px;
+                padding: 50px 40px;
                 text-align: center;
-                margin-bottom: 40px;
+                margin-bottom: 50px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+                opacity: 0.1;
+            }
+
+            .header-content {
+                position: relative;
+                z-index: 1;
             }
 
             .logo {
                 font-size: 32px;
-                font-weight: 800;
-                letter-spacing: -1px;
-                margin-bottom: 16px;
+                font-weight: 900;
+                letter-spacing: -0.02em;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
             }
 
-            .logo::before {
-                content: '🛡️';
-                margin-right: 12px;
-                font-size: 28px;
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
             }
 
             .report-title {
                 font-size: 28px;
-                font-weight: 700;
-                margin-bottom: 8px;
+                font-weight: 800;
+                margin-bottom: 12px;
+                letter-spacing: -0.01em;
             }
 
             .report-subtitle {
                 font-size: 16px;
-                opacity: 0.9;
-                font-weight: 300;
+                opacity: 0.95;
+                font-weight: 400;
+                letter-spacing: 0.01em;
             }
 
-            /* Score Hero Section */
+            /* Premium Score Hero Section */
             .score-hero {
-                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
                 border-radius: 16px;
                 padding: 40px;
                 text-align: center;
                 margin-bottom: 40px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                border: 1px solid #e2e8f0;
+                box-shadow: var(--shadow-md);
+                border: 2px solid var(--border);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .score-hero::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle at center, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
+            }
+
+            .score-hero-content {
+                position: relative;
+                z-index: 1;
             }
 
             .score-circle {
-                width: 100px;
-                height: 100px;
+                width: 110px;
+                height: 110px;
                 border-radius: 50%;
-                margin: 0 auto 20px;
+                margin: 0 auto 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 32px;
-                font-weight: 800;
+                font-weight: 900;
                 color: white;
                 position: relative;
+                box-shadow: var(--shadow-md);
             }
 
-            .score-excellent { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
-            .score-good { background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); }
-            .score-fair { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); }
-            .score-poor { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
-            .score-critical { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+            .score-circle::before {
+                content: '';
+                position: absolute;
+                top: -3px;
+                left: -3px;
+                right: -3px;
+                bottom: -3px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent);
+                z-index: -1;
+            }
+
+            .score-excellent {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                box-shadow: 0 6px 24px rgba(16, 185, 129, 0.3);
+            }
+            .score-good {
+                background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+                box-shadow: 0 6px 24px rgba(132, 204, 22, 0.3);
+            }
+            .score-fair {
+                background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+                box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+            }
+            .score-poor {
+                background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+                box-shadow: 0 6px 24px rgba(249, 115, 22, 0.3);
+            }
+            .score-critical {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                box-shadow: 0 6px 24px rgba(239, 68, 68, 0.3);
+            }
 
             .score-label {
-                font-size: 24px;
-                font-weight: 600;
-                color: #1f2937;
-                margin-bottom: 8px;
+                font-size: 26px;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 12px;
+                letter-spacing: -0.01em;
             }
 
             .score-description {
-                font-size: 14px;
-                color: #6b7280;
+                font-size: 15px;
+                color: var(--text-secondary);
                 max-width: 400px;
                 margin: 0 auto;
+                line-height: 1.6;
+                font-weight: 400;
             }
 
             /* Metrics Grid */
@@ -576,11 +671,19 @@ export async function POST(req: NextRequest) {
             </style>
         </head>
         <body>
-            <!-- Header -->
+            <!-- Professional Header -->
             <div class="header">
-                <div class="logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 40px; width: auto; margin-bottom: 12px;" />` : (whiteLabel ? brandName : '🛡️ ' + brandName)}</div>
-                <div class="report-title">Accessibility Compliance Report</div>
-                <div class="report-subtitle">Comprehensive WCAG Analysis & Remediation Guide</div>
+                <div class="header-content">
+                    <div class="logo">
+                        ${brandLogo ?
+                            `<div class="logo-icon"><img src="${brandLogo}" alt="${brandName}" style="height: 20px; width: auto;" /></div>` :
+                            `<div class="logo-icon">🛡️</div>`
+                        }
+                        <span>${brandName}</span>
+                    </div>
+                    <div class="report-title">Accessibility Compliance Report</div>
+                    <div class="report-subtitle">Professional WCAG Analysis & Assessment</div>
+                </div>
             </div>
 
             <!-- Website Info -->
@@ -589,13 +692,15 @@ export async function POST(req: NextRequest) {
                 <div class="scan-date">Scanned on ${formatDate(scan.createdAt)} • Generated on ${formatDate(new Date())}</div>
             </div>
 
-            <!-- Score Hero -->
+            <!-- Premium Score Hero -->
             <div class="score-hero avoid-break">
-                <div class="score-circle ${scoreInfo.category}">
-                    ${scan.score || 0}
+                <div class="score-hero-content">
+                    <div class="score-circle ${scoreInfo.category}">
+                        ${scan.score || 0}
+                    </div>
+                    <div class="score-label">${scoreInfo.label} Accessibility Score</div>
+                    <div class="score-description">${scoreInfo.description}</div>
                 </div>
-                <div class="score-label">${scoreInfo.label} Accessibility Score</div>
-                <div class="score-description">${scoreInfo.description}</div>
             </div>
 
             <!-- Metrics Grid -->

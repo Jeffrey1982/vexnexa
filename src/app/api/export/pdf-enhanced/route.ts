@@ -461,37 +461,80 @@ export async function POST(req: NextRequest) {
 
     const comprehensiveAnalysis = generateComprehensiveAnalysis(scan.score || 0, violations, siteUrl);
 
-    // Generate beautiful HTML for PDF conversion
+    // Generate stunning HTML for PDF conversion with professional design
     const html = `
         <!DOCTYPE html>
         <html>
         <head>
             <meta charset="utf-8">
+            <title>${brandName} - Accessibility Report</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
             <style>
             @page {
-                margin: 15mm;
+                margin: 12mm;
                 size: A4;
-                @top-center {
+                @top-left {
                     content: "${brandName} Accessibility Report";
-                    font-size: 10px;
-                    color: #6b7280;
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    font-size: 9px;
+                    color: #64748b;
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                    font-weight: 500;
+                }
+                @top-right {
+                    content: "${formatDate(new Date())}";
+                    font-size: 9px;
+                    color: #64748b;
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                    font-weight: 400;
                 }
                 @bottom-center {
                     content: "Page " counter(page) " of " counter(pages);
-                    font-size: 10px;
-                    color: #6b7280;
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    font-size: 9px;
+                    color: #64748b;
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                    font-weight: 400;
+                    margin-top: 8px;
                 }
             }
 
+            :root {
+                --primary: ${primaryColor};
+                --secondary: ${secondaryColor};
+                --accent: #f8fafc;
+                --surface: #ffffff;
+                --text-primary: #0f172a;
+                --text-secondary: #475569;
+                --text-muted: #64748b;
+                --border: #e2e8f0;
+                --success: #10b981;
+                --warning: #f59e0b;
+                --error: #ef4444;
+                --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+                --gradient-surface: linear-gradient(135deg, #fafbfc 0%, #f1f5f9 100%);
+                --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+                --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+                --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+                --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+                --border-radius: 12px;
+                --border-radius-lg: 16px;
+                --border-radius-xl: 20px;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
                 margin: 0;
                 padding: 0;
-                color: #1f2937;
+                color: var(--text-primary);
                 line-height: 1.6;
-                background: white;
+                background: var(--surface);
+                font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
 
             /* Header Section */
@@ -923,166 +966,119 @@ export async function POST(req: NextRequest) {
                 font-weight: 500;
             }
 
-            /* Print-Optimized Advanced Analysis Sections */
-            .advanced-section {
-                background: #f8fafc;
-                border: 1px solid #e2e8f0;
-                border-radius: 8px;
+            /* Simple, Clean PDF Styling */
+            .pdf-section {
+                margin: 30px 0;
                 padding: 20px;
-                margin: 20px 0;
+                border: 1px solid #ddd;
                 page-break-inside: avoid;
-                break-inside: avoid;
             }
 
-            .section-header {
+            .pdf-header {
+                color: ${primaryColor};
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 20px;
                 border-bottom: 2px solid ${primaryColor};
                 padding-bottom: 10px;
-                margin-bottom: 20px;
             }
 
-            .section-header h3 {
-                font-size: 20px;
-                font-weight: 700;
-                color: ${primaryColor};
-                margin: 0;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-
-            .metrics-grid-2 {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
+            .metrics-row {
+                width: 100%;
                 margin: 20px 0;
             }
 
-            .metrics-grid-4 {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 15px;
-                margin: 20px 0;
+            .metrics-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 15px 0;
             }
 
-            .metric-box {
-                background: white;
-                border: 1px solid #e5e7eb;
-                border-radius: 6px;
-                padding: 16px;
+            .metrics-table td {
+                border: 1px solid #ddd;
+                padding: 15px;
                 text-align: center;
-                page-break-inside: avoid;
+                width: 25%;
             }
 
-            .metric-value {
+            .metric-number {
                 font-size: 24px;
-                font-weight: 800;
-                margin-bottom: 6px;
-                line-height: 1;
+                font-weight: bold;
+                color: ${primaryColor};
+                display: block;
+                margin-bottom: 5px;
             }
 
-            .metric-label {
+            .metric-text {
                 font-size: 12px;
-                color: #6b7280;
-                font-weight: 500;
+                color: #666;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
             }
 
-            .highlight-box {
-                background: #fffbeb;
-                border: 1px solid #fbbf24;
-                border-left: 4px solid #f59e0b;
-                border-radius: 6px;
-                padding: 16px;
-                margin: 16px 0;
+            .info-block {
+                background: #f9f9f9;
+                border-left: 4px solid ${primaryColor};
+                padding: 15px;
+                margin: 15px 0;
             }
 
-            .warning-box {
-                background: #fef2f2;
-                border: 1px solid #fecaca;
-                border-left: 4px solid #ef4444;
-                border-radius: 6px;
-                padding: 16px;
-                margin: 16px 0;
+            .warning-block {
+                background: #fdf2f2;
+                border-left: 4px solid #dc2626;
+                padding: 15px;
+                margin: 15px 0;
             }
 
-            .success-box {
+            .success-block {
                 background: #f0fdf4;
-                border: 1px solid #bbf7d0;
-                border-left: 4px solid #22c55e;
-                border-radius: 6px;
-                padding: 16px;
-                margin: 16px 0;
+                border-left: 4px solid #16a34a;
+                padding: 15px;
+                margin: 15px 0;
             }
 
-            .info-box {
-                background: #eff6ff;
-                border: 1px solid #bfdbfe;
-                border-left: 4px solid #3b82f6;
-                border-radius: 6px;
-                padding: 16px;
-                margin: 16px 0;
+            .simple-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 15px 0;
             }
 
-            .status-badge {
-                display: inline-block;
-                padding: 6px 12px;
-                border-radius: 4px;
-                font-weight: 600;
-                font-size: 12px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                margin: 4px 0;
+            .simple-table th,
+            .simple-table td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: left;
             }
 
-            .status-critical { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-            .status-high { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
-            .status-medium { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
-            .status-low { background: #f0fdf4; color: #059669; border: 1px solid #bbf7d0; }
-
-            .two-column {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-                margin: 20px 0;
+            .simple-table th {
+                background: #f5f5f5;
+                font-weight: bold;
             }
 
-            .simple-list {
-                list-style: none;
-                padding: 0;
-                margin: 12px 0;
+            .status-high { color: #dc2626; font-weight: bold; }
+            .status-medium { color: #d97706; font-weight: bold; }
+            .status-low { color: #16a34a; font-weight: bold; }
+
+            .large-number {
+                font-size: 36px;
+                font-weight: bold;
+                color: ${primaryColor};
+                text-align: center;
+                margin: 10px 0;
             }
 
-            .simple-list li {
-                padding: 8px 0;
-                border-bottom: 1px solid #f1f5f9;
-                font-size: 14px;
-                line-height: 1.5;
+            .center-text { text-align: center; }
+            .bold { font-weight: bold; }
+
+            ul.clean-list {
+                list-style-type: disc;
+                margin: 10px 0;
+                padding-left: 25px;
             }
 
-            .simple-list li:last-child {
-                border-bottom: none;
+            ul.clean-list li {
+                margin: 5px 0;
+                line-height: 1.4;
             }
-
-            .text-large { font-size: 32px; font-weight: 800; line-height: 1; }
-            .text-medium { font-size: 20px; font-weight: 600; line-height: 1.2; }
-            .text-small { font-size: 14px; line-height: 1.4; }
-            .text-tiny { font-size: 12px; line-height: 1.3; }
-
-            .color-primary { color: ${primaryColor}; }
-            .color-success { color: #059669; }
-            .color-warning { color: #d97706; }
-            .color-danger { color: #dc2626; }
-            .color-muted { color: #6b7280; }
-
-            .mb-10 { margin-bottom: 10px; }
-            .mb-20 { margin-bottom: 20px; }
-            .mt-10 { margin-top: 10px; }
-            .mt-20 { margin-top: 20px; }
-
-            .text-center { text-align: center; }
-            .font-bold { font-weight: 700; }
-            .font-semibold { font-weight: 600; }
 
             /* Violations Section */
             .violations-container {
@@ -1241,75 +1237,103 @@ export async function POST(req: NextRequest) {
             </style>
         </head>
         <body>
-            <!-- Header -->
+            <!-- Premium Header -->
             <div class="header">
-                <div class="logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 40px; width: auto; margin-bottom: 12px;" />` : (whiteLabel ? brandName : '🛡️ ' + brandName)}</div>
-                <div class="report-title">Accessibility Compliance Report</div>
-                <div class="report-subtitle">Comprehensive WCAG Analysis & Remediation Guide</div>
-            </div>
-
-            <!-- Website Info -->
-            <div class="website-info">
-                <div class="website-url">${siteUrl}</div>
-                <div class="scan-date">Scanned on ${formatDate(scan.createdAt)} • Generated on ${formatDate(new Date())}</div>
-            </div>
-
-            <!-- Score Hero -->
-            <div class="score-hero">
-                <div class="score-circle ${scoreInfo.category}">
-                    ${scan.score || 0}
+                <div class="header-content">
+                    <div class="logo">
+                        ${brandLogo ?
+                            `<div class="logo-icon"><img src="${brandLogo}" alt="${brandName}" style="height: 24px; width: auto;" /></div>` :
+                            `<div class="logo-icon">🛡️</div>`
+                        }
+                        <span>${brandName}</span>
+                    </div>
+                    <div class="report-title">Accessibility Compliance Report</div>
+                    <div class="report-subtitle">Comprehensive WCAG Analysis & Strategic Remediation Guide</div>
                 </div>
-                <div class="score-label">${scoreInfo.label} Accessibility Score</div>
-                <div class="score-description">${scoreInfo.description}</div>
             </div>
 
-            <!-- Metrics Grid -->
+            <!-- Premium Website Info -->
+            <div class="website-info">
+                <div class="website-info-content">
+                    <div class="website-url">${siteUrl}</div>
+                    <div class="scan-date">Scanned on ${formatDate(scan.createdAt)} • Generated on ${formatDate(new Date())}</div>
+                </div>
+            </div>
+
+            <!-- Premium Score Hero -->
+            <div class="score-hero">
+                <div class="score-hero-content">
+                    <div class="score-circle ${scoreInfo.category}">
+                        ${scan.score || 0}
+                    </div>
+                    <div class="score-label">${scoreInfo.label} Accessibility Score</div>
+                    <div class="score-description">${scoreInfo.description}</div>
+                </div>
+            </div>
+
+            <!-- Premium Metrics Grid -->
             <div class="metrics-grid">
                 <div class="metric-card wcag">
-                    <div class="metric-icon">📋</div>
-                    <div class="metric-value">${wcagAACompliance}%</div>
-                    <div class="metric-label">WCAG 2.1 AA</div>
+                    <div class="metric-content">
+                        <div class="metric-icon">📋</div>
+                        <div class="metric-value">${wcagAACompliance}%</div>
+                        <div class="metric-label">WCAG 2.1 AA</div>
+                    </div>
                 </div>
                 <div class="metric-card performance">
-                    <div class="metric-icon">⚡</div>
-                    <div class="metric-value">${scan.performanceScore || 'N/A'}</div>
-                    <div class="metric-label">Performance</div>
+                    <div class="metric-content">
+                        <div class="metric-icon">⚡</div>
+                        <div class="metric-value">${scan.performanceScore || 'N/A'}</div>
+                        <div class="metric-label">Performance</div>
+                    </div>
                 </div>
                 <div class="metric-card seo">
-                    <div class="metric-icon">🔍</div>
-                    <div class="metric-value">${scan.seoScore || 'N/A'}</div>
-                    <div class="metric-label">SEO Score</div>
+                    <div class="metric-content">
+                        <div class="metric-icon">🔍</div>
+                        <div class="metric-value">${scan.seoScore || 'N/A'}</div>
+                        <div class="metric-label">SEO Score</div>
+                    </div>
                 </div>
                 <div class="metric-card issues">
-                    <div class="metric-icon">⚠️</div>
-                    <div class="metric-value">${stats.total}</div>
-                    <div class="metric-label">Total Issues</div>
+                    <div class="metric-content">
+                        <div class="metric-icon">⚠️</div>
+                        <div class="metric-value">${stats.total}</div>
+                        <div class="metric-label">Total Issues</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Impact Breakdown -->
+            <!-- Premium Impact Breakdown -->
             <div class="section">
                 <div class="section-title">Issue Severity Breakdown</div>
                 <div class="impact-grid">
                     <div class="impact-card critical">
-                        <div class="impact-icon">🔴</div>
-                        <div class="impact-value">${stats.critical}</div>
-                        <div class="impact-label">Critical</div>
+                        <div class="impact-content">
+                            <div class="impact-icon">🔴</div>
+                            <div class="impact-value">${stats.critical}</div>
+                            <div class="impact-label">Critical</div>
+                        </div>
                     </div>
                     <div class="impact-card serious">
-                        <div class="impact-icon">🟠</div>
-                        <div class="impact-value">${stats.serious}</div>
-                        <div class="impact-label">Serious</div>
+                        <div class="impact-content">
+                            <div class="impact-icon">🟠</div>
+                            <div class="impact-value">${stats.serious}</div>
+                            <div class="impact-label">Serious</div>
+                        </div>
                     </div>
                     <div class="impact-card moderate">
-                        <div class="impact-icon">🟡</div>
-                        <div class="impact-value">${stats.moderate}</div>
-                        <div class="impact-label">Moderate</div>
+                        <div class="impact-content">
+                            <div class="impact-icon">🟡</div>
+                            <div class="impact-value">${stats.moderate}</div>
+                            <div class="impact-label">Moderate</div>
+                        </div>
                     </div>
                     <div class="impact-card minor">
-                        <div class="impact-icon">⚪</div>
-                        <div class="impact-value">${stats.minor}</div>
-                        <div class="impact-label">Minor</div>
+                        <div class="impact-content">
+                            <div class="impact-icon">⚪</div>
+                            <div class="impact-value">${stats.minor}</div>
+                            <div class="impact-label">Minor</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1326,21 +1350,23 @@ export async function POST(req: NextRequest) {
                 ` : ''}
 
                 <div class="business-impact">
-                    <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 16px; text-align: center;">💰 Revenue Impact Assessment</h3>
+                    <div class="business-impact-content">
+                        <h3 style="color: #dc2626; font-size: 24px; font-weight: 800; margin-bottom: 20px; text-align: center; letter-spacing: -0.01em;">💰 Revenue Impact Assessment</h3>
 
-                    <div class="impact-highlight">
-                        <div style="text-align: center;">
-                            <div style="font-size: 16px; color: #6b7280; margin-bottom: 8px;">Estimated Monthly Revenue Loss</div>
-                            <div class="revenue-loss">$${businessImpact.monthlyRevenueLoss.toLocaleString()}</div>
-                            <div style="font-size: 20px; font-weight: 600; color: #dc2626;">Annual Loss: $${businessImpact.annualRevenueLoss.toLocaleString()}</div>
-                        </div>
-                        <div style="margin-top: 20px; padding: 15px; background: #fef2f2; border-radius: 8px;">
-                            <div style="font-size: 14px; color: #374151;">
-                                <strong>Why you're losing money:</strong><br>
-                                • ${businessImpact.conversionReduction}% reduction in conversion rates<br>
-                                • ${businessImpact.userExclusionPercentage}% of potential customers cannot properly use your site<br>
-                                • ${businessImpact.seoImpact}<br>
-                                • Damaged brand reputation and customer trust
+                        <div class="impact-highlight">
+                            <div style="text-align: center;">
+                                <div style="font-size: 18px; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600;">Estimated Monthly Revenue Loss</div>
+                                <div class="revenue-loss">$${businessImpact.monthlyRevenueLoss.toLocaleString()}</div>
+                                <div style="font-size: 24px; font-weight: 700; color: #dc2626; margin-top: 8px;">Annual Loss: $${businessImpact.annualRevenueLoss.toLocaleString()}</div>
+                            </div>
+                            <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, #fef2f2, #fee2e2); border-radius: 12px; border: 1px solid #fecaca;">
+                                <div style="font-size: 15px; color: var(--text-primary); line-height: 1.6;">
+                                    <strong style="font-size: 16px; color: #dc2626;">Why you're losing money:</strong><br><br>
+                                    • <strong>${businessImpact.conversionReduction}%</strong> reduction in conversion rates<br>
+                                    • <strong>${businessImpact.userExclusionPercentage}%</strong> of potential customers cannot properly use your site<br>
+                                    • ${businessImpact.seoImpact}<br>
+                                    • Damaged brand reputation and customer trust
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1361,150 +1387,173 @@ export async function POST(req: NextRequest) {
                     </div>
                 </div>
 
-                <div style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border: 2px solid #fecaca; border-radius: 12px; padding: 20px; margin: 20px 0;">
-                    <h3 style="color: #dc2626; font-size: 18px; margin-bottom: 16px;">⚖️ Legal Risk Assessment</h3>
-                    <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                        <span style="font-weight: 600; margin-right: 12px;">Risk Level:</span>
-                        <span class="risk-badge" style="background-color: ${businessImpact.riskAssessment.color};">${businessImpact.riskAssessment.level}</span>
-                    </div>
-                    <div style="font-size: 14px; color: #374151;">
-                        <p><strong>${businessImpact.riskAssessment.description}</strong></p>
-                        <ul style="margin: 12px 0; padding-left: 20px;">
-                            <li>ADA lawsuit filings increased 320% in recent years</li>
-                            <li>Average lawsuit settlement: $75,000 - $400,000</li>
-                            <li>Legal fees typically range from $50,000 - $150,000</li>
-                            <li>Businesses often forced to rebuild entire website</li>
-                        </ul>
-                        <p style="font-weight: 600;">Note: This report can serve as evidence of known accessibility issues in legal proceedings.</p>
+                <div style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 50%, #fecaca 100%); border: 2px solid #f87171; border-radius: 16px; padding: 28px; margin: 24px 0; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
+                    <div style="position: relative; z-index: 1;">
+                        <h3 style="color: #dc2626; font-size: 22px; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.01em;">⚖️ Legal Risk Assessment</h3>
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <span style="font-weight: 700; margin-right: 16px; font-size: 15px;">Risk Level:</span>
+                            <span class="risk-badge" style="background: linear-gradient(135deg, ${businessImpact.riskAssessment.color}, ${businessImpact.riskAssessment.color}dd);">${businessImpact.riskAssessment.level}</span>
+                        </div>
+                        <div style="font-size: 15px; color: var(--text-primary); line-height: 1.6;">
+                            <p style="font-weight: 600; margin-bottom: 16px;">${businessImpact.riskAssessment.description}</p>
+                            <ul class="clean-list" style="margin: 16px 0;">
+                                <li>ADA lawsuit filings increased <strong>320%</strong> in recent years</li>
+                                <li>Average lawsuit settlement: <strong>$75,000 - $400,000</strong></li>
+                                <li>Legal fees typically range from <strong>$50,000 - $150,000</strong></li>
+                                <li>Businesses often forced to <strong>rebuild entire website</strong></li>
+                            </ul>
+                            <p style="font-weight: 700; color: #dc2626; background: rgba(255,255,255,0.7); padding: 12px; border-radius: 8px; border-left: 4px solid #dc2626;">⚠️ Note: This report can serve as evidence of known accessibility issues in legal proceedings.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Executive Summary Dashboard -->
             <div class="page-break"></div>
-            <div class="section">
-                <div class="section-title">📈 Executive Summary Dashboard</div>
+            <div class="pdf-section">
+                <div class="pdf-header">📈 Executive Summary Dashboard</div>
 
-                <div class="advanced-section">
-                    <div class="section-header">
-                        <h3>💼 Key Business Metrics at a Glance</h3>
-                    </div>
+                <h3>💼 Key Business Metrics at a Glance</h3>
 
-                    <div class="metrics-grid-4">
-                        <div class="metric-box">
-                            <div class="metric-value color-success">$${comprehensiveAnalysis.advancedROI.annualRevenueLift.toLocaleString()}</div>
-                            <div class="metric-label">Annual Revenue Opportunity</div>
-                        </div>
-
-                        <div class="metric-box">
-                            <div class="metric-value color-danger">${comprehensiveAnalysis.legalRisk.riskScore}%</div>
-                            <div class="metric-label">Legal Risk Score</div>
-                        </div>
-
-                        <div class="metric-box">
-                            <div class="metric-value color-warning">${comprehensiveAnalysis.uxImpact.userExclusionRate}%</div>
-                            <div class="metric-label">Users Currently Excluded</div>
-                        </div>
-
-                        <div class="metric-box">
-                            <div class="metric-value color-primary">${comprehensiveAnalysis.advancedROI.breakEvenMonths}</div>
-                            <div class="metric-label">Months to Break Even</div>
-                        </div>
-                    </div>
-                </div>
+                <table class="metrics-table">
+                    <tr>
+                        <td>
+                            <span class="metric-number">$${comprehensiveAnalysis.advancedROI.annualRevenueLift.toLocaleString()}</span>
+                            <span class="metric-text">Annual Revenue Opportunity</span>
+                        </td>
+                        <td>
+                            <span class="metric-number">${comprehensiveAnalysis.legalRisk.riskScore}%</span>
+                            <span class="metric-text">Legal Risk Score</span>
+                        </td>
+                        <td>
+                            <span class="metric-number">${comprehensiveAnalysis.uxImpact.userExclusionRate}%</span>
+                            <span class="metric-text">Users Currently Excluded</span>
+                        </td>
+                        <td>
+                            <span class="metric-number">${comprehensiveAnalysis.advancedROI.breakEvenMonths}</span>
+                            <span class="metric-text">Months to Break Even</span>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Advanced ROI Analysis -->
             <div class="page-break"></div>
-            <div class="section">
-                <div class="section-title">💎 Advanced ROI & Financial Projections</div>
+            <div class="pdf-section">
+                <div class="pdf-header">💎 Advanced ROI & Financial Projections</div>
 
-                <div class="advanced-section">
-                    <div class="section-header">
-                        <h3>💰 5-Year Financial Impact Analysis</h3>
-                    </div>
+                <h3>💰 5-Year Financial Impact Analysis</h3>
 
-                    <div class="metrics-grid-2">
-                        <div class="metric-box">
-                            <div class="metric-value color-success">$${comprehensiveAnalysis.advancedROI.monthlyRevenueLift.toLocaleString()}</div>
-                            <div class="metric-label">Monthly Revenue Lift</div>
-                        </div>
-                        <div class="metric-box">
-                            <div class="metric-value color-success">$${comprehensiveAnalysis.advancedROI.fiveYearProjection.toLocaleString()}</div>
-                            <div class="metric-label">5-Year Revenue Projection</div>
-                        </div>
-                    </div>
+                <table class="metrics-table">
+                    <tr>
+                        <td>
+                            <span class="metric-number">$${comprehensiveAnalysis.advancedROI.monthlyRevenueLift.toLocaleString()}</span>
+                            <span class="metric-text">Monthly Revenue Lift</span>
+                        </td>
+                        <td>
+                            <span class="metric-number">$${comprehensiveAnalysis.advancedROI.fiveYearProjection.toLocaleString()}</span>
+                            <span class="metric-text">5-Year Revenue Projection</span>
+                        </td>
+                    </tr>
+                </table>
 
-                    <div class="success-box">
-                        <h4 class="text-medium color-success mb-10">📊 Market Expansion Opportunities</h4>
-                        <p class="text-small mb-10"><strong>Untapped Revenue Stream: $${comprehensiveAnalysis.advancedROI.marketExpansionRevenue.toLocaleString()}/year</strong></p>
-                        <ul class="simple-list">
-                            <li>${comprehensiveAnalysis.advancedROI.customerLifetimeValueIncrease * 100}% increase in customer lifetime value</li>
-                            <li>Access to ${comprehensiveAnalysis.advancedROI.disabledUserMarketShare * 100}% disabled user market (61 million Americans)</li>
-                            <li>Government contract eligibility worth millions in potential revenue</li>
-                            <li>Premium pricing justified by accessible, inclusive design</li>
-                            <li>Reduced customer acquisition costs through improved retention</li>
-                        </ul>
-                    </div>
+                <div class="success-block">
+                    <h4>📊 Market Expansion Opportunities</h4>
+                    <p><strong>Untapped Revenue Stream: $${comprehensiveAnalysis.advancedROI.marketExpansionRevenue.toLocaleString()}/year</strong></p>
+                    <ul class="clean-list">
+                        <li>${comprehensiveAnalysis.advancedROI.customerLifetimeValueIncrease * 100}% increase in customer lifetime value</li>
+                        <li>Access to ${comprehensiveAnalysis.advancedROI.disabledUserMarketShare * 100}% disabled user market (61 million Americans)</li>
+                        <li>Government contract eligibility worth millions in potential revenue</li>
+                        <li>Premium pricing justified by accessible, inclusive design</li>
+                        <li>Reduced customer acquisition costs through improved retention</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Legal Risk Assessment -->
-            <div class="section">
-                <div class="section-title">⚖️ Comprehensive Legal Risk Assessment</div>
+            <!-- Enhanced Legal Risk Assessment -->
+            <div class="pdf-section">
+                <div class="pdf-header">⚖️ Comprehensive Legal Risk Assessment</div>
 
-                <div class="advanced-section">
-                    <div class="section-header">
-                        <h3>🚨 Litigation Risk Analysis</h3>
+                <h3 style="color: var(--text-primary); font-size: 20px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.01em;">🚨 Litigation Risk Analysis</h3>
+
+                <!-- Risk Score Visualization -->
+                <div style="background: linear-gradient(135deg, #fef2f2, #fee2e2); border-radius: 20px; padding: 40px; text-align: center; margin: 32px 0; box-shadow: var(--shadow-xl); border: 2px solid #fca5a5; position: relative; overflow: hidden;">
+                    <div style="position: relative; z-index: 1;">
+                        <!-- Risk Score Display -->
+                        <div style="width: 160px; height: 160px; margin: 0 auto 24px; position: relative; background: radial-gradient(circle, rgba(220,38,38,0.1), transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 120px; height: 120px; border: 6px solid #fca5a5; border-top-color: #dc2626; border-radius: 50%; position: relative;">
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                    <div style="font-size: 36px; font-weight: 900; color: #dc2626; letter-spacing: -0.02em;">${comprehensiveAnalysis.legalRisk.riskScore}%</div>
+                                    <div style="font-size: 12px; color: #b91c1c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px;">Risk Score</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin: 24px 0;">
+                            <div style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Lawsuit Probability Assessment</div>
+                            <div style="display: inline-block; padding: 12px 24px; border-radius: 25px; font-weight: 700; font-size: 14px;
+                                        background: ${comprehensiveAnalysis.legalRisk.riskScore > 70 ? 'linear-gradient(135deg, #dc2626, #b91c1c)' : comprehensiveAnalysis.legalRisk.riskScore > 40 ? 'linear-gradient(135deg, #d97706, #b45309)' : 'linear-gradient(135deg, #059669, #047857)'};
+                                        color: white; box-shadow: var(--shadow-md);">
+                                ${comprehensiveAnalysis.legalRisk.lawsuitProbability}
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="text-center mb-20">
-                        <div class="text-large color-danger mb-10">${comprehensiveAnalysis.legalRisk.riskScore}%</div>
-                        <div class="text-small color-muted mb-10">Legal Risk Score</div>
-                        <div class="status-badge ${comprehensiveAnalysis.legalRisk.riskScore > 70 ? 'status-critical' : comprehensiveAnalysis.legalRisk.riskScore > 40 ? 'status-high' : 'status-low'}">
-                            Lawsuit Probability: ${comprehensiveAnalysis.legalRisk.lawsuitProbability}
+                <!-- Enhanced Financial Exposure Section -->
+                <div style="background: linear-gradient(135deg, #fef2f2, #fee2e2); border-radius: 16px; padding: 32px; margin: 24px 0; box-shadow: var(--shadow-lg); border: 2px solid #fca5a5;">
+                    <h4 style="color: #dc2626; font-size: 18px; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        💸 Financial Exposure Analysis
+                    </h4>
+
+                    <!-- Cost Breakdown Visualization -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0;">
+                        <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 20px; text-align: center; box-shadow: var(--shadow-sm);">
+                            <div style="font-size: 12px; color: #b91c1c; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Estimated Legal Costs</div>
+                            <div style="font-size: 24px; font-weight: 800; color: #dc2626; margin-bottom: 8px;">${comprehensiveAnalysis.legalRisk.estimatedLegalCosts}</div>
+                            <div style="width: 100%; height: 4px; background: linear-gradient(90deg, #fca5a5, #dc2626); border-radius: 2px;"></div>
+                        </div>
+
+                        <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 20px; text-align: center; box-shadow: var(--shadow-sm);">
+                            <div style="font-size: 12px; color: #b91c1c; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Time to Compliance</div>
+                            <div style="font-size: 24px; font-weight: 800; color: #dc2626; margin-bottom: 8px;">${comprehensiveAnalysis.legalRisk.timeToCompliance}</div>
+                            <div style="width: 100%; height: 4px; background: linear-gradient(90deg, #fca5a5, #dc2626); border-radius: 2px;"></div>
                         </div>
                     </div>
 
-                    <div class="warning-box">
-                        <h4 class="text-medium color-danger mb-10">💸 Financial Exposure</h4>
-                        <div class="text-medium font-bold color-danger text-center mb-10">
-                            ${comprehensiveAnalysis.legalRisk.estimatedLegalCosts}
-                        </div>
-                        <p class="text-small mb-10"><strong>Compliance Timeline:</strong> ${comprehensiveAnalysis.legalRisk.timeToCompliance}</p>
-                        <p class="text-small font-semibold color-danger">
-                            ⚠️ Warning: This documented accessibility analysis could be used as evidence of known violations in legal proceedings.
+                    <div style="background: rgba(255, 255, 255, 0.95); border-radius: 12px; padding: 20px; margin: 20px 0; border-left: 6px solid #dc2626; box-shadow: var(--shadow-md);">
+                        <p style="font-size: 16px; font-weight: 800; color: #dc2626; margin: 0; display: flex; align-items: center; gap: 8px;">
+                            ⚠️ Critical Legal Notice
+                        </p>
+                        <p style="font-size: 14px; color: var(--text-primary); margin: 12px 0 0 0; line-height: 1.6; font-weight: 500;">
+                            This documented accessibility analysis could be used as evidence of known violations in legal proceedings. Immediate remediation is strongly recommended.
                         </p>
                     </div>
                 </div>
             </div>
 
             <!-- Industry Compliance -->
-            <div class="section">
-                <div class="section-title">🏛️ ${comprehensiveAnalysis.industryCompliance.industry} Compliance Analysis</div>
+            <div class="pdf-section">
+                <div class="pdf-header">🏛️ ${comprehensiveAnalysis.industryCompliance.industry} Compliance Analysis</div>
 
-                <div class="advanced-section">
-                    <div class="section-header">
-                        <h3>📋 Industry-Specific Requirements</h3>
-                    </div>
+                <h3>📋 Industry-Specific Requirements</h3>
 
-                    <div class="text-center mb-20">
-                        <div class="status-badge ${comprehensiveAnalysis.industryCompliance.complianceLevel === 'Compliant' ? 'status-low' : 'status-critical'}">
-                            Current Status: ${comprehensiveAnalysis.industryCompliance.complianceLevel}
-                        </div>
-                    </div>
+                <div class="center-text">
+                    <p class="${comprehensiveAnalysis.industryCompliance.complianceLevel === 'Compliant' ? 'status-low' : 'status-high'} bold">
+                        Current Status: ${comprehensiveAnalysis.industryCompliance.complianceLevel}
+                    </p>
+                </div>
 
-                    <div class="info-box">
-                        <h4 class="text-medium color-primary mb-10">📋 Required Compliance Standards</h4>
-                        <ul class="simple-list">
-                            ${comprehensiveAnalysis.industryCompliance.specificRequirements.map(req => `<li>${req}</li>`).join('')}
-                        </ul>
-                    </div>
+                <div class="info-block">
+                    <h4>📋 Required Compliance Standards</h4>
+                    <ul class="clean-list">
+                        ${comprehensiveAnalysis.industryCompliance.specificRequirements.map(req => `<li>${req}</li>`).join('')}
+                    </ul>
+                </div>
 
-                    <div class="highlight-box">
-                        <p class="text-small font-semibold color-warning mb-10">⚠️ Non-Compliance Penalties:</p>
-                        <p class="text-small">${comprehensiveAnalysis.industryCompliance.penalties}</p>
-                    </div>
+                <div class="warning-block">
+                    <p class="bold">⚠️ Non-Compliance Penalties:</p>
+                    <p>${comprehensiveAnalysis.industryCompliance.penalties}</p>
                 </div>
             </div>
 
