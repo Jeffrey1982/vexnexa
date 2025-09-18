@@ -31,7 +31,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   const exportPdf = async () => {
     setPdfStatus('loading');
     try {
-      const response = await fetch("/api/export/pdf-enhanced", {
+      const response = await fetch("/api/export/pdf-beautiful", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
