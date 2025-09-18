@@ -13,7 +13,7 @@ import { IssuesByImpactChart } from "@/components/IssuesByImpactChart";
 import { TrendMini } from "@/components/TrendMini";
 import { formatDate, formatDateShort, getFaviconFromUrl } from "@/lib/format";
 import { computeIssueStats, Violation } from "@/lib/axe-types";
-import { Search, Plus, Activity, AlertTriangle, TrendingUp, Users, Shield } from "lucide-react";
+import { Search, Plus, Activity, AlertTriangle, TrendingUp, Users, Shield, FileText } from "lucide-react";
 import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
@@ -28,6 +28,7 @@ import { BeforeAfterComparison } from "@/components/enhanced/BeforeAfterComparis
 import { DragDropDashboard } from "@/components/enhanced/DragDropDashboard";
 import { TrendAnalysis } from "@/components/enhanced/TrendAnalysis";
 import { CompetitorBenchmark } from "@/components/enhanced/CompetitorBenchmark";
+import { MonitoringDashboard } from "@/components/monitoring/MonitoringDashboard";
 import { ROICalculator } from "@/components/enhanced/ROICalculator";
 import { ExecutiveSummary } from "@/components/enhanced/ExecutiveSummary";
 import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
@@ -201,9 +202,10 @@ export default async function DashboardPage() {
       {/* Enhanced Dashboard with Tabs */}
       <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
         <div className="overflow-x-auto">
-          <TabsList className={`grid w-full min-w-max ${hasWhiteLabelAccess ? 'grid-cols-6' : 'grid-cols-5'} md:min-w-0`}>
+          <TabsList className={`grid w-full min-w-max ${hasWhiteLabelAccess ? 'grid-cols-7' : 'grid-cols-6'} md:min-w-0`}>
             <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
             <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
+            <TabsTrigger value="monitoring" className="text-xs sm:text-sm">Monitoring</TabsTrigger>
             <TabsTrigger value="teams" className="text-xs sm:text-sm">Teams</TabsTrigger>
             <TabsTrigger value="reports" className="text-xs sm:text-sm">Reports</TabsTrigger>
             <TabsTrigger value="tools" className="text-xs sm:text-sm">Tools</TabsTrigger>
@@ -332,18 +334,76 @@ export default async function DashboardPage() {
           <CompetitorBenchmark currentScore={stats.avgScore} websiteUrl={scans[0]?.site?.url || ''} />
         </TabsContent>
 
+        <TabsContent value="monitoring" className="space-y-6">
+          {/* Real-time Monitoring Dashboard */}
+          <MonitoringDashboard />
+        </TabsContent>
+
         <TabsContent value="reports" className="space-y-6">
-          {/* Multi-Format Export */}
-          <MultiFormatExporter
-            scanData={{
-              id: 'dashboard-summary',
-              url: scans[0]?.site?.url || '',
-              score: stats.avgScore,
-              issues: stats.impactStats,
-              violations: [],
-              createdAt: new Date()
-            }}
-          />
+          {/* Recent Scan Reports */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-display text-xl">
+                <FileText className="w-5 h-5 text-primary" />
+                Scan Reports
+              </CardTitle>
+              <CardDescription className="text-base">
+                Download detailed accessibility reports for your scans
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {scans.length === 0 ? (
+                <div className="text-center py-8">
+                  <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No Reports Available</h3>
+                  <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                    Run your first accessibility scan to generate downloadable reports.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Select a scan to download its detailed accessibility report:
+                  </p>
+                  <div className="grid gap-3">
+                    {scans.slice(0, 10).map((scan) => (
+                      <div key={scan.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          <SiteImage
+                            src={getFaviconFromUrl(scan.site.url)}
+                            alt=""
+                            width={20}
+                            height={20}
+                            className="rounded flex-shrink-0"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <div className="font-medium text-sm truncate">
+                              {new URL(scan.site.url).hostname}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {formatDate(scan.createdAt)} • {scan.issues || 0} issues
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          {scan.score !== null && (
+                            <ScoreBadge score={scan.score} size="sm" />
+                          )}
+                          {scan.status === 'done' ? (
+                            <ExportButtons scanId={scan.id} className="flex-shrink-0" />
+                          ) : (
+                            <Badge variant="outline" className="text-xs">
+                              {scan.status}
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="tools" className="space-y-6">
