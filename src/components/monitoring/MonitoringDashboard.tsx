@@ -19,7 +19,7 @@ import {
 import { cn } from '@/lib/utils';
 import { ScoreTrendAnalysis } from './ScoreTrendAnalysis';
 import { RegressionDetector } from './RegressionDetector';
-import { AlertsSystem } from './AlertsSystem';
+// import { AlertsSystem } from './AlertsSystem';
 import { ComplianceTracker } from './ComplianceTracker';
 
 interface RegressionAlert {
@@ -279,8 +279,8 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
       {/* Regression Detection System */}
       <RegressionDetector />
 
-      {/* Automated Alerts System */}
-      <AlertsSystem />
+      {/* Automated Alerts System - Temporarily Disabled */}
+      {/* <AlertsSystem /> */}
 
       {/* Continuous Compliance Tracking */}
       <ComplianceTracker />

@@ -105,7 +105,7 @@ export async function GET(req: NextRequest) {
 
     for (let i = 1; i < scans.length; i++) {
       if (scans[i-1].score && scans[i].score) {
-        totalScoreChange += scans[i].score - scans[i-1].score;
+        totalScoreChange += scans[i].score! - scans[i-1].score!;
         changeCount++;
       }
     }
@@ -156,7 +156,7 @@ export async function GET(req: NextRequest) {
     const scoreChanges = [];
     for (let i = 1; i < scans.length; i++) {
       if (scans[i-1].score && scans[i].score) {
-        const change = Math.abs(scans[i].score - scans[i-1].score);
+        const change = Math.abs(scans[i].score! - scans[i-1].score!);
         scoreChanges.push(change);
       }
     }

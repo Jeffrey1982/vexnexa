@@ -174,7 +174,7 @@ export function ScoreTrendAnalysis({
     <div className={cn("space-y-6", className)}>
       {/* Controls */}
       <div className="flex gap-4 flex-wrap">
-        <Select value={selectedRange} onValueChange={setSelectedRange}>
+        <Select value={selectedRange} onValueChange={(value) => setSelectedRange(value as '7d' | '30d' | '90d')}>
           <SelectTrigger className="w-40">
             <SelectValue placeholder="Time Range" />
           </SelectTrigger>
@@ -185,7 +185,7 @@ export function ScoreTrendAnalysis({
           </SelectContent>
         </Select>
 
-        <Select value={selectedSite} onValueChange={setSelectedSite}>
+        <Select value={selectedSite} onValueChange={(value) => setSelectedSite(value)}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="All Sites" />
           </SelectTrigger>

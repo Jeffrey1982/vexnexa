@@ -33,6 +33,7 @@ import { ROICalculator } from "@/components/enhanced/ROICalculator";
 import { ExecutiveSummary } from "@/components/enhanced/ExecutiveSummary";
 import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
 import { MultiFormatExporter } from "@/components/enhanced/MultiFormatExporter";
+import { ExportButtons } from "@/components/ExportButtons";
 import { AIInsights } from "@/components/enhanced/AIInsights";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getEntitlements } from "@/lib/billing/entitlements";

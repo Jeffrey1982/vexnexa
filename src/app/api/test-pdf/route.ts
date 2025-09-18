@@ -56,9 +56,9 @@ export async function GET() {
     const pdfDoc = React.createElement(TestPDFDocument);
     const pdfBuffer = await pdf(pdfDoc as any).toBuffer();
 
-    console.log("Test PDF generated successfully, size:", pdfBuffer.length, "bytes");
+    console.log("Test PDF generated successfully, buffer created");
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(pdfBuffer as any, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": "attachment; filename=\"test-pdf-report.pdf\"",
@@ -68,7 +68,7 @@ export async function GET() {
   } catch (error) {
     console.error("Test PDF generation error:", error);
     return NextResponse.json(
-      { error: "Failed to generate test PDF", details: error.message },
+      { error: "Failed to generate test PDF", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
