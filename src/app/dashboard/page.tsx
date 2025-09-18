@@ -199,9 +199,10 @@ export default async function DashboardPage() {
 
       {/* Enhanced Dashboard with Tabs */}
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className={`grid w-full ${hasWhiteLabelAccess ? 'grid-cols-5' : 'grid-cols-4'}`}>
+        <TabsList className={`grid w-full ${hasWhiteLabelAccess ? 'grid-cols-6' : 'grid-cols-5'}`}>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="teams">Teams</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
           <TabsTrigger value="tools">Tools</TabsTrigger>
           {hasWhiteLabelAccess && (
@@ -252,6 +253,53 @@ export default async function DashboardPage() {
 
           {/* Drag and Drop Dashboard */}
           <DragDropDashboard />
+        </TabsContent>
+
+        <TabsContent value="teams" className="space-y-6">
+          {/* Team Collaboration Features */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-display text-xl">
+                <Users className="w-5 h-5 text-primary" />
+                Team Collaboration
+              </CardTitle>
+              <CardDescription className="text-base">
+                Collaborate with your team on accessibility projects and share insights
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-8">
+                <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Team Features Available</h3>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  Invite team members, assign roles, track issues, and collaborate on accessibility improvements.
+                </p>
+                <Link href="/teams">
+                  <Button className="mb-4">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Go to Teams
+                  </Button>
+                </Link>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 max-w-2xl mx-auto">
+                  <div className="text-center p-4 border rounded-lg">
+                    <Shield className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                    <h4 className="font-semibold text-sm">Role-Based Access</h4>
+                    <p className="text-xs text-muted-foreground">Admin, Editor, Viewer permissions</p>
+                  </div>
+                  <div className="text-center p-4 border rounded-lg">
+                    <AlertTriangle className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+                    <h4 className="font-semibold text-sm">Issue Tracking</h4>
+                    <p className="text-xs text-muted-foreground">Assign and track accessibility issues</p>
+                  </div>
+                  <div className="text-center p-4 border rounded-lg">
+                    <TrendingUp className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                    <h4 className="font-semibold text-sm">Shared Workspaces</h4>
+                    <p className="text-xs text-muted-foreground">Collaborate on multiple sites</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-6">

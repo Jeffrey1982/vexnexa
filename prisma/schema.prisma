@@ -12,7 +12,7 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   sites     Site[]
-  
+
   // Personal information
   firstName    String?
   lastName     String?
@@ -21,14 +21,14 @@ model User {
   phoneNumber  String?
   website      String?
   country      String?
-  
+
   // Marketing preferences
   marketingEmails Boolean @default(true)
   productUpdates  Boolean @default(true)
-  
+
   // Profile completion
   profileCompleted Boolean @default(false)
-  
+
   // Billing fields
   plan               Plan     @default(TRIAL)  // TRIAL, STARTER, PRO, BUSINESS
   subscriptionStatus String   @default("inactive") // active, canceled, past_due, inactive
@@ -41,6 +41,21 @@ model User {
   usages             Usage[]
   whiteLabel         WhiteLabel?
   portfolios         Portfolio[]
+
+  // Team collaboration
+  ownedTeams         Team[] @relation("TeamOwner")
+  teamMemberships    TeamMember[]
+  sentInvites        TeamInvite[] @relation("InvitedBy")
+  invitedBy          TeamMember[] @relation("InvitedByUser")
+
+  // Issue tracking
+  createdIssues      Issue[] @relation("CreatedBy")
+  assignedIssues     Issue[] @relation("AssignedTo")
+  assignedByIssues   Issue[] @relation("AssignedBy")
+  resolvedIssues     Issue[] @relation("ResolvedBy")
+  issueComments      IssueComment[]
+  issueActivities    IssueActivity[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -57,6 +72,9 @@ model Site {
   // Portfolio association
   portfolioId String?
   portfolio   Portfolio? @relation(fields: [portfolioId], references: [id], onDelete: SetNull)
+
+  // Team collaboration
+  teams       Team[]     @relation("TeamSites")
 
   createdAt   DateTime   @default(now())
 
@@ -92,6 +110,9 @@ model Scan {
   score     Int?
   issues    Int?
   reportUrl String?
+
+  // Issue tracking
+  scanIssues Issue[]
 
   // Impact counts
   impactCritical Int @default(0)
@@ -305,5 +326,145 @@ model Portfolio {
   // Portfolio can contain multiple sites
   sites           Site[]
 
+  @@index([userId])
+}
+
+enum TeamRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum IssueStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum IssuePriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  ownerId     String
+  owner       User     @relation("TeamOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  members     TeamMember[]
+  invites     TeamInvite[]
+  sites       Site[]   @relation("TeamSites")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([ownerId])
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      TeamRole @default(VIEWER)
+  invitedBy String?
+  inviter   User?    @relation("InvitedByUser", fields: [invitedBy], references: [id], onDelete: SetNull)
+  joinedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+}
+
+model TeamInvite {
+  id         String   @id @default(cuid())
+  teamId     String
+  team       Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  email      String
+  role       TeamRole @default(VIEWER)
+  invitedBy  String
+  inviter    User     @relation("InvitedBy", fields: [invitedBy], references: [id], onDelete: Cascade)
+  token      String   @unique
+  expiresAt  DateTime
+  acceptedAt DateTime?
+  createdAt  DateTime @default(now())
+
+  @@index([teamId])
+  @@index([email])
+}
+
+model Issue {
+  id            String        @id @default(cuid())
+  scanId        String
+  scan          Scan          @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  violationId   String        // Reference to specific violation in scan.raw
+  title         String
+  description   String?
+  status        IssueStatus   @default(OPEN)
+  priority      IssuePriority @default(MEDIUM)
+
+  assignedToId  String?
+  assignedTo    User?         @relation("AssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedById  String?
+  assignedBy    User?         @relation("AssignedBy", fields: [assignedById], references: [id], onDelete: SetNull)
+  createdById   String
+  createdBy     User          @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
+
+  resolvedAt    DateTime?
+  resolvedById  String?
+  resolvedBy    User?         @relation("ResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+
+  dueDate       DateTime?
+  estimatedHours Int?
+  actualHours   Int?
+  tags          String[]
+
+  comments      IssueComment[]
+  activities    IssueActivity[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@unique([scanId, violationId])
+  @@index([scanId])
+  @@index([assignedToId])
+  @@index([createdById])
+  @@index([status])
+  @@index([priority])
+}
+
+model IssueComment {
+  id        String   @id @default(cuid())
+  issueId   String
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([issueId])
+  @@index([userId])
+}
+
+model IssueActivity {
+  id        String   @id @default(cuid())
+  issueId   String
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String   // "created", "assigned", "status_changed", "priority_changed", etc.
+  oldValue  String?
+  newValue  String?
+  createdAt DateTime @default(now())
+
+  @@index([issueId])
   @@index([userId])
 }
