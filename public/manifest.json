@@ -1,0 +1,83 @@
+{
+  "name": "TutuSporta - Accessibility Testing Platform",
+  "short_name": "TutuSporta",
+  "description": "Professional accessibility testing and compliance monitoring platform for websites",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "developer", "utilities"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Scan",
+      "short_name": "Scan",
+      "description": "Start a new accessibility scan",
+      "url": "/dashboard?action=scan",
+      "icons": [
+        {
+          "src": "/icon-scan-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "View Reports",
+      "short_name": "Reports",
+      "description": "View accessibility reports",
+      "url": "/dashboard?tab=reports",
+      "icons": [
+        {
+          "src": "/icon-reports-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Team Collaboration",
+      "short_name": "Teams",
+      "description": "Collaborate with your team",
+      "url": "/teams",
+      "icons": [
+        {
+          "src": "/icon-teams-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "features": [
+    "cross-platform",
+    "offline",
+    "push-notifications"
+  ],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "protocol_handlers": [
+    {
+      "protocol": "web+tutusporta",
+      "url": "/scan?url=%s"
+    }
+  ]
+}

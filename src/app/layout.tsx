@@ -6,8 +6,36 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'TutusPorta by Vexnexa',
-  description: 'Professional accessibility scanning and reporting by Vexnexa',
+  title: 'TutusPorta - Accessibility Testing Platform',
+  description: 'Professional accessibility testing and compliance monitoring platform for websites',
+  keywords: ['accessibility', 'WCAG', 'testing', 'compliance', 'monitoring', 'a11y'],
+  authors: [{ name: 'Vexnexa' }],
+  creator: 'Vexnexa',
+  publisher: 'Vexnexa',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'TutuSporta',
+  },
+  openGraph: {
+    title: 'TutuSporta - Accessibility Testing Platform',
+    description: 'Professional accessibility testing and compliance monitoring platform for websites',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'TutuSporta - Accessibility Testing Platform',
+    description: 'Professional accessibility testing and compliance monitoring platform for websites',
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  themeColor: '#3B82F6',
 }
 
 export default function RootLayout({
@@ -20,6 +48,31 @@ export default function RootLayout({
       <head>
         {/* Default favicon - will be replaced by white label if configured */}
         <link rel="icon" href="/favicon.ico" />
+
+        {/* PWA Meta Tags */}
+        <link rel="manifest" href="/manifest.json" />
+
+        {/* iOS PWA Support */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="TutuSporta" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+
+        {/* Android PWA Support */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="TutuSporta" />
+
+        {/* Microsoft PWA Support */}
+        <meta name="msapplication-TileColor" content="#3B82F6" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+
+        {/* Theme Color */}
+        <meta name="theme-color" content="#3B82F6" />
+        <meta name="msapplication-navbutton-color" content="#3B82F6" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        {/* Preload Service Worker */}
+        <link rel="prefetch" href="/sw.js" />
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider

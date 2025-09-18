@@ -166,49 +166,52 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <BrandedHeader />
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
 
 
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-4xl font-bold font-display tracking-tight">Dashboard</h1>
-          <p className="text-lg text-muted-foreground mt-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight">Dashboard</h1>
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 sm:mt-2">
             Monitor your website accessibility scans and improvements
           </p>
         </div>
-        <ThemeToggle />
+        <div className="self-end sm:self-auto">
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* New Scan Card */}
       <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-display text-xl">
-            <Plus className="w-5 h-5 text-primary" />
+        <CardHeader className="pb-3 sm:pb-4">
+          <CardTitle className="flex items-center gap-2 font-display text-lg sm:text-xl">
+            <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
             New Accessibility Scan
           </CardTitle>
-          <CardDescription className="text-base">
+          <CardDescription className="text-sm sm:text-base">
             Enter a URL to run a comprehensive WCAG accessibility analysis
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           <NewScanForm />
-
         </CardContent>
       </Card>
 
       {/* Enhanced Dashboard with Tabs */}
-      <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className={`grid w-full ${hasWhiteLabelAccess ? 'grid-cols-6' : 'grid-cols-5'}`}>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="teams">Teams</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
-          <TabsTrigger value="tools">Tools</TabsTrigger>
-          {hasWhiteLabelAccess && (
-            <TabsTrigger value="white-label">White Label</TabsTrigger>
-          )}
-        </TabsList>
+      <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
+        <div className="overflow-x-auto">
+          <TabsList className={`grid w-full min-w-max ${hasWhiteLabelAccess ? 'grid-cols-6' : 'grid-cols-5'} md:min-w-0`}>
+            <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+            <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
+            <TabsTrigger value="teams" className="text-xs sm:text-sm">Teams</TabsTrigger>
+            <TabsTrigger value="reports" className="text-xs sm:text-sm">Reports</TabsTrigger>
+            <TabsTrigger value="tools" className="text-xs sm:text-sm">Tools</TabsTrigger>
+            {hasWhiteLabelAccess && (
+              <TabsTrigger value="white-label" className="text-xs sm:text-sm">White Label</TabsTrigger>
+            )}
+          </TabsList>
+        </div>
 
         <TabsContent value="overview" className="space-y-6">
           {/* Animated Stats Cards */}
@@ -280,20 +283,20 @@ export default async function DashboardPage() {
                     Go to Teams
                   </Button>
                 </Link>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 max-w-2xl mx-auto">
-                  <div className="text-center p-4 border rounded-lg">
-                    <Shield className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-sm">Role-Based Access</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-6 max-w-2xl mx-auto">
+                  <div className="text-center p-3 sm:p-4 border rounded-lg">
+                    <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 mx-auto mb-2" />
+                    <h4 className="font-semibold text-xs sm:text-sm">Role-Based Access</h4>
                     <p className="text-xs text-muted-foreground">Admin, Editor, Viewer permissions</p>
                   </div>
-                  <div className="text-center p-4 border rounded-lg">
-                    <AlertTriangle className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-sm">Issue Tracking</h4>
+                  <div className="text-center p-3 sm:p-4 border rounded-lg">
+                    <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 mx-auto mb-2" />
+                    <h4 className="font-semibold text-xs sm:text-sm">Issue Tracking</h4>
                     <p className="text-xs text-muted-foreground">Assign and track accessibility issues</p>
                   </div>
-                  <div className="text-center p-4 border rounded-lg">
-                    <TrendingUp className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-sm">Shared Workspaces</h4>
+                  <div className="text-center p-3 sm:p-4 border rounded-lg">
+                    <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mx-auto mb-2" />
+                    <h4 className="font-semibold text-xs sm:text-sm">Shared Workspaces</h4>
                     <p className="text-xs text-muted-foreground">Collaborate on multiple sites</p>
                   </div>
                 </div>
@@ -385,43 +388,43 @@ export default async function DashboardPage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Quick Access Links */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Link href="/settings/white-label" className="group">
-                    <div className="border rounded-lg p-4 hover:border-blue-500 transition-colors">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  <Link href="/settings/white-label" className="group sm:col-span-2 lg:col-span-1">
+                    <div className="border rounded-lg p-3 sm:p-4 hover:border-blue-500 transition-colors">
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                          <span className="text-blue-600 font-semibold">⚙️</span>
+                        <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                          <span className="text-blue-600 font-semibold text-sm sm:text-base">⚙️</span>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">Full Settings</h3>
-                          <p className="text-sm text-gray-500">Complete white-label configuration</p>
+                          <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-blue-600">Full Settings</h3>
+                          <p className="text-xs sm:text-sm text-gray-500">Complete white-label configuration</p>
                         </div>
                       </div>
                       <p className="text-xs text-gray-400">Logo, colors, contact info, domain settings</p>
                     </div>
                   </Link>
 
-                  <div className="border rounded-lg p-4 bg-gray-50">
+                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
-                        <span className="text-green-600 font-semibold">📱</span>
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-green-100 flex items-center justify-center">
+                        <span className="text-green-600 font-semibold text-sm sm:text-base">📱</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">Live Preview</h3>
-                        <p className="text-sm text-gray-500">See your customizations</p>
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">Live Preview</h3>
+                        <p className="text-xs sm:text-sm text-gray-500">See your customizations</p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-400">Your site already shows your branding!</p>
                   </div>
 
-                  <div className="border rounded-lg p-4 bg-gray-50">
+                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                        <span className="text-purple-600 font-semibold">📈</span>
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <span className="text-purple-600 font-semibold text-sm sm:text-base">📈</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">Custom Reports</h3>
-                        <p className="text-sm text-gray-500">Branded PDF exports</p>
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">Custom Reports</h3>
+                        <p className="text-xs sm:text-sm text-gray-500">Branded PDF exports</p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-400">Coming soon - Reports with your branding</p>
@@ -429,9 +432,9 @@ export default async function DashboardPage() {
                 </div>
 
                 {/* White Label Features Overview */}
-                <div className="border rounded-lg p-6 bg-gradient-to-br from-blue-50 to-purple-50">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-4">🎨 Your White Label Features</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="border rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50">
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">🎨 Your White Label Features</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
@@ -490,8 +493,8 @@ export default async function DashboardPage() {
       {/* Recent Scans */}
       <Card>
         <CardHeader>
-          <CardTitle className="font-display text-xl">Recent Scans</CardTitle>
-          <CardDescription className="text-base">
+          <CardTitle className="font-display text-lg sm:text-xl">Recent Scans</CardTitle>
+          <CardDescription className="text-sm sm:text-base">
             Your latest accessibility scans and their results
           </CardDescription>
         </CardHeader>
@@ -499,54 +502,44 @@ export default async function DashboardPage() {
           {scans.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Site</TableHead>
-                    <TableHead>URL</TableHead>
-                    <TableHead>Score</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Issues</TableHead>
-                    <TableHead>Date</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {scans.map((scan) => (
-                    <TableRow key={scan.id} className="cursor-pointer hover:bg-muted/50">
-                      <TableCell>
-                        <Link href={`/scans/${scan.id}`} className="flex items-center gap-2">
+            <>
+              {/* Mobile Card Layout */}
+              <div className="block sm:hidden space-y-3">
+                {scans.map((scan) => (
+                  <Link key={scan.id} href={`/scans/${scan.id}`}>
+                    <Card className="p-4 hover:bg-muted/50 transition-colors">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
                           <SiteImage
                             src={getFaviconFromUrl(scan.site.url)}
                             alt=""
                             width={16}
                             height={16}
-                            className="rounded"
+                            className="rounded flex-shrink-0"
                           />
-                          <span className="font-medium truncate max-w-32">
-                            {new URL(scan.site.url).hostname}
-                          </span>
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/scans/${scan.id}`} className="text-blue-600 hover:text-blue-800 truncate max-w-48 block">
-                          {scan.site.url}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/scans/${scan.id}`}>
+                          <div className="min-w-0 flex-1">
+                            <div className="font-medium text-sm truncate">
+                              {new URL(scan.site.url).hostname}
+                            </div>
+                            <div className="text-xs text-muted-foreground truncate">
+                              {scan.site.url}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 ml-2">
                           {scan.score !== null ? (
                             <ScoreBadge score={scan.score} size="sm" />
                           ) : (
-                            <span className="text-muted-foreground">-</span>
+                            <span className="text-muted-foreground text-sm">-</span>
                           )}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/scans/${scan.id}`}>
-                          <Badge 
-                            variant={scan.status === 'done' ? 'default' : 'outline'} 
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3">
+                          <Badge
+                            variant={scan.status === 'done' ? 'default' : 'outline'}
                             className={cn(
+                              "text-xs",
                               scan.status === 'done' && 'bg-success text-success-foreground',
                               scan.status === 'failed' && 'bg-critical text-critical-foreground',
                               scan.status === 'running' && 'bg-primary text-primary-foreground'
@@ -554,23 +547,93 @@ export default async function DashboardPage() {
                           >
                             {scan.status}
                           </Badge>
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/scans/${scan.id}`}>
-                          <span className="font-medium">{scan.issues || 0}</span>
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/scans/${scan.id}`} className="text-muted-foreground text-sm">
-                          {formatDate(scan.createdAt)}
-                        </Link>
-                      </TableCell>
+                          <span className="text-muted-foreground">
+                            {scan.issues || 0} issues
+                          </span>
+                        </div>
+                        <span className="text-muted-foreground">
+                          {formatDateShort(scan.createdAt)}
+                        </span>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Desktop Table Layout */}
+              <div className="hidden sm:block rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Site</TableHead>
+                      <TableHead className="hidden lg:table-cell">URL</TableHead>
+                      <TableHead>Score</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Issues</TableHead>
+                      <TableHead>Date</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                  </TableHeader>
+                  <TableBody>
+                    {scans.map((scan) => (
+                      <TableRow key={scan.id} className="cursor-pointer hover:bg-muted/50">
+                        <TableCell>
+                          <Link href={`/scans/${scan.id}`} className="flex items-center gap-2">
+                            <SiteImage
+                              src={getFaviconFromUrl(scan.site.url)}
+                              alt=""
+                              width={16}
+                              height={16}
+                              className="rounded"
+                            />
+                            <span className="font-medium truncate max-w-32">
+                              {new URL(scan.site.url).hostname}
+                            </span>
+                          </Link>
+                        </TableCell>
+                        <TableCell className="hidden lg:table-cell">
+                          <Link href={`/scans/${scan.id}`} className="text-blue-600 hover:text-blue-800 truncate max-w-48 block">
+                            {scan.site.url}
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/scans/${scan.id}`}>
+                            {scan.score !== null ? (
+                              <ScoreBadge score={scan.score} size="sm" />
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/scans/${scan.id}`}>
+                            <Badge
+                              variant={scan.status === 'done' ? 'default' : 'outline'}
+                              className={cn(
+                                scan.status === 'done' && 'bg-success text-success-foreground',
+                                scan.status === 'failed' && 'bg-critical text-critical-foreground',
+                                scan.status === 'running' && 'bg-primary text-primary-foreground'
+                              )}
+                            >
+                              {scan.status}
+                            </Badge>
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/scans/${scan.id}`}>
+                            <span className="font-medium">{scan.issues || 0}</span>
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/scans/${scan.id}`} className="text-muted-foreground text-sm">
+                            {formatDate(scan.createdAt)}
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>

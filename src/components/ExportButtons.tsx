@@ -27,8 +27,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   const exportPdf = async () => {
     setExportingPdf(true);
     try {
-      // Open the HTML report in a new window for printing to PDF
-      const response = await fetch("/api/export/pdf-beautiful", {
+      const response = await fetch("/api/export/pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,21 +36,11 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate report");
+        throw new Error("Failed to generate PDF");
       }
 
-      const htmlContent = await response.text();
-      const printWindow = window.open("", "_blank");
-      if (printWindow) {
-        printWindow.document.write(htmlContent);
-        printWindow.document.close();
-        printWindow.focus();
-        
-        // Give the content time to load, then trigger print
-        setTimeout(() => {
-          printWindow.print();
-        }, 500);
-      }
+      const blob = await response.blob();
+      downloadBlob(blob, `tutusporta-accessibility-report-${scanId}.pdf`);
     } catch (error) {
       console.error("PDF export failed:", error);
       alert("Failed to export PDF. Please try again.");

@@ -168,7 +168,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <BrandedHeader />
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Link href="/dashboard" className="hover:text-foreground">
@@ -180,28 +180,28 @@ export default async function ScanDetailPage({ params }: PageProps) {
 
       {/* Header */}
       <Card className="border-l-4 border-l-primary">
-        <CardHeader>
-          <div className="flex items-start justify-between">
-            <div className="flex items-start gap-4">
+        <CardHeader className="pb-3 sm:pb-6">
+          <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+            <div className="flex items-start gap-3 sm:gap-4 min-w-0 flex-1">
               <SiteImage
                 src={getFaviconFromUrl(siteUrl)}
                 alt=""
-                width={64}
-                height={64}
-                className="rounded-xl"
+                width={48}
+                height={48}
+                className="rounded-lg sm:rounded-xl sm:w-16 sm:h-16"
               />
-              <div>
-                <CardTitle className="flex items-center gap-3 font-display text-2xl">
-                  <span>{new URL(siteUrl).hostname}</span>
+              <div className="min-w-0 flex-1">
+                <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 font-display text-lg sm:text-xl lg:text-2xl">
+                  <span className="truncate">{new URL(siteUrl).hostname}</span>
                   {scan.score !== null && <ScoreBadge score={scan.score} size="lg" />}
                 </CardTitle>
-                <CardDescription className="flex items-center gap-2 mt-3 text-base">
-                  <Globe className="w-4 h-4" />
-                  <a 
-                    href={siteUrl} 
-                    target="_blank" 
+                <CardDescription className="flex items-center gap-2 mt-2 sm:mt-3 text-sm sm:text-base">
+                  <Globe className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                  <a
+                    href={siteUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 font-medium"
+                    className="text-primary hover:text-primary/80 font-medium truncate"
                   >
                     {siteUrl}
                   </a>
@@ -209,17 +209,17 @@ export default async function ScanDetailPage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 self-start sm:self-auto">
               {getStatusBadge(scan.status)}
               <CopyButton text={shareUrl} size="sm">
-                <Share className="w-4 h-4 mr-2" />
-                Share
+                <Share className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Share</span>
               </CopyButton>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <CardContent className="pt-0 sm:pt-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <StatCard
               title="Total Issues"
               value={stats.total}
@@ -256,17 +256,19 @@ export default async function ScanDetailPage({ params }: PageProps) {
       </Card>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {/* Left Column - Main Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="heatmap">🗺️ Heatmap</TabsTrigger>
-              <TabsTrigger value="analytics">Analytics</TabsTrigger>
-              <TabsTrigger value="violations">Violations</TabsTrigger>
-              <TabsTrigger value="raw">Raw JSON</TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto">
+              <TabsList className="grid w-full min-w-max grid-cols-5 md:min-w-0">
+                <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+                <TabsTrigger value="heatmap" className="text-xs sm:text-sm">🗺️ Heatmap</TabsTrigger>
+                <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
+                <TabsTrigger value="violations" className="text-xs sm:text-sm">Violations</TabsTrigger>
+                <TabsTrigger value="raw" className="text-xs sm:text-sm">Raw JSON</TabsTrigger>
+              </TabsList>
+            </div>
 
             <TabsContent value="overview" className="space-y-6 mt-6">
               {/* Severity Overview */}

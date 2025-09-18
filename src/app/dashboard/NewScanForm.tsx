@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { TouchButton } from "@/components/ui/touch-button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Search, AlertCircle } from "lucide-react";
@@ -59,8 +59,8 @@ export function NewScanForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex gap-2">
+    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
         <div className="flex-1">
           <Input
             type="url"
@@ -68,28 +68,32 @@ export function NewScanForm() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={isLoading}
-            className="h-11"
+            className="h-10 sm:h-11 text-base sm:text-base px-4 touch-manipulation"
             required
             aria-label="Website URL to scan"
+            autoComplete="url"
+            inputMode="url"
           />
         </div>
-        <Button 
-          type="submit" 
+        <TouchButton
+          type="submit"
           disabled={!url.trim() || isLoading}
-          className="h-11 px-6"
+          className="h-10 sm:h-11 px-4 sm:px-6 text-sm sm:text-base w-full sm:w-auto"
         >
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Scanning...
+              <span className="hidden sm:inline">Scanning...</span>
+              <span className="sm:hidden">Scanning</span>
             </>
           ) : (
             <>
               <Search className="w-4 h-4 mr-2" />
-              Start Scan
+              <span className="hidden sm:inline">Start Scan</span>
+              <span className="sm:hidden">Scan</span>
             </>
           )}
-        </Button>
+        </TouchButton>
       </div>
 
       {error && (

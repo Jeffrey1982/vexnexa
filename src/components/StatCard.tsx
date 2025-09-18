@@ -102,28 +102,28 @@ export function StatCard({
   
   return (
     <Card className={cn(styles.card, className)}>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between space-y-0 pb-2">
-          <p className="text-sm font-medium text-muted-foreground font-display">
+      <CardContent className="p-3 sm:p-4 lg:p-6">
+        <div className="flex items-center justify-between space-y-0 pb-1 sm:pb-2">
+          <p className="text-xs sm:text-sm font-medium text-muted-foreground font-display">
             {title}
           </p>
           {Icon && (
-            <Icon className={cn("w-5 h-5", styles.icon)} />
+            <Icon className={cn("w-4 h-4 sm:w-5 sm:h-5", styles.icon)} />
           )}
         </div>
-        
-        <div className="space-y-2">
-          <div className={cn("text-3xl font-bold font-display", styles.value)}>
+
+        <div className="space-y-1 sm:space-y-2">
+          <div className={cn("text-xl sm:text-2xl lg:text-3xl font-bold font-display", styles.value)}>
             {typeof value === 'number' ? value.toLocaleString() : value}
           </div>
-          
+
           <div className="flex items-center justify-between">
             {subtitle && (
               <p className="text-xs text-muted-foreground">
                 {subtitle}
               </p>
             )}
-            
+
             {trend && (
               <div className={cn("flex items-center gap-1 text-xs font-medium", getTrendColor())}>
                 {TrendIcon && <TrendIcon className="w-3 h-3" />}
