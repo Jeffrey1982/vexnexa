@@ -19,7 +19,7 @@ export function OfflineIndicator() {
         <Alert className="bg-red-50 border-red-200 text-red-800 shadow-lg">
           <WifiOff className="h-4 w-4" />
           <AlertDescription className="font-medium">
-            You're offline. Some features may be limited.
+            You&rsquo;re offline. Some features may be limited.
           </AlertDescription>
         </Alert>
       ) : wasOffline ? (

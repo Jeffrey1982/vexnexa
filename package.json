@@ -24,12 +24,15 @@
     "seed": "node prisma/seed.mjs"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.7.0",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@mollie/api-client": "^4.3.3",
     "@prisma/client": "^6.15.0",
     "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -66,6 +69,7 @@
     "next": "14.2.15",
     "next-themes": "^0.4.6",
     "node-fetch": "^3.3.2",
+    "playwright": "^1.45.0",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-diff-viewer-continued": "^3.4.0",
@@ -74,9 +78,7 @@
     "recharts": "^3.2.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^4.1.5",
-    "@axe-core/playwright": "^4.7.0",
-    "playwright": "^1.45.0"
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",

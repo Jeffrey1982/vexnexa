@@ -123,7 +123,7 @@ export function InstallPrompt() {
           <div className="flex-1">
             <AlertDescription className="text-blue-800">
               <strong>Install TutuSporta</strong><br />
-              Tap <span className="inline-flex items-center mx-1">📤</span> in Safari, then "Add to Home Screen"
+              Tap <span className="inline-flex items-center mx-1">📤</span> in Safari, then &ldquo;Add to Home Screen&rdquo;
             </AlertDescription>
           </div>
           <Button

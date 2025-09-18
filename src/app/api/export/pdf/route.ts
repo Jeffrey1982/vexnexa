@@ -1,3 +1,4 @@
+import React from "react";
 import { NextRequest, NextResponse } from "next/server";
 import { pdf } from "@react-pdf/renderer";
 import { prisma } from "@/lib/prisma";
@@ -52,9 +53,9 @@ export async function POST(req: NextRequest) {
     // Parse violations data
     let violations = [];
     try {
-      violations = Array.isArray(scan.violations)
-        ? scan.violations
-        : JSON.parse(scan.violations as string || "[]");
+      if (scan.raw && typeof scan.raw === 'object' && 'violations' in scan.raw) {
+        violations = (scan.raw as any).violations || [];
+      }
     } catch (error) {
       console.error("Failed to parse violations:", error);
       violations = [];
@@ -70,21 +71,20 @@ export async function POST(req: NextRequest) {
     };
 
     // Generate PDF using React PDF
-    const pdfDoc = PDFReport({
+    const pdfDoc = React.createElement(PDFReport, {
       scanData,
       brandName: "TutuSporta",
       primaryColor: "#3B82F6"
     });
 
     // Convert to buffer
-    const pdfBuffer = await pdf(pdfDoc).toBuffer();
+    const pdfBuffer = await pdf(pdfDoc as any).toBuffer();
 
     // Return PDF as downloadable file
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(pdfBuffer as any, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="tutusporta-accessibility-report-${scanId}.pdf"`,
-        "Content-Length": pdfBuffer.length.toString(),
       },
     });
 

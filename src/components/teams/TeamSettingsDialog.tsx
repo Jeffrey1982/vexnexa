@@ -190,7 +190,7 @@ export function TeamSettingsDialog({
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Team</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{team.name}"? This action cannot be undone.
+              Are you sure you want to delete &ldquo;{team.name}&rdquo;? This action cannot be undone.
               All team members will lose access to shared sites.
             </AlertDialogDescription>
           </AlertDialogHeader>
