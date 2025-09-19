@@ -162,30 +162,12 @@ function HeroSection() {
           {/* Right column - Hero image placeholder */}
           <div className="relative animate-fade-in">
             <div className="relative z-10">
-              {/* Hero image placeholder - replace with actual image */}
-              <div className="aspect-square lg:aspect-[4/3] bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 rounded-3xl shadow-2xl border border-primary/20 backdrop-blur-sm relative overflow-hidden group">
-                {/* Placeholder content */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-                  <div className="w-20 h-20 bg-primary/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Shield className="w-10 h-10 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold font-display text-foreground mb-3">
-                    Accessibility Scanning
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    Hero image placeholder
-                  </p>
-                  <p className="text-xs text-muted-foreground/70 mt-2">
-                    Perfect spot for an accessibility-themed illustration
-                  </p>
-                </div>
-
-                {/* Decorative elements */}
-                <div className="absolute top-4 right-4 w-16 h-16 border border-primary/20 rounded-full opacity-20"></div>
-                <div className="absolute bottom-6 left-6 w-12 h-12 border border-accent/30 rounded-full opacity-30"></div>
-                <div className="absolute top-1/2 right-8 w-2 h-2 bg-primary/40 rounded-full"></div>
-                <div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-accent/40 rounded-full"></div>
-              </div>
+              {/* Hero image */}
+              <img
+                src="/heroImage.png"
+                alt="TutusPorta accessibility scanning platform"
+                className="aspect-square lg:aspect-[4/3] rounded-3xl shadow-2xl border border-primary/20 w-full h-full object-cover"
+              />
 
               {/* Floating elements around the image */}
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
@@ -305,13 +287,11 @@ function VisualSection() {
           
           <div className="relative">
             <div className="bg-white rounded-lg shadow-xl p-6">
-              <div className="bg-muted/50 h-64 rounded-lg flex items-center justify-center">
-                <div className="text-center text-muted-foreground">
-                  <FileText className="w-16 h-16 mx-auto mb-4" />
-                  <p>Scan detail screenshot</p>
-                  <p className="text-sm">Placeholder</p>
-                </div>
-              </div>
+              <img
+                src="/Screenshot1.png"
+                alt="TutusPorta scan detail report showing accessibility issues"
+                className="w-full h-64 rounded-lg object-cover"
+              />
             </div>
           </div>
         </div>

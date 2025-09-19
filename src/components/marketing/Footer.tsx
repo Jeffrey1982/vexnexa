@@ -62,30 +62,30 @@ export function Footer({ className }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={cn("border-t border-border/50 gradient-subtle shadow-elegant", className)}>
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand & Newsletter */}
-          <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">T</span>
+    <footer className={cn("border-t border-border/40 bg-muted/30", className)}>
+      <div className="container mx-auto px-4 py-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+          {/* Brand & Description */}
+          <div className="lg:col-span-1 space-y-6">
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center shadow-sm">
+                <span className="text-primary-foreground font-bold">T</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-bold text-xl">TutusPorta</span>
-                <span className="text-xs text-muted-foreground">by Vexnexa</span>
+                <span className="font-display font-bold text-2xl">TutusPorta</span>
+                <span className="text-sm text-muted-foreground">by Vexnexa</span>
               </div>
             </Link>
-            
-            <p className="text-muted-foreground max-w-md">
-              WCAG-scans die wél inzicht geven. Voer een URL in en krijg een concreet rapport 
-              met prioriteiten, voorbeelden en quick wins.
+
+            <p className="text-muted-foreground leading-relaxed max-w-sm">
+              WCAG-scans die wél inzicht geven. Krijg concrete rapporten met prioriteiten en quick wins.
             </p>
 
             {/* Newsletter Signup */}
-            <div className="space-y-2">
-              <h3 className="font-semibold">Blijf op de hoogte</h3>
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-md">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg">Blijf op de hoogte</h3>
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-sm">
                 <Input
                   type="email"
                   placeholder="je@email.nl"
@@ -93,71 +93,79 @@ export function Footer({ className }: FooterProps) {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isSubmitting}
+                  className="bg-background"
                 />
-                <Button type="submit" disabled={isSubmitting}>
+                <Button type="submit" disabled={isSubmitting} size="icon">
                   <Mail className="w-4 h-4" />
                 </Button>
               </form>
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">Product</h3>
-            <div className="flex flex-col space-y-2 text-sm">
-              <Link href="/features" className="text-muted-foreground hover:text-foreground transition-colors">
-                Features
-              </Link>
-              <Link href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">
-                Pricing
-              </Link>
-              <Link href="/changelog" className="text-muted-foreground hover:text-foreground transition-colors">
-                Changelog
-              </Link>
-              <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
-                Dashboard
-              </Link>
-            </div>
-          </div>
+          {/* Navigation Links - Better organized */}
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+              {/* Product */}
+              <div className="space-y-4">
+                <h3 className="font-semibold text-lg">Product</h3>
+                <div className="flex flex-col space-y-3 text-sm">
+                  <Link href="/features" className="text-muted-foreground hover:text-primary transition-colors">
+                    Features
+                  </Link>
+                  <Link href="/pricing" className="text-muted-foreground hover:text-primary transition-colors">
+                    Pricing
+                  </Link>
+                  <Link href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors">
+                    Dashboard
+                  </Link>
+                  <Link href="/changelog" className="text-muted-foreground hover:text-primary transition-colors">
+                    Changelog
+                  </Link>
+                </div>
+              </div>
 
-          {/* Support & Legal */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">Support</h3>
-            <div className="flex flex-col space-y-2 text-sm">
-              <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                Contact
-              </Link>
-              <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                Blog
-              </Link>
-              <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-                Over ons
-              </Link>
-            </div>
-            
-            <h3 className="font-semibold pt-2">Juridisch</h3>
-            <div className="flex flex-col space-y-2 text-sm">
-              <Link href="/legal/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy
-              </Link>
-              <Link href="/legal/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Voorwaarden
-              </Link>
+              {/* Support */}
+              <div className="space-y-4">
+                <h3 className="font-semibold text-lg">Support</h3>
+                <div className="flex flex-col space-y-3 text-sm">
+                  <Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                    Contact
+                  </Link>
+                  <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">
+                    Over ons
+                  </Link>
+                  <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                    Blog
+                  </Link>
+                </div>
+              </div>
+
+              {/* Legal */}
+              <div className="space-y-4">
+                <h3 className="font-semibold text-lg">Juridisch</h3>
+                <div className="flex flex-col space-y-3 text-sm">
+                  <Link href="/legal/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+                    Privacy
+                  </Link>
+                  <Link href="/legal/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                    Voorwaarden
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        {/* Bottom Bar - Simplified */}
+        <div className="pt-8 border-t border-border/40">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-              <span>Gemaakt met</span>
-              <Heart className="w-4 h-4 text-red-500" />
-              <span>in NL © {currentYear}</span>
+              <span>Copyright </span>
+              <span>Vexnexa © {currentYear}</span>
             </div>
-            
-            <div className="text-xs text-muted-foreground max-w-md text-center md:text-right">
-              Wij scannen publiek toegankelijke content en slaan geen persoonsgegevens op vanuit pagina&apos;s.
+
+            <div className="text-xs text-muted-foreground text-center md:text-right max-w-md">
+              Publieke content scanning • Geen opslag van persoonsgegevens
             </div>
           </div>
         </div>

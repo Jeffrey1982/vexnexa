@@ -1,7 +1,7 @@
 export const PRICES = {
-  STARTER: { amount: "19.00", currency: "EUR", interval: "1 month" },
-  PRO:     { amount: "49.00", currency: "EUR", interval: "1 month" },
-  BUSINESS:{ amount: "149.00",currency: "EUR", interval: "1 month" },
+  STARTER: { amount: "9.00", currency: "EUR", interval: "1 month" },
+  PRO:     { amount: "19.00", currency: "EUR", interval: "1 month" },
+  BUSINESS:{ amount: "49.00", currency: "EUR", interval: "1 month" },
 } as const
 
 export type Entitlements = {
