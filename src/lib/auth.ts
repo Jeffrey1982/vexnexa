@@ -36,7 +36,12 @@ export async function getCurrentUser() {
     plan: dbUser.plan,
     subscriptionStatus: dbUser.subscriptionStatus,
     trialEndsAt: dbUser.trialEndsAt,
-    profileCompleted: dbUser.profileCompleted
+    profileCompleted: dbUser.profileCompleted,
+    marketingEmails: dbUser.marketingEmails,
+    productUpdates: dbUser.productUpdates,
+    teamInvitations: dbUser.teamInvitations,
+    scanNotifications: dbUser.scanNotifications,
+    weeklyReports: dbUser.weeklyReports
   }
 }
 
