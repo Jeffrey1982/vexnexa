@@ -8,14 +8,14 @@ export async function POST() {
 
     // Test 1: Basic test email
     const testResult = await sendTestEmail()
-    console.log('✅ Test email sent:', testResult?.id)
+    console.log('✅ Test email sent:', testResult?.data?.id)
 
     // Test 2: Welcome email
     const welcomeResult = await sendWelcomeEmail({
       email: 'jeffrey.aay@gmail.com',
       firstName: 'Jeffrey'
     })
-    console.log('✅ Welcome email sent:', welcomeResult?.id)
+    console.log('✅ Welcome email sent:', welcomeResult?.data?.id)
 
     // Test 3: Password reset email
     const resetResult = await sendPasswordResetEmail({
@@ -23,7 +23,7 @@ export async function POST() {
       resetUrl: 'https://tutusporta.com/auth/reset-password?token=test',
       userAgent: 'Test Browser'
     })
-    console.log('✅ Password reset email sent:', resetResult?.id)
+    console.log('✅ Password reset email sent:', resetResult?.data?.id)
 
     // Test 4: Team invitation email
     const inviteResult = await sendTeamInvitation({
@@ -33,16 +33,16 @@ export async function POST() {
       inviteToken: 'test-token-123',
       role: 'Editor'
     })
-    console.log('✅ Team invitation email sent:', inviteResult?.id)
+    console.log('✅ Team invitation email sent:', inviteResult?.data?.id)
 
     return NextResponse.json({
       success: true,
       message: 'All email tests completed successfully!',
       results: {
-        testEmail: testResult?.id,
-        welcomeEmail: welcomeResult?.id,
-        passwordReset: resetResult?.id,
-        teamInvitation: inviteResult?.id
+        testEmail: testResult?.data?.id,
+        welcomeEmail: welcomeResult?.data?.id,
+        passwordReset: resetResult?.data?.id,
+        teamInvitation: inviteResult?.data?.id
       }
     })
   } catch (error) {
