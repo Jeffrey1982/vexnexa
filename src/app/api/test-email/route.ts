@@ -1,0 +1,71 @@
+import { NextResponse } from 'next/server'
+import { sendTestEmail, sendWelcomeEmail, sendPasswordResetEmail, sendTeamInvitation } from '@/lib/email'
+
+export async function POST() {
+  try {
+    // Test basic email functionality
+    console.log('Testing email system...')
+
+    // Test 1: Basic test email
+    const testResult = await sendTestEmail()
+    console.log('✅ Test email sent:', testResult?.id)
+
+    // Test 2: Welcome email
+    const welcomeResult = await sendWelcomeEmail({
+      email: 'jeffrey.aay@gmail.com',
+      firstName: 'Jeffrey'
+    })
+    console.log('✅ Welcome email sent:', welcomeResult?.id)
+
+    // Test 3: Password reset email
+    const resetResult = await sendPasswordResetEmail({
+      email: 'jeffrey.aay@gmail.com',
+      resetUrl: 'https://tutusporta.com/auth/reset-password?token=test',
+      userAgent: 'Test Browser'
+    })
+    console.log('✅ Password reset email sent:', resetResult?.id)
+
+    // Test 4: Team invitation email
+    const inviteResult = await sendTeamInvitation({
+      inviterName: 'Jeffrey Aay',
+      teamName: 'Test Team',
+      inviteEmail: 'jeffrey.aay@gmail.com',
+      inviteToken: 'test-token-123',
+      role: 'Editor'
+    })
+    console.log('✅ Team invitation email sent:', inviteResult?.id)
+
+    return NextResponse.json({
+      success: true,
+      message: 'All email tests completed successfully!',
+      results: {
+        testEmail: testResult?.id,
+        welcomeEmail: welcomeResult?.id,
+        passwordReset: resetResult?.id,
+        teamInvitation: inviteResult?.id
+      }
+    })
+  } catch (error) {
+    console.error('Email test failed:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Email test failed',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    )
+  }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    message: 'Email test endpoint ready. Send POST request to test all email functionality.',
+    availableTests: [
+      'Basic test email',
+      'Welcome email template',
+      'Password reset email',
+      'Team invitation email'
+    ]
+  })
+}
