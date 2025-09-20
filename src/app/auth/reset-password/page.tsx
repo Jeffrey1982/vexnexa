@@ -29,6 +29,9 @@ export default function ResetPasswordPage() {
   const supabase = createClient()
 
   useEffect(() => {
+    // Check if we're in the browser (not during SSR/static generation)
+    if (typeof window === 'undefined') return
+
     // Check if we have access token in URL (from email link)
     const hashParams = new URLSearchParams(window.location.hash.substring(1))
     const accessToken = hashParams.get('access_token')
