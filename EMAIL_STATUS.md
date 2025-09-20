@@ -2,7 +2,7 @@
 
 ## ✅ **FULLY OPERATIONAL!**
 
-Your Resend API key `re_fZqF3cAQ_NnSdLDjnHg3xrKLMUTWFemtj` has been successfully integrated and all email functionality is now active.
+Your Resend API key has been successfully integrated and all email functionality is now active.
 
 ---
 
@@ -41,7 +41,7 @@ Your Resend API key `re_fZqF3cAQ_NnSdLDjnHg3xrKLMUTWFemtj` has been successfully
 
 ### **Environment Variables**
 ```bash
-✅ RESEND_API_KEY="re_fZqF3cAQ_NnSdLDjnHg3xrKLMUTWFemtj"
+✅ RESEND_API_KEY="[CONFIGURED]"
 ✅ NEXT_PUBLIC_APP_URL="https://tutusporta.com"
 ✅ Vercel Production Environment: Configured
 ```
