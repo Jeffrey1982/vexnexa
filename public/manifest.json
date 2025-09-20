@@ -11,21 +11,21 @@
   "lang": "en",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-1024.png",
+      "src": "/icon-1024.svg",
       "sizes": "1024x1024",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
     }
   ],
@@ -37,7 +37,7 @@
       "url": "/dashboard?action=scan",
       "icons": [
         {
-          "src": "/icon-scan-192.png",
+          "src": "/icon-scan-192.svg",
           "sizes": "192x192"
         }
       ]
@@ -49,7 +49,7 @@
       "url": "/dashboard?tab=reports",
       "icons": [
         {
-          "src": "/icon-reports-192.png",
+          "src": "/icon-reports-192.svg",
           "sizes": "192x192"
         }
       ]
@@ -61,7 +61,7 @@
       "url": "/teams",
       "icons": [
         {
-          "src": "/icon-teams-192.png",
+          "src": "/icon-teams-192.svg",
           "sizes": "192x192"
         }
       ]
