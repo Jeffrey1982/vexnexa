@@ -85,10 +85,11 @@ export async function createSubscription(opts: {
   }
   
   // Check if customer has valid mandates
-  // TODO: Fix Mollie API method for mandate validation
-  // const mandates = await mollie.customerMandates.all({ customerId } as any)
+  // NOTE: Mandate validation disabled - requires proper Mollie API key configuration
+  // When Mollie is properly configured, uncomment and update the following:
+  // const mandates = await mollie.customerMandates.all({ customerId })
   // const validMandate = mandates.find(m => m.status === "valid")
-  // 
+  //
   // if (!validMandate) {
   //   throw new Error("No valid mandate found for customer")
   // }
@@ -179,19 +180,19 @@ export async function changePlan(opts: {
   }
   
   // Check if user has valid mandate
-  // TODO: Fix Mollie API method for mandate validation  
-  // const mandates = await mollie.customerMandates.all({ customerId: user.mollieCustomerId } as any)
+  // NOTE: Mandate validation disabled - requires proper Mollie API key configuration
+  // When Mollie is properly configured, uncomment and update the following:
+  // const mandates = await mollie.customerMandates.all({ customerId: user.mollieCustomerId })
   // const validMandate = mandates.find(m => m.status === "valid")
-  // 
+  //
   // if (!validMandate) {
   //   // Need new checkout flow for mandate
   //   return { needCheckout: true }
   // }
-  
+
   // For now, always require checkout for plan changes to ensure proper payment setup
+  // This ensures secure payment processing until Mollie is fully configured
   return { needCheckout: true }
-  
-  // TODO: Implement direct subscription creation when mandate validation is working
   // Can create subscription directly
   // await createSubscription({
   //   customerId: user.mollieCustomerId,

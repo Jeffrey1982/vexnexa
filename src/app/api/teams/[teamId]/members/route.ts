@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { sendTeamInvitation } from "@/lib/email";
 
 export async function POST(
   req: NextRequest,
@@ -131,7 +132,19 @@ export async function POST(
         }
       });
 
-      // TODO: Send invitation email
+      // Send invitation email
+      try {
+        await sendTeamInvitation({
+          inviterName: `${invite.inviter.firstName} ${invite.inviter.lastName}`,
+          teamName: invite.team.name,
+          inviteEmail: email,
+          inviteToken: token,
+          role: role
+        });
+      } catch (emailError) {
+        console.error('Failed to send invitation email:', emailError);
+        // Continue even if email fails - the invitation is created in database
+      }
 
       return NextResponse.json({ invite });
     }

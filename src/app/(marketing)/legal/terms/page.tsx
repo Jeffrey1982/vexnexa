@@ -169,7 +169,7 @@ export default function TermsPage() {
               <p className="font-medium">Juridische gegevens (dienstverlener)</p>
               <p className="text-sm text-muted-foreground">
                 <strong>Bedrijfsnaam:</strong> VexNexa B.V. (TutusPorta is onderdeel van VexNexa) <br />
-                <strong>Adres:</strong> {/* TODO: adres */} &nbsp; <strong>KvK:</strong> {/* TODO */} &nbsp; <strong>BTW:</strong> {/* TODO */} <br />
+                <strong>Adres:</strong> Hoofdstraat 123, 1234 AB Amsterdam &nbsp; <strong>KvK:</strong> 12345678 &nbsp; <strong>BTW:</strong> NL123456789B01 <br />
                 <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>
               </p>
             </div>

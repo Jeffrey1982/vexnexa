@@ -37,7 +37,9 @@
       "Bash(curl:*)",
       "Bash(npx prisma:*)",
       "Bash(xargs kill:*)",
-      "Bash(netstat:*)"
+      "Bash(netstat:*)",
+      "Bash(mv:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []

@@ -59,8 +59,8 @@ const contactMethods: Method[] = [
     title: "E-mail Support",
     description: "Voor algemene vragen en support",
     detail: "Responstijd: 24–72 uur",
-    actionLabel: "hello@tutusporta.com",
-    href: "mailto:hello@tutusporta.com",
+    actionLabel: "info@tutusporta.com",
+    href: "mailto:info@tutusporta.com",
   },
   {
     icon: MessageCircle,
@@ -68,8 +68,7 @@ const contactMethods: Method[] = [
     description: "Voor Team-plannen en enterprise oplossingen",
     detail: "Persoonlijke demo binnen 24 uur",
     actionLabel: "Plan een gesprek",
-    // TODO: vervang door je Cal.com/Calendly link
-    href: "/demo", // placeholder
+    href: "/demo", // Links to demo page with contact form
   },
   {
     icon: Globe,
@@ -151,7 +150,7 @@ export default function ContactPage() {
       toast({
         variant: "destructive",
         title: "Er ging iets mis",
-        description: "Probeer het later opnieuw of stuur een e-mail naar hello@tutusporta.com",
+        description: "Probeer het later opnieuw of stuur een e-mail naar info@tutusporta.com",
       });
     } finally {
       setIsSubmitting(false);
@@ -256,8 +255,8 @@ export default function ContactPage() {
               <div className="pt-6">
                 <p className="text-sm text-muted-foreground">
                   Liever direct contact? Mail{" "}
-                  <a href="mailto:hello@tutusporta.com" className="text-primary hover:underline">
-                    hello@tutusporta.com
+                  <a href="mailto:info@tutusporta.com" className="text-primary hover:underline">
+                    info@tutusporta.com
                   </a>
                   .
                 </p>

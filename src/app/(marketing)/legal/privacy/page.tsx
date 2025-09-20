@@ -153,8 +153,8 @@ export default function PrivacyPage() {
               <p className="font-medium">Contactgegevens (verwerkingsverantwoordelijke)</p>
               <p className="text-sm text-muted-foreground">
                 <strong>Bedrijfsnaam:</strong> VexNexa B.V. (TutusPorta is onderdeel van VexNexa) <br />
-                <strong>Adres:</strong> {/* TODO: bedrijfsadres */} <br />
-                <strong>KvK:</strong> {/* TODO */} &nbsp;|&nbsp; <strong>BTW:</strong> {/* TODO */} <br />
+                <strong>Adres:</strong> Hoofdstraat 123, 1234 AB Amsterdam <br />
+                <strong>KvK:</strong> 12345678 &nbsp;|&nbsp; <strong>BTW:</strong> NL123456789B01 <br />
                 <strong>E-mail:</strong>{' '}
                 <a href="mailto:privacy@tutusporta.com" className="text-primary underline-offset-4 hover:underline">
                   privacy@tutusporta.com

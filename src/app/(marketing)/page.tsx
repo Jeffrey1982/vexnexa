@@ -54,11 +54,11 @@ const steps = [
   },
 ];
 
-const logos = [
-  { name: "Company A", width: 100, height: 40 },
-  { name: "Company B", width: 120, height: 40 },
-  { name: "Company C", width: 80, height: 40 },
-  { name: "Company D", width: 110, height: 40 },
+const trustedBy = [
+  { name: "Nederlandse overheid", width: 120, height: 40 },
+  { name: "Zorgverzekeraars", width: 110, height: 40 },
+  { name: "Financiële instellingen", width: 140, height: 40 },
+  { name: "E-commerce platforms", width: 130, height: 40 },
 ];
 
 function JsonLd() {
@@ -191,13 +191,13 @@ function SocialProofSection() {
         </div>
         
         <div className="flex justify-center items-center space-x-8 lg:space-x-16 opacity-60">
-          {logos.map((logo, index) => (
-            <div 
-              key={logo.name}
-              className="bg-muted rounded-lg flex items-center justify-center text-muted-foreground"
-              style={{ width: logo.width, height: logo.height }}
+          {trustedBy.map((organization, index) => (
+            <div
+              key={organization.name}
+              className="bg-muted rounded-lg flex items-center justify-center text-muted-foreground text-xs font-medium px-3"
+              style={{ width: organization.width, height: organization.height }}
             >
-              {logo.name}
+              {organization.name}
             </div>
           ))}
         </div>

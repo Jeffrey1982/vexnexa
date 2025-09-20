@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createContactMessage } from '@/lib/supabaseServer'
+import { sendContactNotification } from '@/lib/email'
+import { contactFormLimiter } from '@/lib/rate-limit'
 import { z } from 'zod'
 
 const ContactSchema = z.object({
@@ -10,8 +12,28 @@ const ContactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const rateLimitResult = contactFormLimiter(request)
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Too many requests. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': new Date(rateLimitResult.resetTime).toISOString(),
+            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+          }
+        }
+      )
+    }
+
     const body = await request.json()
-    
+
     // Validate input
     const validation = ContactSchema.safeParse(body)
     if (!validation.success) {
@@ -22,14 +44,6 @@ export async function POST(request: NextRequest) {
     }
 
     const { name, email, message } = validation.data
-
-    // Rate limiting check (simple IP-based)
-    const clientIP = request.headers.get('x-forwarded-for') || 
-                    request.headers.get('x-real-ip') || 
-                    'unknown'
-    
-    // TODO: Implement proper rate limiting
-    // For now, we rely on natural limits
 
     // Basic spam detection
     const spamKeywords = ['crypto', 'bitcoin', 'loan', 'casino', 'viagra', 'cialis']
@@ -44,14 +58,19 @@ export async function POST(request: NextRequest) {
     // Create contact message
     const contactMessage = await createContactMessage(name, email, message)
 
-    // TODO: Send notification email to team
-    // TODO: Send confirmation email to user
+    // Send notification and confirmation emails
+    try {
+      await sendContactNotification({ name, email, message })
+    } catch (emailError) {
+      console.error('Failed to send contact emails:', emailError)
+      // Continue even if email fails - the message is saved in database
+    }
 
     return NextResponse.json(
-      { 
-        success: true, 
+      {
+        success: true,
         message: 'Message sent successfully',
-        messageId: contactMessage.id 
+        messageId: contactMessage.id
       },
       { status: 200 }
     )

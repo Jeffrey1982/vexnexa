@@ -117,6 +117,84 @@ tutusporta.com
   }
 }
 
+export interface TeamInvitationData {
+  inviterName: string
+  teamName: string
+  inviteEmail: string
+  inviteToken: string
+  role: string
+}
+
+export async function sendTeamInvitation(data: TeamInvitationData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping team invitation email')
+    return null
+  }
+
+  try {
+    const { inviterName, teamName, inviteEmail, inviteToken, role } = data
+    const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/teams/invite?token=${inviteToken}`
+
+    const result = await resend.emails.send({
+      from: 'TutusPorta Teams <noreply@tutusporta.com>',
+      to: [inviteEmail],
+      subject: `Uitnodiging voor team "${teamName}" - TutusPorta`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #3B82F6;">Je bent uitgenodigd voor een team!</h2>
+
+          <p>Hoi,</p>
+
+          <p><strong>${inviterName}</strong> heeft je uitgenodigd om lid te worden van het team <strong>"${teamName}"</strong> op TutusPorta als <strong>${role}</strong>.</p>
+
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+            <h3 style="margin-top: 0;">Accepteer je uitnodiging</h3>
+            <a href="${inviteUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+              Lid worden van team
+            </a>
+          </div>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Als de knop niet werkt, kopieer dan deze link: <br>
+            <a href="${inviteUrl}" style="color: #3B82F6;">${inviteUrl}</a>
+          </p>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij TutusPorta, wordt er automatisch een account voor je aangemaakt.
+          </p>
+
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+          <p style="color: #6b7280; font-size: 14px;">
+            TutusPorta - WCAG accessibility scanning platform<br>
+            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+          </p>
+        </div>
+      `,
+      text: `
+Je bent uitgenodigd voor team "${teamName}" - TutusPorta
+
+Hoi,
+
+${inviterName} heeft je uitgenodigd om lid te worden van het team "${teamName}" op TutusPorta als ${role}.
+
+Accepteer je uitnodiging door naar deze link te gaan:
+${inviteUrl}
+
+Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij TutusPorta, wordt er automatisch een account voor je aangemaakt.
+
+TutusPorta - WCAG accessibility scanning platform
+tutusporta.com
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send team invitation email:', error)
+    throw error
+  }
+}
+
 export async function sendTestEmail() {
   if (!resend) {
     throw new Error('RESEND_API_KEY not configured')
