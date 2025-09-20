@@ -1,7 +1,10 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -16,7 +19,7 @@ import {
   Shield
 } from 'lucide-react'
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -25,7 +28,6 @@ export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
   const supabase = createClient()
 
   useEffect(() => {
@@ -249,5 +251,17 @@ export default function ResetPasswordPage() {
         }
       `}</style>
     </div>
+  )
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <ResetPasswordForm />
+    </Suspense>
   )
 }
