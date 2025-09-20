@@ -150,6 +150,15 @@ export default function ModernLoginForm() {
             </form>
 
             <div className="text-center space-y-4">
+              <div className="text-sm">
+                <a
+                  href="/auth/forgot-password"
+                  className="text-blue-600 hover:text-blue-500 transition-colors"
+                >
+                  Wachtwoord vergeten?
+                </a>
+              </div>
+
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t border-gray-200 dark:border-gray-600" />

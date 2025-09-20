@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { sendWelcomeEmail } from '@/lib/email'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
       const metadata = data.user.user_metadata || {}
       
       // Create or update user in our database
-      await prisma.user.upsert({
+      const user = await prisma.user.upsert({
         where: { email: data.user.email! },
         update: {
           // Update profile completion status
@@ -38,6 +39,19 @@ export async function GET(request: NextRequest) {
           trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
         },
       })
+
+      // Send welcome email for new users
+      if (metadata.first_name && user.firstName) {
+        try {
+          await sendWelcomeEmail({
+            email: user.email,
+            firstName: user.firstName
+          })
+        } catch (emailError) {
+          console.error('Failed to send welcome email:', emailError)
+          // Continue even if email fails
+        }
+      }
     }
   }
 

@@ -195,6 +195,180 @@ tutusporta.com
   }
 }
 
+export interface PasswordResetData {
+  email: string
+  resetUrl: string
+  userAgent?: string
+}
+
+export async function sendPasswordResetEmail(data: PasswordResetData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping password reset email')
+    return null
+  }
+
+  try {
+    const { email, resetUrl, userAgent } = data
+
+    const result = await resend.emails.send({
+      from: 'TutusPorta Security <noreply@tutusporta.com>',
+      to: [email],
+      subject: 'Reset je TutusPorta wachtwoord',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #3B82F6;">Wachtwoord opnieuw instellen</h2>
+
+          <p>Hoi,</p>
+
+          <p>We hebben een verzoek ontvangen om je wachtwoord voor TutusPorta opnieuw in te stellen.</p>
+
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+            <h3 style="margin-top: 0;">Reset je wachtwoord</h3>
+            <a href="${resetUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+              Nieuw wachtwoord instellen
+            </a>
+          </div>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Als de knop niet werkt, kopieer dan deze link: <br>
+            <a href="${resetUrl}" style="color: #3B82F6;">${resetUrl}</a>
+          </p>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Deze link is 1 uur geldig. Als je dit verzoek niet hebt gedaan, kun je deze email negeren.
+          </p>
+
+          ${userAgent ? `<p style="color: #6b7280; font-size: 12px;">
+            Verzoek gedaan vanaf: ${userAgent}
+          </p>` : ''}
+
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+          <p style="color: #6b7280; font-size: 14px;">
+            TutusPorta - WCAG accessibility scanning platform<br>
+            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+          </p>
+        </div>
+      `,
+      text: `
+Wachtwoord opnieuw instellen - TutusPorta
+
+Hoi,
+
+We hebben een verzoek ontvangen om je wachtwoord voor TutusPorta opnieuw in te stellen.
+
+Reset je wachtwoord door naar deze link te gaan:
+${resetUrl}
+
+Deze link is 1 uur geldig. Als je dit verzoek niet hebt gedaan, kun je deze email negeren.
+
+${userAgent ? `Verzoek gedaan vanaf: ${userAgent}` : ''}
+
+TutusPorta - WCAG accessibility scanning platform
+tutusporta.com
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send password reset email:', error)
+    throw error
+  }
+}
+
+export async function sendWelcomeEmail(data: { email: string; firstName: string }) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping welcome email')
+    return null
+  }
+
+  try {
+    const { email, firstName } = data
+
+    const result = await resend.emails.send({
+      from: 'TutusPorta <noreply@tutusporta.com>',
+      to: [email],
+      subject: 'Welkom bij TutusPorta! 🎉',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #3B82F6;">Welkom bij TutusPorta, ${firstName}! 🎉</h2>
+
+          <p>Bedankt voor je aanmelding! Je bent nu klaar om websites toegankelijker te maken.</p>
+
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0;">Je 14-daagse gratis proefperiode is gestart</h3>
+            <p>Je hebt volledige toegang tot alle Pro functies:</p>
+            <ul>
+              <li>✅ Onbeperkte WCAG-scans</li>
+              <li>✅ Team samenwerking</li>
+              <li>✅ Geavanceerde rapportage</li>
+              <li>✅ Real-time monitoring</li>
+            </ul>
+          </div>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+              Start je eerste scan
+            </a>
+          </div>
+
+          <h3>Volgende stappen:</h3>
+          <ol>
+            <li><strong>Voeg je eerste website toe</strong> - Begin met een snelle scan</li>
+            <li><strong>Nodig teamleden uit</strong> - Werk samen aan accessibility</li>
+            <li><strong>Stel monitoring in</strong> - Krijg alerts bij nieuwe issues</li>
+          </ol>
+
+          <p>Heb je vragen? Reageer gewoon op deze email of bezoek ons <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/contact" style="color: #3B82F6;">contact centrum</a>.</p>
+
+          <p>Veel succes met het toegankelijker maken van het web! 🚀</p>
+
+          <p>Het TutusPorta team</p>
+
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+          <p style="color: #6b7280; font-size: 14px;">
+            TutusPorta - WCAG accessibility scanning platform<br>
+            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+          </p>
+        </div>
+      `,
+      text: `
+Welkom bij TutusPorta, ${firstName}! 🎉
+
+Bedankt voor je aanmelding! Je bent nu klaar om websites toegankelijker te maken.
+
+Je 14-daagse gratis proefperiode is gestart met volledige toegang tot alle Pro functies:
+- Onbeperkte WCAG-scans
+- Team samenwerking
+- Geavanceerde rapportage
+- Real-time monitoring
+
+Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard
+
+Volgende stappen:
+1. Voeg je eerste website toe - Begin met een snelle scan
+2. Nodig teamleden uit - Werk samen aan accessibility
+3. Stel monitoring in - Krijg alerts bij nieuwe issues
+
+Heb je vragen? Reageer gewoon op deze email of bezoek ons contact centrum.
+
+Veel succes met het toegankelijker maken van het web! 🚀
+
+Het TutusPorta team
+
+TutusPorta - WCAG accessibility scanning platform
+tutusporta.com
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send welcome email:', error)
+    throw error
+  }
+}
+
 export async function sendTestEmail() {
   if (!resend) {
     throw new Error('RESEND_API_KEY not configured')

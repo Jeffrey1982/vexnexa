@@ -23,8 +23,11 @@ model User {
   country      String?
 
   // Marketing preferences
-  marketingEmails Boolean @default(true)
-  productUpdates  Boolean @default(true)
+  marketingEmails    Boolean @default(true)
+  productUpdates     Boolean @default(true)
+  teamInvitations    Boolean @default(true)
+  scanNotifications  Boolean @default(true)
+  weeklyReports      Boolean @default(false)
 
   // Profile completion
   profileCompleted Boolean @default(false)

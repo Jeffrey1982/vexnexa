@@ -51,6 +51,9 @@ export async function POST(request: NextRequest) {
     const hasSpam = spamKeywords.some(keyword => messageContent.includes(keyword))
     
     if (hasSpam) {
+      const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+                      request.headers.get('x-real-ip') ||
+                      'unknown'
       console.warn('Potential spam detected from IP:', clientIP, { name, email, message: message.substring(0, 100) })
       // Still process but flag for review
     }
