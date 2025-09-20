@@ -166,12 +166,17 @@ async function networkFirstStrategy(request) {
 
 // Cache-first strategy: try cache, fallback to network
 async function cacheFirstStrategy(request) {
+  // Only cache GET requests - Cache API doesn't support other methods
+  if (request.method !== 'GET') {
+    return networkOnlyStrategy(request);
+  }
+
   const cachedResponse = await caches.match(request);
 
   if (cachedResponse) {
-    // Update cache in background
+    // Update cache in background for GET requests only
     fetch(request).then(response => {
-      if (response.ok) {
+      if (response.ok && request.method === 'GET') {
         caches.open(CACHE_NAME).then(cache => {
           cache.put(request, response);
         });
@@ -187,7 +192,7 @@ async function cacheFirstStrategy(request) {
   try {
     const networkResponse = await fetch(request);
 
-    if (networkResponse.ok) {
+    if (networkResponse.ok && request.method === 'GET') {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, networkResponse.clone());
     }
