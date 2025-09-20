@@ -41,7 +41,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { email, source } = validation.data
+    const { email: rawEmail, source } = validation.data
+    const email = rawEmail.trim() // Ensure no whitespace issues
 
     // Initialize Resend
     const resend = new Resend(process.env.RESEND_API_KEY)
@@ -98,9 +99,10 @@ Wil je geen emails meer ontvangen? Stuur een email naar noreply@tutusporta.com m
       })
 
       // Also send notification to admin
+      const adminEmail = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
       await resend.emails.send({
         from: 'TutusPorta Notifications <noreply@tutusporta.com>',
-        to: [process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com'],
+        to: [adminEmail],
         subject: 'Nieuwe nieuwsbrief inschrijving',
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
