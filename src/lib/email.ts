@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { getSourceDisplayName } from './email-utils'
 
 // Initialize Resend only if API key is available
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
@@ -329,7 +330,8 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string 
 
           <p style="color: #6b7280; font-size: 14px;">
             TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a><br><br>
+            <small>Dit is een systeemmelding over je account. Voor vragen: info@tutusporta.com</small>
           </p>
         </div>
       `,
@@ -359,12 +361,167 @@ Het TutusPorta team
 
 TutusPorta - WCAG accessibility scanning platform
 tutusporta.com
+
+Dit is een systeemmelding over je account. Voor vragen: info@tutusporta.com
       `.trim()
     })
 
     return result
   } catch (error) {
     console.error('Failed to send welcome email:', error)
+    throw error
+  }
+}
+
+export interface EmailVerificationData {
+  email: string
+  confirmUrl: string
+  firstName?: string
+}
+
+export async function sendEmailVerification(data: EmailVerificationData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping email verification')
+    return null
+  }
+
+  try {
+    const { email, confirmUrl, firstName } = data
+
+    const result = await resend.emails.send({
+      from: 'TutusPorta Account <noreply@tutusporta.com>',
+      to: [email],
+      subject: 'Bevestig je TutusPorta account',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #3B82F6;">Welkom bij TutusPorta${firstName ? `, ${firstName}` : ''}!</h2>
+
+          <p>Bedankt voor je aanmelding! Klik op de onderstaande knop om je account te bevestigen en direct te beginnen met WCAG-scans.</p>
+
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+            <h3 style="margin-top: 0;">Bevestig je account</h3>
+            <a href="${confirmUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+              Account bevestigen
+            </a>
+          </div>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Als de knop niet werkt, kopieer dan deze link: <br>
+            <a href="${confirmUrl}" style="color: #3B82F6;">${confirmUrl}</a>
+          </p>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Deze link is 24 uur geldig. Als je geen account hebt aangemaakt, kun je deze email negeren.
+          </p>
+
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+          <p style="color: #6b7280; font-size: 14px;">
+            TutusPorta - WCAG accessibility scanning platform<br>
+            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+          </p>
+        </div>
+      `,
+      text: `
+Welkom bij TutusPorta${firstName ? `, ${firstName}` : ''}!
+
+Bedankt voor je aanmelding! Bevestig je account door naar deze link te gaan:
+${confirmUrl}
+
+Deze link is 24 uur geldig. Als je geen account hebt aangemaakt, kun je deze email negeren.
+
+TutusPorta - WCAG accessibility scanning platform
+tutusporta.com
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send email verification:', error)
+    throw error
+  }
+}
+
+export interface NewsletterData {
+  email: string
+  source?: string
+}
+
+export async function sendNewsletterConfirmation(data: NewsletterData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping newsletter confirmation')
+    return null
+  }
+
+  try {
+    const { email, source } = data
+    const friendlySource = getSourceDisplayName(source)
+
+    const result = await resend.emails.send({
+      from: 'TutusPorta Newsletter <noreply@tutusporta.com>',
+      to: [email],
+      subject: 'Welkom bij de TutusPorta nieuwsbrief! 📧',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #3B82F6;">Bedankt voor je inschrijving! 🎉</h2>
+
+          <p>Je bent nu ingeschreven voor de TutusPorta nieuwsbrief. We houden je op de hoogte van:</p>
+
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <ul style="color: #4b5563; line-height: 1.6; margin: 0; padding-left: 20px;">
+              <li>🚀 Nieuwe features en productnieuws</li>
+              <li>💡 Tips voor betere webtoegankelijkheid</li>
+              <li>📊 Trends en best practices in WCAG</li>
+              <li>🎯 Exclusive content en early access</li>
+            </ul>
+          </div>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+              Start je eerste scan
+            </a>
+          </div>
+
+          <p>We versturen ongeveer 1-2 emails per maand en respecteren je inbox. Geen spam, beloofd! 🤝</p>
+
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+          <p style="color: #6b7280; font-size: 14px;">
+            Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.<br>
+            <a href="mailto:info@tutusporta.com?subject=Uitschrijven nieuwsbrief" style="color: #3B82F6;">Klik hier om je uit te schrijven</a>
+          </p>
+
+          <p style="color: #6b7280; font-size: 14px;">
+            TutusPorta - WCAG accessibility scanning platform<br>
+            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+          </p>
+        </div>
+      `,
+      text: `
+Bedankt voor je inschrijving! 🎉
+
+Je bent nu ingeschreven voor de TutusPorta nieuwsbrief. We houden je op de hoogte van:
+
+- Nieuwe features en productnieuws
+- Tips voor betere webtoegankelijkheid
+- Trends en best practices in WCAG
+- Exclusive content en early access
+
+Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard
+
+We versturen ongeveer 1-2 emails per maand en respecteren je inbox. Geen spam, beloofd!
+
+Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.
+Uitschrijven? Mail info@tutusporta.com met onderwerp "Uitschrijven nieuwsbrief"
+
+TutusPorta - WCAG accessibility scanning platform
+tutusporta.com
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send newsletter confirmation:', error)
     throw error
   }
 }

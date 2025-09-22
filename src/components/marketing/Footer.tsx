@@ -34,11 +34,20 @@ export function Footer({ className }: FooterProps) {
         }),
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        toast({
-          title: "Bedankt voor je inschrijving!",
-          description: "We houden je op de hoogte van nieuwe features en tips.",
-        });
+        if (result.requiresConfirmation) {
+          toast({
+            title: "Bevestigingsmail verzonden! 📧",
+            description: "Controleer je inbox en klik op de link om je inschrijving te voltooien.",
+          });
+        } else {
+          toast({
+            title: "Bedankt voor je inschrijving!",
+            description: "We houden je op de hoogte van nieuwe features en tips.",
+          });
+        }
         setEmail("");
       } else if (response.status === 409) {
         toast({
@@ -46,7 +55,11 @@ export function Footer({ className }: FooterProps) {
           description: "Bedankt voor je interesse!",
         });
       } else {
-        throw new Error("Failed to subscribe");
+        toast({
+          variant: "destructive",
+          title: "Er ging iets mis",
+          description: result.error || "Probeer het later opnieuw.",
+        });
       }
     } catch (error) {
       toast({

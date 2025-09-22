@@ -1,4 +1,4 @@
--- Create Lead table for newsletter signups
+-- Create Lead table for newsletter signups with GDPR compliance
 CREATE TABLE IF NOT EXISTS "Lead" (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
@@ -8,6 +8,15 @@ CREATE TABLE IF NOT EXISTS "Lead" (
   "utmSource" TEXT,
   "utmMedium" TEXT,
   "utmCampaign" TEXT,
+  -- GDPR/AVG compliance fields
+  "isConfirmed" BOOLEAN DEFAULT FALSE,
+  "confirmationToken" TEXT UNIQUE,
+  "confirmedAt" TIMESTAMP WITH TIME ZONE,
+  "isUnsubscribed" BOOLEAN DEFAULT FALSE,
+  "unsubscribeToken" TEXT UNIQUE,
+  "unsubscribedAt" TIMESTAMP WITH TIME ZONE,
+  "ipAddress" TEXT,
+  "userAgent" TEXT,
   "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -27,6 +36,10 @@ CREATE TABLE IF NOT EXISTS "ContactMessage" (
 -- Add indexes for better performance
 CREATE INDEX IF NOT EXISTS "Lead_email_idx" ON "Lead" (email);
 CREATE INDEX IF NOT EXISTS "Lead_createdAt_idx" ON "Lead" ("createdAt");
+CREATE INDEX IF NOT EXISTS "Lead_confirmationToken_idx" ON "Lead" ("confirmationToken");
+CREATE INDEX IF NOT EXISTS "Lead_unsubscribeToken_idx" ON "Lead" ("unsubscribeToken");
+CREATE INDEX IF NOT EXISTS "Lead_isConfirmed_idx" ON "Lead" ("isConfirmed");
+CREATE INDEX IF NOT EXISTS "Lead_isUnsubscribed_idx" ON "Lead" ("isUnsubscribed");
 CREATE INDEX IF NOT EXISTS "ContactMessage_email_idx" ON "ContactMessage" (email);
 CREATE INDEX IF NOT EXISTS "ContactMessage_createdAt_idx" ON "ContactMessage" ("createdAt");
 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset je TutusPorta wachtwoord</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="display: inline-block; background: #3B82F6; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">T</div>
+                <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">TutusPorta</h1>
+                <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
+            </div>
+
+            <!-- Main Content -->
+            <div style="text-align: center;">
+                <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px; font-weight: 600;">Wachtwoord opnieuw instellen</h2>
+
+                <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
+                    We hebben een verzoek ontvangen om je wachtwoord voor TutusPorta opnieuw in te stellen. Klik op de onderstaande knop om een nieuw wachtwoord te kiezen.
+                </p>
+
+                <!-- Security Notice -->
+                <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 16px; margin: 24px 0; text-align: left;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="font-size: 18px; margin-right: 12px;">🔒</span>
+                        <div>
+                            <strong style="color: #92400E; font-size: 14px;">Veiligheidstip:</strong>
+                            <p style="color: #92400E; font-size: 14px; margin: 4px 0 0 0; line-height: 1.4;">
+                                Als je dit verzoek niet hebt gedaan, kun je deze email veilig negeren.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div style="margin: 32px 0;">
+                    <a href="{{ .ConfirmationURL }}"
+                       style="display: inline-block; background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); transition: all 0.2s ease;">
+                        Nieuw wachtwoord instellen
+                    </a>
+                </div>
+
+                <!-- Alternative Link -->
+                <p style="color: #6B7280; font-size: 14px; line-height: 1.5; margin: 24px 0;">
+                    Werkt de knop niet? Kopieer deze link:<br>
+                    <a href="{{ .ConfirmationURL }}" style="color: #3B82F6; word-break: break-all;">{{ .ConfirmationURL }}</a>
+                </p>
+
+                <!-- Time Limit Notice -->
+                <div style="background: #F3F4F6; border-radius: 8px; padding: 16px; margin: 24px 0;">
+                    <p style="color: #4B5563; font-size: 14px; margin: 0; line-height: 1.5;">
+                        <strong>Let op:</strong> Deze link is 1 uur geldig om veiligheidsredenen.<br>
+                        Na dit tijdstip moet je opnieuw een wachtwoord reset aanvragen.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 32px;">
+            <p style="color: #9CA3AF; font-size: 14px; line-height: 1.5; margin: 0;">
+                Heb je problemen? Neem contact op via <a href="mailto:info@tutusporta.com" style="color: #3B82F6;">info@tutusporta.com</a><br><br>
+                <strong>TutusPorta</strong> | <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a><br>
+                <span style="font-size: 12px;">Privacy-first WCAG scanning • Gemaakt in Nederland</span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
