@@ -38,10 +38,7 @@ export async function getCurrentUser() {
     trialEndsAt: dbUser.trialEndsAt,
     profileCompleted: dbUser.profileCompleted,
     marketingEmails: dbUser.marketingEmails,
-    productUpdates: dbUser.productUpdates,
-    teamInvitations: dbUser.teamInvitations,
-    scanNotifications: dbUser.scanNotifications,
-    weeklyReports: dbUser.weeklyReports
+    productUpdates: dbUser.productUpdates
   }
 }
 

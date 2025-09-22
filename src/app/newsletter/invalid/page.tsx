@@ -76,7 +76,7 @@ export default function NewsletterInvalidPage() {
 
           <div className="bg-blue-50 p-4 rounded-lg">
             <p className="text-blue-800 text-sm">
-              <strong>Wat kun je doen?</strong><br>
+              <strong>Wat kun je doen?</strong><br />
               {content.suggestion}
             </p>
           </div>

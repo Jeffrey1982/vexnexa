@@ -20,9 +20,6 @@ export async function GET() {
       marketingEmails: user.marketingEmails,
       productUpdates: user.productUpdates,
       securityAlerts: true, // Always true for security
-      teamInvitations: user.teamInvitations ?? true,
-      scanNotifications: user.scanNotifications ?? true,
-      weeklyReports: user.weeklyReports ?? false,
     })
   } catch (error) {
     console.error('Failed to get notification settings:', error)
@@ -54,9 +51,6 @@ export async function PUT(request: NextRequest) {
       data: {
         marketingEmails: settings.marketingEmails,
         productUpdates: settings.productUpdates,
-        teamInvitations: settings.teamInvitations,
-        scanNotifications: settings.scanNotifications,
-        weeklyReports: settings.weeklyReports,
       },
     })
 

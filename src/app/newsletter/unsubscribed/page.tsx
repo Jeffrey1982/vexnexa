@@ -54,7 +54,7 @@ export default function NewsletterUnsubscribedPage() {
 
           <div className="bg-yellow-50 p-4 rounded-lg">
             <p className="text-yellow-800 text-sm">
-              <strong>Per ongeluk uitgeschreven?</strong><br>
+              <strong>Per ongeluk uitgeschreven?</strong><br />
               Geen probleem! Je kunt je opnieuw inschrijven via onze homepage.
             </p>
           </div>
