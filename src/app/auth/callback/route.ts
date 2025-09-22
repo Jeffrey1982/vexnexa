@@ -1,60 +1,48 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { sendWelcomeEmail } from '@/lib/email'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
+  const error = requestUrl.searchParams.get('error')
+
+  // Handle OAuth error
+  if (error) {
+    console.error('OAuth error:', error)
+    return NextResponse.redirect(new URL('/auth/login?error=oauth_error', request.url))
+  }
 
   if (code) {
     const supabase = createClient()
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-    
-    if (!error && data.user) {
-      // Extract user metadata from the signup
-      const metadata = data.user.user_metadata || {}
-      
-      // Create or update user in our database
-      const user = await prisma.user.upsert({
-        where: { email: data.user.email! },
-        update: {
-          // Update profile completion status
-          profileCompleted: !!(metadata.first_name && metadata.last_name)
-        },
-        create: {
-          email: data.user.email!,
-          firstName: metadata.first_name || null,
-          lastName: metadata.last_name || null,
-          company: metadata.company || null,
-          jobTitle: metadata.job_title || null,
-          phoneNumber: metadata.phone_number || null,
-          website: metadata.website || null,
-          country: metadata.country || null,
-          marketingEmails: metadata.marketing_emails !== false, // default true
-          productUpdates: metadata.product_updates !== false, // default true
-          profileCompleted: !!(metadata.first_name && metadata.last_name),
-          plan: 'TRIAL',
-          subscriptionStatus: 'trialing',
-          trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
-        },
-      })
 
-      // Send welcome email for new users
-      if (metadata.first_name && user.firstName) {
-        try {
-          await sendWelcomeEmail({
-            email: user.email,
-            firstName: user.firstName
-          })
-        } catch (emailError) {
-          console.error('Failed to send welcome email:', emailError)
-          // Continue even if email fails
+    try {
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+
+      if (error) {
+        console.error('Session exchange error:', error)
+        return NextResponse.redirect(new URL('/auth/login?error=session_error', request.url))
+      }
+
+      if (data.user) {
+        console.log('OAuth login successful for user:', data.user.email)
+
+        // Check if this is a new user (first time login)
+        const isNewUser = data.user.created_at === data.user.last_sign_in_at
+
+        if (isNewUser) {
+          // Redirect to onboarding or welcome page for new users
+          return NextResponse.redirect(new URL('/dashboard?welcome=true', request.url))
+        } else {
+          // Redirect to dashboard for existing users
+          return NextResponse.redirect(new URL('/dashboard', request.url))
         }
       }
+    } catch (exchangeError) {
+      console.error('Unexpected error during OAuth callback:', exchangeError)
+      return NextResponse.redirect(new URL('/auth/login?error=unexpected_error', request.url))
     }
   }
 
-  // URL to redirect to after sign in process completes
-  return NextResponse.redirect(new URL('/dashboard', request.url))
+  // If no code or other issues, redirect to login
+  return NextResponse.redirect(new URL('/auth/login', request.url))
 }
