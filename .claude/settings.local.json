@@ -43,7 +43,9 @@
       "Bash(pkill:*)",
       "Bash(tasklist)",
       "Bash(findstr:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "WebFetch(domain:www.tutusporta.com)",
+      "WebFetch(domain:autoriteitpersoonsgegevens.nl)"
     ],
     "deny": [],
     "ask": []
