@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tutusporta-v1';
+const CACHE_NAME = 'tutusporta-v2';
 const STATIC_CACHE_URLS = [
   '/',
   '/dashboard',
@@ -88,11 +88,19 @@ self.addEventListener('fetch', (event) => {
 // Network-first strategy: try network, fallback to cache
 async function networkFirstStrategy(request) {
   try {
-    const networkResponse = await fetch(request);
+    // Create a new request with explicit redirect handling
+    const fetchRequest = new Request(request, {
+      redirect: 'follow'
+    });
+
+    const networkResponse = await fetch(fetchRequest);
 
     if (networkResponse.ok) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
+      // Only cache successful responses that are not redirects
+      if (networkResponse.type !== 'opaqueredirect') {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(request, networkResponse.clone());
+      }
       return networkResponse;
     }
   } catch (error) {
@@ -175,8 +183,9 @@ async function cacheFirstStrategy(request) {
 
   if (cachedResponse) {
     // Update cache in background for GET requests only
-    fetch(request).then(response => {
-      if (response.ok && request.method === 'GET') {
+    const fetchRequest = new Request(request, { redirect: 'follow' });
+    fetch(fetchRequest).then(response => {
+      if (response.ok && request.method === 'GET' && response.type !== 'opaqueredirect') {
         caches.open(CACHE_NAME).then(cache => {
           cache.put(request, response);
         });
@@ -190,9 +199,10 @@ async function cacheFirstStrategy(request) {
 
   // Fallback to network
   try {
-    const networkResponse = await fetch(request);
+    const fetchRequest = new Request(request, { redirect: 'follow' });
+    const networkResponse = await fetch(fetchRequest);
 
-    if (networkResponse.ok && request.method === 'GET') {
+    if (networkResponse.ok && request.method === 'GET' && networkResponse.type !== 'opaqueredirect') {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, networkResponse.clone());
     }
@@ -206,7 +216,8 @@ async function cacheFirstStrategy(request) {
 
 // Network-only strategy: always use network
 async function networkOnlyStrategy(request) {
-  return fetch(request);
+  const fetchRequest = new Request(request, { redirect: 'follow' });
+  return fetch(fetchRequest);
 }
 
 // Handle background sync for failed requests
