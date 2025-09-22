@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, ArrowRight } from "lucide-react";
+import { Suspense } from "react";
 
-export default function NewsletterInvalidPage() {
+function NewsletterInvalidContent() {
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason");
 
@@ -109,5 +110,24 @@ export default function NewsletterInvalidPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function NewsletterInvalidPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center p-4">
+        <Card className="w-full max-w-2xl">
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <AlertTriangle className="w-8 h-8 text-orange-600" />
+            </div>
+            <CardTitle className="text-2xl text-orange-800">Loading...</CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+    }>
+      <NewsletterInvalidContent />
+    </Suspense>
   );
 }
