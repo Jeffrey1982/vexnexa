@@ -153,7 +153,7 @@ export default async function DashboardPage() {
   try {
     user = await requireAuth();
   } catch (error) {
-    redirect("/auth/register");
+    redirect("/auth/login");
   }
 
   const [scans, stats] = await Promise.all([

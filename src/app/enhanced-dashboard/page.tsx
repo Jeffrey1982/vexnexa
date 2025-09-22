@@ -243,7 +243,7 @@ export default async function EnhancedDashboardPage() {
   try {
     user = await requireAuth();
   } catch (error) {
-    redirect("/auth/register");
+    redirect("/auth/login");
   }
 
   const dashboardData = await getEnhancedDashboardData(user.id);

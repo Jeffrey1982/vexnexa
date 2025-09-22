@@ -20,7 +20,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
   try {
     user = await requireAuth();
   } catch (error) {
-    redirect("/auth/register");
+    redirect("/auth/login");
   }
 
   // Verify site ownership
