@@ -99,8 +99,8 @@ export const contactFormLimiter = rateLimit({
 })
 
 export const newsletterLimiter = rateLimit({
-  maxRequests: 10, // 10 signups per hour (increased for testing)
-  windowMs: 60 * 60 * 1000 // 1 hour
+  maxRequests: 5, // 5 signups per day per IP
+  windowMs: 24 * 60 * 60 * 1000 // 24 hours
 })
 
 export const apiLimiter = rateLimit({
