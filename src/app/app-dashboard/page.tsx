@@ -55,8 +55,7 @@ export default async function AppDashboardPage() {
     include: {
       site: {
         select: {
-          url: true,
-          name: true
+          url: true
         }
       }
     },
@@ -156,7 +155,7 @@ export default async function AppDashboardPage() {
                         <div className="flex items-center space-x-3">
                           <SiteImage url={site.url} size={40} />
                           <div>
-                            <h3 className="font-medium">{site.name || site.url}</h3>
+                            <h3 className="font-medium">{site.url}</h3>
                             <p className="text-sm text-gray-500">{site.url}</p>
                           </div>
                         </div>
@@ -199,7 +198,7 @@ export default async function AppDashboardPage() {
                       <div className="flex items-center space-x-3">
                         <SiteImage url={scan.site.url} size={32} />
                         <div>
-                          <h4 className="font-medium">{scan.site.name || scan.site.url}</h4>
+                          <h4 className="font-medium">{scan.site.url}</h4>
                           <p className="text-sm text-gray-500">{formatDate(scan.createdAt)}</p>
                         </div>
                       </div>
