@@ -149,7 +149,7 @@ export default async function AppDashboardPage() {
                     return (
                       <div key={site.id} className="flex items-center justify-between p-4 border rounded-lg">
                         <div className="flex items-center space-x-3">
-                          <SiteImage url={site.url} size={40} />
+                          <SiteImage src={`https://www.google.com/s2/favicons?domain=${site.url}&sz=40`} width={40} height={40} />
                           <div>
                             <h3 className="font-medium">{site.url}</h3>
                             <p className="text-sm text-gray-500">{site.url}</p>
@@ -192,7 +192,7 @@ export default async function AppDashboardPage() {
                   {recentScans.slice(0, 5).map((scan) => (
                     <div key={scan.id} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex items-center space-x-3">
-                        <SiteImage url={scan.site.url} size={32} />
+                        <SiteImage src={`https://www.google.com/s2/favicons?domain=${scan.site.url}&sz=32`} width={32} height={32} />
                         <div>
                           <h4 className="font-medium">{scan.site.url}</h4>
                           <p className="text-sm text-gray-500">{formatDate(scan.createdAt)}</p>
