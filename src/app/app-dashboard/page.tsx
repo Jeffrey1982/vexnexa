@@ -8,7 +8,7 @@ import { StatCard } from "@/components/StatCard";
 import { SeverityBadge } from "@/components/SeverityBadge";
 import { formatDate, getFaviconFromUrl } from "@/lib/format";
 import { computeIssueStats } from "@/lib/axe-types";
-import { Plus, Activity, AlertTriangle, TrendingUp, Users } from "lucide-react";
+import { Plus, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
 import { redirect } from "next/navigation";
@@ -84,26 +84,22 @@ export default async function AppDashboardPage() {
           <StatCard
             title="Websites"
             value={sites.length}
-            icon={<Users className="h-4 w-4" />}
-            className="text-blue-600"
+            iconName="Users"
           />
           <StatCard
             title="Total Scans"
             value={totalScans}
-            icon={<Activity className="h-4 w-4" />}
-            className="text-green-600"
+            iconName="TrendingUp"
           />
           <StatCard
             title="Average Score"
             value={avgScore}
-            icon={<TrendingUp className="h-4 w-4" />}
-            className="text-purple-600"
+            iconName="TrendingUp"
           />
           <StatCard
             title="Total Issues"
             value={totalIssues}
-            icon={<AlertTriangle className="h-4 w-4" />}
-            className="text-orange-600"
+            iconName="AlertTriangle"
           />
         </div>
 
