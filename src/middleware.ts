@@ -27,6 +27,7 @@ export async function middleware(request: NextRequest) {
 
   if (isProtectedPath) {
     if (!user) {
+      // Force redirect to login page (production cache fix)
       const redirectUrl = new URL('/auth/login', request.url)
       redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)
       return NextResponse.redirect(redirectUrl)

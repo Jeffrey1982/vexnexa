@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tutusporta-v3-auth-fixed';
+const CACHE_NAME = 'tutusporta-v4-redirect-fixed';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
