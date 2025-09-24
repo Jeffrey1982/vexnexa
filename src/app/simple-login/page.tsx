@@ -108,7 +108,7 @@ export default function SimpleLoginPage() {
           </form>
 
           <div className="mt-6 text-center text-sm">
-            <span className="text-gray-600">Don't have an account? </span>
+            <span className="text-gray-600">Don&apos;t have an account? </span>
             <Link href="/simple-register" className="text-blue-600 hover:underline">
               Sign up
             </Link>
