@@ -1,10 +1,17 @@
-import { redirect } from "next/navigation";
-import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { SiteList } from "@/components/dashboard/SiteList";
-import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import { RecentScans } from "@/components/dashboard/RecentScans";
-import { QuickActions } from "@/components/dashboard/QuickActions";
+import { requireAuth } from "@/lib/auth";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ScoreBadge } from "@/components/ScoreBadge";
+import { StatCard } from "@/components/StatCard";
+import { SeverityBadge } from "@/components/SeverityBadge";
+import { formatDate, getFaviconFromUrl } from "@/lib/format";
+import { computeIssueStats } from "@/lib/axe-types";
+import { Plus, Activity, AlertTriangle, TrendingUp, Users } from "lucide-react";
+import Link from "next/link";
+import { SiteImage } from "@/components/SiteImage";
+import { redirect } from "next/navigation";
 
 export default async function AppDashboardPage() {
   let user;
@@ -57,6 +64,11 @@ export default async function AppDashboardPage() {
     take: 10
   });
 
+  // Calculate stats
+  const totalScans = recentScans.length;
+  const avgScore = totalScans > 0 ? Math.round(recentScans.reduce((sum, scan) => sum + (scan.score || 0), 0) / totalScans) : 0;
+  const totalIssues = recentScans.reduce((sum, scan) => sum + (scan.issues || 0), 0);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -68,23 +80,141 @@ export default async function AppDashboardPage() {
           </p>
         </div>
 
-        {/* Stats */}
-        <DashboardStats sites={sites} />
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <StatCard
+            title="Websites"
+            value={sites.length}
+            icon={<Users className="h-4 w-4" />}
+            className="text-blue-600"
+          />
+          <StatCard
+            title="Total Scans"
+            value={totalScans}
+            icon={<Activity className="h-4 w-4" />}
+            className="text-green-600"
+          />
+          <StatCard
+            title="Average Score"
+            value={avgScore}
+            icon={<TrendingUp className="h-4 w-4" />}
+            className="text-purple-600"
+          />
+          <StatCard
+            title="Total Issues"
+            value={totalIssues}
+            icon={<AlertTriangle className="h-4 w-4" />}
+            className="text-orange-600"
+          />
+        </div>
 
         {/* Quick Actions */}
-        <QuickActions />
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-4">
+              <Button asChild>
+                <Link href="/sites/new">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Website
+                </Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="/analytics">
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  View Analytics
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Sites List */}
-          <div>
-            <SiteList sites={sites} />
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Websites</CardTitle>
+              <CardDescription>Manage and scan your websites</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {sites.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 mb-4">No websites added yet</p>
+                  <Button asChild>
+                    <Link href="/sites/new">Add Your First Website</Link>
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {sites.slice(0, 5).map((site) => {
+                    const latestScan = site.scans[0];
+                    return (
+                      <div key={site.id} className="flex items-center justify-between p-4 border rounded-lg">
+                        <div className="flex items-center space-x-3">
+                          <SiteImage url={site.url} size={40} />
+                          <div>
+                            <h3 className="font-medium">{site.name || site.url}</h3>
+                            <p className="text-sm text-gray-500">{site.url}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {latestScan && (
+                            <>
+                              <ScoreBadge score={latestScan.score || 0} />
+                              <Button variant="outline" size="sm" asChild>
+                                <Link href={`/scans/${latestScan.id}/report`}>View</Link>
+                              </Button>
+                            </>
+                          )}
+                          <Button size="sm" asChild>
+                            <Link href={`/sites/${site.id}/scan`}>Scan</Link>
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* Recent Scans */}
-          <div>
-            <RecentScans scans={recentScans} />
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Scans</CardTitle>
+              <CardDescription>Latest accessibility scan results</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {recentScans.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500">No scans completed yet</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {recentScans.slice(0, 5).map((scan) => (
+                    <div key={scan.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <SiteImage url={scan.site.url} size={32} />
+                        <div>
+                          <h4 className="font-medium">{scan.site.name || scan.site.url}</h4>
+                          <p className="text-sm text-gray-500">{formatDate(scan.createdAt)}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <ScoreBadge score={scan.score || 0} />
+                        <Button variant="outline" size="sm" asChild>
+                          <Link href={`/scans/${scan.id}/report`}>View Report</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
