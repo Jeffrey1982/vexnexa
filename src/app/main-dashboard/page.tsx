@@ -10,7 +10,7 @@ import Link from "next/link";
 
 interface User {
   id: string;
-  email: string;
+  email: string | undefined;
   user_metadata?: {
     first_name?: string;
     last_name?: string;
@@ -74,7 +74,7 @@ export default function MainDashboardPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600 mt-1">
-            Welcome back, {user.user_metadata?.first_name || user.email}
+            Welcome back, {user.user_metadata?.first_name || user.email || 'User'}
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export default function MainDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Email:</strong> {user.email || 'Not available'}</p>
               <p><strong>User ID:</strong> {user.id}</p>
               <p><strong>First Name:</strong> {user.user_metadata?.first_name || "Not set"}</p>
               <p><strong>Last Name:</strong> {user.user_metadata?.last_name || "Not set"}</p>
