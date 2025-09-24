@@ -1,13 +1,11 @@
-const CACHE_NAME = 'tutusporta-v4-redirect-fixed';
+const CACHE_NAME = 'tutusporta-v5-no-auth-cache';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
-  '/auth/login',
-  '/auth/register',
   '/features',
   '/pricing',
   '/contact',
-  // Add more critical routes and assets - removed protected routes
+  // Removed auth pages from cache to prevent redirect conflicts
 ];
 
 const API_CACHE_URLS = [
