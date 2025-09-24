@@ -7,15 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Loader2, Plus, TrendingUp } from "lucide-react";
 import Link from "next/link";
-
-interface User {
-  id: string;
-  email: string | undefined;
-  user_metadata?: {
-    first_name?: string;
-    last_name?: string;
-  };
-}
+import type { User } from "@supabase/supabase-js";
 
 export default function MainDashboardPage() {
   const [user, setUser] = useState<User | null>(null);
