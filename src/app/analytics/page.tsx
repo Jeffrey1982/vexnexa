@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, requireAuth } from "@/lib/auth";
 import { getScanTrendData, getViolationTrends } from "@/lib/analytics";
 import { computeIssueStats, getTopViolations } from "@/lib/axe-types";
 import { EnhancedScoreTrends } from "@/components/charts/EnhancedScoreTrends";
