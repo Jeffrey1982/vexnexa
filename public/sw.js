@@ -1,10 +1,13 @@
-const CACHE_NAME = 'tutusporta-v2';
+const CACHE_NAME = 'tutusporta-v3-auth-fixed';
 const STATIC_CACHE_URLS = [
   '/',
-  '/dashboard',
-  '/teams',
   '/manifest.json',
-  // Add more critical routes and assets
+  '/auth/login',
+  '/auth/register',
+  '/features',
+  '/pricing',
+  '/contact',
+  // Add more critical routes and assets - removed protected routes
 ];
 
 const API_CACHE_URLS = [
@@ -87,8 +90,19 @@ self.addEventListener('fetch', (event) => {
 
 // Network-first strategy: try network, fallback to cache
 async function networkFirstStrategy(request) {
+  const url = new URL(request.url);
+
+  // Check if this is a protected route that might redirect
+  const protectedPaths = ['/dashboard', '/analytics', '/advanced-analytics', '/enhanced-dashboard', '/settings', '/admin', '/teams', '/scans', '/sites'];
+  const isProtectedRoute = protectedPaths.some(path => url.pathname.startsWith(path));
+
   try {
-    // Create a new request with explicit redirect handling
+    // For protected routes, use network-only to allow proper redirects
+    if (isProtectedRoute) {
+      return await fetch(request);
+    }
+
+    // Create a new request with explicit redirect handling for public routes
     const fetchRequest = new Request(request, {
       redirect: 'follow'
     });
@@ -96,8 +110,8 @@ async function networkFirstStrategy(request) {
     const networkResponse = await fetch(fetchRequest);
 
     if (networkResponse.ok) {
-      // Only cache successful responses that are not redirects
-      if (networkResponse.type !== 'opaqueredirect') {
+      // Only cache successful responses that are not redirects and not protected routes
+      if (networkResponse.type !== 'opaqueredirect' && !isProtectedRoute) {
         const cache = await caches.open(CACHE_NAME);
         cache.put(request, networkResponse.clone());
       }
@@ -107,7 +121,12 @@ async function networkFirstStrategy(request) {
     console.log('🌐 Network failed, trying cache for:', request.url);
   }
 
-  // Fallback to cache
+  // Don't serve cached responses for protected routes - let them redirect properly
+  if (isProtectedRoute) {
+    throw new Error('Protected route requires authentication');
+  }
+
+  // Fallback to cache for public routes only
   const cachedResponse = await caches.match(request);
   if (cachedResponse) {
     return cachedResponse;
