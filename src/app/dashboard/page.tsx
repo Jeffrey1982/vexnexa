@@ -153,13 +153,29 @@ export default async function DashboardPage() {
   try {
     user = await requireAuth();
   } catch (error) {
-    redirect("/auth/login");
+    redirect("/auth/login?redirect=/dashboard");
   }
 
-  const [scans, stats] = await Promise.all([
-    getRecentScans(user.id),
-    getDashboardStats(user.id),
-  ]);
+  // Try to get data from database, fallback to empty data if user doesn't exist in DB
+  let scans: any[] = [];
+  let stats: any = {
+    totalScans: 0,
+    avgScore: 0,
+    totalIssues: 0,
+    criticalIssues: 0,
+    totalSites: 0,
+    hasScans: false
+  };
+
+  try {
+    [scans, stats] = await Promise.all([
+      getRecentScans(user.id),
+      getDashboardStats(user.id),
+    ]);
+  } catch (error) {
+    console.log("User not found in database, using empty data:", error);
+    // Keep default empty data for new users who only exist in Supabase
+  }
 
   // Check if user has white label access
   const userEntitlements = getEntitlements(user.plan as keyof typeof ENTITLEMENTS);

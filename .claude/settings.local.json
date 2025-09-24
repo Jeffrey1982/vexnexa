@@ -45,7 +45,8 @@
       "Bash(findstr:*)",
       "Bash(taskkill:*)",
       "WebFetch(domain:www.tutusporta.com)",
-      "WebFetch(domain:autoriteitpersoonsgegevens.nl)"
+      "WebFetch(domain:autoriteitpersoonsgegevens.nl)",
+      "WebFetch(domain:tutusporta-9a9bu7fz9-jeffreyaay-gmailcoms-projects.vercel.app)"
     ],
     "deny": [],
     "ask": []

@@ -84,7 +84,9 @@ export default function ModernLoginForm() {
 
       if (error) throw error
 
-      router.push('/dashboard')
+      // Check for redirect parameter
+      const redirect = searchParams.get('redirect') || '/dashboard'
+      router.push(redirect)
       router.refresh()
     } catch (error: any) {
       setError(error.message)
@@ -98,10 +100,11 @@ export default function ModernLoginForm() {
     setError('')
 
     try {
+      const redirect = searchParams.get('redirect') || '/dashboard'
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(redirect)}`
         }
       })
 

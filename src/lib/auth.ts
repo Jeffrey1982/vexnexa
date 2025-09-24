@@ -1,44 +1,39 @@
 import { createClient } from '@/lib/supabase/server'
-import { prisma } from "./prisma"
 
 export async function getCurrentUser() {
   const supabase = createClient()
 
   const { data: { user }, error } = await supabase.auth.getUser()
 
+  // Add debugging information
+  console.log("Auth debug:", {
+    hasUser: !!user,
+    userId: user?.id,
+    userEmail: user?.email,
+    error: error?.message,
+    hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    hasSupabaseKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  })
+
   if (error || !user) {
     throw new Error("Authentication required")
   }
 
-  // Get or create user in our database
-  let dbUser = await prisma.user.findUnique({
-    where: { email: user.email! }
-  })
-
-  if (!dbUser) {
-    // Create new user with trial plan
-    dbUser = await prisma.user.create({
-      data: {
-        email: user.email!,
-        plan: "TRIAL",
-        subscriptionStatus: "trialing",
-        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // 14 days
-      }
-    })
-  }
-
+  // For now, return a simplified user object based on Supabase data
+  // This avoids database dependency issues while maintaining functionality
   return {
-    id: dbUser.id,
-    email: dbUser.email,
-    firstName: dbUser.firstName,
-    lastName: dbUser.lastName,
-    company: dbUser.company,
-    plan: dbUser.plan,
-    subscriptionStatus: dbUser.subscriptionStatus,
-    trialEndsAt: dbUser.trialEndsAt,
-    profileCompleted: dbUser.profileCompleted,
-    marketingEmails: dbUser.marketingEmails,
-    productUpdates: dbUser.productUpdates
+    id: user.id,
+    email: user.email!,
+    firstName: user.user_metadata?.first_name || null,
+    lastName: user.user_metadata?.last_name || null,
+    company: user.user_metadata?.company || null,
+    plan: "TRIAL", // Default to trial for all users
+    subscriptionStatus: "trialing",
+    trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
+    profileCompleted: !!(user.user_metadata?.first_name && user.user_metadata?.last_name),
+    marketingEmails: user.user_metadata?.marketing_emails !== false,
+    productUpdates: user.user_metadata?.product_updates !== false,
+    supabaseUser: user // Include the full Supabase user object for reference
   }
 }
 

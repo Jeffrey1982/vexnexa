@@ -103,7 +103,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
                 }}
               >
-                Branding
+                Settings
               </Link>
             </nav>
           )}
@@ -123,7 +123,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                 e.currentTarget.style.color = settings?.secondaryColor || '#374151';
               }}
             >
-              Settings
+              Account
             </Link>
             
             <button

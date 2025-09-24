@@ -1,7 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const response = NextResponse.next()
+
+  // Check if this is a protected route
+  const protectedPaths = [
+    '/dashboard',
+    '/analytics',
+    '/advanced-analytics',
+    '/enhanced-dashboard',
+    '/settings',
+    '/teams',
+    '/scans',
+    '/sites',
+    '/admin'
+  ]
+
+  const isProtectedPath = protectedPaths.some(path =>
+    request.nextUrl.pathname.startsWith(path)
+  )
+
+  if (isProtectedPath) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      const redirectUrl = new URL('/auth/login', request.url)
+      redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)
+      return NextResponse.redirect(redirectUrl)
+    }
+  }
   
   // UTM parameter capture
   const url = request.nextUrl
