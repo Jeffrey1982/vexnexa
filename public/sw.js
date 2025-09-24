@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tutusporta-v5-no-auth-cache';
+const CACHE_NAME = 'tutusporta-v6-rebuilt-routes';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -91,7 +91,7 @@ async function networkFirstStrategy(request) {
   const url = new URL(request.url);
 
   // Check if this is a protected route that might redirect
-  const protectedPaths = ['/dashboard', '/analytics', '/advanced-analytics', '/enhanced-dashboard', '/settings', '/admin', '/teams', '/scans', '/sites'];
+  const protectedPaths = ['/app-dashboard', '/analytics', '/advanced-analytics', '/enhanced-dashboard', '/settings', '/admin', '/teams', '/scans', '/sites'];
   const isProtectedRoute = protectedPaths.some(path => url.pathname.startsWith(path));
 
   try {
@@ -297,7 +297,7 @@ self.addEventListener('notificationclick', (event) => {
 
   if (event.action === 'view') {
     event.waitUntil(
-      self.clients.openWindow('/dashboard')
+      self.clients.openWindow('/app-dashboard')
     );
   }
 });

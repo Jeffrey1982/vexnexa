@@ -4,9 +4,9 @@ import { createClient } from '@/lib/supabase/server'
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
-  // Check if this is a protected route
+  // Check if this is a protected route - rebuilt routing system
   const protectedPaths = [
-    '/dashboard',
+    '/app-dashboard',
     '/analytics',
     '/advanced-analytics',
     '/enhanced-dashboard',
@@ -27,12 +27,17 @@ export async function middleware(request: NextRequest) {
 
   if (isProtectedPath) {
     if (!user) {
-      // Force redirect to login page with cache-busting timestamp
+      // Clean redirect to login - rebuilt system
       const redirectUrl = new URL('/auth/login', request.url)
       redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)
-      redirectUrl.searchParams.set('t', Date.now().toString())
+      redirectUrl.searchParams.set('v', Date.now().toString())
       return NextResponse.redirect(redirectUrl)
     }
+  }
+
+  // Handle legacy dashboard redirect to new route
+  if (request.nextUrl.pathname === '/dashboard') {
+    return NextResponse.redirect(new URL('/app-dashboard', request.url))
   }
 
   // Check if authenticated users are trying to access auth pages
@@ -40,8 +45,8 @@ export async function middleware(request: NextRequest) {
   const isAuthPath = authPaths.some(path => request.nextUrl.pathname === path)
 
   if (isAuthPath && user) {
-    // Authenticated user trying to access login/register - redirect to dashboard
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    // Authenticated user trying to access login/register - redirect to new dashboard
+    return NextResponse.redirect(new URL('/app-dashboard', request.url))
   }
   
   // UTM parameter capture

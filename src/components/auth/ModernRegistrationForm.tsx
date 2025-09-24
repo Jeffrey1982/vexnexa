@@ -96,8 +96,8 @@ export default function ModernRegistrationForm() {
     const checkAuthStatus = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
-        // User is already logged in, redirect to dashboard
-        router.push('/dashboard')
+        // User is already logged in, redirect to new dashboard
+        router.push('/app-dashboard')
         router.refresh()
       }
     }
