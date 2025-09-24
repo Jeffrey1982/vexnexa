@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -90,6 +90,20 @@ export default function ModernRegistrationForm() {
   const [message, setMessage] = useState('')
   const router = useRouter()
   const supabase = createClient()
+
+  // Check if user is already logged in and redirect
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        // User is already logged in, redirect to dashboard
+        router.push('/dashboard')
+        router.refresh()
+      }
+    }
+
+    checkAuthStatus()
+  }, [supabase, router])
 
   const [formData, setFormData] = useState<RegistrationData>({
     email: '',

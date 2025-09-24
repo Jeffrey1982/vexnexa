@@ -21,15 +21,25 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   )
 
-  if (isProtectedPath) {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+  // Handle authentication checks
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
+  if (isProtectedPath) {
     if (!user) {
       const redirectUrl = new URL('/auth/login', request.url)
       redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)
       return NextResponse.redirect(redirectUrl)
     }
+  }
+
+  // Check if authenticated users are trying to access auth pages
+  const authPaths = ['/auth/login', '/auth/register', '/auth/forgot-password', '/auth/reset-password']
+  const isAuthPath = authPaths.some(path => request.nextUrl.pathname === path)
+
+  if (isAuthPath && user) {
+    // Authenticated user trying to access login/register - redirect to dashboard
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
   
   // UTM parameter capture
