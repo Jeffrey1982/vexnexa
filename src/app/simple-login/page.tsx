@@ -33,8 +33,9 @@ function LoginForm() {
 
       if (error) throw error;
 
-      // Success! Redirect to home
-      const redirect = searchParams.get("redirect") || "/";
+      // Success! Redirect to dashboard by default
+      const redirect = searchParams.get("redirect") || "/dashboard";
+      console.log('🔐 Simple login successful, redirecting to:', redirect);
       router.push(redirect);
       router.refresh();
 

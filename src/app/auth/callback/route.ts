@@ -29,15 +29,16 @@ export async function GET(request: NextRequest) {
         // TODO: Re-enable user database sync once Prisma build issues are resolved
         console.log('User logged in successfully:', data.user.email)
 
-        // Get redirect parameter
-        const redirect = requestUrl.searchParams.get('redirect') || '/'
+        // Get redirect parameter - default to dashboard
+        const redirect = requestUrl.searchParams.get('redirect') || '/dashboard'
+        console.log('🔐 Auth callback, redirecting to:', redirect)
 
         // Check if this is a new user (first time login)
         const isNewUser = data.user.created_at === data.user.last_sign_in_at
 
         if (isNewUser) {
-          // Redirect to home page with welcome for new users
-          return NextResponse.redirect(new URL('/?welcome=true', request.url))
+          // Redirect to dashboard with welcome for new users
+          return NextResponse.redirect(new URL('/dashboard?welcome=true', request.url))
         } else {
           // Redirect to the intended page for existing users
           return NextResponse.redirect(new URL(redirect, request.url))

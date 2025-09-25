@@ -99,8 +99,13 @@ export default function ModernLoginForm() {
 
       if (error) throw error
 
-      // Check for redirect parameter
-      const redirect = searchParams.get('redirect') || '/'
+      // Check for redirect parameter - force dashboard if no specific redirect
+      const redirect = searchParams.get('redirect') || '/dashboard'
+      console.log('🔐 Login successful, redirecting to:', redirect)
+
+      // Add delay to ensure session is fully established
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
       router.push(redirect)
       router.refresh()
     } catch (error: any) {
@@ -115,7 +120,8 @@ export default function ModernLoginForm() {
     setError('')
 
     try {
-      const redirect = searchParams.get('redirect') || '/'
+      const redirect = searchParams.get('redirect') || '/dashboard'
+      console.log('🔐 OAuth login, will redirect to:', redirect)
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
