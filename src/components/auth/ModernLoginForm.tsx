@@ -57,7 +57,7 @@ export default function ModernLoginForm() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         // User is already logged in, redirect to dashboard or intended page
-        const redirect = searchParams.get('redirect') || '/app-dashboard'
+        const redirect = searchParams.get('redirect') || '/'
         router.push(redirect)
         router.refresh()
       }
@@ -100,7 +100,7 @@ export default function ModernLoginForm() {
       if (error) throw error
 
       // Check for redirect parameter
-      const redirect = searchParams.get('redirect') || '/app-dashboard'
+      const redirect = searchParams.get('redirect') || '/'
       router.push(redirect)
       router.refresh()
     } catch (error: any) {
@@ -115,7 +115,7 @@ export default function ModernLoginForm() {
     setError('')
 
     try {
-      const redirect = searchParams.get('redirect') || '/app-dashboard'
+      const redirect = searchParams.get('redirect') || '/'
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {

@@ -27,14 +27,14 @@ export async function GET(request: NextRequest) {
         console.log('OAuth login successful for user:', data.user.email)
 
         // Get redirect parameter
-        const redirect = requestUrl.searchParams.get('redirect') || '/dashboard'
+        const redirect = requestUrl.searchParams.get('redirect') || '/'
 
         // Check if this is a new user (first time login)
         const isNewUser = data.user.created_at === data.user.last_sign_in_at
 
         if (isNewUser) {
-          // Redirect to onboarding or welcome page for new users
-          return NextResponse.redirect(new URL('/dashboard?welcome=true', request.url))
+          // Redirect to home page with welcome for new users
+          return NextResponse.redirect(new URL('/?welcome=true', request.url))
         } else {
           // Redirect to the intended page for existing users
           return NextResponse.redirect(new URL(redirect, request.url))

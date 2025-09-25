@@ -33,8 +33,8 @@ function LoginForm() {
 
       if (error) throw error;
 
-      // Success! Redirect to dashboard
-      const redirect = searchParams.get("redirect") || "/main-dashboard";
+      // Success! Redirect to home
+      const redirect = searchParams.get("redirect") || "/";
       router.push(redirect);
       router.refresh();
 

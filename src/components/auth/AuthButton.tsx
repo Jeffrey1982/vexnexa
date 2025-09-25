@@ -46,6 +46,13 @@ export default function AuthButton({ user }: AuthButtonProps) {
           {user.email}
         </span>
         <Button
+          onClick={() => router.push('/dashboard')}
+          variant="default"
+          size="sm"
+        >
+          Dashboard
+        </Button>
+        <Button
           onClick={handleSignOut}
           disabled={loading}
           variant="outline"
