@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import AuthButton from "@/components/auth/AuthButton";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client-new";
 import { User } from "@supabase/supabase-js";
 import {
   Sheet,

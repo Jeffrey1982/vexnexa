@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { createClient } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client-new'
 import { User } from '@supabase/supabase-js'
 
 interface AuthButtonProps {
@@ -46,7 +46,7 @@ export default function AuthButton({ user }: AuthButtonProps) {
           {user.email}
         </span>
         <Button
-          onClick={() => router.push('/dashboard-client')}
+          onClick={() => router.push('/dashboard')}
           variant="default"
           size="sm"
         >
