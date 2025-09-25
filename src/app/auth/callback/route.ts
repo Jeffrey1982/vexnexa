@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { NextRequest, NextResponse } from 'next/server'
-import { ensureUserInDatabase } from '@/lib/user-sync'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
@@ -27,13 +26,8 @@ export async function GET(request: NextRequest) {
       if (data.user) {
         console.log('OAuth login successful for user:', data.user.email)
 
-        // Ensure user exists in database
-        try {
-          await ensureUserInDatabase(data.user)
-        } catch (dbError) {
-          console.error('Failed to sync user to database, continuing anyway:', dbError)
-          // Continue even if database sync fails
-        }
+        // TODO: Re-enable user database sync once Prisma build issues are resolved
+        console.log('User logged in successfully:', data.user.email)
 
         // Get redirect parameter
         const redirect = requestUrl.searchParams.get('redirect') || '/'

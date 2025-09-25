@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       whiteLabel: whiteLabel || null,
-      hasAccess: user.plan === "BUSINESS"
+      hasAccess: (user.plan as string) === "BUSINESS"
     });
 
   } catch (error: any) {

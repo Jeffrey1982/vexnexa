@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const { plan } = validation.data
     
     // Check if it's the same plan
-    if (user.plan === plan) {
+    if (user.plan as string === plan) {
       return NextResponse.json(
         { error: "Already on this plan" },
         { status: 400 }
