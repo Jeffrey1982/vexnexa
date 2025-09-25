@@ -52,7 +52,7 @@ export async function middleware(request: NextRequest) {
     !request.nextUrl.pathname.startsWith('/newsletter') &&
     !request.nextUrl.pathname.startsWith('/simple-login') &&
     !request.nextUrl.pathname.startsWith('/simple-register') &&
-    request.nextUrl.pathname.startsWith('/dashboard')
+    false // Dashboard now handles client-side auth
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
