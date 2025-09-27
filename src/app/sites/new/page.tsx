@@ -94,7 +94,7 @@ export default function NewSitePage() {
               Website URL
             </CardTitle>
             <CardDescription>
-              We'll scan this website for WCAG accessibility compliance issues
+              We&apos;ll scan this website for WCAG accessibility compliance issues
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -152,7 +152,7 @@ export default function NewSitePage() {
 
             {/* Info Section */}
             <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold text-blue-900 mb-2">What we'll check:</h3>
+              <h3 className="font-semibold text-blue-900 mb-2">What we&apos;ll check:</h3>
               <ul className="text-sm text-blue-800 space-y-1">
                 <li>• WCAG 2.1 accessibility compliance</li>
                 <li>• Color contrast ratios</li>
@@ -172,13 +172,13 @@ export default function NewSitePage() {
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-gray-600">
             <p>
-              <strong>First scan?</strong> Try scanning your homepage first to get an overview of your site's accessibility status.
+              <strong>First scan?</strong> Try scanning your homepage first to get an overview of your site&apos;s accessibility status.
             </p>
             <p>
               <strong>Need help?</strong> Our scans are based on WCAG 2.1 AA standards and will help you identify common accessibility issues.
             </p>
             <p>
-              <strong>Results:</strong> You'll get a detailed report with specific issues and recommendations for fixes.
+              <strong>Results:</strong> You&apos;ll get a detailed report with specific issues and recommendations for fixes.
             </p>
           </CardContent>
         </Card>
