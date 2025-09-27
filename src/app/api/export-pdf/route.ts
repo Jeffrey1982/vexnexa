@@ -363,7 +363,7 @@ export async function POST(req: NextRequest) {
     console.log('✅ PDF generated successfully');
 
     // Return PDF as response
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="accessibility-report-${result.url.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.pdf"`
