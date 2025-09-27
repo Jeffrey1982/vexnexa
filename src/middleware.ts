@@ -4,10 +4,7 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
   // TEMPORARILY DISABLED ALL AUTH MIDDLEWARE TO FIX CACHING ISSUES
-  // Just handle legacy dashboard redirect
-  if (request.nextUrl.pathname === '/dashboard') {
-    return NextResponse.redirect(new URL('/main-dashboard', request.url))
-  }
+  // Dashboard redirect removed - allow direct access to /dashboard
   
   // UTM parameter capture
   const url = request.nextUrl

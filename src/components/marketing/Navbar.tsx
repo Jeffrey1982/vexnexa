@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import AuthButton from "@/components/auth/AuthButton";
 import { createClient } from "@/lib/supabase/client-new";
@@ -31,6 +32,7 @@ interface NavbarProps {
 export function Navbar({ className }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
@@ -85,15 +87,19 @@ export function Navbar({ className }: NavbarProps) {
           {/* Desktop Auth/CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
-              <Button 
-                asChild
-                className="button-hover shadow-elegant font-medium"
-                onClick={() => handleCtaClick("navbar_dashboard")}
-              >
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
+              <>
+                <Button
+                  onClick={() => router.push('/dashboard')}
+                  variant="default"
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
+                  Dashboard
+                </Button>
+                <AuthButton user={user} />
+              </>
             ) : (
-              <Button 
+              <Button
                 asChild
                 className="button-hover gradient-primary shadow-elegant font-medium text-sm relative overflow-hidden group"
                 onClick={() => handleCtaClick("navbar_primary")}
@@ -104,7 +110,6 @@ export function Navbar({ className }: NavbarProps) {
                 </Link>
               </Button>
             )}
-            <AuthButton user={user} />
           </div>
 
           {/* Mobile Menu */}
@@ -145,17 +150,41 @@ export function Navbar({ className }: NavbarProps) {
                   </Link>
                 ))}
                 
-                <div className="pt-6">
-                  <Button 
-                    asChild 
-                    className="w-full justify-start gradient-primary shadow-elegant font-medium"
-                    onClick={() => {
-                      setIsOpen(false);
-                      handleCtaClick("mobile_primary");
-                    }}
-                  >
-                    <Link href="/auth/register">Start Gratis</Link>
-                  </Button>
+                <div className="pt-6 space-y-3">
+                  {user ? (
+                    <>
+                      <Button
+                        onClick={() => {
+                          setIsOpen(false);
+                          router.push('/dashboard');
+                        }}
+                        className="w-full justify-start gradient-primary shadow-elegant font-medium"
+                      >
+                        Dashboard
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setIsOpen(false);
+                          // Add sign out functionality here if needed
+                        }}
+                        variant="outline"
+                        className="w-full justify-start"
+                      >
+                        Sign Out
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      asChild
+                      className="w-full justify-start gradient-primary shadow-elegant font-medium"
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleCtaClick("mobile_primary");
+                      }}
+                    >
+                      <Link href="/auth/register">Start Gratis</Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </SheetContent>

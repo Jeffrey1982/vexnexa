@@ -41,26 +41,14 @@ export default function AuthButton({ user }: AuthButtonProps) {
 
   if (user) {
     return (
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-muted-foreground">
-          {user.email}
-        </span>
-        <Button
-          onClick={() => router.push('/dashboard')}
-          variant="default"
-          size="sm"
-        >
-          Dashboard
-        </Button>
-        <Button
-          onClick={handleSignOut}
-          disabled={loading}
-          variant="outline"
-          size="sm"
-        >
-          {loading ? 'Signing out...' : 'Sign out'}
-        </Button>
-      </div>
+      <Button
+        onClick={handleSignOut}
+        disabled={loading}
+        variant="outline"
+        size="sm"
+      >
+        {loading ? 'Signing out...' : 'Sign out'}
+      </Button>
     )
   }
 

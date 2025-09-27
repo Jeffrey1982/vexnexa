@@ -410,7 +410,7 @@ export default function HybridDashboardPage() {
               <div className="space-y-2">
                 <p><strong>User ID:</strong> <code className="text-xs bg-gray-100 px-1 rounded">{user.id.slice(0, 8)}...</code></p>
                 <p><strong>Account Created:</strong> {new Date(user.created_at).toLocaleDateString()}</p>
-                <p><strong>Plan:</strong> <Badge variant="outline">Trial</Badge></p>
+                <div><strong>Plan:</strong> <Badge variant="outline">Trial</Badge></div>
               </div>
             </div>
           </CardContent>

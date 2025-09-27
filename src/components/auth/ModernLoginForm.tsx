@@ -57,7 +57,7 @@ export default function ModernLoginForm() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         // User is already logged in, redirect to dashboard or intended page
-        const redirect = searchParams.get('redirect') || '/'
+        const redirect = searchParams.get('redirect') || '/dashboard'
         router.push(redirect)
         router.refresh()
       }
