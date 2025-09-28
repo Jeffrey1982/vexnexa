@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     console.log('Testing Mollie API connection...')
 
     // Test basic API connection by fetching profile
-    const profile = await mollie.profiles.get('me')
+    const profile = await mollie.profiles.getCurrent()
     console.log('Mollie profile:', profile)
 
     return NextResponse.json({
