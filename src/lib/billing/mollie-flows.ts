@@ -45,36 +45,47 @@ export async function createUpgradePayment(opts: {
   email: string
   plan: Exclude<Plan, "TRIAL">
 }) {
-  const { userId, email, plan } = opts
-  
-  if (!PRICES[plan]) {
-    throw new Error(`Invalid plan: ${plan}`)
-  }
-  
-  // Get or create Mollie customer
-  const customer = await createOrGetMollieCustomer(userId, email)
-  
-  // Create first payment (creates mandate automatically)
-  const paymentData: PaymentCreateParams = {
-    amount: {
-      currency: PRICES[plan].currency as any,
-      value: PRICES[plan].amount
-    },
-    description: `TutusPorta ${plan} Plan - First Payment (Vexnexa)`,
-    customerId: customer.id,
-    sequenceType: SequenceType.first,
-    redirectUrl: appUrl("/dashboard?checkout=success"),
-    webhookUrl: appUrl("/api/mollie/webhook"),
-    metadata: {
-      userId,
-      plan,
-      type: "upgrade"
-    }
-  }
+  try {
+    const { userId, email, plan } = opts
 
-  const payment = await mollie.payments.create(paymentData)
-  
-  return payment
+    console.log('Creating upgrade payment for:', { userId, email, plan })
+
+    if (!PRICES[plan]) {
+      throw new Error(`Invalid plan: ${plan}`)
+    }
+
+    // Get or create Mollie customer
+    console.log('Getting or creating Mollie customer...')
+    const customer = await createOrGetMollieCustomer(userId, email)
+    console.log('Customer created/retrieved:', customer.id)
+
+    // Create first payment (creates mandate automatically)
+    const paymentData: PaymentCreateParams = {
+      amount: {
+        currency: PRICES[plan].currency as any,
+        value: PRICES[plan].amount
+      },
+      description: `TutusPorta ${plan} Plan - First Payment (Vexnexa)`,
+      customerId: customer.id,
+      sequenceType: SequenceType.first,
+      redirectUrl: appUrl("/dashboard?checkout=success"),
+      webhookUrl: appUrl("/api/mollie/webhook"),
+      metadata: {
+        userId,
+        plan,
+        type: "upgrade"
+      }
+    }
+
+    console.log('Creating payment with data:', paymentData)
+    const payment = await mollie.payments.create(paymentData)
+    console.log('Payment created successfully:', payment.id)
+
+    return payment
+  } catch (error) {
+    console.error('Error in createUpgradePayment:', error)
+    throw error
+  }
 }
 
 export async function createSubscription(opts: {

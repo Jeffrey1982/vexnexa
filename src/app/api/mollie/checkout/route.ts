@@ -51,16 +51,26 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     console.error("Checkout error:", error)
-    
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : 'No stack trace',
+      name: error instanceof Error ? error.name : 'Unknown'
+    })
+
     if (error instanceof Error && error.message === "Authentication required") {
       return NextResponse.json(
         { error: "Authentication required" },
         { status: 401 }
       )
     }
-    
+
+    // Return more detailed error for debugging
     return NextResponse.json(
-      { error: "Failed to create checkout" },
+      {
+        error: "Failed to create checkout",
+        details: error instanceof Error ? error.message : 'Unknown error',
+        debug: process.env.NODE_ENV === 'development' ? error : undefined
+      },
       { status: 500 }
     )
   }
