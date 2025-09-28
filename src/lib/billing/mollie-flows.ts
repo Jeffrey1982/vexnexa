@@ -155,6 +155,7 @@ export async function createUpgradePayment(opts: {
       sequenceType: SequenceType.first,
       redirectUrl: appUrl("/dashboard?checkout=success"),
       webhookUrl: appUrl("/api/mollie/webhook"),
+      // method: ["creditcard", "paypal", "banktransfer", "ideal"], // Let Mollie determine available methods
       metadata: {
         userId,
         plan,
@@ -163,10 +164,27 @@ export async function createUpgradePayment(opts: {
     }
 
     console.log('Creating payment with data:', paymentData)
-    const payment = await mollie.payments.create(paymentData)
-    console.log('Payment created successfully:', payment.id)
 
-    return payment
+    try {
+      const payment = await mollie.payments.create(paymentData)
+      console.log('Payment created successfully:', payment.id)
+      return payment
+    } catch (paymentError: any) {
+      console.error('Payment creation failed:', paymentError)
+
+      // If no suitable payment methods, try without specifying methods
+      if (paymentError.message?.includes('payment methods') || paymentError.message?.includes('suitable')) {
+        console.log('Retrying payment creation without specific methods...')
+        const fallbackData = { ...paymentData }
+        delete fallbackData.method
+
+        const payment = await mollie.payments.create(fallbackData)
+        console.log('Fallback payment created successfully:', payment.id)
+        return payment
+      }
+
+      throw paymentError
+    }
   } catch (error) {
     console.error('Error in createUpgradePayment:', error)
     throw error

@@ -48,7 +48,8 @@
       "WebFetch(domain:autoriteitpersoonsgegevens.nl)",
       "WebFetch(domain:tutusporta-9a9bu7fz9-jeffreyaay-gmailcoms-projects.vercel.app)",
       "WebSearch",
-      "WebFetch(domain:supabase.com)"
+      "WebFetch(domain:supabase.com)",
+      "Bash(printf \"live_wE8cnAvfRtxjy483WCnWu9C8CpdTWT\")"
     ],
     "deny": [],
     "ask": []
