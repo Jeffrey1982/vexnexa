@@ -2,6 +2,8 @@ import { mollie, appUrl } from "../mollie"
 import { prisma } from "../prisma"
 import { PRICES, planKeyFromString } from "./plans"
 import type { Plan } from "@prisma/client"
+import type { PaymentCreateParams } from "@mollie/api-client"
+import { SequenceType } from "@mollie/api-client"
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
   const user = await prisma.user.findUnique({
@@ -53,14 +55,14 @@ export async function createUpgradePayment(opts: {
   const customer = await createOrGetMollieCustomer(userId, email)
   
   // Create first payment (creates mandate automatically)
-  const payment = await mollie.payments.create({
+  const paymentData: PaymentCreateParams = {
     amount: {
-      currency: PRICES[plan].currency,
+      currency: PRICES[plan].currency as any,
       value: PRICES[plan].amount
     },
     description: `TutusPorta ${plan} Plan - First Payment (Vexnexa)`,
     customerId: customer.id,
-    sequenceType: "first" as const, // This creates a mandate for recurring payments
+    sequenceType: SequenceType.first,
     redirectUrl: appUrl("/dashboard?checkout=success"),
     webhookUrl: appUrl("/api/mollie/webhook"),
     metadata: {
@@ -68,7 +70,9 @@ export async function createUpgradePayment(opts: {
       plan,
       type: "upgrade"
     }
-  })
+  }
+
+  const payment = await mollie.payments.create(paymentData)
   
   return payment
 }
@@ -85,8 +89,8 @@ export async function createSubscription(opts: {
   }
   
   // Check if customer has valid mandates
-  const mandates = await mollie.customerMandates.all({ customerId })
-  const validMandate = mandates.find(m => m.status === "valid")
+  const mandates = await mollie.customerMandates.page({ customerId })
+  const validMandate = mandates.find((m: any) => m.status === "valid")
 
   if (!validMandate) {
     throw new Error("No valid mandate found for customer")
@@ -178,8 +182,8 @@ export async function changePlan(opts: {
   }
   
   // Check if user has valid mandate
-  const mandates = await mollie.customerMandates.all({ customerId: user.mollieCustomerId })
-  const validMandate = mandates.find(m => m.status === "valid")
+  const mandates = await mollie.customerMandates.page({ customerId: user.mollieCustomerId })
+  const validMandate = mandates.find((m: any) => m.status === "valid")
 
   if (!validMandate) {
     // Need new checkout flow for mandate
@@ -231,21 +235,23 @@ export async function createPaymentMethodResetPayment(userId: string, email: str
   const customer = await createOrGetMollieCustomer(userId, email)
   
   // Create a small first payment to establish new mandate
-  const payment = await mollie.payments.create({
+  const paymentData: PaymentCreateParams = {
     amount: {
       currency: "EUR",
       value: "0.01" // 1 cent
     },
     description: "TutusPorta - Payment Method Setup (Vexnexa)",
     customerId: customer.id,
-    sequenceType: "first",
+    sequenceType: SequenceType.first,
     redirectUrl: appUrl("/settings/billing?setup=success"),
     webhookUrl: appUrl("/api/mollie/webhook"),
     metadata: {
       userId,
       type: "payment_method_reset"
     }
-  })
+  }
+
+  const payment = await mollie.payments.create(paymentData)
   
   return payment
 }
