@@ -6,7 +6,8 @@ import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
-  const user = await prisma.user.findUnique({
+  // First try to find existing user
+  let user = await prisma.user.findUnique({
     where: { id: userId },
     select: {
       id: true,
@@ -17,8 +18,30 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
       subscriptionStatus: true
     }
   })
-  
-  if (!user) throw new Error("User not found")
+
+  // If user doesn't exist in database, create them
+  if (!user) {
+    console.log('User not found in database, creating new user:', { userId, email })
+    user = await prisma.user.create({
+      data: {
+        id: userId,
+        email: email,
+        plan: 'TRIAL',
+        subscriptionStatus: 'inactive',
+        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
+        teamInvitations: true // Set the new field
+      },
+      select: {
+        id: true,
+        email: true,
+        mollieCustomerId: true,
+        mollieSubscriptionId: true,
+        plan: true,
+        subscriptionStatus: true
+      }
+    })
+    console.log('User created successfully:', user.id)
+  }
   
   // If user already has a Mollie customer ID, return it
   if (user.mollieCustomerId) {
