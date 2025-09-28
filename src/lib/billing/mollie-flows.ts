@@ -6,7 +6,9 @@ import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
-  // First try to find existing user
+  console.log('Looking for user with ID:', userId, 'and email:', email)
+
+  // First try to find existing user by ID
   let user = await prisma.user.findUnique({
     where: { id: userId },
     select: {
@@ -19,18 +21,11 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
     }
   })
 
-  // If user doesn't exist in database, create them
+  // If user doesn't exist by ID, try to find by email (might be an existing user with different ID)
   if (!user) {
-    console.log('User not found in database, creating new user:', { userId, email })
-    user = await prisma.user.create({
-      data: {
-        id: userId,
-        email: email,
-        plan: 'TRIAL',
-        subscriptionStatus: 'inactive',
-        trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
-        teamInvitations: true // Set the new field
-      },
+    console.log('User not found by ID, checking by email...')
+    user = await prisma.user.findUnique({
+      where: { email: email },
       select: {
         id: true,
         email: true,
@@ -40,7 +35,66 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
         subscriptionStatus: true
       }
     })
-    console.log('User created successfully:', user.id)
+
+    if (user) {
+      console.log('Found existing user by email with different ID:', user.id, 'vs expected:', userId)
+      // Update the user's ID to match Supabase
+      user = await prisma.user.update({
+        where: { email: email },
+        data: { id: userId },
+        select: {
+          id: true,
+          email: true,
+          mollieCustomerId: true,
+          mollieSubscriptionId: true,
+          plan: true,
+          subscriptionStatus: true
+        }
+      })
+      console.log('Updated user ID to match Supabase:', user.id)
+    }
+  }
+
+  // If user still doesn't exist, create them
+  if (!user) {
+    console.log('User not found in database, creating new user:', { userId, email })
+    try {
+      user = await prisma.user.create({
+        data: {
+          id: userId,
+          email: email,
+          plan: 'TRIAL',
+          subscriptionStatus: 'inactive',
+          trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
+        },
+        select: {
+          id: true,
+          email: true,
+          mollieCustomerId: true,
+          mollieSubscriptionId: true,
+          plan: true,
+          subscriptionStatus: true
+        }
+      })
+      console.log('User created successfully:', user.id)
+    } catch (error) {
+      console.error('Failed to create user, trying to find existing user again:', error)
+      // Last resort: try to find the user again (might have been created by another request)
+      user = await prisma.user.findUnique({
+        where: { email: email },
+        select: {
+          id: true,
+          email: true,
+          mollieCustomerId: true,
+          mollieSubscriptionId: true,
+          plan: true,
+          subscriptionStatus: true
+        }
+      })
+      if (!user) {
+        throw new Error('Unable to create or find user')
+      }
+    }
   }
   
   // If user already has a Mollie customer ID, return it
