@@ -60,7 +60,7 @@ export async function createUpgradePayment(opts: {
     },
     description: `TutusPorta ${plan} Plan - First Payment (Vexnexa)`,
     customerId: customer.id,
-    // sequenceType: "first" as const, // This creates a mandate for recurring payments
+    sequenceType: "first" as const, // This creates a mandate for recurring payments
     redirectUrl: appUrl("/dashboard?checkout=success"),
     webhookUrl: appUrl("/api/mollie/webhook"),
     metadata: {
@@ -85,14 +85,12 @@ export async function createSubscription(opts: {
   }
   
   // Check if customer has valid mandates
-  // NOTE: Mandate validation disabled - requires proper Mollie API key configuration
-  // When Mollie is properly configured, uncomment and update the following:
-  // const mandates = await mollie.customerMandates.all({ customerId })
-  // const validMandate = mandates.find(m => m.status === "valid")
-  //
-  // if (!validMandate) {
-  //   throw new Error("No valid mandate found for customer")
-  // }
+  const mandates = await mollie.customerMandates.all({ customerId })
+  const validMandate = mandates.find(m => m.status === "valid")
+
+  if (!validMandate) {
+    throw new Error("No valid mandate found for customer")
+  }
   
   // Cancel existing subscription if any
   const user = await prisma.user.findUnique({ where: { id: userId } })
@@ -180,27 +178,22 @@ export async function changePlan(opts: {
   }
   
   // Check if user has valid mandate
-  // NOTE: Mandate validation disabled - requires proper Mollie API key configuration
-  // When Mollie is properly configured, uncomment and update the following:
-  // const mandates = await mollie.customerMandates.all({ customerId: user.mollieCustomerId })
-  // const validMandate = mandates.find(m => m.status === "valid")
-  //
-  // if (!validMandate) {
-  //   // Need new checkout flow for mandate
-  //   return { needCheckout: true }
-  // }
+  const mandates = await mollie.customerMandates.all({ customerId: user.mollieCustomerId })
+  const validMandate = mandates.find(m => m.status === "valid")
 
-  // For now, always require checkout for plan changes to ensure proper payment setup
-  // This ensures secure payment processing until Mollie is fully configured
-  return { needCheckout: true }
+  if (!validMandate) {
+    // Need new checkout flow for mandate
+    return { needCheckout: true }
+  }
+
   // Can create subscription directly
-  // await createSubscription({
-  //   customerId: user.mollieCustomerId,
-  //   plan: newPlan,
-  //   userId
-  // })
-  // 
-  // return { success: true }
+  await createSubscription({
+    customerId: user.mollieCustomerId,
+    plan: newPlan,
+    userId
+  })
+
+  return { success: true }
 }
 
 export async function processWebhookPayment(paymentId: string) {
@@ -245,7 +238,7 @@ export async function createPaymentMethodResetPayment(userId: string, email: str
     },
     description: "TutusPorta - Payment Method Setup (Vexnexa)",
     customerId: customer.id,
-    // sequenceType: "first",
+    sequenceType: "first",
     redirectUrl: appUrl("/settings/billing?setup=success"),
     webhookUrl: appUrl("/api/mollie/webhook"),
     metadata: {
