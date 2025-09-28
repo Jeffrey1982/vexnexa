@@ -7,7 +7,15 @@ import { SequenceType } from "@mollie/api-client"
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
   const user = await prisma.user.findUnique({
-    where: { id: userId }
+    where: { id: userId },
+    select: {
+      id: true,
+      email: true,
+      mollieCustomerId: true,
+      mollieSubscriptionId: true,
+      plan: true,
+      subscriptionStatus: true
+    }
   })
   
   if (!user) throw new Error("User not found")
@@ -108,7 +116,10 @@ export async function createSubscription(opts: {
   }
   
   // Cancel existing subscription if any
-  const user = await prisma.user.findUnique({ where: { id: userId } })
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { mollieSubscriptionId: true }
+  })
   if (user?.mollieSubscriptionId) {
     try {
       await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, { customerId })
@@ -149,7 +160,12 @@ export async function createSubscription(opts: {
 
 export async function cancelSubscription(userId: string) {
   const user = await prisma.user.findUnique({
-    where: { id: userId }
+    where: { id: userId },
+    select: {
+      id: true,
+      mollieCustomerId: true,
+      mollieSubscriptionId: true
+    }
   })
   
   if (!user) throw new Error("User not found")
@@ -183,7 +199,11 @@ export async function changePlan(opts: {
   const { userId, newPlan } = opts
   
   const user = await prisma.user.findUnique({
-    where: { id: userId }
+    where: { id: userId },
+    select: {
+      id: true,
+      mollieCustomerId: true
+    }
   })
   
   if (!user) throw new Error("User not found")
@@ -239,7 +259,10 @@ export async function processWebhookPayment(paymentId: string) {
 }
 
 export async function createPaymentMethodResetPayment(userId: string, email: string) {
-  const user = await prisma.user.findUnique({ where: { id: userId } })
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true }
+  })
   if (!user) throw new Error("User not found")
   
   // Get or create customer
