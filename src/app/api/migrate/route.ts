@@ -3,25 +3,58 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(request: NextRequest) {
   try {
-    console.log('Running database migration to add teamInvitations column...')
+    console.log('Running database migration to add missing User columns...')
 
-    // Check if the column already exists by trying to select it
+    const results = []
+
+    // Add teamInvitations column
     try {
-      await prisma.$queryRaw`SELECT "teamInvitations" FROM "User" LIMIT 1`
-      console.log('Column teamInvitations already exists')
-      return NextResponse.json({ success: true, message: 'Column already exists' })
+      console.log('Adding teamInvitations column...')
+      await prisma.$executeRaw`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "teamInvitations" BOOLEAN NOT NULL DEFAULT true`
+      console.log('Successfully added teamInvitations column')
+      results.push('teamInvitations: added')
     } catch (error) {
-      console.log('Column teamInvitations does not exist, adding it...')
+      console.log('teamInvitations column might already exist:', error)
+      results.push('teamInvitations: already exists')
     }
 
-    // Add the missing column
-    await prisma.$executeRaw`ALTER TABLE "User" ADD COLUMN "teamInvitations" BOOLEAN NOT NULL DEFAULT true`
+    // Add scanNotifications column
+    try {
+      console.log('Adding scanNotifications column...')
+      await prisma.$executeRaw`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "scanNotifications" BOOLEAN NOT NULL DEFAULT true`
+      console.log('Successfully added scanNotifications column')
+      results.push('scanNotifications: added')
+    } catch (error) {
+      console.log('scanNotifications column might already exist:', error)
+      results.push('scanNotifications: already exists')
+    }
 
-    console.log('Successfully added teamInvitations column')
+    // Add weeklyReports column
+    try {
+      console.log('Adding weeklyReports column...')
+      await prisma.$executeRaw`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "weeklyReports" BOOLEAN NOT NULL DEFAULT false`
+      console.log('Successfully added weeklyReports column')
+      results.push('weeklyReports: added')
+    } catch (error) {
+      console.log('weeklyReports column might already exist:', error)
+      results.push('weeklyReports: already exists')
+    }
+
+    // Add profileCompleted column
+    try {
+      console.log('Adding profileCompleted column...')
+      await prisma.$executeRaw`ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "profileCompleted" BOOLEAN NOT NULL DEFAULT false`
+      console.log('Successfully added profileCompleted column')
+      results.push('profileCompleted: added')
+    } catch (error) {
+      console.log('profileCompleted column might already exist:', error)
+      results.push('profileCompleted: already exists')
+    }
 
     return NextResponse.json({
       success: true,
-      message: 'Database migration completed successfully'
+      message: 'Database migration completed',
+      results
     })
 
   } catch (error) {
