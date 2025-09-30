@@ -120,7 +120,7 @@ export default function TestEnhancedScanPage() {
                 Ready to Scan
               </h3>
               <p className="text-gray-500">
-                Enter a URL above and click "Scan" to run our enhanced accessibility analysis
+                Enter a URL above and click &ldquo;Scan&rdquo; to run our enhanced accessibility analysis
               </p>
             </CardContent>
           </Card>
