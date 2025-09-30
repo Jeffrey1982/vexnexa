@@ -173,22 +173,20 @@ export async function createUpgradePayment(opts: {
       console.log('Could not check available methods:', methodError instanceof Error ? methodError.message : 'Unknown error')
     }
 
-    // Try creating payment without customerId first to test if that's the issue
+    // Simplest possible payment creation to isolate the issue
     const paymentData: PaymentCreateParams = {
       amount: {
-        currency: PRICES[plan].currency as any,
-        value: PRICES[plan].amount
+        currency: "EUR",
+        value: "9.00"
       },
-      description: `TutusPorta ${plan} Plan - Payment (Vexnexa)`,
-      // Temporarily remove customerId to test
-      // customerId: customer.id,
-      redirectUrl: appUrl("/dashboard?checkout=success"),
-      webhookUrl: appUrl("/api/mollie/webhook"),
+      description: "TutusPorta STARTER Plan - Test Payment",
+      redirectUrl: "https://tutusporta.com/dashboard?checkout=success",
+      // Remove webhook temporarily to test if that's causing issues
+      // webhookUrl: appUrl("/api/mollie/webhook"),
       metadata: {
         userId,
-        plan,
-        type: "upgrade",
-        customerEmail: customer.email // Store email in metadata instead
+        plan: "STARTER",
+        type: "test"
       }
     }
 
