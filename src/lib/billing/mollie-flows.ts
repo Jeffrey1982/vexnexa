@@ -108,6 +108,12 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
   }
   
   // Create new Mollie customer
+  console.log('Creating new Mollie customer with data:', {
+    email: email,
+    name: email.split('@')[0],
+    metadata: { userId: userId }
+  })
+
   const customer = await mollie.customers.create({
     email: email,
     name: email.split('@')[0], // Use email prefix as name
@@ -115,13 +121,22 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
       userId: userId
     }
   })
-  
+
+  console.log('Mollie customer created:', {
+    id: customer.id,
+    email: customer.email,
+    name: customer.name,
+    mode: customer.mode
+  })
+
   // Save customer ID to database
   await prisma.user.update({
     where: { id: userId },
     data: { mollieCustomerId: customer.id }
   })
-  
+
+  console.log('Customer ID saved to database')
+
   return customer
 }
 
@@ -133,7 +148,8 @@ export async function createUpgradePayment(opts: {
   try {
     const { userId, email, plan } = opts
 
-    console.log('Creating upgrade payment for:', { userId, email, plan })
+    console.log('=== Creating Upgrade Payment ===')
+    console.log('Input:', { userId, email, plan })
 
     if (!PRICES[plan]) {
       throw new Error(`Invalid plan: ${plan}`)
@@ -142,7 +158,20 @@ export async function createUpgradePayment(opts: {
     // Get or create Mollie customer
     console.log('Getting or creating Mollie customer...')
     const customer = await createOrGetMollieCustomer(userId, email)
-    console.log('Customer created/retrieved:', customer.id)
+    console.log('Customer details:', {
+      id: customer.id,
+      email: customer.email,
+      name: customer.name,
+      mode: customer.mode
+    })
+
+    // Check what payment methods are available for this customer
+    try {
+      const availableMethods = await mollie.methods.list({ customerId: customer.id })
+      console.log('Available methods for customer:', availableMethods.map(m => ({ id: m.id, description: m.description })))
+    } catch (methodError) {
+      console.log('Could not check available methods for customer:', methodError.message)
+    }
 
     // Create payment without sequenceType to support all payment methods
     const paymentData: PaymentCreateParams = {
@@ -162,13 +191,24 @@ export async function createUpgradePayment(opts: {
       }
     }
 
-    console.log('Creating payment with data:', paymentData)
+    console.log('Payment data to send:', JSON.stringify(paymentData, null, 2))
 
     const payment = await mollie.payments.create(paymentData)
-    console.log('Payment created successfully:', payment.id)
+    console.log('Payment created successfully:', {
+      id: payment.id,
+      status: payment.status,
+      sequenceType: payment.sequenceType,
+      checkoutUrl: payment.getCheckoutUrl()
+    })
     return payment
   } catch (error) {
-    console.error('Error in createUpgradePayment:', error)
+    console.error('=== Error in createUpgradePayment ===')
+    console.error('Error type:', error.constructor.name)
+    console.error('Error message:', error.message)
+    console.error('Error details:', error)
+    if (error.field) console.error('Error field:', error.field)
+    if (error.statusCode) console.error('Status code:', error.statusCode)
+    if (error.title) console.error('Error title:', error.title)
     throw error
   }
 }
