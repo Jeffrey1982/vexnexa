@@ -170,7 +170,7 @@ export async function createUpgradePayment(opts: {
       const availableMethods = await mollie.methods.list()
       console.log('Available methods (general):', availableMethods.map(m => ({ id: m.id, description: m.description, status: m.status })))
     } catch (methodError) {
-      console.log('Could not check available methods:', methodError.message)
+      console.log('Could not check available methods:', methodError instanceof Error ? methodError.message : 'Unknown error')
     }
 
     // Create payment without sequenceType to support all payment methods
