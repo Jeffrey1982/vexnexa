@@ -144,18 +144,17 @@ export async function createUpgradePayment(opts: {
     const customer = await createOrGetMollieCustomer(userId, email)
     console.log('Customer created/retrieved:', customer.id)
 
-    // Create first payment (creates mandate automatically)
+    // Create payment without sequenceType to support all payment methods
     const paymentData: PaymentCreateParams = {
       amount: {
         currency: PRICES[plan].currency as any,
         value: PRICES[plan].amount
       },
-      description: `TutusPorta ${plan} Plan - First Payment (Vexnexa)`,
+      description: `TutusPorta ${plan} Plan - Payment (Vexnexa)`,
       customerId: customer.id,
-      sequenceType: SequenceType.first,
+      // Removed sequenceType to allow all payment methods
       redirectUrl: appUrl("/dashboard?checkout=success"),
       webhookUrl: appUrl("/api/mollie/webhook"),
-      // Removed methods filter to show all available payment methods
       metadata: {
         userId,
         plan,
@@ -165,41 +164,9 @@ export async function createUpgradePayment(opts: {
 
     console.log('Creating payment with data:', paymentData)
 
-    try {
-      const payment = await mollie.payments.create(paymentData)
-      console.log('Payment created successfully:', payment.id)
-      return payment
-    } catch (paymentError: any) {
-      console.error('Payment creation failed with sequenceType.first:', paymentError)
-
-      // If no suitable payment methods with sequenceType.first, try a regular one-time payment
-      if (paymentError.message?.includes('payment methods') || paymentError.message?.includes('suitable')) {
-        console.log('Retrying as one-time payment without sequenceType...')
-        const fallbackData: PaymentCreateParams = {
-          amount: {
-            currency: PRICES[plan].currency as any,
-            value: PRICES[plan].amount
-          },
-          description: `TutusPorta ${plan} Plan - Payment (Vexnexa)`,
-          customerId: customer.id,
-          // Remove sequenceType to make it a regular payment
-          redirectUrl: appUrl("/dashboard?checkout=success"),
-          webhookUrl: appUrl("/api/mollie/webhook"),
-          // Removed methods filter to show all available payment methods
-          metadata: {
-            userId,
-            plan,
-            type: "upgrade"
-          }
-        }
-
-        const payment = await mollie.payments.create(fallbackData)
-        console.log('Fallback payment created successfully:', payment.id)
-        return payment
-      }
-
-      throw paymentError
-    }
+    const payment = await mollie.payments.create(paymentData)
+    console.log('Payment created successfully:', payment.id)
+    return payment
   } catch (error) {
     console.error('Error in createUpgradePayment:', error)
     throw error
