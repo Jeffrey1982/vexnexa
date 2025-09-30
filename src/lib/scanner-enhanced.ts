@@ -424,7 +424,7 @@ export class EnhancedAccessibilityScanner {
       score: Math.max(0, score),
       issues,
       touchTargets: touchTargets.adequate,
-      viewport,
+      viewport: viewport || false,
       orientation: true, // Simplified
       gestureAlternatives: true // Simplified
     };
