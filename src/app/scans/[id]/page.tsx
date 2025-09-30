@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import BrandedHeader from "@/components/white-label/BrandedHeader";
 import BrandedFooter from "@/components/white-label/BrandedFooter";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
+import { EnhancedScanResults } from "@/components/EnhancedScanResults";
 import {
   getScanTrendData,
   getBenchmarkComparison,
@@ -143,8 +144,17 @@ export default async function ScanDetailPage({ params }: PageProps) {
 
   // Extract violations from raw data
   let violations: Violation[] = [];
+  let isEnhancedScan = false;
+  let enhancedScanData = null;
+
   if (scan.raw && typeof scan.raw === 'object' && 'violations' in scan.raw) {
     violations = (scan.raw as any).violations || [];
+
+    // Check if this is an enhanced scan (has the additional categories)
+    if ('keyboardNavigation' in (scan.raw as any) && 'screenReaderCompatibility' in (scan.raw as any)) {
+      isEnhancedScan = true;
+      enhancedScanData = scan.raw;
+    }
   }
 
   const stats = computeIssueStats(violations);
@@ -259,9 +269,12 @@ export default async function ScanDetailPage({ params }: PageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {/* Left Column - Main Content */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-          <Tabs defaultValue="overview" className="w-full">
+          <Tabs defaultValue={isEnhancedScan ? "enhanced" : "overview"} className="w-full">
             <div className="overflow-x-auto">
-              <TabsList className="grid w-full min-w-max grid-cols-5 md:min-w-0">
+              <TabsList className={`grid w-full min-w-max ${isEnhancedScan ? 'grid-cols-6' : 'grid-cols-5'} md:min-w-0`}>
+                {isEnhancedScan && (
+                  <TabsTrigger value="enhanced" className="text-xs sm:text-sm">🚀 Enhanced</TabsTrigger>
+                )}
                 <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
                 <TabsTrigger value="heatmap" className="text-xs sm:text-sm">🗺️ Heatmap</TabsTrigger>
                 <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
@@ -269,6 +282,15 @@ export default async function ScanDetailPage({ params }: PageProps) {
                 <TabsTrigger value="raw" className="text-xs sm:text-sm">Raw JSON</TabsTrigger>
               </TabsList>
             </div>
+
+            {isEnhancedScan && enhancedScanData && (
+              <TabsContent value="enhanced" className="mt-6">
+                <EnhancedScanResults
+                  result={enhancedScanData as any}
+                  url={siteUrl}
+                />
+              </TabsContent>
+            )}
 
             <TabsContent value="overview" className="space-y-6 mt-6">
               {/* Severity Overview */}
