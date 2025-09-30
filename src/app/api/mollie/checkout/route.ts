@@ -50,12 +50,22 @@ export async function POST(request: NextRequest) {
     })
     
   } catch (error) {
-    console.error("Checkout error:", error)
+    console.error("=== CHECKOUT ERROR DEBUG ===")
+    console.error("Timestamp:", new Date().toISOString())
+    console.error("Environment:", process.env.NODE_ENV)
+    console.error("Error object:", error)
     console.error("Error details:", {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : 'No stack trace',
-      name: error instanceof Error ? error.name : 'Unknown'
+      name: error instanceof Error ? error.name : 'Unknown',
+      // Log more API error details if it's a Mollie error
+      ...(error && typeof error === 'object' && 'field' in error ? {
+        field: (error as any).field,
+        statusCode: (error as any).statusCode,
+        title: (error as any).title
+      } : {})
     })
+    console.error("=== END CHECKOUT ERROR ===")
 
     if (error instanceof Error && error.message === "Authentication required") {
       return NextResponse.json(
@@ -64,12 +74,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Return more detailed error for debugging
+    // Return more detailed error for debugging - always include details in production for now
     return NextResponse.json(
       {
         error: "Failed to create checkout",
         details: error instanceof Error ? error.message : 'Unknown error',
-        debug: process.env.NODE_ENV === 'development' ? error : undefined
+        timestamp: new Date().toISOString(),
+        // Include full error details for debugging
+        debug: error instanceof Error ? {
+          message: error.message,
+          name: error.name,
+          ...(error && typeof error === 'object' && 'field' in error ? {
+            field: (error as any).field,
+            statusCode: (error as any).statusCode,
+            title: (error as any).title
+          } : {})
+        } : error
       },
       { status: 500 }
     )
