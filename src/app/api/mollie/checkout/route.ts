@@ -4,6 +4,8 @@ import { requireAuth } from "@/lib/auth"
 import { createUpgradePayment } from "@/lib/billing/mollie-flows"
 import { planKeyFromString, PRICES } from "@/lib/billing/plans"
 
+export const dynamic = 'force-dynamic'
+
 const CheckoutSchema = z.object({
   plan: z.enum(["STARTER", "PRO", "BUSINESS"])
 })

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { processWebhookPayment } from "@/lib/billing/mollie-flows"
 import crypto from "crypto"
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     console.log('=== Mollie Webhook Received ===')
