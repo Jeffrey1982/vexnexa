@@ -165,12 +165,12 @@ export async function createUpgradePayment(opts: {
       mode: customer.mode
     })
 
-    // Check what payment methods are available for this customer
+    // Check what payment methods are available (general list, not customer-specific)
     try {
-      const availableMethods = await mollie.methods.list({ customerId: customer.id })
-      console.log('Available methods for customer:', availableMethods.map(m => ({ id: m.id, description: m.description })))
+      const availableMethods = await mollie.methods.list()
+      console.log('Available methods (general):', availableMethods.map(m => ({ id: m.id, description: m.description, status: m.status })))
     } catch (methodError) {
-      console.log('Could not check available methods for customer:', methodError.message)
+      console.log('Could not check available methods:', methodError.message)
     }
 
     // Create payment without sequenceType to support all payment methods
