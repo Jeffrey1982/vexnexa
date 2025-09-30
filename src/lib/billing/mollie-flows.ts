@@ -203,12 +203,12 @@ export async function createUpgradePayment(opts: {
     return payment
   } catch (error) {
     console.error('=== Error in createUpgradePayment ===')
-    console.error('Error type:', error.constructor.name)
-    console.error('Error message:', error.message)
+    console.error('Error type:', error instanceof Error ? error.constructor.name : 'Unknown')
+    console.error('Error message:', error instanceof Error ? error.message : String(error))
     console.error('Error details:', error)
-    if (error.field) console.error('Error field:', error.field)
-    if (error.statusCode) console.error('Status code:', error.statusCode)
-    if (error.title) console.error('Error title:', error.title)
+    if (error && typeof error === 'object' && 'field' in error) console.error('Error field:', (error as any).field)
+    if (error && typeof error === 'object' && 'statusCode' in error) console.error('Status code:', (error as any).statusCode)
+    if (error && typeof error === 'object' && 'title' in error) console.error('Error title:', (error as any).title)
     throw error
   }
 }
