@@ -4,15 +4,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Check, 
-  ArrowRight, 
-  Zap, 
-  Target, 
-  Globe, 
-  FileText, 
+import {
+  Check,
+  ArrowRight,
+  Zap,
+  Target,
+  Globe,
+  FileText,
   Shield,
-  ChevronRight
+  ChevronRight,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,18 +22,18 @@ import { cn } from "@/lib/utils";
 const features = [
   {
     icon: Shield,
-    title: "Echte axe-core scans",
-    description: "Dezelfde engine die professionals gebruiken voor nauwkeurige WCAG 2.2 analyses.",
+    title: "100% Toegankelijkheidsanalyse",
+    description: "De enige tool die verder gaat dan WCAG met 8 extra categorieën voor complete coverage.",
   },
   {
     icon: Target,
-    title: "Rapport met prioriteit",
-    description: "Critical, Serious, Moderate, Minor - weet meteen waar je moet beginnen.",
+    title: "Geavanceerde Scanning",
+    description: "Keyboard navigatie, screen reader tests, mobiele toegankelijkheid en cognitieve analyse.",
   },
   {
     icon: Globe,
-    title: "Site-wide crawling (beta)",
-    description: "Vind problemen pagina-breed en krijg overzicht van je hele website.",
+    title: "Uitgebreide Rapportage",
+    description: "Volledige inzichten in prestaties, kleurenblindheid, beweging en meertaligheid.",
   },
 ];
 
@@ -43,14 +44,14 @@ const steps = [
     description: "Plak de link van je pagina in het dashboard",
   },
   {
-    number: "02", 
-    title: "Scan loopt automatisch",
-    description: "Axe-core analyseert alle elementen op WCAG-compliance",
+    number: "02",
+    title: "100% Scan loopt automatisch",
+    description: "Onze enhanced scanner analyseert WCAG + 8 extra categorieën voor complete coverage",
   },
   {
     number: "03",
-    title: "Rapport met prioriteiten", 
-    description: "Export als PDF/Word en deel met team of klanten",
+    title: "Uitgebreid Rapport",
+    description: "Krijg volledig overzicht van toegankelijkheid, prestaties en gebruikerservaring",
   },
 ];
 
@@ -108,19 +109,20 @@ function HeroSection() {
               variant="outline"
               className="mb-4 animate-fade-in shadow-elegant border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors"
             >
-              🚀 Nieuw: Site-wide crawling in beta
+              🎯 Nieuw: 100% Toegankelijkheids Coverage
             </Badge>
 
             <h1 className="animate-slide-up text-4xl lg:text-5xl xl:text-6xl font-bold font-display tracking-tight leading-tight">
-              WCAG-scans die wél{" "}
+              De enige{" "}
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                inzicht geven
+                100% toegankelijkheids
               </span>
+              {" "}scanner
             </h1>
 
             <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              Voer een URL in en krijg een concreet rapport met prioriteiten, voorbeelden en quick wins.
-              Export als PDF of Word.
+              Verder dan WCAG: krijg complete coverage met 8 extra categorieën voor keyboard navigatie,
+              screen readers, cognitieve toegankelijkheid en meer.
             </p>
 
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
@@ -212,11 +214,11 @@ function FeaturesSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4 animate-slide-up">
-            Alles wat je nodig hebt voor WCAG-compliance
+            De meest uitgebreide toegankelijkheidsanalyse
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-slide-up leading-relaxed">
-            Van snelle single-page scans tot complete site-analyses. 
-            Ideaal voor marketing, development en compliance teams.
+            100% coverage door 8 extra categorieën boven traditionele WCAG-scans.
+            Van keyboard navigatie tot cognitieve toegankelijkheid.
           </p>
         </div>
         
@@ -294,6 +296,141 @@ function VisualSection() {
               />
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ComparisonSection() {
+  const comparisons = [
+    {
+      feature: "WCAG 2.1 AA Coverage",
+      tutusporta: true,
+      competitors: true,
+      note: "Basis voor alle tools"
+    },
+    {
+      feature: "Keyboard Navigation Testing",
+      tutusporta: true,
+      competitors: false,
+      note: "Exclusief bij TutusPorta"
+    },
+    {
+      feature: "Screen Reader Compatibility",
+      tutusporta: true,
+      competitors: false,
+      note: "Automatische simulatie"
+    },
+    {
+      feature: "Mobile Accessibility Analysis",
+      tutusporta: true,
+      competitors: false,
+      note: "Touch targets & viewport"
+    },
+    {
+      feature: "Cognitive Accessibility Assessment",
+      tutusporta: true,
+      competitors: false,
+      note: "Taalcomplexiteit & timeouts"
+    },
+    {
+      feature: "Motion & Animation Safety",
+      tutusporta: true,
+      competitors: false,
+      note: "Vestibular disorders"
+    },
+    {
+      feature: "Advanced Color Vision Testing",
+      tutusporta: true,
+      competitors: false,
+      note: "Alle vormen kleurenblindheid"
+    },
+    {
+      feature: "Performance Impact Analysis",
+      tutusporta: true,
+      competitors: false,
+      note: "Assistive tech vriendelijk"
+    },
+    {
+      feature: "Language Support Analysis",
+      tutusporta: true,
+      competitors: false,
+      note: "Meertaligheid & RTL"
+    }
+  ];
+
+  return (
+    <section className="py-20 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+            Waarom TutusPorta de volledigste tool is
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Andere tools dekken slechts 60% van toegankelijkheid af. Wij gaan verder met 8 extra categorieën
+            voor echte 100% coverage.
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <Card className="overflow-hidden shadow-lg">
+            <div className="grid grid-cols-4 gap-4 p-6 bg-muted/50 font-semibold text-sm">
+              <div className="col-span-2">Functionaliteit</div>
+              <div className="text-center text-primary">TutusPorta</div>
+              <div className="text-center text-muted-foreground">Andere Tools</div>
+            </div>
+
+            {comparisons.map((item, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "grid grid-cols-4 gap-4 p-4 border-t items-center",
+                  index % 2 === 0 ? "bg-background" : "bg-muted/20"
+                )}
+              >
+                <div className="col-span-2">
+                  <div className="font-medium">{item.feature}</div>
+                  <div className="text-sm text-muted-foreground">{item.note}</div>
+                </div>
+                <div className="text-center">
+                  {item.tutusporta ? (
+                    <Check className="h-5 w-5 text-success mx-auto" />
+                  ) : (
+                    <X className="h-5 w-5 text-destructive mx-auto" />
+                  )}
+                </div>
+                <div className="text-center">
+                  {item.competitors ? (
+                    <Check className="h-5 w-5 text-success mx-auto" />
+                  ) : (
+                    <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                  )}
+                </div>
+              </div>
+            ))}
+
+            <div className="p-6 bg-primary/5 border-t">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-semibold text-lg">Totale Coverage</div>
+                  <div className="text-sm text-muted-foreground">
+                    Percentage van alle toegankelijkheidsaspecten
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">100%</div>
+                    <div className="text-sm text-muted-foreground">TutusPorta</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-muted-foreground">~60%</div>
+                    <div className="text-sm text-muted-foreground">Anderen</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -404,6 +541,7 @@ export default function HomePage() {
       <SocialProofSection />
       <FeaturesSection />
       <VisualSection />
+      <ComparisonSection />
       <HowItWorksSection />
       <CTASection />
     </>
