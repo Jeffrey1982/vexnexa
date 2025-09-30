@@ -173,21 +173,22 @@ export async function createUpgradePayment(opts: {
       console.log('Could not check available methods:', methodError instanceof Error ? methodError.message : 'Unknown error')
     }
 
-    // Create payment without sequenceType to support all payment methods
+    // Try creating payment without customerId first to test if that's the issue
     const paymentData: PaymentCreateParams = {
       amount: {
         currency: PRICES[plan].currency as any,
         value: PRICES[plan].amount
       },
       description: `TutusPorta ${plan} Plan - Payment (Vexnexa)`,
-      customerId: customer.id,
-      // Removed sequenceType to allow all payment methods
+      // Temporarily remove customerId to test
+      // customerId: customer.id,
       redirectUrl: appUrl("/dashboard?checkout=success"),
       webhookUrl: appUrl("/api/mollie/webhook"),
       metadata: {
         userId,
         plan,
-        type: "upgrade"
+        type: "upgrade",
+        customerEmail: customer.email // Store email in metadata instead
       }
     }
 
