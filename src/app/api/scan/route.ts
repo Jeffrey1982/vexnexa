@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { runAccessibilityScan } from "@/lib/scanner";
+import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";
 import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
@@ -91,9 +91,9 @@ export async function POST(req: Request) {
     // Run accessibility scan
     let result;
     try {
-      console.log('Starting accessibility scan for:', fullPageUrl);
-      result = await runAccessibilityScan(fullPageUrl);
-      console.log('Scan completed successfully with score:', result.score);
+      console.log('Starting enhanced accessibility scan for:', fullPageUrl);
+      result = await runEnhancedAccessibilityScan(fullPageUrl);
+      console.log('Enhanced scan completed successfully with score:', result.score);
     } catch (scanError: any) {
       console.error('Accessibility scan failed:', scanError);
 
@@ -114,18 +114,25 @@ export async function POST(req: Request) {
       }, { status: 500 });
     }
 
-    // Extract impact counts from axe violations
-    const violations = result.axe?.violations || [];
+    // Extract impact counts from enhanced scan violations
+    const violations = result.violations || [];
     const impactCounts = {
-      critical: violations.filter((v: any) => v.impact === 'critical').length,
-      serious: violations.filter((v: any) => v.impact === 'serious').length,
-      moderate: violations.filter((v: any) => v.impact === 'moderate').length,
-      minor: violations.filter((v: any) => v.impact === 'minor').length,
+      critical: result.impactCritical || 0,
+      serious: result.impactSerious || 0,
+      moderate: result.impactModerate || 0,
+      minor: result.impactMinor || 0,
     };
 
+    // Convert enhanced violations to expected format for WCAG compliance calculation
+    const formattedViolations = violations.map((v: any) => ({
+      ...v,
+      helpUrl: v.helpUrl || `https://dequeuniversity.com/rules/axe/4.10/${v.id}`,
+      tags: v.tags || ['wcag2a', 'wcag21aa']
+    }));
+
     // Calculate WCAG compliance
-    const wcagAACompliance = calculateWCAGCompliance(violations, "AA");
-    const wcagAAACompliance = calculateWCAGCompliance(violations, "AAA");
+    const wcagAACompliance = calculateWCAGCompliance(formattedViolations, "AA");
+    const wcagAAACompliance = calculateWCAGCompliance(formattedViolations, "AAA");
 
     // Create violation counts by rule for trending
     const violationsByRule: Record<string, number> = {};
@@ -201,7 +208,7 @@ export async function POST(req: Request) {
         complianceGaps: complianceRisk.complianceGaps,
         legalRiskScore: complianceRisk.legalRiskScore,
 
-        raw: result.axe || result // Save the complete axe results
+        raw: JSON.parse(JSON.stringify(result)) // Save the complete enhanced scan results as JSON
       },
       include: {
         site: true,
