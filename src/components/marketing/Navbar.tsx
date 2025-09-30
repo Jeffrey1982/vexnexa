@@ -32,19 +32,27 @@ interface NavbarProps {
 export function Navbar({ className }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
     const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        setUser(user);
+      } catch (error) {
+        console.error('Error getting user:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     getUser();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -86,7 +94,9 @@ export function Navbar({ className }: NavbarProps) {
 
           {/* Desktop Auth/CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            {user ? (
+            {isLoading ? (
+              <div className="w-20 h-8 bg-muted rounded animate-pulse"></div>
+            ) : user ? (
               <>
                 <Button
                   onClick={() => router.push('/dashboard')}
@@ -99,16 +109,26 @@ export function Navbar({ className }: NavbarProps) {
                 <AuthButton user={user} />
               </>
             ) : (
-              <Button
-                asChild
-                className="button-hover gradient-primary shadow-elegant font-medium text-sm relative overflow-hidden group"
-                onClick={() => handleCtaClick("navbar_primary")}
-              >
-                <Link href="/auth/register">
-                  <span className="relative z-10">Start Gratis</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-                </Link>
-              </Button>
+              <>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="font-medium text-sm hover:bg-primary/5 hover:text-primary transition-all duration-200"
+                >
+                  <Link href="/auth/login">Inloggen</Link>
+                </Button>
+                <Button
+                  asChild
+                  className="button-hover gradient-primary shadow-elegant font-medium text-sm relative overflow-hidden group"
+                  onClick={() => handleCtaClick("navbar_primary")}
+                >
+                  <Link href="/auth/register">
+                    <span className="relative z-10">Start Gratis</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                  </Link>
+                </Button>
+              </>
             )}
           </div>
 
@@ -151,7 +171,12 @@ export function Navbar({ className }: NavbarProps) {
                 ))}
                 
                 <div className="pt-6 space-y-3">
-                  {user ? (
+                  {isLoading ? (
+                    <div className="space-y-3">
+                      <div className="w-full h-10 bg-muted rounded animate-pulse"></div>
+                      <div className="w-full h-10 bg-muted rounded animate-pulse"></div>
+                    </div>
+                  ) : user ? (
                     <>
                       <Button
                         onClick={() => {
@@ -174,16 +199,26 @@ export function Navbar({ className }: NavbarProps) {
                       </Button>
                     </>
                   ) : (
-                    <Button
-                      asChild
-                      className="w-full justify-start gradient-primary shadow-elegant font-medium"
-                      onClick={() => {
-                        setIsOpen(false);
-                        handleCtaClick("mobile_primary");
-                      }}
-                    >
-                      <Link href="/auth/register">Start Gratis</Link>
-                    </Button>
+                    <>
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="w-full justify-start font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Link href="/auth/login">Inloggen</Link>
+                      </Button>
+                      <Button
+                        asChild
+                        className="w-full justify-start gradient-primary shadow-elegant font-medium"
+                        onClick={() => {
+                          setIsOpen(false);
+                          handleCtaClick("mobile_primary");
+                        }}
+                      >
+                        <Link href="/auth/register">Start Gratis</Link>
+                      </Button>
+                    </>
                   )}
                 </div>
               </div>

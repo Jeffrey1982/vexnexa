@@ -155,6 +155,7 @@ export async function createUpgradePayment(opts: {
       sequenceType: SequenceType.first,
       redirectUrl: appUrl("/dashboard?checkout=success"),
       webhookUrl: appUrl("/api/mollie/webhook"),
+      // Removed methods filter to show all available payment methods
       metadata: {
         userId,
         plan,
@@ -184,6 +185,7 @@ export async function createUpgradePayment(opts: {
           // Remove sequenceType to make it a regular payment
           redirectUrl: appUrl("/dashboard?checkout=success"),
           webhookUrl: appUrl("/api/mollie/webhook"),
+          // Removed methods filter to show all available payment methods
           metadata: {
             userId,
             plan,
