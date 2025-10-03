@@ -3,7 +3,7 @@ import Bottleneck from "bottleneck";
 import * as cheerio from "cheerio";
 import { normalizeUrl, sameOrigin } from "./normalizeUrl";
 import { isAllowedByRobots } from "./robots";
-import { runAccessibilityScan } from "./scanner";
+import { runEnhancedAccessibilityScan } from "./scanner-enhanced";
 import { calculateWCAGCompliance } from "./analytics";
 import { getPerformanceMetrics, analyzeSEOMetrics, calculateComplianceRisk } from "./performance-analytics";
 
@@ -15,7 +15,7 @@ const limiter = new Bottleneck({
   maxConcurrent: 2
 });
 
-export async function startCrawl(siteId: string, maxPages = 50, maxDepth = 3) {
+export async function startCrawl(siteId: string, maxPages = 50, maxDepth = 3, includeSitemap = true) {
   const site = await prisma.site.findUnique({
     where: { id: siteId }
   });
@@ -41,11 +41,39 @@ export async function startCrawl(siteId: string, maxPages = 50, maxDepth = 3) {
     }
   });
 
+  let totalQueued = 1;
+
+  // Discover and add sitemap URLs if enabled
+  if (includeSitemap) {
+    try {
+      const sitemapUrls = await discoverSitemapUrls(site.url);
+      console.log(`Found ${sitemapUrls.length} URLs in sitemaps for ${site.url}`);
+
+      for (const url of sitemapUrls.slice(0, maxPages - 1)) {
+        try {
+          await prisma.crawlUrl.create({
+            data: {
+              crawlId: crawl.id,
+              url: url,
+              depth: 0,
+              status: "queued"
+            }
+          });
+          totalQueued++;
+        } catch {
+          // URL already exists, skip
+        }
+      }
+    } catch (error) {
+      console.log(`Sitemap discovery failed for ${site.url}:`, error instanceof Error ? error.message : 'Unknown error');
+    }
+  }
+
   // Update crawl with initial queue count
   await prisma.crawl.update({
     where: { id: crawl.id },
-    data: { 
-      pagesQueued: 1,
+    data: {
+      pagesQueued: totalQueued,
       status: "running"
     }
   });
@@ -140,23 +168,23 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
       return;
     }
 
-    // Run accessibility scan using rate limiter
-    const scanResult = await limiter.schedule(() => runAccessibilityScan(url));
+    // Run enhanced accessibility scan using rate limiter
+    const scanResult = await limiter.schedule(() => runEnhancedAccessibilityScan(url));
 
-    // Extract violations from axe results
-    const violations = scanResult.axe?.violations || [];
+    // Extract violations from enhanced scan results
+    const violations = scanResult.violations || [];
 
-    // Calculate impact counts
+    // Calculate impact counts from enhanced scan
     const impactCounts = {
-      critical: violations.filter((v: any) => v.impact === 'critical').length,
-      serious: violations.filter((v: any) => v.impact === 'serious').length,
-      moderate: violations.filter((v: any) => v.impact === 'moderate').length,
-      minor: violations.filter((v: any) => v.impact === 'minor').length,
+      critical: scanResult.impactCritical || 0,
+      serious: scanResult.impactSerious || 0,
+      moderate: scanResult.impactModerate || 0,
+      minor: scanResult.impactMinor || 0,
     };
 
     // Calculate WCAG compliance
-    const wcagAACompliance = calculateWCAGCompliance(violations, "AA");
-    const wcagAAACompliance = calculateWCAGCompliance(violations, "AAA");
+    const wcagAACompliance = calculateWCAGCompliance(violations as any, "AA");
+    const wcagAAACompliance = calculateWCAGCompliance(violations as any, "AAA");
 
     // Create violation counts by rule for trending
     const violationsByRule: Record<string, number> = {};
@@ -256,7 +284,7 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
         pageLoadTime: null,
         elementsScanned: null,
 
-        raw: scanResult.axe || scanResult // Save the complete axe results
+        raw: JSON.parse(JSON.stringify(scanResult)) // Save the complete enhanced scan results
       }
     });
 
@@ -463,4 +491,104 @@ function calculateEstimatedTime(crawl: any, statusCounts: any): string | null {
   const remainingMinutes = minutes % 60;
 
   return `${hours}h ${remainingMinutes}m`;
+}
+
+// Sitemap discovery functionality
+async function discoverSitemapUrls(baseUrl: string): Promise<string[]> {
+  const urls: string[] = [];
+
+  try {
+    // Try common sitemap locations
+    const sitemapUrls = [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/sitemap_index.xml`,
+      `${baseUrl}/sitemaps/sitemap.xml`,
+      `${baseUrl}/sitemap/sitemap.xml`
+    ];
+
+    for (const sitemapUrl of sitemapUrls) {
+      try {
+        console.log(`Checking sitemap: ${sitemapUrl}`);
+        const fetch = (await import("node-fetch")).default;
+        const response = await fetch(sitemapUrl, {
+          headers: {
+            'User-Agent': 'TutusPorta-Accessibility-Scanner/1.0'
+          }
+        } as any);
+
+        if (response.ok) {
+          const xml = await response.text();
+          const discoveredUrls = parseSitemapXML(xml, baseUrl);
+          urls.push(...discoveredUrls);
+          console.log(`Found ${discoveredUrls.length} URLs in ${sitemapUrl}`);
+          break; // Use first successful sitemap
+        }
+      } catch (sitemapError) {
+        console.log(`Sitemap ${sitemapUrl} not accessible:`, sitemapError instanceof Error ? sitemapError.message : 'Unknown error');
+      }
+    }
+
+    // Also check robots.txt for sitemap references
+    try {
+      const fetch = (await import("node-fetch")).default;
+      const robotsResponse = await fetch(`${baseUrl}/robots.txt`);
+      if (robotsResponse.ok) {
+        const robotsTxt = await robotsResponse.text();
+        const sitemapMatches = robotsTxt.match(/Sitemap:\s*(https?:\/\/[^\s]+)/gi);
+        if (sitemapMatches) {
+          for (const match of sitemapMatches) {
+            const sitemapUrl = match.replace(/Sitemap:\s*/i, '');
+            try {
+              const response = await fetch(sitemapUrl);
+              if (response.ok) {
+                const xml = await response.text();
+                const discoveredUrls = parseSitemapXML(xml, baseUrl);
+                urls.push(...discoveredUrls);
+                console.log(`Found ${discoveredUrls.length} URLs in robots.txt sitemap: ${sitemapUrl}`);
+              }
+            } catch (error) {
+              console.log(`Failed to fetch sitemap from robots.txt: ${sitemapUrl}`);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.log('Could not check robots.txt for sitemaps');
+    }
+
+  } catch (error) {
+    console.log('Sitemap discovery failed:', error instanceof Error ? error.message : 'Unknown error');
+  }
+
+  // Remove duplicates and limit
+  return Array.from(new Set(urls)).slice(0, 100);
+}
+
+function parseSitemapXML(xml: string, baseUrl: string): string[] {
+  const urls: string[] = [];
+
+  try {
+    // Simple XML parsing for <loc> tags
+    const locMatches = xml.match(/<loc[^>]*>(.*?)<\/loc>/gi);
+    if (locMatches) {
+      for (const match of locMatches) {
+        const url = match.replace(/<\/?loc[^>]*>/gi, '').trim();
+        if (url.startsWith('http') && url.startsWith(baseUrl)) {
+          urls.push(url);
+        }
+      }
+    }
+
+    // Handle sitemap index files (recursive)
+    const sitemapMatches = xml.match(/<sitemap[^>]*>[\s\S]*?<\/sitemap>/gi);
+    if (sitemapMatches && sitemapMatches.length > 0) {
+      console.log(`Found ${sitemapMatches.length} sub-sitemaps in index`);
+      // Note: For production, you might want to handle recursive sitemap fetching
+      // For now, we'll focus on the direct URLs
+    }
+  } catch (error) {
+    console.log('XML parsing failed:', error instanceof Error ? error.message : 'Unknown error');
+  }
+
+  return urls;
 }

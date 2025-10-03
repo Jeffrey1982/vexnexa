@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { TouchButton } from "@/components/ui/touch-button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Search, AlertCircle } from "lucide-react";
+import { Loader2, Search, AlertCircle, Sparkles, Info } from "lucide-react";
 
 export function NewScanForm() {
   const [url, setUrl] = useState("");
@@ -88,9 +88,9 @@ export function NewScanForm() {
             </>
           ) : (
             <>
-              <Search className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Start Scan</span>
-              <span className="sm:hidden">Scan</span>
+              <Sparkles className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">100% Enhanced Scan</span>
+              <span className="sm:hidden">100% Scan</span>
             </>
           )}
         </TouchButton>
@@ -103,9 +103,22 @@ export function NewScanForm() {
         </Alert>
       )}
 
-      <p className="text-xs text-muted-foreground">
-        Enter a complete URL including https:// to run a comprehensive WCAG accessibility scan.
-      </p>
+      <div className="space-y-2">
+        <p className="text-xs text-muted-foreground">
+          Voer een complete URL in om een 100% uitgebreide toegankelijkheidsscan te starten.
+        </p>
+
+        <div className="flex items-start gap-2 p-3 bg-primary/5 rounded-lg border border-primary/10">
+          <Info className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+          <div className="text-xs text-primary">
+            <div className="font-medium mb-1">✨ Nieuw: 100% Enhanced Scanning</div>
+            <div className="text-primary/80">
+              WCAG + 8 extra categorieën: keyboard navigatie, screen reader tests,
+              mobile toegankelijkheid, cognitieve analyse en meer.
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
   );
 }

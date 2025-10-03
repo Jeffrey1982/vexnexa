@@ -364,13 +364,13 @@ async function getRiskAnalysis(whereCondition: any) {
     _count: true
   });
 
-  const riskCounts = riskData.reduce((acc: any, item) => {
+  const riskCounts: Record<string, number> = riskData.reduce((acc: Record<string, number>, item) => {
     acc[item.adaRiskLevel?.toLowerCase() || 'unknown'] = item._count;
     return acc;
   }, {});
 
-  const highRisk = (riskCounts.high || 0) + (riskCounts.critical || 0);
-  const totalScans = Object.values(riskCounts).reduce((a: number, b: number) => a + b, 0) as number;
+  const highRisk: number = (riskCounts.high || 0) + (riskCounts.critical || 0);
+  const totalScans: number = Object.values(riskCounts).reduce((a, b) => a + b, 0);
 
   return {
     distribution: riskCounts,

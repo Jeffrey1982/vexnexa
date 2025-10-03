@@ -7,7 +7,7 @@ export function getEntitlements(plan: keyof typeof ENTITLEMENTS) {
 
 export async function assertWithinLimits(opts: {
   userId: string
-  action: "scan" | "export_pdf" | "export_word" | "schedule" | "crawl" | "white_label"
+  action: "scan" | "bulk_scan" | "export_pdf" | "export_word" | "schedule" | "crawl" | "white_label"
   pages?: number
   now?: Date
 }) {
@@ -36,6 +36,11 @@ export async function assertWithinLimits(opts: {
     e.code = "UPGRADE_REQUIRED"; e.feature = "crawl"
     throw e
   }
+  if (opts.action === "bulk_scan" && !ent.crawl) {
+    const e: any = new Error("Upgrade required: Bulk scanning is alleen beschikbaar voor betaalde plannen.")
+    e.code = "UPGRADE_REQUIRED"; e.feature = "bulk_scan"
+    throw e
+  }
   if (opts.action === "white_label" && !ent.whiteLabel) {
     const e: any = new Error("Upgrade required: White labeling is alleen beschikbaar voor Business plannen.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "whiteLabel"
@@ -43,7 +48,7 @@ export async function assertWithinLimits(opts: {
   }
 
   // Usage limits
-  if (["scan","export_pdf","export_word","crawl"].includes(opts.action)) {
+  if (["scan","bulk_scan","export_pdf","export_word","crawl"].includes(opts.action)) {
     let usage = await prisma.usage.findUnique({ 
       where: { userId_period: { userId: user.id, period } } 
     })
