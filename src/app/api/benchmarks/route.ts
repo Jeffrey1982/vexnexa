@@ -15,12 +15,10 @@ export async function GET(req: Request) {
     const includeUserStats = searchParams.get("includeUserStats") === "true";
 
     // Get industry benchmarks
-    const industryBenchmark = await prisma.benchmark.findUnique({
+    const industryBenchmark = await prisma.benchmark.findFirst({
       where: {
-        industry_category: {
-          industry: industry,
-          category: null as string | null
-        }
+        industry: industry,
+        category: null
       }
     });
 
