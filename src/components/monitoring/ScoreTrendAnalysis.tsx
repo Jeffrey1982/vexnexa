@@ -344,7 +344,7 @@ export function ScoreTrendAnalysis({
         </CardContent>
       </Card>
 
-      {/* Chart Placeholder */}
+      {/* Trend Visualization */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -352,15 +352,149 @@ export function ScoreTrendAnalysis({
             Trend Visualization
           </CardTitle>
           <CardDescription>
-            Interactive chart showing score trends over time
+            Score trends over time with key metrics
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-64 flex items-center justify-center text-muted-foreground">
-            <div className="text-center">
-              <BarChart3 className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p>Interactive trend chart will be implemented with charting library</p>
-              <p className="text-xs mt-2">Shows: Score trends, WCAG compliance, performance correlation</p>
+          <div className="space-y-6">
+            {/* Chart Stats */}
+            <div className="grid grid-cols-4 gap-4">
+              <div className="text-center p-3 rounded-lg bg-blue-50 border border-blue-200">
+                <p className="text-xs text-blue-600 mb-1">Data Points</p>
+                <p className="text-xl font-bold text-blue-700">{data.trends.length}</p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-green-50 border border-green-200">
+                <p className="text-xs text-green-600 mb-1">Highest Score</p>
+                <p className="text-xl font-bold text-green-700">
+                  {Math.max(...data.trends.map(t => t.score)).toFixed(0)}
+                </p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-orange-50 border border-orange-200">
+                <p className="text-xs text-orange-600 mb-1">Lowest Score</p>
+                <p className="text-xl font-bold text-orange-700">
+                  {Math.min(...data.trends.map(t => t.score)).toFixed(0)}
+                </p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-purple-50 border border-purple-200">
+                <p className="text-xs text-purple-600 mb-1">Avg Score</p>
+                <p className="text-xl font-bold text-purple-700">
+                  {(data.trends.reduce((sum, t) => sum + t.score, 0) / data.trends.length).toFixed(0)}
+                </p>
+              </div>
+            </div>
+
+            {/* Simple Bar Chart Visualization */}
+            <div className="relative h-64 border rounded-lg bg-gradient-to-b from-gray-50 to-white p-4">
+              <div className="absolute inset-4 flex items-end justify-between gap-1">
+                {data.trends.map((point, index) => {
+                  const height = (point.score / 100) * 100;
+                  const color = point.score >= 80 ? 'bg-green-500' :
+                               point.score >= 60 ? 'bg-yellow-500' :
+                               'bg-red-500';
+
+                  return (
+                    <div
+                      key={index}
+                      className="flex-1 flex flex-col items-center group relative"
+                    >
+                      <div
+                        className={cn(
+                          "w-full rounded-t transition-all hover:opacity-80",
+                          color
+                        )}
+                        style={{ height: `${height}%`, minHeight: '4px' }}
+                      />
+
+                      {/* Tooltip on hover */}
+                      <div className="absolute bottom-full mb-2 hidden group-hover:block z-10">
+                        <div className="bg-gray-900 text-white text-xs rounded py-2 px-3 shadow-lg whitespace-nowrap">
+                          <p className="font-bold">{point.date}</p>
+                          <p>Score: {point.score.toFixed(1)}</p>
+                          <p>Issues: {point.issues}</p>
+                          {point.wcagAACompliance && (
+                            <p>WCAG AA: {point.wcagAACompliance.toFixed(1)}%</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Y-axis labels */}
+              <div className="absolute left-0 top-4 bottom-4 flex flex-col justify-between text-xs text-gray-500">
+                <span>100</span>
+                <span>75</span>
+                <span>50</span>
+                <span>25</span>
+                <span>0</span>
+              </div>
+            </div>
+
+            {/* X-axis Date Labels */}
+            <div className="flex justify-between text-xs text-gray-600 px-4">
+              <span>{data.trends[0]?.date}</span>
+              <span className="text-center">
+                {data.trends[Math.floor(data.trends.length / 2)]?.date}
+              </span>
+              <span>{data.trends[data.trends.length - 1]?.date}</span>
+            </div>
+
+            {/* Detailed Trend Data Table */}
+            <div className="border rounded-lg overflow-hidden">
+              <div className="max-h-64 overflow-y-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-50 sticky top-0">
+                    <tr>
+                      <th className="text-left p-3 text-xs font-medium text-gray-600">Date</th>
+                      <th className="text-right p-3 text-xs font-medium text-gray-600">Score</th>
+                      <th className="text-right p-3 text-xs font-medium text-gray-600">Issues</th>
+                      <th className="text-right p-3 text-xs font-medium text-gray-600">WCAG AA</th>
+                      <th className="text-left p-3 text-xs font-medium text-gray-600">Site</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.trends.slice().reverse().map((point, index) => (
+                      <tr key={index} className="border-t hover:bg-gray-50">
+                        <td className="p-3">{point.date}</td>
+                        <td className="p-3 text-right">
+                          <span className={cn(
+                            "font-medium",
+                            point.score >= 80 ? "text-green-600" :
+                            point.score >= 60 ? "text-yellow-600" :
+                            "text-red-600"
+                          )}>
+                            {point.score.toFixed(1)}
+                          </span>
+                        </td>
+                        <td className="p-3 text-right">{point.issues}</td>
+                        <td className="p-3 text-right">
+                          {point.wcagAACompliance ? `${point.wcagAACompliance.toFixed(1)}%` : '-'}
+                        </td>
+                        <td className="p-3 text-xs text-gray-600 truncate max-w-xs">
+                          {point.siteUrl}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="flex items-center justify-center gap-6 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded" />
+                <span className="text-gray-600">Excellent (80+)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-yellow-500 rounded" />
+                <span className="text-gray-600">Good (60-79)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-500 rounded" />
+                <span className="text-gray-600">Needs Work (&lt;60)</span>
+              </div>
             </div>
           </div>
         </CardContent>

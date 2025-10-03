@@ -522,8 +522,160 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
           </TabsContent>
 
           <TabsContent value="timeline" className="mt-6">
-            <div className="text-center py-12 text-gray-500">
-              Timeline view - Coming soon
+            <div className="space-y-6">
+              {/* Timeline View with Gantt-style layout */}
+              <div className="flex items-center gap-4 mb-6">
+                <Badge variant="outline" className="text-xs">
+                  Showing {filteredAndSortedIssues.length} tasks
+                </Badge>
+                <div className="text-xs text-gray-600">
+                  Tasks are ordered by due date and priority
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {filteredAndSortedIssues
+                  .sort((a, b) => {
+                    if (!a.dueDate && !b.dueDate) return 0;
+                    if (!a.dueDate) return 1;
+                    if (!b.dueDate) return -1;
+                    return a.dueDate.getTime() - b.dueDate.getTime();
+                  })
+                  .map((issue, index) => {
+                    const daysUntilDue = issue.dueDate
+                      ? Math.ceil((issue.dueDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+                      : null;
+                    const isOverdue = daysUntilDue !== null && daysUntilDue < 0;
+                    const isUpcoming = daysUntilDue !== null && daysUntilDue <= 7 && daysUntilDue >= 0;
+
+                    return (
+                      <motion.div
+                        key={issue.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className={`
+                          p-4 rounded-lg border-l-4
+                          ${isOverdue ? 'border-l-red-500 bg-red-50' : ''}
+                          ${isUpcoming ? 'border-l-yellow-500 bg-yellow-50' : ''}
+                          ${!isOverdue && !isUpcoming ? 'border-l-blue-500 bg-white' : ''}
+                          hover:shadow-md transition-shadow
+                        `}
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-2">
+                              {getStatusIcon(issue.status)}
+                              <span className="font-semibold text-sm truncate">{issue.rule}</span>
+                              <Badge
+                                variant={issue.impact === 'critical' ? 'destructive' : 'secondary'}
+                                className="text-xs capitalize"
+                              >
+                                {issue.impact}
+                              </Badge>
+                              <Badge className={`text-xs capitalize ${getEffortColor(issue.effort)}`}>
+                                {issue.effort}
+                              </Badge>
+                            </div>
+
+                            <p className="text-xs text-gray-600 mb-2">
+                              {issue.description}
+                            </p>
+
+                            <div className="flex items-center gap-4 text-xs text-gray-500">
+                              <div className="flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {issue.estimatedHours}h
+                              </div>
+                              <div className="flex items-center gap-1">
+                                {getCategoryIcon(issue.category)}
+                                <span className="capitalize">{issue.category}</span>
+                              </div>
+                              {issue.assignee && (
+                                <div className="flex items-center gap-1">
+                                  <Users className="h-3 w-3" />
+                                  {issue.assignee}
+                                </div>
+                              )}
+                              <div>
+                                {issue.elementsAffected} elements
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col items-end gap-2 shrink-0">
+                            {issue.dueDate ? (
+                              <div className="text-right">
+                                <div className={`
+                                  text-xs font-medium
+                                  ${isOverdue ? 'text-red-600' : ''}
+                                  ${isUpcoming ? 'text-yellow-600' : ''}
+                                  ${!isOverdue && !isUpcoming ? 'text-gray-600' : ''}
+                                `}>
+                                  {issue.dueDate.toLocaleDateString()}
+                                </div>
+                                {daysUntilDue !== null && (
+                                  <div className="text-xs text-gray-500">
+                                    {isOverdue
+                                      ? `${Math.abs(daysUntilDue)} days overdue`
+                                      : `${daysUntilDue} days left`
+                                    }
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="text-xs text-gray-400">No due date</div>
+                            )}
+
+                            <Select
+                              value={issue.status}
+                              onValueChange={(value: Issue['status']) =>
+                                onUpdateIssue(issue.id, { status: value })
+                              }
+                            >
+                              <SelectTrigger className="w-28 h-7 text-xs">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="not-started">Not Started</SelectItem>
+                                <SelectItem value="in-progress">In Progress</SelectItem>
+                                <SelectItem value="completed">Completed</SelectItem>
+                                <SelectItem value="blocked">Blocked</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        {/* Progress bar based on status */}
+                        <div className="mt-3 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            className={`
+                              h-full rounded-full
+                              ${issue.status === 'completed' ? 'bg-green-500' : ''}
+                              ${issue.status === 'in-progress' ? 'bg-blue-500' : ''}
+                              ${issue.status === 'blocked' ? 'bg-red-500' : ''}
+                              ${issue.status === 'not-started' ? 'bg-gray-400' : ''}
+                            `}
+                            initial={{ width: 0 }}
+                            animate={{
+                              width: issue.status === 'completed' ? '100%' :
+                                     issue.status === 'in-progress' ? '50%' :
+                                     issue.status === 'blocked' ? '25%' : '0%'
+                            }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                          />
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+              </div>
+
+              {filteredAndSortedIssues.length === 0 && (
+                <div className="text-center py-12 text-gray-500">
+                  <Calendar className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                  <p>No tasks match the current filters</p>
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>

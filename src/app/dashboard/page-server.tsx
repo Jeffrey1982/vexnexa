@@ -208,7 +208,7 @@ export default async function DashboardPage() {
             New Accessibility Scan
           </CardTitle>
           <CardDescription className="text-sm sm:text-base">
-            Enter a URL to run a comprehensive WCAG accessibility analysis
+            Voer een URL in voor een 100% uitgebreide toegankelijkheidsscan met 8 extra categorieën
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0">
@@ -504,7 +504,7 @@ export default async function DashboardPage() {
                         <p className="text-xs sm:text-sm text-gray-500">Branded PDF exports</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400">Coming soon - Reports with your branding</p>
+                    <p className="text-xs text-gray-400">Available - Generate reports with your branding</p>
                   </div>
                 </div>
 
@@ -544,8 +544,8 @@ export default async function DashboardPage() {
                         <span>Custom domain (contact support)</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-purple-500">🔜</span>
-                        <span>Branded PDF reports (coming soon)</span>
+                        <span className="text-green-500">✓</span>
+                        <span>Branded PDF reports</span>
                       </div>
                     </div>
                   </div>

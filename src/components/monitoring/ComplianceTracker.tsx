@@ -425,27 +425,144 @@ export function ComplianceTracker({ className }: ComplianceTrackerProps) {
         </CardContent>
       </Card>
 
-      {/* Compliance Timeline Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-green-600" />
-            Compliance Timeline
-          </CardTitle>
-          <CardDescription>
-            Historical compliance trends and milestone tracking
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 flex items-center justify-center text-muted-foreground">
-            <div className="text-center">
-              <BarChart3 className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p>Interactive compliance timeline will be implemented with charting library</p>
-              <p className="text-xs mt-2">Shows: WCAG AA/AAA trends, compliance milestones, legal events</p>
+      {/* Compliance Timeline */}
+      {selectedSite && selectedSite.timeline.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-green-600" />
+              Compliance Timeline - {selectedSite.siteUrl}
+            </CardTitle>
+            <CardDescription>
+              Historical compliance trends and milestone tracking
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Timeline Stats */}
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="text-center p-3 rounded-lg bg-blue-50 border border-blue-200">
+                <p className="text-sm text-blue-600 mb-1">Data Points</p>
+                <p className="text-2xl font-bold text-blue-700">{selectedSite.timeline.length}</p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-green-50 border border-green-200">
+                <p className="text-sm text-green-600 mb-1">Latest AA Score</p>
+                <p className="text-2xl font-bold text-green-700">
+                  {selectedSite.timeline[selectedSite.timeline.length - 1]?.wcagAA.toFixed(1)}%
+                </p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-purple-50 border border-purple-200">
+                <p className="text-sm text-purple-600 mb-1">Latest AAA Score</p>
+                <p className="text-2xl font-bold text-purple-700">
+                  {selectedSite.timeline[selectedSite.timeline.length - 1]?.wcagAAA.toFixed(1)}%
+                </p>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+
+            {/* Timeline Visualization */}
+            <div className="space-y-3">
+              {selectedSite.timeline.slice().reverse().map((point, index) => {
+                const prevPoint = index < selectedSite.timeline.length - 1
+                  ? selectedSite.timeline[selectedSite.timeline.length - index - 2]
+                  : null;
+                const aaChange = prevPoint ? point.wcagAA - prevPoint.wcagAA : 0;
+                const aaaChange = prevPoint ? point.wcagAAA - prevPoint.wcagAAA : 0;
+
+                return (
+                  <div
+                    key={index}
+                    className="relative pl-8 pb-4 border-l-2 border-gray-200 last:border-l-0 last:pb-0"
+                  >
+                    {/* Timeline dot */}
+                    <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow" />
+
+                    <div className="bg-white p-4 rounded-lg border hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <p className="font-medium text-sm">{formatDate(point.date)}</p>
+                          {point.event && (
+                            <p className="text-xs text-blue-600 mt-1">📌 {point.event}</p>
+                          )}
+                        </div>
+                        <Badge variant="outline" className="text-xs">
+                          {index === 0 ? 'Latest' : `${index + 1} scans ago`}
+                        </Badge>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 mt-3">
+                        {/* WCAG AA */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-muted-foreground">WCAG AA</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-sm font-bold">{point.wcagAA.toFixed(1)}%</span>
+                              {aaChange !== 0 && (
+                                <span className={cn(
+                                  "text-xs",
+                                  aaChange > 0 ? "text-green-600" : "text-red-600"
+                                )}>
+                                  {aaChange > 0 ? '↑' : '↓'} {Math.abs(aaChange).toFixed(1)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                "h-full rounded-full transition-all",
+                                point.wcagAA >= 90 ? "bg-green-500" :
+                                point.wcagAA >= 70 ? "bg-yellow-500" :
+                                "bg-red-500"
+                              )}
+                              style={{ width: `${point.wcagAA}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* WCAG AAA */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-muted-foreground">WCAG AAA</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-sm font-bold">{point.wcagAAA.toFixed(1)}%</span>
+                              {aaaChange !== 0 && (
+                                <span className={cn(
+                                  "text-xs",
+                                  aaaChange > 0 ? "text-green-600" : "text-red-600"
+                                )}>
+                                  {aaaChange > 0 ? '↑' : '↓'} {Math.abs(aaaChange).toFixed(1)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                "h-full rounded-full transition-all",
+                                point.wcagAAA >= 90 ? "bg-purple-500" :
+                                point.wcagAAA >= 70 ? "bg-blue-500" :
+                                "bg-orange-500"
+                              )}
+                              style={{ width: `${point.wcagAAA}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {selectedSite.timeline.length === 0 && (
+              <div className="text-center py-12 text-muted-foreground">
+                <Clock className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                <p>No historical timeline data available for this site</p>
+                <p className="text-xs mt-2">Timeline will populate as more scans are completed</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

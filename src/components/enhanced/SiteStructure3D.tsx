@@ -118,12 +118,31 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0, z: 0 });
   const [scale, setScale] = useState(1);
   const [isRotating, setIsRotating] = useState(false);
+  const [filterLevel, setFilterLevel] = useState<number | null>(null);
+  const [highlightIssues, setHighlightIssues] = useState<'all' | 'critical' | 'serious' | null>('all');
+  const [showConnections, setShowConnections] = useState(true);
+  const [animationSpeed, setAnimationSpeed] = useState(2);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const positionedNodes = useMemo(() => {
     const nodes: Array<{ node: PageNode; x: number; y: number; z: number }> = [];
 
     const calculatePositions = (node: PageNode, level: number, parentX = 0, parentY = 0, parentZ = 0, angle = 0) => {
+      // Filter by level if set
+      if (filterLevel !== null && level > filterLevel) {
+        return;
+      }
+
+      // Filter by issue severity
+      if (highlightIssues === 'critical' && node.issues.critical === 0) {
+        return;
+      }
+      if (highlightIssues === 'serious' && node.issues.serious === 0 && node.issues.critical === 0) {
+        return;
+      }
+
       let x, y, z;
 
       switch (viewMode) {
@@ -157,7 +176,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
 
     calculatePositions(siteData, 0);
     return nodes;
-  }, [siteData, viewMode]);
+  }, [siteData, viewMode, filterLevel, highlightIssues]);
 
   const handleRotate = () => {
     setIsRotating(!isRotating);
@@ -174,14 +193,38 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
       const interval = setInterval(() => {
         setRotation(prev => ({
           x: prev.x,
-          y: (prev.y + 2) % 360,
+          y: (prev.y + animationSpeed) % 360,
           z: prev.z,
         }));
       }, 50);
 
       return () => clearInterval(interval);
     }
-  }, [isRotating]);
+  }, [isRotating, animationSpeed]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging) {
+      const deltaX = e.clientX - dragStart.x;
+      const deltaY = e.clientY - dragStart.y;
+
+      setRotation(prev => ({
+        x: prev.x + deltaY * 0.5,
+        y: prev.y + deltaX * 0.5,
+        z: prev.z,
+      }));
+
+      setDragStart({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   const getTotalStats = (node: PageNode): { pages: number; issues: number } => {
     const stats = { pages: 1, issues: node.issues.critical + node.issues.serious + node.issues.moderate + node.issues.minor };
@@ -209,8 +252,8 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-center gap-2 flex-wrap">
             <Select value={viewMode} onValueChange={(value: any) => setViewMode(value)}>
               <SelectTrigger className="w-[140px]">
                 <SelectValue placeholder="View mode" />
@@ -221,9 +264,38 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
                 <SelectItem value="hierarchy">Hierarchy View</SelectItem>
               </SelectContent>
             </Select>
+
+            <Select
+              value={highlightIssues || 'all'}
+              onValueChange={(value: any) => setHighlightIssues(value === 'all' ? 'all' : value)}
+            >
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="Filter issues" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Pages</SelectItem>
+                <SelectItem value="critical">Critical Only</SelectItem>
+                <SelectItem value="serious">Serious+</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={filterLevel?.toString() || 'all'}
+              onValueChange={(value: string) => setFilterLevel(value === 'all' ? null : parseInt(value))}
+            >
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Depth" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Levels</SelectItem>
+                <SelectItem value="1">Level 1</SelectItem>
+                <SelectItem value="2">Level 2</SelectItem>
+                <SelectItem value="3">Level 3</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-end">
             <Button
               variant="outline"
               size="sm"
@@ -239,7 +311,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
               <ZoomIn className="h-4 w-4" />
             </Button>
             <Button
-              variant="outline"
+              variant={isRotating ? "default" : "outline"}
               size="sm"
               onClick={handleRotate}
             >
@@ -257,8 +329,14 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
 
         <div
           ref={containerRef}
-          className="relative h-96 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden border"
+          className={`relative h-96 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg overflow-hidden border ${
+            isDragging ? 'cursor-grabbing' : 'cursor-grab'
+          }`}
           style={{ perspective: '1000px' }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
         >
           <div
             className="absolute inset-0 flex items-center justify-center"
@@ -314,8 +392,16 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
           <div className="absolute bottom-4 left-4 bg-white/90 p-3 rounded-lg shadow-sm">
             <div className="text-xs text-gray-600">
               • Click nodes for details<br/>
-              • Use controls to navigate<br/>
+              • Drag to rotate manually<br/>
+              • Use filters to focus<br/>
               • Numbers show issue count
+            </div>
+          </div>
+
+          {/* Node count */}
+          <div className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-lg shadow-sm">
+            <div className="text-xs text-gray-600">
+              Showing {positionedNodes.length} nodes
             </div>
           </div>
         </div>

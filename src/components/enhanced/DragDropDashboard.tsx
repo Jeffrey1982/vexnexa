@@ -394,6 +394,37 @@ export function DragDropDashboard({ className }: DragDropDashboardProps) {
   const visibleWidgets = widgets.filter((widget) => widget.visible);
   const hiddenWidgets = widgets.filter((widget) => !widget.visible);
 
+  const saveLayout = () => {
+    // Save current widget configuration to localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('dashboard-widgets', JSON.stringify(widgets));
+    }
+  };
+
+  const loadLayout = () => {
+    // Load widget configuration from localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('dashboard-widgets');
+      if (saved) {
+        try {
+          setWidgets(JSON.parse(saved));
+        } catch (error) {
+          console.error('Failed to load saved layout:', error);
+        }
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    loadLayout();
+  }, []);
+
+  React.useEffect(() => {
+    if (widgets.length > 0) {
+      saveLayout();
+    }
+  }, [widgets]);
+
   return (
     <div className={className}>
       <div className="flex justify-between items-center mb-6">
@@ -409,9 +440,9 @@ export function DragDropDashboard({ className }: DragDropDashboardProps) {
               onCheckedChange={setIsCustomizing}
             />
           </div>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={saveLayout}>
             <Settings className="h-4 w-4 mr-2" />
-            Settings
+            Save Layout
           </Button>
         </div>
       </div>
@@ -439,8 +470,22 @@ export function DragDropDashboard({ className }: DragDropDashboardProps) {
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-xs text-blue-700">
-              Drag widgets to rearrange them. Toggle visibility with the switches above.
+            <div className="mt-4 flex items-center justify-between">
+              <div className="text-xs text-blue-700">
+                💡 Drag widgets to rearrange them. Your layout is saved automatically.
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem('dashboard-widgets');
+                    window.location.reload();
+                  }
+                }}
+              >
+                Reset to Default
+              </Button>
             </div>
           </motion.div>
         )}
