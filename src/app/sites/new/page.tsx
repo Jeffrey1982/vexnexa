@@ -54,8 +54,8 @@ export default function NewSitePage() {
       const result = await response.json();
 
       if (result.ok && result.scanId) {
-        // Redirect to results page with real scan ID
-        router.push(`/scans/results?scanId=${result.scanId}`);
+        // Redirect to scan detail page (same as dashboard)
+        router.push(`/scans/${result.scanId}`);
       } else {
         setError(result.error || 'Scan failed');
       }
