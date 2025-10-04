@@ -10,8 +10,13 @@ const config: Config = {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: ['var(--font-sans)', 'Inter', 'sans-serif'],
-  			display: ['var(--font-display)', 'Plus Jakarta Sans', 'sans-serif']
+  			sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
+  			display: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'sans-serif'],
+  			inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
+  			jakarta: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'sans-serif'],
+  			dmsans: ['var(--font-dmsans)', 'DM Sans', 'sans-serif'],
+  			spacegrotesk: ['var(--font-spacegrotesk)', 'Space Grotesk', 'sans-serif'],
+  			urbanist: ['var(--font-urbanist)', 'Urbanist', 'sans-serif']
   		},
   		colors: {
   			background: 'hsl(var(--background))',
@@ -77,12 +82,31 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			tp: {
+  				bg: 'var(--tp-bg)',
+  				surface: 'var(--tp-surface)',
+  				muted: 'var(--tp-muted)',
+  				border: 'var(--tp-border)',
+  				text: 'var(--tp-text)',
+  				'text-muted': 'var(--tp-text-muted)',
+  				primary: 'var(--tp-primary)',
+  				'primary-hover': 'var(--tp-primary-hover)',
+  				accent: 'var(--tp-accent)'
   			}
+  		},
+  		boxShadow: {
+  			'elev1': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+  			'elev2': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  			'elev3': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+  			'elev4': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			sm: 'calc(var(--radius) - 4px)',
+  			xl: '0.875rem',
+  			'2xl': '1rem'
   		},
   		keyframes: {
   			'accordion-down': {

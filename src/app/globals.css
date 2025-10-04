@@ -73,12 +73,23 @@
     --chart-5: 0 72% 51%;
     
     --radius: 0.75rem;
-    
+
     /* Custom gradient variables for modern look */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 45%) 100%);
     --gradient-subtle: linear-gradient(135deg, hsl(220 10% 99%) 0%, hsl(220 10% 96%) 100%);
     --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+    /* TutusPorta Brand Tokens */
+    --tp-bg: #0B1220;
+    --tp-surface: #FFFFFF;
+    --tp-muted: #F5F7FB;
+    --tp-border: #E5E7EB;
+    --tp-text: #0B1220;
+    --tp-text-muted: #475569;
+    --tp-primary: #2563EB;
+    --tp-primary-hover: #1D4ED8;
+    --tp-accent: #14B8A6;
   }
   
   .dark {
@@ -179,9 +190,11 @@
     @apply text-2xl lg:text-3xl font-semibold;
   }
   
-  /* Enhanced focus styles */
-  :focus-visible {
-    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  /* Enhanced focus styles with AA+ contrast */
+  *:focus-visible {
+    outline: 2px solid var(--tp-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
   
   /* Improved selection */
@@ -214,7 +227,16 @@
 /* Modern component utilities */
 @layer utilities {
   .glass {
-    @apply backdrop-blur-sm bg-background/80 border border-border/50;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .glass {
+    background: rgba(11, 18, 32, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .gradient-primary {

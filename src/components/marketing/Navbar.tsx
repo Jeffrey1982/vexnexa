@@ -112,15 +112,17 @@ export function Navbar({ className }: NavbarProps) {
               <>
                 <Button
                   asChild
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
-                  className="font-medium text-sm hover:bg-primary/5 hover:text-primary transition-all duration-200"
+                  className="font-medium text-sm"
                 >
                   <Link href="/auth/login">Inloggen</Link>
                 </Button>
                 <Button
                   asChild
-                  className="button-hover gradient-primary shadow-elegant font-medium text-sm relative overflow-hidden group"
+                  variant="gradient"
+                  size="sm"
+                  className="font-medium text-sm relative overflow-hidden group"
                   onClick={() => handleCtaClick("navbar_primary")}
                 >
                   <Link href="/auth/register">
@@ -202,7 +204,7 @@ export function Navbar({ className }: NavbarProps) {
                     <>
                       <Button
                         asChild
-                        variant="outline"
+                        variant="secondary"
                         className="w-full justify-start font-medium"
                         onClick={() => setIsOpen(false)}
                       >
@@ -210,7 +212,8 @@ export function Navbar({ className }: NavbarProps) {
                       </Button>
                       <Button
                         asChild
-                        className="w-full justify-start gradient-primary shadow-elegant font-medium"
+                        variant="gradient"
+                        className="w-full justify-start font-medium"
                         onClick={() => {
                           setIsOpen(false);
                           handleCtaClick("mobile_primary");

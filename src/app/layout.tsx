@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { fontSans, fontDisplay } from './fonts'
+import { inter, jakarta } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
@@ -44,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontDisplay.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
       <head>
         {/* Default favicon - will be replaced by white label if configured */}
         <link rel="icon" href="/favicon.ico" />
@@ -74,7 +74,7 @@ export default function RootLayout({
         {/* Preload Service Worker */}
         <link rel="prefetch" href="/sw.js" />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-[var(--tp-muted)]">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
