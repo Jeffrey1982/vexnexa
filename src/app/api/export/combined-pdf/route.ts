@@ -1,3 +1,4 @@
+import React from "react";
 import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -53,10 +54,10 @@ export async function GET(req: Request) {
 
     // Generate PDF
     const pdfStream = await renderToStream(
-      <CombinedPDFReport
-        reportData={reportData}
-        brandName={brandName}
-      />
+      React.createElement(CombinedPDFReport, {
+        reportData,
+        brandName
+      })
     );
 
     const chunks: Uint8Array[] = [];
