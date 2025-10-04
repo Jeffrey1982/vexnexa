@@ -60,7 +60,7 @@ export async function GET(req: Request) {
       }) as any
     );
 
-    const chunks: Uint8Array[] = [];
+    const chunks: any[] = [];
     for await (const chunk of pdfStream) {
       chunks.push(chunk);
     }
