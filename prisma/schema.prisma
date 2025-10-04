@@ -714,3 +714,22 @@ model BlogPost {
   @@index([category])
   @@index([publishedAt])
 }
+
+// Contact form submissions
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String   @db.Text
+
+  // Metadata
+  status    String   @default("new") // new, read, replied, archived
+  replied   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
