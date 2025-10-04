@@ -134,26 +134,49 @@ export async function POST(req: Request) {
     // ----- 4) Uitvoeren scan -----
     let result: any;
     try {
-      console.log("[scan] Start enhanced a11y scan:", fullPageUrl);
+      console.log("[scan] ========================================");
+      console.log("[scan] Starting enhanced accessibility scan");
+      console.log("[scan] URL:", fullPageUrl);
+      console.log("[scan] Environment:", process.env.NODE_ENV);
+      console.log("[scan] ========================================");
+
       result = await runEnhancedAccessibilityScan(fullPageUrl);
-      console.log("[scan] Scan klaar, score:", result?.score);
+
+      console.log("[scan] ========================================");
+      console.log("[scan] Scan completed successfully");
+      console.log("[scan] Score:", result?.score);
+      console.log("[scan] Engine:", result?.engineName);
+      console.log("[scan] Violations count:", result?.violations?.length);
+      console.log("[scan] Is demo?:", result?.__demo);
+      console.log("[scan] Is mock?:", result?.mock);
+      console.log("[scan] ========================================");
     } catch (scanError: any) {
-      console.error("[scan] Fout tijdens scan:", scanError);
+      console.error("[scan] ========================================");
+      console.error("[scan] ❌ SCAN FAILED");
+      console.error("[scan] Error:", scanError?.message);
+      console.error("[scan] Code:", scanError?.code);
+      console.error("[scan] Stack:", scanError?.stack);
+      console.error("[scan] ========================================");
 
       await prisma.scan.update({
         where: { id: runningScan.id },
         data: {
           status: "failed",
-          raw: { error: scanError?.message, stack: scanError?.stack },
+          raw: {
+            error: scanError?.message,
+            code: scanError?.code,
+            stack: scanError?.stack
+          },
         },
       });
 
       return NextResponse.json(
         {
           ok: false,
-          error: `Accessibility scan failed: ${scanError?.message}`,
+          error: `Scan engine error: ${scanError?.message || "Unknown error"}`,
+          code: scanError?.code || "SCAN_FAILED",
           scanId: runningScan.id,
-          details: scanError?.stack,
+          details: process.env.NODE_ENV === "development" ? scanError?.stack : undefined,
         },
         { status: 500 }
       );
@@ -167,23 +190,40 @@ export async function POST(req: Request) {
       !Array.isArray(result?.violations);
 
     if (looksMock) {
-      console.warn("[a11y] Mock/invalid scan blocked", {
-        engineName: result?.engineName,
-        __demo: result?.__demo,
-        mock: result?.mock,
-        hasViolationsArray: Array.isArray(result?.violations),
-      });
+      console.error("[scan] ========================================");
+      console.error("[scan] 🚫 MOCK/DEMO SCAN DETECTED AND BLOCKED");
+      console.error("[scan] This indicates the browser failed to launch");
+      console.error("[scan] Reasons:");
+      console.error("[scan]   - __demo flag:", result?.__demo);
+      console.error("[scan]   - mock flag:", result?.mock);
+      console.error("[scan]   - engineName:", result?.engineName);
+      console.error("[scan]   - hasViolationsArray:", Array.isArray(result?.violations));
+      console.error("[scan] ========================================");
 
       await prisma.scan.update({
         where: { id: runningScan.id },
-        data: { status: "failed", raw: { error: "Mock/demo scan blocked", meta: result ?? null } },
+        data: {
+          status: "failed",
+          raw: {
+            error: "Mock/demo scan blocked - browser unavailable",
+            __demo: result?.__demo,
+            mock: result?.mock,
+            engineName: result?.engineName,
+            hasViolations: Array.isArray(result?.violations)
+          }
+        },
       });
 
       return NextResponse.json(
         {
           ok: false,
-          error: "Accessibility scan unavailable (no browser).",
+          error: "Scanner temporarily unavailable. The accessibility scanning engine could not be initialized. Please try again or contact support.",
           code: "SCANNER_NO_BROWSER",
+          technical: process.env.NODE_ENV === "development" ? {
+            reason: "Mock data detected",
+            engineName: result?.engineName,
+            isDemo: result?.__demo
+          } : undefined
         },
         { status: 503 }
       );

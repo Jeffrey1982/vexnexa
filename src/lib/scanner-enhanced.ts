@@ -183,8 +183,9 @@ export class EnhancedAccessibilityScanner {
   private playwrightAvailable = false;
 
   async initialize(): Promise<void> {
-    console.log("[a11y] env", {
+    console.log("[a11y] Scanner initialization", {
       NODE_ENV: process.env.NODE_ENV,
+      IS_PROD: IS_PROD,
       ALLOW_MOCK_A11Y: process.env.ALLOW_MOCK_A11Y,
       PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH
     });
@@ -192,9 +193,11 @@ export class EnhancedAccessibilityScanner {
     this.playwrightAvailable = await loadPlaywright();
 
     if (!this.playwrightAvailable) {
-      console.warn("[a11y] Playwright not available; will use fallback policy");
+      console.error("[a11y] ERROR: Playwright dependencies not available");
       return;
     }
+
+    console.log("[a11y] Playwright loaded successfully, attempting browser launch...")
 
     try {
       // In production (Vercel), use serverless chromium executable
@@ -212,25 +215,49 @@ export class EnhancedAccessibilityScanner {
 
       // Add executable path for serverless chromium
       if (chromiumExecutable) {
-        launchOptions.executablePath = await chromiumExecutable.executablePath();
-        console.log("[a11y] Using serverless Chromium:", launchOptions.executablePath);
+        try {
+          launchOptions.executablePath = await chromiumExecutable.executablePath();
+          console.log("[a11y] Using serverless Chromium executable:", launchOptions.executablePath);
+        } catch (execError) {
+          console.error("[a11y] ERROR: Failed to get chromium executable path:", execError);
+          throw execError;
+        }
+      } else {
+        console.log("[a11y] Using local Chromium (dev mode)");
       }
 
+      console.log("[a11y] Launch options:", JSON.stringify({
+        headless: launchOptions.headless,
+        hasExecPath: !!launchOptions.executablePath,
+        argsCount: launchOptions.args?.length
+      }));
+
       this.browser = await chromium.launch(launchOptions);
+      console.log("[a11y] Browser instance created");
 
       const context = await this.browser.newContext({
         viewport: { width: 1280, height: 800 },
         ignoreHTTPSErrors: true,
         userAgent: A11Y_USER_AGENT,
       });
+      console.log("[a11y] Browser context created");
 
       this.page = await context.newPage();
-      console.log("[a11y] Browser launched successfully");
+      console.log("[a11y] ✅ Browser launched successfully - ready to scan");
     } catch (error) {
-      console.warn("[a11y] Failed to launch Chromium; fallback policy applies:", (error as Error)?.message);
+      console.error("[a11y] ❌ CRITICAL: Failed to launch browser:", {
+        error: (error as Error)?.message,
+        stack: (error as Error)?.stack,
+        isProd: IS_PROD,
+        hasChromiumExecutable: !!chromiumExecutable
+      });
       this.playwrightAvailable = false;
       this.browser = null;
       this.page = null;
+      // Re-throw in production so we don't silently fail
+      if (IS_PROD) {
+        throw error;
+      }
     }
   }
 
