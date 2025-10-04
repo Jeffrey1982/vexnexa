@@ -39,11 +39,11 @@ export const urbanist = Urbanist({
 // Font pairing presets
 export const fontPresets = {
   // Default: Inter + Plus Jakarta Sans (recommended)
-  jakartaInter: \`\${inter.variable} \${jakarta.variable}\`,
-  
+  jakartaInter: `${inter.variable} ${jakarta.variable}`,
+
   // Alternative pairings
-  dmSansInter: \`\${inter.variable} \${dmSans.variable}\`,
-  spaceGroteskInter: \`\${inter.variable} \${spaceGrotesk.variable}\`,
-  urbanistInter: \`\${inter.variable} \${urbanist.variable}\`,
-  interOnly: \`\${inter.variable}\`,
+  dmSansInter: `${inter.variable} ${dmSans.variable}`,
+  spaceGroteskInter: `${inter.variable} ${spaceGrotesk.variable}`,
+  urbanistInter: `${inter.variable} ${urbanist.variable}`,
+  interOnly: `${inter.variable}`,
 }
