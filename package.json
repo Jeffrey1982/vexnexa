@@ -24,11 +24,12 @@
     "seed": "node prisma/seed.mjs"
   },
   "dependencies": {
-    "@axe-core/playwright": "^4.7.0",
+    "@axe-core/playwright": "^4.10.2",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@mollie/api-client": "^4.3.3",
+    "@playwright/browser-chromium": "^1.55.1",
     "@prisma/client": "^6.15.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",

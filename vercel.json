@@ -1,15 +1,36 @@
 {
+  "framework": "nextjs",
+  "regions": ["fra1"],
+
   "build": {
     "env": {
-      "NEXT_PHASE": "next-build",
-      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
+      "PLAYWRIGHT_BROWSERS_PATH": "0",
+      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "0"
     }
   },
+
+  "env": {
+    "ALLOW_MOCK_A11Y": "false",
+    "A11Y_TIMEOUT_MS": "45000",
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+
   "functions": {
-    "src/app/api/**/*.ts": {
-      "maxDuration": 60
+    "app/api/**/route.ts": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": [
+        "node_modules/@playwright/browser-chromium/**",
+        "node_modules/playwright-core/**"
+      ]
+    },
+    "src/app/api/**/route.ts": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": [
+        "node_modules/@playwright/browser-chromium/**",
+        "node_modules/playwright-core/**"
+      ]
     }
-  },
-  "regions": ["fra1"],
-  "framework": "nextjs"
+  }
 }
