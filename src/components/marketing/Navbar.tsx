@@ -15,7 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Linkedin, Twitter, Github } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
@@ -92,8 +92,41 @@ export function Navbar({ className }: NavbarProps) {
             ))}
           </div>
 
-          {/* Desktop Auth/CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-3">
+          {/* Desktop Right Section: Social + Auth */}
+          <div className="hidden md:flex items-center gap-6">
+            {/* Social Icons */}
+            <div className="flex items-center gap-2">
+              <a
+                href="https://linkedin.com/company/vexnexa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-lg hover:bg-[var(--tp-muted)] text-[var(--tp-text-muted)] hover:text-[var(--tp-primary)] flex items-center justify-center transition-all duration-200"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a
+                href="https://twitter.com/vexnexa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-lg hover:bg-[var(--tp-muted)] text-[var(--tp-text-muted)] hover:text-[var(--tp-primary)] flex items-center justify-center transition-all duration-200"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-4 h-4" />
+              </a>
+              <a
+                href="https://github.com/vexnexa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-lg hover:bg-[var(--tp-muted)] text-[var(--tp-text-muted)] hover:text-[var(--tp-primary)] flex items-center justify-center transition-all duration-200"
+                aria-label="GitHub"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Auth Buttons */}
+            <div className="flex items-center space-x-3">
             {isLoading ? (
               <div className="w-20 h-8 bg-muted rounded animate-pulse"></div>
             ) : user ? (
@@ -132,6 +165,7 @@ export function Navbar({ className }: NavbarProps) {
                 </Button>
               </>
             )}
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -171,7 +205,41 @@ export function Navbar({ className }: NavbarProps) {
                     {item.name}
                   </Link>
                 ))}
-                
+
+                {/* Social Icons - Mobile */}
+                <div className="pt-4 pb-2">
+                  <p className="text-sm font-medium text-muted-foreground mb-3">Volg ons</p>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href="https://linkedin.com/company/vexnexa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://twitter.com/vexnexa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
+                      aria-label="Twitter"
+                    >
+                      <Twitter className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://github.com/vexnexa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
+                      aria-label="GitHub"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                  </div>
+                </div>
+
                 <div className="pt-6 space-y-3">
                   {isLoading ? (
                     <div className="space-y-3">

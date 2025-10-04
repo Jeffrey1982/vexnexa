@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail } from "lucide-react";
+import { Heart, Mail, Linkedin, Twitter, Github, Facebook } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FooterProps {
@@ -112,6 +112,49 @@ export function Footer({ className }: FooterProps) {
                   <Mail className="w-4 h-4" />
                 </Button>
               </form>
+            </div>
+
+            {/* Social Links */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg">Volg ons</h3>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://linkedin.com/company/vexnexa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://twitter.com/vexnexa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://github.com/vexnexa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  aria-label="GitHub"
+                >
+                  <Github className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://facebook.com/vexnexa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-xl bg-[var(--tp-muted)] hover:bg-[var(--tp-primary)] text-[var(--tp-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-5 h-5" />
+                </a>
+              </div>
             </div>
           </div>
 
