@@ -239,8 +239,9 @@ export class EnhancedAccessibilityScanner {
         viewport: { width: 1280, height: 800 },
         ignoreHTTPSErrors: true,
         userAgent: A11Y_USER_AGENT,
+        bypassCSP: true, // Allow axe-core script injection despite CSP headers
       });
-      console.log("[a11y] Browser context created");
+      console.log("[a11y] Browser context created with CSP bypass");
 
       this.page = await context.newPage();
       console.log("[a11y] ✅ Browser launched successfully - ready to scan");
@@ -279,7 +280,10 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    const axeResults = await new AxeBuilder({ page }).analyze();
+    // Use setLegacyMode() for better compatibility with strict CSP
+    const axeResults = await new AxeBuilder({ page })
+      .setLegacyMode(true)
+      .analyze();
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
