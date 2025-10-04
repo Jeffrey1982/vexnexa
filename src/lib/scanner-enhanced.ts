@@ -1,7 +1,8 @@
 import { ScanResult } from "./scanner";
 import { runRobustAccessibilityScan } from "./scanner-headless";
 
-// ===== Production flags =====
+// ===== Env & Production flags =====
+const IS_PROD = process.env.NODE_ENV === "production";
 const ALLOW_MOCK = process.env.ALLOW_MOCK_A11Y === "true";
 const DEFAULT_TIMEOUT_MS = Number(process.env.A11Y_TIMEOUT_MS ?? 45000);
 const A11Y_USER_AGENT =
@@ -15,19 +16,18 @@ let AxeBuilder: any = null;
 async function loadPlaywright(): Promise<boolean> {
   try {
     if (!chromium) {
-      try {
-        // Prefer the lighter serverless browser build
-        const pw = await import("@playwright/browser-chromium");
-        chromium = pw.chromium;
-      } catch {
-        // Fallback to full playwright
-        const pw = await import("playwright");
-        chromium = pw.chromium;
-      }
+      // Probeer light build; val terug op volledige playwright
+      const mod1 = await import("@playwright/browser-chromium").catch(() => null);
+      const mod2 = mod1 ?? (await import("playwright"));
+      const anyMod = mod2 as any;
+      const chr = anyMod.chromium ?? anyMod.default?.chromium;
+      if (!chr) throw new Error("chromium export not found on playwright module");
+      chromium = chr;
     }
     if (!AxeBuilder) {
-      const axePw = await import("@axe-core/playwright");
-      AxeBuilder = axePw.AxeBuilder;
+      const axeMod: any = await import("@axe-core/playwright");
+      AxeBuilder = axeMod.AxeBuilder ?? axeMod.default?.AxeBuilder;
+      if (!AxeBuilder) throw new Error("AxeBuilder export not found on @axe-core/playwright");
     }
     return true;
   } catch (err) {
@@ -178,6 +178,12 @@ export class EnhancedAccessibilityScanner {
   private playwrightAvailable = false;
 
   async initialize(): Promise<void> {
+    console.log("[a11y] env", {
+      NODE_ENV: process.env.NODE_ENV,
+      ALLOW_MOCK_A11Y: process.env.ALLOW_MOCK_A11Y,
+      PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH
+    });
+
     this.playwrightAvailable = await loadPlaywright();
 
     if (!this.playwrightAvailable) {
@@ -215,6 +221,11 @@ export class EnhancedAccessibilityScanner {
 
   async scanUrl(url: string): Promise<EnhancedScanResult> {
     await this.initialize();
+    console.log("[a11y] mode", {
+      playwrightAvailable: this.playwrightAvailable,
+      hasPage: !!this.page
+    });
+
     if (this.playwrightAvailable && this.page) {
       return this.scanUrlWithPlaywright(url);
     }
@@ -274,9 +285,12 @@ export class EnhancedAccessibilityScanner {
     const counts = this.calculateImpactCounts(violations);
     const title = await page.title().catch(() => undefined);
 
+    const engineName = (axeResults as any)?.testEngine?.name ?? "axe-core";
+    const axeVersion = (axeResults as any)?.testEngine?.version ?? null;
+
     console.log("[a11y] axe meta", {
-      engine: (axeResults as any)?.testEngine?.name,
-      version: (axeResults as any)?.testEngine?.version,
+      engine: engineName,
+      version: axeVersion,
       violations: violations.length,
       passes: passes.length ?? 0,
       score: enhancedScore,
@@ -295,8 +309,8 @@ export class EnhancedAccessibilityScanner {
         nodes: v.nodes,
         help: v.help,
         description: v.description,
-        helpUrl: v.helpUrl, // keep original url if available
-        tags: v.tags,       // pass-through tags
+        helpUrl: v.helpUrl,
+        tags: v.tags,
       })),
       title,
       keyboardNavigation,
@@ -307,27 +321,34 @@ export class EnhancedAccessibilityScanner {
       advancedColorVision,
       performanceImpact,
       languageSupport,
-      engineName: (axeResults as any)?.testEngine?.name ?? "axe-core",
-      axeVersion: (axeResults as any)?.testEngine?.version ?? null,
+      engineName,
+      axeVersion,
+      __demo: false,
+      mock: false
     };
   }
 
   private async scanUrlWithFallback(_url: string): Promise<EnhancedScanResult> {
-    // Production-safe fallback: either THROW or return clearly marked mock *only* if allowed.
-    if (!ALLOW_MOCK) {
-      const err: any = new Error(
-        "Playwright/Chromium unavailable; mock accessibility results are disabled in production."
-      );
+    // In productie: NOOIT mocken → altijd throwen
+    if (IS_PROD) {
+      const err: any = new Error("No browser available in production; refusing to return mock results.");
       err.code = "SCANNER_NO_BROWSER";
       throw err;
     }
 
-    // If you explicitly allow mocks (e.g., local/dev or demo mode), keep it deterministic:
+    // In dev: mock alléén als expliciet toegestaan
+    if (!ALLOW_MOCK) {
+      const err: any = new Error("Playwright/Chromium unavailable (dev) and mocks disabled.");
+      err.code = "SCANNER_NO_BROWSER";
+      throw err;
+    }
+
+    // Dev/demo mock – duidelijk gemarkeerd
     const basicResult = await runRobustAccessibilityScan(_url);
 
     const mock: EnhancedScanResult = {
       ...basicResult,
-      score: basicResult.score, // do not inflate; keep consistent
+      score: basicResult.score,
       keyboardNavigation: { score: 85, issues: [], focusableElements: 24, tabOrder: true, skipLinks: false, focusVisible: true },
       screenReaderCompatibility: { score: 82, issues: [], ariaLabels: 12, landmarks: 3, headingStructure: true, altTexts: 9 },
       mobileAccessibility: { score: 88, issues: [], touchTargets: 22, viewport: true, orientation: true, gestureAlternatives: true },
@@ -339,10 +360,10 @@ export class EnhancedAccessibilityScanner {
       engineName: "fallback-mock",
       axeVersion: null,
       __demo: true,
-      mock: true,
+      mock: true
     };
 
-    console.warn("[a11y] Returning MOCK a11y payload (ALLOW_MOCK_A11Y=true).");
+    console.warn("[a11y] Returning MOCK a11y payload (dev only; ALLOW_MOCK_A11Y=true).");
     return mock;
   }
 
@@ -540,7 +561,7 @@ export class EnhancedAccessibilityScanner {
   }
 
   private async testMotionAndAnimation(_page: any): Promise<MotionAnimationResult> {
-    // Without video playback inspection we keep this deterministic & conservative
+    // Conservatief/deterministisch zonder video-inspectie
     return {
       score: 90,
       issues: [],

@@ -1,123 +1,165 @@
+// src/app/api/scan/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";
 import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
-import { getPerformanceMetrics, analyzeSEOMetrics, calculateComplianceRisk } from "@/lib/performance-analytics";
+import {
+  getPerformanceMetrics,
+  analyzeSEOMetrics,
+  calculateComplianceRisk,
+} from "@/lib/performance-analytics";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
+// (optioneel, helpt cold starts wennen in EU)
+// export const preferredRegion = ["fra1"];
+
+// === Service bypass headers ===
+const SERVICE_TOKEN_HEADER = "x-service-token";
+const SERVICE_USER_HEADER = "x-scan-user-id";
 
 export async function POST(req: Request) {
   try {
-    // Check authentication and limits first
-    const user = await requireAuth();
-    
-    await assertWithinLimits({
-      userId: user.id,
-      action: "scan",
-      pages: 1
-    });
+    // ----- 0) Auth: user of service-token -----
+    const incomingSvcToken = req.headers.get(SERVICE_TOKEN_HEADER);
+    const svcToken = process.env.SCAN_SERVICE_TOKEN;
+    const isServiceCall = Boolean(
+      incomingSvcToken && svcToken && incomingSvcToken === svcToken
+    );
 
-    const { url } = await req.json();
-    
-    if (!url) {
-      return NextResponse.json({ ok: false, error: "URL is required" }, { status: 400 });
+    // Bepaal "user" context
+    let user: { id: string };
+
+    if (isServiceCall) {
+      // In automation-mode mag je (optioneel) de user-id meegeven in header,
+      // of zet SCAN_SERVICE_USER_ID in env.
+      const forcedUserId =
+        req.headers.get(SERVICE_USER_HEADER) || process.env.SCAN_SERVICE_USER_ID || "";
+
+      if (!forcedUserId) {
+        return NextResponse.json(
+          {
+            ok: false,
+            error:
+              "Service scan vereist een user-id. Stuur header 'x-scan-user-id' of zet SCAN_SERVICE_USER_ID.",
+          },
+          { status: 400 }
+        );
+      }
+
+      // Veiligheid: controleer dat de user bestaat
+      const userExists = await prisma.user.findUnique({
+        where: { id: forcedUserId },
+        select: { id: true },
+      });
+      if (!userExists) {
+        return NextResponse.json(
+          { ok: false, error: `Onbekende user-id: ${forcedUserId}` },
+          { status: 400 }
+        );
+      }
+
+      user = { id: forcedUserId };
+    } else {
+      // Normale app: ingelogde gebruiker via NextAuth
+      user = await requireAuth();
+
+      // Limits alleen toepassen op normale user-scans
+      await assertWithinLimits({
+        userId: user.id,
+        action: "scan",
+        pages: 1,
+      });
     }
 
-    // Bepaal origin van de ingevoerde URL als siteUrl
+    // ----- 1) Body & URL validatie -----
+    const { url } = await req.json();
+    if (!url) {
+      return NextResponse.json(
+        { ok: false, error: "URL is required" },
+        { status: 400 }
+      );
+    }
+
     let siteUrl: string;
     let fullPageUrl: string;
-    
     try {
       const urlObj = new URL(url);
       siteUrl = urlObj.origin;
       fullPageUrl = url;
     } catch {
-      return NextResponse.json({ ok: false, error: "Invalid URL" }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, error: "Invalid URL" },
+        { status: 400 }
+      );
     }
 
-    // Find-or-create Site for authenticated user
+    // ----- 2) Site/Page op user vastleggen -----
     let site = await prisma.site.findUnique({
-      where: { 
-        userId_url: {
-          userId: user.id,
-          url: siteUrl
-        }
-      }
+      where: {
+        userId_url: { userId: user.id, url: siteUrl },
+      },
     });
 
     if (!site) {
       site = await prisma.site.create({
-        data: {
-          userId: user.id,
-          url: siteUrl
-        }
+        data: { userId: user.id, url: siteUrl },
       });
     }
 
-    // Find-or-create Page op [siteId, volledigePaginaURL]
     let page = await prisma.page.findUnique({
-      where: {
-        siteId_url: {
-          siteId: site.id,
-          url: fullPageUrl
-        }
-      }
+      where: { siteId_url: { siteId: site.id, url: fullPageUrl } },
     });
 
     if (!page) {
       page = await prisma.page.create({
-        data: {
-          siteId: site.id,
-          url: fullPageUrl
-        }
+        data: { siteId: site.id, url: fullPageUrl },
       });
     }
 
-    // Markeer scan als running
+    // ----- 3) Scan record 'running' -----
     const runningScan = await prisma.scan.create({
       data: {
         siteId: site.id,
         pageId: page.id,
         status: "running",
         score: 0,
-        issues: 0
-      }
+        issues: 0,
+      },
     });
 
-    // Run accessibility scan
+    // ----- 4) Uitvoeren scan -----
     let result: any;
     try {
-      console.log("Starting enhanced accessibility scan for:", fullPageUrl);
+      console.log("[scan] Start enhanced a11y scan:", fullPageUrl);
       result = await runEnhancedAccessibilityScan(fullPageUrl);
-      console.log("Enhanced scan completed successfully with score:", result?.score);
+      console.log("[scan] Scan klaar, score:", result?.score);
     } catch (scanError: any) {
-      console.error("Accessibility scan failed:", scanError);
+      console.error("[scan] Fout tijdens scan:", scanError);
 
-      // Update scan with error status
       await prisma.scan.update({
         where: { id: runningScan.id },
         data: {
           status: "failed",
-          raw: { error: scanError.message, stack: scanError.stack }
-        }
+          raw: { error: scanError?.message, stack: scanError?.stack },
+        },
       });
 
       return NextResponse.json(
         {
           ok: false,
-          error: `Accessibility scan failed: ${scanError.message}`,
+          error: `Accessibility scan failed: ${scanError?.message}`,
           scanId: runningScan.id,
-          details: scanError.stack
+          details: scanError?.stack,
         },
         { status: 500 }
       );
     }
 
-    // Block mock/demo or invalid results (extra safeguard)
+    // ----- 5) Mock/demo resultaten blokkeren -----
     const looksMock =
       result?.__demo === true ||
       result?.mock === true ||
@@ -129,75 +171,71 @@ export async function POST(req: Request) {
         engineName: result?.engineName,
         __demo: result?.__demo,
         mock: result?.mock,
-        hasViolationsArray: Array.isArray(result?.violations)
+        hasViolationsArray: Array.isArray(result?.violations),
       });
 
       await prisma.scan.update({
         where: { id: runningScan.id },
-        data: {
-          status: "failed",
-          raw: { error: "Mock/demo scan blocked", meta: result ?? null }
-        }
+        data: { status: "failed", raw: { error: "Mock/demo scan blocked", meta: result ?? null } },
       });
 
       return NextResponse.json(
-        { ok: false, error: "Accessibility scan unavailable (no browser).", code: "SCANNER_NO_BROWSER" },
+        {
+          ok: false,
+          error: "Accessibility scan unavailable (no browser).",
+          code: "SCANNER_NO_BROWSER",
+        },
         { status: 503 }
       );
     }
 
-    // Extract impact counts from enhanced scan violations
+    // ----- 6) Analytics/finaliseren -----
     const violations = result.violations || [];
     const impactCounts = {
       critical: result.impactCritical || 0,
       serious: result.impactSerious || 0,
       moderate: result.impactModerate || 0,
-      minor: result.impactMinor || 0
+      minor: result.impactMinor || 0,
     };
 
-    // Convert enhanced violations to expected format for WCAG compliance calculation
     const formattedViolations = violations.map((v: any) => ({
       ...v,
       helpUrl: v.helpUrl || `https://dequeuniversity.com/rules/axe/4.10/${v.id}`,
-      tags: v.tags || ["wcag2a", "wcag21aa"]
+      tags: v.tags || ["wcag2a", "wcag21aa"],
     }));
 
-    // Calculate WCAG compliance
     const wcagAACompliance = calculateWCAGCompliance(formattedViolations, "AA");
     const wcagAAACompliance = calculateWCAGCompliance(formattedViolations, "AAA");
 
-    // Create violation counts by rule for trending
     const violationsByRule: Record<string, number> = {};
     violations.forEach((violation: any) => {
       violationsByRule[violation.id] = (violationsByRule[violation.id] || 0) + 1;
     });
 
-    // Find previous scan for comparison
     const previousScan = await prisma.scan.findFirst({
       where: {
         siteId: site.id,
         pageId: page.id,
         status: "done",
-        createdAt: { lt: new Date() }
+        createdAt: { lt: new Date() },
       },
-      orderBy: { createdAt: "desc" }
+      orderBy: { createdAt: "desc" },
     });
 
-    // Calculate changes from previous scan
-    const issuesFixed = previousScan ? Math.max(0, (previousScan.issues || 0) - violations.length) : 0;
-    const newIssues = previousScan ? Math.max(0, violations.length - (previousScan.issues || 0)) : violations.length;
-    const scoreImprovement = previousScan ? Math.round(result.score) - (previousScan.score || 0) : null;
+    const issuesFixed = previousScan
+      ? Math.max(0, (previousScan.issues || 0) - violations.length)
+      : 0;
+    const newIssues = previousScan
+      ? Math.max(0, violations.length - (previousScan.issues || 0))
+      : violations.length;
+    const scoreImprovement = previousScan
+      ? Math.round(result.score) - (previousScan.score || 0)
+      : null;
 
-    // Get performance metrics
     const performanceMetrics = await getPerformanceMetrics(fullPageUrl);
-
-    // Analyze SEO correlation
     const seoMetrics = analyzeSEOMetrics(violations);
-
-    // Calculate compliance risk
     const complianceRisk = calculateComplianceRisk(Math.round(result.score), violations);
 
-    // Update scan with results
     const completedScan = await prisma.scan.update({
       where: { id: runningScan.id },
       data: {
@@ -209,16 +247,14 @@ export async function POST(req: Request) {
         impactModerate: impactCounts.moderate,
         impactMinor: impactCounts.minor,
 
-        // Enhanced analytics fields
-        wcagAACompliance: wcagAACompliance,
-        wcagAAACompliance: wcagAAACompliance,
-        violationsByRule: violationsByRule,
-        issuesFixed: issuesFixed,
-        newIssues: newIssues,
-        scoreImprovement: scoreImprovement,
+        wcagAACompliance,
+        wcagAAACompliance,
+        violationsByRule,
+        issuesFixed,
+        newIssues,
+        scoreImprovement,
         previousScanId: previousScan?.id,
 
-        // Performance metrics
         performanceScore: performanceMetrics.performanceScore,
         firstContentfulPaint: performanceMetrics.firstContentfulPaint,
         largestContentfulPaint: performanceMetrics.largestContentfulPaint,
@@ -226,30 +262,30 @@ export async function POST(req: Request) {
         firstInputDelay: performanceMetrics.firstInputDelay,
         totalBlockingTime: performanceMetrics.totalBlockingTime,
 
-        // SEO metrics
         seoScore: seoMetrics.seoScore,
         metaDescription: seoMetrics.metaDescription,
         headingStructure: seoMetrics.headingStructure,
         altTextCoverage: seoMetrics.altTextCoverage,
         linkAccessibility: seoMetrics.linkAccessibility,
 
-        // Compliance risk assessment
         adaRiskLevel: complianceRisk.adaRiskLevel,
         wcag21Compliance: complianceRisk.wcag21Compliance,
         wcag22Compliance: complianceRisk.wcag22Compliance,
         complianceGaps: complianceRisk.complianceGaps,
         legalRiskScore: complianceRisk.legalRiskScore,
 
-        raw: JSON.parse(JSON.stringify(result)) // Save the complete enhanced scan results as JSON
+        raw: JSON.parse(JSON.stringify(result)),
       },
       include: {
         site: true,
-        page: true
-      }
+        page: true,
+      },
     });
 
-    // Track usage for successful scan
-    await addPageUsage(user.id, 1);
+    // Alleen normale user-scans tellen we mee in billing/usage
+    if (!isServiceCall) {
+      await addPageUsage(user.id, 1);
+    }
 
     return NextResponse.json({
       ok: true,
@@ -259,54 +295,41 @@ export async function POST(req: Request) {
       issues: completedScan.issues,
       site: completedScan.site?.url,
       page: completedScan.page?.url,
-      createdAt: completedScan.createdAt
+      createdAt: completedScan.createdAt,
     });
-
   } catch (e: any) {
     console.error("Scan failed:", e);
-    
-    // Handle billing errors
+
     if (e instanceof Error) {
       if ((e as any).code === "UPGRADE_REQUIRED") {
         return NextResponse.json(
-          { 
-            ok: false,
-            error: e.message,
-            code: "UPGRADE_REQUIRED",
-            feature: (e as any).feature
-          },
+          { ok: false, error: e.message, code: "UPGRADE_REQUIRED", feature: (e as any).feature },
           { status: 402 }
         );
       }
-      
       if ((e as any).code === "LIMIT_REACHED") {
         return NextResponse.json(
-          { 
+          {
             ok: false,
             error: e.message,
             code: "LIMIT_REACHED",
             limit: (e as any).limit,
-            current: (e as any).current
+            current: (e as any).current,
           },
           { status: 429 }
         );
       }
-      
       if ((e as any).code === "TRIAL_EXPIRED") {
         return NextResponse.json(
-          { 
-            ok: false,
-            error: e.message,
-            code: "TRIAL_EXPIRED"
-          },
+          { ok: false, error: e.message, code: "TRIAL_EXPIRED" },
           { status: 402 }
         );
       }
     }
-    
-    return NextResponse.json({ 
-      ok: false, 
-      error: e?.message ?? "Scan failed" 
-    }, { status: 500 });
+
+    return NextResponse.json(
+      { ok: false, error: e?.message ?? "Scan failed" },
+      { status: 500 }
+    );
   }
 }
