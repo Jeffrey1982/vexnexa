@@ -16,21 +16,15 @@
   },
 
   "functions": {
-    "app/api/**/route.ts": {
+    "src/app/api/**/route.*": {
       "maxDuration": 60,
       "memory": 1024,
-      "includeFiles": [
-        "node_modules/@playwright/browser-chromium/**",
-        "node_modules/playwright-core/**"
-      ]
+      "includeFiles": "node_modules/@playwright*/**"
     },
-    "src/app/api/**/route.ts": {
+    "app/api/**/route.*": {
       "maxDuration": 60,
       "memory": 1024,
-      "includeFiles": [
-        "node_modules/@playwright/browser-chromium/**",
-        "node_modules/playwright-core/**"
-      ]
+      "includeFiles": "node_modules/@playwright*/**"
     }
   }
 }
