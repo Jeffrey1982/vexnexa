@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createContactMessage } from '@/lib/supabaseServer'
+import { prisma } from '@/lib/prisma'
 import { sendContactNotification } from '@/lib/email'
 import { contactFormLimiter } from '@/lib/rate-limit'
 import { z } from 'zod'
@@ -58,8 +58,16 @@ export async function POST(request: NextRequest) {
       // Still process but flag for review
     }
 
-    // Create contact message
-    const contactMessage = await createContactMessage(name, email, message)
+    // Create contact message using Prisma
+    const contactMessage = await prisma.contactMessage.create({
+      data: {
+        name,
+        email,
+        message,
+        status: 'new',
+        replied: false
+      }
+    })
 
     // Send notification and confirmation emails
     try {
@@ -80,9 +88,19 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Contact message creation error:', error)
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      name: error instanceof Error ? error.name : undefined
+    })
 
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again or email us directly.' },
+      {
+        error: 'Failed to send message. Please try again or email us directly.',
+        debug: process.env.NODE_ENV === 'development' ? {
+          message: error instanceof Error ? error.message : String(error)
+        } : undefined
+      },
       { status: 500 }
     )
   }
