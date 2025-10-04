@@ -10,7 +10,7 @@ export default async function AuditsPage() {
   const user = await requireAuth();
 
   // Fetch user's sites
-  const sites = await prisma.site.findMany({
+  const sitesData = await prisma.site.findMany({
     where: { userId: user.id },
     select: {
       id: true,
@@ -18,6 +18,12 @@ export default async function AuditsPage() {
     },
     orderBy: { createdAt: "desc" }
   });
+
+  // Map sites to include name field (null since Site model doesn't have it)
+  const sites = sitesData.map(site => ({
+    ...site,
+    name: null
+  }));
 
   // Fetch available templates
   const templates = await prisma.auditTemplate.findMany({
