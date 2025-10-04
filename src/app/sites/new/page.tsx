@@ -42,8 +42,8 @@ export default function NewSitePage() {
     setError("");
 
     try {
-      // Test with simple scan first
-      const response = await fetch('/api/simple-scan', {
+      // Run real accessibility scan
+      const response = await fetch('/api/scan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,14 +53,9 @@ export default function NewSitePage() {
 
       const result = await response.json();
 
-      if (result.ok) {
-        // Redirect to results page with scan data
-        const scanParams = new URLSearchParams({
-          mock: 'true',
-          url: validUrl,
-          scanId: result.scanId || 'test-' + Date.now()
-        });
-        router.push(`/scans/results?${scanParams.toString()}`);
+      if (result.ok && result.scanId) {
+        // Redirect to results page with real scan ID
+        router.push(`/scans/results?scanId=${result.scanId}`);
       } else {
         setError(result.error || 'Scan failed');
       }
@@ -130,7 +125,7 @@ export default function NewSitePage() {
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Running Test Scan...
+                      Running Accessibility Scan...
                     </>
                   ) : (
                     <>
