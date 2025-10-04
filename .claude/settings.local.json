@@ -10,7 +10,8 @@
       "Bash(npm run build:*)",
       "Bash(npx prisma migrate dev:*)",
       "Bash(npx prisma:*)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(node -e \"const fs = require(''fs''); const file = ''src/lib/auth.ts''; let content = fs.readFileSync(file, ''utf8''); content = content.replace(''productUpdates: user.user_metadata?.product_updates !== false,'', ''productUpdates: user.user_metadata?.product_updates !== false,\\n    isAdmin: user.user_metadata?.is_admin === true,''); fs.writeFileSync(file, content);\")"
     ],
     "deny": [],
     "ask": []

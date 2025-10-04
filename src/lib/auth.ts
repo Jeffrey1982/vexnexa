@@ -33,6 +33,7 @@ export async function getCurrentUser() {
     profileCompleted: !!(user.user_metadata?.first_name && user.user_metadata?.last_name),
     marketingEmails: user.user_metadata?.marketing_emails !== false,
     productUpdates: user.user_metadata?.product_updates !== false,
+    isAdmin: user.user_metadata?.is_admin === true,
     createdAt: new Date(user.created_at),
     updatedAt: new Date(),
     supabaseUser: user
