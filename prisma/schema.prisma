@@ -59,6 +59,20 @@ model User {
   issueComments      IssueComment[]
   issueActivities    IssueActivity[]
 
+  // Manual audit tracking
+  createdAudits      ManualAudit[] @relation("AuditCreator")
+  assignedAudits     ManualAudit[] @relation("AuditAssignee")
+  reviewedAudits     ManualAudit[] @relation("AuditReviewer")
+  auditTemplates     AuditTemplate[]
+  testedAuditItems   AuditItem[]
+  auditAttachments   AuditAttachment[]
+
+  // Blog
+  blogPosts          BlogPost[]
+
+  // Admin role
+  isAdmin            Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -78,6 +92,9 @@ model Site {
 
   // Team collaboration
   teams       Team[]     @relation("TeamSites")
+
+  // Manual audits
+  manualAudits ManualAudit[]
 
   createdAt   DateTime   @default(now())
 
@@ -156,6 +173,9 @@ model Scan {
 
   // Legal compliance risk assessment
   adaRiskLevel       String? // LOW, MEDIUM, HIGH, CRITICAL
+
+  // Manual audits linked to this scan
+  manualAudits       ManualAudit[]
   wcag21Compliance   Float? // WCAG 2.1 compliance percentage
   wcag22Compliance   Float? // WCAG 2.2 compliance percentage
   complianceGaps     Json? // Specific compliance issues
@@ -470,4 +490,227 @@ model IssueActivity {
 
   @@index([issueId])
   @@index([userId])
+}
+
+// ============================================
+// MANUAL ACCESSIBILITY AUDIT SYSTEM
+// ============================================
+
+model ManualAudit {
+  id          String   @id @default(cuid())
+  siteId      String
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  // Optional link to automated scan for comparison
+  scanId      String?
+  scan        Scan?    @relation(fields: [scanId], references: [id], onDelete: SetNull)
+
+  // Audit metadata
+  name        String   // e.g., "WCAG 2.1 AA Audit - Homepage"
+  description String?
+  templateId  String?  // Link to audit template used
+  template    AuditTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+
+  // Audit status
+  status      String   @default("draft") // draft, in_progress, under_review, completed
+
+  // Assignment
+  createdById String
+  createdBy   User     @relation("AuditCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  assignedToId String?
+  assignedTo  User?    @relation("AuditAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  reviewedById String?
+  reviewedBy  User?    @relation("AuditReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  // Progress tracking
+  totalCriteria     Int @default(0)
+  completedCriteria Int @default(0)
+  passedCriteria    Int @default(0)
+  failedCriteria    Int @default(0)
+
+  // Overall results
+  overallScore      Float? // 0-100 percentage
+  wcagLevel         String? // "A", "AA", "AAA"
+  compliant         Boolean @default(false)
+
+  // Timing
+  dueDate     DateTime?
+  startedAt   DateTime?
+  completedAt DateTime?
+  reviewedAt  DateTime?
+
+  // Audit items (checklist)
+  items       AuditItem[]
+  attachments AuditAttachment[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([siteId])
+  @@index([scanId])
+  @@index([createdById])
+  @@index([assignedToId])
+  @@index([status])
+}
+
+model AuditTemplate {
+  id          String   @id @default(cuid())
+  name        String   // e.g., "WCAG 2.1 AA Checklist"
+  description String?
+  category    String   // "wcag", "section508", "custom", "industry"
+  wcagLevel   String?  // "A", "AA", "AAA"
+
+  // Template metadata
+  isPublic    Boolean  @default(true)
+  isDefault   Boolean  @default(false)
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  // Template criteria
+  criteria    AuditCriterion[]
+  audits      ManualAudit[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([createdById])
+}
+
+model AuditCriterion {
+  id              String   @id @default(cuid())
+  templateId      String
+  template        AuditTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  // Criterion details
+  category        String   // "keyboard", "screen_reader", "color", "forms", etc.
+  subcategory     String?  // More specific grouping
+  title           String   // e.g., "All interactive elements are keyboard accessible"
+  description     String?
+  howToTest       String?  // Testing instructions
+
+  // WCAG mapping
+  wcagCriterion   String?  // e.g., "1.1.1", "2.1.1"
+  wcagLevel       String?  // "A", "AA", "AAA"
+  wcagUrl         String?  // Link to WCAG documentation
+
+  // Importance
+  priority        String   @default("medium") // critical, high, medium, low
+  required        Boolean  @default(true)
+
+  // Display order
+  order           Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([templateId])
+  @@index([category])
+}
+
+model AuditItem {
+  id              String   @id @default(cuid())
+  auditId         String
+  audit           ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  // Link to template criterion or custom
+  criterionId     String?  // If based on template
+
+  // Item details
+  category        String
+  subcategory     String?
+  title           String
+  description     String?
+  howToTest       String?
+
+  // WCAG mapping
+  wcagCriterion   String?
+  wcagLevel       String?
+  wcagUrl         String?
+
+  // Test results
+  status          String   @default("pending") // pending, pass, fail, not_applicable, needs_review
+  result          String?  // Detailed result notes
+
+  // Evidence
+  notes           String?
+  screenshotUrls  String[] // Array of uploaded screenshots
+  elementSelector String?  // CSS selector or XPath
+  pageUrl         String?  // Specific page tested
+
+  // Testing details
+  testedById      String?
+  testedBy        User?    @relation(fields: [testedById], references: [id], onDelete: SetNull)
+  testedAt        DateTime?
+
+  // Remediation
+  remediationNotes String?
+  priority         String   @default("medium")
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([auditId])
+  @@index([testedById])
+  @@index([status])
+  @@index([category])
+}
+
+model AuditAttachment {
+  id          String   @id @default(cuid())
+  auditId     String
+  audit       ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  fileName    String
+  fileUrl     String
+  fileType    String   // "screenshot", "document", "video", "other"
+  fileSize    Int?     // in bytes
+  description String?
+
+  uploadedById String
+  uploadedBy   User    @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+
+  @@index([auditId])
+  @@index([uploadedById])
+}
+
+// Blog system
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   @db.Text
+  excerpt     String?  @db.Text
+  coverImage  String?
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String[]
+
+  // Organization
+  category    String
+  tags        String[]
+
+  // Publishing
+  status      String   @default("draft") // draft, published, archived
+  publishedAt DateTime?
+
+  // Author
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Analytics
+  views       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([slug])
+  @@index([status])
+  @@index([category])
+  @@index([publishedAt])
 }
