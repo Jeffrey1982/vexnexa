@@ -53,10 +53,10 @@ export async function GET(req: Request) {
 
     // Generate PDF
     const pdfStream = await renderToStream(
-      CombinedPDFReport({
-        reportData,
-        brandName
-      })
+      <CombinedPDFReport
+        reportData={reportData}
+        brandName={brandName}
+      />
     );
 
     const chunks: Uint8Array[] = [];
