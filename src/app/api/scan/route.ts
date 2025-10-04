@@ -89,13 +89,13 @@ export async function POST(req: Request) {
     });
 
     // Run accessibility scan
-    let result;
+    let result: any;
     try {
-      console.log('Starting enhanced accessibility scan for:', fullPageUrl);
+      console.log("Starting enhanced accessibility scan for:", fullPageUrl);
       result = await runEnhancedAccessibilityScan(fullPageUrl);
-      console.log('Enhanced scan completed successfully with score:', result.score);
+      console.log("Enhanced scan completed successfully with score:", result?.score);
     } catch (scanError: any) {
-      console.error('Accessibility scan failed:', scanError);
+      console.error("Accessibility scan failed:", scanError);
 
       // Update scan with error status
       await prisma.scan.update({
@@ -106,12 +106,44 @@ export async function POST(req: Request) {
         }
       });
 
-      return NextResponse.json({
-        ok: false,
-        error: `Accessibility scan failed: ${scanError.message}`,
-        scanId: runningScan.id,
-        details: scanError.stack
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          ok: false,
+          error: `Accessibility scan failed: ${scanError.message}`,
+          scanId: runningScan.id,
+          details: scanError.stack
+        },
+        { status: 500 }
+      );
+    }
+
+    // Block mock/demo or invalid results (extra safeguard)
+    const looksMock =
+      result?.__demo === true ||
+      result?.mock === true ||
+      result?.engineName === "fallback-mock" ||
+      !Array.isArray(result?.violations);
+
+    if (looksMock) {
+      console.warn("[a11y] Mock/invalid scan blocked", {
+        engineName: result?.engineName,
+        __demo: result?.__demo,
+        mock: result?.mock,
+        hasViolationsArray: Array.isArray(result?.violations)
+      });
+
+      await prisma.scan.update({
+        where: { id: runningScan.id },
+        data: {
+          status: "failed",
+          raw: { error: "Mock/demo scan blocked", meta: result ?? null }
+        }
+      });
+
+      return NextResponse.json(
+        { ok: false, error: "Accessibility scan unavailable (no browser).", code: "SCANNER_NO_BROWSER" },
+        { status: 503 }
+      );
     }
 
     // Extract impact counts from enhanced scan violations
@@ -120,14 +152,14 @@ export async function POST(req: Request) {
       critical: result.impactCritical || 0,
       serious: result.impactSerious || 0,
       moderate: result.impactModerate || 0,
-      minor: result.impactMinor || 0,
+      minor: result.impactMinor || 0
     };
 
     // Convert enhanced violations to expected format for WCAG compliance calculation
     const formattedViolations = violations.map((v: any) => ({
       ...v,
       helpUrl: v.helpUrl || `https://dequeuniversity.com/rules/axe/4.10/${v.id}`,
-      tags: v.tags || ['wcag2a', 'wcag21aa']
+      tags: v.tags || ["wcag2a", "wcag21aa"]
     }));
 
     // Calculate WCAG compliance
@@ -227,7 +259,7 @@ export async function POST(req: Request) {
       issues: completedScan.issues,
       site: completedScan.site?.url,
       page: completedScan.page?.url,
-      createdAt: completedScan.createdAt,
+      createdAt: completedScan.createdAt
     });
 
   } catch (e: any) {
