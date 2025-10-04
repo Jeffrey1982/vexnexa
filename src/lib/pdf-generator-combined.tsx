@@ -326,7 +326,7 @@ interface CombinedPDFReportProps {
     };
     scan: {
       score: number | null;
-      violations: any[];
+      violations?: any[];
       createdAt: Date;
     } | null;
     audit: {

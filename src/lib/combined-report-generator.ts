@@ -9,15 +9,12 @@ interface CombinedReportData {
   scan: {
     id: string;
     score: number | null;
-    issues: number;
+    issues: number | null;
     impactCritical: number;
     impactSerious: number;
     impactModerate: number;
     impactMinor: number;
-    wcagAACompliance: number | null;
-    wcagAAACompliance: number | null;
     createdAt: Date;
-    violations: any[];
   } | null;
   audit: {
     id: string;
@@ -71,18 +68,22 @@ export async function generateCombinedReport(
   auditId?: string
 ): Promise<CombinedReportData | null> {
   // Fetch site
-  const site = await prisma.site.findUnique({
+  const siteData = await prisma.site.findUnique({
     where: { id: siteId },
     select: {
       id: true,
       url: true,
-      name: true
     }
   });
 
-  if (!site) {
+  if (!siteData) {
     return null;
   }
+
+  const site = {
+    ...siteData,
+    name: null
+  };
 
   // Fetch scan (either specific or most recent)
   let scan = null;
@@ -100,9 +101,7 @@ export async function generateCombinedReport(
         impactSerious: true,
         impactModerate: true,
         impactMinor: true,
-        wcagAACompliance: true,
-        wcagAAACompliance: true,
-        violations: true,
+        
         createdAt: true
       }
     });
@@ -120,9 +119,7 @@ export async function generateCombinedReport(
         impactSerious: true,
         impactModerate: true,
         impactMinor: true,
-        wcagAACompliance: true,
-        wcagAAACompliance: true,
-        violations: true,
+        
         createdAt: true
       },
       orderBy: { createdAt: "desc" }
@@ -225,23 +222,12 @@ export async function generateCombinedReport(
   const moderateIssues = (scan?.impactModerate || 0) + (audit ? countBySeverity(audit.items, "medium") : 0);
   const minorIssues = (scan?.impactMinor || 0) + (audit ? countBySeverity(audit.items, "low") : 0);
 
-  // WCAG compliance (combine automated and manual)
+  // WCAG compliance (from manual audit only, automated scans don't track WCAG compliance)
   let wcagAACompliance = null;
   let wcagAAACompliance = null;
 
-  if (scan?.wcagAACompliance !== null && audit?.overallScore !== null) {
-    // Both available - use weighted average
-    wcagAACompliance = (scan.wcagAACompliance * 0.5) + (audit.overallScore * 0.5);
-  } else if (scan?.wcagAACompliance !== null) {
-    wcagAACompliance = scan.wcagAACompliance;
-  } else if (audit?.overallScore !== null) {
+  if (audit && audit.overallScore !== null) {
     wcagAACompliance = audit.overallScore;
-  }
-
-  if (scan?.wcagAAACompliance !== null && audit?.overallScore !== null) {
-    wcagAAACompliance = (scan.wcagAAACompliance * 0.5) + (audit.overallScore * 0.5);
-  } else if (scan?.wcagAAACompliance !== null) {
-    wcagAAACompliance = scan.wcagAAACompliance;
   }
 
   // Coverage calculation

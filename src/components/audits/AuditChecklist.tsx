@@ -114,7 +114,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
       if (data.ok) {
         setAudit(data.audit);
         // Auto-expand all categories by default
-        const categories = new Set(data.audit.items.map((item: AuditItem) => item.category));
+        const categories = new Set<string>(data.audit.items.map((item: AuditItem) => item.category));
         setExpandedCategories(categories);
       }
     } catch (e) {

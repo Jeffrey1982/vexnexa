@@ -119,6 +119,19 @@ export default function BlogManagement() {
   const totalViews = posts.reduce((sum, p) => sum + p.views, 0);
 
   if (showEditor) {
+    // Convert BlogPost (with null) to BlogEditor format (with undefined)
+    const editorData = editingPost ? {
+      id: editingPost.id,
+      title: editingPost.title,
+      slug: editingPost.slug,
+      content: editingPost.content,
+      excerpt: editingPost.excerpt ?? undefined,
+      category: editingPost.category,
+      tags: editingPost.tags,
+      status: editingPost.status,
+      publishedAt: editingPost.publishedAt ?? undefined
+    } : undefined;
+
     return (
       <div>
         <div className="mb-6">
@@ -127,7 +140,7 @@ export default function BlogManagement() {
           </h2>
         </div>
         <BlogEditor
-          initialData={editingPost || undefined}
+          initialData={editorData}
           onSave={handleSave}
           onCancel={handleCancel}
         />
