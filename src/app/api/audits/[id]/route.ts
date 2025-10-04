@@ -23,7 +23,7 @@ export async function GET(
         ]
       },
       include: {
-        site: { select: { url: true, name: true } },
+        site: { select: { url: true } },
         scan: {
           select: {
             score: true,
