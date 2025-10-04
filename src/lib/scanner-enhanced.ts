@@ -11,19 +11,24 @@ const A11Y_USER_AGENT =
 
 // Dynamic imports; prefer serverless-friendly chromium build
 let chromium: any = null;
+let chromiumExecutable: any = null;
 let AxeBuilder: any = null;
 
 async function loadPlaywright(): Promise<boolean> {
   try {
+    // Load chromium driver from playwright-core
     if (!chromium) {
-      // Probeer light build; val terug op volledige playwright
-      const mod1 = await import("@playwright/browser-chromium").catch(() => null);
-      const mod2 = mod1 ?? (await import("playwright"));
-      const anyMod = mod2 as any;
-      const chr = anyMod.chromium ?? anyMod.default?.chromium;
-      if (!chr) throw new Error("chromium export not found on playwright module");
-      chromium = chr;
+      const pwCore: any = await import("playwright-core");
+      chromium = pwCore.chromium ?? pwCore.default?.chromium;
+      if (!chromium) throw new Error("chromium export not found on playwright-core");
     }
+
+    // Load serverless chromium executable path for Vercel
+    if (!chromiumExecutable && IS_PROD) {
+      const spartChromium: any = await import("@sparticuz/chromium");
+      chromiumExecutable = spartChromium.default ?? spartChromium;
+    }
+
     if (!AxeBuilder) {
       const axeMod: any = await import("@axe-core/playwright");
       AxeBuilder = axeMod.AxeBuilder ?? axeMod.default?.AxeBuilder;
@@ -192,9 +197,10 @@ export class EnhancedAccessibilityScanner {
     }
 
     try {
-      this.browser = await chromium.launch({
+      // In production (Vercel), use serverless chromium executable
+      const launchOptions: any = {
         headless: true,
-        args: [
+        args: chromiumExecutable ? chromiumExecutable.args : [
           "--no-sandbox",
           "--disable-setuid-sandbox",
           "--disable-dev-shm-usage",
@@ -202,7 +208,15 @@ export class EnhancedAccessibilityScanner {
           "--disable-web-security",
         ],
         timeout: DEFAULT_TIMEOUT_MS,
-      });
+      };
+
+      // Add executable path for serverless chromium
+      if (chromiumExecutable) {
+        launchOptions.executablePath = await chromiumExecutable.executablePath();
+        console.log("[a11y] Using serverless Chromium:", launchOptions.executablePath);
+      }
+
+      this.browser = await chromium.launch(launchOptions);
 
       const context = await this.browser.newContext({
         viewport: { width: 1280, height: 800 },
@@ -211,6 +225,7 @@ export class EnhancedAccessibilityScanner {
       });
 
       this.page = await context.newPage();
+      console.log("[a11y] Browser launched successfully");
     } catch (error) {
       console.warn("[a11y] Failed to launch Chromium; fallback policy applies:", (error as Error)?.message);
       this.playwrightAvailable = false;

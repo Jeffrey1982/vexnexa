@@ -4,8 +4,7 @@
 
   "build": {
     "env": {
-      "PLAYWRIGHT_BROWSERS_PATH": "0",
-      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "0"
+      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
     }
   },
 
@@ -16,15 +15,13 @@
   },
 
   "functions": {
-    "src/app/api/**/route.*": {
+    "src/app/api/scan*/route.*": {
       "maxDuration": 60,
-      "memory": 1024,
-      "includeFiles": "node_modules/@playwright*/**"
+      "memory": 3008
     },
-    "app/api/**/route.*": {
+    "app/api/scan*/route.*": {
       "maxDuration": 60,
-      "memory": 1024,
-      "includeFiles": "node_modules/@playwright*/**"
+      "memory": 3008
     }
   }
 }
