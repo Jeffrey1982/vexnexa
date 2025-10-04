@@ -14,8 +14,7 @@ export default async function AuditsPage() {
     where: { userId: user.id },
     select: {
       id: true,
-      url: true,
-      name: true
+      url: true
     },
     orderBy: { createdAt: "desc" }
   });
