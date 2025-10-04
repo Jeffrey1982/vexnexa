@@ -57,7 +57,7 @@ export async function GET(req: Request) {
       React.createElement(CombinedPDFReport, {
         reportData,
         brandName
-      })
+      }) as any
     );
 
     const chunks: Uint8Array[] = [];
