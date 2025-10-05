@@ -67,7 +67,13 @@ export async function PATCH(
   try {
     const user = await requireAuth();
 
-    if (!user.isAdmin) {
+    // Check if user is admin by email
+    const adminEmails = [
+      'jeffrey.aay@gmail.com',
+      'admin@tutusporta.com'
+    ];
+
+    if (!adminEmails.includes(user.email)) {
       return NextResponse.json(
         { ok: false, error: "Unauthorized - Admin access required" },
         { status: 403 }
@@ -165,7 +171,13 @@ export async function DELETE(
   try {
     const user = await requireAuth();
 
-    if (!user.isAdmin) {
+    // Check if user is admin by email
+    const adminEmails = [
+      'jeffrey.aay@gmail.com',
+      'admin@tutusporta.com'
+    ];
+
+    if (!adminEmails.includes(user.email)) {
       return NextResponse.json(
         { ok: false, error: "Unauthorized - Admin access required" },
         { status: 403 }
