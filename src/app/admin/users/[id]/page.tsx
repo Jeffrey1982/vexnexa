@@ -201,7 +201,6 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                     <TableHead>URL</TableHead>
                     <TableHead>Scans</TableHead>
                     <TableHead>Added</TableHead>
-                    <TableHead>Last Scanned</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -224,9 +223,6 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                         <Badge variant="outline">{site._count.scans}</Badge>
                       </TableCell>
                       <TableCell>{formatDate(site.createdAt)}</TableCell>
-                      <TableCell>
-                        {site.lastScannedAt ? formatDate(site.lastScannedAt) : 'Never'}
-                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
