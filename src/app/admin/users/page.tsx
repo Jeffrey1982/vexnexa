@@ -35,10 +35,13 @@ async function getAllUsers() {
       createdAt: true,
       trialEndsAt: true,
       lastLoginAt: true,
-      _count: {
+      sites: {
         select: {
-          sites: true,
-          scans: true
+          _count: {
+            select: {
+              scans: true
+            }
+          }
         }
       }
     }
@@ -202,10 +205,12 @@ export default async function AdminUsersPage() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <span className="font-medium">{user._count.sites}</span>
+                        <span className="font-medium">{user.sites.length}</span>
                       </TableCell>
                       <TableCell>
-                        <span className="font-medium">{user._count.scans}</span>
+                        <span className="font-medium">
+                          {user.sites.reduce((sum, site) => sum + site._count.scans, 0)}
+                        </span>
                       </TableCell>
                       <TableCell>
                         <div className="text-sm flex items-center gap-1">

@@ -27,13 +27,12 @@ async function getUserDetails(userId: string) {
     include: {
       sites: {
         orderBy: { createdAt: 'desc' },
-        take: 10
-      },
-      scans: {
-        orderBy: { createdAt: 'desc' },
-        take: 10,
         include: {
-          site: true
+          _count: {
+            select: {
+              scans: true
+            }
+          }
         }
       }
     }
@@ -126,7 +125,9 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
               <CardTitle className="text-sm font-medium text-gray-600">Total Scans</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{user.scans.length}</div>
+              <div className="text-2xl font-bold text-green-600">
+                {user.sites.reduce((sum, site) => sum + site._count.scans, 0)}
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -210,6 +211,7 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                 <TableHeader>
                   <TableRow>
                     <TableHead>URL</TableHead>
+                    <TableHead>Scans</TableHead>
                     <TableHead>Added</TableHead>
                     <TableHead>Last Scanned</TableHead>
                   </TableRow>
@@ -230,60 +232,13 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                           </a>
                         </div>
                       </TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{site._count.scans}</Badge>
+                      </TableCell>
                       <TableCell>{formatDate(site.createdAt)}</TableCell>
                       <TableCell>
                         {site.lastScannedAt ? formatDate(site.lastScannedAt) : 'Never'}
                       </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Recent Scans */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Scans (Last 10)</CardTitle>
-            <CardDescription>Latest accessibility scans performed</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {user.scans.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No scans yet</p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Site</TableHead>
-                    <TableHead>Score</TableHead>
-                    <TableHead>Issues</TableHead>
-                    <TableHead>Scanned</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {user.scans.map((scan) => (
-                    <TableRow key={scan.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Globe className="w-4 h-4 text-gray-400" />
-                          {scan.site?.url || 'N/A'}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={
-                          (scan.score || 0) >= 90 ? 'default' :
-                          (scan.score || 0) >= 70 ? 'secondary' : 'destructive'
-                        }>
-                          {scan.score || 0}%
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <span className="font-medium">
-                          {scan.issuesFound || 0}
-                        </span>
-                      </TableCell>
-                      <TableCell>{formatDate(scan.createdAt)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
