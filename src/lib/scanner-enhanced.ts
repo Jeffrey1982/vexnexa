@@ -263,34 +263,24 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Inject axe-core and execute in one evaluation to avoid race conditions
+    // Inject axe-core by evaluating the source directly (not via script tag)
     const axeCore = require('axe-core');
 
-    console.log('[a11y] Injecting axe-core source, length:', axeCore.source?.length);
+    console.log('[a11y] Evaluating axe-core source directly, length:', axeCore.source?.length);
 
-    const axeResults = await page.evaluate((axeSource: string) => {
-      return new Promise((resolve, reject) => {
-        try {
-          // Inject the script directly
-          const script = document.createElement('script');
-          script.textContent = axeSource;
-          (document.head || document.documentElement).appendChild(script);
-
-          // Check if axe loaded
-          if (typeof (window as any).axe?.run !== 'function') {
-            reject(new Error('axe object not available after injection'));
-            return;
-          }
-
-          // Run immediately after confirming it's available
-          (window as any).axe.run()
-            .then(resolve)
-            .catch(reject);
-        } catch (error) {
-          reject(error);
-        }
-      });
+    // Execute the axe source code directly to set window.axe
+    await page.evaluate((axeSource: string) => {
+      // Use indirect eval to execute in global scope
+      (0, eval)(axeSource);
     }, axeCore.source);
+
+    // Now run the scan
+    const axeResults = await page.evaluate(() => {
+      if (typeof (window as any).axe?.run !== 'function') {
+        throw new Error('axe.run not available after source evaluation');
+      }
+      return (window as any).axe.run();
+    });
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
