@@ -280,28 +280,9 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Inject axe-core from CDN instead of using the minified package
-    await page.addScriptTag({
-      url: 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.2/axe.min.js'
-    });
-
-    // Wait for axe to be available and run the scan
-    const axeResults = await page.evaluate(() => {
-      return new Promise((resolve) => {
-        if ((window as any).axe) {
-          (window as any).axe.run().then(resolve);
-        } else {
-          // Fallback: wait for script to load
-          setTimeout(() => {
-            if ((window as any).axe) {
-              (window as any).axe.run().then(resolve);
-            } else {
-              resolve({ violations: [], passes: [] });
-            }
-          }, 1000);
-        }
-      });
-    });
+    // Use AxeBuilder without legacy mode to avoid minification issues
+    const axeResults = await new AxeBuilder({ page })
+      .analyze();
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
