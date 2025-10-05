@@ -263,13 +263,18 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Load unminified axe.js from node_modules
-    const fs = require('fs');
-    const path = require('path');
-    const axePath = path.join(process.cwd(), 'node_modules', 'axe-core', 'axe.js');
-    const axeSource = fs.readFileSync(axePath, 'utf8');
-
-    console.log('[a11y] Loading unminified axe.js, length:', axeSource.length);
+    // Try to require axe.js directly from the package
+    let axeSource: string;
+    try {
+      // This will resolve to node_modules/axe-core/axe.js
+      axeSource = require('fs').readFileSync(require.resolve('axe-core/axe.js'), 'utf8');
+      console.log('[a11y] Loaded axe.js via require.resolve, length:', axeSource.length);
+    } catch (e) {
+      console.error('[a11y] Failed to load axe.js, falling back to axe-core source:', e);
+      // Fallback to source if file not found
+      axeSource = require('axe-core').source;
+      console.log('[a11y] Using axe-core.source fallback, length:', axeSource?.length);
+    }
 
     // Inject via addScriptTag with content
     await page.addScriptTag({ content: axeSource });
