@@ -280,9 +280,18 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Use AxeBuilder without legacy mode to avoid minification issues
-    const axeResults = await new AxeBuilder({ page })
-      .analyze();
+    // Directly inject axe-core source (unminified) to avoid minification issues
+    const axeCore = require('axe-core');
+    await page.evaluate((axeSource: string) => {
+      const script = document.createElement('script');
+      script.textContent = axeSource;
+      document.head.appendChild(script);
+    }, axeCore.source);
+
+    // Run axe-core analysis
+    const axeResults = await page.evaluate(() => {
+      return (window as any).axe.run();
+    });
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
