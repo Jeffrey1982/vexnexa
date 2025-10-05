@@ -263,28 +263,32 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Load axe-core source
-    const axeCore = require('axe-core');
-    console.log('[a11y] axe-core.source available:', !!axeCore.source, 'length:', axeCore.source?.length);
+    // Load unminified axe.js from our bundled copy
+    const fs = require('fs');
+    const path = require('path');
+    const axeSource = fs.readFileSync(path.join(__dirname, 'axe-unminified.js'), 'utf8');
 
-    // Execute everything in one atomic page.evaluate to avoid any race conditions
+    console.log('[a11y] Loaded unminified axe.js from bundle, length:', axeSource.length);
+
+    // Execute everything in one atomic page.evaluate
     const axeResults = await page.evaluate((axeSource: string) => {
       return new Promise((resolve, reject) => {
         try {
-          // Method 1: Try Function constructor (safer than eval)
-          const axeInit = new Function(axeSource + '\n; return axe;');
-          const axe = axeInit();
+          // Execute the source to set window.axe
+          const axeInit = new Function(axeSource);
+          axeInit();
 
-          if (axe && typeof axe.run === 'function') {
-            axe.run().then(resolve).catch(reject);
+          // Now window.axe should exist
+          if (typeof (window as any).axe?.run === 'function') {
+            (window as any).axe.run().then(resolve).catch(reject);
           } else {
-            reject(new Error('axe not initialized properly via Function constructor'));
+            reject(new Error('window.axe.run not available after execution'));
           }
         } catch (error) {
           reject(error);
         }
       });
-    }, axeCore.source);
+    }, axeSource);
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
