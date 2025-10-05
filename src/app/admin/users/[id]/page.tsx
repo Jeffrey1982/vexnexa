@@ -296,7 +296,7 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
         <Card>
           <CardHeader>
             <CardTitle>Admin Actions</CardTitle>
-            <CardDescription>Manage this user's account</CardDescription>
+            <CardDescription>Manage this user&apos;s account</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-3">
