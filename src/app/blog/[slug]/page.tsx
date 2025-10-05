@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react'
-import { prisma } from '@/lib/prisma'
+import { PrismaClient } from '@prisma/client'
 import ReactMarkdown from 'react-markdown'
+
+const prisma = new PrismaClient()
 
 interface BlogPostPageProps {
   params: {

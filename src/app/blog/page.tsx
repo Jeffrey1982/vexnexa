@@ -3,7 +3,9 @@ import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Calendar, User, ArrowRight } from 'lucide-react'
-import { prisma } from '@/lib/prisma'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export const metadata: Metadata = {
   title: 'Blog - TutusPorta',

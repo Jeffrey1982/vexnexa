@@ -175,7 +175,7 @@ async function main() {
         slug: 'tutusporta-toekomst-web-toegankelijkheid-vexnexa',
         content: blogContent,
         excerpt: 'Ontdek waarom TutusPorta de meest uitgebreide accessibility scanner is met 100% coverage. Van keyboard navigatie tot cognitieve toegankelijkheid - we dekken alles wat andere tools missen.',
-        coverImage: '/blog/tutusporta-hero.jpg',
+        coverImage: '/heroImage.png',
         metaTitle: 'TutusPorta: Complete Web Toegankelijkheid Scanner | Vexnexa',
         metaDescription: 'Traditionele WCAG scanners dekken 60% af. TutusPorta biedt 100% coverage met 8 extra categorieën. Ontdek waarom bedrijven kiezen voor de meest complete accessibility tool.',
         metaKeywords: [
