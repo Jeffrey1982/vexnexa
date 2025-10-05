@@ -263,34 +263,28 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Try to require axe.js directly from the package
-    let axeSource: string;
-    try {
-      // This will resolve to node_modules/axe-core/axe.js
-      axeSource = require('fs').readFileSync(require.resolve('axe-core/axe.js'), 'utf8');
-      console.log('[a11y] Loaded axe.js via require.resolve, length:', axeSource.length);
-    } catch (e) {
-      console.error('[a11y] Failed to load axe.js, falling back to axe-core source:', e);
-      // Fallback to source if file not found
-      axeSource = require('axe-core').source;
-      console.log('[a11y] Using axe-core.source fallback, length:', axeSource?.length);
-    }
+    // Load axe-core source
+    const axeCore = require('axe-core');
+    console.log('[a11y] axe-core.source available:', !!axeCore.source, 'length:', axeCore.source?.length);
 
-    // Inject via addScriptTag with content
-    await page.addScriptTag({ content: axeSource });
+    // Execute everything in one atomic page.evaluate to avoid any race conditions
+    const axeResults = await page.evaluate((axeSource: string) => {
+      return new Promise((resolve, reject) => {
+        try {
+          // Method 1: Try Function constructor (safer than eval)
+          const axeInit = new Function(axeSource + '\n; return axe;');
+          const axe = axeInit();
 
-    // Wait for axe to be available
-    await page.waitForFunction(
-      () => typeof (window as any).axe?.run === 'function',
-      { timeout: 5000 }
-    );
-
-    console.log('[a11y] axe.run confirmed available, running scan...');
-
-    // Now run the scan
-    const axeResults = await page.evaluate(() => {
-      return (window as any).axe.run();
-    });
+          if (axe && typeof axe.run === 'function') {
+            axe.run().then(resolve).catch(reject);
+          } else {
+            reject(new Error('axe not initialized properly via Function constructor'));
+          }
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }, axeCore.source);
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
