@@ -263,20 +263,34 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Inject axe-core source (unminified) directly
+    // Inject axe-core and execute in one evaluation to avoid race conditions
     const axeCore = require('axe-core');
-    await page.addScriptTag({ content: axeCore.source });
 
-    // Wait for axe to be available
-    await page.waitForFunction(
-      () => typeof (window as any).axe?.run === 'function',
-      { timeout: 10000 }
-    );
+    console.log('[a11y] Injecting axe-core source, length:', axeCore.source?.length);
 
-    // Run axe-core
-    const axeResults = await page.evaluate(() => {
-      return (window as any).axe.run();
-    });
+    const axeResults = await page.evaluate((axeSource: string) => {
+      return new Promise((resolve, reject) => {
+        try {
+          // Inject the script directly
+          const script = document.createElement('script');
+          script.textContent = axeSource;
+          (document.head || document.documentElement).appendChild(script);
+
+          // Check if axe loaded
+          if (typeof (window as any).axe?.run !== 'function') {
+            reject(new Error('axe object not available after injection'));
+            return;
+          }
+
+          // Run immediately after confirming it's available
+          (window as any).axe.run()
+            .then(resolve)
+            .catch(reject);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }, axeCore.source);
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
