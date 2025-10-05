@@ -239,9 +239,8 @@ export class EnhancedAccessibilityScanner {
         viewport: { width: 1280, height: 800 },
         ignoreHTTPSErrors: true,
         userAgent: A11Y_USER_AGENT,
-        bypassCSP: true, // Allow axe-core script injection despite CSP headers
       });
-      console.log("[a11y] Browser context created with CSP bypass");
+      console.log("[a11y] Browser context created");
 
       this.page = await context.newPage();
       console.log("[a11y] ✅ Browser launched successfully - ready to scan");
@@ -278,16 +277,10 @@ export class EnhancedAccessibilityScanner {
 
   private async scanUrlWithPlaywright(url: string): Promise<EnhancedScanResult> {
     const page = this.page!;
-    await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Pass axe-core source directly to AxeBuilder constructor
-    const axeCore = require('axe-core');
-    console.log('[a11y] Using AxeBuilder with custom axe source, length:', axeCore.source?.length || 0);
-
-    const axeResults = await new AxeBuilder({
-      page,
-      axeSource: axeCore.source
-    }).analyze();
+    // Simplest possible approach - just use AxeBuilder with no customization
+    const axeResults = await new AxeBuilder({ page }).analyze();
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
