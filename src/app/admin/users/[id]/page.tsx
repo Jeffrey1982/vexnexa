@@ -164,15 +164,6 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                 </div>
               </div>
 
-              <div>
-                <label className="text-sm font-medium text-gray-600">Last Login</label>
-                <div className="mt-1 flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-900">
-                    {user.lastLoginAt ? formatDate(user.lastLoginAt) : 'Never'}
-                  </span>
-                </div>
-              </div>
 
               {user.trialEndsAt && (
                 <div>

@@ -34,7 +34,6 @@ async function getAllUsers() {
       subscriptionStatus: true,
       createdAt: true,
       trialEndsAt: true,
-      lastLoginAt: true,
       sites: {
         select: {
           _count: {
@@ -160,7 +159,6 @@ export default async function AdminUsersPage() {
                     <TableHead>Sites</TableHead>
                     <TableHead>Scans</TableHead>
                     <TableHead>Joined</TableHead>
-                    <TableHead>Last Login</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -216,11 +214,6 @@ export default async function AdminUsersPage() {
                         <div className="text-sm flex items-center gap-1">
                           <Calendar className="w-3 h-3 text-gray-400" />
                           {formatDate(user.createdAt)}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm text-gray-500">
-                          {user.lastLoginAt ? formatDate(user.lastLoginAt) : 'Never'}
                         </div>
                       </TableCell>
                       <TableCell>
