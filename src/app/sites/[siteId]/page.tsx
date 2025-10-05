@@ -268,7 +268,7 @@ export default function SitePage({ params }: PageProps) {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {site.scans.map((scan) => (
+                  {site.scans.map((scan: any) => (
                     <tr key={scan.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {new Date(scan.createdAt).toLocaleString()}
