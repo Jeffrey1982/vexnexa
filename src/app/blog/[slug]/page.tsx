@@ -3,9 +3,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react'
+import { Calendar, User, ArrowLeft } from 'lucide-react'
 import { PrismaClient } from '@prisma/client'
 import ReactMarkdown from 'react-markdown'
+import { ShareButtons } from '@/components/blog/ShareButtons'
 
 const prisma = new PrismaClient()
 
@@ -116,7 +117,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <span>{post.views} weergaven</span>
               </div>
 
-              {post.tags.length > 0 && (
+              {Array.isArray(post.tags) && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 pt-2">
                   {post.tags.map((tag) => (
                     <Badge key={tag} variant="outline">
@@ -195,48 +196,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </section>
 
       {/* Share Section */}
-      <section className="py-8 border-t">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Share2 className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Deel dit artikel</span>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      window.open(
-                        `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`,
-                        '_blank'
-                      );
-                    }
-                  }}
-                >
-                  Twitter
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      window.open(
-                        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
-                        '_blank'
-                      );
-                    }
-                  }}
-                >
-                  LinkedIn
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ShareButtons
+        title={post.title}
+        url={`https://www.tutusporta.com/blog/${post.slug}`}
+      />
     </div>
   )
 }

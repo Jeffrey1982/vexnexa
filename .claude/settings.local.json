@@ -21,7 +21,8 @@
       "WebFetch(domain:www.tutusporta.com)",
       "Bash(curl -s https://www.tutusporta.com/api/chromium-test)",
       "Bash(git log:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
