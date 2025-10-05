@@ -138,15 +138,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight
               prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-6
               prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-4
-              prose-p:text-foreground prose-p:leading-[1.8] prose-p:text-[18px] prose-p:mb-6
+              prose-p:text-foreground prose-p:leading-[1.8] prose-p:text-[18px] prose-p:mb-8
               prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-              prose-strong:font-semibold
+              prose-strong:font-semibold prose-strong:text-foreground
               prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-              prose-pre:bg-muted prose-pre:border prose-pre:my-8
-              prose-blockquote:border-l-2 prose-blockquote:border-l-border prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:my-8
-              prose-ul:text-[18px] prose-ul:leading-[1.8] prose-ul:my-6
-              prose-ol:text-[18px] prose-ol:leading-[1.8] prose-ol:my-6
-              prose-li:my-3 prose-li:leading-[1.8]
+              prose-pre:bg-muted prose-pre:border prose-pre:my-8 prose-pre:p-6
+              prose-blockquote:border-l-4 prose-blockquote:border-l-primary prose-blockquote:bg-primary/5 prose-blockquote:pl-6 prose-blockquote:pr-6 prose-blockquote:py-4 prose-blockquote:my-8 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:font-medium prose-blockquote:text-lg
+              prose-ul:text-[18px] prose-ul:leading-[1.8] prose-ul:my-8 prose-ul:space-y-3
+              prose-ol:text-[18px] prose-ol:leading-[1.8] prose-ol:my-8 prose-ol:space-y-3
+              prose-li:my-0 prose-li:leading-[1.8]
+              prose-hr:my-12 prose-hr:border-t-2 prose-hr:border-border
               prose-img:rounded-lg prose-img:my-10
             ">
               <ReactMarkdown>{post.content}</ReactMarkdown>
