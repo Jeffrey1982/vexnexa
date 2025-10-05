@@ -16,8 +16,8 @@ let chromiumExecutable: any = null;
 async function loadPuppeteer(): Promise<boolean> {
   try {
     if (!puppeteer) {
-      puppeteer = await import("puppeteer-core");
-      if (!puppeteer) throw new Error("puppeteer-core not found");
+      puppeteer = await import("puppeteer");
+      if (!puppeteer) throw new Error("puppeteer not found");
     }
 
     // Load serverless chromium executable path for Vercel
@@ -221,7 +221,7 @@ export class EnhancedAccessibilityScanner {
         argsCount: launchOptions.args?.length
       }));
 
-      this.browser = await puppeteer.launch(launchOptions);
+      this.browser = await (puppeteer.default || puppeteer).launch(launchOptions);
       console.log("[a11y] Browser instance created");
 
       this.page = await this.browser.newPage();
