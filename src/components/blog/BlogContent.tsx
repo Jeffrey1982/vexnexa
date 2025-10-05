@@ -18,8 +18,8 @@ export function BlogContent({ content }: BlogContentProps) {
         ),
         h3: ({ children }) => {
           const text = children?.toString() || '';
-          // Check if first character is an emoji (simple check for common emoji ranges)
-          const hasEmoji = text && /^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u.test(text);
+          // Check if starts with common emoji characters
+          const hasEmoji = text && /^[🎹📢📱🧠🎬🌈⚡🌍🎯📊🚀💼🤖🔄📈🌐🎓]/.test(text);
 
           if (hasEmoji) {
             return (
