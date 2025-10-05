@@ -280,10 +280,14 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Use setLegacyMode() for better compatibility with strict CSP
-    const axeResults = await new AxeBuilder({ page })
-      .setLegacyMode(true)
-      .analyze();
+    // Manually inject axe-core script to avoid CSP and minification issues
+    const axeSource = await import('axe-core').then(m => m.source);
+    await page.addScriptTag({ content: axeSource });
+
+    // Run axe-core directly via page.evaluate
+    const axeResults = await page.evaluate(() => {
+      return (window as any).axe.run();
+    });
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
