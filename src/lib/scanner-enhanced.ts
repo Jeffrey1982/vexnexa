@@ -517,7 +517,7 @@ export class EnhancedAccessibilityScanner {
   }
 
   private async testMobileAccessibility(page: any): Promise<MobileAccessibilityResult> {
-    await page.setViewportSize({ width: 375, height: 667 });
+    await page.setViewport({ width: 375, height: 667 });
 
     const touchStats = await page.evaluate(() => {
       const clickable = Array.from(document.querySelectorAll("a, button, [onclick], [role='button']"));
@@ -556,7 +556,7 @@ export class EnhancedAccessibilityScanner {
       score -= 30;
     }
 
-    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.setViewport({ width: 1280, height: 800 });
 
     return {
       score: Math.max(0, score),
