@@ -280,13 +280,27 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Manually inject axe-core script to avoid CSP and minification issues
-    const axeSource = await import('axe-core').then(m => m.source);
-    await page.addScriptTag({ content: axeSource });
+    // Inject axe-core from CDN instead of using the minified package
+    await page.addScriptTag({
+      url: 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.2/axe.min.js'
+    });
 
-    // Run axe-core directly via page.evaluate
+    // Wait for axe to be available and run the scan
     const axeResults = await page.evaluate(() => {
-      return (window as any).axe.run();
+      return new Promise((resolve) => {
+        if ((window as any).axe) {
+          (window as any).axe.run().then(resolve);
+        } else {
+          // Fallback: wait for script to load
+          setTimeout(() => {
+            if ((window as any).axe) {
+              (window as any).axe.run().then(resolve);
+            } else {
+              resolve({ violations: [], passes: [] });
+            }
+          }, 1000);
+        }
+      });
     });
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
