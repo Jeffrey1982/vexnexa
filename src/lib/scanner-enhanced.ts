@@ -9,18 +9,15 @@ const A11Y_USER_AGENT =
   process.env.A11Y_USER_AGENT ||
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
-// Dynamic imports; prefer serverless-friendly chromium build
-let chromium: any = null;
+// Dynamic imports; use Puppeteer instead of Playwright
+let puppeteer: any = null;
 let chromiumExecutable: any = null;
-let AxeBuilder: any = null;
 
-async function loadPlaywright(): Promise<boolean> {
+async function loadPuppeteer(): Promise<boolean> {
   try {
-    // Load chromium driver from playwright-core
-    if (!chromium) {
-      const pwCore: any = await import("playwright-core");
-      chromium = pwCore.chromium ?? pwCore.default?.chromium;
-      if (!chromium) throw new Error("chromium export not found on playwright-core");
+    if (!puppeteer) {
+      puppeteer = await import("puppeteer-core");
+      if (!puppeteer) throw new Error("puppeteer-core not found");
     }
 
     // Load serverless chromium executable path for Vercel
@@ -29,14 +26,9 @@ async function loadPlaywright(): Promise<boolean> {
       chromiumExecutable = spartChromium.default ?? spartChromium;
     }
 
-    if (!AxeBuilder) {
-      const axeMod: any = await import("@axe-core/playwright");
-      AxeBuilder = axeMod.AxeBuilder ?? axeMod.default?.AxeBuilder;
-      if (!AxeBuilder) throw new Error("AxeBuilder export not found on @axe-core/playwright");
-    }
     return true;
   } catch (err) {
-    console.warn("[a11y] Playwright not available:", (err as Error)?.message ?? err);
+    console.warn("[a11y] Puppeteer not available:", (err as Error)?.message ?? err);
     return false;
   }
 }
@@ -180,24 +172,23 @@ interface LanguageIssue {
 export class EnhancedAccessibilityScanner {
   private browser: any | null = null;
   private page: any | null = null;
-  private playwrightAvailable = false;
+  private puppeteerAvailable = false;
 
   async initialize(): Promise<void> {
     console.log("[a11y] Scanner initialization", {
       NODE_ENV: process.env.NODE_ENV,
       IS_PROD: IS_PROD,
       ALLOW_MOCK_A11Y: process.env.ALLOW_MOCK_A11Y,
-      PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH
     });
 
-    this.playwrightAvailable = await loadPlaywright();
+    this.puppeteerAvailable = await loadPuppeteer();
 
-    if (!this.playwrightAvailable) {
-      console.error("[a11y] ERROR: Playwright dependencies not available");
+    if (!this.puppeteerAvailable) {
+      console.error("[a11y] ERROR: Puppeteer dependencies not available");
       return;
     }
 
-    console.log("[a11y] Playwright loaded successfully, attempting browser launch...")
+    console.log("[a11y] Puppeteer loaded successfully, attempting browser launch...")
 
     try {
       // In production (Vercel), use serverless chromium executable
@@ -208,9 +199,7 @@ export class EnhancedAccessibilityScanner {
           "--disable-setuid-sandbox",
           "--disable-dev-shm-usage",
           "--disable-gpu",
-          "--disable-web-security",
         ],
-        timeout: DEFAULT_TIMEOUT_MS,
       };
 
       // Add executable path for serverless chromium
@@ -232,17 +221,12 @@ export class EnhancedAccessibilityScanner {
         argsCount: launchOptions.args?.length
       }));
 
-      this.browser = await chromium.launch(launchOptions);
+      this.browser = await puppeteer.launch(launchOptions);
       console.log("[a11y] Browser instance created");
 
-      const context = await this.browser.newContext({
-        viewport: { width: 1280, height: 800 },
-        ignoreHTTPSErrors: true,
-        userAgent: A11Y_USER_AGENT,
-      });
-      console.log("[a11y] Browser context created");
-
-      this.page = await context.newPage();
+      this.page = await this.browser.newPage();
+      await this.page.setUserAgent(A11Y_USER_AGENT);
+      await this.page.setViewport({ width: 1280, height: 800 });
       console.log("[a11y] ✅ Browser launched successfully - ready to scan");
     } catch (error) {
       console.error("[a11y] ❌ CRITICAL: Failed to launch browser:", {
@@ -251,7 +235,7 @@ export class EnhancedAccessibilityScanner {
         isProd: IS_PROD,
         hasChromiumExecutable: !!chromiumExecutable
       });
-      this.playwrightAvailable = false;
+      this.puppeteerAvailable = false;
       this.browser = null;
       this.page = null;
       // Re-throw in production so we don't silently fail
@@ -264,23 +248,35 @@ export class EnhancedAccessibilityScanner {
   async scanUrl(url: string): Promise<EnhancedScanResult> {
     await this.initialize();
     console.log("[a11y] mode", {
-      playwrightAvailable: this.playwrightAvailable,
+      puppeteerAvailable: this.puppeteerAvailable,
       hasPage: !!this.page
     });
 
-    if (this.playwrightAvailable && this.page) {
-      return this.scanUrlWithPlaywright(url);
+    if (this.puppeteerAvailable && this.page) {
+      return this.scanUrlWithPuppeteer(url);
     }
     // No browser: enforce production policy
     return this.scanUrlWithFallback(url);
   }
 
-  private async scanUrlWithPlaywright(url: string): Promise<EnhancedScanResult> {
+  private async scanUrlWithPuppeteer(url: string): Promise<EnhancedScanResult> {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Simplest possible approach - just use AxeBuilder with no customization
-    const axeResults = await new AxeBuilder({ page }).analyze();
+    // Inject axe-core source (unminified) directly
+    const axeCore = require('axe-core');
+    await page.addScriptTag({ content: axeCore.source });
+
+    // Wait for axe to be available
+    await page.waitForFunction(
+      () => typeof (window as any).axe?.run === 'function',
+      { timeout: 10000 }
+    );
+
+    // Run axe-core
+    const axeResults = await page.evaluate(() => {
+      return (window as any).axe.run();
+    });
 
     if (!axeResults || !Array.isArray(axeResults.violations)) {
       const err: any = new Error("axe-core returned invalid result (no violations array).");
