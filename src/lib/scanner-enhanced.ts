@@ -280,15 +280,16 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Directly inject axe-core source (unminified) to avoid minification issues
+    // Inject axe-core source inline (no CDN/CSP issues)
     const axeCore = require('axe-core');
-    await page.evaluate((axeSource: string) => {
-      const script = document.createElement('script');
-      script.textContent = axeSource;
-      document.head.appendChild(script);
-    }, axeCore.source);
+    await page.addScriptTag({ content: axeCore.source });
 
-    // Run axe-core analysis
+    // Wait explicitly for window.axe.run to be available
+    await page.waitForFunction(() => {
+      return !!(window as any).axe && typeof (window as any).axe.run === 'function';
+    }, { timeout: 5000 });
+
+    // Run axe-core analysis - now we KNOW axe exists
     const axeResults = await page.evaluate(() => {
       return (window as any).axe.run();
     });
