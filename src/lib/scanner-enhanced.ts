@@ -263,22 +263,27 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Inject axe-core by evaluating the source directly (not via script tag)
-    const axeCore = require('axe-core');
+    // Load unminified axe.js from node_modules
+    const fs = require('fs');
+    const path = require('path');
+    const axePath = path.join(process.cwd(), 'node_modules', 'axe-core', 'axe.js');
+    const axeSource = fs.readFileSync(axePath, 'utf8');
 
-    console.log('[a11y] Evaluating axe-core source directly, length:', axeCore.source?.length);
+    console.log('[a11y] Loading unminified axe.js, length:', axeSource.length);
 
-    // Execute the axe source code directly to set window.axe
-    await page.evaluate((axeSource: string) => {
-      // Use indirect eval to execute in global scope
-      (0, eval)(axeSource);
-    }, axeCore.source);
+    // Inject via addScriptTag with content
+    await page.addScriptTag({ content: axeSource });
+
+    // Wait for axe to be available
+    await page.waitForFunction(
+      () => typeof (window as any).axe?.run === 'function',
+      { timeout: 5000 }
+    );
+
+    console.log('[a11y] axe.run confirmed available, running scan...');
 
     // Now run the scan
     const axeResults = await page.evaluate(() => {
-      if (typeof (window as any).axe?.run !== 'function') {
-        throw new Error('axe.run not available after source evaluation');
-      }
       return (window as any).axe.run();
     });
 
