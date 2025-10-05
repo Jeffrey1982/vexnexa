@@ -136,17 +136,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="max-w-2xl mx-auto">
             <div className="prose prose-lg max-w-none
               prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight
-              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4
-              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
-              prose-p:text-foreground prose-p:leading-relaxed prose-p:text-[17px]
+              prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-6
+              prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-4
+              prose-p:text-foreground prose-p:leading-[1.8] prose-p:text-[18px] prose-p:mb-6
               prose-a:text-primary prose-a:no-underline hover:prose-a:underline
               prose-strong:font-semibold
               prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-              prose-pre:bg-muted prose-pre:border
-              prose-blockquote:border-l-2 prose-blockquote:border-l-border prose-blockquote:pl-4 prose-blockquote:italic
-              prose-ul:text-[17px] prose-ol:text-[17px]
-              prose-li:my-1 prose-li:leading-relaxed
-              prose-img:rounded-lg prose-img:my-8
+              prose-pre:bg-muted prose-pre:border prose-pre:my-8
+              prose-blockquote:border-l-2 prose-blockquote:border-l-border prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:my-8
+              prose-ul:text-[18px] prose-ul:leading-[1.8] prose-ul:my-6
+              prose-ol:text-[18px] prose-ol:leading-[1.8] prose-ol:my-6
+              prose-li:my-3 prose-li:leading-[1.8]
+              prose-img:rounded-lg prose-img:my-10
             ">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
