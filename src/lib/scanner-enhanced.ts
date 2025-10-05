@@ -263,12 +263,10 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Load unminified axe.js from our bundled copy
-    const fs = require('fs');
-    const path = require('path');
-    const axeSource = fs.readFileSync(path.join(__dirname, 'axe-unminified.js'), 'utf8');
+    // Import axe source from bundled TypeScript module
+    const { axeSource } = await import('./axe-source');
 
-    console.log('[a11y] Loaded unminified axe.js from bundle, length:', axeSource.length);
+    console.log('[a11y] Loaded unminified axe.js from TS module, length:', axeSource.length);
 
     // Execute everything in one atomic page.evaluate
     const axeResults = await page.evaluate((axeSource: string) => {
