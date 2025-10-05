@@ -280,16 +280,40 @@ export class EnhancedAccessibilityScanner {
     const page = this.page!;
     await page.goto(url, { waitUntil: "networkidle", timeout: DEFAULT_TIMEOUT_MS });
 
-    // Inject axe-core source inline (no CDN/CSP issues)
+    // Inject axe-core source inline and verify it loaded
     const axeCore = require('axe-core');
-    await page.addScriptTag({ content: axeCore.source });
 
-    // Wait explicitly for window.axe.run to be available
-    await page.waitForFunction(() => {
-      return !!(window as any).axe && typeof (window as any).axe.run === 'function';
-    }, { timeout: 5000 });
+    console.log('[a11y] Injecting axe-core, source length:', axeCore.source?.length || 0);
 
-    // Run axe-core analysis - now we KNOW axe exists
+    // Inject and immediately check if it worked
+    await page.evaluate((axeSource: string) => {
+      try {
+        // Create and inject script
+        const script = document.createElement('script');
+        script.textContent = axeSource;
+        (document.head || document.documentElement).appendChild(script);
+
+        // Log if axe is available
+        console.log('[axe-inject] window.axe available:', !!(window as any).axe);
+      } catch (e) {
+        console.error('[axe-inject] Failed to inject:', e);
+      }
+    }, axeCore.source);
+
+    // Wait for axe with better timeout and logging
+    try {
+      await page.waitForFunction(() => {
+        const hasAxe = !!(window as any).axe && typeof (window as any).axe.run === 'function';
+        if (!hasAxe) console.log('[axe-wait] Still waiting for window.axe...');
+        return hasAxe;
+      }, { timeout: 10000 });
+      console.log('[a11y] window.axe.run is ready');
+    } catch (e) {
+      console.error('[a11y] waitForFunction failed:', e);
+      throw new Error('Failed to load axe-core into page context');
+    }
+
+    // Run axe-core analysis
     const axeResults = await page.evaluate(() => {
       return (window as any).axe.run();
     });
