@@ -194,12 +194,12 @@ export default function SitePage({ params }: PageProps) {
               Average Score
             </h3>
             <p className="text-3xl font-bold text-green-600">
-              {site.pages.length > 0 
+              {site.pages?.length > 0
                 ? Math.round(
                     site.pages
-                      .filter(p => p.scans.length > 0)
-                      .reduce((sum, p) => sum + (p.scans[0]?.score || 0), 0) /
-                    site.pages.filter(p => p.scans.length > 0).length
+                      .filter((p: any) => p.scans.length > 0)
+                      .reduce((sum: number, p: any) => sum + (p.scans[0]?.score || 0), 0) /
+                    site.pages.filter((p: any) => p.scans.length > 0).length
                   ) || 0
                 : 0
               }
@@ -212,8 +212,8 @@ export default function SitePage({ params }: PageProps) {
             </h3>
             <p className="text-3xl font-bold text-red-600">
               {site.pages
-                .filter(p => p.scans.length > 0)
-                .reduce((sum, p) => sum + (p.scans[0]?.impactCritical || 0), 0)
+                .filter((p: any) => p.scans.length > 0)
+                .reduce((sum: number, p: any) => sum + (p.scans[0]?.impactCritical || 0), 0)
               }
             </p>
           </div>
@@ -224,8 +224,8 @@ export default function SitePage({ params }: PageProps) {
             </h3>
             <p className="text-3xl font-bold text-yellow-600">
               {site.pages
-                .filter(p => p.scans.length > 0)
-                .reduce((sum, p) => sum + (p.scans[0]?.issues || 0), 0)
+                .filter((p: any) => p.scans.length > 0)
+                .reduce((sum: number, p: any) => sum + (p.scans[0]?.issues || 0), 0)
               }
             </p>
           </div>
