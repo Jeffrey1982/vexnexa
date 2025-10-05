@@ -145,9 +145,6 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                 <div className="mt-1 flex items-center gap-2">
                   <Mail className="w-4 h-4 text-gray-400" />
                   <span className="text-gray-900">{user.email}</span>
-                  {user.emailConfirmed && (
-                    <Badge variant="outline" className="text-xs">Verified</Badge>
-                  )}
                 </div>
               </div>
 
