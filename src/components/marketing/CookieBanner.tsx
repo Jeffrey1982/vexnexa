@@ -82,6 +82,7 @@ export function CookieBanner({ className }: CookieBannerProps) {
               size="icon"
               onClick={handleDismiss}
               className="h-8 w-8 flex-shrink-0"
+              aria-label="Sluiten"
             >
               <X className="w-4 h-4" />
               <span className="sr-only">Sluiten</span>

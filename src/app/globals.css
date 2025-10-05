@@ -35,7 +35,7 @@
     --secondary-foreground: 220 15% 20%;
     
     --muted: 220 10% 95%;
-    --muted-foreground: 220 8% 46%;
+    --muted-foreground: 220 10% 35%; /* Darker for WCAG AA contrast (was 46%) */
     
     --accent: 217 91% 95%;
     --accent-foreground: 217 91% 15%;
@@ -62,7 +62,7 @@
     --serious-foreground: 0 0% 99%;
     --moderate: 38 92% 50%;
     --moderate-foreground: 48 96% 9%;
-    --minor: 220 8% 46%;
+    --minor: 220 10% 35%; /* Darker for WCAG AA contrast (was 46%) */
     --minor-foreground: 0 0% 99%;
     
     /* Charts - Harmonious palette */
@@ -86,7 +86,7 @@
     --tp-muted: #F5F7FB;
     --tp-border: #E5E7EB;
     --tp-text: #0B1220;
-    --tp-text-muted: #475569;
+    --tp-text-muted: #334155; /* Darker for WCAG AA contrast (was #475569) */
     --tp-primary: #2563EB;
     --tp-primary-hover: #1D4ED8;
     --tp-accent: #14B8A6;
