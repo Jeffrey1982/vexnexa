@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PLAN_NAMES } from "@/lib/billing/plans";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
-import { Search, Users, Crown, TrendingUp } from "lucide-react";
+import { Search, Users, Crown, TrendingUp, FileText } from "lucide-react";
 
 // Force dynamic rendering for admin pages
 export const dynamic = 'force-dynamic';
@@ -185,6 +185,12 @@ export default async function AdminDashboard() {
                   <Button variant="outline" className="w-full justify-start">
                     <Users className="w-4 h-4 mr-2" />
                     Manage All Users
+                  </Button>
+                </Link>
+                <Link href="/admin/blog" className="w-full">
+                  <Button variant="outline" className="w-full justify-start">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Manage Blog Posts
                   </Button>
                 </Link>
                 <Link href="/admin/upgrade" className="w-full">
