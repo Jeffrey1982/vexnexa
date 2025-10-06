@@ -64,11 +64,9 @@ async function getRecentScans(userId: string) {
     return scans.map(scan => ({
       ...scan,
       createdAt: scan.createdAt.toISOString(),
-      updatedAt: scan.updatedAt.toISOString(),
       site: {
         ...scan.site,
         createdAt: scan.site.createdAt.toISOString(),
-        updatedAt: scan.site.updatedAt.toISOString(),
       }
     }));
   } catch (error) {
