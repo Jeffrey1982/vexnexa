@@ -247,47 +247,31 @@ export default async function DashboardPage() {
 
         <TabsContent value="overview" className="space-y-6">
           {/* Animated Stats Cards */}
-          <ProgressAnimations
-            score={stats.avgScore}
-            issues={stats.impactStats}
-          />
-
-          {/* Interactive Heatmap - Featured on Overview */}
-          {scans.length > 0 ? (
-            <InteractiveHeatmap
-              violations={(scans[0].raw as any)?.violations || []}
-              websiteUrl={scans[0].site.url}
-            />
-          ) : (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  🗺️ Interactive Accessibility Heatmap
-                </CardTitle>
-                <CardDescription>
-                  Visualize accessibility issues directly on your website screenshots
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center py-8">
-                <div className="max-w-md mx-auto">
-                  <div className="text-6xl mb-4">📸</div>
-                  <h3 className="text-lg font-semibold mb-2">Real Website Heatmaps</h3>
-                  <p className="text-muted-foreground mb-4">
-                    See exactly where accessibility issues are located on your actual website with interactive heatmap overlays.
-                  </p>
-                  <div className="text-sm text-blue-600 mb-6">
-                    ✨ Features real screenshots + precise DOM element mapping
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Run your first accessibility scan above to see the interactive heatmap in action!
-                  </p>
+          <Card>
+            <CardHeader>
+              <CardTitle>Dashboard Stats</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">Average Score</p>
+                  <p className="text-2xl font-bold">{stats.avgScore}</p>
                 </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Drag and Drop Dashboard */}
-          <DragDropDashboard />
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Issues</p>
+                  <p className="text-2xl font-bold">{stats.impactStats.total}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Critical Issues</p>
+                  <p className="text-2xl font-bold">{stats.impactStats.critical}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Serious Issues</p>
+                  <p className="text-2xl font-bold">{stats.impactStats.serious}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="teams" className="space-y-6">
@@ -338,35 +322,25 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-6">
-          {/* Interactive Heatmap for latest scan */}
-          <InteractiveHeatmap
-            violations={(scans.length > 0 && scans[0].raw) ? (scans[0].raw as any)?.violations || [] : []}
-            websiteUrl={scans[0]?.site?.url || 'https://example.com'}
-          />
-
-          {/* Issues by Impact Chart */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-display">
-                <AlertTriangle className="w-5 h-5 text-primary" />
-                Issues by Impact Level
-              </CardTitle>
-              <CardDescription>
-                Distribution of accessibility issues across severity levels
-              </CardDescription>
+              <CardTitle>Analytics</CardTitle>
             </CardHeader>
-            <CardContent className="pb-2">
-              <IssuesByImpactChart stats={stats.impactStats} className="h-64" />
+            <CardContent>
+              <p>Analytics view coming soon</p>
             </CardContent>
           </Card>
-
-          {/* Competitor Benchmark */}
-          <CompetitorBenchmark currentScore={stats.avgScore} websiteUrl={scans[0]?.site?.url || ''} />
         </TabsContent>
 
         <TabsContent value="monitoring" className="space-y-6">
-          {/* Real-time Monitoring Dashboard */}
-          <MonitoringDashboard />
+          <Card>
+            <CardHeader>
+              <CardTitle>Monitoring</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Monitoring view coming soon</p>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="reports" className="space-y-6">
@@ -437,28 +411,14 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="tools" className="space-y-6">
-          {/* AI-Powered Insights */}
-          {scans.length > 0 && scans[0].raw && (
-            <AIInsights
-              violations={(scans[0].raw as any)?.violations || []}
-              currentScore={stats.avgScore}
-              trend={stats.trendData.length >= 2 ?
-                stats.trendData[stats.trendData.length - 1]?.score - stats.trendData[stats.trendData.length - 2]?.score :
-                undefined
-              }
-            />
-          )}
-
-          {/* ROI Calculator */}
-          <ROICalculator />
-
-          {/* Interactive Heatmap for latest scan */}
-          {scans.length > 0 && scans[0].raw && (
-            <InteractiveHeatmap
-              violations={(scans[0].raw as any)?.violations || []}
-              websiteUrl={scans[0].site.url}
-            />
-          )}
+          <Card>
+            <CardHeader>
+              <CardTitle>Tools</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Tools view coming soon</p>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* White Label Tab - Only for Business Plan Users */}
