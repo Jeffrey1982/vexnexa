@@ -76,6 +76,7 @@ export function Navbar({ className }: NavbarProps) {
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl group-hover:text-primary transition-colors duration-200">TutusPorta</span>
               <span className="text-xs text-muted-foreground -mt-0.5">by Vexnexa</span>
+              <span className="text-[10px] text-muted-foreground/80 -mt-0.5">Your Secure Path to Accessibility</span>
             </div>
           </Link>
 
@@ -186,6 +187,7 @@ export function Navbar({ className }: NavbarProps) {
                     <div className="flex flex-col">
                       <span className="font-display font-bold text-xl">TutusPorta</span>
                       <span className="text-xs text-muted-foreground -mt-0.5">by Vexnexa</span>
+                      <span className="text-[10px] text-muted-foreground/80 -mt-0.5">Your Secure Path to Accessibility</span>
                     </div>
                   </Link>
                 </SheetTitle>
