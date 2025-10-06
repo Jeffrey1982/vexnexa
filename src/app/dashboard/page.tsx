@@ -17,7 +17,7 @@ import { IssuesByImpactChart } from "@/components/IssuesByImpactChart";
 import { TrendMini } from "@/components/TrendMini";
 import { formatDate, formatDateShort, getFaviconFromUrl } from "@/lib/format";
 import { computeIssueStats, Violation } from "@/lib/axe-types";
-import { Search, Plus, Activity, AlertTriangle, TrendingUp, Users, Shield, FileText } from "lucide-react";
+import { Search, Plus, Activity, AlertTriangle, TrendingUp, Users, Shield, FileText, Clock } from "lucide-react";
 import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
@@ -379,19 +379,64 @@ export default async function DashboardPage() {
                 Continuous Monitoring
               </CardTitle>
               <CardDescription>
-                Monitor your websites for accessibility regressions
+                Track accessibility changes and get notified of regressions
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8">
-                <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">24/7 Monitoring</h3>
-                <p className="text-muted-foreground mb-4">
-                  Get alerts when new accessibility issues are detected on your websites.
-                </p>
-                <p className="text-sm text-blue-600">
-                  Set up monitoring in Settings to enable real-time alerts
-                </p>
+              <div className="space-y-6">
+                {/* Monitoring Status */}
+                <div className="text-center py-8 border rounded-lg bg-muted/30">
+                  <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Monitoring Coming Soon</h3>
+                  <p className="text-muted-foreground mb-4 max-w-md mx-auto">
+                    Automated monitoring will track your websites and alert you when accessibility scores drop or new issues are detected.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+                    <Button asChild variant="outline">
+                      <Link href="/settings/notifications">
+                        <Activity className="w-4 h-4 mr-2" />
+                        Configure Notifications
+                      </Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link href="/settings/billing">
+                        <TrendingUp className="w-4 h-4 mr-2" />
+                        Upgrade Plan
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Monitoring Features Preview */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="w-5 h-5 text-blue-600" />
+                      <h4 className="font-semibold">Scheduled Scans</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Automatically scan your sites daily, weekly, or monthly
+                    </p>
+                  </div>
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className="w-5 h-5 text-orange-600" />
+                      <h4 className="font-semibold">Instant Alerts</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Get email notifications when scores drop or issues increase
+                    </p>
+                  </div>
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <TrendingUp className="w-5 h-5 text-green-600" />
+                      <h4 className="font-semibold">Trend Tracking</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      View historical data and track improvements over time
+                    </p>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
