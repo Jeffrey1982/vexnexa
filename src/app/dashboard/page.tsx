@@ -23,6 +23,8 @@ import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
 import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import BrandedHeader from "@/components/white-label/BrandedHeader";
+import BrandedFooter from "@/components/white-label/BrandedFooter";
 import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
@@ -197,6 +199,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <BrandedHeader />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
 
 
@@ -247,27 +250,39 @@ export default async function DashboardPage() {
 
         <TabsContent value="overview" className="space-y-6">
           {/* Animated Stats Cards */}
+          <ProgressAnimations
+            score={stats.avgScore || 0}
+            issues={stats.impactStats || { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }}
+          />
+
+          {/* Simple Stats Card as fallback */}
           <Card>
             <CardHeader>
-              <CardTitle>Dashboard Stats</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="w-5 h-5 text-primary" />
+                Quick Overview
+              </CardTitle>
+              <CardDescription>
+                Your accessibility metrics at a glance
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-4 border rounded-lg">
                   <p className="text-sm text-muted-foreground">Average Score</p>
-                  <p className="text-2xl font-bold">{stats.avgScore}</p>
+                  <p className="text-3xl font-bold text-primary">{stats.avgScore}</p>
                 </div>
-                <div>
+                <div className="p-4 border rounded-lg">
                   <p className="text-sm text-muted-foreground">Total Issues</p>
-                  <p className="text-2xl font-bold">{stats.impactStats.total}</p>
+                  <p className="text-3xl font-bold">{stats.impactStats.total}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Critical Issues</p>
-                  <p className="text-2xl font-bold">{stats.impactStats.critical}</p>
+                <div className="p-4 border rounded-lg">
+                  <p className="text-sm text-muted-foreground">Critical</p>
+                  <p className="text-3xl font-bold text-red-600">{stats.impactStats.critical}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Serious Issues</p>
-                  <p className="text-2xl font-bold">{stats.impactStats.serious}</p>
+                <div className="p-4 border rounded-lg">
+                  <p className="text-sm text-muted-foreground">Serious</p>
+                  <p className="text-3xl font-bold text-orange-600">{stats.impactStats.serious}</p>
                 </div>
               </div>
             </CardContent>
@@ -322,23 +337,62 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-6">
+          {/* Issues by Impact Chart */}
           <Card>
             <CardHeader>
-              <CardTitle>Analytics</CardTitle>
+              <CardTitle className="flex items-center gap-2 font-display">
+                <AlertTriangle className="w-5 h-5 text-primary" />
+                Issues by Impact Level
+              </CardTitle>
+              <CardDescription>
+                Distribution of accessibility issues across severity levels
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pb-2">
+              <IssuesByImpactChart stats={stats.impactStats} className="h-64" />
+            </CardContent>
+          </Card>
+
+          {/* Trend Analysis */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Trend Analysis</CardTitle>
+              <CardDescription>Track your accessibility improvements over time</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Analytics view coming soon</p>
+              <div className="h-64 flex items-center justify-center text-muted-foreground">
+                <div className="text-center">
+                  <TrendingUp className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                  <p>Run more scans to see trends</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="monitoring" className="space-y-6">
+          {/* Monitoring Overview */}
           <Card>
             <CardHeader>
-              <CardTitle>Monitoring</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-primary" />
+                Continuous Monitoring
+              </CardTitle>
+              <CardDescription>
+                Monitor your websites for accessibility regressions
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Monitoring view coming soon</p>
+              <div className="text-center py-8">
+                <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">24/7 Monitoring</h3>
+                <p className="text-muted-foreground mb-4">
+                  Get alerts when new accessibility issues are detected on your websites.
+                </p>
+                <p className="text-sm text-blue-600">
+                  Set up monitoring in Settings to enable real-time alerts
+                </p>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -411,12 +465,35 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="tools" className="space-y-6">
+          {/* ROI Calculator */}
+          <ROICalculator />
+
+          {/* Additional Tools */}
           <Card>
             <CardHeader>
-              <CardTitle>Tools</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-primary" />
+                Accessibility Resources
+              </CardTitle>
+              <CardDescription>
+                Tools and guides to help improve your website accessibility
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Tools view coming soon</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 border rounded-lg hover:border-primary transition-colors">
+                  <h4 className="font-semibold mb-2">WCAG Guidelines</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Learn about WCAG 2.1 AA compliance requirements
+                  </p>
+                </div>
+                <div className="p-4 border rounded-lg hover:border-primary transition-colors">
+                  <h4 className="font-semibold mb-2">Quick Fixes</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Common accessibility issues and how to fix them
+                  </p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -688,6 +765,7 @@ export default async function DashboardPage() {
         </CardContent>
       </Card>
       </div>
+      <BrandedFooter />
     </div>
   );
 }// Force deployment Wed, Sep 24, 2025  6:21:38 PM
