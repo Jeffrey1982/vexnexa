@@ -23,8 +23,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
 import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
-import BrandedHeader from "@/components/white-label/BrandedHeader";
-import BrandedFooter from "@/components/white-label/BrandedFooter";
+import DashboardNav from "@/components/dashboard/DashboardNav";
 import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
@@ -199,7 +198,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <BrandedHeader />
+      <DashboardNav user={user} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
 
 
@@ -810,7 +809,6 @@ export default async function DashboardPage() {
         </CardContent>
       </Card>
       </div>
-      <BrandedFooter />
     </div>
   );
 }// Force deployment Wed, Sep 24, 2025  6:21:38 PM
