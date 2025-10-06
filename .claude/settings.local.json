@@ -22,7 +22,8 @@
       "Bash(curl -s https://www.tutusporta.com/api/chromium-test)",
       "Bash(git log:*)",
       "Bash(node:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

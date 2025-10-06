@@ -52,11 +52,7 @@ async function getRecentScans(userId: string) {
         },
       },
       include: {
-        site: {
-          include: {
-            user: true,
-          },
-        },
+        site: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -64,7 +60,17 @@ async function getRecentScans(userId: string) {
       take: 10,
     });
 
-    return scans;
+    // Serialize dates to strings for client components
+    return scans.map(scan => ({
+      ...scan,
+      createdAt: scan.createdAt.toISOString(),
+      updatedAt: scan.updatedAt.toISOString(),
+      site: {
+        ...scan.site,
+        createdAt: scan.site.createdAt.toISOString(),
+        updatedAt: scan.site.updatedAt.toISOString(),
+      }
+    }));
   } catch (error) {
     console.error("Failed to fetch scans:", error);
     return [];
