@@ -20,9 +20,9 @@ import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Za
 import { SiteImage } from "@/components/SiteImage";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import BrandedHeader from "@/components/white-label/BrandedHeader";
-import BrandedFooter from "@/components/white-label/BrandedFooter";
+import DashboardNav from "@/components/dashboard/DashboardNav";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
+import { requireAuth } from "@/lib/auth";
 import { EnhancedScanResults } from "@/components/EnhancedScanResults";
 import {
   getScanTrendData,
@@ -136,6 +136,9 @@ function getStatusBadge(status: string) {
 }
 
 export default async function ScanDetailPage({ params }: PageProps) {
+  // Get authenticated user
+  const user = await requireAuth();
+
   const scan = await getScanDetails(params.id);
 
   if (!scan) {
@@ -177,7 +180,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <BrandedHeader />
+      <DashboardNav user={user} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -624,7 +627,6 @@ export default async function ScanDetailPage({ params }: PageProps) {
         </div>
       </div>
       </div>
-      <BrandedFooter />
     </div>
   );
 }
