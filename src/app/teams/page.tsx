@@ -1,3 +1,7 @@
+// Force dynamic rendering for authenticated pages
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import { TeamList } from "@/components/teams/TeamList";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
