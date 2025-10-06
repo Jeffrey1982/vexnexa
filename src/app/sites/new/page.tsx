@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,21 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ArrowLeft, Globe, Loader2, Play } from "lucide-react";
 import Link from "next/link";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
+import { createClient } from "@/lib/supabase/client-new";
 
 export default function NewSitePage() {
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, [supabase]);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -67,8 +80,10 @@ export default function NewSitePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-2xl">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <DashboardNav user={user} />
+      <div className="flex-1 py-8">
+        <div className="container mx-auto px-4 max-w-2xl">
         {/* Header */}
         <div className="mb-8">
           <Link href="/dashboard" className="inline-flex items-center text-blue-600 hover:text-blue-500 mb-4">
@@ -177,7 +192,9 @@ export default function NewSitePage() {
             </p>
           </CardContent>
         </Card>
+        </div>
       </div>
+      <DashboardFooter />
     </div>
   );
 }

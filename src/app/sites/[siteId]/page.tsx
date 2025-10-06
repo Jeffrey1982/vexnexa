@@ -5,6 +5,9 @@ import Link from "next/link";
 import StartCrawlButton from "./StartCrawlButton";
 import PagesTable from "./PagesTable";
 import { useState, useEffect } from "react";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
+import { createClient } from "@/lib/supabase/client-new";
 
 interface PageProps {
   params: {
@@ -17,16 +20,21 @@ export default function SitePage({ params }: PageProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'analytics' | 'monitoring' | 'reports'>('overview');
   const [site, setSite] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
 
   useEffect(() => {
-    async function fetchSiteData() {
+    async function fetchData() {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+
       const response = await fetch(`/api/sites/${siteId}`);
       const data = await response.json();
       setSite(data);
       setLoading(false);
     }
-    fetchSiteData();
-  }, [siteId]);
+    fetchData();
+  }, [siteId, supabase]);
 
   if (loading) {
     return <div className="min-h-screen bg-gray-50 p-8">Loading...</div>;

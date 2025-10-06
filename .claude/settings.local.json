@@ -23,7 +23,8 @@
       "Bash(git log:*)",
       "Bash(node:*)",
       "Bash(curl:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

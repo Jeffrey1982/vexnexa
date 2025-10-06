@@ -14,139 +14,168 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { 
-  Check, 
-  X, 
-  Zap, 
-  Star, 
+import {
+  Check,
+  X,
+  Zap,
+  Star,
   Users,
   ArrowRight,
   Loader2,
-  AlertTriangle
+  AlertTriangle,
+  Info,
+  HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ENTITLEMENTS, PLAN_NAMES, formatPrice } from "@/lib/billing/plans";
+import { ENTITLEMENTS, PLAN_NAMES, formatPrice, OVERFLOW_PRICING } from "@/lib/billing/plans";
+import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 
-// Metadata handled by layout since this is a Client Component
+// JSON-LD for pricing
+function PricingJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "TutusPorta Accessibility Scanner",
+    description: "Web accessibility scanning with deeper coverage beyond WCAG",
+    brand: {
+      "@type": "Brand",
+      name: "TutusPorta by Vexnexa",
+    },
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Starter Plan",
+        price: "9.00",
+        priceCurrency: "EUR",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "9.00",
+          priceCurrency: "EUR",
+          unitText: "MONTH",
+        },
+      },
+      {
+        "@type": "Offer",
+        name: "Pro Plan",
+        price: "29.00",
+        priceCurrency: "EUR",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "29.00",
+          priceCurrency: "EUR",
+          unitText: "MONTH",
+        },
+      },
+      {
+        "@type": "Offer",
+        name: "Business Plan",
+        price: "79.00",
+        priceCurrency: "EUR",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "79.00",
+          priceCurrency: "EUR",
+          unitText: "MONTH",
+        },
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
 
 const plans = [
   {
-    key: "TRIAL" as const,
-    name: "Trial", 
-    price: "€0",
-    period: "",
-    description: "Perfect om te starten met accessibility scanning",
-    highlighted: false,
-    features: [
-      `${ENTITLEMENTS.TRIAL.pagesPerMonth} pagina's per maand`,
-      `${ENTITLEMENTS.TRIAL.sites} website`,
-      "PDF export",
-      "Basis rapport", 
-      "14 dagen gratis",
-    ],
-    limitations: [
-      "Geen Word export",
-      "Geen scheduling",
-      "Beperkte integraties",
-    ],
-    cta: "Start gratis trial",
-    ctaHref: "/dashboard",
-    ctaVariant: "outline" as const,
-    isTrial: true,
-  },
-  {
     key: "STARTER" as const,
     name: "Starter",
-    price: formatPrice("STARTER"),
-    period: "",
-    description: "Voor kleine websites en persoonlijk gebruik",
+    price: "€9",
+    period: "/month",
+    description: "For small websites and personal use",
     highlighted: false,
     features: [
-      `${ENTITLEMENTS.STARTER.pagesPerMonth} pagina's per maand`,
       `${ENTITLEMENTS.STARTER.sites} website`,
+      `${ENTITLEMENTS.STARTER.pagesPerMonth} pages/month`,
+      `${ENTITLEMENTS.STARTER.users} user`,
       "PDF export",
-      "Basis rapporten",
-      "E-mail support",
+      "Basic reports",
+      "Email support",
     ],
     limitations: [
-      "Geen Word export", 
-      "Geen scheduling",
-      "Beperkte integraties",
+      "No Word export",
+      "No scheduling",
+      "Limited integrations",
     ],
-    cta: "Upgrade naar Starter",
-    ctaVariant: "default" as const,
-    isTrial: false,
+    cta: "Start with Starter",
+    ctaVariant: "outline" as const,
   },
   {
     key: "PRO" as const,
     name: "Pro",
-    price: formatPrice("PRO"), 
-    period: "",
-    description: "Voor professionals die regelmatig scannen",
+    price: "€29",
+    period: "/month",
+    description: "For professionals who scan regularly",
     highlighted: true,
     features: [
-      `${ENTITLEMENTS.PRO.pagesPerMonth} pagina's per maand`,
       `${ENTITLEMENTS.PRO.sites} websites`,
-      `${ENTITLEMENTS.PRO.users} gebruikers`,
+      `${ENTITLEMENTS.PRO.pagesPerMonth} pages/month`,
+      `${ENTITLEMENTS.PRO.users} users`,
       "PDF + Word export",
-      "Uitgebreide rapporten", 
+      "Advanced reports",
       "Scheduling",
-      "Slack & Jira integratie",
+      "Slack & Jira integration",
       "Priority support",
     ],
     limitations: [],
-    cta: "Upgrade naar Pro",
+    cta: "Try Pro",
     ctaVariant: "default" as const,
-    isTrial: false,
   },
   {
     key: "BUSINESS" as const,
     name: "Business",
-    price: formatPrice("BUSINESS"),
-    period: "",
-    description: "Voor teams en enterprise gebruik",
+    price: "€79",
+    period: "/month",
+    description: "For teams and enterprise use",
     highlighted: false,
     features: [
-      `${ENTITLEMENTS.BUSINESS.pagesPerMonth} pagina's per maand`,
       `${ENTITLEMENTS.BUSINESS.sites} websites`,
-      `${ENTITLEMENTS.BUSINESS.users} gebruikers`,
-      "Alle exports (PDF + Word)",
-      "White label rapporten",
+      `${ENTITLEMENTS.BUSINESS.pagesPerMonth} pages/month`,
+      `${ENTITLEMENTS.BUSINESS.users} users`,
+      "All exports (PDF + Word)",
+      "White label reports",
       "Advanced scheduling",
-      "Alle integraties",
-      "Priority support (4u response)",
+      "All integrations",
+      "Priority support (4h response)",
     ],
     limitations: [],
-    cta: "Upgrade naar Business",
+    cta: "Start with Business",
     ctaVariant: "default" as const,
-    isTrial: false,
-  },
-];
-
-const comparisonFeatures = [
-  { 
-    category: "Gebruikslimiet",
-    features: [
-      { name: "Pagina's per maand", trial: ENTITLEMENTS.TRIAL.pagesPerMonth, starter: ENTITLEMENTS.STARTER.pagesPerMonth, pro: ENTITLEMENTS.PRO.pagesPerMonth, business: ENTITLEMENTS.BUSINESS.pagesPerMonth },
-      { name: "Websites", trial: ENTITLEMENTS.TRIAL.sites, starter: ENTITLEMENTS.STARTER.sites, pro: ENTITLEMENTS.PRO.sites, business: ENTITLEMENTS.BUSINESS.sites },
-      { name: "Gebruikers", trial: ENTITLEMENTS.TRIAL.users, starter: ENTITLEMENTS.STARTER.users, pro: ENTITLEMENTS.PRO.users, business: ENTITLEMENTS.BUSINESS.users },
-    ]
   },
   {
-    category: "Rapporten & Export", 
+    key: "ENTERPRISE" as const,
+    name: "Enterprise",
+    price: "Custom",
+    period: "",
+    description: "Unlimited scanning for large organizations",
+    highlighted: false,
     features: [
-      { name: "PDF export", trial: ENTITLEMENTS.TRIAL.pdf, starter: ENTITLEMENTS.STARTER.pdf, pro: ENTITLEMENTS.PRO.pdf, business: ENTITLEMENTS.BUSINESS.pdf },
-      { name: "Word export", trial: ENTITLEMENTS.TRIAL.word, starter: ENTITLEMENTS.STARTER.word, pro: ENTITLEMENTS.PRO.word, business: ENTITLEMENTS.BUSINESS.word },
-      { name: "White label", trial: ENTITLEMENTS.TRIAL.whiteLabel || false, starter: ENTITLEMENTS.STARTER.whiteLabel || false, pro: ENTITLEMENTS.PRO.whiteLabel || false, business: ENTITLEMENTS.BUSINESS.whiteLabel || false },
-    ]
-  },
-  {
-    category: "Features",
-    features: [
-      { name: "Scheduling", trial: ENTITLEMENTS.TRIAL.schedule, starter: ENTITLEMENTS.STARTER.schedule, pro: ENTITLEMENTS.PRO.schedule, business: ENTITLEMENTS.BUSINESS.schedule },
-      { name: "Slack integratie", trial: ENTITLEMENTS.TRIAL.integrations.includes("slack"), starter: ENTITLEMENTS.STARTER.integrations.includes("slack"), pro: ENTITLEMENTS.PRO.integrations.includes("slack"), business: ENTITLEMENTS.BUSINESS.integrations.includes("slack") },
-      { name: "Jira integratie", trial: ENTITLEMENTS.TRIAL.integrations.includes("jira"), starter: ENTITLEMENTS.STARTER.integrations.includes("jira"), pro: ENTITLEMENTS.PRO.integrations.includes("jira"), business: ENTITLEMENTS.BUSINESS.integrations.includes("jira") },
-    ]
+      "Unlimited websites",
+      "Unlimited pages",
+      "Unlimited users",
+      "Custom integrations",
+      "SSO/SAML",
+      "Dedicated support",
+      "SLA guarantee",
+      "On-premise option",
+    ],
+    limitations: [],
+    cta: "Talk to us",
+    ctaHref: "/contact",
+    ctaVariant: "outline" as const,
   },
 ];
 
@@ -156,22 +185,28 @@ function HeroSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <Badge variant="outline" className="mb-4">
-            💰 Transparante prijzen
+            💰 Transparent pricing
           </Badge>
-          
+
           <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
-            Kies het juiste plan voor{" "}
-            <span className="text-primary">jouw project</span>
+            Choose the right plan for{" "}
+            <span className="text-primary">your project</span>
           </h1>
-          
+
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            Van gratis trial tot enterprise features. 
-            Alle prijzen zijn transparant en maandelijks opzegbaar.
+            From free trial to enterprise features. All prices are transparent and
+            monthly cancellable.
           </p>
-          
-          <div className="flex justify-center">
+
+          <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="secondary" className="text-sm">
-              Alle prijzen exclusief btw
+              All prices exclude VAT
+            </Badge>
+            <Badge variant="secondary" className="text-sm">
+              No setup fees
+            </Badge>
+            <Badge variant="secondary" className="text-sm">
+              Cancel anytime
             </Badge>
           </div>
         </div>
@@ -184,12 +219,15 @@ function PricingCards() {
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleUpgrade = async (planKey: string) => {
-    if (planKey === "TRIAL") return;
-    
+  const handleUpgrade = async (planKey: string, href?: string) => {
+    if (href) {
+      window.location.href = href;
+      return;
+    }
+
     setLoading(planKey);
     setError(null);
-    
+
     try {
       const response = await fetch("/api/mollie/checkout", {
         method: "POST",
@@ -198,19 +236,19 @@ function PricingCards() {
         },
         body: JSON.stringify({ plan: planKey }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || "Failed to create checkout");
       }
-      
-      // Redirect to Mollie checkout
+
       window.location.href = data.url;
-      
     } catch (err) {
       console.error("Checkout error:", err);
-      setError(err instanceof Error ? err.message : "Er ging iets mis. Probeer opnieuw.");
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
       setLoading(null);
     }
   };
@@ -224,62 +262,65 @@ function PricingCards() {
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
-        
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {plans.map((plan) => (
-            <Card 
-              key={plan.key} 
+            <Card
+              key={plan.key}
               className={cn(
-                "relative",
-                plan.highlighted && "border-primary shadow-xl scale-105"
+                "relative flex flex-col",
+                plan.highlighted && "border-primary shadow-xl lg:scale-105"
               )}
             >
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-primary text-primary-foreground">
                     <Star className="w-3 h-3 mr-1" />
-                    Populair
+                    Popular
                   </Badge>
                 </div>
               )}
-              
+
               <CardHeader className="text-center pb-8">
                 <CardTitle className="font-display text-2xl">{plan.name}</CardTitle>
                 <div className="mt-4">
                   <span className="text-4xl font-bold font-display">{plan.price}</span>
                   <span className="text-muted-foreground">{plan.period}</span>
                 </div>
-                <p className="text-muted-foreground mt-2">{plan.description}</p>
+                <p className="text-muted-foreground mt-2 text-sm">{plan.description}</p>
               </CardHeader>
-              
-              <CardContent className="space-y-6">
-                <div className="space-y-3">
+
+              <CardContent className="space-y-6 flex-1 flex flex-col">
+                <div className="space-y-3 flex-1">
                   {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center space-x-3">
-                      <Check className="h-4 w-4 text-success flex-shrink-0" />
+                    <div key={featureIndex} className="flex items-start space-x-3">
+                      <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
                       <span className="text-sm">{feature}</span>
                     </div>
                   ))}
-                  
+
                   {plan.limitations.map((limitation, limitationIndex) => (
-                    <div key={limitationIndex} className="flex items-center space-x-3 opacity-60">
-                      <X className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <div
+                      key={limitationIndex}
+                      className="flex items-start space-x-3 opacity-60"
+                    >
+                      <X className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
                       <span className="text-sm text-muted-foreground">{limitation}</span>
                     </div>
                   ))}
                 </div>
-                
-                <Button 
-                  className="w-full"
+
+                <Button
+                  className="w-full mt-auto"
                   variant={plan.ctaVariant}
                   size="lg"
-                  onClick={() => plan.isTrial && plan.ctaHref ? window.location.href = plan.ctaHref : handleUpgrade(plan.key)}
+                  onClick={() => handleUpgrade(plan.key, plan.ctaHref)}
                   disabled={loading === plan.key}
                 >
                   {loading === plan.key ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Laden...
+                      Loading...
                     </>
                   ) : (
                     <>
@@ -292,12 +333,12 @@ function PricingCards() {
             </Card>
           ))}
         </div>
-        
+
         <div className="text-center mt-12">
           <p className="text-muted-foreground">
-            Prijzen exclusief btw. Maandelijks opzegbaar. 
+            All plans exclude VAT. Cancel anytime.{" "}
             <Link href="/contact" className="text-primary hover:underline ml-1">
-              Vragen? Neem contact op.
+              Questions? Contact us.
             </Link>
           </p>
         </div>
@@ -306,72 +347,162 @@ function PricingCards() {
   );
 }
 
-function ComparisonTable() {
-  const renderValue = (value: any) => {
-    if (typeof value === 'boolean') {
-      return value ? (
-        <Check className="h-4 w-4 text-success mx-auto" />
-      ) : (
-        <X className="h-4 w-4 text-muted-foreground mx-auto" />
-      );
-    }
-    return <span className="text-sm">{value}</span>;
-  };
-
+function OverflowPricingSection() {
   return (
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Vergelijk alle features
+              Overflow Pricing
             </h2>
             <p className="text-xl text-muted-foreground">
-              Gedetailleerd overzicht van wat elk plan bevat
+              When you exceed your plan limits, we charge small amounts instead of
+              blocking you
             </p>
           </div>
-          
-          <div className="space-y-8">
-            {comparisonFeatures.map((category, categoryIndex) => (
-              <Card key={categoryIndex}>
-                <CardHeader>
-                  <CardTitle className="font-display">{category.category}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Feature</TableHead>
-                        <TableHead className="text-center">Trial</TableHead>
-                        <TableHead className="text-center">Starter</TableHead>
-                        <TableHead className="text-center">
-                          <div className="flex items-center justify-center space-x-1">
-                            <span>Pro</span>
-                            <Star className="h-3 w-3 text-primary" />
-                          </div>
-                        </TableHead>
-                        <TableHead className="text-center">Business</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {category.features.map((feature, featureIndex) => (
-                        <TableRow key={featureIndex}>
-                          <TableCell className="font-medium">{feature.name}</TableCell>
-                          <TableCell className="text-center">{renderValue(feature.trial)}</TableCell>
-                          <TableCell className="text-center">{renderValue(feature.starter)}</TableCell>
-                          <TableCell className="text-center">{renderValue(feature.pro)}</TableCell>
-                          <TableCell className="text-center">{renderValue(feature.business)}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            ))}
+
+          <Card className="overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Resource</TableHead>
+                  <TableHead>Overflow Price</TableHead>
+                  <TableHead>Description</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Extra Pages</TableCell>
+                  <TableCell>€{OVERFLOW_PRICING.extraPage.amount}/{OVERFLOW_PRICING.extraPage.unit}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm">
+                    {OVERFLOW_PRICING.extraPage.description}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Extra Websites</TableCell>
+                  <TableCell>€{OVERFLOW_PRICING.extraSite.amount}/{OVERFLOW_PRICING.extraSite.unit}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm">
+                    {OVERFLOW_PRICING.extraSite.description}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Extra Users</TableCell>
+                  <TableCell>€{OVERFLOW_PRICING.extraUser.amount}/{OVERFLOW_PRICING.extraUser.unit}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm">
+                    {OVERFLOW_PRICING.extraUser.description}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Card>
+
+          <Alert className="mt-8">
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              <strong>How it works:</strong> When you consistently exceed your plan limits,
+              we'll notify you and recommend upgrading. Small overages are automatically
+              billed monthly. You're always in control.
+            </AlertDescription>
+          </Alert>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ComplianceDisclaimerSection() {
+  return (
+    <section className="py-12 border-y bg-amber-50 dark:bg-amber-950/20">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-500 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-semibold text-lg mb-2">Compliance Disclaimer</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong>No tool can guarantee 100% legal compliance in all contexts.</strong>{" "}
+                TutusPorta detects and reports issues, assists remediation, and helps you adhere
+                to WCAG and related standards. For legal risk assessment, consider an expert audit
+                and ongoing governance process. Our scanner is a tool to assist your compliance
+                efforts, not a legal guarantee.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link href="/legal/terms" className="text-sm text-primary hover:underline">
+                  Terms of Service
+                </Link>
+                <span className="text-muted-foreground">•</span>
+                <Link href="/legal/privacy" className="text-sm text-primary hover:underline">
+                  Privacy Policy
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ToolComparisonSection() {
+  const comparisonData = [
+    {
+      feature: "Coverage Depth",
+      tutusporta: "WCAG + 8 extra categories",
+      overlay: "Superficial fixes only",
+      generic: "Basic WCAG checks",
+    },
+    {
+      feature: "Actionability",
+      tutusporta: "Code snippets + remediation tips",
+      overlay: "No developer guidance",
+      generic: "Generic error messages",
+    },
+    {
+      feature: "Team Features",
+      tutusporta: true,
+      overlay: false,
+      generic: false,
+    },
+    {
+      feature: "Continuous Monitoring",
+      tutusporta: true,
+      overlay: false,
+      generic: false,
+    },
+    {
+      feature: "API Access",
+      tutusporta: true,
+      overlay: false,
+      generic: "Limited",
+    },
+    {
+      feature: "False Positives",
+      tutusporta: "Low",
+      overlay: "N/A",
+      generic: "High",
+    },
+    {
+      feature: "Legal Stance",
+      tutusporta: "Tool assists compliance",
+      overlay: "Claims to fix issues",
+      generic: "No legal claims",
+    },
+    {
+      feature: "Cost Scaling",
+      tutusporta: "Transparent overflow pricing",
+      overlay: "Per-page fees",
+      generic: "Fixed tiers only",
+    },
+  ];
+
+  return (
+    <ComparisonTable
+      title="How TutusPorta Compares"
+      description="Comparing our approach to overlay widgets and generic accessibility scanners"
+      rows={comparisonData}
+      disclaimer="Overlay widgets inject JavaScript that attempts to modify your site on the client side. While they may help some users, they don't fix underlying code issues and can create new accessibility problems. Generic scanners often miss context-specific issues. TutusPorta provides deeper automated coverage and actionable guidance for developers."
+    />
   );
 }
 
@@ -381,29 +512,29 @@ function CTASection() {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            Begin vandaag nog met scannen
+            Start scanning today
           </h2>
           <p className="text-xl opacity-90">
-            Start met een gratis trial en upgrade wanneer je meer functionaliteit nodig hebt. 
-            Geen setup, geen verrassingen.
+            Start with a free trial and upgrade when you need more functionality. No
+            setup fees, no surprises.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
               <Link href="/auth/register">
-                Start gratis trial
+                Start free trial
                 <Zap className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            
-            <Button 
-              size="lg" 
-              variant="outline" 
+
+            <Button
+              size="lg"
+              variant="outline"
               className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               asChild
             >
               <Link href="/contact">
-                Neem contact op
+                Contact sales
                 <Users className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -417,9 +548,12 @@ function CTASection() {
 export default function PricingPage() {
   return (
     <>
+      <PricingJsonLd />
       <HeroSection />
       <PricingCards />
-      <ComparisonTable />
+      <OverflowPricingSection />
+      <ComplianceDisclaimerSection />
+      <ToolComparisonSection />
       <CTASection />
     </>
   );

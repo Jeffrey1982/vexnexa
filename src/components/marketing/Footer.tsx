@@ -93,12 +93,12 @@ export function Footer({ className }: FooterProps) {
             </Link>
 
             <p className="text-muted-foreground leading-relaxed max-w-sm">
-              WCAG-scans die wél inzicht geven. Krijg concrete rapporten met prioriteiten en quick wins.
+              The secure gateway to web accessibility. Automated scanning with deeper coverage beyond traditional WCAG checks.
             </p>
 
             {/* Newsletter Signup */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">Blijf op de hoogte</h3>
+              <h3 className="font-semibold text-lg">Stay updated</h3>
               <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-sm">
                 <Input
                   type="email"
@@ -117,7 +117,7 @@ export function Footer({ className }: FooterProps) {
 
             {/* Social Links */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">Volg ons</h3>
+              <h3 className="font-semibold text-lg">Follow us</h3>
               <div className="flex items-center gap-3">
                 <a
                   href="https://linkedin.com/company/vexnexa"
@@ -189,7 +189,7 @@ export function Footer({ className }: FooterProps) {
                     Contact
                   </Link>
                   <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">
-                    Over ons
+                    About
                   </Link>
                   <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
                     Blog
@@ -199,13 +199,19 @@ export function Footer({ className }: FooterProps) {
 
               {/* Legal */}
               <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Juridisch</h3>
+                <h3 className="font-semibold text-lg">Legal</h3>
                 <div className="flex flex-col space-y-3 text-sm">
                   <Link href="/legal/privacy" className="text-muted-foreground hover:text-primary transition-colors">
-                    Privacy
+                    Privacy Policy
                   </Link>
                   <Link href="/legal/terms" className="text-muted-foreground hover:text-primary transition-colors">
-                    Voorwaarden
+                    Terms of Service
+                  </Link>
+                  <Link href="/legal/security" className="text-muted-foreground hover:text-primary transition-colors">
+                    Security
+                  </Link>
+                  <Link href="/legal/sla" className="text-muted-foreground hover:text-primary transition-colors">
+                    SLA & Support
                   </Link>
                 </div>
               </div>
@@ -222,7 +228,7 @@ export function Footer({ className }: FooterProps) {
             </div>
 
             <div className="text-xs text-muted-foreground text-center md:text-right max-w-md">
-              Publieke content scanning • Geen opslag van persoonsgegevens
+              Public content scanning • No storage of personal data
             </div>
           </div>
         </div>
