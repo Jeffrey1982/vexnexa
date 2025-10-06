@@ -121,6 +121,7 @@ function HeroSection() {
           {/* Right column - Dashboard screenshot */}
           <div className="relative animate-fade-in">
             <div className="relative z-10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/heroImage.png"
                 alt="TutusPorta accessibility scanning dashboard showing detailed reports and issue prioritization"
@@ -236,6 +237,7 @@ function FeaturesSection() {
 
           <div className="relative">
             <div className="bg-white rounded-lg shadow-xl p-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/Screenshot1.png"
                 alt="TutusPorta scan detail report showing accessibility issues with prioritization and remediation tips"

@@ -401,8 +401,8 @@ function OverflowPricingSection() {
             <Info className="h-4 w-4" />
             <AlertDescription>
               <strong>How it works:</strong> When you consistently exceed your plan limits,
-              we'll notify you and recommend upgrading. Small overages are automatically
-              billed monthly. You're always in control.
+              we&apos;ll notify you and recommend upgrading. Small overages are automatically
+              billed monthly. You&apos;re always in control.
             </AlertDescription>
           </Alert>
         </div>

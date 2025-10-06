@@ -62,7 +62,7 @@ export function Testimonials({
                 )}
 
                 <blockquote className="text-muted-foreground mb-6 leading-relaxed">
-                  "{testimonial.quote}"
+                  &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
 
                 <div className="border-t pt-4">

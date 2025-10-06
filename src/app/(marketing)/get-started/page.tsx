@@ -75,7 +75,7 @@ export default function GetStartedPage() {
               Get started with your first scan
             </h1>
             <p className="text-xl text-muted-foreground">
-              Enter your website URL and we'll run a comprehensive accessibility scan
+              Enter your website URL and we&apos;ll run a comprehensive accessibility scan
             </p>
           </div>
 
@@ -84,7 +84,7 @@ export default function GetStartedPage() {
             <CardHeader>
               <CardTitle className="text-2xl">Start your first scan</CardTitle>
               <CardDescription>
-                We'll analyze your website for accessibility issues and provide actionable
+                We&apos;ll analyze your website for accessibility issues and provide actionable
                 recommendations
               </CardDescription>
             </CardHeader>
@@ -153,7 +153,7 @@ export default function GetStartedPage() {
                       Email me when the scan is complete
                     </Label>
                     <p id="notify-help" className="text-sm text-muted-foreground">
-                      You'll receive a notification with a link to view your results
+                      You&apos;ll receive a notification with a link to view your results
                     </p>
                   </div>
                 </div>
