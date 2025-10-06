@@ -77,23 +77,24 @@ export default function DashboardNav({ user }: DashboardNavProps) {
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+    <nav className="border-b border-border/50 glass shadow-elegant sticky top-0 z-50 transition-all duration-200">
+      <div className="container mx-auto px-6">
+        <div className="flex justify-between items-center h-20">
           {/* Logo and Desktop Nav */}
           <div className="flex">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center shadow-sm group-hover:scale-105 transition-all duration-300">
-                <span className="text-primary-foreground font-bold text-sm">T</span>
+              <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-elegant group-hover:scale-105 transition-all duration-300 group-hover:shadow-soft">
+                <span className="text-primary-foreground font-bold text-base">T</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-bold text-lg group-hover:text-primary transition-colors">TutusPorta</span>
-                <span className="text-[10px] text-muted-foreground -mt-0.5">Your Secure Path to Accessibility</span>
+                <span className="font-display font-bold text-xl group-hover:text-primary transition-colors duration-200">TutusPorta</span>
+                <span className="text-xs text-muted-foreground -mt-0.5">by Vexnexa</span>
+                <span className="text-[10px] text-muted-foreground/80 -mt-0.5">Your Secure Path to Accessibility</span>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:ml-8 md:flex md:space-x-1">
+            <div className="hidden md:ml-10 md:flex md:items-center md:space-x-8">
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -101,13 +102,14 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                      'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
+                      'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
                       isActive(item.href)
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-primary'
+                        ? 'text-primary after:w-full'
+                        : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
                     )}
                   >
-                    <Icon className="w-4 h-4 mr-2" />
+                    <Icon className="w-4 h-4" />
                     {item.label}
                   </Link>
                 );
@@ -118,22 +120,22 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                 <button
                   onClick={() => setSettingsOpen(!settingsOpen)}
                   className={cn(
-                    'inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                    'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
                     pathname?.startsWith('/settings')
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-primary'
+                      ? 'text-primary'
+                      : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
-                  <Settings className="w-4 h-4 mr-2" />
+                  <Settings className="w-4 h-4" />
                   Settings
                   <ChevronDown className={cn(
-                    "w-4 h-4 ml-1 transition-transform",
+                    "w-3 h-3 transition-transform duration-200",
                     settingsOpen && "rotate-180"
                   )} />
                 </button>
 
                 {settingsOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1">
+                  <div className="absolute left-0 mt-2 w-52 glass rounded-lg shadow-elegant border border-border/50 py-2 overflow-hidden">
                     {settingsItems.map((item) => {
                       const Icon = item.icon;
                       return (
@@ -142,13 +144,13 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                           href={item.href}
                           onClick={() => setSettingsOpen(false)}
                           className={cn(
-                            'flex items-center px-4 py-2 text-sm transition-colors',
+                            'flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200',
                             isActive(item.href)
                               ? 'bg-primary/10 text-primary'
-                              : 'text-gray-700 hover:bg-gray-100'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                           )}
                         >
-                          <Icon className="w-4 h-4 mr-2" />
+                          <Icon className="w-4 h-4" />
                           {item.label}
                         </Link>
                       );
@@ -162,13 +164,14 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                 <Link
                   href="/admin"
                   className={cn(
-                    'inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                    'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
+                    'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
                     isActive('/admin')
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-primary'
+                      ? 'text-primary after:w-full'
+                      : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
                   )}
                 >
-                  <Shield className="w-4 h-4 mr-2" />
+                  <Shield className="w-4 h-4" />
                   Admin
                 </Link>
               )}
@@ -176,9 +179,9 @@ export default function DashboardNav({ user }: DashboardNavProps) {
           </div>
 
           {/* Right side - User info and Sign out */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
+          <div className="hidden md:flex md:items-center md:gap-4">
             {user && (
-              <div className="text-sm text-gray-700">
+              <div className="text-sm text-muted-foreground font-medium">
                 {user.user_metadata?.full_name || user.email}
               </div>
             )}
@@ -186,7 +189,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
               onClick={handleSignOut}
               variant="outline"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 shadow-sm hover:shadow-md transition-shadow"
             >
               <LogOut className="w-4 h-4" />
               Sign Out
@@ -197,7 +200,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 focus:outline-none transition-colors"
             >
               {mobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -211,8 +214,8 @@ export default function DashboardNav({ user }: DashboardNavProps) {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="md:hidden border-t border-border/50 glass">
+          <div className="px-4 pt-4 pb-3 space-y-2">
             {mainNavItems.map((item) => {
               const Icon = item.icon;
               return (
