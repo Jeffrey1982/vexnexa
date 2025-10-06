@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useWhiteLabel } from '@/lib/white-label/context';
+import { createClient } from '@/lib/supabase/client-new';
 
 interface BrandedHeaderProps {
   showNavigation?: boolean;
@@ -12,7 +13,7 @@ interface BrandedHeaderProps {
 export default function BrandedHeader({ showNavigation = true, className = '' }: BrandedHeaderProps) {
   let settings = null;
   let isLoading = true;
-  
+
   try {
     const whiteLabelContext = useWhiteLabel();
     settings = whiteLabelContext.settings;
@@ -22,6 +23,8 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
     settings = null;
     isLoading = false;
   }
+
+  const supabase = createClient();
 
   const companyName = settings?.companyName || 'TutusPorta';
   const logoUrl = settings?.logoUrl;
@@ -128,20 +131,23 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
             
             <button
               onClick={async () => {
-                // Clear client-side storage
-                if (typeof window !== 'undefined') {
-                  localStorage.clear();
-                  sessionStorage.clear();
-                }
-
-                // Submit logout request
                 try {
-                  const response = await fetch('/auth/logout', {
+                  // Clear client-side storage
+                  if (typeof window !== 'undefined') {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                  }
+
+                  // Sign out from Supabase client-side
+                  await supabase.auth.signOut();
+
+                  // Call server-side logout to clear all cookies
+                  await fetch('/auth/logout', {
                     method: 'POST',
                     credentials: 'include'
                   });
 
-                  // Always redirect to home regardless of response
+                  // Force a hard redirect to clear all state
                   window.location.href = '/';
                 } catch (error) {
                   console.error('Logout error:', error);
