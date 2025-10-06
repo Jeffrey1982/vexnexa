@@ -168,7 +168,9 @@ export default async function DashboardPage() {
     totalIssues: 0,
     criticalIssues: 0,
     totalSites: 0,
-    hasScans: false
+    hasScans: false,
+    trendData: [],
+    impactStats: { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }
   };
 
   try {
