@@ -64,7 +64,57 @@ export default function WhiteLabelPage() {
     }
   };
 
+  const validateSettings = (): { valid: boolean; errors: string[] } => {
+    const errors: string[] = [];
+
+    // Validate email format
+    if (settings.supportEmail) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(settings.supportEmail)) {
+        errors.push('Invalid support email format');
+      }
+    }
+
+    // Validate website URL
+    if (settings.website) {
+      try {
+        new URL(settings.website);
+      } catch {
+        errors.push('Invalid website URL format (must include http:// or https://)');
+      }
+    }
+
+    // Validate phone number format (basic)
+    if (settings.phone) {
+      const phoneRegex = /^[\d\s\+\-\(\)]+$/;
+      if (!phoneRegex.test(settings.phone)) {
+        errors.push('Invalid phone number format');
+      }
+    }
+
+    // Validate color formats
+    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
+    if (!colorRegex.test(settings.primaryColor)) {
+      errors.push('Invalid primary color format (must be hex: #RRGGBB)');
+    }
+    if (!colorRegex.test(settings.secondaryColor)) {
+      errors.push('Invalid secondary color format (must be hex: #RRGGBB)');
+    }
+    if (!colorRegex.test(settings.accentColor)) {
+      errors.push('Invalid accent color format (must be hex: #RRGGBB)');
+    }
+
+    return { valid: errors.length === 0, errors };
+  };
+
   const handleSave = async () => {
+    // Validate before saving
+    const validation = validateSettings();
+    if (!validation.valid) {
+      alert('Please fix the following errors:\n\n• ' + validation.errors.join('\n• '));
+      return;
+    }
+
     try {
       setIsSaving(true);
       const response = await fetch('/api/white-label', {
@@ -79,17 +129,17 @@ export default function WhiteLabelPage() {
 
       if (data.success) {
         setSettings(data.whiteLabel);
-        alert('White label settings saved successfully!');
+        alert('✓ White label settings saved successfully!');
       } else {
         if (data.code === 'UPGRADE_REQUIRED') {
-          alert('White labeling is only available for Business plan users. Please upgrade your plan.');
+          alert('⚠ White labeling is only available for Business plan users. Please upgrade your plan.');
         } else {
-          alert(data.error || 'Failed to save settings');
+          alert('✗ ' + (data.error || 'Failed to save settings'));
         }
       }
     } catch (error) {
       console.error('Error saving settings:', error);
-      alert('An error occurred while saving settings');
+      alert('✗ An error occurred while saving settings');
     } finally {
       setIsSaving(false);
     }

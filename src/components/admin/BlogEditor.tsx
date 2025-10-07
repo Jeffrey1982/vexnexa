@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   Save,
@@ -9,7 +9,11 @@ import {
   Image as ImageIcon,
   Tag,
   Calendar,
-  AlertCircle
+  AlertCircle,
+  BookOpen,
+  Clock,
+  CheckCircle2,
+  EyeOff
 } from "lucide-react";
 
 interface BlogEditorProps {
@@ -49,6 +53,16 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+  // Calculate word count and reading time
+  const stats = useMemo(() => {
+    const words = formData.content.trim().split(/\s+/).filter(w => w.length > 0).length;
+    const readingTime = Math.ceil(words / 200); // Average reading speed
+    const characters = formData.content.length;
+    return { words, readingTime, characters };
+  }, [formData.content]);
 
   const generateSlug = (title: string) => {
     return title
@@ -120,6 +134,8 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
       if (onSave) {
         onSave(data);
       }
+
+      setLastSaved(new Date());
     } catch (e: any) {
       setError(e.message || "An error occurred");
     } finally {
@@ -129,12 +145,25 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
 
   return (
     <div className="space-y-6">
-      {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800">{error}</p>
+      {/* Save Status & Errors */}
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
         </div>
-      )}
+        {lastSaved && !error && (
+          <div className="flex items-center gap-2 text-sm text-green-600">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>
+              Saved {new Date(lastSaved).toLocaleTimeString()}
+            </span>
+          </div>
+        )}
+      </div>
 
       <div className="grid grid-cols-3 gap-6">
         {/* Main content */}
@@ -171,20 +200,55 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Content <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              value={formData.content}
-              onChange={e =>
-                setFormData({ ...formData, content: e.target.value })
-              }
-              rows={20}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono text-sm"
-              placeholder="Write your blog post content in Markdown..."
-            />
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Content <span className="text-red-500">*</span>
+              </label>
+              <div className="flex items-center gap-4 text-xs text-gray-500">
+                <span className="flex items-center gap-1">
+                  <BookOpen className="w-3 h-3" />
+                  {stats.words} words
+                </span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {stats.readingTime} min read
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowPreview(!showPreview)}
+                  className="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 transition-colors"
+                >
+                  {showPreview ? (
+                    <>
+                      <EyeOff className="w-3 h-3" />
+                      Edit
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="w-3 h-3" />
+                      Preview
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+            {showPreview ? (
+              <div className="w-full min-h-[500px] px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 prose prose-sm max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: formData.content.replace(/\n/g, '<br/>') }} />
+              </div>
+            ) : (
+              <textarea
+                value={formData.content}
+                onChange={e =>
+                  setFormData({ ...formData, content: e.target.value })
+                }
+                rows={20}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                placeholder="Write your blog post content in Markdown..."
+              />
+            )}
             <p className="text-xs text-gray-500 mt-1">
-              Supports Markdown formatting
+              Supports Markdown formatting • {stats.characters} characters
             </p>
           </div>
 
@@ -328,23 +392,34 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
             </h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Meta Title
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Meta Title
+                  </label>
+                  <span className={`text-xs ${formData.metaTitle.length > 60 ? 'text-orange-600' : 'text-gray-500'}`}>
+                    {formData.metaTitle.length}/60
+                  </span>
+                </div>
                 <input
                   type="text"
                   value={formData.metaTitle}
                   onChange={e =>
                     setFormData({ ...formData, metaTitle: e.target.value })
                   }
+                  maxLength={70}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="SEO title"
+                  placeholder="SEO title (50-60 characters)"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Meta Description
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Meta Description
+                  </label>
+                  <span className={`text-xs ${formData.metaDescription.length > 160 ? 'text-orange-600' : 'text-gray-500'}`}>
+                    {formData.metaDescription.length}/160
+                  </span>
+                </div>
                 <textarea
                   value={formData.metaDescription}
                   onChange={e =>
@@ -354,8 +429,9 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                     })
                   }
                   rows={3}
+                  maxLength={170}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="SEO description"
+                  placeholder="SEO description (150-160 characters)"
                 />
               </div>
               <div>

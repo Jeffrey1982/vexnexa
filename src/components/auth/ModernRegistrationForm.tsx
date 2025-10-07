@@ -131,12 +131,31 @@ export default function ModernRegistrationForm() {
           setError('Please fill in all required fields')
           return false
         }
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(formData.email)) {
+          setError('Please enter a valid email address')
+          return false
+        }
         if (formData.password !== formData.confirmPassword) {
           setError('Passwords do not match')
           return false
         }
-        if (formData.password.length < 6) {
-          setError('Password must be at least 6 characters')
+        // Enhanced password validation
+        if (formData.password.length < 8) {
+          setError('Password must be at least 8 characters')
+          return false
+        }
+        if (!/[A-Z]/.test(formData.password)) {
+          setError('Password must contain at least one uppercase letter')
+          return false
+        }
+        if (!/[a-z]/.test(formData.password)) {
+          setError('Password must contain at least one lowercase letter')
+          return false
+        }
+        if (!/[0-9]/.test(formData.password)) {
+          setError('Password must contain at least one number')
           return false
         }
         break
@@ -145,8 +164,33 @@ export default function ModernRegistrationForm() {
           setError('First name and last name are required')
           return false
         }
+        // Name validation - no numbers or special chars
+        const nameRegex = /^[a-zA-Z\s'-]+$/
+        if (!nameRegex.test(formData.firstName) || !nameRegex.test(formData.lastName)) {
+          setError('Names should only contain letters, spaces, hyphens, and apostrophes')
+          return false
+        }
         break
-      // Steps 3 and 4 are optional
+      case 3:
+        // Validate phone number if provided
+        if (formData.phoneNumber) {
+          const phoneRegex = /^[\d\s\+\-\(\)]+$/
+          if (!phoneRegex.test(formData.phoneNumber)) {
+            setError('Please enter a valid phone number')
+            return false
+          }
+        }
+        // Validate website URL if provided
+        if (formData.website) {
+          try {
+            new URL(formData.website)
+          } catch {
+            setError('Please enter a valid website URL (including http:// or https://)')
+            return false
+          }
+        }
+        break
+      // Step 4 is optional
     }
     setError('')
     return true
