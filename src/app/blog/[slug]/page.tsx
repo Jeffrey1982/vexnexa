@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import { PrismaClient } from '@prisma/client'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { BlogContent } from '@/components/blog/BlogContent'
+import { SafeImage } from '@/components/SafeImage'
 
 const prisma = new PrismaClient()
 
@@ -120,7 +121,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <section className="container mx-auto px-4 pb-16">
           <div className="max-w-4xl mx-auto">
             <div className="aspect-video w-full overflow-hidden rounded-lg">
-              <img
+              <SafeImage
                 src={post.coverImage}
                 alt={post.title}
                 className="w-full h-full object-cover"

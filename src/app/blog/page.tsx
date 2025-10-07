@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Calendar, User, ArrowRight } from 'lucide-react'
 import { PrismaClient } from '@prisma/client'
+import { SafeImage } from '@/components/SafeImage'
 
 const prisma = new PrismaClient()
 
@@ -78,7 +79,7 @@ export default async function BlogPage() {
                     <div className="grid md:grid-cols-2 gap-0">
                       {featuredPost.coverImage && (
                         <div className="aspect-[4/3] md:aspect-auto overflow-hidden">
-                          <img
+                          <SafeImage
                             src={featuredPost.coverImage}
                             alt={featuredPost.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -131,7 +132,7 @@ export default async function BlogPage() {
                       <article className="h-full space-y-4">
                         {post.coverImage && (
                           <div className="aspect-[16/10] w-full overflow-hidden rounded-xl bg-muted">
-                            <img
+                            <SafeImage
                               src={post.coverImage}
                               alt={post.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
