@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server-new'
+import { prisma } from '@/lib/prisma'
 
 export async function getCurrentUser() {
   const supabase = createClient()
@@ -19,8 +20,53 @@ export async function getCurrentUser() {
     throw new Error("Authentication required")
   }
 
-  // For now, return simplified user data to avoid database dependencies
-  // Database sync will happen via API routes and auth callback
+  // Fetch user from database to get actual plan and subscription status
+  let dbUser = null
+  try {
+    dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        company: true,
+        plan: true,
+        subscriptionStatus: true,
+        trialEndsAt: true,
+        profileCompleted: true,
+        marketingEmails: true,
+        productUpdates: true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    })
+  } catch (e) {
+    console.error("Failed to fetch user from database:", e)
+  }
+
+  // If user exists in database, use that data; otherwise use Supabase metadata
+  if (dbUser) {
+    return {
+      id: dbUser.id,
+      email: dbUser.email,
+      firstName: dbUser.firstName,
+      lastName: dbUser.lastName,
+      company: dbUser.company,
+      plan: dbUser.plan,
+      subscriptionStatus: dbUser.subscriptionStatus,
+      trialEndsAt: dbUser.trialEndsAt,
+      profileCompleted: dbUser.profileCompleted,
+      marketingEmails: dbUser.marketingEmails,
+      productUpdates: dbUser.productUpdates,
+      isAdmin: user.user_metadata?.is_admin === true,
+      createdAt: dbUser.createdAt,
+      updatedAt: dbUser.updatedAt,
+      supabaseUser: user
+    }
+  }
+
+  // Fallback to Supabase metadata if user not in database yet
   return {
     id: user.id,
     email: user.email!,
