@@ -547,16 +547,33 @@ export async function POST(req: NextRequest) {
             }
 
             .logo {
-                font-size: 32px;
+                font-size: 36px;
                 font-weight: 800;
                 letter-spacing: -1px;
                 margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .logo-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .logo-icon img {
+                height: 48px;
+                width: auto;
+                max-width: 200px;
+                object-fit: contain;
             }
 
             .logo::before {
                 content: '🛡️';
-                margin-right: 12px;
-                font-size: 28px;
+                margin-right: 0;
+                font-size: 48px;
             }
 
             .report-title {
@@ -1217,7 +1234,19 @@ export async function POST(req: NextRequest) {
             .footer-logo {
                 font-weight: 600;
                 color: ${primaryColor};
-                margin-bottom: 4px;
+                margin-bottom: 8px;
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .footer-logo img {
+                height: 28px;
+                width: auto;
+                max-width: 150px;
+                object-fit: contain;
             }
 
             /* Page Break */
@@ -1242,7 +1271,7 @@ export async function POST(req: NextRequest) {
                 <div class="header-content">
                     <div class="logo">
                         ${brandLogo ?
-                            `<div class="logo-icon"><img src="${brandLogo}" alt="${brandName}" style="height: 24px; width: auto;" /></div>` :
+                            `<div class="logo-icon"><img src="${brandLogo}" alt="${brandName}" /></div>` :
                             `<div class="logo-icon">🛡️</div>`
                         }
                         <span>${brandName}</span>
@@ -1779,7 +1808,10 @@ export async function POST(req: NextRequest) {
 
             <!-- Footer -->
             <div class="footer">
-                <div class="footer-logo">${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" style="height: 16px; width: auto; margin-right: 8px; vertical-align: middle;" />` : (whiteLabel ? '' : '🛡️ ')}${brandName} Accessibility Platform</div>
+                <div class="footer-logo">
+                    ${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" />` : (whiteLabel ? '' : '🛡️ ')}
+                    <span>${brandName} Accessibility Platform</span>
+                </div>
                 <div>This report was generated automatically using axe-core accessibility testing engine.</div>
                 <div>For detailed remediation guidance, visit your dashboard${whiteLabel?.supportEmail ? ` or contact ${whiteLabel.supportEmail}` : (whiteLabel ? '' : ' or contact our accessibility experts')}.</div>
             </div>
