@@ -1,0 +1,7 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /thank-you/
+
+Sitemap: https://vexnexa.com/sitemap.xml

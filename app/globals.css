@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 6%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 6%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 6%;
+
+    --primary: 24 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 13% 91%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 220 13% 91%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 24 100% 50%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-offwhite text-charcoal font-body antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  /* Focus visible styles for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-offwhite;
+  }
+
+  /* Skip to content link for accessibility */
+  .skip-to-content {
+    @apply absolute left-0 top-0 -translate-y-full bg-primary text-white px-4 py-2 z-50 transition-transform;
+  }
+
+  .skip-to-content:focus {
+    @apply translate-y-0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Custom gradient backgrounds */
+  .bg-gradient-radial {
+    background: radial-gradient(circle at 50% 0%, rgba(255, 106, 0, 0.1) 0%, transparent 50%);
+  }
+
+  .bg-grid-subtle {
+    background-image:
+      linear-gradient(to right, rgba(191, 198, 208, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(191, 198, 208, 0.1) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Angled section separator */
+  .angle-top-right {
+    clip-path: polygon(0 0, 100% 4%, 100% 100%, 0 100%);
+  }
+
+  .angle-bottom-left {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 96%);
+  }
+}
