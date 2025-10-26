@@ -10,7 +10,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 export const Section = React.forwardRef<HTMLElement, SectionProps>(
   ({ children, container = true, background = "default", className, ...props }, ref) => {
     const bgClasses = {
-      default: "bg-offwhite",
+      default: "bg-gray-50",
       white: "bg-white",
       gradient: "bg-gradient-radial",
       grid: "bg-grid-subtle",
