@@ -22,63 +22,63 @@ import {
 
 const connectionTypes = [
   {
-    label: "Community Platforms",
+    label: "Dating & Relationships",
     color: "bg-gradient-to-br from-primary-400 to-primary-600",
-    icon: Users,
-    desc: "Build thriving communities"
-  },
-  {
-    label: "Social Networks",
-    color: "bg-gradient-to-br from-coral-400 to-coral-600",
     icon: Heart,
-    desc: "Connect hearts & minds"
+    desc: "Platforms that spark romance"
   },
   {
-    label: "Messaging Apps",
+    label: "Business Networks",
+    color: "bg-gradient-to-br from-coral-400 to-coral-600",
+    icon: TrendingUp,
+    desc: "B2B connections & revenue"
+  },
+  {
+    label: "Social Communities",
     color: "bg-gradient-to-br from-cyan-400 to-cyan-600",
-    icon: MessageCircle,
-    desc: "Real-time conversations"
+    icon: Users,
+    desc: "Spaces people love"
   },
   {
-    label: "Video Platforms",
+    label: "Interactive Experiences",
     color: "bg-gradient-to-br from-sunny-400 to-sunny-600",
-    icon: Video,
-    desc: "Face-to-face moments"
+    icon: Sparkles,
+    desc: "Engagement that sticks"
   },
 ]
 
 const connectionBenefits = [
   {
     icon: Heart,
-    title: "Bring People Together",
-    description: "Create spaces where meaningful connections happen naturally. Build communities that thrive on genuine interactions and shared experiences.",
-    color: "coral"
-  },
-  {
-    icon: Sparkles,
-    title: "Make It Easy & Fun",
-    description: "No complicated onboarding. No confusing interfaces. Just simple, delightful experiences that make people smile from day one.",
+    title: "Social Cohesion First",
+    description: "Every platform we create is designed to bring people together in meaningful ways. We build spaces where authentic connections flourish and communities thrive.",
     color: "primary"
   },
   {
-    icon: Zap,
-    title: "Connect Instantly",
-    description: "Real-time messaging, video calls, notifications—everything you need to keep your community engaged and connected 24/7.",
+    icon: Sparkles,
+    title: "Interactivity at the Core",
+    description: "From real-time messaging to dynamic feeds, we craft experiences that keep users engaged, active, and coming back. Every interaction matters.",
+    color: "coral"
+  },
+  {
+    icon: TrendingUp,
+    title: "Built for Growth",
+    description: "Our platforms don't just launch—they scale. We architect systems that grow with demand, turning small communities into thriving networks.",
     color: "cyan"
   },
   {
     icon: Globe2,
-    title: "Reach Everyone",
-    description: "Build inclusive platforms that work for everyone, everywhere. From local communities to global movements, we've got you covered.",
+    title: "Mission-Driven Innovation",
+    description: "We're not just building apps—we're creating the infrastructure for human connection in the digital age. Every line of code has purpose.",
     color: "sunny"
   }
 ]
 
 const stats = [
   { value: "10M+", label: "Connections Made", color: "primary" },
-  { value: "500K+", label: "Happy Users", color: "coral" },
-  { value: "99.9%", label: "Uptime", color: "cyan" },
-  { value: "24/7", label: "Support", color: "sunny" }
+  { value: "500K+", label: "Active Users", color: "coral" },
+  { value: "15+", label: "Platforms Live", color: "cyan" },
+  { value: "24/7", label: "Always Online", color: "sunny" }
 ]
 
 export default function HomePage() {
@@ -108,13 +108,13 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary-100 to-coral-100 border-2 border-primary-300 mb-8"
             >
               <PartyPopper className="w-5 h-5 text-primary-600" />
-              <span className="text-sm font-semibold text-primary-700">Connecting People, Creating Joy!</span>
+              <span className="text-sm font-semibold text-primary-700">Building Businesses That Connect</span>
             </motion.div>
 
             <h1 className="text-display-lg md:text-display-xl bg-gradient-to-r from-primary-600 via-coral-500 to-cyan-600 bg-clip-text text-transparent mb-6 text-balance font-extrabold">
-              Connect Everyone,{" "}
+              Creating Digital{" "}
               <span className="relative inline-block">
-                Everywhere
+                Experiences
                 <motion.div
                   className="absolute -bottom-2 left-0 right-0 h-3 bg-sunny-300 -z-10"
                   initial={{ scaleX: 0 }}
@@ -122,11 +122,12 @@ export default function HomePage() {
                   transition={{ delay: 0.8, duration: 0.6 }}
                 />
               </span>
+              {" "}That Bring People Together
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-700 mb-10 leading-relaxed max-w-3xl mx-auto">
-              We build platforms that bring people together. From community hubs to social networks,
-              we create spaces where connections flourish and friendships bloom. 🌸
+              VexNexa builds innovative micro-SaaS platforms that spark connections, foster communities,
+              and transform how people interact online.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -135,9 +136,9 @@ export default function HomePage() {
                 className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-glow-purple transform hover:scale-105 transition-all duration-200"
                 asChild
               >
-                <Link href="/contact?intent=project">
+                <Link href="/about">
                   <Sparkles className="w-5 h-5 mr-2" />
-                  Start Connecting People
+                  Our Mission
                 </Link>
               </Button>
               <Button
@@ -146,9 +147,9 @@ export default function HomePage() {
                 className="group hover:bg-gradient-to-r hover:from-coral-50 hover:to-primary-50"
                 asChild
               >
-                <Link href="/about#process">
+                <Link href="/cases">
                   <Smile className="w-5 h-5 mr-2 group-hover:animate-wiggle" />
-                  See Our Happy Approach
+                  What We Build
                 </Link>
               </Button>
             </div>
@@ -218,10 +219,10 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-display-md bg-gradient-to-r from-primary-600 to-coral-600 bg-clip-text text-transparent mb-4">
-              Why People Love Us
+              What Drives Us
             </h2>
             <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-              We don't just build platforms—we create experiences that make connecting feel natural, joyful, and fun!
+              At VexNexa, we're obsessed with building platforms that don't just work—they bring people together in ways that matter.
             </p>
           </motion.div>
         </div>
@@ -273,10 +274,10 @@ export default function HomePage() {
               viewport={{ once: true }}
             >
               <h2 className="text-display-md text-gray-800 mb-4">
-                From Idea to Thriving Community
+                How We Build
               </h2>
               <p className="text-xl text-gray-600">
-                Simple steps, amazing results. Let's build something people will love! ✨
+                Our approach to creating platforms that connect, engage, and inspire.
               </p>
             </motion.div>
           </div>
@@ -300,9 +301,9 @@ export default function HomePage() {
                   <Users className="w-10 h-10 mb-2" />
                   <span>01</span>
                 </motion.div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">Understand Your Community</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Understand People</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  We dive deep into who you want to connect, what makes them tick, and how they love to interact.
+                  We start by deeply understanding human behavior, desires, and needs. Great platforms begin with empathy.
                 </p>
               </div>
             </motion.div>
@@ -323,9 +324,9 @@ export default function HomePage() {
                   <Sparkles className="w-10 h-10 mb-2" />
                   <span>02</span>
                 </motion.div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">Design Delightful Experiences</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Design for Delight</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Beautiful interfaces, smooth interactions, and features that make people say "wow!" every time.
+                  We craft experiences that feel intuitive, look stunning, and make every interaction meaningful and memorable.
                 </p>
               </div>
             </motion.div>
@@ -346,9 +347,9 @@ export default function HomePage() {
                   <TrendingUp className="w-10 h-10 mb-2" />
                   <span>03</span>
                 </motion.div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">Grow & Celebrate Together</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Build to Last</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Watch your community thrive! We're here to help you scale, optimize, and celebrate every milestone.
+                  We engineer platforms that scale effortlessly, perform flawlessly, and evolve with the communities they serve.
                 </p>
               </div>
             </motion.div>
@@ -365,151 +366,123 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-display-md text-gray-800 mb-4">
-              Platforms That Connect
+              Featured Platforms
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From intimate groups to massive communities—we build it all with love! 💜
+              Real products, live and serving thousands of users every day.
             </p>
           </motion.div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="md:col-span-2 lg:col-span-1"
           >
-            <Card className="h-full border-2 border-primary-200 hover:border-primary-400 hover:shadow-glow-purple transition-all duration-300 bg-white/80 backdrop-blur-sm">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 mb-6 shadow-lg">
-                <Users className="w-8 h-8 text-white" aria-hidden="true" />
+            <Card className="h-full border-2 border-primary-200 hover:border-primary-400 hover:shadow-glow-purple transition-all duration-300 bg-white/80 backdrop-blur-sm group">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 shadow-lg group-hover:scale-110 transition-transform">
+                  <Heart className="w-8 h-8 text-white" aria-hidden="true" />
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100 border border-primary-300">
+                  <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+                  <span className="text-xs font-semibold text-primary-700">Live</span>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Community Platforms</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Vincamor</h3>
+              <a
+                href="https://vincamor.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-primary-600 hover:text-primary-700 font-medium mb-4 inline-flex items-center group/link"
+              >
+                vincamor.com
+                <Globe2 className="w-3 h-3 ml-1 group-hover/link:translate-x-0.5 transition-transform" />
+              </a>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Build vibrant communities where members connect, share, and grow together. Forums, groups, events—everything in one place!
+                A sophisticated dating platform connecting people looking for genuine relationships. Features intelligent matching, real-time chat, and beautiful user experiences designed for connection.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start text-gray-700">
                   <Star className="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" />
-                  Member profiles & connections
+                  Smart matching algorithms
                 </li>
                 <li className="flex items-start text-gray-700">
                   <Star className="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" />
-                  Discussion forums & groups
+                  Real-time messaging system
                 </li>
                 <li className="flex items-start text-gray-700">
                   <Star className="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" />
-                  Event planning & RSVP
+                  Safety & verification features
                 </li>
               </ul>
-              <Link href="/solutions#community" className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center group">
-                Explore Community Features
-                <Share2 className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <a
+                href="https://vincamor.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center group/cta"
+              >
+                Visit Platform
+                <Share2 className="w-4 h-4 ml-2 group-hover/cta:translate-x-1 transition-transform" />
+              </a>
             </Card>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
+            transition={{ delay: 0.2 }}
+            className="md:col-span-2 lg:col-span-1"
           >
-            <Card className="h-full border-2 border-coral-200 hover:border-coral-400 hover:shadow-glow-pink transition-all duration-300 bg-white/80 backdrop-blur-sm">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-coral-400 to-coral-600 mb-6 shadow-lg">
-                <MessageCircle className="w-8 h-8 text-white" aria-hidden="true" />
+            <Card className="h-full border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-glow-cyan transition-all duration-300 bg-white/80 backdrop-blur-sm group">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 shadow-lg group-hover:scale-110 transition-transform">
+                  <Zap className="w-8 h-8 text-white" aria-hidden="true" />
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-100 border border-cyan-300">
+                  <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+                  <span className="text-xs font-semibold text-cyan-700">Live</span>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Real-Time Messaging</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">TutusPorta</h3>
+              <a
+                href="https://tutusporta.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-cyan-600 hover:text-cyan-700 font-medium mb-4 inline-flex items-center group/link"
+              >
+                tutusporta.com
+                <Globe2 className="w-3 h-3 ml-1 group-hover/link:translate-x-0.5 transition-transform" />
+              </a>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Keep conversations flowing with instant messaging, group chats, and seamless notifications that keep everyone in the loop.
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start text-gray-700">
-                  <Star className="w-5 h-5 text-coral-500 mr-3 mt-0.5 flex-shrink-0" />
-                  1-on-1 & group messaging
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <Star className="w-5 h-5 text-coral-500 mr-3 mt-0.5 flex-shrink-0" />
-                  File sharing & reactions
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <Star className="w-5 h-5 text-coral-500 mr-3 mt-0.5 flex-shrink-0" />
-                  Push notifications
-                </li>
-              </ul>
-              <Link href="/solutions#messaging" className="text-coral-600 font-semibold hover:text-coral-700 inline-flex items-center group">
-                Discover Messaging Tools
-                <Share2 className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-          >
-            <Card className="h-full border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-glow-cyan transition-all duration-300 bg-white/80 backdrop-blur-sm">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 mb-6 shadow-lg">
-                <Video className="w-8 h-8 text-white" aria-hidden="true" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Video & Voice Calls</h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Bring people face-to-face with crystal-clear video calls, virtual meetups, and live streaming capabilities.
+                Professional WCAG accessibility checker helping businesses ensure their websites are accessible to everyone. Generate comprehensive reports and improve digital inclusivity.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start text-gray-700">
                   <Star className="w-5 h-5 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
-                  HD video & voice quality
+                  Complete WCAG compliance testing
                 </li>
                 <li className="flex items-start text-gray-700">
                   <Star className="w-5 h-5 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
-                  Screen sharing & recording
+                  Downloadable PDF reports
                 </li>
                 <li className="flex items-start text-gray-700">
                   <Star className="w-5 h-5 text-cyan-500 mr-3 mt-0.5 flex-shrink-0" />
-                  Live streaming events
+                  Real-time accessibility scanning
                 </li>
               </ul>
-              <Link href="/solutions#video" className="text-cyan-600 font-semibold hover:text-cyan-700 inline-flex items-center group">
-                See Video Features
-                <Share2 className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.45 }}
-          >
-            <Card className="h-full border-2 border-sunny-200 hover:border-sunny-400 hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-sunny-400 to-sunny-600 mb-6 shadow-lg">
-                <Globe2 className="w-8 h-8 text-white" aria-hidden="true" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Social Networks</h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Create social experiences where people share moments, discover content, and build meaningful relationships that last.
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start text-gray-700">
-                  <Star className="w-5 h-5 text-sunny-600 mr-3 mt-0.5 flex-shrink-0" />
-                  Posts, stories & feeds
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <Star className="w-5 h-5 text-sunny-600 mr-3 mt-0.5 flex-shrink-0" />
-                  Friend connections & follows
-                </li>
-                <li className="flex items-start text-gray-700">
-                  <Star className="w-5 h-5 text-sunny-600 mr-3 mt-0.5 flex-shrink-0" />
-                  Content discovery algorithm
-                </li>
-              </ul>
-              <Link href="/solutions#social" className="text-sunny-700 font-semibold hover:text-sunny-800 inline-flex items-center group">
-                Build Your Network
-                <Share2 className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <a
+                href="https://tutusporta.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-600 font-semibold hover:text-cyan-700 inline-flex items-center group/cta"
+              >
+                Visit Platform
+                <Share2 className="w-4 h-4 ml-2 group-hover/cta:translate-x-1 transition-transform" />
+              </a>
             </Card>
           </motion.div>
         </div>
@@ -556,11 +529,11 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-display-md md:text-display-lg mb-6 font-extrabold">
-              Ready to Connect the World?
+              Building the Future of Connection
             </h2>
             <p className="text-xl md:text-2xl mb-10 leading-relaxed opacity-95">
-              Let's build something amazing together! Whether you're creating a cozy community
-              or the next big social platform, we're here to make it happen. 🚀
+              Every day, millions of people connect through the platforms we've created.
+              Explore our mission, see our work, or get in touch.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -568,9 +541,9 @@ export default function HomePage() {
                 className="bg-white text-primary-700 hover:bg-gray-100 shadow-xl transform hover:scale-105 transition-all duration-200 font-bold"
                 asChild
               >
-                <Link href="/contact?intent=project">
+                <Link href="/about">
                   <Heart className="w-5 h-5 mr-2" />
-                  Let's Create Together!
+                  Our Story
                 </Link>
               </Button>
               <Button
@@ -579,9 +552,9 @@ export default function HomePage() {
                 className="border-2 border-white text-white hover:bg-white/20 backdrop-blur-sm"
                 asChild
               >
-                <Link href="/about">
+                <Link href="/contact">
                   <Sparkles className="w-5 h-5 mr-2" />
-                  Learn About Our Team
+                  Get In Touch
                 </Link>
               </Button>
             </div>
