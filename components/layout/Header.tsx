@@ -5,16 +5,15 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Heart, Sparkles } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navigation = [
-  { name: "Solutions", href: "/solutions" },
-  { name: "Services", href: "/services" },
-  { name: "Cases", href: "/cases" },
+  { name: "What We Build", href: "/solutions" },
+  { name: "How We Help", href: "/services" },
+  { name: "Happy Stories", href: "/cases" },
   { name: "Pricing", href: "/pricing" },
-  { name: "Blog", href: "/blog" },
-  { name: "About", href: "/about" },
+  { name: "About Us", href: "/about" },
 ]
 
 export function Header() {
@@ -55,9 +54,14 @@ export function Header() {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/" className="flex items-center space-x-2 group">
-                <span className="text-2xl font-display font-bold text-charcoal group-hover:text-primary transition-colors">
-                  VexNexa
-                </span>
+                <motion.div
+                  whileHover={{ scale: 1.05, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  <span className="text-2xl font-display font-extrabold bg-gradient-to-r from-primary-600 via-coral-500 to-cyan-600 bg-clip-text text-transparent">
+                    VexNexa
+                  </span>
+                </motion.div>
               </Link>
             </div>
 
@@ -68,30 +72,45 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "text-base font-medium transition-colors relative py-2",
+                    "text-base font-semibold transition-all relative py-2 group",
                     pathname === item.href
-                      ? "text-primary"
-                      : "text-charcoal hover:text-primary"
+                      ? "text-primary-600"
+                      : "text-gray-700 hover:text-primary-600"
                   )}
                 >
-                  {item.name}
-                  {pathname === item.href && (
-                    <motion.div
-                      layoutId="underline"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                    />
-                  )}
+                  <span className="relative">
+                    {item.name}
+                    {pathname === item.href && (
+                      <motion.div
+                        layoutId="underline"
+                        className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-coral-500 rounded-full"
+                      />
+                    )}
+                    {pathname !== item.href && (
+                      <span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-coral-500 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                    )}
+                  </span>
                 </Link>
               ))}
             </div>
 
             {/* Desktop CTA Buttons */}
-            <div className="hidden md:flex md:items-center md:space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/contact">Contact</Link>
+            <div className="hidden md:flex md:items-center md:space-x-3">
+              <Button variant="ghost" size="sm" className="hover:bg-primary-50" asChild>
+                <Link href="/contact">
+                  <Heart className="w-4 h-4 mr-1.5" />
+                  Say Hello!
+                </Link>
               </Button>
-              <Button variant="primary" size="sm" asChild>
-                <Link href="/contact?intent=project">Start a project</Link>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-md hover:shadow-lg transition-all"
+                asChild
+              >
+                <Link href="/contact?intent=project">
+                  <Sparkles className="w-4 h-4 mr-1.5" />
+                  Let's Connect!
+                </Link>
               </Button>
             </div>
 
@@ -140,11 +159,20 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="pt-4 space-y-2">
-                  <Button variant="ghost" className="w-full" asChild>
-                    <Link href="/contact">Contact</Link>
+                  <Button variant="ghost" className="w-full hover:bg-primary-50" asChild>
+                    <Link href="/contact">
+                      <Heart className="w-4 h-4 mr-1.5" />
+                      Say Hello!
+                    </Link>
                   </Button>
-                  <Button variant="primary" className="w-full" asChild>
-                    <Link href="/contact?intent=project">Start a project</Link>
+                  <Button
+                    className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white"
+                    asChild
+                  >
+                    <Link href="/contact?intent=project">
+                      <Sparkles className="w-4 h-4 mr-1.5" />
+                      Let's Connect!
+                    </Link>
                   </Button>
                 </div>
               </div>
