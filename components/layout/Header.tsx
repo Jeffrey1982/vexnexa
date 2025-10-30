@@ -5,15 +5,15 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Heart, Sparkles } from "lucide-react"
+import { Menu, X, Mail, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navigation = [
-  { name: "What We Build", href: "/solutions" },
-  { name: "How We Help", href: "/services" },
-  { name: "Happy Stories", href: "/cases" },
+  { name: "Solutions", href: "/solutions" },
+  { name: "Services", href: "/services" },
+  { name: "Case Studies", href: "/cases" },
   { name: "Pricing", href: "/pricing" },
-  { name: "About Us", href: "/about" },
+  { name: "About", href: "/about" },
 ]
 
 export function Header() {
@@ -98,8 +98,8 @@ export function Header() {
             <div className="hidden md:flex md:items-center md:space-x-3">
               <Button variant="ghost" size="sm" className="hover:bg-primary-50" asChild>
                 <Link href="/contact">
-                  <Heart className="w-4 h-4 mr-1.5" />
-                  Say Hello!
+                  <Mail className="w-4 h-4 mr-1.5" />
+                  Contact
                 </Link>
               </Button>
               <Button
@@ -108,8 +108,8 @@ export function Header() {
                 asChild
               >
                 <Link href="/contact?intent=project">
-                  <Sparkles className="w-4 h-4 mr-1.5" />
-                  Let's Connect!
+                  <ArrowRight className="w-4 h-4 mr-1.5" />
+                  Get Started
                 </Link>
               </Button>
             </div>
@@ -161,8 +161,8 @@ export function Header() {
                 <div className="pt-4 space-y-2">
                   <Button variant="ghost" className="w-full hover:bg-primary-50" asChild>
                     <Link href="/contact">
-                      <Heart className="w-4 h-4 mr-1.5" />
-                      Say Hello!
+                      <Mail className="w-4 h-4 mr-1.5" />
+                      Contact
                     </Link>
                   </Button>
                   <Button
@@ -170,8 +170,8 @@ export function Header() {
                     asChild
                   >
                     <Link href="/contact?intent=project">
-                      <Sparkles className="w-4 h-4 mr-1.5" />
-                      Let's Connect!
+                      <ArrowRight className="w-4 h-4 mr-1.5" />
+                      Get Started
                     </Link>
                   </Button>
                 </div>

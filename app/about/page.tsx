@@ -95,7 +95,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-lg text-steel-600">
               We're not the cheapest, and we're not the biggest. But we're fast,
-              transparent, and obsessed with shipping work that actually moves the needle.
+              transparent, and focused on delivering solutions that drive real business value.
             </p>
           </div>
 
@@ -255,12 +255,12 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-display-xs text-charcoal mb-4">
-              Small team, big results
+              Lean team, proven expertise
             </h2>
             <p className="text-lg text-steel-600 leading-relaxed mb-6">
-              We're a lean team of designers, developers, and strategists who've worked
-              with startups, agencies, and SMEs across Europe. We don't do committees
-              or approval chains—just focused execution and clear communication.
+              We're a focused team of designers, developers, and strategists who've worked
+              with startups, agencies, and SMEs across Europe. Our streamlined structure
+              enables rapid execution and direct communication with stakeholders.
             </p>
             <p className="text-steel-600 leading-relaxed">
               Based in the Netherlands, working with clients globally. Remote-first,
