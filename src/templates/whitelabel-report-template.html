@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Accessibility Compliance Report</title>
+  <style>
+    /* ============================================
+       WHITELABEL ACCESSIBILITY REPORT TEMPLATE
+       Self-contained, print-optimized, no external assets
+       ============================================ */
+
+    /* CSS Variables for theming */
+    :root {
+      --color-critical: #dc2626;
+      --color-critical-bg: #fef2f2;
+      --color-critical-border: #fca5a5;
+
+      --color-serious: #ea580c;
+      --color-serious-bg: #fff7ed;
+      --color-serious-border: #fdba74;
+
+      --color-moderate: #d97706;
+      --color-moderate-bg: #fffbeb;
+      --color-moderate-border: #fcd34d;
+
+      --color-minor: #6b7280;
+      --color-minor-bg: #f9fafb;
+      --color-minor-border: #d1d5db;
+
+      --color-text: #111827;
+      --color-text-secondary: #6b7280;
+      --color-text-muted: #9ca3af;
+      --color-border: #e5e7eb;
+      --color-bg: #ffffff;
+      --color-bg-light: #f9fafb;
+      --color-link: #2563eb;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+    }
+
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Print Setup */
+    @page {
+      size: A4;
+      margin: 15mm 12mm;
+      @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-size: 10px;
+        color: var(--color-text-muted);
+        font-family: var(--font-sans);
+      }
+    }
+
+    @media print {
+      body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      .avoid-break {
+        page-break-inside: avoid;
+      }
+
+      a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 9px;
+        color: var(--color-text-muted);
+      }
+
+      .wcag-link::after {
+        content: "";
+      }
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      margin-top: 24px;
+      color: var(--color-text);
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      color: var(--color-text);
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    a {
+      color: var(--color-link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--color-bg-light);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--color-border);
+    }
+
+    /* Container */
+    .container {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* ============================================
+       EXECUTIVE SUMMARY - PAGE 1
+       ============================================ */
+    .executive-summary {
+      margin-bottom: 40px;
+    }
+
+    .report-header {
+      border-bottom: 2px solid var(--color-text);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .report-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    /* Compliance Score with Pure CSS Donut Chart */
+    .compliance-section {
+      background: var(--color-bg-light);
+      border: 2px solid var(--color-border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .donut-chart {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--color-text) calc(var(--percentage) * 1%),
+        var(--color-border) calc(var(--percentage) * 1%)
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-chart::before {
+      content: attr(data-percentage) "%";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--color-text);
+    }
+
+    .compliance-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary);
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--color-bg);
+      border: 2px solid;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .kpi-card.critical {
+      border-color: var(--color-critical-border);
+      background: var(--color-critical-bg);
+    }
+
+    .kpi-card.serious {
+      border-color: var(--color-serious-border);
+      background: var(--color-serious-bg);
+    }
+
+    .kpi-card.moderate {
+      border-color: var(--color-moderate-border);
+      background: var(--color-moderate-bg);
+    }
+
+    .kpi-card.minor {
+      border-color: var(--color-minor-border);
+      background: var(--color-minor-bg);
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-card.critical .kpi-value { color: var(--color-critical); }
+    .kpi-card.serious .kpi-value { color: var(--color-serious); }
+    .kpi-card.moderate .kpi-value { color: var(--color-moderate); }
+    .kpi-card.minor .kpi-value { color: var(--color-minor); }
+
+    .kpi-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary);
+    }
+
+    /* Severity Distribution Bars */
+    .severity-distribution {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .severity-distribution h3 {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .severity-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .severity-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      min-width: 70px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .severity-bar-track {
+      flex: 1;
+      height: 20px;
+      background: var(--color-bg-light);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .severity-bar-fill {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .severity-bar-fill.critical { background: var(--color-critical); }
+    .severity-bar-fill.serious { background: var(--color-serious); }
+    .severity-bar-fill.moderate { background: var(--color-moderate); }
+    .severity-bar-fill.minor { background: var(--color-minor); }
+
+    .severity-bar-count {
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 35px;
+      text-align: right;
+    }
+
+    /* Hero Thumbnail */
+    .hero-thumbnail {
+      max-width: 400px;
+      margin: 24px auto;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .hero-thumbnail img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .thumbnail-placeholder {
+      background: var(--color-bg-light);
+      padding: 40px;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 12px;
+    }
+
+    /* Top Recommendations */
+    .recommendations {
+      margin-bottom: 32px;
+    }
+
+    .recommendation-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-text);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .recommendation-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .recommendation-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--color-text);
+      color: var(--color-bg);
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .recommendation-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .recommendation-reason {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+      padding-left: 32px;
+    }
+
+    .recommendation-action {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text);
+      background: var(--color-bg-light);
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-left: 32px;
+      border-left: 2px solid var(--color-text);
+    }
+
+    .recommendation-action::before {
+      content: "→ ";
+      font-weight: 700;
+    }
+
+    /* ============================================
+       ISSUE SECTIONS
+       ============================================ */
+    .issues-section {
+      margin-top: 32px;
+    }
+
+    .severity-group {
+      margin-bottom: 32px;
+    }
+
+    .severity-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .severity-header.critical {
+      background: var(--color-critical-bg);
+      border-left: 4px solid var(--color-critical);
+    }
+
+    .severity-header.serious {
+      background: var(--color-serious-bg);
+      border-left: 4px solid var(--color-serious);
+    }
+
+    .severity-header.moderate {
+      background: var(--color-moderate-bg);
+      border-left: 4px solid var(--color-moderate);
+    }
+
+    .severity-header.minor {
+      background: var(--color-minor-bg);
+      border-left: 4px solid var(--color-minor);
+    }
+
+    .severity-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: white;
+    }
+
+    .severity-badge.critical { background: var(--color-critical); }
+    .severity-badge.serious { background: var(--color-serious); }
+    .severity-badge.moderate { background: var(--color-moderate); }
+    .severity-badge.minor { background: var(--color-minor); }
+
+    .severity-count {
+      font-size: 16px;
+      font-weight: 700;
+      margin-left: auto;
+      color: var(--color-text);
+    }
+
+    /* Issue Card */
+    .issue-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .issue-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .issue-title {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+
+    .issue-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 12px;
+      background: var(--color-bg-light);
+      border-radius: 4px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-row-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+    }
+
+    .meta-row-value {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .wcag-link {
+      color: var(--color-link);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wcag-link::after {
+      content: "↗";
+      font-size: 10px;
+    }
+
+    .wcag-link:hover {
+      text-decoration: underline;
+    }
+
+    .issue-explanation {
+      padding: 12px;
+      background: var(--color-bg-light);
+      border-radius: 4px;
+      border-left: 2px solid var(--color-text-muted);
+      margin-bottom: 12px;
+    }
+
+    .issue-explanation p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .issue-fix {
+      padding: 12px;
+      background: #f0fdf4;
+      border-radius: 4px;
+      border-left: 2px solid #10b981;
+      margin-bottom: 12px;
+    }
+
+    .fix-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #065f46;
+      margin-bottom: 4px;
+    }
+
+    .fix-label::before {
+      content: "✓ ";
+    }
+
+    .issue-fix p {
+      margin: 0;
+      font-size: 13px;
+      color: #047857;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .code-example {
+      background: var(--color-text);
+      color: #e5e7eb;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .issue-thumbnail {
+      max-width: 300px;
+      margin-top: 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+    }
+
+    .issue-thumbnail img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Utilities */
+    .mb-24 { margin-bottom: 24px; }
+    .page-break { page-break-before: always; }
+    .avoid-break { page-break-inside: avoid; }
+
+    /* Print Adjustments */
+    @media print {
+      .container {
+        max-width: none;
+        padding: 0;
+      }
+
+      .donut-chart {
+        width: 120px;
+        height: 120px;
+      }
+
+      .donut-chart::before {
+        width: 85px;
+        height: 85px;
+        font-size: 28px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .issue-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ============================================
+         EXECUTIVE SUMMARY - PAGE 1
+         ============================================ -->
+    <section class="executive-summary avoid-break">
+
+      <!-- Report Header -->
+      <header class="report-header">
+        <h1>Web Accessibility Compliance Report</h1>
+        <div class="report-meta">
+          <div class="meta-item">
+            <span class="meta-label">Scanned URL</span>
+            <span class="meta-value">{{scanned_url}}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Scan Date & Time</span>
+            <span class="meta-value">{{scan_date}} at {{scan_time}} {{timezone}}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Pages Scanned</span>
+            <span class="meta-value">{{total_pages_scanned}}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Standard Tested</span>
+            <span class="meta-value">{{wcag_level}}</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Compliance Score with Pure CSS Donut Chart -->
+      <div class="compliance-section avoid-break">
+        <div class="donut-chart" style="--percentage: {{overall_compliance_percent}}" data-percentage="{{overall_compliance_percent}}"></div>
+        <p class="compliance-label">Overall Compliance Score</p>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid avoid-break">
+        <div class="kpi-card critical">
+          <div class="kpi-value">{{count_critical}}</div>
+          <div class="kpi-label">Critical</div>
+        </div>
+        <div class="kpi-card serious">
+          <div class="kpi-value">{{count_serious}}</div>
+          <div class="kpi-label">Serious</div>
+        </div>
+        <div class="kpi-card moderate">
+          <div class="kpi-value">{{count_moderate}}</div>
+          <div class="kpi-label">Moderate</div>
+        </div>
+        <div class="kpi-card minor">
+          <div class="kpi-value">{{count_minor}}</div>
+          <div class="kpi-label">Minor</div>
+        </div>
+      </div>
+
+      <!-- Severity Distribution Bars -->
+      <div class="severity-distribution avoid-break">
+        <h3>Issue Distribution by Severity</h3>
+        <div class="severity-bar-row">
+          <span class="severity-bar-label" style="color: var(--color-critical);">Critical</span>
+          <div class="severity-bar-track">
+            <div class="severity-bar-fill critical" style="width: {{critical_percent}}%;"></div>
+          </div>
+          <span class="severity-bar-count">{{count_critical}}</span>
+        </div>
+        <div class="severity-bar-row">
+          <span class="severity-bar-label" style="color: var(--color-serious);">Serious</span>
+          <div class="severity-bar-track">
+            <div class="severity-bar-fill serious" style="width: {{serious_percent}}%;"></div>
+          </div>
+          <span class="severity-bar-count">{{count_serious}}</span>
+        </div>
+        <div class="severity-bar-row">
+          <span class="severity-bar-label" style="color: var(--color-moderate);">Moderate</span>
+          <div class="severity-bar-track">
+            <div class="severity-bar-fill moderate" style="width: {{moderate_percent}}%;"></div>
+          </div>
+          <span class="severity-bar-count">{{count_moderate}}</span>
+        </div>
+        <div class="severity-bar-row">
+          <span class="severity-bar-label" style="color: var(--color-minor);">Minor</span>
+          <div class="severity-bar-track">
+            <div class="severity-bar-fill minor" style="width: {{minor_percent}}%;"></div>
+          </div>
+          <span class="severity-bar-count">{{count_minor}}</span>
+        </div>
+      </div>
+
+      <!-- Hero Thumbnail (optional) -->
+      {{#if hero_thumbnail_src}}
+      <div class="hero-thumbnail avoid-break">
+        <img src="{{hero_thumbnail_src}}" alt="Screenshot of scanned webpage" />
+      </div>
+      {{else}}
+      <div class="hero-thumbnail avoid-break">
+        <div class="thumbnail-placeholder">
+          <p>Page screenshot unavailable</p>
+        </div>
+      </div>
+      {{/if}}
+
+      <!-- Top 3 Recommendations -->
+      <div class="recommendations avoid-break">
+        <h2>Top 3 Recommendations</h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: 16px; font-size: 13px;">Start here for maximum impact. These are the most critical accessibility improvements needed.</p>
+
+        {{#each top_recommendations}}
+        <div class="recommendation-item">
+          <div class="recommendation-header">
+            <span class="recommendation-number">{{@index_plus_1}}</span>
+            <h3 class="recommendation-title">{{this.title}}</h3>
+          </div>
+          <p class="recommendation-reason">
+            <strong>Why this matters:</strong> {{this.reason}}
+          </p>
+          <div class="recommendation-action">{{this.action}}</div>
+        </div>
+        {{/each}}
+
+      </div>
+
+    </section>
+
+    <!-- ============================================
+         ISSUES SECTIONS - GROUPED BY SEVERITY
+         ============================================ -->
+    <div class="page-break"></div>
+
+    <section class="issues-section">
+      <h1>Detailed Findings</h1>
+      <p style="color: var(--color-text-secondary); margin-bottom: 24px; font-size: 13px;">
+        Scan Date: {{scan_date}} at {{scan_time}} {{timezone}} • Issues are grouped by severity and include WCAG references, affected elements, and remediation guidance.
+      </p>
+
+      <!-- CRITICAL ISSUES -->
+      {{#if_has_severity issues "Critical"}}
+      <div class="severity-group">
+        <div class="severity-header critical avoid-break">
+          <span class="severity-badge critical">Critical</span>
+          <h2 style="margin: 0; flex: 1;">Critical Issues</h2>
+          <span class="severity-count">{{count_severity issues "Critical"}}</span>
+        </div>
+
+        {{#filter_severity issues "Critical"}}
+        <article class="issue-card avoid-break">
+          <div class="issue-header">
+            <div class="issue-title">{{this.issue_title}}</div>
+            <span class="severity-badge critical">{{this.severity}}</span>
+          </div>
+
+          <div class="issue-meta">
+            <div class="meta-row">
+              <span class="meta-row-label">WCAG Criterion</span>
+              <span class="meta-row-value">
+                <a href="{{this.wcag_ref_url}}" class="wcag-link" target="_blank" rel="noopener">
+                  {{this.wcag_ref_code}} (Level {{this.wcag_ref_level}})
+                </a>
+              </span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-row-label">Affected Elements</span>
+              <span class="meta-row-value">{{this.affected_nodes_count}} element(s)</span>
+            </div>
+          </div>
+
+          <div class="issue-explanation">
+            <p>{{this.explanation_short}}</p>
+          </div>
+
+          <div class="issue-fix">
+            <div class="fix-label">Suggested Fix</div>
+            <p>{{this.suggested_fix}}</p>
+          </div>
+
+          {{#if this.example_selector}}
+          <div class="code-example">{{this.example_selector}}</div>
+          {{/if}}
+
+          {{#if this.example_snippet}}
+          <div class="code-example">{{this.example_snippet}}</div>
+          {{/if}}
+
+          {{#if this.issue_thumbnail_src}}
+          <div class="issue-thumbnail">
+            <img src="{{this.issue_thumbnail_src}}" alt="Visual example of the issue" />
+          </div>
+          {{/if}}
+        </article>
+        {{/filter_severity}}
+      </div>
+      {{/if_has_severity}}
+
+      <!-- SERIOUS ISSUES -->
+      {{#if_has_severity issues "Serious"}}
+      <div class="severity-group page-break">
+        <div class="severity-header serious avoid-break">
+          <span class="severity-badge serious">Serious</span>
+          <h2 style="margin: 0; flex: 1;">Serious Issues</h2>
+          <span class="severity-count">{{count_severity issues "Serious"}}</span>
+        </div>
+
+        {{#filter_severity issues "Serious"}}
+        <article class="issue-card avoid-break">
+          <div class="issue-header">
+            <div class="issue-title">{{this.issue_title}}</div>
+            <span class="severity-badge serious">{{this.severity}}</span>
+          </div>
+
+          <div class="issue-meta">
+            <div class="meta-row">
+              <span class="meta-row-label">WCAG Criterion</span>
+              <span class="meta-row-value">
+                <a href="{{this.wcag_ref_url}}" class="wcag-link" target="_blank" rel="noopener">
+                  {{this.wcag_ref_code}} (Level {{this.wcag_ref_level}})
+                </a>
+              </span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-row-label">Affected Elements</span>
+              <span class="meta-row-value">{{this.affected_nodes_count}} element(s)</span>
+            </div>
+          </div>
+
+          <div class="issue-explanation">
+            <p>{{this.explanation_short}}</p>
+          </div>
+
+          <div class="issue-fix">
+            <div class="fix-label">Suggested Fix</div>
+            <p>{{this.suggested_fix}}</p>
+          </div>
+
+          {{#if this.example_selector}}
+          <div class="code-example">{{this.example_selector}}</div>
+          {{/if}}
+
+          {{#if this.example_snippet}}
+          <div class="code-example">{{this.example_snippet}}</div>
+          {{/if}}
+
+          {{#if this.issue_thumbnail_src}}
+          <div class="issue-thumbnail">
+            <img src="{{this.issue_thumbnail_src}}" alt="Visual example of the issue" />
+          </div>
+          {{/if}}
+        </article>
+        {{/filter_severity}}
+      </div>
+      {{/if_has_severity}}
+
+      <!-- MODERATE ISSUES -->
+      {{#if_has_severity issues "Moderate"}}
+      <div class="severity-group page-break">
+        <div class="severity-header moderate avoid-break">
+          <span class="severity-badge moderate">Moderate</span>
+          <h2 style="margin: 0; flex: 1;">Moderate Issues</h2>
+          <span class="severity-count">{{count_severity issues "Moderate"}}</span>
+        </div>
+
+        {{#filter_severity issues "Moderate"}}
+        <article class="issue-card avoid-break">
+          <div class="issue-header">
+            <div class="issue-title">{{this.issue_title}}</div>
+            <span class="severity-badge moderate">{{this.severity}}</span>
+          </div>
+
+          <div class="issue-meta">
+            <div class="meta-row">
+              <span class="meta-row-label">WCAG Criterion</span>
+              <span class="meta-row-value">
+                <a href="{{this.wcag_ref_url}}" class="wcag-link" target="_blank" rel="noopener">
+                  {{this.wcag_ref_code}} (Level {{this.wcag_ref_level}})
+                </a>
+              </span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-row-label">Affected Elements</span>
+              <span class="meta-row-value">{{this.affected_nodes_count}} element(s)</span>
+            </div>
+          </div>
+
+          <div class="issue-explanation">
+            <p>{{this.explanation_short}}</p>
+          </div>
+
+          <div class="issue-fix">
+            <div class="fix-label">Suggested Fix</div>
+            <p>{{this.suggested_fix}}</p>
+          </div>
+
+          {{#if this.example_selector}}
+          <div class="code-example">{{this.example_selector}}</div>
+          {{/if}}
+
+          {{#if this.example_snippet}}
+          <div class="code-example">{{this.example_snippet}}</div>
+          {{/if}}
+
+          {{#if this.issue_thumbnail_src}}
+          <div class="issue-thumbnail">
+            <img src="{{this.issue_thumbnail_src}}" alt="Visual example of the issue" />
+          </div>
+          {{/if}}
+        </article>
+        {{/filter_severity}}
+      </div>
+      {{/if_has_severity}}
+
+      <!-- MINOR ISSUES -->
+      {{#if_has_severity issues "Minor"}}
+      <div class="severity-group page-break">
+        <div class="severity-header minor avoid-break">
+          <span class="severity-badge minor">Minor</span>
+          <h2 style="margin: 0; flex: 1;">Minor Issues</h2>
+          <span class="severity-count">{{count_severity issues "Minor"}}</span>
+        </div>
+
+        {{#filter_severity issues "Minor"}}
+        <article class="issue-card avoid-break">
+          <div class="issue-header">
+            <div class="issue-title">{{this.issue_title}}</div>
+            <span class="severity-badge minor">{{this.severity}}</span>
+          </div>
+
+          <div class="issue-meta">
+            <div class="meta-row">
+              <span class="meta-row-label">WCAG Criterion</span>
+              <span class="meta-row-value">
+                <a href="{{this.wcag_ref_url}}" class="wcag-link" target="_blank" rel="noopener">
+                  {{this.wcag_ref_code}} (Level {{this.wcag_ref_level}})
+                </a>
+              </span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-row-label">Affected Elements</span>
+              <span class="meta-row-value">{{this.affected_nodes_count}} element(s)</span>
+            </div>
+          </div>
+
+          <div class="issue-explanation">
+            <p>{{this.explanation_short}}</p>
+          </div>
+
+          <div class="issue-fix">
+            <div class="fix-label">Suggested Fix</div>
+            <p>{{this.suggested_fix}}</p>
+          </div>
+
+          {{#if this.example_selector}}
+          <div class="code-example">{{this.example_selector}}</div>
+          {{/if}}
+
+          {{#if this.example_snippet}}
+          <div class="code-example">{{this.example_snippet}}</div>
+          {{/if}}
+
+          {{#if this.issue_thumbnail_src}}
+          <div class="issue-thumbnail">
+            <img src="{{this.issue_thumbnail_src}}" alt="Visual example of the issue" />
+          </div>
+          {{/if}}
+        </article>
+        {{/filter_severity}}
+      </div>
+      {{/if_has_severity}}
+
+    </section>
+
+  </div>
+</body>
+</html>
