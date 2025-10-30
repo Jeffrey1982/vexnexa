@@ -61,10 +61,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-semibold text-charcoal mb-1">Email</h3>
                   <a
-                    href="mailto:hello@vexnexa.com"
+                    href="mailto:info@vexnexa.com"
                     className="text-steel-600 hover:text-primary transition-colors"
                   >
-                    hello@vexnexa.com
+                    info@vexnexa.com
                   </a>
                 </div>
               </div>

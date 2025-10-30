@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // Send email using Resend
     const { data, error } = await resend.emails.send({
       from: process.env.CONTACT_EMAIL_FROM || 'noreply@vexnexa.com',
-      to: process.env.CONTACT_EMAIL_TO || 'hello@vexnexa.com',
+      to: process.env.CONTACT_EMAIL_TO || 'info@vexnexa.com',
       subject: `New contact form submission from ${name}`,
       html: `
         <!DOCTYPE html>

@@ -135,8 +135,8 @@ export default function TermsPage() {
             <h2 className="text-2xl font-semibold text-charcoal mt-8 mb-4">12. Contact</h2>
             <p>
               Questions about these terms? Contact us at{" "}
-              <a href="mailto:hello@vexnexa.com" className="text-primary hover:underline">
-                hello@vexnexa.com
+              <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+                info@vexnexa.com
               </a>
             </p>
           </section>

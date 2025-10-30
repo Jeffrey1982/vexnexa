@@ -110,8 +110,8 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-4">
               To exercise these rights, contact us at{" "}
-              <a href="mailto:hello@vexnexa.com" className="text-primary hover:underline">
-                hello@vexnexa.com
+              <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+                info@vexnexa.com
               </a>
             </p>
           </section>
@@ -148,8 +148,8 @@ export default function PrivacyPage() {
             </p>
             <p className="mt-4">
               <strong>Email:</strong>{" "}
-              <a href="mailto:hello@vexnexa.com" className="text-primary hover:underline">
-                hello@vexnexa.com
+              <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+                info@vexnexa.com
               </a>
               <br />
               <strong>Address:</strong> VexNexa, Netherlands

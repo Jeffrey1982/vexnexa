@@ -108,7 +108,7 @@ Create a `.env` file in the root directory:
 RESEND_API_KEY=your_resend_api_key_here
 
 # Email Configuration
-CONTACT_EMAIL_TO=hello@vexnexa.com
+CONTACT_EMAIL_TO=info@vexnexa.com
 CONTACT_EMAIL_FROM=noreply@vexnexa.com
 
 # Analytics (optional)
@@ -266,7 +266,7 @@ The contact form uses Resend for email delivery.
 
 ```env
 RESEND_API_KEY=re_your_key_here
-CONTACT_EMAIL_TO=hello@vexnexa.com
+CONTACT_EMAIL_TO=info@vexnexa.com
 CONTACT_EMAIL_FROM=noreply@vexnexa.com
 ```
 
@@ -439,7 +439,7 @@ Proprietary. All rights reserved to VexNexa.
 
 ## 🤝 Support
 
-Questions? Contact us at hello@vexnexa.com
+Questions? Contact us at info@vexnexa.com
 
 ---
 
