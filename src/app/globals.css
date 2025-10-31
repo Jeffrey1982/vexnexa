@@ -12,139 +12,139 @@
 
 @layer base {
   :root {
-    /* Typography - Vexnexa Design System */
+    /* Typography - Professional SaaS Design System */
     --font-sans: var(--font-inter);
     --font-display: var(--font-spacegrotesk);
 
-    /* Vexnexa Soft Pastel Colors */
-    --background: 257 100% 99%;
-    --foreground: 266 15% 30%;
+    /* Professional SaaS Colors */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
-    /* Cards & Surfaces - Soft pastel backgrounds */
+    /* Cards & Surfaces - Clean white backgrounds */
     --card: 0 0% 100%;
-    --card-foreground: 266 15% 30%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 266 15% 30%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Primary - Soft Pastel Lavender */
-    --primary: 257 39% 74%;
-    --primary-foreground: 266 15% 30%;
+    /* Primary - Ocean Blue/Turquoise */
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Coral accents */
-    --secondary: 328 100% 95%;
-    --secondary-foreground: 328 100% 35%;
+    /* Secondary - Warm Amber */
+    --secondary: 38 92% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 257 100% 98%;
-    --muted-foreground: 257 10% 40%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 146 60% 78%;
-    --accent-foreground: 146 60% 20%;
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 100%;
 
     /* Error states */
     --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 99%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* UI Elements - Soft borders */
-    --border: 257 39% 90%;
-    --input: 257 39% 92%;
-    --ring: 257 39% 74%;
+    /* UI Elements - Clean borders */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 199 89% 48%;
 
-    /* Status Colors - Pastel harmonious palette */
-    --success: 146 60% 78%;
-    --success-foreground: 146 60% 20%;
+    /* Status Colors - Professional palette */
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
 
-    --warning: 38 100% 83%;
-    --warning-foreground: 38 100% 25%;
+    --warning: 25 95% 53%;
+    --warning-foreground: 0 0% 100%;
 
     --critical: 0 72% 51%;
-    --critical-foreground: 0 0% 99%;
+    --critical-foreground: 0 0% 100%;
     --serious: 25 95% 53%;
-    --serious-foreground: 0 0% 99%;
-    --moderate: 38 100% 83%;
-    --moderate-foreground: 38 100% 25%;
-    --minor: 257 10% 40%;
-    --minor-foreground: 0 0% 99%;
+    --serious-foreground: 0 0% 100%;
+    --moderate: 38 92% 50%;
+    --moderate-foreground: 0 0% 100%;
+    --minor: 215 16% 47%;
+    --minor-foreground: 0 0% 100%;
 
-    /* Charts - Vexnexa harmonious palette */
-    --chart-1: 257 39% 74%;
-    --chart-2: 146 60% 78%;
-    --chart-3: 38 100% 83%;
-    --chart-4: 328 100% 85%;
-    --chart-5: 257 39% 60%;
+    /* Charts - Professional harmonious palette */
+    --chart-1: 199 89% 48%;
+    --chart-2: 160 84% 39%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 25 95% 53%;
+    --chart-5: 199 89% 38%;
 
     --radius: 0.5rem;
 
-    /* Vexnexa gradient variables */
-    --gradient-primary: linear-gradient(135deg, #B4A7D6 0%, #FFB3D9 50%, #A8E6CF 100%);
-    --gradient-subtle: linear-gradient(135deg, #FAF9FC 0%, #FFF5FB 50%, #F0FCF7 100%);
-    --shadow-elegant: 0 2px 8px rgba(180, 167, 214, 0.12);
-    --shadow-soft: 0 4px 16px rgba(180, 167, 214, 0.18);
+    /* Professional SaaS gradient variables */
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+    --gradient-subtle: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+    --shadow-elegant: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.12);
 
-    /* TutusPorta Brand Tokens - Vexnexa Edition */
-    --tp-bg: #4A4458;
+    /* TutusPorta Brand Tokens - Professional Edition */
+    --tp-bg: #0F172A;
     --tp-surface: #FFFFFF;
-    --tp-muted: #FAF9FC;
-    --tp-border: #E8E3F4;
-    --tp-text: #4A4458;
-    --tp-text-muted: #6B5C98;
-    --tp-primary: #B4A7D6;
-    --tp-primary-hover: #9B8CC7;
-    --tp-accent: #A8E6CF;
+    --tp-muted: #F8FAFC;
+    --tp-border: #E2E8F0;
+    --tp-text: #0F172A;
+    --tp-text-muted: #475569;
+    --tp-primary: #0EA5E9;
+    --tp-primary-hover: #0284C7;
+    --tp-accent: #F59E0B;
   }
   
   .dark {
-    --background: 266 15% 8%;
-    --foreground: 257 100% 98%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 266 15% 10%;
-    --card-foreground: 257 100% 98%;
-    --popover: 266 15% 10%;
-    --popover-foreground: 257 100% 98%;
+    --card: 222 47% 13%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 13%;
+    --popover-foreground: 210 40% 98%;
 
-    /* Soft lavender for dark mode */
-    --primary: 257 39% 74%;
-    --primary-foreground: 266 15% 10%;
+    /* Ocean blue for dark mode */
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 328 100% 85%;
-    --secondary-foreground: 266 15% 10%;
+    --secondary: 38 92% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 266 15% 12%;
-    --muted-foreground: 257 20% 65%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 146 60% 78%;
-    --accent-foreground: 266 15% 10%;
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 65%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 266 15% 18%;
-    --input: 266 15% 18%;
-    --ring: 257 39% 74%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 199 89% 48%;
 
-    --success: 146 60% 78%;
-    --success-foreground: 146 60% 10%;
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
 
-    --warning: 38 100% 83%;
-    --warning-foreground: 38 100% 10%;
+    --warning: 25 95% 53%;
+    --warning-foreground: 0 0% 100%;
 
-    --critical: 0 72% 65%;
-    --critical-foreground: 0 72% 8%;
-    --serious: 25 95% 65%;
-    --serious-foreground: 25 95% 8%;
-    --moderate: 38 100% 83%;
-    --moderate-foreground: 38 100% 10%;
-    --minor: 257 20% 65%;
-    --minor-foreground: 257 20% 8%;
+    --critical: 0 72% 51%;
+    --critical-foreground: 0 0% 100%;
+    --serious: 25 95% 53%;
+    --serious-foreground: 0 0% 100%;
+    --moderate: 38 92% 50%;
+    --moderate-foreground: 0 0% 100%;
+    --minor: 215 20% 65%;
+    --minor-foreground: 222 47% 11%;
 
-    --chart-1: 257 39% 74%;
-    --chart-2: 146 60% 78%;
-    --chart-3: 38 100% 83%;
-    --chart-4: 328 100% 85%;
-    --chart-5: 257 39% 60%;
+    --chart-1: 199 89% 48%;
+    --chart-2: 160 84% 39%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 25 95% 53%;
+    --chart-5: 199 89% 38%;
 
-    /* Dark mode Vexnexa gradients */
-    --gradient-primary: linear-gradient(135deg, #B4A7D6 0%, #FFB3D9 50%, #A8E6CF 100%);
-    --gradient-subtle: linear-gradient(135deg, hsl(266 15% 10%) 0%, hsl(266 15% 12%) 100%);
+    /* Dark mode professional gradients */
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+    --gradient-subtle: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(222 47% 13%) 100%);
   }
 }
 
@@ -162,8 +162,8 @@
   body {
     @apply bg-background text-foreground font-sans;
     background-image:
-      linear-gradient(to right, rgba(180, 167, 214, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(180, 167, 214, 0.08) 1px, transparent 1px);
+      linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
     background-size: 32px 32px;
     background-attachment: fixed;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -193,29 +193,29 @@
   
   /* Enhanced focus styles with AA+ contrast - keyboard users */
   *:focus-visible {
-    outline: 3px solid #8272B5 !important;
+    outline: 3px solid #0284C7 !important;
     outline-offset: 2px !important;
     border-radius: 4px;
-    box-shadow: 0 0 0 5px rgba(130, 114, 181, 0.4) !important;
+    box-shadow: 0 0 0 5px rgba(14, 165, 233, 0.3) !important;
   }
 
   /* Ensure buttons and links have highly visible focus */
   button:focus-visible,
   a:focus-visible,
   [role="button"]:focus-visible {
-    outline: 3px solid #8272B5 !important;
+    outline: 3px solid #0284C7 !important;
     outline-offset: 3px !important;
-    box-shadow: 0 0 0 6px rgba(130, 114, 181, 0.4) !important;
+    box-shadow: 0 0 0 6px rgba(14, 165, 233, 0.3) !important;
   }
 
   /* Form elements get special focus treatment */
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: 3px solid #8272B5 !important;
+    outline: 3px solid #0284C7 !important;
     outline-offset: 2px !important;
-    box-shadow: 0 0 0 5px rgba(130, 114, 181, 0.4) !important;
-    border-color: #8272B5 !important;
+    box-shadow: 0 0 0 5px rgba(14, 165, 233, 0.3) !important;
+    border-color: #0284C7 !important;
   }
 
   /* Ensure focus is never hidden */
@@ -224,7 +224,7 @@
   }
 
   *:focus-visible {
-    outline: 3px solid #8272B5 !important;
+    outline: 3px solid #0284C7 !important;
   }
   
   /* Improved selection */
@@ -257,16 +257,16 @@
 /* Modern component utilities */
 @layer utilities {
   .glass {
-    background: rgba(250, 249, 252, 0.8);
+    background: rgba(248, 250, 252, 0.8);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid rgba(180, 167, 214, 0.2);
-    box-shadow: 0 8px 32px rgba(180, 167, 214, 0.15);
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.12);
   }
 
   .dark .glass {
-    background: rgba(74, 68, 88, 0.7);
-    border: 1px solid rgba(180, 167, 214, 0.2);
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(14, 165, 233, 0.2);
   }
   
   .gradient-primary {

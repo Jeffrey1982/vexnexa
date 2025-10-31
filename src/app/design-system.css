@@ -4,58 +4,95 @@
  */
 
 :root {
-  /* ===== Colors - Primary (Soft Pastel Lavender) ===== */
-  --color-primary: #B4A7D6;
-  --color-primary-foreground: #4A4458;
-  --color-primary-50: #FAF9FC;
-  --color-primary-100: #F3F0FA;
-  --color-primary-200: #E8E3F4;
-  --color-primary-300: #D5CCEA;
-  --color-primary-400: #C4B8E0;
-  --color-primary-500: #B4A7D6;
-  --color-primary-600: #9B8CC7;
-  --color-primary-700: #8272B5;
-  --color-primary-800: #6B5C98;
-  --color-primary-900: #544978;
+  /* ===== Base & Neutral Colors ===== */
+  --color-bg: #FFFFFF;
+  --color-bg-subtle: #F8FAFC;
+  --color-bg-muted: #F1F5F9;
+  --color-text: #0F172A;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748B;
+  --color-border: #E2E8F0;
+  --color-border-strong: #CBD5E1;
 
-  /* ===== Colors - Coral (Soft Pastel Pink) ===== */
-  --color-coral: #FFB3D9;
-  --color-coral-50: #FFF5FB;
-  --color-coral-100: #FFEAF6;
-  --color-coral-200: #FFD6ED;
-  --color-coral-300: #FFC2E4;
-  --color-coral-400: #FFADDB;
-  --color-coral-500: #FFB3D9;
-  --color-coral-600: #FF8DC7;
-  --color-coral-700: #FF6BB5;
-  --color-coral-800: #E54A95;
-  --color-coral-900: #C93D7F;
+  /* ===== Colors - Primary (Ocean Blue/Turquoise) ===== */
+  --color-primary: #0EA5E9;
+  --color-primary-hover: #0284C7;
+  --color-primary-active: #0369A1;
+  --color-primary-foreground: #FFFFFF;
+  --color-primary-50: #F0F9FF;
+  --color-primary-100: #E0F2FE;
+  --color-primary-200: #BAE6FD;
+  --color-primary-300: #7DD3FC;
+  --color-primary-400: #38BDF8;
+  --color-primary-500: #0EA5E9;
+  --color-primary-600: #0284C7;
+  --color-primary-700: #0369A1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0C4A6E;
 
-  /* ===== Colors - Cyan (Soft Pastel Mint/Aqua) ===== */
-  --color-cyan: #A8E6CF;
-  --color-cyan-50: #F0FCF7;
-  --color-cyan-100: #E0F9F0;
-  --color-cyan-200: #C7F3E3;
-  --color-cyan-300: #ADECD6;
-  --color-cyan-400: #A8E6CF;
-  --color-cyan-500: #8DE0C1;
-  --color-cyan-600: #6DD4B0;
-  --color-cyan-700: #4DC89E;
-  --color-cyan-800: #3BA982;
-  --color-cyan-900: #2F8A6B;
+  /* ===== Colors - Secondary (Warm Amber) ===== */
+  --color-secondary: #F59E0B;
+  --color-secondary-hover: #D97706;
+  --color-secondary-active: #B45309;
+  --color-secondary-foreground: #FFFFFF;
+  --color-secondary-50: #FFFBEB;
+  --color-secondary-100: #FEF3C7;
+  --color-secondary-200: #FDE68A;
+  --color-secondary-300: #FCD34D;
+  --color-secondary-400: #FBBF24;
+  --color-secondary-500: #F59E0B;
+  --color-secondary-600: #D97706;
+  --color-secondary-700: #B45309;
+  --color-secondary-800: #92400E;
+  --color-secondary-900: #78350F;
 
-  /* ===== Colors - Sunny (Soft Pastel Peach) ===== */
-  --color-sunny: #FFDAA8;
-  --color-sunny-50: #FFFCF5;
-  --color-sunny-100: #FFF8EB;
-  --color-sunny-200: #FFEDD6;
-  --color-sunny-300: #FFE3C2;
-  --color-sunny-400: #FFDAA8;
-  --color-sunny-500: #FFD08F;
-  --color-sunny-600: #FFC476;
-  --color-sunny-700: #FFB75D;
-  --color-sunny-800: #E59F45;
-  --color-sunny-900: #CC8933;
+  /* ===== Colors - Success (Emerald Green) ===== */
+  --color-success: #10B981;
+  --color-success-hover: #059669;
+  --color-success-bg: #D1FAE5;
+  --color-success-foreground: #FFFFFF;
+  --color-success-50: #ECFDF5;
+  --color-success-100: #D1FAE5;
+  --color-success-200: #A7F3D0;
+  --color-success-300: #6EE7B7;
+  --color-success-400: #34D399;
+  --color-success-500: #10B981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-success-800: #065F46;
+  --color-success-900: #064E3B;
+
+  /* ===== Colors - Warning (Warm Orange) ===== */
+  --color-warning: #F97316;
+  --color-warning-hover: #EA580C;
+  --color-warning-bg: #FFEDD5;
+  --color-warning-foreground: #FFFFFF;
+  --color-warning-50: #FFF7ED;
+  --color-warning-100: #FFEDD5;
+  --color-warning-200: #FED7AA;
+  --color-warning-300: #FDBA74;
+  --color-warning-400: #FB923C;
+  --color-warning-500: #F97316;
+  --color-warning-600: #EA580C;
+  --color-warning-700: #C2410C;
+  --color-warning-800: #9A3412;
+  --color-warning-900: #7C2D12;
+
+  /* ===== Colors - Destructive (Vibrant Red) ===== */
+  --color-destructive: #EF4444;
+  --color-destructive-hover: #DC2626;
+  --color-destructive-bg: #FEE2E2;
+  --color-destructive-foreground: #FFFFFF;
+  --color-destructive-50: #FEF2F2;
+  --color-destructive-100: #FEE2E2;
+  --color-destructive-200: #FECACA;
+  --color-destructive-300: #FCA5A5;
+  --color-destructive-400: #F87171;
+  --color-destructive-500: #EF4444;
+  --color-destructive-600: #DC2626;
+  --color-destructive-700: #B91C1C;
+  --color-destructive-800: #991B1B;
+  --color-destructive-900: #7F1D1D;
 
   /* ===== Typography ===== */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
@@ -81,19 +118,22 @@
   --letter-spacing-display-xs: 0;
 
   /* ===== Shadows ===== */
-  --shadow-soft-sm: 0 2px 8px rgba(180, 167, 214, 0.12);
-  --shadow-soft-md: 0 4px 16px rgba(180, 167, 214, 0.18);
-  --shadow-soft-lg: 0 8px 24px rgba(180, 167, 214, 0.22);
-  --shadow-glow-purple: 0 0 30px rgba(180, 167, 214, 0.5);
-  --shadow-glow-pink: 0 0 30px rgba(255, 179, 217, 0.5);
-  --shadow-glow-cyan: 0 0 30px rgba(168, 230, 207, 0.5);
-  --shadow-glass: 0 8px 32px 0 rgba(180, 167, 214, 0.15);
-  --shadow-neon: 0 0 5px rgba(180, 167, 214, 0.6), 0 0 20px rgba(180, 167, 214, 0.4);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-primary-glow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+  --shadow-secondary-glow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-mesh: linear-gradient(135deg, #B4A7D6 0%, #FFB3D9 50%, #A8E6CF 100%);
-  --gradient-soft: linear-gradient(135deg, #FAF9FC 0%, #FFF5FB 50%, #F0FCF7 100%);
-  --gradient-radial: radial-gradient(circle at 50% 0%, rgba(180, 167, 214, 0.15) 0%, rgba(255, 179, 217, 0.08) 50%, transparent 80%);
+  --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  --gradient-warm: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+  --gradient-hero: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+  --gradient-subtle: linear-gradient(to bottom, #FFFFFF 0%, #F8FAFC 100%);
+  --gradient-mesh: linear-gradient(135deg, #0EA5E9 0%, #F59E0B 50%, #10B981 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;
@@ -264,8 +304,8 @@
 
 .bg-grid-subtle {
   background-image:
-    linear-gradient(to right, rgba(180, 167, 214, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(180, 167, 214, 0.12) 1px, transparent 1px);
+    linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 

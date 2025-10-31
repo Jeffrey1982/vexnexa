@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  themeColor: '#B4A7D6',
+  themeColor: '#0EA5E9',
 }
 
 export default function RootLayout({
@@ -64,12 +64,12 @@ export default function RootLayout({
         <meta name="application-name" content="TutuSporta" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#B4A7D6" />
+        <meta name="msapplication-TileColor" content="#0EA5E9" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#B4A7D6" />
-        <meta name="msapplication-navbutton-color" content="#B4A7D6" />
+        <meta name="theme-color" content="#0EA5E9" />
+        <meta name="msapplication-navbutton-color" content="#0EA5E9" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         {/* Preload Service Worker */}
