@@ -179,7 +179,7 @@ export default function ContactPage() {
           <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative max-w-4xl mx-auto text-center space-y-4 p-8 sm:p-12">
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-              Let's <span className="text-primary">talk</span>
+              Let&apos;s <span className="text-primary">talk</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
               Vragen over TutusPorta, een demo plannen of feedback? We horen graag van je.
@@ -428,7 +428,7 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Certainly. We'd be happy to give a personal demo using your own website as an example. Plan een 30-minuten gesprek
+                  Certainly. We&apos;d be happy to give a personal demo using your own website as an example. Plan een 30-minuten gesprek
                   via het formulier of de “Schedule a call”-knop.
                 </p>
               </CardContent>

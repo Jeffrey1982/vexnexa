@@ -108,7 +108,7 @@ export default function PrivacyPage() {
                   </ul>
                 </div>
                 <div className="space-y-3 text-sm text-muted-foreground">
-                  <p className="font-medium text-foreground">❌ What we DON'T do</p>
+                  <p className="font-medium text-foreground">❌ What we DON&apos;T do</p>
                   <ul className="list-disc pl-5 space-y-2 leading-relaxed">
                     <li>Store personal data from page content</li>
                     <li>Sell data to third parties</li>
