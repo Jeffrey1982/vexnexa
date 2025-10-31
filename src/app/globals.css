@@ -191,11 +191,23 @@
     @apply text-2xl lg:text-3xl font-semibold;
   }
   
-  /* Enhanced focus styles with AA+ contrast */
+  /* Enhanced focus styles with AA+ contrast - keyboard users */
   *:focus-visible {
-    outline: 2px solid var(--tp-primary);
-    outline-offset: 3px;
+    outline: 3px solid #B4A7D6;
+    outline-offset: 2px;
     border-radius: 4px;
+    box-shadow: 0 0 0 4px rgba(180, 167, 214, 0.3);
+  }
+
+  /* Ensure buttons and links have visible focus */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid #B4A7D6;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(180, 167, 214, 0.3);
   }
   
   /* Improved selection */

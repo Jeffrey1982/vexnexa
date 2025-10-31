@@ -80,7 +80,7 @@ function HeroSection() {
             </h1>
 
             <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring.
+              Automated scanning with 8 additional categories beyond WCAG. Get clear reports, quick fixes, and continuous monitoring.
             </p>
 
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
@@ -114,7 +114,7 @@ function HeroSection() {
             </div>
 
             <p className="animate-fade-in text-sm text-muted-foreground pt-4">
-              No credit card needed • 1 free scan/week
+              No credit card required. Get 1 free scan every week.
             </p>
           </div>
 
@@ -215,7 +215,7 @@ function FeaturesSection() {
               <span className="text-primary">minutes</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              No technical expertise required. Our reports are clear enough that your team can start improvements immediately.
+              No technical skills needed. Our reports are simple and clear so your team can start fixing issues right away.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -383,14 +383,16 @@ export default function HomePage() {
   return (
     <>
       <JsonLd />
-      <HeroSection />
-      <LogoStrip logos={logos} />
-      <ValuePillarsSection />
-      <FeaturesSection />
-      <CTABand />
-      <Testimonials testimonials={testimonials} title="Trusted by accessibility professionals" />
-      <FAQ items={faqItems} />
-      <FinalCTASection />
+      <main id="main-content">
+        <HeroSection />
+        <LogoStrip logos={logos} />
+        <ValuePillarsSection />
+        <FeaturesSection />
+        <CTABand />
+        <Testimonials testimonials={testimonials} title="Trusted by accessibility professionals" />
+        <FAQ items={faqItems} />
+        <FinalCTASection />
+      </main>
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { WhiteLabelProvider } from '@/lib/white-label/context';
 import { InstallPrompt } from '@/components/pwa/InstallPrompt';
 import { OfflineIndicator } from '@/components/pwa/OfflineIndicator';
+import { SkipToContent } from '@/components/SkipToContent';
 import { usePWA } from '@/hooks/usePWA';
 import { useEffect } from 'react';
 
@@ -27,6 +28,7 @@ function PWAManager() {
 export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <WhiteLabelProvider>
+      <SkipToContent />
       <PWAManager />
       <OfflineIndicator />
       {children}

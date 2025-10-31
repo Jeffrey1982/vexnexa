@@ -65,7 +65,7 @@ export function Navbar({ className }: NavbarProps) {
   };
 
   return (
-    <nav className={cn("border-b border-border/50 glass shadow-elegant sticky top-0 z-50 transition-all duration-200", className)}>
+    <nav className={cn("border-b border-border/50 glass shadow-elegant sticky top-0 z-50 transition-all duration-200", className)} aria-label="Main navigation">
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}

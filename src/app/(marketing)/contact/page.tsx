@@ -306,7 +306,7 @@ export default function ContactPage() {
                       aria-describedby={errors.name ? "name-error" : undefined}
                     />
                     {errors.name && (
-                      <p id="name-error" className="text-sm text-destructive">
+                      <p id="name-error" className="text-sm text-destructive" role="alert">
                         {errors.name}
                       </p>
                     )}
@@ -327,7 +327,7 @@ export default function ContactPage() {
                       aria-describedby={errors.email ? "email-error" : undefined}
                     />
                     {errors.email && (
-                      <p id="email-error" className="text-sm text-destructive">
+                      <p id="email-error" className="text-sm text-destructive" role="alert">
                         {errors.email}
                       </p>
                     )}
@@ -347,7 +347,7 @@ export default function ContactPage() {
                       aria-describedby={errors.message ? "message-error" : undefined}
                     />
                     {errors.message && (
-                      <p id="message-error" className="text-sm text-destructive">
+                      <p id="message-error" className="text-sm text-destructive" role="alert">
                         {errors.message}
                       </p>
                     )}
@@ -376,7 +376,7 @@ export default function ContactPage() {
                       </Label>
                     </div>
                     {errors.consent && (
-                      <p id="consent-error" className="text-sm text-destructive">
+                      <p id="consent-error" className="text-sm text-destructive" role="alert">
                         {errors.consent}
                       </p>
                     )}
