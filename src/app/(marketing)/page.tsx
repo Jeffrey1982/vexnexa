@@ -227,7 +227,7 @@ function FeaturesSection() {
               ))}
             </div>
 
-            <Button asChild className="mt-6" size="lg">
+            <Button asChild className="mt-6 gradient-primary text-white hover:opacity-90" size="lg">
               <Link href="/auth/register">
                 Start free scan
                 <ArrowRight className="ml-2 h-4 w-4" />
