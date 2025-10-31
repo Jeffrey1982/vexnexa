@@ -8,10 +8,10 @@ import { ArrowLeft, Shield, Mail, Calendar, Lock, Database, AlertTriangle, ListT
 export const metadata: Metadata = {
   title: 'Security & Privacy - TutusPorta',
   description:
-    'Security en privacy informatie van TutusPorta: data handling, encryption, retention beleid en incident response.',
+    'Security and privacy information from TutusPorta: data handling, encryption, retention beleid en incident response.',
   keywords: [
     'security',
-    'beveiliging',
+    'security',
     'privacy',
     'data protection',
     'encryption',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Security & Privacy - TutusPorta',
     description:
-      'Security en privacy informatie van TutusPorta: data handling, encryption, retention beleid en incident response.',
+      'Security and privacy information from TutusPorta: data handling, encryption, retention beleid en incident response.',
     url: 'https://tutusporta.com/legal/security',
     siteName: 'TutusPorta',
     type: 'website',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: 'Security & Privacy - TutusPorta',
     description:
-      'Security en privacy informatie van TutusPorta: data handling, encryption, retention beleid en incident response.',
+      'Security and privacy information from TutusPorta: data handling, encryption, retention beleid en incident response.',
   },
   alternates: {
     canonical: 'https://tutusporta.com/legal/security',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-const lastUpdated = '8 december 2024'
+const lastUpdated = 'December 8, 2024'
 const policyVersion = 'v1.0'
 
 const sections = [
@@ -59,7 +59,7 @@ export default function SecurityPage() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
       >
-        Ga naar hoofdinhoud
+        Skip to main content
       </a>
 
       {/* Hero */}
@@ -72,21 +72,21 @@ export default function SecurityPage() {
             className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            Terug naar startpagina
+            Back to homepage
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Security & Privacy</h1>
             <Badge variant="outline" className="flex items-center gap-2">
               <Calendar className="h-3 w-3" aria-hidden="true" />
-              Laatst bijgewerkt: {lastUpdated}
+              Last updated: {lastUpdated}
             </Badge>
-            <Badge variant="secondary" aria-label={`Beleidsversie ${policyVersion}`}>
+            <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
               {policyVersion}
             </Badge>
           </div>
           <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
-            Hoe we jouw data beschermen en onze security maatregelen.
+            How we protect your data and our security measures.
           </p>
 
           {/* Summary */}
@@ -95,18 +95,18 @@ export default function SecurityPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                   <Shield className="h-5 w-5" aria-hidden="true" />
-                  Security Garanties
+                  Security Guarantees
                 </CardTitle>
-                <CardDescription>Onze toezeggingen voor jouw data</CardDescription>
+                <CardDescription>Our commitments for your data</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6 sm:grid-cols-3">
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <Lock className="h-4 w-4" />
-                    Encryptie
+                    Encryption
                   </p>
                   <p className="leading-relaxed">
-                    Industry-standard encryptie voor data at rest en in transit
+                    Industry-standard encryption for data at rest and in transit
                   </p>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -279,13 +279,13 @@ export default function SecurityPage() {
           {/* Footer strip */}
           <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">Laatst bijgewerkt: {lastUpdated}</p>
+              <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
                   <Link href="/legal/privacy">Privacy Policy</Link>
                 </Button>
                 <Button asChild>
-                  <Link href="/contact">Contact opnemen</Link>
+                  <Link href="/contact">Contact us</Link>
                 </Button>
               </div>
             </div>
@@ -298,12 +298,12 @@ export default function SecurityPage() {
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base">
                 <ListTree className="h-4 w-4" />
-                Op deze pagina
+                On this page
               </CardTitle>
-              <CardDescription>Snel naar een sectie</CardDescription>
+              <CardDescription>Quick navigation to sections</CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
-              <nav aria-label="Inhoudsopgave" className="space-y-2">
+              <nav aria-label="Table of contents" className="space-y-2">
                 {sections.map((s) => (
                   <div key={s.id}>
                     <Link

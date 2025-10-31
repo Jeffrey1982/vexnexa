@@ -39,33 +39,33 @@ export function Footer({ className }: FooterProps) {
       if (response.ok) {
         if (result.requiresConfirmation) {
           toast({
-            title: "Bevestigingsmail verzonden! 📧",
-            description: "Controleer je inbox en klik op de link om je inschrijving te voltooien.",
+            title: "Confirmation email sent! 📧",
+            description: "Check your inbox and click the link to complete your subscription.",
           });
         } else {
           toast({
-            title: "Bedankt voor je inschrijving!",
-            description: "We houden je op de hoogte van nieuwe features en tips.",
+            title: "Thanks for subscribing!",
+            description: "We'll keep you updated with new features and tips.",
           });
         }
         setEmail("");
       } else if (response.status === 409) {
         toast({
-          title: "Dit e-mailadres staat al ingeschreven",
-          description: "Bedankt voor je interesse!",
+          title: "This email address is already subscribed",
+          description: "Thanks for your interest!",
         });
       } else {
         toast({
           variant: "destructive",
-          title: "Er ging iets mis",
-          description: result.error || "Probeer het later opnieuw.",
+          title: "Something went wrong",
+          description: result.error || "Please try again later.",
         });
       }
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Er ging iets mis",
-        description: "Probeer het later opnieuw.",
+        title: "Something went wrong",
+        description: "Please try again later.",
       });
     } finally {
       setIsSubmitting(false);
@@ -102,7 +102,7 @@ export function Footer({ className }: FooterProps) {
               <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-sm">
                 <Input
                   type="email"
-                  placeholder="je@email.nl"
+                  placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required

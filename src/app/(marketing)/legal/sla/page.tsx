@@ -77,9 +77,9 @@ export default function SLAPage() {
             <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">SLA & Support</h1>
             <Badge variant="outline" className="flex items-center gap-2">
               <Calendar className="h-3 w-3" aria-hidden="true" />
-              Laatst bijgewerkt: {lastUpdated}
+              Last updated: {lastUpdated}
             </Badge>
-            <Badge variant="secondary" aria-label={`Beleidsversie ${policyVersion}`}>
+            <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
               {policyVersion}
             </Badge>
           </div>
@@ -241,7 +241,7 @@ export default function SLAPage() {
           {/* Footer strip */}
           <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">Laatst bijgewerkt: {lastUpdated}</p>
+              <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
                   <Link href="/legal/security">Security</Link>
@@ -282,8 +282,8 @@ export default function SLAPage() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Hulp nodig?</CardTitle>
-              <CardDescription>We reageren meestal binnen 1 werkdag.</CardDescription>
+              <CardTitle className="text-base">Need help?</CardTitle>
+              <CardDescription>We typically respond within 1 business day.</CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">

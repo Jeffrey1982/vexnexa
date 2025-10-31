@@ -21,7 +21,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 
 const navigationItems = [
   { name: "Features", href: "/features" },
-  { name: "Prijzen", href: "/pricing" },
+  { name: "Pricing", href: "/pricing" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
@@ -154,7 +154,7 @@ export function Navbar({ className }: NavbarProps) {
                   size="sm"
                   className="font-medium text-sm"
                 >
-                  <Link href="/auth/login">Inloggen</Link>
+                  <Link href="/auth/login">Login</Link>
                 </Button>
                 <Button
                   asChild
@@ -164,7 +164,7 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => handleCtaClick("navbar_primary")}
                 >
                   <Link href="/auth/register">
-                    <span className="relative z-10">Start Gratis</span>
+                    <span className="relative z-10">Start Free</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                   </Link>
                 </Button>
@@ -196,7 +196,7 @@ export function Navbar({ className }: NavbarProps) {
                   </Link>
                 </SheetTitle>
                 <SheetDescription className="text-left pt-2">
-                  WCAG-scans die wél inzicht geven
+                  WCAG scans that provide real insights
                 </SheetDescription>
               </SheetHeader>
               
@@ -214,13 +214,13 @@ export function Navbar({ className }: NavbarProps) {
 
                 {/* Language Selector - Mobile */}
                 <div className="pt-4 pb-2 border-b border-border/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-3">Taal / Language</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-3">Language</p>
                   <LanguageSelector />
                 </div>
 
                 {/* Social Icons - Mobile */}
                 <div className="pt-4 pb-2">
-                  <p className="text-sm font-medium text-muted-foreground mb-3">Volg ons</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-3">Follow us</p>
                   <div className="flex items-center gap-3">
                     <a
                       href="https://linkedin.com/company/vexnexa"
@@ -288,7 +288,7 @@ export function Navbar({ className }: NavbarProps) {
                         className="w-full justify-start font-medium"
                         onClick={() => setIsOpen(false)}
                       >
-                        <Link href="/auth/login">Inloggen</Link>
+                        <Link href="/auth/login">Login</Link>
                       </Button>
                       <Button
                         asChild
@@ -299,7 +299,7 @@ export function Navbar({ className }: NavbarProps) {
                           handleCtaClick("mobile_primary");
                         }}
                       >
-                        <Link href="/auth/register">Start Gratis</Link>
+                        <Link href="/auth/register">Start Free</Link>
                       </Button>
                     </>
                   )}

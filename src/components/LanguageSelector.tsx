@@ -28,7 +28,7 @@ const languages: Language[] = [
 ];
 
 export function LanguageSelector() {
-  const [currentLanguage, setCurrentLanguage] = React.useState<Language>(languages[0]);
+  const [currentLanguage, setCurrentLanguage] = React.useState<Language>(languages[0]); // English is first
 
   const handleLanguageChange = (language: Language) => {
     setCurrentLanguage(language);

@@ -19,16 +19,16 @@ import {
 } from "lucide-react";
 
 // NOTE: In Next.js, metadata for a client component can't use `export const metadata`.
-// Laat dit object hier staan of verplaats het naar een server component/layout.
+// Keep this object here or move it to a server component/layout.
 const metadata = {
   title: "Contact - TutusPorta WCAG Scanner",
   description:
-    "Neem contact op met TutusPorta voor vragen over accessibility scanning, WCAG compliance of custom oplossingen.",
-  keywords: "contact, support, accessibility hulp, WCAG vragen, demo, enterprise",
+    "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
+  keywords: "contact, support, accessibility help, WCAG questions, demo, enterprise",
   openGraph: {
     title: "Contact - TutusPorta WCAG Scanner",
     description:
-      "Neem contact op met TutusPorta voor vragen over accessibility scanning, WCAG compliance of custom oplossingen.",
+      "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
     url: "https://tutusporta.com/contact",
     siteName: "TutusPorta",
     type: "website",
@@ -37,7 +37,7 @@ const metadata = {
     card: "summary",
     title: "Contact - TutusPorta WCAG Scanner",
     description:
-      "Neem contact op met TutusPorta voor vragen over accessibility scanning, WCAG compliance of custom oplossingen.",
+      "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
   },
   alternates: {
     canonical: "https://tutusporta.com/contact",
@@ -57,7 +57,7 @@ const contactMethods: Method[] = [
   {
     icon: Mail,
     title: "E-mail Support",
-    description: "Voor algemene vragen en support",
+    description: "For general questions and support",
     detail: "Responstijd: 24–72 uur",
     actionLabel: "info@tutusporta.com",
     href: "mailto:info@tutusporta.com",
@@ -65,16 +65,16 @@ const contactMethods: Method[] = [
   {
     icon: MessageCircle,
     title: "Sales & Demo",
-    description: "Voor Team-plannen en enterprise oplossingen",
-    detail: "Persoonlijke demo binnen 24 uur",
-    actionLabel: "Plan een gesprek",
+    description: "For Team plans and enterprise solutions",
+    detail: "Personal demo within 24 hours",
+    actionLabel: "Schedule a call",
     href: "/demo", // Links to demo page with contact form
   },
   {
     icon: Globe,
-    title: "Gemaakt in Nederland",
+    title: "Made in the Netherlands",
     description: "Privacy-first, GDPR compliant",
-    detail: "Data opgeslagen in Europa",
+    detail: "Data stored in Europe",
     actionLabel: "Amsterdam, Nederland",
   },
 ];
@@ -100,12 +100,12 @@ export default function ContactPage() {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!formData.name.trim()) e.name = "Vul je naam in.";
-    if (!formData.email.trim() || !isValidEmail(formData.email)) e.email = "Vul een geldig e-mailadres in.";
-    if (!formData.message.trim() || formData.message.trim().length < 10) e.message = "Schrijf minimaal 10 tekens.";
-    if (!consent) e.consent = "Geef toestemming om je bericht te mogen beantwoorden.";
+    if (!formData.name.trim()) e.name = "Enter your name.";
+    if (!formData.email.trim() || !isValidEmail(formData.email)) e.email = "Enter a valid email address.";
+    if (!formData.message.trim() || formData.message.trim().length < 10) e.message = "Write at least 10 characters.";
+    if (!consent) e.consent = "Give permission to respond to your message.";
     // honeypot
-    if (formData.company.trim()) e.company = "Spam gedetecteerd.";
+    if (formData.company.trim()) e.company = "Spam detected.";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -128,8 +128,8 @@ export default function ContactPage() {
 
       if (response.ok) {
         toast({
-          title: "Bericht verzonden!",
-          description: "We nemen binnen 24 uur contact met je op.",
+          title: "Message sent!",
+          description: "We will contact you within 24 hours.",
         });
         const emailForTrack = formData.email;
         const len = formData.message.length;
@@ -149,8 +149,8 @@ export default function ContactPage() {
     } catch {
       toast({
         variant: "destructive",
-        title: "Er ging iets mis",
-        description: "Probeer het later opnieuw of stuur een e-mail naar info@tutusporta.com",
+        title: "Something went wrong",
+        description: "Try again later or send an email to info@tutusporta.com",
       });
     } finally {
       setIsSubmitting(false);
@@ -169,7 +169,7 @@ export default function ContactPage() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
       >
-        Ga naar hoofdinhoud
+        Skip to main content
       </a>
 
       {/* Hero */}
@@ -179,11 +179,11 @@ export default function ContactPage() {
           <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative max-w-4xl mx-auto text-center space-y-4 p-8 sm:p-12">
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-              Laten we <span className="text-primary">praten</span>
+              Let's <span className="text-primary">talk</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
               Vragen over TutusPorta, een demo plannen of feedback? We horen graag van je.
-              Geen verkooppraatjes — gewoon behulpzame mensen.
+              No sales talk — just helpful people.
             </p>
           </div>
         </div>
@@ -226,29 +226,29 @@ export default function ContactPage() {
             {/* Left column */}
             <div className="space-y-6">
               <div>
-                <h2 className="font-display text-3xl font-bold mb-4">Stuur ons een bericht</h2>
+                <h2 className="font-display text-3xl font-bold mb-4">Send us a message</h2>
                 <p className="text-lg text-muted-foreground">
-                  Vul het formulier in en we nemen zo snel mogelijk contact met je op.
-                  Voor urgente vragen kun je ook direct mailen.
+                  Fill in the form and we will contact you as soon as possible.
+                  For urgent questions you can also email directly.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Respons binnen 24 uur op werkdagen</span>
+                  <span>Response within 24 hours on business days</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Gratis demo’s en consultatie</span>
+                  <span>Free demos and consultation’s en consultatie</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Nederlandse support in het Nederlands</span>
+                  <span>Dutch support in Dutch</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Privacy-first: je gegevens worden veilig bewaard</span>
+                  <span>Privacy-first: your data is stored securely</span>
                 </div>
               </div>
 
@@ -266,9 +266,9 @@ export default function ContactPage() {
             {/* Right column – form */}
             <Card>
               <CardHeader>
-                <CardTitle className="font-display">Contactformulier</CardTitle>
+                <CardTitle className="font-display">Contact form</CardTitle>
                 <CardDescription>
-                  We behandelen je gegevens vertrouwelijk volgens ons{" "}
+                  We treat your data confidentially according to our{" "}
                   <Link href="/legal/privacy" className="text-primary hover:underline">
                     privacybeleid
                   </Link>
@@ -277,9 +277,9 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                  {/* Honeypot (verborgen voor users, zichtbaar voor bots) */}
+                  {/* Honeypot (hidden for users, visible for bots) */}
                   <div className="sr-only" aria-hidden="true">
-                    <Label htmlFor="company">Bedrijfsnaam</Label>
+                    <Label htmlFor="company">Company name</Label>
                     <Input
                       id="company"
                       name="company"
@@ -292,7 +292,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="name">Naam *</Label>
+                    <Label htmlFor="name">Name *</Label>
                     <Input
                       id="name"
                       type="text"
@@ -301,7 +301,7 @@ export default function ContactPage() {
                       onChange={(e) => handleInput("name", e.target.value)}
                       required
                       disabled={isSubmitting}
-                      placeholder="Je voornaam en achternaam"
+                      placeholder="Your first and last name"
                       aria-invalid={!!errors.name}
                       aria-describedby={errors.name ? "name-error" : undefined}
                     />
@@ -322,7 +322,7 @@ export default function ContactPage() {
                       onChange={(e) => handleInput("email", e.target.value)}
                       required
                       disabled={isSubmitting}
-                      placeholder="je@email.nl"
+                      placeholder="you@email.com"
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? "email-error" : undefined}
                     />
@@ -334,14 +334,14 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Bericht *</Label>
+                    <Label htmlFor="message">Message *</Label>
                     <Textarea
                       id="message"
                       value={formData.message}
                       onChange={(e) => handleInput("message", e.target.value)}
                       required
                       disabled={isSubmitting}
-                      placeholder="Vertel ons waar we je mee kunnen helpen…"
+                      placeholder="Tell us how we can help you…"
                       rows={6}
                       aria-invalid={!!errors.message}
                       aria-describedby={errors.message ? "message-error" : undefined}
@@ -368,7 +368,7 @@ export default function ContactPage() {
                         aria-describedby={errors.consent ? "consent-error" : undefined}
                       />
                       <Label htmlFor="consent" className="leading-relaxed">
-                        Ik geef toestemming om mijn gegevens te gebruiken om op mijn bericht te reageren, conform het{" "}
+                        I give permission to use my data to respond to my message, in accordance with the{" "}
                         <Link href="/legal/privacy" className="text-primary hover:underline">
                           privacybeleid
                         </Link>
@@ -386,12 +386,12 @@ export default function ContactPage() {
                     {isSubmitting ? (
                       <>
                         <Clock className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                        Bezig met verzenden…
+                        Sending…
                       </>
                     ) : (
                       <>
                         <Send className="mr-2 h-4 w-4" aria-hidden="true" />
-                        Verstuur bericht
+                        Send message
                       </>
                     )}
                   </Button>
@@ -406,53 +406,53 @@ export default function ContactPage() {
       <section className="container mx-auto px-4 py-12 sm:py-16">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-3xl font-bold mb-3">Veelgestelde vragen</h2>
-            <p className="text-lg text-muted-foreground">Snel antwoord op de meest voorkomende vragen</p>
+            <h2 className="font-display text-3xl font-bold mb-3">Frequently asked questions</h2>
+            <p className="text-lg text-muted-foreground">Quick answers to the most common questions</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
-                <CardTitle>Hoe snel krijg ik antwoord?</CardTitle>
+                <CardTitle>How quickly will I get a response??</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  We reageren binnen 24 uur op werkdagen. Voor Team-demo’s en sales proberen we binnen 4 uur te reageren.
+                  We respond within 24 hours on business days. For Team demos and sales we try to respond within 4 hours.’s en sales proberen we binnen 4 uur te reageren.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Kunnen jullie een custom demo geven?</CardTitle>
+                <CardTitle>Can you give a custom demo??</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Zeker. We doen graag een persoonlijke demo met je eigen website als voorbeeld. Plan een 30-minuten gesprek
-                  via het formulier of de “Plan een gesprek”-knop.
+                  Certainly. We'd be happy to give a personal demo using your own website as an example. Plan een 30-minuten gesprek
+                  via het formulier of de “Schedule a call”-knop.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Bieden jullie training en consultancy?</CardTitle>
+                <CardTitle>Do you offer training and consultancy??</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Voor Team-accounts bieden we onboarding en trainingssessies. Voor consultancy leveren we offertes op maat.
+                  For Team accounts we offer onboarding and training sessions. For consultancy we provide custom quotes.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Hoe werkt enterprise ondersteuning?</CardTitle>
+                <CardTitle>How does enterprise support work??</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
                   Enterprise krijgt dedicated support, SSO, custom branding en desgewenst on-premise deployment. Neem contact op
-                  voor details.
+                  for details.
                 </p>
               </CardContent>
             </Card>
@@ -463,14 +463,14 @@ export default function ContactPage() {
       {/* CTA */}
       <section className="container mx-auto px-4 py-20 sm:py-24 text-center">
         <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-          <h2 className="font-display text-3xl md:text-4xl font-bold">Liever eerst uitproberen?</h2>
+          <h2 className="font-display text-3xl md:text-4xl font-bold">Prefer to try it first??</h2>
           <p className="text-xl text-muted-foreground">
-            Start direct met een gratis scan van je website. Registratie vereist, resultaat binnen seconden.
+            Start directly with a free scan of your website. Registration required, results within seconds.
           </p>
 
           <Button size="lg" asChild>
             <Link href="/auth/register">
-              Start gratis scan
+              Start free scan
               <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>

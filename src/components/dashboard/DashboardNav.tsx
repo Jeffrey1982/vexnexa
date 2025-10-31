@@ -286,7 +286,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
             {/* Language Selector (mobile) */}
             <div className="pt-4 border-t border-gray-200">
               <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">
-                Language / Taal
+                Language
               </div>
               <div className="px-3">
                 <LanguageSelector />

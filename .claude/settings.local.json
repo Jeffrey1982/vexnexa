@@ -27,7 +27,10 @@
       "Bash(ls:*)",
       "Bash(pkill:*)",
       "Bash(git rm:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(find:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)"
     ],
     "deny": [],
     "ask": []

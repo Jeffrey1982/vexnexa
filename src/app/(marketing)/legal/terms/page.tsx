@@ -6,20 +6,20 @@ import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Scale, Mail, Calendar, AlertTriangle, ListTree } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Algemene Voorwaarden - TutusPorta',
+  title: 'Terms of Service - TutusPorta',
   description:
-    'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
+    'Read TutusPorta's terms of service: usage terms, payments, liability and service conditions.',
   keywords: [
     'algemene voorwaarden',
     'terms of service',
-    'gebruiksvoorwaarden',
-    'servicevoorwaarden',
-    'aansprakelijkheid',
+    'usage terms',
+    'service conditions',
+    'liability',
   ],
   openGraph: {
-    title: 'Algemene Voorwaarden - TutusPorta',
+    title: 'Terms of Service - TutusPorta',
     description:
-      'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
+      'Read TutusPorta's terms of service: usage terms, payments, liability and service conditions.',
     url: 'https://tutusporta.com/legal/terms',
     siteName: 'TutusPorta',
     type: 'website',
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Algemene Voorwaarden - TutusPorta',
+    title: 'Terms of Service - TutusPorta',
     description:
-      'Lees de algemene voorwaarden van TutusPorta: gebruiksvoorwaarden, betalingen, aansprakelijkheid en servicevoorwaarden.',
+      'Read TutusPorta's terms of service: usage terms, payments, liability and service conditions.',
   },
   alternates: {
     canonical: 'https://tutusporta.com/legal/terms',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-const lastUpdated = '8 december 2024'
+const lastUpdated = 'December 8, 2024'
 const policyVersion = 'v1.1'
 
 const sections = [
@@ -48,7 +48,7 @@ const sections = [
   { id: 'betalingen', label: '4. Betalingen & abonnementen' },
   { id: 'beschikbaarheid', label: '5. Beschikbaarheid & support' },
   { id: 'ip', label: '6. Intellectueel eigendom' },
-  { id: 'aansprakelijkheid', label: '7. Garanties & aansprakelijkheid' },
+  { id: 'liability', label: '7. Garanties & liability' },
   { id: 'privacy', label: '8. Privacy & gegevensbescherming' },
   { id: 'beindiging', label: '9. Beëindiging' },
   { id: 'recht', label: '10. Toepasselijk recht & geschillen' },
@@ -64,7 +64,7 @@ export default function TermsPage() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
       >
-        Ga naar hoofdinhoud
+        Skip to main content
       </a>
 
       {/* Hero */}
@@ -77,21 +77,21 @@ export default function TermsPage() {
             className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            Terug naar startpagina
+            Back to homepage
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Algemene Voorwaarden</h1>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Terms of Service</h1>
             <Badge variant="outline" className="flex items-center gap-2">
               <Calendar className="h-3 w-3" aria-hidden="true" />
-              Laatst bijgewerkt: {lastUpdated}
+              Last updated: {lastUpdated}
             </Badge>
-            <Badge variant="secondary" aria-label={`Beleidsversie ${policyVersion}`}>
+            <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
               {policyVersion}
             </Badge>
           </div>
           <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
-            Deze voorwaarden zijn van toepassing op het gebruik van de TutusPorta accessibility-scanning service.
+            These terms apply to the use of the TutusPorta accessibility-scanning service.
           </p>
 
           {/* Summary */}
@@ -106,12 +106,12 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p className="font-medium text-foreground">✅ Wat je mag</p>
+                  <p className="font-medium text-foreground">✅ What you may do</p>
                   <ul className="list-disc pl-5 space-y-1 leading-relaxed">
-                    <li>Je eigen sites scannen (of met toestemming van de eigenaar)</li>
-                    <li>Rapporten delen met je team/klanten</li>
-                    <li>Abonnement opzeggen wanneer je wilt</li>
-                    <li>Bij vragen support inschakelen</li>
+                    <li>Scan your own sites (or with owner permission)</li>
+                    <li>Share reports with your team/clients</li>
+                    <li>Cancel subscription whenever you want</li>
+                    <li>Contact support for questions</li>
                   </ul>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -125,7 +125,7 @@ export default function TermsPage() {
                 <div className="sm:col-span-2">
                   <p className="text-sm text-muted-foreground border-t pt-3">
                     <AlertTriangle className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                    Door TutusPorta te gebruiken ga je akkoord met deze voorwaarden.
+                    By using TutusPorta you agree to these terms.
                   </p>
                 </div>
               </CardContent>
@@ -155,13 +155,13 @@ export default function TermsPage() {
               <li><strong>TutusPorta</strong>: de accessibility-scanning service op tutusporta.com.</li>
               <li><strong>Wij/Ons</strong>: de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.).</li>
               <li><strong>Gebruiker</strong>: iedere natuurlijke of rechtspersoon die de service gebruikt.</li>
-              <li><strong>Account</strong>: je persoonlijke of zakelijke toegang tot functies en historie.</li>
+              <li><strong>Account</strong>: your personal or business access to functions and history.</li>
               <li><strong>Scan</strong>: een geautomatiseerde test van een webpagina op toegankelijkheid.</li>
-              <li><strong>API</strong>: programmeerinterface voor geautomatiseerde toegang tot de service.</li>
+              <li><strong>API</strong>: programming interface for automated access to the service.</li>
             </ul>
             <h3>Toepasselijkheid</h3>
             <p>
-              Deze voorwaarden gelden voor al het gebruik van TutusPorta, inclusief gratis en betaalde accounts, de API,
+              These terms apply to all use of TutusPorta, including free and paid accounts, the API,
               proefperiodes en alle bijbehorende communicatie. Afwijkingen zijn alleen geldig indien schriftelijk overeengekomen.
             </p>
             <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
@@ -181,9 +181,9 @@ export default function TermsPage() {
             <h2>2. Gebruik van de service</h2>
             <h3>Toegestaan gebruik</h3>
             <ul>
-              <li>Scannen van websites die je bezit of waarvoor je aantoonbare toestemming hebt</li>
+              <li>Scanning websites you own or have demonstrable permission for</li>
               <li>Interne en klantprojecten (rapporten delen is toegestaan)</li>
-              <li>Onderwijs/onderzoek en commercieel gebruik binnen je bundellimieten</li>
+              <li>Education/research and commercial use within your bundle limits</li>
             </ul>
             <h3>Verboden gebruik</h3>
             <ul>
@@ -297,8 +297,8 @@ export default function TermsPage() {
           <div className="h-px bg-border my-10 not-prose" />
 
           {/* 7 */}
-          <section id="aansprakelijkheid">
-            <h2>7. Garanties & aansprakelijkheid</h2>
+          <section id="liability">
+            <h2>7. Garanties & liability</h2>
             <h3>Beperkte garantie</h3>
             <ul>
               <li>Scans volgen gangbare methoden (o.a. regels vergelijkbaar met axe-core), maar dekt niet alle WCAG-criteria in alle contexten</li>
@@ -306,13 +306,13 @@ export default function TermsPage() {
             </ul>
             <h3>Aansprakelijkheidsbeperking</h3>
             <ul>
-              <li>Onze totale aansprakelijkheid is beperkt tot het bedrag dat je in de laatste 12 maanden hebt betaald</li>
-              <li>Geen aansprakelijkheid voor indirecte/gevolgschade, winstderving, dataverlies of reputatieschade</li>
+              <li>Onze totale liability is beperkt tot het bedrag dat je in de laatste 12 maanden hebt betaald</li>
+              <li>Geen liability voor indirecte/gevolgschade, winstderving, dataverlies of reputatieschade</li>
               <li>Uitsluitingen gelden niet bij opzet of bewuste roekeloosheid voor zover wettelijk toegestaan</li>
             </ul>
             <h3>Overmacht</h3>
             <ul>
-              <li>Geen aansprakelijkheid bij gebeurtenissen buiten onze redelijke controle (o.a. storing bij derden, oorlog, natuurrampen, cyberaanval)</li>
+              <li>Geen liability bij gebeurtenissen buiten onze redelijke controle (o.a. storing bij derden, oorlog, natuurrampen, cyberaanval)</li>
             </ul>
           </section>
 
@@ -403,7 +403,7 @@ export default function TermsPage() {
           {/* Footer strip */}
           <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">Laatst bijgewerkt: {lastUpdated}</p>
+              <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
                   <Link href="/legal/privacy">Privacybeleid</Link>
@@ -422,12 +422,12 @@ export default function TermsPage() {
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base">
                 <ListTree className="h-4 w-4" />
-                Op deze pagina
+                On this page
               </CardTitle>
-              <CardDescription>Snel naar een sectie</CardDescription>
+              <CardDescription>Quick navigation to sections</CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
-              <nav aria-label="Inhoudsopgave" className="space-y-2">
+              <nav aria-label="Table of contents" className="space-y-2">
                 {sections.map((s) => (
                   <div key={s.id}>
                     <Link
@@ -444,12 +444,12 @@ export default function TermsPage() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Hulp nodig?</CardTitle>
-              <CardDescription>We reageren meestal binnen 1 werkdag.</CardDescription>
+              <CardTitle className="text-base">Need help?</CardTitle>
+              <CardDescription>We typically respond within 1 business day.</CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <Link href="/contact">Contact opnemen</Link>
+                <Link href="/contact">Contact us</Link>
               </Button>
             </CardContent>
           </Card>

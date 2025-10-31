@@ -223,7 +223,7 @@ export default async function DashboardPage() {
             New Accessibility Scan
           </CardTitle>
           <CardDescription className="text-sm sm:text-base">
-            Voer een URL in voor een 100% uitgebreide toegankelijkheidsscan met 8 extra categorieën
+            Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0">
