@@ -3,7 +3,7 @@ import { inter, spaceGrotesk } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
-import '../design-system.css'
+import './design-system.css'
 import './globals.css'
 
 export const metadata: Metadata = {
