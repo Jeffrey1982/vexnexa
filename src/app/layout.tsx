@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
-import { inter, jakarta } from './fonts'
+import { inter, spaceGrotesk } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import '../design-system.css'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  themeColor: '#3B82F6',
+  themeColor: '#B4A7D6',
 }
 
 export default function RootLayout({
@@ -44,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         {/* Default favicon - will be replaced by white label if configured */}
         <link rel="icon" href="/favicon.ico" />
@@ -63,12 +64,12 @@ export default function RootLayout({
         <meta name="application-name" content="TutuSporta" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#3B82F6" />
+        <meta name="msapplication-TileColor" content="#B4A7D6" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#3B82F6" />
-        <meta name="msapplication-navbutton-color" content="#3B82F6" />
+        <meta name="theme-color" content="#B4A7D6" />
+        <meta name="msapplication-navbutton-color" content="#B4A7D6" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         {/* Preload Service Worker */}

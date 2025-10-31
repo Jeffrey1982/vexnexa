@@ -1,0 +1,305 @@
+/**
+ * Vexnexa Design System - CSS Variables
+ * Import this file into any project to use the Vexnexa design system
+ */
+
+:root {
+  /* ===== Colors - Primary (Soft Pastel Lavender) ===== */
+  --color-primary: #B4A7D6;
+  --color-primary-foreground: #4A4458;
+  --color-primary-50: #FAF9FC;
+  --color-primary-100: #F3F0FA;
+  --color-primary-200: #E8E3F4;
+  --color-primary-300: #D5CCEA;
+  --color-primary-400: #C4B8E0;
+  --color-primary-500: #B4A7D6;
+  --color-primary-600: #9B8CC7;
+  --color-primary-700: #8272B5;
+  --color-primary-800: #6B5C98;
+  --color-primary-900: #544978;
+
+  /* ===== Colors - Coral (Soft Pastel Pink) ===== */
+  --color-coral: #FFB3D9;
+  --color-coral-50: #FFF5FB;
+  --color-coral-100: #FFEAF6;
+  --color-coral-200: #FFD6ED;
+  --color-coral-300: #FFC2E4;
+  --color-coral-400: #FFADDB;
+  --color-coral-500: #FFB3D9;
+  --color-coral-600: #FF8DC7;
+  --color-coral-700: #FF6BB5;
+  --color-coral-800: #E54A95;
+  --color-coral-900: #C93D7F;
+
+  /* ===== Colors - Cyan (Soft Pastel Mint/Aqua) ===== */
+  --color-cyan: #A8E6CF;
+  --color-cyan-50: #F0FCF7;
+  --color-cyan-100: #E0F9F0;
+  --color-cyan-200: #C7F3E3;
+  --color-cyan-300: #ADECD6;
+  --color-cyan-400: #A8E6CF;
+  --color-cyan-500: #8DE0C1;
+  --color-cyan-600: #6DD4B0;
+  --color-cyan-700: #4DC89E;
+  --color-cyan-800: #3BA982;
+  --color-cyan-900: #2F8A6B;
+
+  /* ===== Colors - Sunny (Soft Pastel Peach) ===== */
+  --color-sunny: #FFDAA8;
+  --color-sunny-50: #FFFCF5;
+  --color-sunny-100: #FFF8EB;
+  --color-sunny-200: #FFEDD6;
+  --color-sunny-300: #FFE3C2;
+  --color-sunny-400: #FFDAA8;
+  --color-sunny-500: #FFD08F;
+  --color-sunny-600: #FFC476;
+  --color-sunny-700: #FFB75D;
+  --color-sunny-800: #E59F45;
+  --color-sunny-900: #CC8933;
+
+  /* ===== Typography ===== */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --font-size-display-xl: 4.5rem;
+  --font-size-display-lg: 3.75rem;
+  --font-size-display-md: 3rem;
+  --font-size-display-sm: 2.25rem;
+  --font-size-display-xs: 1.875rem;
+
+  --line-height-display-xl: 1.1;
+  --line-height-display-lg: 1.1;
+  --line-height-display-md: 1.15;
+  --line-height-display-sm: 1.2;
+  --line-height-display-xs: 1.3;
+  --line-height-relaxed: 1.6;
+
+  --letter-spacing-display-xl: -0.02em;
+  --letter-spacing-display-lg: -0.02em;
+  --letter-spacing-display-md: -0.01em;
+  --letter-spacing-display-sm: -0.01em;
+  --letter-spacing-display-xs: 0;
+
+  /* ===== Shadows ===== */
+  --shadow-soft-sm: 0 2px 8px rgba(180, 167, 214, 0.12);
+  --shadow-soft-md: 0 4px 16px rgba(180, 167, 214, 0.18);
+  --shadow-soft-lg: 0 8px 24px rgba(180, 167, 214, 0.22);
+  --shadow-glow-purple: 0 0 30px rgba(180, 167, 214, 0.5);
+  --shadow-glow-pink: 0 0 30px rgba(255, 179, 217, 0.5);
+  --shadow-glow-cyan: 0 0 30px rgba(168, 230, 207, 0.5);
+  --shadow-glass: 0 8px 32px 0 rgba(180, 167, 214, 0.15);
+  --shadow-neon: 0 0 5px rgba(180, 167, 214, 0.6), 0 0 20px rgba(180, 167, 214, 0.4);
+
+  /* ===== Gradients ===== */
+  --gradient-mesh: linear-gradient(135deg, #B4A7D6 0%, #FFB3D9 50%, #A8E6CF 100%);
+  --gradient-soft: linear-gradient(135deg, #FAF9FC 0%, #FFF5FB 50%, #F0FCF7 100%);
+  --gradient-radial: radial-gradient(circle at 50% 0%, rgba(180, 167, 214, 0.15) 0%, rgba(255, 179, 217, 0.08) 50%, transparent 80%);
+
+  /* ===== Spacing ===== */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  --spacing-100: 25rem;
+  --spacing-112: 28rem;
+  --spacing-128: 32rem;
+
+  /* ===== Border Radius ===== */
+  --radius: 0.5rem;
+
+  /* ===== Backdrop Blur ===== */
+  --backdrop-blur-xs: 2px;
+
+  /* ===== Animation Durations ===== */
+  --duration-fade-up: 0.6s;
+  --duration-fade-in: 0.4s;
+  --duration-slide-in: 0.4s;
+  --duration-float: 6s;
+  --duration-bounce-slow: 3s;
+  --duration-wiggle: 1s;
+  --duration-pulse-slow: 3s;
+  --duration-spin-slow: 8s;
+  --duration-ping-slow: 2s;
+  --duration-gradient: 8s;
+  --duration-blob: 7s;
+  --duration-tilt: 10s;
+}
+
+/* ===== Animation Keyframes ===== */
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+
+/* ===== Utility Classes ===== */
+
+.text-display-xl {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-xl);
+  line-height: var(--line-height-display-xl);
+  letter-spacing: var(--letter-spacing-display-xl);
+  font-weight: 700;
+}
+
+.text-display-lg {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-lg);
+  line-height: var(--line-height-display-lg);
+  letter-spacing: var(--letter-spacing-display-lg);
+  font-weight: 700;
+}
+
+.text-display-md {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-md);
+  line-height: var(--line-height-display-md);
+  letter-spacing: var(--letter-spacing-display-md);
+  font-weight: 700;
+}
+
+.text-display-sm {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-sm);
+  line-height: var(--line-height-display-sm);
+  letter-spacing: var(--letter-spacing-display-sm);
+  font-weight: 600;
+}
+
+.text-display-xs {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-xs);
+  line-height: var(--line-height-display-xs);
+  letter-spacing: var(--letter-spacing-display-xs);
+  font-weight: 600;
+}
+
+.bg-gradient-mesh {
+  background: var(--gradient-mesh);
+}
+
+.bg-gradient-soft {
+  background: var(--gradient-soft);
+}
+
+.bg-gradient-radial {
+  background: var(--gradient-radial);
+}
+
+.bg-grid-subtle {
+  background-image:
+    linear-gradient(to right, rgba(180, 167, 214, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(180, 167, 214, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ===== Animation Classes ===== */
+
+.animate-fade-up {
+  animation: fadeUp var(--duration-fade-up) ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-fade-in) ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn var(--duration-slide-in) ease-out;
+}
+
+.animate-float {
+  animation: float var(--duration-float) ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle var(--duration-wiggle) ease-in-out infinite;
+}
+
+.animate-gradient {
+  animation: gradient var(--duration-gradient) ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-blob {
+  animation: blob var(--duration-blob) infinite;
+}
+
+.animate-tilt {
+  animation: tilt var(--duration-tilt) infinite linear;
+}

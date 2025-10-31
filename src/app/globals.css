@@ -12,139 +12,139 @@
 
 @layer base {
   :root {
-    /* Typography */
+    /* Typography - Vexnexa Design System */
     --font-sans: var(--font-inter);
-    --font-display: var(--font-plus-jakarta-sans);
+    --font-display: var(--font-spacegrotesk);
 
-    /* Modern Business Colors - Sophisticated Blue Palette */
-    --background: 0 0% 99%;
-    --foreground: 220 15% 12%;
-    
-    /* Cards & Surfaces - Subtle elevation */
+    /* Vexnexa Soft Pastel Colors */
+    --background: 257 100% 99%;
+    --foreground: 266 15% 30%;
+
+    /* Cards & Surfaces - Soft pastel backgrounds */
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 12%;
+    --card-foreground: 266 15% 30%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 12%;
-    
-    /* Premium Blue - Professional & Trustworthy */
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 99%;
-    
-    /* Sophisticated Gray System */
-    --secondary: 220 10% 96%;
-    --secondary-foreground: 220 15% 20%;
-    
-    --muted: 220 10% 95%;
-    --muted-foreground: 220 10% 35%; /* Darker for WCAG AA contrast (was 46%) */
-    
-    --accent: 217 91% 95%;
-    --accent-foreground: 217 91% 15%;
-    
+    --popover-foreground: 266 15% 30%;
+
+    /* Primary - Soft Pastel Lavender */
+    --primary: 257 39% 74%;
+    --primary-foreground: 266 15% 30%;
+
+    /* Secondary - Coral accents */
+    --secondary: 328 100% 95%;
+    --secondary-foreground: 328 100% 35%;
+
+    --muted: 257 100% 98%;
+    --muted-foreground: 257 10% 40%;
+
+    --accent: 146 60% 78%;
+    --accent-foreground: 146 60% 20%;
+
     /* Error states */
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 99%;
-    
-    /* UI Elements - Refined borders */
-    --border: 220 10% 88%;
-    --input: 220 10% 92%;
-    --ring: 217 91% 60%;
-    
-    /* Status Colors - More refined palette */
-    --success: 142 69% 58%;
-    --success-foreground: 0 0% 99%;
-    
-    --warning: 38 92% 50%;
-    --warning-foreground: 48 96% 9%;
-    
+
+    /* UI Elements - Soft borders */
+    --border: 257 39% 90%;
+    --input: 257 39% 92%;
+    --ring: 257 39% 74%;
+
+    /* Status Colors - Pastel harmonious palette */
+    --success: 146 60% 78%;
+    --success-foreground: 146 60% 20%;
+
+    --warning: 38 100% 83%;
+    --warning-foreground: 38 100% 25%;
+
     --critical: 0 72% 51%;
     --critical-foreground: 0 0% 99%;
     --serious: 25 95% 53%;
     --serious-foreground: 0 0% 99%;
-    --moderate: 38 92% 50%;
-    --moderate-foreground: 48 96% 9%;
-    --minor: 220 10% 35%; /* Darker for WCAG AA contrast (was 46%) */
+    --moderate: 38 100% 83%;
+    --moderate-foreground: 38 100% 25%;
+    --minor: 257 10% 40%;
     --minor-foreground: 0 0% 99%;
-    
-    /* Charts - Harmonious palette */
-    --chart-1: 217 91% 60%;
-    --chart-2: 142 69% 58%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 25 95% 53%;
-    --chart-5: 0 72% 51%;
-    
-    --radius: 0.75rem;
 
-    /* Custom gradient variables for modern look */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 45%) 100%);
-    --gradient-subtle: linear-gradient(135deg, hsl(220 10% 99%) 0%, hsl(220 10% 96%) 100%);
-    --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    /* Charts - Vexnexa harmonious palette */
+    --chart-1: 257 39% 74%;
+    --chart-2: 146 60% 78%;
+    --chart-3: 38 100% 83%;
+    --chart-4: 328 100% 85%;
+    --chart-5: 257 39% 60%;
 
-    /* TutusPorta Brand Tokens */
-    --tp-bg: #0B1220;
+    --radius: 0.5rem;
+
+    /* Vexnexa gradient variables */
+    --gradient-primary: linear-gradient(135deg, #B4A7D6 0%, #FFB3D9 50%, #A8E6CF 100%);
+    --gradient-subtle: linear-gradient(135deg, #FAF9FC 0%, #FFF5FB 50%, #F0FCF7 100%);
+    --shadow-elegant: 0 2px 8px rgba(180, 167, 214, 0.12);
+    --shadow-soft: 0 4px 16px rgba(180, 167, 214, 0.18);
+
+    /* TutusPorta Brand Tokens - Vexnexa Edition */
+    --tp-bg: #4A4458;
     --tp-surface: #FFFFFF;
-    --tp-muted: #F5F7FB;
-    --tp-border: #E5E7EB;
-    --tp-text: #0B1220;
-    --tp-text-muted: #334155; /* Darker for WCAG AA contrast (was #475569) */
-    --tp-primary: #2563EB;
-    --tp-primary-hover: #1D4ED8;
-    --tp-accent: #14B8A6;
+    --tp-muted: #FAF9FC;
+    --tp-border: #E8E3F4;
+    --tp-text: #4A4458;
+    --tp-text-muted: #6B5C98;
+    --tp-primary: #B4A7D6;
+    --tp-primary-hover: #9B8CC7;
+    --tp-accent: #A8E6CF;
   }
   
   .dark {
-    --background: 220 15% 5%;
-    --foreground: 0 0% 98%;
-    
-    --card: 220 15% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 220 15% 8%;
-    --popover-foreground: 0 0% 98%;
-    
-    /* Elegant blue for dark mode */
-    --primary: 217 91% 75%;
-    --primary-foreground: 220 15% 8%;
-    
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 0 0% 98%;
-    
-    --muted: 220 15% 12%;
-    --muted-foreground: 220 8% 60%;
-    
-    --accent: 217 91% 20%;
-    --accent-foreground: 0 0% 98%;
-    
+    --background: 266 15% 8%;
+    --foreground: 257 100% 98%;
+
+    --card: 266 15% 10%;
+    --card-foreground: 257 100% 98%;
+    --popover: 266 15% 10%;
+    --popover-foreground: 257 100% 98%;
+
+    /* Soft lavender for dark mode */
+    --primary: 257 39% 74%;
+    --primary-foreground: 266 15% 10%;
+
+    --secondary: 328 100% 85%;
+    --secondary-foreground: 266 15% 10%;
+
+    --muted: 266 15% 12%;
+    --muted-foreground: 257 20% 65%;
+
+    --accent: 146 60% 78%;
+    --accent-foreground: 266 15% 10%;
+
     --destructive: 0 72% 65%;
     --destructive-foreground: 0 0% 98%;
-    
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 217 91% 75%;
-    
-    --success: 142 69% 65%;
-    --success-foreground: 142 69% 8%;
-    
-    --warning: 38 92% 65%;
-    --warning-foreground: 48 96% 9%;
-    
+
+    --border: 266 15% 18%;
+    --input: 266 15% 18%;
+    --ring: 257 39% 74%;
+
+    --success: 146 60% 78%;
+    --success-foreground: 146 60% 10%;
+
+    --warning: 38 100% 83%;
+    --warning-foreground: 38 100% 10%;
+
     --critical: 0 72% 65%;
     --critical-foreground: 0 72% 8%;
     --serious: 25 95% 65%;
     --serious-foreground: 25 95% 8%;
-    --moderate: 38 92% 65%;
-    --moderate-foreground: 48 96% 9%;
-    --minor: 220 8% 60%;
-    --minor-foreground: 220 8% 8%;
-    
-    --chart-1: 217 91% 75%;
-    --chart-2: 142 69% 65%;
-    --chart-3: 38 92% 65%;
-    --chart-4: 25 95% 65%;
-    --chart-5: 0 72% 65%;
-    
-    /* Dark mode gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 75%) 0%, hsl(217 91% 60%) 100%);
-    --gradient-subtle: linear-gradient(135deg, hsl(220 15% 8%) 0%, hsl(220 15% 12%) 100%);
+    --moderate: 38 100% 83%;
+    --moderate-foreground: 38 100% 10%;
+    --minor: 257 20% 65%;
+    --minor-foreground: 257 20% 8%;
+
+    --chart-1: 257 39% 74%;
+    --chart-2: 146 60% 78%;
+    --chart-3: 38 100% 83%;
+    --chart-4: 328 100% 85%;
+    --chart-5: 257 39% 60%;
+
+    /* Dark mode Vexnexa gradients */
+    --gradient-primary: linear-gradient(135deg, #B4A7D6 0%, #FFB3D9 50%, #A8E6CF 100%);
+    --gradient-subtle: linear-gradient(135deg, hsl(266 15% 10%) 0%, hsl(266 15% 12%) 100%);
   }
 }
 
@@ -161,9 +161,10 @@
   
   body {
     @apply bg-background text-foreground font-sans;
-    background-image: 
-      radial-gradient(circle at 1px 1px, hsl(var(--muted)) 1px, transparent 0);
-    background-size: 20px 20px;
+    background-image:
+      linear-gradient(to right, rgba(180, 167, 214, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(180, 167, 214, 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
     background-attachment: fixed;
     font-feature-settings: "rlig" 1, "calt" 1;
     text-rendering: optimizeLegibility;
@@ -227,16 +228,16 @@
 /* Modern component utilities */
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(250, 249, 252, 0.8);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(180, 167, 214, 0.2);
+    box-shadow: 0 8px 32px rgba(180, 167, 214, 0.15);
   }
 
   .dark .glass {
-    background: rgba(11, 18, 32, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(74, 68, 88, 0.7);
+    border: 1px solid rgba(180, 167, 214, 0.2);
   }
   
   .gradient-primary {
