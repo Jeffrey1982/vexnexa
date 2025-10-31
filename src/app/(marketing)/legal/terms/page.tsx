@@ -8,7 +8,7 @@ import { ArrowLeft, Scale, Mail, Calendar, AlertTriangle, ListTree } from 'lucid
 export const metadata: Metadata = {
   title: 'Terms of Service - TutusPorta',
   description:
-    'Read TutusPorta's terms of service: usage terms, payments, liability and service conditions.',
+    'Read TutusPorta terms of service: usage terms, payments, liability and service conditions.',
   keywords: [
     'algemene voorwaarden',
     'terms of service',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms of Service - TutusPorta',
     description:
-      'Read TutusPorta's terms of service: usage terms, payments, liability and service conditions.',
+      'Read TutusPorta terms of service: usage terms, payments, liability and service conditions.',
     url: 'https://tutusporta.com/legal/terms',
     siteName: 'TutusPorta',
     type: 'website',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: 'Terms of Service - TutusPorta',
     description:
-      'Read TutusPorta's terms of service: usage terms, payments, liability and service conditions.',
+      'Read TutusPorta terms of service: usage terms, payments, liability and service conditions.',
   },
   alternates: {
     canonical: 'https://tutusporta.com/legal/terms',
