@@ -3,6 +3,10 @@ import { requireAuth } from "@/lib/auth";
 import { assertWithinLimits } from "@/lib/billing/entitlements";
 import { prisma } from "@/lib/prisma";
 
+// Configure route to handle larger request bodies for file uploads
+export const runtime = 'nodejs';
+export const maxDuration = 30;
+
 export async function POST(request: NextRequest) {
   try {
     // Check authentication and white label permissions
@@ -47,11 +51,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    // Validate file size (max 2MB to account for base64 encoding overhead)
+    // Base64 encoding increases size by ~33%, so 2MB becomes ~2.66MB encoded
+    const maxSize = 2 * 1024 * 1024; // 2MB
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: "File too large. Maximum size is 5MB" },
+        { error: "File too large. Maximum size is 2MB" },
         { status: 400 }
       );
     }

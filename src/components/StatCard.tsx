@@ -32,7 +32,7 @@ const variantStyles = {
   success: {
     card: "border-success/20 bg-success/5",
     icon: "text-success",
-    value: "text-success-foreground", 
+    value: "text-success dark:text-success-foreground",
     trend: {
       positive: "text-success",
       negative: "text-critical",
@@ -42,17 +42,17 @@ const variantStyles = {
   warning: {
     card: "border-warning/20 bg-warning/5",
     icon: "text-warning",
-    value: "text-warning-foreground",
+    value: "text-warning dark:text-warning-foreground",
     trend: {
       positive: "text-success",
-      negative: "text-critical", 
+      negative: "text-critical",
       neutral: "text-muted-foreground",
     },
   },
   critical: {
     card: "border-critical/20 bg-critical/5",
     icon: "text-critical",
-    value: "text-critical-foreground",
+    value: "text-critical dark:text-critical-foreground",
     trend: {
       positive: "text-success",
       negative: "text-critical",

@@ -22,6 +22,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client-new';
+import { LanguageSelector } from '@/components/LanguageSelector';
 
 interface DashboardNavProps {
   user?: {
@@ -178,8 +179,9 @@ export default function DashboardNav({ user }: DashboardNavProps) {
             </div>
           </div>
 
-          {/* Right side - User info and Sign out */}
+          {/* Right side - Language, User info and Sign out */}
           <div className="hidden md:flex md:items-center md:gap-4">
+            <LanguageSelector />
             {user && (
               <div className="text-sm text-muted-foreground font-medium">
                 {user.user_metadata?.full_name || user.email}
@@ -280,6 +282,16 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                 </Link>
               </div>
             )}
+
+            {/* Language Selector (mobile) */}
+            <div className="pt-4 border-t border-gray-200">
+              <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">
+                Language / Taal
+              </div>
+              <div className="px-3">
+                <LanguageSelector />
+              </div>
+            </div>
 
             {/* User info and sign out (mobile) */}
             {user && (

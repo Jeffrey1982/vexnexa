@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, X, Linkedin, Twitter, Github } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const navigationItems = [
   { name: "Features", href: "/features" },
@@ -93,7 +94,7 @@ export function Navbar({ className }: NavbarProps) {
             ))}
           </div>
 
-          {/* Desktop Right Section: Social + Auth */}
+          {/* Desktop Right Section: Social + Language + Auth */}
           <div className="hidden md:flex items-center gap-6">
             {/* Social Icons */}
             <div className="flex items-center gap-2">
@@ -125,6 +126,9 @@ export function Navbar({ className }: NavbarProps) {
                 <Github className="w-4 h-4" />
               </a>
             </div>
+
+            {/* Language Selector */}
+            <LanguageSelector />
 
             {/* Auth Buttons */}
             <div className="flex items-center space-x-3">
@@ -207,6 +211,12 @@ export function Navbar({ className }: NavbarProps) {
                     {item.name}
                   </Link>
                 ))}
+
+                {/* Language Selector - Mobile */}
+                <div className="pt-4 pb-2 border-b border-border/20">
+                  <p className="text-sm font-medium text-muted-foreground mb-3">Taal / Language</p>
+                  <LanguageSelector />
+                </div>
 
                 {/* Social Icons - Mobile */}
                 <div className="pt-4 pb-2">

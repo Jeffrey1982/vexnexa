@@ -149,6 +149,20 @@ export default function WhiteLabelPage() {
     try {
       setIsUploading(prev => ({ ...prev, [type]: true }));
 
+      // Validate file size on client side (max 2MB)
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert(`File too large. Maximum size is 2MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB.`);
+        return;
+      }
+
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'];
+      if (!validTypes.includes(file.type)) {
+        alert('Invalid file type. Only JPEG, PNG, WebP, and SVG files are allowed.');
+        return;
+      }
+
       const formData = new FormData();
       formData.append('file', file);
       formData.append('type', type);
@@ -158,6 +172,18 @@ export default function WhiteLabelPage() {
         body: formData
       });
 
+      // Handle non-JSON responses (like HTML error pages)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('Server returned non-JSON response:', response.status);
+        if (response.status === 413) {
+          alert('File too large for server. The uploaded file exceeds the maximum allowed size. Please use a smaller image (max 2MB).');
+        } else {
+          alert('Upload failed. Server returned an unexpected response.');
+        }
+        return;
+      }
+
       const data = await response.json();
 
       if (data.success) {
@@ -165,13 +191,13 @@ export default function WhiteLabelPage() {
           ...prev,
           [type === 'logo' ? 'logoUrl' : 'faviconUrl']: data.url
         }));
-        alert(`${type === 'logo' ? 'Logo' : 'Favicon'} uploaded successfully!`);
+        alert(`✓ ${type === 'logo' ? 'Logo' : 'Favicon'} uploaded successfully!`);
       } else {
-        alert(data.error || 'Upload failed');
+        alert('✗ ' + (data.error || 'Upload failed'));
       }
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Upload failed');
+      alert('✗ Upload failed. Please try again with a smaller image.');
     } finally {
       setIsUploading(prev => ({ ...prev, [type]: false }));
     }
@@ -326,8 +352,9 @@ export default function WhiteLabelPage() {
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-3">
                       Company Logo
+                      <span className="text-xs font-normal text-gray-500 ml-2">(Max 2MB)</span>
                     </label>
-                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors">
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors relative">
                       {settings.logoUrl ? (
                         <div className="space-y-4">
                           <Image
@@ -376,8 +403,9 @@ export default function WhiteLabelPage() {
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-3">
                       Favicon (16x16)
+                      <span className="text-xs font-normal text-gray-500 ml-2">(Max 2MB)</span>
                     </label>
-                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors">
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors relative">
                       {settings.faviconUrl ? (
                         <div className="space-y-4">
                           <Image

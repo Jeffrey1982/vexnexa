@@ -273,15 +273,15 @@ export default async function DashboardPage() {
                 </div>
                 <div className="p-4 border rounded-lg">
                   <p className="text-sm text-muted-foreground">Total Issues</p>
-                  <p className="text-3xl font-bold">{stats.impactStats.total}</p>
+                  <p className="text-3xl font-bold text-foreground">{stats.impactStats.total}</p>
                 </div>
                 <div className="p-4 border rounded-lg">
                   <p className="text-sm text-muted-foreground">Critical</p>
-                  <p className="text-3xl font-bold text-red-600">{stats.impactStats.critical}</p>
+                  <p className="text-3xl font-bold text-red-600 dark:text-red-400">{stats.impactStats.critical}</p>
                 </div>
                 <div className="p-4 border rounded-lg">
                   <p className="text-sm text-muted-foreground">Serious</p>
-                  <p className="text-3xl font-bold text-orange-600">{stats.impactStats.serious}</p>
+                  <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">{stats.impactStats.serious}</p>
                 </div>
               </div>
             </CardContent>

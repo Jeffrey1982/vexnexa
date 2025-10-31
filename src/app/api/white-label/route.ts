@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+// Configure route settings
+export const runtime = 'nodejs';
+export const maxDuration = 30;
+
 export async function GET(request: NextRequest) {
   try {
     // Try to get user, but don't fail if not authenticated

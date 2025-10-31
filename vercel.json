@@ -22,6 +22,12 @@
     "app/api/scan*/route.*": {
       "maxDuration": 60,
       "memory": 2048
+    },
+    "src/app/api/white-label/upload/route.*": {
+      "maxDuration": 30
+    },
+    "src/app/api/white-label/route.*": {
+      "maxDuration": 30
     }
   }
 }

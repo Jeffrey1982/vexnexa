@@ -63,7 +63,7 @@ function MetricCard({ title, value, maxValue, color, icon, delay = 0 }: MetricCa
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           {icon}
-          <span className="font-medium text-sm">{title}</span>
+          <span className="font-medium text-sm text-gray-900 dark:text-gray-100">{title}</span>
         </div>
         <Badge variant="outline" className="text-xs">
           {displayValue}/{maxValue}
@@ -163,15 +163,14 @@ function CircularProgress({ value, maxValue, color, size = 120 }: {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center">
           <motion.div
-            className="text-2xl font-bold"
-            style={{ color }}
+            className="text-2xl font-bold text-gray-900 dark:text-gray-100"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
             {displayValue}
           </motion.div>
-          <div className="text-xs text-gray-600">/{maxValue}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">/{maxValue}</div>
         </div>
       </div>
     </div>
