@@ -193,21 +193,38 @@
   
   /* Enhanced focus styles with AA+ contrast - keyboard users */
   *:focus-visible {
-    outline: 3px solid #B4A7D6;
-    outline-offset: 2px;
+    outline: 3px solid #8272B5 !important;
+    outline-offset: 2px !important;
     border-radius: 4px;
-    box-shadow: 0 0 0 4px rgba(180, 167, 214, 0.3);
+    box-shadow: 0 0 0 5px rgba(130, 114, 181, 0.4) !important;
   }
 
-  /* Ensure buttons and links have visible focus */
+  /* Ensure buttons and links have highly visible focus */
   button:focus-visible,
   a:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 3px solid #8272B5 !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 6px rgba(130, 114, 181, 0.4) !important;
+  }
+
+  /* Form elements get special focus treatment */
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: 3px solid #B4A7D6;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(180, 167, 214, 0.3);
+    outline: 3px solid #8272B5 !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 5px rgba(130, 114, 181, 0.4) !important;
+    border-color: #8272B5 !important;
+  }
+
+  /* Ensure focus is never hidden */
+  *:focus {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 3px solid #8272B5 !important;
   }
   
   /* Improved selection */
