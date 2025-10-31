@@ -21,11 +21,11 @@ export function LogoStrip({ logos, title = "Trusted by teams who take accessibil
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16 opacity-60">
+        <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
           {logos.map((logo, index) => (
             <div
               key={index}
-              className="bg-muted rounded-lg flex items-center justify-center text-muted-foreground text-xs sm:text-sm font-medium px-4 py-3 min-w-[100px]"
+              className="bg-muted rounded-lg flex items-center justify-center text-foreground font-medium px-4 py-3 min-w-[100px] opacity-70"
               style={{ width: logo.width || 120, height: logo.height || 40 }}
               role="img"
               aria-label={logo.name}

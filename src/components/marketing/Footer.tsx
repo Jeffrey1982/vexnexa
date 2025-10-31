@@ -109,7 +109,7 @@ export function Footer({ className }: FooterProps) {
                   disabled={isSubmitting}
                   className="bg-background"
                 />
-                <Button type="submit" disabled={isSubmitting} size="icon">
+                <Button type="submit" disabled={isSubmitting} size="icon" aria-label="Subscribe to newsletter">
                   <Mail className="w-4 h-4" />
                 </Button>
               </form>

@@ -177,9 +177,9 @@ function ValuePillarsSection() {
                     <pillar.icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold font-display mb-4 group-hover:text-primary transition-colors">
+                <h2 className="text-xl font-semibold font-display mb-4 group-hover:text-primary transition-colors">
                   {pillar.title}
-                </h3>
+                </h2>
                 <p className="text-muted-foreground leading-relaxed flex-1">
                   {pillar.description}
                 </p>

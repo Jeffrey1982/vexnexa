@@ -46,7 +46,7 @@ export function Testimonials({
                 />
 
                 {testimonial.rating && (
-                  <div className="flex gap-1 mb-4" aria-label={`Rating: ${testimonial.rating} out of 5 stars`}>
+                  <div className="flex gap-1 mb-4" role="img" aria-label={`Rating: ${testimonial.rating} out of 5 stars`}>
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
                         key={i}

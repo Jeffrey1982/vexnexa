@@ -46,6 +46,7 @@ export function FAQ({ items, title = "Frequently Asked Questions", description }
                   className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
+                  id={`faq-question-${index}`}
                 >
                   <span className="font-semibold text-lg pr-8">{item.question}</span>
                   <ChevronDown
