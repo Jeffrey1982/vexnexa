@@ -383,16 +383,14 @@ export default function HomePage() {
   return (
     <>
       <JsonLd />
-      <main id="main-content">
-        <HeroSection />
-        <LogoStrip logos={logos} />
-        <ValuePillarsSection />
-        <FeaturesSection />
-        <CTABand />
-        <Testimonials testimonials={testimonials} title="Trusted by accessibility professionals" />
-        <FAQ items={faqItems} />
-        <FinalCTASection />
-      </main>
+      <HeroSection />
+      <LogoStrip logos={logos} />
+      <ValuePillarsSection />
+      <FeaturesSection />
+      <CTABand />
+      <Testimonials testimonials={testimonials} title="Trusted by accessibility professionals" />
+      <FAQ items={faqItems} />
+      <FinalCTASection />
     </>
   );
 }

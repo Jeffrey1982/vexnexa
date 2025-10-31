@@ -160,7 +160,7 @@ export default function AboutPage() {
         <div className="h-px bg-border" />
 
         {/* Waarom we bestaan */}
-        <main id="main" role="main">
+        <div>
           <section className="py-12 sm:py-16 bg-card">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
@@ -525,7 +525,7 @@ export default function AboutPage() {
               </p>
             </div>
           </section>
-        </main>
+        </div>
       </div>
     </>
   )

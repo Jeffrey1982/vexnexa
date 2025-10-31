@@ -125,8 +125,7 @@ export default function PrivacyPage() {
       {/* Content + Aside */}
       <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_300px]">
         {/* Main content */}
-        <main
-          id="main"
+        <div
           className={[
             // basis typografie
             'prose prose-slate max-w-none',
@@ -431,7 +430,7 @@ export default function PrivacyPage() {
               </div>
             </div>
           </div>
-        </main>
+        </div>
 
         {/* Aside */}
         <aside className="lg:sticky lg:top-24 lg:h-fit">

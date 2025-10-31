@@ -135,9 +135,8 @@ export default function SecurityPage() {
 
       {/* Content + Aside */}
       <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_300px]">
-        {/* Main */}
-        <main
-          id="main"
+        {/* Main content */}
+        <div
           className={[
             'prose prose-slate max-w-none',
             '[&_h2]:mt-14 [&_h2]:mb-5 [&_h2]:scroll-mt-24',
@@ -291,7 +290,7 @@ export default function SecurityPage() {
               </div>
             </div>
           </div>
-        </main>
+        </div>
 
         {/* Aside */}
         <aside className="lg:sticky lg:top-24 lg:h-fit">
