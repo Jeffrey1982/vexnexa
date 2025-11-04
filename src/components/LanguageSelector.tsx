@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Globe, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -62,12 +62,11 @@ export function LanguageSelector() {
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          className="text-2xl px-2"
           aria-label="Select language"
+          title={currentLanguage.nativeName}
         >
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline-block">{currentLanguage.flag} {currentLanguage.code.toUpperCase()}</span>
-          <span className="sm:hidden">{currentLanguage.flag}</span>
+          {currentLanguage.flag}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
