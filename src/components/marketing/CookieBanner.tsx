@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, Cookie } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface CookieBannerProps {
   className?: string;
 }
 
 export function CookieBanner({ className }: CookieBannerProps) {
+  const t = useTranslations('cookie');
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -53,39 +55,38 @@ export function CookieBanner({ className }: CookieBannerProps) {
               <div>
                 <h3 className="font-semibold text-sm">Cookies</h3>
                 <p className="text-sm text-muted-foreground">
-                  We gebruiken cookies voor analytics en om je ervaring te verbeteren. 
-                  We slaan geen persoonsgegevens op.
+                  {t('message')}
                 </p>
               </div>
-              
+
               <div className="flex gap-2">
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={handleAccept}
                   className="flex-1"
                 >
-                  Accepteer
+                  {t('accept')}
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={handleDecline}
                   className="flex-1"
                 >
-                  Weiger
+                  {t('decline')}
                 </Button>
               </div>
             </div>
-            
+
             <Button
               variant="ghost"
               size="icon"
               onClick={handleDismiss}
               className="h-8 w-8 flex-shrink-0"
-              aria-label="Sluiten"
+              aria-label={t('decline')}
             >
               <X className="w-4 h-4" />
-              <span className="sr-only">Sluiten</span>
+              <span className="sr-only">{t('decline')}</span>
             </Button>
           </div>
         </CardContent>

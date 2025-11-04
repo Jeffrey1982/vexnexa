@@ -1,0 +1,300 @@
+{
+  "nav": {
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "blog": "Blog",
+    "contact": "Contact",
+    "login": "Connexion",
+    "signup": "Commencer Gratuitement",
+    "signOut": "Se Déconnecter",
+    "dashboard": "Tableau de Bord",
+    "demo": "Démo",
+    "about": "À Propos",
+    "getStarted": "Commencer",
+    "changelog": "Journal des Modifications",
+    "language": "Langue",
+    "followUs": "Suivez-nous"
+  },
+  "footer": {
+    "brand": {
+      "name": "TutusPorta",
+      "tagline": "Votre passerelle sécurisée vers l'accessibilité web",
+      "newsletter": {
+        "title": "Restez informé",
+        "description": "Abonnez-vous à notre newsletter pour recevoir des mises à jour et des conseils d'accessibilité.",
+        "placeholder": "Entrez votre email",
+        "subscribe": "S'abonner",
+        "success": "Merci de votre inscription!"
+      }
+    },
+    "product": {
+      "title": "Produit",
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "demo": "Démo",
+      "changelog": "Journal des Modifications",
+      "documentation": "Documentation"
+    },
+    "support": {
+      "title": "Support",
+      "contact": "Contact",
+      "help": "Centre d'Aide",
+      "faq": "FAQ",
+      "api": "Documentation API",
+      "status": "État du Système"
+    },
+    "legal": {
+      "title": "Légal",
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions d'Utilisation",
+      "security": "Sécurité",
+      "sla": "SLA & Support"
+    },
+    "copyright": "Tous droits réservés."
+  },
+  "home": {
+    "hero": {
+      "title": "La passerelle sécurisée vers",
+      "titleHighlight": "l'accessibilité web",
+      "subtitle": "Analyse automatisée avec 8 catégories supplémentaires au-delà des WCAG. Obtenez des rapports clairs, des corrections rapides et une surveillance continue.",
+      "ctaPrimary": "Commencer l'analyse gratuite",
+      "ctaSecondary": "Voir les tarifs",
+      "noCreditCard": "Aucune carte de crédit requise. Obtenez 1 analyse gratuite chaque semaine."
+    },
+    "pillars": {
+      "title": "Pourquoi TutusPorta?",
+      "subtitle": "Conçu pour les professionnels de l'accessibilité et les équipes de conformité",
+      "deeper": {
+        "title": "Couverture approfondie",
+        "description": "Clavier, cognitif, structure, contraste, formulaires, repères, multimédia, sémantique ARIA."
+      },
+      "actionable": {
+        "title": "Rapports exploitables",
+        "description": "Conseils clairs avec exemples de code, évaluations de gravité et listes de corrections priorisées."
+      },
+      "continuous": {
+        "title": "Surveillance continue",
+        "description": "Analyses planifiées, alertes automatisées, suivi des régressions lors des déploiements."
+      },
+      "compliant": {
+        "title": "Prêt pour l'entreprise",
+        "description": "Exportez des rapports PDF/DOCX personnalisés, tableaux de bord en marque blanche, conformité SOC 2."
+      }
+    },
+    "benefits": {
+      "title": "Tests d'accessibilité complets",
+      "subtitle": "Allez au-delà des vérifications WCAG de base avec 8 catégories de tests supplémentaires",
+      "categories": {
+        "keyboard": {
+          "title": "Navigation au Clavier",
+          "description": "Tests complets d'accessibilité au clavier incluant la gestion du focus et l'ordre de tabulation"
+        },
+        "cognitive": {
+          "title": "Charge Cognitive",
+          "description": "Mesurez la complexité du contenu, la lisibilité et l'accessibilité cognitive"
+        },
+        "structure": {
+          "title": "Structure du Document",
+          "description": "Validation HTML sémantique et hiérarchie appropriée des en-têtes"
+        },
+        "contrast": {
+          "title": "Contraste Avancé",
+          "description": "Vérification du contraste WCAG AAA avec simulations visuelles"
+        },
+        "forms": {
+          "title": "Accessibilité des Formulaires",
+          "description": "Validation complète des formulaires incluant étiquettes, instructions et gestion des erreurs"
+        },
+        "landmarks": {
+          "title": "Repères ARIA",
+          "description": "Structure de repères appropriée pour la navigation des lecteurs d'écran"
+        },
+        "multimedia": {
+          "title": "Multimédia",
+          "description": "Accessibilité vidéo et audio avec vérification des sous-titres et transcriptions"
+        },
+        "aria": {
+          "title": "Sémantique ARIA",
+          "description": "Validation avancée des modèles ARIA et vérification des rôles"
+        }
+      }
+    },
+    "features": {
+      "title": "Tout ce dont vous avez besoin pour la conformité d'accessibilité",
+      "automation": {
+        "title": "Tests Automatisés",
+        "description": "Planifiez des analyses régulières et recevez des alertes lorsque de nouveaux problèmes sont détectés"
+      },
+      "reports": {
+        "title": "Rapports Détaillés",
+        "description": "Exportez des rapports PDF/DOCX professionnels avec votre image de marque"
+      },
+      "monitoring": {
+        "title": "Surveillance Continue",
+        "description": "Suivez les changements au fil du temps et prévenez les régressions d'accessibilité"
+      },
+      "team": {
+        "title": "Collaboration d'Équipe",
+        "description": "Partagez les analyses, assignez des tâches et suivez les progrès de correction"
+      }
+    },
+    "cta": {
+      "title": "Commencez à améliorer l'accessibilité aujourd'hui",
+      "subtitle": "Rejoignez les équipes qui utilisent déjà TutusPorta pour la conformité WCAG",
+      "button": "Commencer gratuitement",
+      "noCard": "Aucune carte de crédit requise"
+    }
+  },
+  "pricing": {
+    "title": "Tarification simple et transparente",
+    "subtitle": "Choisissez le plan adapté à votre équipe",
+    "monthly": "Mensuel",
+    "annual": "Annuel",
+    "save": "Économisez 20%",
+    "free": {
+      "name": "Gratuit",
+      "price": "€0",
+      "period": "/mois",
+      "description": "Parfait pour essayer TutusPorta",
+      "cta": "Commencer",
+      "features": {
+        "scans": "1 analyse par semaine",
+        "pages": "Jusqu'à 10 pages par analyse",
+        "basic": "Vérifications WCAG de base",
+        "support": "Support communautaire"
+      }
+    },
+    "pro": {
+      "name": "Professionnel",
+      "price": "€49",
+      "period": "/mois",
+      "description": "Pour les professionnels et petites équipes",
+      "cta": "Commencer l'essai gratuit",
+      "popular": "Le plus populaire",
+      "features": {
+        "scans": "Analyses illimitées",
+        "pages": "Jusqu'à 100 pages par analyse",
+        "advanced": "Les 8 catégories avancées",
+        "monitoring": "Surveillance continue",
+        "reports": "Exports PDF/DOCX",
+        "support": "Support par email"
+      }
+    },
+    "enterprise": {
+      "name": "Entreprise",
+      "price": "Personnalisé",
+      "description": "Pour les grandes organisations",
+      "cta": "Contacter les ventes",
+      "features": {
+        "scans": "Analyses illimitées",
+        "pages": "Pages illimitées",
+        "advanced": "Toutes les fonctionnalités",
+        "whitelabel": "Tableau de bord en marque blanche",
+        "api": "Accès API",
+        "sla": "Garantie SLA",
+        "support": "Support prioritaire",
+        "training": "Formation d'équipe"
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": {
+        "question": "Puis-je changer de plan plus tard?",
+        "answer": "Oui, vous pouvez passer à un plan supérieur ou inférieur à tout moment."
+      },
+      "q2": {
+        "question": "Quels modes de paiement acceptez-vous?",
+        "answer": "Nous acceptons toutes les principales cartes de crédit et les virements bancaires pour les plans entreprise."
+      },
+      "q3": {
+        "question": "Y a-t-il un essai gratuit?",
+        "answer": "Oui, tous les plans payants incluent un essai gratuit de 14 jours. Aucune carte de crédit requise."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Une question ou besoin d'aide? Nous sommes là pour vous.",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "subject": "Sujet",
+      "message": "Message",
+      "send": "Envoyer le message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès!",
+      "error": "Échec de l'envoi. Veuillez réessayer."
+    },
+    "info": {
+      "email": {
+        "title": "Email",
+        "value": "support@tutusporta.com"
+      },
+      "phone": {
+        "title": "Téléphone",
+        "value": "+31 (0) 20 123 4567"
+      },
+      "office": {
+        "title": "Bureau",
+        "value": "Amsterdam, Pays-Bas"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Email",
+      "password": "Mot de passe",
+      "forgot": "Mot de passe oublié?",
+      "submit": "Se connecter",
+      "noAccount": "Pas encore de compte?",
+      "signUp": "S'inscrire"
+    },
+    "register": {
+      "title": "Créez votre compte",
+      "subtitle": "Commencez à analyser gratuitement",
+      "name": "Nom complet",
+      "email": "Email",
+      "password": "Mot de passe",
+      "confirm": "Confirmer le mot de passe",
+      "terms": "J'accepte les",
+      "termsLink": "Conditions d'Utilisation",
+      "and": "et la",
+      "privacyLink": "Politique de Confidentialité",
+      "submit": "Créer un compte",
+      "hasAccount": "Vous avez déjà un compte?",
+      "signIn": "Se connecter"
+    }
+  },
+  "cookie": {
+    "message": "Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre utilisation des cookies.",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "customize": "Personnaliser",
+    "learnMore": "En savoir plus"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "export": "Exporter",
+    "print": "Imprimer",
+    "share": "Partager",
+    "copy": "Copier",
+    "copied": "Copié!",
+    "viewMore": "Voir plus",
+    "viewLess": "Voir moins",
+    "learnMore": "En savoir plus"
+  }
+}

@@ -3,6 +3,8 @@ import { inter, spaceGrotesk } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 import './design-system.css'
 import './globals.css'
 
@@ -39,11 +41,13 @@ export const metadata: Metadata = {
   themeColor: '#0EA5E9',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const messages = await getMessages();
+
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
@@ -76,16 +80,18 @@ export default function RootLayout({
         <link rel="prefetch" href="/sw.js" />
       </head>
       <body className="font-sans antialiased bg-[var(--tp-muted)]">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ClientLayout>
-            {children}
-          </ClientLayout>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ClientLayout>
+              {children}
+            </ClientLayout>
+          </ThemeProvider>
+        </NextIntlClientProvider>
         <Analytics />
       </body>
     </html>

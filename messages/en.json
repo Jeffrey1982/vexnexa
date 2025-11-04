@@ -1,0 +1,300 @@
+{
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Start Free",
+    "signOut": "Sign Out",
+    "dashboard": "Dashboard",
+    "demo": "Demo",
+    "about": "About",
+    "getStarted": "Get Started",
+    "changelog": "Changelog",
+    "language": "Language",
+    "followUs": "Follow us"
+  },
+  "footer": {
+    "brand": {
+      "name": "TutusPorta",
+      "tagline": "Your secure gateway to web accessibility",
+      "newsletter": {
+        "title": "Stay up to date",
+        "description": "Subscribe to our newsletter for updates and accessibility tips.",
+        "placeholder": "Enter your email",
+        "subscribe": "Subscribe",
+        "success": "Thanks for subscribing!"
+      }
+    },
+    "product": {
+      "title": "Product",
+      "features": "Features",
+      "pricing": "Pricing",
+      "demo": "Demo",
+      "changelog": "Changelog",
+      "documentation": "Documentation"
+    },
+    "support": {
+      "title": "Support",
+      "contact": "Contact",
+      "help": "Help Center",
+      "faq": "FAQ",
+      "api": "API Docs",
+      "status": "System Status"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "security": "Security",
+      "sla": "SLA & Support"
+    },
+    "copyright": "All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "title": "The secure gateway to",
+      "titleHighlight": "web accessibility",
+      "subtitle": "Automated scanning with 8 additional categories beyond WCAG. Get clear reports, quick fixes, and continuous monitoring.",
+      "ctaPrimary": "Start free scan",
+      "ctaSecondary": "See pricing",
+      "noCreditCard": "No credit card required. Get 1 free scan every week."
+    },
+    "pillars": {
+      "title": "Why TutusPorta?",
+      "subtitle": "Built for accessibility professionals and compliance teams",
+      "deeper": {
+        "title": "Deeper coverage",
+        "description": "Keyboard, cognitive, structure, contrast, forms, landmarks, multimedia, ARIA semantics."
+      },
+      "actionable": {
+        "title": "Actionable reports",
+        "description": "Clear guidance with code examples, severity ratings, and prioritized fix lists."
+      },
+      "continuous": {
+        "title": "Continuous monitoring",
+        "description": "Scheduled scans, automated alerts, regression tracking across deployments."
+      },
+      "compliant": {
+        "title": "Enterprise-ready",
+        "description": "Export branded PDF/DOCX reports, white-label dashboards, SOC 2 compliance."
+      }
+    },
+    "benefits": {
+      "title": "Comprehensive accessibility testing",
+      "subtitle": "Go beyond basic WCAG checks with 8 additional test categories",
+      "categories": {
+        "keyboard": {
+          "title": "Keyboard Navigation",
+          "description": "Full keyboard accessibility testing including focus management and tab order"
+        },
+        "cognitive": {
+          "title": "Cognitive Load",
+          "description": "Measure content complexity, readability, and cognitive accessibility"
+        },
+        "structure": {
+          "title": "Document Structure",
+          "description": "Semantic HTML validation and proper heading hierarchy"
+        },
+        "contrast": {
+          "title": "Advanced Contrast",
+          "description": "WCAG AAA contrast checking with visual simulations"
+        },
+        "forms": {
+          "title": "Form Accessibility",
+          "description": "Complete form validation including labels, instructions, and error handling"
+        },
+        "landmarks": {
+          "title": "ARIA Landmarks",
+          "description": "Proper landmark structure for screen reader navigation"
+        },
+        "multimedia": {
+          "title": "Multimedia",
+          "description": "Video, audio accessibility with caption and transcript checking"
+        },
+        "aria": {
+          "title": "ARIA Semantics",
+          "description": "Advanced ARIA pattern validation and role verification"
+        }
+      }
+    },
+    "features": {
+      "title": "Everything you need for accessibility compliance",
+      "automation": {
+        "title": "Automated Testing",
+        "description": "Schedule regular scans and get alerts when new issues are detected"
+      },
+      "reports": {
+        "title": "Detailed Reports",
+        "description": "Export professional PDF/DOCX reports with your branding"
+      },
+      "monitoring": {
+        "title": "Continuous Monitoring",
+        "description": "Track changes over time and prevent accessibility regressions"
+      },
+      "team": {
+        "title": "Team Collaboration",
+        "description": "Share scans, assign tasks, and track remediation progress"
+      }
+    },
+    "cta": {
+      "title": "Start improving accessibility today",
+      "subtitle": "Join teams already using TutusPorta for WCAG compliance",
+      "button": "Get started for free",
+      "noCard": "No credit card required"
+    }
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Choose the plan that's right for your team",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save": "Save 20%",
+    "free": {
+      "name": "Free",
+      "price": "€0",
+      "period": "/month",
+      "description": "Perfect for trying out TutusPorta",
+      "cta": "Get started",
+      "features": {
+        "scans": "1 scan per week",
+        "pages": "Up to 10 pages per scan",
+        "basic": "Basic WCAG checks",
+        "support": "Community support"
+      }
+    },
+    "pro": {
+      "name": "Professional",
+      "price": "€49",
+      "period": "/month",
+      "description": "For professionals and small teams",
+      "cta": "Start free trial",
+      "popular": "Most popular",
+      "features": {
+        "scans": "Unlimited scans",
+        "pages": "Up to 100 pages per scan",
+        "advanced": "All 8 advanced categories",
+        "monitoring": "Continuous monitoring",
+        "reports": "PDF/DOCX exports",
+        "support": "Email support"
+      }
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Custom",
+      "description": "For large organizations",
+      "cta": "Contact sales",
+      "features": {
+        "scans": "Unlimited scans",
+        "pages": "Unlimited pages",
+        "advanced": "All features",
+        "whitelabel": "White-label dashboard",
+        "api": "API access",
+        "sla": "SLA guarantee",
+        "support": "Priority support",
+        "training": "Team training"
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": {
+        "question": "Can I change plans later?",
+        "answer": "Yes, you can upgrade or downgrade your plan at any time."
+      },
+      "q2": {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards and bank transfers for enterprise plans."
+      },
+      "q3": {
+        "question": "Is there a free trial?",
+        "answer": "Yes, all paid plans include a 14-day free trial. No credit card required."
+      }
+    }
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Have a question or need help? We're here for you.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send message",
+      "sending": "Sending...",
+      "success": "Message sent successfully!",
+      "error": "Failed to send message. Please try again."
+    },
+    "info": {
+      "email": {
+        "title": "Email",
+        "value": "support@tutusporta.com"
+      },
+      "phone": {
+        "title": "Phone",
+        "value": "+31 (0) 20 123 4567"
+      },
+      "office": {
+        "title": "Office",
+        "value": "Amsterdam, Netherlands"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Start scanning for free",
+      "name": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirm": "Confirm password",
+      "terms": "I agree to the",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
+    }
+  },
+  "cookie": {
+    "message": "We use cookies to improve your experience on our site. By continuing, you agree to our use of cookies.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "customize": "Customize",
+    "learnMore": "Learn more"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "export": "Export",
+    "print": "Print",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "viewMore": "View more",
+    "viewLess": "View less",
+    "learnMore": "Learn more"
+  }
+}

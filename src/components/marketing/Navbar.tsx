@@ -18,24 +18,26 @@ import {
 import { Menu, X, Linkedin, Twitter, Github } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LanguageSelector } from "@/components/LanguageSelector";
-
-const navigationItems = [
-  { name: "Features", href: "/features" },
-  { name: "Pricing", href: "/pricing" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
-];
+import { useTranslations } from "next-intl";
 
 interface NavbarProps {
   className?: string;
 }
 
 export function Navbar({ className }: NavbarProps) {
+  const t = useTranslations('nav');
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const supabase = createClient();
+
+  const navigationItems = [
+    { name: t('features'), href: "/features" },
+    { name: t('pricing'), href: "/pricing" },
+    { name: t('blog'), href: "/blog" },
+    { name: t('contact'), href: "/contact" },
+  ];
 
   useEffect(() => {
     const getUser = async () => {
@@ -142,7 +144,7 @@ export function Navbar({ className }: NavbarProps) {
                   size="sm"
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                 >
-                  Dashboard
+                  {t('dashboard')}
                 </Button>
                 <AuthButton user={user} />
               </>
@@ -154,7 +156,7 @@ export function Navbar({ className }: NavbarProps) {
                   size="sm"
                   className="font-medium text-sm"
                 >
-                  <Link href="/auth/login">Login</Link>
+                  <Link href="/auth/login">{t('login')}</Link>
                 </Button>
                 <Button
                   asChild
@@ -164,7 +166,7 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => handleCtaClick("navbar_primary")}
                 >
                   <Link href="/auth/register">
-                    <span className="relative z-10">Start Free</span>
+                    <span className="relative z-10">{t('signup')}</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                   </Link>
                 </Button>
@@ -214,13 +216,13 @@ export function Navbar({ className }: NavbarProps) {
 
                 {/* Language Selector - Mobile */}
                 <div className="pt-4 pb-2 border-b border-border/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-3">Language</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-3">{t('language')}</p>
                   <LanguageSelector />
                 </div>
 
                 {/* Social Icons - Mobile */}
                 <div className="pt-4 pb-2">
-                  <p className="text-sm font-medium text-muted-foreground mb-3">Follow us</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-3">{t('followUs')}</p>
                   <div className="flex items-center gap-3">
                     <a
                       href="https://linkedin.com/company/vexnexa"
@@ -267,7 +269,7 @@ export function Navbar({ className }: NavbarProps) {
                         }}
                         className="w-full justify-start gradient-primary shadow-elegant font-medium"
                       >
-                        Dashboard
+                        {t('dashboard')}
                       </Button>
                       <Button
                         onClick={() => {
@@ -277,7 +279,7 @@ export function Navbar({ className }: NavbarProps) {
                         variant="outline"
                         className="w-full justify-start"
                       >
-                        Sign Out
+                        {t('signOut')}
                       </Button>
                     </>
                   ) : (
@@ -288,7 +290,7 @@ export function Navbar({ className }: NavbarProps) {
                         className="w-full justify-start font-medium"
                         onClick={() => setIsOpen(false)}
                       >
-                        <Link href="/auth/login">Login</Link>
+                        <Link href="/auth/login">{t('login')}</Link>
                       </Button>
                       <Button
                         asChild
@@ -299,7 +301,7 @@ export function Navbar({ className }: NavbarProps) {
                           handleCtaClick("mobile_primary");
                         }}
                       >
-                        <Link href="/auth/register">Start Free</Link>
+                        <Link href="/auth/register">{t('signup')}</Link>
                       </Button>
                     </>
                   )}

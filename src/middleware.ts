@@ -3,6 +3,17 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
+  // Handle locale cookie if not set, default to 'en'
+  if (!request.cookies.get('NEXT_LOCALE')) {
+    response.cookies.set('NEXT_LOCALE', 'en', {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      path: '/',
+    })
+  }
+
   // TEMPORARILY DISABLED ALL AUTH MIDDLEWARE TO FIX CACHING ISSUES
   // Dashboard redirect removed - allow direct access to /dashboard
   

@@ -33,20 +33,26 @@ export function LanguageSelector() {
   const handleLanguageChange = (language: Language) => {
     setCurrentLanguage(language);
 
-    // Store preference in localStorage
+    // Store preference in localStorage and cookie
     if (typeof window !== "undefined") {
       localStorage.setItem("preferred-language", language.code);
-    }
 
-    // TODO: Integrate with your i18n solution
-    // For example: i18n.changeLanguage(language.code)
-    console.log(`Language changed to: ${language.name} (${language.code})`);
+      // Set the NEXT_LOCALE cookie
+      document.cookie = `NEXT_LOCALE=${language.code}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+
+      // Reload the page to apply the new locale
+      window.location.reload();
+    }
   };
 
   // Load saved language preference on mount
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      const savedLanguage = localStorage.getItem("preferred-language");
+      // Check cookie first (source of truth for next-intl)
+      const cookieMatch = document.cookie.match(/NEXT_LOCALE=([^;]+)/);
+      const cookieLocale = cookieMatch ? cookieMatch[1] : null;
+
+      const savedLanguage = cookieLocale || localStorage.getItem("preferred-language");
       if (savedLanguage) {
         const language = languages.find(lang => lang.code === savedLanguage);
         if (language) {

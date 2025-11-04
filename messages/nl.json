@@ -1,0 +1,300 @@
+{
+  "nav": {
+    "features": "Functies",
+    "pricing": "Prijzen",
+    "blog": "Blog",
+    "contact": "Contact",
+    "login": "Inloggen",
+    "signup": "Gratis Starten",
+    "signOut": "Uitloggen",
+    "dashboard": "Dashboard",
+    "demo": "Demo",
+    "about": "Over Ons",
+    "getStarted": "Aan de Slag",
+    "changelog": "Wijzigingslog",
+    "language": "Taal",
+    "followUs": "Volg ons"
+  },
+  "footer": {
+    "brand": {
+      "name": "TutusPorta",
+      "tagline": "Uw veilige toegang tot webtoegankelijkheid",
+      "newsletter": {
+        "title": "Blijf op de hoogte",
+        "description": "Abonneer u op onze nieuwsbrief voor updates en toegankelijkheidstips.",
+        "placeholder": "Vul uw e-mailadres in",
+        "subscribe": "Abonneren",
+        "success": "Bedankt voor uw aanmelding!"
+      }
+    },
+    "product": {
+      "title": "Product",
+      "features": "Functies",
+      "pricing": "Prijzen",
+      "demo": "Demo",
+      "changelog": "Wijzigingslog",
+      "documentation": "Documentatie"
+    },
+    "support": {
+      "title": "Ondersteuning",
+      "contact": "Contact",
+      "help": "Helpcentrum",
+      "faq": "Veelgestelde Vragen",
+      "api": "API Documentatie",
+      "status": "Systeemstatus"
+    },
+    "legal": {
+      "title": "Juridisch",
+      "privacy": "Privacybeleid",
+      "terms": "Servicevoorwaarden",
+      "security": "Beveiliging",
+      "sla": "SLA & Ondersteuning"
+    },
+    "copyright": "Alle rechten voorbehouden."
+  },
+  "home": {
+    "hero": {
+      "title": "De veilige toegang tot",
+      "titleHighlight": "webtoegankelijkheid",
+      "subtitle": "Geautomatiseerd scannen met 8 extra categorieën naast WCAG. Krijg duidelijke rapporten, snelle oplossingen en continue monitoring.",
+      "ctaPrimary": "Gratis scan starten",
+      "ctaSecondary": "Bekijk prijzen",
+      "noCreditCard": "Geen creditcard vereist. Ontvang elke week 1 gratis scan."
+    },
+    "pillars": {
+      "title": "Waarom TutusPorta?",
+      "subtitle": "Gebouwd voor toegankelijkheidsprofessionals en compliance teams",
+      "deeper": {
+        "title": "Diepere dekking",
+        "description": "Toetsenbord, cognitief, structuur, contrast, formulieren, oriëntatiepunten, multimedia, ARIA-semantiek."
+      },
+      "actionable": {
+        "title": "Uitvoerbare rapporten",
+        "description": "Duidelijke richtlijnen met codevoorbeelden, ernstbeoordelingen en geprioriteerde herstellijsten."
+      },
+      "continuous": {
+        "title": "Continue monitoring",
+        "description": "Geplande scans, geautomatiseerde waarschuwingen, regressie-tracking tijdens implementaties."
+      },
+      "compliant": {
+        "title": "Enterprise-klaar",
+        "description": "Exporteer PDF/DOCX-rapporten met uw branding, white-label dashboards, SOC 2-compliance."
+      }
+    },
+    "benefits": {
+      "title": "Uitgebreide toegankelijkheidstesten",
+      "subtitle": "Ga verder dan basis WCAG-controles met 8 extra testcategorieën",
+      "categories": {
+        "keyboard": {
+          "title": "Toetsenbordnavigatie",
+          "description": "Volledige toetsenbordtoegankelijkheidstesten inclusief focusbeheer en tabvolgorde"
+        },
+        "cognitive": {
+          "title": "Cognitieve Belasting",
+          "description": "Meet contentcomplexiteit, leesbaarheid en cognitieve toegankelijkheid"
+        },
+        "structure": {
+          "title": "Documentstructuur",
+          "description": "Validatie van semantische HTML en juiste koppenhi­ërarchie"
+        },
+        "contrast": {
+          "title": "Geavanceerd Contrast",
+          "description": "WCAG AAA-contrastcontrole met visuele simulaties"
+        },
+        "forms": {
+          "title": "Formuliertoegankelijkheid",
+          "description": "Volledige formuliervalidatie inclusief labels, instructies en foutafhandeling"
+        },
+        "landmarks": {
+          "title": "ARIA-oriëntatiepunten",
+          "description": "Juiste oriëntatiepuntstructuur voor schermlezernavigatie"
+        },
+        "multimedia": {
+          "title": "Multimedia",
+          "description": "Video- en audiotoegankelijkheid met ondertiteling en transcriptcontrole"
+        },
+        "aria": {
+          "title": "ARIA-semantiek",
+          "description": "Geavanceerde ARIA-patroonvalidatie en rolverificatie"
+        }
+      }
+    },
+    "features": {
+      "title": "Alles wat u nodig heeft voor toegankelijkheidscompliance",
+      "automation": {
+        "title": "Geautomatiseerd Testen",
+        "description": "Plan regelmatige scans en ontvang waarschuwingen bij nieuwe problemen"
+      },
+      "reports": {
+        "title": "Gedetailleerde Rapporten",
+        "description": "Exporteer professionele PDF/DOCX-rapporten met uw branding"
+      },
+      "monitoring": {
+        "title": "Continue Monitoring",
+        "description": "Volg wijzigingen in de tijd en voorkom toegankelijkheidsregressies"
+      },
+      "team": {
+        "title": "Teamsamenwerking",
+        "description": "Deel scans, wijs taken toe en volg herstelvoortgang"
+      }
+    },
+    "cta": {
+      "title": "Begin vandaag nog met het verbeteren van toegankelijkheid",
+      "subtitle": "Sluit u aan bij teams die TutusPorta al gebruiken voor WCAG-compliance",
+      "button": "Gratis beginnen",
+      "noCard": "Geen creditcard vereist"
+    }
+  },
+  "pricing": {
+    "title": "Eenvoudige, transparante prijzen",
+    "subtitle": "Kies het plan dat bij uw team past",
+    "monthly": "Maandelijks",
+    "annual": "Jaarlijks",
+    "save": "Bespaar 20%",
+    "free": {
+      "name": "Gratis",
+      "price": "€0",
+      "period": "/maand",
+      "description": "Perfect om TutusPorta uit te proberen",
+      "cta": "Aan de slag",
+      "features": {
+        "scans": "1 scan per week",
+        "pages": "Tot 10 pagina's per scan",
+        "basic": "Basis WCAG-controles",
+        "support": "Community-ondersteuning"
+      }
+    },
+    "pro": {
+      "name": "Professioneel",
+      "price": "€49",
+      "period": "/maand",
+      "description": "Voor professionals en kleine teams",
+      "cta": "Gratis proefperiode starten",
+      "popular": "Populairst",
+      "features": {
+        "scans": "Onbeperkte scans",
+        "pages": "Tot 100 pagina's per scan",
+        "advanced": "Alle 8 geavanceerde categorieën",
+        "monitoring": "Continue monitoring",
+        "reports": "PDF/DOCX-exports",
+        "support": "E-mailondersteuning"
+      }
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Op maat",
+      "description": "Voor grote organisaties",
+      "cta": "Neem contact op met verkoop",
+      "features": {
+        "scans": "Onbeperkte scans",
+        "pages": "Onbeperkt aantal pagina's",
+        "advanced": "Alle functies",
+        "whitelabel": "White-label dashboard",
+        "api": "API-toegang",
+        "sla": "SLA-garantie",
+        "support": "Prioritaire ondersteuning",
+        "training": "Teamtraining"
+      }
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "q1": {
+        "question": "Kan ik later van plan veranderen?",
+        "answer": "Ja, u kunt uw plan op elk moment upgraden of downgraden."
+      },
+      "q2": {
+        "question": "Welke betaalmethoden accepteren jullie?",
+        "answer": "We accepteren alle grote creditcards en bankoverschrijvingen voor enterprise-plannen."
+      },
+      "q3": {
+        "question": "Is er een gratis proefperiode?",
+        "answer": "Ja, alle betaalde plannen bevatten een gratis proefperiode van 14 dagen. Geen creditcard vereist."
+      }
+    }
+  },
+  "contact": {
+    "title": "Neem contact op",
+    "subtitle": "Heeft u een vraag of hulp nodig? We zijn er voor u.",
+    "form": {
+      "name": "Naam",
+      "email": "E-mail",
+      "subject": "Onderwerp",
+      "message": "Bericht",
+      "send": "Bericht verzenden",
+      "sending": "Verzenden...",
+      "success": "Bericht succesvol verzonden!",
+      "error": "Verzenden mislukt. Probeer het opnieuw."
+    },
+    "info": {
+      "email": {
+        "title": "E-mail",
+        "value": "support@tutusporta.com"
+      },
+      "phone": {
+        "title": "Telefoon",
+        "value": "+31 (0) 20 123 4567"
+      },
+      "office": {
+        "title": "Kantoor",
+        "value": "Amsterdam, Nederland"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welkom terug",
+      "subtitle": "Meld u aan bij uw account",
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "forgot": "Wachtwoord vergeten?",
+      "submit": "Aanmelden",
+      "noAccount": "Nog geen account?",
+      "signUp": "Registreren"
+    },
+    "register": {
+      "title": "Maak uw account aan",
+      "subtitle": "Begin gratis met scannen",
+      "name": "Volledige naam",
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "confirm": "Bevestig wachtwoord",
+      "terms": "Ik ga akkoord met de",
+      "termsLink": "Servicevoorwaarden",
+      "and": "en",
+      "privacyLink": "Privacybeleid",
+      "submit": "Account aanmaken",
+      "hasAccount": "Heeft u al een account?",
+      "signIn": "Aanmelden"
+    }
+  },
+  "cookie": {
+    "message": "We gebruiken cookies voor analytics en om je ervaring te verbeteren. We slaan geen persoonsgegevens op.",
+    "accept": "Accepteer",
+    "decline": "Weiger",
+    "customize": "Aanpassen",
+    "learnMore": "Meer informatie"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Er is een fout opgetreden",
+    "retry": "Opnieuw proberen",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "close": "Sluiten",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "sort": "Sorteren",
+    "export": "Exporteren",
+    "print": "Afdrukken",
+    "share": "Delen",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd!",
+    "viewMore": "Meer weergeven",
+    "viewLess": "Minder weergeven",
+    "learnMore": "Meer informatie"
+  }
+}
