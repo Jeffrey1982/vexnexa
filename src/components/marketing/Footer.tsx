@@ -7,12 +7,14 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Heart, Mail, Linkedin, Twitter, Github, Facebook } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface FooterProps {
   className?: string;
 }
 
 export function Footer({ className }: FooterProps) {
+  const t = useTranslations('footer');
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -93,23 +95,23 @@ export function Footer({ className }: FooterProps) {
             </Link>
 
             <p className="text-muted-foreground leading-relaxed max-w-sm">
-              The secure gateway to web accessibility. Automated scanning with deeper coverage beyond traditional WCAG checks.
+              {t('brand.tagline')}
             </p>
 
             {/* Newsletter Signup */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">Stay updated</h3>
+              <h3 className="font-semibold text-lg">{t('brand.newsletter.title')}</h3>
               <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-sm">
                 <Input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder={t('brand.newsletter.placeholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isSubmitting}
                   className="bg-background"
                 />
-                <Button type="submit" disabled={isSubmitting} size="icon" aria-label="Subscribe to newsletter">
+                <Button type="submit" disabled={isSubmitting} size="icon" aria-label={t('brand.newsletter.subscribe')}>
                   <Mail className="w-4 h-4" />
                 </Button>
               </form>
@@ -117,7 +119,7 @@ export function Footer({ className }: FooterProps) {
 
             {/* Social Links */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">Follow us</h3>
+              <h3 className="font-semibold text-lg">{t('brand.followUs')}</h3>
               <div className="flex items-center gap-3">
                 <a
                   href="https://linkedin.com/company/vexnexa"
@@ -164,29 +166,29 @@ export function Footer({ className }: FooterProps) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
               {/* Product */}
               <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Product</h3>
+                <h3 className="font-semibold text-lg">{t('product.title')}</h3>
                 <div className="flex flex-col space-y-3 text-sm">
                   <Link href="/features" className="text-muted-foreground hover:text-primary transition-colors">
-                    Features
+                    {t('product.features')}
                   </Link>
                   <Link href="/pricing" className="text-muted-foreground hover:text-primary transition-colors">
-                    Pricing
+                    {t('product.pricing')}
                   </Link>
                   <Link href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors">
                     Dashboard
                   </Link>
                   <Link href="/changelog" className="text-muted-foreground hover:text-primary transition-colors">
-                    Changelog
+                    {t('product.changelog')}
                   </Link>
                 </div>
               </div>
 
               {/* Support */}
               <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Support</h3>
+                <h3 className="font-semibold text-lg">{t('support.title')}</h3>
                 <div className="flex flex-col space-y-3 text-sm">
                   <Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                    Contact
+                    {t('support.contact')}
                   </Link>
                   <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">
                     About
@@ -199,19 +201,19 @@ export function Footer({ className }: FooterProps) {
 
               {/* Legal */}
               <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Legal</h3>
+                <h3 className="font-semibold text-lg">{t('legal.title')}</h3>
                 <div className="flex flex-col space-y-3 text-sm">
                   <Link href="/legal/privacy" className="text-muted-foreground hover:text-primary transition-colors">
-                    Privacy Policy
+                    {t('legal.privacy')}
                   </Link>
                   <Link href="/legal/terms" className="text-muted-foreground hover:text-primary transition-colors">
-                    Terms of Service
+                    {t('legal.terms')}
                   </Link>
                   <Link href="/legal/security" className="text-muted-foreground hover:text-primary transition-colors">
-                    Security
+                    {t('legal.security')}
                   </Link>
                   <Link href="/legal/sla" className="text-muted-foreground hover:text-primary transition-colors">
-                    SLA & Support
+                    {t('legal.sla')}
                   </Link>
                 </div>
               </div>
@@ -223,8 +225,7 @@ export function Footer({ className }: FooterProps) {
         <div className="pt-8 border-t border-border/40">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-              <span>Copyright </span>
-              <span>Vexnexa © {currentYear}</span>
+              <span>Vexnexa © {currentYear} • {t('copyright')}</span>
             </div>
 
             <div className="text-xs text-muted-foreground text-center md:text-right max-w-md">
