@@ -59,7 +59,100 @@
       "subtitle": "Analyse automatisée avec 8 catégories supplémentaires au-delà des WCAG. Obtenez des rapports clairs, des corrections rapides et une surveillance continue.",
       "ctaPrimary": "Commencer l'analyse gratuite",
       "ctaSecondary": "Voir les tarifs",
-      "noCreditCard": "Aucune carte de crédit requise. Obtenez 1 analyse gratuite chaque semaine."
+      "noCreditCard": "Aucune carte de crédit requise. Obtenez 1 analyse gratuite chaque semaine.",
+      "imageAlt": "Tableau de bord de scan d'accessibilité TutusPorta montrant des rapports détaillés et la priorisation des problèmes"
+    },
+    "valuePillars": {
+      "deeper": {
+        "title": "Couverture approfondie",
+        "description": "Clavier, cognitif, structure, contraste, formulaires, repères, multimédia, sémantique ARIA."
+      },
+      "actionable": {
+        "title": "Rapports exploitables",
+        "description": "Problèmes priorisés, extraits de code et conseils de correction."
+      },
+      "monitoring": {
+        "title": "Surveillance continue",
+        "description": "Planifiez des analyses, suivez les régressions, alertez votre équipe."
+      },
+      "teamReady": {
+        "title": "Prêt pour l'équipe",
+        "description": "Projets, rôles, intégration Slack/Jira, API."
+      }
+    },
+    "featuresSection": {
+      "title": "De l'analyse à l'action en",
+      "titleHighlight": "minutes",
+      "subtitle": "Aucune compétence technique requise. Nos rapports sont simples et clairs pour que votre équipe puisse commencer à corriger les problèmes immédiatement.",
+      "cta": "Commencer l'analyse gratuite",
+      "imageAlt": "Rapport détaillé d'analyse TutusPorta montrant les problèmes d'accessibilité avec priorisation et conseils",
+      "features": {
+        "category1": "8 catégories d'analyse supplémentaires au-delà des WCAG",
+        "category2": "Tests de navigation au clavier",
+        "category3": "Vérifications de compatibilité avec les lecteurs d'écran",
+        "category4": "Analyse d'accessibilité mobile",
+        "category5": "Évaluation de l'accessibilité cognitive",
+        "category6": "Sécurité des mouvements et animations",
+        "category7": "Tests avancés de vision des couleurs",
+        "category8": "Analyse d'impact sur les performances"
+      }
+    },
+    "ctaBand": {
+      "title": "Vérifiez votre site maintenant",
+      "cta": "Commencer l'analyse gratuite"
+    },
+    "finalCta": {
+      "title": "Commencez votre analyse gratuite",
+      "subtitle": "Aucune carte de crédit requise. Commencez en quelques secondes et voyez quels problèmes d'accessibilité existent sur votre site.",
+      "ctaPrimary": "Commencer l'analyse gratuite",
+      "ctaSecondary": "Contactez-nous"
+    },
+    "testimonials": {
+      "title": "Approuvé par les professionnels de l'accessibilité",
+      "testimonial1": {
+        "quote": "TutusPorta a trouvé des problèmes d'accessibilité que nos outils précédents avaient complètement manqués. Les rapports sont exploitables et nous aident à prioriser les corrections efficacement.",
+        "author": "Sarah Johnson",
+        "role": "Lead Developer",
+        "company": "TechCorp"
+      },
+      "testimonial2": {
+        "quote": "La fonction de surveillance continue nous aide à détecter les régressions avant qu'elles n'atteignent la production. C'est devenu une partie essentielle de notre pipeline CI/CD.",
+        "author": "Michael Chen",
+        "role": "Engineering Manager",
+        "company": "StartupXYZ"
+      },
+      "testimonial3": {
+        "quote": "Enfin, un scanner d'accessibilité qui va au-delà des bases. Les tests de navigation au clavier et de lecteur d'écran nous ont fait gagner des semaines de QA manuelle.",
+        "author": "Emma Williams",
+        "role": "QA Lead",
+        "company": "Enterprise Inc"
+      }
+    },
+    "faq": {
+      "q1": {
+        "question": "Pouvez-vous garantir la conformité légale?",
+        "answer": "Aucun outil ne peut garantir une conformité légale à 100% dans tous les contextes. TutusPorta détecte et signale les problèmes, aide à la correction et vous aide à respecter les WCAG et normes connexes. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu."
+      },
+      "q2": {
+        "question": "Comment fonctionnent les limites de pages?",
+        "answer": "Chaque plan inclut une limite mensuelle de pages analysées. Une 'page' est une URL analysée. Si vous analysez la même page plusieurs fois dans un mois, chaque analyse compte dans votre limite. Lorsque vous approchez de votre limite, vous recevrez une notification."
+      },
+      "q3": {
+        "question": "Que se passe-t-il si je dépasse mon plan?",
+        "answer": "Les petits dépassements sont automatiquement facturés à 0,002€/page, 2€/site supplémentaire ou 1€/utilisateur supplémentaire par mois. Lorsque vous dépassez constamment les limites, nous vous suggérerons de passer à un plan plus adapté."
+      },
+      "q4": {
+        "question": "Supportez-vous les équipes/SSO?",
+        "answer": "Les plans Pro supportent jusqu'à 5 membres d'équipe. Les plans Business supportent jusqu'à 15 membres avec accès basé sur les rôles. Le SSO est disponible sur les plans Business et Enterprise. Contactez-nous pour les fonctionnalités Enterprise."
+      },
+      "q5": {
+        "question": "Puis-je exporter les rapports?",
+        "answer": "L'export PDF est disponible sur tous les plans payants. L'export Word est disponible sur les plans Pro et Business. Tous les exports incluent vos résultats d'analyse, problèmes priorisés, extraits de code et recommandations de correction."
+      },
+      "q6": {
+        "question": "Qu'est-ce qui est surveillé en continu?",
+        "answer": "La surveillance continue vous permet de planifier des analyses automatiques (quotidiennes, hebdomadaires ou mensuelles). Vous recevrez des alertes par email lorsque les scores baissent ou que de nouveaux problèmes sont détectés. Cette fonctionnalité est disponible sur les plans Pro et Business."
+      }
     },
     "pillars": {
       "title": "Pourquoi TutusPorta?",

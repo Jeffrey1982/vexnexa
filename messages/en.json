@@ -59,7 +59,100 @@
       "subtitle": "Automated scanning with 8 additional categories beyond WCAG. Get clear reports, quick fixes, and continuous monitoring.",
       "ctaPrimary": "Start free scan",
       "ctaSecondary": "See pricing",
-      "noCreditCard": "No credit card required. Get 1 free scan every week."
+      "noCreditCard": "No credit card required. Get 1 free scan every week.",
+      "imageAlt": "TutusPorta accessibility scanning dashboard showing detailed reports and issue prioritization"
+    },
+    "valuePillars": {
+      "deeper": {
+        "title": "Deeper coverage",
+        "description": "Keyboard, cognitive, structure, contrast, forms, landmarks, multimedia, ARIA semantics."
+      },
+      "actionable": {
+        "title": "Actionable reports",
+        "description": "Prioritized issues, code snippets, and remediation tips."
+      },
+      "monitoring": {
+        "title": "Continuous monitoring",
+        "description": "Schedule scans, track regressions, alert your team."
+      },
+      "teamReady": {
+        "title": "Team-ready",
+        "description": "Projects, roles, Slack/Jira integration, API."
+      }
+    },
+    "featuresSection": {
+      "title": "From scan to action in",
+      "titleHighlight": "minutes",
+      "subtitle": "No technical skills needed. Our reports are simple and clear so your team can start fixing issues right away.",
+      "cta": "Start free scan",
+      "imageAlt": "TutusPorta scan detail report showing accessibility issues with prioritization and remediation tips",
+      "features": {
+        "category1": "8 additional scanning categories beyond WCAG",
+        "category2": "Keyboard navigation testing",
+        "category3": "Screen reader compatibility checks",
+        "category4": "Mobile accessibility analysis",
+        "category5": "Cognitive accessibility assessment",
+        "category6": "Motion & animation safety",
+        "category7": "Advanced color vision testing",
+        "category8": "Performance impact analysis"
+      }
+    },
+    "ctaBand": {
+      "title": "Check your site now",
+      "cta": "Start free scan"
+    },
+    "finalCta": {
+      "title": "Start your free scan",
+      "subtitle": "No credit card required. Get started in seconds and see what accessibility issues exist on your site.",
+      "ctaPrimary": "Start free scan",
+      "ctaSecondary": "Talk to us"
+    },
+    "testimonials": {
+      "title": "Trusted by accessibility professionals",
+      "testimonial1": {
+        "quote": "TutusPorta found accessibility issues our previous tools completely missed. The reports are actionable and help us prioritize fixes effectively.",
+        "author": "Sarah Johnson",
+        "role": "Lead Developer",
+        "company": "TechCorp"
+      },
+      "testimonial2": {
+        "quote": "The continuous monitoring feature helps us catch regressions before they reach production. It's become an essential part of our CI/CD pipeline.",
+        "author": "Michael Chen",
+        "role": "Engineering Manager",
+        "company": "StartupXYZ"
+      },
+      "testimonial3": {
+        "quote": "Finally, an accessibility scanner that goes beyond the basics. The keyboard navigation and screen reader testing saved us weeks of manual QA.",
+        "author": "Emma Williams",
+        "role": "QA Lead",
+        "company": "Enterprise Inc"
+      }
+    },
+    "faq": {
+      "q1": {
+        "question": "Can you guarantee legal compliance?",
+        "answer": "No tool can guarantee 100% legal compliance in all contexts. TutusPorta detects and reports issues, assists remediation, and helps you adhere to WCAG and related standards. For legal risk assessment, consider an expert audit and ongoing governance process."
+      },
+      "q2": {
+        "question": "How do page limits work?",
+        "answer": "Each plan includes a monthly page scan limit. A 'page' is one URL scanned. If you scan the same page multiple times in a month, each scan counts toward your limit. When you approach your limit, you'll receive a notification."
+      },
+      "q3": {
+        "question": "What if I exceed my plan?",
+        "answer": "Small overages are automatically billed at €0.002/page, €2/extra site, or €1/extra user per month. When you consistently exceed limits, we'll suggest upgrading to a more suitable plan."
+      },
+      "q4": {
+        "question": "Do you support teams/SSO?",
+        "answer": "Pro plans support up to 5 team members. Business plans support up to 15 members with role-based access. SSO is available on Business and Enterprise plans. Contact us for Enterprise features."
+      },
+      "q5": {
+        "question": "Can I export reports?",
+        "answer": "PDF export is available on all paid plans. Word export is available on Pro and Business plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
+      },
+      "q6": {
+        "question": "What's monitored continuously?",
+        "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans."
+      }
     },
     "pillars": {
       "title": "Why TutusPorta?",

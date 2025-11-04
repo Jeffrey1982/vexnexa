@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { LogoStrip } from "@/components/marketing/LogoStrip";
 import { Testimonials } from "@/components/marketing/Testimonials";
 import { FAQ } from "@/components/marketing/FAQ";
+import { useTranslations } from "next-intl";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -54,6 +55,7 @@ function JsonLd() {
 
 // Hero Section
 function HeroSection() {
+  const t = useTranslations('home.hero');
   const handleCtaClick = (location: string) => {
     if (typeof window !== 'undefined' && window.va) {
       window.va.track("cta_click", { location });
@@ -73,14 +75,14 @@ function HeroSection() {
           {/* Left column - Text content */}
           <div className="text-center lg:text-left space-y-8">
             <h1 className="animate-slide-up text-4xl lg:text-5xl xl:text-6xl font-bold font-display tracking-tight leading-tight">
-              The secure gateway to{" "}
+              {t('title')}{" "}
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                web accessibility
+                {t('titleHighlight')}
               </span>
             </h1>
 
             <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              Automated scanning with 8 additional categories beyond WCAG. Get clear reports, quick fixes, and continuous monitoring.
+              {t('subtitle')}
             </p>
 
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
@@ -94,7 +96,7 @@ function HeroSection() {
                   onClick={() => handleCtaClick("hero_primary")}
                 >
                   <span className="relative z-10 flex items-center">
-                    Start free scan
+                    {t('ctaPrimary')}
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
@@ -108,13 +110,13 @@ function HeroSection() {
                 asChild
               >
                 <Link href="/pricing">
-                  See pricing
+                  {t('ctaSecondary')}
                 </Link>
               </Button>
             </div>
 
             <p className="animate-fade-in text-sm text-muted-foreground pt-4">
-              No credit card required. Get 1 free scan every week.
+              {t('noCreditCard')}
             </p>
           </div>
 
@@ -124,7 +126,7 @@ function HeroSection() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/heroImage.png"
-                alt="TutusPorta accessibility scanning dashboard showing detailed reports and issue prioritization"
+                alt={t('imageAlt')}
                 className="aspect-square lg:aspect-[4/3] rounded-3xl shadow-2xl border border-primary/20 w-full h-full object-cover"
               />
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-pulse" aria-hidden="true"></div>
@@ -139,26 +141,27 @@ function HeroSection() {
 
 // Value Pillars Section
 function ValuePillarsSection() {
+  const t = useTranslations('home.valuePillars');
   const pillars = [
     {
       icon: Eye,
-      title: "Deeper coverage",
-      description: "Keyboard, cognitive, structure, contrast, forms, landmarks, multimedia, ARIA semantics.",
+      title: t('deeper.title'),
+      description: t('deeper.description'),
     },
     {
       icon: FileText,
-      title: "Actionable reports",
-      description: "Prioritized issues, code snippets, and remediation tips.",
+      title: t('actionable.title'),
+      description: t('actionable.description'),
     },
     {
       icon: Bell,
-      title: "Continuous monitoring",
-      description: "Schedule scans, track regressions, alert your team.",
+      title: t('monitoring.title'),
+      description: t('monitoring.description'),
     },
     {
       icon: Users,
-      title: "Team-ready",
-      description: "Projects, roles, Slack/Jira integration, API.",
+      title: t('teamReady.title'),
+      description: t('teamReady.description'),
     },
   ];
 
@@ -194,15 +197,16 @@ function ValuePillarsSection() {
 
 // Feature Details Section
 function FeaturesSection() {
+  const t = useTranslations('home.featuresSection');
   const features = [
-    "8 additional scanning categories beyond WCAG",
-    "Keyboard navigation testing",
-    "Screen reader compatibility checks",
-    "Mobile accessibility analysis",
-    "Cognitive accessibility assessment",
-    "Motion & animation safety",
-    "Advanced color vision testing",
-    "Performance impact analysis",
+    t('features.category1'),
+    t('features.category2'),
+    t('features.category3'),
+    t('features.category4'),
+    t('features.category5'),
+    t('features.category6'),
+    t('features.category7'),
+    t('features.category8'),
   ];
 
   return (
@@ -211,11 +215,11 @@ function FeaturesSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              From scan to action in{" "}
-              <span className="text-primary">minutes</span>
+              {t('title')}{" "}
+              <span className="text-primary">{t('titleHighlight')}</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              No technical skills needed. Our reports are simple and clear so your team can start fixing issues right away.
+              {t('subtitle')}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -229,7 +233,7 @@ function FeaturesSection() {
 
             <Button asChild className="mt-6 gradient-primary text-white hover:opacity-90" size="lg">
               <Link href="/auth/register">
-                Start free scan
+                {t('cta')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -240,7 +244,7 @@ function FeaturesSection() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/Screenshot1.png"
-                alt="TutusPorta scan detail report showing accessibility issues with prioritization and remediation tips"
+                alt={t('imageAlt')}
                 className="w-full h-64 rounded-lg object-cover"
               />
             </div>
@@ -253,15 +257,16 @@ function FeaturesSection() {
 
 // CTA Band
 function CTABand() {
+  const t = useTranslations('home.ctaBand');
   return (
     <section className="py-12 bg-muted/30 border-y">
       <div className="container mx-auto px-4 text-center">
         <h3 className="text-2xl font-bold font-display mb-4">
-          Check your site now
+          {t('title')}
         </h3>
         <Button size="lg" asChild className="gradient-primary">
           <Link href="/auth/register">
-            Start free scan
+            {t('cta')}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </Button>
@@ -272,6 +277,7 @@ function CTABand() {
 
 // Final CTA Section
 function FinalCTASection() {
+  const t = useTranslations('home.finalCta');
   return (
     <section className="py-20 gradient-primary text-primary-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-10" aria-hidden="true">
@@ -283,10 +289,10 @@ function FinalCTASection() {
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-3xl lg:text-4xl font-bold font-display animate-slide-up">
-            Start your free scan
+            {t('title')}
           </h2>
           <p className="text-xl opacity-90 animate-slide-up leading-relaxed">
-            No credit card required. Get started in seconds and see what accessibility issues exist on your site.
+            {t('subtitle')}
           </p>
 
           <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -297,7 +303,7 @@ function FinalCTASection() {
               asChild
             >
               <Link href="/auth/register">
-                Start free scan
+                {t('ctaPrimary')}
                 <Zap className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -309,7 +315,7 @@ function FinalCTASection() {
               asChild
             >
               <Link href="/contact">
-                Talk to us
+                {t('ctaSecondary')}
               </Link>
             </Button>
           </div>
@@ -321,6 +327,9 @@ function FinalCTASection() {
 
 // Main Page Component
 export default function HomePage() {
+  const tTest = useTranslations('home.testimonials');
+  const tFaq = useTranslations('home.faq');
+
   // Placeholder data for components
   const logos = [
     { name: "Rijksdienst" },
@@ -331,52 +340,52 @@ export default function HomePage() {
 
   const testimonials = [
     {
-      quote: "TutusPorta found accessibility issues our previous tools completely missed. The reports are actionable and help us prioritize fixes effectively.",
-      author: "Sarah Johnson",
-      role: "Lead Developer",
-      company: "TechCorp",
+      quote: tTest('testimonial1.quote'),
+      author: tTest('testimonial1.author'),
+      role: tTest('testimonial1.role'),
+      company: tTest('testimonial1.company'),
       rating: 5,
     },
     {
-      quote: "The continuous monitoring feature helps us catch regressions before they reach production. It's become an essential part of our CI/CD pipeline.",
-      author: "Michael Chen",
-      role: "Engineering Manager",
-      company: "StartupXYZ",
+      quote: tTest('testimonial2.quote'),
+      author: tTest('testimonial2.author'),
+      role: tTest('testimonial2.role'),
+      company: tTest('testimonial2.company'),
       rating: 5,
     },
     {
-      quote: "Finally, an accessibility scanner that goes beyond the basics. The keyboard navigation and screen reader testing saved us weeks of manual QA.",
-      author: "Emma Williams",
-      role: "QA Lead",
-      company: "Enterprise Inc",
+      quote: tTest('testimonial3.quote'),
+      author: tTest('testimonial3.author'),
+      role: tTest('testimonial3.role'),
+      company: tTest('testimonial3.company'),
       rating: 5,
     },
   ];
 
   const faqItems = [
     {
-      question: "Can you guarantee legal compliance?",
-      answer: "No tool can guarantee 100% legal compliance in all contexts. TutusPorta detects and reports issues, assists remediation, and helps you adhere to WCAG and related standards. For legal risk assessment, consider an expert audit and ongoing governance process.",
+      question: tFaq('q1.question'),
+      answer: tFaq('q1.answer'),
     },
     {
-      question: "How do page limits work?",
-      answer: "Each plan includes a monthly page scan limit. A 'page' is one URL scanned. If you scan the same page multiple times in a month, each scan counts toward your limit. When you approach your limit, you'll receive a notification.",
+      question: tFaq('q2.question'),
+      answer: tFaq('q2.answer'),
     },
     {
-      question: "What if I exceed my plan?",
-      answer: "Small overages are automatically billed at €0.002/page, €2/extra site, or €1/extra user per month. When you consistently exceed limits, we'll suggest upgrading to a more suitable plan.",
+      question: tFaq('q3.question'),
+      answer: tFaq('q3.answer'),
     },
     {
-      question: "Do you support teams/SSO?",
-      answer: "Pro plans support up to 5 team members. Business plans support up to 15 members with role-based access. SSO is available on Business and Enterprise plans. Contact us for Enterprise features.",
+      question: tFaq('q4.question'),
+      answer: tFaq('q4.answer'),
     },
     {
-      question: "Can I export reports?",
-      answer: "PDF export is available on all paid plans. Word export is available on Pro and Business plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations.",
+      question: tFaq('q5.question'),
+      answer: tFaq('q5.answer'),
     },
     {
-      question: "What's monitored continuously?",
-      answer: "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans.",
+      question: tFaq('q6.question'),
+      answer: tFaq('q6.answer'),
     },
   ];
 
@@ -388,7 +397,7 @@ export default function HomePage() {
       <ValuePillarsSection />
       <FeaturesSection />
       <CTABand />
-      <Testimonials testimonials={testimonials} title="Trusted by accessibility professionals" />
+      <Testimonials testimonials={testimonials} title={tTest('title')} />
       <FAQ items={faqItems} />
       <FinalCTASection />
     </>

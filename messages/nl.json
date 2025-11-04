@@ -59,7 +59,100 @@
       "subtitle": "Geautomatiseerd scannen met 8 extra categorieën naast WCAG. Krijg duidelijke rapporten, snelle oplossingen en continue monitoring.",
       "ctaPrimary": "Gratis scan starten",
       "ctaSecondary": "Bekijk prijzen",
-      "noCreditCard": "Geen creditcard vereist. Ontvang elke week 1 gratis scan."
+      "noCreditCard": "Geen creditcard vereist. Ontvang elke week 1 gratis scan.",
+      "imageAlt": "TutusPorta toegankelijkheidsscan dashboard met gedetailleerde rapporten en issue prioritering"
+    },
+    "valuePillars": {
+      "deeper": {
+        "title": "Diepere dekking",
+        "description": "Toetsenbord, cognitief, structuur, contrast, formulieren, oriëntatiepunten, multimedia, ARIA-semantiek."
+      },
+      "actionable": {
+        "title": "Uitvoerbare rapporten",
+        "description": "Geprioriteerde problemen, codefragmenten en hersteladvies."
+      },
+      "monitoring": {
+        "title": "Continue monitoring",
+        "description": "Plan scans, volg regressies, waarschuw uw team."
+      },
+      "teamReady": {
+        "title": "Team-klaar",
+        "description": "Projecten, rollen, Slack/Jira-integratie, API."
+      }
+    },
+    "featuresSection": {
+      "title": "Van scan naar actie in",
+      "titleHighlight": "minuten",
+      "subtitle": "Geen technische vaardigheden nodig. Onze rapporten zijn eenvoudig en duidelijk, zodat uw team meteen problemen kan oplossen.",
+      "cta": "Gratis scan starten",
+      "imageAlt": "TutusPorta scandetailrapport met toegankelijkheidsproblemen en hersteladvies",
+      "features": {
+        "category1": "8 extra scancategorieën naast WCAG",
+        "category2": "Toetsenbordnavigatietesten",
+        "category3": "Schermlezercompatibiliteitscontroles",
+        "category4": "Mobiele toegankelijkheidsanalyse",
+        "category5": "Cognitieve toegankelijkheidsbeoordeling",
+        "category6": "Beweging & animatieveiligheid",
+        "category7": "Geavanceerde kleurvisietesten",
+        "category8": "Prestatie-impactanalyse"
+      }
+    },
+    "ctaBand": {
+      "title": "Controleer uw site nu",
+      "cta": "Gratis scan starten"
+    },
+    "finalCta": {
+      "title": "Start uw gratis scan",
+      "subtitle": "Geen creditcard vereist. Begin in seconden en zie welke toegankelijkheidsproblemen er op uw site bestaan.",
+      "ctaPrimary": "Gratis scan starten",
+      "ctaSecondary": "Neem contact op"
+    },
+    "testimonials": {
+      "title": "Vertrouwd door toegankelijkheidsprofessionals",
+      "testimonial1": {
+        "quote": "TutusPorta vond toegankelijkheidsproblemen die onze eerdere tools volledig misten. De rapporten zijn uitvoerbaar en helpen ons effectief te prioriteren.",
+        "author": "Sarah Johnson",
+        "role": "Lead Developer",
+        "company": "TechCorp"
+      },
+      "testimonial2": {
+        "quote": "De continue monitoring helpt ons regressies te vangen voordat ze in productie komen. Het is een essentieel onderdeel van onze CI/CD-pipeline geworden.",
+        "author": "Michael Chen",
+        "role": "Engineering Manager",
+        "company": "StartupXYZ"
+      },
+      "testimonial3": {
+        "quote": "Eindelijk een toegankelijkheidsscanner die verder gaat dan de basis. De toetsenbordnavigatie en schermlezer testen bespaarden ons weken handmatige QA.",
+        "author": "Emma Williams",
+        "role": "QA Lead",
+        "company": "Enterprise Inc"
+      }
+    },
+    "faq": {
+      "q1": {
+        "question": "Kunt u juridische compliance garanderen?",
+        "answer": "Geen tool kan 100% juridische compliance in alle contexten garanderen. TutusPorta detecteert en rapporteert problemen, helpt bij herstel en helpt u te voldoen aan WCAG en gerelateerde standaarden. Overweeg voor juridische risicobeoordeling een expertaudit en doorlopend governance-proces."
+      },
+      "q2": {
+        "question": "Hoe werken pagina-limieten?",
+        "answer": "Elk plan bevat een maandelijkse paginascanlimiet. Een 'pagina' is één gescande URL. Als u dezelfde pagina meerdere keren per maand scant, telt elke scan mee voor uw limiet. Bij nadering van uw limiet ontvangt u een melding."
+      },
+      "q3": {
+        "question": "Wat als ik mijn plan overschrijd?",
+        "answer": "Kleine overschrijdingen worden automatisch gefactureerd tegen €0,002/pagina, €2/extra site, of €1/extra gebruiker per maand. Wanneer u consequent limieten overschrijdt, zullen we een geschikter plan voorstellen."
+      },
+      "q4": {
+        "question": "Ondersteunen jullie teams/SSO?",
+        "answer": "Pro-plannen ondersteunen tot 5 teamleden. Business-plannen ondersteunen tot 15 leden met rolgebaseerde toegang. SSO is beschikbaar op Business en Enterprise-plannen. Neem contact op voor Enterprise-functies."
+      },
+      "q5": {
+        "question": "Kan ik rapporten exporteren?",
+        "answer": "PDF-export is beschikbaar op alle betaalde plannen. Word-export is beschikbaar op Pro en Business-plannen. Alle exports bevatten uw scanresultaten, geprioriteerde problemen, codefragmenten en hersteladvies."
+      },
+      "q6": {
+        "question": "Wat wordt continu gemonitord?",
+        "answer": "Continue monitoring stelt u in staat automatische scans te plannen (dagelijks, wekelijks of maandelijks). U ontvangt e-mailwaarschuwingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro en Business-plannen."
+      }
     },
     "pillars": {
       "title": "Waarom TutusPorta?",
