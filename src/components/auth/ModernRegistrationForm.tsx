@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { createClient } from '@/lib/supabase/client'
+import { useTranslations } from 'next-intl'
 import { 
   User, 
   Mail, 
@@ -84,6 +85,7 @@ const steps = [
 ]
 
 export default function ModernRegistrationForm() {
+  const t = useTranslations('auth.register')
   const [currentStep, setCurrentStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')

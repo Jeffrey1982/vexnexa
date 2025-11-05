@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client'
+import { useTranslations } from 'next-intl'
 import {
   Mail,
   ArrowLeft,
@@ -17,6 +18,7 @@ import {
 } from 'lucide-react'
 
 export default function ForgotPasswordPage() {
+  const t = useTranslations('auth.forgotPassword')
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
@@ -37,7 +39,7 @@ export default function ForgotPasswordPage() {
 
       if (error) throw error
 
-      setMessage('Controleer je email voor instructies om je wachtwoord opnieuw in te stellen.')
+      setMessage(t('success'))
     } catch (error: any) {
       setError(error.message)
     } finally {
@@ -61,10 +63,10 @@ export default function ForgotPasswordPage() {
               <Shield className="w-8 h-8 text-white" />
             </div>
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Wachtwoord vergeten?
+              {t('title')}
             </CardTitle>
             <CardDescription className="text-base">
-              Geen zorgen, we sturen je een reset link
+              {t('subtitle')}
             </CardDescription>
           </CardHeader>
 
@@ -85,7 +87,7 @@ export default function ForgotPasswordPage() {
                   onClick={() => router.push('/auth/login')}
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Terug naar inloggen
+                  {t('backToLogin')}
                 </Button>
               </div>
             ) : (
@@ -94,7 +96,7 @@ export default function ForgotPasswordPage() {
                   <div className="space-y-2">
                     <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
                       <Mail className="w-4 h-4" />
-                      Email adres
+                      {t('emailLabel')}
                     </Label>
                     <Input
                       id="email"
@@ -102,7 +104,7 @@ export default function ForgotPasswordPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      placeholder="je@email.nl"
+                      placeholder={t('emailPlaceholder')}
                       className="h-12 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     />
                   </div>
@@ -121,10 +123,10 @@ export default function ForgotPasswordPage() {
                     {loading ? (
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                        Versturen...
+                        {t('sending')}
                       </div>
                     ) : (
-                      'Reset link versturen'
+                      '{t('sendButton')}'
                     )}
                   </Button>
                 </form>

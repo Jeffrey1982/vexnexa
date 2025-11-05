@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client'
+import { useTranslations } from 'next-intl'
 import {
   Lock,
   Eye,
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react'
 
 function ResetPasswordForm() {
+  const t = useTranslations('auth.resetPassword')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -55,13 +57,13 @@ function ResetPasswordForm() {
     setMessage('')
 
     if (password !== confirmPassword) {
-      setError('Wachtwoorden komen niet overeen')
+      setError(t('errors.passwordsMatch'))
       setLoading(false)
       return
     }
 
     if (password.length < 6) {
-      setError('Wachtwoord moet minimaal 6 karakters lang zijn')
+      setError(t('errors.passwordLength'))
       setLoading(false)
       return
     }
@@ -73,7 +75,7 @@ function ResetPasswordForm() {
 
       if (error) throw error
 
-      setMessage('Wachtwoord succesvol bijgewerkt! Je wordt doorgeleid naar het dashboard.')
+      setMessage(t('success'))
 
       // Redirect to dashboard after 2 seconds
       setTimeout(() => {
@@ -102,10 +104,10 @@ function ResetPasswordForm() {
               <Shield className="w-8 h-8 text-white" />
             </div>
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Nieuw wachtwoord instellen
+              {t('title')}
             </CardTitle>
             <CardDescription className="text-base">
-              Kies een sterk nieuw wachtwoord voor je account
+              {t('subtitle')}
             </CardDescription>
           </CardHeader>
 
@@ -127,7 +129,7 @@ function ResetPasswordForm() {
                   <div className="space-y-2">
                     <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium">
                       <Lock className="w-4 h-4" />
-                      Nieuw wachtwoord
+                      {t('passwordLabel')}
                     </Label>
                     <div className="relative">
                       <Input
@@ -136,7 +138,7 @@ function ResetPasswordForm() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        placeholder="Minimaal 6 karakters"
+                        placeholder={t('passwordPlaceholder')}
                         className="h-12 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pr-12"
                       />
                       <Button
@@ -158,7 +160,7 @@ function ResetPasswordForm() {
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-medium">
                       <Lock className="w-4 h-4" />
-                      Bevestig wachtwoord
+                      {t('confirmPasswordLabel')}
                     </Label>
                     <div className="relative">
                       <Input
@@ -167,7 +169,7 @@ function ResetPasswordForm() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        placeholder="Herhaal je nieuwe wachtwoord"
+                        placeholder={t('confirmPasswordPlaceholder')}
                         className="h-12 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pr-12"
                       />
                       <Button
@@ -201,10 +203,10 @@ function ResetPasswordForm() {
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                      Bijwerken...
+                      {t('resetting')}
                     </div>
                   ) : (
-                    'Wachtwoord bijwerken'
+                    '{t('resetButton')}'
                   )}
                 </Button>
               </form>
