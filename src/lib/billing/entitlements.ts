@@ -49,20 +49,27 @@ export async function assertWithinLimits(opts: {
 
   // Usage limits
   if (["scan","bulk_scan","export_pdf","export_word","crawl"].includes(opts.action)) {
-    let usage = await prisma.usage.findUnique({ 
-      where: { userId_period: { userId: user.id, period } } 
+    let usage = await prisma.usage.findUnique({
+      where: { userId_period: { userId: user.id, period } }
     })
     if (!usage) {
-      usage = await prisma.usage.create({ 
-        data: { userId: user.id, period } 
+      usage = await prisma.usage.create({
+        data: { userId: user.id, period }
       })
     }
-    
+
     if (usage.pages >= ent.pagesPerMonth) {
-      const e: any = new Error(`Maandelijkse paginalimiet bereikt voor jouw ${plan.toLowerCase()} plan.`)
-      e.code = "LIMIT_REACHED"; 
+      // Different messages for TRIAL vs paid plans
+      const isTrial = plan === "TRIAL";
+      const message = isTrial
+        ? `Free trial limit bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een betaald plan om door te gaan met scannen.`
+        : `Maandelijkse paginalimiet bereikt voor jouw ${plan.toLowerCase()} plan (${ent.pagesPerMonth} pages/maand). Upgrade naar een hoger plan of wacht tot volgende maand.`;
+
+      const e: any = new Error(message)
+      e.code = isTrial ? "TRIAL_LIMIT_REACHED" : "LIMIT_REACHED";
       e.limit = ent.pagesPerMonth
       e.current = usage.pages
+      e.requiresUpgrade = isTrial
       throw e
     }
   }

@@ -140,7 +140,7 @@
       },
       "q3": {
         "question": "Que se passe-t-il si je dépasse mon plan?",
-        "answer": "Les petits dépassements sont automatiquement facturés à 0,002€/page, 2€/site supplémentaire ou 1€/utilisateur supplémentaire par mois. Lorsque vous dépassez constamment les limites, nous vous suggérerons de passer à un plan plus adapté."
+        "answer": "Essai Gratuit : Le service est bloqué à la limite. Passez à un plan payant pour continuer à scanner. Plans payants : Le service continue mais vous recevrez des notifications pour upgrader si vous dépassez régulièrement vos limites."
       },
       "q4": {
         "question": "Supportez-vous les équipes/SSO?",

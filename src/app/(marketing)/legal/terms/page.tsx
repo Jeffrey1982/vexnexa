@@ -225,10 +225,13 @@ export default async function TermsPage() {
           {/* 4 */}
           <section id="betalingen">
             <h2>4. Betalingen & abonnementen</h2>
-            <h3>Gratis tier</h3>
+            <h3>Gratis tier (Trial)</h3>
             <ul>
-              <li>Free blijft gratis; limieten staan in het dashboard</li>
+              <li>De gratis Trial blijft gratis met vaste maandelijkse limieten (100 pagina's/maand, 1 website)</li>
+              <li><strong>Harde limiet:</strong> Bij overschrijding van het gratis gebruik wordt de service geblokkeerd tot de volgende maand of totdat je upgrade naar een betaald plan</li>
+              <li>Trial verloopt na de aangegeven periode; upgrade is vereist om de service te blijven gebruiken</li>
               <li>Functies kunnen wijzigen — we communiceren substantiële wijzigingen vooraf</li>
+              <li>Geen automatische overage-facturatie; upgrade naar betaald plan voor verdere toegang</li>
             </ul>
             <h3>Betaalde abonnementen</h3>
             <ul>
@@ -237,9 +240,12 @@ export default async function TermsPage() {
               <li>Opzeggen kan tot de laatste dag van de lopende periode (service loopt door tot einde termijn)</li>
               <li>Mid-cycle upgrades zijn mogelijk; kosten worden pro-rato verrekend</li>
             </ul>
-            <h3>Limieten & overage</h3>
+            <h3>Limieten & overage (alleen betaalde plannen)</h3>
             <ul>
-              <li>Bij overschrijding: blokkade of bijkoop per scan (tarief in je plan), met waarschuwingen bij 80% en 100%</li>
+              <li><strong>Trial/Gratis:</strong> Harde limiet - service wordt geblokkeerd bij overschrijding. Upgrade vereist voor verdere toegang.</li>
+              <li><strong>Betaalde plannen:</strong> Bij overschrijding worden extra scans automatisch gefactureerd (€0.002/pagina, €2/extra site, €1/extra gebruiker per maand)</li>
+              <li>Waarschuwingen bij 80% en 100% van je limiet</li>
+              <li>Bij consistente overschrijding adviseren we een upgrade naar een hoger plan</li>
             </ul>
             <h3>Restituties & chargebacks</h3>
             <ul>

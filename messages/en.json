@@ -140,7 +140,7 @@
       },
       "q3": {
         "question": "What if I exceed my plan?",
-        "answer": "Small overages are automatically billed at €0.002/page, €2/extra site, or €1/extra user per month. When you consistently exceed limits, we'll suggest upgrading to a more suitable plan."
+        "answer": "Free Trial: Service is blocked at limit. Upgrade to a paid plan to continue scanning. Paid plans: Service continues but you'll receive notifications to upgrade if you consistently exceed your limits."
       },
       "q4": {
         "question": "Do you support teams/SSO?",
