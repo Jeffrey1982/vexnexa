@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
+import { useTranslations } from 'next-intl'
 import {
   Mail,
   Lock,
@@ -42,6 +43,7 @@ const AppleIcon = () => (
 )
 
 export default function ModernLoginForm() {
+  const t = useTranslations('auth.login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -72,16 +74,16 @@ export default function ModernLoginForm() {
     if (oauthError) {
       switch (oauthError) {
         case 'oauth_error':
-          setError('Er is een fout opgetreden bij het inloggen met je sociale account.')
+          setError(t('errors.oauthError'))
           break
         case 'session_error':
-          setError('Kon geen sessie aanmaken. Probeer het opnieuw.')
+          setError(t('errors.sessionError'))
           break
         case 'unexpected_error':
-          setError('Er is een onverwachte fout opgetreden. Probeer het later opnieuw.')
+          setError(t('errors.unexpectedError'))
           break
         default:
-          setError('Er is een fout opgetreden bij het inloggen.')
+          setError(t('errors.genericError'))
       }
     }
   }, [searchParams])
@@ -93,14 +95,14 @@ export default function ModernLoginForm() {
 
     // Client-side validation
     if (!email || !password) {
-      setError('Please enter both email and password')
+      setError(t('errors.emailRequired'))
       setLoading(false)
       return
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address')
+      setError(t('errors.invalidEmail'))
       setLoading(false)
       return
     }

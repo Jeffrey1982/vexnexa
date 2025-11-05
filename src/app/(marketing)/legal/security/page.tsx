@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Shield, Mail, Calendar, Lock, Database, AlertTriangle, ListTree } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: 'Security & Privacy - TutusPorta',
@@ -47,11 +48,14 @@ const sections = [
   { id: 'storage', label: 'Data Storage' },
   { id: 'retention', label: 'Data Retention' },
   { id: 'third-party', label: 'Third-Party Services' },
-  { id: 'incidents', label: 'Security Incident Response' },
+  { id: 'incidents', label: 'Security {t('guarantees.incident')}' },
   { id: 'contact', label: 'Contact' },
 ]
 
-export default function SecurityPage() {
+export default async function SecurityPage() {
+  const t = await getTranslations('legal.security');
+  const tc = await getTranslations('legal.common');
+
   return (
     <div className="container mx-auto px-4 py-12 sm:py-16">
       {/* Skip link */}
@@ -76,17 +80,17 @@ export default function SecurityPage() {
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Security & Privacy</h1>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">{t('title')}</h1>
             <Badge variant="outline" className="flex items-center gap-2">
               <Calendar className="h-3 w-3" aria-hidden="true" />
-              Last updated: {lastUpdated}
+              {tc('lastUpdated')}: {t('lastUpdated')}
             </Badge>
             <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
               {policyVersion}
             </Badge>
           </div>
           <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
-            How we protect your data and our security measures.
+            {t('description')}
           </p>
 
           {/* Summary */}
@@ -95,27 +99,27 @@ export default function SecurityPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                   <Shield className="h-5 w-5" aria-hidden="true" />
-                  Security Guarantees
+                  {t('guarantees.title')}
                 </CardTitle>
-                <CardDescription>Our commitments for your data</CardDescription>
+                <CardDescription>{t('guarantees.description')}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6 sm:grid-cols-3">
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <Lock className="h-4 w-4" />
-                    Encryption
+                    {t('guarantees.encryption')}
                   </p>
                   <p className="leading-relaxed">
-                    Industry-standard encryption for data at rest and in transit
+                    {t('guarantees.encryptionDesc')}
                   </p>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <Database className="h-4 w-4" />
-                    Secure Storage
+                    {t('guarantees.storage')}
                   </p>
                   <p className="leading-relaxed">
-                    Encrypted databases met restricted access controls
+                    {t('guarantees.storageDesc')}
                   </p>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -124,7 +128,7 @@ export default function SecurityPage() {
                     Incident Response
                   </p>
                   <p className="leading-relaxed">
-                    Notificatie binnen 72 uur bij security incidents
+                    {t('guarantees.incidentDesc')}
                   </p>
                 </div>
               </CardContent>
@@ -279,7 +283,7 @@ export default function SecurityPage() {
           {/* Footer strip */}
           <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
+              <p className="text-sm text-muted-foreground">{tc('lastUpdated')}: {t('lastUpdated')}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
                   <Link href="/legal/privacy">Privacy Policy</Link>
@@ -298,9 +302,9 @@ export default function SecurityPage() {
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base">
                 <ListTree className="h-4 w-4" />
-                On this page
+                {tc('onThisPage')}
               </CardTitle>
-              <CardDescription>Quick navigation to sections</CardDescription>
+              <CardDescription>{tc('quickNavigation')}</CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
               <nav aria-label="Table of contents" className="space-y-2">

@@ -335,30 +335,92 @@
     }
   },
   "auth": {
+    "loading": "Laden...",
     "login": {
       "title": "Welkom terug",
-      "subtitle": "Meld u aan bij uw account",
-      "email": "E-mail",
-      "password": "Wachtwoord",
-      "forgot": "Wachtwoord vergeten?",
-      "submit": "Aanmelden",
+      "subtitle": "Meld je aan bij je account om door te gaan",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.nl",
+      "passwordLabel": "Wachtwoord",
+      "passwordPlaceholder": "Voer je wachtwoord in",
+      "showPassword": "Wachtwoord tonen",
+      "hidePassword": "Wachtwoord verbergen",
+      "signInButton": "Inloggen",
+      "signingIn": "Bezig met inloggen...",
+      "forgotPassword": "Wachtwoord vergeten?",
       "noAccount": "Nog geen account?",
-      "signUp": "Registreren"
+      "signUp": "Registreren",
+      "or": "Of ga verder met",
+      "errors": {
+        "emailRequired": "Voer zowel e-mail als wachtwoord in",
+        "invalidEmail": "Voer een geldig e-mailadres in",
+        "oauthError": "Er is een fout opgetreden bij het inloggen met je sociale account.",
+        "sessionError": "Kon geen sessie aanmaken. Probeer het opnieuw.",
+        "unexpectedError": "Er is een onverwachte fout opgetreden. Probeer het later opnieuw.",
+        "genericError": "Er is een fout opgetreden bij het inloggen."
+      },
+      "features": {
+        "secure": "Veilige authenticatie",
+        "fast": "Razendsnel scannen",
+        "support": "24/7 ondersteuning beschikbaar"
+      }
     },
     "register": {
-      "title": "Maak uw account aan",
-      "subtitle": "Begin gratis met scannen",
-      "name": "Volledige naam",
-      "email": "E-mail",
-      "password": "Wachtwoord",
-      "confirm": "Bevestig wachtwoord",
-      "terms": "Ik ga akkoord met de",
-      "termsLink": "Servicevoorwaarden",
+      "title": "Maak je account aan",
+      "subtitle": "Begin vandaag nog met scannen op toegankelijkheidsproblemen",
+      "nameLabel": "Volledige naam",
+      "namePlaceholder": "Jan Jansen",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.nl",
+      "passwordLabel": "Wachtwoord",
+      "passwordPlaceholder": "Minimaal 8 tekens",
+      "confirmPasswordLabel": "Bevestig wachtwoord",
+      "confirmPasswordPlaceholder": "Voer je wachtwoord opnieuw in",
+      "createAccountButton": "Account aanmaken",
+      "creatingAccount": "Account wordt aangemaakt...",
+      "haveAccount": "Heb je al een account?",
+      "signIn": "Inloggen",
+      "or": "Of ga verder met",
+      "terms": "Door een account aan te maken, ga je akkoord met onze",
+      "termsLink": "Algemene Voorwaarden",
       "and": "en",
       "privacyLink": "Privacybeleid",
-      "submit": "Account aanmaken",
-      "hasAccount": "Heeft u al een account?",
-      "signIn": "Aanmelden"
+      "errors": {
+        "allFieldsRequired": "Vul alle velden in",
+        "invalidEmail": "Voer een geldig e-mailadres in",
+        "passwordLength": "Wachtwoord moet minimaal 8 tekens bevatten",
+        "passwordsMatch": "Wachtwoorden moeten overeenkomen"
+      }
+    },
+    "forgotPassword": {
+      "title": "Reset je wachtwoord",
+      "subtitle": "Voer je e-mailadres in en we sturen je een reset link",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.nl",
+      "sendButton": "Reset link versturen",
+      "sending": "Versturen...",
+      "backToLogin": "Terug naar inloggen",
+      "success": "Controleer je e-mail voor een reset link!",
+      "errors": {
+        "emailRequired": "Voer je e-mailadres in",
+        "invalidEmail": "Voer een geldig e-mailadres in"
+      }
+    },
+    "resetPassword": {
+      "title": "Stel nieuw wachtwoord in",
+      "subtitle": "Voer hieronder je nieuwe wachtwoord in",
+      "passwordLabel": "Nieuw wachtwoord",
+      "passwordPlaceholder": "Minimaal 8 tekens",
+      "confirmPasswordLabel": "Bevestig nieuw wachtwoord",
+      "confirmPasswordPlaceholder": "Voer je wachtwoord opnieuw in",
+      "resetButton": "Wachtwoord resetten",
+      "resetting": "Bezig met resetten...",
+      "success": "Wachtwoord succesvol gereset!",
+      "errors": {
+        "allFieldsRequired": "Vul alle velden in",
+        "passwordLength": "Wachtwoord moet minimaal 8 tekens bevatten",
+        "passwordsMatch": "Wachtwoorden moeten overeenkomen"
+      }
     }
   },
   "cookie": {
@@ -389,6 +451,396 @@
     "copied": "Gekopieerd!",
     "viewMore": "Meer weergeven",
     "viewLess": "Minder weergeven",
-    "learnMore": "Meer informatie"
+    "learnMore": "Meer informatie",
+    "issues": "problemen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Monitor uw website toegankelijkheidsscans en verbeteringen",
+    "newScan": {
+      "title": "Nieuwe Toegankelijkheidsscan",
+      "description": "Voer een URL in voor een 100% uitgebreide toegankelijkheidsscan met 8 extra categorieën"
+    },
+    "tabs": {
+      "overview": "Overzicht",
+      "analytics": "Analytics",
+      "monitoring": "Monitoring",
+      "teams": "Teams",
+      "reports": "Rapporten",
+      "tools": "Hulpmiddelen",
+      "whiteLabel": "White Label"
+    },
+    "stats": {
+      "title": "Snel Overzicht",
+      "description": "Uw toegankelijkheidsstatistieken in een oogopslag",
+      "averageScore": "Gemiddelde Score",
+      "totalIssues": "Totaal Problemen",
+      "critical": "Kritiek",
+      "serious": "Ernstig",
+      "moderate": "Matig",
+      "minor": "Klein"
+    },
+    "teams": {
+      "title": "Teamsamenwerking",
+      "description": "Werk samen met uw team aan toegankelijkheidsprojecten en deel inzichten",
+      "available": "Teamfuncties Beschikbaar",
+      "availableDescription": "Nodig teamleden uit, wijs rollen toe, volg problemen en werk samen aan toegankelijkheidsverbeteringen.",
+      "goToTeams": "Ga naar Teams",
+      "roleBasedAccess": {
+        "title": "Rolgebaseerde Toegang",
+        "description": "Admin, Editor, Viewer rechten"
+      },
+      "issueTracking": {
+        "title": "Probleemregistratie",
+        "description": "Wijs toe en volg toegankelijkheidsproblemen"
+      },
+      "sharedWorkspaces": {
+        "title": "Gedeelde Werkruimtes",
+        "description": "Werk samen aan meerdere sites"
+      }
+    },
+    "analytics": {
+      "issuesByImpact": {
+        "title": "Problemen per Impactniveau",
+        "description": "Verdeling van toegankelijkheidsproblemen over ernstniveaus"
+      },
+      "trendAnalysis": {
+        "title": "Trendanalyse",
+        "description": "Volg uw toegankelijkheidsverbeteringen in de loop van de tijd",
+        "noData": "Voer meer scans uit om trends te zien"
+      }
+    },
+    "monitoring": {
+      "title": "Continue Monitoring",
+      "description": "Volg toegankelijkheidswijzigingen en ontvang meldingen bij achteruitgang",
+      "comingSoon": "Monitoring Komt Binnenkort",
+      "comingSoonDescription": "Geautomatiseerde monitoring volgt uw websites en waarschuwt u wanneer toegankelijkheidsscores dalen of nieuwe problemen worden gedetecteerd.",
+      "configureNotifications": "Meldingen Configureren",
+      "upgradePlan": "Plan Upgraden",
+      "scheduledScans": {
+        "title": "Geplande Scans",
+        "description": "Scan uw sites automatisch dagelijks, wekelijks of maandelijks"
+      },
+      "instantAlerts": {
+        "title": "Directe Waarschuwingen",
+        "description": "Ontvang e-mailmeldingen wanneer scores dalen of problemen toenemen"
+      },
+      "trendTracking": {
+        "title": "Trendvolging",
+        "description": "Bekijk historische gegevens en volg verbeteringen in de loop van de tijd"
+      }
+    },
+    "reports": {
+      "title": "Scanrapporten",
+      "description": "Download gedetailleerde toegankelijkheidsrapporten voor uw scans",
+      "noReports": "Geen Rapporten Beschikbaar",
+      "noReportsDescription": "Voer uw eerste toegankelijkheidsscan uit om downloadbare rapporten te genereren.",
+      "selectScan": "Selecteer een scan om het gedetailleerde toegankelijkheidsrapport te downloaden:"
+    },
+    "tools": {
+      "title": "Toegankelijkheidsbronnen",
+      "description": "Hulpmiddelen en gidsen om de toegankelijkheid van uw website te verbeteren",
+      "wcagGuidelines": {
+        "title": "WCAG Richtlijnen",
+        "description": "Leer over WCAG 2.1 AA nalevingsvereisten"
+      },
+      "quickFixes": {
+        "title": "Snelle Oplossingen",
+        "description": "Veelvoorkomende toegankelijkheidsproblemen en hoe ze op te lossen"
+      }
+    },
+    "whiteLabel": {
+      "title": "White Label Beheer",
+      "description": "Pas uw merkuitstraling, logo, kleuren en contactgegevens aan voor uw Business-abonnement.",
+      "fullSettings": "Volledige Instellingen",
+      "fullSettingsDescription": "Volledige white-label configuratie",
+      "fullSettingsDetails": "Logo, kleuren, contactinfo, domeininstellingen",
+      "livePreview": "Live Voorbeeld",
+      "livePreviewDescription": "Zie uw aanpassingen",
+      "livePreviewDetails": "Uw site toont al uw branding!",
+      "customReports": "Aangepaste Rapporten",
+      "customReportsDescription": "Branded PDF exports",
+      "customReportsDetails": "Beschikbaar - Genereer rapporten met uw branding",
+      "featuresTitle": "Uw White Label Functies",
+      "features": {
+        "logo": "Aangepast bedrijfslogo & favicon",
+        "colors": "Merkleuren (primair, secundair, accent)",
+        "contact": "Aangepaste contactinformatie",
+        "removeBranding": "Verwijder \"Powered by TutusPorta\"",
+        "footerText": "Aangepaste voettekst",
+        "subdomain": "Subdomein (uwbedrijf.tutusporta.com)",
+        "customDomain": "Aangepast domein (neem contact op met support)",
+        "brandedReports": "Branded PDF rapporten"
+      },
+      "customize": "Pas Uw Merk Aan"
+    },
+    "recentScans": {
+      "title": "Recente Scans",
+      "description": "Uw meest recente toegankelijkheidsscans en hun resultaten",
+      "empty": "Nog geen scans",
+      "emptyDescription": "Begin door uw eerste website te scannen op toegankelijkheidsproblemen.",
+      "tableHeaders": {
+        "site": "Site",
+        "url": "URL",
+        "score": "Score",
+        "status": "Status",
+        "issues": "Problemen",
+        "date": "Datum"
+      }
+    },
+    "status": {
+      "done": "klaar",
+      "running": "bezig",
+      "failed": "mislukt",
+      "queued": "in de wachtrij"
+    }
+  },
+  "legal": {
+    "common": {
+      "skipToContent": "Ga naar hoofdinhoud",
+      "backToHome": "Terug naar startpagina",
+      "lastUpdated": "Laatst bijgewerkt",
+      "onThisPage": "Op deze pagina",
+      "quickNavigation": "Snel naar een sectie",
+      "needHelp": "Need help?",
+      "responseTime": "We reageren meestal binnen 1 werkdag",
+      "contactUs": "Neem contact op"
+    },
+    "privacy": {
+      "title": "Privacybeleid",
+      "metaDescription": "Lees ons privacybeleid: hoe TutusPorta omgaat met je gegevens, cookies en privacy. GDPR-compliant.",
+      "description": "Hoe TutusPorta omgaat met je persoonsgegevens en je privacy beschermt.",
+      "lastUpdated": "8 december 2024",
+      "version": "v1.2",
+      "summary": {
+        "title": "Privacy in een oogopslag",
+        "description": "De belangrijkste punten in één overzicht.",
+        "doTitle": "✅ Wat we WEL doen",
+        "doItems": [
+          "Alleen publiek toegankelijke pagina's scannen",
+          "Gegevens veilig opslaan in de EU",
+          "Dataminimalisatie & transparantie",
+          "Duidelijke rechten en instellingen"
+        ],
+        "dontTitle": "❌ Wat we NIET doen",
+        "dontItems": [
+          "Persoonsgegevens uit pagina-inhoud opslaan",
+          "Gegevens verkopen aan derden",
+          "Niet-essentiële cookies zonder toestemming",
+          "Onveilige overdrachten buiten de EU"
+        ]
+      },
+      "section1": {
+        "title": "1. Wie we zijn",
+        "content": "TutusPorta is een accessibility-scanning service ontwikkeld in Nederland. We helpen website-eigenaren hun sites toegankelijker te maken door WCAG-compliance te testen.",
+        "contactTitle": "Contactgegevens (verwerkingsverantwoordelijke)",
+        "companyName": "Bedrijfsnaam",
+        "companyValue": "VexNexa B.V. (TutusPorta is onderdeel van VexNexa)",
+        "address": "Adres",
+        "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
+        "kvk": "KvK-nummer",
+        "vat": "BTW",
+        "email": "E-mail",
+        "website": "Website"
+      },
+      "section2": {
+        "title": "2. Welke gegevens we verzamelen",
+        "scanDataTitle": "Scangegevens",
+        "scanDataItems": [
+          "URL van de gescande pagina",
+          "Technische metadata over toegankelijkheidsproblemen",
+          "Scan tijdstempels",
+          "IP-adres voor rate-limiting en misbruikpreventie"
+        ],
+        "important": "Belangrijk",
+        "importantNote": "we slaan geen persoonsgegevens uit pagina-inhoud op (zoals namen, e-mails, telefoonnummers); we analyseren alleen HTML-structuur en toegankelijkheid.",
+        "accountTitle": "Accountgegevens (optioneel)",
+        "accountItems": [
+          "E-mailadres",
+          "Naam (indien opgegeven)",
+          "Gehashed wachtwoord",
+          "Accountvoorkeuren"
+        ],
+        "contactTitle": "Contact",
+        "contactItems": [
+          "Naam en e-mailadres",
+          "Berichtinhoud",
+          "Tijdstempel van verzending"
+        ]
+      },
+      "section3": {
+        "title": "3. Rechtsgrond (Art. 6 AVG)",
+        "items": [
+          "Uitvoering overeenkomst – scans, resultaten, accountbeheer.",
+          "Gerechtvaardigd belang – beveiliging (rate-limiting, misbruikdetectie), basisverbeteringen.",
+          "Toestemming – analytics/marketingcookies en opt-in communicatie.",
+          "Wettelijke verplichting – bewaartermijnen en verzoeken van autoriteiten."
+        ]
+      },
+      "section4": {
+        "title": "4. Cookies en tracking",
+        "functionalTitle": "Functionele cookies (noodzakelijk)",
+        "functionalItems": [
+          "Sessie voor ingelogde gebruikers",
+          "Voorkeuren (taal, thema)",
+          "Cookie-toestemmingsstatus"
+        ],
+        "analyticsTitle": "Analytics cookies (optioneel)",
+        "analyticsIntro": "Met toestemming kunnen we privacy-vriendelijke analytics gebruiken (bijv. Vercel Analytics of alternatief). We meten geaggregeerde statistieken, geen individuele profielen.",
+        "analyticsItems": [
+          "Bezoekersstatistieken (geaggregeerd/anoniem)",
+          "Populaire pagina's en functies",
+          "Technische prestaties"
+        ],
+        "manageText": "Je kunt toestemming beheren via de",
+        "cookieSettings": "cookie-instellingen",
+        "utmTitle": "UTM parameters",
+        "utmText": "We kunnen UTM parameters tijdelijk bewaren om herkomst te begrijpen. Deze bevatten geen persoonsgegevens."
+      },
+      "section5": {
+        "title": "5. Hoe en waarom we gegevens gebruiken",
+        "items": [
+          "Uitvoeren van scans en tonen van resultaten",
+          "Accountbeheer en inloggen",
+          "Klantenservice en ondersteuning",
+          "Serviceverbetering (met toestemming voor analytics)",
+          "Naleving van wetten en regelgeving"
+        ],
+        "noSelling": "We verkopen of verhuren je gegevens niet aan derden voor marketingdoeleinden."
+      },
+      "section6": {
+        "title": "6. Ontvangers en verwerkers",
+        "intro": "We delen gegevens alleen met dienstverleners die namens ons verwerken onder een verwerkersovereenkomst."
+      },
+      "section7": {
+        "title": "7. Doorgifte buiten EU/EEA",
+        "content": "Indien doorgifte buiten de EU plaatsvindt (bijv. edge-routing of supportlogs), gebruiken we passende waarborgen zoals EU Standard Contractual Clauses en aanvullende maatregelen."
+      },
+      "section8": {
+        "title": "8. Gegevensopslag, beveiliging & bewaartermijnen",
+        "storageTitle": "Opslaglocaties",
+        "storageItems": [
+          "Database/compute in EU datacenters",
+          "Back-ups binnen Europa"
+        ],
+        "securityTitle": "Beveiligingsmaatregelen",
+        "securityItems": [
+          "TLS/HTTPS end-to-end",
+          "Gehashte wachtwoorden",
+          "Least-privilege toegangscontrole & monitoring",
+          "Regelmatige patches/updates",
+          "Dataminimalisatie"
+        ],
+        "retentionTitle": "Bewaartermijnen",
+        "retentionItems": [
+          "Scangegevens: 1 jaar (Gratis); langer voor betaalde accounts (configureerbaar in je account)",
+          "Accountgegevens: tot accountverwijdering of zolang wettelijk vereist",
+          "Contactberichten: tot 2 jaar",
+          "Analytics: tot 24 maanden (geaggregeerd/geanonimiseerd waar mogelijk)"
+        ],
+        "retentionNote": "We verwijderen of anonimiseren eerder wanneer gegevens niet meer nodig zijn, tenzij bewaring wettelijk verplicht is."
+      },
+      "section9": {
+        "title": "9. Jouw rechten (AVG/GDPR)",
+        "accessTitle": "🔍 Recht op inzage",
+        "accessDesc": "Vraag op welke gegevens we over je hebben.",
+        "rectificationTitle": "✏️ Rectificatie",
+        "rectificationDesc": "Laat onjuiste gegevens corrigeren.",
+        "erasureTitle": "🗑️ Verwijdering",
+        "erasureDesc": "Laat gegevens verwijderen.",
+        "restrictionTitle": "⏸️ Beperking",
+        "restrictionDesc": "Beperk verwerking (tijdelijk).",
+        "portabilityTitle": "📦 Dataportabiliteit",
+        "portabilityDesc": "Ontvang gegevens in een gangbaar formaat.",
+        "objectionTitle": "❌ Bezwaar",
+        "objectionDesc": "Bezwaar tegen verwerking op basis van gerechtvaardigd belang.",
+        "exerciseText": "Je rechten uitoefenen? Mail",
+        "responseText": "We reageren binnen 30 dagen."
+      },
+      "section10": {
+        "title": "10. Kinderen",
+        "content": "Niet gericht op kinderen onder 16 jaar. Neem contact op als er gegevens zijn verzameld; we zullen deze verwijderen."
+      },
+      "section11": {
+        "title": "11. Datalekken",
+        "content": "We onderzoeken direct de impact, beperken risico's en melden indien vereist aan de Autoriteit Persoonsgegevens en betrokkenen."
+      },
+      "section12": {
+        "title": "12. Geautomatiseerde besluitvorming",
+        "content": "We nemen geen beslissingen uitsluitend op basis van geautomatiseerde verwerking met rechtsgevolgen voor jou."
+      },
+      "section13": {
+        "title": "13. Wijzigingen in dit beleid",
+        "content": "We communiceren belangrijke wijzigingen via e-mail (indien van toepassing), een melding op de site en update van de datum."
+      },
+      "section14": {
+        "title": "14. Contact & klachten",
+        "getInTouch": "Neem contact op",
+        "emailLabel": "E-mail",
+        "useForm": "Of gebruik het",
+        "contactForm": "contactformulier",
+        "notSatisfied": "Niet tevreden? Dien een klacht in bij de Autoriteit Persoonsgegevens via"
+      },
+      "footer": {
+        "questions": "Vragen? Neem contact op",
+        "termsLink": "Algemene Voorwaarden"
+      }
+    },
+    "terms": {
+      "title": "Algemene Voorwaarden",
+      "description": "Deze voorwaarden zijn van toepassing op het gebruik van de TutusPorta accessibility-scanning service.",
+      "lastUpdated": "8 december 2024",
+      "version": "v1.1",
+      "summary": {
+        "title": "Samenvatting (niet juridisch bindend)",
+        "description": "In gewone taal — lees ook de volledige voorwaarden hieronder.",
+        "mayTitle": "✅ Wat je mag doen",
+        "mayItems": [
+          "Je eigen sites scannen (of met toestemming van eigenaar)",
+          "Rapporten delen met je team/klanten",
+          "Abonnement op elk moment opzeggen",
+          "Contact opnemen met support voor vragen"
+        ],
+        "notAllowedTitle": "❌ Niet toegestaan",
+        "notAllowedItems": [
+          "Scannen zonder toestemming van de eigenaar",
+          "Misbruik/rate-limits omzeilen of reverse-engineeren",
+          "Onrechtmatig of schadelijk gebruik (bv. scraping van persoonsgegevens)"
+        ],
+        "byUsing": "Door TutusPorta te gebruiken ga je akkoord met deze voorwaarden."
+      }
+    },
+    "security": {
+      "title": "Beveiliging & Privacy",
+      "description": "Hoe we je gegevens beschermen en onze beveiligingsmaatregelen.",
+      "lastUpdated": "8 december 2024",
+      "version": "v1.0",
+      "guarantees": {
+        "title": "Beveiligingsgaranties",
+        "description": "Onze toezeggingen voor je gegevens",
+        "encryption": "Versleuteling",
+        "encryptionDesc": "Industriestandaard versleuteling voor data at rest en in transit",
+        "storage": "Veilige Opslag",
+        "storageDesc": "Versleutelde databases met beperkte toegangscontroles",
+        "incident": "Incident Response",
+        "incidentDesc": "Notificatie binnen 72 uur bij security incidents"
+      }
+    },
+    "sla": {
+      "title": "SLA & Ondersteuning",
+      "description": "Onze service level overeenkomst en support informatie voor alle TutusPorta gebruikers.",
+      "lastUpdated": "8 december 2024",
+      "version": "v1.0",
+      "keyPoints": {
+        "title": "Belangrijkste punten",
+        "description": "Onze toezeggingen aan jou",
+        "uptime": "Uptime",
+        "uptimeDesc": "99.9% uptime garantie op alle betaalde plannen",
+        "support": "Support",
+        "supportDesc": "Reactie binnen 4 uur voor Business plan gebruikers",
+        "monitoring": "24/7 Monitoring",
+        "monitoringDesc": "Continue monitoring met directe incident response"
+      }
+    }
   }
 }

@@ -335,30 +335,92 @@
     }
   },
   "auth": {
+    "loading": "Chargement...",
     "login": {
       "title": "Bon retour",
-      "subtitle": "Connectez-vous à votre compte",
-      "email": "Email",
-      "password": "Mot de passe",
-      "forgot": "Mot de passe oublié?",
-      "submit": "Se connecter",
-      "noAccount": "Pas encore de compte?",
-      "signUp": "S'inscrire"
+      "subtitle": "Connectez-vous à votre compte pour continuer",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "vous@exemple.fr",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe",
+      "signInButton": "Se connecter",
+      "signingIn": "Connexion en cours...",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUp": "S'inscrire",
+      "or": "Ou continuer avec",
+      "errors": {
+        "emailRequired": "Veuillez entrer votre e-mail et votre mot de passe",
+        "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+        "oauthError": "Une erreur s'est produite lors de la connexion avec votre compte social.",
+        "sessionError": "Impossible de créer une session. Veuillez réessayer.",
+        "unexpectedError": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+        "genericError": "Une erreur s'est produite lors de la connexion."
+      },
+      "features": {
+        "secure": "Authentification sécurisée",
+        "fast": "Analyses ultra-rapides",
+        "support": "Support 24/7 disponible"
+      }
     },
     "register": {
-      "title": "Créez votre compte",
-      "subtitle": "Commencez à analyser gratuitement",
-      "name": "Nom complet",
-      "email": "Email",
-      "password": "Mot de passe",
-      "confirm": "Confirmer le mot de passe",
-      "terms": "J'accepte les",
+      "title": "Créer votre compte",
+      "subtitle": "Commencez à scanner les problèmes d'accessibilité aujourd'hui",
+      "nameLabel": "Nom complet",
+      "namePlaceholder": "Jean Dupont",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "vous@exemple.fr",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "Au moins 8 caractères",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Ressaisissez votre mot de passe",
+      "createAccountButton": "Créer un compte",
+      "creatingAccount": "Création du compte...",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "signIn": "Se connecter",
+      "or": "Ou continuer avec",
+      "terms": "En créant un compte, vous acceptez nos",
       "termsLink": "Conditions d'Utilisation",
-      "and": "et la",
+      "and": "et",
       "privacyLink": "Politique de Confidentialité",
-      "submit": "Créer un compte",
-      "hasAccount": "Vous avez déjà un compte?",
-      "signIn": "Se connecter"
+      "errors": {
+        "allFieldsRequired": "Veuillez remplir tous les champs",
+        "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+        "passwordLength": "Le mot de passe doit contenir au moins 8 caractères",
+        "passwordsMatch": "Les mots de passe doivent correspondre"
+      }
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser votre mot de passe",
+      "subtitle": "Entrez votre e-mail et nous vous enverrons un lien de réinitialisation",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "vous@exemple.fr",
+      "sendButton": "Envoyer le lien",
+      "sending": "Envoi en cours...",
+      "backToLogin": "Retour à la connexion",
+      "success": "Vérifiez votre e-mail pour un lien de réinitialisation !",
+      "errors": {
+        "emailRequired": "Veuillez entrer votre e-mail",
+        "invalidEmail": "Veuillez entrer une adresse e-mail valide"
+      }
+    },
+    "resetPassword": {
+      "title": "Définir un nouveau mot de passe",
+      "subtitle": "Entrez votre nouveau mot de passe ci-dessous",
+      "passwordLabel": "Nouveau mot de passe",
+      "passwordPlaceholder": "Au moins 8 caractères",
+      "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+      "confirmPasswordPlaceholder": "Ressaisissez votre mot de passe",
+      "resetButton": "Réinitialiser le mot de passe",
+      "resetting": "Réinitialisation...",
+      "success": "Mot de passe réinitialisé avec succès !",
+      "errors": {
+        "allFieldsRequired": "Veuillez remplir tous les champs",
+        "passwordLength": "Le mot de passe doit contenir au moins 8 caractères",
+        "passwordsMatch": "Les mots de passe doivent correspondre"
+      }
     }
   },
   "cookie": {
@@ -389,6 +451,396 @@
     "copied": "Copié!",
     "viewMore": "Voir plus",
     "viewLess": "Voir moins",
-    "learnMore": "En savoir plus"
+    "learnMore": "En savoir plus",
+    "issues": "problèmes"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Surveillez vos analyses d'accessibilité et améliorations de site web",
+    "newScan": {
+      "title": "Nouvelle Analyse d'Accessibilité",
+      "description": "Entrez une URL pour une analyse d'accessibilité complète à 100% avec 8 catégories supplémentaires"
+    },
+    "tabs": {
+      "overview": "Aperçu",
+      "analytics": "Analytique",
+      "monitoring": "Surveillance",
+      "teams": "Équipes",
+      "reports": "Rapports",
+      "tools": "Outils",
+      "whiteLabel": "Marque Blanche"
+    },
+    "stats": {
+      "title": "Aperçu Rapide",
+      "description": "Vos métriques d'accessibilité en un coup d'œil",
+      "averageScore": "Score Moyen",
+      "totalIssues": "Total des Problèmes",
+      "critical": "Critique",
+      "serious": "Sérieux",
+      "moderate": "Modéré",
+      "minor": "Mineur"
+    },
+    "teams": {
+      "title": "Collaboration d'Équipe",
+      "description": "Collaborez avec votre équipe sur les projets d'accessibilité et partagez des insights",
+      "available": "Fonctionnalités d'Équipe Disponibles",
+      "availableDescription": "Invitez des membres d'équipe, attribuez des rôles, suivez les problèmes et collaborez sur les améliorations d'accessibilité.",
+      "goToTeams": "Aller aux Équipes",
+      "roleBasedAccess": {
+        "title": "Accès Basé sur les Rôles",
+        "description": "Permissions Admin, Éditeur, Lecteur"
+      },
+      "issueTracking": {
+        "title": "Suivi des Problèmes",
+        "description": "Attribuez et suivez les problèmes d'accessibilité"
+      },
+      "sharedWorkspaces": {
+        "title": "Espaces de Travail Partagés",
+        "description": "Collaborez sur plusieurs sites"
+      }
+    },
+    "analytics": {
+      "issuesByImpact": {
+        "title": "Problèmes par Niveau d'Impact",
+        "description": "Distribution des problèmes d'accessibilité par niveaux de gravité"
+      },
+      "trendAnalysis": {
+        "title": "Analyse de Tendance",
+        "description": "Suivez vos améliorations d'accessibilité au fil du temps",
+        "noData": "Effectuez plus d'analyses pour voir les tendances"
+      }
+    },
+    "monitoring": {
+      "title": "Surveillance Continue",
+      "description": "Suivez les changements d'accessibilité et soyez notifié des régressions",
+      "comingSoon": "Surveillance Bientôt Disponible",
+      "comingSoonDescription": "La surveillance automatisée suivra vos sites web et vous alertera lorsque les scores d'accessibilité baissent ou que de nouveaux problèmes sont détectés.",
+      "configureNotifications": "Configurer les Notifications",
+      "upgradePlan": "Mettre à Niveau le Plan",
+      "scheduledScans": {
+        "title": "Analyses Programmées",
+        "description": "Analysez automatiquement vos sites quotidiennement, hebdomadairement ou mensuellement"
+      },
+      "instantAlerts": {
+        "title": "Alertes Instantanées",
+        "description": "Recevez des notifications par e-mail lorsque les scores baissent ou que les problèmes augmentent"
+      },
+      "trendTracking": {
+        "title": "Suivi des Tendances",
+        "description": "Consultez les données historiques et suivez les améliorations au fil du temps"
+      }
+    },
+    "reports": {
+      "title": "Rapports d'Analyse",
+      "description": "Téléchargez des rapports d'accessibilité détaillés pour vos analyses",
+      "noReports": "Aucun Rapport Disponible",
+      "noReportsDescription": "Effectuez votre première analyse d'accessibilité pour générer des rapports téléchargeables.",
+      "selectScan": "Sélectionnez une analyse pour télécharger son rapport d'accessibilité détaillé :"
+    },
+    "tools": {
+      "title": "Ressources d'Accessibilité",
+      "description": "Outils et guides pour améliorer l'accessibilité de votre site web",
+      "wcagGuidelines": {
+        "title": "Directives WCAG",
+        "description": "Découvrez les exigences de conformité WCAG 2.1 AA"
+      },
+      "quickFixes": {
+        "title": "Corrections Rapides",
+        "description": "Problèmes d'accessibilité courants et comment les résoudre"
+      }
+    },
+    "whiteLabel": {
+      "title": "Gestion de Marque Blanche",
+      "description": "Personnalisez l'apparence de votre marque, logo, couleurs et informations de contact pour votre plan Business.",
+      "fullSettings": "Paramètres Complets",
+      "fullSettingsDescription": "Configuration complète de marque blanche",
+      "fullSettingsDetails": "Logo, couleurs, infos de contact, paramètres de domaine",
+      "livePreview": "Aperçu en Direct",
+      "livePreviewDescription": "Voyez vos personnalisations",
+      "livePreviewDetails": "Votre site affiche déjà votre branding !",
+      "customReports": "Rapports Personnalisés",
+      "customReportsDescription": "Exports PDF personnalisés",
+      "customReportsDetails": "Disponible - Générez des rapports avec votre branding",
+      "featuresTitle": "Vos Fonctionnalités de Marque Blanche",
+      "features": {
+        "logo": "Logo et favicon personnalisés de l'entreprise",
+        "colors": "Couleurs de marque (primaire, secondaire, accent)",
+        "contact": "Informations de contact personnalisées",
+        "removeBranding": "Supprimer \"Propulsé par TutusPorta\"",
+        "footerText": "Texte de pied de page personnalisé",
+        "subdomain": "Sous-domaine (votreentreprise.tutusporta.com)",
+        "customDomain": "Domaine personnalisé (contacter le support)",
+        "brandedReports": "Rapports PDF personnalisés"
+      },
+      "customize": "Personnalisez Votre Marque"
+    },
+    "recentScans": {
+      "title": "Analyses Récentes",
+      "description": "Vos dernières analyses d'accessibilité et leurs résultats",
+      "empty": "Aucune analyse pour l'instant",
+      "emptyDescription": "Commencez par analyser votre premier site web pour détecter les problèmes d'accessibilité.",
+      "tableHeaders": {
+        "site": "Site",
+        "url": "URL",
+        "score": "Score",
+        "status": "Statut",
+        "issues": "Problèmes",
+        "date": "Date"
+      }
+    },
+    "status": {
+      "done": "terminé",
+      "running": "en cours",
+      "failed": "échoué",
+      "queued": "en file d'attente"
+    }
+  },
+  "legal": {
+    "common": {
+      "skipToContent": "Aller au contenu principal",
+      "backToHome": "Retour à l'accueil",
+      "lastUpdated": "Dernière mise à jour",
+      "onThisPage": "Sur cette page",
+      "quickNavigation": "Navigation rapide vers les sections",
+      "needHelp": "Besoin d'aide?",
+      "responseTime": "Nous répondons généralement sous 1 jour ouvrable",
+      "contactUs": "Nous contacter"
+    },
+    "privacy": {
+      "title": "Politique de Confidentialité",
+      "metaDescription": "Lisez notre politique de confidentialité: comment TutusPorta gère vos données, cookies et vie privée. Conforme RGPD.",
+      "description": "Comment TutusPorta traite vos données personnelles et protège votre vie privée.",
+      "lastUpdated": "8 décembre 2024",
+      "version": "v1.2",
+      "summary": {
+        "title": "Confidentialité en un coup d'œil",
+        "description": "Les points les plus importants en un seul aperçu.",
+        "doTitle": "✅ Ce que nous faisons",
+        "doItems": [
+          "Scannons uniquement les pages publiquement accessibles",
+          "Stockons les données en toute sécurité dans l'UE",
+          "Minimisation des données & transparence",
+          "Droits et paramètres clairs"
+        ],
+        "dontTitle": "❌ Ce que nous ne faisons PAS",
+        "dontItems": [
+          "Stocker les données personnelles du contenu des pages",
+          "Vendre des données à des tiers",
+          "Cookies non essentiels sans consentement",
+          "Transferts non sécurisés hors de l'UE"
+        ]
+      },
+      "section1": {
+        "title": "1. Qui nous sommes",
+        "content": "TutusPorta est un service de scan d'accessibilité développé aux Pays-Bas. Nous aidons les propriétaires de sites web à rendre leurs sites plus accessibles en testant la conformité WCAG.",
+        "contactTitle": "Coordonnées (responsable du traitement)",
+        "companyName": "Nom de l'entreprise",
+        "companyValue": "VexNexa B.V. (TutusPorta fait partie de VexNexa)",
+        "address": "Adresse",
+        "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
+        "kvk": "Chambre de Commerce",
+        "vat": "TVA",
+        "email": "E-mail",
+        "website": "Site web"
+      },
+      "section2": {
+        "title": "2. Quelles données nous collectons",
+        "scanDataTitle": "Données de scan",
+        "scanDataItems": [
+          "URL de la page scannée",
+          "Métadonnées techniques sur les problèmes d'accessibilité",
+          "Horodatages de scan",
+          "Adresse IP pour la limitation de débit et la prévention des abus"
+        ],
+        "important": "Important",
+        "importantNote": "nous ne stockons pas les données personnelles du contenu des pages (comme les noms, e-mails, numéros de téléphone); nous analysons uniquement la structure HTML et l'accessibilité.",
+        "accountTitle": "Données de compte (optionnel)",
+        "accountItems": [
+          "Adresse e-mail",
+          "Nom (si fourni)",
+          "Mot de passe haché",
+          "Préférences du compte"
+        ],
+        "contactTitle": "Contact",
+        "contactItems": [
+          "Nom et adresse e-mail",
+          "Contenu du message",
+          "Horodatage de soumission"
+        ]
+      },
+      "section3": {
+        "title": "3. Base juridique (Art. 6 RGPD)",
+        "items": [
+          "Exécution du contrat – scans, résultats, gestion de compte.",
+          "Intérêt légitime – sécurité (limitation de débit, détection d'abus), améliorations de base.",
+          "Consentement – cookies analytics/marketing et toute communication opt-in.",
+          "Obligation légale – exigences de conservation et demandes des autorités."
+        ]
+      },
+      "section4": {
+        "title": "4. Cookies et suivi",
+        "functionalTitle": "Cookies fonctionnels (nécessaires)",
+        "functionalItems": [
+          "Session pour les utilisateurs connectés",
+          "Préférences (langue, thème)",
+          "Statut du consentement aux cookies"
+        ],
+        "analyticsTitle": "Cookies analytics (optionnel)",
+        "analyticsIntro": "Avec consentement, nous pouvons utiliser des analytics respectueuses de la vie privée (par ex., Vercel Analytics ou alternative). Nous mesurons des statistiques agrégées, pas des profils individuels.",
+        "analyticsItems": [
+          "Statistiques de visiteurs (agrégées/anonymes)",
+          "Pages et fonctionnalités populaires",
+          "Performances techniques"
+        ],
+        "manageText": "Vous pouvez gérer le consentement via les",
+        "cookieSettings": "paramètres des cookies",
+        "utmTitle": "Paramètres UTM",
+        "utmText": "Nous pouvons stocker temporairement des paramètres UTM pour comprendre l'origine. Ceux-ci ne contiennent pas de données personnelles."
+      },
+      "section5": {
+        "title": "5. Comment et pourquoi nous utilisons les données",
+        "items": [
+          "Effectuer des scans et afficher les résultats",
+          "Gestion de compte et connexion",
+          "Service client et support",
+          "Amélioration du service (avec consentement pour analytics)",
+          "Conformité aux lois et réglementations"
+        ],
+        "noSelling": "Nous ne vendons ni ne louons vos données à des tiers à des fins marketing."
+      },
+      "section6": {
+        "title": "6. Destinataires et sous-traitants",
+        "intro": "Nous ne partageons des données qu'avec des prestataires de services qui traitent en notre nom dans le cadre d'un accord de traitement des données."
+      },
+      "section7": {
+        "title": "7. Transferts hors UE/EEE",
+        "content": "Si des transferts hors de l'UE ont lieu (par ex., routage edge ou journaux de support), nous utilisons des garanties appropriées telles que les Clauses Contractuelles Types de l'UE et des mesures supplémentaires."
+      },
+      "section8": {
+        "title": "8. Stockage des données, sécurité & conservation",
+        "storageTitle": "Lieux de stockage",
+        "storageItems": [
+          "Base de données/calcul dans des centres de données UE",
+          "Sauvegardes en Europe"
+        ],
+        "securityTitle": "Mesures de sécurité",
+        "securityItems": [
+          "TLS/HTTPS de bout en bout",
+          "Mots de passe hachés",
+          "Contrôle d'accès à moindre privilège & monitoring",
+          "Mises à jour/correctifs réguliers",
+          "Minimisation des données"
+        ],
+        "retentionTitle": "Périodes de conservation",
+        "retentionItems": [
+          "Données de scan: 1 an (Gratuit); plus longtemps pour les comptes payants (configurable dans votre compte)",
+          "Données de compte: jusqu'à suppression du compte ou tant que légalement requis",
+          "Messages de contact: jusqu'à 2 ans",
+          "Analytics: jusqu'à 24 mois (agrégées/anonymisées si possible)"
+        ],
+        "retentionNote": "Nous supprimons ou anonymisons plus tôt lorsque les données ne sont plus nécessaires, sauf si la conservation est légalement requise."
+      },
+      "section9": {
+        "title": "9. Vos droits (RGPD)",
+        "accessTitle": "🔍 Droit d'accès",
+        "accessDesc": "Demander quelles données nous avons sur vous.",
+        "rectificationTitle": "✏️ Rectification",
+        "rectificationDesc": "Faire corriger les données incorrectes.",
+        "erasureTitle": "🗑️ Effacement",
+        "erasureDesc": "Faire supprimer les données.",
+        "restrictionTitle": "⏸️ Limitation",
+        "restrictionDesc": "Limiter le traitement (temporairement).",
+        "portabilityTitle": "📦 Portabilité des données",
+        "portabilityDesc": "Recevoir les données dans un format courant.",
+        "objectionTitle": "❌ Opposition",
+        "objectionDesc": "S'opposer au traitement basé sur l'intérêt légitime.",
+        "exerciseText": "Pour exercer vos droits? E-mail",
+        "responseText": "Nous répondons sous 30 jours."
+      },
+      "section10": {
+        "title": "10. Enfants",
+        "content": "Non destiné aux enfants de moins de 16 ans. Contactez-nous si des données ont été collectées; nous les supprimerons."
+      },
+      "section11": {
+        "title": "11. Violations de données",
+        "content": "Nous enquêtons immédiatement sur l'impact, limitons les risques et signalons si requis à l'autorité néerlandaise de protection des données et aux personnes concernées."
+      },
+      "section12": {
+        "title": "12. Prise de décision automatisée",
+        "content": "Nous ne prenons pas de décisions basées uniquement sur un traitement automatisé ayant des effets juridiques pour vous."
+      },
+      "section13": {
+        "title": "13. Modifications de cette politique",
+        "content": "Nous communiquons les modifications importantes par e-mail (le cas échéant), une notification sur le site et mise à jour de la date."
+      },
+      "section14": {
+        "title": "14. Contact & réclamations",
+        "getInTouch": "Nous contacter",
+        "emailLabel": "E-mail",
+        "useForm": "Ou utilisez le",
+        "contactForm": "formulaire de contact",
+        "notSatisfied": "Pas satisfait? Déposez une plainte auprès de l'autorité néerlandaise de protection des données via"
+      },
+      "footer": {
+        "questions": "Des questions? Contactez-nous",
+        "termsLink": "Conditions d'Utilisation"
+      }
+    },
+    "terms": {
+      "title": "Conditions d'Utilisation",
+      "description": "Ces conditions s'appliquent à l'utilisation du service de scan d'accessibilité TutusPorta.",
+      "lastUpdated": "8 décembre 2024",
+      "version": "v1.1",
+      "summary": {
+        "title": "Résumé (non juridiquement contraignant)",
+        "description": "En langage simple — lisez aussi les conditions complètes ci-dessous.",
+        "mayTitle": "✅ Ce que vous pouvez faire",
+        "mayItems": [
+          "Scanner vos propres sites (ou avec permission du propriétaire)",
+          "Partager des rapports avec votre équipe/clients",
+          "Annuler l'abonnement quand vous voulez",
+          "Contacter le support pour des questions"
+        ],
+        "notAllowedTitle": "❌ Non autorisé",
+        "notAllowedItems": [
+          "Scanner sans permission du propriétaire",
+          "Abus/contournement des limites de débit ou rétro-ingénierie",
+          "Utilisation illégale ou nuisible (par ex., scraping de données personnelles)"
+        ],
+        "byUsing": "En utilisant TutusPorta, vous acceptez ces conditions."
+      }
+    },
+    "security": {
+      "title": "Sécurité & Confidentialité",
+      "description": "Comment nous protégeons vos données et nos mesures de sécurité.",
+      "lastUpdated": "8 décembre 2024",
+      "version": "v1.0",
+      "guarantees": {
+        "title": "Garanties de Sécurité",
+        "description": "Nos engagements pour vos données",
+        "encryption": "Chiffrement",
+        "encryptionDesc": "Chiffrement standard de l'industrie pour les données au repos et en transit",
+        "storage": "Stockage Sécurisé",
+        "storageDesc": "Bases de données chiffrées avec contrôles d'accès restreints",
+        "incident": "Réponse aux Incidents",
+        "incidentDesc": "Notification sous 72 heures pour les incidents de sécurité"
+      }
+    },
+    "sla": {
+      "title": "SLA & Support",
+      "description": "Notre accord de niveau de service et informations de support pour tous les utilisateurs TutusPorta.",
+      "lastUpdated": "8 décembre 2024",
+      "version": "v1.0",
+      "keyPoints": {
+        "title": "Points Clés",
+        "description": "Nos engagements envers vous",
+        "uptime": "Uptime",
+        "uptimeDesc": "Garantie de disponibilité de 99,9% sur tous les plans payants",
+        "support": "Support",
+        "supportDesc": "Réponse sous 4 heures pour les utilisateurs du plan Business",
+        "monitoring": "Surveillance 24/7",
+        "monitoringDesc": "Surveillance continue avec réponse immédiate aux incidents"
+      }
+    }
   }
 }

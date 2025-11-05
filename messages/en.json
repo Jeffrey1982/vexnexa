@@ -335,30 +335,92 @@
     }
   },
   "auth": {
+    "loading": "Loading...",
     "login": {
       "title": "Welcome back",
-      "subtitle": "Sign in to your account",
-      "email": "Email",
-      "password": "Password",
-      "forgot": "Forgot password?",
-      "submit": "Sign in",
+      "subtitle": "Sign in to your account to continue",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "signInButton": "Sign in",
+      "signingIn": "Signing in...",
+      "forgotPassword": "Forgot password?",
       "noAccount": "Don't have an account?",
-      "signUp": "Sign up"
+      "signUp": "Sign up",
+      "or": "Or continue with",
+      "errors": {
+        "emailRequired": "Please enter both email and password",
+        "invalidEmail": "Please enter a valid email address",
+        "oauthError": "An error occurred while signing in with your social account.",
+        "sessionError": "Could not create session. Please try again.",
+        "unexpectedError": "An unexpected error occurred. Please try again later.",
+        "genericError": "An error occurred while signing in."
+      },
+      "features": {
+        "secure": "Secure authentication",
+        "fast": "Lightning fast scans",
+        "support": "24/7 support available"
+      }
     },
     "register": {
       "title": "Create your account",
-      "subtitle": "Start scanning for free",
-      "name": "Full name",
-      "email": "Email",
-      "password": "Password",
-      "confirm": "Confirm password",
-      "terms": "I agree to the",
+      "subtitle": "Start scanning for accessibility issues today",
+      "nameLabel": "Full name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "At least 8 characters",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Re-enter your password",
+      "createAccountButton": "Create account",
+      "creatingAccount": "Creating account...",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "or": "Or continue with",
+      "terms": "By creating an account, you agree to our",
       "termsLink": "Terms of Service",
       "and": "and",
       "privacyLink": "Privacy Policy",
-      "submit": "Create account",
-      "hasAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "errors": {
+        "allFieldsRequired": "Please fill in all fields",
+        "invalidEmail": "Please enter a valid email address",
+        "passwordLength": "Password must be at least 8 characters",
+        "passwordsMatch": "Passwords must match"
+      }
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a reset link",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "sendButton": "Send reset link",
+      "sending": "Sending...",
+      "backToLogin": "Back to login",
+      "success": "Check your email for a reset link!",
+      "errors": {
+        "emailRequired": "Please enter your email",
+        "invalidEmail": "Please enter a valid email address"
+      }
+    },
+    "resetPassword": {
+      "title": "Set new password",
+      "subtitle": "Enter your new password below",
+      "passwordLabel": "New password",
+      "passwordPlaceholder": "At least 8 characters",
+      "confirmPasswordLabel": "Confirm new password",
+      "confirmPasswordPlaceholder": "Re-enter your password",
+      "resetButton": "Reset password",
+      "resetting": "Resetting...",
+      "success": "Password reset successfully!",
+      "errors": {
+        "allFieldsRequired": "Please fill in all fields",
+        "passwordLength": "Password must be at least 8 characters",
+        "passwordsMatch": "Passwords must match"
+      }
     }
   },
   "cookie": {
@@ -389,6 +451,396 @@
     "copied": "Copied!",
     "viewMore": "View more",
     "viewLess": "View less",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "issues": "issues"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Monitor your website accessibility scans and improvements",
+    "newScan": {
+      "title": "New Accessibility Scan",
+      "description": "Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "analytics": "Analytics",
+      "monitoring": "Monitoring",
+      "teams": "Teams",
+      "reports": "Reports",
+      "tools": "Tools",
+      "whiteLabel": "White Label"
+    },
+    "stats": {
+      "title": "Quick Overview",
+      "description": "Your accessibility metrics at a glance",
+      "averageScore": "Average Score",
+      "totalIssues": "Total Issues",
+      "critical": "Critical",
+      "serious": "Serious",
+      "moderate": "Moderate",
+      "minor": "Minor"
+    },
+    "teams": {
+      "title": "Team Collaboration",
+      "description": "Collaborate with your team on accessibility projects and share insights",
+      "available": "Team Features Available",
+      "availableDescription": "Invite team members, assign roles, track issues, and collaborate on accessibility improvements.",
+      "goToTeams": "Go to Teams",
+      "roleBasedAccess": {
+        "title": "Role-Based Access",
+        "description": "Admin, Editor, Viewer permissions"
+      },
+      "issueTracking": {
+        "title": "Issue Tracking",
+        "description": "Assign and track accessibility issues"
+      },
+      "sharedWorkspaces": {
+        "title": "Shared Workspaces",
+        "description": "Collaborate on multiple sites"
+      }
+    },
+    "analytics": {
+      "issuesByImpact": {
+        "title": "Issues by Impact Level",
+        "description": "Distribution of accessibility issues across severity levels"
+      },
+      "trendAnalysis": {
+        "title": "Trend Analysis",
+        "description": "Track your accessibility improvements over time",
+        "noData": "Run more scans to see trends"
+      }
+    },
+    "monitoring": {
+      "title": "Continuous Monitoring",
+      "description": "Track accessibility changes and get notified of regressions",
+      "comingSoon": "Monitoring Coming Soon",
+      "comingSoonDescription": "Automated monitoring will track your websites and alert you when accessibility scores drop or new issues are detected.",
+      "configureNotifications": "Configure Notifications",
+      "upgradePlan": "Upgrade Plan",
+      "scheduledScans": {
+        "title": "Scheduled Scans",
+        "description": "Automatically scan your sites daily, weekly, or monthly"
+      },
+      "instantAlerts": {
+        "title": "Instant Alerts",
+        "description": "Get email notifications when scores drop or issues increase"
+      },
+      "trendTracking": {
+        "title": "Trend Tracking",
+        "description": "View historical data and track improvements over time"
+      }
+    },
+    "reports": {
+      "title": "Scan Reports",
+      "description": "Download detailed accessibility reports for your scans",
+      "noReports": "No Reports Available",
+      "noReportsDescription": "Run your first accessibility scan to generate downloadable reports.",
+      "selectScan": "Select a scan to download its detailed accessibility report:"
+    },
+    "tools": {
+      "title": "Accessibility Resources",
+      "description": "Tools and guides to help improve your website accessibility",
+      "wcagGuidelines": {
+        "title": "WCAG Guidelines",
+        "description": "Learn about WCAG 2.1 AA compliance requirements"
+      },
+      "quickFixes": {
+        "title": "Quick Fixes",
+        "description": "Common accessibility issues and how to fix them"
+      }
+    },
+    "whiteLabel": {
+      "title": "White Label Management",
+      "description": "Customize your brand appearance, logo, colors, and contact information for your Business plan.",
+      "fullSettings": "Full Settings",
+      "fullSettingsDescription": "Complete white-label configuration",
+      "fullSettingsDetails": "Logo, colors, contact info, domain settings",
+      "livePreview": "Live Preview",
+      "livePreviewDescription": "See your customizations",
+      "livePreviewDetails": "Your site already shows your branding!",
+      "customReports": "Custom Reports",
+      "customReportsDescription": "Branded PDF exports",
+      "customReportsDetails": "Available - Generate reports with your branding",
+      "featuresTitle": "Your White Label Features",
+      "features": {
+        "logo": "Custom company logo & favicon",
+        "colors": "Brand colors (primary, secondary, accent)",
+        "contact": "Custom contact information",
+        "removeBranding": "Remove \"Powered by TutusPorta\"",
+        "footerText": "Custom footer text",
+        "subdomain": "Subdomain (yourcompany.tutusporta.com)",
+        "customDomain": "Custom domain (contact support)",
+        "brandedReports": "Branded PDF reports"
+      },
+      "customize": "Customize Your Brand"
+    },
+    "recentScans": {
+      "title": "Recent Scans",
+      "description": "Your latest accessibility scans and their results",
+      "empty": "No scans yet",
+      "emptyDescription": "Get started by scanning your first website for accessibility issues.",
+      "tableHeaders": {
+        "site": "Site",
+        "url": "URL",
+        "score": "Score",
+        "status": "Status",
+        "issues": "Issues",
+        "date": "Date"
+      }
+    },
+    "status": {
+      "done": "done",
+      "running": "running",
+      "failed": "failed",
+      "queued": "queued"
+    }
+  },
+  "legal": {
+    "common": {
+      "skipToContent": "Skip to main content",
+      "backToHome": "Back to homepage",
+      "lastUpdated": "Last updated",
+      "onThisPage": "On this page",
+      "quickNavigation": "Quick navigation to sections",
+      "needHelp": "Need help?",
+      "responseTime": "We typically respond within 1 business day",
+      "contactUs": "Contact us"
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "metaDescription": "Read our privacy policy: how TutusPorta handles your data, cookies and privacy. GDPR compliant.",
+      "description": "How TutusPorta handles your personal data and protects your privacy.",
+      "lastUpdated": "December 8, 2024",
+      "version": "v1.2",
+      "summary": {
+        "title": "Privacy at a glance",
+        "description": "The most important points in one overview.",
+        "doTitle": "✅ What we DO",
+        "doItems": [
+          "Only scan publicly accessible pages",
+          "Store data securely in the EU",
+          "Data minimization & transparency",
+          "Clear rights and settings"
+        ],
+        "dontTitle": "❌ What we DON'T do",
+        "dontItems": [
+          "Store personal data from page content",
+          "Sell data to third parties",
+          "Non-essential cookies without consent",
+          "Unsecured transfers outside the EU"
+        ]
+      },
+      "section1": {
+        "title": "1. Who we are",
+        "content": "TutusPorta is an accessibility-scanning service developed in the Netherlands. We help website owners make their sites more accessible by testing WCAG compliance.",
+        "contactTitle": "Contact details (data controller)",
+        "companyName": "Company name",
+        "companyValue": "VexNexa B.V. (TutusPorta is part of VexNexa)",
+        "address": "Address",
+        "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
+        "kvk": "Chamber of Commerce",
+        "vat": "VAT",
+        "email": "Email",
+        "website": "Website"
+      },
+      "section2": {
+        "title": "2. What data we collect",
+        "scanDataTitle": "Scan data",
+        "scanDataItems": [
+          "URL of the scanned page",
+          "Technical metadata about accessibility issues",
+          "Scan timestamps",
+          "IP address for rate-limiting and abuse prevention"
+        ],
+        "important": "Important",
+        "importantNote": "we do not store personal data from page content (such as names, emails, phone numbers); we only analyze HTML structure and accessibility.",
+        "accountTitle": "Account data (optional)",
+        "accountItems": [
+          "Email address",
+          "Name (if provided)",
+          "Hashed password",
+          "Account preferences"
+        ],
+        "contactTitle": "Contact",
+        "contactItems": [
+          "Name and email address",
+          "Message content",
+          "Submission timestamp"
+        ]
+      },
+      "section3": {
+        "title": "3. Legal basis (Art. 6 GDPR)",
+        "items": [
+          "Performance of contract – scans, results, account management.",
+          "Legitimate interest – security (rate-limiting, abuse detection), basic improvements.",
+          "Consent – analytics/marketing cookies and any opt-in communication.",
+          "Legal obligation – retention requirements and requests from authorities."
+        ]
+      },
+      "section4": {
+        "title": "4. Cookies and tracking",
+        "functionalTitle": "Functional cookies (necessary)",
+        "functionalItems": [
+          "Session for logged-in users",
+          "Preferences (language, theme)",
+          "Cookie consent status"
+        ],
+        "analyticsTitle": "Analytics cookies (optional)",
+        "analyticsIntro": "With consent, we may use privacy-friendly analytics (e.g., Vercel Analytics or alternative). We measure aggregated statistics, not individual profiles.",
+        "analyticsItems": [
+          "Visitor statistics (aggregated/anonymous)",
+          "Popular pages and features",
+          "Technical performance"
+        ],
+        "manageText": "You can manage consent through the",
+        "cookieSettings": "cookie settings",
+        "utmTitle": "UTM parameters",
+        "utmText": "We may temporarily store UTM parameters to understand origin. These contain no personal data."
+      },
+      "section5": {
+        "title": "5. How and why we use data",
+        "items": [
+          "Performing scans and displaying results",
+          "Account management and login",
+          "Customer service and support",
+          "Service improvement (with consent for analytics)",
+          "Compliance with laws and regulations"
+        ],
+        "noSelling": "We do not sell or rent your data to third parties for marketing purposes."
+      },
+      "section6": {
+        "title": "6. Recipients and processors",
+        "intro": "We only share data with service providers who process on our behalf under a data processing agreement."
+      },
+      "section7": {
+        "title": "7. Transfers outside EU/EEA",
+        "content": "If transfers outside the EU take place (e.g., edge-routing or support logs), we use appropriate safeguards such as EU Standard Contractual Clauses and additional measures."
+      },
+      "section8": {
+        "title": "8. Data storage, security & retention",
+        "storageTitle": "Storage locations",
+        "storageItems": [
+          "Database/compute in EU data centers",
+          "Backups within Europe"
+        ],
+        "securityTitle": "Security measures",
+        "securityItems": [
+          "TLS/HTTPS end-to-end",
+          "Hashed passwords",
+          "Least-privilege access control & monitoring",
+          "Regular patches/updates",
+          "Data minimization"
+        ],
+        "retentionTitle": "Retention periods",
+        "retentionItems": [
+          "Scan data: 1 year (Free); longer for paid accounts (configurable in your account)",
+          "Account data: until account deletion or as long as legally required",
+          "Contact messages: up to 2 years",
+          "Analytics: up to 24 months (aggregated/anonymized where possible)"
+        ],
+        "retentionNote": "We delete or anonymize earlier when data is no longer needed, unless retention is legally required."
+      },
+      "section9": {
+        "title": "9. Your rights (GDPR/AVG)",
+        "accessTitle": "🔍 Right of access",
+        "accessDesc": "Request what data we have about you.",
+        "rectificationTitle": "✏️ Rectification",
+        "rectificationDesc": "Have incorrect data corrected.",
+        "erasureTitle": "🗑️ Erasure",
+        "erasureDesc": "Have data deleted.",
+        "restrictionTitle": "⏸️ Restriction",
+        "restrictionDesc": "Restrict processing (temporarily).",
+        "portabilityTitle": "📦 Data portability",
+        "portabilityDesc": "Receive data in a common format.",
+        "objectionTitle": "❌ Objection",
+        "objectionDesc": "Object to processing based on legitimate interest.",
+        "exerciseText": "To exercise your rights? Email",
+        "responseText": "We respond within 30 days."
+      },
+      "section10": {
+        "title": "10. Children",
+        "content": "Not directed at children under 16 years. Contact us if data has been collected; we will delete it."
+      },
+      "section11": {
+        "title": "11. Data breaches",
+        "content": "We immediately investigate the impact, limit risks and report if required to the Dutch Data Protection Authority and affected parties."
+      },
+      "section12": {
+        "title": "12. Automated decision-making",
+        "content": "We do not make decisions based solely on automated processing with legal effects for you."
+      },
+      "section13": {
+        "title": "13. Changes to this policy",
+        "content": "We communicate significant changes via email (if applicable), a notification on the site and update of the date."
+      },
+      "section14": {
+        "title": "14. Contact & complaints",
+        "getInTouch": "Get in touch",
+        "emailLabel": "Email",
+        "useForm": "Or use the",
+        "contactForm": "contact form",
+        "notSatisfied": "Not satisfied? File a complaint with the Dutch Data Protection Authority via"
+      },
+      "footer": {
+        "questions": "Questions? Get in touch",
+        "termsLink": "Terms of Service"
+      }
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "description": "These terms apply to the use of the TutusPorta accessibility-scanning service.",
+      "lastUpdated": "December 8, 2024",
+      "version": "v1.1",
+      "summary": {
+        "title": "Summary (not legally binding)",
+        "description": "In plain language — also read the full terms below.",
+        "mayTitle": "✅ What you may do",
+        "mayItems": [
+          "Scan your own sites (or with owner permission)",
+          "Share reports with your team/clients",
+          "Cancel subscription whenever you want",
+          "Contact support for questions"
+        ],
+        "notAllowedTitle": "❌ Not allowed",
+        "notAllowedItems": [
+          "Scanning without owner permission",
+          "Abuse/bypassing rate-limits or reverse-engineering",
+          "Unlawful or harmful use (e.g., scraping personal data)"
+        ],
+        "byUsing": "By using TutusPorta you agree to these terms."
+      }
+    },
+    "security": {
+      "title": "Security & Privacy",
+      "description": "How we protect your data and our security measures.",
+      "lastUpdated": "December 8, 2024",
+      "version": "v1.0",
+      "guarantees": {
+        "title": "Security Guarantees",
+        "description": "Our commitments for your data",
+        "encryption": "Encryption",
+        "encryptionDesc": "Industry-standard encryption for data at rest and in transit",
+        "storage": "Secure Storage",
+        "storageDesc": "Encrypted databases with restricted access controls",
+        "incident": "Incident Response",
+        "incidentDesc": "Notification within 72 hours for security incidents"
+      }
+    },
+    "sla": {
+      "title": "SLA & Support",
+      "description": "Our service level agreement and support information for all TutusPorta users.",
+      "lastUpdated": "December 8, 2024",
+      "version": "v1.0",
+      "keyPoints": {
+        "title": "Key Points",
+        "description": "Our commitments to you",
+        "uptime": "Uptime",
+        "uptimeDesc": "99.9% uptime guarantee on all paid plans",
+        "support": "Support",
+        "supportDesc": "Response within 4 hours for Business plan users",
+        "monitoring": "24/7 Monitoring",
+        "monitoringDesc": "Continuous monitoring with immediate incident response"
+      }
+    }
   }
 }

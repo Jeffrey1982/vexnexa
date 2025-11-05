@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Shield, Mail, Calendar, Clock, Activity, ListTree } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
-  title: 'SLA & Support - TutusPorta',
+  title: 'SLA & {t('keyPoints.support')} - TutusPorta',
   description:
     'Service Level Agreement en support informatie van TutusPorta: uptime garanties, response times en support levels.',
   keywords: [
@@ -49,7 +50,10 @@ const sections = [
   { id: 'contact', label: 'Contact Support' },
 ]
 
-export default function SLAPage() {
+export default async function SLAPage() {
+  const t = await getTranslations('legal.sla');
+  const tc = await getTranslations('legal.common');
+
   return (
     <div className="container mx-auto px-4 py-12 sm:py-16">
       {/* Skip link */}
@@ -74,17 +78,17 @@ export default function SLAPage() {
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">SLA & Support</h1>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">{t('title')}</h1>
             <Badge variant="outline" className="flex items-center gap-2">
               <Calendar className="h-3 w-3" aria-hidden="true" />
-              Last updated: {lastUpdated}
+              {tc('lastUpdated')}: {t('lastUpdated')}
             </Badge>
             <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
               {policyVersion}
             </Badge>
           </div>
           <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
-            Onze service level overeenkomst en support informatie voor alle TutusPorta gebruikers.
+            {t('description')}
           </p>
 
           {/* Summary */}
@@ -93,18 +97,18 @@ export default function SLAPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                   <Shield className="h-5 w-5" aria-hidden="true" />
-                  Belangrijkste punten
+                  {t('keyPoints.title')}
                 </CardTitle>
-                <CardDescription>Onze toezeggingen aan jou</CardDescription>
+                <CardDescription>{t('keyPoints.description')}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6 sm:grid-cols-3">
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <Activity className="h-4 w-4" />
-                    Uptime
+                    {t('keyPoints.uptime')}
                   </p>
                   <p className="leading-relaxed">
-                    99.9% uptime garantie op alle betaalde plannen
+                    {t('keyPoints.uptimeDesc')}
                   </p>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -113,16 +117,16 @@ export default function SLAPage() {
                     Support
                   </p>
                   <p className="leading-relaxed">
-                    Reactie binnen 4 uur voor Business plan gebruikers
+                    {t('keyPoints.supportDesc')}
                   </p>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <Mail className="h-4 w-4" />
-                    24/7 Monitoring
+                    {t('keyPoints.monitoring')}
                   </p>
                   <p className="leading-relaxed">
-                    Continue monitoring met directe incident response
+                    {t('keyPoints.monitoringDesc')}
                   </p>
                 </div>
               </CardContent>
@@ -241,7 +245,7 @@ export default function SLAPage() {
           {/* Footer strip */}
           <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
+              <p className="text-sm text-muted-foreground">{tc('lastUpdated')}: {t('lastUpdated')}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
                   <Link href="/legal/security">Security</Link>
@@ -260,9 +264,9 @@ export default function SLAPage() {
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base">
                 <ListTree className="h-4 w-4" />
-                Op deze pagina
+                {tc('onThisPage')}
               </CardTitle>
-              <CardDescription>Snel naar een sectie</CardDescription>
+              <CardDescription>{tc('quickNavigation')}</CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
               <nav aria-label="Inhoudsopgave" className="space-y-2">

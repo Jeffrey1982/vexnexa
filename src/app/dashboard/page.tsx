@@ -23,6 +23,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
 import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -161,6 +162,10 @@ function EmptyState() {
 }
 
 export default async function DashboardPage() {
+  // Get translations
+  const t = await getTranslations('dashboard');
+  const tCommon = await getTranslations('common');
+
   // Require authentication to access dashboard
   let user;
   try {
@@ -205,9 +210,9 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight">Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight">{t('title')}</h1>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 sm:mt-2">
-            Monitor your website accessibility scans and improvements
+            {t('subtitle')}
           </p>
         </div>
         <div className="self-end sm:self-auto">
@@ -220,10 +225,10 @@ export default async function DashboardPage() {
         <CardHeader className="pb-3 sm:pb-4">
           <CardTitle className="flex items-center gap-2 font-display text-lg sm:text-xl">
             <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-            New Accessibility Scan
+            {t('newScan.title')}
           </CardTitle>
           <CardDescription className="text-sm sm:text-base">
-            Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories
+            {t('newScan.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0">
@@ -235,14 +240,14 @@ export default async function DashboardPage() {
       <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
         <div className="overflow-x-auto">
           <TabsList className={`grid w-full min-w-max ${hasWhiteLabelAccess ? 'grid-cols-7' : 'grid-cols-6'} md:min-w-0`}>
-            <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
-            <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
-            <TabsTrigger value="monitoring" className="text-xs sm:text-sm">Monitoring</TabsTrigger>
-            <TabsTrigger value="teams" className="text-xs sm:text-sm">Teams</TabsTrigger>
-            <TabsTrigger value="reports" className="text-xs sm:text-sm">Reports</TabsTrigger>
-            <TabsTrigger value="tools" className="text-xs sm:text-sm">Tools</TabsTrigger>
+            <TabsTrigger value="overview" className="text-xs sm:text-sm">{t('tabs.overview')}</TabsTrigger>
+            <TabsTrigger value="analytics" className="text-xs sm:text-sm">{t('tabs.analytics')}</TabsTrigger>
+            <TabsTrigger value="monitoring" className="text-xs sm:text-sm">{t('tabs.monitoring')}</TabsTrigger>
+            <TabsTrigger value="teams" className="text-xs sm:text-sm">{t('tabs.teams')}</TabsTrigger>
+            <TabsTrigger value="reports" className="text-xs sm:text-sm">{t('tabs.reports')}</TabsTrigger>
+            <TabsTrigger value="tools" className="text-xs sm:text-sm">{t('tabs.tools')}</TabsTrigger>
             {hasWhiteLabelAccess && (
-              <TabsTrigger value="white-label" className="text-xs sm:text-sm">White Label</TabsTrigger>
+              <TabsTrigger value="white-label" className="text-xs sm:text-sm">{t('tabs.whiteLabel')}</TabsTrigger>
             )}
           </TabsList>
         </div>
@@ -259,28 +264,28 @@ export default async function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="w-5 h-5 text-primary" />
-                Quick Overview
+                {t('stats.title')}
               </CardTitle>
               <CardDescription>
-                Your accessibility metrics at a glance
+                {t('stats.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">Average Score</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.averageScore')}</p>
                   <p className="text-3xl font-bold text-primary">{stats.avgScore}</p>
                 </div>
                 <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">Total Issues</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.totalIssues')}</p>
                   <p className="text-3xl font-bold text-foreground">{stats.impactStats.total}</p>
                 </div>
                 <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">Critical</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.critical')}</p>
                   <p className="text-3xl font-bold text-red-600 dark:text-red-400">{stats.impactStats.critical}</p>
                 </div>
                 <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">Serious</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.serious')}</p>
                   <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">{stats.impactStats.serious}</p>
                 </div>
               </div>
@@ -289,7 +294,7 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="teams" className="space-y-6">
-          {/* Team Collaboration Features */}
+          {/* {t('teams.title')} Features */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-display text-xl">
@@ -297,37 +302,37 @@ export default async function DashboardPage() {
                 Team Collaboration
               </CardTitle>
               <CardDescription className="text-base">
-                Collaborate with your team on accessibility projects and share insights
+                {t('teams.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="text-center py-8">
                 <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Team Features Available</h3>
+                <h3 className="text-lg font-semibold mb-2">{t('teams.available')}</h3>
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Invite team members, assign roles, track issues, and collaborate on accessibility improvements.
+                  {t('teams.availableDescription')}
                 </p>
                 <Link href="/teams">
                   <Button className="mb-4">
                     <Plus className="w-4 h-4 mr-2" />
-                    Go to Teams
+                    {t('teams.goToTeams')}
                   </Button>
                 </Link>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-6 max-w-2xl mx-auto">
                   <div className="text-center p-3 sm:p-4 border rounded-lg">
                     <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-xs sm:text-sm">Role-Based Access</h4>
-                    <p className="text-xs text-muted-foreground">Admin, Editor, Viewer permissions</p>
+                    <h4 className="font-semibold text-xs sm:text-sm">{t('teams.roleBasedAccess.title')}</h4>
+                    <p className="text-xs text-muted-foreground">{t('teams.roleBasedAccess.description')}</p>
                   </div>
                   <div className="text-center p-3 sm:p-4 border rounded-lg">
                     <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-xs sm:text-sm">Issue Tracking</h4>
-                    <p className="text-xs text-muted-foreground">Assign and track accessibility issues</p>
+                    <h4 className="font-semibold text-xs sm:text-sm">{t('teams.issueTracking.title')}</h4>
+                    <p className="text-xs text-muted-foreground">{t('teams.issueTracking.description')}</p>
                   </div>
                   <div className="text-center p-3 sm:p-4 border rounded-lg">
                     <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-xs sm:text-sm">Shared Workspaces</h4>
-                    <p className="text-xs text-muted-foreground">Collaborate on multiple sites</p>
+                    <h4 className="font-semibold text-xs sm:text-sm">{t('teams.sharedWorkspaces.title')}</h4>
+                    <p className="text-xs text-muted-foreground">{t('teams.sharedWorkspaces.description')}</p>
                   </div>
                 </div>
               </div>
@@ -341,10 +346,10 @@ export default async function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-display">
                 <AlertTriangle className="w-5 h-5 text-primary" />
-                Issues by Impact Level
+                {t('analytics.issuesByImpact.title')}
               </CardTitle>
               <CardDescription>
-                Distribution of accessibility issues across severity levels
+                {t('analytics.issuesByImpact.description')}
               </CardDescription>
             </CardHeader>
             <CardContent className="pb-2">
@@ -355,14 +360,14 @@ export default async function DashboardPage() {
           {/* Trend Analysis */}
           <Card>
             <CardHeader>
-              <CardTitle>Trend Analysis</CardTitle>
-              <CardDescription>Track your accessibility improvements over time</CardDescription>
+              <CardTitle>{t('analytics.trendAnalysis.title')}</CardTitle>
+              <CardDescription>{t('analytics.trendAnalysis.description')}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center justify-center text-muted-foreground">
                 <div className="text-center">
                   <TrendingUp className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p>Run more scans to see trends</p>
+                  <p>{t('analytics.trendAnalysis.noData')}</p>
                 </div>
               </div>
             </CardContent>
@@ -375,10 +380,10 @@ export default async function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-primary" />
-                Continuous Monitoring
+                {t('monitoring.title')}
               </CardTitle>
               <CardDescription>
-                Track accessibility changes and get notified of regressions
+                {t('monitoring.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -386,21 +391,21 @@ export default async function DashboardPage() {
                 {/* Monitoring Status */}
                 <div className="text-center py-8 border rounded-lg bg-muted/30">
                   <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Monitoring Coming Soon</h3>
+                  <h3 className="text-lg font-semibold mb-2">{t('monitoring.comingSoon')}</h3>
                   <p className="text-muted-foreground mb-4 max-w-md mx-auto">
-                    Automated monitoring will track your websites and alert you when accessibility scores drop or new issues are detected.
+                    {t('monitoring.comingSoonDescription')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
                     <Button asChild variant="outline">
                       <Link href="/settings/notifications">
                         <Activity className="w-4 h-4 mr-2" />
-                        Configure Notifications
+                        {t('monitoring.configureNotifications')}
                       </Link>
                     </Button>
                     <Button asChild variant="outline">
                       <Link href="/settings/billing">
                         <TrendingUp className="w-4 h-4 mr-2" />
-                        Upgrade Plan
+                        {t('monitoring.upgradePlan')}
                       </Link>
                     </Button>
                   </div>
@@ -411,28 +416,28 @@ export default async function DashboardPage() {
                   <div className="p-4 border rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Clock className="w-5 h-5 text-blue-600" />
-                      <h4 className="font-semibold">Scheduled Scans</h4>
+                      <h4 className="font-semibold">{t('monitoring.scheduledScans.title')}</h4>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Automatically scan your sites daily, weekly, or monthly
+                      {t('monitoring.scheduledScans.description')}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <AlertTriangle className="w-5 h-5 text-orange-600" />
-                      <h4 className="font-semibold">Instant Alerts</h4>
+                      <h4 className="font-semibold">{t('monitoring.instantAlerts.title')}</h4>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Get email notifications when scores drop or issues increase
+                      {t('monitoring.instantAlerts.description')}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <TrendingUp className="w-5 h-5 text-green-600" />
-                      <h4 className="font-semibold">Trend Tracking</h4>
+                      <h4 className="font-semibold">{t('monitoring.trendTracking.title')}</h4>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      View historical data and track improvements over time
+                      {t('monitoring.trendTracking.description')}
                     </p>
                   </div>
                 </div>
@@ -442,7 +447,7 @@ export default async function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="reports" className="space-y-6">
-          {/* Recent Scan Reports */}
+          {/* Recent {t('reports.title')} */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-display text-xl">
@@ -450,22 +455,22 @@ export default async function DashboardPage() {
                 Scan Reports
               </CardTitle>
               <CardDescription className="text-base">
-                Download detailed accessibility reports for your scans
+                {t('reports.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               {scans.length === 0 ? (
                 <div className="text-center py-8">
                   <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Reports Available</h3>
+                  <h3 className="text-lg font-semibold mb-2">{t('reports.noReports')}</h3>
                   <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                    Run your first accessibility scan to generate downloadable reports.
+                    {t('reports.noReportsDescription')}
                   </p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   <p className="text-sm text-muted-foreground mb-4">
-                    Select a scan to download its detailed accessibility report:
+                    {t('reports.selectScan')}
                   </p>
                   <div className="grid gap-3">
                     {scans.slice(0, 10).map((scan) => (
@@ -483,7 +488,7 @@ export default async function DashboardPage() {
                               {new URL(scan.site.url).hostname}
                             </div>
                             <div className="text-xs text-muted-foreground">
-                              {formatDate(scan.createdAt)} • {scan.issues || 0} issues
+                              {formatDate(scan.createdAt)} • {scan.issues || 0} {tCommon('issues')}
                             </div>
                           </div>
                         </div>
@@ -517,24 +522,24 @@ export default async function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" />
-                Accessibility Resources
+                {t('tools.title')}
               </CardTitle>
               <CardDescription>
-                Tools and guides to help improve your website accessibility
+                {t('tools.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 border rounded-lg hover:border-primary transition-colors">
-                  <h4 className="font-semibold mb-2">WCAG Guidelines</h4>
+                  <h4 className="font-semibold mb-2">{t('tools.wcagGuidelines.title')}</h4>
                   <p className="text-sm text-muted-foreground">
-                    Learn about WCAG 2.1 AA compliance requirements
+                    {t('tools.wcagGuidelines.description')}
                   </p>
                 </div>
                 <div className="p-4 border rounded-lg hover:border-primary transition-colors">
-                  <h4 className="font-semibold mb-2">Quick Fixes</h4>
+                  <h4 className="font-semibold mb-2">{t('tools.quickFixes.title')}</h4>
                   <p className="text-sm text-muted-foreground">
-                    Common accessibility issues and how to fix them
+                    {t('tools.quickFixes.description')}
                   </p>
                 </div>
               </div>
@@ -551,10 +556,10 @@ export default async function DashboardPage() {
                   <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
                     <span className="text-white font-bold text-sm">WL</span>
                   </div>
-                  White Label Management
+                  {t('whiteLabel.title')}
                 </CardTitle>
                 <CardDescription className="text-base">
-                  Customize your brand appearance, logo, colors, and contact information for your Business plan.
+                  {t('whiteLabel.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -567,11 +572,11 @@ export default async function DashboardPage() {
                           <span className="text-blue-600 font-semibold text-sm sm:text-base">⚙️</span>
                         </div>
                         <div>
-                          <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-blue-600">Full Settings</h3>
-                          <p className="text-xs sm:text-sm text-gray-500">Complete white-label configuration</p>
+                          <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-blue-600">{t('whiteLabel.fullSettings')}</h3>
+                          <p className="text-xs sm:text-sm text-gray-500">{t('whiteLabel.fullSettingsDescription')}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-400">Logo, colors, contact info, domain settings</p>
+                      <p className="text-xs text-gray-400">{t('whiteLabel.fullSettingsDetails')}</p>
                     </div>
                   </Link>
 
@@ -581,11 +586,11 @@ export default async function DashboardPage() {
                         <span className="text-green-600 font-semibold text-sm sm:text-base">📱</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">Live Preview</h3>
-                        <p className="text-xs sm:text-sm text-gray-500">See your customizations</p>
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.livePreview')}</h3>
+                        <p className="text-xs sm:text-sm text-gray-500">{t('whiteLabel.livePreviewDescription')}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400">Your site already shows your branding!</p>
+                    <p className="text-xs text-gray-400">{t('whiteLabel.livePreviewDetails')}</p>
                   </div>
 
                   <div className="border rounded-lg p-3 sm:p-4 bg-gray-50">
@@ -594,52 +599,52 @@ export default async function DashboardPage() {
                         <span className="text-purple-600 font-semibold text-sm sm:text-base">📈</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">Custom Reports</h3>
-                        <p className="text-xs sm:text-sm text-gray-500">Branded PDF exports</p>
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.customReports')}</h3>
+                        <p className="text-xs sm:text-sm text-gray-500">{t('whiteLabel.customReportsDescription')}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400">Available - Generate reports with your branding</p>
+                    <p className="text-xs text-gray-400">{t('whiteLabel.customReportsDetails')}</p>
                   </div>
                 </div>
 
                 {/* White Label Features Overview */}
                 <div className="border rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50">
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">🎨 Your White Label Features</h4>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">🎨 {t('whiteLabel.featuresTitle')}</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Custom company logo & favicon</span>
+                        <span>{t('whiteLabel.features.logo')}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Brand colors (primary, secondary, accent)</span>
+                        <span>{t('whiteLabel.features.colors')}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Custom contact information</span>
+                        <span>{t('whiteLabel.features.contact')}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Remove &quot;Powered by TutusPorta&quot;</span>
+                        <span>{t('whiteLabel.features.removeBranding')}</span>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Custom footer text</span>
+                        <span>{t('whiteLabel.features.footerText')}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Subdomain (yourcompany.tutusporta.com)</span>
+                        <span>{t('whiteLabel.features.subdomain')}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-blue-500">📞</span>
-                        <span>Custom domain (contact support)</span>
+                        <span>{t('whiteLabel.features.customDomain')}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
-                        <span>Branded PDF reports</span>
+                        <span>{t('whiteLabel.features.brandedReports')}</span>
                       </div>
                     </div>
                   </div>
@@ -651,7 +656,7 @@ export default async function DashboardPage() {
                     href="/settings/white-label"
                     className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
                   >
-                    🎨 Customize Your Brand
+                    🎨 {t('whiteLabel.customize')}
                   </Link>
                 </div>
               </CardContent>
@@ -664,9 +669,9 @@ export default async function DashboardPage() {
       {/* Recent Scans */}
       <Card>
         <CardHeader>
-          <CardTitle className="font-display text-lg sm:text-xl">Recent Scans</CardTitle>
+          <CardTitle className="font-display text-lg sm:text-xl">{t('recentScans.title')}</CardTitle>
           <CardDescription className="text-sm sm:text-base">
-            Your latest accessibility scans and their results
+            {t('recentScans.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -719,7 +724,7 @@ export default async function DashboardPage() {
                             {scan.status}
                           </Badge>
                           <span className="text-muted-foreground">
-                            {scan.issues || 0} issues
+                            {scan.issues || 0} {tCommon('issues')}
                           </span>
                         </div>
                         <span className="text-muted-foreground">
@@ -736,12 +741,12 @@ export default async function DashboardPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Site</TableHead>
-                      <TableHead className="hidden lg:table-cell">URL</TableHead>
-                      <TableHead>Score</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Issues</TableHead>
-                      <TableHead>Date</TableHead>
+                      <TableHead>{t('recentScans.tableHeaders.site')}</TableHead>
+                      <TableHead className="hidden lg:table-cell">{t('recentScans.tableHeaders.url')}</TableHead>
+                      <TableHead>{t('recentScans.tableHeaders.score')}</TableHead>
+                      <TableHead>{t('recentScans.tableHeaders.status')}</TableHead>
+                      <TableHead>{t('recentScans.tableHeaders.issues')}</TableHead>
+                      <TableHead>{t('recentScans.tableHeaders.date')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

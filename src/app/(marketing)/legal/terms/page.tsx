@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Scale, Mail, Calendar, AlertTriangle, ListTree } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: 'Terms of Service - TutusPorta',
@@ -56,7 +57,10 @@ const sections = [
   { id: 'contact', label: '12. Contact' },
 ]
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const t = await getTranslations('legal.terms');
+  const tc = await getTranslations('legal.common');
+
   return (
     <div className="container mx-auto px-4 py-12 sm:py-16">
       {/* Skip link */}
@@ -81,17 +85,17 @@ export default function TermsPage() {
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Terms of Service</h1>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">{t('title')}</h1>
             <Badge variant="outline" className="flex items-center gap-2">
               <Calendar className="h-3 w-3" aria-hidden="true" />
-              Last updated: {lastUpdated}
+              {tc('lastUpdated')}: {t('lastUpdated')}
             </Badge>
             <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
               {policyVersion}
             </Badge>
           </div>
           <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
-            These terms apply to the use of the TutusPorta accessibility-scanning service.
+            {t('description')}
           </p>
 
           {/* Summary */}
@@ -100,32 +104,32 @@ export default function TermsPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                   <Scale className="h-5 w-5" aria-hidden="true" />
-                  Samenvatting (niet juridisch bindend)
+                  {t('summary.title')}
                 </CardTitle>
-                <CardDescription>In gewone taal — lees ook de volledige voorwaarden hieronder.</CardDescription>
+                <CardDescription>{t('summary.description')}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p className="font-medium text-foreground">✅ What you may do</p>
+                  <p className="font-medium text-foreground">{t('summary.mayTitle')}</p>
                   <ul className="list-disc pl-5 space-y-1 leading-relaxed">
-                    <li>Scan your own sites (or with owner permission)</li>
-                    <li>Share reports with your team/clients</li>
-                    <li>Cancel subscription whenever you want</li>
-                    <li>Contact support for questions</li>
+                    <li>{t('summary.mayItems.0')}</li>
+                    <li>{t('summary.mayItems.1')}</li>
+                    <li>{t('summary.mayItems.2')}</li>
+                    <li>{t('summary.mayItems.3')}</li>
                   </ul>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p className="font-medium text-foreground">❌ Niet toegestaan</p>
+                  <p className="font-medium text-foreground">{t('summary.notAllowedTitle')}</p>
                   <ul className="list-disc pl-5 space-y-1 leading-relaxed">
-                    <li>Scannen zonder toestemming van de eigenaar</li>
-                    <li>Misbruik/rate-limits omzeilen of reverse-engineeren</li>
-                    <li>Onrechtmatig of schadelijk gebruik (bv. scraping van persoonsgegevens)</li>
+                    <li>{t('summary.notAllowedItems.0')}</li>
+                    <li>{t('summary.notAllowedItems.1')}</li>
+                    <li>{t('summary.notAllowedItems.2')}</li>
                   </ul>
                 </div>
                 <div className="sm:col-span-2">
                   <p className="text-sm text-muted-foreground border-t pt-3">
                     <AlertTriangle className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                    By using TutusPorta you agree to these terms.
+                    {t('summary.byUsing')}
                   </p>
                 </div>
               </CardContent>
@@ -403,7 +407,7 @@ export default function TermsPage() {
           {/* Footer strip */}
           <div className="not-prose mt-12 rounded-xl border bg-background p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
+              <p className="text-sm text-muted-foreground">{tc('lastUpdated')}: {t('lastUpdated')}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
                   <Link href="/legal/privacy">Privacybeleid</Link>
@@ -422,9 +426,9 @@ export default function TermsPage() {
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base">
                 <ListTree className="h-4 w-4" />
-                On this page
+                {tc('onThisPage')}
               </CardTitle>
-              <CardDescription>Quick navigation to sections</CardDescription>
+              <CardDescription>{tc('quickNavigation')}</CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
               <nav aria-label="Table of contents" className="space-y-2">
@@ -444,12 +448,12 @@ export default function TermsPage() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Need help?</CardTitle>
-              <CardDescription>We typically respond within 1 business day.</CardDescription>
+              <CardTitle className="text-base">{tc('needHelp')}</CardTitle>
+              <CardDescription>{tc('responseTime')}</CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <Link href="/contact">Contact us</Link>
+                <Link href="/contact">{tc('contactUs')}</Link>
               </Button>
             </CardContent>
           </Card>
