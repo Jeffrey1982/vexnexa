@@ -227,7 +227,7 @@ export default async function TermsPage() {
             <h2>4. Betalingen & abonnementen</h2>
             <h3>Gratis tier (Trial)</h3>
             <ul>
-              <li>De gratis Trial blijft gratis met vaste maandelijkse limieten (100 pagina's/maand, 1 website)</li>
+              <li>De gratis Trial blijft gratis met vaste maandelijkse limieten (100 pagina&apos;s/maand, 1 website)</li>
               <li><strong>Harde limiet:</strong> Bij overschrijding van het gratis gebruik wordt de service geblokkeerd tot de volgende maand of totdat je upgrade naar een betaald plan</li>
               <li>Trial verloopt na de aangegeven periode; upgrade is vereist om de service te blijven gebruiken</li>
               <li>Functies kunnen wijzigen — we communiceren substantiële wijzigingen vooraf</li>
