@@ -29,6 +29,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ENTITLEMENTS, PLAN_NAMES, formatPrice, OVERFLOW_PRICING } from "@/lib/billing/plans";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
+import { useTranslations } from 'next-intl';
 
 // JSON-LD for pricing
 function PricingJsonLd() {
@@ -89,103 +90,17 @@ function PricingJsonLd() {
   );
 }
 
-const plans = [
-  {
-    key: "STARTER" as const,
-    name: "Starter",
-    price: "€9",
-    period: "/month",
-    description: "For small websites and personal use",
-    highlighted: false,
-    features: [
-      `${ENTITLEMENTS.STARTER.sites} website`,
-      `${ENTITLEMENTS.STARTER.pagesPerMonth} pages/month`,
-      `${ENTITLEMENTS.STARTER.users} user`,
-      "PDF export",
-      "Basic reports",
-      "Email support",
-    ],
-    limitations: [
-      "No Word export",
-      "No scheduling",
-      "Limited integrations",
-    ],
-    cta: "Start with Starter",
-    ctaVariant: "outline" as const,
-  },
-  {
-    key: "PRO" as const,
-    name: "Pro",
-    price: "€29",
-    period: "/month",
-    description: "For professionals who scan regularly",
-    highlighted: true,
-    features: [
-      `${ENTITLEMENTS.PRO.sites} websites`,
-      `${ENTITLEMENTS.PRO.pagesPerMonth} pages/month`,
-      `${ENTITLEMENTS.PRO.users} users`,
-      "PDF + Word export",
-      "Advanced reports",
-      "Scheduling",
-      "Slack & Jira integration",
-      "Priority support",
-    ],
-    limitations: [],
-    cta: "Try Pro",
-    ctaVariant: "default" as const,
-  },
-  {
-    key: "BUSINESS" as const,
-    name: "Business",
-    price: "€79",
-    period: "/month",
-    description: "For teams and enterprise use",
-    highlighted: false,
-    features: [
-      `${ENTITLEMENTS.BUSINESS.sites} websites`,
-      `${ENTITLEMENTS.BUSINESS.pagesPerMonth} pages/month`,
-      `${ENTITLEMENTS.BUSINESS.users} users`,
-      "All exports (PDF + Word)",
-      "White label reports",
-      "Advanced scheduling",
-      "All integrations",
-      "Priority support (4h response)",
-    ],
-    limitations: [],
-    cta: "Start with Business",
-    ctaVariant: "default" as const,
-  },
-  {
-    key: "ENTERPRISE" as const,
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    description: "Unlimited scanning for large organizations",
-    highlighted: false,
-    features: [
-      "Unlimited websites",
-      "Unlimited pages",
-      "Unlimited users",
-      "Custom integrations",
-      "SSO/SAML",
-      "Dedicated support",
-      "SLA guarantee",
-      "On-premise option",
-    ],
-    limitations: [],
-    cta: "Talk to us",
-    ctaHref: "/contact",
-    ctaVariant: "outline" as const,
-  },
-];
+
 
 function HeroSection() {
+  const t = useTranslations('pricing.hero');
+
   return (
     <section className="py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <Badge variant="outline" className="mb-4">
-            💰 Transparent pricing
+            {t('badge')}
           </Badge>
 
           <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
@@ -200,13 +115,13 @@ function HeroSection() {
 
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="secondary" className="text-sm">
-              All prices exclude VAT
+              {t('badges.vat')}
             </Badge>
             <Badge variant="secondary" className="text-sm">
-              No setup fees
+              {t('badges.noSetup')}
             </Badge>
             <Badge variant="secondary" className="text-sm">
-              Cancel anytime
+              {t('badges.cancelAnytime')}
             </Badge>
           </div>
         </div>
@@ -216,8 +131,99 @@ function HeroSection() {
 }
 
 function PricingCards() {
+  const t = useTranslations('pricing');
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const plans = [
+    {
+      key: "STARTER" as const,
+      name: t('plans.starter.name'),
+      price: "€9",
+      period: "/month",
+      description: t('plans.starter.description'),
+      highlighted: false,
+      features: [
+        t('plans.starter.features.sites', { count: ENTITLEMENTS.STARTER.sites }),
+        t('plans.starter.features.pages', { count: ENTITLEMENTS.STARTER.pagesPerMonth }),
+        t('plans.starter.features.users', { count: ENTITLEMENTS.STARTER.users }),
+        t('plans.starter.features.pdfExport'),
+        t('plans.starter.features.basicReports'),
+        t('plans.starter.features.emailSupport'),
+      ],
+      limitations: [
+        t('plans.starter.limitations.noWord'),
+        t('plans.starter.limitations.noScheduling'),
+        t('plans.starter.limitations.limitedIntegrations'),
+      ],
+      cta: t('plans.starter.cta'),
+      ctaVariant: "outline" as const,
+    },
+    {
+      key: "PRO" as const,
+      name: t('plans.pro.name'),
+      price: "€29",
+      period: "/month",
+      description: t('plans.pro.description'),
+      highlighted: true,
+      features: [
+        t('plans.pro.features.sites', { count: ENTITLEMENTS.PRO.sites }),
+        t('plans.pro.features.pages', { count: ENTITLEMENTS.PRO.pagesPerMonth }),
+        t('plans.pro.features.users', { count: ENTITLEMENTS.PRO.users }),
+        t('plans.pro.features.exports'),
+        t('plans.pro.features.advancedReports'),
+        t('plans.pro.features.scheduling'),
+        t('plans.pro.features.integrations'),
+        t('plans.pro.features.prioritySupport'),
+      ],
+      limitations: [],
+      cta: t('plans.pro.cta'),
+      ctaVariant: "default" as const,
+    },
+    {
+      key: "BUSINESS" as const,
+      name: t('plans.business.name'),
+      price: "€79",
+      period: "/month",
+      description: t('plans.business.description'),
+      highlighted: false,
+      features: [
+        t('plans.business.features.sites', { count: ENTITLEMENTS.BUSINESS.sites }),
+        t('plans.business.features.pages', { count: ENTITLEMENTS.BUSINESS.pagesPerMonth }),
+        t('plans.business.features.users', { count: ENTITLEMENTS.BUSINESS.users }),
+        t('plans.business.features.allExports'),
+        t('plans.business.features.whiteLabel'),
+        t('plans.business.features.advancedScheduling'),
+        t('plans.business.features.allIntegrations'),
+        t('plans.business.features.prioritySupport'),
+      ],
+      limitations: [],
+      cta: t('plans.business.cta'),
+      ctaVariant: "default" as const,
+    },
+    {
+      key: "ENTERPRISE" as const,
+      name: t('plans.enterprise.name'),
+      price: t('plans.enterprise.price'),
+      period: "",
+      description: t('plans.enterprise.description'),
+      highlighted: false,
+      features: [
+        t('plans.enterprise.features.unlimitedSites'),
+        t('plans.enterprise.features.unlimitedPages'),
+        t('plans.enterprise.features.unlimitedUsers'),
+        t('plans.enterprise.features.customIntegrations'),
+        t('plans.enterprise.features.sso'),
+        t('plans.enterprise.features.dedicatedSupport'),
+        t('plans.enterprise.features.sla'),
+        t('plans.enterprise.features.onPremise'),
+      ],
+      limitations: [],
+      cta: t('plans.enterprise.cta'),
+      ctaHref: "/contact",
+      ctaVariant: "outline" as const,
+    },
+  ];
 
   const handleUpgrade = async (planKey: string, href?: string) => {
     if (href) {
@@ -276,7 +282,7 @@ function PricingCards() {
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-primary text-primary-foreground">
                     <Star className="w-3 h-3 mr-1" />
-                    Popular
+                    {t('plans.pro.popular')}
                   </Badge>
                 </div>
               )}
@@ -320,7 +326,7 @@ function PricingCards() {
                   {loading === plan.key ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Loading...
+                      {t('loading')}
                     </>
                   ) : (
                     <>
@@ -336,9 +342,9 @@ function PricingCards() {
 
         <div className="text-center mt-12">
           <p className="text-muted-foreground">
-            All plans exclude VAT. Cancel anytime.{" "}
+            {t('footer.note')}{" "}
             <Link href="/contact" className="text-primary hover:underline ml-1">
-              Questions? Contact us.
+              {t('footer.contact')}
             </Link>
           </p>
         </div>
@@ -348,6 +354,8 @@ function PricingCards() {
 }
 
 function OverflowPricingSection() {
+  const t = useTranslations('pricing.overflow');
+
   return (
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -357,8 +365,7 @@ function OverflowPricingSection() {
               Overflow Pricing
             </h2>
             <p className="text-xl text-muted-foreground">
-              When you exceed your plan limits, we charge small amounts instead of
-              blocking you
+              {t('subtitle')}
             </p>
           </div>
 
@@ -366,28 +373,28 @@ function OverflowPricingSection() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Resource</TableHead>
-                  <TableHead>Overflow Price</TableHead>
-                  <TableHead>Description</TableHead>
+                  <TableHead>{t('table.resource')}</TableHead>
+                  <TableHead>{t('table.price')}</TableHead>
+                  <TableHead>{t('table.description')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell className="font-medium">Extra Pages</TableCell>
+                  <TableCell className="font-medium">{t('resources.extraPages')}</TableCell>
                   <TableCell>€{OVERFLOW_PRICING.extraPage.amount}/{OVERFLOW_PRICING.extraPage.unit}</TableCell>
                   <TableCell className="text-muted-foreground text-sm">
                     {OVERFLOW_PRICING.extraPage.description}
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Extra Websites</TableCell>
+                  <TableCell className="font-medium">{t('resources.extraSites')}</TableCell>
                   <TableCell>€{OVERFLOW_PRICING.extraSite.amount}/{OVERFLOW_PRICING.extraSite.unit}</TableCell>
                   <TableCell className="text-muted-foreground text-sm">
                     {OVERFLOW_PRICING.extraSite.description}
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium">Extra Users</TableCell>
+                  <TableCell className="font-medium">{t('resources.extraUsers')}</TableCell>
                   <TableCell>€{OVERFLOW_PRICING.extraUser.amount}/{OVERFLOW_PRICING.extraUser.unit}</TableCell>
                   <TableCell className="text-muted-foreground text-sm">
                     {OVERFLOW_PRICING.extraUser.description}
@@ -400,9 +407,7 @@ function OverflowPricingSection() {
           <Alert className="mt-8">
             <Info className="h-4 w-4" />
             <AlertDescription>
-              <strong>How it works:</strong> When you consistently exceed your plan limits,
-              we&apos;ll notify you and recommend upgrading. Small overages are automatically
-              billed monthly. You&apos;re always in control.
+              <strong>{t('alert.title')}</strong> {t('alert.description')}
             </AlertDescription>
           </Alert>
         </div>
@@ -412,6 +417,8 @@ function OverflowPricingSection() {
 }
 
 function ComplianceDisclaimerSection() {
+  const t = useTranslations('pricing.compliance');
+
   return (
     <section className="py-12 border-y bg-amber-50 dark:bg-amber-950/20">
       <div className="container mx-auto px-4">
@@ -419,21 +426,18 @@ function ComplianceDisclaimerSection() {
           <div className="flex items-start gap-4">
             <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-500 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="font-semibold text-lg mb-2">Compliance Disclaimer</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('title')}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong>No tool can guarantee 100% legal compliance in all contexts.</strong>{" "}
-                TutusPorta detects and reports issues, assists remediation, and helps you adhere
-                to WCAG and related standards. For legal risk assessment, consider an expert audit
-                and ongoing governance process. Our scanner is a tool to assist your compliance
-                efforts, not a legal guarantee.
+                <strong>{t('warning')}</strong>{" "}
+                {t('description')}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <Link href="/legal/terms" className="text-sm text-primary hover:underline">
-                  Terms of Service
+                  {t('links.terms')}
                 </Link>
                 <span className="text-muted-foreground">•</span>
                 <Link href="/legal/privacy" className="text-sm text-primary hover:underline">
-                  Privacy Policy
+                  {t('links.privacy')}
                 </Link>
               </div>
             </div>
@@ -445,6 +449,8 @@ function ComplianceDisclaimerSection() {
 }
 
 function ToolComparisonSection() {
+  const t = useTranslations('pricing.comparison');
+
   const comparisonData = [
     {
       feature: "Coverage Depth",
@@ -498,15 +504,17 @@ function ToolComparisonSection() {
 
   return (
     <ComparisonTable
-      title="How TutusPorta Compares"
-      description="Comparing our approach to overlay widgets and generic accessibility scanners"
+      title={t('title')}
+      description={t('subtitle')}
       rows={comparisonData}
-      disclaimer="Overlay widgets inject JavaScript that attempts to modify your site on the client side. While they may help some users, they don't fix underlying code issues and can create new accessibility problems. Generic scanners often miss context-specific issues. TutusPorta provides deeper automated coverage and actionable guidance for developers."
+      disclaimer={t('disclaimer')}
     />
   );
 }
 
 function CTASection() {
+  const t = useTranslations('pricing.cta');
+
   return (
     <section className="py-20 bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 text-center">
@@ -515,14 +523,13 @@ function CTASection() {
             Start scanning today
           </h2>
           <p className="text-xl opacity-90">
-            Start with a free trial and upgrade when you need more functionality. No
-            setup fees, no surprises.
+            {t('subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
               <Link href="/auth/register">
-                Start free trial
+                {t('startTrial')}
                 <Zap className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -534,7 +541,7 @@ function CTASection() {
               asChild
             >
               <Link href="/contact">
-                Contact sales
+                {t('contactSales')}
                 <Users className="ml-2 h-4 w-4" />
               </Link>
             </Button>

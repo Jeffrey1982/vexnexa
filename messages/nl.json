@@ -240,70 +240,182 @@
     }
   },
   "pricing": {
-    "title": "Eenvoudige, transparante prijzen",
-    "subtitle": "Kies het plan dat bij uw team past",
-    "monthly": "Maandelijks",
-    "annual": "Jaarlijks",
-    "save": "Bespaar 20%",
-    "free": {
-      "name": "Gratis",
-      "price": "€0",
-      "period": "/maand",
-      "description": "Perfect om TutusPorta uit te proberen",
-      "cta": "Aan de slag",
-      "features": {
-        "scans": "1 scan per week",
-        "pages": "Tot 10 pagina's per scan",
-        "basic": "Basis WCAG-controles",
-        "support": "Community-ondersteuning"
+    "hero": {
+      "badge": "💰 Transparante prijzen",
+      "title": "Kies het juiste plan voor",
+      "titleHighlight": "jouw project",
+      "subtitle": "Van gratis proefperiode tot enterprise-functionaliteiten. Alle prijzen zijn transparant en maandelijks opzegbaar.",
+      "badges": {
+        "vat": "Alle prijzen excl. BTW",
+        "noSetup": "Geen opstartkosten",
+        "cancelAnytime": "Opzeggen wanneer je wilt"
       }
     },
-    "pro": {
-      "name": "Professioneel",
-      "price": "€49",
-      "period": "/maand",
-      "description": "Voor professionals en kleine teams",
-      "cta": "Gratis proefperiode starten",
-      "popular": "Populairst",
-      "features": {
-        "scans": "Onbeperkte scans",
-        "pages": "Tot 100 pagina's per scan",
-        "advanced": "Alle 8 geavanceerde categorieën",
-        "monitoring": "Continue monitoring",
-        "reports": "PDF/DOCX-exports",
-        "support": "E-mailondersteuning"
-      }
-    },
-    "enterprise": {
-      "name": "Enterprise",
-      "price": "Op maat",
-      "description": "Voor grote organisaties",
-      "cta": "Neem contact op met verkoop",
-      "features": {
-        "scans": "Onbeperkte scans",
-        "pages": "Onbeperkt aantal pagina's",
-        "advanced": "Alle functies",
-        "whitelabel": "White-label dashboard",
-        "api": "API-toegang",
-        "sla": "SLA-garantie",
-        "support": "Prioritaire ondersteuning",
-        "training": "Teamtraining"
-      }
-    },
-    "faq": {
-      "title": "Veelgestelde vragen",
-      "q1": {
-        "question": "Kan ik later van plan veranderen?",
-        "answer": "Ja, u kunt uw plan op elk moment upgraden of downgraden."
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "Voor kleine websites en persoonlijk gebruik",
+        "cta": "Start met Starter",
+        "features": {
+          "sites": "{count} website",
+          "pages": "{count} pagina's/maand",
+          "users": "{count} gebruiker",
+          "pdfExport": "PDF export",
+          "basicReports": "Basis rapporten",
+          "emailSupport": "E-mail support"
+        },
+        "limitations": {
+          "noWord": "Geen Word export",
+          "noScheduling": "Geen planning",
+          "limitedIntegrations": "Beperkte integraties"
+        }
       },
-      "q2": {
-        "question": "Welke betaalmethoden accepteren jullie?",
-        "answer": "We accepteren alle grote creditcards en bankoverschrijvingen voor enterprise-plannen."
+      "pro": {
+        "name": "Pro",
+        "description": "Voor professionals die regelmatig scannen",
+        "cta": "Probeer Pro",
+        "popular": "Populair",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pagina's/maand",
+          "users": "{count} gebruikers",
+          "exports": "PDF + Word export",
+          "advancedReports": "Geavanceerde rapporten",
+          "scheduling": "Planning",
+          "integrations": "Slack & Jira integratie",
+          "prioritySupport": "Prioriteitsondersteuning"
+        }
       },
-      "q3": {
-        "question": "Is er een gratis proefperiode?",
-        "answer": "Ja, alle betaalde plannen bevatten een gratis proefperiode van 14 dagen. Geen creditcard vereist."
+      "business": {
+        "name": "Business",
+        "description": "Voor teams en zakelijk gebruik",
+        "cta": "Start met Business",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pagina's/maand",
+          "users": "{count} gebruikers",
+          "allExports": "Alle exports (PDF + Word)",
+          "whiteLabel": "White label rapporten",
+          "advancedScheduling": "Geavanceerde planning",
+          "allIntegrations": "Alle integraties",
+          "prioritySupport": "Prioriteitsondersteuning (4u reactie)"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Op maat",
+        "description": "Onbeperkt scannen voor grote organisaties",
+        "cta": "Neem contact op",
+        "features": {
+          "unlimitedSites": "Onbeperkt websites",
+          "unlimitedPages": "Onbeperkt pagina's",
+          "unlimitedUsers": "Onbeperkt gebruikers",
+          "customIntegrations": "Aangepaste integraties",
+          "sso": "SSO/SAML",
+          "dedicatedSupport": "Toegewijde support",
+          "sla": "SLA garantie",
+          "onPremise": "On-premise optie"
+        }
       }
+    },
+    "loading": "Laden...",
+    "footer": {
+      "note": "Alle prijzen excl. BTW. Opzeggen wanneer je wilt.",
+      "contact": "Vragen? Neem contact op."
+    },
+    "overflow": {
+      "title": "Overflow Prijzen",
+      "subtitle": "Wanneer je je planlimiet overschrijdt, brengen we kleine bedragen in rekening in plaats van je te blokkeren",
+      "table": {
+        "resource": "Resource",
+        "price": "Overflow Prijs",
+        "description": "Beschrijving"
+      },
+      "resources": {
+        "extraPages": "Extra Pagina's",
+        "extraSites": "Extra Websites",
+        "extraUsers": "Extra Gebruikers"
+      },
+      "alert": {
+        "title": "Hoe het werkt:",
+        "description": "Wanneer je consequent je planlimiet overschrijdt, sturen we je een melding en raden we aan te upgraden. Kleine overschrijdingen worden automatisch maandelijks gefactureerd. Jij hebt altijd de controle."
+      }
+    },
+    "compliance": {
+      "title": "Compliance Disclaimer",
+      "warning": "Geen tool kan 100% juridische naleving garanderen in alle contexten.",
+      "description": "TutusPorta detecteert en rapporteert problemen, helpt bij herstel en ondersteunt je bij het naleven van WCAG en gerelateerde standaarden. Voor juridische risicobeoordeling is het aan te raden een expertaudit en doorlopend governanceproces in te stellen. Onze scanner is een tool om je nalevingsinspanningen te ondersteunen, geen juridische garantie.",
+      "links": {
+        "terms": "Servicevoorwaarden",
+        "privacy": "Privacybeleid"
+      }
+    },
+    "comparison": {
+      "title": "Hoe TutusPorta zich verhoudt",
+      "subtitle": "Vergelijking van onze aanpak met overlay-widgets en generieke toegankelijkheidscanners",
+      "columns": {
+        "feature": "Functie",
+        "tutusporta": "TutusPorta",
+        "overlay": "Overlay Widgets",
+        "generic": "Generieke Scanners"
+      },
+      "features": {
+        "coverage": {
+          "name": "Dekkingsbreedte",
+          "tutusporta": "WCAG + 8 extra categorieën",
+          "overlay": "Alleen oppervlakkige fixes",
+          "generic": "Basis WCAG controles"
+        },
+        "actionability": {
+          "name": "Bruikbaarheid",
+          "tutusporta": "Code snippets + herstel tips",
+          "overlay": "Geen ontwikkelaarsbegeleiding",
+          "generic": "Generieke foutmeldingen"
+        },
+        "team": {
+          "name": "Team Functies",
+          "tutusporta": true,
+          "overlay": false,
+          "generic": false
+        },
+        "monitoring": {
+          "name": "Continue Monitoring",
+          "tutusporta": true,
+          "overlay": false,
+          "generic": false
+        },
+        "api": {
+          "name": "API Toegang",
+          "tutusporta": true,
+          "overlay": false,
+          "generic": "Beperkt"
+        },
+        "falsePositives": {
+          "name": "Valse Positieven",
+          "tutusporta": "Laag",
+          "overlay": "N.v.t.",
+          "generic": "Hoog"
+        },
+        "legal": {
+          "name": "Juridisch Standpunt",
+          "tutusporta": "Tool ondersteunt naleving",
+          "overlay": "Claimt problemen op te lossen",
+          "generic": "Geen juridische claims"
+        },
+        "cost": {
+          "name": "Kostenschaling",
+          "tutusporta": "Transparante overflow pricing",
+          "overlay": "Per-pagina kosten",
+          "generic": "Alleen vaste plannen"
+        }
+      },
+      "disclaimer": "Overlay-widgets injecteren JavaScript die probeert je site aan de client-kant te wijzigen. Hoewel ze sommige gebruikers kunnen helpen, lossen ze onderliggende codeproblemen niet op en kunnen ze nieuwe toegankelijkheidsproblemen creëren. Generieke scanners missen vaak contextspecifieke problemen. TutusPorta biedt diepere geautomatiseerde dekking en bruikbare begeleiding voor ontwikkelaars."
+    },
+    "cta": {
+      "title": "Start vandaag met scannen",
+      "subtitle": "Begin met een gratis proefperiode en upgrade wanneer je meer functionaliteit nodig hebt. Geen opstartkosten, geen verrassingen.",
+      "startTrial": "Start gratis proefperiode",
+      "contactSales": "Neem contact op met verkoop"
     }
   },
   "contact": {

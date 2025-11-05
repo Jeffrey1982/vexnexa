@@ -240,70 +240,182 @@
     }
   },
   "pricing": {
-    "title": "Tarification simple et transparente",
-    "subtitle": "Choisissez le plan adapté à votre équipe",
-    "monthly": "Mensuel",
-    "annual": "Annuel",
-    "save": "Économisez 20%",
-    "free": {
-      "name": "Gratuit",
-      "price": "€0",
-      "period": "/mois",
-      "description": "Parfait pour essayer TutusPorta",
-      "cta": "Commencer",
-      "features": {
-        "scans": "1 analyse par semaine",
-        "pages": "Jusqu'à 10 pages par analyse",
-        "basic": "Vérifications WCAG de base",
-        "support": "Support communautaire"
+    "hero": {
+      "badge": "💰 Tarification transparente",
+      "title": "Choisissez le bon plan pour",
+      "titleHighlight": "votre projet",
+      "subtitle": "De l'essai gratuit aux fonctionnalités d'entreprise. Tous les prix sont transparents et résiliables mensuellement.",
+      "badges": {
+        "vat": "Tous les prix hors TVA",
+        "noSetup": "Pas de frais de configuration",
+        "cancelAnytime": "Annuler à tout moment"
       }
     },
-    "pro": {
-      "name": "Professionnel",
-      "price": "€49",
-      "period": "/mois",
-      "description": "Pour les professionnels et petites équipes",
-      "cta": "Commencer l'essai gratuit",
-      "popular": "Le plus populaire",
-      "features": {
-        "scans": "Analyses illimitées",
-        "pages": "Jusqu'à 100 pages par analyse",
-        "advanced": "Les 8 catégories avancées",
-        "monitoring": "Surveillance continue",
-        "reports": "Exports PDF/DOCX",
-        "support": "Support par email"
-      }
-    },
-    "enterprise": {
-      "name": "Entreprise",
-      "price": "Personnalisé",
-      "description": "Pour les grandes organisations",
-      "cta": "Contacter les ventes",
-      "features": {
-        "scans": "Analyses illimitées",
-        "pages": "Pages illimitées",
-        "advanced": "Toutes les fonctionnalités",
-        "whitelabel": "Tableau de bord en marque blanche",
-        "api": "Accès API",
-        "sla": "Garantie SLA",
-        "support": "Support prioritaire",
-        "training": "Formation d'équipe"
-      }
-    },
-    "faq": {
-      "title": "Questions fréquentes",
-      "q1": {
-        "question": "Puis-je changer de plan plus tard?",
-        "answer": "Oui, vous pouvez passer à un plan supérieur ou inférieur à tout moment."
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "Pour les petits sites web et l'usage personnel",
+        "cta": "Commencer avec Starter",
+        "features": {
+          "sites": "{count} site web",
+          "pages": "{count} pages/mois",
+          "users": "{count} utilisateur",
+          "pdfExport": "Export PDF",
+          "basicReports": "Rapports de base",
+          "emailSupport": "Support par e-mail"
+        },
+        "limitations": {
+          "noWord": "Pas d'export Word",
+          "noScheduling": "Pas de planification",
+          "limitedIntegrations": "Intégrations limitées"
+        }
       },
-      "q2": {
-        "question": "Quels modes de paiement acceptez-vous?",
-        "answer": "Nous acceptons toutes les principales cartes de crédit et les virements bancaires pour les plans entreprise."
+      "pro": {
+        "name": "Pro",
+        "description": "Pour les professionnels qui scannent régulièrement",
+        "cta": "Essayer Pro",
+        "popular": "Populaire",
+        "features": {
+          "sites": "{count} sites web",
+          "pages": "{count} pages/mois",
+          "users": "{count} utilisateurs",
+          "exports": "Export PDF + Word",
+          "advancedReports": "Rapports avancés",
+          "scheduling": "Planification",
+          "integrations": "Intégration Slack & Jira",
+          "prioritySupport": "Support prioritaire"
+        }
       },
-      "q3": {
-        "question": "Y a-t-il un essai gratuit?",
-        "answer": "Oui, tous les plans payants incluent un essai gratuit de 14 jours. Aucune carte de crédit requise."
+      "business": {
+        "name": "Business",
+        "description": "Pour les équipes et l'usage d'entreprise",
+        "cta": "Commencer avec Business",
+        "features": {
+          "sites": "{count} sites web",
+          "pages": "{count} pages/mois",
+          "users": "{count} utilisateurs",
+          "allExports": "Tous les exports (PDF + Word)",
+          "whiteLabel": "Rapports en marque blanche",
+          "advancedScheduling": "Planification avancée",
+          "allIntegrations": "Toutes les intégrations",
+          "prioritySupport": "Support prioritaire (réponse en 4h)"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Personnalisé",
+        "description": "Scan illimité pour les grandes organisations",
+        "cta": "Contactez-nous",
+        "features": {
+          "unlimitedSites": "Sites web illimités",
+          "unlimitedPages": "Pages illimitées",
+          "unlimitedUsers": "Utilisateurs illimités",
+          "customIntegrations": "Intégrations personnalisées",
+          "sso": "SSO/SAML",
+          "dedicatedSupport": "Support dédié",
+          "sla": "Garantie SLA",
+          "onPremise": "Option sur site"
+        }
       }
+    },
+    "loading": "Chargement...",
+    "footer": {
+      "note": "Tous les prix hors TVA. Annuler à tout moment.",
+      "contact": "Des questions ? Contactez-nous."
+    },
+    "overflow": {
+      "title": "Tarification en Dépassement",
+      "subtitle": "Lorsque vous dépassez les limites de votre plan, nous facturons de petits montants au lieu de vous bloquer",
+      "table": {
+        "resource": "Ressource",
+        "price": "Prix de Dépassement",
+        "description": "Description"
+      },
+      "resources": {
+        "extraPages": "Pages Supplémentaires",
+        "extraSites": "Sites Web Supplémentaires",
+        "extraUsers": "Utilisateurs Supplémentaires"
+      },
+      "alert": {
+        "title": "Comment ça fonctionne :",
+        "description": "Lorsque vous dépassez régulièrement les limites de votre plan, nous vous en informerons et recommanderons une mise à niveau. Les petits dépassements sont automatiquement facturés mensuellement. Vous gardez toujours le contrôle."
+      }
+    },
+    "compliance": {
+      "title": "Avertissement de Conformité",
+      "warning": "Aucun outil ne peut garantir une conformité légale à 100% dans tous les contextes.",
+      "description": "TutusPorta détecte et signale les problèmes, aide à la remédiation et vous aide à respecter les normes WCAG et connexes. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu. Notre scanner est un outil pour assister vos efforts de conformité, pas une garantie légale.",
+      "links": {
+        "terms": "Conditions de Service",
+        "privacy": "Politique de Confidentialité"
+      }
+    },
+    "comparison": {
+      "title": "Comment TutusPorta se Compare",
+      "subtitle": "Comparaison de notre approche avec les widgets overlay et les scanners d'accessibilité génériques",
+      "columns": {
+        "feature": "Fonctionnalité",
+        "tutusporta": "TutusPorta",
+        "overlay": "Widgets Overlay",
+        "generic": "Scanners Génériques"
+      },
+      "features": {
+        "coverage": {
+          "name": "Profondeur de Couverture",
+          "tutusporta": "WCAG + 8 catégories supplémentaires",
+          "overlay": "Correctifs superficiels uniquement",
+          "generic": "Vérifications WCAG de base"
+        },
+        "actionability": {
+          "name": "Actionnabilité",
+          "tutusporta": "Extraits de code + conseils de remédiation",
+          "overlay": "Aucun guide pour les développeurs",
+          "generic": "Messages d'erreur génériques"
+        },
+        "team": {
+          "name": "Fonctionnalités d'Équipe",
+          "tutusporta": true,
+          "overlay": false,
+          "generic": false
+        },
+        "monitoring": {
+          "name": "Surveillance Continue",
+          "tutusporta": true,
+          "overlay": false,
+          "generic": false
+        },
+        "api": {
+          "name": "Accès API",
+          "tutusporta": true,
+          "overlay": false,
+          "generic": "Limité"
+        },
+        "falsePositives": {
+          "name": "Faux Positifs",
+          "tutusporta": "Faible",
+          "overlay": "N/A",
+          "generic": "Élevé"
+        },
+        "legal": {
+          "name": "Position Juridique",
+          "tutusporta": "L'outil aide à la conformité",
+          "overlay": "Prétend corriger les problèmes",
+          "generic": "Aucune réclamation juridique"
+        },
+        "cost": {
+          "name": "Échelle de Coûts",
+          "tutusporta": "Tarification de dépassement transparente",
+          "overlay": "Frais par page",
+          "generic": "Paliers fixes uniquement"
+        }
+      },
+      "disclaimer": "Les widgets overlay injectent du JavaScript qui tente de modifier votre site côté client. Bien qu'ils puissent aider certains utilisateurs, ils ne corrigent pas les problèmes de code sous-jacents et peuvent créer de nouveaux problèmes d'accessibilité. Les scanners génériques manquent souvent les problèmes spécifiques au contexte. TutusPorta fournit une couverture automatisée plus approfondie et des conseils pratiques pour les développeurs."
+    },
+    "cta": {
+      "title": "Commencez à scanner aujourd'hui",
+      "subtitle": "Commencez avec un essai gratuit et mettez à niveau lorsque vous avez besoin de plus de fonctionnalités. Pas de frais de configuration, pas de surprises.",
+      "startTrial": "Commencer l'essai gratuit",
+      "contactSales": "Contacter les ventes"
     }
   },
   "contact": {
