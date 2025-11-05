@@ -7,7 +7,7 @@ import { ArrowLeft, Shield, Mail, Calendar, Clock, Activity, ListTree } from 'lu
 import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
-  title: 'SLA & {t('keyPoints.support')} - TutusPorta',
+  title: 'SLA & Support - TutusPorta',
   description:
     'Service Level Agreement en support informatie van TutusPorta: uptime garanties, response times en support levels.',
   keywords: [

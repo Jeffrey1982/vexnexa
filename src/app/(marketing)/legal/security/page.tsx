@@ -48,7 +48,7 @@ const sections = [
   { id: 'storage', label: 'Data Storage' },
   { id: 'retention', label: 'Data Retention' },
   { id: 'third-party', label: 'Third-Party Services' },
-  { id: 'incidents', label: 'Security {t('guarantees.incident')}' },
+  { id: 'incidents', label: 'Security Incidents' },
   { id: 'contact', label: 'Contact' },
 ]
 
