@@ -206,7 +206,7 @@ function ResetPasswordForm() {
                       {t('resetting')}
                     </div>
                   ) : (
-                    '{t('resetButton')}'
+                    t('resetButton')
                   )}
                 </Button>
               </form>

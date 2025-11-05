@@ -126,7 +126,7 @@ export default function ForgotPasswordPage() {
                         {t('sending')}
                       </div>
                     ) : (
-                      '{t('sendButton')}'
+                      t('sendButton')
                     )}
                   </Button>
                 </form>
