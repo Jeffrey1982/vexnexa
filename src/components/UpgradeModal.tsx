@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -31,6 +32,8 @@ export function UpgradeModal({
   limit,
   current,
 }: UpgradeModalProps) {
+  const t = useTranslations("upgradeModal");
+
   const getTitle = () => {
     switch (reason) {
       case "UPGRADE_REQUIRED":
