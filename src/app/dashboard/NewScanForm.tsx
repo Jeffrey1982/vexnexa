@@ -9,6 +9,8 @@ import { Loader2, Search, AlertCircle, Sparkles, Info } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function NewScanForm() {
+  const t = useTranslations("dashboard.newScan");
+  const tScan = useTranslations("scanForm");
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
