@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -53,33 +54,8 @@ type Method = {
   href?: string;
 };
 
-const contactMethods: Method[] = [
-  {
-    icon: Mail,
-    title: "E-mail Support",
-    description: "For general questions and support",
-    detail: "Responstijd: 24–72 uur",
-    actionLabel: "info@tutusporta.com",
-    href: "mailto:info@tutusporta.com",
-  },
-  {
-    icon: MessageCircle,
-    title: "Sales & Demo",
-    description: "For Team plans and enterprise solutions",
-    detail: "Personal demo within 24 hours",
-    actionLabel: "Schedule a call",
-    href: "/demo", // Links to demo page with contact form
-  },
-  {
-    icon: Globe,
-    title: "Made in the Netherlands",
-    description: "Privacy-first, GDPR compliant",
-    detail: "Data stored in Europe",
-    actionLabel: "Amsterdam, Nederland",
-  },
-];
-
 export default function ContactPage() {
+  const t = useTranslations('contact');
   const { toast } = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -93,6 +69,32 @@ export default function ContactPage() {
     company: "",
   });
 
+  const contactMethods: Method[] = [
+    {
+      icon: Mail,
+      title: t('methods.email.title'),
+      description: t('methods.email.description'),
+      detail: t('methods.email.detail'),
+      actionLabel: t('methods.email.actionLabel'),
+      href: "mailto:info@tutusporta.com",
+    },
+    {
+      icon: MessageCircle,
+      title: t('methods.sales.title'),
+      description: t('methods.sales.description'),
+      detail: t('methods.sales.detail'),
+      actionLabel: t('methods.sales.actionLabel'),
+      href: "/demo", // Links to demo page with contact form
+    },
+    {
+      icon: Globe,
+      title: t('methods.location.title'),
+      description: t('methods.location.description'),
+      detail: t('methods.location.detail'),
+      actionLabel: t('methods.location.actionLabel'),
+    },
+  ];
+
   const isValidEmail = useMemo(
     () => (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
     []
@@ -100,12 +102,12 @@ export default function ContactPage() {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!formData.name.trim()) e.name = "Enter your name.";
-    if (!formData.email.trim() || !isValidEmail(formData.email)) e.email = "Enter a valid email address.";
-    if (!formData.message.trim() || formData.message.trim().length < 10) e.message = "Write at least 10 characters.";
-    if (!consent) e.consent = "Give permission to respond to your message.";
+    if (!formData.name.trim()) e.name = t('form.errors.name');
+    if (!formData.email.trim() || !isValidEmail(formData.email)) e.email = t('form.errors.email');
+    if (!formData.message.trim() || formData.message.trim().length < 10) e.message = t('form.errors.message');
+    if (!consent) e.consent = t('form.errors.consent');
     // honeypot
-    if (formData.company.trim()) e.company = "Spam detected.";
+    if (formData.company.trim()) e.company = t('form.errors.spam');
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -128,8 +130,8 @@ export default function ContactPage() {
 
       if (response.ok) {
         toast({
-          title: "Message sent!",
-          description: "We will contact you within 24 hours.",
+          title: t('form.toast.successTitle'),
+          description: t('form.toast.successDescription'),
         });
         const emailForTrack = formData.email;
         const len = formData.message.length;
@@ -149,8 +151,8 @@ export default function ContactPage() {
     } catch {
       toast({
         variant: "destructive",
-        title: "Something went wrong",
-        description: "Try again later or send an email to info@tutusporta.com",
+        title: t('form.toast.errorTitle'),
+        description: t('form.toast.errorDescription'),
       });
     } finally {
       setIsSubmitting(false);
@@ -162,6 +164,8 @@ export default function ContactPage() {
     if (errors[field]) setErrors((e) => ({ ...e, [field]: "" }));
   };
 
+  const benefits = t.raw('form.benefits') as string[];
+
   return (
     <div className="flex flex-col">
       {/* Skip link */}
@@ -169,7 +173,7 @@ export default function ContactPage() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
       >
-        Skip to main content
+        {t('skipLink')}
       </a>
 
       {/* Hero */}
@@ -179,11 +183,10 @@ export default function ContactPage() {
           <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative max-w-4xl mx-auto text-center space-y-4 p-8 sm:p-12">
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-              Let&apos;s <span className="text-primary">talk</span>
+              {t('hero.title')} <span className="text-primary">{t('hero.titleHighlight')}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Vragen over TutusPorta, een demo plannen of feedback? We horen graag van je.
-              No sales talk — just helpful people.
+              {t('hero.subtitle')}
             </p>
           </div>
         </div>
@@ -226,35 +229,24 @@ export default function ContactPage() {
             {/* Left column */}
             <div className="space-y-6">
               <div>
-                <h2 className="font-display text-3xl font-bold mb-4">Send us a message</h2>
+                <h2 className="font-display text-3xl font-bold mb-4">{t('form.title')}</h2>
                 <p className="text-lg text-muted-foreground">
-                  Fill in the form and we will contact you as soon as possible.
-                  For urgent questions you can also email directly.
+                  {t('form.subtitle')}
                 </p>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Response within 24 hours on business days</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Free demos and consultation’s en consultatie</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Dutch support in Dutch</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
-                  <span>Privacy-first: your data is stored securely</span>
-                </div>
+                {benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-success" aria-hidden="true" />
+                    <span>{benefit}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="pt-6">
                 <p className="text-sm text-muted-foreground">
-                  Liever direct contact? Mail{" "}
+                  {t('form.directContact')}{" "}
                   <a href="mailto:info@tutusporta.com" className="text-primary hover:underline">
                     info@tutusporta.com
                   </a>
@@ -266,11 +258,11 @@ export default function ContactPage() {
             {/* Right column – form */}
             <Card>
               <CardHeader>
-                <CardTitle className="font-display">Contact form</CardTitle>
+                <CardTitle className="font-display">{t('form.cardTitle')}</CardTitle>
                 <CardDescription>
-                  We treat your data confidentially according to our{" "}
+                  {t('form.cardDescription')}{" "}
                   <Link href="/legal/privacy" className="text-primary hover:underline">
-                    privacybeleid
+                    {t('form.privacyPolicy')}
                   </Link>
                   .
                 </CardDescription>
@@ -279,7 +271,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                   {/* Honeypot (hidden for users, visible for bots) */}
                   <div className="sr-only" aria-hidden="true">
-                    <Label htmlFor="company">Company name</Label>
+                    <Label htmlFor="company">{t('form.labels.company')}</Label>
                     <Input
                       id="company"
                       name="company"
@@ -292,7 +284,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name *</Label>
+                    <Label htmlFor="name">{t('form.labels.name')}</Label>
                     <Input
                       id="name"
                       type="text"
@@ -301,7 +293,7 @@ export default function ContactPage() {
                       onChange={(e) => handleInput("name", e.target.value)}
                       required
                       disabled={isSubmitting}
-                      placeholder="Your first and last name"
+                      placeholder={t('form.placeholders.name')}
                       aria-invalid={!!errors.name}
                       aria-describedby={errors.name ? "name-error" : undefined}
                     />
@@ -313,7 +305,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">E-mail *</Label>
+                    <Label htmlFor="email">{t('form.labels.email')}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -322,7 +314,7 @@ export default function ContactPage() {
                       onChange={(e) => handleInput("email", e.target.value)}
                       required
                       disabled={isSubmitting}
-                      placeholder="you@email.com"
+                      placeholder={t('form.placeholders.email')}
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? "email-error" : undefined}
                     />
@@ -334,14 +326,14 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
+                    <Label htmlFor="message">{t('form.labels.message')}</Label>
                     <Textarea
                       id="message"
                       value={formData.message}
                       onChange={(e) => handleInput("message", e.target.value)}
                       required
                       disabled={isSubmitting}
-                      placeholder="Tell us how we can help you…"
+                      placeholder={t('form.placeholders.message')}
                       rows={6}
                       aria-invalid={!!errors.message}
                       aria-describedby={errors.message ? "message-error" : undefined}
@@ -368,9 +360,9 @@ export default function ContactPage() {
                         aria-describedby={errors.consent ? "consent-error" : undefined}
                       />
                       <Label htmlFor="consent" className="leading-relaxed">
-                        I give permission to use my data to respond to my message, in accordance with the{" "}
+                        {t('form.consent.label')}{" "}
                         <Link href="/legal/privacy" className="text-primary hover:underline">
-                          privacybeleid
+                          {t('form.consent.privacyPolicy')}
                         </Link>
                         .
                       </Label>
@@ -386,12 +378,12 @@ export default function ContactPage() {
                     {isSubmitting ? (
                       <>
                         <Clock className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                        Sending…
+                        {t('form.submit.sending')}
                       </>
                     ) : (
                       <>
                         <Send className="mr-2 h-4 w-4" aria-hidden="true" />
-                        Send message
+                        {t('form.submit.idle')}
                       </>
                     )}
                   </Button>
@@ -406,53 +398,51 @@ export default function ContactPage() {
       <section className="container mx-auto px-4 py-12 sm:py-16">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-3xl font-bold mb-3">Frequently asked questions</h2>
-            <p className="text-lg text-muted-foreground">Quick answers to the most common questions</p>
+            <h2 className="font-display text-3xl font-bold mb-3">{t('faq.title')}</h2>
+            <p className="text-lg text-muted-foreground">{t('faq.subtitle')}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
-                <CardTitle>How quickly will I get a response??</CardTitle>
+                <CardTitle>{t('faq.q1.question')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  We respond within 24 hours on business days. For Team demos and sales we try to respond within 4 hours.’s en sales proberen we binnen 4 uur te reageren.
+                  {t('faq.q1.answer')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Can you give a custom demo??</CardTitle>
+                <CardTitle>{t('faq.q2.question')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Certainly. We&apos;d be happy to give a personal demo using your own website as an example. Plan een 30-minuten gesprek
-                  via het formulier of de “Schedule a call”-knop.
+                  {t('faq.q2.answer')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Do you offer training and consultancy??</CardTitle>
+                <CardTitle>{t('faq.q3.question')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  For Team accounts we offer onboarding and training sessions. For consultancy we provide custom quotes.
+                  {t('faq.q3.answer')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>How does enterprise support work??</CardTitle>
+                <CardTitle>{t('faq.q4.question')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Enterprise krijgt dedicated support, SSO, custom branding en desgewenst on-premise deployment. Neem contact op
-                  for details.
+                  {t('faq.q4.answer')}
                 </p>
               </CardContent>
             </Card>
@@ -463,14 +453,14 @@ export default function ContactPage() {
       {/* CTA */}
       <section className="container mx-auto px-4 py-20 sm:py-24 text-center">
         <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-          <h2 className="font-display text-3xl md:text-4xl font-bold">Prefer to try it first??</h2>
+          <h2 className="font-display text-3xl md:text-4xl font-bold">{t('cta.title')}</h2>
           <p className="text-xl text-muted-foreground">
-            Start directly with a free scan of your website. Registration required, results within seconds.
+            {t('cta.subtitle')}
           </p>
 
           <Button size="lg" asChild>
             <Link href="/auth/register">
-              Start free scan
+              {t('cta.button')}
               <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>

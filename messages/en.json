@@ -419,31 +419,107 @@
     }
   },
   "contact": {
-    "title": "Get in touch",
-    "subtitle": "Have a question or need help? We're here for you.",
-    "form": {
-      "name": "Name",
-      "email": "Email",
-      "subject": "Subject",
-      "message": "Message",
-      "send": "Send message",
-      "sending": "Sending...",
-      "success": "Message sent successfully!",
-      "error": "Failed to send message. Please try again."
+    "metadata": {
+      "title": "Contact - TutusPorta WCAG Scanner",
+      "description": "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
+      "keywords": "contact, support, accessibility help, WCAG questions, demo, enterprise"
     },
-    "info": {
+    "skipLink": "Skip to main content",
+    "hero": {
+      "title": "Let's",
+      "titleHighlight": "talk",
+      "subtitle": "Questions about TutusPorta, schedule a demo or feedback? We'd love to hear from you. No sales talk — just helpful people."
+    },
+    "methods": {
       "email": {
-        "title": "Email",
-        "value": "support@tutusporta.com"
+        "title": "E-mail Support",
+        "description": "For general questions and support",
+        "detail": "Response time: 24–72 hours",
+        "actionLabel": "info@tutusporta.com"
       },
-      "phone": {
-        "title": "Phone",
-        "value": "+31 (0) 20 123 4567"
+      "sales": {
+        "title": "Sales & Demo",
+        "description": "For Team plans and enterprise solutions",
+        "detail": "Personal demo within 24 hours",
+        "actionLabel": "Schedule a call"
       },
-      "office": {
-        "title": "Office",
-        "value": "Amsterdam, Netherlands"
+      "location": {
+        "title": "Made in the Netherlands",
+        "description": "Privacy-first, GDPR compliant",
+        "detail": "Data stored in Europe",
+        "actionLabel": "Amsterdam, Netherlands"
       }
+    },
+    "form": {
+      "title": "Send us a message",
+      "subtitle": "Fill in the form and we will contact you as soon as possible. For urgent questions you can also email directly.",
+      "benefits": [
+        "Response within 24 hours on business days",
+        "Free demos and consultations",
+        "Support in Dutch",
+        "Privacy-first: your data is stored securely"
+      ],
+      "directContact": "Prefer direct contact? Email",
+      "cardTitle": "Contact form",
+      "cardDescription": "We treat your data confidentially according to our",
+      "privacyPolicy": "privacy policy",
+      "labels": {
+        "name": "Name *",
+        "email": "E-mail *",
+        "message": "Message *",
+        "company": "Company name"
+      },
+      "placeholders": {
+        "name": "Your first and last name",
+        "email": "you@email.com",
+        "message": "Tell us how we can help you…"
+      },
+      "consent": {
+        "label": "I give permission to use my data to respond to my message, in accordance with the",
+        "privacyPolicy": "privacy policy"
+      },
+      "submit": {
+        "idle": "Send message",
+        "sending": "Sending…"
+      },
+      "errors": {
+        "name": "Enter your name.",
+        "email": "Enter a valid email address.",
+        "message": "Write at least 10 characters.",
+        "consent": "Give permission to respond to your message.",
+        "spam": "Spam detected."
+      },
+      "toast": {
+        "successTitle": "Message sent!",
+        "successDescription": "We will contact you within 24 hours.",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "Try again later or send an email to info@tutusporta.com"
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Quick answers to the most common questions",
+      "q1": {
+        "question": "How quickly will I get a response?",
+        "answer": "We respond within 24 hours on business days. For Team demos and sales we try to respond within 4 hours."
+      },
+      "q2": {
+        "question": "Can you give a custom demo?",
+        "answer": "Certainly. We'd be happy to give a personal demo using your own website as an example. Schedule a 30-minute call via the form or the 'Schedule a call' button."
+      },
+      "q3": {
+        "question": "Do you offer training and consultancy?",
+        "answer": "For Team accounts we offer onboarding and training sessions. For consultancy we provide custom quotes."
+      },
+      "q4": {
+        "question": "How does enterprise support work?",
+        "answer": "Enterprise gets dedicated support, SSO, custom branding and optional on-premise deployment. Contact us for details."
+      }
+    },
+    "cta": {
+      "title": "Prefer to try it first?",
+      "subtitle": "Start directly with a free scan of your website. Registration required, results within seconds.",
+      "button": "Start free scan"
     }
   },
   "auth": {
@@ -571,7 +647,9 @@
     "subtitle": "Monitor your website accessibility scans and improvements",
     "newScan": {
       "title": "New Accessibility Scan",
-      "description": "Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories"
+      "description": "Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories",
+      "enhancedTitle": "✨ New: 100% Enhanced Scanning",
+      "enhancedDescription": "WCAG + 8 extra categories: keyboard navigation, screen reader tests, mobile accessibility, cognitive analysis and more."
     },
     "tabs": {
       "overview": "Overview",
@@ -706,6 +784,479 @@
       "failed": "failed",
       "queued": "queued"
     }
+  },
+  "about": {
+    "metadata": {
+      "title": "About TutusPorta - WCAG Accessibility Scans by VexNexa",
+      "description": "TutusPorta: WCAG scans without noise — clear priorities, concrete fixes, and measurable quality. EU hosting, axe-core ruleset.",
+      "ogTitle": "About TutusPorta - WCAG Accessibility Scans by VexNexa",
+      "ogDescription": "Accessibility without noise — clear priorities, concrete fixes, measurable quality. EU hosting, axe-core ruleset.",
+      "twitterTitle": "About TutusPorta - WCAG Accessibility Scans by VexNexa",
+      "twitterDescription": "Accessibility without noise — clear priorities, concrete fixes, measurable quality."
+    },
+    "skipLink": "Skip to main content",
+    "hero": {
+      "title": "About TutusPorta — part of VexNexa",
+      "subtitle": "We make accessibility workable for busy teams. Less noise, more real improvements with clear priorities and concrete fixes.",
+      "badges": {
+        "euHosting": "EU hosting",
+        "axeCore": "axe-core ruleset",
+        "pdfWordExport": "PDF/Word export"
+      },
+      "cta": {
+        "startFreeScan": "Start free scan",
+        "startFreeScanAriaLabel": "Start your first free WCAG scan",
+        "planDemo": "Schedule 15-min demo",
+        "planDemoAriaLabel": "Schedule a demo"
+      }
+    },
+    "whyWeExist": {
+      "title": "Why we exist",
+      "paragraph1": "Teams often drown in reports full of noise: technical jargon, vague references, and little guidance. Meanwhile, the pressure grows: stricter legislation, users with diverse needs, and the simple fact that accessible sites perform better.",
+      "paragraph2": "TutusPorta turns that around. We show exactly what's wrong, what has priority, and how to fix it — so the team can start today.",
+      "paragraph3": "Accessibility doesn't have to feel complex. It should be practical, understandable, and action-oriented."
+    },
+    "whatMakesUsDifferent": {
+      "title": "What makes us different",
+      "subtitle": "Five reasons why teams choose TutusPorta",
+      "features": {
+        "vexnexaQuality": {
+          "title": "VexNexa quality",
+          "description": "Rule sets tuned to axe-core + our filtering. Less noise, more real issues with user impact."
+        },
+        "actionableReports": {
+          "title": "Action-oriented reports",
+          "description": "No jargon — concrete steps, code examples, and context per issue."
+        },
+        "smartPrioritization": {
+          "title": "Smart prioritization",
+          "description": "Critical, Serious, Moderate, Minor — start where the impact is greatest."
+        },
+        "transparentSecure": {
+          "title": "Transparent & secure",
+          "description": "EU hosting (e.g., eu-central), TLS everywhere, data minimization. Your data stays yours."
+        },
+        "teamworkFeatures": {
+          "title": "Teamwork features",
+          "description": "Shareable links, exports to PDF/Word, clear progress tracking. Everyone stays engaged."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "From confusion to action plan in three steps",
+      "steps": {
+        "scan": {
+          "title": "Scan",
+          "description": "Enter a URL. The engine checks against WCAG 2.2 AA and immediately highlights the real issues."
+        },
+        "understand": {
+          "title": "Understand",
+          "description": "Clear report with priorities, explanation, impact, and examples — ready for your backlog."
+        },
+        "improve": {
+          "title": "Improve",
+          "description": "Export, share, and fix systematically. Track progress and see the effect on users."
+        }
+      }
+    },
+    "results": {
+      "title": "Results that matter",
+      "subtitle": "What teams achieve with TutusPorta",
+      "kpis": {
+        "lessTime": {
+          "value": "75%",
+          "label": "Less time on scans",
+          "description": "Focused reporting and priorities"
+        },
+        "lessFalsePositives": {
+          "value": "60%",
+          "label": "Fewer false positives",
+          "description": "Smarter filtering, less noise"
+        },
+        "conversionPotential": {
+          "value": "25%",
+          "label": "Conversion potential",
+          "description": "Accessible sites perform better"
+        }
+      },
+      "disclaimer": "* Indicative; results vary per site and implementation."
+    },
+    "securityTrust": {
+      "title": "Security & trust",
+      "euDataPrivacy": {
+        "title": "EU data & privacy",
+        "items": {
+          "hosting": "Hosting in EU region (e.g., eu-central)",
+          "tls": "TLS everywhere, strong password hashing",
+          "dataMinimization": "Data minimization + automatic cleanup"
+        }
+      },
+      "transparencyControl": {
+        "title": "Transparency & control",
+        "items": {
+          "ownership": "You remain owner of your data",
+          "exports": "Full exports and audit trails",
+          "updates": "Regular updates with new WCAG/axe rules"
+        }
+      }
+    },
+    "valuesTeam": {
+      "title": "Our values & team",
+      "values": {
+        "quality": {
+          "title": "Quality",
+          "description": "No shortcuts — only working solutions"
+        },
+        "clarity": {
+          "title": "Clarity",
+          "description": "Complex matters explained simply"
+        },
+        "respect": {
+          "title": "Respect",
+          "description": "For all users and their needs"
+        },
+        "responsibility": {
+          "title": "Responsibility",
+          "description": "Accessibility is everyone's task"
+        }
+      },
+      "quote": "Accessibility is not a checkbox — it's product craftsmanship. It's about respect for all people who want to use your product."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "questions": {
+        "q1": {
+          "question": "Does a scan mean full WCAG compliance?",
+          "answer": "No. Automated checks cover the automatically testable criteria. Manual testing remains necessary. TutusPorta does catch most common issues."
+        },
+        "q2": {
+          "question": "Can I scan multiple pages or sites?",
+          "answer": "Yes. Depending on your plan, you can include multiple pages per scan. Site-wide crawling (beta) automatically finds subpages."
+        },
+        "q3": {
+          "question": "Can I share reports with team or clients?",
+          "answer": "Absolutely. Each report has a shareable link and export to PDF/Word — handy for presentations and audits."
+        },
+        "q4": {
+          "question": "What about privacy and data security?",
+          "answer": "We only scan publicly accessible content and don't store personal data. EU hosting, TLS, and data minimization."
+        },
+        "q5": {
+          "question": "Why does VexNexa invoice?",
+          "answer": "TutusPorta is a product of VexNexa. Contracts, invoicing, and support run through VexNexa for clear responsibilities."
+        },
+        "q6": {
+          "question": "Can I try TutusPorta for free?",
+          "answer": "Yes. You get one free scan weekly. Registration required; no credit card needed."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Make your site more accessible today",
+      "subtitle": "Start with a free scan and see immediately which improvements have the most impact.",
+      "cta": {
+        "startFreeScan": "Start free scan",
+        "startFreeScanAriaLabel": "Start your first free WCAG scan",
+        "viewPricing": "View pricing",
+        "viewPricingAriaLabel": "View pricing plans"
+      }
+    },
+    "footerDisclaimer": {
+      "billing": "Invoicing is done through VexNexa. TutusPorta is a product of VexNexa.",
+      "questions": "Questions? Email",
+      "email": "info@vexnexa.com"
+    }
+  },
+  "changelog": {
+    "metadata": {
+      "title": "Changelog - TutusPorta",
+      "description": "All updates, new features and improvements to TutusPorta accessibility scanner."
+    },
+    "title": "Changelog",
+    "subtitle": "Stay up to date with all new features, improvements and bug fixes. We're constantly working to improve your accessibility scanning experience.",
+    "betaLaunch": {
+      "title": "Beta Launch",
+      "version": "v0.1.0",
+      "date": "December 2024",
+      "newFeatures": "✨ New features",
+      "features": [
+        "Axe-core powered accessibility scanning",
+        "PDF and Word export functionality",
+        "Issue priorities (Critical, Serious, Moderate, Minor)",
+        "Detailed reporting with examples",
+        "Responsive dashboard interface"
+      ]
+    },
+    "upcoming": {
+      "crawling": {
+        "title": "Site-wide Crawling",
+        "badge": "Coming Soon",
+        "description": "Scan complete websites at once. Get an overview of accessibility issues across your entire site and prioritize fixes based on impact."
+      },
+      "teamFeatures": {
+        "title": "Team Features",
+        "badge": "In Development",
+        "features": [
+          "Team accounts with multiple users",
+          "Shared scans and reports",
+          "Integrations with Jira and Linear",
+          "Automated scanning and alerts"
+        ]
+      }
+    },
+    "cta": "Start free scan"
+  },
+  "newsletter": {
+    "confirmed": {
+      "title": "Subscription confirmed! 🎉",
+      "subtitle": "You're now subscribed to the TutusPorta newsletter",
+      "emailSent": "Welcome email sent",
+      "checkInbox": "Check your inbox for your welcome message with all the details.",
+      "whatToExpect": "What can you expect?",
+      "expectations": {
+        "productNews": "Product news and features",
+        "wcagTips": "WCAG tips & tricks",
+        "accessibilityTrends": "Accessibility trends",
+        "emailFrequency": "Max. 2 emails/month"
+      },
+      "startScan": "Start your first scan",
+      "backToHome": "Back to homepage",
+      "gdprNote": "GDPR compliant: You can always unsubscribe via the link in every newsletter, or by sending an email to info@tutusporta.com."
+    },
+    "unsubscribed": {
+      "title": "Unsubscribed",
+      "subtitle": "You won't receive newsletters from TutusPorta anymore",
+      "confirmationSent": "Unsubscription confirmed",
+      "confirmationMessage": "You'll receive a confirmation email of your unsubscription.",
+      "whatThisMeans": "What does this mean?",
+      "details": [
+        "You won't receive marketing emails anymore",
+        "Transactional emails (like account confirmations) you'll still receive",
+        "Your data is kept according to our privacy policy",
+        "You can always resubscribe"
+      ],
+      "accidentalTitle": "Unsubscribed by accident?",
+      "accidentalMessage": "No problem! You can resubscribe via our homepage.",
+      "resubscribe": "Resubscribe",
+      "feedbackTitle": "Feedback:",
+      "feedbackMessage": "We'd like to know why you unsubscribed.",
+      "shareFeedback": "Share your feedback"
+    },
+    "invalid": {
+      "title": {
+        "token": "Invalid link",
+        "unsubscribed": "Account unsubscribed",
+        "default": "Link problem"
+      },
+      "description": {
+        "token": "This confirmation link is not valid or has expired",
+        "unsubscribed": "This email address has already been unsubscribed from our newsletter",
+        "default": "There's a problem with this newsletter link"
+      },
+      "possibleCauses": "Possible causes:",
+      "causes": {
+        "token": [
+          "The link may have expired (links are valid for 7 days)",
+          "The link has already been used",
+          "The link was corrupted during copying"
+        ],
+        "unsubscribed": [
+          "You've already unsubscribed previously",
+          "This link can no longer be used"
+        ],
+        "default": [
+          "The link may be corrupted",
+          "The link is no longer valid"
+        ]
+      },
+      "whatToDoTitle": "What can you do?",
+      "whatToDo": {
+        "token": "Try to resubscribe for a new confirmation link.",
+        "unsubscribed": "If you want to resubscribe, go to our homepage.",
+        "default": "Contact our support team for help."
+      },
+      "resubscribe": "Resubscribe",
+      "subscribeNewsletter": "Subscribe to newsletter",
+      "contactSupport": "Contact support",
+      "loading": "Loading..."
+    }
+  },
+  "features": {
+    "metadata": {
+      "title": "Features - TutusPorta",
+      "description": "Discover all features of TutusPorta: Dashboard, scan details, PDF export, priorities and upcoming integrations."
+    },
+    "hero": {
+      "badge": "✨ All features",
+      "title": "Everything you need for",
+      "titleHighlight": "WCAG compliance",
+      "subtitle": "From quick scans to complete site analyses. Dashboard, exports, priorities and soon team collaboration.",
+      "cta": "Start free scan"
+    },
+    "priorities": {
+      "title": "Issue Priorities",
+      "subtitle": "We categorize all accessibility issues according to WCAG impact levels",
+      "critical": {
+        "title": "Critical",
+        "description": "Completely blocks access. Immediate action required."
+      },
+      "serious": {
+        "title": "Serious",
+        "description": "Significant barriers. High priority."
+      },
+      "moderate": {
+        "title": "Moderate",
+        "description": "Hinders use. Medium priority."
+      },
+      "minor": {
+        "title": "Minor",
+        "description": "Small improvements. Low priority."
+      }
+    },
+    "current": {
+      "title": "Available Features",
+      "subtitle": "Everything you can use now to make your website more accessible",
+      "dashboard": {
+        "title": "Clear Dashboard",
+        "description": "View all your scans in one overview with scores, trends and quick wins.",
+        "benefits": [
+          "All scans in one place",
+          "Score trends over time",
+          "Quick wins identification",
+          "Site overview with favicons"
+        ]
+      },
+      "scanResults": {
+        "title": "Detailed Scan Results",
+        "description": "Deep insight into every accessibility issue with concrete examples.",
+        "benefits": [
+          "Per-element analysis",
+          "WCAG 2.2 guidelines",
+          "Screenshots of problems",
+          "Filterable results"
+        ]
+      },
+      "export": {
+        "title": "PDF & Word Export",
+        "description": "Share reports with stakeholders via professional exports.",
+        "benefits": [
+          "PDF reports in one click",
+          "Word documents for editing",
+          "Branded templates",
+          "Executive summaries"
+        ]
+      },
+      "axeCore": {
+        "title": "Real Axe-Core Scans",
+        "description": "The same engine that professionals use worldwide.",
+        "benefits": [
+          "Industry-standard analyses",
+          "Regular updates",
+          "No false positives",
+          "Reliable results"
+        ]
+      }
+    },
+    "upcoming": {
+      "title": "Coming Soon",
+      "subtitle": "We're working hard on new features to make your workflow even better",
+      "crawling": {
+        "title": "Site-wide Crawling",
+        "status": "Beta",
+        "description": "Automatically scan entire websites and get a complete overview."
+      },
+      "monitoring": {
+        "title": "Alerts & Monitoring",
+        "status": "Q1 2024",
+        "description": "Automatic notifications for new issues or score changes."
+      },
+      "integrations": {
+        "title": "Jira & Linear Integrations",
+        "status": "Q2 2024",
+        "description": "Export issues directly to your project management tools."
+      },
+      "team": {
+        "title": "Team Collaboration",
+        "status": "Q2 2024",
+        "description": "Invite team members and share scans within your organization."
+      },
+      "noMissUpdates": "Don't miss updates of new features",
+      "viewChangelog": "View Changelog"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to the most common questions about TutusPorta",
+      "privacy": {
+        "question": "How does TutusPorta handle privacy?",
+        "answer": "We only scan publicly accessible content and don't store personal data. Our scans are fully GDPR compliant and we don't share data with third parties."
+      },
+      "performance": {
+        "question": "Does scanning impact my website's performance?",
+        "answer": "No, our scans have no noticeable impact on your website. We simulate a normal visitor and don't perform stress tests. Scans run in the background without straining your site."
+      },
+      "cookies": {
+        "question": "Do I need to accept cookies to use TutusPorta?",
+        "answer": "Basic functionality works without cookies. We only use cookies for analytics (optional) and to remember your preferences. You can refuse all cookies and the tool remains fully functional."
+      },
+      "international": {
+        "question": "Can I scan international websites?",
+        "answer": "Yes! TutusPorta works with websites in all languages and countries. We support international character sets and can scan websites regardless of location or language of content."
+      },
+      "account": {
+        "question": "Do I need an account or can I create teams?",
+        "answer": "For basic use, no account is needed - you can scan directly. For advanced features like saved scans, exports and team collaboration, you can create a free account."
+      },
+      "support": {
+        "question": "What kind of support do I get?",
+        "answer": "All users get email support. Free plan: 72 hour response time. Pro plan: 24 hours. Team plan: priority support within 4 hours. Plus extensive documentation and video tutorials."
+      },
+      "moreQuestions": "Have other questions?",
+      "contactUs": "Contact us"
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "subtitle": "Start improving your website's accessibility today. Free for 1 scan per week (registration required).",
+      "startScan": "Start free scan",
+      "viewPricing": "View pricing"
+    }
+  },
+  "demo": {
+    "metadata": {
+      "title": "Schedule a Demo - TutusPorta",
+      "description": "Discover how TutusPorta can help your team with WCAG compliance and accessibility."
+    },
+    "backLink": "Back to about",
+    "title": "Schedule a",
+    "titleHighlight": "personal demo",
+    "subtitle": "Discover how TutusPorta can help your team with WCAG compliance and accessibility",
+    "whatYouGet": {
+      "title": "What you get in 15 minutes:",
+      "items": [
+        "Live demo of the TutusPorta platform",
+        "Insight into automated WCAG scanning",
+        "Reporting and prioritization explained",
+        "Team collaboration features",
+        "Q&A about your specific needs"
+      ]
+    },
+    "whoIsThisFor": {
+      "title": "Who is this for?",
+      "items": [
+        "Development teams (5+ developers)",
+        "Digital agencies with multiple clients",
+        "Enterprise organizations",
+        "Teams that need WCAG compliance",
+        "Organizations with accessibility requirements"
+      ]
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "subtitle": "Or start directly with a free scan of your website",
+      "scheduleDemo": "Schedule a demo",
+      "startFreeScan": "Start free scan"
+    },
+    "additionalInfo": "No obligations • Demo lasts ~15 minutes • Response within 24 hours"
   },
   "legal": {
     "common": {
@@ -952,6 +1503,76 @@
         "supportDesc": "Response within 4 hours for Business plan users",
         "monitoring": "24/7 Monitoring",
         "monitoringDesc": "Continuous monitoring with immediate incident response"
+      }
+    }
+  },
+  "scanForm": {
+    "placeholder": "Enter website URL to scan...",
+    "button": {
+      "idle": "Start Scan",
+      "loading": "Scanning...",
+      "success": "Scan Complete"
+    },
+    "errors": {
+      "invalidUrl": "Please enter a valid URL",
+      "required": "URL is required",
+      "failed": "Scan failed. Please try again."
+    }
+  },
+  "upgradeModal": {
+    "limitReached": {
+      "title": "Scan Limit Reached",
+      "description": "You've reached your free scan limit for this week. Upgrade to continue scanning.",
+      "upgradeButton": "Upgrade Now",
+      "cancelButton": "Maybe Later"
+    },
+    "upgradeRequired": {
+      "title": "Upgrade Required",
+      "description": "This feature requires a paid plan. Upgrade to unlock advanced scanning capabilities.",
+      "upgradeButton": "View Plans",
+      "cancelButton": "Cancel"
+    },
+    "trialExpired": {
+      "title": "Trial Period Ended",
+      "description": "Your free trial has ended. Upgrade to a paid plan to continue using TutusPorta.",
+      "upgradeButton": "Choose a Plan",
+      "cancelButton": "Sign Out"
+    }
+  },
+  "modernAuth": {
+    "login": {
+      "steps": {
+        "credentials": "Sign In",
+        "verify": "Verify"
+      },
+      "socialLogin": "Sign in with {provider}",
+      "securityTips": {
+        "title": "Security Tips",
+        "tip1": "Never share your password",
+        "tip2": "Use a strong, unique password",
+        "tip3": "Enable two-factor authentication"
+      }
+    },
+    "register": {
+      "steps": {
+        "account": "Create Account",
+        "details": "Your Details",
+        "confirm": "Confirm"
+      },
+      "socialRegister": "Sign up with {provider}",
+      "passwordRequirements": {
+        "title": "Password Requirements",
+        "length": "At least 8 characters",
+        "uppercase": "One uppercase letter",
+        "lowercase": "One lowercase letter",
+        "number": "One number"
+      },
+      "benefits": {
+        "title": "What you get",
+        "freeScan": "1 free scan per week",
+        "reports": "Detailed accessibility reports",
+        "tracking": "Track improvements over time",
+        "support": "Email support"
       }
     }
   }

@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ScanForm() {
+  const t = useTranslations("scanForm");
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<any>(null);
@@ -28,13 +30,13 @@ export default function ScanForm() {
 
       if (!r.ok || !data.ok) {
         console.error('🔍 [ScanForm] Request failed:', data);
-        throw new Error(data.error || "Scan mislukt");
+        throw new Error(data.error || t("errors.failed"));
       }
 
       setRes(data);
     } catch (err: any) {
       console.error('🔍 [ScanForm] Error:', err);
-      setError(err.message ?? "Onbekende fout");
+      setError(err.message ?? t("errors.failed"));
     } finally {
       setLoading(false);
     }
@@ -47,12 +49,12 @@ export default function ScanForm() {
           type="text"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="bijv. example.com of https://example.com"
+          placeholder={t("placeholder")}
           className="flex-1 border rounded-xl px-3 py-2"
           required
         />
         <button disabled={loading} className="px-4 py-2 rounded-xl bg-black text-white disabled:opacity-50">
-          {loading ? "Scannen..." : "Scan"}
+          {loading ? t("button.loading") : t("button.idle")}
         </button>
       </form>
 
@@ -69,7 +71,7 @@ export default function ScanForm() {
             {JSON.stringify(res.summary?.top ?? [], null, 2)}
           </pre>
           <a href={`/scans/${res.scanId}`} className="text-blue-600 underline text-sm mt-2 inline-block">
-            Bekijk volledige details →
+            {t("button.success")} →
           </a>
         </div>
       )}

@@ -6,6 +6,7 @@ import { TouchButton } from "@/components/ui/touch-button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Search, AlertCircle, Sparkles, Info } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function NewScanForm() {
   const [url, setUrl] = useState("");
@@ -64,13 +65,13 @@ export function NewScanForm() {
         <div className="flex-1">
           <Input
             type="url"
-            placeholder="https://example.com"
+            placeholder={tScan("placeholder")}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={isLoading}
             className="h-10 sm:h-11 text-base sm:text-base px-4 touch-manipulation"
             required
-            aria-label="Website URL to scan"
+            aria-label={t("title")}
             autoComplete="url"
             inputMode="url"
           />
@@ -83,14 +84,14 @@ export function NewScanForm() {
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              <span className="hidden sm:inline">Scanning...</span>
-              <span className="sm:hidden">Scanning</span>
+              <span className="hidden sm:inline">{tScan("button.loading")}</span>
+              <span className="sm:hidden">{tScan("button.loading")}</span>
             </>
           ) : (
             <>
               <Sparkles className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">100% Enhanced Scan</span>
-              <span className="sm:hidden">100% Scan</span>
+              <span className="hidden sm:inline">{tScan("button.idle")}</span>
+              <span className="sm:hidden">{tScan("button.idle")}</span>
             </>
           )}
         </TouchButton>
@@ -105,16 +106,15 @@ export function NewScanForm() {
 
       <div className="space-y-2">
         <p className="text-xs text-muted-foreground">
-          Voer een complete URL in om een 100% uitgebreide toegankelijkheidsscan te starten.
+          {t("description")}
         </p>
 
         <div className="flex items-start gap-2 p-3 bg-primary/5 rounded-lg border border-primary/10">
           <Info className="w-4 h-4 text-primary mt-0.5 shrink-0" />
           <div className="text-xs text-primary">
-            <div className="font-medium mb-1">✨ Nieuw: 100% Enhanced Scanning</div>
+            <div className="font-medium mb-1">{t("enhancedTitle")}</div>
             <div className="text-primary/80">
-              WCAG + 8 extra categorieën: keyboard navigatie, screen reader tests,
-              mobile toegankelijkheid, cognitieve analyse en meer.
+              {t("enhancedDescription")}
             </div>
           </div>
         </div>

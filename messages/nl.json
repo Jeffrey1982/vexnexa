@@ -419,31 +419,107 @@
     }
   },
   "contact": {
-    "title": "Neem contact op",
-    "subtitle": "Heeft u een vraag of hulp nodig? We zijn er voor u.",
-    "form": {
-      "name": "Naam",
-      "email": "E-mail",
-      "subject": "Onderwerp",
-      "message": "Bericht",
-      "send": "Bericht verzenden",
-      "sending": "Verzenden...",
-      "success": "Bericht succesvol verzonden!",
-      "error": "Verzenden mislukt. Probeer het opnieuw."
+    "metadata": {
+      "title": "Contact - TutusPorta WCAG Scanner",
+      "description": "Neem contact op met TutusPorta voor vragen over toegankelijkheidsscans, WCAG-compliance of maatwerk oplossingen.",
+      "keywords": "contact, support, toegankelijkheidshulp, WCAG vragen, demo, enterprise"
     },
-    "info": {
+    "skipLink": "Ga naar hoofdinhoud",
+    "hero": {
+      "title": "Laten we",
+      "titleHighlight": "praten",
+      "subtitle": "Vragen over TutusPorta, een demo plannen of feedback? We horen graag van je. Geen verkooppraatjes — alleen behulpzame mensen."
+    },
+    "methods": {
       "email": {
-        "title": "E-mail",
-        "value": "support@tutusporta.com"
+        "title": "E-mail Ondersteuning",
+        "description": "Voor algemene vragen en support",
+        "detail": "Reactietijd: 24–72 uur",
+        "actionLabel": "info@tutusporta.com"
       },
-      "phone": {
-        "title": "Telefoon",
-        "value": "+31 (0) 20 123 4567"
+      "sales": {
+        "title": "Verkoop & Demo",
+        "description": "Voor Teamplannen en enterprise oplossingen",
+        "detail": "Persoonlijke demo binnen 24 uur",
+        "actionLabel": "Plan een gesprek"
       },
-      "office": {
-        "title": "Kantoor",
-        "value": "Amsterdam, Nederland"
+      "location": {
+        "title": "Gemaakt in Nederland",
+        "description": "Privacy-first, AVG-compliant",
+        "detail": "Data opgeslagen in Europa",
+        "actionLabel": "Amsterdam, Nederland"
       }
+    },
+    "form": {
+      "title": "Stuur ons een bericht",
+      "subtitle": "Vul het formulier in en we nemen zo snel mogelijk contact met je op. Voor urgente vragen kun je ook direct mailen.",
+      "benefits": [
+        "Reactie binnen 24 uur op werkdagen",
+        "Gratis demo's en consultaties",
+        "Ondersteuning in het Nederlands",
+        "Privacy-first: je gegevens worden veilig opgeslagen"
+      ],
+      "directContact": "Liever direct contact? Mail",
+      "cardTitle": "Contactformulier",
+      "cardDescription": "We behandelen je gegevens vertrouwelijk volgens ons",
+      "privacyPolicy": "privacybeleid",
+      "labels": {
+        "name": "Naam *",
+        "email": "E-mail *",
+        "message": "Bericht *",
+        "company": "Bedrijfsnaam"
+      },
+      "placeholders": {
+        "name": "Je voor- en achternaam",
+        "email": "jij@email.nl",
+        "message": "Vertel ons hoe we je kunnen helpen…"
+      },
+      "consent": {
+        "label": "Ik geef toestemming om mijn gegevens te gebruiken om op mijn bericht te reageren, conform het",
+        "privacyPolicy": "privacybeleid"
+      },
+      "submit": {
+        "idle": "Bericht versturen",
+        "sending": "Versturen…"
+      },
+      "errors": {
+        "name": "Voer je naam in.",
+        "email": "Voer een geldig e-mailadres in.",
+        "message": "Schrijf minimaal 10 tekens.",
+        "consent": "Geef toestemming om op je bericht te reageren.",
+        "spam": "Spam gedetecteerd."
+      },
+      "toast": {
+        "successTitle": "Bericht verzonden!",
+        "successDescription": "We nemen binnen 24 uur contact met je op.",
+        "errorTitle": "Er ging iets mis",
+        "errorDescription": "Probeer het later opnieuw of stuur een e-mail naar info@tutusporta.com"
+      }
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "subtitle": "Snelle antwoorden op de meest voorkomende vragen",
+      "q1": {
+        "question": "Hoe snel krijg ik een reactie?",
+        "answer": "We reageren binnen 24 uur op werkdagen. Voor Team demo's en verkoop proberen we binnen 4 uur te reageren."
+      },
+      "q2": {
+        "question": "Kunnen jullie een custom demo geven?",
+        "answer": "Zeker. We geven graag een persoonlijke demo met jouw eigen website als voorbeeld. Plan een 30-minuten gesprek via het formulier of de 'Plan een gesprek' knop."
+      },
+      "q3": {
+        "question": "Bieden jullie training en consultancy?",
+        "answer": "Voor Team accounts bieden we onboarding en trainingen. Voor consultancy bieden we maatwerk offertes."
+      },
+      "q4": {
+        "question": "Hoe werkt enterprise support?",
+        "answer": "Enterprise krijgt dedicated support, SSO, custom branding en optionele on-premise deployment. Neem contact op voor details."
+      }
+    },
+    "cta": {
+      "title": "Liever eerst proberen?",
+      "subtitle": "Start direct met een gratis scan van je website. Registratie verplicht, resultaten binnen seconden.",
+      "button": "Start gratis scan"
     }
   },
   "auth": {
@@ -571,7 +647,9 @@
     "subtitle": "Monitor uw website toegankelijkheidsscans en verbeteringen",
     "newScan": {
       "title": "Nieuwe Toegankelijkheidsscan",
-      "description": "Voer een URL in voor een 100% uitgebreide toegankelijkheidsscan met 8 extra categorieën"
+      "description": "Voer een URL in voor een 100% uitgebreide toegankelijkheidsscan met 8 extra categorieën",
+      "enhancedTitle": "✨ Nieuw: 100% Enhanced Scanning",
+      "enhancedDescription": "WCAG + 8 extra categorieën: keyboard navigatie, screen reader tests, mobile toegankelijkheid, cognitieve analyse en meer."
     },
     "tabs": {
       "overview": "Overzicht",
@@ -706,6 +784,479 @@
       "failed": "mislukt",
       "queued": "in de wachtrij"
     }
+  },
+  "about": {
+    "metadata": {
+      "title": "Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa",
+      "description": "TutusPorta: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. EU-hosting, axe-core ruleset.",
+      "ogTitle": "Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa",
+      "ogDescription": "Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit. EU-hosting, axe-core ruleset.",
+      "twitterTitle": "Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa",
+      "twitterDescription": "Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit."
+    },
+    "skipLink": "Ga naar hoofdinhoud",
+    "hero": {
+      "title": "Over TutusPorta — onderdeel van VexNexa",
+      "subtitle": "We maken toegankelijkheid werkbaar voor drukke teams. Minder ruis, meer echte verbeteringen met duidelijke prioriteiten en concrete fixes.",
+      "badges": {
+        "euHosting": "EU-hosting",
+        "axeCore": "axe-core ruleset",
+        "pdfWordExport": "PDF/Word export"
+      },
+      "cta": {
+        "startFreeScan": "Start gratis scan",
+        "startFreeScanAriaLabel": "Start je eerste gratis WCAG-scan",
+        "planDemo": "Plan 15-min demo",
+        "planDemoAriaLabel": "Plan een demo"
+      }
+    },
+    "whyWeExist": {
+      "title": "Waarom we bestaan",
+      "paragraph1": "Teams verdrinken vaak in rapporten vol ruis: technische termen, vage verwijzingen en weinig houvast. Ondertussen groeit de druk: strengere wetgeving, gebruikers met uiteenlopende behoeften en het simpele feit dat toegankelijke sites beter presteren.",
+      "paragraph2": "TutusPorta draait dat om. We laten precies zien wat er mis is, wat prioriteit heeft en hoe je het oplost — zodat het team vandaag kan beginnen.",
+      "paragraph3": "Toegankelijkheid hoeft niet complex te voelen. Het moet vooral praktisch, begrijpelijk en actiegericht zijn."
+    },
+    "whatMakesUsDifferent": {
+      "title": "Wat ons anders maakt",
+      "subtitle": "Vijf redenen waarom teams voor TutusPorta kiezen",
+      "features": {
+        "vexnexaQuality": {
+          "title": "VexNexa-kwaliteit",
+          "description": "Regelsets afgestemd op axe-core + onze filtering. Minder ruis, meer echte issues met gebruikersimpact."
+        },
+        "actionableReports": {
+          "title": "Actiegerichte rapporten",
+          "description": "Geen jargon — wel concrete stappen, codevoorbeelden en context per issue."
+        },
+        "smartPrioritization": {
+          "title": "Slimme prioritering",
+          "description": "Critical, Serious, Moderate, Minor — begin waar de impact het grootst is."
+        },
+        "transparentSecure": {
+          "title": "Transparant & veilig",
+          "description": "EU-hosting (bijv. eu-central), TLS overal, dataminimalisatie. Je data blijft van jou."
+        },
+        "teamworkFeatures": {
+          "title": "Teamwork features",
+          "description": "Deelbare links, exports naar PDF/Word, duidelijke progressie. Iedereen blijft aangehaakt."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "Hoe het werkt",
+      "subtitle": "Van onduidelijkheid naar actieplan in drie stappen",
+      "steps": {
+        "scan": {
+          "title": "Scan",
+          "description": "Voer een URL in. De engine controleert tegen WCAG 2.2 AA en markeert direct de echte issues."
+        },
+        "understand": {
+          "title": "Begrijp",
+          "description": "Overzichtelijk rapport met prioriteiten, uitleg, impact en voorbeelden — klaar voor je backlog."
+        },
+        "improve": {
+          "title": "Verbeter",
+          "description": "Exporteer, deel en los gestructureerd op. Volg voortgang en zie het effect op gebruikers."
+        }
+      }
+    },
+    "results": {
+      "title": "Resultaten die tellen",
+      "subtitle": "Wat teams bereiken met TutusPorta",
+      "kpis": {
+        "lessTime": {
+          "value": "75%",
+          "label": "Minder tijd aan scans",
+          "description": "Gefocuste rapportage en prioriteiten"
+        },
+        "lessFalsePositives": {
+          "value": "60%",
+          "label": "Minder false positives",
+          "description": "Slimmere filtering, minder ruis"
+        },
+        "conversionPotential": {
+          "value": "25%",
+          "label": "Conversie-potentieel",
+          "description": "Toegankelijke sites presteren beter"
+        }
+      },
+      "disclaimer": "* Indicatief; resultaten variëren per site en implementatie."
+    },
+    "securityTrust": {
+      "title": "Security & vertrouwen",
+      "euDataPrivacy": {
+        "title": "EU-data & privacy",
+        "items": {
+          "hosting": "Hosting in EU-regio (bijv. eu-central)",
+          "tls": "TLS overal, sterke wachtwoordhashing",
+          "dataMinimization": "Dataminimalisatie + automatische opschoning"
+        }
+      },
+      "transparencyControl": {
+        "title": "Transparantie & controle",
+        "items": {
+          "ownership": "Jij blijft eigenaar van je data",
+          "exports": "Volledige exports en audit-trails",
+          "updates": "Regelmatige updates met nieuwe WCAG/axe-regels"
+        }
+      }
+    },
+    "valuesTeam": {
+      "title": "Onze waarden & team",
+      "values": {
+        "quality": {
+          "title": "Kwaliteit",
+          "description": "Geen shortcuts — alleen werkende oplossingen"
+        },
+        "clarity": {
+          "title": "Duidelijkheid",
+          "description": "Complexe zaken simpel uitgelegd"
+        },
+        "respect": {
+          "title": "Respect",
+          "description": "Voor alle gebruikers en hun behoeften"
+        },
+        "responsibility": {
+          "title": "Verantwoordelijkheid",
+          "description": "Toegankelijkheid is ieders taak"
+        }
+      },
+      "quote": "Toegankelijkheid is geen vinkje — het is productvakmanschap. Het gaat over respect voor alle mensen die je product willen gebruiken."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "questions": {
+        "q1": {
+          "question": "Betekent een scan volledige WCAG-compliance?",
+          "answer": "Nee. Geautomatiseerde checks dekken de automatisch testbare criteria. Handmatige controles blijven nodig. TutusPorta vangt wel het merendeel van de veelvoorkomende issues."
+        },
+        "q2": {
+          "question": "Kan ik meerdere pagina's of sites scannen?",
+          "answer": "Ja. Afhankelijk van je plan kun je meerdere pagina's per scan opnemen. Site-wide crawling (beta) vindt automatisch subpagina's."
+        },
+        "q3": {
+          "question": "Kan ik rapporten delen met team of klanten?",
+          "answer": "Zeker. Elk rapport heeft een deelbare link en export naar PDF/Word — handig voor presentaties en audits."
+        },
+        "q4": {
+          "question": "Hoe zit het met privacy en databeveiliging?",
+          "answer": "We scannen alleen publiek toegankelijke content en slaan geen persoonsinhoud op. EU-hosting, TLS en dataminimalisatie."
+        },
+        "q5": {
+          "question": "Waarom factureert VexNexa?",
+          "answer": "TutusPorta is een product van VexNexa. Contracten, facturatie en support lopen via VexNexa voor heldere verantwoordelijkheden."
+        },
+        "q6": {
+          "question": "Kan ik TutusPorta gratis proberen?",
+          "answer": "Ja. Je krijgt wekelijks één gratis scan. Registratie vereist; geen creditcard nodig."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Maak je site vandaag toegankelijker",
+      "subtitle": "Begin met een gratis scan en zie direct welke verbeteringen de meeste impact hebben.",
+      "cta": {
+        "startFreeScan": "Start gratis scan",
+        "startFreeScanAriaLabel": "Start je eerste gratis WCAG-scan",
+        "viewPricing": "Bekijk prijzen",
+        "viewPricingAriaLabel": "Bekijk prijsplannen"
+      }
+    },
+    "footerDisclaimer": {
+      "billing": "Facturatie verloopt via VexNexa. TutusPorta is een product van VexNexa.",
+      "questions": "Vragen? Mail",
+      "email": "info@vexnexa.com"
+    }
+  },
+  "changelog": {
+    "metadata": {
+      "title": "Wijzigingslog - TutusPorta",
+      "description": "Alle updates, nieuwe features en verbeteringen van TutusPorta accessibility scanner."
+    },
+    "title": "Wijzigingslog",
+    "subtitle": "Blijf op de hoogte van alle nieuwe features, verbeteringen en bugfixes. We werken voortdurend aan het verbeteren van je accessibility scanning ervaring.",
+    "betaLaunch": {
+      "title": "Beta Launch",
+      "version": "v0.1.0",
+      "date": "December 2024",
+      "newFeatures": "✨ Nieuwe features",
+      "features": [
+        "Axe-core powered accessibility scanning",
+        "PDF en Word export functionaliteit",
+        "Issue prioriteiten (Critical, Serious, Moderate, Minor)",
+        "Gedetailleerde rapportage met voorbeelden",
+        "Responsive dashboard interface"
+      ]
+    },
+    "upcoming": {
+      "crawling": {
+        "title": "Site-wide Crawling",
+        "badge": "Binnenkort",
+        "description": "Scan complete websites in één keer. Krijg een overzicht van accessibility issues over je hele site en prioriteer fixes op basis van impact."
+      },
+      "teamFeatures": {
+        "title": "Team Features",
+        "badge": "In ontwikkeling",
+        "features": [
+          "Team accounts met meerdere gebruikers",
+          "Gedeelde scans en rapporten",
+          "Integraties met Jira en Linear",
+          "Automated scanning en alerts"
+        ]
+      }
+    },
+    "cta": "Start gratis scan"
+  },
+  "newsletter": {
+    "confirmed": {
+      "title": "Inschrijving bevestigd! 🎉",
+      "subtitle": "Je bent nu ingeschreven voor de TutusPorta nieuwsbrief",
+      "emailSent": "Welkomstmail verzonden",
+      "checkInbox": "Controleer je inbox voor je welkomstbericht met alle details.",
+      "whatToExpect": "Wat kun je verwachten?",
+      "expectations": {
+        "productNews": "Productnieuws en features",
+        "wcagTips": "WCAG tips & tricks",
+        "accessibilityTrends": "Accessibility trends",
+        "emailFrequency": "Max. 2 emails/maand"
+      },
+      "startScan": "Start je eerste scan",
+      "backToHome": "Terug naar homepage",
+      "gdprNote": "AVG/GDPR compliant: Je kunt je altijd uitschrijven via de link in elke nieuwsbrief, of door een email te sturen naar info@tutusporta.com."
+    },
+    "unsubscribed": {
+      "title": "Uitgeschreven",
+      "subtitle": "Je ontvangt geen nieuwsbrieven meer van TutusPorta",
+      "confirmationSent": "Uitschrijving bevestigd",
+      "confirmationMessage": "Je ontvangt een bevestigingsmail van je uitschrijving.",
+      "whatThisMeans": "Wat betekent dit?",
+      "details": [
+        "Je ontvangt geen marketing emails meer",
+        "Transactionele emails (zoals account bevestigingen) ontvang je nog wel",
+        "Je data wordt bewaard conform ons privacybeleid",
+        "Je kunt je altijd opnieuw inschrijven"
+      ],
+      "accidentalTitle": "Per ongeluk uitgeschreven?",
+      "accidentalMessage": "Geen probleem! Je kunt je opnieuw inschrijven via onze homepage.",
+      "resubscribe": "Opnieuw inschrijven",
+      "feedbackTitle": "Feedback:",
+      "feedbackMessage": "We zouden graag weten waarom je je hebt uitgeschreven.",
+      "shareFeedback": "Deel je feedback"
+    },
+    "invalid": {
+      "title": {
+        "token": "Ongeldige link",
+        "unsubscribed": "Account uitgeschreven",
+        "default": "Probleem met link"
+      },
+      "description": {
+        "token": "Deze bevestigingslink is niet geldig of verlopen",
+        "unsubscribed": "Dit e-mailadres is al uitgeschreven van onze nieuwsbrief",
+        "default": "Er is een probleem met deze nieuwsbrief link"
+      },
+      "possibleCauses": "Mogelijke oorzaken:",
+      "causes": {
+        "token": [
+          "De link is mogelijk verlopen (links zijn 7 dagen geldig)",
+          "De link is al gebruikt",
+          "De link is beschadigd tijdens het kopiëren"
+        ],
+        "unsubscribed": [
+          "Je hebt je al eerder uitgeschreven",
+          "Deze link kan niet meer gebruikt worden"
+        ],
+        "default": [
+          "De link is mogelijk beschadigd",
+          "De link is niet meer geldig"
+        ]
+      },
+      "whatToDoTitle": "Wat kun je doen?",
+      "whatToDo": {
+        "token": "Probeer je opnieuw in te schrijven voor een nieuwe bevestigingslink.",
+        "unsubscribed": "Als je je opnieuw wilt inschrijven, ga dan naar onze homepage.",
+        "default": "Neem contact op met ons support team voor hulp."
+      },
+      "resubscribe": "Opnieuw inschrijven",
+      "subscribeNewsletter": "Inschrijven voor nieuwsbrief",
+      "contactSupport": "Contact opnemen",
+      "loading": "Laden..."
+    }
+  },
+  "features": {
+    "metadata": {
+      "title": "Features - TutusPorta",
+      "description": "Ontdek alle features van TutusPorta: Dashboard, scan details, PDF export, prioriteiten en komende integraties."
+    },
+    "hero": {
+      "badge": "✨ Alle features",
+      "title": "Alles wat je nodig hebt voor",
+      "titleHighlight": "WCAG-compliance",
+      "subtitle": "Van snelle scans tot complete site-analyses. Dashboard, exports, prioriteiten en binnenkort team-collaboration.",
+      "cta": "Start gratis scan"
+    },
+    "priorities": {
+      "title": "Issue Prioriteiten",
+      "subtitle": "Wij categoriseren alle accessibility issues volgens WCAG-impact levels",
+      "critical": {
+        "title": "Critical",
+        "description": "Blokkeert toegang volledig. Direct actie vereist."
+      },
+      "serious": {
+        "title": "Serious",
+        "description": "Significante barrières. Hoge prioriteit."
+      },
+      "moderate": {
+        "title": "Moderate",
+        "description": "Hindert gebruik. Medium prioriteit."
+      },
+      "minor": {
+        "title": "Minor",
+        "description": "Kleine verbeterpunten. Lage prioriteit."
+      }
+    },
+    "current": {
+      "title": "Beschikbare Features",
+      "subtitle": "Alles wat je nu kunt gebruiken om je website toegankelijker te maken",
+      "dashboard": {
+        "title": "Overzichtelijk Dashboard",
+        "description": "Bekijk al je scans in één overzicht met scores, trends en quick wins.",
+        "benefits": [
+          "Alle scans op één plek",
+          "Score-trends over tijd",
+          "Quick wins identificatie",
+          "Site-overzicht met favicons"
+        ]
+      },
+      "scanResults": {
+        "title": "Gedetailleerde Scan Resultaten",
+        "description": "Diep inzicht in elke accessibility issue met concrete voorbeelden.",
+        "benefits": [
+          "Per-element analyse",
+          "WCAG 2.2 richtlijnen",
+          "Screenshots van problemen",
+          "Filterbare resultaten"
+        ]
+      },
+      "export": {
+        "title": "PDF & Word Export",
+        "description": "Deel rapporten met stakeholders via professionele exports.",
+        "benefits": [
+          "PDF rapporten in één klik",
+          "Word documenten voor editing",
+          "Branded templates",
+          "Executive summaries"
+        ]
+      },
+      "axeCore": {
+        "title": "Echte Axe-Core Scans",
+        "description": "Dezelfde engine die professionals wereldwijd gebruiken.",
+        "benefits": [
+          "Industry-standard analyses",
+          "Regelmatige updates",
+          "Geen false positives",
+          "Betrouwbare resultaten"
+        ]
+      }
+    },
+    "upcoming": {
+      "title": "Binnenkort Beschikbaar",
+      "subtitle": "We werken hard aan nieuwe features om je workflow nog beter te maken",
+      "crawling": {
+        "title": "Site-wide Crawling",
+        "status": "Beta",
+        "description": "Scan hele websites automatisch en krijg een compleet overzicht."
+      },
+      "monitoring": {
+        "title": "Alerts & Monitoring",
+        "status": "Q1 2024",
+        "description": "Automatische meldingen bij nieuwe issues of score-wijzigingen."
+      },
+      "integrations": {
+        "title": "Jira & Linear Integraties",
+        "status": "Q2 2024",
+        "description": "Export issues direct naar je project management tools."
+      },
+      "team": {
+        "title": "Team Collaboration",
+        "status": "Q2 2024",
+        "description": "Nodig teamleden uit en deel scans binnen je organisatie."
+      },
+      "noMissUpdates": "Mis geen updates van nieuwe features",
+      "viewChangelog": "Bekijk Changelog"
+    },
+    "faq": {
+      "title": "Veelgestelde Vragen",
+      "subtitle": "Antwoorden op de meest voorkomende vragen over TutusPorta",
+      "privacy": {
+        "question": "Hoe gaat TutusPorta om met privacy?",
+        "answer": "We scannen alleen publiek toegankelijke content en slaan geen persoonsgegevens op. Onze scans zijn volledig GDPR-compliant en we delen geen data met derden."
+      },
+      "performance": {
+        "question": "Heeft scannen impact op de performance van mijn website?",
+        "answer": "Nee, onze scans hebben geen merkbare impact op je website. We simuleren een gewone bezoeker en voeren geen stress-tests uit. De scans lopen in de achtergrond zonder je site te belasten."
+      },
+      "cookies": {
+        "question": "Moet ik cookies accepteren om TutusPorta te gebruiken?",
+        "answer": "Basis functionaliteit werkt zonder cookies. We gebruiken alleen cookies voor analytics (optioneel) en om je voorkeuren te onthouden. Je kunt alle cookies weigeren en de tool blijft volledig functioneel."
+      },
+      "international": {
+        "question": "Kan ik ook internationale websites scannen?",
+        "answer": "Ja! TutusPorta werkt met websites in alle talen en landen. We ondersteunen internationale karaktersets en kunnen websites scannen ongeacht de locatie of taal van de content."
+      },
+      "account": {
+        "question": "Heb ik een account nodig of kan ik teams aanmaken?",
+        "answer": "Voor basis gebruik is geen account nodig - je kunt direct scannen. Voor geavanceerde features zoals opgeslagen scans, exports en team-collaboration kun je een gratis account aanmaken."
+      },
+      "support": {
+        "question": "Wat voor support krijg ik?",
+        "answer": "Alle gebruikers krijgen e-mail support. Free plan: 72 uur responstijd. Pro plan: 24 uur. Team plan: prioriteitssupport binnen 4 uur. Plus uitgebreide documentatie en video tutorials."
+      },
+      "moreQuestions": "Heb je nog andere vragen?",
+      "contactUs": "Neem contact op"
+    },
+    "cta": {
+      "title": "Klaar om te beginnen?",
+      "subtitle": "Start vandaag nog met het verbeteren van je website's accessibility. Gratis voor 1 scan per week (registratie vereist).",
+      "startScan": "Start gratis scan",
+      "viewPricing": "Bekijk prijzen"
+    }
+  },
+  "demo": {
+    "metadata": {
+      "title": "Plan een Demo - TutusPorta",
+      "description": "Ontdek hoe TutusPorta jouw team kan helpen met WCAG-compliance en toegankelijkheid."
+    },
+    "backLink": "Terug naar over ons",
+    "title": "Plan een",
+    "titleHighlight": "persoonlijke demo",
+    "subtitle": "Ontdek hoe TutusPorta jouw team kan helpen met WCAG-compliance en toegankelijkheid",
+    "whatYouGet": {
+      "title": "Wat je krijgt in 15 minuten:",
+      "items": [
+        "Live demo van het TutusPorta platform",
+        "Inzicht in automated WCAG scanning",
+        "Rapportage en prioritering uitgelegd",
+        "Team collaboratie features",
+        "Q&A over jouw specifieke behoeften"
+      ]
+    },
+    "whoIsThisFor": {
+      "title": "Voor wie is dit?",
+      "items": [
+        "Development teams (5+ developers)",
+        "Digital agencies met meerdere klanten",
+        "Enterprise organisaties",
+        "Teams die WCAG-compliance nodig hebben",
+        "Organisaties met accessibility requirements"
+      ]
+    },
+    "cta": {
+      "title": "Klaar om te starten?",
+      "subtitle": "Of begin direct met een gratis scan van je website",
+      "scheduleDemo": "Plan een demo",
+      "startFreeScan": "Start gratis scan"
+    },
+    "additionalInfo": "Geen verplichtingen • Demo duurt ~15 minuten • Response binnen 24 uur"
   },
   "legal": {
     "common": {
@@ -952,6 +1503,76 @@
         "supportDesc": "Reactie binnen 4 uur voor Business plan gebruikers",
         "monitoring": "24/7 Monitoring",
         "monitoringDesc": "Continue monitoring met directe incident response"
+      }
+    }
+  },
+  "scanForm": {
+    "placeholder": "Voer website URL in om te scannen...",
+    "button": {
+      "idle": "Start Scan",
+      "loading": "Bezig met scannen...",
+      "success": "Scan voltooid"
+    },
+    "errors": {
+      "invalidUrl": "Voer een geldige URL in",
+      "required": "URL is verplicht",
+      "failed": "Scan mislukt. Probeer het opnieuw."
+    }
+  },
+  "upgradeModal": {
+    "limitReached": {
+      "title": "Scanlimiet bereikt",
+      "description": "Je hebt je gratis scanlimiet voor deze week bereikt. Upgrade om door te gaan met scannen.",
+      "upgradeButton": "Nu upgraden",
+      "cancelButton": "Misschien later"
+    },
+    "upgradeRequired": {
+      "title": "Upgrade vereist",
+      "description": "Deze functie vereist een betaald plan. Upgrade om geavanceerde scanmogelijkheden te ontgrendelen.",
+      "upgradeButton": "Bekijk plannen",
+      "cancelButton": "Annuleren"
+    },
+    "trialExpired": {
+      "title": "Proefperiode beëindigd",
+      "description": "Je gratis proefperiode is afgelopen. Upgrade naar een betaald plan om TutusPorta te blijven gebruiken.",
+      "upgradeButton": "Kies een plan",
+      "cancelButton": "Uitloggen"
+    }
+  },
+  "modernAuth": {
+    "login": {
+      "steps": {
+        "credentials": "Inloggen",
+        "verify": "Verifiëren"
+      },
+      "socialLogin": "Inloggen met {provider}",
+      "securityTips": {
+        "title": "Beveiligingstips",
+        "tip1": "Deel je wachtwoord nooit",
+        "tip2": "Gebruik een sterk, uniek wachtwoord",
+        "tip3": "Schakel twee-factor authenticatie in"
+      }
+    },
+    "register": {
+      "steps": {
+        "account": "Account aanmaken",
+        "details": "Jouw gegevens",
+        "confirm": "Bevestigen"
+      },
+      "socialRegister": "Registreren met {provider}",
+      "passwordRequirements": {
+        "title": "Wachtwoordvereisten",
+        "length": "Minimaal 8 tekens",
+        "uppercase": "Eén hoofdletter",
+        "lowercase": "Eén kleine letter",
+        "number": "Eén cijfer"
+      },
+      "benefits": {
+        "title": "Wat je krijgt",
+        "freeScan": "1 gratis scan per week",
+        "reports": "Gedetailleerde toegankelijkheidsrapporten",
+        "tracking": "Volg verbeteringen in de tijd",
+        "support": "E-mail ondersteuning"
       }
     }
   }

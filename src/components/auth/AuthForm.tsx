@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client'
+import { useTranslations } from 'next-intl'
 
 interface AuthFormProps {
   mode: 'login' | 'register'
@@ -40,7 +41,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
         if (error) throw error
 
-        setMessage('Check your email for the confirmation link!')
+        setMessage(t('errors.success') || 'Check your email for the confirmation link!')
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
@@ -62,37 +63,37 @@ export default function AuthForm({ mode }: AuthFormProps) {
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader>
-        <CardTitle>{mode === 'login' ? 'Sign in' : 'Create account'}</CardTitle>
+        <CardTitle>{mode === 'login' ? t('title') : t('title')}</CardTitle>
         <CardDescription>
           {mode === 'login' 
-            ? 'Welcome back to TutusPorta by Vexnexa'
-            : 'Join TutusPorta by Vexnexa and start improving accessibility'
+            ? t('subtitle')
+            : t('subtitle')
           }
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleAuth} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('emailLabel')}</Label>
             <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="Enter your email"
+              placeholder={t('emailPlaceholder')}
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('passwordLabel')}</Label>
             <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Enter your password"
+              placeholder={t('passwordPlaceholder')}
               minLength={6}
             />
           </div>
@@ -115,15 +116,15 @@ export default function AuthForm({ mode }: AuthFormProps) {
             className="w-full"
           >
             {loading 
-              ? (mode === 'login' ? 'Signing in...' : 'Creating account...') 
-              : (mode === 'login' ? 'Sign in' : 'Create account')
+              ? (mode === 'login' ? t('signingIn') : t('creatingAccount')) 
+              : (mode === 'login' ? t('title') : t('title'))
             }
           </Button>
 
           <div className="text-center text-sm">
             {mode === 'login' ? (
               <>
-                Don&apos;t have an account?{' '}
+                {t('noAccount')}?{' '}
                 <Button
                   type="button"
                   variant="link"
@@ -135,7 +136,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               </>
             ) : (
               <>
-                Already have an account?{' '}
+                {t('haveAccount')}?{' '}
                 <Button
                   type="button"
                   variant="link"

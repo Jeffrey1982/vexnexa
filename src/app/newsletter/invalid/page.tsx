@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, ArrowRight } from "lucide-react";
@@ -10,39 +11,30 @@ import { Suspense } from "react";
 function NewsletterInvalidContent() {
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason");
+  const t = useTranslations("newsletter.invalid");
 
   const getContent = () => {
     switch (reason) {
       case "token":
         return {
-          title: "Ongeldige link",
-          description: "Deze bevestigingslink is niet geldig of verlopen",
-          details: [
-            "De link is mogelijk verlopen (links zijn 7 dagen geldig)",
-            "De link is al gebruikt",
-            "De link is beschadigd tijdens het kopiëren"
-          ],
-          suggestion: "Probeer je opnieuw in te schrijven voor een nieuwe bevestigingslink."
+          title: t("title.token"),
+          description: t("description.token"),
+          details: t.raw("causes.token") as string[],
+          suggestion: t("whatToDo.token")
         };
       case "unsubscribed":
         return {
-          title: "Account uitgeschreven",
-          description: "Dit e-mailadres is al uitgeschreven van onze nieuwsbrief",
-          details: [
-            "Je hebt je al eerder uitgeschreven",
-            "Deze link kan niet meer gebruikt worden"
-          ],
-          suggestion: "Als je je opnieuw wilt inschrijven, ga dan naar onze homepage."
+          title: t("title.unsubscribed"),
+          description: t("description.unsubscribed"),
+          details: t.raw("causes.unsubscribed") as string[],
+          suggestion: t("whatToDo.unsubscribed")
         };
       default:
         return {
-          title: "Probleem met link",
-          description: "Er is een probleem met deze nieuwsbrief link",
-          details: [
-            "De link is mogelijk beschadigd",
-            "De link is niet meer geldig"
-          ],
-          suggestion: "Neem contact op met ons support team voor hulp."
+          title: t("title.default"),
+          description: t("description.default"),
+          details: t.raw("causes.default") as string[],
+          suggestion: t("whatToDo.default")
         };
     }
   };
@@ -64,7 +56,7 @@ function NewsletterInvalidContent() {
 
         <CardContent className="space-y-6">
           <div className="space-y-3">
-            <h3 className="font-semibold text-gray-900">Mogelijke oorzaken:</h3>
+            <h3 className="font-semibold text-gray-900">{t("possibleCauses")}</h3>
             <ul className="space-y-1 text-sm text-gray-600">
               {content.details.map((detail, index) => (
                 <li key={index} className="flex items-start">
@@ -76,35 +68,32 @@ function NewsletterInvalidContent() {
           </div>
 
           <div className="bg-blue-50 p-4 rounded-lg">
-            <p className="text-blue-800 text-sm">
-              <strong>Wat kun je doen?</strong><br />
-              {content.suggestion}
-            </p>
+            <p className="text-blue-800 text-sm" dangerouslySetInnerHTML={{ __html: t.markup("whatToDoHeader", { suggestion: content.suggestion }) }} />
           </div>
 
           <div className="pt-4 space-y-3">
             {reason !== "unsubscribed" ? (
               <Button asChild className="w-full">
                 <Link href="/#newsletter">
-                  Opnieuw inschrijven
+                  {t("buttons.tryAgain")}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
             ) : (
               <Button asChild className="w-full">
                 <Link href="/#newsletter">
-                  Inschrijven voor nieuwsbrief
+                  {t("buttons.subscribeNewsletter")}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
             )}
 
             <Button variant="outline" asChild className="w-full">
-              <Link href="/contact">Contact opnemen</Link>
+              <Link href="/contact">{t("buttons.contact")}</Link>
             </Button>
 
             <Button variant="ghost" asChild className="w-full">
-              <Link href="/">Terug naar homepage</Link>
+              <Link href="/">{t("buttons.backToHome")}</Link>
             </Button>
           </div>
         </CardContent>
@@ -114,6 +103,8 @@ function NewsletterInvalidContent() {
 }
 
 export default function NewsletterInvalidPage() {
+  const t = useTranslations("newsletter.invalid");
+
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center p-4">
@@ -122,7 +113,7 @@ export default function NewsletterInvalidPage() {
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertTriangle className="w-8 h-8 text-orange-600" />
             </div>
-            <CardTitle className="text-2xl text-orange-800">Loading...</CardTitle>
+            <CardTitle className="text-2xl text-orange-800">{t("loading")}</CardTitle>
           </CardHeader>
         </Card>
       </div>

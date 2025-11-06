@@ -34,11 +34,11 @@ export function UpgradeModal({
   const getTitle = () => {
     switch (reason) {
       case "UPGRADE_REQUIRED":
-        return "Upgrade Required";
+        return t("upgradeRequired.title");
       case "LIMIT_REACHED":
-        return "Limit Reached";
+        return t("limitReached.title");
       case "TRIAL_EXPIRED":
-        return "Trial Expired";
+        return t("trialExpired.title");
       default:
         return "Upgrade Required";
     }
@@ -47,13 +47,13 @@ export function UpgradeModal({
   const getDescription = () => {
     switch (reason) {
       case "UPGRADE_REQUIRED":
-        return `${feature === "word" ? "Word export" : "This feature"} is only available on paid plans.`;
+        return t("upgradeRequired.description");
       case "LIMIT_REACHED":
-        return `You've reached your monthly limit of ${limit} pages. Upgrade to continue.`;
+        return t("limitReached.description");
       case "TRIAL_EXPIRED":
-        return "Your free trial has expired. Upgrade to continue using TutusPorta.";
+        return t("trialExpired.description");
       default:
-        return "Upgrade to unlock more features.";
+        return t("upgradeRequired.description");
     }
   };
 
@@ -86,7 +86,7 @@ export function UpgradeModal({
         {reason === "LIMIT_REACHED" && limit && current && (
           <div className="py-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-muted-foreground">Pages used this month</span>
+              <span className="text-sm text-muted-foreground">{t("limitReached.title")}</span>
               <span className="text-sm font-medium">{current} / {limit}</span>
             </div>
             <div className="w-full bg-secondary rounded-full h-2">
@@ -101,19 +101,18 @@ export function UpgradeModal({
         <Alert className="border-primary/20 bg-primary/5">
           <Zap className="h-4 w-4" />
           <AlertDescription>
-            Upgrade now and get unlimited access to all features, including Word exports, 
-            scheduling, and higher usage limits.
+            {t("upgradeRequired.description")}
           </AlertDescription>
         </Alert>
 
         <DialogFooter className="flex-col sm:flex-row gap-2">
           <Button variant="outline" onClick={onClose}>
-            Maybe Later
+            {t("limitReached.cancelButton")}
           </Button>
           <Button asChild>
             <Link href="/pricing" onClick={onClose}>
               <Crown className="mr-2 h-4 w-4" />
-              View Plans
+              {t("upgradeRequired.upgradeButton")}
             </Link>
           </Button>
         </DialogFooter>
