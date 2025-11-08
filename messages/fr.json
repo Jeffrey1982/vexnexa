@@ -8,7 +8,6 @@
     "signup": "Commencer Gratuitement",
     "signOut": "Se Déconnecter",
     "dashboard": "Tableau de Bord",
-    "demo": "Démo",
     "about": "À Propos",
     "getStarted": "Commencer",
     "changelog": "Journal des Modifications",
@@ -32,7 +31,6 @@
       "title": "Produit",
       "features": "Fonctionnalités",
       "pricing": "Tarifs",
-      "demo": "Démo",
       "changelog": "Journal des Modifications",
       "documentation": "Documentation"
     },
@@ -57,7 +55,7 @@
     "hero": {
       "title": "La passerelle sécurisée vers",
       "titleHighlight": "l'accessibilité web",
-      "subtitle": "Analyse automatisée avec 8 catégories supplémentaires au-delà des WCAG. Obtenez des rapports clairs, des corrections rapides et une surveillance continue.",
+      "subtitle": "Exécutez votre scan d'accessibilité en quelques minutes. Pas d'appels. Pas de vendeurs. Juste scanner.",
       "ctaPrimary": "Commencer l'analyse gratuite",
       "ctaSecondary": "Voir les tarifs",
       "noCreditCard": "Aucune carte de crédit requise. Obtenez 1 analyse gratuite chaque semaine.",
@@ -104,9 +102,9 @@
     },
     "finalCta": {
       "title": "Commencez votre analyse gratuite",
-      "subtitle": "Aucune carte de crédit requise. Commencez en quelques secondes et voyez quels problèmes d'accessibilité existent sur votre site.",
+      "subtitle": "Commencez à scanner en quelques minutes. Entièrement en libre-service. Aucune réunion requise.",
       "ctaPrimary": "Commencer l'analyse gratuite",
-      "ctaSecondary": "Contactez-nous"
+      "ctaSecondary": "Voir les tarifs"
     },
     "testimonials": {
       "title": "Approuvé par les professionnels de l'accessibilité",
@@ -153,6 +151,10 @@
       "q6": {
         "question": "Qu'est-ce qui est surveillé en continu?",
         "answer": "La surveillance continue vous permet de planifier des analyses automatiques (quotidiennes, hebdomadaires ou mensuelles). Vous recevrez des alertes par email lorsque les scores baissent ou que de nouveaux problèmes sont détectés. Cette fonctionnalité est disponible sur les plans Pro et Business."
+      },
+      "q7": {
+        "question": "Dois-je planifier une démo?",
+        "answer": "Non! TutusPorta est entièrement en libre-service. Inscrivez-vous, entrez votre URL et obtenez votre rapport d'accessibilité en quelques minutes. Pas d'appels, pas d'attente."
       }
     },
     "pillars": {
@@ -315,7 +317,8 @@
           "dedicatedSupport": "Support dédié",
           "sla": "Garantie SLA",
           "onPremise": "Option sur site"
-        }
+        },
+        "note": "Parfait pour les grandes organisations. Contactez-nous pour un tarif personnalisé."
       }
     },
     "loading": "Chargement...",
@@ -414,8 +417,9 @@
     "cta": {
       "title": "Commencez à scanner aujourd'hui",
       "subtitle": "Commencez avec un essai gratuit et mettez à niveau lorsque vous avez besoin de plus de fonctionnalités. Pas de frais de configuration, pas de surprises.",
-      "startTrial": "Commencer l'essai gratuit",
-      "contactSales": "Contacter les ventes"
+      "startTrial": "Commencer le scan gratuit",
+      "needMore": "Besoin de limites plus élevées?",
+      "contactUs": "Contactez-nous"
     }
   },
   "contact": {
@@ -428,7 +432,7 @@
     "hero": {
       "title": "Parlons-en",
       "titleHighlight": "ensemble",
-      "subtitle": "Des questions sur TutusPorta, planifier une démo ou des commentaires ? Nous serions ravis de vous entendre. Pas de discours commercial — juste des gens serviables."
+      "subtitle": "Des questions sur TutusPorta ou besoin de limites plus élevées? Nous serions ravis de vous entendre. La plupart des utilisateurs peuvent commencer immédiatement."
     },
     "methods": {
       "email": {
@@ -438,10 +442,10 @@
         "actionLabel": "info@tutusporta.com"
       },
       "sales": {
-        "title": "Ventes & Démo",
-        "description": "Pour les plans d'équipe et les solutions d'entreprise",
-        "detail": "Démo personnelle dans les 24 heures",
-        "actionLabel": "Planifier un appel"
+        "title": "Entreprise et limites supérieures",
+        "description": "Pour les grandes équipes ou besoins personnalisés",
+        "detail": "Réponse sous 1-2 jours ouvrables",
+        "actionLabel": "Demander des informations"
       },
       "location": {
         "title": "Fabriqué aux Pays-Bas",
@@ -509,11 +513,15 @@
       },
       "q3": {
         "question": "Offrez-vous des formations et des consultations ?",
-        "answer": "Pour les comptes d'équipe, nous proposons des sessions d'intégration et de formation. Pour les consultations, nous fournissons des devis personnalisés."
+        "answer": "Nous répondons sous 24-48 heures les jours ouvrables pour les demandes enterprise. Pour le support général, utilisez notre chat intégré ou le support par e-mail."
       },
       "q4": {
         "question": "Comment fonctionne le support entreprise ?",
         "answer": "Enterprise bénéficie d'un support dédié, SSO, personnalisation personnalisée et déploiement sur site en option. Contactez-nous pour plus de détails."
+      },
+      "q5": {
+        "question": "Dois-je réserver une démo?",
+        "answer": "Non! Vous pouvez commencer à scanner immédiatement après l'inscription. Les démos ne sont nécessaires que pour les clients enterprise avec des exigences personnalisées."
       }
     },
     "cta": {
@@ -806,8 +814,8 @@
       "cta": {
         "startFreeScan": "Commencer l'analyse gratuite",
         "startFreeScanAriaLabel": "Commencez votre première analyse WCAG gratuite",
-        "planDemo": "Planifier une démo de 15 min",
-        "planDemoAriaLabel": "Planifier une démo"
+        "viewPricing": "Voir les tarifs",
+        "viewPricingAriaLabel": "Voir les plans tarifaires"
       }
     },
     "whyWeExist": {
@@ -954,7 +962,7 @@
     },
     "finalCta": {
       "title": "Rendez votre site plus accessible aujourd'hui",
-      "subtitle": "Commencez par un scan gratuit et voyez immédiatement quelles améliorations ont le plus d'impact.",
+      "subtitle": "Commencez avec un scan gratuit et voyez immédiatement quelles améliorations ont le plus d'impact. Aucune réunion requise.",
       "cta": {
         "startFreeScan": "Commencer l'analyse gratuite",
         "startFreeScanAriaLabel": "Commencez votre première analyse WCAG gratuite",

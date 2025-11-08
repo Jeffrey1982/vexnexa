@@ -124,6 +124,10 @@ function HeroSection() {
             </Badge>
           </div>
         </div>
+        
+        <p className="text-sm opacity-75 mt-6">
+          {t('needMore')} <Link href="/contact" className="underline hover:opacity-100">{t('contactUs')}</Link>
+        </p>
       </div>
     </section>
   );
@@ -539,9 +543,8 @@ function CTASection() {
               className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               asChild
             >
-              <Link href="/contact">
-                {t('contactSales')}
-                <Users className="ml-2 h-4 w-4" />
+              <Link href="/pricing#overflow">
+                {t('needMore')}
               </Link>
             </Button>
           </div>

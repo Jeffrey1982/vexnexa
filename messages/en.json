@@ -8,7 +8,6 @@
     "signup": "Start Free",
     "signOut": "Sign Out",
     "dashboard": "Dashboard",
-    "demo": "Demo",
     "about": "About",
     "getStarted": "Get Started",
     "changelog": "Changelog",
@@ -32,7 +31,6 @@
       "title": "Product",
       "features": "Features",
       "pricing": "Pricing",
-      "demo": "Demo",
       "changelog": "Changelog",
       "documentation": "Documentation"
     },
@@ -57,7 +55,7 @@
     "hero": {
       "title": "The secure gateway to",
       "titleHighlight": "web accessibility",
-      "subtitle": "Automated scanning with 8 additional categories beyond WCAG. Get clear reports, quick fixes, and continuous monitoring.",
+      "subtitle": "Run your accessibility scan in minutes. No calls. No salespeople. Just scan.",
       "ctaPrimary": "Start free scan",
       "ctaSecondary": "See pricing",
       "noCreditCard": "No credit card required. Get 1 free scan every week.",
@@ -104,9 +102,9 @@
     },
     "finalCta": {
       "title": "Start your free scan",
-      "subtitle": "No credit card required. Get started in seconds and see what accessibility issues exist on your site.",
+      "subtitle": "Start scanning in minutes. Fully self-serve. No meetings required.",
       "ctaPrimary": "Start free scan",
-      "ctaSecondary": "Talk to us"
+      "ctaSecondary": "View pricing"
     },
     "testimonials": {
       "title": "Trusted by accessibility professionals",
@@ -153,6 +151,10 @@
       "q6": {
         "question": "What's monitored continuously?",
         "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans."
+      },
+      "q7": {
+        "question": "Do I need to schedule a demo?",
+        "answer": "No! TutusPorta is fully self-serve. Sign up, enter your URL, and get your accessibility report in minutes. No calls, no waiting."
       }
     },
     "pillars": {
@@ -305,7 +307,7 @@
         "name": "Enterprise",
         "price": "Custom",
         "description": "Unlimited scanning for large organizations",
-        "cta": "Talk to us",
+        "cta": "Contact us",
         "features": {
           "unlimitedSites": "Unlimited websites",
           "unlimitedPages": "Unlimited pages",
@@ -315,7 +317,8 @@
           "dedicatedSupport": "Dedicated support",
           "sla": "SLA guarantee",
           "onPremise": "On-premise option"
-        }
+        },
+        "note": "Perfect for large organizations. Contact us for custom pricing."
       }
     },
     "loading": "Loading...",
@@ -414,8 +417,9 @@
     "cta": {
       "title": "Start scanning today",
       "subtitle": "Start with a free trial and upgrade when you need more functionality. No setup fees, no surprises.",
-      "startTrial": "Start free trial",
-      "contactSales": "Contact sales"
+      "startTrial": "Start free scan",
+      "needMore": "Need higher limits?",
+      "contactUs": "Contact us"
     }
   },
   "contact": {
@@ -428,7 +432,7 @@
     "hero": {
       "title": "Let's",
       "titleHighlight": "talk",
-      "subtitle": "Questions about TutusPorta, schedule a demo or feedback? We'd love to hear from you. No sales talk — just helpful people."
+      "subtitle": "Questions about TutusPorta or need higher limits? We'd love to hear from you. Most users can start right away."
     },
     "methods": {
       "email": {
@@ -438,10 +442,10 @@
         "actionLabel": "info@tutusporta.com"
       },
       "sales": {
-        "title": "Sales & Demo",
-        "description": "For Team plans and enterprise solutions",
-        "detail": "Personal demo within 24 hours",
-        "actionLabel": "Schedule a call"
+        "title": "Enterprise & Higher Limits",
+        "description": "For larger teams or custom requirements",
+        "detail": "Response within 1-2 business days",
+        "actionLabel": "Request information"
       },
       "location": {
         "title": "Made in the Netherlands",
@@ -509,11 +513,15 @@
       },
       "q3": {
         "question": "Do you offer training and consultancy?",
-        "answer": "For Team accounts we offer onboarding and training sessions. For consultancy we provide custom quotes."
+        "answer": "We respond within 24-48 hours on business days for enterprise inquiries. For general support, use our in-app chat or email support."
       },
       "q4": {
         "question": "How does enterprise support work?",
         "answer": "Enterprise gets dedicated support, SSO, custom branding and optional on-premise deployment. Contact us for details."
+      },
+      "q5": {
+        "question": "Do I need to book a demo?",
+        "answer": "No! You can start scanning immediately after signup. Demos are only needed for enterprise customers with custom requirements."
       }
     },
     "cta": {
@@ -806,8 +814,8 @@
       "cta": {
         "startFreeScan": "Start free scan",
         "startFreeScanAriaLabel": "Start your first free WCAG scan",
-        "planDemo": "Schedule 15-min demo",
-        "planDemoAriaLabel": "Schedule a demo"
+        "viewPricing": "View pricing",
+        "viewPricingAriaLabel": "View pricing plans"
       }
     },
     "whyWeExist": {
@@ -954,7 +962,7 @@
     },
     "finalCta": {
       "title": "Make your site more accessible today",
-      "subtitle": "Start with a free scan and see immediately which improvements have the most impact.",
+      "subtitle": "Start with a free scan and see immediately which improvements have the most impact. No meetings required.",
       "cta": {
         "startFreeScan": "Start free scan",
         "startFreeScanAriaLabel": "Start your first free WCAG scan",

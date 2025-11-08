@@ -8,7 +8,6 @@
     "signup": "Gratis Starten",
     "signOut": "Uitloggen",
     "dashboard": "Dashboard",
-    "demo": "Demo",
     "about": "Over Ons",
     "getStarted": "Aan de Slag",
     "changelog": "Wijzigingslog",
@@ -32,7 +31,6 @@
       "title": "Product",
       "features": "Functies",
       "pricing": "Prijzen",
-      "demo": "Demo",
       "changelog": "Wijzigingslog",
       "documentation": "Documentatie"
     },
@@ -57,7 +55,7 @@
     "hero": {
       "title": "De veilige toegang tot",
       "titleHighlight": "webtoegankelijkheid",
-      "subtitle": "Geautomatiseerd scannen met 8 extra categorieën naast WCAG. Krijg duidelijke rapporten, snelle oplossingen en continue monitoring.",
+      "subtitle": "Voer je toegankelijkheidsscan uit in minuten. Geen gesprekken. Geen verkopers. Gewoon scannen.",
       "ctaPrimary": "Gratis scan starten",
       "ctaSecondary": "Bekijk prijzen",
       "noCreditCard": "Geen creditcard vereist. Ontvang elke week 1 gratis scan.",
@@ -104,9 +102,9 @@
     },
     "finalCta": {
       "title": "Start uw gratis scan",
-      "subtitle": "Geen creditcard vereist. Begin in seconden en zie welke toegankelijkheidsproblemen er op uw site bestaan.",
+      "subtitle": "Begin met scannen in enkele minuten. Volledig zelfbediening. Geen vergaderingen vereist.",
       "ctaPrimary": "Gratis scan starten",
-      "ctaSecondary": "Neem contact op"
+      "ctaSecondary": "Bekijk prijzen"
     },
     "testimonials": {
       "title": "Vertrouwd door toegankelijkheidsprofessionals",
@@ -153,6 +151,10 @@
       "q6": {
         "question": "Wat wordt continu gemonitord?",
         "answer": "Continue monitoring stelt u in staat automatische scans te plannen (dagelijks, wekelijks of maandelijks). U ontvangt e-mailwaarschuwingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro en Business-plannen."
+      },
+      "q7": {
+        "question": "Moet ik een demo inplannen?",
+        "answer": "Nee! TutusPorta is volledig zelfbediening. Meld je aan, voer je URL in en krijg je toegankelijkheidsrapport binnen enkele minuten. Geen gesprekken, geen wachten."
       }
     },
     "pillars": {
@@ -315,7 +317,8 @@
           "dedicatedSupport": "Toegewijde support",
           "sla": "SLA garantie",
           "onPremise": "On-premise optie"
-        }
+        },
+        "note": "Perfect voor grote organisaties. Neem contact op voor aangepaste prijzen."
       }
     },
     "loading": "Laden...",
@@ -414,8 +417,9 @@
     "cta": {
       "title": "Start vandaag met scannen",
       "subtitle": "Begin met een gratis proefperiode en upgrade wanneer je meer functionaliteit nodig hebt. Geen opstartkosten, geen verrassingen.",
-      "startTrial": "Start gratis proefperiode",
-      "contactSales": "Neem contact op met verkoop"
+      "startTrial": "Start gratis scan",
+      "needMore": "Hogere limieten nodig?",
+      "contactUs": "Neem contact op"
     }
   },
   "contact": {
@@ -428,7 +432,7 @@
     "hero": {
       "title": "Laten we",
       "titleHighlight": "praten",
-      "subtitle": "Vragen over TutusPorta, een demo plannen of feedback? We horen graag van je. Geen verkooppraatjes — alleen behulpzame mensen."
+      "subtitle": "Vragen over TutusPorta of hogere limieten nodig? We horen graag van je. De meeste gebruikers kunnen direct starten."
     },
     "methods": {
       "email": {
@@ -438,10 +442,10 @@
         "actionLabel": "info@tutusporta.com"
       },
       "sales": {
-        "title": "Verkoop & Demo",
-        "description": "Voor Teamplannen en enterprise oplossingen",
-        "detail": "Persoonlijke demo binnen 24 uur",
-        "actionLabel": "Plan een gesprek"
+        "title": "Enterprise en hogere limieten",
+        "description": "Voor grotere teams of aangepaste vereisten",
+        "detail": "Reactie binnen 1-2 werkdagen",
+        "actionLabel": "Informatie aanvragen"
       },
       "location": {
         "title": "Gemaakt in Nederland",
@@ -509,11 +513,15 @@
       },
       "q3": {
         "question": "Bieden jullie training en consultancy?",
-        "answer": "Voor Team accounts bieden we onboarding en trainingen. Voor consultancy bieden we maatwerk offertes."
+        "answer": "We reageren binnen 24-48 uur op werkdagen voor enterprise aanvragen. Voor algemene ondersteuning, gebruik onze in-app chat of e-mail support."
       },
       "q4": {
         "question": "Hoe werkt enterprise support?",
         "answer": "Enterprise krijgt dedicated support, SSO, custom branding en optionele on-premise deployment. Neem contact op voor details."
+      },
+      "q5": {
+        "question": "Moet ik een demo boeken?",
+        "answer": "Nee! Je kunt direct na registratie beginnen met scannen. Demo's zijn alleen nodig voor enterprise klanten met aangepaste vereisten."
       }
     },
     "cta": {
@@ -806,8 +814,8 @@
       "cta": {
         "startFreeScan": "Start gratis scan",
         "startFreeScanAriaLabel": "Start je eerste gratis WCAG-scan",
-        "planDemo": "Plan 15-min demo",
-        "planDemoAriaLabel": "Plan een demo"
+        "viewPricing": "Bekijk prijzen",
+        "viewPricingAriaLabel": "Bekijk prijsplannen"
       }
     },
     "whyWeExist": {
@@ -954,7 +962,7 @@
     },
     "finalCta": {
       "title": "Maak je site vandaag toegankelijker",
-      "subtitle": "Begin met een gratis scan en zie direct welke verbeteringen de meeste impact hebben.",
+      "subtitle": "Begin met een gratis scan en zie direct welke verbeteringen de meeste impact hebben. Geen vergaderingen vereist.",
       "cta": {
         "startFreeScan": "Start gratis scan",
         "startFreeScanAriaLabel": "Start je eerste gratis WCAG-scan",

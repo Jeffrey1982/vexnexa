@@ -84,7 +84,7 @@ export default function ContactPage() {
       description: t('methods.sales.description'),
       detail: t('methods.sales.detail'),
       actionLabel: t('methods.sales.actionLabel'),
-      href: "/demo", // Links to demo page with contact form
+      href: "#contact-form", // Scroll to contact form on this page
     },
     {
       icon: Globe,
