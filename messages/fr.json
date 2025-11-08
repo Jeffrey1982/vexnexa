@@ -154,7 +154,7 @@
       },
       "q7": {
         "question": "Dois-je planifier une démo?",
-        "answer": "Non! TutusPorta est entièrement en libre-service. Inscrivez-vous, entrez votre URL et obtenez votre rapport d'accessibilité en quelques minutes. Pas d'appels, pas d'attente."
+        "answer": "Non! TutusPorta est 100% en libre-service. Inscrivez-vous, entrez votre URL et obtenez votre rapport d'accessibilité en quelques minutes. Nous n'offrons pas de démos ou d'appels de vente."
       }
     },
     "pillars": {
@@ -426,7 +426,7 @@
     "metadata": {
       "title": "Contact - Scanner WCAG TutusPorta",
       "description": "Contactez TutusPorta pour des questions sur le scan d'accessibilité, la conformité WCAG ou des solutions personnalisées.",
-      "keywords": "contact, support, aide accessibilité, questions WCAG, démo, entreprise"
+      "keywords": "contact, support, aide accessibilité, questions WCAG, enterprise"
     },
     "skipLink": "Aller au contenu principal",
     "hero": {
@@ -513,7 +513,7 @@
       },
       "q3": {
         "question": "Offrez-vous des formations et des consultations ?",
-        "answer": "Nous répondons sous 24-48 heures les jours ouvrables pour les demandes enterprise. Pour le support général, utilisez notre chat intégré ou le support par e-mail."
+        "answer": "Nous répondons sous 24-48 heures les jours ouvrables pour les demandes enterprise. Pour le support général, utilisez notre aide intégrée ou le support par e-mail."
       },
       "q4": {
         "question": "Comment fonctionne le support entreprise ?",
@@ -521,7 +521,7 @@
       },
       "q5": {
         "question": "Dois-je réserver une démo?",
-        "answer": "Non! Vous pouvez commencer à scanner immédiatement après l'inscription. Les démos ne sont nécessaires que pour les clients enterprise avec des exigences personnalisées."
+        "answer": "Non! Vous pouvez commencer à scanner immédiatement après l'inscription. Il suffit de vous inscrire et de commencer - aucune réunion requise."
       }
     },
     "cta": {

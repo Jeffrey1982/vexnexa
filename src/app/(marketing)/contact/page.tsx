@@ -25,7 +25,7 @@ const metadata = {
   title: "Contact - TutusPorta WCAG Scanner",
   description:
     "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
-  keywords: "contact, support, accessibility help, WCAG questions, demo, enterprise",
+  keywords: "contact, support, accessibility help, WCAG questions, enterprise",
   openGraph: {
     title: "Contact - TutusPorta WCAG Scanner",
     description:

@@ -145,11 +145,11 @@ export default function AboutPage() {
                   </svg>
                 </Link>
                 <Link
-                  href="/demo"
+                  href="/pricing"
                   className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-foreground bg-card hover:bg-secondary shadow-elegant hover:shadow-soft ring-1 ring-border/50 transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                  aria-label="Plan een demo"
+                  aria-label="Bekijk prijzen"
                 >
-                  Plan 15-min demo
+                  Bekijk prijzen
                 </Link>
               </div>
             </div>

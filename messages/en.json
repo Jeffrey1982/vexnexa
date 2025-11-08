@@ -154,7 +154,7 @@
       },
       "q7": {
         "question": "Do I need to schedule a demo?",
-        "answer": "No! TutusPorta is fully self-serve. Sign up, enter your URL, and get your accessibility report in minutes. No calls, no waiting."
+        "answer": "No! TutusPorta is 100% self-serve. Sign up, enter your URL, and get your accessibility report in minutes. We don't offer demos or sales calls."
       }
     },
     "pillars": {
@@ -426,7 +426,7 @@
     "metadata": {
       "title": "Contact - TutusPorta WCAG Scanner",
       "description": "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
-      "keywords": "contact, support, accessibility help, WCAG questions, demo, enterprise"
+      "keywords": "contact, support, accessibility help, WCAG questions, enterprise"
     },
     "skipLink": "Skip to main content",
     "hero": {
@@ -513,7 +513,7 @@
       },
       "q3": {
         "question": "Do you offer training and consultancy?",
-        "answer": "We respond within 24-48 hours on business days for enterprise inquiries. For general support, use our in-app chat or email support."
+        "answer": "We respond within 24-48 hours on business days for enterprise inquiries. For general support, use our in-app help or email support."
       },
       "q4": {
         "question": "How does enterprise support work?",
@@ -521,7 +521,7 @@
       },
       "q5": {
         "question": "Do I need to book a demo?",
-        "answer": "No! You can start scanning immediately after signup. Demos are only needed for enterprise customers with custom requirements."
+        "answer": "No! You can start scanning immediately after signup. Just register and begin - no meetings required."
       }
     },
     "cta": {

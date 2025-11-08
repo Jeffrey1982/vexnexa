@@ -40,7 +40,11 @@
       "Bash(while read file)",
       "Bash(do if ! grep -q \"useTranslations\\|getTranslations\" $file)",
       "Bash(then echo $file fi done)",
-      "Bash(__NEW_LINE__ echo \"File: BlogEditor.tsx\")"
+      "Bash(__NEW_LINE__ echo \"File: BlogEditor.tsx\")",
+      "Bash(perl -i -pe:*)",
+      "Bash(perl -i -0777 -pe:*)",
+      "Bash(git checkout:*)",
+      "Bash(git revert:*)"
     ],
     "deny": [],
     "ask": []

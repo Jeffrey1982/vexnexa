@@ -154,7 +154,7 @@
       },
       "q7": {
         "question": "Moet ik een demo inplannen?",
-        "answer": "Nee! TutusPorta is volledig zelfbediening. Meld je aan, voer je URL in en krijg je toegankelijkheidsrapport binnen enkele minuten. Geen gesprekken, geen wachten."
+        "answer": "Nee! TutusPorta is 100% zelfbediening. Meld je aan, voer je URL in en krijg je toegankelijkheidsrapport binnen enkele minuten. We bieden geen demo's of verkoopgesprekken aan."
       }
     },
     "pillars": {
@@ -426,7 +426,7 @@
     "metadata": {
       "title": "Contact - TutusPorta WCAG Scanner",
       "description": "Neem contact op met TutusPorta voor vragen over toegankelijkheidsscans, WCAG-compliance of maatwerk oplossingen.",
-      "keywords": "contact, support, toegankelijkheidshulp, WCAG vragen, demo, enterprise"
+      "keywords": "contact, support, toegankelijkheidshulp, WCAG vragen, enterprise"
     },
     "skipLink": "Ga naar hoofdinhoud",
     "hero": {
@@ -513,7 +513,7 @@
       },
       "q3": {
         "question": "Bieden jullie training en consultancy?",
-        "answer": "We reageren binnen 24-48 uur op werkdagen voor enterprise aanvragen. Voor algemene ondersteuning, gebruik onze in-app chat of e-mail support."
+        "answer": "We reageren binnen 24-48 uur op werkdagen voor enterprise aanvragen. Voor algemene ondersteuning, gebruik onze in-app hulp of e-mail support."
       },
       "q4": {
         "question": "Hoe werkt enterprise support?",
@@ -521,7 +521,7 @@
       },
       "q5": {
         "question": "Moet ik een demo boeken?",
-        "answer": "Nee! Je kunt direct na registratie beginnen met scannen. Demo's zijn alleen nodig voor enterprise klanten met aangepaste vereisten."
+        "answer": "Nee! Je kunt direct na registratie beginnen met scannen. Meld je gewoon aan en begin - geen vergaderingen vereist."
       }
     },
     "cta": {
