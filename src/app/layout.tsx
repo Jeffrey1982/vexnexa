@@ -52,7 +52,7 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         {/* Default favicon - will be replaced by white label if configured */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
