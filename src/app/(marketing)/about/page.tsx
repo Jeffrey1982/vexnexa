@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa',
   description:
-    'TutusPorta: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. {t('hero.badges.euHosting')}, {t('hero.badges.axeCore')}.',
+    'TutusPorta: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. EU-hosting, axe-core ruleset.',
   keywords: [
     'TutusPorta',
     'VexNexa',
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa',
     description:
-      'Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit. {t('hero.badges.euHosting')}, {t('hero.badges.axeCore')}.',
+      'Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit. EU-hosting, axe-core ruleset.',
     type: 'website',
     locale: 'nl_NL',
     url: 'https://tutusporta.com/about',
@@ -83,8 +82,7 @@ function JsonLd() {
   )
 }
 
-export default async function AboutPage() {
-  const t = await getTranslations('about');
+export default function AboutPage() {
   return (
     <>
       <JsonLd />
@@ -94,7 +92,7 @@ export default async function AboutPage() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
       >
-        {t('skipLink')}
+        Ga naar hoofdinhoud
       </a>
 
       <div className="min-h-screen bg-background">
@@ -103,18 +101,18 @@ export default async function AboutPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 sm:py-20">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="font-display text-4xl lg:text-6xl font-bold text-foreground leading-tight">
-                {t('hero.title')}
+                Over TutusPorta — onderdeel van VexNexa
               </h1>
               <p className="mt-4 text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-                {t('hero.subtitle')}
+                We maken toegankelijkheid werkbaar voor drukke teams. Minder ruis, meer echte verbeteringen met duidelijke prioriteiten en concrete fixes.
               </p>
 
               {/* Trust chips */}
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 {[
-                  ['{t('hero.badges.euHosting')}', 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'],
-                  ['{t('hero.badges.axeCore')}', 'M13 10V3L4 14h7v7l9-11h-7z'],
-                  ['{t('hero.badges.pdfWordExport')}', 'M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+                  ['EU-hosting', 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'],
+                  ['axe-core ruleset', 'M13 10V3L4 14h7v7l9-11h-7z'],
+                  ['PDF/Word export', 'M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
                 ].map(([label, d], i) => (
                   <span
                     key={i}
@@ -141,7 +139,7 @@ export default async function AboutPage() {
                   className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-primary-foreground gradient-primary shadow-elegant hover:shadow-soft transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   aria-label="Start je eerste gratis WCAG-scan"
                 >
-                  {t('hero.cta.startFree{t('howItWorks.steps.scan.title')}')}
+                  Start gratis scan
                   <svg className="ml-2 h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0-5 5m5-5H6" />
                   </svg>
@@ -151,7 +149,7 @@ export default async function AboutPage() {
                   className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-foreground bg-card hover:bg-secondary shadow-elegant hover:shadow-soft ring-1 ring-border/50 transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   aria-label="Plan een demo"
                 >
-                  {t('hero.cta.planDemo')}
+                  Plan 15-min demo
                 </Link>
               </div>
             </div>
@@ -161,13 +159,13 @@ export default async function AboutPage() {
         {/* Divider */}
         <div className="h-px bg-border" />
 
-        {/* {t('whyWeExist.title')} */}
+        {/* Waarom we bestaan */}
         <div>
           <section className="py-12 sm:py-16 bg-card">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground pb-2 border-b border-muted">
-                  {t('whyWeExist.title')}
+                  Waarom we bestaan
                 </h2>
                 <div className="prose prose-lg max-w-none [&_p]:leading-relaxed [&_p]:my-5">
                   <p className="text-muted-foreground">
@@ -187,18 +185,18 @@ export default async function AboutPage() {
           {/* Divider */}
           <div className="h-px bg-border" />
 
-          {/* {t('whatMakesUsDifferent.title')} */}
+          {/* Wat ons anders maakt */}
           <section className="py-12 sm:py-16">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-10">
-                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">{t('whatMakesUsDifferent.title')}</h2>
-                <p className="mt-3 text-xl text-muted-foreground">{t('whatMakesUsDifferent.subtitle')}</p>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">Wat ons anders maakt</h2>
+                <p className="mt-3 text-xl text-muted-foreground">Vijf redenen waarom teams voor TutusPorta kiezen</p>
               </div>
 
               <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
                   {
-                    title: '{t('whatMakesUsDifferent.features.vexnexaQuality.title')}',
+                    title: 'VexNexa-kwaliteit',
                     body:
                       'Regelsets afgestemd op axe-core + onze filtering. Minder ruis, meer echte issues met gebruikersimpact.',
                     iconBg: 'bg-primary/10',
@@ -213,16 +211,16 @@ export default async function AboutPage() {
                       'M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4',
                   },
                   {
-                    title: '{t('whatMakesUsDifferent.features.smartPrioritization.title')}',
+                    title: 'Slimme prioritering',
                     body:
                       'Critical, Serious, Moderate, Minor — begin waar de impact het grootst is.',
                     iconBg: 'bg-warning/10',
                     iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
                   },
                   {
-                    title: '{t('whatMakesUsDifferent.features.transparentSecure.title')}',
+                    title: 'Transparant & veilig',
                     body:
-                      '{t('hero.badges.euHosting')} (bijv. eu-central), TLS overal, dataminimalisatie. Je data blijft van jou.',
+                      'EU-hosting (bijv. eu-central), TLS overal, dataminimalisatie. Je data blijft van jou.',
                     iconBg: 'bg-primary/10',
                     iconPath:
                       'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
@@ -253,19 +251,19 @@ export default async function AboutPage() {
           {/* Divider */}
           <div className="h-px bg-border" />
 
-          {/* {t('howItWorks.title')} */}
+          {/* Hoe het werkt */}
           <section className="py-12 sm:py-16 bg-card">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-10">
-                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">{t('howItWorks.title')}</h2>
-                <p className="mt-2 text-xl text-muted-foreground">{t('howItWorks.subtitle')}</p>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">Hoe het werkt</h2>
+                <p className="mt-2 text-xl text-muted-foreground">Van onduidelijkheid naar actieplan in drie stappen</p>
               </div>
 
               <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {[
                   {
                     n: '1',
-                    title: '{t('howItWorks.steps.scan.title')}',
+                    title: 'Scan',
                     copy:
                       'Voer een URL in. De engine controleert tegen WCAG 2.2 AA en markeert direct de echte issues.',
                     bg: 'gradient-primary',
@@ -273,7 +271,7 @@ export default async function AboutPage() {
                   },
                   {
                     n: '2',
-                    title: '{t('howItWorks.steps.understand.title')}',
+                    title: 'Begrijp',
                     copy:
                       'Overzichtelijk rapport met prioriteiten, uitleg, impact en voorbeelden — klaar voor je backlog.',
                     bg: 'bg-success',
@@ -281,7 +279,7 @@ export default async function AboutPage() {
                   },
                   {
                     n: '3',
-                    title: '{t('howItWorks.steps.improve.title')}',
+                    title: 'Verbeter',
                     copy:
                       'Exporteer, deel en los gestructureerd op. Volg voortgang en zie het effect op gebruikers.',
                     bg: 'bg-warning',
@@ -307,8 +305,8 @@ export default async function AboutPage() {
           <section className="py-12 sm:py-16">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-10">
-                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">{t('results.title')}</h2>
-                <p className="mt-2 text-xl text-muted-foreground">{t('results.subtitle')}</p>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">Resultaten die tellen</h2>
+                <p className="mt-2 text-xl text-muted-foreground">Wat teams bereiken met TutusPorta</p>
               </div>
 
               <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -339,12 +337,12 @@ export default async function AboutPage() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground text-center">
-                  {t('securityTrust.title')}
+                  Security & vertrouwen
                 </h2>
 
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-xl font-semibold text-foreground mb-3">{t('securityTrust.euDataPrivacy.title')}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-3">EU-data & privacy</h3>
                     <ul className="space-y-3 text-muted-foreground">
                       <li className="flex items-start gap-3">
                         <svg className="h-5 w-5 text-success mt-0.5 flex-shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -368,7 +366,7 @@ export default async function AboutPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-semibold text-foreground mb-3">{t('securityTrust.transparencyControl.title')}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-3">Transparantie & controle</h3>
                     <ul className="space-y-3 text-muted-foreground">
                       <li className="flex items-start gap-3">
                         <svg className="h-5 w-5 text-success mt-0.5 flex-shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -402,14 +400,14 @@ export default async function AboutPage() {
           <section className="py-12 sm:py-16">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">{t('valuesTeam.title')}</h2>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">Onze waarden & team</h2>
 
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-8">
                   {[
-                    ['{t('valuesTeam.values.quality.title')}', 'Geen shortcuts — alleen werkende oplossingen'],
-                    ['{t('valuesTeam.values.clarity.title')}', 'Complexe zaken simpel uitgelegd'],
-                    ['{t('valuesTeam.values.respect.title')}', 'Voor alle gebruikers en hun behoeften'],
-                    ['{t('valuesTeam.values.responsibility.title')}', 'Toegankelijkheid is ieders taak'],
+                    ['Kwaliteit', 'Geen shortcuts — alleen werkende oplossingen'],
+                    ['Duidelijkheid', 'Complexe zaken simpel uitgelegd'],
+                    ['Respect', 'Voor alle gebruikers en hun behoeften'],
+                    ['Verantwoordelijkheid', 'Toegankelijkheid is ieders taak'],
                   ].map(([title, sub], i) => (
                     <div key={i}>
                       <div className="text-2xl font-bold text-primary">{title}</div>
@@ -435,7 +433,7 @@ export default async function AboutPage() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground text-center">
-                  {t('faq.title')}
+                  Veelgestelde vragen
                 </h2>
 
                 <div className="mt-8 space-y-6">
@@ -454,7 +452,7 @@ export default async function AboutPage() {
                     ],
                     [
                       'Hoe zit het met privacy en databeveiliging?',
-                      'We scannen alleen publiek toegankelijke content en slaan geen persoonsinhoud op. {t('hero.badges.euHosting')}, TLS en dataminimalisatie.',
+                      'We scannen alleen publiek toegankelijke content en slaan geen persoonsinhoud op. EU-hosting, TLS en dataminimalisatie.',
                     ],
                     [
                       'Waarom factureert VexNexa?',
@@ -483,7 +481,7 @@ export default async function AboutPage() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center">
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-primary-foreground">
-                  {t('finalCta.title')}
+                  Maak je site vandaag toegankelijker
                 </h2>
                 <p className="mt-3 text-xl text-primary-foreground/90 max-w-3xl mx-auto">
                   Begin met een gratis scan en zie direct welke verbeteringen de meeste impact hebben.
@@ -495,7 +493,7 @@ export default async function AboutPage() {
                     className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-primary bg-card hover:bg-secondary shadow-elegant hover:shadow-soft transition-all ring-1 ring-border/50 focus:outline-none focus:ring-2 focus:ring-card focus:ring-offset-2 focus:ring-offset-primary"
                     aria-label="Start je eerste gratis WCAG-scan"
                   >
-                    {t('hero.cta.startFree{t('howItWorks.steps.scan.title')}')}
+                    Start gratis scan
                     <svg className="ml-2 h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0-5 5m5-5H6" />
                     </svg>
@@ -505,7 +503,7 @@ export default async function AboutPage() {
                     className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-primary-foreground bg-transparent hover:bg-white/10 transition-all ring-2 ring-primary-foreground/30 hover:ring-primary-foreground/50 focus:outline-none focus:ring-2 focus:ring-card focus:ring-offset-2 focus:ring-offset-primary"
                     aria-label="Bekijk prijsplannen"
                   >
-                    {t('finalCta.cta.viewPricing')}
+                    Bekijk prijzen
                   </Link>
                 </div>
               </div>

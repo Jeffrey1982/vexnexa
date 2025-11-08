@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,7 +25,6 @@ import {
 } from "lucide-react";
 
 export default function GetStartedPage() {
-  const t = useTranslations('getStartedPage');
   const router = useRouter();
   const [url, setUrl] = useState("");
   const [frequency, setFrequency] = useState("once");
@@ -42,13 +40,13 @@ export default function GetStartedPage() {
     try {
       // Validate URL
       if (!url) {
-        throw new Error(t('form.errors.required'));
+        throw new Error("Please enter a URL");
       }
 
       try {
         new URL(url);
       } catch {
-        throw new Error(t('form.errors.invalid'));
+        throw new Error("Please enter a valid URL");
       }
 
       // Here you would typically create the scan
@@ -57,7 +55,7 @@ export default function GetStartedPage() {
 
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('form.errors.generic'));
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -71,20 +69,20 @@ export default function GetStartedPage() {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4">
               <Zap className="w-3 h-3 mr-1" />
-              {t('hero.badge')}
+              Quick start
             </Badge>
             <h1 className="text-4xl lg:text-5xl font-bold font-display mb-4">
-              {t('hero.title')}
+              Get started with your first scan
             </h1>
             <p className="text-xl text-muted-foreground">
-              {t('hero.subtitle')}
+              Enter your website URL and we&apos;ll run a comprehensive accessibility scan
             </p>
           </div>
 
           {/* Main Form Card */}
           <Card className="shadow-lg mb-12">
             <CardHeader>
-              <CardTitle className="text-2xl">{t('form.title')}</CardTitle>
+              <CardTitle className="text-2xl">Start your first scan</CardTitle>
               <CardDescription>
                 We&apos;ll analyze your website for accessibility issues and provide actionable
                 recommendations
@@ -101,12 +99,12 @@ export default function GetStartedPage() {
                 {/* URL Input */}
                 <div className="space-y-2">
                   <Label htmlFor="url" className="text-base">
-                    {t('form.url.label')} <span className="text-destructive">{t('form.url.required')}</span>
+                    Website URL <span className="text-destructive">*</span>
                   </Label>
                   <Input
                     id="url"
                     type="url"
-                    placeholder={t('form.url.placeholder')}
+                    placeholder="https://example.com"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     required
@@ -114,29 +112,29 @@ export default function GetStartedPage() {
                     aria-describedby="url-help"
                   />
                   <p id="url-help" className="text-sm text-muted-foreground">
-                    {t('form.url.help')}
+                    Enter the full URL of the page you want to scan
                   </p>
                 </div>
 
                 {/* Frequency Selection */}
                 <div className="space-y-2">
                   <Label htmlFor="frequency" className="text-base">
-                    {t('form.frequency.label')}
+                    Scan frequency
                   </Label>
                   <Select value={frequency} onValueChange={setFrequency}>
                     <SelectTrigger id="frequency" aria-describedby="frequency-help">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="once"{t('form.frequency.options.once')}</SelectItem>
-                      <SelectItem value="weekly"{t('form.frequency.options.weekly')}</SelectItem>
-                      <SelectItem value="monthly"{t('form.frequency.options.monthly')}</SelectItem>
+                      <SelectItem value="once">One-time scan</SelectItem>
+                      <SelectItem value="weekly">Weekly</SelectItem>
+                      <SelectItem value="monthly">Monthly</SelectItem>
                     </SelectContent>
                   </Select>
                   <p id="frequency-help" className="text-sm text-muted-foreground">
                     {frequency === "once"
-                      ? t('form.frequency.help.once')
-                      : t('form.frequency.help.recurring', { frequency })}
+                      ? "Run a single scan now"
+                      : `Automatically scan your site ${frequency}`}
                   </p>
                 </div>
 
@@ -152,10 +150,10 @@ export default function GetStartedPage() {
                   />
                   <div className="flex-1">
                     <Label htmlFor="notify" className="text-base font-normal cursor-pointer">
-                      {t('form.notify.label')}
+                      Email me when the scan is complete
                     </Label>
                     <p id="notify-help" className="text-sm text-muted-foreground">
-                      {t('form.notify.help')}
+                      You&apos;ll receive a notification with a link to view your results
                     </p>
                   </div>
                 </div>
@@ -169,11 +167,11 @@ export default function GetStartedPage() {
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      {t('form.submit.loading')}
+                      Starting scan...
                     </>
                   ) : (
                     <>
-                      {t('form.submit.default')}
+                      Start accessibility scan
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </>
                   )}
@@ -187,7 +185,7 @@ export default function GetStartedPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary" />
-                {t('whatHappensNext.title')}
+                What happens next?
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -196,10 +194,10 @@ export default function GetStartedPage() {
                   1
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">{t('whatHappensNext.steps.scan.title')}</h3>
+                  <h3 className="font-semibold mb-1">Scan runs automatically</h3>
                   <p className="text-sm text-muted-foreground">
                     Our scanner analyzes your page for WCAG compliance + 8 additional
-                    {t('whatHappensNext.steps.scan.description')}
+                    accessibility categories
                   </p>
                 </div>
               </div>
@@ -209,10 +207,10 @@ export default function GetStartedPage() {
                   2
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1"{t('whatHappensNext.steps.report.title')}</h3>
+                  <h3 className="font-semibold mb-1">View your detailed report</h3>
                   <p className="text-sm text-muted-foreground">
                     See prioritized issues with code snippets, screenshots, and clear
-                    {t('whatHappensNext.steps.report.description')}
+                    remediation steps
                   </p>
                 </div>
               </div>
@@ -222,10 +220,10 @@ export default function GetStartedPage() {
                   3
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1"{t('whatHappensNext.steps.improve.title')}</h3>
+                  <h3 className="font-semibold mb-1">Fix top issues → re-scan → improve</h3>
                   <p className="text-sm text-muted-foreground">
                     Work through issues by priority, re-scan to track progress, and share
-                    {t('whatHappensNext.steps.improve.description')}
+                    reports with your team
                   </p>
                 </div>
               </div>
@@ -235,13 +233,13 @@ export default function GetStartedPage() {
           {/* Bottom CTA */}
           <div className="text-center mt-12">
             <p className="text-muted-foreground mb-4">
-              {t('footer.notReady')}{" "}
+              Not ready to scan yet?{" "}
               <Link href="/features" className="text-primary hover:underline">
-                {t('footer.learnMore')}
+                Learn more about our features
               </Link>
             </p>
             <p className="text-sm text-muted-foreground">
-              {t('footer.hasAccount')}{" "}
+              Already have an account?{" "}
               <Link href="/auth/login" className="text-primary hover:underline">
                 Sign in
               </Link>
