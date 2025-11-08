@@ -104,13 +104,12 @@ function HeroSection() {
           </Badge>
 
           <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
-            Choose the right plan for{" "}
-            <span className="text-primary">your project</span>
+            {t('title')}{" "}
+            <span className="text-primary">{t('titleHighlight')}</span>
           </h1>
 
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            From free trial to enterprise features. All prices are transparent and
-            monthly cancellable.
+            {t('subtitle')}
           </p>
 
           <div className="flex justify-center gap-4 flex-wrap">
@@ -362,7 +361,7 @@ function OverflowPricingSection() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Overflow Pricing
+              {t('title')}
             </h2>
             <p className="text-xl text-muted-foreground">
               {t('subtitle')}
@@ -520,7 +519,7 @@ function CTASection() {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            Start scanning today
+            {t('title')}
           </h2>
           <p className="text-xl opacity-90">
             {t('subtitle')}

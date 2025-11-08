@@ -1575,5 +1575,70 @@
         "support": "E-mail ondersteuning"
       }
     }
+  },
+  "getStartedPage": {
+    "hero": {
+      "badge": "Snelstart",
+      "title": "Begin met je eerste scan",
+      "subtitle": "Voer de URL van je website in en we voeren een uitgebreide toegankelijkheidscan uit"
+    },
+    "form": {
+      "title": "Start je eerste scan",
+      "description": "We analyseren je website op toegankelijkheidsproblemen en bieden uitvoerbare aanbevelingen",
+      "url": {
+        "label": "Website URL",
+        "required": "*",
+        "placeholder": "https://voorbeeld.nl",
+        "help": "Voer de volledige URL in van de pagina die je wilt scannen"
+      },
+      "frequency": {
+        "label": "Scanfrequentie",
+        "options": {
+          "once": "Eenmalige scan",
+          "weekly": "Wekelijks",
+          "monthly": "Maandelijks"
+        },
+        "help": {
+          "once": "Voer nu een enkele scan uit",
+          "recurring": "Scan je site automatisch {frequency}"
+        }
+      },
+      "notify": {
+        "label": "Stuur me een e-mail wanneer de scan klaar is",
+        "help": "Je ontvangt een notificatie met een link om je resultaten te bekijken"
+      },
+      "submit": {
+        "default": "Start toegankelijkheidsscan",
+        "loading": "Scan starten..."
+      },
+      "errors": {
+        "required": "Voer een URL in",
+        "invalid": "Voer een geldige URL in",
+        "generic": "Er is iets misgegaan"
+      }
+    },
+    "whatHappensNext": {
+      "title": "Wat gebeurt er nu?",
+      "steps": {
+        "scan": {
+          "title": "Scan wordt automatisch uitgevoerd",
+          "description": "Onze scanner analyseert je pagina op WCAG-naleving + 8 extra toegankelijkheidscategorieën"
+        },
+        "report": {
+          "title": "Bekijk je gedetailleerde rapport",
+          "description": "Zie geprioriteerde problemen met codefragmenten, screenshots en duidelijke herstelstappen"
+        },
+        "improve": {
+          "title": "Los top problemen op → herscan → verbeter",
+          "description": "Werk problemen af op prioriteit, herscan om voortgang bij te houden en deel rapporten met je team"
+        }
+      }
+    },
+    "footer": {
+      "notReady": "Nog niet klaar om te scannen?",
+      "learnMore": "Meer informatie over onze functies",
+      "hasAccount": "Heb je al een account?",
+      "signIn": "Inloggen"
+    }
   }
 }

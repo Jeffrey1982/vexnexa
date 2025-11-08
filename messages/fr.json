@@ -1575,5 +1575,70 @@
         "support": "Support par e-mail"
       }
     }
+  },
+  "getStartedPage": {
+    "hero": {
+      "badge": "Démarrage rapide",
+      "title": "Commencez avec votre première analyse",
+      "subtitle": "Entrez l'URL de votre site web et nous effectuerons une analyse complète de l'accessibilité"
+    },
+    "form": {
+      "title": "Commencez votre première analyse",
+      "description": "Nous analyserons votre site web pour détecter les problèmes d'accessibilité et fournirons des recommandations concrètes",
+      "url": {
+        "label": "URL du site web",
+        "required": "*",
+        "placeholder": "https://exemple.com",
+        "help": "Entrez l'URL complète de la page que vous souhaitez analyser"
+      },
+      "frequency": {
+        "label": "Fréquence d'analyse",
+        "options": {
+          "once": "Analyse unique",
+          "weekly": "Hebdomadaire",
+          "monthly": "Mensuelle"
+        },
+        "help": {
+          "once": "Effectuer une seule analyse maintenant",
+          "recurring": "Analyser automatiquement votre site {frequency}"
+        }
+      },
+      "notify": {
+        "label": "M'envoyer un e-mail lorsque l'analyse est terminée",
+        "help": "Vous recevrez une notification avec un lien pour consulter vos résultats"
+      },
+      "submit": {
+        "default": "Démarrer l'analyse d'accessibilité",
+        "loading": "Démarrage de l'analyse..."
+      },
+      "errors": {
+        "required": "Veuillez entrer une URL",
+        "invalid": "Veuillez entrer une URL valide",
+        "generic": "Quelque chose s'est mal passé"
+      }
+    },
+    "whatHappensNext": {
+      "title": "Que se passe-t-il ensuite?",
+      "steps": {
+        "scan": {
+          "title": "L'analyse se lance automatiquement",
+          "description": "Notre scanner analyse votre page pour la conformité WCAG + 8 catégories d'accessibilité supplémentaires"
+        },
+        "report": {
+          "title": "Consultez votre rapport détaillé",
+          "description": "Voyez les problèmes prioritaires avec des extraits de code, des captures d'écran et des étapes de remédiation claires"
+        },
+        "improve": {
+          "title": "Corrigez les problèmes → réanalysez → améliorez",
+          "description": "Travaillez sur les problèmes par priorité, réanalysez pour suivre les progrès et partagez les rapports avec votre équipe"
+        }
+      }
+    },
+    "footer": {
+      "notReady": "Pas encore prêt à analyser?",
+      "learnMore": "En savoir plus sur nos fonctionnalités",
+      "hasAccount": "Vous avez déjà un compte?",
+      "signIn": "Se connecter"
+    }
   }
 }
