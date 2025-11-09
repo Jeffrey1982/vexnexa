@@ -33,7 +33,7 @@ export function createListUnsubscribeHeader(unsubscribeToken: string): EmailHead
   const unsubscribeUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/newsletter/unsubscribe?token=${unsubscribeToken}`
 
   return {
-    'List-Unsubscribe': `<mailto:unsubscribe@tutusporta.com>, <${unsubscribeUrl}>`,
+    'List-Unsubscribe': `<mailto:unsubscribe@vexnexa.com>, <${unsubscribeUrl}>`,
     'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
   }
 }

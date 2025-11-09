@@ -70,7 +70,7 @@ export async function PATCH(
     // Check if user is admin by email
     const adminEmails = [
       'jeffrey.aay@gmail.com',
-      'admin@tutusporta.com'
+      'admin@vexnexa.com'
     ];
 
     if (!adminEmails.includes(user.email)) {
@@ -174,7 +174,7 @@ export async function DELETE(
     // Check if user is admin by email
     const adminEmails = [
       'jeffrey.aay@gmail.com',
-      'admin@tutusporta.com'
+      'admin@vexnexa.com'
     ];
 
     if (!adminEmails.includes(user.email)) {

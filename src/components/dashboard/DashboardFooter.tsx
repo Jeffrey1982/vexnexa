@@ -9,7 +9,7 @@ export default function DashboardFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="font-display font-bold text-sm mb-3">TutusPorta</h3>
+            <h3 className="font-display font-bold text-sm mb-3">VexNexa</h3>
             <p className="text-xs text-muted-foreground">
               Your Secure Path to Accessibility
             </p>
@@ -93,7 +93,7 @@ export default function DashboardFooter() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-6 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {currentYear} TutusPorta by Vexnexa. All rights reserved.
+            © {currentYear} VexNexa by Vexnexa. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
             Made with ❤️ for web accessibility

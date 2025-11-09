@@ -86,7 +86,7 @@ export default function MainDashboardPage() {
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Get started with TutusPorta</CardDescription>
+            <CardDescription>Get started with VexNexa</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

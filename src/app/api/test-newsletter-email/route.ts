@@ -30,14 +30,14 @@ export async function POST(request: NextRequest) {
     )
 
     const baseEmailOptions = {
-      from: 'TutusPorta <noreply@tutusporta.com>',
+      from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: '🧪 TEST: Bevestig je inschrijving voor de TutusPorta nieuwsbrief',
+      subject: '🧪 TEST: Bevestig je inschrijving voor de VexNexa nieuwsbrief',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
             <div style="display: inline-block; background: #3B82F6; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">T</div>
-            <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">TutusPorta</h1>
+            <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
             <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
 
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center;">
-            <strong>TutusPorta</strong> | <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a><br>
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3B82F6;">vexnexa.com</a><br>
             🧪 TEST EMAIL - Source Name Mapping Verification
           </p>
         </div>
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
       text: `
 🧪 TEST EMAIL - Friendly Source Names
 
-Bevestig je inschrijving voor de TutusPorta nieuwsbrief
+Bevestig je inschrijving voor de VexNexa nieuwsbrief
 
 Bedankt voor je interesse in onze nieuwsbrief! Je hebt je ingeschreven via ${friendlySource}.
 
@@ -110,7 +110,7 @@ Wat krijg je?
 
 🧪 TEST MODE: This is a test email to verify friendly source names work correctly.
 
-TutusPorta | tutusporta.com
+VexNexa | vexnexa.com
 🧪 TEST EMAIL - Source Name Mapping Verification
       `.trim()
     }

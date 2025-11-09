@@ -122,7 +122,7 @@ export function InstallPrompt() {
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <AlertDescription className="text-blue-800">
-              <strong>Install TutuSporta</strong><br />
+              <strong>Install VexNexa</strong><br />
               Tap <span className="inline-flex items-center mx-1">📤</span> in Safari, then &ldquo;Add to Home Screen&rdquo;
             </AlertDescription>
           </div>
@@ -150,7 +150,7 @@ export function InstallPrompt() {
             </div>
             <div>
               <CardTitle className="text-base font-semibold text-blue-900">
-                Install TutuSporta
+                Install VexNexa
               </CardTitle>
               <CardDescription className="text-blue-700 text-sm">
                 Get the full app experience

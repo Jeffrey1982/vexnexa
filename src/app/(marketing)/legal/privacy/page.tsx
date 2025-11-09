@@ -7,25 +7,25 @@ import { ArrowLeft, Shield, Mail, Calendar, ListTree } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - TutusPorta',
-  description: 'Read our privacy policy: how TutusPorta handles your data, cookies and privacy. GDPR compliant.',
+  title: 'Privacy Policy - VexNexa',
+  description: 'Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.',
   keywords: ['privacy policy','privacy policy','GDPR','AVG','data protection','cookies','data protection'],
   openGraph: {
-    title: 'Privacy Policy - TutusPorta',
-    description: 'Read our privacy policy: how TutusPorta handles your data, cookies and privacy. GDPR compliant.',
-    url: 'https://tutusporta.com/legal/privacy',
-    siteName: 'TutusPorta',
+    title: 'Privacy Policy - VexNexa',
+    description: 'Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.',
+    url: 'https://vexnexa.com/legal/privacy',
+    siteName: 'VexNexa',
     type: 'website',
     locale: 'nl_NL',
   },
   twitter: {
     card: 'summary',
-    title: 'Privacy Policy - TutusPorta',
-    description: 'Read our privacy policy: how TutusPorta handles your data, cookies and privacy. GDPR compliant.',
+    title: 'Privacy Policy - VexNexa',
+    description: 'Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.',
   },
   alternates: {
-    canonical: 'https://tutusporta.com/legal/privacy',
-    languages: { 'nl-NL': 'https://tutusporta.com/legal/privacy' },
+    canonical: 'https://vexnexa.com/legal/privacy',
+    languages: { 'nl-NL': 'https://vexnexa.com/legal/privacy' },
   },
   robots: { index: true, follow: true },
 }
@@ -158,12 +158,12 @@ export default async function PrivacyPage() {
                 <strong>{t('section1.address')}:</strong> {t('section1.addressValue')} <br />
                 <strong>{t('section1.kvk')}:</strong> 12345678 &nbsp;|&nbsp; <strong>{t('section1.vat')}:</strong> NL123456789B01 <br />
                 <strong>{t('section1.email')}:</strong>{' '}
-                <a href="mailto:privacy@tutusporta.com" className="text-primary underline-offset-4 hover:underline">
-                  privacy@tutusporta.com
+                <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                  privacy@vexnexa.com
                 </a>
                 {' '}| <strong>{t('section1.website')}:</strong>{' '}
-                <a href="https://tutusporta.com" className="text-primary underline-offset-4 hover:underline">
-                  tutusporta.com
+                <a href="https://vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                  vexnexa.com
                 </a>
               </p>
             </div>
@@ -344,8 +344,8 @@ export default async function PrivacyPage() {
             </div>
             <p className="mt-3">
               Je rechten uitoefenen? Mail{' '}
-              <a href="mailto:privacy@tutusporta.com" className="text-primary underline-offset-4 hover:underline">
-                privacy@tutusporta.com
+              <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                privacy@vexnexa.com
               </a>. {t('section9.responseText')}
             </p>
           </section>
@@ -392,8 +392,8 @@ export default async function PrivacyPage() {
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
                 Email:{' '}
-                <a href="mailto:privacy@tutusporta.com" className="text-primary underline-offset-4 hover:underline">
-                  privacy@tutusporta.com
+                <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                  privacy@vexnexa.com
                 </a>
               </p>
               <p className="text-sm text-muted-foreground">

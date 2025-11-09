@@ -35,10 +35,10 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: t('metadata.title'),
       description: t('metadata.description'),
-      url: "https://tutusporta.com/features",
+      url: "https://vexnexa.com/features",
     },
     alternates: {
-      canonical: "https://tutusporta.com/features",
+      canonical: "https://vexnexa.com/features",
     },
   }
 }

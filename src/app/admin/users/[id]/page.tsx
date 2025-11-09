@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 
 async function requireAdmin() {
   const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@tutusporta.com'];
+  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
   if (!adminEmails.includes(user.email)) {
     redirect('/dashboard');
   }

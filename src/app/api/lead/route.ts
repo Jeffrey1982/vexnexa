@@ -64,14 +64,14 @@ export async function POST(request: NextRequest) {
     )
 
     const baseEmailOptions = {
-      from: 'TutusPorta <noreply@tutusporta.com>',
+      from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Bevestig je inschrijving voor de TutusPorta nieuwsbrief',
+      subject: 'Bevestig je inschrijving voor de VexNexa nieuwsbrief',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
             <div style="display: inline-block; background: #3B82F6; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">T</div>
-            <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">TutusPorta</h1>
+            <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
             <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
 
@@ -108,13 +108,13 @@ export async function POST(request: NextRequest) {
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center;">
-            <strong>TutusPorta</strong> | <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a><br>
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3B82F6;">vexnexa.com</a><br>
             Privacy-first WCAG scanning • Gemaakt in Nederland
           </p>
         </div>
       `,
       text: `
-Bevestig je inschrijving voor de TutusPorta nieuwsbrief
+Bevestig je inschrijving voor de VexNexa nieuwsbrief
 
 Bedankt voor je interesse in onze nieuwsbrief! Je hebt je ingeschreven via ${friendlySource}.
 
@@ -129,7 +129,7 @@ Wat krijg je?
 
 AVG/GDPR Compliance: Door te klikken bevestig je dat je onze nieuwsbrief wilt ontvangen. Je kunt je altijd weer uitschrijven.
 
-TutusPorta | tutusporta.com
+VexNexa | vexnexa.com
 Privacy-first WCAG scanning • Gemaakt in Nederland
       `.trim()
     }
@@ -147,7 +147,7 @@ Privacy-first WCAG scanning • Gemaakt in Nederland
     try {
       const adminEmail = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
       await resend.emails.send({
-        from: 'TutusPorta Notifications <noreply@tutusporta.com>',
+        from: 'VexNexa Notifications <noreply@vexnexa.com>',
         to: [adminEmail],
         subject: 'Nieuwe nieuwsbrief inschrijving',
         html: `

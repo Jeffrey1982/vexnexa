@@ -180,9 +180,9 @@ export default function CookiesPage() {
                   Voor vragen over dit cookie beleid kunt u contact met ons opnemen:
                 </p>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                  <p className="mb-2"><strong>E-mail:</strong> <a href="mailto:privacy@tutusporta.com" className="text-blue-600 hover:text-blue-800">privacy@tutusporta.com</a></p>
+                  <p className="mb-2"><strong>E-mail:</strong> <a href="mailto:privacy@vexnexa.com" className="text-blue-600 hover:text-blue-800">privacy@vexnexa.com</a></p>
                   <p className="mb-2"><strong>Website:</strong> <a href="/contact" className="text-blue-600 hover:text-blue-800">Contactformulier</a></p>
-                  <p><strong>Adres:</strong> TutusPorta, Nederland</p>
+                  <p><strong>Adres:</strong> VexNexa, Nederland</p>
                 </div>
               </section>
             </div>

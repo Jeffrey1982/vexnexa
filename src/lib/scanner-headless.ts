@@ -77,7 +77,7 @@ export async function runHeadlessAccessibilityScan(options: HeadlessScanOptions)
       const response = await fetch(options.url, {
         method: 'HEAD',
         headers: {
-          'User-Agent': 'TutusPorta Accessibility Scanner 1.0'
+          'User-Agent': 'VexNexa Accessibility Scanner 1.0'
         },
         signal: controller.signal
       });

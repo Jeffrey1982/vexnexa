@@ -7,9 +7,9 @@ import { ArrowLeft, Shield, Mail, Calendar, Clock, Activity, ListTree } from 'lu
 import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
-  title: 'SLA & Support - TutusPorta',
+  title: 'SLA & Support - VexNexa',
   description:
-    'Service Level Agreement en support informatie van TutusPorta: uptime garanties, response times en support levels.',
+    'Service Level Agreement en support informatie van VexNexa: uptime garanties, response times en support levels.',
   keywords: [
     'SLA',
     'service level agreement',
@@ -19,23 +19,23 @@ export const metadata: Metadata = {
     'beschikbaarheid',
   ],
   openGraph: {
-    title: 'SLA & Support - TutusPorta',
+    title: 'SLA & Support - VexNexa',
     description:
-      'Service Level Agreement en support informatie van TutusPorta: uptime garanties, response times en support levels.',
-    url: 'https://tutusporta.com/legal/sla',
-    siteName: 'TutusPorta',
+      'Service Level Agreement en support informatie van VexNexa: uptime garanties, response times en support levels.',
+    url: 'https://vexnexa.com/legal/sla',
+    siteName: 'VexNexa',
     type: 'website',
     locale: 'nl_NL',
   },
   twitter: {
     card: 'summary',
-    title: 'SLA & Support - TutusPorta',
+    title: 'SLA & Support - VexNexa',
     description:
-      'Service Level Agreement en support informatie van TutusPorta: uptime garanties, response times en support levels.',
+      'Service Level Agreement en support informatie van VexNexa: uptime garanties, response times en support levels.',
   },
   alternates: {
-    canonical: 'https://tutusporta.com/legal/sla',
-    languages: { 'nl-NL': 'https://tutusporta.com/legal/sla' },
+    canonical: 'https://vexnexa.com/legal/sla',
+    languages: { 'nl-NL': 'https://vexnexa.com/legal/sla' },
   },
   robots: { index: true, follow: true },
 }
@@ -151,7 +151,7 @@ export default async function SLAPage() {
           <section id="agreement">
             <h2>Service Level Agreement</h2>
             <p>
-              TutusPorta commits to providing reliable service with the following availability
+              VexNexa commits to providing reliable service with the following availability
               targets:
             </p>
             <ul>
@@ -234,7 +234,7 @@ export default async function SLAPage() {
               <p className="font-medium">Support Contact</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:support@tutusporta.com">support@tutusporta.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:support@vexnexa.com">support@vexnexa.com</a>
               </p>
               <p className="text-sm text-muted-foreground">
                 Of via het contact formulier in je dashboard

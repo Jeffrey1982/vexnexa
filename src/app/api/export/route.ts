@@ -111,7 +111,7 @@ export async function POST(req: Request) {
       return new NextResponse(csvData, {
         headers: {
           "Content-Type": "text/csv",
-          "Content-Disposition": `attachment; filename="tutusporta-scans-${new Date().toISOString().split('T')[0]}.csv"`
+          "Content-Disposition": `attachment; filename="vexnexa-scans-${new Date().toISOString().split('T')[0]}.csv"`
         }
       });
     } else {
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
       return NextResponse.json({
         ok: true,
         data: scans,
-        filename: `tutusporta-scans-${new Date().toISOString().split('T')[0]}.json`,
+        filename: `vexnexa-scans-${new Date().toISOString().split('T')[0]}.json`,
         format: "json",
         message: "Excel export available as JSON format for now"
       });

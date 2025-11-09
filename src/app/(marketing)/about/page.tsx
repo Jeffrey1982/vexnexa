@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa',
+  title: 'Over VexNexa - WCAG Toegankelijkheidsscans door VexNexa',
   description:
-    'TutusPorta: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. EU-hosting, axe-core ruleset.',
+    'VexNexa: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. EU-hosting, axe-core ruleset.',
   keywords: [
-    'TutusPorta',
+    'VexNexa',
     'VexNexa',
     'WCAG',
     'toegankelijkheid',
@@ -15,22 +15,22 @@ export const metadata: Metadata = {
     'EU hosting',
   ],
   openGraph: {
-    title: 'Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa',
+    title: 'Over VexNexa - WCAG Toegankelijkheidsscans door VexNexa',
     description:
       'Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit. EU-hosting, axe-core ruleset.',
     type: 'website',
     locale: 'nl_NL',
-    url: 'https://tutusporta.com/about',
-    siteName: 'TutusPorta',
+    url: 'https://vexnexa.com/about',
+    siteName: 'VexNexa',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa',
+    title: 'Over VexNexa - WCAG Toegankelijkheidsscans door VexNexa',
     description:
       'Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit.',
   },
   alternates: {
-    canonical: 'https://tutusporta.com/about',
+    canonical: 'https://vexnexa.com/about',
   },
 }
 
@@ -43,7 +43,7 @@ function JsonLd() {
         '@id': 'https://vexnexa.com/#organization',
         name: 'VexNexa',
         url: 'https://vexnexa.com',
-        logo: 'https://tutusporta.com/logo.png',
+        logo: 'https://vexnexa.com/logo.png',
         contactPoint: {
           '@type': 'ContactPoint',
           email: 'info@vexnexa.com',
@@ -54,10 +54,10 @@ function JsonLd() {
       },
       {
         '@type': 'SoftwareApplication',
-        name: 'TutusPorta',
+        name: 'VexNexa',
         applicationCategory: 'WebApplication',
         description: 'WCAG accessibility scanning and reporting tool',
-        url: 'https://tutusporta.com',
+        url: 'https://vexnexa.com',
         creator: { '@id': 'https://vexnexa.com/#organization' },
         offers: {
           '@type': 'Offer',
@@ -68,8 +68,8 @@ function JsonLd() {
       },
       {
         '@type': 'WebSite',
-        name: 'TutusPorta',
-        url: 'https://tutusporta.com',
+        name: 'VexNexa',
+        url: 'https://vexnexa.com',
         publisher: { '@id': 'https://vexnexa.com/#organization' },
       },
     ],
@@ -101,7 +101,7 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 sm:py-20">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="font-display text-4xl lg:text-6xl font-bold text-foreground leading-tight">
-                Over TutusPorta — onderdeel van VexNexa
+                Over VexNexa — onderdeel van VexNexa
               </h1>
               <p className="mt-4 text-xl lg:text-2xl text-muted-foreground leading-relaxed">
                 We maken toegankelijkheid werkbaar voor drukke teams. Minder ruis, meer echte verbeteringen met duidelijke prioriteiten en concrete fixes.
@@ -172,7 +172,7 @@ export default function AboutPage() {
                     Teams verdrinken vaak in rapporten vol ruis: technische termen, vage verwijzingen en weinig houvast. Ondertussen groeit de druk: strengere wetgeving, gebruikers met uiteenlopende behoeften en het simpele feit dat toegankelijke sites beter presteren.
                   </p>
                   <p className="text-muted-foreground">
-                    TutusPorta draait dat om. We laten precies zien wat er mis is, wat prioriteit heeft en hoe je het oplost — zodat het team vandaag kan beginnen.
+                    VexNexa draait dat om. We laten precies zien wat er mis is, wat prioriteit heeft en hoe je het oplost — zodat het team vandaag kan beginnen.
                   </p>
                   <p className="text-muted-foreground">
                     Toegankelijkheid hoeft niet complex te voelen. Het moet vooral praktisch, begrijpelijk en actiegericht zijn.
@@ -190,7 +190,7 @@ export default function AboutPage() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-10">
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">Wat ons anders maakt</h2>
-                <p className="mt-3 text-xl text-muted-foreground">Vijf redenen waarom teams voor TutusPorta kiezen</p>
+                <p className="mt-3 text-xl text-muted-foreground">Vijf redenen waarom teams voor VexNexa kiezen</p>
               </div>
 
               <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -306,7 +306,7 @@ export default function AboutPage() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-10">
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground">Resultaten die tellen</h2>
-                <p className="mt-2 text-xl text-muted-foreground">Wat teams bereiken met TutusPorta</p>
+                <p className="mt-2 text-xl text-muted-foreground">Wat teams bereiken met VexNexa</p>
               </div>
 
               <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -440,7 +440,7 @@ export default function AboutPage() {
                   {[
                     [
                       'Betekent een scan volledige WCAG-compliance?',
-                      'Nee. Geautomatiseerde checks dekken de automatisch testbare criteria. Handmatige controles blijven nodig. TutusPorta vangt wel het merendeel van de veelvoorkomende issues.',
+                      'Nee. Geautomatiseerde checks dekken de automatisch testbare criteria. Handmatige controles blijven nodig. VexNexa vangt wel het merendeel van de veelvoorkomende issues.',
                     ],
                     [
                       'Kan ik meerdere pagina’s of sites scannen?',
@@ -456,10 +456,10 @@ export default function AboutPage() {
                     ],
                     [
                       'Waarom factureert VexNexa?',
-                      'TutusPorta is een product van VexNexa. Contracten, facturatie en support lopen via VexNexa voor heldere verantwoordelijkheden.',
+                      'VexNexa is een product van VexNexa. Contracten, facturatie en support lopen via VexNexa voor heldere verantwoordelijkheden.',
                     ],
                     [
-                      'Kan ik TutusPorta gratis proberen?',
+                      'Kan ik VexNexa gratis proberen?',
                       'Ja. Je krijgt wekelijks één gratis scan. Registratie vereist; geen creditcard nodig.',
                     ],
                   ].map(([q, a], i) => (
@@ -514,7 +514,7 @@ export default function AboutPage() {
           <section className="py-8 bg-muted/30">
             <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
               <p className="text-sm text-muted-foreground">
-                Facturatie verloopt via VexNexa. TutusPorta is een product van VexNexa.
+                Facturatie verloopt via VexNexa. VexNexa is een product van VexNexa.
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 Vragen? Mail{' '}

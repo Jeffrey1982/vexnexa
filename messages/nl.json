@@ -358,56 +358,56 @@
       "subtitle": "Vergelijking van onze aanpak met overlay-widgets en generieke toegankelijkheidscanners",
       "columns": {
         "feature": "Functie",
-        "tutusporta": "VexNexa",
+        "vexnexa": "VexNexa",
         "overlay": "Overlay Widgets",
         "generic": "Generieke Scanners"
       },
       "features": {
         "coverage": {
           "name": "Dekkingsbreedte",
-          "tutusporta": "WCAG + 8 extra categorieën",
+          "vexnexa": "WCAG + 8 extra categorieën",
           "overlay": "Alleen oppervlakkige fixes",
           "generic": "Basis WCAG controles"
         },
         "actionability": {
           "name": "Bruikbaarheid",
-          "tutusporta": "Code snippets + herstel tips",
+          "vexnexa": "Code snippets + herstel tips",
           "overlay": "Geen ontwikkelaarsbegeleiding",
           "generic": "Generieke foutmeldingen"
         },
         "team": {
           "name": "Team Functies",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "monitoring": {
           "name": "Continue Monitoring",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "api": {
           "name": "API Toegang",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": "Beperkt"
         },
         "falsePositives": {
           "name": "Valse Positieven",
-          "tutusporta": "Laag",
+          "vexnexa": "Laag",
           "overlay": "N.v.t.",
           "generic": "Hoog"
         },
         "legal": {
           "name": "Juridisch Standpunt",
-          "tutusporta": "Tool ondersteunt naleving",
+          "vexnexa": "Tool ondersteunt naleving",
           "overlay": "Claimt problemen op te lossen",
           "generic": "Geen juridische claims"
         },
         "cost": {
           "name": "Kostenschaling",
-          "tutusporta": "Transparante overflow pricing",
+          "vexnexa": "Transparante overflow pricing",
           "overlay": "Per-pagina kosten",
           "generic": "Alleen vaste plannen"
         }

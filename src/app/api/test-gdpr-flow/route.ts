@@ -9,9 +9,9 @@ export async function POST(request: NextRequest) {
     const confirmUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/newsletter/confirm?token=test123`
 
     const result = await resend.emails.send({
-      from: 'TutusPorta <noreply@tutusporta.com>',
+      from: 'VexNexa <noreply@vexnexa.com>',
       to: ['test@example.com'],
-      subject: 'TEST: Bevestig je inschrijving voor de TutusPorta nieuwsbrief',
+      subject: 'TEST: Bevestig je inschrijving voor de VexNexa nieuwsbrief',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2>🧪 GDPR TEST - Bevestig je inschrijving</h2>

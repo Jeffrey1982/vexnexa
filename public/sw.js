@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tutusporta-v7-simple-auth';
+const CACHE_NAME = 'vexnexa-v7-simple-auth';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -135,7 +135,7 @@ async function networkFirstStrategy(request) {
     `<!DOCTYPE html>
     <html>
     <head>
-      <title>TutuSporta - Offline</title>
+      <title>VexNexa - Offline</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style>
         body {
@@ -175,7 +175,7 @@ async function networkFirstStrategy(request) {
       <div class="container">
         <div class="icon">📱</div>
         <h1>You're Offline</h1>
-        <p>TutuSporta is not available right now. Please check your internet connection and try again.</p>
+        <p>VexNexa is not available right now. Please check your internet connection and try again.</p>
         <button class="retry-btn" onclick="window.location.reload()">
           Try Again
         </button>
@@ -285,7 +285,7 @@ self.addEventListener('push', (event) => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('TutuSporta', options)
+    self.registration.showNotification('VexNexa', options)
   );
 });
 

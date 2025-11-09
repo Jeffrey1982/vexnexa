@@ -179,7 +179,7 @@ export async function createUpgradePayment(opts: {
         currency: PRICES[plan].currency,
         value: PRICES[plan].amount
       },
-      description: `TutusPorta ${plan} Plan`,
+      description: `VexNexa ${plan} Plan`,
       redirectUrl: appUrl("/dashboard?checkout=success"),
       
       webhookUrl: appUrl("/api/mollie/webhook"),
@@ -252,7 +252,7 @@ export async function createSubscription(opts: {
       value: PRICES[plan].amount
     },
     interval: "1 month",
-    description: `TutusPorta ${plan} Plan (Vexnexa)`,
+    description: `VexNexa ${plan} Plan (Vexnexa)`,
     startDate: new Date().toISOString().split('T')[0], // Start today
     metadata: {
       userId,
@@ -390,7 +390,7 @@ export async function createPaymentMethodResetPayment(userId: string, email: str
       currency: "EUR",
       value: "0.01" // 1 cent
     },
-    description: "TutusPorta - Payment Method Setup (Vexnexa)",
+    description: "VexNexa - Payment Method Setup (Vexnexa)",
     customerId: customer.id,
     sequenceType: SequenceType.first,
     redirectUrl: appUrl("/settings/billing?setup=success"),

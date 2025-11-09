@@ -118,7 +118,7 @@ export default function NotificationSettingsPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight">Notificatie instellingen</h1>
           <p className="text-muted-foreground mt-2">
-            Beheer welke emails je wilt ontvangen van TutusPorta
+            Beheer welke emails je wilt ontvangen van VexNexa
           </p>
         </div>
 
@@ -153,7 +153,7 @@ export default function NotificationSettingsPage() {
                 <div className="space-y-0.5">
                   <Label htmlFor="productUpdates">Product updates</Label>
                   <p className="text-sm text-muted-foreground">
-                    Belangrijke updates over het TutusPorta platform
+                    Belangrijke updates over het VexNexa platform
                   </p>
                 </div>
                 <Switch

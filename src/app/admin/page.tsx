@@ -22,7 +22,7 @@ async function requireAdmin() {
   // For now, check if user is your admin email - replace with your email
   const adminEmails = [
     'jeffrey.aay@gmail.com',
-    'admin@tutusporta.com' // Add more admin emails as needed
+    'admin@vexnexa.com' // Add more admin emails as needed
   ];
 
   if (!adminEmails.includes(user.email)) {

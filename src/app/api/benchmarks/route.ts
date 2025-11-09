@@ -90,7 +90,7 @@ export async function POST(req: Request) {
 
     // Check if user has admin privileges (for now, only allow specific users)
     // In production, you'd have a proper admin role system
-    if (!["admin@tutusporta.com"].includes(user.email)) {
+    if (!["admin@vexnexa.com"].includes(user.email)) {
       return NextResponse.json({ ok: false, error: "Insufficient permissions" }, { status: 403 });
     }
 

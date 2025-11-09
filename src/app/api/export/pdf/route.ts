@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     // Generate PDF using React PDF
     const pdfDoc = React.createElement(PDFReport, {
       scanData,
-      brandName: "TutuSporta",
+      brandName: "VexNexa",
       primaryColor: "#3B82F6"
     });
 
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(pdfBuffer as any, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="tutusporta-accessibility-report-${scanId}.pdf"`,
+        "Content-Disposition": `attachment; filename="vexnexa-accessibility-report-${scanId}.pdf"`,
       },
     });
 

@@ -7,9 +7,9 @@ import { ArrowLeft, Shield, Mail, Calendar, Lock, Database, AlertTriangle, ListT
 import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
-  title: 'Security & Privacy - TutusPorta',
+  title: 'Security & Privacy - VexNexa',
   description:
-    'Security and privacy information from TutusPorta: data handling, encryption, retention beleid en incident response.',
+    'Security and privacy information from VexNexa: data handling, encryption, retention beleid en incident response.',
   keywords: [
     'security',
     'security',
@@ -19,23 +19,23 @@ export const metadata: Metadata = {
     'GDPR',
   ],
   openGraph: {
-    title: 'Security & Privacy - TutusPorta',
+    title: 'Security & Privacy - VexNexa',
     description:
-      'Security and privacy information from TutusPorta: data handling, encryption, retention beleid en incident response.',
-    url: 'https://tutusporta.com/legal/security',
-    siteName: 'TutusPorta',
+      'Security and privacy information from VexNexa: data handling, encryption, retention beleid en incident response.',
+    url: 'https://vexnexa.com/legal/security',
+    siteName: 'VexNexa',
     type: 'website',
     locale: 'nl_NL',
   },
   twitter: {
     card: 'summary',
-    title: 'Security & Privacy - TutusPorta',
+    title: 'Security & Privacy - VexNexa',
     description:
-      'Security and privacy information from TutusPorta: data handling, encryption, retention beleid en incident response.',
+      'Security and privacy information from VexNexa: data handling, encryption, retention beleid en incident response.',
   },
   alternates: {
-    canonical: 'https://tutusporta.com/legal/security',
-    languages: { 'nl-NL': 'https://tutusporta.com/legal/security' },
+    canonical: 'https://vexnexa.com/legal/security',
+    languages: { 'nl-NL': 'https://vexnexa.com/legal/security' },
   },
   robots: { index: true, follow: true },
 }
@@ -153,7 +153,7 @@ export default async function SecurityPage() {
           <section id="data-handling">
             <h2>Data Handling</h2>
             <p>
-              TutusPorta scans publicly accessible web pages. We temporarily store scan results
+              VexNexa scans publicly accessible web pages. We temporarily store scan results
               and metadata to provide our service. We do not collect or store personal data from
               the websites we scan.
             </p>
@@ -256,8 +256,8 @@ export default async function SecurityPage() {
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 If you discover a security vulnerability, please report it responsibly to{' '}
-                <a href="mailto:security@tutusporta.com" className="text-primary hover:underline">
-                  security@tutusporta.com
+                <a href="mailto:security@vexnexa.com" className="text-primary hover:underline">
+                  security@vexnexa.com
                 </a>
               </p>
             </div>
@@ -272,7 +272,7 @@ export default async function SecurityPage() {
               <p className="font-medium">Security Inquiries</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:security@tutusporta.com">security@tutusporta.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:security@vexnexa.com">security@vexnexa.com</a>
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 For security vulnerabilities or privacy concerns, please contact us at the email above.
@@ -329,7 +329,7 @@ export default async function SecurityPage() {
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <a href="mailto:security@tutusporta.com">Contact Security</a>
+                <a href="mailto:security@vexnexa.com">Contact Security</a>
               </Button>
             </CardContent>
           </Card>

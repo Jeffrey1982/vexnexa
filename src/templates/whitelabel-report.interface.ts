@@ -5,7 +5,7 @@
  * a whitelabel accessibility compliance PDF report.
  *
  * @version 2.0.0
- * @author TutusPorta Engineering Team
+ * @author VexNexa Engineering Team
  */
 
 export interface ReportData {

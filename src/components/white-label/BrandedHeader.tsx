@@ -26,7 +26,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
 
   const supabase = createClient();
 
-  const companyName = settings?.companyName || 'TutusPorta';
+  const companyName = settings?.companyName || 'VexNexa';
   const logoUrl = settings?.logoUrl;
 
   return (

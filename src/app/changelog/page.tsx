@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: t('metadata.title'),
       description: t('metadata.description'),
-      url: 'https://tutusporta.com/changelog',
+      url: 'https://vexnexa.com/changelog',
     },
     twitter: {
       card: 'summary',
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t('metadata.description'),
     },
     alternates: {
-      canonical: 'https://tutusporta.com/changelog',
+      canonical: 'https://vexnexa.com/changelog',
     },
   }
 }

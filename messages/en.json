@@ -358,56 +358,56 @@
       "subtitle": "Comparing our approach to overlay widgets and generic accessibility scanners",
       "columns": {
         "feature": "Feature",
-        "tutusporta": "VexNexa",
+        "vexnexa": "VexNexa",
         "overlay": "Overlay Widgets",
         "generic": "Generic Scanners"
       },
       "features": {
         "coverage": {
           "name": "Coverage Depth",
-          "tutusporta": "WCAG + 8 extra categories",
+          "vexnexa": "WCAG + 8 extra categories",
           "overlay": "Superficial fixes only",
           "generic": "Basic WCAG checks"
         },
         "actionability": {
           "name": "Actionability",
-          "tutusporta": "Code snippets + remediation tips",
+          "vexnexa": "Code snippets + remediation tips",
           "overlay": "No developer guidance",
           "generic": "Generic error messages"
         },
         "team": {
           "name": "Team Features",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "monitoring": {
           "name": "Continuous Monitoring",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "api": {
           "name": "API Access",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": "Limited"
         },
         "falsePositives": {
           "name": "False Positives",
-          "tutusporta": "Low",
+          "vexnexa": "Low",
           "overlay": "N/A",
           "generic": "High"
         },
         "legal": {
           "name": "Legal Stance",
-          "tutusporta": "Tool assists compliance",
+          "vexnexa": "Tool assists compliance",
           "overlay": "Claims to fix issues",
           "generic": "No legal claims"
         },
         "cost": {
           "name": "Cost Scaling",
-          "tutusporta": "Transparent overflow pricing",
+          "vexnexa": "Transparent overflow pricing",
           "overlay": "Per-page fees",
           "generic": "Fixed tiers only"
         }

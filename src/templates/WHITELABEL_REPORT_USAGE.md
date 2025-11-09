@@ -162,7 +162,7 @@ The `is_whitelabel` flag controls branding visibility:
 ### Current Implementation
 
 The provided template is **100% whitelabel by default**:
-- No TutusPorta mentions
+- No VexNexa mentions
 - No product URLs or QR codes
 - No branded footers
 - Only neutral WCAG reference links
@@ -172,7 +172,7 @@ The provided template is **100% whitelabel by default**:
 ```handlebars
 {{#unless is_whitelabel}}
   <div class="footer-branding">
-    Powered by TutusPorta
+    Powered by VexNexa
   </div>
 {{/unless}}
 ```
@@ -638,5 +638,5 @@ const percentages = calculateSeverityPercentages(reportData);
 
 ## 📄 License
 
-Internal TutusPorta template - Proprietary
+Internal VexNexa template - Proprietary
 Not for redistribution outside organization

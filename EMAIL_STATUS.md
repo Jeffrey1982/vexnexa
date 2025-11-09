@@ -1,4 +1,4 @@
-# 📧 TutusPorta Email System Status
+# 📧 VexNexa Email System Status
 
 ## ✅ **FULLY OPERATIONAL!**
 
@@ -11,7 +11,7 @@ Your Resend API key has been successfully integrated and all email functionality
 ### **1. Contact Form Emails**
 - **Location**: Contact page form, footer newsletter
 - **Functionality**: Professional inquiry emails with auto-responses
-- **Templates**: HTML + text versions with TutusPorta branding
+- **Templates**: HTML + text versions with VexNexa branding
 - **Rate Limiting**: 5 messages per hour per IP
 
 ### **2. Authentication Emails**
@@ -42,7 +42,7 @@ Your Resend API key has been successfully integrated and all email functionality
 ### **Environment Variables**
 ```bash
 ✅ RESEND_API_KEY="[CONFIGURED]"
-✅ NEXT_PUBLIC_APP_URL="https://tutusporta.com"
+✅ NEXT_PUBLIC_APP_URL="https://vexnexa.com"
 ✅ Vercel Production Environment: Configured
 ```
 
@@ -97,7 +97,7 @@ Your Resend API key has been successfully integrated and all email functionality
 
 ### **Email Deliverability**
 - **Service**: Resend (professional email delivery)
-- **Domain**: From tutusporta.com addresses
+- **Domain**: From vexnexa.com addresses
 - **SPF/DKIM**: Configured for high deliverability
 - **Unsubscribe**: Links included in all marketing emails
 

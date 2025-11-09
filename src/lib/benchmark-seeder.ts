@@ -222,7 +222,7 @@ export async function updateBenchmarksFromScans() {
   // Update general benchmark using findFirst/update pattern
   const existingGeneral = await prisma.benchmark.findFirst({
     where: {
-      industry: "tutusporta_users",
+      industry: "vexnexa_users",
       category: null
     }
   });
@@ -245,7 +245,7 @@ export async function updateBenchmarksFromScans() {
   } else {
     await prisma.benchmark.create({
       data: {
-        industry: "tutusporta_users",
+        industry: "vexnexa_users",
         category: null,
         avgScore: Math.round(avgScore * 10) / 10,
         avgCritical: Math.round(avgCritical * 10) / 10,
@@ -259,6 +259,6 @@ export async function updateBenchmarksFromScans() {
     });
   }
 
-  console.log(`Updated TutusPorta users benchmark with ${allScans.length} scans`);
+  console.log(`Updated VexNexa users benchmark with ${allScans.length} scans`);
   console.log(`Average score: ${Math.round(avgScore)}, Critical issues: ${Math.round(avgCritical * 10) / 10}`);
 }

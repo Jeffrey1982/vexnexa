@@ -1,15 +1,15 @@
-# TutusPorta Enhanced Accessibility Report Design
+# VexNexa Enhanced Accessibility Report Design
 
 ## Executive Summary
 
-This document outlines the enhanced design for TutusPorta's accessibility audit reports with improved structure, readability, and professional polish for both technical and non-technical audiences.
+This document outlines the enhanced design for VexNexa's accessibility audit reports with improved structure, readability, and professional polish for both technical and non-technical audiences.
 
 ---
 
 ## 🎨 Design System
 
 ### Color Palette
-- **Primary Blue**: `#3b82f6` (TutusPorta brand)
+- **Primary Blue**: `#3b82f6` (VexNexa brand)
 - **Secondary Blue**: `#1e40af` (darker accent)
 - **Critical**: `#dc2626` with `#fef2f2` background
 - **Serious**: `#ea580c` with `#fff7ed` background
@@ -34,7 +34,7 @@ This document outlines the enhanced design for TutusPorta's accessibility audit 
 <!-- HEADER: Full-width gradient banner -->
 <div class="header" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); padding: 50px; text-align: center; color: white;">
   <div class="logo" style="font-size: 36px; font-weight: 800; margin-bottom: 16px;">
-    🛡️ TutusPorta
+    🛡️ VexNexa
   </div>
   <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 12px;">
     Accessibility Compliance Report
@@ -421,7 +421,7 @@ This document outlines the enhanced design for TutusPorta's accessibility audit 
   <!-- Logo/Brand -->
   <div style="margin-bottom: 20px;">
     <div style="font-size: 24px; font-weight: 800; color: #3b82f6; margin-bottom: 8px;">
-      🛡️ TutusPorta
+      🛡️ VexNexa
     </div>
     <div style="font-size: 13px; color: #64748b; font-weight: 500;">
       Professional Accessibility Platform
@@ -435,7 +435,7 @@ This document outlines the enhanced design for TutusPorta's accessibility audit 
         This comprehensive accessibility report was generated automatically using <strong>axe-core</strong>, the world's leading digital accessibility testing toolkit.
       </p>
       <p style="margin: 0 0 12px 0;">
-        For detailed remediation guidance, implementation support, or questions about this report, please visit your TutusPorta dashboard or contact our accessibility experts.
+        For detailed remediation guidance, implementation support, or questions about this report, please visit your VexNexa dashboard or contact our accessibility experts.
       </p>
       <p style="margin: 0;">
         <strong>Report ID:</strong> {report_id} | <strong>Generated:</strong> {generation_timestamp}
@@ -458,16 +458,16 @@ This document outlines the enhanced design for TutusPorta's accessibility audit 
 
   <!-- Social/Links (optional) -->
   <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 11px; color: #64748b;">
-    <a href="https://tutusporta.com" style="color: #3b82f6; text-decoration: none;">Website</a>
+    <a href="https://vexnexa.com" style="color: #3b82f6; text-decoration: none;">Website</a>
     <span style="color: #cbd5e1;">•</span>
-    <a href="https://tutusporta.com/support" style="color: #3b82f6; text-decoration: none;">Support</a>
+    <a href="https://vexnexa.com/support" style="color: #3b82f6; text-decoration: none;">Support</a>
     <span style="color: #cbd5e1;">•</span>
-    <a href="https://tutusporta.com/docs" style="color: #3b82f6; text-decoration: none;">Documentation</a>
+    <a href="https://vexnexa.com/docs" style="color: #3b82f6; text-decoration: none;">Documentation</a>
   </div>
 
   <!-- Legal Disclaimer -->
   <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 10px; color: #94a3b8; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5;">
-    This report is provided for informational purposes and does not constitute legal advice. While TutusPorta strives for accuracy, no automated tool can guarantee 100% compliance. For complete WCAG certification, consider professional manual auditing and user testing.
+    This report is provided for informational purposes and does not constitute legal advice. While VexNexa strives for accuracy, no automated tool can guarantee 100% compliance. For complete WCAG certification, consider professional manual auditing and user testing.
   </div>
 </div>
 ```

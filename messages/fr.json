@@ -358,56 +358,56 @@
       "subtitle": "Comparaison de notre approche avec les widgets overlay et les scanners d'accessibilité génériques",
       "columns": {
         "feature": "Fonctionnalité",
-        "tutusporta": "VexNexa",
+        "vexnexa": "VexNexa",
         "overlay": "Widgets Overlay",
         "generic": "Scanners Génériques"
       },
       "features": {
         "coverage": {
           "name": "Profondeur de Couverture",
-          "tutusporta": "WCAG + 8 catégories supplémentaires",
+          "vexnexa": "WCAG + 8 catégories supplémentaires",
           "overlay": "Correctifs superficiels uniquement",
           "generic": "Vérifications WCAG de base"
         },
         "actionability": {
           "name": "Actionnabilité",
-          "tutusporta": "Extraits de code + conseils de remédiation",
+          "vexnexa": "Extraits de code + conseils de remédiation",
           "overlay": "Aucun guide pour les développeurs",
           "generic": "Messages d'erreur génériques"
         },
         "team": {
           "name": "Fonctionnalités d'Équipe",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "monitoring": {
           "name": "Surveillance Continue",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "api": {
           "name": "Accès API",
-          "tutusporta": true,
+          "vexnexa": true,
           "overlay": false,
           "generic": "Limité"
         },
         "falsePositives": {
           "name": "Faux Positifs",
-          "tutusporta": "Faible",
+          "vexnexa": "Faible",
           "overlay": "N/A",
           "generic": "Élevé"
         },
         "legal": {
           "name": "Position Juridique",
-          "tutusporta": "L'outil aide à la conformité",
+          "vexnexa": "L'outil aide à la conformité",
           "overlay": "Prétend corriger les problèmes",
           "generic": "Aucune réclamation juridique"
         },
         "cost": {
           "name": "Échelle de Coûts",
-          "tutusporta": "Tarification de dépassement transparente",
+          "vexnexa": "Tarification de dépassement transparente",
           "overlay": "Frais par page",
           "generic": "Paliers fixes uniquement"
         }

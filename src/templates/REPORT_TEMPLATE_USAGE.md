@@ -168,7 +168,7 @@ const reportData: ReportData = {
 ### Current Implementation
 
 The provided template is **already 100% whitelabel** by default:
-- No TutusPorta logos or mentions
+- No VexNexa logos or mentions
 - No product URLs
 - No branded footers
 - Generic "Web Accessibility Compliance Report" title
@@ -587,5 +587,5 @@ For issues or questions:
 
 ## 📄 License
 
-Internal TutusPorta template - Proprietary
+Internal VexNexa template - Proprietary
 Not for redistribution outside organization

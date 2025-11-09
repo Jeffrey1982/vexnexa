@@ -9,7 +9,7 @@ import './design-system.css'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'TutusPorta - Accessibility Testing Platform',
+  title: 'VexNexa - Accessibility Testing Platform',
   description: 'Professional accessibility testing and compliance monitoring platform for websites',
   keywords: ['accessibility', 'WCAG', 'testing', 'compliance', 'monitoring', 'a11y'],
   authors: [{ name: 'Vexnexa' }],
@@ -19,17 +19,17 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'TutuSporta',
+    title: 'VexNexa',
   },
   openGraph: {
-    title: 'TutuSporta - Accessibility Testing Platform',
+    title: 'VexNexa - Accessibility Testing Platform',
     description: 'Professional accessibility testing and compliance monitoring platform for websites',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary',
-    title: 'TutuSporta - Accessibility Testing Platform',
+    title: 'VexNexa - Accessibility Testing Platform',
     description: 'Professional accessibility testing and compliance monitoring platform for websites',
   },
   viewport: {
@@ -60,12 +60,12 @@ export default async function RootLayout({
         {/* iOS PWA Support */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="TutuSporta" />
+        <meta name="apple-mobile-web-app-title" content="VexNexa" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
 
         {/* Android PWA Support */}
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="application-name" content="TutuSporta" />
+        <meta name="application-name" content="VexNexa" />
 
         {/* Microsoft PWA Support */}
         <meta name="msapplication-TileColor" content="#0EA5E9" />

@@ -8,7 +8,7 @@ async function main() {
   try {
     const blogPost = await prisma.blogPost.updateMany({
       where: {
-        slug: 'tutusporta-toekomst-web-toegankelijkheid-vexnexa'
+        slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa'
       },
       data: {
         coverImage: '/heroImage.png'

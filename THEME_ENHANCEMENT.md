@@ -1,7 +1,7 @@
-# TutusPorta Enhanced Professional SaaS Theme
+# VexNexa Enhanced Professional SaaS Theme
 
 ## Design Philosophy
-Transform TutusPorta from soft pastels to a professional, trustworthy SaaS platform with:
+Transform VexNexa from soft pastels to a professional, trustworthy SaaS platform with:
 - **Primary**: Deep Ocean Blue/Turquoise for trust and professionalism
 - **Secondary**: Warm Amber for approachability and energy
 - **Maintaining**: WCAG AA+ accessibility, clean aesthetics, human warmth

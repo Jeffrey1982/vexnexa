@@ -63,7 +63,7 @@ export default function SimpleRegisterPage() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
           <CardDescription>
-            Get started with TutusPorta
+            Get started with VexNexa
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -1,8 +1,8 @@
-# TutusPorta Setup Guide
+# VexNexa Setup Guide
 
 ## 🎉 Project Status: 100% Complete!
 
-Your TutusPorta accessibility testing platform is now fully complete and ready for production. This guide will help you set up the final email and authentication services.
+Your VexNexa accessibility testing platform is now fully complete and ready for production. This guide will help you set up the final email and authentication services.
 
 ## Required Environment Variables
 
@@ -185,7 +185,7 @@ Add all environment variables in your Vercel dashboard under Settings > Environm
 
 ## Support
 
-Your TutusPorta platform is now complete and production-ready!
+Your VexNexa platform is now complete and production-ready!
 
 - All core features implemented
 - All business logic complete

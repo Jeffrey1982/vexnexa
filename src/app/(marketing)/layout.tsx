@@ -7,28 +7,28 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
-    default: 'TutusPorta - The secure gateway to web accessibility',
-    template: '%s | TutusPorta'
+    default: 'VexNexa - The secure gateway to web accessibility',
+    template: '%s | VexNexa'
   },
   description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring. Start your free scan today.',
   keywords: 'WCAG, accessibility, web accessibility, axe-core, accessibility testing, compliance, WCAG 2.1, accessibility scanner, a11y',
   authors: [{ name: 'Vexnexa' }],
   openGraph: {
-    title: 'TutusPorta - The secure gateway to web accessibility',
+    title: 'VexNexa - The secure gateway to web accessibility',
     description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring.',
-    url: 'https://tutusporta.com',
-    siteName: 'TutusPorta by Vexnexa',
+    url: 'https://vexnexa.com',
+    siteName: 'VexNexa by Vexnexa',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TutusPorta - The secure gateway to web accessibility',
+    title: 'VexNexa - The secure gateway to web accessibility',
     description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring.',
     creator: '@vexnexa',
   },
   alternates: {
-    canonical: 'https://tutusporta.com',
+    canonical: 'https://vexnexa.com',
   },
   robots: {
     index: true,

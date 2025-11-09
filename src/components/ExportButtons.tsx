@@ -40,7 +40,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `tutusporta-accessibility-report-${scanId}.pdf`);
+      downloadBlob(blob, `vexnexa-accessibility-report-${scanId}.pdf`);
     } catch (error) {
       console.error("PDF export failed:", error);
       alert("Failed to export PDF. Please try again.");
@@ -65,7 +65,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `tutusporta-${scanId}.docx`);
+      downloadBlob(blob, `vexnexa-${scanId}.docx`);
     } catch (error) {
       console.error("Word export failed:", error);
       alert("Failed to export Word document. Please try again.");

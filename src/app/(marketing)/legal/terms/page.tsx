@@ -7,9 +7,9 @@ import { ArrowLeft, Scale, Mail, Calendar, AlertTriangle, ListTree } from 'lucid
 import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - TutusPorta',
+  title: 'Terms of Service - VexNexa',
   description:
-    'Read TutusPorta terms of service: usage terms, payments, liability and service conditions.',
+    'Read VexNexa terms of service: usage terms, payments, liability and service conditions.',
   keywords: [
     'algemene voorwaarden',
     'terms of service',
@@ -18,23 +18,23 @@ export const metadata: Metadata = {
     'liability',
   ],
   openGraph: {
-    title: 'Terms of Service - TutusPorta',
+    title: 'Terms of Service - VexNexa',
     description:
-      'Read TutusPorta terms of service: usage terms, payments, liability and service conditions.',
-    url: 'https://tutusporta.com/legal/terms',
-    siteName: 'TutusPorta',
+      'Read VexNexa terms of service: usage terms, payments, liability and service conditions.',
+    url: 'https://vexnexa.com/legal/terms',
+    siteName: 'VexNexa',
     type: 'website',
     locale: 'nl_NL',
   },
   twitter: {
     card: 'summary',
-    title: 'Terms of Service - TutusPorta',
+    title: 'Terms of Service - VexNexa',
     description:
-      'Read TutusPorta terms of service: usage terms, payments, liability and service conditions.',
+      'Read VexNexa terms of service: usage terms, payments, liability and service conditions.',
   },
   alternates: {
-    canonical: 'https://tutusporta.com/legal/terms',
-    languages: { 'nl-NL': 'https://tutusporta.com/legal/terms' },
+    canonical: 'https://vexnexa.com/legal/terms',
+    languages: { 'nl-NL': 'https://vexnexa.com/legal/terms' },
   },
   robots: { index: true, follow: true },
 }
@@ -156,7 +156,7 @@ export default async function TermsPage() {
             <h2>1. Definities & toepasselijkheid</h2>
             <h3>Definities</h3>
             <ul>
-              <li><strong>TutusPorta</strong>: de accessibility-scanning service op tutusporta.com.</li>
+              <li><strong>VexNexa</strong>: de accessibility-scanning service op vexnexa.com.</li>
               <li><strong>Wij/Ons</strong>: de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.).</li>
               <li><strong>Gebruiker</strong>: iedere natuurlijke of rechtspersoon die de service gebruikt.</li>
               <li><strong>Account</strong>: your personal or business access to functions and history.</li>
@@ -165,15 +165,15 @@ export default async function TermsPage() {
             </ul>
             <h3>Toepasselijkheid</h3>
             <p>
-              These terms apply to all use of TutusPorta, including free and paid accounts, the API,
+              These terms apply to all use of VexNexa, including free and paid accounts, the API,
               proefperiodes en alle bijbehorende communicatie. Afwijkingen zijn alleen geldig indien schriftelijk overeengekomen.
             </p>
             <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
               <p className="font-medium">Juridische gegevens (dienstverlener)</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Bedrijfsnaam:</strong> VexNexa B.V. (TutusPorta is onderdeel van VexNexa) <br />
+                <strong>Bedrijfsnaam:</strong> VexNexa B.V. (VexNexa is onderdeel van VexNexa) <br />
                 <strong>Adres:</strong> Hoofdstraat 123, 1234 AB Amsterdam &nbsp; <strong>KvK:</strong> 12345678 &nbsp; <strong>BTW:</strong> NL123456789B01 <br />
-                <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>
+                <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>
               </p>
             </div>
           </section>
@@ -199,7 +199,7 @@ export default async function TermsPage() {
             <h3>Account & beveiliging</h3>
             <ul>
               <li>Beheer je inloggegevens zorgvuldig; elke activiteit onder je account wordt aan jou toegerekend</li>
-              <li>Meld misbruik of vermoeden van een datalek direct via <a href="mailto:security@tutusporta.com">security@tutusporta.com</a></li>
+              <li>Meld misbruik of vermoeden van een datalek direct via <a href="mailto:security@vexnexa.com">security@vexnexa.com</a></li>
               <li>Wij mogen accounts tijdelijk blokkeren bij vermoeden van misbruik of veiligheidsrisico’s</li>
             </ul>
           </section>
@@ -215,7 +215,7 @@ export default async function TermsPage() {
             </p>
             <ul>
               <li>API-sleutels zijn persoonlijk; delen of open-sourcen is niet toegestaan</li>
-              <li>Resultaten mogen in je eigen tooling worden getoond, mits bronvermelding “TutusPorta” bij geautomatiseerde rapportage</li>
+              <li>Resultaten mogen in je eigen tooling worden getoond, mits bronvermelding “VexNexa” bij geautomatiseerde rapportage</li>
               <li>Wijzigingen aan endpoints of limieten kunnen zonder voorafgaande kennisgeving plaatsvinden bij misbruik of storingen</li>
             </ul>
           </section>
@@ -300,7 +300,7 @@ export default async function TermsPage() {
             <h3>Kennisgevingen</h3>
             <p>
               Vermoed je een inbreuk (bijv. onrechtmatig gebruik van je merk)? Mail{' '}
-              <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>.
+              <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>.
             </p>
           </section>
 
@@ -369,7 +369,7 @@ export default async function TermsPage() {
             <p>Nederlands recht is van toepassing, met uitzondering van conflictregels.</p>
             <h3>Geschillenbeslechting</h3>
             <ol>
-              <li>Eerst intern proberen op te lossen: mail <a href="mailto:legal@tutusporta.com">legal@tutusporta.com</a></li>
+              <li>Eerst intern proberen op te lossen: mail <a href="mailto:legal@vexnexa.com">legal@vexnexa.com</a></li>
               <li>Reactietermijn: 30 dagen om een oplossing te vinden</li>
               <li>Bij uitblijven oplossing: bemiddeling (indien beide partijen instemmen)</li>
               <li>Bevoegde rechter: rechtbank Amsterdam</li>
@@ -405,7 +405,7 @@ export default async function TermsPage() {
               <p className="font-medium">Juridische vragen</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:legal@tutusporta.com">legal@tutusporta.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>
               </p>
             </div>
           </section>

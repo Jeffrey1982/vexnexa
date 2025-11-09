@@ -3,13 +3,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const blogContent = `
-# TutusPorta: De Toekomst van Web Toegankelijkheid door Vexnexa
+# VexNexa: De Toekomst van Web Toegankelijkheid door Vexnexa
 
-Web toegankelijkheid is niet langer een nice-to-have, maar een **essentiële vereiste** voor moderne websites. Bij Vexnexa begrijpen we dat beter dan wie dan ook. Daarom hebben we TutusPorta ontwikkeld: de meest uitgebreide accessibility scanner op de markt.
+Web toegankelijkheid is niet langer een nice-to-have, maar een **essentiële vereiste** voor moderne websites. Bij Vexnexa begrijpen we dat beter dan wie dan ook. Daarom hebben we VexNexa ontwikkeld: de meest uitgebreide accessibility scanner op de markt.
 
-## Waarom TutusPorta Uniek Is
+## Waarom VexNexa Uniek Is
 
-Traditionele WCAG-scanners dekken slechts 60% van alle toegankelijkheidsaspecten af. **TutusPorta gaat verder** met 100% coverage door 8 extra categorieën toe te voegen:
+Traditionele WCAG-scanners dekken slechts 60% van alle toegankelijkheidsaspecten af. **VexNexa gaat verder** met 100% coverage door 8 extra categorieën toe te voegen:
 
 ### 1. 🎹 Keyboard Navigatie
 Niet iedereen kan een muis gebruiken. Onze scanner test of je website volledig navigeerbaar is met alleen een toetsenbord, inclusief:
@@ -66,7 +66,7 @@ Bij **Vexnexa** geloven we dat het web voor iedereen toegankelijk moet zijn. Nie
 2. **User-Centric**: Altijd de eindgebruiker voor ogen houden
 3. **Continuous Improvement**: Toegankelijkheid is een journey, geen destination
 
-## Waarom Bedrijven Kiezen voor TutusPorta
+## Waarom Bedrijven Kiezen voor VexNexa
 
 ### 🎯 Complete Coverage
 Waar andere tools stoppen bij WCAG, beginnen wij pas. Met 100% coverage mis je nooit meer een accessibility issue.
@@ -98,7 +98,7 @@ Onze klanten zien gemiddeld:
 - **100% WCAG AA/AAA** compliance binnen 6 maanden
 - **0** rechtszaken over toegankelijkheid
 
-## De TutusPorta Ervaring
+## De VexNexa Ervaring
 
 ### Stap 1: Scan
 Voer je URL in en onze AI-powered scanner analyseert je complete website in minuten.
@@ -117,7 +117,7 @@ Automatische scans houden je site toegankelijk, zelfs na updates.
 
 ## Vexnexa's Commitment
 
-Als onderdeel van Vexnexa's missie om **digitale ervaringen voor iedereen beter te maken**, blijven we TutusPorta doorontwikkelen met:
+Als onderdeel van Vexnexa's missie om **digitale ervaringen voor iedereen beter te maken**, blijven we VexNexa doorontwikkelen met:
 
 - 🤖 AI-powered fix suggestions
 - 🔄 Automated remediation (coming soon)
@@ -137,7 +137,7 @@ Web toegankelijkheid is geen technisch probleem, het is een **opportunity**:
 
 ---
 
-*TutusPorta is ontwikkeld door [Vexnexa](https://vexnexa.com) - Innovation in Digital Accessibility*
+*VexNexa is ontwikkeld door [Vexnexa](https://vexnexa.com) - Innovation in Digital Accessibility*
 
 ## Over de Auteur
 
@@ -171,18 +171,18 @@ async function main() {
 
     const blogPost = await prisma.blogPost.create({
       data: {
-        title: 'TutusPorta: De Toekomst van Web Toegankelijkheid door Vexnexa',
-        slug: 'tutusporta-toekomst-web-toegankelijkheid-vexnexa',
+        title: 'VexNexa: De Toekomst van Web Toegankelijkheid door Vexnexa',
+        slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa',
         content: blogContent,
-        excerpt: 'Ontdek waarom TutusPorta de meest uitgebreide accessibility scanner is met 100% coverage. Van keyboard navigatie tot cognitieve toegankelijkheid - we dekken alles wat andere tools missen.',
+        excerpt: 'Ontdek waarom VexNexa de meest uitgebreide accessibility scanner is met 100% coverage. Van keyboard navigatie tot cognitieve toegankelijkheid - we dekken alles wat andere tools missen.',
         coverImage: '/heroImage.png',
-        metaTitle: 'TutusPorta: Complete Web Toegankelijkheid Scanner | Vexnexa',
-        metaDescription: 'Traditionele WCAG scanners dekken 60% af. TutusPorta biedt 100% coverage met 8 extra categorieën. Ontdek waarom bedrijven kiezen voor de meest complete accessibility tool.',
+        metaTitle: 'VexNexa: Complete Web Toegankelijkheid Scanner | Vexnexa',
+        metaDescription: 'Traditionele WCAG scanners dekken 60% af. VexNexa biedt 100% coverage met 8 extra categorieën. Ontdek waarom bedrijven kiezen voor de meest complete accessibility tool.',
         metaKeywords: [
           'web toegankelijkheid',
           'WCAG compliance',
           'accessibility scanner',
-          'TutusPorta',
+          'VexNexa',
           'Vexnexa',
           'inclusive design',
           'screen reader',

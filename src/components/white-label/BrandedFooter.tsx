@@ -20,7 +20,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
   }
 
   const currentYear = new Date().getFullYear();
-  const companyName = settings?.companyName || 'TutusPorta';
+  const companyName = settings?.companyName || 'VexNexa';
   const footerText = settings?.footerText || `Copyright © ${currentYear} ${companyName}. All rights reserved.`;
   const showPoweredBy = settings?.showPoweredBy !== false; // Default to true
   const supportEmail = settings?.supportEmail;
@@ -270,7 +270,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   Powered by
                 </span>
                 <Link
-                  href="https://tutusporta.com"
+                  href="https://vexnexa.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold transition-colors"
@@ -285,7 +285,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
                   }}
                 >
-                  TutusPorta
+                  VexNexa
                 </Link>
               </div>
             )}

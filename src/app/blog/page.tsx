@@ -9,20 +9,20 @@ import { SafeImage } from '@/components/SafeImage'
 const prisma = new PrismaClient()
 
 export const metadata: Metadata = {
-  title: 'Blog - TutusPorta',
+  title: 'Blog - VexNexa',
   description: 'Laatste nieuws, tips en inzichten over web accessibility en WCAG compliance.',
   openGraph: {
-    title: 'Blog - TutusPorta',
+    title: 'Blog - VexNexa',
     description: 'Laatste nieuws, tips en inzichten over web accessibility en WCAG compliance.',
-    url: 'https://tutusporta.com/blog',
+    url: 'https://vexnexa.com/blog',
   },
   twitter: {
     card: 'summary',
-    title: 'Blog - TutusPorta',
+    title: 'Blog - VexNexa',
     description: 'Laatste nieuws, tips en inzichten over web accessibility en WCAG compliance.',
   },
   alternates: {
-    canonical: 'https://tutusporta.com/blog',
+    canonical: 'https://vexnexa.com/blog',
   },
 }
 

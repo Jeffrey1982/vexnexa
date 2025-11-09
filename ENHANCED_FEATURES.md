@@ -291,7 +291,7 @@ Recharts integration for all charts and graphs:
 
 ## 🎉 Conclusion
 
-These enhanced features transform TutusPorta from a simple accessibility scanner into a comprehensive accessibility management platform. The combination of visual enhancements, advanced analytics, and improved user experience creates a compelling solution that serves all stakeholders in the accessibility journey.
+These enhanced features transform VexNexa from a simple accessibility scanner into a comprehensive accessibility management platform. The combination of visual enhancements, advanced analytics, and improved user experience creates a compelling solution that serves all stakeholders in the accessibility journey.
 
 The implementation follows modern web development best practices with TypeScript, responsive design, accessibility standards, and performance optimization. All components are fully tested and production-ready.
 

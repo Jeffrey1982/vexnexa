@@ -50,8 +50,8 @@ export async function POST(req: NextRequest) {
       where: { userId: user.id }
     });
 
-    // Use white-label branding or fallback to TutusPorta
-    const brandName = whiteLabel?.companyName || 'TutusPorta';
+    // Use white-label branding or fallback to VexNexa
+    const brandName = whiteLabel?.companyName || 'VexNexa';
     const brandLogo = whiteLabel?.logoUrl;
     const primaryColor = whiteLabel?.primaryColor || '#3b82f6';
     const secondaryColor = whiteLabel?.secondaryColor || '#1e40af';
@@ -916,7 +916,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(htmlContent, {
       headers: {
         "Content-Type": "text/html",
-        "Content-Disposition": `inline; filename="tutusporta-${scanId}-report.html"`,
+        "Content-Disposition": `inline; filename="vexnexa-${scanId}-report.html"`,
       },
     });
 

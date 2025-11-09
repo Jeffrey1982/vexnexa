@@ -10,7 +10,7 @@ async function requireAdmin() {
 
   const adminEmails = [
     'jeffrey.aay@gmail.com',
-    'admin@tutusporta.com'
+    'admin@vexnexa.com'
   ];
 
   if (!adminEmails.includes(user.email)) {

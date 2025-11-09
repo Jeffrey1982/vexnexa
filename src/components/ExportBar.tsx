@@ -80,7 +80,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `tutusporta-${scanId}.docx`);
+      downloadBlob(blob, `vexnexa-${scanId}.docx`);
       
       setWordStatus('success');
       setTimeout(() => setWordStatus('idle'), 3000);

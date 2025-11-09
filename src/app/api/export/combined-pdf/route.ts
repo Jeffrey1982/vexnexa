@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     const siteId = searchParams.get("siteId");
     const scanId = searchParams.get("scanId") || undefined;
     const auditId = searchParams.get("auditId") || undefined;
-    const brandName = searchParams.get("brandName") || "TutusPorta";
+    const brandName = searchParams.get("brandName") || "VexNexa";
 
     if (!siteId) {
       return NextResponse.json(

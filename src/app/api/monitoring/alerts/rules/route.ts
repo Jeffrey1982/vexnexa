@@ -49,7 +49,7 @@ let alertRules: AlertRule[] = [
       slack: false
     },
     recipients: {
-      emails: ['admin@tutusporta.com']
+      emails: ['admin@vexnexa.com']
     },
     cooldownMinutes: 60,
     totalAlertsSent: 3

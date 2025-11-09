@@ -48,7 +48,7 @@ export async function getPerformanceMetrics(url: string): Promise<PerformanceMet
         `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&strategy=desktop&category=PERFORMANCE`,
         {
           headers: {
-            'User-Agent': 'TutusPorta Performance Analyzer'
+            'User-Agent': 'VexNexa Performance Analyzer'
           }
         }
       );

@@ -1,8 +1,8 @@
-# TutusPorta Design System
+# VexNexa Design System
 
 ## Overview
 
-TutusPorta uses a modern, accessible design system built with:
+VexNexa uses a modern, accessible design system built with:
 - **Typography**: Premium font pairing with Plus Jakarta Sans + Inter
 - **Brand Tokens**: Consistent color palette with CSS custom properties
 - **Glass Morphism**: Modern UI effects with backdrop-blur
@@ -276,7 +276,7 @@ Target score: ≥95
 <header className="glass sticky top-0 z-50 shadow-elev2">
   <div className="container mx-auto px-6">
     <h1 className="font-display font-bold text-4xl text-tp-text">
-      Welcome to TutusPorta
+      Welcome to VexNexa
     </h1>
     <p className="font-sans text-tp-text-muted">
       Professional accessibility testing
@@ -377,6 +377,6 @@ None - the new system extends the existing Tailwind theme without removing defau
 ## Support
 
 For questions or issues with the design system:
-- **GitHub Issues**: https://github.com/vexnexa/tutusporta/issues
-- **Documentation**: https://tutusporta.com/docs
+- **GitHub Issues**: https://github.com/vexnexa/vexnexa/issues
+- **Documentation**: https://vexnexa.com/docs
 - **Contact**: support@vexnexa.com

@@ -5,13 +5,13 @@ const prisma = new PrismaClient();
 const improvedContent = `
 Web toegankelijkheid is niet langer een nice-to-have, maar een **essentiële vereiste** voor moderne websites. Bij Vexnexa begrijpen we dat beter dan wie dan ook.
 
-Daarom hebben we TutusPorta ontwikkeld: de meest uitgebreide accessibility scanner op de markt.
+Daarom hebben we VexNexa ontwikkeld: de meest uitgebreide accessibility scanner op de markt.
 
 ---
 
-## Waarom TutusPorta Uniek Is
+## Waarom VexNexa Uniek Is
 
-Traditionele WCAG-scanners dekken slechts **60%** van alle toegankelijkheidsaspecten af. TutusPorta gaat verder met **100% coverage** door 8 extra categorieën toe te voegen.
+Traditionele WCAG-scanners dekken slechts **60%** van alle toegankelijkheidsaspecten af. VexNexa gaat verder met **100% coverage** door 8 extra categorieën toe te voegen.
 
 ---
 
@@ -108,7 +108,7 @@ Bij Vexnexa geloven we dat het web voor **iedereen** toegankelijk moet zijn. Nie
 
 ---
 
-## Waarom Bedrijven Kiezen voor TutusPorta
+## Waarom Bedrijven Kiezen voor VexNexa
 
 ### 🎯 Complete Coverage
 
@@ -157,7 +157,7 @@ Onze klanten zien gemiddeld:
 
 ---
 
-## De TutusPorta Ervaring
+## De VexNexa Ervaring
 
 ### Stap 1: Scan
 
@@ -183,7 +183,7 @@ Automatische scans houden je site toegankelijk, zelfs na updates en nieuwe featu
 
 ## Vexnexa's Commitment
 
-Als onderdeel van Vexnexa's missie om digitale ervaringen voor iedereen beter te maken, blijven we TutusPorta doorontwikkelen met:
+Als onderdeel van Vexnexa's missie om digitale ervaringen voor iedereen beter te maken, blijven we VexNexa doorontwikkelen met:
 
 🤖 **AI-powered fix suggestions** die steeds slimmer worden
 
@@ -210,7 +210,7 @@ Start vandaag nog met een gratis scan en ontdek hoe toegankelijk jouw website we
 
 ---
 
-*TutusPorta is ontwikkeld door Vexnexa - Innovation in Digital Accessibility*
+*VexNexa is ontwikkeld door Vexnexa - Innovation in Digital Accessibility*
 
 ### Over de Auteur
 
@@ -223,7 +223,7 @@ Met jarenlange ervaring in het bouwen van toegankelijke digitale producten, dele
 
 async function main() {
   const post = await prisma.blogPost.findUnique({
-    where: { slug: 'tutusporta-toekomst-web-toegankelijkheid-vexnexa' }
+    where: { slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa' }
   });
 
   if (!post) {

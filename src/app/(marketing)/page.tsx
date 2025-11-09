@@ -29,10 +29,10 @@ function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "TutusPorta by Vexnexa",
+    name: "VexNexa by Vexnexa",
     description: "Advanced web accessibility and compliance scanner with coverage beyond traditional WCAG checks",
-    url: "https://tutusporta.com",
-    logo: "https://tutusporta.com/logo.png",
+    url: "https://vexnexa.com",
+    logo: "https://vexnexa.com/logo.png",
     sameAs: [
       "https://linkedin.com/company/vexnexa",
       "https://twitter.com/vexnexa",
@@ -41,7 +41,7 @@ function JsonLd() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer service",
-      url: "https://tutusporta.com/contact",
+      url: "https://vexnexa.com/contact",
     },
   };
 

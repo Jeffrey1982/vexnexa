@@ -22,26 +22,26 @@ import {
 // NOTE: In Next.js, metadata for a client component can't use `export const metadata`.
 // Keep this object here or move it to a server component/layout.
 const metadata = {
-  title: "Contact - TutusPorta WCAG Scanner",
+  title: "Contact - VexNexa WCAG Scanner",
   description:
-    "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
+    "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
   keywords: "contact, support, accessibility help, WCAG questions, enterprise",
   openGraph: {
-    title: "Contact - TutusPorta WCAG Scanner",
+    title: "Contact - VexNexa WCAG Scanner",
     description:
-      "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
-    url: "https://tutusporta.com/contact",
-    siteName: "TutusPorta",
+      "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
+    url: "https://vexnexa.com/contact",
+    siteName: "VexNexa",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Contact - TutusPorta WCAG Scanner",
+    title: "Contact - VexNexa WCAG Scanner",
     description:
-      "Contact TutusPorta for questions about accessibility scanning, WCAG compliance or custom solutions.",
+      "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
   },
   alternates: {
-    canonical: "https://tutusporta.com/contact",
+    canonical: "https://vexnexa.com/contact",
   },
 };
 
@@ -76,7 +76,7 @@ export default function ContactPage() {
       description: t('methods.email.description'),
       detail: t('methods.email.detail'),
       actionLabel: t('methods.email.actionLabel'),
-      href: "mailto:info@tutusporta.com",
+      href: "mailto:info@vexnexa.com",
     },
     {
       icon: MessageCircle,
@@ -247,8 +247,8 @@ export default function ContactPage() {
               <div className="pt-6">
                 <p className="text-sm text-muted-foreground">
                   {t('form.directContact')}{" "}
-                  <a href="mailto:info@tutusporta.com" className="text-primary hover:underline">
-                    info@tutusporta.com
+                  <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+                    info@vexnexa.com
                   </a>
                   .
                 </p>

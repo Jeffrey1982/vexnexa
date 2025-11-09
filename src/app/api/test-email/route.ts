@@ -20,7 +20,7 @@ export async function POST() {
     // Test 3: Password reset email
     const resetResult = await sendPasswordResetEmail({
       email: 'jeffrey.aay@gmail.com',
-      resetUrl: 'https://tutusporta.com/auth/reset-password?token=test',
+      resetUrl: 'https://vexnexa.com/auth/reset-password?token=test',
       userAgent: 'Test Browser'
     })
     console.log('✅ Password reset email sent:', resetResult?.data?.id)

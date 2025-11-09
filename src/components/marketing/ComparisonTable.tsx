@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface ComparisonRow {
   feature: string;
-  tutusporta: boolean | string;
+  vexnexa: boolean | string;
   overlay: boolean | string;
   generic: boolean | string;
 }
@@ -19,7 +19,7 @@ interface ComparisonTableProps {
 }
 
 export function ComparisonTable({
-  title = "How TutusPorta Compares",
+  title = "How VexNexa Compares",
   description,
   rows,
   disclaimer,
@@ -54,7 +54,7 @@ export function ComparisonTable({
             {/* Header Row */}
             <div className="grid grid-cols-4 gap-4 p-6 bg-muted/50 font-semibold text-sm">
               <div className="col-span-1"></div>
-              <div className="text-center text-primary font-bold">TutusPorta</div>
+              <div className="text-center text-primary font-bold">VexNexa</div>
               <div className="text-center text-muted-foreground">Overlay Widget</div>
               <div className="text-center text-muted-foreground">Generic Scanner</div>
             </div>
@@ -69,7 +69,7 @@ export function ComparisonTable({
                 )}
               >
                 <div className="col-span-1 font-medium text-sm">{row.feature}</div>
-                <div className="text-center">{renderValue(row.tutusporta)}</div>
+                <div className="text-center">{renderValue(row.vexnexa)}</div>
                 <div className="text-center">{renderValue(row.overlay)}</div>
                 <div className="text-center">{renderValue(row.generic)}</div>
               </div>

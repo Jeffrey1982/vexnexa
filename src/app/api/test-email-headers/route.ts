@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Base email options
     const baseEmailOptions = {
-      from: 'TutusPorta <noreply@tutusporta.com>',
+      from: 'VexNexa <noreply@vexnexa.com>',
       to: ['test@example.com'],
       subject: 'TEST: Professional Email Headers & UTM Tracking',
       html: `
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
           <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 16px; margin: 24px 0;">
             <p style="color: #92400E; font-size: 14px; margin: 0;">
               <strong>Headers Test:</strong><br>
-              • List-Unsubscribe: &lt;mailto:unsubscribe@tutusporta.com&gt;, &lt;${unsubscribeUrl}&gt;<br>
+              • List-Unsubscribe: &lt;mailto:unsubscribe@vexnexa.com&gt;, &lt;${unsubscribeUrl}&gt;<br>
               • List-Unsubscribe-Post: List-Unsubscribe=One-Click<br>
               • Preheader: Test email met professionele headers voor betere deliverability
             </p>
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center;">
-            <strong>TutusPorta</strong> Test Environment<br>
+            <strong>VexNexa</strong> Test Environment<br>
             Dit is een test email voor email deliverability optimalisatie
           </p>
         </div>
@@ -80,11 +80,11 @@ Test Links:
 - Unsubscribe: ${unsubscribeUrl}
 
 Headers Test:
-- List-Unsubscribe: <mailto:unsubscribe@tutusporta.com>, <${unsubscribeUrl}>
+- List-Unsubscribe: <mailto:unsubscribe@vexnexa.com>, <${unsubscribeUrl}>
 - List-Unsubscribe-Post: List-Unsubscribe=One-Click
 - Preheader: Test email met professionele headers voor betere deliverability
 
-TutusPorta Test Environment
+VexNexa Test Environment
 Dit is een test email voor email deliverability optimalisatie
       `.trim()
     }
@@ -103,7 +103,7 @@ Dit is een test email voor email deliverability optimalisatie
       message: 'Professional email headers test sent successfully',
       emailId: result.data?.id,
       features: {
-        listUnsubscribe: `<mailto:unsubscribe@tutusporta.com>, <${unsubscribeUrl}>`,
+        listUnsubscribe: `<mailto:unsubscribe@vexnexa.com>, <${unsubscribeUrl}>`,
         preheaderText: 'Test email met professionele headers voor betere deliverability en hogere open rates',
         utmTracking: {
           dashboardUrl,

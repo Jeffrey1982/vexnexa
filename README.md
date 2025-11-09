@@ -1,4 +1,4 @@
-# TutusPorta
+# VexNexa
 
 Next.js 14 + TypeScript + Tailwind + Prisma + Supabase accessibility scanner.
 

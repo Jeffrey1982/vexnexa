@@ -1,6 +1,6 @@
 {
-  "name": "TutuSporta - Accessibility Testing Platform",
-  "short_name": "TutuSporta",
+  "name": "VexNexa - Accessibility Testing Platform",
+  "short_name": "VexNexa",
   "description": "Professional accessibility testing and compliance monitoring platform for websites",
   "start_url": "/dashboard",
   "display": "standalone",
@@ -76,7 +76,7 @@
   "scope": "/",
   "protocol_handlers": [
     {
-      "protocol": "web+tutusporta",
+      "protocol": "web+vexnexa",
       "url": "/scan?url=%s"
     }
   ]

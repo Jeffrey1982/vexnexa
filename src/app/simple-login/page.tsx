@@ -53,7 +53,7 @@ function LoginForm() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
           <CardDescription>
-            Access your TutusPorta dashboard
+            Access your VexNexa dashboard
           </CardDescription>
         </CardHeader>
         <CardContent>

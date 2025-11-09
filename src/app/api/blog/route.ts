@@ -23,7 +23,7 @@ export async function GET(req: Request) {
       // Check if user is admin by email
       const adminEmails = [
         'jeffrey.aay@gmail.com',
-        'admin@tutusporta.com'
+        'admin@vexnexa.com'
       ];
 
       if (!adminEmails.includes(user.email)) {
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
     // Check if user is admin by email
     const adminEmails = [
       'jeffrey.aay@gmail.com',
-      'admin@tutusporta.com'
+      'admin@vexnexa.com'
     ];
 
     if (!adminEmails.includes(user.email)) {

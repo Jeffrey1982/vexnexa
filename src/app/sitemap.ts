@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tutusporta.com'
+  const baseUrl = 'https://vexnexa.com'
   const lastModified = new Date()
 
   // Static marketing pages with high priority

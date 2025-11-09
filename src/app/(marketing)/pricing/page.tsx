@@ -36,11 +36,11 @@ function PricingJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: "TutusPorta Accessibility Scanner",
+    name: "VexNexa Accessibility Scanner",
     description: "Web accessibility scanning with deeper coverage beyond WCAG",
     brand: {
       "@type": "Brand",
-      name: "TutusPorta by Vexnexa",
+      name: "VexNexa by Vexnexa",
     },
     offers: [
       {
@@ -457,49 +457,49 @@ function ToolComparisonSection() {
   const comparisonData = [
     {
       feature: "Coverage Depth",
-      tutusporta: "WCAG + 8 extra categories",
+      vexnexa: "WCAG + 8 extra categories",
       overlay: "Superficial fixes only",
       generic: "Basic WCAG checks",
     },
     {
       feature: "Actionability",
-      tutusporta: "Code snippets + remediation tips",
+      vexnexa: "Code snippets + remediation tips",
       overlay: "No developer guidance",
       generic: "Generic error messages",
     },
     {
       feature: "Team Features",
-      tutusporta: true,
+      vexnexa: true,
       overlay: false,
       generic: false,
     },
     {
       feature: "Continuous Monitoring",
-      tutusporta: true,
+      vexnexa: true,
       overlay: false,
       generic: false,
     },
     {
       feature: "API Access",
-      tutusporta: true,
+      vexnexa: true,
       overlay: false,
       generic: "Limited",
     },
     {
       feature: "False Positives",
-      tutusporta: "Low",
+      vexnexa: "Low",
       overlay: "N/A",
       generic: "High",
     },
     {
       feature: "Legal Stance",
-      tutusporta: "Tool assists compliance",
+      vexnexa: "Tool assists compliance",
       overlay: "Claims to fix issues",
       generic: "No legal claims",
     },
     {
       feature: "Cost Scaling",
-      tutusporta: "Transparent overflow pricing",
+      vexnexa: "Transparent overflow pricing",
       overlay: "Per-page fees",
       generic: "Fixed tiers only",
     },

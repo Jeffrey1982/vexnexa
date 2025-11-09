@@ -340,7 +340,7 @@ async function extractAndQueueLinks(crawlId: string, currentUrl: string, depth: 
     const response = await fetch(currentUrl, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "TutusPorta Accessibility Crawler"
+        "User-Agent": "VexNexa Accessibility Crawler"
       }
     });
     
@@ -512,7 +512,7 @@ async function discoverSitemapUrls(baseUrl: string): Promise<string[]> {
         const fetch = (await import("node-fetch")).default;
         const response = await fetch(sitemapUrl, {
           headers: {
-            'User-Agent': 'TutusPorta-Accessibility-Scanner/1.0'
+            'User-Agent': 'VexNexa-Accessibility-Scanner/1.0'
           }
         } as any);
 

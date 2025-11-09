@@ -171,7 +171,7 @@ export default function ModernLoginForm() {
               Welcome Back
             </CardTitle>
             <CardDescription className="text-base">
-              Sign in to TutusPorta by Vexnexa
+              Sign in to VexNexa by Vexnexa
             </CardDescription>
           </CardHeader>
           
@@ -309,7 +309,7 @@ export default function ModernLoginForm() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-white dark:bg-gray-800 px-2 text-gray-500">
-                    New to TutusPorta?
+                    New to VexNexa?
                   </span>
                 </div>
               </div>

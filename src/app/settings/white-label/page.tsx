@@ -313,7 +313,7 @@ export default function WhiteLabelPage() {
             White Label <span className="text-indigo-600">Branding</span>
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl">
-            Customize your brand appearance and contact information. Make TutusPorta truly yours with personalized branding.
+            Customize your brand appearance and contact information. Make VexNexa truly yours with personalized branding.
           </p>
         </div>
 
@@ -618,7 +618,7 @@ export default function WhiteLabelPage() {
                     className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                   />
                   <label htmlFor="showPoweredBy" className="ml-3 block text-sm font-medium text-gray-900">
-                    Show &quot;Powered by TutusPorta&quot; in footer
+                    Show &quot;Powered by VexNexa&quot; in footer
                   </label>
                 </div>
               </div>
@@ -670,7 +670,7 @@ export default function WhiteLabelPage() {
                     placeholder="yourcompany"
                   />
                   <p className="text-xs text-gray-500 mt-2">
-                    Will be available at: yourcompany.tutusporta.com
+                    Will be available at: yourcompany.vexnexa.com
                   </p>
                 </div>
               </div>
@@ -740,7 +740,7 @@ export default function WhiteLabelPage() {
               <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200">
                 <h3 className="text-lg font-bold text-blue-900 mb-2">Need Help?</h3>
                 <p className="text-blue-700 text-sm mb-4">
-                  Customize your TutusPorta experience with white-label branding. Contact our support team for assistance.
+                  Customize your VexNexa experience with white-label branding. Contact our support team for assistance.
                 </p>
                 <a
                   href="/contact"
@@ -765,12 +765,12 @@ export default function WhiteLabelPage() {
                   <span className="text-white font-bold text-sm">T</span>
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900">TutusPorta</div>
+                  <div className="font-semibold text-gray-900">VexNexa</div>
                   <div className="text-xs text-gray-500">by Vexnexa</div>
                 </div>
               </div>
               <div className="text-sm text-gray-500">
-                © 2025 TutusPorta. White-label branding available on Business plans.
+                © 2025 VexNexa. White-label branding available on Business plans.
               </div>
             </div>
           </div>
