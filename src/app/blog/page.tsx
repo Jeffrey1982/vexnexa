@@ -27,6 +27,7 @@ export const metadata: Metadata = {
 }
 
 export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic'; // Skip build-time prerendering
 
 export default async function BlogPage() {
   const posts = await prisma.blogPost.findMany({
