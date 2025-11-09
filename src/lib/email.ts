@@ -21,12 +21,12 @@ export async function sendContactNotification(data: ContactEmailData) {
 
     // Send notification to your team
     const teamNotification = await resend.emails.send({
-      from: 'TutusPorta Contact <noreply@tutusporta.com>',
-      to: ['info@tutusporta.com'],
+      from: 'VexNexa Contact <noreply@vexnexa.com>',
+      to: ['support@vexnexa.com'],
       subject: `Nieuw contactbericht van ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Nieuw contactbericht</h2>
+          <h2 style="color: #7C3AED;">Nieuw contactbericht</h2>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0;">Contactgegevens</h3>
@@ -40,7 +40,7 @@ export async function sendContactNotification(data: ContactEmailData) {
           </div>
 
           <p style="margin-top: 30px; color: #6b7280; font-size: 14px;">
-            Dit bericht is verzonden via het contactformulier op tutusporta.com
+            Dit bericht is verzonden via het contactformulier op vexnexa.com
           </p>
         </div>
       `,
@@ -53,18 +53,18 @@ E-mail: ${email}
 Bericht:
 ${message}
 
-Dit bericht is verzonden via het contactformulier op tutusporta.com
+Dit bericht is verzonden via het contactformulier op vexnexa.com
       `.trim()
     })
 
     // Send confirmation to the user
     const userConfirmation = await resend.emails.send({
-      from: 'TutusPorta <noreply@tutusporta.com>',
+      from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Bedankt voor je bericht - TutusPorta',
+      subject: 'Bedankt voor je bericht - VexNexa',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Bedankt voor je bericht!</h2>
+          <h2 style="color: #7C3AED;">Bedankt voor je bericht!</h2>
 
           <p>Hoi ${name},</p>
 
@@ -75,16 +75,16 @@ Dit bericht is verzonden via het contactformulier op tutusporta.com
             <p style="white-space: pre-wrap;">${message}</p>
           </div>
 
-          <p>Voor urgente vragen kun je direct mailen naar <a href="mailto:info@tutusporta.com" style="color: #3B82F6;">info@tutusporta.com</a>.</p>
+          <p>Voor urgente vragen kun je direct mailen naar <a href="mailto:support@vexnexa.com" style="color: #7C3AED;">support@vexnexa.com</a>.</p>
 
           <p>Met vriendelijke groet,<br>
-          Het TutusPorta team</p>
+          Het VexNexa team</p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
-            TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+            VexNexa - WCAG accessibility scanning platform<br>
+            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a>
           </p>
         </div>
       `,
@@ -98,13 +98,13 @@ Bedankt voor je bericht. We hebben je contactverzoek ontvangen en nemen binnen 2
 Je bericht:
 ${message}
 
-Voor urgente vragen kun je direct mailen naar info@tutusporta.com.
+Voor urgente vragen kun je direct mailen naar support@vexnexa.com.
 
 Met vriendelijke groet,
-Het TutusPorta team
+Het VexNexa team
 
-TutusPorta - WCAG accessibility scanning platform
-tutusporta.com
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
       `.trim()
     })
 
@@ -134,58 +134,58 @@ export async function sendTeamInvitation(data: TeamInvitationData) {
 
   try {
     const { inviterName, teamName, inviteEmail, inviteToken, role } = data
-    const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/teams/invite?token=${inviteToken}`
+    const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/teams/invite?token=${inviteToken}`
 
     const result = await resend.emails.send({
-      from: 'TutusPorta Teams <noreply@tutusporta.com>',
+      from: 'VexNexa Teams <noreply@vexnexa.com>',
       to: [inviteEmail],
-      subject: `Uitnodiging voor team "${teamName}" - TutusPorta`,
+      subject: `Uitnodiging voor team "${teamName}" - VexNexa`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Je bent uitgenodigd voor een team!</h2>
+          <h2 style="color: #7C3AED;">Je bent uitgenodigd voor een team!</h2>
 
           <p>Hoi,</p>
 
-          <p><strong>${inviterName}</strong> heeft je uitgenodigd om lid te worden van het team <strong>"${teamName}"</strong> op TutusPorta als <strong>${role}</strong>.</p>
+          <p><strong>${inviterName}</strong> heeft je uitgenodigd om lid te worden van het team <strong>"${teamName}"</strong> op VexNexa als <strong>${role}</strong>.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
             <h3 style="margin-top: 0;">Accepteer je uitnodiging</h3>
-            <a href="${inviteUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+            <a href="${inviteUrl}" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
               Lid worden van team
             </a>
           </div>
 
           <p style="color: #6b7280; font-size: 14px;">
             Als de knop niet werkt, kopieer dan deze link: <br>
-            <a href="${inviteUrl}" style="color: #3B82F6;">${inviteUrl}</a>
+            <a href="${inviteUrl}" style="color: #7C3AED;">${inviteUrl}</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij TutusPorta, wordt er automatisch een account voor je aangemaakt.
+            Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij VexNexa, wordt er automatisch een account voor je aangemaakt.
           </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
-            TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+            VexNexa - WCAG accessibility scanning platform<br>
+            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a>
           </p>
         </div>
       `,
       text: `
-Je bent uitgenodigd voor team "${teamName}" - TutusPorta
+Je bent uitgenodigd voor team "${teamName}" - VexNexa
 
 Hoi,
 
-${inviterName} heeft je uitgenodigd om lid te worden van het team "${teamName}" op TutusPorta als ${role}.
+${inviterName} heeft je uitgenodigd om lid te worden van het team "${teamName}" op VexNexa als ${role}.
 
 Accepteer je uitnodiging door naar deze link te gaan:
 ${inviteUrl}
 
-Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij TutusPorta, wordt er automatisch een account voor je aangemaakt.
+Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij VexNexa, wordt er automatisch een account voor je aangemaakt.
 
-TutusPorta - WCAG accessibility scanning platform
-tutusporta.com
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
       `.trim()
     })
 
@@ -212,27 +212,27 @@ export async function sendPasswordResetEmail(data: PasswordResetData) {
     const { email, resetUrl, userAgent } = data
 
     const result = await resend.emails.send({
-      from: 'TutusPorta Security <noreply@tutusporta.com>',
+      from: 'VexNexa Security <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Reset je TutusPorta wachtwoord',
+      subject: 'Reset je VexNexa wachtwoord',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Wachtwoord opnieuw instellen</h2>
+          <h2 style="color: #7C3AED;">Wachtwoord opnieuw instellen</h2>
 
           <p>Hoi,</p>
 
-          <p>We hebben een verzoek ontvangen om je wachtwoord voor TutusPorta opnieuw in te stellen.</p>
+          <p>We hebben een verzoek ontvangen om je wachtwoord voor VexNexa opnieuw in te stellen.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
             <h3 style="margin-top: 0;">Reset je wachtwoord</h3>
-            <a href="${resetUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+            <a href="${resetUrl}" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
               Nieuw wachtwoord instellen
             </a>
           </div>
 
           <p style="color: #6b7280; font-size: 14px;">
             Als de knop niet werkt, kopieer dan deze link: <br>
-            <a href="${resetUrl}" style="color: #3B82F6;">${resetUrl}</a>
+            <a href="${resetUrl}" style="color: #7C3AED;">${resetUrl}</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
@@ -246,17 +246,17 @@ export async function sendPasswordResetEmail(data: PasswordResetData) {
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
-            TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+            VexNexa - WCAG accessibility scanning platform<br>
+            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a>
           </p>
         </div>
       `,
       text: `
-Wachtwoord opnieuw instellen - TutusPorta
+Wachtwoord opnieuw instellen - VexNexa
 
 Hoi,
 
-We hebben een verzoek ontvangen om je wachtwoord voor TutusPorta opnieuw in te stellen.
+We hebben een verzoek ontvangen om je wachtwoord voor VexNexa opnieuw in te stellen.
 
 Reset je wachtwoord door naar deze link te gaan:
 ${resetUrl}
@@ -265,8 +265,8 @@ Deze link is 1 uur geldig. Als je dit verzoek niet hebt gedaan, kun je deze emai
 
 ${userAgent ? `Verzoek gedaan vanaf: ${userAgent}` : ''}
 
-TutusPorta - WCAG accessibility scanning platform
-tutusporta.com
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
       `.trim()
     })
 
@@ -277,22 +277,28 @@ tutusporta.com
   }
 }
 
-export async function sendWelcomeEmail(data: { email: string; firstName: string }) {
+export async function sendWelcomeEmail(data: { email: string; firstName: string; trialEndsAt?: Date }) {
   if (!resend) {
     console.warn('RESEND_API_KEY not configured, skipping welcome email')
     return null
   }
 
   try {
-    const { email, firstName } = data
+    const { email, firstName, trialEndsAt } = data
+
+    const trialEndDate = trialEndsAt 
+      ? new Intl.DateTimeFormat('en-US', { 
+          day: 'numeric', month: 'long', year: 'numeric' 
+        }).format(trialEndsAt)
+      : null
 
     const result = await resend.emails.send({
-      from: 'TutusPorta <noreply@tutusporta.com>',
+      from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Welkom bij TutusPorta! 🎉',
+      subject: 'Welkom bij VexNexa! 🎉',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Welkom bij TutusPorta, ${firstName}! 🎉</h2>
+          <h2 style="color: #7C3AED;">Welkom bij VexNexa, ${firstName}! 🎉</h2>
 
           <p>Bedankt voor je aanmelding! Je bent nu klaar om websites toegankelijker te maken.</p>
 
@@ -308,7 +314,7 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string 
           </div>
 
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
               Start je eerste scan
             </a>
           </div>
@@ -320,23 +326,23 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string 
             <li><strong>Stel monitoring in</strong> - Krijg alerts bij nieuwe issues</li>
           </ol>
 
-          <p>Heb je vragen? Reageer gewoon op deze email of bezoek ons <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/contact" style="color: #3B82F6;">contact centrum</a>.</p>
+          <p>Heb je vragen? Reageer gewoon op deze email of bezoek ons <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/contact" style="color: #7C3AED;">contact centrum</a>.</p>
 
           <p>Veel succes met het toegankelijker maken van het web! 🚀</p>
 
-          <p>Het TutusPorta team</p>
+          <p>Het VexNexa team</p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
-            TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a><br><br>
-            <small>Dit is een systeemmelding over je account. Voor vragen: info@tutusporta.com</small>
+            VexNexa - WCAG accessibility scanning platform<br>
+            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a><br><br>
+            <small>Dit is een systeemmelding over je account. Voor vragen: support@vexnexa.com</small>
           </p>
         </div>
       `,
       text: `
-Welkom bij TutusPorta, ${firstName}! 🎉
+Welkom bij VexNexa, ${firstName}! 🎉
 
 Bedankt voor je aanmelding! Je bent nu klaar om websites toegankelijker te maken.
 
@@ -346,7 +352,7 @@ Je 14-daagse gratis proefperiode is gestart met volledige toegang tot alle Pro f
 - Geavanceerde rapportage
 - Real-time monitoring
 
-Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard
+Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard
 
 Volgende stappen:
 1. Voeg je eerste website toe - Begin met een snelle scan
@@ -357,12 +363,12 @@ Heb je vragen? Reageer gewoon op deze email of bezoek ons contact centrum.
 
 Veel succes met het toegankelijker maken van het web! 🚀
 
-Het TutusPorta team
+Het VexNexa team
 
-TutusPorta - WCAG accessibility scanning platform
-tutusporta.com
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
 
-Dit is een systeemmelding over je account. Voor vragen: info@tutusporta.com
+Dit is een systeemmelding over je account. Voor vragen: support@vexnexa.com
       `.trim()
     })
 
@@ -389,25 +395,25 @@ export async function sendEmailVerification(data: EmailVerificationData) {
     const { email, confirmUrl, firstName } = data
 
     const result = await resend.emails.send({
-      from: 'TutusPorta Account <noreply@tutusporta.com>',
+      from: 'VexNexa Account <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Bevestig je TutusPorta account',
+      subject: 'Bevestig je VexNexa account',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Welkom bij TutusPorta${firstName ? `, ${firstName}` : ''}!</h2>
+          <h2 style="color: #7C3AED;">Welkom bij VexNexa${firstName ? `, ${firstName}` : ''}!</h2>
 
           <p>Bedankt voor je aanmelding! Klik op de onderstaande knop om je account te bevestigen en direct te beginnen met WCAG-scans.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
             <h3 style="margin-top: 0;">Bevestig je account</h3>
-            <a href="${confirmUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+            <a href="${confirmUrl}" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
               Account bevestigen
             </a>
           </div>
 
           <p style="color: #6b7280; font-size: 14px;">
             Als de knop niet werkt, kopieer dan deze link: <br>
-            <a href="${confirmUrl}" style="color: #3B82F6;">${confirmUrl}</a>
+            <a href="${confirmUrl}" style="color: #7C3AED;">${confirmUrl}</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
@@ -417,21 +423,21 @@ export async function sendEmailVerification(data: EmailVerificationData) {
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
-            TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+            VexNexa - WCAG accessibility scanning platform<br>
+            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a>
           </p>
         </div>
       `,
       text: `
-Welkom bij TutusPorta${firstName ? `, ${firstName}` : ''}!
+Welkom bij VexNexa${firstName ? `, ${firstName}` : ''}!
 
 Bedankt voor je aanmelding! Bevestig je account door naar deze link te gaan:
 ${confirmUrl}
 
 Deze link is 24 uur geldig. Als je geen account hebt aangemaakt, kun je deze email negeren.
 
-TutusPorta - WCAG accessibility scanning platform
-tutusporta.com
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
       `.trim()
     })
 
@@ -458,14 +464,14 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
     const friendlySource = getSourceDisplayName(source)
 
     const result = await resend.emails.send({
-      from: 'TutusPorta Newsletter <noreply@tutusporta.com>',
+      from: 'VexNexa Newsletter <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Welkom bij de TutusPorta nieuwsbrief! 📧',
+      subject: 'Welkom bij de VexNexa nieuwsbrief! 📧',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #3B82F6;">Bedankt voor je inschrijving! 🎉</h2>
+          <h2 style="color: #7C3AED;">Bedankt voor je inschrijving! 🎉</h2>
 
-          <p>Je bent nu ingeschreven voor de TutusPorta nieuwsbrief. We houden je op de hoogte van:</p>
+          <p>Je bent nu ingeschreven voor de VexNexa nieuwsbrief. We houden je op de hoogte van:</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <ul style="color: #4b5563; line-height: 1.6; margin: 0; padding-left: 20px;">
@@ -477,7 +483,7 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
           </div>
 
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
               Start je eerste scan
             </a>
           </div>
@@ -488,34 +494,34 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
 
           <p style="color: #6b7280; font-size: 14px;">
             Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.<br>
-            <a href="mailto:info@tutusporta.com?subject=Uitschrijven nieuwsbrief" style="color: #3B82F6;">Klik hier om je uit te schrijven</a>
+            <a href="mailto:support@vexnexa.com?subject=Uitschrijven nieuwsbrief" style="color: #7C3AED;">Klik hier om je uit te schrijven</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
-            TutusPorta - WCAG accessibility scanning platform<br>
-            <a href="https://tutusporta.com" style="color: #3B82F6;">tutusporta.com</a>
+            VexNexa - WCAG accessibility scanning platform<br>
+            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a>
           </p>
         </div>
       `,
       text: `
 Bedankt voor je inschrijving! 🎉
 
-Je bent nu ingeschreven voor de TutusPorta nieuwsbrief. We houden je op de hoogte van:
+Je bent nu ingeschreven voor de VexNexa nieuwsbrief. We houden je op de hoogte van:
 
 - Nieuwe features en productnieuws
 - Tips voor betere webtoegankelijkheid
 - Trends en best practices in WCAG
 - Exclusive content en early access
 
-Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://tutusporta.com'}/dashboard
+Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard
 
 We versturen ongeveer 1-2 emails per maand en respecteren je inbox. Geen spam, beloofd!
 
 Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.
-Uitschrijven? Mail info@tutusporta.com met onderwerp "Uitschrijven nieuwsbrief"
+Uitschrijven? Mail support@vexnexa.com met onderwerp "Uitschrijven nieuwsbrief"
 
-TutusPorta - WCAG accessibility scanning platform
-tutusporta.com
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
       `.trim()
     })
 
@@ -533,11 +539,11 @@ export async function sendTestEmail() {
 
   try {
     const result = await resend.emails.send({
-      from: 'TutusPorta <noreply@tutusporta.com>',
-      to: ['info@tutusporta.com'],
-      subject: 'Test email - TutusPorta',
-      html: '<p>This is a test email from TutusPorta contact form.</p>',
-      text: 'This is a test email from TutusPorta contact form.'
+      from: 'VexNexa <noreply@vexnexa.com>',
+      to: ['support@vexnexa.com'],
+      subject: 'Test email - VexNexa',
+      html: '<p>This is a test email from VexNexa contact form.</p>',
+      text: 'This is a test email from VexNexa contact form.'
     })
 
     return result

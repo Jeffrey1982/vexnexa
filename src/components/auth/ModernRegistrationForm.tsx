@@ -118,7 +118,7 @@ export default function ModernRegistrationForm() {
     phoneNumber: '',
     website: '',
     country: '',
-    marketingEmails: true,
+    marketingEmails: false,
     productUpdates: true
   })
 
@@ -279,7 +279,7 @@ export default function ModernRegistrationForm() {
           <Shield className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold">Create Your Account</h2>
-        <p className="text-muted-foreground">Join TutusPorta by Vexnexa and start improving accessibility</p>
+        <p className="text-muted-foreground">Join VexNexa and start improving accessibility</p>
       </div>
       
       <div className="space-y-4">

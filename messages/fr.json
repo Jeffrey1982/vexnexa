@@ -16,7 +16,7 @@
   },
   "footer": {
     "brand": {
-      "name": "TutusPorta",
+      "name": "VexNexa",
       "tagline": "Votre passerelle sécurisée vers l'accessibilité web",
       "followUs": "Suivez-nous",
       "newsletter": {
@@ -59,7 +59,7 @@
       "ctaPrimary": "Commencer l'analyse gratuite",
       "ctaSecondary": "Voir les tarifs",
       "noCreditCard": "Aucune carte de crédit requise. Obtenez 1 analyse gratuite chaque semaine.",
-      "imageAlt": "Tableau de bord de scan d'accessibilité TutusPorta montrant des rapports détaillés et la priorisation des problèmes"
+      "imageAlt": "Tableau de bord de scan d'accessibilité VexNexa montrant des rapports détaillés et la priorisation des problèmes"
     },
     "valuePillars": {
       "deeper": {
@@ -84,7 +84,7 @@
       "titleHighlight": "minutes",
       "subtitle": "Aucune compétence technique requise. Nos rapports sont simples et clairs pour que votre équipe puisse commencer à corriger les problèmes immédiatement.",
       "cta": "Commencer l'analyse gratuite",
-      "imageAlt": "Rapport détaillé d'analyse TutusPorta montrant les problèmes d'accessibilité avec priorisation et conseils",
+      "imageAlt": "Rapport détaillé d'analyse VexNexa montrant les problèmes d'accessibilité avec priorisation et conseils",
       "features": {
         "category1": "8 catégories d'analyse supplémentaires au-delà des WCAG",
         "category2": "Tests de navigation au clavier",
@@ -109,7 +109,7 @@
     "testimonials": {
       "title": "Approuvé par les professionnels de l'accessibilité",
       "testimonial1": {
-        "quote": "TutusPorta a trouvé des problèmes d'accessibilité que nos outils précédents avaient complètement manqués. Les rapports sont exploitables et nous aident à prioriser les corrections efficacement.",
+        "quote": "VexNexa a trouvé des problèmes d'accessibilité que nos outils précédents avaient complètement manqués. Les rapports sont exploitables et nous aident à prioriser les corrections efficacement.",
         "author": "Sarah Johnson",
         "role": "Lead Developer",
         "company": "TechCorp"
@@ -130,7 +130,7 @@
     "faq": {
       "q1": {
         "question": "Pouvez-vous garantir la conformité légale?",
-        "answer": "Aucun outil ne peut garantir une conformité légale à 100% dans tous les contextes. TutusPorta détecte et signale les problèmes, aide à la correction et vous aide à respecter les WCAG et normes connexes. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu."
+        "answer": "Aucun outil ne peut garantir une conformité légale à 100% dans tous les contextes. VexNexa détecte et signale les problèmes, aide à la correction et vous aide à respecter les WCAG et normes connexes. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu."
       },
       "q2": {
         "question": "Comment fonctionnent les limites de pages?",
@@ -154,11 +154,11 @@
       },
       "q7": {
         "question": "Dois-je planifier une démo?",
-        "answer": "Non! TutusPorta est 100% en libre-service. Inscrivez-vous, entrez votre URL et obtenez votre rapport d'accessibilité en quelques minutes. Nous n'offrons pas de démos ou d'appels de vente."
+        "answer": "Non! VexNexa est 100% en libre-service. Inscrivez-vous, entrez votre URL et obtenez votre rapport d'accessibilité en quelques minutes. Nous n'offrons pas de démos ou d'appels de vente."
       }
     },
     "pillars": {
-      "title": "Pourquoi TutusPorta?",
+      "title": "Pourquoi VexNexa?",
       "subtitle": "Conçu pour les professionnels de l'accessibilité et les équipes de conformité",
       "deeper": {
         "title": "Couverture approfondie",
@@ -236,7 +236,7 @@
     },
     "cta": {
       "title": "Commencez à améliorer l'accessibilité aujourd'hui",
-      "subtitle": "Rejoignez les équipes qui utilisent déjà TutusPorta pour la conformité WCAG",
+      "subtitle": "Rejoignez les équipes qui utilisent déjà VexNexa pour la conformité WCAG",
       "button": "Commencer gratuitement",
       "noCard": "Aucune carte de crédit requise"
     }
@@ -347,18 +347,18 @@
     "compliance": {
       "title": "Avertissement de Conformité",
       "warning": "Aucun outil ne peut garantir une conformité légale à 100% dans tous les contextes.",
-      "description": "TutusPorta détecte et signale les problèmes, aide à la remédiation et vous aide à respecter les normes WCAG et connexes. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu. Notre scanner est un outil pour assister vos efforts de conformité, pas une garantie légale.",
+      "description": "VexNexa détecte et signale les problèmes, aide à la remédiation et vous aide à respecter les normes WCAG et connexes. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu. Notre scanner est un outil pour assister vos efforts de conformité, pas une garantie légale.",
       "links": {
         "terms": "Conditions de Service",
         "privacy": "Politique de Confidentialité"
       }
     },
     "comparison": {
-      "title": "Comment TutusPorta se Compare",
+      "title": "Comment VexNexa se Compare",
       "subtitle": "Comparaison de notre approche avec les widgets overlay et les scanners d'accessibilité génériques",
       "columns": {
         "feature": "Fonctionnalité",
-        "tutusporta": "TutusPorta",
+        "tutusporta": "VexNexa",
         "overlay": "Widgets Overlay",
         "generic": "Scanners Génériques"
       },
@@ -412,7 +412,7 @@
           "generic": "Paliers fixes uniquement"
         }
       },
-      "disclaimer": "Les widgets overlay injectent du JavaScript qui tente de modifier votre site côté client. Bien qu'ils puissent aider certains utilisateurs, ils ne corrigent pas les problèmes de code sous-jacents et peuvent créer de nouveaux problèmes d'accessibilité. Les scanners génériques manquent souvent les problèmes spécifiques au contexte. TutusPorta fournit une couverture automatisée plus approfondie et des conseils pratiques pour les développeurs."
+      "disclaimer": "Les widgets overlay injectent du JavaScript qui tente de modifier votre site côté client. Bien qu'ils puissent aider certains utilisateurs, ils ne corrigent pas les problèmes de code sous-jacents et peuvent créer de nouveaux problèmes d'accessibilité. Les scanners génériques manquent souvent les problèmes spécifiques au contexte. VexNexa fournit une couverture automatisée plus approfondie et des conseils pratiques pour les développeurs."
     },
     "cta": {
       "title": "Commencez à scanner aujourd'hui",
@@ -424,22 +424,22 @@
   },
   "contact": {
     "metadata": {
-      "title": "Contact - Scanner WCAG TutusPorta",
-      "description": "Contactez TutusPorta pour des questions sur le scan d'accessibilité, la conformité WCAG ou des solutions personnalisées.",
+      "title": "Contact - Scanner WCAG VexNexa",
+      "description": "Contactez VexNexa pour des questions sur le scan d'accessibilité, la conformité WCAG ou des solutions personnalisées.",
       "keywords": "contact, support, aide accessibilité, questions WCAG, enterprise"
     },
     "skipLink": "Aller au contenu principal",
     "hero": {
       "title": "Parlons-en",
       "titleHighlight": "ensemble",
-      "subtitle": "Des questions sur TutusPorta ou besoin de limites plus élevées? Nous serions ravis de vous entendre. La plupart des utilisateurs peuvent commencer immédiatement."
+      "subtitle": "Des questions sur VexNexa ou besoin de limites plus élevées? Nous serions ravis de vous entendre. La plupart des utilisateurs peuvent commencer immédiatement."
     },
     "methods": {
       "email": {
         "title": "Support par E-mail",
         "description": "Pour les questions générales et le support",
         "detail": "Temps de réponse : 24–72 heures",
-        "actionLabel": "info@tutusporta.com"
+        "actionLabel": "support@vexnexa.com"
       },
       "sales": {
         "title": "Entreprise et limites supérieures",
@@ -497,7 +497,7 @@
         "successTitle": "Message envoyé !",
         "successDescription": "Nous vous contacterons dans les 24 heures.",
         "errorTitle": "Quelque chose s'est mal passé",
-        "errorDescription": "Réessayez plus tard ou envoyez un email à info@tutusporta.com"
+        "errorDescription": "Réessayez plus tard ou envoyez un email à support@vexnexa.com"
       }
     },
     "faq": {
@@ -764,9 +764,9 @@
         "logo": "Logo et favicon personnalisés de l'entreprise",
         "colors": "Couleurs de marque (primaire, secondaire, accent)",
         "contact": "Informations de contact personnalisées",
-        "removeBranding": "Supprimer \"Propulsé par TutusPorta\"",
+        "removeBranding": "Supprimer \"Propulsé par VexNexa\"",
         "footerText": "Texte de pied de page personnalisé",
-        "subdomain": "Sous-domaine (votreentreprise.tutusporta.com)",
+        "subdomain": "Sous-domaine (votreentreprise.vexnexa.com)",
         "customDomain": "Domaine personnalisé (contacter le support)",
         "brandedReports": "Rapports PDF personnalisés"
       },
@@ -795,16 +795,16 @@
   },
   "about": {
     "metadata": {
-      "title": "À propos de TutusPorta - Scans d'accessibilité WCAG par VexNexa",
-      "description": "TutusPorta : scans WCAG sans bruit — priorités claires, corrections concrètes et qualité mesurable. Hébergement UE, ensemble de règles axe-core.",
-      "ogTitle": "À propos de TutusPorta - Scans d'accessibilité WCAG par VexNexa",
+      "title": "À propos de VexNexa - Scans d'accessibilité WCAG par VexNexa",
+      "description": "VexNexa : scans WCAG sans bruit — priorités claires, corrections concrètes et qualité mesurable. Hébergement UE, ensemble de règles axe-core.",
+      "ogTitle": "À propos de VexNexa - Scans d'accessibilité WCAG par VexNexa",
       "ogDescription": "Accessibilité sans bruit — priorités claires, corrections concrètes, qualité mesurable. Hébergement UE, ensemble de règles axe-core.",
-      "twitterTitle": "À propos de TutusPorta - Scans d'accessibilité WCAG par VexNexa",
+      "twitterTitle": "À propos de VexNexa - Scans d'accessibilité WCAG par VexNexa",
       "twitterDescription": "Accessibilité sans bruit — priorités claires, corrections concrètes, qualité mesurable."
     },
     "skipLink": "Aller au contenu principal",
     "hero": {
-      "title": "À propos de TutusPorta — partie de VexNexa",
+      "title": "À propos de VexNexa — partie de VexNexa",
       "subtitle": "Nous rendons l'accessibilité réalisable pour les équipes occupées. Moins de bruit, plus d'améliorations réelles avec des priorités claires et des corrections concrètes.",
       "badges": {
         "euHosting": "Hébergement UE",
@@ -821,12 +821,12 @@
     "whyWeExist": {
       "title": "Pourquoi nous existons",
       "paragraph1": "Les équipes se noient souvent dans des rapports pleins de bruit : jargon technique, références vagues et peu de conseils. Pendant ce temps, la pression augmente : législation plus stricte, utilisateurs aux besoins divers et le simple fait que les sites accessibles performent mieux.",
-      "paragraph2": "TutusPorta renverse la situation. Nous montrons exactement ce qui ne va pas, ce qui a la priorité et comment le corriger — pour que l'équipe puisse commencer aujourd'hui.",
+      "paragraph2": "VexNexa renverse la situation. Nous montrons exactement ce qui ne va pas, ce qui a la priorité et comment le corriger — pour que l'équipe puisse commencer aujourd'hui.",
       "paragraph3": "L'accessibilité n'a pas à être complexe. Elle doit être pratique, compréhensible et orientée vers l'action."
     },
     "whatMakesUsDifferent": {
       "title": "Ce qui nous rend différents",
-      "subtitle": "Cinq raisons pour lesquelles les équipes choisissent TutusPorta",
+      "subtitle": "Cinq raisons pour lesquelles les équipes choisissent VexNexa",
       "features": {
         "vexnexaQuality": {
           "title": "Qualité VexNexa",
@@ -870,7 +870,7 @@
     },
     "results": {
       "title": "Résultats qui comptent",
-      "subtitle": "Ce que les équipes réalisent avec TutusPorta",
+      "subtitle": "Ce que les équipes réalisent avec VexNexa",
       "kpis": {
         "lessTime": {
           "value": "75%",
@@ -936,7 +936,7 @@
       "questions": {
         "q1": {
           "question": "Un scan signifie-t-il une conformité WCAG complète ?",
-          "answer": "Non. Les vérifications automatisées couvrent les critères automatiquement testables. Les tests manuels restent nécessaires. TutusPorta détecte la plupart des problèmes courants."
+          "answer": "Non. Les vérifications automatisées couvrent les critères automatiquement testables. Les tests manuels restent nécessaires. VexNexa détecte la plupart des problèmes courants."
         },
         "q2": {
           "question": "Puis-je scanner plusieurs pages ou sites ?",
@@ -952,10 +952,10 @@
         },
         "q5": {
           "question": "Pourquoi VexNexa facture-t-il ?",
-          "answer": "TutusPorta est un produit de VexNexa. Les contrats, la facturation et le support passent par VexNexa pour des responsabilités claires."
+          "answer": "VexNexa est un produit de VexNexa. Les contrats, la facturation et le support passent par VexNexa pour des responsabilités claires."
         },
         "q6": {
-          "question": "Puis-je essayer TutusPorta gratuitement ?",
+          "question": "Puis-je essayer VexNexa gratuitement ?",
           "answer": "Oui. Vous obtenez un scan gratuit par semaine. Inscription requise ; aucune carte de crédit nécessaire."
         }
       }
@@ -971,15 +971,15 @@
       }
     },
     "footerDisclaimer": {
-      "billing": "La facturation est effectuée via VexNexa. TutusPorta est un produit de VexNexa.",
+      "billing": "La facturation est effectuée via VexNexa. VexNexa est un produit de VexNexa.",
       "questions": "Des questions ? E-mail",
-      "email": "info@vexnexa.com"
+      "email": "support@vexnexa.com"
     }
   },
   "changelog": {
     "metadata": {
-      "title": "Journal des Modifications - TutusPorta",
-      "description": "Toutes les mises à jour, nouvelles fonctionnalités et améliorations du scanner d'accessibilité TutusPorta."
+      "title": "Journal des Modifications - VexNexa",
+      "description": "Toutes les mises à jour, nouvelles fonctionnalités et améliorations du scanner d'accessibilité VexNexa."
     },
     "title": "Journal des Modifications",
     "subtitle": "Restez informé de toutes les nouvelles fonctionnalités, améliorations et corrections de bugs. Nous travaillons constamment à améliorer votre expérience de scan d'accessibilité.",
@@ -1018,7 +1018,7 @@
   "newsletter": {
     "confirmed": {
       "title": "Inscription confirmée ! 🎉",
-      "subtitle": "Vous êtes maintenant inscrit à la newsletter TutusPorta",
+      "subtitle": "Vous êtes maintenant inscrit à la newsletter VexNexa",
       "emailSent": "E-mail de bienvenue envoyé",
       "checkInbox": "Vérifiez votre boîte de réception pour votre message de bienvenue avec tous les détails.",
       "whatToExpect": "À quoi vous attendre ?",
@@ -1030,11 +1030,11 @@
       },
       "startScan": "Commencez votre première analyse",
       "backToHome": "Retour à l'accueil",
-      "gdprNote": "Conforme RGPD : Vous pouvez toujours vous désinscrire via le lien dans chaque newsletter, ou en envoyant un email à info@tutusporta.com."
+      "gdprNote": "Conforme RGPD : Vous pouvez toujours vous désinscrire via le lien dans chaque newsletter, ou en envoyant un email à support@vexnexa.com."
     },
     "unsubscribed": {
       "title": "Désinscrit",
-      "subtitle": "Vous ne recevrez plus de newsletters de TutusPorta",
+      "subtitle": "Vous ne recevrez plus de newsletters de VexNexa",
       "confirmationSent": "Désinscription confirmée",
       "confirmationMessage": "Vous recevrez un e-mail de confirmation de votre désinscription.",
       "whatThisMeans": "Qu'est-ce que cela signifie ?",
@@ -1092,8 +1092,8 @@
   },
   "features": {
     "metadata": {
-      "title": "Fonctionnalités - TutusPorta",
-      "description": "Découvrez toutes les fonctionnalités de TutusPorta : Tableau de bord, détails des scans, export PDF, priorités et intégrations à venir."
+      "title": "Fonctionnalités - VexNexa",
+      "description": "Découvrez toutes les fonctionnalités de VexNexa : Tableau de bord, détails des scans, export PDF, priorités et intégrations à venir."
     },
     "hero": {
       "badge": "✨ Toutes les fonctionnalités",
@@ -1194,9 +1194,9 @@
     },
     "faq": {
       "title": "Questions Fréquemment Posées",
-      "subtitle": "Réponses aux questions les plus courantes sur TutusPorta",
+      "subtitle": "Réponses aux questions les plus courantes sur VexNexa",
       "privacy": {
-        "question": "Comment TutusPorta gère-t-il la confidentialité ?",
+        "question": "Comment VexNexa gère-t-il la confidentialité ?",
         "answer": "Nous ne scannons que le contenu accessible publiquement et ne stockons pas de données personnelles. Nos scans sont entièrement conformes au RGPD et nous ne partageons pas de données avec des tiers."
       },
       "performance": {
@@ -1204,12 +1204,12 @@
         "answer": "Non, nos scans n'ont aucun impact notable sur votre site web. Nous simulons un visiteur normal et n'effectuons pas de tests de charge. Les scans s'exécutent en arrière-plan sans solliciter votre site."
       },
       "cookies": {
-        "question": "Dois-je accepter les cookies pour utiliser TutusPorta ?",
+        "question": "Dois-je accepter les cookies pour utiliser VexNexa ?",
         "answer": "La fonctionnalité de base fonctionne sans cookies. Nous n'utilisons des cookies que pour les analytics (optionnel) et pour mémoriser vos préférences. Vous pouvez refuser tous les cookies et l'outil reste entièrement fonctionnel."
       },
       "international": {
         "question": "Puis-je scanner des sites web internationaux ?",
-        "answer": "Oui ! TutusPorta fonctionne avec des sites web dans toutes les langues et tous les pays. Nous prenons en charge les jeux de caractères internationaux et pouvons scanner des sites web quelle que soit la localisation ou la langue du contenu."
+        "answer": "Oui ! VexNexa fonctionne avec des sites web dans toutes les langues et tous les pays. Nous prenons en charge les jeux de caractères internationaux et pouvons scanner des sites web quelle que soit la localisation ou la langue du contenu."
       },
       "account": {
         "question": "Ai-je besoin d'un compte ou puis-je créer des équipes ?",
@@ -1231,17 +1231,17 @@
   },
   "demo": {
     "metadata": {
-      "title": "Planifier une Démo - TutusPorta",
-      "description": "Découvrez comment TutusPorta peut aider votre équipe avec la conformité WCAG et l'accessibilité."
+      "title": "Planifier une Démo - VexNexa",
+      "description": "Découvrez comment VexNexa peut aider votre équipe avec la conformité WCAG et l'accessibilité."
     },
     "backLink": "Retour à à propos",
     "title": "Planifier une",
     "titleHighlight": "démo personnalisée",
-    "subtitle": "Découvrez comment TutusPorta peut aider votre équipe avec la conformité WCAG et l'accessibilité",
+    "subtitle": "Découvrez comment VexNexa peut aider votre équipe avec la conformité WCAG et l'accessibilité",
     "whatYouGet": {
       "title": "Ce que vous obtenez en 15 minutes :",
       "items": [
-        "Démo en direct de la plateforme TutusPorta",
+        "Démo en direct de la plateforme VexNexa",
         "Aperçu du scan WCAG automatisé",
         "Rapports et priorisation expliqués",
         "Fonctionnalités de collaboration d'équipe",
@@ -1279,8 +1279,8 @@
     },
     "privacy": {
       "title": "Politique de Confidentialité",
-      "metaDescription": "Lisez notre politique de confidentialité: comment TutusPorta gère vos données, cookies et vie privée. Conforme RGPD.",
-      "description": "Comment TutusPorta traite vos données personnelles et protège votre vie privée.",
+      "metaDescription": "Lisez notre politique de confidentialité: comment VexNexa gère vos données, cookies et vie privée. Conforme RGPD.",
+      "description": "Comment VexNexa traite vos données personnelles et protège votre vie privée.",
       "lastUpdated": "8 décembre 2024",
       "version": "v1.2",
       "summary": {
@@ -1303,10 +1303,10 @@
       },
       "section1": {
         "title": "1. Qui nous sommes",
-        "content": "TutusPorta est un service de scan d'accessibilité développé aux Pays-Bas. Nous aidons les propriétaires de sites web à rendre leurs sites plus accessibles en testant la conformité WCAG.",
+        "content": "VexNexa est un service de scan d'accessibilité développé aux Pays-Bas. Nous aidons les propriétaires de sites web à rendre leurs sites plus accessibles en testant la conformité WCAG.",
         "contactTitle": "Coordonnées (responsable du traitement)",
         "companyName": "Nom de l'entreprise",
-        "companyValue": "VexNexa B.V. (TutusPorta fait partie de VexNexa)",
+        "companyValue": "VexNexa B.V. (VexNexa fait partie de VexNexa)",
         "address": "Adresse",
         "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
         "kvk": "Chambre de Commerce",
@@ -1459,7 +1459,7 @@
     },
     "terms": {
       "title": "Conditions d'Utilisation",
-      "description": "Ces conditions s'appliquent à l'utilisation du service de scan d'accessibilité TutusPorta.",
+      "description": "Ces conditions s'appliquent à l'utilisation du service de scan d'accessibilité VexNexa.",
       "lastUpdated": "8 décembre 2024",
       "version": "v1.1",
       "summary": {
@@ -1478,7 +1478,7 @@
           "Abus/contournement des limites de débit ou rétro-ingénierie",
           "Utilisation illégale ou nuisible (par ex., scraping de données personnelles)"
         ],
-        "byUsing": "En utilisant TutusPorta, vous acceptez ces conditions."
+        "byUsing": "En utilisant VexNexa, vous acceptez ces conditions."
       }
     },
     "security": {
@@ -1499,7 +1499,7 @@
     },
     "sla": {
       "title": "SLA & Support",
-      "description": "Notre accord de niveau de service et informations de support pour tous les utilisateurs TutusPorta.",
+      "description": "Notre accord de niveau de service et informations de support pour tous les utilisateurs VexNexa.",
       "lastUpdated": "8 décembre 2024",
       "version": "v1.0",
       "keyPoints": {
@@ -1542,7 +1542,7 @@
     },
     "trialExpired": {
       "title": "Période d'essai terminée",
-      "description": "Votre essai gratuit est terminé. Passez à un plan payant pour continuer à utiliser TutusPorta.",
+      "description": "Votre essai gratuit est terminé. Passez à un plan payant pour continuer à utiliser VexNexa.",
       "upgradeButton": "Choisir un plan",
       "cancelButton": "Se déconnecter"
     }

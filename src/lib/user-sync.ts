@@ -3,73 +3,68 @@ import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 export async function ensureUserInDatabase(supabaseUser: SupabaseUser) {
   try {
-    // Check if user already exists in database
-    let dbUser = await prisma.user.findUnique({
-      where: { id: supabaseUser.id }
+    const now = new Date()
+    const trialStart = now
+    const trialEnd = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000) // 14 days
+    const trialOrigin = 'self-signup'
+
+    // Use upsert for idempotent database sync
+    const dbUser = await prisma.user.upsert({
+      where: { id: supabaseUser.id },
+      update: {
+        email: supabaseUser.email!,
+        firstName: supabaseUser.user_metadata?.first_name || null,
+        lastName: supabaseUser.user_metadata?.last_name || null,
+        company: supabaseUser.user_metadata?.company || null,
+        jobTitle: supabaseUser.user_metadata?.job_title || null,
+        phoneNumber: supabaseUser.user_metadata?.phone_number || null,
+        website: supabaseUser.user_metadata?.website || null,
+        country: supabaseUser.user_metadata?.country || null,
+        // GDPR: Marketing opt-in must be explicitly true
+        marketingEmails: supabaseUser.user_metadata?.marketing_emails === true,
+        productUpdates: supabaseUser.user_metadata?.product_updates !== false,
+        profileCompleted: !!(
+          supabaseUser.user_metadata?.first_name &&
+          supabaseUser.user_metadata?.last_name
+        ),
+        updatedAt: now
+      },
+      create: {
+        id: supabaseUser.id,
+        email: supabaseUser.email!,
+        firstName: supabaseUser.user_metadata?.first_name || null,
+        lastName: supabaseUser.user_metadata?.last_name || null,
+        company: supabaseUser.user_metadata?.company || null,
+        jobTitle: supabaseUser.user_metadata?.job_title || null,
+        phoneNumber: supabaseUser.user_metadata?.phone_number || null,
+        website: supabaseUser.user_metadata?.website || null,
+        country: supabaseUser.user_metadata?.country || null,
+        // GDPR: Marketing opt-in must be explicitly true
+        marketingEmails: supabaseUser.user_metadata?.marketing_emails === true,
+        productUpdates: supabaseUser.user_metadata?.product_updates !== false,
+        profileCompleted: !!(
+          supabaseUser.user_metadata?.first_name &&
+          supabaseUser.user_metadata?.last_name
+        ),
+        plan: 'TRIAL',
+        subscriptionStatus: 'trialing',
+        trialStartsAt: trialStart,
+        trialEndsAt: trialEnd,
+        trialOrigin,
+        createdAt: new Date(supabaseUser.created_at),
+        updatedAt: now
+      }
     })
 
-    if (!dbUser) {
-      // Create user in database with Supabase user data
-      console.log('Creating new user in database:', supabaseUser.email)
-
-      dbUser = await prisma.user.create({
-        data: {
-          id: supabaseUser.id,
-          email: supabaseUser.email!,
-          firstName: supabaseUser.user_metadata?.first_name || null,
-          lastName: supabaseUser.user_metadata?.last_name || null,
-          company: supabaseUser.user_metadata?.company || null,
-          jobTitle: supabaseUser.user_metadata?.job_title || null,
-          phoneNumber: supabaseUser.user_metadata?.phone_number || null,
-          website: supabaseUser.user_metadata?.website || null,
-          country: supabaseUser.user_metadata?.country || null,
-          marketingEmails: supabaseUser.user_metadata?.marketing_emails !== false,
-          productUpdates: supabaseUser.user_metadata?.product_updates !== false,
-          profileCompleted: !!(
-            supabaseUser.user_metadata?.first_name &&
-            supabaseUser.user_metadata?.last_name
-          ),
-          plan: 'TRIAL',
-          subscriptionStatus: 'trialing',
-          trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
-          createdAt: new Date(supabaseUser.created_at),
-          updatedAt: new Date()
-        }
-      })
-
-      console.log('User created successfully in database:', dbUser.id)
-    } else {
-      // Update user data if needed (sync latest metadata)
-      const updatedData: any = {}
-      let needsUpdate = false
-
-      if (supabaseUser.user_metadata?.first_name !== dbUser.firstName) {
-        updatedData.firstName = supabaseUser.user_metadata?.first_name || null
-        needsUpdate = true
-      }
-      if (supabaseUser.user_metadata?.last_name !== dbUser.lastName) {
-        updatedData.lastName = supabaseUser.user_metadata?.last_name || null
-        needsUpdate = true
-      }
-      if (supabaseUser.user_metadata?.company !== dbUser.company) {
-        updatedData.company = supabaseUser.user_metadata?.company || null
-        needsUpdate = true
-      }
-
-      if (needsUpdate) {
-        updatedData.updatedAt = new Date()
-        dbUser = await prisma.user.update({
-          where: { id: supabaseUser.id },
-          data: updatedData
-        })
-        console.log('User updated in database:', dbUser.id)
-      }
-    }
-
+    console.log('User synced to database:', dbUser.id)
     return dbUser
   } catch (error) {
     console.error('Error ensuring user in database:', error)
-    // Return a default user object if database fails
+
+    // Return fallback user object if database fails
+    const now = new Date()
+    const trialEnd = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000)
+
     return {
       id: supabaseUser.id,
       email: supabaseUser.email!,
@@ -78,12 +73,18 @@ export async function ensureUserInDatabase(supabaseUser: SupabaseUser) {
       company: supabaseUser.user_metadata?.company || null,
       plan: 'TRIAL' as const,
       subscriptionStatus: 'trialing',
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-      profileCompleted: !!(supabaseUser.user_metadata?.first_name && supabaseUser.user_metadata?.last_name),
-      marketingEmails: true,
-      productUpdates: true,
+      trialStartsAt: now,
+      trialEndsAt: trialEnd,
+      trialOrigin: 'self-signup',
+      profileCompleted: !!(
+        supabaseUser.user_metadata?.first_name &&
+        supabaseUser.user_metadata?.last_name
+      ),
+      // GDPR: Marketing opt-in must be explicitly true
+      marketingEmails: supabaseUser.user_metadata?.marketing_emails === true,
+      productUpdates: supabaseUser.user_metadata?.product_updates !== false,
       createdAt: new Date(supabaseUser.created_at),
-      updatedAt: new Date()
+      updatedAt: now
     }
   }
 }

@@ -23,7 +23,7 @@ model User {
   country      String?
 
   // Marketing preferences
-  marketingEmails    Boolean @default(true)
+  marketingEmails    Boolean @default(false)
   productUpdates     Boolean @default(true)
   teamInvitations    Boolean @default(true)
   scanNotifications  Boolean @default(true)
@@ -34,8 +34,10 @@ model User {
 
   // Billing fields
   plan               Plan     @default(TRIAL)  // TRIAL, STARTER, PRO, BUSINESS
-  subscriptionStatus String   @default("inactive") // active, canceled, past_due, inactive
+  subscriptionStatus String   @default("trialing") // active, canceled, past_due, inactive
   trialEndsAt        DateTime?
+  trialStartsAt      DateTime?
+  trialOrigin        String?   // "self-signup", "partner", "referral", "ad-campaign", etc.
 
   // Mollie koppelingen
   mollieCustomerId      String? @unique

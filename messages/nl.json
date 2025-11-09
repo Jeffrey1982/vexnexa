@@ -16,7 +16,7 @@
   },
   "footer": {
     "brand": {
-      "name": "TutusPorta",
+      "name": "VexNexa",
       "tagline": "Uw veilige toegang tot webtoegankelijkheid",
       "followUs": "Volg ons",
       "newsletter": {
@@ -59,7 +59,7 @@
       "ctaPrimary": "Gratis scan starten",
       "ctaSecondary": "Bekijk prijzen",
       "noCreditCard": "Geen creditcard vereist. Ontvang elke week 1 gratis scan.",
-      "imageAlt": "TutusPorta toegankelijkheidsscan dashboard met gedetailleerde rapporten en issue prioritering"
+      "imageAlt": "VexNexa toegankelijkheidsscan dashboard met gedetailleerde rapporten en issue prioritering"
     },
     "valuePillars": {
       "deeper": {
@@ -84,7 +84,7 @@
       "titleHighlight": "minuten",
       "subtitle": "Geen technische vaardigheden nodig. Onze rapporten zijn eenvoudig en duidelijk, zodat uw team meteen problemen kan oplossen.",
       "cta": "Gratis scan starten",
-      "imageAlt": "TutusPorta scandetailrapport met toegankelijkheidsproblemen en hersteladvies",
+      "imageAlt": "VexNexa scandetailrapport met toegankelijkheidsproblemen en hersteladvies",
       "features": {
         "category1": "8 extra scancategorieën naast WCAG",
         "category2": "Toetsenbordnavigatietesten",
@@ -109,7 +109,7 @@
     "testimonials": {
       "title": "Vertrouwd door toegankelijkheidsprofessionals",
       "testimonial1": {
-        "quote": "TutusPorta vond toegankelijkheidsproblemen die onze eerdere tools volledig misten. De rapporten zijn uitvoerbaar en helpen ons effectief te prioriteren.",
+        "quote": "VexNexa vond toegankelijkheidsproblemen die onze eerdere tools volledig misten. De rapporten zijn uitvoerbaar en helpen ons effectief te prioriteren.",
         "author": "Sarah Johnson",
         "role": "Lead Developer",
         "company": "TechCorp"
@@ -130,7 +130,7 @@
     "faq": {
       "q1": {
         "question": "Kunt u juridische compliance garanderen?",
-        "answer": "Geen tool kan 100% juridische compliance in alle contexten garanderen. TutusPorta detecteert en rapporteert problemen, helpt bij herstel en helpt u te voldoen aan WCAG en gerelateerde standaarden. Overweeg voor juridische risicobeoordeling een expertaudit en doorlopend governance-proces."
+        "answer": "Geen tool kan 100% juridische compliance in alle contexten garanderen. VexNexa detecteert en rapporteert problemen, helpt bij herstel en helpt u te voldoen aan WCAG en gerelateerde standaarden. Overweeg voor juridische risicobeoordeling een expertaudit en doorlopend governance-proces."
       },
       "q2": {
         "question": "Hoe werken pagina-limieten?",
@@ -154,11 +154,11 @@
       },
       "q7": {
         "question": "Moet ik een demo inplannen?",
-        "answer": "Nee! TutusPorta is 100% zelfbediening. Meld je aan, voer je URL in en krijg je toegankelijkheidsrapport binnen enkele minuten. We bieden geen demo's of verkoopgesprekken aan."
+        "answer": "Nee! VexNexa is 100% zelfbediening. Meld je aan, voer je URL in en krijg je toegankelijkheidsrapport binnen enkele minuten. We bieden geen demo's of verkoopgesprekken aan."
       }
     },
     "pillars": {
-      "title": "Waarom TutusPorta?",
+      "title": "Waarom VexNexa?",
       "subtitle": "Gebouwd voor toegankelijkheidsprofessionals en compliance teams",
       "deeper": {
         "title": "Diepere dekking",
@@ -236,7 +236,7 @@
     },
     "cta": {
       "title": "Begin vandaag nog met het verbeteren van toegankelijkheid",
-      "subtitle": "Sluit u aan bij teams die TutusPorta al gebruiken voor WCAG-compliance",
+      "subtitle": "Sluit u aan bij teams die VexNexa al gebruiken voor WCAG-compliance",
       "button": "Gratis beginnen",
       "noCard": "Geen creditcard vereist"
     }
@@ -347,18 +347,18 @@
     "compliance": {
       "title": "Compliance Disclaimer",
       "warning": "Geen tool kan 100% juridische naleving garanderen in alle contexten.",
-      "description": "TutusPorta detecteert en rapporteert problemen, helpt bij herstel en ondersteunt je bij het naleven van WCAG en gerelateerde standaarden. Voor juridische risicobeoordeling is het aan te raden een expertaudit en doorlopend governanceproces in te stellen. Onze scanner is een tool om je nalevingsinspanningen te ondersteunen, geen juridische garantie.",
+      "description": "VexNexa detecteert en rapporteert problemen, helpt bij herstel en ondersteunt je bij het naleven van WCAG en gerelateerde standaarden. Voor juridische risicobeoordeling is het aan te raden een expertaudit en doorlopend governanceproces in te stellen. Onze scanner is een tool om je nalevingsinspanningen te ondersteunen, geen juridische garantie.",
       "links": {
         "terms": "Servicevoorwaarden",
         "privacy": "Privacybeleid"
       }
     },
     "comparison": {
-      "title": "Hoe TutusPorta zich verhoudt",
+      "title": "Hoe VexNexa zich verhoudt",
       "subtitle": "Vergelijking van onze aanpak met overlay-widgets en generieke toegankelijkheidscanners",
       "columns": {
         "feature": "Functie",
-        "tutusporta": "TutusPorta",
+        "tutusporta": "VexNexa",
         "overlay": "Overlay Widgets",
         "generic": "Generieke Scanners"
       },
@@ -412,7 +412,7 @@
           "generic": "Alleen vaste plannen"
         }
       },
-      "disclaimer": "Overlay-widgets injecteren JavaScript die probeert je site aan de client-kant te wijzigen. Hoewel ze sommige gebruikers kunnen helpen, lossen ze onderliggende codeproblemen niet op en kunnen ze nieuwe toegankelijkheidsproblemen creëren. Generieke scanners missen vaak contextspecifieke problemen. TutusPorta biedt diepere geautomatiseerde dekking en bruikbare begeleiding voor ontwikkelaars."
+      "disclaimer": "Overlay-widgets injecteren JavaScript die probeert je site aan de client-kant te wijzigen. Hoewel ze sommige gebruikers kunnen helpen, lossen ze onderliggende codeproblemen niet op en kunnen ze nieuwe toegankelijkheidsproblemen creëren. Generieke scanners missen vaak contextspecifieke problemen. VexNexa biedt diepere geautomatiseerde dekking en bruikbare begeleiding voor ontwikkelaars."
     },
     "cta": {
       "title": "Start vandaag met scannen",
@@ -424,22 +424,22 @@
   },
   "contact": {
     "metadata": {
-      "title": "Contact - TutusPorta WCAG Scanner",
-      "description": "Neem contact op met TutusPorta voor vragen over toegankelijkheidsscans, WCAG-compliance of maatwerk oplossingen.",
+      "title": "Contact - VexNexa WCAG Scanner",
+      "description": "Neem contact op met VexNexa voor vragen over toegankelijkheidsscans, WCAG-compliance of maatwerk oplossingen.",
       "keywords": "contact, support, toegankelijkheidshulp, WCAG vragen, enterprise"
     },
     "skipLink": "Ga naar hoofdinhoud",
     "hero": {
       "title": "Laten we",
       "titleHighlight": "praten",
-      "subtitle": "Vragen over TutusPorta of hogere limieten nodig? We horen graag van je. De meeste gebruikers kunnen direct starten."
+      "subtitle": "Vragen over VexNexa of hogere limieten nodig? We horen graag van je. De meeste gebruikers kunnen direct starten."
     },
     "methods": {
       "email": {
         "title": "E-mail Ondersteuning",
         "description": "Voor algemene vragen en support",
         "detail": "Reactietijd: 24–72 uur",
-        "actionLabel": "info@tutusporta.com"
+        "actionLabel": "support@vexnexa.com"
       },
       "sales": {
         "title": "Enterprise en hogere limieten",
@@ -497,7 +497,7 @@
         "successTitle": "Bericht verzonden!",
         "successDescription": "We nemen binnen 24 uur contact met je op.",
         "errorTitle": "Er ging iets mis",
-        "errorDescription": "Probeer het later opnieuw of stuur een e-mail naar info@tutusporta.com"
+        "errorDescription": "Probeer het later opnieuw of stuur een e-mail naar support@vexnexa.com"
       }
     },
     "faq": {
@@ -764,9 +764,9 @@
         "logo": "Aangepast bedrijfslogo & favicon",
         "colors": "Merkleuren (primair, secundair, accent)",
         "contact": "Aangepaste contactinformatie",
-        "removeBranding": "Verwijder \"Powered by TutusPorta\"",
+        "removeBranding": "Verwijder \"Powered by VexNexa\"",
         "footerText": "Aangepaste voettekst",
-        "subdomain": "Subdomein (uwbedrijf.tutusporta.com)",
+        "subdomain": "Subdomein (uwbedrijf.vexnexa.com)",
         "customDomain": "Aangepast domein (neem contact op met support)",
         "brandedReports": "Branded PDF rapporten"
       },
@@ -795,16 +795,16 @@
   },
   "about": {
     "metadata": {
-      "title": "Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa",
-      "description": "TutusPorta: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. EU-hosting, axe-core ruleset.",
-      "ogTitle": "Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa",
+      "title": "Over VexNexa - WCAG Toegankelijkheidsscans door VexNexa",
+      "description": "VexNexa: WCAG-scans zonder ruis — duidelijke prioriteiten, concrete fixes en meetbare kwaliteit. EU-hosting, axe-core ruleset.",
+      "ogTitle": "Over VexNexa - WCAG Toegankelijkheidsscans door VexNexa",
       "ogDescription": "Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit. EU-hosting, axe-core ruleset.",
-      "twitterTitle": "Over TutusPorta - WCAG Toegankelijkheidsscans door VexNexa",
+      "twitterTitle": "Over VexNexa - WCAG Toegankelijkheidsscans door VexNexa",
       "twitterDescription": "Toegankelijkheid zonder ruis — duidelijke prioriteiten, concrete fixes, meetbare kwaliteit."
     },
     "skipLink": "Ga naar hoofdinhoud",
     "hero": {
-      "title": "Over TutusPorta — onderdeel van VexNexa",
+      "title": "Over VexNexa — onderdeel van VexNexa",
       "subtitle": "We maken toegankelijkheid werkbaar voor drukke teams. Minder ruis, meer echte verbeteringen met duidelijke prioriteiten en concrete fixes.",
       "badges": {
         "euHosting": "EU-hosting",
@@ -821,12 +821,12 @@
     "whyWeExist": {
       "title": "Waarom we bestaan",
       "paragraph1": "Teams verdrinken vaak in rapporten vol ruis: technische termen, vage verwijzingen en weinig houvast. Ondertussen groeit de druk: strengere wetgeving, gebruikers met uiteenlopende behoeften en het simpele feit dat toegankelijke sites beter presteren.",
-      "paragraph2": "TutusPorta draait dat om. We laten precies zien wat er mis is, wat prioriteit heeft en hoe je het oplost — zodat het team vandaag kan beginnen.",
+      "paragraph2": "VexNexa draait dat om. We laten precies zien wat er mis is, wat prioriteit heeft en hoe je het oplost — zodat het team vandaag kan beginnen.",
       "paragraph3": "Toegankelijkheid hoeft niet complex te voelen. Het moet vooral praktisch, begrijpelijk en actiegericht zijn."
     },
     "whatMakesUsDifferent": {
       "title": "Wat ons anders maakt",
-      "subtitle": "Vijf redenen waarom teams voor TutusPorta kiezen",
+      "subtitle": "Vijf redenen waarom teams voor VexNexa kiezen",
       "features": {
         "vexnexaQuality": {
           "title": "VexNexa-kwaliteit",
@@ -870,7 +870,7 @@
     },
     "results": {
       "title": "Resultaten die tellen",
-      "subtitle": "Wat teams bereiken met TutusPorta",
+      "subtitle": "Wat teams bereiken met VexNexa",
       "kpis": {
         "lessTime": {
           "value": "75%",
@@ -936,7 +936,7 @@
       "questions": {
         "q1": {
           "question": "Betekent een scan volledige WCAG-compliance?",
-          "answer": "Nee. Geautomatiseerde checks dekken de automatisch testbare criteria. Handmatige controles blijven nodig. TutusPorta vangt wel het merendeel van de veelvoorkomende issues."
+          "answer": "Nee. Geautomatiseerde checks dekken de automatisch testbare criteria. Handmatige controles blijven nodig. VexNexa vangt wel het merendeel van de veelvoorkomende issues."
         },
         "q2": {
           "question": "Kan ik meerdere pagina's of sites scannen?",
@@ -952,10 +952,10 @@
         },
         "q5": {
           "question": "Waarom factureert VexNexa?",
-          "answer": "TutusPorta is een product van VexNexa. Contracten, facturatie en support lopen via VexNexa voor heldere verantwoordelijkheden."
+          "answer": "VexNexa is een product van VexNexa. Contracten, facturatie en support lopen via VexNexa voor heldere verantwoordelijkheden."
         },
         "q6": {
-          "question": "Kan ik TutusPorta gratis proberen?",
+          "question": "Kan ik VexNexa gratis proberen?",
           "answer": "Ja. Je krijgt wekelijks één gratis scan. Registratie vereist; geen creditcard nodig."
         }
       }
@@ -971,15 +971,15 @@
       }
     },
     "footerDisclaimer": {
-      "billing": "Facturatie verloopt via VexNexa. TutusPorta is een product van VexNexa.",
+      "billing": "Facturatie verloopt via VexNexa. VexNexa is een product van VexNexa.",
       "questions": "Vragen? Mail",
-      "email": "info@vexnexa.com"
+      "email": "support@vexnexa.com"
     }
   },
   "changelog": {
     "metadata": {
-      "title": "Wijzigingslog - TutusPorta",
-      "description": "Alle updates, nieuwe features en verbeteringen van TutusPorta accessibility scanner."
+      "title": "Wijzigingslog - VexNexa",
+      "description": "Alle updates, nieuwe features en verbeteringen van VexNexa accessibility scanner."
     },
     "title": "Wijzigingslog",
     "subtitle": "Blijf op de hoogte van alle nieuwe features, verbeteringen en bugfixes. We werken voortdurend aan het verbeteren van je accessibility scanning ervaring.",
@@ -1018,7 +1018,7 @@
   "newsletter": {
     "confirmed": {
       "title": "Inschrijving bevestigd! 🎉",
-      "subtitle": "Je bent nu ingeschreven voor de TutusPorta nieuwsbrief",
+      "subtitle": "Je bent nu ingeschreven voor de VexNexa nieuwsbrief",
       "emailSent": "Welkomstmail verzonden",
       "checkInbox": "Controleer je inbox voor je welkomstbericht met alle details.",
       "whatToExpect": "Wat kun je verwachten?",
@@ -1030,11 +1030,11 @@
       },
       "startScan": "Start je eerste scan",
       "backToHome": "Terug naar homepage",
-      "gdprNote": "AVG/GDPR compliant: Je kunt je altijd uitschrijven via de link in elke nieuwsbrief, of door een email te sturen naar info@tutusporta.com."
+      "gdprNote": "AVG/GDPR compliant: Je kunt je altijd uitschrijven via de link in elke nieuwsbrief, of door een email te sturen naar support@vexnexa.com."
     },
     "unsubscribed": {
       "title": "Uitgeschreven",
-      "subtitle": "Je ontvangt geen nieuwsbrieven meer van TutusPorta",
+      "subtitle": "Je ontvangt geen nieuwsbrieven meer van VexNexa",
       "confirmationSent": "Uitschrijving bevestigd",
       "confirmationMessage": "Je ontvangt een bevestigingsmail van je uitschrijving.",
       "whatThisMeans": "Wat betekent dit?",
@@ -1092,8 +1092,8 @@
   },
   "features": {
     "metadata": {
-      "title": "Features - TutusPorta",
-      "description": "Ontdek alle features van TutusPorta: Dashboard, scan details, PDF export, prioriteiten en komende integraties."
+      "title": "Features - VexNexa",
+      "description": "Ontdek alle features van VexNexa: Dashboard, scan details, PDF export, prioriteiten en komende integraties."
     },
     "hero": {
       "badge": "✨ Alle features",
@@ -1194,9 +1194,9 @@
     },
     "faq": {
       "title": "Veelgestelde Vragen",
-      "subtitle": "Antwoorden op de meest voorkomende vragen over TutusPorta",
+      "subtitle": "Antwoorden op de meest voorkomende vragen over VexNexa",
       "privacy": {
-        "question": "Hoe gaat TutusPorta om met privacy?",
+        "question": "Hoe gaat VexNexa om met privacy?",
         "answer": "We scannen alleen publiek toegankelijke content en slaan geen persoonsgegevens op. Onze scans zijn volledig GDPR-compliant en we delen geen data met derden."
       },
       "performance": {
@@ -1204,12 +1204,12 @@
         "answer": "Nee, onze scans hebben geen merkbare impact op je website. We simuleren een gewone bezoeker en voeren geen stress-tests uit. De scans lopen in de achtergrond zonder je site te belasten."
       },
       "cookies": {
-        "question": "Moet ik cookies accepteren om TutusPorta te gebruiken?",
+        "question": "Moet ik cookies accepteren om VexNexa te gebruiken?",
         "answer": "Basis functionaliteit werkt zonder cookies. We gebruiken alleen cookies voor analytics (optioneel) en om je voorkeuren te onthouden. Je kunt alle cookies weigeren en de tool blijft volledig functioneel."
       },
       "international": {
         "question": "Kan ik ook internationale websites scannen?",
-        "answer": "Ja! TutusPorta werkt met websites in alle talen en landen. We ondersteunen internationale karaktersets en kunnen websites scannen ongeacht de locatie of taal van de content."
+        "answer": "Ja! VexNexa werkt met websites in alle talen en landen. We ondersteunen internationale karaktersets en kunnen websites scannen ongeacht de locatie of taal van de content."
       },
       "account": {
         "question": "Heb ik een account nodig of kan ik teams aanmaken?",
@@ -1231,17 +1231,17 @@
   },
   "demo": {
     "metadata": {
-      "title": "Plan een Demo - TutusPorta",
-      "description": "Ontdek hoe TutusPorta jouw team kan helpen met WCAG-compliance en toegankelijkheid."
+      "title": "Plan een Demo - VexNexa",
+      "description": "Ontdek hoe VexNexa jouw team kan helpen met WCAG-compliance en toegankelijkheid."
     },
     "backLink": "Terug naar over ons",
     "title": "Plan een",
     "titleHighlight": "persoonlijke demo",
-    "subtitle": "Ontdek hoe TutusPorta jouw team kan helpen met WCAG-compliance en toegankelijkheid",
+    "subtitle": "Ontdek hoe VexNexa jouw team kan helpen met WCAG-compliance en toegankelijkheid",
     "whatYouGet": {
       "title": "Wat je krijgt in 15 minuten:",
       "items": [
-        "Live demo van het TutusPorta platform",
+        "Live demo van het VexNexa platform",
         "Inzicht in automated WCAG scanning",
         "Rapportage en prioritering uitgelegd",
         "Team collaboratie features",
@@ -1279,8 +1279,8 @@
     },
     "privacy": {
       "title": "Privacybeleid",
-      "metaDescription": "Lees ons privacybeleid: hoe TutusPorta omgaat met je gegevens, cookies en privacy. GDPR-compliant.",
-      "description": "Hoe TutusPorta omgaat met je persoonsgegevens en je privacy beschermt.",
+      "metaDescription": "Lees ons privacybeleid: hoe VexNexa omgaat met je gegevens, cookies en privacy. GDPR-compliant.",
+      "description": "Hoe VexNexa omgaat met je persoonsgegevens en je privacy beschermt.",
       "lastUpdated": "8 december 2024",
       "version": "v1.2",
       "summary": {
@@ -1303,10 +1303,10 @@
       },
       "section1": {
         "title": "1. Wie we zijn",
-        "content": "TutusPorta is een accessibility-scanning service ontwikkeld in Nederland. We helpen website-eigenaren hun sites toegankelijker te maken door WCAG-compliance te testen.",
+        "content": "VexNexa is een accessibility-scanning service ontwikkeld in Nederland. We helpen website-eigenaren hun sites toegankelijker te maken door WCAG-compliance te testen.",
         "contactTitle": "Contactgegevens (verwerkingsverantwoordelijke)",
         "companyName": "Bedrijfsnaam",
-        "companyValue": "VexNexa B.V. (TutusPorta is onderdeel van VexNexa)",
+        "companyValue": "VexNexa B.V. (VexNexa is onderdeel van VexNexa)",
         "address": "Adres",
         "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
         "kvk": "KvK-nummer",
@@ -1459,7 +1459,7 @@
     },
     "terms": {
       "title": "Algemene Voorwaarden",
-      "description": "Deze voorwaarden zijn van toepassing op het gebruik van de TutusPorta accessibility-scanning service.",
+      "description": "Deze voorwaarden zijn van toepassing op het gebruik van de VexNexa accessibility-scanning service.",
       "lastUpdated": "8 december 2024",
       "version": "v1.1",
       "summary": {
@@ -1478,7 +1478,7 @@
           "Misbruik/rate-limits omzeilen of reverse-engineeren",
           "Onrechtmatig of schadelijk gebruik (bv. scraping van persoonsgegevens)"
         ],
-        "byUsing": "Door TutusPorta te gebruiken ga je akkoord met deze voorwaarden."
+        "byUsing": "Door VexNexa te gebruiken ga je akkoord met deze voorwaarden."
       }
     },
     "security": {
@@ -1499,7 +1499,7 @@
     },
     "sla": {
       "title": "SLA & Ondersteuning",
-      "description": "Onze service level overeenkomst en support informatie voor alle TutusPorta gebruikers.",
+      "description": "Onze service level overeenkomst en support informatie voor alle VexNexa gebruikers.",
       "lastUpdated": "8 december 2024",
       "version": "v1.0",
       "keyPoints": {
@@ -1542,7 +1542,7 @@
     },
     "trialExpired": {
       "title": "Proefperiode beëindigd",
-      "description": "Je gratis proefperiode is afgelopen. Upgrade naar een betaald plan om TutusPorta te blijven gebruiken.",
+      "description": "Je gratis proefperiode is afgelopen. Upgrade naar een betaald plan om VexNexa te blijven gebruiken.",
       "upgradeButton": "Kies een plan",
       "cancelButton": "Uitloggen"
     }

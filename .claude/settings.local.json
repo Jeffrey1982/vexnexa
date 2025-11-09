@@ -44,7 +44,8 @@
       "Bash(perl -i -pe:*)",
       "Bash(perl -i -0777 -pe:*)",
       "Bash(git checkout:*)",
-      "Bash(git revert:*)"
+      "Bash(git revert:*)",
+      "Bash(git remote:*)"
     ],
     "deny": [],
     "ask": []

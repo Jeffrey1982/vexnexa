@@ -1,3 +1,4 @@
+import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
@@ -40,7 +41,7 @@ export async function middleware(request: NextRequest) {
     )
     
     // Store UTM parameters in a cookie for 7 days
-    response.cookies.set('tp_utm', JSON.stringify(cleanUtmParams), {
+    response.cookies.set('vn_utm', JSON.stringify(cleanUtmParams), {
       httpOnly: false, // Allow JavaScript access for analytics
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

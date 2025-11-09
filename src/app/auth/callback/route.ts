@@ -1,5 +1,7 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { NextRequest, NextResponse } from 'next/server'
+import { ensureUserInDatabase } from '@/lib/user-sync'
+import { sendWelcomeEmail } from '@/lib/email'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
@@ -26,15 +28,41 @@ export async function GET(request: NextRequest) {
       if (data.user) {
         console.log('OAuth login successful for user:', data.user.email)
 
-        // TODO: Re-enable user database sync once Prisma build issues are resolved
-        console.log('User logged in successfully:', data.user.email)
+        // Database sync - re-enabled
+        let dbSyncSuccess = false
+        let dbUser = null
+        
+        try {
+          dbUser = await ensureUserInDatabase(data.user)
+          dbSyncSuccess = true
+          console.log('Database sync successful for user:', data.user.email)
+        } catch (dbError) {
+          console.error('[Callback] ⚠️  Database sync failed (non-fatal):', dbError)
+        }
 
         // Get redirect parameter - default to dashboard
         const redirect = requestUrl.searchParams.get('redirect') || '/dashboard'
         console.log('🔐 Auth callback, redirecting to:', redirect)
 
         // Check if this is a new user (first time login)
-        const isNewUser = data.user.created_at === data.user.last_sign_in_at
+        // Small tolerance for timestamp comparison (1 second)
+        const createdAt = new Date(data.user.created_at).getTime()
+        const lastSignIn = new Date(data.user.last_sign_in_at!).getTime()
+        const isNewUser = Math.abs(createdAt - lastSignIn) < 1000
+
+        // Send welcome email for new users (only if DB sync succeeded and we have user data)
+        if (isNewUser && dbSyncSuccess && dbUser?.firstName) {
+          try {
+            await sendWelcomeEmail({
+              email: data.user.email!,
+              firstName: dbUser.firstName,
+              trialEndsAt: dbUser.trialEndsAt || undefined,
+            })
+            console.log('Welcome email sent to:', data.user.email)
+          } catch (emailError) {
+            console.error('[Callback] ⚠️  Welcome email failed (non-fatal):', emailError)
+          }
+        }
 
         if (isNewUser) {
           // Redirect to dashboard with welcome for new users
