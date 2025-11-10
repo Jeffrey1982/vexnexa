@@ -80,16 +80,16 @@
     --shadow-elegant: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.12);
 
-    /* TutusPorta Brand Tokens - Professional Edition */
-    --tp-bg: #0F172A;
-    --tp-surface: #FFFFFF;
-    --tp-muted: #F8FAFC;
-    --tp-border: #E2E8F0;
-    --tp-text: #0F172A;
-    --tp-text-muted: #475569;
-    --tp-primary: #0EA5E9;
-    --tp-primary-hover: #0284C7;
-    --tp-accent: #F59E0B;
+    /* VexNexa Brand Tokens - Professional Edition */
+    --vn-bg: #0F172A;
+    --vn-surface: #FFFFFF;
+    --vn-muted: #F8FAFC;
+    --vn-border: #E2E8F0;
+    --vn-text: #0F172A;
+    --vn-text-muted: #475569;
+    --vn-primary: #0EA5E9;
+    --vn-primary-hover: #0284C7;
+    --vn-accent: #F59E0B;
   }
   
   .dark {

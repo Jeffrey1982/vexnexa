@@ -10,17 +10,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[var(--tp-primary)] text-white shadow-elev2 hover:bg-[var(--tp-primary-hover)] hover:shadow-elev3 hover:-translate-y-px",
+          "bg-[var(--vn-primary)] text-white shadow-elev2 hover:bg-[var(--vn-primary-hover)] hover:shadow-elev3 hover:-translate-y-px",
         destructive:
           "bg-destructive text-destructive-foreground shadow-elev2 hover:bg-destructive/90 hover:shadow-elev3 hover:-translate-y-px",
         outline:
-          "border border-[var(--tp-border)] bg-white shadow-elev1 hover:bg-[var(--tp-muted)] hover:border-[var(--tp-primary)] hover:shadow-elev2 hover:-translate-y-px",
+          "border border-[var(--vn-border)] bg-white shadow-elev1 hover:bg-[var(--vn-muted)] hover:border-[var(--vn-primary)] hover:shadow-elev2 hover:-translate-y-px",
         secondary:
-          "glass shadow-elev2 hover:shadow-elev3 hover:-translate-y-px text-[var(--tp-text)]",
-        ghost: "hover:bg-[var(--tp-muted)] hover:text-[var(--tp-text)]",
-        link: "text-[var(--tp-primary)] underline-offset-4 hover:underline",
+          "glass shadow-elev2 hover:shadow-elev3 hover:-translate-y-px text-[var(--vn-text)]",
+        ghost: "hover:bg-[var(--vn-muted)] hover:text-[var(--vn-text)]",
+        link: "text-[var(--vn-primary)] underline-offset-4 hover:underline",
         gradient:
-          "bg-gradient-to-r from-[var(--tp-primary)] to-[var(--tp-accent)] text-white shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-[var(--tp-primary-hover)] hover:to-[var(--tp-accent)]",
+          "bg-gradient-to-r from-[var(--vn-primary)] to-[var(--vn-accent)] text-white shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-[var(--vn-primary-hover)] hover:to-[var(--vn-accent)]",
       },
       size: {
         default: "h-10 px-4 py-2",

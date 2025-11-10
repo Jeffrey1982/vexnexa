@@ -1,6 +1,6 @@
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "tutusporta"
+project_id = "vexnexa"
 
 [api]
 enabled = true
@@ -71,7 +71,7 @@ enabled = true
 # in emails.
 site_url = "http://localhost:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["https://tutusporta.com", "https://tutusporta-5lnr57bwp-jeffreyaay-gmailcoms-projects.vercel.app"]
+additional_redirect_urls = ["https://vexnexa.com", "https://vexnexa.vercel.app"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -93,19 +93,19 @@ enable_confirmations = true
 
 # Uncomment to customize email template
 [auth.email.template.invite]
-subject = "Je bent uitgenodigd voor TutusPorta"
+subject = "Je bent uitgenodigd voor VexNexa"
 content_path = "./supabase/templates/invite.html"
 
 [auth.email.template.confirmation]
-subject = "Bevestig je TutusPorta account"
+subject = "Bevestig je VexNexa account"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.recovery]
-subject = "Reset je TutusPorta wachtwoord"
+subject = "Reset je VexNexa wachtwoord"
 content_path = "./supabase/templates/recovery.html"
 
 [auth.email.template.email_change]
-subject = "Bevestig je nieuwe email voor TutusPorta"
+subject = "Bevestig je nieuwe email voor VexNexa"
 content_path = "./supabase/templates/email_change.html"
 
 [auth.sms]

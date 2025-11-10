@@ -133,16 +133,16 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-  			tp: {
-  				bg: 'var(--tp-bg)',
-  				surface: 'var(--tp-surface)',
-  				muted: 'var(--tp-muted)',
-  				border: 'var(--tp-border)',
-  				text: 'var(--tp-text)',
-  				'text-muted': 'var(--tp-text-muted)',
-  				primary: 'var(--tp-primary)',
-  				'primary-hover': 'var(--tp-primary-hover)',
-  				accent: 'var(--tp-accent)'
+  			vn: {
+  				bg: 'var(--vn-bg)',
+  				surface: 'var(--vn-surface)',
+  				muted: 'var(--vn-muted)',
+  				border: 'var(--vn-border)',
+  				text: 'var(--vn-text)',
+  				'text-muted': 'var(--vn-text-muted)',
+  				primary: 'var(--vn-primary)',
+  				'primary-hover': 'var(--vn-primary-hover)',
+  				accent: 'var(--vn-accent)'
   			}
   		},
   		boxShadow: {

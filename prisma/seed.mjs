@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = process.env.DEV_USER_EMAIL ?? "dev@tutusporta.local";
+  const email = process.env.DEV_USER_EMAIL ?? "dev@vexnexa.local";
   const siteUrl = process.env.SEED_SITE_URL ?? "https://example.com/";
 
   // user with trial plan

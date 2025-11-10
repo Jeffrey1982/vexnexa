@@ -7,6 +7,5 @@
   <path d="M18 25 h14 M18 30 h14 M18 35 h14" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
 
   <!-- Text -->
-  <text x="50" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">TutusPorta</text>
-  <text x="50" y="40" font-family="Arial, sans-serif" font-size="10" fill="white" opacity="0.8">by Vexnexa</text>
+  <text x="50" y="35" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">VexNexa</text>
 </svg>
