@@ -356,7 +356,7 @@ export default async function AboutPage() {
 
                 <blockquote className="mt-10 max-w-3xl mx-auto text-left border-l-4 border-primary pl-6">
                   <p className="text-2xl font-medium text-foreground italic">
-                    "{t('valuesTeam.quote')}"
+                    &ldquo;{t('valuesTeam.quote')}&rdquo;
                   </p>
                 </blockquote>
               </div>
