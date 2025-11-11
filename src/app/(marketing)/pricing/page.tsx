@@ -148,7 +148,7 @@ function PricingCards() {
   const t = useTranslations('pricing');
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [billingCycle, setBillingCycle] = useState<BillingCycle>('annual');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
 
   const plans = [
     {
