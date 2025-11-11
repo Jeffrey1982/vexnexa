@@ -33,16 +33,16 @@ const config: Config = {
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))',
-  				50: '#F0F9FF',
-  				100: '#E0F2FE',
-  				200: '#BAE6FD',
-  				300: '#7DD3FC',
-  				400: '#38BDF8',
-  				500: '#0EA5E9',
-  				600: '#0284C7',
-  				700: '#0369A1',
-  				800: '#075985',
-  				900: '#0C4A6E'
+  				50: '#FFF5ED',
+  				100: '#FFE7D6',
+  				200: '#FFCFAD',
+  				300: '#FFB07A',
+  				400: '#FF9447',
+  				500: '#FF7A00', // VexNexa Orange
+  				600: '#E66D00',
+  				700: '#B35400',
+  				800: '#803C00',
+  				900: '#4D2400'
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -84,44 +84,44 @@ const config: Config = {
   				DEFAULT: 'hsl(var(--minor))',
   				foreground: 'hsl(var(--minor-foreground))'
   			},
-  			amber: {
-  				DEFAULT: '#F59E0B',
-  				50: '#FFFBEB',
-  				100: '#FEF3C7',
-  				200: '#FDE68A',
-  				300: '#FCD34D',
-  				400: '#FBBF24',
-  				500: '#F59E0B',
-  				600: '#D97706',
-  				700: '#B45309',
-  				800: '#92400E',
-  				900: '#78350F'
+  			gold: {
+  				DEFAULT: '#FFD166',
+  				50: '#FFFCF0',
+  				100: '#FFF8DC',
+  				200: '#FFF0B3',
+  				300: '#FFE999',
+  				400: '#FFE07F',
+  				500: '#FFD166', // Solar Gold
+  				600: '#FFBF33',
+  				700: '#FFAD00',
+  				800: '#CC8A00',
+  				900: '#996700'
   			},
-  			emerald: {
-  				DEFAULT: '#10B981',
-  				50: '#ECFDF5',
-  				100: '#D1FAE5',
-  				200: '#A7F3D0',
-  				300: '#6EE7B7',
-  				400: '#34D399',
-  				500: '#10B981',
-  				600: '#059669',
-  				700: '#047857',
-  				800: '#065F46',
-  				900: '#064E3B'
+  			blue: {
+  				DEFAULT: '#118AB2',
+  				50: '#E8F6FA',
+  				100: '#C2E8F3',
+  				200: '#9DDAEC',
+  				300: '#5CC2DC',
+  				400: '#2CAAC7',
+  				500: '#118AB2', // Plasma Blue
+  				600: '#0E6F8E',
+  				700: '#0B546A',
+  				800: '#083946',
+  				900: '#051E22'
   			},
-  			orange: {
-  				DEFAULT: '#F97316',
-  				50: '#FFF7ED',
-  				100: '#FFEDD5',
-  				200: '#FED7AA',
-  				300: '#FDBA74',
-  				400: '#FB923C',
-  				500: '#F97316',
-  				600: '#EA580C',
-  				700: '#C2410C',
-  				800: '#9A3412',
-  				900: '#7C2D12'
+  			graphite: {
+  				DEFAULT: '#1E1E1E',
+  				50: '#F5F5F5',
+  				100: '#E0E0E0',
+  				200: '#C0C0C0',
+  				300: '#A0A0A0',
+  				400: '#606060',
+  				500: '#1E1E1E', // Midnight Graphite
+  				600: '#181818',
+  				700: '#121212',
+  				800: '#0C0C0C',
+  				900: '#060606'
   			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
@@ -134,15 +134,15 @@ const config: Config = {
   				'5': 'hsl(var(--chart-5))'
   			},
   			vn: {
-  				bg: 'var(--vn-bg)',
-  				surface: 'var(--vn-surface)',
+  				bg: 'var(--vn-bg)', // Midnight Graphite
+  				surface: 'var(--vn-surface)', // Cloud White
   				muted: 'var(--vn-muted)',
-  				border: 'var(--vn-border)',
+  				border: 'var(--vn-border)', // Ash Gray
   				text: 'var(--vn-text)',
   				'text-muted': 'var(--vn-text-muted)',
-  				primary: 'var(--vn-primary)',
+  				primary: 'var(--vn-primary)', // Aurora Orange
   				'primary-hover': 'var(--vn-primary-hover)',
-  				accent: 'var(--vn-accent)'
+  				accent: 'var(--vn-accent)' // Solar Gold
   			}
   		},
   		boxShadow: {
@@ -153,11 +153,11 @@ const config: Config = {
   			'soft-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
   			'soft-md': '0 4px 16px rgba(0, 0, 0, 0.12)',
   			'soft-lg': '0 8px 24px rgba(0, 0, 0, 0.15)',
-  			'glow-blue': '0 0 30px rgba(14, 165, 233, 0.5)',
-  			'glow-amber': '0 0 30px rgba(245, 158, 11, 0.5)',
-  			'glow-emerald': '0 0 30px rgba(16, 185, 129, 0.5)',
-  			'glass': '0 8px 32px 0 rgba(14, 165, 233, 0.12)',
-  			'neon': '0 0 5px rgba(14, 165, 233, 0.6), 0 0 20px rgba(14, 165, 233, 0.4)'
+  			'glow-orange': '0 0 30px rgba(255, 122, 0, 0.5)',
+  			'glow-gold': '0 0 30px rgba(255, 209, 102, 0.5)',
+  			'glow-blue': '0 0 30px rgba(17, 138, 178, 0.5)',
+  			'glass': '0 8px 32px 0 rgba(255, 122, 0, 0.12)',
+  			'neon': '0 0 5px rgba(255, 122, 0, 0.6), 0 0 20px rgba(255, 122, 0, 0.4)'
   		},
   		spacing: {
   			'18': '4.5rem',

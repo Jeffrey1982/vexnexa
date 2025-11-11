@@ -5,78 +5,78 @@
 
 :root {
   /* ===== Base & Neutral Colors ===== */
-  --color-bg: #FFFFFF;
-  --color-bg-subtle: #F8FAFC;
-  --color-bg-muted: #F1F5F9;
-  --color-text: #0F172A;
-  --color-text-muted: #475569;
-  --color-text-subtle: #64748B;
-  --color-border: #E2E8F0;
-  --color-border-strong: #CBD5E1;
+  --color-bg: #F8F9FA; /* Cloud White */
+  --color-bg-subtle: #F8F9FA;
+  --color-bg-muted: #E8E9EA;
+  --color-text: #1E1E1E; /* Midnight Graphite */
+  --color-text-muted: #C0C3C7; /* Ash Gray */
+  --color-text-subtle: #A8AAAD;
+  --color-border: #C0C3C7; /* Ash Gray */
+  --color-border-strong: #A0A3A7;
 
-  /* ===== Colors - Primary (Ocean Blue/Turquoise) ===== */
-  --color-primary: #0EA5E9;
-  --color-primary-hover: #0284C7;
-  --color-primary-active: #0369A1;
+  /* ===== Colors - Primary (VexNexa Orange) ===== */
+  --color-primary: #FF7A00; /* VexNexa Orange - Energie, innovatie, kracht */
+  --color-primary-hover: #FF9447;
+  --color-primary-active: #E66D00;
   --color-primary-foreground: #FFFFFF;
-  --color-primary-50: #F0F9FF;
-  --color-primary-100: #E0F2FE;
-  --color-primary-200: #BAE6FD;
-  --color-primary-300: #7DD3FC;
-  --color-primary-400: #38BDF8;
-  --color-primary-500: #0EA5E9;
-  --color-primary-600: #0284C7;
-  --color-primary-700: #0369A1;
-  --color-primary-800: #075985;
-  --color-primary-900: #0C4A6E;
+  --color-primary-50: #FFF5ED;
+  --color-primary-100: #FFE7D6;
+  --color-primary-200: #FFCFAD;
+  --color-primary-300: #FFB07A;
+  --color-primary-400: #FF9447;
+  --color-primary-500: #FF7A00;
+  --color-primary-600: #E66D00;
+  --color-primary-700: #B35400;
+  --color-primary-800: #803C00;
+  --color-primary-900: #4D2400;
 
-  /* ===== Colors - Secondary (Warm Amber) ===== */
-  --color-secondary: #F59E0B;
-  --color-secondary-hover: #D97706;
-  --color-secondary-active: #B45309;
-  --color-secondary-foreground: #FFFFFF;
-  --color-secondary-50: #FFFBEB;
-  --color-secondary-100: #FEF3C7;
-  --color-secondary-200: #FDE68A;
-  --color-secondary-300: #FCD34D;
-  --color-secondary-400: #FBBF24;
-  --color-secondary-500: #F59E0B;
-  --color-secondary-600: #D97706;
-  --color-secondary-700: #B45309;
-  --color-secondary-800: #92400E;
-  --color-secondary-900: #78350F;
+  /* ===== Colors - Secondary (Solar Gold) ===== */
+  --color-secondary: #FFD166; /* Solar Gold - Vertrouwen */
+  --color-secondary-hover: #FFBF33;
+  --color-secondary-active: #FFAD00;
+  --color-secondary-foreground: #1E1E1E;
+  --color-secondary-50: #FFFCF0;
+  --color-secondary-100: #FFF8DC;
+  --color-secondary-200: #FFF0B3;
+  --color-secondary-300: #FFE999;
+  --color-secondary-400: #FFE07F;
+  --color-secondary-500: #FFD166;
+  --color-secondary-600: #FFBF33;
+  --color-secondary-700: #FFAD00;
+  --color-secondary-800: #CC8A00;
+  --color-secondary-900: #996700;
 
-  /* ===== Colors - Success (Emerald Green) ===== */
-  --color-success: #10B981;
-  --color-success-hover: #059669;
-  --color-success-bg: #D1FAE5;
+  /* ===== Colors - Success (Plasma Blue) ===== */
+  --color-success: #118AB2; /* Plasma Blue - Kalmte, intelligentie */
+  --color-success-hover: #0E6F8E;
+  --color-success-bg: #C2E8F3;
   --color-success-foreground: #FFFFFF;
-  --color-success-50: #ECFDF5;
-  --color-success-100: #D1FAE5;
-  --color-success-200: #A7F3D0;
-  --color-success-300: #6EE7B7;
-  --color-success-400: #34D399;
-  --color-success-500: #10B981;
-  --color-success-600: #059669;
-  --color-success-700: #047857;
-  --color-success-800: #065F46;
-  --color-success-900: #064E3B;
+  --color-success-50: #E8F6FA;
+  --color-success-100: #C2E8F3;
+  --color-success-200: #9DDAEC;
+  --color-success-300: #5CC2DC;
+  --color-success-400: #2CAAC7;
+  --color-success-500: #118AB2;
+  --color-success-600: #0E6F8E;
+  --color-success-700: #0B546A;
+  --color-success-800: #083946;
+  --color-success-900: #051E22;
 
-  /* ===== Colors - Warning (Warm Orange) ===== */
-  --color-warning: #F97316;
-  --color-warning-hover: #EA580C;
-  --color-warning-bg: #FFEDD5;
-  --color-warning-foreground: #FFFFFF;
-  --color-warning-50: #FFF7ED;
-  --color-warning-100: #FFEDD5;
-  --color-warning-200: #FED7AA;
-  --color-warning-300: #FDBA74;
-  --color-warning-400: #FB923C;
-  --color-warning-500: #F97316;
-  --color-warning-600: #EA580C;
-  --color-warning-700: #C2410C;
-  --color-warning-800: #9A3412;
-  --color-warning-900: #7C2D12;
+  /* ===== Colors - Warning (Solar Gold) ===== */
+  --color-warning: #FFD166;
+  --color-warning-hover: #FFBF33;
+  --color-warning-bg: #FFF8DC;
+  --color-warning-foreground: #1E1E1E;
+  --color-warning-50: #FFFCF0;
+  --color-warning-100: #FFF8DC;
+  --color-warning-200: #FFF0B3;
+  --color-warning-300: #FFE999;
+  --color-warning-400: #FFE07F;
+  --color-warning-500: #FFD166;
+  --color-warning-600: #FFBF33;
+  --color-warning-700: #FFAD00;
+  --color-warning-800: #CC8A00;
+  --color-warning-900: #996700;
 
   /* ===== Colors - Destructive (Vibrant Red) ===== */
   --color-destructive: #EF4444;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-primary-glow: 0 0 0 3px rgba(14, 165, 233, 0.2);
-  --shadow-secondary-glow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  --shadow-primary-glow: 0 0 0 3px rgba(255, 122, 0, 0.2);
+  --shadow-secondary-glow: 0 0 0 3px rgba(255, 209, 102, 0.2);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
-  --gradient-warm: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
-  --gradient-hero: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
-  --gradient-subtle: linear-gradient(to bottom, #FFFFFF 0%, #F8FAFC 100%);
-  --gradient-mesh: linear-gradient(135deg, #0EA5E9 0%, #F59E0B 50%, #10B981 100%);
+  --gradient-primary: linear-gradient(135deg, #FF7A00 0%, #FF9447 100%);
+  --gradient-warm: linear-gradient(135deg, #FFD166 0%, #FF7A00 100%);
+  --gradient-hero: linear-gradient(135deg, #FF7A00 0%, #118AB2 100%);
+  --gradient-subtle: linear-gradient(to bottom, #F8F9FA 0%, #FFFFFF 100%);
+  --gradient-mesh: linear-gradient(135deg, #FF7A00 0%, #FFD166 50%, #118AB2 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;
@@ -304,8 +304,8 @@
 
 .bg-grid-subtle {
   background-image:
-    linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 122, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 122, 0, 0.06) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
