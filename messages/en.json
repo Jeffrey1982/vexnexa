@@ -243,12 +243,12 @@
   },
   "pricing": {
     "hero": {
-      "badge": "💰 Transparent pricing",
-      "title": "Choose Your Plan — Flexible Billing to Fit",
-      "titleHighlight": "Your Growth",
-      "subtitle": "From free trial to enterprise features. All prices are transparent and monthly cancellable.",
-      "billingSubtitle": "Save up to 10% with annual billing.",
-      "needMore": "Need custom limits or on-premise deployment?",
+      "badge": "💰 Simple pricing",
+      "title": "Simple, Flexible Pricing —",
+      "titleHighlight": "Built for Growth",
+      "subtitle": "Fully automated SaaS with transparent pricing.",
+      "billingSubtitle": "Save up to 10% with long-term billing.",
+      "needMore": "Questions about pricing?",
       "contactUs": "Contact us",
       "badges": {
         "vat": "All prices exclude VAT",
@@ -262,8 +262,8 @@
       "annual": "Annual",
       "save5": "Save 5%",
       "save10": "Save 10%",
-      "hint": "Save more with annual billing",
-      "switchToSave": "Switch to annual to save more"
+      "hint": "Annual billing saves 10% automatically",
+      "switchToSave": "Switch to annual and save more"
     },
     "plans": {
       "starter": {

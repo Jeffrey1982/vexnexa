@@ -1,7 +1,7 @@
 export const PRICES = {
-  STARTER: { amount: "22.00", currency: "EUR", interval: "1 month" },
-  PRO:     { amount: "54.00", currency: "EUR", interval: "1 month" },
-  BUSINESS:{ amount: "112.00", currency: "EUR", interval: "1 month" },
+  STARTER: { amount: "19.99", currency: "EUR", interval: "1 month" },
+  PRO:     { amount: "49.99", currency: "EUR", interval: "1 month" },
+  BUSINESS:{ amount: "99.99", currency: "EUR", interval: "1 month" },
 } as const
 
 // Overflow pricing - charges when plan limits are exceeded

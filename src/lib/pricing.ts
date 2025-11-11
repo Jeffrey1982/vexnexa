@@ -2,11 +2,11 @@
  * VexNexa Pricing Configuration
  *
  * This file contains all pricing data, billing cycles, and discount logic.
- * Prices are 10% below market average with automatic discounts for longer billing cycles.
+ * Clean 3-tier SaaS pricing with automatic discounts for longer billing cycles.
  */
 
 export type BillingCycle = 'monthly' | 'semiannual' | 'annual';
-export type PlanKey = 'STARTER' | 'PRO' | 'BUSINESS' | 'ENTERPRISE';
+export type PlanKey = 'STARTER' | 'PRO' | 'BUSINESS';
 
 export interface PlanPrice {
   monthly: number;
@@ -23,13 +23,12 @@ export interface PlanPrice {
 }
 
 /**
- * Base monthly prices (in EUR, 10% below market average)
+ * Base monthly prices (EUR, ending with .99 for psychological pricing)
  */
 export const BASE_PRICES: Record<PlanKey, number> = {
-  STARTER: 22,
-  PRO: 54,
-  BUSINESS: 112,
-  ENTERPRISE: 270, // Starting from (custom quote)
+  STARTER: 19.99,
+  PRO: 49.99,
+  BUSINESS: 99.99,
 } as const;
 
 /**
@@ -42,6 +41,20 @@ export const BILLING_DISCOUNTS = {
 } as const;
 
 /**
+ * Calculate semi-annual price (6 months with 5% discount)
+ */
+export function getSemiAnnualPrice(base: number): number {
+  return (base * 6) * 0.95;
+}
+
+/**
+ * Calculate annual price (12 months with 10% discount)
+ */
+export function getAnnualPrice(base: number): number {
+  return (base * 12) * 0.90;
+}
+
+/**
  * Calculate price for a given plan and billing cycle
  */
 export function calculatePrice(planKey: PlanKey, cycle: BillingCycle): number {
@@ -51,11 +64,11 @@ export function calculatePrice(planKey: PlanKey, cycle: BillingCycle): number {
     return basePrice;
   }
 
-  const months = cycle === 'semiannual' ? 6 : 12;
-  const discount = BILLING_DISCOUNTS[cycle];
-  const totalPrice = basePrice * months * (1 - discount);
+  if (cycle === 'semiannual') {
+    return getSemiAnnualPrice(basePrice);
+  }
 
-  return totalPrice;
+  return getAnnualPrice(basePrice);
 }
 
 /**
@@ -139,11 +152,15 @@ export function getDiscountBadge(cycle: BillingCycle): string | null {
 }
 
 /**
- * Get CTA button text based on billing cycle
+ * Get CTA button text based on billing cycle and plan
  */
-export function getCTAText(cycle: BillingCycle, isEnterprise: boolean = false): string {
-  if (isEnterprise) return 'Contact Sales';
+export function getCTAText(cycle: BillingCycle, planKey?: PlanKey): string {
+  // Plan-specific CTAs
+  if (planKey === 'STARTER') return 'Get Started';
+  if (planKey === 'PRO') return 'Upgrade Now';
+  if (planKey === 'BUSINESS') return 'Scale Your Agency';
 
+  // Generic cycle-based CTAs
   switch (cycle) {
     case 'monthly':
       return 'Start Monthly Plan';
@@ -158,9 +175,9 @@ export function getCTAText(cycle: BillingCycle, isEnterprise: boolean = false): 
  * Legacy compatibility - keep old PRICES export for existing code
  */
 export const PRICES = {
-  STARTER: { amount: BASE_PRICES.STARTER.toFixed(2), currency: "EUR", interval: "1 month" },
-  PRO: { amount: BASE_PRICES.PRO.toFixed(2), currency: "EUR", interval: "1 month" },
-  BUSINESS: { amount: BASE_PRICES.BUSINESS.toFixed(2), currency: "EUR", interval: "1 month" },
+  STARTER: { amount: "19.99", currency: "EUR", interval: "1 month" },
+  PRO: { amount: "49.99", currency: "EUR", interval: "1 month" },
+  BUSINESS: { amount: "99.99", currency: "EUR", interval: "1 month" },
 } as const;
 
 export function formatPrice(plan: keyof typeof PRICES) {

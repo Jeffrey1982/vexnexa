@@ -53,11 +53,11 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Starter Plan",
-        price: "22.00",
+        price: "19.99",
         priceCurrency: "EUR",
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "22.00",
+          price: "19.99",
           priceCurrency: "EUR",
           unitText: "MONTH",
         },
@@ -65,11 +65,11 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Pro Plan",
-        price: "54.00",
+        price: "49.99",
         priceCurrency: "EUR",
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "54.00",
+          price: "49.99",
           priceCurrency: "EUR",
           unitText: "MONTH",
         },
@@ -77,23 +77,11 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Business Plan",
-        price: "112.00",
+        price: "99.99",
         priceCurrency: "EUR",
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "112.00",
-          priceCurrency: "EUR",
-          unitText: "MONTH",
-        },
-      },
-      {
-        "@type": "Offer",
-        name: "Enterprise Plan",
-        price: "270.00",
-        priceCurrency: "EUR",
-        priceSpecification: {
-          "@type": "UnitPriceSpecification",
-          price: "270.00",
+          price: "99.99",
           priceCurrency: "EUR",
           unitText: "MONTH",
         },
@@ -219,33 +207,9 @@ function PricingCards() {
       limitations: [],
       ctaVariant: "default" as const,
     },
-    {
-      key: "ENTERPRISE" as PlanKey,
-      name: t('plans.enterprise.name'),
-      description: t('plans.enterprise.description'),
-      highlighted: false,
-      features: [
-        t('plans.enterprise.features.unlimitedSites'),
-        t('plans.enterprise.features.unlimitedPages'),
-        t('plans.enterprise.features.unlimitedUsers'),
-        t('plans.enterprise.features.customIntegrations'),
-        t('plans.enterprise.features.sso'),
-        t('plans.enterprise.features.dedicatedSupport'),
-        t('plans.enterprise.features.sla'),
-        t('plans.enterprise.features.onPremise'),
-      ],
-      limitations: [],
-      ctaHref: "/contact",
-      ctaVariant: "outline" as const,
-    },
   ];
 
-  const handleUpgrade = async (planKey: string, href?: string) => {
-    if (href) {
-      window.location.href = href;
-      return;
-    }
-
+  const handleUpgrade = async (planKey: string) => {
     setLoading(planKey);
     setError(null);
 
@@ -335,11 +299,11 @@ function PricingCards() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan) => {
             const priceDisplay = formatPriceDisplay(plan.key, billingCycle);
             const discountBadge = getDiscountBadge(billingCycle);
-            const ctaText = getCTAText(billingCycle, plan.key === 'ENTERPRISE');
+            const ctaText = getCTAText(billingCycle, plan.key);
 
             return (
               <Card
@@ -358,7 +322,7 @@ function PricingCards() {
                   </div>
                 )}
 
-                {discountBadge && !plan.ctaHref && (
+                {discountBadge && (
                   <div className="absolute -top-2 -right-2">
                     <Badge variant="secondary" className="bg-green-500 text-white text-xs px-2 py-1">
                       {discountBadge}
@@ -369,27 +333,16 @@ function PricingCards() {
                 <CardHeader className="text-center pb-8">
                   <CardTitle className="font-display text-2xl">{plan.name}</CardTitle>
                   <div className="mt-4">
-                    {plan.key === 'ENTERPRISE' ? (
-                      <>
-                        <span className="text-4xl font-bold font-display">{t('plans.enterprise.price')}</span>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {t('plans.enterprise.priceFrom')}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-4xl font-bold font-display">{priceDisplay.mainPrice}</span>
-                        <span className="text-muted-foreground">{priceDisplay.period}</span>
-                        {priceDisplay.subtext && (
-                          <p className="text-sm text-muted-foreground mt-1">
-                            ({priceDisplay.subtext})
-                          </p>
-                        )}
-                      </>
+                    <span className="text-4xl font-bold font-display">{priceDisplay.mainPrice}</span>
+                    <span className="text-muted-foreground">{priceDisplay.period}</span>
+                    {priceDisplay.subtext && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        (≈ {priceDisplay.subtext})
+                      </p>
                     )}
                   </div>
                   <p className="text-muted-foreground mt-2 text-sm">{plan.description}</p>
-                  {billingCycle === 'monthly' && !plan.ctaHref && (
+                  {billingCycle === 'monthly' && (
                     <p className="text-xs text-primary mt-2">
                       {t('billing.switchToSave')}
                     </p>
@@ -423,7 +376,7 @@ function PricingCards() {
                     )}
                     variant={plan.ctaVariant}
                     size="lg"
-                    onClick={() => handleUpgrade(plan.key, plan.ctaHref)}
+                    onClick={() => handleUpgrade(plan.key)}
                     disabled={loading === plan.key}
                   >
                     {loading === plan.key ? (
