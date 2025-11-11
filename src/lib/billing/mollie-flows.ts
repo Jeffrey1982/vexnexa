@@ -1,6 +1,7 @@
 import { mollie, appUrl } from "../mollie"
 import { prisma } from "../prisma"
 import { PRICES, planKeyFromString } from "./plans"
+import { calculatePrice, type BillingCycle, type PlanKey } from "../pricing"
 import type { Plan } from "@prisma/client"
 import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
@@ -144,16 +145,21 @@ export async function createUpgradePayment(opts: {
   userId: string
   email: string
   plan: Exclude<Plan, "TRIAL">
+  billingCycle?: BillingCycle
 }) {
   try {
-    const { userId, email, plan } = opts
+    const { userId, email, plan, billingCycle = 'monthly' } = opts
 
     console.log('=== Creating Upgrade Payment ===')
-    console.log('Input:', { userId, email, plan })
+    console.log('Input:', { userId, email, plan, billingCycle })
 
     if (!PRICES[plan]) {
       throw new Error(`Invalid plan: ${plan}`)
     }
+
+    // Calculate price based on billing cycle
+    const totalPrice = calculatePrice(plan as PlanKey, billingCycle)
+    const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : billingCycle === 'semiannual' ? '6-Month' : 'Annual'
 
     // Get or create Mollie customer
     console.log('Getting or creating Mollie customer...')
@@ -176,16 +182,17 @@ export async function createUpgradePayment(opts: {
     // Create payment for the selected plan
     const paymentData: PaymentCreateParams = {
       amount: {
-        currency: PRICES[plan].currency,
-        value: PRICES[plan].amount
+        currency: 'EUR',
+        value: totalPrice.toFixed(2)
       },
-      description: `VexNexa ${plan} Plan`,
+      description: `VexNexa ${plan} Plan (${billingCycleLabel})`,
       redirectUrl: appUrl("/dashboard?checkout=success"),
-      
+
       webhookUrl: appUrl("/api/mollie/webhook"),
       metadata: {
         userId,
         plan,
+        billingCycle,
         type: "upgrade"
       }
     }
@@ -216,13 +223,14 @@ export async function createSubscription(opts: {
   customerId: string
   plan: Exclude<Plan, "TRIAL">
   userId: string
+  billingCycle?: BillingCycle
 }) {
-  const { customerId, plan, userId } = opts
-  
+  const { customerId, plan, userId, billingCycle = 'monthly' } = opts
+
   if (!PRICES[plan]) {
     throw new Error(`Invalid plan: ${plan}`)
   }
-  
+
   // Check if customer has valid mandates
   const mandates = await mollie.customerMandates.page({ customerId })
   const validMandate = mandates.find((m: any) => m.status === "valid")
@@ -230,7 +238,7 @@ export async function createSubscription(opts: {
   if (!validMandate) {
     throw new Error("No valid mandate found for customer")
   }
-  
+
   // Cancel existing subscription if any
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -243,23 +251,29 @@ export async function createSubscription(opts: {
       // Failed to cancel existing subscription
     }
   }
-  
+
+  // Calculate price and interval based on billing cycle
+  const totalPrice = calculatePrice(plan as PlanKey, billingCycle)
+  const interval = billingCycle === 'monthly' ? '1 month' : billingCycle === 'semiannual' ? '6 months' : '12 months'
+  const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : billingCycle === 'semiannual' ? '6-Month' : 'Annual'
+
   // Create new subscription
   const subscription = await (mollie.customerSubscriptions as any).create({
     customerId,
     amount: {
-      currency: PRICES[plan].currency,
-      value: PRICES[plan].amount
+      currency: 'EUR',
+      value: totalPrice.toFixed(2)
     },
-    interval: "1 month",
-    description: `VexNexa ${plan} Plan (Vexnexa)`,
+    interval,
+    description: `VexNexa ${plan} Plan (${billingCycleLabel})`,
     startDate: new Date().toISOString().split('T')[0], // Start today
     metadata: {
       userId,
-      plan
+      plan,
+      billingCycle
     }
   })
-  
+
   // Update user in database
   await prisma.user.update({
     where: { id: userId },
@@ -270,7 +284,7 @@ export async function createSubscription(opts: {
       trialEndsAt: null
     }
   })
-  
+
   return subscription
 }
 
@@ -350,26 +364,28 @@ export async function changePlan(opts: {
 export async function processWebhookPayment(paymentId: string) {
   // Fetch payment details from Mollie (never trust webhook data directly)
   const payment = await mollie.payments.get(paymentId)
-  
+
   if (!(payment.metadata as any)?.userId || !(payment.metadata as any)?.plan) {
     console.error("Payment missing required metadata:", payment.id)
     return
   }
-  
+
   const userId = (payment.metadata as any).userId
   const plan = planKeyFromString((payment.metadata as any).plan)
-  
+  const billingCycle = (payment.metadata as any)?.billingCycle || 'monthly'
+
   if (payment.status !== "paid") {
     // Payment not paid yet
     return
   }
-  
+
   // Payment is successful, create subscription
   if (payment.customerId && plan !== "TRIAL") {
     await createSubscription({
       customerId: payment.customerId,
       plan: plan as Exclude<Plan, "TRIAL">,
-      userId
+      userId,
+      billingCycle
     })
   }
 }

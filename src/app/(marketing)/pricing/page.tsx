@@ -27,7 +27,14 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ENTITLEMENTS, PLAN_NAMES, formatPrice, OVERFLOW_PRICING } from "@/lib/billing/plans";
+import { ENTITLEMENTS, PLAN_NAMES, OVERFLOW_PRICING } from "@/lib/billing/plans";
+import {
+  BillingCycle,
+  PlanKey,
+  formatPriceDisplay,
+  getDiscountBadge,
+  getCTAText
+} from "@/lib/pricing";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 import { useTranslations } from 'next-intl';
 
@@ -40,17 +47,17 @@ function PricingJsonLd() {
     description: "Web accessibility scanning with deeper coverage beyond WCAG",
     brand: {
       "@type": "Brand",
-      name: "VexNexa by Vexnexa",
+      name: "VexNexa",
     },
     offers: [
       {
         "@type": "Offer",
         name: "Starter Plan",
-        price: "9.00",
+        price: "22.00",
         priceCurrency: "EUR",
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "9.00",
+          price: "22.00",
           priceCurrency: "EUR",
           unitText: "MONTH",
         },
@@ -58,11 +65,11 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Pro Plan",
-        price: "29.00",
+        price: "54.00",
         priceCurrency: "EUR",
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "29.00",
+          price: "54.00",
           priceCurrency: "EUR",
           unitText: "MONTH",
         },
@@ -70,11 +77,23 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Business Plan",
-        price: "79.00",
+        price: "112.00",
         priceCurrency: "EUR",
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "79.00",
+          price: "112.00",
+          priceCurrency: "EUR",
+          unitText: "MONTH",
+        },
+      },
+      {
+        "@type": "Offer",
+        name: "Enterprise Plan",
+        price: "270.00",
+        priceCurrency: "EUR",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "270.00",
           priceCurrency: "EUR",
           unitText: "MONTH",
         },
@@ -112,6 +131,10 @@ function HeroSection() {
             {t('subtitle')}
           </p>
 
+          <p className="text-lg text-muted-foreground">
+            {t('billingSubtitle')}
+          </p>
+
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="secondary" className="text-sm">
               {t('badges.vat')}
@@ -124,8 +147,8 @@ function HeroSection() {
             </Badge>
           </div>
         </div>
-        
-        <p className="text-sm opacity-75 mt-6">
+
+        <p className="text-sm opacity-75 mt-6 text-center">
           {t('needMore')} <Link href="/contact" className="underline hover:opacity-100">{t('contactUs')}</Link>
         </p>
       </div>
@@ -137,13 +160,12 @@ function PricingCards() {
   const t = useTranslations('pricing');
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('annual');
 
   const plans = [
     {
-      key: "STARTER" as const,
+      key: "STARTER" as PlanKey,
       name: t('plans.starter.name'),
-      price: "€9",
-      period: "/month",
       description: t('plans.starter.description'),
       highlighted: false,
       features: [
@@ -159,14 +181,11 @@ function PricingCards() {
         t('plans.starter.limitations.noScheduling'),
         t('plans.starter.limitations.limitedIntegrations'),
       ],
-      cta: t('plans.starter.cta'),
       ctaVariant: "outline" as const,
     },
     {
-      key: "PRO" as const,
+      key: "PRO" as PlanKey,
       name: t('plans.pro.name'),
-      price: "€29",
-      period: "/month",
       description: t('plans.pro.description'),
       highlighted: true,
       features: [
@@ -180,14 +199,11 @@ function PricingCards() {
         t('plans.pro.features.prioritySupport'),
       ],
       limitations: [],
-      cta: t('plans.pro.cta'),
       ctaVariant: "default" as const,
     },
     {
-      key: "BUSINESS" as const,
+      key: "BUSINESS" as PlanKey,
       name: t('plans.business.name'),
-      price: "€79",
-      period: "/month",
       description: t('plans.business.description'),
       highlighted: false,
       features: [
@@ -201,14 +217,11 @@ function PricingCards() {
         t('plans.business.features.prioritySupport'),
       ],
       limitations: [],
-      cta: t('plans.business.cta'),
       ctaVariant: "default" as const,
     },
     {
-      key: "ENTERPRISE" as const,
+      key: "ENTERPRISE" as PlanKey,
       name: t('plans.enterprise.name'),
-      price: t('plans.enterprise.price'),
-      period: "",
       description: t('plans.enterprise.description'),
       highlighted: false,
       features: [
@@ -222,7 +235,6 @@ function PricingCards() {
         t('plans.enterprise.features.onPremise'),
       ],
       limitations: [],
-      cta: t('plans.enterprise.cta'),
       ctaHref: "/contact",
       ctaVariant: "outline" as const,
     },
@@ -243,7 +255,10 @@ function PricingCards() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ plan: planKey }),
+        body: JSON.stringify({
+          plan: planKey,
+          billingCycle
+        }),
       });
 
       const data = await response.json();
@@ -272,75 +287,161 @@ function PricingCards() {
           </Alert>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {plans.map((plan) => (
-            <Card
-              key={plan.key}
+        {/* Billing Cycle Toggle */}
+        <div className="flex flex-col items-center mb-12 space-y-4">
+          <div className="inline-flex items-center rounded-lg bg-muted p-1 shadow-sm">
+            <button
+              onClick={() => setBillingCycle('monthly')}
               className={cn(
-                "relative flex flex-col",
-                plan.highlighted && "border-primary shadow-xl lg:scale-105"
+                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
+                billingCycle === 'monthly'
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
-              {plan.highlighted && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-primary text-primary-foreground">
-                    <Star className="w-3 h-3 mr-1" />
-                    {t('plans.pro.popular')}
-                  </Badge>
-                </div>
+              {t('billing.monthly')}
+            </button>
+            <button
+              onClick={() => setBillingCycle('semiannual')}
+              className={cn(
+                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
+                billingCycle === 'semiannual'
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
               )}
+            >
+              {t('billing.semiannual')}
+              <Badge className="ml-2 bg-primary/90 text-xs">
+                {t('billing.save5')}
+              </Badge>
+            </button>
+            <button
+              onClick={() => setBillingCycle('annual')}
+              className={cn(
+                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
+                billingCycle === 'annual'
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {t('billing.annual')}
+              <Badge className="ml-2 bg-primary text-xs">
+                {t('billing.save10')}
+              </Badge>
+            </button>
+          </div>
+          <p className="text-sm text-muted-foreground text-center">
+            {t('billing.hint')}
+          </p>
+        </div>
 
-              <CardHeader className="text-center pb-8">
-                <CardTitle className="font-display text-2xl">{plan.name}</CardTitle>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold font-display">{plan.price}</span>
-                  <span className="text-muted-foreground">{plan.period}</span>
-                </div>
-                <p className="text-muted-foreground mt-2 text-sm">{plan.description}</p>
-              </CardHeader>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {plans.map((plan) => {
+            const priceDisplay = formatPriceDisplay(plan.key, billingCycle);
+            const discountBadge = getDiscountBadge(billingCycle);
+            const ctaText = getCTAText(billingCycle, plan.key === 'ENTERPRISE');
 
-              <CardContent className="space-y-6 flex-1 flex flex-col">
-                <div className="space-y-3 flex-1">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-start space-x-3">
-                      <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
-                    </div>
-                  ))}
+            return (
+              <Card
+                key={plan.key}
+                className={cn(
+                  "relative flex flex-col transition-all duration-300",
+                  plan.highlighted && "border-[#FF7A00] shadow-xl lg:scale-105 ring-2 ring-[#FF7A00]/20"
+                )}
+              >
+                {plan.highlighted && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <Badge className="bg-[#FF7A00] text-white hover:bg-[#FF7A00]/90">
+                      <Star className="w-3 h-3 mr-1" />
+                      {t('plans.pro.popular')}
+                    </Badge>
+                  </div>
+                )}
 
-                  {plan.limitations.map((limitation, limitationIndex) => (
-                    <div
-                      key={limitationIndex}
-                      className="flex items-start space-x-3 opacity-60"
-                    >
-                      <X className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">{limitation}</span>
-                    </div>
-                  ))}
-                </div>
+                {discountBadge && !plan.ctaHref && (
+                  <div className="absolute -top-2 -right-2">
+                    <Badge variant="secondary" className="bg-green-500 text-white text-xs px-2 py-1">
+                      {discountBadge}
+                    </Badge>
+                  </div>
+                )}
 
-                <Button
-                  className="w-full mt-auto"
-                  variant={plan.ctaVariant}
-                  size="lg"
-                  onClick={() => handleUpgrade(plan.key, plan.ctaHref)}
-                  disabled={loading === plan.key}
-                >
-                  {loading === plan.key ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t('loading')}
-                    </>
-                  ) : (
-                    <>
-                      {plan.cta}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
+                <CardHeader className="text-center pb-8">
+                  <CardTitle className="font-display text-2xl">{plan.name}</CardTitle>
+                  <div className="mt-4">
+                    {plan.key === 'ENTERPRISE' ? (
+                      <>
+                        <span className="text-4xl font-bold font-display">{t('plans.enterprise.price')}</span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {t('plans.enterprise.priceFrom')}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-4xl font-bold font-display">{priceDisplay.mainPrice}</span>
+                        <span className="text-muted-foreground">{priceDisplay.period}</span>
+                        {priceDisplay.subtext && (
+                          <p className="text-sm text-muted-foreground mt-1">
+                            ({priceDisplay.subtext})
+                          </p>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  <p className="text-muted-foreground mt-2 text-sm">{plan.description}</p>
+                  {billingCycle === 'monthly' && !plan.ctaHref && (
+                    <p className="text-xs text-primary mt-2">
+                      {t('billing.switchToSave')}
+                    </p>
                   )}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                </CardHeader>
+
+                <CardContent className="space-y-6 flex-1 flex flex-col">
+                  <div className="space-y-3 flex-1">
+                    {plan.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-start space-x-3">
+                        <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+                        <span className="text-sm">{feature}</span>
+                      </div>
+                    ))}
+
+                    {plan.limitations.map((limitation, limitationIndex) => (
+                      <div
+                        key={limitationIndex}
+                        className="flex items-start space-x-3 opacity-60"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-muted-foreground">{limitation}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button
+                    className={cn(
+                      "w-full mt-auto transition-all duration-200",
+                      plan.highlighted && "bg-[#FF7A00] hover:bg-[#FF7A00]/90"
+                    )}
+                    variant={plan.ctaVariant}
+                    size="lg"
+                    onClick={() => handleUpgrade(plan.key, plan.ctaHref)}
+                    disabled={loading === plan.key}
+                  >
+                    {loading === plan.key ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        {t('loading')}
+                      </>
+                    ) : (
+                      <>
+                        {ctaText}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         <div className="text-center mt-12">

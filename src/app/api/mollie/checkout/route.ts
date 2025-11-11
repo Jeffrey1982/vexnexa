@@ -7,7 +7,8 @@ import { planKeyFromString, PRICES } from "@/lib/billing/plans"
 export const dynamic = 'force-dynamic'
 
 const CheckoutSchema = z.object({
-  plan: z.enum(["STARTER", "PRO", "BUSINESS"])
+  plan: z.enum(["STARTER", "PRO", "BUSINESS"]),
+  billingCycle: z.enum(["monthly", "semiannual", "annual"]).optional().default("monthly")
 })
 
 export async function POST(request: NextRequest) {
@@ -35,8 +36,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { plan } = validation.data
-    console.log('Plan validated:', plan)
+    const { plan, billingCycle } = validation.data
+    console.log('Plan validated:', { plan, billingCycle })
 
     // Validate plan exists in pricing
     if (!PRICES[plan]) {
@@ -52,7 +53,8 @@ export async function POST(request: NextRequest) {
     const payment = await createUpgradePayment({
       userId: user.id,
       email: user.email,
-      plan
+      plan,
+      billingCycle
     })
 
     console.log('Payment created successfully:', payment.id)

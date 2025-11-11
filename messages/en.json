@@ -244,14 +244,26 @@
   "pricing": {
     "hero": {
       "badge": "💰 Transparent pricing",
-      "title": "Choose the right plan for",
-      "titleHighlight": "your project",
+      "title": "Choose Your Plan — Flexible Billing to Fit",
+      "titleHighlight": "Your Growth",
       "subtitle": "From free trial to enterprise features. All prices are transparent and monthly cancellable.",
+      "billingSubtitle": "Save up to 10% with annual billing.",
+      "needMore": "Need custom limits or on-premise deployment?",
+      "contactUs": "Contact us",
       "badges": {
         "vat": "All prices exclude VAT",
         "noSetup": "No setup fees",
         "cancelAnytime": "Cancel anytime"
       }
+    },
+    "billing": {
+      "monthly": "Monthly",
+      "semiannual": "6 Months",
+      "annual": "Annual",
+      "save5": "Save 5%",
+      "save10": "Save 10%",
+      "hint": "Save more with annual billing",
+      "switchToSave": "Switch to annual to save more"
     },
     "plans": {
       "starter": {
@@ -306,6 +318,7 @@
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom",
+        "priceFrom": "Starting from €270/month",
         "description": "Unlimited scanning for large organizations",
         "cta": "Contact us",
         "features": {
