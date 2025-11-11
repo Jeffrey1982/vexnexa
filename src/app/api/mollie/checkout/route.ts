@@ -13,6 +13,7 @@ const CheckoutSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Force rebuild to pick up new environment variables
     console.log('=== Checkout Request (Cache Cleared) ===')
     console.log('Timestamp:', new Date().toISOString())
     console.log('Headers:', Object.fromEntries(request.headers.entries()))
