@@ -262,8 +262,9 @@
       "annual": "Jaarlijks",
       "save5": "Bespaar 5%",
       "save10": "Bespaar 10%",
-      "hint": "Jaarlijkse facturering bespaart automatisch 10%",
-      "switchToSave": "Schakel over naar jaarlijks en bespaar meer"
+      "saveUpTo17": "Bespaar tot 17%",
+      "hint": "Langetermijnfacturering bespaart tot 17%",
+      "switchToSave": "Schakel over naar langetermijn en bespaar meer"
     },
     "plans": {
       "starter": {

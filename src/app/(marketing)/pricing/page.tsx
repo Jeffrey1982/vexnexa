@@ -276,7 +276,7 @@ function PricingCards() {
             >
               {t('billing.semiannual')}
               <Badge className="ml-2 bg-primary/90 text-xs">
-                {t('billing.save5')}
+                {t('billing.saveUpTo17')}
               </Badge>
             </button>
             <button
@@ -290,7 +290,7 @@ function PricingCards() {
             >
               {t('billing.annual')}
               <Badge className="ml-2 bg-primary text-xs">
-                {t('billing.save10')}
+                {t('billing.saveUpTo17')}
               </Badge>
             </button>
           </div>
@@ -302,7 +302,7 @@ function PricingCards() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan) => {
             const priceDisplay = formatPriceDisplay(plan.key, billingCycle);
-            const discountBadge = getDiscountBadge(billingCycle);
+            const discountBadge = getDiscountBadge(billingCycle, plan.key);
             const ctaText = getCTAText(billingCycle, plan.key);
 
             return (

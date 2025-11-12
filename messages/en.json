@@ -262,8 +262,9 @@
       "annual": "Annual",
       "save5": "Save 5%",
       "save10": "Save 10%",
-      "hint": "Annual billing saves 10% automatically",
-      "switchToSave": "Switch to annual and save more"
+      "saveUpTo17": "Save up to 17%",
+      "hint": "Long-term billing saves up to 17%",
+      "switchToSave": "Switch to long-term and save more"
     },
     "plans": {
       "starter": {

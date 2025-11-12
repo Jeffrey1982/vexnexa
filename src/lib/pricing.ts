@@ -32,62 +32,87 @@ export const BASE_PRICES: Record<PlanKey, number> = {
 } as const;
 
 /**
- * Discount percentages for different billing cycles
+ * Fixed 6-month prices with custom discounts
  */
-export const BILLING_DISCOUNTS = {
-  monthly: 0,
-  semiannual: 0.05,  // 5% discount
-  annual: 0.10,       // 10% discount
+export const SEMIANNUAL_PRICES: Record<PlanKey, number> = {
+  STARTER: 99.99,    // 16.6% discount
+  PRO: 274.99,       // 8.3% discount
+  BUSINESS: 549.99,  // 8.3% discount
 } as const;
 
 /**
- * Calculate semi-annual price (6 months with 5% discount)
+ * Fixed annual prices with custom discounts
  */
-export function getSemiAnnualPrice(base: number): number {
-  return (base * 6) * 0.95;
+export const ANNUAL_PRICES: Record<PlanKey, number> = {
+  STARTER: 199.99,   // 16.6% discount
+  PRO: 529.99,       // 11.7% discount
+  BUSINESS: 999.00,  // 16.7% discount
+} as const;
+
+/**
+ * Calculate discount percentage for a plan and cycle
+ */
+export function getDiscountPercentage(planKey: PlanKey, cycle: BillingCycle): number {
+  if (cycle === 'monthly') return 0;
+
+  const basePrice = BASE_PRICES[planKey];
+  const months = cycle === 'semiannual' ? 6 : 12;
+  const fullPrice = basePrice * months;
+  const discountedPrice = cycle === 'semiannual'
+    ? SEMIANNUAL_PRICES[planKey]
+    : ANNUAL_PRICES[planKey];
+
+  return Math.round(((fullPrice - discountedPrice) / fullPrice) * 100);
 }
 
 /**
- * Calculate annual price (12 months with 10% discount)
+ * Get semi-annual price for a plan
  */
-export function getAnnualPrice(base: number): number {
-  return (base * 12) * 0.90;
+export function getSemiAnnualPrice(planKey: PlanKey): number {
+  return SEMIANNUAL_PRICES[planKey];
+}
+
+/**
+ * Get annual price for a plan
+ */
+export function getAnnualPrice(planKey: PlanKey): number {
+  return ANNUAL_PRICES[planKey];
 }
 
 /**
  * Calculate price for a given plan and billing cycle
  */
 export function calculatePrice(planKey: PlanKey, cycle: BillingCycle): number {
-  const basePrice = BASE_PRICES[planKey];
-
   if (cycle === 'monthly') {
-    return basePrice;
+    return BASE_PRICES[planKey];
   }
 
   if (cycle === 'semiannual') {
-    return getSemiAnnualPrice(basePrice);
+    return SEMIANNUAL_PRICES[planKey];
   }
 
-  return getAnnualPrice(basePrice);
+  return ANNUAL_PRICES[planKey];
 }
 
 /**
  * Get all pricing details for a plan
  */
 export function getPlanPricing(planKey: PlanKey): PlanPrice {
-  const basePrice = BASE_PRICES[planKey];
+  const monthly = BASE_PRICES[planKey];
+  const semiannual = SEMIANNUAL_PRICES[planKey];
+  const annual = ANNUAL_PRICES[planKey];
 
   return {
-    monthly: basePrice,
+    monthly,
     semiannual: {
-      total: calculatePrice(planKey, 'semiannual'),
-      perMonth: calculatePrice(planKey, 'semiannual') / 6,
-      discount: BILLING_DISCOUNTS.semiannual * 100,
+      total: semiannual,
+      perMonth: semiannual / 6,
+      discount: getDiscountPercentage(planKey, 'semiannual'),
     },
     annual: {
-      total: calculatePrice(planKey, 'annual'),
-      perMonth: calculatePrice(planKey, 'annual') / 12,
-      discount: BILLING_DISCOUNTS.annual * 100,
+      total: annual,
+      perMonth: annual / 12,
+      discount: getDiscountPercentage(planKey, 'annual'),
     },
   };
 }
@@ -142,13 +167,22 @@ export function formatPriceDisplay(
 }
 
 /**
- * Get discount badge text
+ * Get discount badge text for a specific plan and cycle
  */
-export function getDiscountBadge(cycle: BillingCycle): string | null {
+export function getDiscountBadge(cycle: BillingCycle, planKey?: PlanKey): string | null {
   if (cycle === 'monthly') return null;
 
-  const discount = BILLING_DISCOUNTS[cycle] * 100;
-  return `Save ${discount}%`;
+  // If planKey is provided, calculate specific discount
+  if (planKey) {
+    const discount = getDiscountPercentage(planKey, cycle);
+    return `Save ${discount}%`;
+  }
+
+  // Generic discount for cycle (use highest discount as reference)
+  if (cycle === 'semiannual') return 'Save up to 17%';
+  if (cycle === 'annual') return 'Save up to 17%';
+
+  return null;
 }
 
 /**
