@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'VexNexa - The secure gateway to web accessibility',
     description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring.',
     url: 'https://vexnexa.com',
-    siteName: 'VexNexa by Vexnexa',
+    siteName: 'VexNexa',
     type: 'website',
     locale: 'en_US',
   },

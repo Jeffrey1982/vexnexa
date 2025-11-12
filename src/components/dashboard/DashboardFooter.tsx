@@ -93,7 +93,7 @@ export default function DashboardFooter() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-6 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {currentYear} VexNexa by Vexnexa. All rights reserved.
+            © {currentYear} VexNexa. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
             Made with ❤️ for web accessibility

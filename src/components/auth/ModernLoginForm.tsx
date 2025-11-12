@@ -171,7 +171,7 @@ export default function ModernLoginForm() {
               Welcome Back
             </CardTitle>
             <CardDescription className="text-base">
-              Sign in to VexNexa by Vexnexa
+              Sign in to VexNexa
             </CardDescription>
           </CardHeader>
           

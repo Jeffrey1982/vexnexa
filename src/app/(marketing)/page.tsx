@@ -29,7 +29,7 @@ function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "VexNexa by Vexnexa",
+    name: "VexNexa",
     description: "Advanced web accessibility and compliance scanner with coverage beyond traditional WCAG checks",
     url: "https://vexnexa.com",
     logo: "https://vexnexa.com/logo.png",

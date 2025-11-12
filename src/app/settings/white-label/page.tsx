@@ -766,7 +766,6 @@ export default function WhiteLabelPage() {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">VexNexa</div>
-                  <div className="text-xs text-gray-500">by Vexnexa</div>
                 </div>
               </div>
               <div className="text-sm text-gray-500">

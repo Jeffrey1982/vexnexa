@@ -808,11 +808,11 @@
   },
   "about": {
     "metadata": {
-      "title": "About VexNexa - WCAG Accessibility Scans by VexNexa",
+      "title": "About VexNexa - WCAG Accessibility Scans",
       "description": "VexNexa: WCAG scans without noise — clear priorities, concrete fixes, and measurable quality. EU hosting, axe-core ruleset.",
-      "ogTitle": "About VexNexa - WCAG Accessibility Scans by VexNexa",
+      "ogTitle": "About VexNexa - WCAG Accessibility Scans",
       "ogDescription": "Accessibility without noise — clear priorities, concrete fixes, measurable quality. EU hosting, axe-core ruleset.",
-      "twitterTitle": "About VexNexa - WCAG Accessibility Scans by VexNexa",
+      "twitterTitle": "About VexNexa - WCAG Accessibility Scans",
       "twitterDescription": "Accessibility without noise — clear priorities, concrete fixes, measurable quality."
     },
     "skipLink": "Skip to main content",
