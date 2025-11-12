@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import StartCrawlButton from "./StartCrawlButton";
 import PagesTable from "./PagesTable";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
@@ -48,7 +48,7 @@ export default function SitePage({ params }: PageProps) {
   const latestCrawl = site.crawls?.[0];
 
   // Calculate top issues from real scan data
-  const topIssues = useMemo(() => {
+  const calculateTopIssues = () => {
     const violationCounts: Record<string, { count: number; description: string }> = {};
 
     // Aggregate violations from all pages' latest scans
@@ -78,7 +78,9 @@ export default function SitePage({ params }: PageProps) {
       }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
-  }, [site.pages]);
+  };
+
+  const topIssues = calculateTopIssues();
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
