@@ -177,6 +177,7 @@ Status: Wacht op bevestiging (double opt-in)`
 
     return NextResponse.json({
       success: true,
+      requiresConfirmation: true,
       message: 'Bevestigingsmail verzonden! Check je inbox om je inschrijving te voltooien.',
       details: {
         email,

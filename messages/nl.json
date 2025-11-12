@@ -243,15 +243,27 @@
   },
   "pricing": {
     "hero": {
-      "badge": "💰 Transparante prijzen",
-      "title": "Kies het juiste plan voor",
-      "titleHighlight": "jouw project",
-      "subtitle": "Van gratis proefperiode tot enterprise-functionaliteiten. Alle prijzen zijn transparant en maandelijks opzegbaar.",
+      "badge": "💰 Eenvoudige prijzen",
+      "title": "Eenvoudige, Flexibele Prijzen —",
+      "titleHighlight": "Gebouwd voor Groei",
+      "subtitle": "Volledig geautomatiseerde SaaS met transparante prijzen.",
+      "billingSubtitle": "Bespaar tot 10% met langetermijnfacturering.",
+      "needMore": "Vragen over prijzen?",
+      "contactUs": "Neem contact op",
       "badges": {
         "vat": "Alle prijzen excl. BTW",
         "noSetup": "Geen opstartkosten",
         "cancelAnytime": "Opzeggen wanneer je wilt"
       }
+    },
+    "billing": {
+      "monthly": "Maandelijks",
+      "semiannual": "6 Maanden",
+      "annual": "Jaarlijks",
+      "save5": "Bespaar 5%",
+      "save10": "Bespaar 10%",
+      "hint": "Jaarlijkse facturering bespaart automatisch 10%",
+      "switchToSave": "Schakel over naar jaarlijks en bespaar meer"
     },
     "plans": {
       "starter": {
@@ -306,6 +318,7 @@
       "enterprise": {
         "name": "Enterprise",
         "price": "Op maat",
+        "priceFrom": "Vanaf €270/maand",
         "description": "Onbeperkt scannen voor grote organisaties",
         "cta": "Neem contact op",
         "features": {
