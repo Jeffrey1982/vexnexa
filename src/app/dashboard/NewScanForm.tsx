@@ -81,7 +81,7 @@ export function NewScanForm() {
         <TouchButton
           type="submit"
           disabled={!url.trim() || isLoading}
-          className="h-10 sm:h-11 px-4 sm:px-6 text-sm sm:text-base w-full sm:w-auto"
+          className="h-10 sm:h-11 px-4 sm:px-6 text-sm sm:text-base w-full sm:w-auto bg-[#FF7A00] hover:bg-[#FF7A00]/90"
         >
           {isLoading ? (
             <>

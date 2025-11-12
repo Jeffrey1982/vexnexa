@@ -313,7 +313,7 @@ export default async function DashboardPage() {
                   {t('teams.availableDescription')}
                 </p>
                 <Link href="/teams">
-                  <Button className="mb-4">
+                  <Button className="mb-4 bg-[#FF7A00] hover:bg-[#FF7A00]/90">
                     <Plus className="w-4 h-4 mr-2" />
                     {t('teams.goToTeams')}
                   </Button>
@@ -396,13 +396,13 @@ export default async function DashboardPage() {
                     {t('monitoring.comingSoonDescription')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-                    <Button asChild variant="outline">
+                    <Button asChild variant="outline" className="border-[#FF7A00] text-[#FF7A00] hover:bg-[#FF7A00] hover:text-white">
                       <Link href="/settings/notifications">
                         <Activity className="w-4 h-4 mr-2" />
                         {t('monitoring.configureNotifications')}
                       </Link>
                     </Button>
-                    <Button asChild variant="outline">
+                    <Button asChild variant="outline" className="border-[#FF7A00] text-[#FF7A00] hover:bg-[#FF7A00] hover:text-white">
                       <Link href="/settings/billing">
                         <TrendingUp className="w-4 h-4 mr-2" />
                         {t('monitoring.upgradePlan')}
