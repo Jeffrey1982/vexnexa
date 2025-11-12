@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import StartCrawlButton from "./StartCrawlButton";
 import PagesTable from "./PagesTable";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
@@ -46,6 +46,39 @@ export default function SitePage({ params }: PageProps) {
 
   const latestScan = site.scans?.[0];
   const latestCrawl = site.crawls?.[0];
+
+  // Calculate top issues from real scan data
+  const topIssues = useMemo(() => {
+    const violationCounts: Record<string, { count: number; description: string }> = {};
+
+    // Aggregate violations from all pages' latest scans
+    site.pages?.forEach((page: any) => {
+      const latestPageScan = page.scans?.[0];
+      if (latestPageScan?.raw && typeof latestPageScan.raw === 'object' && 'violations' in latestPageScan.raw) {
+        const violations = (latestPageScan.raw as any).violations || [];
+        violations.forEach((violation: any) => {
+          const id = violation.id || 'unknown';
+          const description = violation.description || violation.help || id;
+          const nodeCount = violation.nodes?.length || 1;
+
+          if (!violationCounts[id]) {
+            violationCounts[id] = { count: 0, description };
+          }
+          violationCounts[id].count += nodeCount;
+        });
+      }
+    });
+
+    // Sort by count and return top 5
+    return Object.entries(violationCounts)
+      .map(([id, data]) => ({
+        id,
+        description: data.description,
+        count: data.count
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+  }, [site.pages]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -404,22 +437,22 @@ export default function SitePage({ params }: PageProps) {
               <div className="bg-white rounded-lg shadow p-6">
                 <h3 className="text-lg font-semibold mb-4">Top Issues</h3>
                 <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="text-sm text-gray-600">Missing alt text</span>
-                    <span className="text-sm font-medium">24</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="text-sm text-gray-600">Low contrast</span>
-                    <span className="text-sm font-medium">18</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="text-sm text-gray-600">Missing labels</span>
-                    <span className="text-sm font-medium">12</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="text-sm text-gray-600">Heading structure</span>
-                    <span className="text-sm font-medium">8</span>
-                  </div>
+                  {topIssues.length > 0 ? (
+                    topIssues.map((issue, idx) => (
+                      <div key={idx} className="flex justify-between py-2 border-b">
+                        <span className="text-sm text-gray-600" title={issue.id}>
+                          {issue.description.length > 40
+                            ? issue.description.substring(0, 40) + '...'
+                            : issue.description}
+                        </span>
+                        <span className="text-sm font-medium">{issue.count}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-sm text-gray-500 text-center py-4">
+                      No issues found. Scan your pages to see violations.
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
