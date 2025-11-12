@@ -35,7 +35,7 @@ export const BASE_PRICES: Record<PlanKey, number> = {
  * Fixed 6-month prices with custom discounts
  */
 export const SEMIANNUAL_PRICES: Record<PlanKey, number> = {
-  STARTER: 99.99,    // 16.6% discount
+  STARTER: 109.99,   // 8.3% discount
   PRO: 274.99,       // 8.3% discount
   BUSINESS: 549.99,  // 8.3% discount
 } as const;
@@ -44,7 +44,7 @@ export const SEMIANNUAL_PRICES: Record<PlanKey, number> = {
  * Fixed annual prices with custom discounts
  */
 export const ANNUAL_PRICES: Record<PlanKey, number> = {
-  STARTER: 199.99,   // 16.6% discount
+  STARTER: 229.99,   // 4.1% discount
   PRO: 529.99,       // 11.7% discount
   BUSINESS: 999.00,  // 16.7% discount
 } as const;
@@ -178,8 +178,8 @@ export function getDiscountBadge(cycle: BillingCycle, planKey?: PlanKey): string
     return `Save ${discount}%`;
   }
 
-  // Generic discount for cycle (use highest discount as reference)
-  if (cycle === 'semiannual') return 'Save up to 17%';
+  // Generic discount for cycle (use typical discount as reference)
+  if (cycle === 'semiannual') return 'Save up to 8%';
   if (cycle === 'annual') return 'Save up to 17%';
 
   return null;

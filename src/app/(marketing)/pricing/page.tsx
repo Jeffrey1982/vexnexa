@@ -276,7 +276,7 @@ function PricingCards() {
             >
               {t('billing.semiannual')}
               <Badge className="ml-2 bg-primary/90 text-xs">
-                {t('billing.saveUpTo17')}
+                {t('billing.save8')}
               </Badge>
             </button>
             <button

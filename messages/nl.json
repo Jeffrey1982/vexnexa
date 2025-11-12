@@ -251,7 +251,7 @@
       "needMore": "Vragen over prijzen?",
       "contactUs": "Neem contact op",
       "badges": {
-        "vat": "Alle prijzen excl. BTW",
+        "vat": "Alle prijzen incl. BTW",
         "noSetup": "Geen opstartkosten",
         "cancelAnytime": "Opzeggen wanneer je wilt"
       }
@@ -261,6 +261,7 @@
       "semiannual": "6 Maanden",
       "annual": "Jaarlijks",
       "save5": "Bespaar 5%",
+      "save8": "Bespaar tot 8%",
       "save10": "Bespaar 10%",
       "saveUpTo17": "Bespaar tot 17%",
       "hint": "Langetermijnfacturering bespaart tot 17%",
@@ -337,7 +338,7 @@
     },
     "loading": "Laden...",
     "footer": {
-      "note": "Alle prijzen excl. BTW. Opzeggen wanneer je wilt.",
+      "note": "Alle prijzen incl. BTW. Opzeggen wanneer je wilt.",
       "contact": "Vragen? Neem contact op."
     },
     "overflow": {

@@ -251,7 +251,7 @@
       "needMore": "Questions about pricing?",
       "contactUs": "Contact us",
       "badges": {
-        "vat": "All prices exclude VAT",
+        "vat": "All prices include VAT",
         "noSetup": "No setup fees",
         "cancelAnytime": "Cancel anytime"
       }
@@ -261,6 +261,7 @@
       "semiannual": "6 Months",
       "annual": "Annual",
       "save5": "Save 5%",
+      "save8": "Save up to 8%",
       "save10": "Save 10%",
       "saveUpTo17": "Save up to 17%",
       "hint": "Long-term billing saves up to 17%",
@@ -337,7 +338,7 @@
     },
     "loading": "Loading...",
     "footer": {
-      "note": "All plans exclude VAT. Cancel anytime.",
+      "note": "All plans include VAT. Cancel anytime.",
       "contact": "Questions? Contact us."
     },
     "overflow": {
