@@ -81,6 +81,38 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Check team member limit before creating new team
+    const userWithPlan = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { plan: true }
+    });
+
+    const ownerPlan = (userWithPlan?.plan || "TRIAL") as "TRIAL" | "STARTER" | "PRO" | "BUSINESS";
+    const { ENTITLEMENTS } = await import("@/lib/billing/plans");
+    const userLimit = ENTITLEMENTS[ownerPlan].users;
+
+    // Count current team members across all teams owned by this user
+    const currentMemberCount = await prisma.teamMember.count({
+      where: {
+        team: {
+          ownerId: user.id
+        }
+      }
+    });
+
+    // Check if adding owner as member would exceed the limit
+    if (currentMemberCount >= userLimit) {
+      return NextResponse.json(
+        {
+          error: `Team member limit reached for ${ownerPlan} plan (${userLimit} users). Upgrade to create more teams.`,
+          code: "TEAM_MEMBER_LIMIT_REACHED",
+          limit: userLimit,
+          current: currentMemberCount
+        },
+        { status: 402 }
+      );
+    }
+
     const team = await prisma.team.create({
       data: {
         name: name.trim(),

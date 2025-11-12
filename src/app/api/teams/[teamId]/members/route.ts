@@ -74,6 +74,50 @@ export async function POST(
       );
     }
 
+    // Get team and owner information for limit checking
+    const team = await prisma.team.findUnique({
+      where: { id: teamId },
+      include: {
+        owner: {
+          select: { id: true, plan: true }
+        }
+      }
+    });
+
+    if (!team) {
+      return NextResponse.json(
+        { error: "Team not found" },
+        { status: 404 }
+      );
+    }
+
+    // Check team member limit for the team owner's plan
+    const ownerPlan = team.owner.plan as "TRIAL" | "STARTER" | "PRO" | "BUSINESS";
+    const { ENTITLEMENTS } = await import("@/lib/billing/plans");
+    const userLimit = ENTITLEMENTS[ownerPlan].users;
+
+    // Count current team members across all teams owned by this user
+    const currentMemberCount = await prisma.teamMember.count({
+      where: {
+        team: {
+          ownerId: team.owner.id
+        }
+      }
+    });
+
+    // Check if adding one more member would exceed the limit
+    if (currentMemberCount >= userLimit) {
+      return NextResponse.json(
+        {
+          error: `Team member limit reached for ${ownerPlan} plan (${userLimit} users). Upgrade to add more team members.`,
+          code: "TEAM_MEMBER_LIMIT_REACHED",
+          limit: userLimit,
+          current: currentMemberCount
+        },
+        { status: 402 }
+      );
+    }
+
     // Check if the invited user exists
     const invitedUser = await prisma.user.findUnique({
       where: { email: email.toLowerCase().trim() }

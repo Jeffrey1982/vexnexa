@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";
-import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
+import { assertWithinLimits, addPageUsage, addSiteUsage } from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
 import {
   getPerformanceMetrics,
@@ -105,9 +105,38 @@ export async function POST(req: Request) {
     });
 
     if (!site) {
+      // Check site limit before creating new site
+      const userWithPlan = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { plan: true }
+      });
+
+      const currentSiteCount = await prisma.site.count({
+        where: { userId: user.id }
+      });
+
+      const { ENTITLEMENTS } = await import("@/lib/billing/plans");
+      const plan = (userWithPlan?.plan || "TRIAL") as keyof typeof ENTITLEMENTS;
+      const siteLimit = ENTITLEMENTS[plan].sites;
+
+      if (currentSiteCount >= siteLimit) {
+        const e: any = new Error(
+          `Site limit reached for ${plan} plan (${siteLimit} sites). Upgrade to add more websites.`
+        );
+        e.code = "SITE_LIMIT_REACHED";
+        e.limit = siteLimit;
+        e.current = currentSiteCount;
+        throw e;
+      }
+
       site = await prisma.site.create({
         data: { userId: user.id, url: siteUrl },
       });
+
+      // Track site creation in usage (only for normal user scans, not service calls)
+      if (!isServiceCall) {
+        await addSiteUsage(user.id);
+      }
     }
 
     let page = await prisma.page.findUnique({
@@ -357,6 +386,18 @@ export async function POST(req: Request) {
             current: (e as any).current,
           },
           { status: 429 }
+        );
+      }
+      if ((e as any).code === "SITE_LIMIT_REACHED") {
+        return NextResponse.json(
+          {
+            ok: false,
+            error: e.message,
+            code: "SITE_LIMIT_REACHED",
+            limit: (e as any).limit,
+            current: (e as any).current,
+          },
+          { status: 402 }
         );
       }
       if ((e as any).code === "TRIAL_EXPIRED") {

@@ -85,7 +85,7 @@ export async function assertWithinLimits(opts: {
 export async function addPageUsage(userId: string, pages: number) {
   const now = new Date()
   const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
-  
+
   await prisma.usage.upsert({
     where: { userId_period: { userId, period } },
     update: { pages: { increment: pages } },
@@ -93,14 +93,25 @@ export async function addPageUsage(userId: string, pages: number) {
   })
 }
 
+export async function addSiteUsage(userId: string) {
+  const now = new Date()
+  const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
+
+  await prisma.usage.upsert({
+    where: { userId_period: { userId, period } },
+    update: { sites: { increment: 1 } },
+    create: { userId, period, sites: 1, pages: 0 }
+  })
+}
+
 export async function getCurrentUsage(userId: string) {
   const now = new Date()
   const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
-  
+
   const usage = await prisma.usage.findUnique({
     where: { userId_period: { userId, period } }
   })
-  
+
   return {
     pages: usage?.pages || 0,
     sites: usage?.sites || 0,

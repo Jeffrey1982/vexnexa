@@ -43,28 +43,34 @@ export default function BillingPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  // Mock data for MVP - replace with actual API calls
+  // Load real billing and usage data from API
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        // Mock user data - in production, get from API
+        const response = await fetch("/api/billing");
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to load billing data");
+        }
+
         setUser({
-          id: "user-id",
-          email: "dev@vexnexa.local",
-          plan: "TRIAL",
-          subscriptionStatus: "inactive",
-          trialEndsAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString()
+          id: data.user.id,
+          email: data.user.email,
+          plan: data.user.plan,
+          subscriptionStatus: data.user.subscriptionStatus,
+          trialEndsAt: data.user.trialEndsAt,
         });
-        
+
         setUsage({
-          pages: 45,
-          sites: 1,
-          period: "2025-01"
+          pages: data.usage.pages,
+          sites: data.usage.sites,
+          period: data.usage.period,
         });
-        
+
         setLoading(false);
       } catch (err) {
-        setError("Failed to load billing data");
+        setError(err instanceof Error ? err.message : "Failed to load billing data");
         setLoading(false);
       }
     };
