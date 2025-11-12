@@ -141,7 +141,7 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => router.push('/dashboard')}
                   variant="default"
                   size="sm"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  className="bg-[#FF7A00] hover:bg-[#FF7A00]/90"
                 >
                   {t('dashboard')}
                 </Button>
@@ -265,7 +265,7 @@ export function Navbar({ className }: NavbarProps) {
                           setIsOpen(false);
                           router.push('/dashboard');
                         }}
-                        className="w-full justify-start gradient-primary shadow-elegant font-medium"
+                        className="w-full justify-start bg-[#FF7A00] hover:bg-[#FF7A00]/90 shadow-elegant font-medium"
                       >
                         {t('dashboard')}
                       </Button>
