@@ -44,7 +44,7 @@ export const SEMIANNUAL_PRICES: Record<PlanKey, number> = {
  * Fixed annual prices with custom discounts
  */
 export const ANNUAL_PRICES: Record<PlanKey, number> = {
-  STARTER: 229.99,   // 4.1% discount
+  STARTER: 209.99,   // 12.5% discount
   PRO: 529.99,       // 11.7% discount
   BUSINESS: 999.00,  // 16.7% discount
 } as const;
