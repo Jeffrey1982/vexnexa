@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  themeColor: '#0EA5E9',
+  themeColor: '#FF6B35',
 }
 
 export default async function RootLayout({
@@ -68,12 +68,12 @@ export default async function RootLayout({
         <meta name="application-name" content="VexNexa" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#0EA5E9" />
+        <meta name="msapplication-TileColor" content="#FF6B35" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#0EA5E9" />
-        <meta name="msapplication-navbutton-color" content="#0EA5E9" />
+        <meta name="theme-color" content="#FF6B35" />
+        <meta name="msapplication-navbutton-color" content="#FF6B35" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         {/* Preload Service Worker */}

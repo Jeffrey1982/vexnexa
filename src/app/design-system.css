@@ -14,18 +14,18 @@
   --color-border: #C0C3C7; /* Ash Gray */
   --color-border-strong: #A0A3A7;
 
-  /* ===== Colors - Primary (VexNexa Orange) ===== */
-  --color-primary: #FF7A00; /* VexNexa Orange - Energie, innovatie, kracht */
-  --color-primary-hover: #FF9447;
-  --color-primary-active: #E66D00;
+  /* ===== Colors - Primary (Aurora Orange) ===== */
+  --color-primary: #FF6B35; /* Aurora Orange - Energie, innovatie, kracht */
+  --color-primary-hover: #FF8A5B;
+  --color-primary-active: #E6602F;
   --color-primary-foreground: #FFFFFF;
   --color-primary-50: #FFF5ED;
   --color-primary-100: #FFE7D6;
-  --color-primary-200: #FFCFAD;
-  --color-primary-300: #FFB07A;
-  --color-primary-400: #FF9447;
-  --color-primary-500: #FF7A00;
-  --color-primary-600: #E66D00;
+  --color-primary-200: #FFC4A8;
+  --color-primary-300: #FFA376;
+  --color-primary-400: #FF8A5B;
+  --color-primary-500: #FF6B35;
+  --color-primary-600: #E6602F;
   --color-primary-700: #B35400;
   --color-primary-800: #803C00;
   --color-primary-900: #4D2400;
@@ -46,21 +46,21 @@
   --color-secondary-800: #CC8A00;
   --color-secondary-900: #996700;
 
-  /* ===== Colors - Success (Plasma Blue) ===== */
-  --color-success: #118AB2; /* Plasma Blue - Kalmte, intelligentie */
-  --color-success-hover: #0E6F8E;
-  --color-success-bg: #C2E8F3;
+  /* ===== Colors - Success (Teal Blue) ===== */
+  --color-success: #0F5C5C; /* Teal Blue - Kalmte, intelligentie */
+  --color-success-hover: #0C4A4A;
+  --color-success-bg: #D4EBEB;
   --color-success-foreground: #FFFFFF;
-  --color-success-50: #E8F6FA;
-  --color-success-100: #C2E8F3;
-  --color-success-200: #9DDAEC;
-  --color-success-300: #5CC2DC;
-  --color-success-400: #2CAAC7;
-  --color-success-500: #118AB2;
-  --color-success-600: #0E6F8E;
-  --color-success-700: #0B546A;
-  --color-success-800: #083946;
-  --color-success-900: #051E22;
+  --color-success-50: #E8F4F4;
+  --color-success-100: #D4EBEB;
+  --color-success-200: #A9D7D7;
+  --color-success-300: #7EC3C3;
+  --color-success-400: #53AFAF;
+  --color-success-500: #0F5C5C;
+  --color-success-600: #0C4A4A;
+  --color-success-700: #093838;
+  --color-success-800: #062626;
+  --color-success-900: #031414;
 
   /* ===== Colors - Warning (Solar Gold) ===== */
   --color-warning: #FFD166;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-primary-glow: 0 0 0 3px rgba(255, 122, 0, 0.2);
+  --shadow-primary-glow: 0 0 0 3px rgba(255, 107, 53, 0.2);
   --shadow-secondary-glow: 0 0 0 3px rgba(255, 209, 102, 0.2);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #FF7A00 0%, #FF9447 100%);
-  --gradient-warm: linear-gradient(135deg, #FFD166 0%, #FF7A00 100%);
-  --gradient-hero: linear-gradient(135deg, #FF7A00 0%, #118AB2 100%);
+  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%);
+  --gradient-warm: linear-gradient(135deg, #FFD166 0%, #FF6B35 100%);
+  --gradient-hero: linear-gradient(135deg, #FF6B35 0%, #0F5C5C 100%);
   --gradient-subtle: linear-gradient(to bottom, #F8F9FA 0%, #FFFFFF 100%);
-  --gradient-mesh: linear-gradient(135deg, #FF7A00 0%, #FFD166 50%, #118AB2 100%);
+  --gradient-mesh: linear-gradient(135deg, #FF6B35 0%, #FFD166 50%, #0F5C5C 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;
@@ -304,8 +304,8 @@
 
 .bg-grid-subtle {
   background-image:
-    linear-gradient(to right, rgba(255, 122, 0, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 122, 0, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 107, 53, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 107, 53, 0.06) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
