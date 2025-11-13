@@ -104,27 +104,27 @@ export function Navbar({ className }: NavbarProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-9 w-9 rounded-lg hover:bg-[var(--vn-muted)] text-[var(--vn-text-muted)] hover:text-[var(--vn-primary)] flex items-center justify-center transition-all duration-200"
-                aria-label="LinkedIn"
+                aria-label="Visit VexNexa on LinkedIn"
               >
-                <Linkedin className="w-4 h-4" />
+                <Linkedin className="w-4 h-4" aria-hidden="true" />
               </a>
               <a
                 href="https://twitter.com/vexnexa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-9 w-9 rounded-lg hover:bg-[var(--vn-muted)] text-[var(--vn-text-muted)] hover:text-[var(--vn-primary)] flex items-center justify-center transition-all duration-200"
-                aria-label="Twitter"
+                aria-label="Visit VexNexa on Twitter"
               >
-                <Twitter className="w-4 h-4" />
+                <Twitter className="w-4 h-4" aria-hidden="true" />
               </a>
               <a
                 href="https://github.com/vexnexa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-9 w-9 rounded-lg hover:bg-[var(--vn-muted)] text-[var(--vn-text-muted)] hover:text-[var(--vn-primary)] flex items-center justify-center transition-all duration-200"
-                aria-label="GitHub"
+                aria-label="Visit VexNexa on GitHub"
               >
-                <Github className="w-4 h-4" />
+                <Github className="w-4 h-4" aria-hidden="true" />
               </a>
             </div>
 
@@ -141,7 +141,7 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => router.push('/dashboard')}
                   variant="default"
                   size="sm"
-                  className="bg-[#FF7A00] hover:bg-[#FF7A00]/90"
+                  className="bg-primary hover:bg-primary/90"
                 >
                   {t('dashboard')}
                 </Button>
@@ -227,27 +227,27 @@ export function Navbar({ className }: NavbarProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
-                      aria-label="LinkedIn"
+                      aria-label="Visit VexNexa on LinkedIn"
                     >
-                      <Linkedin className="w-5 h-5" />
+                      <Linkedin className="w-5 h-5" aria-hidden="true" />
                     </a>
                     <a
                       href="https://twitter.com/vexnexa"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
-                      aria-label="Twitter"
+                      aria-label="Visit VexNexa on Twitter"
                     >
-                      <Twitter className="w-5 h-5" />
+                      <Twitter className="w-5 h-5" aria-hidden="true" />
                     </a>
                     <a
                       href="https://github.com/vexnexa"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
-                      aria-label="GitHub"
+                      aria-label="Visit VexNexa on GitHub"
                     >
-                      <Github className="w-5 h-5" />
+                      <Github className="w-5 h-5" aria-hidden="true" />
                     </a>
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export function Navbar({ className }: NavbarProps) {
                           setIsOpen(false);
                           router.push('/dashboard');
                         }}
-                        className="w-full justify-start bg-[#FF7A00] hover:bg-[#FF7A00]/90 shadow-elegant font-medium"
+                        className="w-full justify-start bg-primary hover:bg-primary/90 shadow-elegant font-medium"
                       >
                         {t('dashboard')}
                       </Button>

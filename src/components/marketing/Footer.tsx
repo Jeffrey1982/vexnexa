@@ -99,9 +99,13 @@ export function Footer({ className }: FooterProps) {
 
             {/* Newsletter Signup */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">{t('brand.newsletter.title')}</h3>
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-sm">
+              <h3 className="font-semibold text-lg" id="newsletter-heading">{t('brand.newsletter.title')}</h3>
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 max-w-sm" aria-labelledby="newsletter-heading">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  {t('brand.newsletter.placeholder')}
+                </label>
                 <Input
+                  id="newsletter-email"
                   type="email"
                   placeholder={t('brand.newsletter.placeholder')}
                   value={email}
@@ -109,9 +113,10 @@ export function Footer({ className }: FooterProps) {
                   required
                   disabled={isSubmitting}
                   className="bg-background"
+                  aria-required="true"
                 />
                 <Button type="submit" disabled={isSubmitting} size="icon" aria-label={t('brand.newsletter.subscribe')}>
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-4 h-4" aria-hidden="true" />
                 </Button>
               </form>
             </div>
@@ -125,36 +130,36 @@ export function Footer({ className }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="LinkedIn"
+                  aria-label="Visit VexNexa on LinkedIn"
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <Linkedin className="w-5 h-5" aria-hidden="true" />
                 </a>
                 <a
                   href="https://twitter.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="Twitter"
+                  aria-label="Visit VexNexa on Twitter"
                 >
-                  <Twitter className="w-5 h-5" />
+                  <Twitter className="w-5 h-5" aria-hidden="true" />
                 </a>
                 <a
                   href="https://github.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="GitHub"
+                  aria-label="Visit VexNexa on GitHub"
                 >
-                  <Github className="w-5 h-5" />
+                  <Github className="w-5 h-5" aria-hidden="true" />
                 </a>
                 <a
                   href="https://facebook.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="Facebook"
+                  aria-label="Visit VexNexa on Facebook"
                 >
-                  <Facebook className="w-5 h-5" />
+                  <Facebook className="w-5 h-5" aria-hidden="true" />
                 </a>
               </div>
             </div>
