@@ -153,24 +153,24 @@ export default function ModernLoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">
       <div className="w-full max-w-md">
-        {/* Floating elements for visual interest */}
+        {/* Floating elements for visual interest - VexNexa colors */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-4 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute -top-4 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute -top-4 -left-4 w-72 h-72 bg-[#FF6B35] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+          <div className="absolute -top-4 -right-4 w-72 h-72 bg-[#FFD166] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#0F5C5C] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
         </div>
 
-        <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 shadow-2xl border-0">
+        <Card className="backdrop-blur-sm bg-white/90 dark:bg-[#1E1E1E]/90 shadow-2xl border border-[#C0C3C7]/20">
           <CardHeader className="text-center pb-2">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg">
+            <div className="w-16 h-16 gradient-primary rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg">
               <Shield className="w-8 h-8 text-white" />
             </div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <CardTitle className="text-2xl font-bold font-display text-[#1E1E1E] dark:text-white">
               Welcome Back
             </CardTitle>
-            <CardDescription className="text-base">
+            <CardDescription className="text-base text-[#5A5A5A] dark:text-[#C0C3C7]">
               Sign in to VexNexa
             </CardDescription>
           </CardHeader>
@@ -190,7 +190,8 @@ export default function ModernLoginForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder="Enter your email"
-                    className="h-12 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200"
+                    aria-required="true"
                   />
                 </div>
                 
@@ -207,7 +208,8 @@ export default function ModernLoginForm() {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       placeholder="Enter your password"
-                      className="h-12 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pr-12"
+                      className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200 pr-12"
+                      aria-required="true"
                     />
                     <Button
                       type="button"
@@ -235,7 +237,7 @@ export default function ModernLoginForm() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
               >
                 {loading ? (
                   <div className="flex items-center gap-2">
@@ -255,7 +257,7 @@ export default function ModernLoginForm() {
               <div className="text-sm">
                 <a
                   href="/auth/forgot-password"
-                  className="text-blue-600 hover:text-blue-500 transition-colors"
+                  className="text-[#0F5C5C] hover:text-[#FF6B35] transition-colors font-medium"
                 >
                   Wachtwoord vergeten?
                 </a>
@@ -264,10 +266,10 @@ export default function ModernLoginForm() {
               {/* OAuth Section */}
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-gray-200 dark:border-gray-600" />
+                  <span className="w-full border-t border-[#C0C3C7] dark:border-[#444]" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white dark:bg-gray-800 px-2 text-gray-500">
+                  <span className="bg-white dark:bg-[#1E1E1E] px-2 text-[#5A5A5A] dark:text-[#C0C3C7]">
                     Of sign in with
                   </span>
                 </div>
@@ -279,7 +281,8 @@ export default function ModernLoginForm() {
                   variant="outline"
                   disabled={loading}
                   onClick={() => handleOAuthLogin('google')}
-                  className="h-12 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
+                  className="h-12 border-2 border-[#C0C3C7] hover:bg-[#F8F9FA] hover:border-[#FF6B35] dark:hover:bg-[#2A2A2A] dark:border-[#444] transition-all duration-200"
+                  aria-label="Sign in with Google"
                 >
                   <GoogleIcon />
                 </Button>
@@ -288,7 +291,8 @@ export default function ModernLoginForm() {
                   variant="outline"
                   disabled={loading}
                   onClick={() => handleOAuthLogin('facebook')}
-                  className="h-12 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
+                  className="h-12 border-2 border-[#C0C3C7] hover:bg-[#F8F9FA] hover:border-[#FF6B35] dark:hover:bg-[#2A2A2A] dark:border-[#444] transition-all duration-200"
+                  aria-label="Sign in with Facebook"
                 >
                   <FacebookIcon />
                 </Button>
@@ -297,7 +301,8 @@ export default function ModernLoginForm() {
                   variant="outline"
                   disabled={loading}
                   onClick={() => handleOAuthLogin('apple')}
-                  className="h-12 border-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
+                  className="h-12 border-2 border-[#C0C3C7] hover:bg-[#F8F9FA] hover:border-[#FF6B35] dark:hover:bg-[#2A2A2A] dark:border-[#444] transition-all duration-200"
+                  aria-label="Sign in with Apple"
                 >
                   <AppleIcon />
                 </Button>
@@ -305,10 +310,10 @@ export default function ModernLoginForm() {
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-gray-200 dark:border-gray-600" />
+                  <span className="w-full border-t border-[#C0C3C7] dark:border-[#444]" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white dark:bg-gray-800 px-2 text-gray-500">
+                  <span className="bg-white dark:bg-[#1E1E1E] px-2 text-[#5A5A5A] dark:text-[#C0C3C7]">
                     New to VexNexa?
                   </span>
                 </div>
@@ -317,7 +322,7 @@ export default function ModernLoginForm() {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full h-12 border-2 border-gradient-to-r from-blue-600 to-purple-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-950 dark:hover:to-purple-950 transition-all duration-200"
+                className="w-full h-12 border-2 border-[#0F5C5C] hover:bg-[#0F5C5C] hover:text-white dark:border-[#0F5C5C] dark:hover:bg-[#0F5C5C] transition-all duration-200"
                 onClick={() => router.push('/auth/register')}
               >
                 <div className="flex items-center gap-2">
@@ -328,18 +333,18 @@ export default function ModernLoginForm() {
             </div>
 
             {/* Trust indicators */}
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-              <div className="flex items-center justify-center gap-6 text-xs text-gray-500">
+            <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
+              <div className="flex items-center justify-center gap-6 text-xs text-[#5A5A5A] dark:text-[#C0C3C7]">
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3 h-3" />
+                  <Shield className="w-3 h-3 text-[#0F5C5C]" aria-hidden="true" />
                   <span>Secure</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Zap className="w-3 h-3" />
+                  <Zap className="w-3 h-3 text-[#FFD166]" aria-hidden="true" />
                   <span>14-day trial</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
+                  <Sparkles className="w-3 h-3 text-[#FF6B35]" aria-hidden="true" />
                   <span>No credit card</span>
                 </div>
               </div>
