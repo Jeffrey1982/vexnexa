@@ -74,11 +74,11 @@ export function Navbar({ className }: NavbarProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-elegant group-hover:scale-105 transition-all duration-300 group-hover:shadow-soft">
-              <span className="text-primary-foreground font-bold text-base">T</span>
+              <span className="text-primary-foreground font-bold text-xl">V</span>
             </div>
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl group-hover:text-primary transition-colors duration-200">VexNexa</span>
-              <span className="text-[10px] text-muted-foreground/80 -mt-0.5">Your Secure Path to Accessibility</span>
+              <span className="text-[10px] text-muted-foreground/80 -mt-0.5">Developer-friendly WCAG scanning</span>
             </div>
           </Link>
 

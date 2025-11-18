@@ -1,11 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
-  <!-- Background -->
-  <rect width="200" height="60" fill="#3B82F6" rx="8"/>
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF7A00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF9933;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="60" fill="url(#bgGradient)" rx="8"/>
 
-  <!-- Icon -->
-  <circle cx="25" cy="30" r="15" fill="white" opacity="0.9"/>
-  <path d="M18 25 h14 M18 30 h14 M18 35 h14" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
+  <!-- V Icon with modern design -->
+  <g transform="translate(25, 30)">
+    <path d="M-10,-12 L0,12 L10,-12" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95"/>
+  </g>
 
   <!-- Text -->
-  <text x="50" y="35" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">VexNexa</text>
+  <text x="50" y="38" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white">VexNexa</text>
 </svg>
