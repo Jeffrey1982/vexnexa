@@ -17,7 +17,7 @@
   "footer": {
     "brand": {
       "name": "VexNexa",
-      "tagline": "Your secure gateway to web accessibility",
+      "tagline": "Developer-friendly WCAG scanning. No overlays. No BS.",
       "followUs": "Follow us",
       "newsletter": {
         "title": "Stay up to date",
@@ -53,13 +53,13 @@
   },
   "home": {
     "hero": {
-      "title": "The secure gateway to",
-      "titleHighlight": "web accessibility",
-      "subtitle": "Run your accessibility scan in minutes. No calls. No salespeople. Just scan.",
+      "title": "Instant accessibility audits.",
+      "titleHighlight": "No overlays. No sales calls.",
+      "subtitle": "Fast WCAG scanning for developers and agencies who need real data, not widget band-aids.",
       "ctaPrimary": "Start free scan",
       "ctaSecondary": "See pricing",
-      "noCreditCard": "No credit card required. Get 1 free scan every week.",
-      "imageAlt": "VexNexa accessibility scanning dashboard showing detailed reports and issue prioritization"
+      "noCreditCard": "No credit card required. No signup for your first scan.",
+      "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
     },
     "valuePillars": {
       "deeper": {
@@ -106,27 +106,6 @@
       "ctaPrimary": "Start free scan",
       "ctaSecondary": "View pricing"
     },
-    "testimonials": {
-      "title": "Trusted by accessibility professionals",
-      "testimonial1": {
-        "quote": "VexNexa found accessibility issues our previous tools completely missed. The reports are actionable and help us prioritize fixes effectively.",
-        "author": "Sarah Johnson",
-        "role": "Lead Developer",
-        "company": "TechCorp"
-      },
-      "testimonial2": {
-        "quote": "The continuous monitoring feature helps us catch regressions before they reach production. It's become an essential part of our CI/CD pipeline.",
-        "author": "Michael Chen",
-        "role": "Engineering Manager",
-        "company": "StartupXYZ"
-      },
-      "testimonial3": {
-        "quote": "Finally, an accessibility scanner that goes beyond the basics. The keyboard navigation and screen reader testing saved us weeks of manual QA.",
-        "author": "Emma Williams",
-        "role": "QA Lead",
-        "company": "Enterprise Inc"
-      }
-    },
     "faq": {
       "q1": {
         "question": "Can you guarantee legal compliance?",
@@ -155,26 +134,34 @@
       "q7": {
         "question": "Do I need to schedule a demo?",
         "answer": "No! VexNexa is 100% self-serve. Sign up, enter your URL, and get your accessibility report in minutes. We don't offer demos or sales calls."
+      },
+      "q8": {
+        "question": "Is VexNexa an accessibility overlay?",
+        "answer": "No. We scan your code structure and give you WCAG violations to fix properly. We never inject widgets or scripts into your site. Overlays are controversial in the accessibility community—we analyze your actual code instead."
+      },
+      "q9": {
+        "question": "Can VexNexa automatically fix issues?",
+        "answer": "No. Real accessibility requires proper code changes. We show you exactly what's wrong and how to fix it, but you need to make the changes yourself. Automated 'fixes' don't address root causes."
       }
     },
     "pillars": {
       "title": "Why VexNexa?",
-      "subtitle": "Built for accessibility professionals and compliance teams",
+      "subtitle": "Built for developers, agencies, and teams who ship code",
       "deeper": {
-        "title": "Deeper coverage",
-        "description": "Keyboard, cognitive, structure, contrast, forms, landmarks, multimedia, ARIA semantics."
+        "title": "No overlay widgets",
+        "description": "We scan your code structure. We don't inject controversial overlay scripts that the accessibility community warns against."
       },
       "actionable": {
-        "title": "Actionable reports",
-        "description": "Clear guidance with code examples, severity ratings, and prioritized fix lists."
+        "title": "Developer-friendly reports",
+        "description": "Technical language developers understand. Code-level insights. WCAG references. No vague 'compliance scores' without context."
       },
       "continuous": {
-        "title": "Continuous monitoring",
-        "description": "Scheduled scans, automated alerts, regression tracking across deployments."
+        "title": "Instant & self-service",
+        "description": "Other tools make you sit through demos. We give you instant results and transparent pricing. Upgrade with a click."
       },
       "compliant": {
-        "title": "Enterprise-ready",
-        "description": "Export branded PDF/DOCX reports, white-label dashboards, SOC 2 compliance."
+        "title": "Multilingual platform",
+        "description": "Full platform in English, Dutch, and French. Not just translated help docs—the entire interface."
       }
     },
     "benefits": {

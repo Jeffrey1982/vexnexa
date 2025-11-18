@@ -17,7 +17,7 @@
   "footer": {
     "brand": {
       "name": "VexNexa",
-      "tagline": "Uw veilige toegang tot webtoegankelijkheid",
+      "tagline": "Ontwikkelaar-vriendelijke WCAG-scanning. Geen overlays. Geen onzin.",
       "followUs": "Volg ons",
       "newsletter": {
         "title": "Blijf op de hoogte",
@@ -53,13 +53,13 @@
   },
   "home": {
     "hero": {
-      "title": "De veilige toegang tot",
-      "titleHighlight": "webtoegankelijkheid",
-      "subtitle": "Voer je toegankelijkheidsscan uit in minuten. Geen gesprekken. Geen verkopers. Gewoon scannen.",
+      "title": "Directe toegankelijkheidsaudits.",
+      "titleHighlight": "Geen overlays. Geen verkoopgesprekken.",
+      "subtitle": "Snelle WCAG-scanning voor ontwikkelaars en agencies die echte data nodig hebben, geen widget-pleisters.",
       "ctaPrimary": "Gratis scan starten",
       "ctaSecondary": "Bekijk prijzen",
-      "noCreditCard": "Geen creditcard vereist. Ontvang elke week 1 gratis scan.",
-      "imageAlt": "VexNexa toegankelijkheidsscan dashboard met gedetailleerde rapporten en issue prioritering"
+      "noCreditCard": "Geen creditcard vereist. Geen aanmelding voor je eerste scan.",
+      "imageAlt": "VexNexa toegankelijkheidsscan dashboard met gedetailleerde WCAG-rapporten en issue prioritering"
     },
     "valuePillars": {
       "deeper": {

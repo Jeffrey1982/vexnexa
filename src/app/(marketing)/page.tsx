@@ -19,8 +19,6 @@ import {
   Gauge,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LogoStrip } from "@/components/marketing/LogoStrip";
-import { Testimonials } from "@/components/marketing/Testimonials";
 import { FAQ } from "@/components/marketing/FAQ";
 import { useTranslations } from "next-intl";
 
@@ -327,40 +325,10 @@ function FinalCTASection() {
 
 // Main Page Component
 export default function HomePage() {
-  const tTest = useTranslations('home.testimonials');
   const tFaq = useTranslations('home.faq');
 
-  // Placeholder data for components
-  const logos = [
-    { name: "Rijksdienst" },
-    { name: "InsurerCo" },
-    { name: "FinanceCorp" },
-    { name: "E-CommerceNL" },
-  ];
-
-  const testimonials = [
-    {
-      quote: tTest('testimonial1.quote'),
-      author: tTest('testimonial1.author'),
-      role: tTest('testimonial1.role'),
-      company: tTest('testimonial1.company'),
-      rating: 5,
-    },
-    {
-      quote: tTest('testimonial2.quote'),
-      author: tTest('testimonial2.author'),
-      role: tTest('testimonial2.role'),
-      company: tTest('testimonial2.company'),
-      rating: 5,
-    },
-    {
-      quote: tTest('testimonial3.quote'),
-      author: tTest('testimonial3.author'),
-      role: tTest('testimonial3.role'),
-      company: tTest('testimonial3.company'),
-      rating: 5,
-    },
-  ];
+  // REMOVED: Fake client logos and testimonials per brand guidelines
+  // VexNexa is pre-launch and cannot make false claims about enterprise clients
 
   const faqItems = [
     {
@@ -393,11 +361,9 @@ export default function HomePage() {
     <>
       <JsonLd />
       <HeroSection />
-      <LogoStrip logos={logos} />
       <ValuePillarsSection />
       <FeaturesSection />
       <CTABand />
-      <Testimonials testimonials={testimonials} title={tTest('title')} />
       <FAQ items={faqItems} />
       <FinalCTASection />
     </>
