@@ -37,7 +37,7 @@ export function AdminTicketActions({ ticketId, currentStatus, currentPriority }:
     }
   };
 
-  const handlePriorityChange = async (newPriority: string) {
+  const handlePriorityChange = async (newPriority: string) => {
     setError(null);
     setIsUpdating(true);
 
