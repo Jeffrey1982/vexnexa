@@ -552,3 +552,78 @@ export async function sendTestEmail() {
     throw error
   }
 }
+
+export interface AdminEmailData {
+  to: string
+  subject: string
+  message: string
+  adminName?: string
+}
+
+export async function sendAdminEmail(data: AdminEmailData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping admin email')
+    return null
+  }
+
+  try {
+    const { to, subject, message, adminName = 'VexNexa Team' } = data
+
+    const result = await resend.emails.send({
+      from: 'VexNexa <noreply@vexnexa.com>',
+      replyTo: 'support@vexnexa.com',
+      to: [to],
+      subject: subject,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: #7C3AED; padding: 20px; border-radius: 8px 8px 0 0;">
+            <h2 style="color: white; margin: 0;">VexNexa</h2>
+          </div>
+
+          <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
+            <p>Hallo,</p>
+
+            <div style="background: #f8f9fa; padding: 20px; border-left: 4px solid #7C3AED; border-radius: 4px; margin: 20px 0;">
+              <p style="white-space: pre-wrap; margin: 0;">${message.replace(/\n/g, '<br>')}</p>
+            </div>
+
+            <p>Voor vragen kun je direct reageren op deze email of contact opnemen via <a href="mailto:support@vexnexa.com" style="color: #7C3AED;">support@vexnexa.com</a>.</p>
+
+            <p style="margin-top: 30px;">
+              Met vriendelijke groet,<br>
+              <strong>${adminName}</strong><br>
+              VexNexa Team
+            </p>
+          </div>
+
+          <div style="background: #f8f9fa; padding: 15px; text-align: center; border-radius: 0 0 8px 8px;">
+            <p style="color: #6b7280; font-size: 12px; margin: 0;">
+              VexNexa - WCAG accessibility scanning platform<br>
+              <a href="https://vexnexa.com" style="color: #7C3AED; text-decoration: none;">vexnexa.com</a>
+            </p>
+          </div>
+        </div>
+      `,
+      text: `
+Hallo,
+
+${message}
+
+Voor vragen kun je direct reageren op deze email of contact opnemen via support@vexnexa.com.
+
+Met vriendelijke groet,
+${adminName}
+VexNexa Team
+
+---
+VexNexa - WCAG accessibility scanning platform
+vexnexa.com
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send admin email:', error)
+    throw error
+  }
+}

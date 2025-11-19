@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { getMollieClient } from '@/lib/mollie';
+import { sendAdminEmail } from '@/lib/email';
 import type { Plan, TicketCategory, TicketPriority } from '@prisma/client';
 
 // Admin check helper
@@ -254,32 +255,53 @@ export async function fetchMolliePayments(userId: string) {
   }
 }
 
-// Send email to user (placeholder - implement with your email service)
+// Send email to user
 export async function sendEmailToUser(userId: string, subject: string, message: string) {
   const admin = await requireAdmin();
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { email: true }
+    select: { email: true, firstName: true, lastName: true }
   });
 
   if (!user) throw new Error('User not found');
 
-  // TODO: Implement email sending with Resend or your email service
-  console.log('Send email to:', user.email, 'Subject:', subject, 'Message:', message);
+  try {
+    // Get admin name for email signature
+    const adminUser = await prisma.user.findUnique({
+      where: { id: admin.id },
+      select: { firstName: true, lastName: true }
+    });
 
-  await prisma.userAdminEvent.create({
-    data: {
-      userId,
-      adminId: admin.id,
-      eventType: 'EMAIL_SENT',
-      description: `Email sent: ${subject}`,
-      metadata: { subject }
-    }
-  });
+    const adminName = adminUser?.firstName && adminUser?.lastName
+      ? `${adminUser.firstName} ${adminUser.lastName}`
+      : 'VexNexa Team';
 
-  revalidatePath(`/admin/users/${userId}`);
-  return { success: true, message: 'Email sending not yet implemented. Event logged.' };
+    // Send email using Resend
+    await sendAdminEmail({
+      to: user.email,
+      subject,
+      message,
+      adminName
+    });
+
+    // Log the event
+    await prisma.userAdminEvent.create({
+      data: {
+        userId,
+        adminId: admin.id,
+        eventType: 'EMAIL_SENT',
+        description: `Email sent: ${subject}`,
+        metadata: { subject, preview: message.substring(0, 100) }
+      }
+    });
+
+    revalidatePath(`/admin/users/${userId}`);
+    return { success: true, message: 'Email sent successfully!' };
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    throw new Error('Failed to send email: ' + (error instanceof Error ? error.message : 'Unknown error'));
+  }
 }
 
 // Fetch Mollie subscription details

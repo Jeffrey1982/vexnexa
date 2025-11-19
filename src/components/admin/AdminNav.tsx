@@ -13,7 +13,8 @@ import {
   Menu,
   X,
   LogOut,
-  Ticket
+  Ticket,
+  Mail
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -60,6 +61,7 @@ export function AdminNav({ user }: AdminNavProps) {
     { href: '/admin/blog', label: 'Blog', icon: FileText },
     { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
     { href: '/admin-interface', label: 'Support', icon: Ticket },
+    { href: '/admin/contact-messages', label: 'Contact', icon: Mail },
   ];
 
   const userName = user?.firstName && user?.lastName
