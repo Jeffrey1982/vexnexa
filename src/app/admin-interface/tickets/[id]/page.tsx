@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { AdminNav } from "@/components/admin/AdminNav";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -96,7 +97,7 @@ export default async function AdminTicketDetailPage(props: PageProps) {
   // Await params if it's a Promise (Next.js 15+)
   const params = await Promise.resolve(props.params);
 
-  await requireAdmin();
+  const adminUser = await requireAdmin();
   const ticket = await getTicket(params.id);
 
   if (!ticket) {
@@ -106,7 +107,9 @@ export default async function AdminTicketDetailPage(props: PageProps) {
   const userName = `${ticket.user.firstName || ''} ${ticket.user.lastName || ''}`.trim() || ticket.user.email;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50">
+      <AdminNav user={adminUser} />
+      <div className="p-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-6">
@@ -249,6 +252,7 @@ export default async function AdminTicketDetailPage(props: PageProps) {
             />
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

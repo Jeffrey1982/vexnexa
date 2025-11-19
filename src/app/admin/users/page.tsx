@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { AdminNav } from "@/components/admin/AdminNav";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { PLAN_NAMES } from "@/lib/billing/plans";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
-import { ArrowLeft, Search, Users, Mail, Building, Calendar, Eye } from "lucide-react";
+import { Search, Users, Mail, Building, Calendar, Eye } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
@@ -50,7 +51,7 @@ async function getAllUsers() {
 }
 
 export default async function AdminUsersPage() {
-  await requireAdmin();
+  const user = await requireAdmin();
   const users = await getAllUsers();
 
   const stats = {
@@ -63,18 +64,14 @@ export default async function AdminUsersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50">
+      <AdminNav user={user} />
+      <div className="p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <Link href="/admin">
-                <Button variant="ghost" size="sm" className="gap-2 mb-4">
-                  <ArrowLeft className="w-4 h-4" />
-                  Back to Admin Dashboard
-                </Button>
-              </Link>
               <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
                 <Users className="text-blue-500" />
                 User Management
@@ -231,6 +228,7 @@ export default async function AdminUsersPage() {
             </div>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );
