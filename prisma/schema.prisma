@@ -810,3 +810,50 @@ model SupportTicketMessage {
   @@index([senderUserId])
   @@index([createdAt])
 }
+
+// ============================================
+// ADMIN USER MANAGEMENT
+// ============================================
+
+model AdminUserNote {
+  id        String   @id @default(cuid())
+  userId    String
+  adminId   String
+  note      String   @db.Text
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([adminId])
+  @@index([createdAt])
+}
+
+enum AdminEventType {
+  PLAN_CHANGE
+  STATUS_CHANGE
+  PAYMENT_REFUND
+  NOTE_ADDED
+  TICKET_CREATED
+  TICKET_CLOSED
+  CONTACT_CONVERTED
+  MANUAL_ACTIVATION
+  MANUAL_SUSPENSION
+  EMAIL_SENT
+}
+
+model UserAdminEvent {
+  id          String         @id @default(cuid())
+  userId      String
+  adminId     String?
+  eventType   AdminEventType
+  metadata    Json?
+  description String?
+  
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([adminId])
+  @@index([eventType])
+  @@index([createdAt])
+}
