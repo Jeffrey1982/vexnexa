@@ -56,13 +56,13 @@ export function AdminReplyForm({ ticketId }: { ticketId: string }) {
             className="resize-none"
             disabled={isSubmitting}
           />
-          <Button type="submit" disabled={isSubmitting || !message.trim()} className="bg-blue-600 hover:bg-blue-700">
+          <Button type="submit" disabled={isSubmitting || !message.trim()} >
             {isSubmitting ? (
               <>Sending...</>
             ) : (
               <>
                 <Send className="w-4 h-4 mr-2" />
-                Send Admin Reply
+                Send Reply
               </>
             )}
           </Button>
