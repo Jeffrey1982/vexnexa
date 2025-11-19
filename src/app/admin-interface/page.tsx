@@ -11,6 +11,7 @@ import { Shield, Ticket, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
 import { AdminTicketFilters } from "./AdminTicketFilters";
+import { AdminNav } from "@/components/admin/AdminNav";
 
 // Admin check
 async function requireAdmin() {
@@ -128,7 +129,7 @@ export default async function AdminInterfacePage(props: PageProps) {
   // Await searchParams if it's a Promise (Next.js 15+)
   const searchParams = await Promise.resolve(props.searchParams);
 
-  await requireAdmin();
+  const user = await requireAdmin();
 
   const stats = await getTicketStats();
   const tickets = await getAllTickets({
@@ -137,8 +138,10 @@ export default async function AdminInterfacePage(props: PageProps) {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <AdminNav user={user} />
+
+      <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -149,9 +152,6 @@ export default async function AdminInterfacePage(props: PageProps) {
               </h1>
               <p className="text-gray-600 mt-1">Manage all customer support tickets</p>
             </div>
-            <Link href="/dashboard">
-              <Button variant="outline">← Back to Dashboard</Button>
-            </Link>
           </div>
         </div>
 
