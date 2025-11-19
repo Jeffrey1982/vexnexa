@@ -281,3 +281,158 @@ export async function sendEmailToUser(userId: string, subject: string, message: 
   revalidatePath(`/admin/users/${userId}`);
   return { success: true, message: 'Email sending not yet implemented. Event logged.' };
 }
+
+// Fetch Mollie subscription details
+export async function fetchMollieSubscription(userId: string) {
+  await requireAdmin();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { mollieCustomerId: true, mollieSubscriptionId: true }
+  });
+
+  if (!user?.mollieCustomerId || !user?.mollieSubscriptionId) {
+    return { subscription: null };
+  }
+
+  try {
+    const mollie = getMollieClient();
+    const subscription = await mollie.customerSubscriptions.get(
+      user.mollieSubscriptionId,
+      { customerId: user.mollieCustomerId }
+    );
+
+    return {
+      subscription: {
+        id: subscription.id,
+        status: subscription.status,
+        amount: subscription.amount,
+        description: subscription.description,
+        method: subscription.method,
+        interval: subscription.interval,
+        startDate: subscription.startDate,
+        nextPaymentDate: subscription.nextPaymentDate,
+        canceledAt: subscription.canceledAt,
+        createdAt: subscription.createdAt
+      }
+    };
+  } catch (error) {
+    console.error('Failed to fetch Mollie subscription:', error);
+    return { subscription: null, error: 'Failed to fetch subscription details' };
+  }
+}
+
+// Cancel Mollie subscription
+export async function cancelMollieSubscription(userId: string, reason?: string) {
+  const admin = await requireAdmin();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      mollieCustomerId: true,
+      mollieSubscriptionId: true,
+      email: true,
+      plan: true
+    }
+  });
+
+  if (!user?.mollieCustomerId || !user?.mollieSubscriptionId) {
+    throw new Error('No active Mollie subscription found');
+  }
+
+  try {
+    const mollie = getMollieClient();
+
+    // Cancel the subscription in Mollie
+    await mollie.customerSubscriptions.cancel(
+      user.mollieSubscriptionId,
+      { customerId: user.mollieCustomerId }
+    );
+
+    // Update user status in database
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        subscriptionStatus: 'canceled',
+        mollieSubscriptionId: null // Clear the subscription ID
+      }
+    });
+
+    // Log admin event
+    await prisma.userAdminEvent.create({
+      data: {
+        userId,
+        adminId: admin.id,
+        eventType: 'STATUS_CHANGE',
+        description: `Subscription canceled${reason ? `: ${reason}` : ''}`,
+        metadata: {
+          oldSubscriptionId: user.mollieSubscriptionId,
+          reason: reason || 'Admin cancellation'
+        }
+      }
+    });
+
+    revalidatePath(`/admin/users/${userId}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to cancel Mollie subscription:', error);
+    throw new Error('Failed to cancel subscription');
+  }
+}
+
+// Process refund for a payment
+export async function processMollieRefund(
+  userId: string,
+  paymentId: string,
+  amount: { value: string; currency: string },
+  description?: string
+) {
+  const admin = await requireAdmin();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { email: true }
+  });
+
+  if (!user) throw new Error('User not found');
+
+  try {
+    const mollie = getMollieClient();
+
+    // Create refund
+    const refund = await mollie.paymentRefunds.create({
+      paymentId,
+      amount,
+      description: description || 'Refund processed by admin'
+    });
+
+    // Log admin event
+    await prisma.userAdminEvent.create({
+      data: {
+        userId,
+        adminId: admin.id,
+        eventType: 'PAYMENT_REFUND',
+        description: `Refund processed: ${amount.currency} ${amount.value}`,
+        metadata: {
+          paymentId,
+          refundId: refund.id,
+          amount: amount,
+          description: description || ''
+        }
+      }
+    });
+
+    revalidatePath(`/admin/users/${userId}`);
+    return {
+      success: true,
+      refund: {
+        id: refund.id,
+        amount: amount,
+        status: refund.status
+      }
+    };
+  } catch (error) {
+    console.error('Failed to process refund:', error);
+    throw new Error('Failed to process refund: ' + (error instanceof Error ? error.message : 'Unknown error'));
+  }
+}
