@@ -39,16 +39,25 @@
                 <!-- CTA Button -->
                 <div style="margin: 32px 0;">
                     <a href="{{ .ConfirmationURL }}"
-                       style="display: inline-block; background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); transition: all 0.2s ease;">
-                        Nieuw wachtwoord instellen
+                       style="display: inline-block; background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);">
+                        🔐 Wachtwoord opnieuw instellen
                     </a>
                 </div>
 
                 <!-- Alternative Link -->
                 <p style="color: #6B7280; font-size: 14px; line-height: 1.5; margin: 24px 0;">
-                    Werkt de knop niet? Kopieer deze link:<br>
-                    <a href="{{ .ConfirmationURL }}" style="color: #3B82F6; word-break: break-all;">{{ .ConfirmationURL }}</a>
+                    Werkt de knop niet? Kopieer en plak deze link in je browser:<br>
+                    <a href="{{ .ConfirmationURL }}" style="color: #7C3AED; word-break: break-all; text-decoration: underline;">{{ .ConfirmationURL }}</a>
                 </p>
+
+                <!-- Debug Info (remove after testing) -->
+                <div style="background: #F9FAFB; border: 1px dashed #D1D5DB; border-radius: 6px; padding: 12px; margin: 16px 0; text-align: left;">
+                    <p style="color: #6B7280; font-size: 12px; margin: 0; font-family: monospace;">
+                        <strong>Debug:</strong> Email type = recovery<br>
+                        Token expiry = 1 hour<br>
+                        Redirect = /auth/reset-password
+                    </p>
+                </div>
 
                 <!-- Time Limit Notice -->
                 <div style="background: #F3F4F6; border-radius: 8px; padding: 16px; margin: 24px 0;">
