@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      emailId: result.id,
+      emailId: result.data?.id || 'unknown',
       sentTo: testEmail,
       timestamp: new Date().toISOString(),
       message: 'Email sent successfully! Check your inbox.'
