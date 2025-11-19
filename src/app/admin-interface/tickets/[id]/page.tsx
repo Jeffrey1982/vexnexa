@@ -88,7 +88,14 @@ function getCategoryDisplay(category: string) {
   return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
 }
 
-export default async function AdminTicketDetailPage({ params }: { params: { id: string } }) {
+type PageProps = {
+  params: Promise<{ id: string }> | { id: string };
+};
+
+export default async function AdminTicketDetailPage(props: PageProps) {
+  // Await params if it's a Promise (Next.js 15+)
+  const params = await Promise.resolve(props.params);
+
   await requireAdmin();
   const ticket = await getTicket(params.id);
 

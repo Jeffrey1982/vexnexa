@@ -12,65 +12,80 @@ import Link from "next/link";
 import { formatDate } from "@/lib/format";
 import { AdminTicketFilters } from "./AdminTicketFilters";
 
-// Admin check - you can enhance this with a proper admin role system
+// Admin check
 async function requireAdmin() {
-  const user = await requireAuth();
+  try {
+    const user = await requireAuth();
 
-  // Check if user is admin
-  const adminEmails = [
-    'jeffrey.aay@gmail.com',
-    'admin@vexnexa.com'
-  ];
+    // Check if user is admin
+    const adminEmails = [
+      'jeffrey.aay@gmail.com',
+      'admin@vexnexa.com'
+    ];
 
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
+    if (!adminEmails.includes(user.email) && !user.isAdmin) {
+      redirect('/dashboard');
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Admin auth error:', error);
+    redirect('/auth/login');
   }
-
-  return user;
 }
 
 async function getAllTickets(filters?: {
   status?: string;
   priority?: string;
 }) {
-  const where: any = {};
+  try {
+    const where: any = {};
 
-  if (filters?.status && filters.status !== 'all') {
-    where.status = filters.status;
-  }
+    if (filters?.status && filters.status !== 'all') {
+      where.status = filters.status;
+    }
 
-  if (filters?.priority && filters.priority !== 'all') {
-    where.priority = filters.priority;
-  }
+    if (filters?.priority && filters.priority !== 'all') {
+      where.priority = filters.priority;
+    }
 
-  return await prisma.supportTicket.findMany({
-    where,
-    include: {
-      user: {
-        select: {
-          email: true,
-          firstName: true,
-          lastName: true,
+    return await prisma.supportTicket.findMany({
+      where,
+      include: {
+        user: {
+          select: {
+            email: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        _count: {
+          select: { messages: true },
         },
       },
-      _count: {
-        select: { messages: true },
-      },
-    },
-    orderBy: { updatedAt: 'desc' },
-  });
+      orderBy: { updatedAt: 'desc' },
+    });
+  } catch (error) {
+    console.error('Error fetching tickets:', error);
+    return [];
+  }
 }
 
 async function getTicketStats() {
-  const [total, open, inProgress, resolved, closed] = await Promise.all([
-    prisma.supportTicket.count(),
-    prisma.supportTicket.count({ where: { status: 'OPEN' } }),
-    prisma.supportTicket.count({ where: { status: 'IN_PROGRESS' } }),
-    prisma.supportTicket.count({ where: { status: 'RESOLVED' } }),
-    prisma.supportTicket.count({ where: { status: 'CLOSED' } }),
-  ]);
+  try {
+    const [total, open, inProgress, resolved, closed] = await Promise.all([
+      prisma.supportTicket.count(),
+      prisma.supportTicket.count({ where: { status: 'OPEN' } }),
+      prisma.supportTicket.count({ where: { status: 'IN_PROGRESS' } }),
+      prisma.supportTicket.count({ where: { status: 'RESOLVED' } }),
+      prisma.supportTicket.count({ where: { status: 'CLOSED' } }),
+    ]);
 
-  return { total, open, inProgress, resolved, closed };
+    return { total, open, inProgress, resolved, closed };
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    return { total: 0, open: 0, inProgress: 0, resolved: 0, closed: 0 };
+  }
 }
 
 function getStatusColor(status: string) {
@@ -105,11 +120,14 @@ function getCategoryDisplay(category: string) {
   return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
 }
 
-export default async function AdminInterfacePage({
-  searchParams,
-}: {
-  searchParams: { status?: string; priority?: string };
-}) {
+type PageProps = {
+  searchParams: Promise<{ status?: string; priority?: string }> | { status?: string; priority?: string };
+};
+
+export default async function AdminInterfacePage(props: PageProps) {
+  // Await searchParams if it's a Promise (Next.js 15+)
+  const searchParams = await Promise.resolve(props.searchParams);
+
   await requireAdmin();
 
   const stats = await getTicketStats();

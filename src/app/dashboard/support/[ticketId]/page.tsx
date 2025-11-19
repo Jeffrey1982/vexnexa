@@ -80,7 +80,14 @@ function getCategoryDisplay(category: string) {
   return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
 }
 
-export default async function TicketDetailPage({ params }: { params: { ticketId: string } }) {
+type PageProps = {
+  params: Promise<{ ticketId: string }> | { ticketId: string };
+};
+
+export default async function TicketDetailPage(props: PageProps) {
+  // Await params if it's a Promise (Next.js 15+)
+  const params = await Promise.resolve(props.params);
+
   const user = await requireAuth();
   const ticket = await getTicket(params.ticketId, user.id);
 
