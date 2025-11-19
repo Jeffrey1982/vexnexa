@@ -8,8 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { TrendingUp, FileText, MessageSquare, Mail, Settings } from "lucide-react";
-import { changeUserPlan, changeUserStatus, addAdminNote, createTicketForUser, sendEmailToUser } from "@/app/actions/admin-user";
+import { TrendingUp, FileText, MessageSquare, Mail, Settings, Ban, UserX, PlayCircle, Trash2 } from "lucide-react";
+import { changeUserPlan, changeUserStatus, addAdminNote, createTicketForUser, sendEmailToUser, suspendUser, reactivateUser, deleteUser } from "@/app/actions/admin-user";
 import { useRouter } from "next/navigation";
 import type { Plan } from "@prisma/client";
 
@@ -26,6 +26,9 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
   const [addNoteOpen, setAddNoteOpen] = useState(false);
   const [createTicketOpen, setCreateTicketOpen] = useState(false);
   const [sendEmailOpen, setSendEmailOpen] = useState(false);
+  const [suspendOpen, setSuspendOpen] = useState(false);
+  const [reactivateOpen, setReactivateOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const [newPlan, setNewPlan] = useState<Plan>(currentPlan);
   const [newStatus, setNewStatus] = useState(currentStatus);
@@ -36,8 +39,14 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
   const [ticketPriority, setTicketPriority] = useState<'LOW' | 'MEDIUM' | 'HIGH'>('MEDIUM');
   const [emailSubject, setEmailSubject] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
+  const [suspendReason, setSuspendReason] = useState('');
+  const [suspendDuration, setSuspendDuration] = useState<'temporary' | 'permanent'>('temporary');
+  const [reactivateReason, setReactivateReason] = useState('');
+  const [deleteReason, setDeleteReason] = useState('');
 
   const [loading, setLoading] = useState(false);
+
+  const isSuspended = currentStatus === 'suspended';
 
   const handleChangePlan = async () => {
     if (!confirm(`Change plan to ${newPlan}?`)) return;
@@ -118,6 +127,60 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
     } catch (error) {
       alert('Failed to send email');
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSuspend = async () => {
+    if (!suspendReason.trim()) {
+      alert('Reason is required');
+      return;
+    }
+    if (!confirm(`${suspendDuration === 'permanent' ? 'Permanently ban' : 'Suspend'} this user account?`)) return;
+    setLoading(true);
+    try {
+      await suspendUser(userId, suspendReason, suspendDuration);
+      alert('User account suspended successfully');
+      setSuspendReason('');
+      setSuspendOpen(false);
+      router.refresh();
+    } catch (error) {
+      alert('Failed to suspend user');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReactivate = async () => {
+    if (!confirm('Reactivate this user account?')) return;
+    setLoading(true);
+    try {
+      await reactivateUser(userId, reactivateReason);
+      alert('User account reactivated successfully');
+      setReactivateReason('');
+      setReactivateOpen(false);
+      router.refresh();
+    } catch (error) {
+      alert('Failed to reactivate user');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!deleteReason.trim()) {
+      alert('Reason is required');
+      return;
+    }
+    if (!confirm('⚠️ DANGER: This will permanently delete this user account and all related data. This action CANNOT be undone. Are you absolutely sure?')) return;
+    if (!confirm('Type YES to confirm deletion (this is your final warning)')) return;
+    setLoading(true);
+    try {
+      await deleteUser(userId, deleteReason);
+      alert('User account deleted successfully');
+      router.push('/admin/users');
+    } catch (error) {
+      alert('Failed to delete user: ' + (error instanceof Error ? error.message : 'Unknown error'));
       setLoading(false);
     }
   };
@@ -334,7 +397,7 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
               <DialogHeader>
                 <DialogTitle>Send Email to User</DialogTitle>
                 <DialogDescription>
-                  Send an email to this user (placeholder - implement with your email service)
+                  Send an email to this user
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
@@ -360,6 +423,137 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
                 <Button variant="outline" onClick={() => setSendEmailOpen(false)}>Cancel</Button>
                 <Button onClick={handleSendEmail} disabled={loading || !emailSubject.trim() || !emailMessage.trim()}>
                   {loading ? 'Sending...' : 'Send Email'}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* Suspend/Ban User */}
+          {!isSuspended && (
+            <Dialog open={suspendOpen} onOpenChange={setSuspendOpen}>
+              <DialogTrigger asChild>
+                <Button variant="destructive" className="gap-2">
+                  <Ban className="w-4 h-4" />
+                  Suspend User
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Suspend User Account</DialogTitle>
+                  <DialogDescription>
+                    Suspend or permanently ban this user account. They will lose access immediately.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <Label>Duration</Label>
+                    <Select value={suspendDuration} onValueChange={(value: any) => setSuspendDuration(value)}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="temporary">Temporary Suspension</SelectItem>
+                        <SelectItem value="permanent">Permanent Ban</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label>Reason *</Label>
+                    <Textarea
+                      value={suspendReason}
+                      onChange={(e) => setSuspendReason(e.target.value)}
+                      placeholder="e.g., Terms of service violation, payment fraud, etc."
+                      rows={3}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setSuspendOpen(false)}>Cancel</Button>
+                  <Button variant="destructive" onClick={handleSuspend} disabled={loading || !suspendReason.trim()}>
+                    {loading ? 'Suspending...' : `${suspendDuration === 'permanent' ? 'Ban' : 'Suspend'} User`}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
+
+          {/* Reactivate User */}
+          {isSuspended && (
+            <Dialog open={reactivateOpen} onOpenChange={setReactivateOpen}>
+              <DialogTrigger asChild>
+                <Button variant="default" className="gap-2">
+                  <PlayCircle className="w-4 h-4" />
+                  Reactivate User
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Reactivate User Account</DialogTitle>
+                  <DialogDescription>
+                    Restore access to this suspended user account.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <Label>Reason (Optional)</Label>
+                    <Textarea
+                      value={reactivateReason}
+                      onChange={(e) => setReactivateReason(e.target.value)}
+                      placeholder="e.g., Issue resolved, payment received, etc."
+                      rows={3}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setReactivateOpen(false)}>Cancel</Button>
+                  <Button onClick={handleReactivate} disabled={loading}>
+                    {loading ? 'Reactivating...' : 'Reactivate User'}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
+
+          {/* Delete User */}
+          <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+            <DialogTrigger asChild>
+              <Button variant="destructive" className="gap-2">
+                <Trash2 className="w-4 h-4" />
+                Delete User
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-red-600">⚠️ Danger Zone - Delete User</DialogTitle>
+                <DialogDescription>
+                  This will <strong>permanently delete</strong> this user account and ALL related data including sites, scans, tickets, and payments. This action <strong>CANNOT be undone</strong>.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="bg-red-50 border border-red-200 rounded p-3">
+                  <p className="text-sm text-red-800 font-medium">What will be deleted:</p>
+                  <ul className="text-sm text-red-700 mt-2 space-y-1">
+                    <li>• User account and profile</li>
+                    <li>• All websites and scans</li>
+                    <li>• Support tickets and messages</li>
+                    <li>• Admin notes and events</li>
+                    <li>• Mollie subscription (if active)</li>
+                  </ul>
+                </div>
+                <div>
+                  <Label>Reason for Deletion *</Label>
+                  <Textarea
+                    value={deleteReason}
+                    onChange={(e) => setDeleteReason(e.target.value)}
+                    placeholder="e.g., User requested account deletion, GDPR compliance, etc."
+                    rows={3}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setDeleteOpen(false)}>Cancel</Button>
+                <Button variant="destructive" onClick={handleDelete} disabled={loading || !deleteReason.trim()}>
+                  {loading ? 'Deleting...' : 'Permanently Delete User'}
                 </Button>
               </DialogFooter>
             </DialogContent>

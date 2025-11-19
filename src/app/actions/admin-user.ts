@@ -458,3 +458,152 @@ export async function processMollieRefund(
     throw new Error('Failed to process refund: ' + (error instanceof Error ? error.message : 'Unknown error'));
   }
 }
+
+// Suspend/Ban user account
+export async function suspendUser(userId: string, reason: string, duration?: 'temporary' | 'permanent') {
+  const admin = await requireAdmin();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { email: true, firstName: true, lastName: true }
+  });
+
+  if (!user) throw new Error('User not found');
+
+  try {
+    // Update user status
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        subscriptionStatus: 'suspended'
+      }
+    });
+
+    // Log admin event
+    await prisma.userAdminEvent.create({
+      data: {
+        userId,
+        adminId: admin.id,
+        eventType: 'STATUS_CHANGE',
+        description: `Account ${duration === 'permanent' ? 'banned' : 'suspended'}: ${reason}`,
+        metadata: {
+          previousStatus: 'active',
+          newStatus: 'suspended',
+          duration: duration || 'temporary',
+          reason
+        }
+      }
+    });
+
+    revalidatePath(`/admin/users/${userId}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to suspend user:', error);
+    throw new Error('Failed to suspend user');
+  }
+}
+
+// Reactivate suspended user
+export async function reactivateUser(userId: string, reason?: string) {
+  const admin = await requireAdmin();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { email: true }
+  });
+
+  if (!user) throw new Error('User not found');
+
+  try {
+    // Update user status back to active
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        subscriptionStatus: 'active'
+      }
+    });
+
+    // Log admin event
+    await prisma.userAdminEvent.create({
+      data: {
+        userId,
+        adminId: admin.id,
+        eventType: 'STATUS_CHANGE',
+        description: `Account reactivated${reason ? `: ${reason}` : ''}`,
+        metadata: {
+          previousStatus: 'suspended',
+          newStatus: 'active',
+          reason: reason || 'Admin reactivation'
+        }
+      }
+    });
+
+    revalidatePath(`/admin/users/${userId}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to reactivate user:', error);
+    throw new Error('Failed to reactivate user');
+  }
+}
+
+// Delete user account with cascade
+export async function deleteUser(userId: string, reason: string) {
+  const admin = await requireAdmin();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      email: true,
+      firstName: true,
+      lastName: true,
+      mollieCustomerId: true,
+      mollieSubscriptionId: true
+    }
+  });
+
+  if (!user) throw new Error('User not found');
+
+  try {
+    // Cancel Mollie subscription if exists
+    if (user.mollieCustomerId && user.mollieSubscriptionId) {
+      try {
+        const mollie = getMollieClient();
+        await mollie.customerSubscriptions.cancel(
+          user.mollieSubscriptionId,
+          { customerId: user.mollieCustomerId }
+        );
+      } catch (error) {
+        console.error('Failed to cancel Mollie subscription during deletion:', error);
+        // Continue with deletion even if Mollie cancellation fails
+      }
+    }
+
+    // Log the deletion event BEFORE deleting (so we can still reference the user)
+    await prisma.userAdminEvent.create({
+      data: {
+        userId,
+        adminId: admin.id,
+        eventType: 'STATUS_CHANGE',
+        description: `User account deleted: ${reason}`,
+        metadata: {
+          userEmail: user.email,
+          userName: `${user.firstName} ${user.lastName}`,
+          deletedBy: admin.email,
+          reason
+        }
+      }
+    });
+
+    // Delete user (cascade will handle related records based on schema)
+    // The schema should have proper cascade settings for related records
+    await prisma.user.delete({
+      where: { id: userId }
+    });
+
+    revalidatePath('/admin/users');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to delete user:', error);
+    throw new Error('Failed to delete user: ' + (error instanceof Error ? error.message : 'Unknown error'));
+  }
+}
