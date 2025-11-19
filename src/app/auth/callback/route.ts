@@ -8,6 +8,9 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
   const type = requestUrl.searchParams.get('type')
+  const next = requestUrl.searchParams.get('next')
+
+  console.log('[Callback] Request params:', { code: code?.substring(0, 10), error, type, next })
 
   // Handle OAuth error
   if (error) {
@@ -22,17 +25,20 @@ export async function GET(request: NextRequest) {
       const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
       if (error) {
-        console.error('Session exchange error:', error)
+        console.error('[Callback] Session exchange error:', error)
         return NextResponse.redirect(new URL('/auth/login?error=session_error', request.url))
       }
 
       if (data.user) {
-        console.log('OAuth login successful for user:', data.user.email)
+        console.log('[Callback] Session created for user:', data.user.email)
 
         // Check if this is a password recovery/reset flow
-        if (type === 'recovery') {
-          console.log('Password recovery flow detected, redirecting to reset-password')
-          return NextResponse.redirect(new URL('/auth/reset-password', request.url))
+        // Can be detected via type param OR next param pointing to reset-password
+        if (type === 'recovery' || next === '/auth/reset-password') {
+          console.log('[Callback] Password recovery flow detected, redirecting to reset-password')
+          // Create a new response that sets the session cookie and redirects
+          const response = NextResponse.redirect(new URL('/auth/reset-password', request.url))
+          return response
         }
 
         // Database sync - re-enabled
