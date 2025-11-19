@@ -25,8 +25,8 @@ import { createClient } from '@/lib/supabase/client-new';
 interface AdminNavProps {
   user?: {
     email?: string;
-    firstName?: string;
-    lastName?: string;
+    firstName?: string | null;
+    lastName?: string | null;
   } | null;
 }
 
