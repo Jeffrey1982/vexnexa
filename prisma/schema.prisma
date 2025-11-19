@@ -72,6 +72,10 @@ model User {
   // Blog
   blogPosts          BlogPost[]
 
+  // Support tickets
+  supportTickets        SupportTicket[]
+  supportTicketMessages SupportTicketMessage[]
+
   // Admin role
   isAdmin            Boolean @default(false)
 
@@ -733,5 +737,76 @@ model ContactMessage {
 
   @@index([email])
   @@index([status])
+  @@index([createdAt])
+}
+
+// ============================================
+// SUPPORT TICKET SYSTEM
+// ============================================
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TicketCategory {
+  GENERAL
+  BILLING
+  TECHNICAL
+  FEATURE_REQUEST
+  BUG_REPORT
+}
+
+model SupportTicket {
+  id          String          @id @default(cuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  subject     String
+  category    TicketCategory  @default(GENERAL)
+  priority    TicketPriority  @default(MEDIUM)
+  status      TicketStatus    @default(OPEN)
+
+  messages    SupportTicketMessage[]
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+  @@index([category])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+enum MessageSenderType {
+  USER
+  ADMIN
+}
+
+model SupportTicketMessage {
+  id          String            @id @default(cuid())
+  ticketId    String
+  ticket      SupportTicket     @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  senderType  MessageSenderType
+  senderUserId String?
+  senderUser  User?             @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
+
+  message     String            @db.Text
+
+  createdAt   DateTime          @default(now())
+
+  @@index([ticketId])
+  @@index([senderUserId])
   @@index([createdAt])
 }

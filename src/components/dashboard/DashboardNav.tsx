@@ -17,7 +17,8 @@ import {
   Menu,
   X,
   LogOut,
-  Shield
+  Shield,
+  MessageCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -69,6 +70,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
     { href: '/scans', label: 'Scans', icon: Search },
     { href: '/sites', label: 'Sites', icon: Globe },
     { href: '/teams', label: 'Teams', icon: Users },
+    { href: '/dashboard/support', label: 'Support', icon: MessageCircle },
   ];
 
   const settingsItems = [
@@ -159,21 +161,36 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                 )}
               </div>
 
-              {/* Admin Link (if admin) */}
+              {/* Admin Links (if admin) */}
               {user?.user_metadata?.is_admin && (
-                <Link
-                  href="/admin"
-                  className={cn(
-                    'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
-                    'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
-                    isActive('/admin')
-                      ? 'text-primary after:w-full'
-                      : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
-                  )}
-                >
-                  <Shield className="w-4 h-4" />
-                  Admin
-                </Link>
+                <>
+                  <Link
+                    href="/admin"
+                    className={cn(
+                      'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
+                      'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
+                      isActive('/admin') && !isActive('/admin-interface')
+                        ? 'text-primary after:w-full'
+                        : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
+                    )}
+                  >
+                    <Shield className="w-4 h-4" />
+                    Admin
+                  </Link>
+                  <Link
+                    href="/admin-interface"
+                    className={cn(
+                      'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
+                      'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
+                      isActive('/admin-interface')
+                        ? 'text-primary after:w-full'
+                        : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
+                    )}
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Support Admin
+                  </Link>
+                </>
               )}
             </div>
           </div>
@@ -263,21 +280,37 @@ export default function DashboardNav({ user }: DashboardNavProps) {
               })}
             </div>
 
-            {/* Admin Link (mobile) */}
+            {/* Admin Links (mobile) */}
             {user?.user_metadata?.is_admin && (
               <div className="pt-2 border-t border-gray-200">
+                <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">
+                  Admin
+                </div>
                 <Link
                   href="/admin"
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     'flex items-center px-3 py-2 text-base font-medium rounded-md',
-                    isActive('/admin')
+                    isActive('/admin') && !isActive('/admin-interface')
                       ? 'bg-primary/10 text-primary'
                       : 'text-gray-700 hover:bg-gray-100'
                   )}
                 >
                   <Shield className="w-5 h-5 mr-3" />
-                  Admin
+                  Admin Dashboard
+                </Link>
+                <Link
+                  href="/admin-interface"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    'flex items-center px-3 py-2 text-base font-medium rounded-md',
+                    isActive('/admin-interface')
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  )}
+                >
+                  <MessageCircle className="w-5 h-5 mr-3" />
+                  Support Admin
                 </Link>
               </div>
             )}
