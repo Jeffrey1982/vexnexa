@@ -210,13 +210,18 @@ export default function ModernRegistrationForm() {
 
   const handleSubmit = async () => {
     if (!validateStep(currentStep)) return
-    
+
     setLoading(true)
     setError('')
     setMessage('')
 
     try {
-      const { error } = await supabase.auth.signUp({
+      // Add timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timeout - email configuration may need adjustment')), 25000)
+      )
+
+      const signUpPromise = supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -235,11 +240,17 @@ export default function ModernRegistrationForm() {
         }
       })
 
+      const { error } = await Promise.race([signUpPromise, timeoutPromise]) as any
+
       if (error) throw error
 
       setMessage('🎉 Account created! Please check your email to confirm your account.')
     } catch (error: any) {
-      setError(error.message)
+      if (error.message?.includes('timeout')) {
+        setError('Registration is taking too long. This is likely due to email configuration. Please contact support or try again later.')
+      } else {
+        setError(error.message)
+      }
     } finally {
       setLoading(false)
     }

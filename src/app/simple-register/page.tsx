@@ -29,7 +29,12 @@ export default function SimpleRegisterPage() {
     setSuccess("");
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // Add timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timeout - this may be due to email configuration issues')), 25000)
+      );
+
+      const signUpPromise = supabase.auth.signUp({
         email,
         password,
         options: {
@@ -39,6 +44,8 @@ export default function SimpleRegisterPage() {
           },
         },
       });
+
+      const { data, error } = await Promise.race([signUpPromise, timeoutPromise]) as any;
 
       if (error) throw error;
 
@@ -51,7 +58,11 @@ export default function SimpleRegisterPage() {
 
     } catch (error: any) {
       console.error("Register error:", error);
-      setError(error.message || "Failed to create account");
+      if (error.message?.includes('timeout')) {
+        setError("Registration is taking too long. Please check your Supabase email settings or try again later.");
+      } else {
+        setError(error.message || "Failed to create account");
+      }
     } finally {
       setLoading(false);
     }
