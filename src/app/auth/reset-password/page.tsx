@@ -33,22 +33,20 @@ function ResetPasswordForm() {
   const supabase = createClient()
 
   useEffect(() => {
-    // Check if we're in the browser (not during SSR/static generation)
-    if (typeof window === 'undefined') return
-
-    // Check if we have access token in URL (from email link)
-    const hashParams = new URLSearchParams(window.location.hash.substring(1))
-    const accessToken = hashParams.get('access_token')
-    const refreshToken = hashParams.get('refresh_token')
-
-    if (accessToken && refreshToken) {
-      // Set the session
-      supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken
-      })
+    // Check if user is authenticated
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        // Not authenticated, redirect to login
+        console.error('No authenticated user found for password reset')
+        router.push('/auth/login?error=session_expired')
+      } else {
+        console.log('User authenticated for password reset:', user.email)
+      }
     }
-  }, [supabase.auth])
+
+    checkAuth()
+  }, [supabase.auth, router])
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault()

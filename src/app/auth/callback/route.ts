@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
+  const type = requestUrl.searchParams.get('type')
 
   // Handle OAuth error
   if (error) {
@@ -28,10 +29,16 @@ export async function GET(request: NextRequest) {
       if (data.user) {
         console.log('OAuth login successful for user:', data.user.email)
 
+        // Check if this is a password recovery/reset flow
+        if (type === 'recovery') {
+          console.log('Password recovery flow detected, redirecting to reset-password')
+          return NextResponse.redirect(new URL('/auth/reset-password', request.url))
+        }
+
         // Database sync - re-enabled
         let dbSyncSuccess = false
         let dbUser = null
-        
+
         try {
           dbUser = await ensureUserInDatabase(data.user)
           dbSyncSuccess = true
