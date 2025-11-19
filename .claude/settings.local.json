@@ -63,7 +63,8 @@
       "Bash(then grep \"RESEND_API_KEY\" .env)",
       "Bash(else echo \"No .env file found - checking Vercel env\")",
       "Bash(echo:*)",
-      "Bash(.gitignore)"
+      "Bash(.gitignore)",
+      "Bash(timeout 60 tail:*)"
     ],
     "deny": [],
     "ask": []

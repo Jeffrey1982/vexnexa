@@ -12,6 +12,7 @@ import { UserTicketsList } from "@/components/admin/UserTicketsList";
 import { UserContactMessages } from "@/components/admin/UserContactMessages";
 import { UserActivityTimeline } from "@/components/admin/UserActivityTimeline";
 import { AdminUserActions } from "@/components/admin/AdminUserActions";
+import { AdminNotesViewer } from "@/components/admin/AdminNotesViewer";
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +27,7 @@ async function requireAdmin() {
 
 async function getUserDetails(userId: string) {
   // Fetch user with all related data
-  const [user, tickets, contactMessages, adminEvents] = await Promise.all([
+  const [user, tickets, contactMessages, adminEvents, adminNotes] = await Promise.all([
     // User with sites and scans
     prisma.user.findUnique({
       where: { id: userId },
@@ -76,6 +77,21 @@ async function getUserDetails(userId: string) {
       where: { userId },
       orderBy: { createdAt: 'desc' },
       take: 50
+    }),
+
+    // Admin notes
+    prisma.adminUserNote.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        admin: {
+          select: {
+            email: true,
+            firstName: true,
+            lastName: true
+          }
+        }
+      }
     })
   ]);
 
@@ -83,13 +99,14 @@ async function getUserDetails(userId: string) {
     user,
     tickets,
     contactMessages,
-    adminEvents
+    adminEvents,
+    adminNotes
   };
 }
 
 export default async function AdminUserDetailPage({ params }: { params: { id: string } }) {
   const admin = await requireAdmin();
-  const { user, tickets, contactMessages, adminEvents } = await getUserDetails(params.id);
+  const { user, tickets, contactMessages, adminEvents, adminNotes } = await getUserDetails(params.id);
 
   if (!user) {
     return (
@@ -152,6 +169,9 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                 contactMessages={contactMessages}
                 userEmail={user.email}
               />
+
+              {/* Admin Notes */}
+              <AdminNotesViewer notes={adminNotes} />
 
               {/* Activity Timeline */}
               <UserActivityTimeline events={adminEvents} user={user} />

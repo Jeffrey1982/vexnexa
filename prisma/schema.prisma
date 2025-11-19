@@ -78,6 +78,7 @@ model User {
 
   // Admin role
   isAdmin            Boolean @default(false)
+  adminNotes         AdminUserNote[] @relation("AdminNotes")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -819,8 +820,9 @@ model AdminUserNote {
   id        String   @id @default(cuid())
   userId    String
   adminId   String
+  admin     User?    @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
   note      String   @db.Text
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
