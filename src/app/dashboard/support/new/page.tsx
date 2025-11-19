@@ -59,7 +59,7 @@ export default function NewTicketPage() {
             Back to Tickets
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">Create Support Ticket</h1>
-          <p className="text-gray-600 mt-1">We'll get back to you as soon as possible</p>
+          <p className="text-gray-600 mt-1">We&apos;ll get back to you as soon as possible</p>
         </div>
 
         {/* Error Alert */}
