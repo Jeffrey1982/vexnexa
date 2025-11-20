@@ -20,7 +20,9 @@ import {
   Activity,
   Globe,
   Palette,
-  UserCog
+  UserCog,
+  ChevronDown,
+  Settings
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -34,13 +36,30 @@ interface AdminNavProps {
   } | null;
 }
 
+interface NavItem {
+  href: string;
+  label: string;
+  icon: any;
+}
+
+interface NavGroup {
+  label: string;
+  icon: any;
+  items: NavItem[];
+}
+
 export function AdminNav({ user }: AdminNavProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const supabase = createClient();
 
   const isActive = (path: string) => {
     return pathname === path || pathname?.startsWith(path + '/');
+  };
+
+  const isGroupActive = (items: NavItem[]) => {
+    return items.some(item => isActive(item.href));
   };
 
   const handleSignOut = async () => {
@@ -61,19 +80,42 @@ export function AdminNav({ user }: AdminNavProps) {
     }
   };
 
-  const adminNavItems = [
+  // Primary navigation items (always visible)
+  const primaryNavItems: NavItem[] = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/users', label: 'Users', icon: Users },
     { href: '/admin/health', label: 'Health', icon: Activity },
-    { href: '/admin/sites', label: 'Sites', icon: Globe },
-    { href: '/admin/teams', label: 'Teams', icon: UserCog },
-    { href: '/admin/white-label', label: 'Branding', icon: Palette },
-    { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
-    { href: '/admin/billing', label: 'Billing', icon: DollarSign },
-    { href: '/admin-interface', label: 'Support', icon: Ticket },
-    { href: '/admin/contact-messages', label: 'Contact', icon: Mail },
-    { href: '/admin/blog', label: 'Blog', icon: FileText },
-    { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
+  ];
+
+  // Grouped navigation items (in dropdowns)
+  const navGroups: NavGroup[] = [
+    {
+      label: 'Resources',
+      icon: Globe,
+      items: [
+        { href: '/admin/sites', label: 'Sites', icon: Globe },
+        { href: '/admin/teams', label: 'Teams', icon: UserCog },
+        { href: '/admin/white-label', label: 'Branding', icon: Palette },
+      ]
+    },
+    {
+      label: 'Business',
+      icon: BarChart3,
+      items: [
+        { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+        { href: '/admin/billing', label: 'Billing', icon: DollarSign },
+        { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
+      ]
+    },
+    {
+      label: 'Support',
+      icon: Ticket,
+      items: [
+        { href: '/admin-interface', label: 'Tickets', icon: Ticket },
+        { href: '/admin/contact-messages', label: 'Messages', icon: Mail },
+        { href: '/admin/blog', label: 'Blog', icon: FileText },
+      ]
+    },
   ];
 
   const userName = user?.firstName && user?.lastName
@@ -85,7 +127,7 @@ export function AdminNav({ user }: AdminNavProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center gap-4 sm:gap-8">
+          <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/admin" className="flex items-center gap-3 group">
               <div className="relative h-10 w-10 bg-white rounded-lg flex items-center justify-center shadow-md transition-transform group-hover:scale-105">
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
@@ -106,7 +148,8 @@ export function AdminNav({ user }: AdminNavProps) {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex lg:items-center lg:gap-1">
-              {adminNavItems.map((item) => {
+              {/* Primary Items */}
+              {primaryNavItems.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
                 return (
@@ -121,8 +164,68 @@ export function AdminNav({ user }: AdminNavProps) {
                     )}
                   >
                     <Icon className="w-4 h-4" />
-                    <span className="hidden xl:inline">{item.label}</span>
+                    <span>{item.label}</span>
                   </Link>
+                );
+              })}
+
+              {/* Grouped Items with Dropdowns */}
+              {navGroups.map((group) => {
+                const Icon = group.icon;
+                const active = isGroupActive(group.items);
+                const isOpen = openDropdown === group.label;
+
+                return (
+                  <div key={group.label} className="relative">
+                    <button
+                      onClick={() => setOpenDropdown(isOpen ? null : group.label)}
+                      onMouseEnter={() => setOpenDropdown(group.label)}
+                      onMouseLeave={() => setOpenDropdown(null)}
+                      className={cn(
+                        'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all',
+                        active
+                          ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
+                          : 'text-orange-100 hover:bg-white/10 hover:text-white'
+                      )}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span>{group.label}</span>
+                      <ChevronDown className={cn(
+                        "w-3 h-3 transition-transform",
+                        isOpen && "rotate-180"
+                      )} />
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {isOpen && (
+                      <div
+                        className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+                        onMouseEnter={() => setOpenDropdown(group.label)}
+                        onMouseLeave={() => setOpenDropdown(null)}
+                      >
+                        {group.items.map((item) => {
+                          const ItemIcon = item.icon;
+                          const itemActive = isActive(item.href);
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className={cn(
+                                'flex items-center gap-3 px-4 py-3 text-sm transition-colors',
+                                itemActive
+                                  ? 'bg-orange-50 text-orange-600 font-medium'
+                                  : 'text-gray-700 hover:bg-gray-50'
+                              )}
+                              onClick={() => setOpenDropdown(null)}
+                            >
+                              <ItemIcon className="w-4 h-4" />
+                              <span>{item.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
@@ -174,7 +277,8 @@ export function AdminNav({ user }: AdminNavProps) {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-white/20 bg-gradient-to-b from-orange-500 to-orange-600">
           <div className="px-4 py-3 space-y-1">
-            {adminNavItems.map((item) => {
+            {/* Primary Items */}
+            {primaryNavItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
               return (
@@ -192,6 +296,43 @@ export function AdminNav({ user }: AdminNavProps) {
                   <Icon className="w-4 h-4" />
                   {item.label}
                 </Link>
+              );
+            })}
+
+            {/* Grouped Items */}
+            {navGroups.map((group) => {
+              const Icon = group.icon;
+              const active = isGroupActive(group.items);
+              return (
+                <div key={group.label} className="space-y-1">
+                  <div className={cn(
+                    'flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider',
+                    'text-orange-200 mt-3'
+                  )}>
+                    <Icon className="w-3 h-3" />
+                    {group.label}
+                  </div>
+                  {group.items.map((item) => {
+                    const ItemIcon = item.icon;
+                    const itemActive = isActive(item.href);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          'flex items-center gap-3 px-6 py-2 text-sm font-medium rounded-lg transition-all',
+                          itemActive
+                            ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
+                            : 'text-orange-100 hover:bg-white/10 hover:text-white'
+                        )}
+                      >
+                        <ItemIcon className="w-4 h-4" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
               );
             })}
 
