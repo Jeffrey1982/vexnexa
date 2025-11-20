@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import {
   LayoutDashboard,
   Users,
   FileText,
   TrendingUp,
-  Shield,
   Home,
   Menu,
   X,
@@ -60,12 +60,12 @@ export function AdminNav({ user }: AdminNavProps) {
   const adminNavItems = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/users', label: 'Users', icon: Users },
-    { href: '/admin/blog', label: 'Blog', icon: FileText },
-    { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
-    { href: '/admin-interface', label: 'Support', icon: Ticket },
-    { href: '/admin/contact-messages', label: 'Contact', icon: Mail },
     { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/admin/billing', label: 'Billing', icon: DollarSign },
+    { href: '/admin-interface', label: 'Support', icon: Ticket },
+    { href: '/admin/contact-messages', label: 'Contact', icon: Mail },
+    { href: '/admin/blog', label: 'Blog', icon: FileText },
+    { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
   ];
 
   const userName = user?.firstName && user?.lastName
@@ -73,16 +73,27 @@ export function AdminNav({ user }: AdminNavProps) {
     : user?.email;
 
   return (
-    <nav className="border-b bg-white shadow-sm sticky top-0 z-50">
+    <nav className="border-b bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center gap-4 sm:gap-8">
-            <Link href="/admin" className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-gray-900 rounded flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
+            <Link href="/admin" className="flex items-center gap-3 group">
+              <div className="relative h-10 w-10 bg-white rounded-lg flex items-center justify-center shadow-md transition-transform group-hover:scale-105">
+                <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
+                  <path d="M2 8 L12 20 L22 8" stroke="url(#vexGradient)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <defs>
+                    <linearGradient id="vexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FF7A00"/>
+                      <stop offset="100%" stopColor="#FF9933"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
               </div>
-              <span className="font-semibold text-gray-900 hidden sm:block">Admin</span>
+              <div className="hidden sm:block">
+                <div className="text-white font-bold text-xl tracking-tight">VexNexa</div>
+                <div className="text-orange-100 text-xs -mt-1">Admin Panel</div>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -95,10 +106,10 @@ export function AdminNav({ user }: AdminNavProps) {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded',
+                      'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all',
                       active
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
+                        : 'text-orange-100 hover:bg-white/10 hover:text-white'
                     )}
                   >
                     <Icon className="w-4 h-4" />
@@ -112,15 +123,25 @@ export function AdminNav({ user }: AdminNavProps) {
           {/* Desktop Actions */}
           <div className="hidden lg:flex lg:items-center lg:gap-3">
             <Link href="/dashboard">
-              <Button variant="ghost" size="sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10 hover:text-white"
+              >
                 <Home className="w-4 h-4 mr-2" />
-                Dashboard
+                My Dashboard
               </Button>
             </Link>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded text-sm">
-              <span className="text-gray-600 hidden xl:inline">{userName}</span>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-lg text-sm border border-white/20">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-white font-medium hidden xl:inline">{userName}</span>
             </div>
-            <Button onClick={handleSignOut} variant="ghost" size="sm">
+            <Button
+              onClick={handleSignOut}
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/10 hover:text-white"
+            >
               <LogOut className="w-4 h-4" />
             </Button>
           </div>
@@ -129,7 +150,7 @@ export function AdminNav({ user }: AdminNavProps) {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded text-gray-600 hover:bg-gray-100"
+              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
             >
               {mobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -143,7 +164,7 @@ export function AdminNav({ user }: AdminNavProps) {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t bg-white">
+        <div className="lg:hidden border-t border-white/20 bg-gradient-to-b from-orange-500 to-orange-600">
           <div className="px-4 py-3 space-y-1">
             {adminNavItems.map((item) => {
               const Icon = item.icon;
@@ -154,10 +175,10 @@ export function AdminNav({ user }: AdminNavProps) {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2 text-sm font-medium rounded',
+                    'flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all',
                     active
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
+                      : 'text-orange-100 hover:bg-white/10 hover:text-white'
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -167,15 +188,22 @@ export function AdminNav({ user }: AdminNavProps) {
             })}
 
             {/* Mobile user info and actions */}
-            <div className="pt-3 mt-3 border-t space-y-2">
-              <div className="px-3 py-2 text-sm text-gray-600">
-                {userName}
+            <div className="pt-3 mt-3 border-t border-white/20 space-y-2">
+              <div className="px-3 py-2 text-sm text-white font-medium bg-white/10 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  {userName}
+                </div>
               </div>
 
               <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="ghost" size="sm" className="w-full justify-start">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start text-white hover:bg-white/10 hover:text-white"
+                >
                   <Home className="w-4 h-4 mr-2" />
-                  Dashboard
+                  My Dashboard
                 </Button>
               </Link>
 
@@ -183,7 +211,7 @@ export function AdminNav({ user }: AdminNavProps) {
                 onClick={handleSignOut}
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start"
+                className="w-full justify-start text-white hover:bg-white/10 hover:text-white"
               >
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
