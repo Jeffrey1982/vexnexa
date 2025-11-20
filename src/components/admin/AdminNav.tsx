@@ -16,7 +16,9 @@ import {
   Ticket,
   Mail,
   BarChart3,
-  DollarSign
+  DollarSign,
+  Activity,
+  Globe
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -60,6 +62,8 @@ export function AdminNav({ user }: AdminNavProps) {
   const adminNavItems = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/users', label: 'Users', icon: Users },
+    { href: '/admin/health', label: 'Health', icon: Activity },
+    { href: '/admin/sites', label: 'Sites', icon: Globe },
     { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/admin/billing', label: 'Billing', icon: DollarSign },
     { href: '/admin-interface', label: 'Support', icon: Ticket },
