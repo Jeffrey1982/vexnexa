@@ -14,7 +14,9 @@ import {
   X,
   LogOut,
   Ticket,
-  Mail
+  Mail,
+  BarChart3,
+  DollarSign
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -62,6 +64,8 @@ export function AdminNav({ user }: AdminNavProps) {
     { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
     { href: '/admin-interface', label: 'Support', icon: Ticket },
     { href: '/admin/contact-messages', label: 'Contact', icon: Mail },
+    { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+    { href: '/admin/billing', label: 'Billing', icon: DollarSign },
   ];
 
   const userName = user?.firstName && user?.lastName
