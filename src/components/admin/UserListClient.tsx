@@ -11,6 +11,7 @@ import Link from "next/link";
 import { formatDate } from "@/lib/format";
 import { Search, Mail, Building, Calendar, Eye, X } from "lucide-react";
 import type { Plan } from "@prisma/client";
+import { BulkUserActions } from "./BulkUserActions";
 
 interface UserWithSites {
   id: string;
@@ -148,6 +149,11 @@ export function UserListClient({ users }: UserListClientProps) {
             <div className="text-2xl font-bold text-purple-600">{stats.business}</div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Bulk Actions */}
+      <div className="mb-8">
+        <BulkUserActions users={filteredUsers} />
       </div>
 
       {/* Users Table */}

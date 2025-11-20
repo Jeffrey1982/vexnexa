@@ -64,7 +64,12 @@
       "Bash(else echo \"No .env file found - checking Vercel env\")",
       "Bash(echo:*)",
       "Bash(.gitignore)",
-      "Bash(timeout 60 tail:*)"
+      "Bash(timeout 60 tail:*)",
+      "Bash(then echo \"=== .env.local ===\")",
+      "Bash(then echo \"=== .env ===\")",
+      "Bash(then grep -i \"RESEND\" .env.local)",
+      "Bash(then grep -i \"RESEND\" .env)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []
