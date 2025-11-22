@@ -252,7 +252,7 @@ function FeaturesSection() {
                 alt={t('imageAlt')}
                 className="w-full h-80 lg:h-96 rounded-xl object-cover"
                 style={{
-                  boxShadow: '0 10px 20px -6px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                  boxShadow: '0 10px 20px -6px rgba(0, 0, 0, 0.2)'
                 }}
               />
             </div>
