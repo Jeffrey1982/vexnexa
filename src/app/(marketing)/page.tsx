@@ -123,7 +123,7 @@ function HeroSection() {
             <div className="relative z-10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/heroImage.png"
+                src="/heroImage.jpeg"
                 alt={t('imageAlt')}
                 className="aspect-square lg:aspect-[4/3] rounded-3xl shadow-2xl border border-primary/20 w-full h-full object-cover"
               />

@@ -175,7 +175,7 @@ async function main() {
         slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa',
         content: blogContent,
         excerpt: 'Ontdek waarom VexNexa de meest uitgebreide accessibility scanner is met 100% coverage. Van keyboard navigatie tot cognitieve toegankelijkheid - we dekken alles wat andere tools missen.',
-        coverImage: '/heroImage.png',
+        coverImage: '/heroImage.jpeg',
         metaTitle: 'VexNexa: Complete Web Toegankelijkheid Scanner | Vexnexa',
         metaDescription: 'Traditionele WCAG scanners dekken 60% af. VexNexa biedt 100% coverage met 8 extra categorieën. Ontdek waarom bedrijven kiezen voor de meest complete accessibility tool.',
         metaKeywords: [

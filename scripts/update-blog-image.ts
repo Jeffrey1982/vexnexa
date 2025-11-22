@@ -11,7 +11,7 @@ async function main() {
         slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa'
       },
       data: {
-        coverImage: '/heroImage.png'
+        coverImage: '/heroImage.jpeg'
       }
     });
 
