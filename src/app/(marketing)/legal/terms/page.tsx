@@ -171,8 +171,9 @@ export default async function TermsPage() {
             <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
               <p className="font-medium">Juridische gegevens (dienstverlener)</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Bedrijfsnaam:</strong> VexNexa B.V. (VexNexa is onderdeel van VexNexa) <br />
-                <strong>Adres:</strong> Hoofdstraat 123, 1234 AB Amsterdam &nbsp; <strong>KvK:</strong> 12345678 &nbsp; <strong>BTW:</strong> NL123456789B01 <br />
+                <strong>Business Type:</strong> Sole proprietorship (Eenmanszaak) <br />
+                <strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands <br />
+                <strong>Chamber of Commerce:</strong> 94848262 &nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
                 <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>
               </p>
             </div>

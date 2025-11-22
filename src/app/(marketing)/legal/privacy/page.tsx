@@ -154,9 +154,9 @@ export default async function PrivacyPage() {
             <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
               <p className="font-medium">{t('section1.contactTitle')}</p>
               <p className="text-sm text-muted-foreground">
-                <strong>{t('section1.companyName')}:</strong> {t('section1.companyValue')} <br />
-                <strong>{t('section1.address')}:</strong> {t('section1.addressValue')} <br />
-                <strong>{t('section1.kvk')}:</strong> 12345678 &nbsp;|&nbsp; <strong>{t('section1.vat')}:</strong> NL123456789B01 <br />
+                <strong>Business Type:</strong> Sole proprietorship (Eenmanszaak) <br />
+                <strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands <br />
+                <strong>Chamber of Commerce:</strong> 94848262 &nbsp;|&nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
                 <strong>{t('section1.email')}:</strong>{' '}
                 <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
                   privacy@vexnexa.com

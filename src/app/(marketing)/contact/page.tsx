@@ -253,6 +253,16 @@ export default function ContactPage() {
                   .
                 </p>
               </div>
+
+              <div className="pt-6 border-t">
+                <h3 className="font-semibold mb-3">Business Information</h3>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p><strong>Business Type:</strong> Sole proprietorship (Eenmanszaak)</p>
+                  <p><strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands</p>
+                  <p><strong>Chamber of Commerce:</strong> 94848262</p>
+                  <p><strong>Establishment Number:</strong> 000060294744</p>
+                </div>
+              </div>
             </div>
 
             {/* Right column – form */}

@@ -240,6 +240,15 @@ export default async function SLAPage() {
                 Of via het contact formulier in je dashboard
               </p>
             </div>
+            <div className="not-prose mt-4 rounded-lg border bg-muted/40 p-4 space-y-2">
+              <p className="font-medium">Business Information</p>
+              <p className="text-sm text-muted-foreground">
+                <strong>Business Type:</strong> Sole proprietorship (Eenmanszaak) <br />
+                <strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands <br />
+                <strong>Chamber of Commerce:</strong> 94848262 <br />
+                <strong>Establishment Number:</strong> 000060294744
+              </p>
+            </div>
           </section>
 
           {/* Footer strip */}
