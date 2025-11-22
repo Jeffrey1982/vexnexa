@@ -125,7 +125,10 @@ function HeroSection() {
               <img
                 src="/heroImage.jpeg"
                 alt={t('imageAlt')}
-                className="aspect-square lg:aspect-[4/3] rounded-3xl shadow-2xl border border-primary/20 w-full h-full object-cover"
+                className="aspect-square lg:aspect-[4/3] rounded-3xl border border-primary/20 w-full h-full object-cover"
+                style={{
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 12px 24px -8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                }}
               />
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-pulse" aria-hidden="true"></div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/10 rounded-full blur-xl animate-pulse delay-500" aria-hidden="true"></div>
@@ -238,12 +241,19 @@ function FeaturesSection() {
           </div>
 
           <div className="relative">
-            <div className="bg-white rounded-lg shadow-xl p-6">
+            <div className="bg-white rounded-2xl p-4"
+              style={{
+                boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+              }}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/Screenshot1.jpeg"
                 alt={t('imageAlt')}
-                className="w-full h-64 rounded-lg object-cover"
+                className="w-full h-80 lg:h-96 rounded-xl object-cover"
+                style={{
+                  boxShadow: '0 10px 20px -6px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                }}
               />
             </div>
           </div>
