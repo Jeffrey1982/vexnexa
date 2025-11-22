@@ -216,7 +216,7 @@ export default async function TermsPage() {
             </p>
             <ul>
               <li>API keys are personal; sharing or open-sourcing them is not permitted</li>
-              <li>Results may be displayed in your own tooling, provided you credit "VexNexa" in automated reporting</li>
+              <li>Results may be displayed in your own tooling, provided you credit &ldquo;VexNexa&rdquo; in automated reporting</li>
               <li>Changes to endpoints or limits may occur without prior notice in case of abuse or disruptions</li>
             </ul>
           </section>
