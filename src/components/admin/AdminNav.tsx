@@ -102,7 +102,8 @@ export function AdminNav({ user }: AdminNavProps) {
       label: 'Business',
       icon: BarChart3,
       items: [
-        { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+        { href: '/admin/analytics', label: 'Usage Analytics', icon: BarChart3 },
+        { href: '/admin/analytics-advanced', label: 'Advanced Analytics', icon: TrendingUp },
         { href: '/admin/billing', label: 'Billing', icon: DollarSign },
         { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
       ]

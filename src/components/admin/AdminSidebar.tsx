@@ -1,0 +1,233 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  LayoutDashboard,
+  Users,
+  Globe,
+  Activity,
+  BarChart3,
+  TrendingUp,
+  DollarSign,
+  Ticket,
+  Mail,
+  FileText,
+  Palette,
+  UserCog,
+  ChevronDown,
+  ChevronRight,
+  Menu,
+  X,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+interface NavItem {
+  href: string;
+  label: string;
+  icon: any;
+}
+
+interface NavGroup {
+  label: string;
+  icon: any;
+  items: NavItem[];
+}
+
+export function AdminSidebar() {
+  const pathname = usePathname();
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(['Resources', 'Business', 'Support']);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isActive = (path: string) => {
+    return pathname === path || pathname?.startsWith(path + '/');
+  };
+
+  const isGroupActive = (items: NavItem[]) => {
+    return items.some(item => isActive(item.href));
+  };
+
+  const toggleGroup = (label: string) => {
+    setExpandedGroups(prev =>
+      prev.includes(label)
+        ? prev.filter(g => g !== label)
+        : [...prev, label]
+    );
+  };
+
+  // Primary navigation items (always visible)
+  const primaryNavItems: NavItem[] = [
+    { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/admin/users', label: 'Users', icon: Users },
+    { href: '/admin/health', label: 'Health', icon: Activity },
+  ];
+
+  // Grouped navigation items
+  const navGroups: NavGroup[] = [
+    {
+      label: 'Resources',
+      icon: Globe,
+      items: [
+        { href: '/admin/sites', label: 'Sites', icon: Globe },
+        { href: '/admin/teams', label: 'Teams', icon: UserCog },
+        { href: '/admin/white-label', label: 'Branding', icon: Palette },
+      ]
+    },
+    {
+      label: 'Business',
+      icon: BarChart3,
+      items: [
+        { href: '/admin/analytics', label: 'Usage Analytics', icon: BarChart3 },
+        { href: '/admin/analytics-advanced', label: 'Advanced Analytics', icon: TrendingUp },
+        { href: '/admin/billing', label: 'Billing', icon: DollarSign },
+        { href: '/admin/payments', label: 'Payments', icon: DollarSign },
+        { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
+      ]
+    },
+    {
+      label: 'Support',
+      icon: Ticket,
+      items: [
+        { href: '/admin-interface', label: 'Tickets', icon: Ticket },
+        { href: '/admin/contact-messages', label: 'Messages', icon: Mail },
+        { href: '/admin/blog', label: 'Blog', icon: FileText },
+      ]
+    },
+  ];
+
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full">
+      {/* Sidebar Header */}
+      <div className="p-4 border-b border-gray-200">
+        <div className="flex items-center gap-3">
+          <div className="relative h-10 w-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
+            <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
+              <path d="M2 8 L12 20 L22 8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div className="text-gray-900 font-bold text-lg">VexNexa</div>
+            <div className="text-gray-500 text-xs">Admin Panel</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="flex-1 overflow-y-auto py-4">
+        {/* Primary Items */}
+        <div className="px-3 space-y-1">
+          {primaryNavItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
+                  active
+                    ? 'bg-orange-50 text-orange-600 shadow-sm'
+                    : 'text-gray-700 hover:bg-gray-50'
+                )}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Grouped Items */}
+        <div className="mt-6 space-y-1">
+          {navGroups.map((group) => {
+            const Icon = group.icon;
+            const isExpanded = expandedGroups.includes(group.label);
+            const active = isGroupActive(group.items);
+
+            return (
+              <div key={group.label}>
+                <button
+                  onClick={() => toggleGroup(group.label)}
+                  className={cn(
+                    'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold transition-colors',
+                    active ? 'text-orange-600' : 'text-gray-600 hover:text-gray-900'
+                  )}
+                >
+                  <Icon className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">{group.label}</span>
+                  {isExpanded ? (
+                    <ChevronDown className="w-4 h-4 flex-shrink-0" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                  )}
+                </button>
+
+                {isExpanded && (
+                  <div className="mt-1 space-y-1">
+                    {group.items.map((item) => {
+                      const ItemIcon = item.icon;
+                      const itemActive = isActive(item.href);
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
+                          className={cn(
+                            'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
+                            itemActive
+                              ? 'bg-orange-50 text-orange-600'
+                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                          )}
+                        >
+                          <ItemIcon className="w-4 h-4 flex-shrink-0" />
+                          <span>{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mobile Toggle Button */}
+      <button
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200"
+      >
+        {mobileOpen ? (
+          <X className="w-5 h-5 text-gray-600" />
+        ) : (
+          <Menu className="w-5 h-5 text-gray-600" />
+        )}
+      </button>
+
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          'fixed top-0 left-0 z-40 h-screen bg-white border-r border-gray-200 transition-transform',
+          'w-72',
+          mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        )}
+      >
+        <SidebarContent />
+      </aside>
+    </>
+  );
+}

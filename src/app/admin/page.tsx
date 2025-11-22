@@ -9,26 +9,8 @@ import { PLAN_NAMES } from "@/lib/billing/plans";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
 import { Users, Crown, TrendingUp, FileText, Ticket, MessageCircle, AlertCircle } from "lucide-react";
-import { AdminNav } from "@/components/admin/AdminNav";
-
 // Force dynamic rendering for admin pages
 export const dynamic = 'force-dynamic';
-
-// Simple admin check
-async function requireAdmin() {
-  const user = await requireAuth();
-
-  const adminEmails = [
-    'jeffrey.aay@gmail.com',
-    'admin@vexnexa.com'
-  ];
-
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-
-  return user;
-}
 
 async function getAdminStats() {
   const [
@@ -113,15 +95,10 @@ async function getAdminStats() {
 }
 
 export default async function AdminDashboard() {
-  // Require admin access
-  const user = await requireAdmin();
-
   const stats = await getAdminStats();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={user} />
-
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-8">

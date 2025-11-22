@@ -1,20 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { AdminNav } from "@/components/admin/AdminNav";
-import { redirect } from "next/navigation";
 import { Users } from "lucide-react";
 import { UserListClient } from "@/components/admin/UserListClient";
 
 export const dynamic = 'force-dynamic';
-
-async function requireAdmin() {
-  const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-  return user;
-}
 
 async function getAllUsers() {
   const users = await prisma.user.findMany({
@@ -45,12 +33,10 @@ async function getAllUsers() {
 }
 
 export default async function AdminUsersPage() {
-  const user = await requireAdmin();
   const users = await getAllUsers();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={user} />
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}

@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminNav } from "@/components/admin/AdminNav";
 import { Globe, ExternalLink, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -10,16 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export const dynamic = 'force-dynamic';
-
-async function requireAdmin() {
-  const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-  return user;
-}
-
 async function getSitesData() {
   const sites = await prisma.site.findMany({
     include: {
@@ -62,12 +49,10 @@ async function getSitesData() {
 }
 
 export default async function AdminSitesPage() {
-  const admin = await requireAdmin();
   const { sites, stats } = await getSitesData();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={admin} />
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">

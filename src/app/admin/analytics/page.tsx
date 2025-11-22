@@ -1,24 +1,11 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminNav } from "@/components/admin/AdminNav";
 import { ENTITLEMENTS } from "@/lib/billing/plans";
 import { AlertTriangle, TrendingUp, Users, Database } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export const dynamic = 'force-dynamic';
-
-async function requireAdmin() {
-  const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-  return user;
-}
-
 async function getAnalyticsData() {
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -115,12 +102,10 @@ async function getAnalyticsData() {
 }
 
 export default async function AdminAnalyticsPage() {
-  const admin = await requireAdmin();
   const { usersWithMetrics, stats } = await getAnalyticsData();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={admin} />
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">

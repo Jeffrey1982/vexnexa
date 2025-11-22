@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminNav } from "@/components/admin/AdminNav";
 import { ENTITLEMENTS } from "@/lib/billing/plans";
 import { AlertTriangle, Clock, TrendingDown, XCircle, Zap } from "lucide-react";
 import Link from "next/link";
@@ -10,16 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export const dynamic = 'force-dynamic';
-
-async function requireAdmin() {
-  const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-  return user;
-}
-
 async function getHealthData() {
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
@@ -191,7 +178,6 @@ async function getHealthData() {
 }
 
 export default async function AdminHealthPage() {
-  const admin = await requireAdmin();
   const { atRiskUsers, stats } = await getHealthData();
 
   const getRiskBadge = (score: number) => {
@@ -202,7 +188,6 @@ export default async function AdminHealthPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={admin} />
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">

@@ -1,12 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { AdminNav } from "@/components/admin/AdminNav";
 import { UserBasicInfo } from "@/components/admin/UserBasicInfo";
 import { UserBillingInfo } from "@/components/admin/UserBillingInfo";
 import { UserTicketsList } from "@/components/admin/UserTicketsList";
@@ -20,16 +17,6 @@ import { OverageBillingManager } from "@/components/admin/OverageBillingManager"
 import { ENTITLEMENTS } from "@/lib/billing/plans";
 
 export const dynamic = 'force-dynamic';
-
-async function requireAdmin() {
-  const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-  return user;
-}
-
 async function getUserDetails(userId: string) {
   const now = new Date();
   const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -161,7 +148,6 @@ async function getUserDetails(userId: string) {
 }
 
 export default async function AdminUserDetailPage({ params }: { params: { id: string } }) {
-  const admin = await requireAdmin();
   const {
     user,
     tickets,
@@ -179,7 +165,6 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AdminNav user={admin} />
         <div className="max-w-7xl mx-auto p-6">
           <Card>
             <CardContent className="p-12 text-center">
@@ -197,7 +182,6 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={admin} />
 
       <div className="max-w-7xl mx-auto p-6">
         <Link href="/admin/users">

@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminNav } from "@/components/admin/AdminNav";
 import { Palette, Globe, ExternalLink, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -10,16 +7,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export const dynamic = 'force-dynamic';
-
-async function requireAdmin() {
-  const user = await requireAuth();
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
-    redirect('/dashboard');
-  }
-  return user;
-}
-
 async function getWhiteLabelData() {
   const whiteLabels = await prisma.whiteLabel.findMany({
     include: {
@@ -52,12 +39,10 @@ async function getWhiteLabelData() {
 }
 
 export default async function AdminWhiteLabelPage() {
-  const admin = await requireAdmin();
   const { whiteLabels, stats } = await getWhiteLabelData();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNav user={admin} />
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
