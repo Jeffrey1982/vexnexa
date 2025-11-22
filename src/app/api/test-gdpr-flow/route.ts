@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const confirmUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/newsletter/confirm?token=test123`
 
     const result = await resend.emails.send({
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       to: ['test@example.com'],
       subject: 'TEST: Confirm your subscription to the VexNexa newsletter',
       html: `

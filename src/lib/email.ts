@@ -21,7 +21,7 @@ export async function sendContactNotification(data: ContactEmailData) {
 
     // Send notification to your team
     const teamNotification = await resend.emails.send({
-      from: 'VexNexa Contact <noreply@vexnexa.com>',
+      from: 'VexNexa Contact <support@vexnexa.com>',
       to: ['info@vexnexa.com'],
       subject: `New contact message from ${name}`,
       html: `
@@ -59,7 +59,7 @@ This message was sent via the contact form on vexnexa.com
 
     // Send confirmation to the user
     const userConfirmation = await resend.emails.send({
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       to: [email],
       subject: 'Thank you for your message - VexNexa',
       html: `
@@ -137,7 +137,7 @@ export async function sendTeamInvitation(data: TeamInvitationData) {
     const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/teams/invite?token=${inviteToken}`
 
     const result = await resend.emails.send({
-      from: 'VexNexa Teams <noreply@vexnexa.com>',
+      from: 'VexNexa Teams <support@vexnexa.com>',
       to: [inviteEmail],
       subject: `Invitation to team "${teamName}" - VexNexa`,
       html: `
@@ -212,7 +212,7 @@ export async function sendPasswordResetEmail(data: PasswordResetData) {
     const { email, resetUrl, userAgent } = data
 
     const result = await resend.emails.send({
-      from: 'VexNexa Security <noreply@vexnexa.com>',
+      from: 'VexNexa Security <support@vexnexa.com>',
       to: [email],
       subject: 'Reset your VexNexa password',
       html: `
@@ -293,7 +293,7 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string;
       : null
 
     const result = await resend.emails.send({
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       to: [email],
       subject: 'Welcome to VexNexa! 🎉',
       html: `
@@ -395,7 +395,7 @@ export async function sendEmailVerification(data: EmailVerificationData) {
     const { email, confirmUrl, firstName } = data
 
     const result = await resend.emails.send({
-      from: 'VexNexa Account <noreply@vexnexa.com>',
+      from: 'VexNexa Account <support@vexnexa.com>',
       to: [email],
       subject: 'Confirm your VexNexa account',
       html: `
@@ -464,7 +464,7 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
     const friendlySource = getSourceDisplayName(source)
 
     const result = await resend.emails.send({
-      from: 'VexNexa Newsletter <noreply@vexnexa.com>',
+      from: 'VexNexa Newsletter <support@vexnexa.com>',
       to: [email],
       subject: 'Welcome to the VexNexa newsletter! 📧',
       html: `
@@ -539,7 +539,7 @@ export async function sendTestEmail() {
 
   try {
     const result = await resend.emails.send({
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       to: ['info@vexnexa.com'],
       subject: 'Test email - VexNexa',
       html: '<p>This is a test email from VexNexa contact form.</p>',
@@ -570,7 +570,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
     const { to, subject, message, adminName = 'VexNexa Team' } = data
 
     const result = await resend.emails.send({
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       replyTo: 'info@vexnexa.com',
       to: [to],
       subject: subject,

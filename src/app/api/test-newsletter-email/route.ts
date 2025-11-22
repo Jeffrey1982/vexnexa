@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     )
 
     const baseEmailOptions = {
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       to: [email],
       subject: '🧪 TEST: Confirm your subscription to the VexNexa newsletter',
       html: `

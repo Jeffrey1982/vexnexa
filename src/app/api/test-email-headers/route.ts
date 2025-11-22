@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Base email options
     const baseEmailOptions = {
-      from: 'VexNexa <noreply@vexnexa.com>',
+      from: 'VexNexa <support@vexnexa.com>',
       to: ['test@example.com'],
       subject: 'TEST: Professional Email Headers & UTM Tracking',
       html: `

@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     console.log('Sending test email to:', testEmail)
 
     const result = await resend.emails.send({
-      from: 'VexNexa Test <noreply@vexnexa.com>',
+      from: 'VexNexa Test <support@vexnexa.com>',
       to: [testEmail],
       subject: 'Test Email - VexNexa Email Verification',
       html: `
