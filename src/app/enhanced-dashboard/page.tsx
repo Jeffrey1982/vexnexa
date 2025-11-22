@@ -230,7 +230,9 @@ async function getEnhancedDashboardData(userId: string) {
       benchmarkData,
       siteStructure,
       executiveSummary,
-      remediationIssues
+      remediationIssues,
+      currentScore: latestScan.score || 0,
+      websiteUrl: latestScan.site.url
     };
   } catch (error) {
     console.error("Failed to fetch enhanced dashboard data:", error);
@@ -360,7 +362,10 @@ export default async function EnhancedDashboardPage() {
 
           <TabsContent value="analytics" className="space-y-6">
             <TrendAnalysis data={dashboardData.trendData} />
-            <CompetitorBenchmark currentScore={85} websiteUrl="https://example.com" />
+            <CompetitorBenchmark
+              currentScore={dashboardData.currentScore || 0}
+              websiteUrl={dashboardData.websiteUrl || ''}
+            />
             <SiteStructure3D siteData={dashboardData.siteStructure} />
           </TabsContent>
 

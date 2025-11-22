@@ -59,98 +59,11 @@ export default async function AnalyticsPage() {
       }
     });
   } catch (error) {
-    console.log('Database connection failed, using mock data for analytics:', error);
-
-    // Provide mock data when database is unavailable
-    const now = new Date();
-    const mockScanDate = new Date(now.getTime() - 24 * 60 * 60 * 1000); // Yesterday
-
-    sites = [
-      {
-        id: 'mock-site-1',
-        url: 'https://example.com',
-        createdAt: mockScanDate,
-        scans: [{
-          id: 'mock-scan-1',
-          score: 85,
-          impactCritical: 2,
-          impactSerious: 5,
-          impactModerate: 8,
-          impactMinor: 3,
-          issues: 18,
-          createdAt: mockScanDate
-        }]
-      },
-      {
-        id: 'mock-site-2',
-        url: 'https://demo.com',
-        createdAt: mockScanDate,
-        scans: [{
-          id: 'mock-scan-2',
-          score: 92,
-          impactCritical: 1,
-          impactSerious: 2,
-          impactModerate: 4,
-          impactMinor: 1,
-          issues: 8,
-          createdAt: mockScanDate
-        }]
-      }
-    ];
-
-    allScans = [
-      {
-        id: 'mock-scan-1',
-        score: 85,
-        impactCritical: 2,
-        impactSerious: 5,
-        impactModerate: 8,
-        impactMinor: 3,
-        issues: 18,
-        createdAt: mockScanDate,
-        site: { url: 'https://example.com' },
-        raw: {
-          violations: [
-            {
-              id: 'color-contrast',
-              impact: 'serious',
-              help: 'Elements must have sufficient color contrast',
-              description: 'Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds',
-              nodes: [{ target: ['#main'], html: '<div id="main">Content</div>' }]
-            },
-            {
-              id: 'image-alt',
-              impact: 'critical',
-              help: 'Images must have alternate text',
-              description: 'Ensures <img> elements have alternate text or a role of none or presentation',
-              nodes: [{ target: ['img'], html: '<img src="photo.jpg">' }]
-            }
-          ]
-        }
-      },
-      {
-        id: 'mock-scan-2',
-        score: 92,
-        impactCritical: 1,
-        impactSerious: 2,
-        impactModerate: 4,
-        impactMinor: 1,
-        issues: 8,
-        createdAt: mockScanDate,
-        site: { url: 'https://demo.com' },
-        raw: {
-          violations: [
-            {
-              id: 'heading-order',
-              impact: 'moderate',
-              help: 'Heading levels should only increase by one',
-              description: 'Ensures the order of headings is semantically correct',
-              nodes: [{ target: ['h3'], html: '<h3>Heading</h3>' }]
-            }
-          ]
-        }
-      }
-    ];
+    console.error('Database connection failed for analytics:', error);
+    // Return empty data if database is unavailable
+    // Users will see "No data available" message instead of mock data
+    sites = [];
+    allScans = [];
   }
 
   // Prepare analytics data
