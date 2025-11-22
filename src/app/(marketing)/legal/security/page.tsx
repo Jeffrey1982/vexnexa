@@ -256,8 +256,8 @@ export default async function SecurityPage() {
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 If you discover a security vulnerability, please report it responsibly to{' '}
-                <a href="mailto:security@vexnexa.com" className="text-primary hover:underline">
-                  security@vexnexa.com
+                <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+                  info@vexnexa.com
                 </a>
               </p>
             </div>
@@ -272,7 +272,7 @@ export default async function SecurityPage() {
               <p className="font-medium">Security Inquiries</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:security@vexnexa.com">security@vexnexa.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 For security vulnerabilities or privacy concerns, please contact us at the email above.
@@ -338,7 +338,7 @@ export default async function SecurityPage() {
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <a href="mailto:security@vexnexa.com">Contact Security</a>
+                <a href="mailto:info@vexnexa.com">Contact Security</a>
               </Button>
             </CardContent>
           </Card>

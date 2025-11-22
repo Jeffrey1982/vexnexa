@@ -158,8 +158,8 @@ export default async function PrivacyPage() {
                 <strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands <br />
                 <strong>Chamber of Commerce:</strong> 94848262 &nbsp;|&nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
                 <strong>{t('section1.email')}:</strong>{' '}
-                <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
-                  privacy@vexnexa.com
+                <a href="mailto:info@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                  info@vexnexa.com
                 </a>
                 {' '}| <strong>{t('section1.website')}:</strong>{' '}
                 <a href="https://vexnexa.com" className="text-primary underline-offset-4 hover:underline">
@@ -344,8 +344,8 @@ export default async function PrivacyPage() {
             </div>
             <p className="mt-3">
               Je rechten uitoefenen? Mail{' '}
-              <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
-                privacy@vexnexa.com
+              <a href="mailto:info@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                info@vexnexa.com
               </a>. {t('section9.responseText')}
             </p>
           </section>
@@ -392,8 +392,8 @@ export default async function PrivacyPage() {
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
                 Email:{' '}
-                <a href="mailto:privacy@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
-                  privacy@vexnexa.com
+                <a href="mailto:info@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+                  info@vexnexa.com
                 </a>
               </p>
               <p className="text-sm text-muted-foreground">

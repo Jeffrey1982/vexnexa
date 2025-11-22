@@ -454,7 +454,7 @@
         "title": "E-mail Ondersteuning",
         "description": "Voor algemene vragen en support",
         "detail": "Reactietijd: 24–72 uur",
-        "actionLabel": "support@vexnexa.com"
+        "actionLabel": "info@vexnexa.com"
       },
       "sales": {
         "title": "Enterprise en hogere limieten",
@@ -512,7 +512,7 @@
         "successTitle": "Bericht verzonden!",
         "successDescription": "We nemen binnen 24 uur contact met je op.",
         "errorTitle": "Er ging iets mis",
-        "errorDescription": "Probeer het later opnieuw of stuur een e-mail naar support@vexnexa.com"
+        "errorDescription": "Probeer het later opnieuw of stuur een e-mail naar info@vexnexa.com"
       }
     },
     "faq": {
@@ -988,7 +988,7 @@
     "footerDisclaimer": {
       "billing": "Facturatie verloopt via VexNexa. VexNexa is een product van VexNexa.",
       "questions": "Vragen? Mail",
-      "email": "support@vexnexa.com"
+      "email": "info@vexnexa.com"
     }
   },
   "changelog": {
@@ -1045,7 +1045,7 @@
       },
       "startScan": "Start je eerste scan",
       "backToHome": "Terug naar homepage",
-      "gdprNote": "AVG/GDPR compliant: Je kunt je altijd uitschrijven via de link in elke nieuwsbrief, of door een email te sturen naar support@vexnexa.com."
+      "gdprNote": "AVG/GDPR compliant: Je kunt je altijd uitschrijven via de link in elke nieuwsbrief, of door een email te sturen naar info@vexnexa.com."
     },
     "unsubscribed": {
       "title": "Uitgeschreven",

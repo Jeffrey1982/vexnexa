@@ -27,7 +27,7 @@ export function appUrl(path = "") {
 }
 
 export const BILLING_CONFIG = {
-  supportEmail: process.env.BILLING_SUPPORT_EMAIL || "support@vexnexa.com",
+  supportEmail: process.env.BILLING_SUPPORT_EMAIL || "info@vexnexa.com",
   webhookUrl: appUrl("/api/mollie/webhook"),
   successUrl: appUrl("/dashboard?checkout=success"),
   cancelUrl: appUrl("/pricing?checkout=cancelled")

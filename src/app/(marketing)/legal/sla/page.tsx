@@ -234,7 +234,7 @@ export default async function SLAPage() {
               <p className="font-medium">Support Contact</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:support@vexnexa.com">support@vexnexa.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
               </p>
               <p className="text-sm text-muted-foreground">
                 Of via het contact formulier in je dashboard

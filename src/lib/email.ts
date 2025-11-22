@@ -22,7 +22,7 @@ export async function sendContactNotification(data: ContactEmailData) {
     // Send notification to your team
     const teamNotification = await resend.emails.send({
       from: 'VexNexa Contact <noreply@vexnexa.com>',
-      to: ['support@vexnexa.com'],
+      to: ['info@vexnexa.com'],
       subject: `Nieuw contactbericht van ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -75,7 +75,7 @@ Dit bericht is verzonden via het contactformulier op vexnexa.com
             <p style="white-space: pre-wrap;">${message}</p>
           </div>
 
-          <p>Voor urgente vragen kun je direct mailen naar <a href="mailto:support@vexnexa.com" style="color: #7C3AED;">support@vexnexa.com</a>.</p>
+          <p>Voor urgente vragen kun je direct mailen naar <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
 
           <p>Met vriendelijke groet,<br>
           Het VexNexa team</p>
@@ -98,7 +98,7 @@ Bedankt voor je bericht. We hebben je contactverzoek ontvangen en nemen binnen 2
 Je bericht:
 ${message}
 
-Voor urgente vragen kun je direct mailen naar support@vexnexa.com.
+Voor urgente vragen kun je direct mailen naar info@vexnexa.com.
 
 Met vriendelijke groet,
 Het VexNexa team
@@ -337,7 +337,7 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string;
           <p style="color: #6b7280; font-size: 14px;">
             VexNexa - WCAG accessibility scanning platform<br>
             <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a><br><br>
-            <small>Dit is een systeemmelding over je account. Voor vragen: support@vexnexa.com</small>
+            <small>Dit is een systeemmelding over je account. Voor vragen: info@vexnexa.com</small>
           </p>
         </div>
       `,
@@ -368,7 +368,7 @@ Het VexNexa team
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
 
-Dit is een systeemmelding over je account. Voor vragen: support@vexnexa.com
+Dit is een systeemmelding over je account. Voor vragen: info@vexnexa.com
       `.trim()
     })
 
@@ -494,7 +494,7 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
 
           <p style="color: #6b7280; font-size: 14px;">
             Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.<br>
-            <a href="mailto:support@vexnexa.com?subject=Uitschrijven nieuwsbrief" style="color: #7C3AED;">Klik hier om je uit te schrijven</a>
+            <a href="mailto:info@vexnexa.com?subject=Uitschrijven nieuwsbrief" style="color: #7C3AED;">Klik hier om je uit te schrijven</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
@@ -518,7 +518,7 @@ Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 We versturen ongeveer 1-2 emails per maand en respecteren je inbox. Geen spam, beloofd!
 
 Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.
-Uitschrijven? Mail support@vexnexa.com met onderwerp "Uitschrijven nieuwsbrief"
+Uitschrijven? Mail info@vexnexa.com met onderwerp "Uitschrijven nieuwsbrief"
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
@@ -540,7 +540,7 @@ export async function sendTestEmail() {
   try {
     const result = await resend.emails.send({
       from: 'VexNexa <noreply@vexnexa.com>',
-      to: ['support@vexnexa.com'],
+      to: ['info@vexnexa.com'],
       subject: 'Test email - VexNexa',
       html: '<p>This is a test email from VexNexa contact form.</p>',
       text: 'This is a test email from VexNexa contact form.'
@@ -571,7 +571,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
 
     const result = await resend.emails.send({
       from: 'VexNexa <noreply@vexnexa.com>',
-      replyTo: 'support@vexnexa.com',
+      replyTo: 'info@vexnexa.com',
       to: [to],
       subject: subject,
       html: `
@@ -587,7 +587,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
               <p style="white-space: pre-wrap; margin: 0;">${message.replace(/\n/g, '<br>')}</p>
             </div>
 
-            <p>Voor vragen kun je direct reageren op deze email of contact opnemen via <a href="mailto:support@vexnexa.com" style="color: #7C3AED;">support@vexnexa.com</a>.</p>
+            <p>Voor vragen kun je direct reageren op deze email of contact opnemen via <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
 
             <p style="margin-top: 30px;">
               Met vriendelijke groet,<br>
@@ -609,7 +609,7 @@ Hallo,
 
 ${message}
 
-Voor vragen kun je direct reageren op deze email of contact opnemen via support@vexnexa.com.
+Voor vragen kun je direct reageren op deze email of contact opnemen via info@vexnexa.com.
 
 Met vriendelijke groet,
 ${adminName}

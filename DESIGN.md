@@ -379,4 +379,4 @@ None - the new system extends the existing Tailwind theme without removing defau
 For questions or issues with the design system:
 - **GitHub Issues**: https://github.com/vexnexa/vexnexa/issues
 - **Documentation**: https://vexnexa.com/docs
-- **Contact**: support@vexnexa.com
+- **Contact**: info@vexnexa.com

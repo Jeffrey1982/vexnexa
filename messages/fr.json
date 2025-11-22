@@ -439,7 +439,7 @@
         "title": "Support par E-mail",
         "description": "Pour les questions générales et le support",
         "detail": "Temps de réponse : 24–72 heures",
-        "actionLabel": "support@vexnexa.com"
+        "actionLabel": "info@vexnexa.com"
       },
       "sales": {
         "title": "Entreprise et limites supérieures",
@@ -497,7 +497,7 @@
         "successTitle": "Message envoyé !",
         "successDescription": "Nous vous contacterons dans les 24 heures.",
         "errorTitle": "Quelque chose s'est mal passé",
-        "errorDescription": "Réessayez plus tard ou envoyez un email à support@vexnexa.com"
+        "errorDescription": "Réessayez plus tard ou envoyez un email à info@vexnexa.com"
       }
     },
     "faq": {
@@ -973,7 +973,7 @@
     "footerDisclaimer": {
       "billing": "La facturation est effectuée via VexNexa. VexNexa est un produit de VexNexa.",
       "questions": "Des questions ? E-mail",
-      "email": "support@vexnexa.com"
+      "email": "info@vexnexa.com"
     }
   },
   "changelog": {
@@ -1030,7 +1030,7 @@
       },
       "startScan": "Commencez votre première analyse",
       "backToHome": "Retour à l'accueil",
-      "gdprNote": "Conforme RGPD : Vous pouvez toujours vous désinscrire via le lien dans chaque newsletter, ou en envoyant un email à support@vexnexa.com."
+      "gdprNote": "Conforme RGPD : Vous pouvez toujours vous désinscrire via le lien dans chaque newsletter, ou en envoyant un email à info@vexnexa.com."
     },
     "unsubscribed": {
       "title": "Désinscrit",

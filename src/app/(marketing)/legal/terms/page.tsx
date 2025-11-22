@@ -174,7 +174,7 @@ export default async function TermsPage() {
                 <strong>Business Type:</strong> Sole proprietorship (Eenmanszaak) <br />
                 <strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands <br />
                 <strong>Chamber of Commerce:</strong> 94848262 &nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
-                <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>
+                <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
               </p>
             </div>
           </section>
@@ -200,7 +200,7 @@ export default async function TermsPage() {
             <h3>Account & beveiliging</h3>
             <ul>
               <li>Beheer je inloggegevens zorgvuldig; elke activiteit onder je account wordt aan jou toegerekend</li>
-              <li>Meld misbruik of vermoeden van een datalek direct via <a href="mailto:security@vexnexa.com">security@vexnexa.com</a></li>
+              <li>Meld misbruik of vermoeden van een datalek direct via <a href="mailto:info@vexnexa.com">info@vexnexa.com</a></li>
               <li>Wij mogen accounts tijdelijk blokkeren bij vermoeden van misbruik of veiligheidsrisico’s</li>
             </ul>
           </section>
@@ -301,7 +301,7 @@ export default async function TermsPage() {
             <h3>Kennisgevingen</h3>
             <p>
               Vermoed je een inbreuk (bijv. onrechtmatig gebruik van je merk)? Mail{' '}
-              <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>.
+              <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>.
             </p>
           </section>
 
@@ -370,7 +370,7 @@ export default async function TermsPage() {
             <p>Nederlands recht is van toepassing, met uitzondering van conflictregels.</p>
             <h3>Geschillenbeslechting</h3>
             <ol>
-              <li>Eerst intern proberen op te lossen: mail <a href="mailto:legal@vexnexa.com">legal@vexnexa.com</a></li>
+              <li>Eerst intern proberen op te lossen: mail <a href="mailto:info@vexnexa.com">info@vexnexa.com</a></li>
               <li>Reactietermijn: 30 dagen om een oplossing te vinden</li>
               <li>Bij uitblijven oplossing: bemiddeling (indien beide partijen instemmen)</li>
               <li>Bevoegde rechter: rechtbank Amsterdam</li>
@@ -406,7 +406,7 @@ export default async function TermsPage() {
               <p className="font-medium">Juridische vragen</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:legal@vexnexa.com">legal@vexnexa.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
               </p>
             </div>
           </section>

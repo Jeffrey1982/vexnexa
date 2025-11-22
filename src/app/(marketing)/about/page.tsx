@@ -45,7 +45,7 @@ function JsonLd() {
         logo: 'https://vexnexa.com/logo.png',
         contactPoint: {
           '@type': 'ContactPoint',
-          email: 'support@vexnexa.com',
+          email: 'info@vexnexa.com',
           contactType: 'customer service',
           areaServed: 'WORLDWIDE',
           availableLanguage: ['nl', 'en', 'fr'],

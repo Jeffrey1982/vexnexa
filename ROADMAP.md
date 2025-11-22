@@ -355,7 +355,7 @@ See what others have requested and upvote your favorites
 Get early access to new features and provide feedback
 
 **4. Contact Us Directly**
-Email [product@vexnexa.com](mailto:product@vexnexa.com) with detailed use cases
+Email [info@vexnexa.com](mailto:info@vexnexa.com) with detailed use cases
 
 ---
 
@@ -475,4 +475,4 @@ Don't wait for future features. VexNexa is powerful right now.
 **Last Updated**: 2025-01-18
 **Next Update**: February 2025
 **Status**: Active Roadmap
-**Feedback**: product@vexnexa.com
+**Feedback**: info@vexnexa.com

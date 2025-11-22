@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   try {
     // Get test email from query param or use default
     const { searchParams } = new URL(request.url)
-    const testEmail = searchParams.get('email') || 'support@vexnexa.com'
+    const testEmail = searchParams.get('email') || 'info@vexnexa.com'
 
     console.log('Sending test email to:', testEmail)
 

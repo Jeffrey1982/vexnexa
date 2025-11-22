@@ -441,7 +441,7 @@
         "title": "E-mail Support",
         "description": "For general questions and support",
         "detail": "Response time: 24–72 hours",
-        "actionLabel": "support@vexnexa.com"
+        "actionLabel": "info@vexnexa.com"
       },
       "sales": {
         "title": "Enterprise & Higher Limits",
@@ -499,7 +499,7 @@
         "successTitle": "Message sent!",
         "successDescription": "We will contact you within 24 hours.",
         "errorTitle": "Something went wrong",
-        "errorDescription": "Try again later or send an email to support@vexnexa.com"
+        "errorDescription": "Try again later or send an email to info@vexnexa.com"
       }
     },
     "faq": {
@@ -975,7 +975,7 @@
     "footerDisclaimer": {
       "billing": "Invoicing is done through VexNexa. VexNexa is a product of VexNexa.",
       "questions": "Questions? Email",
-      "email": "support@vexnexa.com"
+      "email": "info@vexnexa.com"
     }
   },
   "changelog": {
@@ -1032,7 +1032,7 @@
       },
       "startScan": "Start your first scan",
       "backToHome": "Back to homepage",
-      "gdprNote": "GDPR compliant: You can always unsubscribe via the link in every newsletter, or by sending an email to support@vexnexa.com."
+      "gdprNote": "GDPR compliant: You can always unsubscribe via the link in every newsletter, or by sending an email to info@vexnexa.com."
     },
     "unsubscribed": {
       "title": "Unsubscribed",
