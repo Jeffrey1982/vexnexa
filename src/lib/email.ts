@@ -627,3 +627,168 @@ vexnexa.com
     throw error
   }
 }
+
+export interface NewUserNotificationData {
+  email: string
+  firstName?: string
+  lastName?: string
+  company?: string
+  jobTitle?: string
+  phoneNumber?: string
+  website?: string
+  country?: string
+  marketingEmails: boolean
+  productUpdates: boolean
+  trialEndsAt?: Date
+}
+
+export async function sendNewUserNotification(data: NewUserNotificationData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping new user notification')
+    return null
+  }
+
+  try {
+    const {
+      email,
+      firstName,
+      lastName,
+      company,
+      jobTitle,
+      phoneNumber,
+      website,
+      country,
+      marketingEmails,
+      productUpdates,
+      trialEndsAt
+    } = data
+
+    const trialEndDate = trialEndsAt
+      ? new Intl.DateTimeFormat('en-US', {
+          day: 'numeric', month: 'long', year: 'numeric'
+        }).format(trialEndsAt)
+      : 'Not set'
+
+    const result = await resend.emails.send({
+      from: 'VexNexa Notifications <support@vexnexa.com>',
+      to: ['info@vexnexa.com'],
+      subject: `🎉 New user registration: ${firstName} ${lastName}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #059669 0%, #047857 100%); padding: 24px; border-radius: 12px 12px 0 0;">
+            <h2 style="color: white; margin: 0; font-size: 24px;">🎉 New User Registration</h2>
+            <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0;">Someone just joined VexNexa!</p>
+          </div>
+
+          <div style="background: #f8f9fa; padding: 24px; border-radius: 0 0 12px 12px; border: 1px solid #e5e7eb; border-top: none;">
+            <h3 style="color: #1F2937; margin-top: 0; margin-bottom: 16px;">User Details</h3>
+
+            <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600; width: 140px;">Name:</td>
+                  <td style="padding: 8px 0; color: #1F2937;">${firstName || 'N/A'} ${lastName || ''}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Email:</td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #059669;">${email}</a></td>
+                </tr>
+                ${company ? `<tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Company:</td>
+                  <td style="padding: 8px 0; color: #1F2937;">${company}</td>
+                </tr>` : ''}
+                ${jobTitle ? `<tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Job Title:</td>
+                  <td style="padding: 8px 0; color: #1F2937;">${jobTitle}</td>
+                </tr>` : ''}
+                ${phoneNumber ? `<tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Phone:</td>
+                  <td style="padding: 8px 0; color: #1F2937;">${phoneNumber}</td>
+                </tr>` : ''}
+                ${website ? `<tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Website:</td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #059669;" target="_blank">${website}</a></td>
+                </tr>` : ''}
+                ${country ? `<tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Country:</td>
+                  <td style="padding: 8px 0; color: #1F2937;">${country}</td>
+                </tr>` : ''}
+              </table>
+            </div>
+
+            <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+              <h4 style="color: #1F2937; margin: 0 0 12px 0; font-size: 16px;">Communication Preferences</h4>
+              <p style="margin: 4px 0; color: #374151;">
+                <strong style="color: #6B7280;">Marketing Emails:</strong>
+                <span style="color: ${marketingEmails ? '#059669' : '#DC2626'}; font-weight: 600;">
+                  ${marketingEmails ? '✅ Opted In' : '❌ Opted Out'}
+                </span>
+              </p>
+              <p style="margin: 4px 0; color: #374151;">
+                <strong style="color: #6B7280;">Product Updates:</strong>
+                <span style="color: ${productUpdates ? '#059669' : '#DC2626'}; font-weight: 600;">
+                  ${productUpdates ? '✅ Opted In' : '❌ Opted Out'}
+                </span>
+              </p>
+            </div>
+
+            <div style="background: #EFF6FF; padding: 16px; border-radius: 8px; border-left: 4px solid #3B82F6;">
+              <h4 style="color: #1E40AF; margin: 0 0 8px 0; font-size: 16px;">Trial Information</h4>
+              <p style="margin: 4px 0; color: #1E40AF;">
+                <strong>Trial Ends:</strong> ${trialEndDate}
+              </p>
+              <p style="margin: 4px 0; color: #1E40AF;">
+                <strong>Plan:</strong> 14-day Trial
+              </p>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+              <p style="color: #6B7280; font-size: 14px; margin: 0;">
+                <strong>Timestamp:</strong> ${new Date().toLocaleString('en-US', {
+                  dateStyle: 'full',
+                  timeStyle: 'long'
+                })}
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <p style="color: #9CA3AF; font-size: 12px;">
+              VexNexa Admin Notification System
+            </p>
+          </div>
+        </div>
+      `,
+      text: `
+🎉 NEW USER REGISTRATION
+
+User Details:
+- Name: ${firstName || 'N/A'} ${lastName || ''}
+- Email: ${email}
+${company ? `- Company: ${company}` : ''}
+${jobTitle ? `- Job Title: ${jobTitle}` : ''}
+${phoneNumber ? `- Phone: ${phoneNumber}` : ''}
+${website ? `- Website: ${website}` : ''}
+${country ? `- Country: ${country}` : ''}
+
+Communication Preferences:
+- Marketing Emails: ${marketingEmails ? '✅ Opted In' : '❌ Opted Out'}
+- Product Updates: ${productUpdates ? '✅ Opted In' : '❌ Opted Out'}
+
+Trial Information:
+- Trial Ends: ${trialEndDate}
+- Plan: 14-day Trial
+
+Timestamp: ${new Date().toLocaleString('en-US')}
+
+---
+VexNexa Admin Notification System
+      `.trim()
+    })
+
+    return result
+  } catch (error) {
+    console.error('Failed to send new user notification:', error)
+    throw error
+  }
+}

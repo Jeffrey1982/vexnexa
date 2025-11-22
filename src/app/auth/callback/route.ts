@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { NextRequest, NextResponse } from 'next/server'
 import { ensureUserInDatabase } from '@/lib/user-sync'
-import { sendWelcomeEmail } from '@/lib/email'
+import { sendWelcomeEmail, sendNewUserNotification } from '@/lib/email'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
@@ -74,6 +74,26 @@ export async function GET(request: NextRequest) {
             console.log('Welcome email sent to:', data.user.email)
           } catch (emailError) {
             console.error('[Callback] ⚠️  Welcome email failed (non-fatal):', emailError)
+          }
+
+          // Send admin notification for new user registration
+          try {
+            await sendNewUserNotification({
+              email: data.user.email!,
+              firstName: dbUser.firstName,
+              lastName: dbUser.lastName || undefined,
+              company: dbUser.company || undefined,
+              jobTitle: dbUser.jobTitle || undefined,
+              phoneNumber: dbUser.phoneNumber || undefined,
+              website: dbUser.website || undefined,
+              country: dbUser.country || undefined,
+              marketingEmails: dbUser.marketingEmails,
+              productUpdates: dbUser.productUpdates,
+              trialEndsAt: dbUser.trialEndsAt || undefined,
+            })
+            console.log('Admin notification sent for new user:', data.user.email)
+          } catch (adminEmailError) {
+            console.error('[Callback] ⚠️  Admin notification failed (non-fatal):', adminEmailError)
           }
         }
 
