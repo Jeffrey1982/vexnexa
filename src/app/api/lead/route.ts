@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     if (!rateLimitResult.success) {
       return NextResponse.json(
         {
-          error: 'Te veel verzoeken. Probeer het later opnieuw.',
+          error: 'Too many requests. Try again later.',
           retryAfter: rateLimitResult.resetTime
         },
         {
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     const baseEmailOptions = {
       from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Bevestig je inschrijving voor de VexNexa nieuwsbrief',
+      subject: 'Confirm your subscription to the VexNexa newsletter',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
@@ -75,33 +75,33 @@ export async function POST(request: NextRequest) {
             <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
 
-          <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px;">Bevestig je inschrijving 📧</h2>
+          <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px;">Confirm your subscription 📧</h2>
 
           <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-            Bedankt voor je interesse in onze nieuwsbrief! <strong>Je hebt je ingeschreven via ${friendlySource}</strong>.
-            Om je inschrijving te voltooien en te voldoen aan de AVG/GDPR, klik je op onderstaande knop om je e-mailadres te bevestigen.
+            Thank you for your interest in our newsletter! <strong>You signed up via ${friendlySource}</strong>.
+            To complete your subscription and comply with GDPR, click the button below to confirm your email address.
           </p>
 
           <div style="background: #F8FAFC; padding: 24px; border-radius: 8px; margin: 24px 0;">
-            <h3 style="color: #1F2937; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">Wat krijg je?</h3>
+            <h3 style="color: #1F2937; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">What do you get?</h3>
             <ul style="color: #4b5563; line-height: 1.6; margin: 0; padding-left: 20px;">
-              <li>🚀 Productnieuws en nieuwe features</li>
-              <li>💡 Tips voor betere webtoegankelijkheid</li>
-              <li>📊 Trends en best practices in WCAG</li>
-              <li>🎯 Maximaal 2 emails per maand, geen spam</li>
+              <li>🚀 Product news and new features</li>
+              <li>💡 Tips for better web accessibility</li>
+              <li>📊 Trends and best practices in WCAG</li>
+              <li>🎯 Maximum 2 emails per month, no spam</li>
             </ul>
           </div>
 
           <div style="text-align: center; margin: 32px 0;">
             <a href="${confirmUrl}" style="display: inline-block; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;">
-              Ja, ik wil de nieuwsbrief ontvangen
+              Yes, I want to receive the newsletter
             </a>
           </div>
 
           <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 16px; margin: 24px 0;">
             <p style="color: #92400E; font-size: 14px; margin: 0; line-height: 1.4;">
-              <strong>AVG/GDPR Compliance:</strong> Door te klikken bevestig je dat je onze nieuwsbrief wilt ontvangen.
-              Je kunt je altijd weer uitschrijven.
+              <strong>GDPR Compliance:</strong> By clicking, you confirm that you want to receive our newsletter.
+              You can unsubscribe at any time.
             </p>
           </div>
 
@@ -109,28 +109,28 @@ export async function POST(request: NextRequest) {
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center;">
             <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3B82F6;">vexnexa.com</a><br>
-            Privacy-first WCAG scanning • Gemaakt in Nederland
+            Privacy-first WCAG scanning • Made in the Netherlands
           </p>
         </div>
       `,
       text: `
-Bevestig je inschrijving voor de VexNexa nieuwsbrief
+Confirm your subscription to the VexNexa newsletter
 
-Bedankt voor je interesse in onze nieuwsbrief! Je hebt je ingeschreven via ${friendlySource}.
+Thank you for your interest in our newsletter! You signed up via ${friendlySource}.
 
-Om je inschrijving te voltooien en te voldoen aan de AVG/GDPR, bevestig je e-mailadres door naar deze link te gaan:
+To complete your subscription and comply with GDPR, confirm your email address by going to this link:
 ${confirmUrl}
 
-Wat krijg je?
-- Productnieuws en nieuwe features
-- Tips voor betere webtoegankelijkheid
-- Trends en best practices in WCAG
-- Maximaal 2 emails per maand, geen spam
+What do you get?
+- Product news and new features
+- Tips for better web accessibility
+- Trends and best practices in WCAG
+- Maximum 2 emails per month, no spam
 
-AVG/GDPR Compliance: Door te klikken bevestig je dat je onze nieuwsbrief wilt ontvangen. Je kunt je altijd weer uitschrijven.
+GDPR Compliance: By clicking, you confirm that you want to receive our newsletter. You can unsubscribe at any time.
 
 VexNexa | vexnexa.com
-Privacy-first WCAG scanning • Gemaakt in Nederland
+Privacy-first WCAG scanning • Made in the Netherlands
       `.trim()
     }
 
@@ -138,7 +138,7 @@ Privacy-first WCAG scanning • Gemaakt in Nederland
     const finalEmailOptions = addMarketingEmailHeaders(baseEmailOptions, {
       unsubscribeToken,
       campaignName: 'newsletter_confirmation',
-      preheaderText: 'Bevestig je e-mailadres om onze nieuwsbrief te ontvangen'
+      preheaderText: 'Confirm your email address to receive our newsletter'
     })
 
     const result = await resend.emails.send(finalEmailOptions)
@@ -149,26 +149,26 @@ Privacy-first WCAG scanning • Gemaakt in Nederland
       await resend.emails.send({
         from: 'VexNexa Notifications <noreply@vexnexa.com>',
         to: [adminEmail],
-        subject: 'Nieuwe nieuwsbrief inschrijving',
+        subject: 'New newsletter subscription',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #3B82F6;">📧 Nieuwe nieuwsbrief inschrijving</h2>
+            <h2 style="color: #3B82F6;">📧 New newsletter subscription</h2>
             <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Ingeschreven via:</strong> ${friendlySource}</p>
-            <p><strong>Technische bron:</strong> ${source || 'footer_newsletter'}</p>
-            <p><strong>Tijdstip:</strong> ${new Date().toLocaleString('nl-NL')}</p>
-            <p><strong>IP adres:</strong> ${clientIP}</p>
-            <p style="color: #F59E0B;"><strong>Status:</strong> Wacht op bevestiging (double opt-in)</p>
+            <p><strong>Signed up via:</strong> ${friendlySource}</p>
+            <p><strong>Technical source:</strong> ${source || 'footer_newsletter'}</p>
+            <p><strong>Timestamp:</strong> ${new Date().toLocaleString('en-US')}</p>
+            <p><strong>IP address:</strong> ${clientIP}</p>
+            <p style="color: #F59E0B;"><strong>Status:</strong> Awaiting confirmation (double opt-in)</p>
           </div>
         `,
-        text: `📧 Nieuwe nieuwsbrief inschrijving
+        text: `📧 New newsletter subscription
 
 Email: ${email}
-Ingeschreven via: ${friendlySource}
-Technische bron: ${source || 'footer_newsletter'}
-Tijdstip: ${new Date().toLocaleString('nl-NL')}
-IP adres: ${clientIP}
-Status: Wacht op bevestiging (double opt-in)`
+Signed up via: ${friendlySource}
+Technical source: ${source || 'footer_newsletter'}
+Timestamp: ${new Date().toLocaleString('en-US')}
+IP address: ${clientIP}
+Status: Awaiting confirmation (double opt-in)`
       })
     } catch (adminEmailError) {
       console.error('Failed to send admin notification:', adminEmailError)
@@ -178,7 +178,7 @@ Status: Wacht op bevestiging (double opt-in)`
     return NextResponse.json({
       success: true,
       requiresConfirmation: true,
-      message: 'Bevestigingsmail verzonden! Check je inbox om je inschrijving te voltooien.',
+      message: 'Confirmation email sent! Check your inbox to complete your subscription.',
       details: {
         email,
         source: friendlySource,
@@ -189,7 +189,7 @@ Status: Wacht op bevestiging (double opt-in)`
   } catch (error) {
     console.error('Newsletter signup error:', error)
     return NextResponse.json(
-      { error: 'Er is een fout opgetreden. Probeer het later opnieuw.' },
+      { error: 'An error occurred. Please try again later.' },
       { status: 500 }
     )
   }

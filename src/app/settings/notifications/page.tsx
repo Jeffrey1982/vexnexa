@@ -79,8 +79,8 @@ export default function NotificationSettingsPage() {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Fout bij opslaan",
-        description: "Probeer het later opnieuw.",
+        title: "Error saving",
+        description: "Please try again later.",
       })
     } finally {
       setSaving(false)

@@ -121,37 +121,37 @@ export type UTMPresetKey = keyof typeof UTM_PRESETS
 // Source mapping for user-friendly descriptions in emails
 export const SOURCE_NAMES = {
   // Website locations
-  'footer_newsletter': 'onze website',
-  'homepage_newsletter': 'onze homepage',
-  'contact_newsletter': 'het contactformulier',
-  'pricing_newsletter': 'de prijzenpagina',
-  'features_newsletter': 'de features pagina',
-  'blog_newsletter': 'onze blog',
-  'about_newsletter': 'de over ons pagina',
+  'footer_newsletter': 'our website',
+  'homepage_newsletter': 'our homepage',
+  'contact_newsletter': 'the contact form',
+  'pricing_newsletter': 'the pricing page',
+  'features_newsletter': 'the features page',
+  'blog_newsletter': 'our blog',
+  'about_newsletter': 'the about us page',
 
   // Pop-ups and modals
-  'popup_newsletter': 'een popup op onze website',
-  'modal_newsletter': 'een aanmeldingsformulier',
-  'exit_intent': 'een exit-intent popup',
+  'popup_newsletter': 'a popup on our website',
+  'modal_newsletter': 'a signup form',
+  'exit_intent': 'an exit-intent popup',
 
   // Campaign sources
-  'social_newsletter': 'sociale media',
-  'email_newsletter': 'een email campagne',
-  'referral_newsletter': 'een verwijzing',
-  'direct_newsletter': 'directe toegang',
+  'social_newsletter': 'social media',
+  'email_newsletter': 'an email campaign',
+  'referral_newsletter': 'a referral',
+  'direct_newsletter': 'direct access',
 
   // Default fallback
-  'newsletter': 'onze website',
-  'unknown': 'onze website',
+  'newsletter': 'our website',
+  'unknown': 'our website',
 
   // Testing
-  'test': 'een test',
-  'test_compliance': 'een compliance test',
-  'test_gdpr': 'een GDPR test'
+  'test': 'a test',
+  'test_compliance': 'a compliance test',
+  'test_gdpr': 'a GDPR test'
 } as const
 
 export function getSourceDisplayName(source?: string): string {
-  if (!source) return 'onze website'
+  if (!source) return 'our website'
 
   // Check if we have a mapping for this source
   const mappedName = SOURCE_NAMES[source as keyof typeof SOURCE_NAMES]
@@ -162,20 +162,20 @@ export function getSourceDisplayName(source?: string): string {
     const parts = source.split('_')
     if (parts[1] === 'newsletter') {
       switch (parts[0]) {
-        case 'footer': return 'onze website'
-        case 'homepage': return 'onze homepage'
-        case 'contact': return 'het contactformulier'
-        case 'pricing': return 'de prijzenpagina'
-        case 'features': return 'de features pagina'
-        case 'blog': return 'onze blog'
-        case 'about': return 'de over ons pagina'
-        default: return 'onze website'
+        case 'footer': return 'our website'
+        case 'homepage': return 'our homepage'
+        case 'contact': return 'the contact form'
+        case 'pricing': return 'the pricing page'
+        case 'features': return 'the features page'
+        case 'blog': return 'our blog'
+        case 'about': return 'the about us page'
+        default: return 'our website'
       }
     }
   }
 
   // Fallback to generic description
-  return 'onze website'
+  return 'our website'
 }
 
 export type SourceKey = keyof typeof SOURCE_NAMES

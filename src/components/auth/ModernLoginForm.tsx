@@ -259,7 +259,7 @@ export default function ModernLoginForm() {
                   href="/auth/forgot-password"
                   className="text-[#0F5C5C] hover:text-[#FF6B35] transition-colors font-medium"
                 >
-                  Wachtwoord vergeten?
+                  Forgot password?
                 </a>
               </div>
 

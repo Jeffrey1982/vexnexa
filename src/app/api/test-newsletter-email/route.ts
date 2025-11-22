@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     const baseEmailOptions = {
       from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: '🧪 TEST: Bevestig je inschrijving voor de VexNexa nieuwsbrief',
+      subject: '🧪 TEST: Confirm your subscription to the VexNexa newsletter',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
       text: `
 🧪 TEST EMAIL - Friendly Source Names
 
-Bevestig je inschrijving voor de VexNexa nieuwsbrief
+Confirm your subscription to the VexNexa newsletter
 
 Bedankt voor je interesse in onze nieuwsbrief! Je hebt je ingeschreven via ${friendlySource}.
 

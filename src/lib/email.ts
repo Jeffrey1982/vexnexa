@@ -23,37 +23,37 @@ export async function sendContactNotification(data: ContactEmailData) {
     const teamNotification = await resend.emails.send({
       from: 'VexNexa Contact <noreply@vexnexa.com>',
       to: ['info@vexnexa.com'],
-      subject: `Nieuw contactbericht van ${name}`,
+      subject: `New contact message from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Nieuw contactbericht</h2>
+          <h2 style="color: #7C3AED;">New contact message</h2>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Contactgegevens</h3>
-            <p><strong>Naam:</strong> ${name}</p>
-            <p><strong>E-mail:</strong> ${email}</p>
+            <h3 style="margin-top: 0;">Contact details</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
           </div>
 
           <div style="background: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
-            <h3 style="margin-top: 0;">Bericht</h3>
+            <h3 style="margin-top: 0;">Message</h3>
             <p style="white-space: pre-wrap;">${message}</p>
           </div>
 
           <p style="margin-top: 30px; color: #6b7280; font-size: 14px;">
-            Dit bericht is verzonden via het contactformulier op vexnexa.com
+            This message was sent via the contact form on vexnexa.com
           </p>
         </div>
       `,
       text: `
-Nieuw contactbericht van ${name}
+New contact message from ${name}
 
-Naam: ${name}
-E-mail: ${email}
+Name: ${name}
+Email: ${email}
 
-Bericht:
+Message:
 ${message}
 
-Dit bericht is verzonden via het contactformulier op vexnexa.com
+This message was sent via the contact form on vexnexa.com
       `.trim()
     })
 
@@ -61,24 +61,24 @@ Dit bericht is verzonden via het contactformulier op vexnexa.com
     const userConfirmation = await resend.emails.send({
       from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Bedankt voor je bericht - VexNexa',
+      subject: 'Thank you for your message - VexNexa',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Bedankt voor je bericht!</h2>
+          <h2 style="color: #7C3AED;">Thank you for your message!</h2>
 
-          <p>Hoi ${name},</p>
+          <p>Hi ${name},</p>
 
-          <p>Bedankt voor je bericht. We hebben je contactverzoek ontvangen en nemen binnen 24 uur contact met je op.</p>
+          <p>Thank you for your message. We have received your contact request and will get back to you within 24 hours.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Je bericht</h3>
+            <h3 style="margin-top: 0;">Your message</h3>
             <p style="white-space: pre-wrap;">${message}</p>
           </div>
 
-          <p>Voor urgente vragen kun je direct mailen naar <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
+          <p>For urgent questions, you can email us directly at <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
 
-          <p>Met vriendelijke groet,<br>
-          Het VexNexa team</p>
+          <p>Best regards,<br>
+          The VexNexa team</p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
@@ -89,19 +89,19 @@ Dit bericht is verzonden via het contactformulier op vexnexa.com
         </div>
       `,
       text: `
-Bedankt voor je bericht!
+Thank you for your message!
 
-Hoi ${name},
+Hi ${name},
 
-Bedankt voor je bericht. We hebben je contactverzoek ontvangen en nemen binnen 24 uur contact met je op.
+Thank you for your message. We have received your contact request and will get back to you within 24 hours.
 
-Je bericht:
+Your message:
 ${message}
 
-Voor urgente vragen kun je direct mailen naar info@vexnexa.com.
+For urgent questions, you can email us directly at info@vexnexa.com.
 
-Met vriendelijke groet,
-Het VexNexa team
+Best regards,
+The VexNexa team
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
@@ -139,29 +139,29 @@ export async function sendTeamInvitation(data: TeamInvitationData) {
     const result = await resend.emails.send({
       from: 'VexNexa Teams <noreply@vexnexa.com>',
       to: [inviteEmail],
-      subject: `Uitnodiging voor team "${teamName}" - VexNexa`,
+      subject: `Invitation to team "${teamName}" - VexNexa`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Je bent uitgenodigd voor een team!</h2>
+          <h2 style="color: #7C3AED;">You've been invited to a team!</h2>
 
-          <p>Hoi,</p>
+          <p>Hi,</p>
 
-          <p><strong>${inviterName}</strong> heeft je uitgenodigd om lid te worden van het team <strong>"${teamName}"</strong> op VexNexa als <strong>${role}</strong>.</p>
+          <p><strong>${inviterName}</strong> has invited you to join the team <strong>"${teamName}"</strong> on VexNexa as <strong>${role}</strong>.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-            <h3 style="margin-top: 0;">Accepteer je uitnodiging</h3>
+            <h3 style="margin-top: 0;">Accept your invitation</h3>
             <a href="${inviteUrl}" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-              Lid worden van team
+              Join team
             </a>
           </div>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Als de knop niet werkt, kopieer dan deze link: <br>
+            If the button doesn't work, copy this link: <br>
             <a href="${inviteUrl}" style="color: #7C3AED;">${inviteUrl}</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij VexNexa, wordt er automatisch een account voor je aangemaakt.
+            This invitation expires in 7 days. If you don't have a VexNexa account, one will be automatically created for you.
           </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -173,16 +173,16 @@ export async function sendTeamInvitation(data: TeamInvitationData) {
         </div>
       `,
       text: `
-Je bent uitgenodigd voor team "${teamName}" - VexNexa
+You've been invited to team "${teamName}" - VexNexa
 
-Hoi,
+Hi,
 
-${inviterName} heeft je uitgenodigd om lid te worden van het team "${teamName}" op VexNexa als ${role}.
+${inviterName} has invited you to join the team "${teamName}" on VexNexa as ${role}.
 
-Accepteer je uitnodiging door naar deze link te gaan:
+Accept your invitation by going to this link:
 ${inviteUrl}
 
-Deze uitnodiging verloopt over 7 dagen. Als je geen account hebt bij VexNexa, wordt er automatisch een account voor je aangemaakt.
+This invitation expires in 7 days. If you don't have a VexNexa account, one will be automatically created for you.
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
@@ -214,33 +214,33 @@ export async function sendPasswordResetEmail(data: PasswordResetData) {
     const result = await resend.emails.send({
       from: 'VexNexa Security <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Reset je VexNexa wachtwoord',
+      subject: 'Reset your VexNexa password',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Wachtwoord opnieuw instellen</h2>
+          <h2 style="color: #7C3AED;">Reset your password</h2>
 
-          <p>Hoi,</p>
+          <p>Hi,</p>
 
-          <p>We hebben een verzoek ontvangen om je wachtwoord voor VexNexa opnieuw in te stellen.</p>
+          <p>We received a request to reset your VexNexa password.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-            <h3 style="margin-top: 0;">Reset je wachtwoord</h3>
+            <h3 style="margin-top: 0;">Reset your password</h3>
             <a href="${resetUrl}" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-              Nieuw wachtwoord instellen
+              Set new password
             </a>
           </div>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Als de knop niet werkt, kopieer dan deze link: <br>
+            If the button doesn't work, copy this link: <br>
             <a href="${resetUrl}" style="color: #7C3AED;">${resetUrl}</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Deze link is 1 uur geldig. Als je dit verzoek niet hebt gedaan, kun je deze email negeren.
+            This link is valid for 1 hour. If you didn't make this request, you can ignore this email.
           </p>
 
           ${userAgent ? `<p style="color: #6b7280; font-size: 12px;">
-            Verzoek gedaan vanaf: ${userAgent}
+            Request made from: ${userAgent}
           </p>` : ''}
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -252,18 +252,18 @@ export async function sendPasswordResetEmail(data: PasswordResetData) {
         </div>
       `,
       text: `
-Wachtwoord opnieuw instellen - VexNexa
+Reset your password - VexNexa
 
-Hoi,
+Hi,
 
-We hebben een verzoek ontvangen om je wachtwoord voor VexNexa opnieuw in te stellen.
+We received a request to reset your VexNexa password.
 
-Reset je wachtwoord door naar deze link te gaan:
+Reset your password door naar deze link te gaan:
 ${resetUrl}
 
-Deze link is 1 uur geldig. Als je dit verzoek niet hebt gedaan, kun je deze email negeren.
+This link is valid for 1 hour. If you didn't make this request, you can ignore this email.
 
-${userAgent ? `Verzoek gedaan vanaf: ${userAgent}` : ''}
+${userAgent ? `Request made from: ${userAgent}` : ''}
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
@@ -295,80 +295,80 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string;
     const result = await resend.emails.send({
       from: 'VexNexa <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Welkom bij VexNexa! 🎉',
+      subject: 'Welcome to VexNexa! 🎉',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Welkom bij VexNexa, ${firstName}! 🎉</h2>
+          <h2 style="color: #7C3AED;">Welcome to VexNexa, ${firstName}! 🎉</h2>
 
-          <p>Bedankt voor je aanmelding! Je bent nu klaar om websites toegankelijker te maken.</p>
+          <p>Thank you for signing up! You're now ready to make websites more accessible.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Je 14-daagse gratis proefperiode is gestart</h3>
-            <p>Je hebt volledige toegang tot alle Pro functies:</p>
+            <h3 style="margin-top: 0;">Your 14-day free trial has started</h3>
+            <p>You have full access to all Pro features:</p>
             <ul>
-              <li>✅ Onbeperkte WCAG-scans</li>
-              <li>✅ Team samenwerking</li>
-              <li>✅ Geavanceerde rapportage</li>
+              <li>✅ Unlimited WCAG scans</li>
+              <li>✅ Team collaboration</li>
+              <li>✅ Advanced reporting</li>
               <li>✅ Real-time monitoring</li>
             </ul>
           </div>
 
           <div style="text-align: center; margin: 30px 0;">
             <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-              Start je eerste scan
+              Start your first scan
             </a>
           </div>
 
-          <h3>Volgende stappen:</h3>
+          <h3>Next steps:</h3>
           <ol>
-            <li><strong>Voeg je eerste website toe</strong> - Begin met een snelle scan</li>
-            <li><strong>Nodig teamleden uit</strong> - Werk samen aan accessibility</li>
-            <li><strong>Stel monitoring in</strong> - Krijg alerts bij nieuwe issues</li>
+            <li><strong>Add your first website</strong> - Start with a quick scan</li>
+            <li><strong>Invite team members</strong> - Collaborate on accessibility</li>
+            <li><strong>Set up monitoring</strong> - Get alerts for new issues</li>
           </ol>
 
-          <p>Heb je vragen? Reageer gewoon op deze email of bezoek ons <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/contact" style="color: #7C3AED;">contact centrum</a>.</p>
+          <p>Have questions? Just reply to this email or visit our <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/contact" style="color: #7C3AED;">contact center</a>.</p>
 
-          <p>Veel succes met het toegankelijker maken van het web! 🚀</p>
+          <p>Good luck making the web more accessible! 🚀</p>
 
-          <p>Het VexNexa team</p>
+          <p>The VexNexa team</p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
             VexNexa - WCAG accessibility scanning platform<br>
             <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a><br><br>
-            <small>Dit is een systeemmelding over je account. Voor vragen: info@vexnexa.com</small>
+            <small>This is a system notification about your account. For questions: info@vexnexa.com</small>
           </p>
         </div>
       `,
       text: `
-Welkom bij VexNexa, ${firstName}! 🎉
+Welcome to VexNexa, ${firstName}! 🎉
 
-Bedankt voor je aanmelding! Je bent nu klaar om websites toegankelijker te maken.
+Thank you for signing up! You're now ready to make websites more accessible.
 
-Je 14-daagse gratis proefperiode is gestart met volledige toegang tot alle Pro functies:
-- Onbeperkte WCAG-scans
-- Team samenwerking
-- Geavanceerde rapportage
+Your 14-day free trial has started with full access to all Pro features:
+- Unlimited WCAG scans
+- Team collaboration
+- Advanced reporting
 - Real-time monitoring
 
-Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard
+Start your first scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard
 
-Volgende stappen:
-1. Voeg je eerste website toe - Begin met een snelle scan
-2. Nodig teamleden uit - Werk samen aan accessibility
-3. Stel monitoring in - Krijg alerts bij nieuwe issues
+Next steps:
+1. Add your first website - Start with a quick scan
+2. Invite team members - Collaborate on accessibility
+3. Set up monitoring - Get alerts for new issues
 
-Heb je vragen? Reageer gewoon op deze email of bezoek ons contact centrum.
+Have questions? Just reply to this email or visit our contact center.
 
-Veel succes met het toegankelijker maken van het web! 🚀
+Good luck making the web more accessible! 🚀
 
-Het VexNexa team
+The VexNexa team
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
 
-Dit is een systeemmelding over je account. Voor vragen: info@vexnexa.com
+This is a system notification about your account. For questions: info@vexnexa.com
       `.trim()
     })
 
@@ -397,27 +397,27 @@ export async function sendEmailVerification(data: EmailVerificationData) {
     const result = await resend.emails.send({
       from: 'VexNexa Account <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Bevestig je VexNexa account',
+      subject: 'Confirm your VexNexa account',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Welkom bij VexNexa${firstName ? `, ${firstName}` : ''}!</h2>
+          <h2 style="color: #7C3AED;">Welcome to VexNexa${firstName ? `, ${firstName}` : ''}!</h2>
 
-          <p>Bedankt voor je aanmelding! Klik op de onderstaande knop om je account te bevestigen en direct te beginnen met WCAG-scans.</p>
+          <p>Thank you for signing up! Click the button below to confirm your account and start WCAG scanning right away.</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-            <h3 style="margin-top: 0;">Bevestig je account</h3>
+            <h3 style="margin-top: 0;">Confirm your account</h3>
             <a href="${confirmUrl}" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-              Account bevestigen
+              Confirm account
             </a>
           </div>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Als de knop niet werkt, kopieer dan deze link: <br>
+            If the button doesn't work, copy this link: <br>
             <a href="${confirmUrl}" style="color: #7C3AED;">${confirmUrl}</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
-            Deze link is 24 uur geldig. Als je geen account hebt aangemaakt, kun je deze email negeren.
+            This link is valid for 24 hours. If you didn't create an account, you can ignore this email.
           </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -429,12 +429,12 @@ export async function sendEmailVerification(data: EmailVerificationData) {
         </div>
       `,
       text: `
-Welkom bij VexNexa${firstName ? `, ${firstName}` : ''}!
+Welcome to VexNexa${firstName ? `, ${firstName}` : ''}!
 
-Bedankt voor je aanmelding! Bevestig je account door naar deze link te gaan:
+Thank you for signing up! Confirm your account by going to this link:
 ${confirmUrl}
 
-Deze link is 24 uur geldig. Als je geen account hebt aangemaakt, kun je deze email negeren.
+This link is valid for 24 hours. If you didn't create an account, you can ignore this email.
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
@@ -466,35 +466,35 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
     const result = await resend.emails.send({
       from: 'VexNexa Newsletter <noreply@vexnexa.com>',
       to: [email],
-      subject: 'Welkom bij de VexNexa nieuwsbrief! 📧',
+      subject: 'Welcome to the VexNexa newsletter! 📧',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Bedankt voor je inschrijving! 🎉</h2>
+          <h2 style="color: #7C3AED;">Thank you for subscribing! 🎉</h2>
 
-          <p>Je bent nu ingeschreven voor de VexNexa nieuwsbrief. We houden je op de hoogte van:</p>
+          <p>You are now subscribed to the VexNexa newsletter. We'll keep you updated on:</p>
 
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <ul style="color: #4b5563; line-height: 1.6; margin: 0; padding-left: 20px;">
-              <li>🚀 Nieuwe features en productnieuws</li>
-              <li>💡 Tips voor betere webtoegankelijkheid</li>
-              <li>📊 Trends en best practices in WCAG</li>
-              <li>🎯 Exclusive content en early access</li>
+              <li>🚀 New features and product news</li>
+              <li>💡 Tips for better web accessibility</li>
+              <li>📊 Trends and best practices in WCAG</li>
+              <li>🎯 Exclusive content and early access</li>
             </ul>
           </div>
 
           <div style="text-align: center; margin: 30px 0;">
             <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard" style="display: inline-block; background: #7C3AED; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-              Start je eerste scan
+              Start your first scan
             </a>
           </div>
 
-          <p>We versturen ongeveer 1-2 emails per maand en respecteren je inbox. Geen spam, beloofd! 🤝</p>
+          <p>We send approximately 1-2 emails per month and respect your inbox. No spam, promised! 🤝</p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #6b7280; font-size: 14px;">
-            Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.<br>
-            <a href="mailto:info@vexnexa.com?subject=Uitschrijven nieuwsbrief" style="color: #7C3AED;">Klik hier om je uit te schrijven</a>
+            You're receiving this email because you subscribed to our newsletter via ${friendlySource}.<br>
+            <a href="mailto:info@vexnexa.com?subject=Unsubscribe newsletter" style="color: #7C3AED;">Click here to unsubscribe</a>
           </p>
 
           <p style="color: #6b7280; font-size: 14px;">
@@ -504,21 +504,21 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
         </div>
       `,
       text: `
-Bedankt voor je inschrijving! 🎉
+Thank you for subscribing! 🎉
 
-Je bent nu ingeschreven voor de VexNexa nieuwsbrief. We houden je op de hoogte van:
+You are now subscribed to the VexNexa newsletter. We'll keep you updated on:
 
-- Nieuwe features en productnieuws
-- Tips voor betere webtoegankelijkheid
-- Trends en best practices in WCAG
-- Exclusive content en early access
+- New features and product news
+- Tips for better web accessibility
+- Trends and best practices in WCAG
+- Exclusive content and early access
 
-Start je eerste scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard
+Start your first scan: ${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard
 
-We versturen ongeveer 1-2 emails per maand en respecteren je inbox. Geen spam, beloofd!
+We send approximately 1-2 emails per month and respect your inbox. No spam, promised!
 
-Je ontvangt deze email omdat je je hebt ingeschreven voor onze nieuwsbrief via ${friendlySource}.
-Uitschrijven? Mail info@vexnexa.com met onderwerp "Uitschrijven nieuwsbrief"
+You're receiving this email because you subscribed to our newsletter via ${friendlySource}.
+Unsubscribe? Email info@vexnexa.com with subject "Unsubscribe newsletter"
 
 VexNexa - WCAG accessibility scanning platform
 vexnexa.com
@@ -581,16 +581,16 @@ export async function sendAdminEmail(data: AdminEmailData) {
           </div>
 
           <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
-            <p>Hallo,</p>
+            <p>Hello,</p>
 
             <div style="background: #f8f9fa; padding: 20px; border-left: 4px solid #7C3AED; border-radius: 4px; margin: 20px 0;">
               <p style="white-space: pre-wrap; margin: 0;">${message.replace(/\n/g, '<br>')}</p>
             </div>
 
-            <p>Voor vragen kun je direct reageren op deze email of contact opnemen via <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
+            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
 
             <p style="margin-top: 30px;">
-              Met vriendelijke groet,<br>
+              Best regards,<br>
               <strong>${adminName}</strong><br>
               VexNexa Team
             </p>
@@ -605,13 +605,13 @@ export async function sendAdminEmail(data: AdminEmailData) {
         </div>
       `,
       text: `
-Hallo,
+Hello,
 
 ${message}
 
-Voor vragen kun je direct reageren op deze email of contact opnemen via info@vexnexa.com.
+For questions, you can reply directly to this email or contact us at info@vexnexa.com.
 
-Met vriendelijke groet,
+Best regards,
 ${adminName}
 VexNexa Team
 

@@ -235,11 +235,11 @@ function ResetPasswordForm() {
             {/* Security tips */}
             <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
               <div className="text-xs text-gray-500 space-y-1">
-                <p className="font-medium">Tips voor een sterk wachtwoord:</p>
+                <p className="font-medium">Tips for a strong password:</p>
                 <ul className="list-disc list-inside space-y-1 ml-2">
-                  <li>Minimaal 8 karakters lang</li>
-                  <li>Combinatie van letters, cijfers en symbolen</li>
-                  <li>Niet te raden vanuit persoonlijke informatie</li>
+                  <li>At least 8 characters long</li>
+                  <li>Combination of letters, numbers and symbols</li>
+                  <li>Not guessable from personal information</li>
                 </ul>
               </div>
             </div>
