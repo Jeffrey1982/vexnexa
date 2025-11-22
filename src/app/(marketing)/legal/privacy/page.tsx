@@ -363,7 +363,7 @@ export default async function PrivacyPage() {
           {/* 11 */}
           <section id="datalek">
             <h2>11. Data breaches</h2>
-            <p>We immediately investigate the impact, limit risks and report if required to the Dutch Data Protection Authority and affected parties.’s en melden indien vereist aan de Autoriteit Persoonsgegevens en betrokkenen.</p>
+            <p>We immediately investigate the impact, limit risks and report if required to the Dutch Data Protection Authority and affected parties.</p>
           </section>
 
           <div className="h-px bg-border my-10 not-prose" />
@@ -404,7 +404,7 @@ export default async function PrivacyPage() {
               </p>
             </div>
             <p className="mt-3">
-              Niet tevreden? Dien een klacht in bij de Autoriteit Persoonsgegevens via{' '}
+              Not satisfied? File a complaint with the Dutch Data Protection Authority via{' '}
               <a
                 href="https://autoriteitpersoonsgegevens.nl"
                 className="text-primary underline-offset-4 hover:underline"

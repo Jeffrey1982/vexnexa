@@ -69,7 +69,10 @@
       "Bash(then echo \"=== .env ===\")",
       "Bash(then grep -i \"RESEND\" .env.local)",
       "Bash(then grep -i \"RESEND\" .env)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git -C /e/tutusporta status)",
+      "Bash(git -C /e/tutusporta diff src/app/(marketing)/legal/terms/page.tsx --stat)",
+      "Bash(git -C /e/tutusporta diff --stat src/app/(marketing)/legal/terms/page.tsx)"
     ],
     "deny": [],
     "ask": []

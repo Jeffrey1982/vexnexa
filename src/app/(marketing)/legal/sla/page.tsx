@@ -61,7 +61,7 @@ export default async function SLAPage() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:ring"
       >
-        Ga naar hoofdinhoud
+        Skip to main content
       </a>
 
       {/* Hero */}
@@ -74,7 +74,7 @@ export default async function SLAPage() {
             className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            Terug naar startpagina
+            Back to homepage
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -237,7 +237,7 @@ export default async function SLAPage() {
                 E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
               </p>
               <p className="text-sm text-muted-foreground">
-                Of via het contact formulier in je dashboard
+                Or via the contact form in your dashboard
               </p>
             </div>
             <div className="not-prose mt-4 rounded-lg border bg-muted/40 p-4 space-y-2">
@@ -260,7 +260,7 @@ export default async function SLAPage() {
                   <Link href="/legal/security">Security</Link>
                 </Button>
                 <Button asChild>
-                  <Link href="/contact">Contact opnemen</Link>
+                  <Link href="/contact">Contact us</Link>
                 </Button>
               </div>
             </div>
@@ -300,7 +300,7 @@ export default async function SLAPage() {
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <Link href="/contact">Contact opnemen</Link>
+                <Link href="/contact">Contact us</Link>
               </Button>
             </CardContent>
           </Card>
