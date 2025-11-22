@@ -241,7 +241,7 @@ function FeaturesSection() {
             <div className="bg-white rounded-lg shadow-xl p-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/Screenshot1.png"
+                src="/Screenshot1.jpeg"
                 alt={t('imageAlt')}
                 className="w-full h-64 rounded-lg object-cover"
               />
