@@ -563,8 +563,8 @@ export default async function ScanDetailPage({ params }: PageProps) {
                           variant="ghost"
                           className="w-full justify-start h-auto p-3 text-left"
                         >
-                          <div>
-                            <div className="font-medium text-sm mb-1">
+                          <div className="min-w-0 w-full">
+                            <div className="font-medium text-sm mb-1 break-words">
                               {violation.help}
                             </div>
                             <div className="text-xs text-muted-foreground">

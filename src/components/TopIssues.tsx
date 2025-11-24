@@ -32,7 +32,7 @@ export function TopIssues({ violations, limit = 10, className }: TopIssuesProps)
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <code className="text-sm font-mono bg-muted px-2 py-1 rounded">
+                  <code className="text-sm font-mono bg-muted px-2 py-1 rounded break-all">
                     {violation.id}
                   </code>
                   <ImpactBadge impact={normalizeImpact(violation.impact)} />
@@ -41,7 +41,7 @@ export function TopIssues({ violations, limit = 10, className }: TopIssuesProps)
                   </Badge>
                 </div>
                 
-                <h4 className="font-medium text-sm mb-1">
+                <h4 className="font-medium text-sm mb-1 break-words">
                   {violation.help}
                 </h4>
                 

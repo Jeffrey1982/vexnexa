@@ -182,10 +182,10 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                 <div className="space-y-2">
                   <h4 className="font-semibold">Issues Found:</h4>
                   {result.keyboardNavigation.issues.map((issue, index) => (
-                    <Alert key={index}>
-                      <AlertTriangle className="h-4 w-4" />
-                      <AlertTitle className="capitalize">{issue.type.replace('-', ' ')}</AlertTitle>
-                      <AlertDescription>{issue.description}</AlertDescription>
+                    <Alert key={index} className="overflow-hidden">
+                      <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                      <AlertTitle className="capitalize break-words">{issue.type.replace('-', ' ')}</AlertTitle>
+                      <AlertDescription className="break-words">{issue.description}</AlertDescription>
                     </Alert>
                   ))}
                 </div>
@@ -234,10 +234,10 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                 <div className="space-y-2">
                   <h4 className="font-semibold">Issues Found:</h4>
                   {result.screenReaderCompatibility.issues.map((issue, index) => (
-                    <Alert key={index}>
-                      <AlertTriangle className="h-4 w-4" />
-                      <AlertTitle className="capitalize">{issue.type.replace('-', ' ')}</AlertTitle>
-                      <AlertDescription>{issue.description}</AlertDescription>
+                    <Alert key={index} className="overflow-hidden">
+                      <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                      <AlertTitle className="capitalize break-words">{issue.type.replace('-', ' ')}</AlertTitle>
+                      <AlertDescription className="break-words">{issue.description}</AlertDescription>
                     </Alert>
                   ))}
                 </div>
@@ -539,17 +539,17 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
           <CardContent>
             <div className="space-y-4">
               {result.violations.map((violation, index) => (
-                <Alert key={index}>
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertTitle className="flex items-center gap-2">
+                <Alert key={index} className="overflow-hidden">
+                  <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                  <AlertTitle className="flex items-center gap-2 flex-wrap">
                     {violation.help}
                     <Badge variant={getImpactColor(violation.impact || 'moderate')}>
                       {violation.impact}
                     </Badge>
                   </AlertTitle>
                   <AlertDescription className="mt-2">
-                    <p>{violation.description}</p>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="break-words">{violation.description}</p>
+                    <p className="text-sm text-gray-600 mt-1 break-words">
                       Rule: {violation.id} • {violation.nodes?.length || 0} element(s) affected
                     </p>
                   </AlertDescription>

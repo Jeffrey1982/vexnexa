@@ -163,11 +163,11 @@ export function ViolationsTable({ violations, className }: ViolationsTableProps)
             {filteredViolations.map((violation) => (
               <TableRow key={violation.id}>
                 <TableCell>
-                  <div className="space-y-1">
-                    <code className="text-sm font-mono bg-muted px-2 py-1 rounded">
+                  <div className="space-y-1 min-w-0">
+                    <code className="text-sm font-mono bg-muted px-2 py-1 rounded break-all block">
                       {violation.id}
                     </code>
-                    <div className="text-sm font-medium">
+                    <div className="text-sm font-medium break-words">
                       {violation.help}
                     </div>
                   </div>
@@ -182,7 +182,7 @@ export function ViolationsTable({ violations, className }: ViolationsTableProps)
                 </TableCell>
                 <TableCell>
                   <div className="max-w-md">
-                    <p className="text-sm">{truncateText(violation.description, 120)}</p>
+                    <p className="text-sm break-words">{truncateText(violation.description, 120)}</p>
                     {violation.helpUrl && (
                       <a
                         href={violation.helpUrl}
@@ -257,7 +257,7 @@ export function ViolationsTable({ violations, className }: ViolationsTableProps)
                       {node.failureSummary && (
                         <div>
                           <span className="font-medium text-xs text-muted-foreground">Issue:</span>
-                          <p className="text-xs mt-1">{node.failureSummary}</p>
+                          <p className="text-xs mt-1 break-words">{node.failureSummary}</p>
                         </div>
                       )}
                     </div>
