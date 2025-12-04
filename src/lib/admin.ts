@@ -74,3 +74,6 @@ export async function getAllAdminUsers() {
     orderBy: { email: 'asc' }
   })
 }
+
+// Alias for convenience
+export const isAdmin = isUserAdmin
