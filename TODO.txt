@@ -1,6 +1,6 @@
 # TUTUSPORTA - MISSING FEATURES & TODO LIST
 # Last Updated: 2024-12-04
-# Progress: 27/89 completed (30%)
+# Progress: 48/89 completed (54%)
 
 ================================================================================
 PHASE 1: CRITICAL SECURITY - COMPLETED (2024-12-04)
@@ -11,44 +11,44 @@ PHASE 1: CRITICAL SECURITY - COMPLETED (2024-12-04)
 [X] CSRF protection
 [X] Comprehensive Zod validation schemas
 [X] Structured error logging
-[X] Soft delete functionality
+[X] Soft delete functionality (temporarily disabled - needs schema migration)
 [X] Database indexes (7 new)
 [X] Standardized API responses
 
 ================================================================================
-PHASE 2: CORE API COMPLETENESS (HIGH PRIORITY - START HERE)
+PHASE 2: CORE API COMPLETENESS - 21/33 COMPLETED (64%)
 ================================================================================
 
---- Portfolio System (URGENT - Models exist, ZERO endpoints) ---
-[ ] POST   /api/portfolios - Create portfolio
-[ ] GET    /api/portfolios - List portfolios
-[ ] GET    /api/portfolios/[id] - Get portfolio details
-[ ] PUT    /api/portfolios/[id] - Update portfolio
-[ ] DELETE /api/portfolios/[id] - Delete portfolio
-[ ] POST   /api/portfolios/[id]/sites - Add sites to portfolio
-[ ] DELETE /api/portfolios/[id]/sites/[siteId] - Remove site
+--- Portfolio System - COMPLETED (7/7) ---
+[X] POST   /api/portfolios - Create portfolio
+[X] GET    /api/portfolios - List portfolios
+[X] GET    /api/portfolios/[id] - Get portfolio details
+[X] PUT    /api/portfolios/[id] - Update portfolio
+[X] DELETE /api/portfolios/[id] - Delete portfolio
+[X] POST   /api/portfolios/[id]/sites - Add sites to portfolio
+[X] DELETE /api/portfolios/[id]/sites/[siteId] - Remove site
 
---- User Profile Management ---
-[ ] GET    /api/user/profile - Get user profile
-[ ] PUT    /api/user/profile - Update profile
-[ ] PUT    /api/user/password - Change password
-[ ] PUT    /api/user/email - Change email
-[ ] DELETE /api/user/account - Delete account (self-service)
-[ ] GET    /api/user/activity - User activity log
-[ ] GET    /api/user/data-export - GDPR data export
+--- User Profile Management - COMPLETED (7/7) ---
+[X] GET    /api/user/profile - Get user profile
+[X] PUT    /api/user/profile - Update profile
+[X] PUT    /api/user/password - Change password
+[X] PUT    /api/user/email - Change email
+[X] DELETE /api/user/account - Delete account (self-service)
+[X] GET    /api/user/activity - User activity log
+[X] GET    /api/user/data-export - GDPR data export
 
---- Sites Management ---
-[ ] DELETE /api/sites/[siteId] - Delete site
-[ ] PUT    /api/sites/[siteId] - Update site
-[ ] POST   /api/sites/[siteId]/archive - Archive site
-[ ] GET    /api/sites/[siteId]/history - Site history
+--- Sites Management - COMPLETED (4/4) ---
+[X] DELETE /api/sites/[siteId] - Delete site
+[X] PUT    /api/sites/[siteId] - Update site
+[X] POST   /api/sites/[siteId]/archive - Archive site
+[X] GET    /api/sites/[siteId]/history - Site history
 
---- Scans Management ---
-[ ] DELETE /api/scans/[scanId] - Delete scan
-[ ] POST   /api/scans/[scanId]/rerun - Rerun scan
-[ ] PUT    /api/scans/[scanId]/notes - Add notes to scan
+--- Scans Management - COMPLETED (3/3) ---
+[X] DELETE /api/scans/[scanId] - Delete scan
+[X] POST   /api/scans/[scanId]/rerun - Rerun scan
+[X] PUT    /api/scans/[scanId]/notes - Add notes to scan
 
---- Notifications System ---
+--- Notifications System (Requires Schema Migration) ---
 [ ] CREATE Notification table in schema
 [ ] POST   /api/notifications - Create notification
 [ ] GET    /api/notifications - List notifications
@@ -56,7 +56,7 @@ PHASE 2: CORE API COMPLETENESS (HIGH PRIORITY - START HERE)
 [ ] POST   /api/notifications/mark-all-read - Mark all read
 [ ] DELETE /api/notifications/[id] - Delete notification
 
---- Webhooks (User-configurable) ---
+--- Webhooks (Requires Schema Migration) ---
 [ ] CREATE WebhookEndpoint table in schema
 [ ] POST   /api/webhooks - Create webhook
 [ ] GET    /api/webhooks - List webhooks
