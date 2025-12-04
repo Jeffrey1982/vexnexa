@@ -145,7 +145,7 @@ export const PaginationSchema = z.object({
 // Search/filter schemas
 export const SearchSchema = z.object({
   query: z.string().min(1).max(200),
-  filters: z.record(z.any()).optional(),
+  filters: z.record(z.string(), z.any()).optional(),
   ...PaginationSchema.shape,
 })
 
