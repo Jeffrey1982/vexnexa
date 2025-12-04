@@ -1,0 +1,296 @@
+# TUTUSPORTA - MISSING FEATURES & TODO LIST
+# Last Updated: 2024-12-04
+# Progress: 27/89 completed (30%)
+
+================================================================================
+PHASE 1: CRITICAL SECURITY - COMPLETED (2024-12-04)
+================================================================================
+[X] Rate limiting on all API endpoints
+[X] Enhanced security headers (HSTS, CSP, X-XSS-Protection)
+[X] Database-driven RBAC (replaced hardcoded admin emails)
+[X] CSRF protection
+[X] Comprehensive Zod validation schemas
+[X] Structured error logging
+[X] Soft delete functionality
+[X] Database indexes (7 new)
+[X] Standardized API responses
+
+================================================================================
+PHASE 2: CORE API COMPLETENESS (HIGH PRIORITY - START HERE)
+================================================================================
+
+--- Portfolio System (URGENT - Models exist, ZERO endpoints) ---
+[ ] POST   /api/portfolios - Create portfolio
+[ ] GET    /api/portfolios - List portfolios
+[ ] GET    /api/portfolios/[id] - Get portfolio details
+[ ] PUT    /api/portfolios/[id] - Update portfolio
+[ ] DELETE /api/portfolios/[id] - Delete portfolio
+[ ] POST   /api/portfolios/[id]/sites - Add sites to portfolio
+[ ] DELETE /api/portfolios/[id]/sites/[siteId] - Remove site
+
+--- User Profile Management ---
+[ ] GET    /api/user/profile - Get user profile
+[ ] PUT    /api/user/profile - Update profile
+[ ] PUT    /api/user/password - Change password
+[ ] PUT    /api/user/email - Change email
+[ ] DELETE /api/user/account - Delete account (self-service)
+[ ] GET    /api/user/activity - User activity log
+[ ] GET    /api/user/data-export - GDPR data export
+
+--- Sites Management ---
+[ ] DELETE /api/sites/[siteId] - Delete site
+[ ] PUT    /api/sites/[siteId] - Update site
+[ ] POST   /api/sites/[siteId]/archive - Archive site
+[ ] GET    /api/sites/[siteId]/history - Site history
+
+--- Scans Management ---
+[ ] DELETE /api/scans/[scanId] - Delete scan
+[ ] POST   /api/scans/[scanId]/rerun - Rerun scan
+[ ] PUT    /api/scans/[scanId]/notes - Add notes to scan
+
+--- Notifications System ---
+[ ] CREATE Notification table in schema
+[ ] POST   /api/notifications - Create notification
+[ ] GET    /api/notifications - List notifications
+[ ] PUT    /api/notifications/[id]/read - Mark as read
+[ ] POST   /api/notifications/mark-all-read - Mark all read
+[ ] DELETE /api/notifications/[id] - Delete notification
+
+--- Webhooks (User-configurable) ---
+[ ] CREATE WebhookEndpoint table in schema
+[ ] POST   /api/webhooks - Create webhook
+[ ] GET    /api/webhooks - List webhooks
+[ ] PUT    /api/webhooks/[id] - Update webhook
+[ ] DELETE /api/webhooks/[id] - Delete webhook
+[ ] POST   /api/webhooks/[id]/test - Test webhook
+
+================================================================================
+PHASE 3: ADMIN BACKEND ENHANCEMENTS (HIGH PRIORITY)
+================================================================================
+
+--- User Management ---
+[ ] DELETE /api/admin/users/[id] - Delete user
+[ ] POST   /api/admin/users/[id]/suspend - Suspend user
+[ ] POST   /api/admin/users/[id]/unsuspend - Unsuspend user
+[ ] POST   /api/admin/users/[id]/reset-password - Force password reset
+[ ] POST   /api/admin/users/[id]/verify-email - Force verify email
+[ ] POST   /api/admin/users/[id]/impersonate - Impersonate user (debug)
+
+--- Admin UI Pages ---
+[ ] /admin/roles - Admin role management UI
+[ ] /admin/audit-logs - Audit log viewer
+[ ] /admin/deleted-items - Soft deleted items recovery
+[ ] /admin/system-health - System monitoring dashboard
+[ ] /admin/api-logs - API request logs viewer
+[ ] /admin/error-logs - Application error logs
+
+--- System Monitoring ---
+[ ] GET    /api/admin/system/health - Detailed health check
+[ ] GET    /api/admin/system/performance - Performance metrics
+[ ] GET    /api/admin/system/errors - Recent errors
+[ ] GET    /api/admin/system/api-stats - API usage statistics
+
+--- Analytics Enhancements ---
+[ ] Export functionality for admin reports (CSV, PDF)
+[ ] Scheduled report generation
+[ ] Revenue forecasting dashboard
+[ ] Churn prediction analytics
+
+================================================================================
+PHASE 4: DATABASE IMPROVEMENTS (HIGH PRIORITY)
+================================================================================
+
+--- Missing Tables ---
+[ ] CREATE AlertHistory table (TODO in code at src/app/api/monitoring/alerts/history/route.ts:20)
+[ ] CREATE ApiKey table (for programmatic API access)
+[ ] CREATE WebhookEndpoint table (for user webhooks)
+[ ] CREATE Notification table (in-app notifications)
+[ ] CREATE FeatureFlag table (A/B testing)
+[ ] CREATE EmailLog table (track sent emails)
+[ ] CREATE LoginAttempt table (security monitoring)
+[ ] CREATE RateLimitOverride table (custom rate limits per user)
+
+--- Apply Migrations ---
+[ ] Run: npx prisma migrate deploy (for indexes + soft deletes)
+[ ] Update Prisma schema with deletedAt fields
+[ ] Generate new Prisma client
+
+================================================================================
+PHASE 5: SECURITY FOLLOW-UPS (MEDIUM PRIORITY)
+================================================================================
+
+--- Apply New Security Infrastructure ---
+[ ] Apply Zod validation schemas to ALL existing API endpoints
+[ ] Integrate CSRF tokens in frontend forms
+[ ] Add CSRF middleware check to sensitive endpoints
+[ ] Connect logger to Sentry or DataDog
+[ ] Create admin UI for managing API keys
+[ ] Implement 2FA/MFA system
+
+--- Security Monitoring ---
+[ ] Login attempt tracking and logging
+[ ] Failed authentication alerts
+[ ] Suspicious activity detection
+[ ] IP-based blocking for repeated failures
+
+================================================================================
+PHASE 6: USER-FACING FEATURES (MEDIUM PRIORITY)
+================================================================================
+
+--- Profile Management ---
+[ ] /dashboard/profile - Profile page
+[ ] Avatar upload functionality
+[ ] Password change UI
+[ ] Email change UI (with verification)
+[ ] Account deletion UI (with confirmation)
+[ ] Timezone settings
+[ ] Language preferences
+
+--- Notifications UI ---
+[ ] In-app notification center (bell icon)
+[ ] Browser push notifications
+[ ] Notification preferences per-site
+[ ] Slack/webhook integration (user-configurable)
+[ ] Notification history viewer
+
+--- Onboarding ---
+[ ] Onboarding wizard for new users
+[ ] Interactive product tour
+[ ] Sample data option
+[ ] Quick start guide (in-app)
+[ ] Tutorial videos
+
+--- Team Enhancements ---
+[ ] Team activity feed
+[ ] Team usage analytics
+[ ] Team-level notification settings
+[ ] Team billing split functionality
+
+================================================================================
+PHASE 7: WHITE-LABEL ENHANCEMENTS (MEDIUM PRIORITY)
+================================================================================
+
+[ ] Custom domain support (field exists, needs implementation)
+[ ] Email template customization UI
+[ ] Custom CSS injection
+[ ] Custom footer links editor
+[ ] Custom help documentation links
+[ ] Branded PDF exports with user logos
+[ ] White-label email templates
+
+================================================================================
+PHASE 8: ADMIN DASHBOARD UX (LOWER PRIORITY)
+================================================================================
+
+--- Dashboard Improvements ---
+[ ] Real-time dashboard updates (WebSocket/SSE)
+[ ] Customizable dashboard widgets
+[ ] Drag-and-drop widget arrangement
+[ ] Saved filters and views
+[ ] Dashboard export functionality
+[ ] Widget templates
+
+--- Data Visualization ---
+[ ] Interactive charts with drill-down
+[ ] Chart export (PNG, SVG, CSV)
+[ ] Custom date range selectors
+[ ] Period-over-period comparisons
+[ ] Trend predictions
+
+--- Bulk Operations Integration ---
+[ ] Integrate BulkUserActions component in user list
+[ ] Bulk site operations UI
+[ ] Bulk scan operations UI
+[ ] CSV import for bulk actions
+[ ] Progress indicators for bulk operations
+
+================================================================================
+PHASE 9: API & DOCUMENTATION (LOWER PRIORITY)
+================================================================================
+
+[ ] Swagger/OpenAPI documentation
+[ ] API versioning (v1, v2)
+[ ] API changelog
+[ ] API rate limit configuration per plan
+[ ] API usage dashboard for users
+[ ] Developer portal
+
+================================================================================
+PHASE 10: Q1 2025 ROADMAP ITEMS (COMMITTED)
+================================================================================
+
+[ ] Multi-site dashboard (Promised: Late January 2025)
+[ ] PDF & JSON export enhancements (Promised: Early February 2025)
+[ ] Scheduled scans & monitoring (Promised: Mid February 2025)
+[ ] API Access v1 with documentation (Promised: Late February 2025)
+
+================================================================================
+INFRASTRUCTURE & DEVOPS (AS NEEDED)
+================================================================================
+
+[ ] Redis caching layer
+[ ] Background job system (Bull, BullMQ)
+[ ] Database read replicas
+[ ] CDN integration for assets
+[ ] Error tracking (Sentry integration)
+[ ] Performance monitoring (DataDog/New Relic)
+[ ] Database backup automation
+[ ] Disaster recovery plan
+[ ] CI/CD pipeline
+[ ] Load testing
+[ ] Auto-scaling configuration
+
+================================================================================
+QUICK REFERENCE - COMMANDS
+================================================================================
+
+# Start development
+npm run dev
+
+# Database operations
+npx prisma migrate dev          # Create new migration
+npx prisma migrate deploy       # Apply migrations (production)
+npx prisma generate            # Generate Prisma client
+npx prisma studio              # Open Prisma Studio
+
+# Git workflow
+git status
+git add -A
+git commit -m "message"
+git push origin main
+
+# Deploy to Vercel (auto-deploys on push to main)
+
+================================================================================
+FILES CREATED IN PHASE 1 (Reference)
+================================================================================
+
+src/lib/admin.ts                    - Admin role management utilities
+src/lib/api-response.ts            - Standardized API responses
+src/lib/csrf.ts                    - CSRF protection
+src/lib/logger.ts                  - Structured logging
+src/lib/soft-delete.ts             - Soft delete operations
+src/lib/validation-schemas.ts      - Zod validation schemas
+src/middleware.ts                  - Rate limiting + security headers
+src/app/api/admin/manage-admin-role/route.ts - Admin role API
+
+prisma/migrations/20251204_add_missing_indexes/
+prisma/migrations/20251204_add_soft_deletes/
+
+================================================================================
+USAGE NOTES
+================================================================================
+
+When you init Claude again, simply say:
+"Read TODO.txt and continue from where we left off"
+
+To start a specific phase:
+"Read TODO.txt and start Phase 2"
+
+To work on a specific feature:
+"Read TODO.txt and implement Portfolio CRUD endpoints"
+
+To update this file:
+"Update TODO.txt with completed tasks"
+
+================================================================================
