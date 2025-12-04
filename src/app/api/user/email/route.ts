@@ -28,18 +28,17 @@ export async function PUT(request: NextRequest) {
 
     const { newEmail } = validation.data
 
-    // Check if email is already in use
-    const existingUser = await supabase.auth.admin.getUserByEmail(newEmail)
-    if (existingUser.data.user && existingUser.data.user.id !== user.id) {
-      return errorResponse('Email already in use', 409)
-    }
-
     // Update email using Supabase Auth (will send verification email)
+    // Supabase will handle duplicate email validation
     const { error: updateError } = await supabase.auth.updateUser({
       email: newEmail,
     })
 
     if (updateError) {
+      // Handle specific error for email already in use
+      if (updateError.message.includes('already') || updateError.message.includes('exists')) {
+        return errorResponse('Email already in use', 409)
+      }
       return errorResponse(updateError.message, 400)
     }
 
