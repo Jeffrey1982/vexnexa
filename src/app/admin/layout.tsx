@@ -3,16 +3,12 @@ import { redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { MainNav } from "@/components/admin/MainNav";
 
-// Simple admin check
+// Admin authorization check using database-driven RBAC
 async function requireAdmin() {
   const user = await requireAuth();
 
-  const adminEmails = [
-    'jeffrey.aay@gmail.com',
-    'admin@vexnexa.com'
-  ];
-
-  if (!adminEmails.includes(user.email) && !user.isAdmin) {
+  // Check if user has admin role from database
+  if (!user.isAdmin) {
     redirect('/dashboard');
   }
 

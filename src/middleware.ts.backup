@@ -1,42 +1,7 @@
+import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { apiLimiter, authLimiter } from '@/lib/rate-limit'
 
 export async function middleware(request: NextRequest) {
-  const url = request.nextUrl
-  const pathname = url.pathname
-
-  // Apply rate limiting to API routes
-  if (pathname.startsWith('/api/')) {
-    // Different rate limits for different endpoints
-    let rateLimitResult
-
-    if (pathname.startsWith('/api/auth/') || pathname.startsWith('/api/sync-user')) {
-      // Stricter rate limit for auth endpoints
-      rateLimitResult = authLimiter(request)
-    } else {
-      // Standard rate limit for all other API endpoints
-      rateLimitResult = apiLimiter(request)
-    }
-
-    if (!rateLimitResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Too many requests. Please try again later.',
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
-        },
-        {
-          status: 429,
-          headers: {
-            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
-            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
-            'X-RateLimit-Reset': new Date(rateLimitResult.resetTime).toISOString(),
-            'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
-          }
-        }
-      )
-    }
-  }
-
   const response = NextResponse.next()
 
   // Handle locale cookie if not set, default to 'en'
@@ -50,9 +15,13 @@ export async function middleware(request: NextRequest) {
     })
   }
 
+  // TEMPORARILY DISABLED ALL AUTH MIDDLEWARE TO FIX CACHING ISSUES
+  // Dashboard redirect removed - allow direct access to /dashboard
+  
   // UTM parameter capture
+  const url = request.nextUrl
   const searchParams = url.searchParams
-
+  
   // UTM parameters we want to track
   const utmParams = {
     utm_source: searchParams.get('utm_source'),
@@ -61,16 +30,16 @@ export async function middleware(request: NextRequest) {
     utm_content: searchParams.get('utm_content'),
     utm_term: searchParams.get('utm_term'),
   }
-
+  
   // Check if any UTM parameters are present
   const hasUtmParams = Object.values(utmParams).some(param => param !== null)
-
+  
   if (hasUtmParams) {
     // Filter out null values and create clean UTM data
     const cleanUtmParams = Object.fromEntries(
       Object.entries(utmParams).filter(([_, value]) => value !== null)
     )
-
+    
     // Store UTM parameters in a cookie for 7 days
     response.cookies.set('vn_utm', JSON.stringify(cleanUtmParams), {
       httpOnly: false, // Allow JavaScript access for analytics
@@ -79,38 +48,49 @@ export async function middleware(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
     })
+    
+    // Optionally redirect to clean URL (remove UTM parameters from URL)
+    // Uncomment if you want clean URLs:
+    /*
+    if (url.pathname === '/' || url.pathname.startsWith('/features') || url.pathname.startsWith('/pricing')) {
+      const cleanUrl = new URL(url.toString())
+      Object.keys(utmParams).forEach(param => {
+        cleanUrl.searchParams.delete(param)
+      })
+      
+      if (cleanUrl.toString() !== url.toString()) {
+        return NextResponse.redirect(cleanUrl)
+      }
+    }
+    */
   }
-
-  // Enhanced Security headers
+  
+  // Security headers
   response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('X-XSS-Protection', '1; mode=block')
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()')
-
-  // Strict Transport Security (HSTS) - only in production
-  if (process.env.NODE_ENV === 'production') {
-    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
-  }
-
-  // Enhanced CSP header for additional security with Supabase support
+  response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
+  response.headers.set(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=()'
+  )
+  
+  // CSP header for additional security with Supabase support
   const cspHeader = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com",
     "style-src 'self' 'unsafe-inline'",
-    "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com",
+    "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co",
     "img-src 'self' blob: data: https: https://*.supabase.co",
     "font-src 'self' data:",
     "object-src 'none'",
     "base-uri 'self'",
-    "form-action 'self' https://*.mollie.com",
+    "form-action 'self'",
     "frame-ancestors 'none'",
-    "frame-src https://*.mollie.com",
     "upgrade-insecure-requests",
   ].join('; ')
-
+  
   response.headers.set('Content-Security-Policy', cspHeader)
-
+  
   return response
 }
 
@@ -118,9 +98,14 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths including API routes
-     * Exclude only static files
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - robots.txt
+     * - sitemap.xml
      */
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }
