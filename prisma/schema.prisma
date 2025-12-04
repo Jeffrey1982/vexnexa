@@ -5,105 +5,109 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL") // runtime (can be Supabase pooler 6543)
-  directUrl = env("DIRECT_URL")   // migrations (direct 5432)
+  directUrl = env("DIRECT_URL") // migrations (direct 5432)
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  sites     Site[]
+  id    String @id @default(cuid())
+  email String @unique
+  sites Site[]
 
   // Personal information
-  firstName    String?
-  lastName     String?
-  company      String?
-  jobTitle     String?
-  phoneNumber  String?
-  website      String?
-  country      String?
+  firstName   String?
+  lastName    String?
+  company     String?
+  jobTitle    String?
+  phoneNumber String?
+  website     String?
+  country     String?
 
   // Marketing preferences
-  marketingEmails    Boolean @default(false)
-  productUpdates     Boolean @default(true)
-  teamInvitations    Boolean @default(true)
-  scanNotifications  Boolean @default(true)
-  weeklyReports      Boolean @default(false)
+  marketingEmails   Boolean @default(false)
+  productUpdates    Boolean @default(true)
+  teamInvitations   Boolean @default(true)
+  scanNotifications Boolean @default(true)
+  weeklyReports     Boolean @default(false)
 
   // Profile completion
   profileCompleted Boolean @default(false)
 
   // Billing fields
-  plan               Plan     @default(TRIAL)  // TRIAL, STARTER, PRO, BUSINESS
-  subscriptionStatus String   @default("trialing") // active, canceled, past_due, inactive
+  plan               Plan      @default(TRIAL) // TRIAL, STARTER, PRO, BUSINESS
+  subscriptionStatus String    @default("trialing") // active, canceled, past_due, inactive
   trialEndsAt        DateTime?
   trialStartsAt      DateTime?
-  trialOrigin        String?   // "self-signup", "partner", "referral", "ad-campaign", etc.
+  trialOrigin        String? // "self-signup", "partner", "referral", "ad-campaign", etc.
 
   // Mollie koppelingen
-  mollieCustomerId      String? @unique
-  mollieSubscriptionId  String? // actuele sub (1 actief tegelijk)
+  mollieCustomerId     String? @unique
+  mollieSubscriptionId String? // actuele sub (1 actief tegelijk)
 
-  usages             Usage[]
-  whiteLabel         WhiteLabel?
-  portfolios         Portfolio[]
+  usages     Usage[]
+  whiteLabel WhiteLabel?
+  portfolios Portfolio[]
 
   // Team collaboration
-  ownedTeams         Team[] @relation("TeamOwner")
-  teamMemberships    TeamMember[]
-  sentInvites        TeamInvite[] @relation("InvitedBy")
-  invitedBy          TeamMember[] @relation("InvitedByUser")
+  ownedTeams      Team[]       @relation("TeamOwner")
+  teamMemberships TeamMember[]
+  sentInvites     TeamInvite[] @relation("InvitedBy")
+  invitedBy       TeamMember[] @relation("InvitedByUser")
 
   // Issue tracking
-  createdIssues      Issue[] @relation("CreatedBy")
-  assignedIssues     Issue[] @relation("AssignedTo")
-  assignedByIssues   Issue[] @relation("AssignedBy")
-  resolvedIssues     Issue[] @relation("ResolvedBy")
-  issueComments      IssueComment[]
-  issueActivities    IssueActivity[]
+  createdIssues    Issue[]         @relation("CreatedBy")
+  assignedIssues   Issue[]         @relation("AssignedTo")
+  assignedByIssues Issue[]         @relation("AssignedBy")
+  resolvedIssues   Issue[]         @relation("ResolvedBy")
+  issueComments    IssueComment[]
+  issueActivities  IssueActivity[]
 
   // Manual audit tracking
-  createdAudits      ManualAudit[] @relation("AuditCreator")
-  assignedAudits     ManualAudit[] @relation("AuditAssignee")
-  reviewedAudits     ManualAudit[] @relation("AuditReviewer")
-  auditTemplates     AuditTemplate[]
-  testedAuditItems   AuditItem[]
-  auditAttachments   AuditAttachment[]
+  createdAudits    ManualAudit[]     @relation("AuditCreator")
+  assignedAudits   ManualAudit[]     @relation("AuditAssignee")
+  reviewedAudits   ManualAudit[]     @relation("AuditReviewer")
+  auditTemplates   AuditTemplate[]
+  testedAuditItems AuditItem[]
+  auditAttachments AuditAttachment[]
 
   // Blog
-  blogPosts          BlogPost[]
+  blogPosts BlogPost[]
 
   // Support tickets
   supportTickets        SupportTicket[]
   supportTicketMessages SupportTicketMessage[]
 
   // Admin role
-  isAdmin            Boolean @default(false)
-  adminNotes         AdminUserNote[] @relation("AdminNotes")
+  isAdmin    Boolean         @default(false)
+  adminNotes AdminUserNote[] @relation("AdminNotes")
+
+  // Notifications & Webhooks
+  notifications    Notification[]
+  webhookEndpoints WebhookEndpoint[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Site {
-  id          String     @id @default(cuid())
-  userId      String
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  url         String
-  pages       Page[]
-  scans       Scan[]
-  crawls      Crawl[]
+  id     String  @id @default(cuid())
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  url    String
+  pages  Page[]
+  scans  Scan[]
+  crawls Crawl[]
 
   // Portfolio association
   portfolioId String?
   portfolio   Portfolio? @relation(fields: [portfolioId], references: [id], onDelete: SetNull)
 
   // Team collaboration
-  teams       Team[]     @relation("TeamSites")
+  teams Team[] @relation("TeamSites")
 
   // Manual audits
   manualAudits ManualAudit[]
 
-  createdAt   DateTime   @default(now())
+  createdAt DateTime @default(now())
 
   @@unique([userId, url]) // enables where: { userId_url: { ... } }
   @@index([userId])
@@ -111,27 +115,27 @@ model Site {
 }
 
 model Page {
-  id            String   @id @default(cuid())
-  siteId        String
-  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  url           String
-  title         String?
-  latestScanId  String?
-  scans         Scan[]
-  createdAt     DateTime @default(now())
+  id           String   @id @default(cuid())
+  siteId       String
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  url          String
+  title        String?
+  latestScanId String?
+  scans        Scan[]
+  createdAt    DateTime @default(now())
 
   @@unique([siteId, url]) // enables where: { siteId_url: { ... } }
   @@index([siteId])
 }
 
 model Scan {
-  id        String   @id @default(cuid())
-  siteId    String
-  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   // NEW: optional link to Page
-  pageId    String?
-  page      Page?    @relation(fields: [pageId], references: [id], onDelete: SetNull)
+  pageId String?
+  page   Page?   @relation(fields: [pageId], references: [id], onDelete: SetNull)
 
   status    String
   score     Int?
@@ -153,8 +157,8 @@ model Scan {
   nextScans      Scan[]  @relation("ScanHistory")
 
   scoreImprovement Int? // Change from previous scan
-  issuesFixed      Int @default(0) // Issues resolved since last scan
-  newIssues        Int @default(0) // New issues found since last scan
+  issuesFixed      Int  @default(0) // Issues resolved since last scan
+  newIssues        Int  @default(0) // New issues found since last scan
 
   // WCAG compliance tracking
   wcagAACompliance  Float? // Percentage of AA compliance (0-100)
@@ -164,29 +168,29 @@ model Scan {
   violationsByRule Json? // { "rule_id": count, ... } for trending analysis
 
   // Performance & SEO Integration
-  performanceScore    Float? // Google PageSpeed Insights score (0-100)
-  firstContentfulPaint Float? // FCP in milliseconds
+  performanceScore       Float? // Google PageSpeed Insights score (0-100)
+  firstContentfulPaint   Float? // FCP in milliseconds
   largestContentfulPaint Float? // LCP in milliseconds
-  cumulativeLayoutShift Float? // CLS score
-  firstInputDelay     Float? // FID in milliseconds
-  totalBlockingTime   Float? // TBT in milliseconds
+  cumulativeLayoutShift  Float? // CLS score
+  firstInputDelay        Float? // FID in milliseconds
+  totalBlockingTime      Float? // TBT in milliseconds
 
   // SEO correlation data
-  seoScore           Float? // Overall SEO health score (0-100)
-  metaDescription    String? // Meta description present/quality
-  headingStructure   Json? // H1-H6 structure analysis
-  altTextCoverage    Float? // Percentage of images with alt text
-  linkAccessibility  Float? // Percentage of accessible links
+  seoScore          Float? // Overall SEO health score (0-100)
+  metaDescription   String? // Meta description present/quality
+  headingStructure  Json? // H1-H6 structure analysis
+  altTextCoverage   Float? // Percentage of images with alt text
+  linkAccessibility Float? // Percentage of accessible links
 
   // Legal compliance risk assessment
-  adaRiskLevel       String? // LOW, MEDIUM, HIGH, CRITICAL
+  adaRiskLevel String? // LOW, MEDIUM, HIGH, CRITICAL
 
   // Manual audits linked to this scan
-  manualAudits       ManualAudit[]
-  wcag21Compliance   Float? // WCAG 2.1 compliance percentage
-  wcag22Compliance   Float? // WCAG 2.2 compliance percentage
-  complianceGaps     Json? // Specific compliance issues
-  legalRiskScore     Float? // Calculated legal risk (0-100)
+  manualAudits     ManualAudit[]
+  wcag21Compliance Float? // WCAG 2.1 compliance percentage
+  wcag22Compliance Float? // WCAG 2.2 compliance percentage
+  complianceGaps   Json? // Specific compliance issues
+  legalRiskScore   Float? // Calculated legal risk (0-100)
 
   // Performance metrics
   scanDuration    Int? // Scan duration in milliseconds
@@ -194,7 +198,7 @@ model Scan {
   elementsScanned Int? // Number of elements analyzed
 
   // Raw scan data
-  raw       Json?
+  raw Json?
 
   createdAt DateTime @default(now())
 
@@ -214,52 +218,52 @@ enum Plan {
 model Usage {
   id        String   @id @default(cuid())
   userId    String
-  period    String   // "2025-09"
+  period    String // "2025-09"
   pages     Int      @default(0)
   sites     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, period])
 }
 
 model Crawl {
-  id           String   @id @default(cuid())
-  siteId       String
-  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  
-  status       String   @default("queued") // queued, running, done, error
-  maxPages     Int      @default(50)
-  maxDepth     Int      @default(3)
-  
-  pagesQueued  Int      @default(0)
-  pagesDone    Int      @default(0)
-  pagesError   Int      @default(0)
-  
-  startedAt    DateTime @default(now())
-  finishedAt   DateTime?
-  
-  crawlUrls    CrawlUrl[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id     String @id @default(cuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  status   String @default("queued") // queued, running, done, error
+  maxPages Int    @default(50)
+  maxDepth Int    @default(3)
+
+  pagesQueued Int @default(0)
+  pagesDone   Int @default(0)
+  pagesError  Int @default(0)
+
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+
+  crawlUrls CrawlUrl[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@index([siteId])
   @@index([status])
 }
 
 model CrawlUrl {
-  id       String @id @default(cuid())
-  crawlId  String
-  crawl    Crawl  @relation(fields: [crawlId], references: [id], onDelete: Cascade)
-  
-  url      String
-  depth    Int    @default(0)
-  status   String @default("queued") // queued, running, done, error, skipped
-  reason   String? // Error reason or skip reason
-  
-  createdAt DateTime @default(now())
+  id      String @id @default(cuid())
+  crawlId String
+  crawl   Crawl  @relation(fields: [crawlId], references: [id], onDelete: Cascade)
+
+  url    String
+  depth  Int     @default(0)
+  status String  @default("queued") // queued, running, done, error, skipped
+  reason String? // Error reason or skip reason
+
+  createdAt   DateTime  @default(now())
   processedAt DateTime?
 
   @@unique([crawlId, url]) // Prevent duplicate URLs in same crawl
@@ -267,94 +271,94 @@ model CrawlUrl {
 }
 
 model Benchmark {
-  id          String   @id @default(cuid())
+  id String @id @default(cuid())
 
   // Industry/category benchmarks
-  industry    String   // e.g., "ecommerce", "healthcare", "education", "government"
-  category    String?  // sub-category if applicable
+  industry String // e.g., "ecommerce", "healthcare", "education", "government"
+  category String? // sub-category if applicable
 
   // Benchmark scores
-  avgScore           Float  // Average accessibility score
-  avgCritical        Float  // Average critical issues per page
-  avgSerious         Float  // Average serious issues per page
-  avgModerate        Float  // Average moderate issues per page
-  avgMinor           Float  // Average minor issues per page
+  avgScore    Float // Average accessibility score
+  avgCritical Float // Average critical issues per page
+  avgSerious  Float // Average serious issues per page
+  avgModerate Float // Average moderate issues per page
+  avgMinor    Float // Average minor issues per page
 
   // WCAG compliance averages
-  avgWcagAA          Float  // Average AA compliance percentage
-  avgWcagAAA         Float  // Average AAA compliance percentage
+  avgWcagAA  Float // Average AA compliance percentage
+  avgWcagAAA Float // Average AAA compliance percentage
 
   // Sample size and metadata
-  sampleSize         Int    // Number of sites/pages in benchmark
-  lastUpdated        DateTime @default(now())
+  sampleSize  Int // Number of sites/pages in benchmark
+  lastUpdated DateTime @default(now())
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([industry, category])
   @@index([industry])
 }
 
 model WhiteLabel {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Branding
-  companyName     String?
-  logoUrl         String?
-  faviconUrl      String?
+  companyName String?
+  logoUrl     String?
+  faviconUrl  String?
 
   // Colors
-  primaryColor    String   @default("#3B82F6")   // Blue-500
-  secondaryColor  String   @default("#1F2937")   // Gray-800
-  accentColor     String   @default("#10B981")   // Green-500
-  
+  primaryColor   String @default("#3B82F6") // Blue-500
+  secondaryColor String @default("#1F2937") // Gray-800
+  accentColor    String @default("#10B981") // Green-500
+
   // Contact Information
-  supportEmail    String?
-  website         String?
-  phone           String?
-  
+  supportEmail String?
+  website      String?
+  phone        String?
+
   // Footer Customization
-  footerText      String?
-  showPoweredBy   Boolean  @default(true)
-  
+  footerText    String?
+  showPoweredBy Boolean @default(true)
+
   // Domain Settings
-  customDomain    String?
-  subdomain       String?
-  
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  customDomain String?
+  subdomain    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
 }
 
 model Portfolio {
-  id              String   @id @default(cuid())
-  userId          String
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  name            String   // Portfolio name (e.g., "Main Sites", "Client Portfolio")
-  description     String?
+  name        String // Portfolio name (e.g., "Main Sites", "Client Portfolio")
+  description String?
 
   // Portfolio-wide metrics
-  totalSites      Int      @default(0)
-  avgScore        Float?   // Average accessibility score across all sites
-  totalIssues     Int      @default(0)
-  riskScore       Float?   // Combined legal/compliance risk
+  totalSites  Int    @default(0)
+  avgScore    Float? // Average accessibility score across all sites
+  totalIssues Int    @default(0)
+  riskScore   Float? // Combined legal/compliance risk
 
   // Performance correlation
-  avgPerformance  Float?   // Average performance score
+  avgPerformance         Float? // Average performance score
   performanceCorrelation Float? // Correlation between accessibility and performance
 
   // Portfolio prioritization
-  priorityMatrix  Json?    // Impact/effort matrix data
+  priorityMatrix Json? // Impact/effort matrix data
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Portfolio can contain multiple sites
-  sites           Site[]
+  sites Site[]
 
   @@index([userId])
 }
@@ -380,18 +384,18 @@ enum IssuePriority {
 }
 
 model Team {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String?
   ownerId     String
-  owner       User     @relation("TeamOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  owner       User    @relation("TeamOwner", fields: [ownerId], references: [id], onDelete: Cascade)
 
-  members     TeamMember[]
-  invites     TeamInvite[]
-  sites       Site[]   @relation("TeamSites")
+  members TeamMember[]
+  invites TeamInvite[]
+  sites   Site[]       @relation("TeamSites")
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([ownerId])
 }
@@ -414,53 +418,53 @@ model TeamMember {
 }
 
 model TeamInvite {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   teamId     String
-  team       Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  team       Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
   email      String
-  role       TeamRole @default(VIEWER)
+  role       TeamRole  @default(VIEWER)
   invitedBy  String
-  inviter    User     @relation("InvitedBy", fields: [invitedBy], references: [id], onDelete: Cascade)
-  token      String   @unique
+  inviter    User      @relation("InvitedBy", fields: [invitedBy], references: [id], onDelete: Cascade)
+  token      String    @unique
   expiresAt  DateTime
   acceptedAt DateTime?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime  @default(now())
 
   @@index([teamId])
   @@index([email])
 }
 
 model Issue {
-  id            String        @id @default(cuid())
-  scanId        String
-  scan          Scan          @relation(fields: [scanId], references: [id], onDelete: Cascade)
-  violationId   String        // Reference to specific violation in scan.raw
-  title         String
-  description   String?
-  status        IssueStatus   @default(OPEN)
-  priority      IssuePriority @default(MEDIUM)
+  id          String        @id @default(cuid())
+  scanId      String
+  scan        Scan          @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  violationId String // Reference to specific violation in scan.raw
+  title       String
+  description String?
+  status      IssueStatus   @default(OPEN)
+  priority    IssuePriority @default(MEDIUM)
 
-  assignedToId  String?
-  assignedTo    User?         @relation("AssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
-  assignedById  String?
-  assignedBy    User?         @relation("AssignedBy", fields: [assignedById], references: [id], onDelete: SetNull)
-  createdById   String
-  createdBy     User          @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
+  assignedToId String?
+  assignedTo   User?   @relation("AssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedById String?
+  assignedBy   User?   @relation("AssignedBy", fields: [assignedById], references: [id], onDelete: SetNull)
+  createdById  String
+  createdBy    User    @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
 
-  resolvedAt    DateTime?
-  resolvedById  String?
-  resolvedBy    User?         @relation("ResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+  resolvedAt   DateTime?
+  resolvedById String?
+  resolvedBy   User?     @relation("ResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
 
-  dueDate       DateTime?
+  dueDate        DateTime?
   estimatedHours Int?
-  actualHours   Int?
-  tags          String[]
+  actualHours    Int?
+  tags           String[]
 
-  comments      IssueComment[]
-  activities    IssueActivity[]
+  comments   IssueComment[]
+  activities IssueActivity[]
 
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([scanId, violationId])
   @@index([scanId])
@@ -490,7 +494,7 @@ model IssueActivity {
   issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  action    String   // "created", "assigned", "status_changed", "priority_changed", etc.
+  action    String // "created", "assigned", "status_changed", "priority_changed", etc.
   oldValue  String?
   newValue  String?
   createdAt DateTime @default(now())
@@ -504,30 +508,30 @@ model IssueActivity {
 // ============================================
 
 model ManualAudit {
-  id          String   @id @default(cuid())
-  siteId      String
-  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   // Optional link to automated scan for comparison
-  scanId      String?
-  scan        Scan?    @relation(fields: [scanId], references: [id], onDelete: SetNull)
+  scanId String?
+  scan   Scan?   @relation(fields: [scanId], references: [id], onDelete: SetNull)
 
   // Audit metadata
-  name        String   // e.g., "WCAG 2.1 AA Audit - Homepage"
+  name        String // e.g., "WCAG 2.1 AA Audit - Homepage"
   description String?
-  templateId  String?  // Link to audit template used
+  templateId  String? // Link to audit template used
   template    AuditTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
 
   // Audit status
-  status      String   @default("draft") // draft, in_progress, under_review, completed
+  status String @default("draft") // draft, in_progress, under_review, completed
 
   // Assignment
-  createdById String
-  createdBy   User     @relation("AuditCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  createdById  String
+  createdBy    User    @relation("AuditCreator", fields: [createdById], references: [id], onDelete: Cascade)
   assignedToId String?
-  assignedTo  User?    @relation("AuditAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedTo   User?   @relation("AuditAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
   reviewedById String?
-  reviewedBy  User?    @relation("AuditReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedBy   User?   @relation("AuditReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
 
   // Progress tracking
   totalCriteria     Int @default(0)
@@ -536,9 +540,9 @@ model ManualAudit {
   failedCriteria    Int @default(0)
 
   // Overall results
-  overallScore      Float? // 0-100 percentage
-  wcagLevel         String? // "A", "AA", "AAA"
-  compliant         Boolean @default(false)
+  overallScore Float? // 0-100 percentage
+  wcagLevel    String? // "A", "AA", "AAA"
+  compliant    Boolean @default(false)
 
   // Timing
   dueDate     DateTime?
@@ -550,8 +554,8 @@ model ManualAudit {
   items       AuditItem[]
   attachments AuditAttachment[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([siteId])
   @@index([scanId])
@@ -561,101 +565,101 @@ model ManualAudit {
 }
 
 model AuditTemplate {
-  id          String   @id @default(cuid())
-  name        String   // e.g., "WCAG 2.1 AA Checklist"
+  id          String  @id @default(cuid())
+  name        String // e.g., "WCAG 2.1 AA Checklist"
   description String?
-  category    String   // "wcag", "section508", "custom", "industry"
-  wcagLevel   String?  // "A", "AA", "AAA"
+  category    String // "wcag", "section508", "custom", "industry"
+  wcagLevel   String? // "A", "AA", "AAA"
 
   // Template metadata
-  isPublic    Boolean  @default(true)
-  isDefault   Boolean  @default(false)
+  isPublic    Boolean @default(true)
+  isDefault   Boolean @default(false)
   createdById String?
-  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdBy   User?   @relation(fields: [createdById], references: [id], onDelete: SetNull)
 
   // Template criteria
-  criteria    AuditCriterion[]
-  audits      ManualAudit[]
+  criteria AuditCriterion[]
+  audits   ManualAudit[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([category])
   @@index([createdById])
 }
 
 model AuditCriterion {
-  id              String   @id @default(cuid())
-  templateId      String
-  template        AuditTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  id         String        @id @default(cuid())
+  templateId String
+  template   AuditTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
 
   // Criterion details
-  category        String   // "keyboard", "screen_reader", "color", "forms", etc.
-  subcategory     String?  // More specific grouping
-  title           String   // e.g., "All interactive elements are keyboard accessible"
-  description     String?
-  howToTest       String?  // Testing instructions
+  category    String // "keyboard", "screen_reader", "color", "forms", etc.
+  subcategory String? // More specific grouping
+  title       String // e.g., "All interactive elements are keyboard accessible"
+  description String?
+  howToTest   String? // Testing instructions
 
   // WCAG mapping
-  wcagCriterion   String?  // e.g., "1.1.1", "2.1.1"
-  wcagLevel       String?  // "A", "AA", "AAA"
-  wcagUrl         String?  // Link to WCAG documentation
+  wcagCriterion String? // e.g., "1.1.1", "2.1.1"
+  wcagLevel     String? // "A", "AA", "AAA"
+  wcagUrl       String? // Link to WCAG documentation
 
   // Importance
-  priority        String   @default("medium") // critical, high, medium, low
-  required        Boolean  @default(true)
+  priority String  @default("medium") // critical, high, medium, low
+  required Boolean @default(true)
 
   // Display order
-  order           Int      @default(0)
+  order Int @default(0)
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([templateId])
   @@index([category])
 }
 
 model AuditItem {
-  id              String   @id @default(cuid())
-  auditId         String
-  audit           ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  id      String      @id @default(cuid())
+  auditId String
+  audit   ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
 
   // Link to template criterion or custom
-  criterionId     String?  // If based on template
+  criterionId String? // If based on template
 
   // Item details
-  category        String
-  subcategory     String?
-  title           String
-  description     String?
-  howToTest       String?
+  category    String
+  subcategory String?
+  title       String
+  description String?
+  howToTest   String?
 
   // WCAG mapping
-  wcagCriterion   String?
-  wcagLevel       String?
-  wcagUrl         String?
+  wcagCriterion String?
+  wcagLevel     String?
+  wcagUrl       String?
 
   // Test results
-  status          String   @default("pending") // pending, pass, fail, not_applicable, needs_review
-  result          String?  // Detailed result notes
+  status String  @default("pending") // pending, pass, fail, not_applicable, needs_review
+  result String? // Detailed result notes
 
   // Evidence
   notes           String?
   screenshotUrls  String[] // Array of uploaded screenshots
-  elementSelector String?  // CSS selector or XPath
-  pageUrl         String?  // Specific page tested
+  elementSelector String? // CSS selector or XPath
+  pageUrl         String? // Specific page tested
 
   // Testing details
-  testedById      String?
-  testedBy        User?    @relation(fields: [testedById], references: [id], onDelete: SetNull)
-  testedAt        DateTime?
+  testedById String?
+  testedBy   User?     @relation(fields: [testedById], references: [id], onDelete: SetNull)
+  testedAt   DateTime?
 
   // Remediation
   remediationNotes String?
-  priority         String   @default("medium")
+  priority         String  @default("medium")
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([auditId])
   @@index([testedById])
@@ -664,20 +668,20 @@ model AuditItem {
 }
 
 model AuditAttachment {
-  id          String   @id @default(cuid())
-  auditId     String
-  audit       ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  id      String      @id @default(cuid())
+  auditId String
+  audit   ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
 
   fileName    String
   fileUrl     String
-  fileType    String   // "screenshot", "document", "video", "other"
-  fileSize    Int?     // in bytes
+  fileType    String // "screenshot", "document", "video", "other"
+  fileSize    Int? // in bytes
   description String?
 
   uploadedById String
-  uploadedBy   User    @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+  uploadedBy   User   @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@index([auditId])
   @@index([uploadedById])
@@ -685,12 +689,12 @@ model AuditAttachment {
 
 // Blog system
 model BlogPost {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  content     String   @db.Text
-  excerpt     String?  @db.Text
-  coverImage  String?
+  id         String  @id @default(cuid())
+  title      String
+  slug       String  @unique
+  content    String  @db.Text
+  excerpt    String? @db.Text
+  coverImage String?
 
   // SEO
   metaTitle       String?
@@ -698,22 +702,22 @@ model BlogPost {
   metaKeywords    String[]
 
   // Organization
-  category    String
-  tags        String[]
+  category String
+  tags     String[]
 
   // Publishing
-  status      String   @default("draft") // draft, published, archived
+  status      String    @default("draft") // draft, published, archived
   publishedAt DateTime?
 
   // Author
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   // Analytics
-  views       Int      @default(0)
+  views Int @default(0)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([authorId])
   @@index([slug])
@@ -724,14 +728,14 @@ model BlogPost {
 
 // Contact form submissions
 model ContactMessage {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  message   String   @db.Text
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  message String @db.Text
 
   // Metadata
-  status    String   @default("new") // new, read, replied, archived
-  replied   Boolean  @default(false)
+  status  String  @default("new") // new, read, replied, archived
+  replied Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -767,19 +771,19 @@ enum TicketCategory {
 }
 
 model SupportTicket {
-  id          String          @id @default(cuid())
-  userId      String
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  subject     String
-  category    TicketCategory  @default(GENERAL)
-  priority    TicketPriority  @default(MEDIUM)
-  status      TicketStatus    @default(OPEN)
+  subject  String
+  category TicketCategory @default(GENERAL)
+  priority TicketPriority @default(MEDIUM)
+  status   TicketStatus   @default(OPEN)
 
-  messages    SupportTicketMessage[]
+  messages SupportTicketMessage[]
 
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([status])
@@ -795,17 +799,17 @@ enum MessageSenderType {
 }
 
 model SupportTicketMessage {
-  id          String            @id @default(cuid())
-  ticketId    String
-  ticket      SupportTicket     @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  id       String        @id @default(cuid())
+  ticketId String
+  ticket   SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
 
-  senderType  MessageSenderType
+  senderType   MessageSenderType
   senderUserId String?
-  senderUser  User?             @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
+  senderUser   User?             @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
 
-  message     String            @db.Text
+  message String @db.Text
 
-  createdAt   DateTime          @default(now())
+  createdAt DateTime @default(now())
 
   @@index([ticketId])
   @@index([senderUserId])
@@ -817,11 +821,11 @@ model SupportTicketMessage {
 // ============================================
 
 model AdminUserNote {
-  id        String   @id @default(cuid())
-  userId    String
-  adminId   String
-  admin     User?    @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
-  note      String   @db.Text
+  id      String @id @default(cuid())
+  userId  String
+  adminId String
+  admin   User?  @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
+  note    String @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -851,11 +855,89 @@ model UserAdminEvent {
   eventType   AdminEventType
   metadata    Json?
   description String?
-  
-  createdAt   DateTime @default(now())
+
+  createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([adminId])
   @@index([eventType])
   @@index([createdAt])
+}
+
+// ============================================
+// NOTIFICATIONS SYSTEM
+// ============================================
+
+enum NotificationType {
+  SCAN_COMPLETE
+  ISSUE_ASSIGNED
+  ISSUE_RESOLVED
+  TEAM_INVITE
+  PAYMENT_SUCCESS
+  PAYMENT_FAILED
+  SUBSCRIPTION_EXPIRING
+  TRIAL_EXPIRING
+  REGRESSION_DETECTED
+  ALERT_TRIGGERED
+  SYSTEM_ANNOUNCEMENT
+}
+
+model Notification {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type    NotificationType
+  title   String
+  message String           @db.Text
+  link    String? // Optional link to related resource
+
+  read   Boolean   @default(false)
+  readAt DateTime?
+
+  metadata Json? // Additional data (scanId, issueId, etc.)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, read])
+  @@index([createdAt])
+}
+
+// ============================================
+// WEBHOOKS SYSTEM
+// ============================================
+
+enum WebhookEvent {
+  SCAN_COMPLETED
+  SCAN_FAILED
+  ISSUE_CREATED
+  ISSUE_UPDATED
+  ISSUE_RESOLVED
+  ALERT_TRIGGERED
+  REGRESSION_DETECTED
+}
+
+model WebhookEndpoint {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name   String // User-friendly name
+  url    String // Webhook endpoint URL
+  secret String // Secret for HMAC signature
+
+  events WebhookEvent[] // Events to trigger webhook
+  active Boolean        @default(true)
+
+  // Statistics
+  lastTriggered DateTime?
+  successCount  Int       @default(0)
+  failureCount  Int       @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([active])
 }
