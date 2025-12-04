@@ -1,82 +1,48 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
+import { NextRequest } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import { prisma } from '@/lib/prisma'
+import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse, forbiddenResponse } from '@/lib/api-response'
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
-export async function GET(
-  req: NextRequest,
+/**
+ * DELETE /api/scans/[scanId] - Delete scan
+ */
+export async function DELETE(
+  request: NextRequest,
   { params }: { params: { scanId: string } }
 ) {
   try {
-    const user = await requireAuth();
-    const { scanId } = params;
+    const supabase = await createClient()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    if (!scanId) {
-      return NextResponse.json(
-        { ok: false, error: "Scan ID is required" },
-        { status: 400 }
-      );
+    if (authError || !user) {
+      return unauthorizedResponse()
     }
 
-    // Fetch scan with site and page info
+    // Check ownership through site
     const scan = await prisma.scan.findUnique({
-      where: { id: scanId },
+      where: { id: params.scanId },
       include: {
-        site: true,
-        page: true,
+        site: {
+          select: { userId: true },
+        },
       },
-    });
+    })
 
     if (!scan) {
-      return NextResponse.json(
-        { ok: false, error: "Scan not found" },
-        { status: 404 }
-      );
+      return notFoundResponse('Scan')
     }
 
-    // Verify user owns this scan
     if (scan.site.userId !== user.id) {
-      return NextResponse.json(
-        { ok: false, error: "Unauthorized" },
-        { status: 403 }
-      );
+      return forbiddenResponse()
     }
 
-    // Extract violations from raw data
-    const rawData = scan.raw as any;
-    const violations = rawData?.violations || [];
+    await prisma.scan.delete({
+      where: { id: params.scanId },
+    })
 
-    // Format response for results page
-    const result = {
-      scanId: scan.id,
-      url: scan.page?.url || scan.site.url,
-      score: scan.score,
-      issues: scan.issues,
-      violations: violations.map((v: any) => ({
-        id: v.id,
-        impact: v.impact,
-        help: v.help || v.description,
-        description: v.description || v.help,
-        nodes: (v.nodes || []).map((node: any) => ({
-          target: node.target || [],
-          html: node.html || '',
-        })),
-      })),
-    };
-
-    return NextResponse.json({
-      ok: true,
-      result,
-    });
-
-  } catch (error: any) {
-    console.error("Failed to fetch scan:", error);
-
-    return NextResponse.json(
-      { ok: false, error: error?.message || "Failed to fetch scan" },
-      { status: 500 }
-    );
+    return successResponse(null, 'Scan deleted successfully')
+  } catch (error) {
+    console.error('Error deleting scan:', error)
+    return errorResponse('Failed to delete scan', 500)
   }
 }
