@@ -1,0 +1,1065 @@
+================================================================================
+TUTUSPORTA (VEXNEXA) - COMPREHENSIVE FEATURE LIST
+================================================================================
+Last Updated: 2024-12-04
+Total Components: 128
+Total API Endpoints: 100+
+Total Database Tables: 22
+
+================================================================================
+SUBSCRIPTION PLANS & LIMITS
+================================================================================
+
+TRIAL PLAN (Free)
+├── Duration: 14 days
+├── Sites: 1
+├── Pages per scan: 10
+├── Scans per month: 5
+├── Team members: 1 (self only)
+├── Features:
+│   ├── Basic accessibility scanning
+│   ├── WCAG 2.1 AA compliance checking
+│   ├── PDF report exports
+│   ├── Email notifications
+│   └── Basic analytics
+└── Limitations: No API access, no white-label, no priority support
+
+STARTER PLAN (€29/month)
+├── Sites: 5
+├── Pages per scan: 50
+├── Scans per month: 50
+├── Team members: 3
+├── Features:
+│   ├── All TRIAL features
+│   ├── WCAG 2.1 AAA compliance checking
+│   ├── Historical scan data (90 days)
+│   ├── CSV exports
+│   ├── Custom scan scheduling
+│   ├── Issue tracking system
+│   └── Email support
+└── Limitations: No API access, no white-label, no priority support
+
+PRO PLAN (€99/month)
+├── Sites: 25
+├── Pages per scan: 200
+├── Scans per month: 200
+├── Team members: 10
+├── Features:
+│   ├── All STARTER features
+│   ├── WCAG 2.2 compliance checking
+│   ├── API access (1000 requests/month)
+│   ├── Webhooks
+│   ├── Historical scan data (unlimited)
+│   ├── Advanced analytics & benchmarking
+│   ├── Manual audits system
+│   ├── Bulk scanning
+│   ├── Site crawler (multi-page)
+│   ├── Performance & SEO integration
+│   ├── Legal risk assessment
+│   ├── Regression detection
+│   ├── Custom alert rules
+│   └── Priority email support
+└── White-label: Available as add-on (+€49/month)
+
+BUSINESS PLAN (€299/month)
+├── Sites: Unlimited
+├── Pages per scan: Unlimited
+├── Scans per month: Unlimited
+├── Team members: Unlimited
+├── Features:
+│   ├── All PRO features
+│   ├── API access (unlimited)
+│   ├── White-label (included)
+│   ├── Custom domain support
+│   ├── SSO/SAML authentication
+│   ├── Dedicated account manager
+│   ├── SLA guarantee (99.9% uptime)
+│   ├── Custom integrations
+│   ├── On-premise deployment option
+│   ├── Advanced security features
+│   ├── Custom reporting
+│   └── 24/7 phone + email support
+└── Enterprise: Custom pricing for special requirements
+
+================================================================================
+CORE FEATURES (All Plans)
+================================================================================
+
+AUTHENTICATION & USER MANAGEMENT
+├── ✓ Supabase authentication (email/password)
+├── ✓ Email verification
+├── ✓ Password reset flow
+├── ✓ User profile management
+├── ✓ Account deletion (self-service)
+├── ✓ GDPR data export
+├── ✓ User activity log
+├── ✓ Session management
+├── ✓ Multi-device support
+└── ⏳ 2FA/MFA (planned)
+
+USER PROFILE
+├── ✓ Personal information (name, company, job title)
+├── ✓ Contact details (phone, website, country)
+├── ✓ Email notification preferences
+├── ✓ Marketing email opt-in/out
+├── ✓ Product updates subscription
+├── ✓ Team invitation settings
+├── ✓ Scan notifications
+├── ✓ Weekly reports opt-in
+├── ⏳ Avatar upload (planned)
+├── ⏳ Timezone settings (planned)
+└── ⏳ Language preferences (planned)
+
+BILLING & SUBSCRIPTIONS
+├── ✓ Mollie payment integration
+├── ✓ Subscription management
+├── ✓ Plan upgrades/downgrades
+├── ✓ Payment method management
+├── ✓ Invoice generation
+├── ✓ Usage tracking
+├── ✓ Overage handling
+├── ✓ Trial management
+├── ✓ Subscription cancellation
+├── ✓ Refund processing
+├── ✓ Payment retries
+└── ✓ Webhook integration (Mollie)
+
+================================================================================
+ACCESSIBILITY SCANNING ENGINE
+================================================================================
+
+SCAN TYPES
+├── ✓ Single page scan
+├── ✓ Multi-page scan (crawler)
+├── ✓ Bulk scan (multiple URLs)
+├── ✓ Scheduled scans (PRO+)
+├── ✓ On-demand scans
+└── ⏳ Automated continuous monitoring (planned)
+
+SCAN CAPABILITIES
+├── ✓ WCAG 2.1 Level A compliance
+├── ✓ WCAG 2.1 Level AA compliance
+├── ✓ WCAG 2.1 Level AAA compliance (STARTER+)
+├── ✓ WCAG 2.2 compliance checking (PRO+)
+├── ✓ Section 508 compliance
+├── ✓ Color contrast analysis
+├── ✓ Keyboard navigation testing
+├── ✓ Screen reader compatibility
+├── ✓ Form accessibility
+├── ✓ Image alt text validation
+├── ✓ Heading structure analysis
+├── ✓ Link accessibility
+├── ✓ ARIA attributes validation
+├── ✓ Semantic HTML checking
+├── ✓ Focus management
+├── ✓ Tab order validation
+└── ✓ Dynamic content accessibility
+
+SCAN RESULTS
+├── ✓ Accessibility score (0-100)
+├── ✓ Issue count by severity (critical, serious, moderate, minor)
+├── ✓ Impact categorization
+├── ✓ WCAG success criteria mapping
+├── ✓ Element-level issue details
+├── ✓ CSS selectors for issues
+├── ✓ Fix recommendations
+├── ✓ Before/after comparisons
+├── ✓ Historical trend analysis
+├── ✓ Score improvements tracking
+├── ✓ Issue resolution tracking
+├── ✓ Regression detection (PRO+)
+└── ✓ Performance correlation (PRO+)
+
+PERFORMANCE & SEO INTEGRATION (PRO+)
+├── ✓ Google PageSpeed Insights score
+├── ✓ First Contentful Paint (FCP)
+├── ✓ Largest Contentful Paint (LCP)
+├── ✓ Cumulative Layout Shift (CLS)
+├── ✓ First Input Delay (FID)
+├── ✓ Total Blocking Time (TBT)
+├── ✓ SEO health score
+├── ✓ Meta description analysis
+├── ✓ Heading structure quality
+├── ✓ Alt text coverage
+└── ✓ Link accessibility score
+
+LEGAL COMPLIANCE (PRO+)
+├── ✓ ADA risk assessment (LOW, MEDIUM, HIGH, CRITICAL)
+├── ✓ Legal risk scoring (0-100)
+├── ✓ Compliance gap analysis
+├── ✓ Litigation risk indicators
+└── ⏳ Expert remediation recommendations (planned)
+
+================================================================================
+SITE MANAGEMENT
+================================================================================
+
+SITES
+├── ✓ Add/remove sites
+├── ✓ Site URL management
+├── ✓ Site grouping (portfolios)
+├── ✓ Site archiving
+├── ✓ Site history tracking
+├── ✓ Multi-page crawling
+├── ✓ Sitemap parsing
+├── ✓ robots.txt compliance
+├── ✓ Crawl depth control
+├── ✓ Max pages limit
+├── ✓ Crawl status tracking
+└── ✓ Duplicate URL detection
+
+PORTFOLIOS (All Plans)
+├── ✓ Create portfolios
+├── ✓ Group sites into portfolios
+├── ✓ Portfolio-level metrics
+├── ✓ Average accessibility score
+├── ✓ Total issues across portfolio
+├── ✓ Risk score aggregation
+├── ✓ Performance correlation
+├── ✓ Priority matrix
+├── ✓ Portfolio comparisons
+└── ✓ Custom portfolio descriptions
+
+PAGES
+├── ✓ Page discovery via crawler
+├── ✓ Page-level scan history
+├── ✓ Latest scan association
+├── ✓ URL management
+├── ✓ Title extraction
+└── ✓ Automatic page cataloging
+
+================================================================================
+ISSUE TRACKING SYSTEM (STARTER+)
+================================================================================
+
+ISSUE MANAGEMENT
+├── ✓ Issue creation from scan results
+├── ✓ Issue assignment to team members
+├── ✓ Issue status tracking (OPEN, IN_PROGRESS, RESOLVED, CLOSED)
+├── ✓ Priority levels (LOW, MEDIUM, HIGH, CRITICAL)
+├── ✓ Due date setting
+├── ✓ Time estimation
+├── ✓ Actual hours tracking
+├── ✓ Tags/labels
+├── ✓ Issue comments
+├── ✓ Activity history
+├── ✓ Issue resolution workflow
+├── ✓ Bulk issue operations
+└── ✓ Issue filtering & search
+
+COLLABORATION
+├── ✓ Comment threads
+├── ✓ @mentions
+├── ✓ Activity notifications
+├── ✓ Assignment notifications
+├── ✓ Status change notifications
+└── ✓ Resolution tracking
+
+================================================================================
+MANUAL AUDITS SYSTEM (PRO+)
+================================================================================
+
+AUDIT FEATURES
+├── ✓ Custom audit creation
+├── ✓ Template-based audits
+├── ✓ WCAG audit templates
+├── ✓ Section 508 templates
+├── ✓ Custom criteria
+├── ✓ Audit assignment
+├── ✓ Progress tracking
+├── ✓ Pass/fail criteria
+├── ✓ Evidence collection (screenshots, notes)
+├── ✓ Audit review workflow
+├── ✓ Audit completion tracking
+├── ✓ Overall compliance scoring
+├── ✓ Audit history
+├── ✓ Audit reports
+└── ✓ Audit templates library
+
+AUDIT CRITERIA
+├── ✓ Category organization
+├── ✓ WCAG mapping
+├── ✓ Testing instructions
+├── ✓ Priority levels
+├── ✓ Required vs optional checks
+├── ✓ Custom criteria creation
+└── ✓ Criteria reusability
+
+AUDIT ITEMS
+├── ✓ Test status (pending, pass, fail, not_applicable, needs_review)
+├── ✓ Detailed notes
+├── ✓ Screenshot attachments
+├── ✓ Element selectors
+├── ✓ Page URL tracking
+├── ✓ Tester assignment
+├── ✓ Test date tracking
+└── ✓ Remediation notes
+
+================================================================================
+TEAM COLLABORATION (STARTER+)
+================================================================================
+
+TEAMS
+├── ✓ Create teams
+├── ✓ Team member management
+├── ✓ Role-based access (ADMIN, EDITOR, VIEWER)
+├── ✓ Team invitations via email
+├── ✓ Invitation expiration
+├── ✓ Team ownership transfer
+├── ✓ Shared site access
+├── ✓ Team activity tracking
+├── ⏳ Team usage analytics (planned)
+├── ⏳ Team-level notifications (planned)
+└── ⏳ Team billing split (planned)
+
+PERMISSIONS
+├── ✓ ADMIN: Full control
+├── ✓ EDITOR: Can edit sites, run scans, manage issues
+├── ✓ VIEWER: Read-only access
+└── ✓ Owner: Team ownership with billing access
+
+================================================================================
+REPORTS & EXPORTS
+================================================================================
+
+EXPORT FORMATS
+├── ✓ PDF reports (basic)
+├── ✓ PDF reports (enhanced)
+├── ✓ PDF reports (beautiful/branded)
+├── ✓ Combined PDF (multiple scans)
+├── ✓ CSV exports (STARTER+)
+├── ✓ JSON exports (PRO+)
+├── ✓ DOCX exports (PRO+)
+└── ⏳ Excel exports (planned)
+
+REPORT FEATURES
+├── ✓ Executive summary
+├── ✓ Detailed issue breakdown
+├── ✓ WCAG compliance status
+├── ✓ Score visualization
+├── ✓ Historical trends
+├── ✓ Remediation recommendations
+├── ✓ Screenshot inclusion
+├── ✓ Element selectors
+├── ✓ Custom branding (white-label)
+├── ⏳ Scheduled report generation (planned)
+└── ⏳ Automated report delivery (planned)
+
+================================================================================
+ANALYTICS & INSIGHTS (PRO+)
+================================================================================
+
+DASHBOARDS
+├── ✓ Overview dashboard
+├── ✓ Site-specific analytics
+├── ✓ Portfolio analytics
+├── ✓ Team analytics
+├── ✓ Real-time metrics
+├── ✓ Historical data visualization
+├── ⏳ Customizable widgets (planned)
+├── ⏳ Drag-and-drop layout (planned)
+└── ⏳ Saved views (planned)
+
+ANALYTICS FEATURES
+├── ✓ Score trend analysis
+├── ✓ Issue trend tracking
+├── ✓ Compliance tracking
+├── ✓ Regression detection
+├── ✓ Performance correlation
+├── ✓ Industry benchmarking
+├── ✓ Period-over-period comparison
+├── ✓ Violation categorization
+├── ✓ Rule-level trending
+├── ⏳ Predictive analytics (planned)
+├── ⏳ Churn prediction (planned)
+└── ⏳ Revenue forecasting (planned)
+
+MONITORING (PRO+)
+├── ✓ Custom alert rules
+├── ✓ Score threshold alerts
+├── ✓ Regression alerts
+├── ✓ Compliance alerts
+├── ✓ Alert history
+├── ✓ Alert resolution tracking
+├── ✓ Multi-channel notifications
+└── ⏳ PagerDuty integration (planned)
+
+BENCHMARKING (PRO+)
+├── ✓ Industry-specific benchmarks
+├── ✓ Category comparisons
+├── ✓ Average score comparison
+├── ✓ Issue count comparison
+├── ✓ WCAG compliance comparison
+└── ✓ Sample size tracking
+
+================================================================================
+WHITE-LABEL FEATURES (PRO+ Add-on / BUSINESS Included)
+================================================================================
+
+BRANDING
+├── ✓ Custom company name
+├── ✓ Logo upload (primary)
+├── ✓ Favicon upload
+├── ✓ Color customization (primary, secondary, accent)
+├── ✓ Custom support email
+├── ✓ Custom website URL
+├── ✓ Custom phone number
+├── ✓ Footer text customization
+├── ✓ "Powered by" toggle
+├── ⏳ Custom CSS injection (planned)
+└── ⏳ Custom footer links (planned)
+
+DOMAIN & EMAIL
+├── ✓ Subdomain configuration
+├── ⏳ Custom domain support (planned - BUSINESS)
+├── ⏳ Email template customization (planned)
+├── ⏳ White-label email templates (planned)
+└── ⏳ Custom help documentation links (planned)
+
+REPORTS
+├── ✓ Branded PDF exports with logo
+├── ✓ Custom color schemes in reports
+└── ⏳ Custom report templates (planned)
+
+================================================================================
+API & INTEGRATIONS (PRO+)
+================================================================================
+
+REST API
+├── ✓ Authentication via API keys
+├── ✓ Site management endpoints
+├── ✓ Scan management endpoints
+├── ✓ Results retrieval endpoints
+├── ✓ User management endpoints
+├── ✓ Portfolio management endpoints
+├── ✓ Team management endpoints
+├── ✓ Issue management endpoints
+├── ⏳ Webhook endpoints (planned)
+├── ⏳ API versioning (planned)
+├── ⏳ OpenAPI/Swagger docs (planned)
+└── ⏳ Rate limit customization (planned)
+
+WEBHOOKS (PRO+)
+├── ⏳ Scan completion webhooks (planned)
+├── ⏳ Issue creation webhooks (planned)
+├── ⏳ Alert webhooks (planned)
+├── ⏳ Custom webhook endpoints (planned)
+├── ⏳ Webhook testing (planned)
+└── ⏳ Webhook retry logic (planned)
+
+INTEGRATIONS
+├── ✓ Mollie (payment processing)
+├── ✓ Supabase (authentication)
+├── ✓ Resend (email delivery)
+├── ⏳ Slack (notifications - planned)
+├── ⏳ Microsoft Teams (planned)
+├── ⏳ Jira (issue sync - planned)
+├── ⏳ GitHub (issue sync - planned)
+├── ⏳ Zapier (planned)
+└── ⏳ Custom integrations (BUSINESS)
+
+================================================================================
+ADMIN FEATURES
+================================================================================
+
+USER MANAGEMENT
+├── ✓ User search
+├── ✓ User listing with pagination
+├── ✓ User profile viewing
+├── ✓ Plan management (upgrade/downgrade users)
+├── ✓ Admin role assignment
+├── ✓ Subscription status management
+├── ✓ Trial extension
+├── ✓ Billing information access
+├── ✓ Payment history
+├── ✓ Usage statistics per user
+├── ✓ Admin notes on users
+├── ⏳ User deletion (planned)
+├── ⏳ User suspension (planned)
+├── ⏳ Force password reset (planned)
+├── ⏳ Email verification override (planned)
+└── ⏳ User impersonation (debug - planned)
+
+BILLING ADMIN
+├── ✓ Bulk credit assignment
+├── ✓ Overage waiving
+├── ✓ Overage credit application
+├── ✓ Bulk plan changes
+├── ✓ Subscription cancellation
+├── ✓ Refund processing
+├── ✓ Payment retry
+└── ✓ Bulk email to users
+
+ANALYTICS ADMIN
+├── ✓ Advanced analytics dashboard
+├── ✓ Revenue metrics
+├── ✓ User growth tracking
+├── ✓ Scan volume analytics
+├── ✓ System health monitoring
+├── ⏳ Export functionality (CSV, PDF - planned)
+├── ⏳ Revenue forecasting (planned)
+└── ⏳ Churn prediction (planned)
+
+SYSTEM MANAGEMENT
+├── ✓ Health check endpoint
+├── ✓ Database connection monitoring
+├── ⏳ System health dashboard (planned)
+├── ⏳ Performance metrics (planned)
+├── ⏳ Error logs viewer (planned)
+├── ⏳ API logs viewer (planned)
+└── ⏳ API usage statistics (planned)
+
+CONTENT MANAGEMENT
+├── ✓ Blog post management
+├── ✓ Blog post creation/editing
+├── ✓ Blog post publishing workflow
+├── ✓ SEO metadata management
+├── ✓ Category management
+├── ✓ Tag management
+├── ✓ View count tracking
+├── ✓ Cover image upload
+└── ✓ Rich text editor
+
+SUPPORT TICKETING
+├── ✓ Ticket creation
+├── ✓ Ticket viewing
+├── ✓ Ticket categorization
+├── ✓ Priority management
+├── ✓ Status tracking
+├── ✓ Message threads
+├── ✓ User/admin messaging
+└── ✓ Ticket filtering
+
+CONTACT FORM MANAGEMENT
+├── ✓ Contact message viewing
+├── ✓ Message status tracking
+├── ✓ Reply tracking
+└── ✓ Message archiving
+
+================================================================================
+SECURITY FEATURES
+================================================================================
+
+AUTHENTICATION & AUTHORIZATION
+├── ✓ Supabase authentication
+├── ✓ JWT token-based auth
+├── ✓ Session management
+├── ✓ Email verification required
+├── ✓ Password reset flow
+├── ✓ Role-based access control (RBAC)
+├── ✓ Database-driven admin roles
+├── ✓ Resource ownership verification
+├── ⏳ 2FA/MFA (planned)
+└── ⏳ SSO/SAML (BUSINESS - planned)
+
+API SECURITY
+├── ✓ Rate limiting (global)
+├── ✓ Per-endpoint rate limits
+├── ✓ API key authentication
+├── ✓ CORS configuration
+├── ✓ Input validation (Zod schemas)
+├── ✓ SQL injection prevention
+├── ✓ XSS protection
+├── ✓ CSRF protection
+└── ⏳ Rate limit override per user (planned)
+
+SECURITY HEADERS
+├── ✓ HSTS (Strict-Transport-Security)
+├── ✓ Content Security Policy (CSP)
+├── ✓ X-Frame-Options
+├── ✓ X-Content-Type-Options
+├── ✓ X-XSS-Protection
+└── ✓ Referrer-Policy
+
+DATA PROTECTION
+├── ✓ GDPR compliance
+├── ✓ Data export functionality
+├── ✓ Account deletion (right to erasure)
+├── ✓ Data encryption at rest
+├── ✓ Data encryption in transit (HTTPS)
+├── ✓ Soft delete functionality
+├── ✓ Data retention policies
+├── ⏳ Login attempt tracking (planned)
+├── ⏳ Failed auth alerts (planned)
+├── ⏳ Suspicious activity detection (planned)
+└── ⏳ IP-based blocking (planned)
+
+LOGGING & MONITORING
+├── ✓ Structured logging
+├── ✓ Error logging
+├── ✓ Admin action logging
+├── ✓ User event tracking
+├── ⏳ Sentry integration (planned)
+├── ⏳ DataDog integration (planned)
+└── ⏳ Security audit logs (planned)
+
+================================================================================
+NOTIFICATION SYSTEM
+================================================================================
+
+EMAIL NOTIFICATIONS
+├── ✓ Welcome email
+├── ✓ Email verification
+├── ✓ Password reset
+├── ✓ Scan completion
+├── ✓ Team invitation
+├── ✓ Issue assignment
+├── ✓ Payment confirmation
+├── ✓ Subscription changes
+├── ✓ Trial expiration warnings
+├── ✓ Newsletter (optional)
+├── ✓ Product updates (optional)
+└── ✓ Marketing emails (opt-in)
+
+NOTIFICATION PREFERENCES
+├── ✓ Marketing emails toggle
+├── ✓ Product updates toggle
+├── ✓ Team invitations toggle
+├── ✓ Scan notifications toggle
+├── ✓ Weekly reports toggle
+├── ⏳ Per-site notification settings (planned)
+└── ⏳ Notification frequency control (planned)
+
+IN-APP NOTIFICATIONS
+├── ⏳ Notification center (bell icon - planned)
+├── ⏳ Notification list (planned)
+├── ⏳ Mark as read (planned)
+├── ⏳ Notification history (planned)
+└── ⏳ Browser push notifications (planned)
+
+================================================================================
+DATABASE TABLES (22 Total)
+================================================================================
+
+CORE TABLES
+├── User - User accounts and profiles
+├── Site - Websites being monitored
+├── Page - Individual pages within sites
+├── Scan - Accessibility scan results
+├── Usage - Usage tracking per user/period
+├── Crawl - Multi-page crawl jobs
+└── CrawlUrl - URLs discovered during crawls
+
+SUBSCRIPTION & BILLING
+├── (Mollie external system)
+└── Usage tracking via Usage table
+
+PORTFOLIOS & ORGANIZATION
+├── Portfolio - Site groupings
+└── WhiteLabel - White-label configurations
+
+TEAM COLLABORATION
+├── Team - Team definitions
+├── TeamMember - Team membership records
+└── TeamInvite - Pending team invitations
+
+ISSUE TRACKING
+├── Issue - Accessibility issues
+├── IssueComment - Issue comments
+└── IssueActivity - Issue activity history
+
+MANUAL AUDITS
+├── ManualAudit - Manual accessibility audits
+├── AuditTemplate - Reusable audit templates
+├── AuditCriterion - Template criteria
+├── AuditItem - Individual audit checks
+└── AuditAttachment - Audit attachments (screenshots, docs)
+
+CONTENT & SUPPORT
+├── BlogPost - Blog articles
+├── ContactMessage - Contact form submissions
+├── SupportTicket - Support tickets
+├── SupportTicketMessage - Ticket messages
+├── AdminUserNote - Admin notes on users
+└── UserAdminEvent - Admin action history
+
+BENCHMARKING
+└── Benchmark - Industry benchmark data
+
+PLANNED TABLES (Phase 4)
+├── ⏳ AlertHistory - Alert history tracking
+├── ⏳ ApiKey - API key management
+├── ⏳ WebhookEndpoint - User webhook configurations
+├── ⏳ Notification - In-app notifications
+├── ⏳ FeatureFlag - A/B testing flags
+├── ⏳ EmailLog - Email delivery tracking
+├── ⏳ LoginAttempt - Security monitoring
+└── ⏳ RateLimitOverride - Custom rate limits
+
+================================================================================
+FRONTEND PAGES & COMPONENTS (128 Components)
+================================================================================
+
+PUBLIC PAGES
+├── / - Landing page
+├── /features - Feature showcase
+├── /pricing - Pricing plans
+├── /blog - Blog listing
+├── /blog/[slug] - Blog post
+├── /legal/privacy - Privacy policy
+├── /legal/terms - Terms of service
+└── /contact - Contact form
+
+AUTHENTICATION
+├── /auth/login - Login page
+├── /auth/signup - Registration
+├── /auth/forgot-password - Password reset request
+└── /auth/reset-password - Password reset form
+
+USER DASHBOARD
+├── /dashboard - Main dashboard
+├── /dashboard/sites - Site management
+├── /dashboard/sites/[siteId] - Site details
+├── /dashboard/scans - Scan history
+├── /dashboard/scans/[scanId] - Scan results
+├── /dashboard/portfolios - Portfolio management
+├── /dashboard/issues - Issue tracker
+├── /dashboard/teams - Team management
+├── /dashboard/audits - Manual audits
+├── /dashboard/settings - User settings
+├── /dashboard/billing - Billing & subscription
+└── /dashboard/white-label - White-label settings
+
+ADMIN DASHBOARD
+├── /admin - Admin overview
+├── /admin/users - User management
+├── /admin/analytics - Analytics dashboard
+├── /admin/billing - Billing management
+├── /admin/blog - Blog management
+├── /admin/support - Support tickets
+├── /admin/contact - Contact messages
+├── ⏳ /admin/roles - Role management (planned)
+├── ⏳ /admin/audit-logs - Audit logs (planned)
+├── ⏳ /admin/system-health - System health (planned)
+├── ⏳ /admin/api-logs - API logs (planned)
+└── ⏳ /admin/error-logs - Error logs (planned)
+
+KEY COMPONENT CATEGORIES
+├── Admin Components (22)
+│   ├── User management (search, billing, notes)
+│   ├── Analytics dashboards
+│   ├── Blog management
+│   ├── Support ticket system
+│   └── Bulk operations
+├── Audit Components (12)
+│   ├── Audit creation & management
+│   ├── Audit templates
+│   ├── Checklist system
+│   └── Evidence collection
+├── Authentication Components (6)
+│   ├── Login/signup forms
+│   ├── Password management
+│   └── Email verification
+├── Dashboard Components (15)
+│   ├── Overview metrics
+│   ├── Charts & graphs
+│   ├── Quick actions
+│   └── Recent activity
+├── Enhanced Components (10)
+│   ├── 3D site visualizations
+│   ├── Drag-drop dashboards
+│   ├── Remediation matrix
+│   └── Advanced analytics
+├── Monitoring Components (8)
+│   ├── Alert rules
+│   ├── Compliance tracking
+│   ├── Regression detection
+│   └── Score trend analysis
+├── Issue Tracking Components (10)
+│   ├── Issue board
+│   ├── Issue details
+│   ├── Comments & activity
+│   └── Assignment workflow
+└── Core UI Components (45+)
+    ├── Forms & inputs
+    ├── Tables & data grids
+    ├── Modals & dialogs
+    ├── Navigation & menus
+    └── Charts & visualizations
+
+================================================================================
+API ENDPOINTS (100+ Total)
+================================================================================
+
+USER & PROFILE APIs (7)
+├── GET    /api/user/profile - Get user profile
+├── PUT    /api/user/profile - Update profile
+├── PUT    /api/user/password - Change password
+├── PUT    /api/user/email - Change email
+├── DELETE /api/user/account - Delete account
+├── GET    /api/user/activity - Activity log
+└── GET    /api/user/data-export - GDPR export
+
+SITE APIs (4)
+├── GET    /api/sites/[siteId] - Get site details
+├── PUT    /api/sites/[siteId] - Update site
+├── DELETE /api/sites/[siteId] - Delete site
+├── POST   /api/sites/[siteId]/archive - Archive site
+└── GET    /api/sites/[siteId]/history - Site history
+
+SCAN APIs (6)
+├── POST   /api/scan - Run single scan
+├── POST   /api/scan-enhanced - Enhanced scan
+├── POST   /api/bulk-scan - Bulk scan
+├── DELETE /api/scans/[scanId] - Delete scan
+├── POST   /api/scans/[scanId]/rerun - Rerun scan
+└── PUT    /api/scans/[scanId]/notes - Add notes
+
+CRAWL APIs (2)
+├── POST   /api/crawl - Start crawl
+└── GET    /api/crawl/[id] - Get crawl status
+
+PORTFOLIO APIs (7)
+├── POST   /api/portfolios - Create portfolio
+├── GET    /api/portfolios - List portfolios
+├── GET    /api/portfolios/[id] - Portfolio details
+├── PUT    /api/portfolios/[id] - Update portfolio
+├── DELETE /api/portfolios/[id] - Delete portfolio
+├── POST   /api/portfolios/[id]/sites - Add sites
+└── DELETE /api/portfolios/[id]/sites/[siteId] - Remove site
+
+TEAM APIs (4)
+├── POST   /api/teams - Create team
+├── GET    /api/teams - List teams
+├── GET    /api/teams/[teamId] - Team details
+├── POST   /api/teams/[teamId]/members - Add member
+└── DELETE /api/teams/[teamId] - Delete team
+
+ISSUE APIs (2)
+├── GET    /api/issues - List issues
+├── GET    /api/issues/[issueId] - Issue details
+└── PUT    /api/issues/[issueId] - Update issue
+
+AUDIT APIs (3)
+├── GET    /api/audits - List audits
+├── GET    /api/audits/[id] - Audit details
+├── PUT    /api/audits/[id]/items/[itemId] - Update item
+└── POST   /api/audits - Create audit
+
+ADMIN - USER MANAGEMENT (14)
+├── GET    /api/admin/search-user - Search users
+├── POST   /api/admin/upgrade-user - Upgrade plan
+├── POST   /api/admin/manage-admin-role - Manage admin
+├── POST   /api/admin/bulk-plan-change - Bulk plan change
+├── POST   /api/admin/bulk-credit - Bulk credit
+├── POST   /api/admin/bulk-email - Bulk email
+├── POST   /api/admin/waive-overage - Waive overage
+├── POST   /api/admin/apply-overage-credit - Apply credit
+├── POST   /api/admin/cancel-subscription - Cancel sub
+├── POST   /api/admin/process-refund - Process refund
+├── POST   /api/admin/retry-payment - Retry payment
+├── GET    /api/admin/advanced-analytics - Analytics
+├── GET    /api/admin/export-scans - Export scans
+└── GET    /api/admin/download-report - Download report
+
+BILLING APIs (5)
+├── GET    /api/billing - Get billing info
+├── POST   /api/billing/change-plan - Change plan
+├── POST   /api/billing/cancel - Cancel subscription
+├── PUT    /api/billing/payment-method/reset - Reset payment
+└── (Mollie webhook handled separately)
+
+MONITORING APIs (PRO+) (9)
+├── GET    /api/monitoring/dashboard - Dashboard data
+├── GET    /api/monitoring/trends - Trend analysis
+├── GET    /api/monitoring/compliance - Compliance tracking
+├── GET    /api/monitoring/regressions - Regressions
+├── GET    /api/monitoring/alerts/rules - Alert rules
+├── POST   /api/monitoring/alerts/rules - Create rule
+├── GET    /api/monitoring/alerts/history - Alert history
+├── POST   /api/monitoring/alerts/test/[ruleId] - Test alert
+└── POST   /api/monitoring/alerts/[alertId]/resolve - Resolve
+
+EXPORT APIs (8)
+├── GET    /api/export - Generic export
+├── GET    /api/export/pdf - Basic PDF
+├── GET    /api/export/pdf-simple - Simple PDF
+├── GET    /api/export/pdf-enhanced - Enhanced PDF
+├── GET    /api/export/pdf-beautiful - Beautiful PDF
+├── GET    /api/export/combined-pdf - Combined PDF
+├── GET    /api/export/docx - DOCX export
+└── GET    /api/export-pdf - Legacy PDF
+
+BLOG APIs (2)
+├── GET    /api/blog - List posts
+├── GET    /api/blog/[slug] - Get post
+└── (Admin blog management via admin panel)
+
+ANALYTICS APIs (2)
+├── GET    /api/analytics - Analytics data
+└── GET    /api/dashboard-stats - Dashboard stats
+
+BENCHMARK APIs (1)
+└── GET    /api/benchmarks - Industry benchmarks
+
+WHITE-LABEL APIs (2)
+├── GET    /api/white-label - Get config
+├── PUT    /api/white-label - Update config
+└── POST   /api/white-label/upload - Upload assets
+
+AUTHENTICATION APIs
+├── POST   /api/auth/email-verification - Verify email
+└── (Supabase handles main auth)
+
+MOLLIE PAYMENT APIs (4)
+├── POST   /api/mollie/checkout - Create checkout
+├── POST   /api/mollie/webhook - Payment webhook
+├── GET    /api/mollie/payment-methods - Get methods
+└── GET    /api/mollie/test - Test connection
+
+UTILITY APIs (10+)
+├── GET    /api/health - Health check
+├── POST   /api/contact - Contact form
+├── POST   /api/lead - Lead capture
+├── GET    /api/screenshot - Screenshot service
+├── POST   /api/sync-user - User sync
+├── GET    /api/dbtest - Database test
+├── GET    /api/debug-db - Debug database
+├── POST   /api/migrate - Run migrations
+└── (Various test endpoints)
+
+REPORTS APIs (2)
+├── GET    /api/reports - Report list
+└── GET    /api/reports/combined - Combined report
+
+================================================================================
+TECHNICAL INFRASTRUCTURE
+================================================================================
+
+FRAMEWORK & CORE
+├── Next.js 14.2.15 (App Router)
+├── React 18
+├── TypeScript
+├── Tailwind CSS
+├── Node.js runtime
+└── Edge runtime support
+
+DATABASE & ORM
+├── PostgreSQL (Supabase)
+├── Prisma ORM 6.15.0
+├── 22 database tables
+├── 7 new indexes (Phase 1)
+└── Soft delete architecture (partially implemented)
+
+AUTHENTICATION & SECURITY
+├── Supabase Auth
+├── JWT tokens
+├── Rate limiting (Upstash Redis)
+├── CSRF protection
+├── Zod validation
+├── Security headers
+└── Structured logging
+
+PAYMENT & BILLING
+├── Mollie payment gateway
+├── Subscription management
+├── Webhook handling
+└── Invoice generation
+
+EMAIL & NOTIFICATIONS
+├── Resend email service
+├── Email templates
+├── Notification preferences
+└── Transactional emails
+
+SCANNING ENGINE
+├── Puppeteer (headless browser)
+├── Chromium automation
+├── axe-core accessibility engine
+├── WCAG 2.1/2.2 rules
+└── Performance metrics (Lighthouse)
+
+FILE STORAGE
+└── ⏳ To be implemented (S3/R2)
+
+CACHING & PERFORMANCE
+├── ⏳ Redis caching (planned)
+└── ⏳ CDN integration (planned)
+
+MONITORING & LOGGING
+├── Structured logging system
+├── ⏳ Sentry integration (planned)
+└── ⏳ DataDog/New Relic (planned)
+
+DEPLOYMENT
+├── Vercel hosting
+├── Auto-deployment from Git
+├── Environment variables
+└── Database migrations
+
+BACKGROUND JOBS
+└── ⏳ Bull/BullMQ (planned)
+
+================================================================================
+DEVELOPMENT STATUS SUMMARY
+================================================================================
+
+COMPLETED (54%)
+├── Phase 1: Critical Security (100%)
+├── Phase 2: Core API (64%)
+├── Authentication & User Management (100%)
+├── Billing & Subscriptions (100%)
+├── Basic Scanning Engine (100%)
+├── Site Management (100%)
+├── Portfolio System (100%)
+├── Issue Tracking (90%)
+├── Manual Audits (90%)
+├── Team Collaboration (90%)
+├── Basic Reports (100%)
+├── Admin User Management (80%)
+└── Blog System (100%)
+
+IN PROGRESS / PLANNED (46%)
+├── Phase 2: Notifications & Webhooks (0%)
+├── Phase 3: Admin Backend (0%)
+├── Phase 4: Database Improvements (0%)
+├── Advanced Monitoring (75%)
+├── White-label (70%)
+├── API Documentation (0%)
+├── Enhanced Reports (50%)
+├── Onboarding (0%)
+└── Infrastructure (20%)
+
+================================================================================
+KEY DIFFERENTIATORS
+================================================================================
+
+✓ Comprehensive WCAG 2.1 & 2.2 compliance checking
+✓ Legal risk assessment (ADA compliance)
+✓ Performance & SEO correlation
+✓ Manual audit workflow system
+✓ Team collaboration features
+✓ Portfolio management
+✓ Industry benchmarking
+✓ Regression detection
+✓ Custom alert rules
+✓ White-label capabilities
+✓ Full API access
+✓ Issue tracking system
+✓ Multi-page site crawler
+✓ Historical trend analysis
+✓ Bulk operations
+✓ GDPR compliance built-in
+✓ Flexible subscription plans
+✓ Professional PDF reports
+✓ Admin management dashboard
+
+================================================================================
+ROADMAP COMMITMENTS (Q1 2025)
+================================================================================
+
+Late January 2025
+└── Multi-site dashboard improvements
+
+Early February 2025
+└── Enhanced PDF & JSON exports
+
+Mid February 2025
+└── Scheduled scans & automated monitoring
+
+Late February 2025
+└── API Access v1 with full documentation
+
+================================================================================
+END OF FEATURE LIST
+================================================================================
