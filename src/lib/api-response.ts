@@ -97,7 +97,7 @@ export function validationErrorResponse(zodError: ZodError): NextResponse {
     'Validation failed',
     400,
     ErrorCodes.VALIDATION_ERROR,
-    zodError.errors.map(err => ({
+    zodError.issues.map(err => ({
       path: err.path.join('.'),
       message: err.message
     }))
