@@ -5,10 +5,11 @@ import { successResponse, errorResponse, unauthorizedResponse, validationErrorRe
 import { z } from 'zod'
 
 const DeleteAccountSchema = z.object({
-  confirmation: z.literal('DELETE', {
-    errorMap: () => ({ message: 'You must type DELETE to confirm account deletion' })
-  }),
-})
+  confirmation: z.literal('DELETE'),
+}).refine(
+  (data) => data.confirmation === 'DELETE',
+  { message: 'You must type DELETE to confirm account deletion' }
+)
 
 /**
  * DELETE /api/user/account - Delete account (self-service)
