@@ -941,3 +941,101 @@ model WebhookEndpoint {
   @@index([userId])
   @@index([active])
 }
+
+// ============================================
+// SYSTEM LOGGING & MONITORING
+// ============================================
+
+model ErrorLog {
+  id String @id @default(cuid())
+
+  // Error details
+  message    String
+  stack      String?   @db.Text
+  level      String    @default("error") // error, warning, critical
+  source     String? // API route, component, function name
+  statusCode Int?
+
+  // Context
+  userId    String?
+  userEmail String?
+  url       String?
+  method    String? // GET, POST, etc
+  userAgent String?
+  ip        String?
+
+  // Additional data
+  metadata Json? // Any additional context as JSON
+
+  resolved   Boolean   @default(false)
+  resolvedBy String?
+  resolvedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([level])
+  @@index([resolved])
+  @@index([userId])
+}
+
+model ApiLog {
+  id String @id @default(cuid())
+
+  // Request details
+  method     String // GET, POST, PUT, DELETE, etc
+  path       String // API endpoint path
+  statusCode Int
+  duration   Int // Response time in ms
+
+  // User context
+  userId    String?
+  userEmail String?
+  ip        String?
+  userAgent String?
+
+  // Request/Response data (optional, for debugging)
+  requestBody  Json? // Sanitized request body
+  responseBody Json? // Sanitized response body
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([path])
+  @@index([statusCode])
+  @@index([userId])
+  @@index([method])
+}
+
+model AuditLog {
+  id String @id @default(cuid())
+
+  // Action details
+  action      String // e.g., "user.created", "subscription.upgraded", "scan.deleted"
+  entity      String // User, Site, Scan, etc.
+  entityId    String? // ID of the affected entity
+  description String // Human-readable description
+
+  // Actor (who performed the action)
+  actorId    String?
+  actorEmail String?
+  actorType  String  @default("user") // user, system, admin, api
+
+  // Context
+  ip        String?
+  userAgent String?
+  metadata  Json? // Additional context data
+
+  // Changes (for update actions)
+  oldValues Json? // Previous values
+  newValues Json? // New values
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action])
+  @@index([actorId])
+  @@index([entity])
+  @@index([entityId])
+}

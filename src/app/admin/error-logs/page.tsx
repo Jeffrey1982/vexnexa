@@ -5,13 +5,21 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
 interface ErrorData {
-  message: string
-  note: string
-  placeholder: {
-    totalErrors24h: number
-    criticalErrors: number
-    recentErrors: any[]
-  }
+  totalErrors24h: number
+  criticalErrors: number
+  recentErrors: Array<{
+    id: string
+    message: string
+    stack: string | null
+    level: string
+    source: string | null
+    statusCode: number | null
+    userEmail: string | null
+    url: string | null
+    method: string | null
+    timestamp: string
+    resolved: boolean
+  }>
 }
 
 export default function ErrorLogsPage() {
@@ -81,21 +89,23 @@ export default function ErrorLogsPage() {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Application Error Logs</h1>
 
-        {/* Notice */}
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm text-yellow-700">
-                {errorData?.note || 'Error tracking not yet configured. Integrate with Sentry or DataDog for production error monitoring'}
-              </p>
+        {/* System Status */}
+        {errorData && errorData.totalErrors24h === 0 && (
+          <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-green-700">
+                  System is running smoothly. No errors detected in the last 24 hours.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Current Statistics */}
         {errorData && (
@@ -107,7 +117,7 @@ export default function ErrorLogsPage() {
                   <div>
                     <div className="text-sm text-gray-600">Total Errors</div>
                     <div className="text-2xl font-bold text-red-600">
-                      {errorData.placeholder.totalErrors24h}
+                      {errorData.totalErrors24h}
                     </div>
                   </div>
                   <div className="text-3xl">🔴</div>
@@ -116,7 +126,7 @@ export default function ErrorLogsPage() {
                   <div>
                     <div className="text-sm text-gray-600">Critical Errors</div>
                     <div className="text-2xl font-bold text-orange-600">
-                      {errorData.placeholder.criticalErrors}
+                      {errorData.criticalErrors}
                     </div>
                   </div>
                   <div className="text-3xl">⚠️</div>
@@ -140,24 +150,51 @@ export default function ErrorLogsPage() {
         {/* Recent Errors */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Recent Errors</h2>
-          {errorData?.placeholder.recentErrors.length === 0 ? (
+          {errorData?.recentErrors.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               No recent errors logged
             </div>
           ) : (
             <div className="space-y-3">
-              {errorData?.placeholder.recentErrors.map((error, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+              {errorData?.recentErrors.map((error) => (
+                <div key={error.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded">
-                          ERROR
+                        <span className={`px-2 py-1 text-xs font-medium rounded ${
+                          error.level === 'critical' ? 'bg-red-100 text-red-800' :
+                          error.level === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-orange-100 text-orange-800'
+                        }`}>
+                          {error.level.toUpperCase()}
                         </span>
-                        <span className="text-sm text-gray-500">{error.timestamp}</span>
+                        <span className="text-sm text-gray-500">{new Date(error.timestamp).toLocaleString()}</span>
+                        {error.userEmail && (
+                          <span className="text-sm text-gray-500">• {error.userEmail}</span>
+                        )}
+                        {error.resolved && (
+                          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
+                            RESOLVED
+                          </span>
+                        )}
                       </div>
                       <div className="font-medium text-gray-900 mb-1">{error.message}</div>
-                      <div className="text-sm text-gray-600">{error.stack}</div>
+                      {error.source && (
+                        <div className="text-sm text-gray-600 mb-1">Source: {error.source}</div>
+                      )}
+                      {error.url && (
+                        <div className="text-sm text-gray-600 mb-1">URL: {error.method} {error.url}</div>
+                      )}
+                      {error.stack && (
+                        <details className="mt-2">
+                          <summary className="text-sm text-blue-600 cursor-pointer hover:underline">
+                            Show stack trace
+                          </summary>
+                          <pre className="mt-2 text-xs bg-gray-100 p-3 rounded overflow-x-auto">
+                            {error.stack}
+                          </pre>
+                        </details>
+                      )}
                     </div>
                   </div>
                 </div>
