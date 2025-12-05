@@ -177,11 +177,14 @@ export function AdminNav({ user }: AdminNavProps) {
                 const isOpen = openDropdown === group.label;
 
                 return (
-                  <div key={group.label} className="relative">
+                  <div
+                    key={group.label}
+                    className="relative"
+                    onMouseEnter={() => setOpenDropdown(group.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
+                  >
                     <button
                       onClick={() => setOpenDropdown(isOpen ? null : group.label)}
-                      onMouseEnter={() => setOpenDropdown(group.label)}
-                      onMouseLeave={() => setOpenDropdown(null)}
                       className={cn(
                         'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all',
                         active
@@ -200,10 +203,10 @@ export function AdminNav({ user }: AdminNavProps) {
                     {/* Dropdown Menu */}
                     {isOpen && (
                       <div
-                        className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
-                        onMouseEnter={() => setOpenDropdown(group.label)}
-                        onMouseLeave={() => setOpenDropdown(null)}
+                        className="absolute top-full left-0 pt-1 w-48 z-50"
                       >
+                        <div className="bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden"
+                        >
                         {group.items.map((item) => {
                           const ItemIcon = item.icon;
                           const itemActive = isActive(item.href);
@@ -224,6 +227,7 @@ export function AdminNav({ user }: AdminNavProps) {
                             </Link>
                           );
                         })}
+                        </div>
                       </div>
                     )}
                   </div>
