@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User as UserIcon, Shield } from "lucide-react";
