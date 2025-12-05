@@ -7,8 +7,11 @@ import { MainNav } from "@/components/admin/MainNav";
 async function requireAdmin() {
   const user = await requireAuth();
 
-  // Check if user has admin role from database
-  if (!user.isAdmin) {
+  // Admin emails whitelist as fallback
+  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
+
+  // Check if user has admin role from database OR is in admin emails list
+  if (!user.isAdmin && !adminEmails.includes(user.email)) {
     redirect('/dashboard');
   }
 
