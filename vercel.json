@@ -28,6 +28,15 @@
     },
     "src/app/api/white-label/route.*": {
       "maxDuration": 30
+    },
+    "src/app/api/cron/scheduled-scans/route.*": {
+      "maxDuration": 300,
+      "memory": 2048
     }
-  }
+  },
+
+  "crons": [{
+    "path": "/api/cron/scheduled-scans",
+    "schedule": "*/15 * * * *"
+  }]
 }
