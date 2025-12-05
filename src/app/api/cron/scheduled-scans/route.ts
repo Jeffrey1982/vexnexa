@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { successResponse, errorResponse } from '@/lib/api-response'
 import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced'
-import { sendEmail } from '@/lib/email'
 
 /**
  * GET /api/cron/scheduled-scans - Execute due scheduled scans
@@ -77,11 +76,7 @@ export async function GET(request: NextRequest) {
           }
         })
 
-        // Send notifications
-        if (scheduledScan.emailOnComplete || (scheduledScan.emailOnIssues && scanResult.totalIssues > 0)) {
-          await sendScanCompletionEmail(scheduledScan, scanResult)
-        }
-
+        // Send webhook notification
         if (scheduledScan.webhookUrl && scanResult) {
           await sendWebhookNotification(scheduledScan.webhookUrl, scheduledScan, scanResult)
         }
@@ -147,35 +142,6 @@ function calculateNextRunTime(frequency: string, dayOfWeek?: number | null, dayO
   }
 
   return nextRun
-}
-
-async function sendScanCompletionEmail(scheduledScan: any, scanResult: any) {
-  try {
-    const userName = scheduledScan.user.firstName || scheduledScan.user.email
-
-    await sendEmail({
-      to: scheduledScan.user.email,
-      subject: `Scheduled Scan Completed - ${scheduledScan.site.url}`,
-      html: `
-        <h2>Scheduled Scan Results</h2>
-        <p>Hello ${userName},</p>
-        <p>Your scheduled scan for <strong>${scheduledScan.site.url}</strong> has been completed.</p>
-
-        <h3>Summary:</h3>
-        <ul>
-          <li><strong>Accessibility Score:</strong> ${scanResult.score}/100</li>
-          <li><strong>Total Issues:</strong> ${scanResult.totalIssues || 0}</li>
-          <li><strong>Violations Found:</strong> ${scanResult.violations?.length || 0}</li>
-        </ul>
-
-        <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/sites/${scheduledScan.siteId}">View Site Report</a></p>
-
-        <p>Next scheduled scan: ${new Date(scheduledScan.nextRunAt).toLocaleString()}</p>
-      `
-    })
-  } catch (error) {
-    console.error('Error sending scan completion email:', error)
-  }
 }
 
 async function sendWebhookNotification(webhookUrl: string, scheduledScan: any, scanResult: any) {
