@@ -74,7 +74,9 @@
       "Bash(git -C /e/tutusporta diff src/app/(marketing)/legal/terms/page.tsx --stat)",
       "Bash(git -C /e/tutusporta diff --stat src/app/(marketing)/legal/terms/page.tsx)",
       "Bash(LC_ALL=en_US.UTF-8 sed:*)",
-      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && grep \"\"export async function\"\" {}')"
+      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && grep \"\"export async function\"\" {}')",
+      "Bash(npx next build:*)",
+      "Bash(timeout 120 bash:*)"
     ],
     "deny": [],
     "ask": []

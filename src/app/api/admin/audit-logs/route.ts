@@ -22,55 +22,39 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const eventType = searchParams.get('eventType')
-    const email = searchParams.get('email')
+    const limit = parseInt(searchParams.get('limit') || '50')
+    const action = searchParams.get('action')
+    const entity = searchParams.get('entity')
+    const actorEmail = searchParams.get('email')
 
     const skip = (page - 1) * limit
 
     const where: any = {}
 
-    if (eventType) {
-      where.eventType = eventType
+    if (action) {
+      where.action = { contains: action, mode: 'insensitive' }
     }
 
-    if (email) {
-      where.user = {
-        email: {
-          contains: email,
-          mode: 'insensitive',
-        },
-      }
+    if (entity) {
+      where.entity = entity
+    }
+
+    if (actorEmail) {
+      where.actorEmail = { contains: actorEmail, mode: 'insensitive' }
     }
 
     const [logs, total] = await Promise.all([
-      prisma.userAdminEvent.findMany({
+      prisma.auditLog.findMany({
         where,
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
       }),
-      prisma.userAdminEvent.count({ where }),
+      prisma.auditLog.count({ where }),
     ])
 
-    // Fetch user details separately
-    const allUserIds = [...logs.map(l => l.userId), ...logs.map(l => l.adminId).filter(Boolean)] as string[]
-    const userIds = Array.from(new Set(allUserIds))
-    const users = await prisma.user.findMany({
-      where: { id: { in: userIds } },
-      select: { id: true, email: true, firstName: true, lastName: true },
-    })
-
-    const userMap = new Map(users.map(u => [u.id, u]))
-
-    const logsWithUsers = logs.map(log => ({
-      ...log,
-      user: userMap.get(log.userId) || { email: 'Unknown', firstName: null, lastName: null },
-      admin: log.adminId ? (userMap.get(log.adminId) || { email: 'Unknown', firstName: null, lastName: null }) : { email: 'System', firstName: null, lastName: null },
-    }))
-
     return successResponse({
-      logs: logsWithUsers,
+      logs,
       pagination: {
         page,
         limit,
