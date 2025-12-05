@@ -49,11 +49,14 @@ export function AdminSidebar() {
   };
 
   const toggleGroup = (label: string) => {
-    setExpandedGroups(prev =>
-      prev.includes(label)
+    console.log('[AdminSidebar] Toggling group:', label);
+    setExpandedGroups(prev => {
+      const newGroups = prev.includes(label)
         ? prev.filter(g => g !== label)
-        : [...prev, label]
-    );
+        : [...prev, label];
+      console.log('[AdminSidebar] New expanded groups:', newGroups);
+      return newGroups;
+    });
   };
 
   // Primary navigation items (always visible)
@@ -97,7 +100,7 @@ export function AdminSidebar() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative z-10">
       {/* Sidebar Header */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center gap-3">
@@ -124,7 +127,10 @@ export function AdminSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={() => {
+                  console.log('[AdminSidebar] Navigating to:', item.href, item.label);
+                  setMobileOpen(false);
+                }}
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
                   active
@@ -156,7 +162,7 @@ export function AdminSidebar() {
                     toggleGroup(group.label);
                   }}
                   className={cn(
-                    'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold transition-colors',
+                    'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold transition-colors cursor-pointer',
                     active ? 'text-orange-600' : 'text-gray-600 hover:text-gray-900'
                   )}
                 >
@@ -178,7 +184,10 @@ export function AdminSidebar() {
                         <Link
                           key={item.href}
                           href={item.href}
-                          onClick={() => setMobileOpen(false)}
+                          onClick={() => {
+                            console.log('[AdminSidebar] Navigating to:', item.href, item.label);
+                            setMobileOpen(false);
+                          }}
                           className={cn(
                             'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
                             itemActive
