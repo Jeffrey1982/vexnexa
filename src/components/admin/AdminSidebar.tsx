@@ -149,7 +149,12 @@ export function AdminSidebar() {
             return (
               <div key={group.label}>
                 <button
-                  onClick={() => toggleGroup(group.label)}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleGroup(group.label);
+                  }}
                   className={cn(
                     'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold transition-colors',
                     active ? 'text-orange-600' : 'text-gray-600 hover:text-gray-900'
@@ -201,7 +206,7 @@ export function AdminSidebar() {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200"
+        className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white rounded-lg shadow-lg border border-gray-200"
       >
         {mobileOpen ? (
           <X className="w-5 h-5 text-gray-600" />
@@ -213,7 +218,7 @@ export function AdminSidebar() {
       {/* Mobile Overlay */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          className="lg:hidden fixed inset-0 bg-black/50 z-40 pointer-events-auto"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -221,7 +226,7 @@ export function AdminSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-40 h-screen bg-white border-r border-gray-200 transition-transform',
+          'fixed top-0 left-0 z-50 h-screen bg-white border-r border-gray-200 transition-transform pointer-events-auto',
           'w-72',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}

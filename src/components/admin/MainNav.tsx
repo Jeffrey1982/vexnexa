@@ -39,7 +39,7 @@ export function MainNav({ user }: MainNavProps) {
     : user?.email;
 
   return (
-    <nav className="sticky top-0 z-30 border-b bg-white shadow-sm">
+    <nav className="sticky top-0 z-20 border-b bg-white shadow-sm">
       <div className="flex justify-between items-center h-16 px-6">
         {/* Left side - could add breadcrumbs or page title here */}
         <div className="flex items-center gap-4">
