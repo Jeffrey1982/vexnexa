@@ -94,7 +94,7 @@ export function AdminSidebar() {
       label: 'Support',
       icon: Ticket,
       items: [
-        { href: '/admin-interface', label: 'Tickets', icon: Ticket },
+        { href: '/admin/tickets', label: 'Tickets', icon: Ticket },
         { href: '/admin/contact-messages', label: 'Messages', icon: Mail },
         { href: '/admin/blog', label: 'Blog', icon: FileText },
       ]
