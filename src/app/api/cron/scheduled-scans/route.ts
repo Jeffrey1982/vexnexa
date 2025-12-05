@@ -8,15 +8,9 @@ import { sendEmail } from '@/lib/email'
  * GET /api/cron/scheduled-scans - Execute due scheduled scans
  *
  * This endpoint should be called by a cron job (e.g., Vercel Cron, GitHub Actions)
- * every 5-15 minutes to check for and execute scheduled scans.
+ * to check for and execute scheduled scans.
  *
- * Configure in vercel.json:
- * {
- *   "crons": [{
- *     "path": "/api/cron/scheduled-scans",
- *     "schedule": "*/15 * * * *"
- *   }]
- * }
+ * Configure in vercel.json with appropriate cron schedule.
  */
 export async function GET(request: NextRequest) {
   try {
