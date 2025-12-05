@@ -111,7 +111,8 @@ export default async function AdminTicketsPage(props: PageProps) {
   });
 
   return (
-    <div className="p-6">
+    <>
+      <div className="p-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -270,6 +271,6 @@ export default async function AdminTicketsPage(props: PageProps) {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </>
   );
 }
