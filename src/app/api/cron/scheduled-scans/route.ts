@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
           siteUrl: scheduledScan.site.url,
           status: 'success',
           score: scanResult.score,
-          issues: scanResult.totalIssues
+          issues: scanResult.issues
         })
       } catch (error) {
         console.error(`Error executing scheduled scan ${scheduledScan.id}:`, error)
@@ -156,7 +156,7 @@ async function sendWebhookNotification(webhookUrl: string, scheduledScan: any, s
         siteUrl: scheduledScan.site.url,
         scanResult: {
           score: scanResult.score,
-          totalIssues: scanResult.totalIssues,
+          issues: scanResult.issues,
           violations: scanResult.violations?.length || 0
         }
       })
