@@ -76,7 +76,8 @@
       "Bash(LC_ALL=en_US.UTF-8 sed:*)",
       "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && grep \"\"export async function\"\" {}')",
       "Bash(npx next build:*)",
-      "Bash(timeout 120 bash:*)"
+      "Bash(timeout 120 bash:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

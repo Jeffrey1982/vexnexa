@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { successResponse, errorResponse } from '@/lib/api-response'
-import { runEnhancedAccessibilityScan } from '@/lib/scan-engine'
+import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced'
 import { sendEmail } from '@/lib/email'
 
 /**
@@ -58,12 +58,8 @@ export async function GET(request: NextRequest) {
       try {
         console.log(`Executing scheduled scan ${scheduledScan.id} for site ${scheduledScan.site.url}`)
 
-        // Run the scan
-        const scanResult = await runEnhancedAccessibilityScan(
-          scheduledScan.site.url,
-          scheduledScan.user.id,
-          scheduledScan.siteId
-        )
+        // Run the scan using the scan API
+        const scanResult = await runEnhancedAccessibilityScan(scheduledScan.site.url)
 
         // Update scheduled scan
         const nextRunAt = calculateNextRunTime(
@@ -94,8 +90,8 @@ export async function GET(request: NextRequest) {
           scheduledScanId: scheduledScan.id,
           siteUrl: scheduledScan.site.url,
           status: 'success',
-          scanId: scanResult.scanId,
-          score: scanResult.score
+          score: scanResult.score,
+          issues: scanResult.totalIssues
         })
       } catch (error) {
         console.error(`Error executing scheduled scan ${scheduledScan.id}:`, error)
@@ -168,12 +164,11 @@ async function sendScanCompletionEmail(scheduledScan: any, scanResult: any) {
         <h3>Summary:</h3>
         <ul>
           <li><strong>Accessibility Score:</strong> ${scanResult.score}/100</li>
-          <li><strong>Total Issues:</strong> ${scanResult.totalIssues}</li>
-          <li><strong>Critical Issues:</strong> ${scanResult.critical || 0}</li>
-          <li><strong>Serious Issues:</strong> ${scanResult.serious || 0}</li>
+          <li><strong>Total Issues:</strong> ${scanResult.totalIssues || 0}</li>
+          <li><strong>Violations Found:</strong> ${scanResult.violations?.length || 0}</li>
         </ul>
 
-        <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/scans/${scanResult.scanId}">View Full Report</a></p>
+        <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/sites/${scheduledScan.siteId}">View Site Report</a></p>
 
         <p>Next scheduled scan: ${new Date(scheduledScan.nextRunAt).toLocaleString()}</p>
       `
@@ -194,13 +189,9 @@ async function sendWebhookNotification(webhookUrl: string, scheduledScan: any, s
         scheduledScanId: scheduledScan.id,
         siteUrl: scheduledScan.site.url,
         scanResult: {
-          scanId: scanResult.scanId,
           score: scanResult.score,
           totalIssues: scanResult.totalIssues,
-          critical: scanResult.critical || 0,
-          serious: scanResult.serious || 0,
-          moderate: scanResult.moderate || 0,
-          minor: scanResult.minor || 0
+          violations: scanResult.violations?.length || 0
         }
       })
     })
