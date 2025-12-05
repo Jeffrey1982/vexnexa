@@ -41,7 +41,7 @@ export function SiteImage({ src, alt = "", width, height, className, fallbackSrc
       height={height}
       className={className}
       onError={handleError}
-      unoptimized={imgSrc === DEFAULT_PLACEHOLDER || imgSrc.startsWith('data:')}
+      unoptimized={imgSrc === DEFAULT_PLACEHOLDER || imgSrc.startsWith('data:') || imgSrc.includes('google.com')}
     />
   );
 }
