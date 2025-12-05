@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    return successResponse({ scheduledScan }, 201)
+    return successResponse({ scheduledScan }, 'Scheduled scan created successfully', 201)
   } catch (error) {
     console.error('Error creating scheduled scan:', error)
     return errorResponse('Failed to create scheduled scan', 500)
