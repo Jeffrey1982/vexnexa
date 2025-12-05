@@ -37,7 +37,8 @@ interface NavGroup {
 
 export function AdminSidebar() {
   const pathname = usePathname();
-  const [expandedGroups, setExpandedGroups] = useState<string[]>(['Resources', 'Business', 'Support']);
+  // Keep all groups permanently expanded for better UX in sidebar
+  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Support']);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -48,16 +49,17 @@ export function AdminSidebar() {
     return items.some(item => isActive(item.href));
   };
 
-  const toggleGroup = (label: string) => {
-    console.log('[AdminSidebar] Toggling group:', label);
-    setExpandedGroups(prev => {
-      const newGroups = prev.includes(label)
-        ? prev.filter(g => g !== label)
-        : [...prev, label];
-      console.log('[AdminSidebar] New expanded groups:', newGroups);
-      return newGroups;
-    });
-  };
+  // Groups are always expanded, no toggle needed
+  // const toggleGroup = (label: string) => {
+  //   console.log('[AdminSidebar] Toggling group:', label);
+  //   setExpandedGroups(prev => {
+  //     const newGroups = prev.includes(label)
+  //       ? prev.filter(g => g !== label)
+  //       : [...prev, label];
+  //     console.log('[AdminSidebar] New expanded groups:', newGroups);
+  //     return newGroups;
+  //   });
+  // };
 
   // Primary navigation items (always visible)
   const primaryNavItems: NavItem[] = [
@@ -154,26 +156,16 @@ export function AdminSidebar() {
 
             return (
               <div key={group.label}>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleGroup(group.label);
-                  }}
+                <div
                   className={cn(
-                    'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold transition-colors cursor-pointer',
-                    active ? 'text-orange-600' : 'text-gray-600 hover:text-gray-900'
+                    'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold',
+                    active ? 'text-orange-600' : 'text-gray-600'
                   )}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
                   <span className="flex-1 text-left">{group.label}</span>
-                  {isExpanded ? (
-                    <ChevronDown className="w-4 h-4 flex-shrink-0" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 flex-shrink-0" />
-                  )}
-                </button>
+                  <ChevronDown className="w-4 h-4 flex-shrink-0" />
+                </div>
 
                 {isExpanded && (
                   <div className="mt-1 space-y-1">
