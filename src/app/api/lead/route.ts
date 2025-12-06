@@ -52,7 +52,15 @@ export async function POST(request: NextRequest) {
     const confirmationToken = randomBytes(32).toString('hex')
     const unsubscribeToken = randomBytes(32).toString('hex')
 
-    // Initialize Resend
+    // Initialize Resend - check if API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY not configured')
+      return NextResponse.json(
+        { error: 'Email service not configured. Please contact support.' },
+        { status: 500 }
+      )
+    }
+
     const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Send double opt-in confirmation email with friendly source names
