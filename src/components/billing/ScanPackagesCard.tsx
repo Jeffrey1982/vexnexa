@@ -73,8 +73,14 @@ export function ScanPackagesCard({
         onRefresh()
         setSuccess(null)
       }, 2000)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to purchase scan package")
+    } catch (err: any) {
+      // Show user-friendly error
+      setError(err?.message || "Failed to purchase scan package")
+
+      // Auto-redirect if needed
+      if (err?.redirectUrl) {
+        setTimeout(() => window.location.href = err.redirectUrl, 2000)
+      }
     } finally {
       setLoading(null)
     }
@@ -262,7 +268,19 @@ export function ScanPackagesCard({
         {/* Alerts */}
         {error && (
           <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription>
+              {error}
+              {error.includes("betaalmethode") && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="ml-4"
+                  onClick={() => window.location.href = "/settings/billing"}
+                >
+                  Betaalmethode instellen
+                </Button>
+              )}
+            </AlertDescription>
           </Alert>
         )}
 

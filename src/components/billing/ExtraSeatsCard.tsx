@@ -67,8 +67,14 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         onRefresh()
         setSuccess(null)
       }, 2000)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to add seat")
+    } catch (err: any) {
+      // Show user-friendly error
+      setError(err?.message || "Failed to add seat")
+
+      // Auto-redirect if needed
+      if (err?.redirectUrl) {
+        setTimeout(() => window.location.href = err.redirectUrl, 2000)
+      }
     } finally {
       setLoading(false)
     }
@@ -250,7 +256,19 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         {/* Alerts */}
         {error && (
           <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription>
+              {error}
+              {error.includes("betaalmethode") && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="ml-4"
+                  onClick={() => window.location.href = "/settings/billing"}
+                >
+                  Betaalmethode instellen
+                </Button>
+              )}
+            </AlertDescription>
           </Alert>
         )}
 
