@@ -95,7 +95,20 @@ export async function purchaseAddOn(opts: {
     }
   }
 
-  // Create Mollie subscription for the add-on
+  // Create add-on record in database FIRST (immediate activation)
+  const addOn = await prisma.addOn.create({
+    data: {
+      userId,
+      type,
+      quantity,
+      status: "active",
+      pricePerUnit: pricing.pricePerUnit,
+      totalPrice,
+      activatedAt: new Date()
+    }
+  })
+
+  // Create Mollie subscription for recurring billing (async, no wait needed)
   const subscription = await (mollie.customerSubscriptions as any).create({
     customerId: user.mollieCustomerId,
     amount: {
@@ -107,23 +120,16 @@ export async function purchaseAddOn(opts: {
     startDate: new Date().toISOString().split('T')[0],
     metadata: {
       userId,
+      addOnId: addOn.id, // Link to our add-on record
       addOnType: type,
       quantity: quantity.toString()
     }
   })
 
-  // Create add-on record in database
-  const addOn = await prisma.addOn.create({
-    data: {
-      userId,
-      type,
-      quantity,
-      mollieSubscriptionId: subscription.id,
-      status: "active",
-      pricePerUnit: pricing.pricePerUnit,
-      totalPrice,
-      activatedAt: new Date()
-    }
+  // Update add-on with Mollie subscription ID
+  await prisma.addOn.update({
+    where: { id: addOn.id },
+    data: { mollieSubscriptionId: subscription.id }
   })
 
   // Update user's extraSeats field for quick access (denormalized)
@@ -268,57 +274,6 @@ export async function cancelAddOn(addOnId: string) {
   }
 
   return canceledAddOn
-}
-
-/**
- * Process webhook for add-on subscription payments
- * Called from Mollie webhook when payment status changes
- */
-export async function processAddOnWebhook(subscriptionId: string) {
-  // Find the add-on by Mollie subscription ID
-  const addOn = await prisma.addOn.findUnique({
-    where: { mollieSubscriptionId: subscriptionId },
-    include: { user: true }
-  })
-
-  if (!addOn) {
-    console.error("Add-on not found for subscription:", subscriptionId)
-    return
-  }
-
-  if (!addOn.user.mollieCustomerId) {
-    console.error("No Mollie customer ID for user:", addOn.userId)
-    return
-  }
-
-  // Fetch subscription status from Mollie
-  const subscription = await mollie.customerSubscriptions.get(
-    subscriptionId,
-    { customerId: addOn.user.mollieCustomerId }
-  )
-
-  // Update add-on status based on subscription status
-  const newStatus = subscription.status === "active" ? "active" :
-                    subscription.status === "canceled" ? "canceled" :
-                    subscription.status === "suspended" ? "past_due" :
-                    "inactive"
-
-  await prisma.addOn.update({
-    where: { id: addOn.id },
-    data: { status: newStatus }
-  })
-
-  // If subscription was canceled, update extraSeats
-  if (newStatus === "canceled" && addOn.type === "EXTRA_SEAT" && addOn.status === "active") {
-    await prisma.user.update({
-      where: { id: addOn.userId },
-      data: {
-        extraSeats: {
-          decrement: addOn.quantity
-        }
-      }
-    })
-  }
 }
 
 /**

@@ -22,6 +22,7 @@ interface ScanPackagesCardProps {
     totalPrice: number
   }>
   onRefresh: () => void
+  isTrial?: boolean
 }
 
 const SCAN_PACKAGES = [
@@ -36,7 +37,8 @@ export function ScanPackagesCard({
   usedScans,
   currentPeriod,
   addOns,
-  onRefresh
+  onRefresh,
+  isTrial = false
 }: ScanPackagesCardProps) {
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -202,47 +204,59 @@ export function ScanPackagesCard({
         {/* Available packages */}
         <div className="space-y-2">
           <h4 className="text-sm font-medium">Beschikbare pakketten</h4>
-          <div className="grid gap-2">
-            {SCAN_PACKAGES.map(pkg => {
-              const isActive = activeScanPacks.some(a => a.type === pkg.type)
-              const pricing = ADDON_PRICING[pkg.type]
+          {isTrial ? (
+            <Alert>
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription>
+                Upgrade naar een betaald plan om extra scan pakketten te kunnen kopen.
+                <a href="/pricing" className="ml-2 underline font-medium">
+                  Bekijk plannen →
+                </a>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <div className="grid gap-2">
+              {SCAN_PACKAGES.map(pkg => {
+                const isActive = activeScanPacks.some(a => a.type === pkg.type)
+                const pricing = ADDON_PRICING[pkg.type]
 
-              return (
-                <div
-                  key={pkg.type}
-                  className={`flex items-center justify-between p-3 rounded-lg border ${
-                    isActive ? "bg-muted opacity-60" : "bg-card"
-                  }`}
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium">+{pkg.scans.toLocaleString()} scans</p>
-                      {isActive && <Badge variant="secondary">Actief</Badge>}
+                return (
+                  <div
+                    key={pkg.type}
+                    className={`flex items-center justify-between p-3 rounded-lg border ${
+                      isActive ? "bg-muted opacity-60" : "bg-card"
+                    }`}
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium">+{pkg.scans.toLocaleString()} scans</p>
+                        {isActive && <Badge variant="secondary">Actief</Badge>}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{pricing.description}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground">{pricing.description}</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-right">
-                      <p className="font-bold">€{pkg.price}</p>
-                      <p className="text-xs text-muted-foreground">/maand</p>
+                    <div className="flex items-center gap-3">
+                      <div className="text-right">
+                        <p className="font-bold">€{pkg.price}</p>
+                        <p className="text-xs text-muted-foreground">/maand</p>
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => handlePurchase(pkg.type)}
+                        disabled={isActive || loading === pkg.type}
+                      >
+                        {loading === pkg.type ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <ShoppingCart className="mr-2 h-4 w-4" />
+                        )}
+                        Kopen
+                      </Button>
                     </div>
-                    <Button
-                      size="sm"
-                      onClick={() => handlePurchase(pkg.type)}
-                      disabled={isActive || loading === pkg.type}
-                    >
-                      {loading === pkg.type ? (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      ) : (
-                        <ShoppingCart className="mr-2 h-4 w-4" />
-                      )}
-                      Kopen
-                    </Button>
                   </div>
-                </div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          )}
         </div>
 
         {/* Alerts */}

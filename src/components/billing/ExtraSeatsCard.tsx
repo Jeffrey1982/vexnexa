@@ -21,9 +21,10 @@ interface ExtraSeatsCardProps {
     totalPrice: number
   }>
   onRefresh: () => void
+  isTrial?: boolean
 }
 
-export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRefresh }: ExtraSeatsCardProps) {
+export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRefresh, isTrial = false }: ExtraSeatsCardProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -188,36 +189,48 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2">
-          <Button
-            onClick={handleAddSeat}
-            disabled={loading}
-            className="flex-1"
-          >
-            {loading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Plus className="mr-2 h-4 w-4" />
-            )}
-            Seat toevoegen
-          </Button>
-
-          {extraSeats > 0 && (
+        {isTrial ? (
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              Upgrade naar een betaald plan om extra seats te kunnen kopen.
+              <a href="/pricing" className="ml-2 underline font-medium">
+                Bekijk plannen →
+              </a>
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <div className="flex gap-2">
             <Button
-              onClick={handleRemoveSeat}
+              onClick={handleAddSeat}
               disabled={loading}
-              variant="outline"
               className="flex-1"
             >
               {loading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                <Minus className="mr-2 h-4 w-4" />
+                <Plus className="mr-2 h-4 w-4" />
               )}
-              Seat verwijderen
+              Seat toevoegen
             </Button>
-          )}
-        </div>
+
+            {extraSeats > 0 && (
+              <Button
+                onClick={handleRemoveSeat}
+                disabled={loading}
+                variant="outline"
+                className="flex-1"
+              >
+                {loading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Minus className="mr-2 h-4 w-4" />
+                )}
+                Seat verwijderen
+              </Button>
+            )}
+          </div>
+        )}
 
         {/* Current add-on info */}
         {seatAddOn && (

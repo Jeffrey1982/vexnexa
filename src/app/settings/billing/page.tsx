@@ -362,19 +362,20 @@ export default function BillingPage() {
           </Card>
         )}
 
-        {/* Extra Seats - Only show for paid plans */}
-        {user.plan !== "TRIAL" && entitlements && (
+        {/* Extra Seats - Show to everyone */}
+        {entitlements && (
           <ExtraSeatsCard
             baseSeats={entitlements.base.users}
             extraSeats={entitlements.addOns.users}
             usedSeats={usedSeats}
             addOns={addOns}
             onRefresh={loadUserData}
+            isTrial={user.plan === "TRIAL"}
           />
         )}
 
-        {/* Scan Packages - Only show for paid plans */}
-        {user.plan !== "TRIAL" && usage && entitlements && (
+        {/* Scan Packages - Show to everyone */}
+        {usage && entitlements && (
           <ScanPackagesCard
             baseScans={entitlements.base.pagesPerMonth}
             extraScans={entitlements.addOns.pagesPerMonth}
@@ -382,6 +383,7 @@ export default function BillingPage() {
             currentPeriod={usage.period}
             addOns={addOns}
             onRefresh={loadUserData}
+            isTrial={user.plan === "TRIAL"}
           />
         )}
 
