@@ -72,18 +72,11 @@ export async function GET(request: NextRequest) {
         if (scan.issues !== null) {
           totalIssues += scan.issues
         }
-        if (scan.criticalIssues !== null) {
-          criticalCount += scan.criticalIssues
-        }
-        if (scan.seriousIssues !== null) {
-          seriousCount += scan.seriousIssues
-        }
-        if (scan.moderateIssues !== null) {
-          moderateCount += scan.moderateIssues
-        }
-        if (scan.minorIssues !== null) {
-          minorCount += scan.minorIssues
-        }
+        // Use impact fields from schema
+        criticalCount += scan.impactCritical
+        seriousCount += scan.impactSerious
+        moderateCount += scan.impactModerate
+        minorCount += scan.impactMinor
       }
     }
 
