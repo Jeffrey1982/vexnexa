@@ -77,7 +77,8 @@
       "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && grep \"\"export async function\"\" {}')",
       "Bash(npx next build:*)",
       "Bash(timeout 120 bash:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []

@@ -365,14 +365,21 @@ export async function processWebhookPayment(paymentId: string) {
   // Fetch payment details from Mollie (never trust webhook data directly)
   const payment = await mollie.payments.get(paymentId)
 
-  if (!(payment.metadata as any)?.userId || !(payment.metadata as any)?.plan) {
+  // Check if this is an add-on related payment
+  const metadata = payment.metadata as any
+  if (metadata?.type === "addon_subscription") {
+    // This will be handled by subscription webhooks, not payment webhooks
+    return
+  }
+
+  if (!metadata?.userId || !metadata?.plan) {
     console.error("Payment missing required metadata:", payment.id)
     return
   }
 
-  const userId = (payment.metadata as any).userId
-  const plan = planKeyFromString((payment.metadata as any).plan)
-  const billingCycle = (payment.metadata as any)?.billingCycle || 'monthly'
+  const userId = metadata.userId
+  const plan = planKeyFromString(metadata.plan)
+  const billingCycle = metadata?.billingCycle || 'monthly'
 
   if (payment.status !== "paid") {
     // Payment not paid yet

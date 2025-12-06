@@ -1,8 +1,45 @@
 import { ENTITLEMENTS } from "./plans"
 import { prisma } from "../prisma"
+import { calculateExtraScans, calculateExtraSeats } from "./addons"
 
 export function getEntitlements(plan: keyof typeof ENTITLEMENTS) {
   return ENTITLEMENTS[plan]
+}
+
+// Get total entitlements including add-ons
+export async function getTotalEntitlements(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      addOns: {
+        where: { status: "active" }
+      }
+    }
+  })
+
+  if (!user) throw new Error("User not found")
+
+  const plan = user.plan as keyof typeof ENTITLEMENTS
+  const baseEntitlements = ENTITLEMENTS[plan]
+
+  // Calculate add-ons
+  const extraScans = calculateExtraScans(user.addOns)
+  const extraSeats = calculateExtraSeats(user.addOns)
+
+  return {
+    ...baseEntitlements,
+    pagesPerMonth: baseEntitlements.pagesPerMonth + extraScans,
+    users: baseEntitlements.users + extraSeats,
+    // Track what came from where for transparency
+    base: {
+      pagesPerMonth: baseEntitlements.pagesPerMonth,
+      users: baseEntitlements.users,
+    },
+    addOns: {
+      pagesPerMonth: extraScans,
+      users: extraSeats,
+    }
+  }
 }
 
 export async function assertWithinLimits(opts: {
@@ -14,11 +51,23 @@ export async function assertWithinLimits(opts: {
   const now = opts.now ?? new Date()
   const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
 
-  const user = await prisma.user.findUnique({ where: { id: opts.userId } })
+  const user = await prisma.user.findUnique({
+    where: { id: opts.userId },
+    include: {
+      addOns: {
+        where: { status: "active" }
+      }
+    }
+  })
   if (!user) throw new Error("User not found")
 
   const plan = user.plan as keyof typeof ENTITLEMENTS
-  const ent = ENTITLEMENTS[plan]
+  const baseEnt = ENTITLEMENTS[plan]
+
+  // Calculate total entitlements including add-ons
+  const extraScans = calculateExtraScans(user.addOns)
+  const totalPagesPerMonth = baseEnt.pagesPerMonth + extraScans
+  const ent = { ...baseEnt, pagesPerMonth: totalPagesPerMonth }
 
   // Feature gates
   if (opts.action === "export_word" && !ent.word) {
@@ -63,7 +112,7 @@ export async function assertWithinLimits(opts: {
       const isTrial = plan === "TRIAL";
       const message = isTrial
         ? `Free trial limit bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een betaald plan om door te gaan met scannen.`
-        : `Maandelijkse paginalimiet bereikt voor jouw ${plan.toLowerCase()} plan (${ent.pagesPerMonth} pages/maand). Upgrade naar een hoger plan of wacht tot volgende maand.`;
+        : `Maandelijkse paginalimiet bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een hoger plan, koop extra scans, of wacht tot volgende maand.`;
 
       const e: any = new Error(message)
       e.code = isTrial ? "TRIAL_LIMIT_REACHED" : "LIMIT_REACHED";

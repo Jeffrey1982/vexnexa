@@ -43,6 +43,10 @@ model User {
   mollieCustomerId     String? @unique
   mollieSubscriptionId String? // actuele sub (1 actief tegelijk)
 
+  // Add-ons (extra seats, scan packages)
+  extraSeats Int     @default(0) // Additional team seats purchased
+  addOns     AddOn[] // Scan packages and seat subscriptions
+
   usages     Usage[]
   whiteLabel WhiteLabel?
   portfolios Portfolio[]
@@ -957,8 +961,8 @@ model ErrorLog {
 
   // Error details
   message    String
-  stack      String?   @db.Text
-  level      String    @default("error") // error, warning, critical
+  stack      String? @db.Text
+  level      String  @default("error") // error, warning, critical
   source     String? // API route, component, function name
   statusCode Int?
 
@@ -1056,20 +1060,20 @@ model ScheduledScan {
   site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   // Schedule configuration
-  frequency String // daily, weekly, monthly
-  dayOfWeek Int? // 0-6 for weekly (0 = Sunday)
+  frequency  String // daily, weekly, monthly
+  dayOfWeek  Int? // 0-6 for weekly (0 = Sunday)
   dayOfMonth Int? // 1-31 for monthly
-  timeOfDay String @default("00:00") // HH:MM format
+  timeOfDay  String @default("00:00") // HH:MM format
 
   // Status
-  active Boolean @default(true)
+  active    Boolean   @default(true)
   lastRunAt DateTime?
   nextRunAt DateTime?
 
   // Notifications
   emailOnComplete Boolean @default(true)
-  emailOnIssues Boolean @default(true)
-  webhookUrl String?
+  emailOnIssues   Boolean @default(true)
+  webhookUrl      String?
 
   // Metadata
   createdAt DateTime @default(now())
@@ -1079,4 +1083,47 @@ model ScheduledScan {
   @@index([siteId])
   @@index([active, nextRunAt])
   @@index([nextRunAt])
+}
+
+// ============================================
+// ADD-ONS SYSTEM (Extra Seats & Scan Packages)
+// ============================================
+
+enum AddOnType {
+  EXTRA_SEAT // €15/month per seat
+  SCAN_PACK_100 // +100 scans, €19/month
+  SCAN_PACK_500 // +500 scans, €69/month
+  SCAN_PACK_1500 // +1500 scans, €179/month
+}
+
+model AddOn {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type AddOnType
+
+  // Mollie integration
+  mollieSubscriptionId String? @unique // Each add-on has its own Mollie subscription
+  status               String  @default("active") // active, canceled, past_due, inactive
+
+  // Quantity (for seats: number of extra seats, for scans: always 1 package)
+  quantity Int @default(1)
+
+  // Billing
+  pricePerUnit Decimal @db.Decimal(10, 2) // Price per unit in EUR
+  totalPrice   Decimal @db.Decimal(10, 2) // Total monthly price (quantity * pricePerUnit)
+
+  // Lifecycle
+  activatedAt DateTime  @default(now())
+  canceledAt  DateTime? // When user requested cancellation
+  expiresAt   DateTime? // When it actually expires (end of billing period)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([type])
+  @@index([status])
 }

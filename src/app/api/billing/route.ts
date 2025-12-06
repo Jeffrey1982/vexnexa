@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
-import { getCurrentUsage, getEntitlements } from "@/lib/billing/entitlements";
+import { getCurrentUsage, getTotalEntitlements } from "@/lib/billing/entitlements";
+import { getUserAddOns } from "@/lib/billing/addon-flows";
 
 export async function GET() {
   try {
@@ -9,8 +10,11 @@ export async function GET() {
     // Get current usage
     const usage = await getCurrentUsage(user.id);
 
-    // Get plan entitlements
-    const entitlements = getEntitlements(user.plan as any);
+    // Get total entitlements (including add-ons)
+    const entitlements = await getTotalEntitlements(user.id);
+
+    // Get active add-ons
+    const addOns = await getUserAddOns(user.id);
 
     return NextResponse.json({
       user: {
@@ -22,6 +26,7 @@ export async function GET() {
       },
       usage,
       entitlements,
+      addOns,
     });
   } catch (error) {
     console.error("Failed to fetch billing data:", error);

@@ -8,8 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { 
-  CreditCard, 
+import {
+  CreditCard,
   Calendar,
   AlertTriangle,
   CheckCircle,
@@ -20,6 +20,9 @@ import {
   RefreshCw
 } from "lucide-react";
 import { PLAN_NAMES, formatPrice, ENTITLEMENTS } from "@/lib/billing/plans";
+import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
+import { ScanPackagesCard } from "@/components/billing/ScanPackagesCard";
+import { AddOnType } from "@prisma/client";
 
 interface UserData {
   id: string;
@@ -35,46 +38,79 @@ interface UsageData {
   period: string;
 }
 
+interface AddOnData {
+  id: string;
+  type: AddOnType;
+  quantity: number;
+  status: string;
+  totalPrice: number;
+}
+
+interface EntitlementsData {
+  pagesPerMonth: number;
+  users: number;
+  sites: number;
+  pdf: boolean;
+  word: boolean;
+  schedule: boolean;
+  crawl: boolean;
+  integrations: string[];
+  whiteLabel?: boolean;
+  base: {
+    pagesPerMonth: number;
+    users: number;
+  };
+  addOns: {
+    pagesPerMonth: number;
+    users: number;
+  };
+}
+
 export default function BillingPage() {
   const [user, setUser] = useState<UserData | null>(null);
   const [usage, setUsage] = useState<UsageData | null>(null);
+  const [entitlements, setEntitlements] = useState<EntitlementsData | null>(null);
+  const [addOns, setAddOns] = useState<AddOnData[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   // Load real billing and usage data from API
-  useEffect(() => {
-    const loadUserData = async () => {
-      try {
-        const response = await fetch("/api/billing");
-        const data = await response.json();
+  const loadUserData = async () => {
+    try {
+      const response = await fetch("/api/billing");
+      const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error(data.error || "Failed to load billing data");
-        }
-
-        setUser({
-          id: data.user.id,
-          email: data.user.email,
-          plan: data.user.plan,
-          subscriptionStatus: data.user.subscriptionStatus,
-          trialEndsAt: data.user.trialEndsAt,
-        });
-
-        setUsage({
-          pages: data.usage.pages,
-          sites: data.usage.sites,
-          period: data.usage.period,
-        });
-
-        setLoading(false);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load billing data");
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to load billing data");
       }
-    };
 
+      setUser({
+        id: data.user.id,
+        email: data.user.email,
+        plan: data.user.plan,
+        subscriptionStatus: data.user.subscriptionStatus,
+        trialEndsAt: data.user.trialEndsAt,
+      });
+
+      setUsage({
+        pages: data.usage.pages,
+        sites: data.usage.sites,
+        period: data.usage.period,
+      });
+
+      setEntitlements(data.entitlements);
+      setAddOns(data.addOns || []);
+
+      setLoading(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load billing data");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadUserData();
   }, []);
 
@@ -189,9 +225,12 @@ export default function BillingPage() {
     );
   }
 
-  const entitlements = ENTITLEMENTS[user.plan];
+  const planEntitlements = ENTITLEMENTS[user.plan];
   const isTrialExpired = user.trialEndsAt && new Date(user.trialEndsAt) < new Date();
-  
+
+  // Get used seats (from teams)
+  const usedSeats = 1; // At minimum, the owner uses 1 seat. TODO: Count actual team members
+
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -260,26 +299,26 @@ export default function BillingPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t">
               <div>
                 <p className="text-sm text-muted-foreground">Pagina&apos;s/maand</p>
-                <p className="font-semibold">{entitlements.pagesPerMonth.toLocaleString()}</p>
+                <p className="font-semibold">{planEntitlements.pagesPerMonth.toLocaleString()}</p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Websites</p>
-                <p className="font-semibold">{entitlements.sites}</p>
+                <p className="font-semibold">{planEntitlements.sites}</p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Word export</p>
-                <p className="font-semibold">{entitlements.word ? "✅" : "❌"}</p>
+                <p className="font-semibold">{planEntitlements.word ? "✅" : "❌"}</p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Scheduling</p>
-                <p className="font-semibold">{entitlements.schedule ? "✅" : "❌"}</p>
+                <p className="font-semibold">{planEntitlements.schedule ? "✅" : "❌"}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Usage */}
-        {usage && (
+        {usage && entitlements && (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -297,13 +336,13 @@ export default function BillingPage() {
                     </span>
                   </div>
                   <div className="w-full bg-secondary rounded-full h-2">
-                    <div 
+                    <div
                       className="bg-primary rounded-full h-2 transition-all"
                       style={{ width: `${Math.min(100, (usage.pages / entitlements.pagesPerMonth) * 100)}%` }}
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-muted-foreground">Websites</span>
@@ -312,7 +351,7 @@ export default function BillingPage() {
                     </span>
                   </div>
                   <div className="w-full bg-secondary rounded-full h-2">
-                    <div 
+                    <div
                       className="bg-primary rounded-full h-2 transition-all"
                       style={{ width: `${Math.min(100, (usage.sites / entitlements.sites) * 100)}%` }}
                     />
@@ -321,6 +360,29 @@ export default function BillingPage() {
               </div>
             </CardContent>
           </Card>
+        )}
+
+        {/* Extra Seats - Only show for paid plans */}
+        {user.plan !== "TRIAL" && entitlements && (
+          <ExtraSeatsCard
+            baseSeats={entitlements.base.users}
+            extraSeats={entitlements.addOns.users}
+            usedSeats={usedSeats}
+            addOns={addOns}
+            onRefresh={loadUserData}
+          />
+        )}
+
+        {/* Scan Packages - Only show for paid plans */}
+        {user.plan !== "TRIAL" && usage && entitlements && (
+          <ScanPackagesCard
+            baseScans={entitlements.base.pagesPerMonth}
+            extraScans={entitlements.addOns.pagesPerMonth}
+            usedScans={usage.pages}
+            currentPeriod={usage.period}
+            addOns={addOns}
+            onRefresh={loadUserData}
+          />
         )}
 
         {/* Actions */}
