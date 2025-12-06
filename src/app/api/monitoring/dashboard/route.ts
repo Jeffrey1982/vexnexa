@@ -167,16 +167,111 @@ export async function GET(req: NextRequest) {
       return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
     });
 
-    // Generate trend data (mock data for now - would be calculated from historical scans)
-    const regressionsTrend = Array.from({ length: 7 }, (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - (6 - i));
-      return {
-        date: date.toISOString().split('T')[0],
-        regressions: Math.floor(Math.random() * 5), // Mock data
-        improvements: Math.floor(Math.random() * 8) // Mock data
-      };
+    // Generate trend data from historical scans (last 7 days)
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+
+    // Get all scans from last 7 days for trend analysis
+    const historicalScans = await prisma.scan.findMany({
+      where: {
+        createdAt: {
+          gte: sevenDaysAgo
+        },
+        site: {
+          OR: [
+            { userId: user.id },
+            {
+              teams: {
+                some: {
+                  members: {
+                    some: {
+                      userId: user.id
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      orderBy: {
+        createdAt: 'asc'
+      },
+      include: {
+        site: true
+      }
     });
+
+    // Group scans by date and calculate regressions/improvements
+    const trendMap = new Map<string, { regressions: number; improvements: number }>();
+
+    // Initialize all 7 days with zero values
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
+      trendMap.set(dateStr, { regressions: 0, improvements: 0 });
+    }
+
+    // Group scans by site and date to compare with previous scans
+    const siteScansMap = new Map<string, any[]>();
+    for (const scan of historicalScans) {
+      const siteId = scan.siteId;
+      if (!siteScansMap.has(siteId)) {
+        siteScansMap.set(siteId, []);
+      }
+      siteScansMap.get(siteId)!.push(scan);
+    }
+
+    // Calculate daily regressions and improvements
+    for (const [siteId, siteScans] of siteScansMap.entries()) {
+      // Sort scans by date
+      siteScans.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
+      for (let i = 1; i < siteScans.length; i++) {
+        const currentScan = siteScans[i];
+        const previousScan = siteScans[i - 1];
+        const dateStr = new Date(currentScan.createdAt).toISOString().split('T')[0];
+
+        if (trendMap.has(dateStr)) {
+          const trend = trendMap.get(dateStr)!;
+
+          // Check for score changes
+          if (currentScan.score !== null && previousScan.score !== null) {
+            const scoreChange = currentScan.score - previousScan.score;
+
+            if (scoreChange < -5) {
+              // Significant score drop = regression
+              trend.regressions++;
+            } else if (scoreChange > 5) {
+              // Significant score improvement
+              trend.improvements++;
+            }
+          }
+
+          // Check for issue count changes
+          if (currentScan.issues !== null && previousScan.issues !== null) {
+            const issueChange = currentScan.issues - previousScan.issues;
+
+            if (issueChange > 3) {
+              // More issues = regression
+              trend.regressions++;
+            } else if (issueChange < -3) {
+              // Fewer issues = improvement
+              trend.improvements++;
+            }
+          }
+        }
+      }
+    }
+
+    // Convert map to array for response
+    const regressionsTrend = Array.from(trendMap.entries()).map(([date, data]) => ({
+      date,
+      regressions: data.regressions,
+      improvements: data.improvements
+    }));
 
     const monitoringData = {
       totalSites,

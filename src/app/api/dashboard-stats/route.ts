@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,27 +9,103 @@ export async function GET(request: NextRequest) {
     // Get current user
     const user = await getCurrentUser()
 
-    // For now, return mock data since database connection may not be ready
-    // This will be replaced with real database queries once Prisma is properly set up
-    const mockStats = {
-      totalSites: 2,
-      totalScans: 8,
-      avgScore: 85,
-      totalIssues: 24,
-      impactStats: {
-        total: 24,
-        critical: 3,
-        serious: 8,
-        moderate: 10,
-        minor: 3
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    // Fetch user's sites (including team sites)
+    const sites = await prisma.site.findMany({
+      where: {
+        OR: [
+          { userId: user.id },
+          {
+            teams: {
+              some: {
+                members: {
+                  some: {
+                    userId: user.id
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      include: {
+        scans: {
+          orderBy: { createdAt: 'desc' }
+        }
+      }
+    })
+
+    // Calculate real statistics
+    const totalSites = sites.length
+    const totalScans = sites.reduce((sum, site) => sum + site.scans.length, 0)
+
+    // Calculate average score from all scans
+    let totalScore = 0
+    let scansWithScore = 0
+
+    for (const site of sites) {
+      for (const scan of site.scans) {
+        if (scan.score !== null) {
+          totalScore += scan.score
+          scansWithScore++
+        }
       }
     }
 
-    return NextResponse.json(mockStats)
+    const avgScore = scansWithScore > 0 ? Math.round(totalScore / scansWithScore) : 0
+
+    // Calculate total issues and impact stats
+    let totalIssues = 0
+    let criticalCount = 0
+    let seriousCount = 0
+    let moderateCount = 0
+    let minorCount = 0
+
+    for (const site of sites) {
+      for (const scan of site.scans) {
+        if (scan.issues !== null) {
+          totalIssues += scan.issues
+        }
+        if (scan.criticalIssues !== null) {
+          criticalCount += scan.criticalIssues
+        }
+        if (scan.seriousIssues !== null) {
+          seriousCount += scan.seriousIssues
+        }
+        if (scan.moderateIssues !== null) {
+          moderateCount += scan.moderateIssues
+        }
+        if (scan.minorIssues !== null) {
+          minorCount += scan.minorIssues
+        }
+      }
+    }
+
+    const stats = {
+      totalSites,
+      totalScans,
+      avgScore,
+      totalIssues,
+      impactStats: {
+        total: totalIssues,
+        critical: criticalCount,
+        serious: seriousCount,
+        moderate: moderateCount,
+        minor: minorCount
+      }
+    }
+
+    return NextResponse.json(stats)
   } catch (error) {
     console.error('Dashboard stats error:', error)
 
-    // Return fallback data if authentication fails
+    // Return empty stats on error
     const fallbackStats = {
       totalSites: 0,
       totalScans: 0,
@@ -43,6 +120,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.json(fallbackStats)
+    return NextResponse.json(fallbackStats, { status: 500 })
   }
 }
