@@ -42,7 +42,7 @@ export async function purchaseAddOn(opts: {
 
   // User must have an active subscription (not TRIAL)
   if (user.plan === "TRIAL") {
-    const error: any = new Error("Upgrade naar een betaald plan om add-ons te kunnen kopen.")
+    const error: any = new Error("TRIAL_USER")
     error.code = "TRIAL_USER"
     error.redirectUrl = "/pricing"
     throw error
@@ -50,19 +50,19 @@ export async function purchaseAddOn(opts: {
 
   // Check if user has Mollie customer (should exist after upgrade)
   if (!user.mollieCustomerId) {
-    const error: any = new Error("Geen betaalmethode gevonden. Ga eerst naar 'Betaalmethode instellen'.")
+    const error: any = new Error("NO_PAYMENT_METHOD")
     error.code = "NO_PAYMENT_METHOD"
     error.action = "setup_payment"
     throw error
   }
 
-  // Check if customer has valid mandate (authorization to charge)
+  // Check if customer has valid mandate (authorization to charge via iDEAL, card, etc.)
   const mandates = await mollie.customerMandates.page({ customerId: user.mollieCustomerId })
   const validMandate = mandates.find((m: any) => m.status === "valid")
 
   if (!validMandate) {
     // User upgraded before but payment method expired/failed
-    const error: any = new Error("Je betaalmethode is verlopen. Klik op 'Betaalmethode instellen' om deze bij te werken.")
+    const error: any = new Error("PAYMENT_METHOD_EXPIRED")
     error.code = "PAYMENT_METHOD_EXPIRED"
     error.action = "setup_payment"
     throw error
@@ -102,7 +102,9 @@ export async function purchaseAddOn(opts: {
     })
 
     if (existingPack) {
-      throw new Error(`Je hebt dit scan pakket al actief. Kies een ander pakket of annuleer eerst het bestaande.`)
+      const error: any = new Error("ALREADY_ACTIVE")
+      error.code = "ALREADY_ACTIVE"
+      throw error
     }
   }
 

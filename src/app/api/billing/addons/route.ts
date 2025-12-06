@@ -51,11 +51,22 @@ export async function POST(req: NextRequest) {
       addOn: 'addOn' in result ? result.addOn : result,
       message: "Add-on geactiveerd! De betaling wordt automatisch maandelijks verwerkt."
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error("Purchase add-on error:", error)
+
+    // Return error code for frontend translation
+    const errorCode = error?.code || "UNKNOWN_ERROR"
+    const redirectUrl = error?.redirectUrl
+    const action = error?.action
+
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to purchase add-on" },
-      { status: 500 }
+      {
+        error: error instanceof Error ? error.message : "Failed to purchase add-on",
+        code: errorCode,
+        redirectUrl,
+        action
+      },
+      { status: error?.code === "TRIAL_USER" ? 403 : 500 }
     )
   }
 }

@@ -1663,5 +1663,49 @@
       "hasAccount": "Heb je al een account?",
       "signIn": "Inloggen"
     }
+  },
+  "addons": {
+    "seats": {
+      "title": "Team & Seats",
+      "description": "Beheer team seats voor samenwerking",
+      "baseSeats": "Basis seats",
+      "extraSeats": "Extra seats",
+      "total": "Totaal",
+      "inUse": "In gebruik",
+      "priceInfo": "Extra seats kosten <strong>€{price} per seat per maand</strong>. Je kunt seats toevoegen en verwijderen wanneer je wilt.",
+      "addSeat": "Seat toevoegen",
+      "removeSeat": "Seat verwijderen",
+      "monthlyCost": "Maandelijkse kosten",
+      "upgradePrompt": "Upgrade naar een betaald plan om extra seats te kunnen kopen.",
+      "viewPlans": "Bekijk plannen →"
+    },
+    "scans": {
+      "title": "Scan Paketten",
+      "description": "Verhoog je maandelijkse scan limiet met extra pakketten",
+      "usage": "Gebruik ({period})",
+      "basePlan": "Basis (plan):",
+      "extraPackages": "Extra pakketten:",
+      "warning80": "Je hebt al {percent}% van je scans gebruikt. Overweeg een extra pakket.",
+      "warning95": "Je hebt bijna je scan limiet bereikt ({percent}%)! Koop extra scans om door te kunnen gaan.",
+      "activePackages": "Actieve pakketten",
+      "availablePackages": "Beschikbare pakketten",
+      "perMonth": "/maand",
+      "buy": "Kopen",
+      "active": "Actief",
+      "upgradePrompt": "Upgrade naar een betaald plan om extra scan pakketten te kunnen kopen.",
+      "alreadyActive": "Je hebt dit scan pakket al actief. Kies een ander pakket of annuleer eerst het bestaande."
+    },
+    "errors": {
+      "trialUser": "Upgrade naar een betaald plan om add-ons te kunnen kopen.",
+      "noPaymentMethod": "Geen betaalmethode gevonden. Ga eerst naar 'Betaalmethode instellen'.",
+      "paymentExpired": "Je betaalmethode is verlopen. Klik op 'Betaalmethode instellen' om deze bij te werken.",
+      "setupPayment": "Betaalmethode instellen",
+      "failed": "Aanvraag mislukt. Probeer het opnieuw."
+    },
+    "success": {
+      "activated": "Add-on geactiveerd! De betaling wordt automatisch maandelijks verwerkt.",
+      "updated": "Aantal seats bijgewerkt",
+      "canceled": "Add-on geannuleerd. Toegang blijft tot einde van de betaalperiode."
+    }
   }
 }

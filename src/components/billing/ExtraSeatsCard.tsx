@@ -48,7 +48,12 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         })
 
         const data = await response.json()
-        if (!response.ok) throw new Error(data.error || "Failed to add seat")
+        if (!response.ok) {
+          const error: any = new Error(data.error || "Failed to add seat")
+          error.code = data.code
+          error.redirectUrl = data.redirectUrl
+          throw error
+        }
         setSuccess(data.message)
       } else {
         // Create new add-on
@@ -59,7 +64,12 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         })
 
         const data = await response.json()
-        if (!response.ok) throw new Error(data.error || "Failed to add seat")
+        if (!response.ok) {
+          const error: any = new Error(data.error || "Failed to add seat")
+          error.code = data.code
+          error.redirectUrl = data.redirectUrl
+          throw error
+        }
         setSuccess(data.message)
       }
 
@@ -68,7 +78,7 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         setSuccess(null)
       }, 2000)
     } catch (err: any) {
-      // Show user-friendly error
+      // Show error message (error codes will be in the message itself for translation)
       setError(err?.message || "Failed to add seat")
 
       // Auto-redirect if needed

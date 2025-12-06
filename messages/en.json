@@ -1650,5 +1650,49 @@
       "hasAccount": "Already have an account?",
       "signIn": "Sign in"
     }
+  },
+  "addons": {
+    "seats": {
+      "title": "Team & Seats",
+      "description": "Manage team seats for collaboration",
+      "baseSeats": "Base seats",
+      "extraSeats": "Extra seats",
+      "total": "Total",
+      "inUse": "In use",
+      "priceInfo": "Extra seats cost <strong>€{price} per seat per month</strong>. You can add and remove seats whenever you want.",
+      "addSeat": "Add seat",
+      "removeSeat": "Remove seat",
+      "monthlyCost": "Monthly cost",
+      "upgradePrompt": "Upgrade to a paid plan to purchase extra seats.",
+      "viewPlans": "View plans →"
+    },
+    "scans": {
+      "title": "Scan Packages",
+      "description": "Increase your monthly scan limit with extra packages",
+      "usage": "Usage ({period})",
+      "basePlan": "Base (plan):",
+      "extraPackages": "Extra packages:",
+      "warning80": "You've already used {percent}% of your scans. Consider an extra package.",
+      "warning95": "You're almost at your scan limit ({percent}%)! Buy extra scans to continue.",
+      "activePackages": "Active packages",
+      "availablePackages": "Available packages",
+      "perMonth": "/month",
+      "buy": "Buy",
+      "active": "Active",
+      "upgradePrompt": "Upgrade to a paid plan to purchase extra scan packages.",
+      "alreadyActive": "You already have this scan package active. Choose another package or cancel the existing one first."
+    },
+    "errors": {
+      "trialUser": "Upgrade to a paid plan to purchase add-ons.",
+      "noPaymentMethod": "No payment method found. Please set up your payment method first.",
+      "paymentExpired": "Your payment method has expired. Click 'Set up payment method' to update it.",
+      "setupPayment": "Set up payment method",
+      "failed": "Failed to process request. Please try again."
+    },
+    "success": {
+      "activated": "Add-on activated! Payment will be processed automatically every month.",
+      "updated": "Number of seats updated",
+      "canceled": "Add-on canceled. Access remains until end of billing period."
+    }
   }
 }

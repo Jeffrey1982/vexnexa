@@ -1648,5 +1648,49 @@
       "hasAccount": "Vous avez déjà un compte?",
       "signIn": "Se connecter"
     }
+  },
+  "addons": {
+    "seats": {
+      "title": "Équipe & Places",
+      "description": "Gérez les places d'équipe pour la collaboration",
+      "baseSeats": "Places de base",
+      "extraSeats": "Places supplémentaires",
+      "total": "Total",
+      "inUse": "En cours d'utilisation",
+      "priceInfo": "Les places supplémentaires coûtent <strong>€{price} par place par mois</strong>. Vous pouvez ajouter et supprimer des places quand vous voulez.",
+      "addSeat": "Ajouter une place",
+      "removeSeat": "Supprimer une place",
+      "monthlyCost": "Coût mensuel",
+      "upgradePrompt": "Passez à un plan payant pour acheter des places supplémentaires.",
+      "viewPlans": "Voir les plans →"
+    },
+    "scans": {
+      "title": "Packs de Scans",
+      "description": "Augmentez votre limite mensuelle de scans avec des packs supplémentaires",
+      "usage": "Utilisation ({period})",
+      "basePlan": "Base (plan):",
+      "extraPackages": "Packs supplémentaires:",
+      "warning80": "Vous avez déjà utilisé {percent}% de vos scans. Envisagez un pack supplémentaire.",
+      "warning95": "Vous êtes presque à votre limite de scans ({percent}%)! Achetez des scans supplémentaires pour continuer.",
+      "activePackages": "Packs actifs",
+      "availablePackages": "Packs disponibles",
+      "perMonth": "/mois",
+      "buy": "Acheter",
+      "active": "Actif",
+      "upgradePrompt": "Passez à un plan payant pour acheter des packs de scans supplémentaires.",
+      "alreadyActive": "Vous avez déjà ce pack de scans actif. Choisissez un autre pack ou annulez d'abord le pack existant."
+    },
+    "errors": {
+      "trialUser": "Passez à un plan payant pour acheter des modules complémentaires.",
+      "noPaymentMethod": "Aucun mode de paiement trouvé. Veuillez d'abord configurer votre mode de paiement.",
+      "paymentExpired": "Votre mode de paiement a expiré. Cliquez sur 'Configurer le mode de paiement' pour le mettre à jour.",
+      "setupPayment": "Configurer le mode de paiement",
+      "failed": "Échec du traitement de la demande. Veuillez réessayer."
+    },
+    "success": {
+      "activated": "Module activé! Le paiement sera traité automatiquement chaque mois.",
+      "updated": "Nombre de places mis à jour",
+      "canceled": "Module annulé. L'accès reste jusqu'à la fin de la période de facturation."
+    }
   }
 }
