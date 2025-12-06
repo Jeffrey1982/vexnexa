@@ -225,7 +225,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Calculate daily regressions and improvements
-    for (const [siteId, siteScans] of siteScansMap.entries()) {
+    siteScansMap.forEach((siteScans, siteId) => {
       // Sort scans by date
       siteScans.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
@@ -264,7 +264,7 @@ export async function GET(req: NextRequest) {
           }
         }
       }
-    }
+    });
 
     // Convert map to array for response
     const regressionsTrend = Array.from(trendMap.entries()).map(([date, data]) => ({
