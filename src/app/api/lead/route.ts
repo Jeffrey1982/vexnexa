@@ -151,10 +151,17 @@ Privacy-first WCAG scanning • Made in the Netherlands
 
     const result = await resend.emails.send(finalEmailOptions)
 
+    console.log('✅ Newsletter confirmation email sent:', {
+      emailId: result?.data?.id,
+      recipient: email,
+      source: friendlySource,
+      timestamp: new Date().toISOString()
+    })
+
     // Send admin notification
     try {
       const adminEmail = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
-      await resend.emails.send({
+      const adminResult = await resend.emails.send({
         from: 'VexNexa Notifications <support@vexnexa.com>',
         to: [adminEmail],
         subject: 'New newsletter subscription',
@@ -178,8 +185,13 @@ Timestamp: ${new Date().toLocaleString('en-US')}
 IP address: ${clientIP}
 Status: Awaiting confirmation (double opt-in)`
       })
+
+      console.log('✅ Admin notification sent:', {
+        emailId: adminResult?.data?.id,
+        recipient: adminEmail
+      })
     } catch (adminEmailError) {
-      console.error('Failed to send admin notification:', adminEmailError)
+      console.error('❌ Failed to send admin notification:', adminEmailError)
       // Continue anyway - the main email was sent
     }
 
@@ -195,9 +207,18 @@ Status: Awaiting confirmation (double opt-in)`
     })
 
   } catch (error) {
-    console.error('Newsletter signup error:', error)
+    console.error('❌ Newsletter signup error:', error)
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    })
     return NextResponse.json(
-      { error: 'An error occurred. Please try again later.' },
+      {
+        error: 'An error occurred. Please try again later.',
+        debug: process.env.NODE_ENV === 'development' ? {
+          message: error instanceof Error ? error.message : String(error)
+        } : undefined
+      },
       { status: 500 }
     )
   }

@@ -61,51 +61,73 @@ This message was sent via the contact form on vexnexa.com
     const userConfirmation = await resend.emails.send({
       from: 'VexNexa <support@vexnexa.com>',
       to: [email],
-      subject: 'Thank you for your message - VexNexa',
+      subject: 'Thank you for contacting VexNexa - We reply as fast as possible',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">Thank you for your message!</h2>
-
-          <p>Hi ${name},</p>
-
-          <p>Thank you for your message. We have received your contact request and will get back to you within 24 hours.</p>
-
-          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Your message</h3>
-            <p style="white-space: pre-wrap;">${message}</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; background: #3B82F6; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
+            <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
+            <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
 
-          <p>For urgent questions, you can email us directly at <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
+          <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px;">Hello ${name}! 👋</h2>
 
-          <p>Best regards,<br>
-          The VexNexa team</p>
+          <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+            <strong>Thank you for contacting us!</strong> We have successfully received your message and our team will review it shortly.
+          </p>
+
+          <div style="background: #EFF6FF; border-left: 4px solid #3B82F6; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+            <p style="color: #1E40AF; font-size: 16px; margin: 0; font-weight: 600;">
+              ⚡ We reply as fast as possible - usually within a few hours!
+            </p>
+          </div>
+
+          <div style="background: #F8FAFC; padding: 24px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1F2937; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">Your message:</h3>
+            <p style="white-space: pre-wrap; color: #4B5563; line-height: 1.6; margin: 0;">${message}</p>
+          </div>
+
+          <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin: 24px 0;">
+            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #3B82F6; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
+          </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
-          <p style="color: #6b7280; font-size: 14px;">
-            VexNexa - WCAG accessibility scanning platform<br>
-            <a href="https://vexnexa.com" style="color: #7C3AED;">vexnexa.com</a>
+          <p style="color: #4B5563; font-size: 16px; margin-bottom: 8px;">
+            Best regards,<br>
+            <strong>The VexNexa Team</strong>
+          </p>
+
+          <p style="color: #9CA3AF; font-size: 14px; text-align: center; margin-top: 30px;">
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3B82F6; text-decoration: none;">vexnexa.com</a><br>
+            Privacy-first WCAG scanning • Made in the Netherlands
           </p>
         </div>
       `,
       text: `
-Thank you for your message!
+Hello ${name}! 👋
 
-Hi ${name},
+Thank you for contacting us! We have successfully received your message and our team will review it shortly.
 
-Thank you for your message. We have received your contact request and will get back to you within 24 hours.
+⚡ We reply as fast as possible - usually within a few hours!
 
 Your message:
 ${message}
 
-For urgent questions, you can email us directly at info@vexnexa.com.
+For urgent questions, you can also email us directly at info@vexnexa.com.
 
 Best regards,
-The VexNexa team
+The VexNexa Team
 
-VexNexa - WCAG accessibility scanning platform
-vexnexa.com
+VexNexa | vexnexa.com
+Privacy-first WCAG scanning • Made in the Netherlands
       `.trim()
+    })
+
+    console.log('✅ Contact emails sent successfully:', {
+      teamNotificationId: teamNotification.data?.id,
+      userConfirmationId: userConfirmation.data?.id,
+      recipient: email
     })
 
     return {
@@ -113,7 +135,7 @@ vexnexa.com
       userConfirmation
     }
   } catch (error) {
-    console.error('Failed to send contact emails:', error)
+    console.error('❌ Failed to send contact emails:', error)
     throw error
   }
 }
