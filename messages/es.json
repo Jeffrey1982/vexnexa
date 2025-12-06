@@ -1,0 +1,1698 @@
+{
+  "nav": {
+    "features": "Características",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "login": "Iniciar sesión",
+    "signup": "Comenzar gratis",
+    "signOut": "Cerrar sesión",
+    "dashboard": "Panel",
+    "about": "Acerca de",
+    "getStarted": "Comenzar",
+    "changelog": "Registro de cambios",
+    "language": "Idioma",
+    "followUs": "Síguenos"
+  },
+  "footer": {
+    "brand": {
+      "name": "VexNexa",
+      "tagline": "Escaneo WCAG amigable para desarrolladores. Sin overlays. Sin tonterías.",
+      "followUs": "Síguenos",
+      "newsletter": {
+        "title": "Mantente actualizado",
+        "description": "Suscríbete a nuestro boletín para actualizaciones y consejos de accesibilidad.",
+        "placeholder": "Introduce tu correo electrónico",
+        "subscribe": "Suscribirse",
+        "success": "¡Gracias por suscribirte!"
+      }
+    },
+    "product": {
+      "title": "Producto",
+      "features": "Características",
+      "pricing": "Precios",
+      "changelog": "Registro de cambios",
+      "documentation": "Documentación"
+    },
+    "support": {
+      "title": "Soporte",
+      "contact": "Contacto",
+      "help": "Centro de ayuda",
+      "faq": "Preguntas frecuentes",
+      "api": "Documentación API",
+      "status": "Estado del sistema"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Política de privacidad",
+      "terms": "Términos de servicio",
+      "security": "Seguridad",
+      "sla": "SLA y soporte"
+    },
+    "copyright": "Todos los derechos reservados."
+  },
+  "home": {
+    "hero": {
+      "title": "Auditorías de accesibilidad instantáneas.",
+      "titleHighlight": "Sin overlays. Sin llamadas de ventas.",
+      "subtitle": "Escaneo WCAG rápido para desarrolladores y agencias que necesitan datos reales, no parches de widgets.",
+      "ctaPrimary": "Comenzar escaneo gratis",
+      "ctaSecondary": "Ver precios",
+      "noCreditCard": "No se requiere tarjeta de crédito. Sin registro para tu primer escaneo.",
+      "imageAlt": "Panel de escaneo de accesibilidad VexNexa mostrando informes WCAG detallados y priorización de problemas"
+    },
+    "valuePillars": {
+      "deeper": {
+        "title": "Cobertura más profunda",
+        "description": "Teclado, cognitivo, estructura, contraste, formularios, puntos de referencia, multimedia, semántica ARIA."
+      },
+      "actionable": {
+        "title": "Informes accionables",
+        "description": "Problemas priorizados, fragmentos de código y consejos de remediación."
+      },
+      "monitoring": {
+        "title": "Monitoreo continuo",
+        "description": "Programa escaneos, rastrea regresiones, alerta a tu equipo."
+      },
+      "teamReady": {
+        "title": "Listo para equipos",
+        "description": "Proyectos, roles, integración Slack/Jira, API."
+      }
+    },
+    "featuresSection": {
+      "title": "Del escaneo a la acción en",
+      "titleHighlight": "minutos",
+      "subtitle": "No se necesitan habilidades técnicas. Nuestros informes son simples y claros para que tu equipo pueda comenzar a solucionar problemas de inmediato.",
+      "cta": "Comenzar escaneo gratis",
+      "imageAlt": "Informe detallado de escaneo VexNexa mostrando problemas de accesibilidad con priorización y consejos de remediación",
+      "features": {
+        "category1": "8 categorías adicionales de escaneo más allá de WCAG",
+        "category2": "Pruebas de navegación por teclado",
+        "category3": "Verificaciones de compatibilidad con lectores de pantalla",
+        "category4": "Análisis de accesibilidad móvil",
+        "category5": "Evaluación de accesibilidad cognitiva",
+        "category6": "Seguridad de movimiento y animación",
+        "category7": "Pruebas avanzadas de visión del color",
+        "category8": "Análisis de impacto en el rendimiento"
+      }
+    },
+    "ctaBand": {
+      "title": "Verifica tu sitio ahora",
+      "cta": "Comenzar escaneo gratis"
+    },
+    "finalCta": {
+      "title": "Comienza tu escaneo gratis",
+      "subtitle": "Comienza a escanear en minutos. Completamente autoservicio. No se requieren reuniones.",
+      "ctaPrimary": "Comenzar escaneo gratis",
+      "ctaSecondary": "Ver precios"
+    },
+    "faq": {
+      "q1": {
+        "question": "¿Pueden garantizar el cumplimiento legal?",
+        "answer": "Ninguna herramienta puede garantizar el 100% de cumplimiento legal en todos los contextos. VexNexa detecta e informa problemas, ayuda en la remediación y te ayuda a cumplir con WCAG y estándares relacionados. Para la evaluación de riesgos legales, considera una auditoría de expertos y un proceso de gobernanza continuo."
+      },
+      "q2": {
+        "question": "¿Cómo funcionan los límites de páginas?",
+        "answer": "Cada plan incluye un límite mensual de escaneo de páginas. Una 'página' es una URL escaneada. Si escaneas la misma página varias veces en un mes, cada escaneo cuenta para tu límite. Cuando te acerques a tu límite, recibirás una notificación."
+      },
+      "q3": {
+        "question": "¿Qué pasa si excedo mi plan?",
+        "answer": "Prueba gratuita: El servicio se bloquea en el límite. Actualiza a un plan de pago para continuar escaneando. Planes de pago: El servicio continúa pero recibirás notificaciones para actualizar si excedes consistentemente tus límites."
+      },
+      "q4": {
+        "question": "¿Admiten equipos/SSO?",
+        "answer": "Los planes Pro admiten hasta 5 miembros del equipo. Los planes Business admiten hasta 15 miembros con acceso basado en roles. SSO está disponible en planes Business y Enterprise. Contáctanos para características Enterprise."
+      },
+      "q5": {
+        "question": "¿Puedo exportar informes?",
+        "answer": "La exportación a PDF está disponible en todos los planes de pago. La exportación a Word está disponible en planes Pro y Business. Todas las exportaciones incluyen tus resultados de escaneo, problemas priorizados, fragmentos de código y recomendaciones de remediación."
+      },
+      "q6": {
+        "question": "¿Qué se monitorea continuamente?",
+        "answer": "El monitoreo continuo te permite programar escaneos automáticos (diarios, semanales o mensuales). Recibirás alertas por correo electrónico cuando las puntuaciones bajen o se detecten nuevos problemas. Esta función está disponible en planes Pro y Business."
+      },
+      "q7": {
+        "question": "¿Necesito programar una demo?",
+        "answer": "¡No! VexNexa es 100% autoservicio. Regístrate, ingresa tu URL y obtén tu informe de accesibilidad en minutos. No ofrecemos demos ni llamadas de ventas."
+      },
+      "q8": {
+        "question": "¿VexNexa es un overlay de accesibilidad?",
+        "answer": "No. Escaneamos la estructura de tu código y te damos violaciones WCAG para corregir adecuadamente. Nunca inyectamos widgets o scripts en tu sitio. Los overlays son controvertidos en la comunidad de accesibilidad: nosotros analizamos tu código real en su lugar."
+      },
+      "q9": {
+        "question": "¿VexNexa puede solucionar problemas automáticamente?",
+        "answer": "No. La accesibilidad real requiere cambios de código adecuados. Te mostramos exactamente qué está mal y cómo solucionarlo, pero necesitas hacer los cambios tú mismo. Las 'correcciones' automatizadas no abordan las causas raíz."
+      }
+    },
+    "pillars": {
+      "title": "¿Por qué VexNexa?",
+      "subtitle": "Creado para desarrolladores, agencias y equipos que envían código",
+      "deeper": {
+        "title": "Sin widgets overlay",
+        "description": "Escaneamos la estructura de tu código. No inyectamos scripts overlay controvertidos contra los que advierte la comunidad de accesibilidad."
+      },
+      "actionable": {
+        "title": "Informes amigables para desarrolladores",
+        "description": "Lenguaje técnico que los desarrolladores entienden. Perspectivas a nivel de código. Referencias WCAG. Sin 'puntuaciones de cumplimiento' vagas sin contexto."
+      },
+      "continuous": {
+        "title": "Instantáneo y autoservicio",
+        "description": "Otras herramientas te hacen pasar por demos. Nosotros te damos resultados instantáneos y precios transparentes. Actualiza con un clic."
+      },
+      "compliant": {
+        "title": "Plataforma multilingüe",
+        "description": "Plataforma completa en inglés, holandés y francés. No solo documentos de ayuda traducidos: toda la interfaz."
+      }
+    },
+    "benefits": {
+      "title": "Pruebas de accesibilidad completas",
+      "subtitle": "Ve más allá de las verificaciones básicas de WCAG con 8 categorías de prueba adicionales",
+      "categories": {
+        "keyboard": {
+          "title": "Navegación por teclado",
+          "description": "Pruebas completas de accesibilidad de teclado incluyendo gestión de enfoque y orden de tabulación"
+        },
+        "cognitive": {
+          "title": "Carga cognitiva",
+          "description": "Mide la complejidad del contenido, legibilidad y accesibilidad cognitiva"
+        },
+        "structure": {
+          "title": "Estructura del documento",
+          "description": "Validación de HTML semántico y jerarquía de encabezados adecuada"
+        },
+        "contrast": {
+          "title": "Contraste avanzado",
+          "description": "Verificación de contraste WCAG AAA con simulaciones visuales"
+        },
+        "forms": {
+          "title": "Accesibilidad de formularios",
+          "description": "Validación completa de formularios incluyendo etiquetas, instrucciones y manejo de errores"
+        },
+        "landmarks": {
+          "title": "Puntos de referencia ARIA",
+          "description": "Estructura de puntos de referencia adecuada para navegación con lector de pantalla"
+        },
+        "multimedia": {
+          "title": "Multimedia",
+          "description": "Accesibilidad de video y audio con verificación de subtítulos y transcripciones"
+        },
+        "aria": {
+          "title": "Semántica ARIA",
+          "description": "Validación avanzada de patrones ARIA y verificación de roles"
+        }
+      }
+    },
+    "features": {
+      "title": "Todo lo que necesitas para el cumplimiento de accesibilidad",
+      "automation": {
+        "title": "Pruebas automatizadas",
+        "description": "Programa escaneos regulares y recibe alertas cuando se detecten nuevos problemas"
+      },
+      "reports": {
+        "title": "Informes detallados",
+        "description": "Exporta informes profesionales en PDF/DOCX con tu marca"
+      },
+      "monitoring": {
+        "title": "Monitoreo continuo",
+        "description": "Rastrea cambios a lo largo del tiempo y previene regresiones de accesibilidad"
+      },
+      "team": {
+        "title": "Colaboración en equipo",
+        "description": "Comparte escaneos, asigna tareas y rastrea el progreso de remediación"
+      }
+    },
+    "cta": {
+      "title": "Comienza a mejorar la accesibilidad hoy",
+      "subtitle": "Únete a equipos que ya usan VexNexa para el cumplimiento de WCAG",
+      "button": "Comenzar gratis",
+      "noCard": "No se requiere tarjeta de crédito"
+    }
+  },
+  "pricing": {
+    "hero": {
+      "badge": "💰 Precios simples",
+      "title": "Precios simples y flexibles —",
+      "titleHighlight": "Creados para el crecimiento",
+      "subtitle": "SaaS completamente automatizado con precios transparentes.",
+      "billingSubtitle": "Ahorra hasta un 10% con facturación a largo plazo.",
+      "needMore": "¿Preguntas sobre precios?",
+      "contactUs": "Contáctanos",
+      "badges": {
+        "vat": "Todos los precios incluyen IVA",
+        "noSetup": "Sin tarifas de configuración",
+        "cancelAnytime": "Cancela en cualquier momento"
+      }
+    },
+    "billing": {
+      "monthly": "Mensual",
+      "semiannual": "6 meses",
+      "annual": "Anual",
+      "save5": "Ahorra 5%",
+      "save8": "Ahorra hasta 8%",
+      "save10": "Ahorra 10%",
+      "saveUpTo17": "Ahorra hasta 17%",
+      "hint": "La facturación a largo plazo ahorra hasta un 17%",
+      "switchToSave": "Cambia a largo plazo y ahorra más"
+    },
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "Para sitios web pequeños y uso personal",
+        "cta": "Comenzar con Starter",
+        "features": {
+          "sites": "{count} sitio web",
+          "pages": "{count} páginas/mes",
+          "users": "{count} usuario",
+          "pdfExport": "Exportación a PDF",
+          "basicReports": "Informes básicos",
+          "emailSupport": "Soporte por correo electrónico"
+        },
+        "limitations": {
+          "noWord": "Sin exportación a Word",
+          "noScheduling": "Sin programación",
+          "limitedIntegrations": "Integraciones limitadas"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Para profesionales que escanean regularmente",
+        "cta": "Probar Pro",
+        "popular": "Popular",
+        "features": {
+          "sites": "{count} sitios web",
+          "pages": "{count} páginas/mes",
+          "users": "{count} usuarios",
+          "exports": "Exportación a PDF + Word",
+          "advancedReports": "Informes avanzados",
+          "scheduling": "Programación",
+          "integrations": "Integración Slack y Jira",
+          "prioritySupport": "Soporte prioritario"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "Para equipos y uso empresarial",
+        "cta": "Comenzar con Business",
+        "features": {
+          "sites": "{count} sitios web",
+          "pages": "{count} páginas/mes",
+          "users": "{count} usuarios",
+          "allExports": "Todas las exportaciones (PDF + Word)",
+          "whiteLabel": "Informes de marca blanca",
+          "advancedScheduling": "Programación avanzada",
+          "allIntegrations": "Todas las integraciones",
+          "prioritySupport": "Soporte prioritario (respuesta en 4h)"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Personalizado",
+        "priceFrom": "Desde €270/mes",
+        "description": "Escaneo ilimitado para grandes organizaciones",
+        "cta": "Contáctanos",
+        "features": {
+          "unlimitedSites": "Sitios web ilimitados",
+          "unlimitedPages": "Páginas ilimitadas",
+          "unlimitedUsers": "Usuarios ilimitados",
+          "customIntegrations": "Integraciones personalizadas",
+          "sso": "SSO/SAML",
+          "dedicatedSupport": "Soporte dedicado",
+          "sla": "Garantía SLA",
+          "onPremise": "Opción on-premise"
+        },
+        "note": "Perfecto para grandes organizaciones. Contáctanos para precios personalizados."
+      }
+    },
+    "loading": "Cargando...",
+    "footer": {
+      "note": "Todos los planes incluyen IVA. Cancela en cualquier momento.",
+      "contact": "¿Preguntas? Contáctanos."
+    },
+    "overflow": {
+      "title": "Precios de excedente",
+      "subtitle": "Cuando excedes los límites de tu plan, cobramos pequeñas cantidades en lugar de bloquearte",
+      "table": {
+        "resource": "Recurso",
+        "price": "Precio de excedente",
+        "description": "Descripción"
+      },
+      "resources": {
+        "extraPages": "Páginas adicionales",
+        "extraSites": "Sitios web adicionales",
+        "extraUsers": "Usuarios adicionales"
+      },
+      "alert": {
+        "title": "Cómo funciona:",
+        "description": "Cuando excedes consistentemente los límites de tu plan, te notificaremos y recomendaremos actualizar. Los pequeños excedentes se facturan automáticamente mensualmente. Siempre tienes el control."
+      }
+    },
+    "compliance": {
+      "title": "Descargo de responsabilidad de cumplimiento",
+      "warning": "Ninguna herramienta puede garantizar el 100% de cumplimiento legal en todos los contextos.",
+      "description": "VexNexa detecta e informa problemas, ayuda en la remediación y te ayuda a cumplir con WCAG y estándares relacionados. Para la evaluación de riesgos legales, considera una auditoría de expertos y un proceso de gobernanza continuo. Nuestro escáner es una herramienta para ayudar en tus esfuerzos de cumplimiento, no una garantía legal.",
+      "links": {
+        "terms": "Términos de servicio",
+        "privacy": "Política de privacidad"
+      }
+    },
+    "comparison": {
+      "title": "Cómo se compara VexNexa",
+      "subtitle": "Comparando nuestro enfoque con widgets overlay y escáneres de accesibilidad genéricos",
+      "columns": {
+        "feature": "Característica",
+        "vexnexa": "VexNexa",
+        "overlay": "Widgets overlay",
+        "generic": "Escáneres genéricos"
+      },
+      "features": {
+        "coverage": {
+          "name": "Profundidad de cobertura",
+          "vexnexa": "WCAG + 8 categorías extra",
+          "overlay": "Solo correcciones superficiales",
+          "generic": "Verificaciones WCAG básicas"
+        },
+        "actionability": {
+          "name": "Accionabilidad",
+          "vexnexa": "Fragmentos de código + consejos de remediación",
+          "overlay": "Sin guía para desarrolladores",
+          "generic": "Mensajes de error genéricos"
+        },
+        "team": {
+          "name": "Características de equipo",
+          "vexnexa": true,
+          "overlay": false,
+          "generic": false
+        },
+        "monitoring": {
+          "name": "Monitoreo continuo",
+          "vexnexa": true,
+          "overlay": false,
+          "generic": false
+        },
+        "api": {
+          "name": "Acceso a API",
+          "vexnexa": true,
+          "overlay": false,
+          "generic": "Limitado"
+        },
+        "falsePositives": {
+          "name": "Falsos positivos",
+          "vexnexa": "Bajo",
+          "overlay": "N/A",
+          "generic": "Alto"
+        },
+        "legal": {
+          "name": "Postura legal",
+          "vexnexa": "La herramienta ayuda al cumplimiento",
+          "overlay": "Afirma corregir problemas",
+          "generic": "Sin reclamaciones legales"
+        },
+        "cost": {
+          "name": "Escalado de costos",
+          "vexnexa": "Precios de excedente transparentes",
+          "overlay": "Tarifas por página",
+          "generic": "Solo niveles fijos"
+        }
+      },
+      "disclaimer": "Los widgets overlay inyectan JavaScript que intenta modificar tu sitio en el lado del cliente. Si bien pueden ayudar a algunos usuarios, no corrigen problemas de código subyacentes y pueden crear nuevos problemas de accesibilidad. Los escáneres genéricos a menudo pierden problemas específicos del contexto. VexNexa proporciona una cobertura automatizada más profunda y orientación accionable para desarrolladores."
+    },
+    "cta": {
+      "title": "Comienza a escanear hoy",
+      "subtitle": "Comienza con una prueba gratuita y actualiza cuando necesites más funcionalidad. Sin tarifas de configuración, sin sorpresas.",
+      "startTrial": "Comenzar escaneo gratis",
+      "needMore": "¿Necesitas límites más altos?",
+      "contactUs": "Contáctanos"
+    }
+  },
+  "contact": {
+    "metadata": {
+      "title": "Contacto - Escáner WCAG VexNexa",
+      "description": "Contacta a VexNexa para preguntas sobre escaneo de accesibilidad, cumplimiento de WCAG o soluciones personalizadas.",
+      "keywords": "contacto, soporte, ayuda de accesibilidad, preguntas WCAG, enterprise"
+    },
+    "skipLink": "Saltar al contenido principal",
+    "hero": {
+      "title": "Hablemos",
+      "titleHighlight": "",
+      "subtitle": "¿Preguntas sobre VexNexa o necesitas límites más altos? Nos encantaría saber de ti. La mayoría de los usuarios pueden comenzar de inmediato."
+    },
+    "methods": {
+      "email": {
+        "title": "Soporte por correo electrónico",
+        "description": "Para preguntas generales y soporte",
+        "detail": "Tiempo de respuesta: 24-72 horas",
+        "actionLabel": "info@vexnexa.com"
+      },
+      "sales": {
+        "title": "Enterprise y límites más altos",
+        "description": "Para equipos más grandes o requisitos personalizados",
+        "detail": "Respuesta dentro de 1-2 días hábiles",
+        "actionLabel": "Solicitar información"
+      },
+      "location": {
+        "title": "Hecho en los Países Bajos",
+        "description": "Privacidad primero, cumplimiento GDPR",
+        "detail": "Datos almacenados en Europa",
+        "actionLabel": "Ámsterdam, Países Bajos"
+      }
+    },
+    "form": {
+      "title": "Envíanos un mensaje",
+      "subtitle": "Completa el formulario y te contactaremos lo antes posible. Para preguntas urgentes también puedes enviar un correo electrónico directamente.",
+      "benefits": [
+        "Respuesta dentro de 24 horas en días hábiles",
+        "Demos y consultas gratuitas",
+        "Soporte en español",
+        "Privacidad primero: tus datos se almacenan de forma segura"
+      ],
+      "directContact": "¿Prefieres contacto directo? Envía un correo a",
+      "cardTitle": "Formulario de contacto",
+      "cardDescription": "Tratamos tus datos confidencialmente según nuestra",
+      "privacyPolicy": "política de privacidad",
+      "labels": {
+        "name": "Nombre *",
+        "email": "Correo electrónico *",
+        "message": "Mensaje *",
+        "company": "Nombre de la empresa"
+      },
+      "placeholders": {
+        "name": "Tu nombre y apellido",
+        "email": "tu@email.com",
+        "message": "Cuéntanos cómo podemos ayudarte…"
+      },
+      "consent": {
+        "label": "Doy permiso para usar mis datos para responder a mi mensaje, de acuerdo con la",
+        "privacyPolicy": "política de privacidad"
+      },
+      "submit": {
+        "idle": "Enviar mensaje",
+        "sending": "Enviando…"
+      },
+      "errors": {
+        "name": "Ingresa tu nombre.",
+        "email": "Ingresa una dirección de correo electrónico válida.",
+        "message": "Escribe al menos 10 caracteres.",
+        "consent": "Da permiso para responder a tu mensaje.",
+        "spam": "Spam detectado."
+      },
+      "toast": {
+        "successTitle": "¡Mensaje enviado!",
+        "successDescription": "Te contactaremos dentro de 24 horas.",
+        "errorTitle": "Algo salió mal",
+        "errorDescription": "Inténtalo de nuevo más tarde o envía un correo electrónico a info@vexnexa.com"
+      }
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "subtitle": "Respuestas rápidas a las preguntas más comunes",
+      "q1": {
+        "question": "¿Qué tan rápido recibiré una respuesta?",
+        "answer": "Respondemos dentro de 24 horas en días hábiles. Para demos de equipo y ventas intentamos responder dentro de 4 horas."
+      },
+      "q2": {
+        "question": "¿Pueden dar una demo personalizada?",
+        "answer": "Ciertamente. Estaremos encantados de dar una demo personal usando tu propio sitio web como ejemplo. Programa una llamada de 30 minutos a través del formulario o el botón 'Programar una llamada'."
+      },
+      "q3": {
+        "question": "¿Ofrecen capacitación y consultoría?",
+        "answer": "Respondemos dentro de 24-48 horas en días hábiles para consultas empresariales. Para soporte general, usa nuestra ayuda en la aplicación o soporte por correo electrónico."
+      },
+      "q4": {
+        "question": "¿Cómo funciona el soporte enterprise?",
+        "answer": "Enterprise obtiene soporte dedicado, SSO, marca personalizada y despliegue on-premise opcional. Contáctanos para más detalles."
+      },
+      "q5": {
+        "question": "¿Necesito reservar una demo?",
+        "answer": "¡No! Puedes comenzar a escanear inmediatamente después del registro. Solo regístrate y comienza - no se requieren reuniones."
+      }
+    },
+    "cta": {
+      "title": "¿Prefieres probarlo primero?",
+      "subtitle": "Comienza directamente con un escaneo gratuito de tu sitio web. Se requiere registro, resultados en segundos.",
+      "button": "Comenzar escaneo gratis"
+    }
+  },
+  "auth": {
+    "loading": "Cargando...",
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesión en tu cuenta para continuar",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@ejemplo.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "signInButton": "Iniciar sesión",
+      "signingIn": "Iniciando sesión...",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Registrarse",
+      "or": "O continuar con",
+      "errors": {
+        "emailRequired": "Por favor ingresa correo electrónico y contraseña",
+        "invalidEmail": "Por favor ingresa una dirección de correo electrónico válida",
+        "oauthError": "Ocurrió un error al iniciar sesión con tu cuenta social.",
+        "sessionError": "No se pudo crear la sesión. Por favor intenta de nuevo.",
+        "unexpectedError": "Ocurrió un error inesperado. Por favor intenta de nuevo más tarde.",
+        "genericError": "Ocurrió un error al iniciar sesión."
+      },
+      "features": {
+        "secure": "Autenticación segura",
+        "fast": "Escaneos ultrarrápidos",
+        "support": "Soporte 24/7 disponible"
+      }
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Comienza a escanear problemas de accesibilidad hoy",
+      "nameLabel": "Nombre completo",
+      "namePlaceholder": "Juan Pérez",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@ejemplo.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Al menos 8 caracteres",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Vuelve a ingresar tu contraseña",
+      "createAccountButton": "Crear cuenta",
+      "creatingAccount": "Creando cuenta...",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Iniciar sesión",
+      "or": "O continuar con",
+      "terms": "Al crear una cuenta, aceptas nuestros",
+      "termsLink": "Términos de servicio",
+      "and": "y",
+      "privacyLink": "Política de privacidad",
+      "errors": {
+        "allFieldsRequired": "Por favor completa todos los campos",
+        "invalidEmail": "Por favor ingresa una dirección de correo electrónico válida",
+        "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+        "passwordsMatch": "Las contraseñas deben coincidir"
+      }
+    },
+    "forgotPassword": {
+      "title": "Restablece tu contraseña",
+      "subtitle": "Ingresa tu correo electrónico y te enviaremos un enlace de restablecimiento",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@ejemplo.com",
+      "sendButton": "Enviar enlace de restablecimiento",
+      "sending": "Enviando...",
+      "backToLogin": "Volver al inicio de sesión",
+      "success": "¡Revisa tu correo electrónico para un enlace de restablecimiento!",
+      "errors": {
+        "emailRequired": "Por favor ingresa tu correo electrónico",
+        "invalidEmail": "Por favor ingresa una dirección de correo electrónico válida"
+      }
+    },
+    "resetPassword": {
+      "title": "Establecer nueva contraseña",
+      "subtitle": "Ingresa tu nueva contraseña a continuación",
+      "passwordLabel": "Nueva contraseña",
+      "passwordPlaceholder": "Al menos 8 caracteres",
+      "confirmPasswordLabel": "Confirmar nueva contraseña",
+      "confirmPasswordPlaceholder": "Vuelve a ingresar tu contraseña",
+      "resetButton": "Restablecer contraseña",
+      "resetting": "Restableciendo...",
+      "success": "¡Contraseña restablecida exitosamente!",
+      "errors": {
+        "allFieldsRequired": "Por favor completa todos los campos",
+        "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+        "passwordsMatch": "Las contraseñas deben coincidir"
+      }
+    }
+  },
+  "cookie": {
+    "message": "Usamos cookies para mejorar tu experiencia en nuestro sitio. Al continuar, aceptas nuestro uso de cookies.",
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "customize": "Personalizar",
+    "learnMore": "Más información"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "retry": "Intentar de nuevo",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "export": "Exportar",
+    "print": "Imprimir",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "viewMore": "Ver más",
+    "viewLess": "Ver menos",
+    "learnMore": "Más información",
+    "issues": "problemas"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "subtitle": "Monitorea tus escaneos de accesibilidad web y mejoras",
+    "newScan": {
+      "title": "Nuevo escaneo de accesibilidad",
+      "description": "Ingresa una URL para un escaneo de accesibilidad 100% completo con 8 categorías adicionales",
+      "enhancedTitle": "✨ Nuevo: Escaneo mejorado 100%",
+      "enhancedDescription": "WCAG + 8 categorías extra: navegación por teclado, pruebas de lector de pantalla, accesibilidad móvil, análisis cognitivo y más."
+    },
+    "tabs": {
+      "overview": "Resumen",
+      "analytics": "Análisis",
+      "monitoring": "Monitoreo",
+      "teams": "Equipos",
+      "reports": "Informes",
+      "tools": "Herramientas",
+      "whiteLabel": "Marca blanca"
+    },
+    "stats": {
+      "title": "Resumen rápido",
+      "description": "Tus métricas de accesibilidad de un vistazo",
+      "averageScore": "Puntuación promedio",
+      "totalIssues": "Problemas totales",
+      "critical": "Crítico",
+      "serious": "Serio",
+      "moderate": "Moderado",
+      "minor": "Menor"
+    },
+    "teams": {
+      "title": "Colaboración en equipo",
+      "description": "Colabora con tu equipo en proyectos de accesibilidad y comparte ideas",
+      "available": "Características de equipo disponibles",
+      "availableDescription": "Invita miembros del equipo, asigna roles, rastrea problemas y colabora en mejoras de accesibilidad.",
+      "goToTeams": "Ir a equipos",
+      "roleBasedAccess": {
+        "title": "Acceso basado en roles",
+        "description": "Permisos de administrador, editor, visualizador"
+      },
+      "issueTracking": {
+        "title": "Seguimiento de problemas",
+        "description": "Asigna y rastrea problemas de accesibilidad"
+      },
+      "sharedWorkspaces": {
+        "title": "Espacios de trabajo compartidos",
+        "description": "Colabora en múltiples sitios"
+      }
+    },
+    "analytics": {
+      "issuesByImpact": {
+        "title": "Problemas por nivel de impacto",
+        "description": "Distribución de problemas de accesibilidad en niveles de gravedad"
+      },
+      "trendAnalysis": {
+        "title": "Análisis de tendencias",
+        "description": "Rastrea tus mejoras de accesibilidad a lo largo del tiempo",
+        "noData": "Ejecuta más escaneos para ver tendencias"
+      }
+    },
+    "monitoring": {
+      "title": "Monitoreo continuo",
+      "description": "Rastrea cambios de accesibilidad y recibe notificaciones de regresiones",
+      "comingSoon": "Monitoreo próximamente",
+      "comingSoonDescription": "El monitoreo automatizado rastreará tus sitios web y te alertará cuando las puntuaciones de accesibilidad bajen o se detecten nuevos problemas.",
+      "configureNotifications": "Configurar notificaciones",
+      "upgradePlan": "Actualizar plan",
+      "scheduledScans": {
+        "title": "Escaneos programados",
+        "description": "Escanea automáticamente tus sitios diaria, semanal o mensualmente"
+      },
+      "instantAlerts": {
+        "title": "Alertas instantáneas",
+        "description": "Recibe notificaciones por correo cuando las puntuaciones bajen o los problemas aumenten"
+      },
+      "trendTracking": {
+        "title": "Seguimiento de tendencias",
+        "description": "Ve datos históricos y rastrea mejoras a lo largo del tiempo"
+      }
+    },
+    "reports": {
+      "title": "Informes de escaneo",
+      "description": "Descarga informes detallados de accesibilidad para tus escaneos",
+      "noReports": "No hay informes disponibles",
+      "noReportsDescription": "Ejecuta tu primer escaneo de accesibilidad para generar informes descargables.",
+      "selectScan": "Selecciona un escaneo para descargar su informe detallado de accesibilidad:"
+    },
+    "tools": {
+      "title": "Recursos de accesibilidad",
+      "description": "Herramientas y guías para ayudar a mejorar la accesibilidad de tu sitio web",
+      "wcagGuidelines": {
+        "title": "Directrices WCAG",
+        "description": "Aprende sobre los requisitos de cumplimiento de WCAG 2.1 AA"
+      },
+      "quickFixes": {
+        "title": "Correcciones rápidas",
+        "description": "Problemas comunes de accesibilidad y cómo solucionarlos"
+      }
+    },
+    "whiteLabel": {
+      "title": "Gestión de marca blanca",
+      "description": "Personaliza la apariencia de tu marca, logotipo, colores e información de contacto para tu plan Business.",
+      "fullSettings": "Configuración completa",
+      "fullSettingsDescription": "Configuración completa de marca blanca",
+      "fullSettingsDetails": "Logotipo, colores, información de contacto, configuración de dominio",
+      "livePreview": "Vista previa en vivo",
+      "livePreviewDescription": "Ve tus personalizaciones",
+      "livePreviewDetails": "¡Tu sitio ya muestra tu marca!",
+      "customReports": "Informes personalizados",
+      "customReportsDescription": "Exportaciones PDF con marca",
+      "customReportsDetails": "Disponible - Genera informes con tu marca",
+      "featuresTitle": "Tus características de marca blanca",
+      "features": {
+        "logo": "Logotipo y favicon de empresa personalizados",
+        "colors": "Colores de marca (primario, secundario, acento)",
+        "contact": "Información de contacto personalizada",
+        "removeBranding": "Eliminar \"Powered by VexNexa\"",
+        "footerText": "Texto de pie de página personalizado",
+        "subdomain": "Subdominio (tuempresa.vexnexa.com)",
+        "customDomain": "Dominio personalizado (contactar soporte)",
+        "brandedReports": "Informes PDF con marca"
+      },
+      "customize": "Personaliza tu marca"
+    },
+    "recentScans": {
+      "title": "Escaneos recientes",
+      "description": "Tus últimos escaneos de accesibilidad y sus resultados",
+      "empty": "Aún no hay escaneos",
+      "emptyDescription": "Comienza escaneando tu primer sitio web en busca de problemas de accesibilidad.",
+      "tableHeaders": {
+        "site": "Sitio",
+        "url": "URL",
+        "score": "Puntuación",
+        "status": "Estado",
+        "issues": "Problemas",
+        "date": "Fecha"
+      }
+    },
+    "status": {
+      "done": "completado",
+      "running": "en ejecución",
+      "failed": "fallido",
+      "queued": "en cola"
+    }
+  },
+  "about": {
+    "metadata": {
+      "title": "Acerca de VexNexa - Escaneos de accesibilidad WCAG",
+      "description": "VexNexa: escaneos WCAG sin ruido — prioridades claras, correcciones concretas y calidad medible. Alojamiento en la UE, conjunto de reglas axe-core.",
+      "ogTitle": "Acerca de VexNexa - Escaneos de accesibilidad WCAG",
+      "ogDescription": "Accesibilidad sin ruido — prioridades claras, correcciones concretas, calidad medible. Alojamiento en la UE, conjunto de reglas axe-core.",
+      "twitterTitle": "Acerca de VexNexa - Escaneos de accesibilidad WCAG",
+      "twitterDescription": "Accesibilidad sin ruido — prioridades claras, correcciones concretas, calidad medible."
+    },
+    "skipLink": "Saltar al contenido principal",
+    "hero": {
+      "title": "Acerca de VexNexa — parte de VexNexa",
+      "subtitle": "Hacemos que la accesibilidad sea viable para equipos ocupados. Menos ruido, más mejoras reales con prioridades claras y correcciones concretas.",
+      "badges": {
+        "euHosting": "Alojamiento en la UE",
+        "axeCore": "Conjunto de reglas axe-core",
+        "pdfWordExport": "Exportación PDF/Word"
+      },
+      "cta": {
+        "startFreeScan": "Comenzar escaneo gratis",
+        "startFreeScanAriaLabel": "Comienza tu primer escaneo WCAG gratis",
+        "viewPricing": "Ver precios",
+        "viewPricingAriaLabel": "Ver planes de precios"
+      }
+    },
+    "whyWeExist": {
+      "title": "Por qué existimos",
+      "paragraph1": "Los equipos a menudo se ahogan en informes llenos de ruido: jerga técnica, referencias vagas y poca orientación. Mientras tanto, la presión aumenta: legislación más estricta, usuarios con necesidades diversas y el simple hecho de que los sitios accesibles funcionan mejor.",
+      "paragraph2": "VexNexa cambia eso. Mostramos exactamente qué está mal, qué tiene prioridad y cómo solucionarlo, para que el equipo pueda comenzar hoy.",
+      "paragraph3": "La accesibilidad no tiene que sentirse compleja. Debe ser práctica, comprensible y orientada a la acción."
+    },
+    "whatMakesUsDifferent": {
+      "title": "Lo que nos hace diferentes",
+      "subtitle": "Cinco razones por las que los equipos eligen VexNexa",
+      "features": {
+        "vexnexaQuality": {
+          "title": "Calidad VexNexa",
+          "description": "Conjuntos de reglas ajustados a axe-core + nuestro filtrado. Menos ruido, más problemas reales con impacto en el usuario."
+        },
+        "actionableReports": {
+          "title": "Informes orientados a la acción",
+          "description": "Sin jerga: pasos concretos, ejemplos de código y contexto por problema."
+        },
+        "smartPrioritization": {
+          "title": "Priorización inteligente",
+          "description": "Crítico, Serio, Moderado, Menor: comienza donde el impacto es mayor."
+        },
+        "transparentSecure": {
+          "title": "Transparente y seguro",
+          "description": "Alojamiento en la UE (ej., eu-central), TLS en todas partes, minimización de datos. Tus datos siguen siendo tuyos."
+        },
+        "teamworkFeatures": {
+          "title": "Características de trabajo en equipo",
+          "description": "Enlaces compartibles, exportaciones a PDF/Word, seguimiento claro del progreso. Todos se mantienen involucrados."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "Cómo funciona",
+      "subtitle": "De la confusión al plan de acción en tres pasos",
+      "steps": {
+        "scan": {
+          "title": "Escanear",
+          "description": "Ingresa una URL. El motor verifica contra WCAG 2.2 AA y destaca inmediatamente los problemas reales."
+        },
+        "understand": {
+          "title": "Comprender",
+          "description": "Informe claro con prioridades, explicación, impacto y ejemplos, listo para tu backlog."
+        },
+        "improve": {
+          "title": "Mejorar",
+          "description": "Exporta, comparte y corrige sistemáticamente. Rastrea el progreso y ve el efecto en los usuarios."
+        }
+      }
+    },
+    "results": {
+      "title": "Resultados que importan",
+      "subtitle": "Lo que los equipos logran con VexNexa",
+      "kpis": {
+        "lessTime": {
+          "value": "75%",
+          "label": "Menos tiempo en escaneos",
+          "description": "Informes enfocados y prioridades"
+        },
+        "lessFalsePositives": {
+          "value": "60%",
+          "label": "Menos falsos positivos",
+          "description": "Filtrado más inteligente, menos ruido"
+        },
+        "conversionPotential": {
+          "value": "25%",
+          "label": "Potencial de conversión",
+          "description": "Los sitios accesibles funcionan mejor"
+        }
+      },
+      "disclaimer": "* Indicativo; los resultados varían por sitio e implementación."
+    },
+    "securityTrust": {
+      "title": "Seguridad y confianza",
+      "euDataPrivacy": {
+        "title": "Datos y privacidad de la UE",
+        "items": {
+          "hosting": "Alojamiento en región de la UE (ej., eu-central)",
+          "tls": "TLS en todas partes, hash de contraseña fuerte",
+          "dataMinimization": "Minimización de datos + limpieza automática"
+        }
+      },
+      "transparencyControl": {
+        "title": "Transparencia y control",
+        "items": {
+          "ownership": "Sigues siendo propietario de tus datos",
+          "exports": "Exportaciones completas y registros de auditoría",
+          "updates": "Actualizaciones regulares con nuevas reglas WCAG/axe"
+        }
+      }
+    },
+    "valuesTeam": {
+      "title": "Nuestros valores y equipo",
+      "values": {
+        "quality": {
+          "title": "Calidad",
+          "description": "Sin atajos: solo soluciones que funcionan"
+        },
+        "clarity": {
+          "title": "Claridad",
+          "description": "Asuntos complejos explicados simplemente"
+        },
+        "respect": {
+          "title": "Respeto",
+          "description": "Para todos los usuarios y sus necesidades"
+        },
+        "responsibility": {
+          "title": "Responsabilidad",
+          "description": "La accesibilidad es tarea de todos"
+        }
+      },
+      "quote": "La accesibilidad no es una casilla de verificación, es artesanía del producto. Se trata de respeto por todas las personas que quieren usar tu producto."
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "questions": {
+        "q1": {
+          "question": "¿Un escaneo significa cumplimiento total de WCAG?",
+          "answer": "No. Las verificaciones automatizadas cubren los criterios que se pueden probar automáticamente. Las pruebas manuales siguen siendo necesarias. VexNexa detecta la mayoría de los problemas comunes."
+        },
+        "q2": {
+          "question": "¿Puedo escanear múltiples páginas o sitios?",
+          "answer": "Sí. Dependiendo de tu plan, puedes incluir múltiples páginas por escaneo. El rastreo de todo el sitio (beta) encuentra automáticamente subpáginas."
+        },
+        "q3": {
+          "question": "¿Puedo compartir informes con el equipo o clientes?",
+          "answer": "Absolutamente. Cada informe tiene un enlace compartible y exportación a PDF/Word, útil para presentaciones y auditorías."
+        },
+        "q4": {
+          "question": "¿Qué pasa con la privacidad y la seguridad de los datos?",
+          "answer": "Solo escaneamos contenido públicamente accesible y no almacenamos datos personales. Alojamiento en la UE, TLS y minimización de datos."
+        },
+        "q5": {
+          "question": "¿Por qué VexNexa factura?",
+          "answer": "VexNexa es un producto de VexNexa. Los contratos, facturación y soporte se ejecutan a través de VexNexa para responsabilidades claras."
+        },
+        "q6": {
+          "question": "¿Puedo probar VexNexa gratis?",
+          "answer": "Sí. Obtienes un escaneo gratis semanalmente. Se requiere registro; no se necesita tarjeta de crédito."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Haz tu sitio más accesible hoy",
+      "subtitle": "Comienza con un escaneo gratis y ve inmediatamente qué mejoras tienen el mayor impacto. No se requieren reuniones.",
+      "cta": {
+        "startFreeScan": "Comenzar escaneo gratis",
+        "startFreeScanAriaLabel": "Comienza tu primer escaneo WCAG gratis",
+        "viewPricing": "Ver precios",
+        "viewPricingAriaLabel": "Ver planes de precios"
+      }
+    },
+    "footerDisclaimer": {
+      "billing": "La facturación se realiza a través de VexNexa. VexNexa es un producto de VexNexa.",
+      "questions": "¿Preguntas? Envía un correo a",
+      "email": "info@vexnexa.com"
+    }
+  },
+  "changelog": {
+    "metadata": {
+      "title": "Registro de cambios - VexNexa",
+      "description": "Todas las actualizaciones, nuevas características y mejoras del escáner de accesibilidad VexNexa."
+    },
+    "title": "Registro de cambios",
+    "subtitle": "Mantente actualizado con todas las nuevas características, mejoras y correcciones de errores. Trabajamos constantemente para mejorar tu experiencia de escaneo de accesibilidad.",
+    "betaLaunch": {
+      "title": "Lanzamiento Beta",
+      "version": "v0.1.0",
+      "date": "Diciembre 2024",
+      "newFeatures": "✨ Nuevas características",
+      "features": [
+        "Escaneo de accesibilidad impulsado por Axe-core",
+        "Funcionalidad de exportación a PDF y Word",
+        "Prioridades de problemas (Crítico, Serio, Moderado, Menor)",
+        "Informes detallados con ejemplos",
+        "Interfaz de panel responsiva"
+      ]
+    },
+    "upcoming": {
+      "crawling": {
+        "title": "Rastreo de todo el sitio",
+        "badge": "Próximamente",
+        "description": "Escanea sitios web completos de una vez. Obtén una visión general de los problemas de accesibilidad en todo tu sitio y prioriza las correcciones según el impacto."
+      },
+      "teamFeatures": {
+        "title": "Características de equipo",
+        "badge": "En desarrollo",
+        "features": [
+          "Cuentas de equipo con múltiples usuarios",
+          "Escaneos e informes compartidos",
+          "Integraciones con Jira y Linear",
+          "Escaneo automatizado y alertas"
+        ]
+      }
+    },
+    "cta": "Comenzar escaneo gratis"
+  },
+  "newsletter": {
+    "confirmed": {
+      "title": "¡Suscripción confirmada! 🎉",
+      "subtitle": "Ahora estás suscrito al boletín de VexNexa",
+      "emailSent": "Correo de bienvenida enviado",
+      "checkInbox": "Revisa tu bandeja de entrada para tu mensaje de bienvenida con todos los detalles.",
+      "whatToExpect": "¿Qué puedes esperar?",
+      "expectations": {
+        "productNews": "Noticias y características del producto",
+        "wcagTips": "Consejos y trucos de WCAG",
+        "accessibilityTrends": "Tendencias de accesibilidad",
+        "emailFrequency": "Máx. 2 correos/mes"
+      },
+      "startScan": "Comienza tu primer escaneo",
+      "backToHome": "Volver a la página de inicio",
+      "gdprNote": "Cumplimiento GDPR: Siempre puedes darte de baja a través del enlace en cada boletín, o enviando un correo a info@vexnexa.com."
+    },
+    "unsubscribed": {
+      "title": "Dado de baja",
+      "subtitle": "Ya no recibirás boletines de VexNexa",
+      "confirmationSent": "Baja confirmada",
+      "confirmationMessage": "Recibirás un correo de confirmación de tu baja.",
+      "whatThisMeans": "¿Qué significa esto?",
+      "details": [
+        "Ya no recibirás correos de marketing",
+        "Correos transaccionales (como confirmaciones de cuenta) los seguirás recibiendo",
+        "Tus datos se mantienen según nuestra política de privacidad",
+        "Siempre puedes volver a suscribirte"
+      ],
+      "accidentalTitle": "¿Te diste de baja por accidente?",
+      "accidentalMessage": "¡No hay problema! Puedes volver a suscribirte a través de nuestra página de inicio.",
+      "resubscribe": "Volver a suscribirse",
+      "feedbackTitle": "Comentarios:",
+      "feedbackMessage": "Nos gustaría saber por qué te diste de baja.",
+      "shareFeedback": "Comparte tus comentarios"
+    },
+    "invalid": {
+      "title": {
+        "token": "Enlace no válido",
+        "unsubscribed": "Cuenta dada de baja",
+        "default": "Problema con el enlace"
+      },
+      "description": {
+        "token": "Este enlace de confirmación no es válido o ha expirado",
+        "unsubscribed": "Esta dirección de correo ya se ha dado de baja de nuestro boletín",
+        "default": "Hay un problema con este enlace del boletín"
+      },
+      "possibleCauses": "Posibles causas:",
+      "causes": {
+        "token": [
+          "El enlace puede haber expirado (los enlaces son válidos por 7 días)",
+          "El enlace ya se ha usado",
+          "El enlace se corrompió durante la copia"
+        ],
+        "unsubscribed": [
+          "Ya te diste de baja previamente",
+          "Este enlace ya no se puede usar"
+        ],
+        "default": [
+          "El enlace puede estar corrompido",
+          "El enlace ya no es válido"
+        ]
+      },
+      "whatToDoTitle": "¿Qué puedes hacer?",
+      "whatToDo": {
+        "token": "Intenta volver a suscribirte para un nuevo enlace de confirmación.",
+        "unsubscribed": "Si quieres volver a suscribirte, ve a nuestra página de inicio.",
+        "default": "Contacta a nuestro equipo de soporte para ayuda."
+      },
+      "resubscribe": "Volver a suscribirse",
+      "subscribeNewsletter": "Suscribirse al boletín",
+      "contactSupport": "Contactar soporte",
+      "loading": "Cargando..."
+    }
+  },
+  "features": {
+    "metadata": {
+      "title": "Características - VexNexa",
+      "description": "Descubre todas las características de VexNexa: Panel, detalles de escaneo, exportación PDF, prioridades e integraciones próximas."
+    },
+    "hero": {
+      "badge": "✨ Todas las características",
+      "title": "Todo lo que necesitas para",
+      "titleHighlight": "cumplimiento de WCAG",
+      "subtitle": "Desde escaneos rápidos hasta análisis completos de sitios. Panel, exportaciones, prioridades y pronto colaboración en equipo.",
+      "cta": "Comenzar escaneo gratis"
+    },
+    "priorities": {
+      "title": "Prioridades de problemas",
+      "subtitle": "Categorizamos todos los problemas de accesibilidad según los niveles de impacto de WCAG",
+      "critical": {
+        "title": "Crítico",
+        "description": "Bloquea completamente el acceso. Se requiere acción inmediata."
+      },
+      "serious": {
+        "title": "Serio",
+        "description": "Barreras significativas. Alta prioridad."
+      },
+      "moderate": {
+        "title": "Moderado",
+        "description": "Dificulta el uso. Prioridad media."
+      },
+      "minor": {
+        "title": "Menor",
+        "description": "Pequeñas mejoras. Baja prioridad."
+      }
+    },
+    "current": {
+      "title": "Características disponibles",
+      "subtitle": "Todo lo que puedes usar ahora para hacer tu sitio web más accesible",
+      "dashboard": {
+        "title": "Panel claro",
+        "description": "Ve todos tus escaneos en una vista general con puntuaciones, tendencias y victorias rápidas.",
+        "benefits": [
+          "Todos los escaneos en un lugar",
+          "Tendencias de puntuación a lo largo del tiempo",
+          "Identificación de victorias rápidas",
+          "Vista general del sitio con favicons"
+        ]
+      },
+      "scanResults": {
+        "title": "Resultados de escaneo detallados",
+        "description": "Perspectiva profunda de cada problema de accesibilidad con ejemplos concretos.",
+        "benefits": [
+          "Análisis por elemento",
+          "Directrices WCAG 2.2",
+          "Capturas de pantalla de problemas",
+          "Resultados filtrables"
+        ]
+      },
+      "export": {
+        "title": "Exportación PDF y Word",
+        "description": "Comparte informes con las partes interesadas a través de exportaciones profesionales.",
+        "benefits": [
+          "Informes PDF en un clic",
+          "Documentos Word para edición",
+          "Plantillas con marca",
+          "Resúmenes ejecutivos"
+        ]
+      },
+      "axeCore": {
+        "title": "Escaneos reales de Axe-Core",
+        "description": "El mismo motor que usan profesionales en todo el mundo.",
+        "benefits": [
+          "Análisis estándar de la industria",
+          "Actualizaciones regulares",
+          "Sin falsos positivos",
+          "Resultados confiables"
+        ]
+      }
+    },
+    "upcoming": {
+      "title": "Próximamente",
+      "subtitle": "Estamos trabajando duro en nuevas características para hacer tu flujo de trabajo aún mejor",
+      "crawling": {
+        "title": "Rastreo de todo el sitio",
+        "status": "Beta",
+        "description": "Escanea automáticamente sitios web completos y obtén una visión general completa."
+      },
+      "monitoring": {
+        "title": "Alertas y monitoreo",
+        "status": "Q1 2024",
+        "description": "Notificaciones automáticas para nuevos problemas o cambios de puntuación."
+      },
+      "integrations": {
+        "title": "Integraciones Jira y Linear",
+        "status": "Q2 2024",
+        "description": "Exporta problemas directamente a tus herramientas de gestión de proyectos."
+      },
+      "team": {
+        "title": "Colaboración en equipo",
+        "status": "Q2 2024",
+        "description": "Invita miembros del equipo y comparte escaneos dentro de tu organización."
+      },
+      "noMissUpdates": "No te pierdas actualizaciones de nuevas características",
+      "viewChangelog": "Ver registro de cambios"
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "subtitle": "Respuestas a las preguntas más comunes sobre VexNexa",
+      "privacy": {
+        "question": "¿Cómo maneja VexNexa la privacidad?",
+        "answer": "Solo escaneamos contenido públicamente accesible y no almacenamos datos personales. Nuestros escaneos cumplen completamente con GDPR y no compartimos datos con terceros."
+      },
+      "performance": {
+        "question": "¿El escaneo afecta el rendimiento de mi sitio web?",
+        "answer": "No, nuestros escaneos no tienen un impacto notable en tu sitio web. Simulamos un visitante normal y no realizamos pruebas de estrés. Los escaneos se ejecutan en segundo plano sin forzar tu sitio."
+      },
+      "cookies": {
+        "question": "¿Necesito aceptar cookies para usar VexNexa?",
+        "answer": "La funcionalidad básica funciona sin cookies. Solo usamos cookies para análisis (opcional) y para recordar tus preferencias. Puedes rechazar todas las cookies y la herramienta sigue siendo completamente funcional."
+      },
+      "international": {
+        "question": "¿Puedo escanear sitios web internacionales?",
+        "answer": "¡Sí! VexNexa funciona con sitios web en todos los idiomas y países. Admitimos conjuntos de caracteres internacionales y podemos escanear sitios web independientemente de la ubicación o el idioma del contenido."
+      },
+      "account": {
+        "question": "¿Necesito una cuenta o puedo crear equipos?",
+        "answer": "Para uso básico, no se necesita una cuenta: puedes escanear directamente. Para características avanzadas como escaneos guardados, exportaciones y colaboración en equipo, puedes crear una cuenta gratuita."
+      },
+      "support": {
+        "question": "¿Qué tipo de soporte recibo?",
+        "answer": "Todos los usuarios reciben soporte por correo electrónico. Plan gratuito: tiempo de respuesta de 72 horas. Plan Pro: 24 horas. Plan de equipo: soporte prioritario dentro de 4 horas. Además de documentación extensa y tutoriales en video."
+      },
+      "moreQuestions": "¿Tienes otras preguntas?",
+      "contactUs": "Contáctanos"
+    },
+    "cta": {
+      "title": "¿Listo para comenzar?",
+      "subtitle": "Comienza a mejorar la accesibilidad de tu sitio web hoy. Gratis para 1 escaneo por semana (se requiere registro).",
+      "startScan": "Comenzar escaneo gratis",
+      "viewPricing": "Ver precios"
+    }
+  },
+  "demo": {
+    "metadata": {
+      "title": "Programar una demo - VexNexa",
+      "description": "Descubre cómo VexNexa puede ayudar a tu equipo con el cumplimiento de WCAG y accesibilidad."
+    },
+    "backLink": "Volver a acerca de",
+    "title": "Programa una",
+    "titleHighlight": "demo personal",
+    "subtitle": "Descubre cómo VexNexa puede ayudar a tu equipo con el cumplimiento de WCAG y accesibilidad",
+    "whatYouGet": {
+      "title": "Lo que obtienes en 15 minutos:",
+      "items": [
+        "Demo en vivo de la plataforma VexNexa",
+        "Perspectiva del escaneo WCAG automatizado",
+        "Informes y priorización explicados",
+        "Características de colaboración en equipo",
+        "Preguntas y respuestas sobre tus necesidades específicas"
+      ]
+    },
+    "whoIsThisFor": {
+      "title": "¿Para quién es esto?",
+      "items": [
+        "Equipos de desarrollo (5+ desarrolladores)",
+        "Agencias digitales con múltiples clientes",
+        "Organizaciones empresariales",
+        "Equipos que necesitan cumplimiento de WCAG",
+        "Organizaciones con requisitos de accesibilidad"
+      ]
+    },
+    "cta": {
+      "title": "¿Listo para comenzar?",
+      "subtitle": "O comienza directamente con un escaneo gratis de tu sitio web",
+      "scheduleDemo": "Programar una demo",
+      "startFreeScan": "Comenzar escaneo gratis"
+    },
+    "additionalInfo": "Sin obligaciones • La demo dura ~15 minutos • Respuesta dentro de 24 horas"
+  },
+  "legal": {
+    "common": {
+      "skipToContent": "Saltar al contenido principal",
+      "backToHome": "Volver a la página de inicio",
+      "lastUpdated": "Última actualización",
+      "onThisPage": "En esta página",
+      "quickNavigation": "Navegación rápida a secciones",
+      "needHelp": "¿Necesitas ayuda?",
+      "responseTime": "Normalmente respondemos dentro de 1 día hábil",
+      "contactUs": "Contáctanos"
+    },
+    "privacy": {
+      "title": "Política de privacidad",
+      "metaDescription": "Lee nuestra política de privacidad: cómo VexNexa maneja tus datos, cookies y privacidad. Cumplimiento GDPR.",
+      "description": "Cómo VexNexa maneja tus datos personales y protege tu privacidad.",
+      "lastUpdated": "8 de diciembre de 2024",
+      "version": "v1.2",
+      "summary": {
+        "title": "Privacidad de un vistazo",
+        "description": "Los puntos más importantes en una vista general.",
+        "doTitle": "✅ Lo que HACEMOS",
+        "doItems": [
+          "Solo escanear páginas públicamente accesibles",
+          "Almacenar datos de forma segura en la UE",
+          "Minimización de datos y transparencia",
+          "Derechos y configuraciones claros"
+        ],
+        "dontTitle": "❌ Lo que NO hacemos",
+        "dontItems": [
+          "Almacenar datos personales del contenido de la página",
+          "Vender datos a terceros",
+          "Cookies no esenciales sin consentimiento",
+          "Transferencias no seguras fuera de la UE"
+        ]
+      },
+      "section1": {
+        "title": "1. Quiénes somos",
+        "content": "VexNexa es un servicio de escaneo de accesibilidad desarrollado en los Países Bajos. Ayudamos a los propietarios de sitios web a hacer sus sitios más accesibles probando el cumplimiento de WCAG.",
+        "contactTitle": "Detalles de contacto (controlador de datos)",
+        "companyName": "Nombre de la empresa",
+        "companyValue": "VexNexa B.V. (VexNexa es parte de VexNexa)",
+        "address": "Dirección",
+        "addressValue": "Hoofdstraat 123, 1234 AB Ámsterdam",
+        "kvk": "Cámara de Comercio",
+        "vat": "IVA",
+        "email": "Correo electrónico",
+        "website": "Sitio web"
+      },
+      "section2": {
+        "title": "2. Qué datos recopilamos",
+        "scanDataTitle": "Datos de escaneo",
+        "scanDataItems": [
+          "URL de la página escaneada",
+          "Metadatos técnicos sobre problemas de accesibilidad",
+          "Marcas de tiempo del escaneo",
+          "Dirección IP para limitación de velocidad y prevención de abuso"
+        ],
+        "important": "Importante",
+        "importantNote": "no almacenamos datos personales del contenido de la página (como nombres, correos, números de teléfono); solo analizamos estructura HTML y accesibilidad.",
+        "accountTitle": "Datos de cuenta (opcional)",
+        "accountItems": [
+          "Dirección de correo electrónico",
+          "Nombre (si se proporciona)",
+          "Contraseña con hash",
+          "Preferencias de cuenta"
+        ],
+        "contactTitle": "Contacto",
+        "contactItems": [
+          "Nombre y dirección de correo electrónico",
+          "Contenido del mensaje",
+          "Marca de tiempo del envío"
+        ]
+      },
+      "section3": {
+        "title": "3. Base legal (Art. 6 GDPR)",
+        "items": [
+          "Ejecución de contrato – escaneos, resultados, gestión de cuenta.",
+          "Interés legítimo – seguridad (limitación de velocidad, detección de abuso), mejoras básicas.",
+          "Consentimiento – cookies de análisis/marketing y cualquier comunicación opt-in.",
+          "Obligación legal – requisitos de retención y solicitudes de autoridades."
+        ]
+      },
+      "section4": {
+        "title": "4. Cookies y seguimiento",
+        "functionalTitle": "Cookies funcionales (necesarias)",
+        "functionalItems": [
+          "Sesión para usuarios conectados",
+          "Preferencias (idioma, tema)",
+          "Estado de consentimiento de cookies"
+        ],
+        "analyticsTitle": "Cookies de análisis (opcionales)",
+        "analyticsIntro": "Con consentimiento, podemos usar análisis respetuosos con la privacidad (ej., Vercel Analytics o alternativa). Medimos estadísticas agregadas, no perfiles individuales.",
+        "analyticsItems": [
+          "Estadísticas de visitantes (agregadas/anónimas)",
+          "Páginas y características populares",
+          "Rendimiento técnico"
+        ],
+        "manageText": "Puedes gestionar el consentimiento a través de la",
+        "cookieSettings": "configuración de cookies",
+        "utmTitle": "Parámetros UTM",
+        "utmText": "Podemos almacenar temporalmente parámetros UTM para entender el origen. Estos no contienen datos personales."
+      },
+      "section5": {
+        "title": "5. Cómo y por qué usamos los datos",
+        "items": [
+          "Realizar escaneos y mostrar resultados",
+          "Gestión de cuenta e inicio de sesión",
+          "Servicio al cliente y soporte",
+          "Mejora del servicio (con consentimiento para análisis)",
+          "Cumplimiento de leyes y regulaciones"
+        ],
+        "noSelling": "No vendemos ni alquilamos tus datos a terceros con fines de marketing."
+      },
+      "section6": {
+        "title": "6. Destinatarios y procesadores",
+        "intro": "Solo compartimos datos con proveedores de servicios que procesan en nuestro nombre bajo un acuerdo de procesamiento de datos."
+      },
+      "section7": {
+        "title": "7. Transferencias fuera de la UE/EEE",
+        "content": "Si se producen transferencias fuera de la UE (ej., enrutamiento edge o registros de soporte), usamos garantías apropiadas como Cláusulas Contractuales Estándar de la UE y medidas adicionales."
+      },
+      "section8": {
+        "title": "8. Almacenamiento de datos, seguridad y retención",
+        "storageTitle": "Ubicaciones de almacenamiento",
+        "storageItems": [
+          "Base de datos/cómputo en centros de datos de la UE",
+          "Copias de seguridad dentro de Europa"
+        ],
+        "securityTitle": "Medidas de seguridad",
+        "securityItems": [
+          "TLS/HTTPS de extremo a extremo",
+          "Contraseñas con hash",
+          "Control de acceso de mínimo privilegio y monitoreo",
+          "Parches/actualizaciones regulares",
+          "Minimización de datos"
+        ],
+        "retentionTitle": "Períodos de retención",
+        "retentionItems": [
+          "Datos de escaneo: 1 año (Gratis); más largo para cuentas de pago (configurable en tu cuenta)",
+          "Datos de cuenta: hasta la eliminación de la cuenta o según lo legalmente requerido",
+          "Mensajes de contacto: hasta 2 años",
+          "Análisis: hasta 24 meses (agregado/anonimizado cuando sea posible)"
+        ],
+        "retentionNote": "Eliminamos o anonimizamos antes cuando los datos ya no son necesarios, a menos que la retención sea legalmente requerida."
+      },
+      "section9": {
+        "title": "9. Tus derechos (GDPR/AVG)",
+        "accessTitle": "🔍 Derecho de acceso",
+        "accessDesc": "Solicita qué datos tenemos sobre ti.",
+        "rectificationTitle": "✏️ Rectificación",
+        "rectificationDesc": "Haz que los datos incorrectos se corrijan.",
+        "erasureTitle": "🗑️ Eliminación",
+        "erasureDesc": "Haz que los datos se eliminen.",
+        "restrictionTitle": "⏸️ Restricción",
+        "restrictionDesc": "Restringe el procesamiento (temporalmente).",
+        "portabilityTitle": "📦 Portabilidad de datos",
+        "portabilityDesc": "Recibe datos en un formato común.",
+        "objectionTitle": "❌ Objeción",
+        "objectionDesc": "Objeta el procesamiento basado en interés legítimo.",
+        "exerciseText": "¿Para ejercer tus derechos? Envía un correo a",
+        "responseText": "Respondemos dentro de 30 días."
+      },
+      "section10": {
+        "title": "10. Niños",
+        "content": "No dirigido a niños menores de 16 años. Contáctanos si se han recopilado datos; los eliminaremos."
+      },
+      "section11": {
+        "title": "11. Violaciones de datos",
+        "content": "Investigamos inmediatamente el impacto, limitamos riesgos e informamos si es requerido a la Autoridad Holandesa de Protección de Datos y partes afectadas."
+      },
+      "section12": {
+        "title": "12. Toma de decisiones automatizada",
+        "content": "No tomamos decisiones basadas únicamente en procesamiento automatizado con efectos legales para ti."
+      },
+      "section13": {
+        "title": "13. Cambios a esta política",
+        "content": "Comunicamos cambios significativos por correo electrónico (si corresponde), una notificación en el sitio y actualización de la fecha."
+      },
+      "section14": {
+        "title": "14. Contacto y quejas",
+        "getInTouch": "Ponte en contacto",
+        "emailLabel": "Correo electrónico",
+        "useForm": "O usa el",
+        "contactForm": "formulario de contacto",
+        "notSatisfied": "¿No estás satisfecho? Presenta una queja ante la Autoridad Holandesa de Protección de Datos a través de"
+      },
+      "footer": {
+        "questions": "¿Preguntas? Ponte en contacto",
+        "termsLink": "Términos de servicio"
+      }
+    },
+    "terms": {
+      "title": "Términos de servicio",
+      "description": "Estos términos se aplican al uso del servicio de escaneo de accesibilidad VexNexa.",
+      "lastUpdated": "8 de diciembre de 2024",
+      "version": "v1.1",
+      "summary": {
+        "title": "Resumen (no legalmente vinculante)",
+        "description": "En lenguaje sencillo — también lee los términos completos a continuación.",
+        "mayTitle": "✅ Lo que puedes hacer",
+        "mayItems": [
+          "Escanear tus propios sitios (o con permiso del propietario)",
+          "Compartir informes con tu equipo/clientes",
+          "Cancelar suscripción cuando quieras",
+          "Contactar soporte para preguntas"
+        ],
+        "notAllowedTitle": "❌ No permitido",
+        "notAllowedItems": [
+          "Escanear sin permiso del propietario",
+          "Abuso/evadir límites de velocidad o ingeniería inversa",
+          "Uso ilegal o dañino (ej., extraer datos personales)"
+        ],
+        "byUsing": "Al usar VexNexa aceptas estos términos."
+      }
+    },
+    "security": {
+      "title": "Seguridad y privacidad",
+      "description": "Cómo protegemos tus datos y nuestras medidas de seguridad.",
+      "lastUpdated": "8 de diciembre de 2024",
+      "version": "v1.0",
+      "guarantees": {
+        "title": "Garantías de seguridad",
+        "description": "Nuestros compromisos para tus datos",
+        "encryption": "Cifrado",
+        "encryptionDesc": "Cifrado estándar de la industria para datos en reposo y en tránsito",
+        "storage": "Almacenamiento seguro",
+        "storageDesc": "Bases de datos cifradas con controles de acceso restringidos",
+        "incident": "Respuesta a incidentes",
+        "incidentDesc": "Notificación dentro de 72 horas para incidentes de seguridad"
+      }
+    },
+    "sla": {
+      "title": "SLA y soporte",
+      "description": "Nuestro acuerdo de nivel de servicio e información de soporte para todos los usuarios de VexNexa.",
+      "lastUpdated": "8 de diciembre de 2024",
+      "version": "v1.0",
+      "keyPoints": {
+        "title": "Puntos clave",
+        "description": "Nuestros compromisos contigo",
+        "uptime": "Tiempo de actividad",
+        "uptimeDesc": "Garantía de 99.9% de tiempo de actividad en todos los planes de pago",
+        "support": "Soporte",
+        "supportDesc": "Respuesta dentro de 4 horas para usuarios del plan Business",
+        "monitoring": "Monitoreo 24/7",
+        "monitoringDesc": "Monitoreo continuo con respuesta inmediata a incidentes"
+      }
+    }
+  },
+  "scanForm": {
+    "placeholder": "Ingresa URL del sitio web para escanear...",
+    "button": {
+      "idle": "Comenzar escaneo",
+      "loading": "Escaneando...",
+      "success": "Escaneo completo"
+    },
+    "errors": {
+      "invalidUrl": "Por favor ingresa una URL válida",
+      "required": "Se requiere URL",
+      "failed": "El escaneo falló. Por favor intenta de nuevo."
+    }
+  },
+  "upgradeModal": {
+    "limitReached": {
+      "title": "Límite de escaneo alcanzado",
+      "description": "Has alcanzado tu límite de escaneo gratis para esta semana. Actualiza para continuar escaneando.",
+      "upgradeButton": "Actualizar ahora",
+      "cancelButton": "Tal vez más tarde"
+    },
+    "upgradeRequired": {
+      "title": "Se requiere actualización",
+      "description": "Esta característica requiere un plan de pago. Actualiza para desbloquear capacidades avanzadas de escaneo.",
+      "upgradeButton": "Ver planes",
+      "cancelButton": "Cancelar"
+    },
+    "trialExpired": {
+      "title": "Período de prueba terminado",
+      "description": "Tu prueba gratuita ha terminado. Actualiza a un plan de pago para continuar usando VexNexa.",
+      "upgradeButton": "Elegir un plan",
+      "cancelButton": "Cerrar sesión"
+    }
+  },
+  "modernAuth": {
+    "login": {
+      "steps": {
+        "credentials": "Iniciar sesión",
+        "verify": "Verificar"
+      },
+      "socialLogin": "Iniciar sesión con {provider}",
+      "securityTips": {
+        "title": "Consejos de seguridad",
+        "tip1": "Nunca compartas tu contraseña",
+        "tip2": "Usa una contraseña fuerte y única",
+        "tip3": "Habilita la autenticación de dos factores"
+      }
+    },
+    "register": {
+      "steps": {
+        "account": "Crear cuenta",
+        "details": "Tus detalles",
+        "confirm": "Confirmar"
+      },
+      "socialRegister": "Registrarse con {provider}",
+      "passwordRequirements": {
+        "title": "Requisitos de contraseña",
+        "length": "Al menos 8 caracteres",
+        "uppercase": "Una letra mayúscula",
+        "lowercase": "Una letra minúscula",
+        "number": "Un número"
+      },
+      "benefits": {
+        "title": "Lo que obtienes",
+        "freeScan": "1 escaneo gratis por semana",
+        "reports": "Informes detallados de accesibilidad",
+        "tracking": "Rastrea mejoras a lo largo del tiempo",
+        "support": "Soporte por correo electrónico"
+      }
+    }
+  },
+  "getStartedPage": {
+    "hero": {
+      "badge": "Inicio rápido",
+      "title": "Comienza con tu primer escaneo",
+      "subtitle": "Ingresa la URL de tu sitio web y ejecutaremos un escaneo completo de accesibilidad"
+    },
+    "form": {
+      "title": "Comienza tu primer escaneo",
+      "description": "Analizaremos tu sitio web en busca de problemas de accesibilidad y proporcionaremos recomendaciones accionables",
+      "url": {
+        "label": "URL del sitio web",
+        "required": "*",
+        "placeholder": "https://ejemplo.com",
+        "help": "Ingresa la URL completa de la página que deseas escanear"
+      },
+      "frequency": {
+        "label": "Frecuencia de escaneo",
+        "options": {
+          "once": "Escaneo único",
+          "weekly": "Semanal",
+          "monthly": "Mensual"
+        },
+        "help": {
+          "once": "Ejecuta un solo escaneo ahora",
+          "recurring": "Escanea automáticamente tu sitio {frequency}"
+        }
+      },
+      "notify": {
+        "label": "Envíame un correo cuando el escaneo esté completo",
+        "help": "Recibirás una notificación con un enlace para ver tus resultados"
+      },
+      "submit": {
+        "default": "Comenzar escaneo de accesibilidad",
+        "loading": "Iniciando escaneo..."
+      },
+      "errors": {
+        "required": "Por favor ingresa una URL",
+        "invalid": "Por favor ingresa una URL válida",
+        "generic": "Algo salió mal"
+      }
+    },
+    "whatHappensNext": {
+      "title": "¿Qué sucede después?",
+      "steps": {
+        "scan": {
+          "title": "El escaneo se ejecuta automáticamente",
+          "description": "Nuestro escáner analiza tu página para el cumplimiento de WCAG + 8 categorías adicionales de accesibilidad"
+        },
+        "report": {
+          "title": "Ve tu informe detallado",
+          "description": "Ve problemas priorizados con fragmentos de código, capturas de pantalla y pasos claros de remediación"
+        },
+        "improve": {
+          "title": "Corrige los principales problemas → vuelve a escanear → mejora",
+          "description": "Trabaja en los problemas por prioridad, vuelve a escanear para rastrear el progreso y comparte informes con tu equipo"
+        }
+      }
+    },
+    "footer": {
+      "notReady": "¿No estás listo para escanear todavía?",
+      "learnMore": "Más información sobre nuestras características",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Iniciar sesión"
+    }
+  },
+  "addons": {
+    "seats": {
+      "title": "Equipo y asientos",
+      "description": "Gestiona asientos de equipo para colaboración",
+      "baseSeats": "Asientos base",
+      "extraSeats": "Asientos extra",
+      "total": "Total",
+      "inUse": "En uso",
+      "priceInfo": "Los asientos extra cuestan <strong>€{price} por asiento por mes</strong>. Puedes agregar y eliminar asientos cuando quieras.",
+      "addSeat": "Agregar asiento",
+      "removeSeat": "Eliminar asiento",
+      "monthlyCost": "Costo mensual",
+      "upgradePrompt": "Actualiza a un plan de pago para comprar asientos extra.",
+      "viewPlans": "Ver planes →"
+    },
+    "scans": {
+      "title": "Paquetes de escaneo",
+      "description": "Aumenta tu límite mensual de escaneo con paquetes extra",
+      "usage": "Uso ({period})",
+      "basePlan": "Base (plan):",
+      "extraPackages": "Paquetes extra:",
+      "warning80": "Ya has usado {percent}% de tus escaneos. Considera un paquete extra.",
+      "warning95": "¡Estás casi en tu límite de escaneo ({percent}%)! Compra escaneos extra para continuar.",
+      "activePackages": "Paquetes activos",
+      "availablePackages": "Paquetes disponibles",
+      "perMonth": "/mes",
+      "buy": "Comprar",
+      "active": "Activo",
+      "upgradePrompt": "Actualiza a un plan de pago para comprar paquetes de escaneo extra.",
+      "alreadyActive": "Ya tienes este paquete de escaneo activo. Elige otro paquete o cancela el existente primero."
+    },
+    "errors": {
+      "trialUser": "Actualiza a un plan de pago para comprar complementos.",
+      "noPaymentMethod": "No se encontró método de pago. Por favor configura tu método de pago primero.",
+      "paymentExpired": "Tu método de pago ha expirado. Haz clic en 'Configurar método de pago' para actualizarlo.",
+      "setupPayment": "Configurar método de pago",
+      "failed": "No se pudo procesar la solicitud. Por favor intenta de nuevo."
+    },
+    "success": {
+      "activated": "¡Complemento activado! El pago se procesará automáticamente cada mes.",
+      "updated": "Número de asientos actualizado",
+      "canceled": "Complemento cancelado. El acceso permanece hasta el final del período de facturación."
+    }
+  }
+}
