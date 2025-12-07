@@ -18,7 +18,12 @@ RESEND_API_KEY=your_resend_api_key_here
 
 ### Authentication Configuration (Supabase)
 
-The authentication system is already fully configured! You just need:
+The authentication system is already fully configured with:
+- ✅ Email/Password authentication
+- ✅ Google OAuth
+- ✅ LinkedIn OAuth
+
+**Quick Setup:**
 
 1. Create a [Supabase](https://supabase.com) project
 2. Get your project URL and anon key from the Supabase dashboard
@@ -29,6 +34,16 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 ```
+
+**OAuth Configuration:**
+
+For detailed OAuth setup instructions (Google & LinkedIn), see [OAUTH_SETUP.md](./OAUTH_SETUP.md)
+
+Quick summary:
+1. Enable Google & LinkedIn providers in Supabase Dashboard
+2. Create OAuth apps in Google Cloud Console & LinkedIn Developers
+3. Add OAuth credentials to Supabase
+4. Test the login/signup flows
 
 ### Database Configuration
 

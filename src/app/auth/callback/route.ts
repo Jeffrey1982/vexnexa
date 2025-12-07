@@ -98,7 +98,17 @@ export async function GET(request: NextRequest) {
         }
 
         if (isNewUser) {
-          // Redirect to dashboard with welcome for new users
+          // Check if profile is complete (has first and last name)
+          const hasFirstName = data.user.user_metadata?.first_name || data.user.user_metadata?.given_name
+          const hasLastName = data.user.user_metadata?.last_name || data.user.user_metadata?.family_name
+
+          if (!hasFirstName || !hasLastName) {
+            // OAuth user without complete profile - redirect to onboarding
+            console.log('[Callback] New OAuth user needs to complete profile')
+            return NextResponse.redirect(new URL('/onboarding', request.url))
+          }
+
+          // Profile is complete - redirect to dashboard with welcome
           return NextResponse.redirect(new URL('/dashboard?welcome=true', request.url))
         } else {
           // Redirect to the intended page for existing users

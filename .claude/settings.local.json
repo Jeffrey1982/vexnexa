@@ -78,7 +78,16 @@
       "Bash(npx next build:*)",
       "Bash(timeout 120 bash:*)",
       "Bash(tee:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(if grep -q \"RESEND_API_KEY=re_\" .env)",
+      "Bash(then echo \"✓ RESEND_API_KEY is configured\")",
+      "Bash(else echo \"✗ RESEND_API_KEY not found or empty\")",
+      "Bash(then echo \"✓ RESEND_API_KEY is configured in .env\")",
+      "Bash(else echo \"✗ RESEND_API_KEY not found in .env\")",
+      "Bash(if grep -q \"RESEND_API_KEY=re_\" .env.local)",
+      "Bash(then echo \"✓ RESEND_API_KEY is configured in .env.local\")",
+      "Bash(else echo \"✗ RESEND_API_KEY not found in .env.local\")",
+      "Bash(timeout 15 bash:*)"
     ],
     "deny": [],
     "ask": []
