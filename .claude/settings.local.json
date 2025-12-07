@@ -87,7 +87,8 @@
       "Bash(if grep -q \"RESEND_API_KEY=re_\" .env.local)",
       "Bash(then echo \"✓ RESEND_API_KEY is configured in .env.local\")",
       "Bash(else echo \"✗ RESEND_API_KEY not found in .env.local\")",
-      "Bash(timeout 15 bash:*)"
+      "Bash(timeout 15 bash:*)",
+      "Bash(timeout 30 vercel ls:*)"
     ],
     "deny": [],
     "ask": []

@@ -2,20 +2,6 @@
   "framework": "nextjs",
   "regions": ["fra1"],
 
-  "redirects": [
-    {
-      "source": "/:path(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.vexnexa.com"
-        }
-      ],
-      "destination": "https://vexnexa.com/:path*",
-      "permanent": true
-    }
-  ],
-
   "build": {
     "env": {
       "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"

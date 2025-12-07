@@ -5,14 +5,6 @@ import { sendWelcomeEmail, sendNewUserNotification } from '@/lib/email'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
-
-  // Redirect www to non-www canonical domain
-  if (requestUrl.hostname === 'www.vexnexa.com') {
-    const canonicalUrl = new URL(request.url)
-    canonicalUrl.hostname = 'vexnexa.com'
-    return NextResponse.redirect(canonicalUrl, 301)
-  }
-
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
   const type = requestUrl.searchParams.get('type')
