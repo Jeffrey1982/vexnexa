@@ -123,7 +123,7 @@ function HeroSection() {
             <div className="relative z-10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/heroImage.jpeg"
+                src="/heroImage.png"
                 alt={t('imageAlt')}
                 className="aspect-square lg:aspect-[4/3] rounded-3xl border border-primary/20 w-full h-full object-cover"
                 style={{
@@ -248,7 +248,7 @@ function FeaturesSection() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/Screenshot1.jpeg"
+                src="/Screenshot1.png"
                 alt={t('imageAlt')}
                 className="w-full h-80 lg:h-96 rounded-xl object-cover"
                 style={{
