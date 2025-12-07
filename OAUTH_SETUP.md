@@ -48,11 +48,17 @@ https://your-domain.com/auth/callback
 2. Create a new project or select an existing one
 3. Navigate to **APIs & Services** > **Credentials**
 4. Click **Create Credentials** > **OAuth 2.0 Client ID**
-5. Configure the OAuth consent screen:
+5. Configure the OAuth consent screen (IMPORTANT - see branding section below):
    - **Application name**: VexNexa
-   - **User support email**: Your email
-   - **Authorized domains**: Add your domain
-   - **Developer contact**: Your email
+   - **User support email**: info@vexnexa.com
+   - **App logo**: Upload VexNexa logo (120x120px PNG)
+   - **Application home page**: https://vexnexa.com
+   - **Privacy policy**: https://vexnexa.com/legal/privacy
+   - **Terms of service**: https://vexnexa.com/legal/terms
+   - **Authorized domains**: vexnexa.com, supabase.co
+   - **Developer contact**: info@vexnexa.com
+
+   ⚠️ **This branding makes users see "VexNexa" instead of the Supabase URL!**
 
 ### Step 2: Configure OAuth Client
 
@@ -222,7 +228,50 @@ Has firstName AND lastName?
 
 ---
 
-## 7. Customizing OAuth Buttons
+## 7. Branding Your OAuth Consent Screen ⭐ IMPORTANT
+
+### Problem: Looks Unprofessional
+
+By default, users see:
+```
+Sign in to zoljdbuiphzlsqzxdxyy.supabase.co
+```
+
+This looks scammy and unprofessional! ❌
+
+### Solution: Brand the Consent Screen
+
+Configure your OAuth consent screen to show:
+```
+Continue to VexNexa
+[Your Logo]
+```
+
+Much more professional! ✅
+
+### Quick Setup:
+
+1. Go to **Google Cloud Console** > **OAuth consent screen**
+2. Fill in these fields:
+
+| Field | Value |
+|-------|-------|
+| **App name** | VexNexa |
+| **User support email** | info@vexnexa.com |
+| **App logo** | Upload VexNexa logo (120x120px PNG) |
+| **Application home page** | https://vexnexa.com |
+| **Privacy policy** | https://vexnexa.com/legal/privacy |
+| **Terms of service** | https://vexnexa.com/legal/terms |
+| **Authorized domains** | vexnexa.com, supabase.co |
+
+3. Save changes
+4. Test OAuth flow - users now see "VexNexa" branding!
+
+**For complete branding guide, see:** [OAUTH_BRANDING_FIX.md](./OAUTH_BRANDING_FIX.md)
+
+---
+
+## 8. Customizing OAuth Buttons
 
 OAuth buttons are already styled in:
 - `src/components/auth/ModernLoginForm.tsx`
