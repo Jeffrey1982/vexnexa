@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v7-simple-auth';
+const CACHE_NAME = 'vexnexa-v8-oauth-bypass';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -65,6 +65,12 @@ self.addEventListener('fetch', (event) => {
   // Skip non-HTTP requests
   if (!url.protocol.startsWith('http')) {
     return;
+  }
+
+  // BYPASS SERVICE WORKER FOR AUTH ROUTES
+  // OAuth callback must be handled directly by the browser to allow proper PKCE flow
+  if (url.pathname.startsWith('/auth/callback') || url.pathname.startsWith('/auth/')) {
+    return; // Let browser handle auth routes directly without SW interference
   }
 
   // Handle different types of requests
