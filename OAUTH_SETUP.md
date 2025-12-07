@@ -65,13 +65,14 @@ https://your-domain.com/auth/callback
    ```
 4. **Authorized redirect URIs**:
    ```
-   https://[YOUR-PROJECT-REF].supabase.co/auth/v1/callback
+   https://zoljdbuiphzlsqzxdxyy.supabase.co/auth/v1/callback
    ```
 
-   **How to find YOUR-PROJECT-REF:**
-   - In Supabase Dashboard > Settings > API
-   - Look at your Project URL: `https://[PROJECT-REF].supabase.co`
-   - Copy the PROJECT-REF part
+   **Your Supabase Project Details:**
+   - Project URL: `https://zoljdbuiphzlsqzxdxyy.supabase.co`
+   - Project Ref: `zoljdbuiphzlsqzxdxyy`
+
+   **IMPORTANT**: Use the exact URL above - this is YOUR specific Supabase callback URL!
 
 5. Click **Create** and save:
    - Client ID
@@ -106,10 +107,10 @@ https://your-domain.com/auth/callback
 1. In your LinkedIn app, go to the **Auth** tab
 2. Add **Redirect URLs**:
    ```
-   https://[YOUR-PROJECT-REF].supabase.co/auth/v1/callback
+   https://zoljdbuiphzlsqzxdxyy.supabase.co/auth/v1/callback
    ```
 
-   Replace `[YOUR-PROJECT-REF]` with your Supabase project reference (same as Google setup)
+   **This is your exact Supabase callback URL - use it exactly as shown!**
 
 3. Request access to **Sign In with LinkedIn** product:
    - Go to **Products** tab
