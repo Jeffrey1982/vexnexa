@@ -42,6 +42,10 @@ https://your-domain.com/auth/callback
 
 ## 2. Google OAuth Setup
 
+**⚠️ IMPORTANT:** To use your own Google OAuth credentials (recommended for production), see the complete guide: [OAUTH_SWITCH_TO_CUSTOM_CREDENTIALS.md](./OAUTH_SWITCH_TO_CUSTOM_CREDENTIALS.md)
+
+This section provides a quick overview. For full control and professional branding, follow the custom credentials guide.
+
 ### Step 1: Create Google OAuth Credentials
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
@@ -84,14 +88,26 @@ https://your-domain.com/auth/callback
    - Client ID
    - Client Secret
 
-### Step 3: Enable in Supabase
+### Step 3: Configure in Supabase
+
+**Option A: Use Custom Credentials (RECOMMENDED)**
 
 1. In Supabase Dashboard > Authentication > Providers
 2. Find **Google** and enable it
-3. Enter your:
-   - **Client ID** (from Google)
-   - **Client Secret** (from Google)
+3. Enter your custom credentials:
+   - **Client ID** (from Google Cloud Console)
+   - **Client Secret** (from Google Cloud Console)
 4. Click **Save**
+
+**See [OAUTH_SWITCH_TO_CUSTOM_CREDENTIALS.md](./OAUTH_SWITCH_TO_CUSTOM_CREDENTIALS.md) for detailed instructions**
+
+**Option B: Use Supabase-Managed OAuth (Quick Setup)**
+
+1. In Supabase Dashboard > Authentication > Providers
+2. Find **Google** and toggle it on
+3. Supabase will handle OAuth automatically
+
+⚠️ **Note:** Supabase-managed OAuth has limitations on branding and control. For production, use custom credentials.
 
 ---
 
