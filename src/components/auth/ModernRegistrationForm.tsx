@@ -128,10 +128,15 @@ export default function ModernRegistrationForm() {
     setError('')
 
     try {
+      const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      const origin = isLocalhost
+        ? window.location.origin
+        : (process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com')
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?redirect=/dashboard`
+          redirectTo: `${origin}/auth/callback?redirect=/dashboard`
         }
       })
 
