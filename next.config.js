@@ -15,6 +15,12 @@ const nextConfig = {
         port: '',
         pathname: '/s2/favicons/**',
       },
+      {
+        protocol: 'https',
+        hostname: '*.gstatic.com',
+        port: '',
+        pathname: '/faviconV2/**',
+      },
     ],
   },
   webpack: (config, { isServer }) => {
@@ -39,8 +45,8 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline'",
-              "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://www.google.com",
-              "img-src 'self' data: blob: https://www.google.com https://*.supabase.co",
+              "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://www.google.com https://*.gstatic.com",
+              "img-src 'self' data: blob: https://www.google.com https://*.supabase.co https://*.gstatic.com",
               "font-src 'self' data:",
               "object-src 'none'",
               "base-uri 'self'",
