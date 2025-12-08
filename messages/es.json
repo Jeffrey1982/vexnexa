@@ -1024,12 +1024,24 @@
       "emailSent": "Correo de bienvenida enviado",
       "checkInbox": "Revisa tu bandeja de entrada para tu mensaje de bienvenida con todos los detalles.",
       "whatToExpect": "¿Qué puedes esperar?",
-      "expectations": {
-        "productNews": "Noticias y características del producto",
-        "wcagTips": "Consejos y trucos de WCAG",
-        "accessibilityTrends": "Tendencias de accesibilidad",
-        "emailFrequency": "Máx. 2 correos/mes"
-      },
+      "expectations": [
+        {
+          "icon": "🚀",
+          "text": "Noticias y características del producto"
+        },
+        {
+          "icon": "💡",
+          "text": "Consejos y trucos de WCAG"
+        },
+        {
+          "icon": "📊",
+          "text": "Tendencias de accesibilidad"
+        },
+        {
+          "icon": "📧",
+          "text": "Máx. 2 correos/mes"
+        }
+      ],
       "startScan": "Comienza tu primer escaneo",
       "backToHome": "Volver a la página de inicio",
       "gdprNote": "Cumplimiento GDPR: Siempre puedes darte de baja a través del enlace en cada boletín, o enviando un correo a info@vexnexa.com."

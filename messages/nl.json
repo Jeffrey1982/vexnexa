@@ -1037,12 +1037,24 @@
       "emailSent": "Welkomstmail verzonden",
       "checkInbox": "Controleer je inbox voor je welkomstbericht met alle details.",
       "whatToExpect": "Wat kun je verwachten?",
-      "expectations": {
-        "productNews": "Productnieuws en features",
-        "wcagTips": "WCAG tips & tricks",
-        "accessibilityTrends": "Accessibility trends",
-        "emailFrequency": "Max. 2 emails/maand"
-      },
+      "expectations": [
+        {
+          "icon": "🚀",
+          "text": "Productnieuws en features"
+        },
+        {
+          "icon": "💡",
+          "text": "WCAG tips & tricks"
+        },
+        {
+          "icon": "📊",
+          "text": "Accessibility trends"
+        },
+        {
+          "icon": "📧",
+          "text": "Max. 2 emails/maand"
+        }
+      ],
       "startScan": "Start je eerste scan",
       "backToHome": "Terug naar homepage",
       "gdprNote": "AVG/GDPR compliant: Je kunt je altijd uitschrijven via de link in elke nieuwsbrief, of door een email te sturen naar info@vexnexa.com."

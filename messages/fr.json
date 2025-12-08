@@ -1022,12 +1022,24 @@
       "emailSent": "E-mail de bienvenue envoyé",
       "checkInbox": "Vérifiez votre boîte de réception pour votre message de bienvenue avec tous les détails.",
       "whatToExpect": "À quoi vous attendre ?",
-      "expectations": {
-        "productNews": "Actualités produit et fonctionnalités",
-        "wcagTips": "Conseils et astuces WCAG",
-        "accessibilityTrends": "Tendances d'accessibilité",
-        "emailFrequency": "Max. 2 emails/mois"
-      },
+      "expectations": [
+        {
+          "icon": "🚀",
+          "text": "Actualités produit et fonctionnalités"
+        },
+        {
+          "icon": "💡",
+          "text": "Conseils et astuces WCAG"
+        },
+        {
+          "icon": "📊",
+          "text": "Tendances d'accessibilité"
+        },
+        {
+          "icon": "📧",
+          "text": "Max. 2 emails/mois"
+        }
+      ],
       "startScan": "Commencez votre première analyse",
       "backToHome": "Retour à l'accueil",
       "gdprNote": "Conforme RGPD : Vous pouvez toujours vous désinscrire via le lien dans chaque newsletter, ou en envoyant un email à info@vexnexa.com."
