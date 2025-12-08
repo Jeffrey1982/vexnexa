@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     // Get client information
     const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
                      request.headers.get('x-real-ip') ||
-                     request.ip || 'unknown'
+                     'unknown'
     const userAgent = request.headers.get('user-agent') || 'unknown'
 
     // Generate confirmation and unsubscribe tokens

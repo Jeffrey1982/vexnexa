@@ -21,7 +21,7 @@ function generateToken(): string {
  * Get or create CSRF token
  */
 export async function getCSRFToken(): Promise<string> {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   let token = cookieStore.get(CSRF_TOKEN_NAME)?.value
 
   if (!token) {

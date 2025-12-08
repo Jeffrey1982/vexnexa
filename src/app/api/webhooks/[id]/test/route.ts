@@ -9,8 +9,10 @@ import { createHmac } from 'crypto'
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -20,7 +22,7 @@ export async function POST(
     }
 
     const webhook = await prisma.webhookEndpoint.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!webhook) {
@@ -65,7 +67,7 @@ export async function POST(
 
       // Update webhook statistics
       await prisma.webhookEndpoint.update({
-        where: { id: params.id },
+        where: { id: id },
         data: {
           lastTriggered: new Date(),
           ...(success
@@ -85,7 +87,7 @@ export async function POST(
     } catch (fetchError: any) {
       // Update failure count
       await prisma.webhookEndpoint.update({
-        where: { id: params.id },
+        where: { id: id },
         data: {
           lastTriggered: new Date(),
           failureCount: { increment: 1 },

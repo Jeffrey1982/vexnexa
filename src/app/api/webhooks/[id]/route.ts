@@ -9,8 +9,10 @@ import { z } from 'zod'
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -20,7 +22,7 @@ export async function PUT(
     }
 
     const webhook = await prisma.webhookEndpoint.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!webhook) {
@@ -54,7 +56,7 @@ export async function PUT(
     }
 
     const updated = await prisma.webhookEndpoint.update({
-      where: { id: params.id },
+      where: { id: id },
       data: result.data,
     })
 
@@ -70,8 +72,10 @@ export async function PUT(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -81,7 +85,7 @@ export async function DELETE(
     }
 
     const webhook = await prisma.webhookEndpoint.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!webhook) {
@@ -93,7 +97,7 @@ export async function DELETE(
     }
 
     await prisma.webhookEndpoint.delete({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     return successResponse({ message: 'Webhook deleted successfully' })

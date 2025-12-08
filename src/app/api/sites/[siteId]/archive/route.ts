@@ -11,8 +11,10 @@ import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse,
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { siteId: string } }
+  { params }: { params: Promise<{ siteId: string }> }
 ) {
+  const { siteId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -23,7 +25,7 @@ export async function POST(
 
     // Check ownership
     const existingSite = await prisma.site.findUnique({
-      where: { id: params.siteId },
+      where: { id: siteId },
       select: { userId: true, portfolioId: true },
     })
 
@@ -38,7 +40,7 @@ export async function POST(
     // Remove from portfolio as a form of archiving
     // In the future, add an 'archived' boolean field to Site model
     const site = await prisma.site.update({
-      where: { id: params.siteId },
+      where: { id: siteId },
       data: {
         portfolioId: null,
       },

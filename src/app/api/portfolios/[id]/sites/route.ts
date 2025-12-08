@@ -13,8 +13,10 @@ const AddSitesSchema = z.object({
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -34,7 +36,7 @@ export async function POST(
 
     // Check portfolio ownership
     const portfolio = await prisma.portfolio.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       select: { userId: true },
     })
 
@@ -64,13 +66,13 @@ export async function POST(
         id: { in: siteIds },
       },
       data: {
-        portfolioId: params.id,
+        portfolioId: id,
       },
     })
 
     // Update portfolio metrics
     const updatedPortfolio = await prisma.portfolio.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         sites: {
           include: {
@@ -99,7 +101,7 @@ export async function POST(
 
     // Update portfolio metrics
     await prisma.portfolio.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         totalSites: updatedPortfolio?._count.sites || 0,
         avgScore,

@@ -4,12 +4,12 @@ import { requireAuth } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { teamId: string } }
+  { params }: { params: Promise<{ teamId: string }> }
 ) {
+  const { teamId } = await params
+
   try {
     const user = await requireAuth();
-    const { teamId } = params;
-
     const team = await prisma.team.findFirst({
       where: {
         id: teamId,
@@ -90,11 +90,12 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { teamId: string } }
+  { params }: { params: Promise<{ teamId: string }> }
 ) {
+  const { teamId } = await params
+
   try {
     const user = await requireAuth();
-    const { teamId } = params;
     const { name, description } = await req.json();
 
     // Check if user is team owner or admin
@@ -164,12 +165,12 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { teamId: string } }
+  { params }: { params: Promise<{ teamId: string }> }
 ) {
+  const { teamId } = await params
+
   try {
     const user = await requireAuth();
-    const { teamId } = params;
-
     // Only team owner can delete the team
     const team = await prisma.team.findFirst({
       where: {

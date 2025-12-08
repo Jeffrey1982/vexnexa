@@ -5,11 +5,12 @@ import { sendTeamInvitation } from "@/lib/email";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { teamId: string } }
+  { params }: { params: Promise<{ teamId: string }> }
 ) {
+  const { teamId } = await params
+
   try {
     const user = await requireAuth();
-    const { teamId } = params;
     const { email, role = 'VIEWER' } = await req.json();
 
     if (!email?.trim()) {
@@ -203,12 +204,12 @@ export async function POST(
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { teamId: string } }
+  { params }: { params: Promise<{ teamId: string }> }
 ) {
+  const { teamId } = await params
+
   try {
     const user = await requireAuth();
-    const { teamId } = params;
-
     // Check if user has access to this team
     const membership = await prisma.teamMember.findFirst({
       where: {

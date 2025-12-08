@@ -15,8 +15,10 @@ const NotesSchema = z.object({
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { scanId: string } }
+  { params }: { params: Promise<{ scanId: string }> }
 ) {
+  const { scanId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -34,7 +36,7 @@ export async function PUT(
 
     // Check ownership through site
     const scan = await prisma.scan.findUnique({
-      where: { id: params.scanId },
+      where: { id: scanId },
       include: {
         site: {
           select: { userId: true },
@@ -53,7 +55,7 @@ export async function PUT(
     // Store notes in raw JSON field until we add a dedicated notes field
     const currentRaw = (scan.raw as any) || {}
     const updatedScan = await prisma.scan.update({
-      where: { id: params.scanId },
+      where: { id: scanId },
       data: {
         raw: {
           ...currentRaw,

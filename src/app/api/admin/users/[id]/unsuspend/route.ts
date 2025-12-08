@@ -9,8 +9,10 @@ import { isAdmin } from '@/lib/admin'
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -24,7 +26,7 @@ export async function POST(
     }
 
     const targetUser = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!targetUser) {
@@ -33,7 +35,7 @@ export async function POST(
 
     // Restore subscription status
     await prisma.user.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         subscriptionStatus: 'active',
       },
@@ -42,7 +44,7 @@ export async function POST(
     // Log admin action
     await prisma.userAdminEvent.create({
       data: {
-        userId: params.id,
+        userId: id,
         adminId: user.id,
         eventType: 'MANUAL_ACTIVATION',
         description: 'User unsuspended by admin',

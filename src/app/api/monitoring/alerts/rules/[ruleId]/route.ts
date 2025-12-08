@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     ruleId: string;
-  };
+  }>;
 }
 
 // This would import from the shared storage in production
@@ -12,9 +12,10 @@ interface RouteParams {
 let alertRules: any[] = [];
 
 export async function PATCH(req: NextRequest, { params }: RouteParams) {
+  const { ruleId } = await params;
+
   try {
     const user = await requireAuth();
-    const { ruleId } = params;
     const updates = await req.json();
 
     // Find and update the rule (in production, update in database)
@@ -45,9 +46,10 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
 }
 
 export async function DELETE(req: NextRequest, { params }: RouteParams) {
+  const { ruleId } = await params;
+
   try {
     const user = await requireAuth();
-    const { ruleId } = params;
 
     // Find and remove the rule (in production, delete from database)
     const ruleIndex = alertRules.findIndex(rule => rule.id === ruleId);

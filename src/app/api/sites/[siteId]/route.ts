@@ -10,11 +10,13 @@ const UpdateSiteSchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { siteId: string } }
+  { params }: { params: Promise<{ siteId: string }> }
 ) {
+  const { siteId } = await params
+
   try {
     const site = await prisma.site.findUnique({
-      where: { id: params.siteId },
+      where: { id: siteId },
       include: {
         pages: {
           include: {
@@ -52,8 +54,10 @@ export async function GET(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { siteId: string } }
+  { params }: { params: Promise<{ siteId: string }> }
 ) {
+  const { siteId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -71,7 +75,7 @@ export async function PUT(
 
     // Check ownership
     const existingSite = await prisma.site.findUnique({
-      where: { id: params.siteId },
+      where: { id: siteId },
       select: { userId: true },
     })
 
@@ -84,7 +88,7 @@ export async function PUT(
     }
 
     const site = await prisma.site.update({
-      where: { id: params.siteId },
+      where: { id: siteId },
       data: validation.data,
       include: {
         _count: {
@@ -108,8 +112,10 @@ export async function PUT(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { siteId: string } }
+  { params }: { params: Promise<{ siteId: string }> }
 ) {
+  const { siteId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -120,7 +126,7 @@ export async function DELETE(
 
     // Check ownership
     const existingSite = await prisma.site.findUnique({
-      where: { id: params.siteId },
+      where: { id: siteId },
       select: { userId: true },
     })
 
@@ -133,7 +139,7 @@ export async function DELETE(
     }
 
     await prisma.site.delete({
-      where: { id: params.siteId },
+      where: { id: siteId },
     })
 
     return successResponse(null, 'Site deleted successfully')

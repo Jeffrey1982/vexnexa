@@ -9,11 +9,12 @@ import { prisma } from "@/lib/prisma"
  */
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { addonId: string } }
+  { params }: { params: Promise<{ addonId: string }> }
 ) {
+  const { addonId } = await params
+
   try {
     const user = await requireAuth()
-    const { addonId } = params
     const { quantity } = await req.json()
 
     // Verify ownership
@@ -61,11 +62,12 @@ export async function PATCH(
  */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { addonId: string } }
+  { params }: { params: Promise<{ addonId: string }> }
 ) {
+  const { addonId } = await params
+
   try {
     const user = await requireAuth()
-    const { addonId } = params
 
     // Verify ownership
     const addOn = await prisma.addOn.findUnique({

@@ -6,10 +6,12 @@ import { getCrawlStatus } from "@/lib/crawler";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+
   try {
     const user = await requireAuth();
-    const crawlId = params.id;
+    const crawlId = id;
 
     // Get crawl status with detailed progress
     const crawlStatus = await getCrawlStatus(crawlId);
@@ -49,10 +51,12 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+
   try {
     const user = await requireAuth();
-    const crawlId = params.id;
+    const crawlId = id;
 
     // Verify ownership and get crawl
     const crawl = await prisma.crawl.findFirst({

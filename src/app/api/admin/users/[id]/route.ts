@@ -9,8 +9,10 @@ import { isAdmin } from '@/lib/admin'
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -25,13 +27,13 @@ export async function DELETE(
     }
 
     // Prevent self-deletion
-    if (user.id === params.id) {
+    if (user.id === id) {
       return errorResponse('Cannot delete your own account', 400)
     }
 
     // Check if user exists
     const targetUser = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       select: { id: true, email: true },
     })
 
@@ -41,11 +43,11 @@ export async function DELETE(
 
     // Delete user from database (cascades will handle related data)
     await prisma.user.delete({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     // Delete user from Supabase Auth
-    const { error: deleteError } = await supabase.auth.admin.deleteUser(params.id)
+    const { error: deleteError } = await supabase.auth.admin.deleteUser(id)
 
     if (deleteError) {
       console.error('Error deleting user from Supabase:', deleteError)
@@ -54,7 +56,7 @@ export async function DELETE(
     // Log admin action
     await prisma.userAdminEvent.create({
       data: {
-        userId: params.id,
+        userId: id,
         adminId: user.id,
         eventType: 'MANUAL_SUSPENSION',
         description: `User account deleted by admin`,

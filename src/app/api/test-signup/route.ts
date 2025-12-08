@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server-new'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   try {
     // Test email signup with a test account

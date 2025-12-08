@@ -4,12 +4,12 @@ import { requireAuth } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { issueId: string } }
+  { params }: { params: Promise<{ issueId: string }> }
 ) {
+  const { issueId } = await params
+
   try {
     const user = await requireAuth();
-    const { issueId } = params;
-
     const issue = await prisma.issue.findFirst({
       where: {
         id: issueId,
@@ -118,11 +118,12 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { issueId: string } }
+  { params }: { params: Promise<{ issueId: string }> }
 ) {
+  const { issueId } = await params
+
   try {
     const user = await requireAuth();
-    const { issueId } = params;
     const updates = await req.json();
 
     // Check if user has access to this issue

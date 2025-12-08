@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     alertId: string;
-  };
+  }>;
 }
 
 export async function POST(req: NextRequest, { params }: RouteParams) {
+  const { alertId } = await params;
+
   try {
     const user = await requireAuth();
-    const { alertId } = params;
 
     // For now, we'll just return success since alerts are calculated dynamically
     // In a real implementation, you might store alert acknowledgments in the database

@@ -8,14 +8,16 @@ export const dynamic = "force-dynamic";
 // GET /api/audits/[id] - Get a single audit with all items
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const user = await requireAuth();
 
     const audit = await prisma.manualAudit.findFirst({
       where: {
-        id: params.id,
+        id: id,
         OR: [
           { createdById: user.id },
           { assignedToId: user.id },
@@ -73,8 +75,10 @@ export async function GET(
 // PATCH /api/audits/[id] - Update audit metadata
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const user = await requireAuth();
     const body = await req.json();
@@ -84,7 +88,7 @@ export async function PATCH(
     // Verify user has access to audit
     const existing = await prisma.manualAudit.findFirst({
       where: {
-        id: params.id,
+        id: id,
         OR: [
           { createdById: user.id },
           { assignedToId: user.id }
@@ -118,7 +122,7 @@ export async function PATCH(
     }
 
     const audit = await prisma.manualAudit.update({
-      where: { id: params.id },
+      where: { id: id },
       data: updateData
     });
 

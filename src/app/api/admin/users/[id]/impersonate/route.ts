@@ -10,8 +10,10 @@ import { isAdmin } from '@/lib/admin'
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -30,7 +32,7 @@ export async function POST(
     }
 
     const targetUser = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       select: { id: true, email: true },
     })
 
@@ -41,7 +43,7 @@ export async function POST(
     // Log admin action
     await prisma.userAdminEvent.create({
       data: {
-        userId: params.id,
+        userId: id,
         adminId: user.id,
         eventType: 'NOTE_ADDED',
         description: `Admin ${user.email} started impersonating user`,

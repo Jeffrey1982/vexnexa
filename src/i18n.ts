@@ -8,7 +8,7 @@ export const defaultLocale: Locale = 'en';
 
 export default getRequestConfig(async () => {
   // Get locale from cookie, fallback to default
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || defaultLocale;
 
   return {

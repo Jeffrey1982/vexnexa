@@ -8,13 +8,15 @@ export const dynamic = "force-dynamic";
 // GET /api/blog/[slug] - Get a single blog post
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params
+
   try {
     const { searchParams } = new URL(req.url);
     const isAdmin = searchParams.get("admin") === "true";
 
-    let where: any = { slug: params.slug };
+    let where: any = { slug: slug };
 
     if (!isAdmin) {
       where.status = "published";
@@ -62,8 +64,10 @@ export async function GET(
 // PATCH /api/blog/[slug] - Update a blog post (admin only)
 export async function PATCH(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params
+
   try {
     const user = await requireAuth();
 
@@ -96,7 +100,7 @@ export async function PATCH(
     } = body;
 
     const existing = await prisma.blogPost.findUnique({
-      where: { slug: params.slug }
+      where: { slug: slug }
     });
 
     if (!existing) {
@@ -107,7 +111,7 @@ export async function PATCH(
     }
 
     // If slug is changing, check new slug doesn't exist
-    if (slug && slug !== params.slug) {
+    if (slug && slug !== slug) {
       const slugExists = await prisma.blogPost.findUnique({
         where: { slug }
       });
@@ -139,7 +143,7 @@ export async function PATCH(
     }
 
     const post = await prisma.blogPost.update({
-      where: { slug: params.slug },
+      where: { slug: slug },
       data: updateData,
       include: {
         author: {
@@ -166,8 +170,10 @@ export async function PATCH(
 // DELETE /api/blog/[slug] - Delete a blog post (admin only)
 export async function DELETE(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params
+
   try {
     const user = await requireAuth();
 
@@ -185,7 +191,7 @@ export async function DELETE(
     }
 
     const existing = await prisma.blogPost.findUnique({
-      where: { slug: params.slug }
+      where: { slug: slug }
     });
 
     if (!existing) {
@@ -196,7 +202,7 @@ export async function DELETE(
     }
 
     await prisma.blogPost.delete({
-      where: { slug: params.slug }
+      where: { slug: slug }
     });
 
     return NextResponse.json({ ok: true });

@@ -14,8 +14,10 @@ const SuspendSchema = z.object({
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -28,7 +30,7 @@ export async function POST(
       return forbiddenResponse('Admin access required')
     }
 
-    if (user.id === params.id) {
+    if (user.id === id) {
       return errorResponse('Cannot suspend your own account', 400)
     }
 
@@ -37,7 +39,7 @@ export async function POST(
 
     // Check if user exists
     const targetUser = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!targetUser) {
@@ -46,7 +48,7 @@ export async function POST(
 
     // Update subscription status to suspended
     await prisma.user.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         subscriptionStatus: 'suspended',
       },
@@ -55,7 +57,7 @@ export async function POST(
     // Log admin action
     await prisma.userAdminEvent.create({
       data: {
-        userId: params.id,
+        userId: id,
         adminId: user.id,
         eventType: 'MANUAL_SUSPENSION',
         description: reason || 'User suspended by admin',

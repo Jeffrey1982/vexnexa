@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     ruleId: string;
-  };
+  }>;
 }
 
 export async function POST(req: NextRequest, { params }: RouteParams) {
+  const { ruleId } = await params;
+
   try {
     const user = await requireAuth();
-    const { ruleId } = params;
 
     // Simulate sending a test alert
     console.log(`Testing alert rule ${ruleId} for user ${user.id}`);

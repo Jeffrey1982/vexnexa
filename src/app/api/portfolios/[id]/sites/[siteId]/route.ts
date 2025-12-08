@@ -8,8 +8,10 @@ import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse,
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; siteId: string } }
+  { params }: { params: Promise<{ id: string; siteId: string }> }
 ) {
+  const { id, siteId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -20,7 +22,7 @@ export async function DELETE(
 
     // Check portfolio ownership
     const portfolio = await prisma.portfolio.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       select: { userId: true },
     })
 
@@ -34,7 +36,7 @@ export async function DELETE(
 
     // Check site ownership and portfolio membership
     const site = await prisma.site.findUnique({
-      where: { id: params.siteId },
+      where: { id: siteId },
       select: { userId: true, portfolioId: true },
     })
 
@@ -46,13 +48,13 @@ export async function DELETE(
       return forbiddenResponse()
     }
 
-    if (site.portfolioId !== params.id) {
+    if (site.portfolioId !== id) {
       return errorResponse('Site is not in this portfolio', 400)
     }
 
     // Remove site from portfolio
     await prisma.site.update({
-      where: { id: params.siteId },
+      where: { id: siteId },
       data: {
         portfolioId: null,
       },
@@ -60,7 +62,7 @@ export async function DELETE(
 
     // Update portfolio metrics
     const updatedPortfolio = await prisma.portfolio.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         sites: {
           include: {
@@ -89,7 +91,7 @@ export async function DELETE(
 
     // Update portfolio metrics
     await prisma.portfolio.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         totalSites: updatedPortfolio?._count.sites || 0,
         avgScore,

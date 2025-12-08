@@ -8,8 +8,10 @@ import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse,
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { scanId: string } }
+  { params }: { params: Promise<{ scanId: string }> }
 ) {
+  const { scanId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -20,7 +22,7 @@ export async function DELETE(
 
     // Check ownership through site
     const scan = await prisma.scan.findUnique({
-      where: { id: params.scanId },
+      where: { id: scanId },
       include: {
         site: {
           select: { userId: true },
@@ -37,7 +39,7 @@ export async function DELETE(
     }
 
     await prisma.scan.delete({
-      where: { id: params.scanId },
+      where: { id: scanId },
     })
 
     return successResponse(null, 'Scan deleted successfully')

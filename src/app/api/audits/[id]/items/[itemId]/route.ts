@@ -8,8 +8,10 @@ export const dynamic = "force-dynamic";
 // PATCH /api/audits/[id]/items/[itemId] - Update an audit item (test result)
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: Promise<{ id: string; itemId: string }> }
 ) {
+  const { id, itemId } = await params
+
   try {
     const user = await requireAuth();
     const body = await req.json();
@@ -28,7 +30,7 @@ export async function PATCH(
     // Verify user has access to the audit
     const audit = await prisma.manualAudit.findFirst({
       where: {
-        id: params.id,
+        id: id,
         OR: [
           { createdById: user.id },
           { assignedToId: user.id }
@@ -46,8 +48,8 @@ export async function PATCH(
     // Verify item belongs to audit
     const existingItem = await prisma.auditItem.findFirst({
       where: {
-        id: params.itemId,
-        auditId: params.id
+        id: itemId,
+        auditId: id
       }
     });
 
@@ -75,13 +77,13 @@ export async function PATCH(
     }
 
     const item = await prisma.auditItem.update({
-      where: { id: params.itemId },
+      where: { id: itemId },
       data: updateData
     });
 
     // Recalculate audit statistics
     const allItems = await prisma.auditItem.findMany({
-      where: { auditId: params.id },
+      where: { auditId: id },
       select: { status: true, result: true }
     });
 
@@ -96,7 +98,7 @@ export async function PATCH(
       : 0;
 
     await prisma.manualAudit.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         completedCriteria,
         passedCriteria,

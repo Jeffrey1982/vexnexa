@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     regressionId: string;
-  };
+  }>;
 }
 
 export async function PATCH(req: NextRequest, { params }: RouteParams) {
+  const { regressionId } = await params;
+
   try {
     const user = await requireAuth();
-    const { regressionId } = params;
     const { status, notes } = await req.json();
 
     // For now, we'll just log the status change since regressions are calculated dynamically

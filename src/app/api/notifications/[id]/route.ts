@@ -8,8 +8,10 @@ import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse,
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -19,7 +21,7 @@ export async function PUT(
     }
 
     const notification = await prisma.notification.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!notification) {
@@ -31,7 +33,7 @@ export async function PUT(
     }
 
     const updated = await prisma.notification.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         read: true,
         readAt: new Date(),
@@ -50,8 +52,10 @@ export async function PUT(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -61,7 +65,7 @@ export async function DELETE(
     }
 
     const notification = await prisma.notification.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     if (!notification) {
@@ -73,7 +77,7 @@ export async function DELETE(
     }
 
     await prisma.notification.delete({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     return successResponse({ message: 'Notification deleted successfully' })

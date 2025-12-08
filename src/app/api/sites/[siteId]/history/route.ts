@@ -8,8 +8,10 @@ import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse,
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { siteId: string } }
+  { params }: { params: Promise<{ siteId: string }> }
 ) {
+  const { siteId } = await params
+
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -20,7 +22,7 @@ export async function GET(
 
     // Check ownership
     const site = await prisma.site.findUnique({
-      where: { id: params.siteId },
+      where: { id: siteId },
       select: { userId: true },
     })
 
@@ -39,7 +41,7 @@ export async function GET(
     const [scans, crawls, audits, pages] = await Promise.all([
       // All scans for this site
       prisma.scan.findMany({
-        where: { siteId: params.siteId },
+        where: { siteId: siteId },
         select: {
           id: true,
           status: true,
@@ -60,7 +62,7 @@ export async function GET(
 
       // All crawls for this site
       prisma.crawl.findMany({
-        where: { siteId: params.siteId },
+        where: { siteId: siteId },
         select: {
           id: true,
           status: true,
@@ -76,7 +78,7 @@ export async function GET(
 
       // All manual audits for this site
       prisma.manualAudit.findMany({
-        where: { siteId: params.siteId },
+        where: { siteId: siteId },
         select: {
           id: true,
           name: true,
@@ -93,7 +95,7 @@ export async function GET(
 
       // Page count over time
       prisma.page.count({
-        where: { siteId: params.siteId },
+        where: { siteId: siteId },
       }),
     ])
 
