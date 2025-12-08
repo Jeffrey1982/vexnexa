@@ -300,12 +300,15 @@ vexnexa.com
 }
 
 export async function sendWelcomeEmail(data: { email: string; firstName: string; trialEndsAt?: Date }) {
+  console.log('[EMAIL] sendWelcomeEmail called for:', data.email)
+
   if (!resend) {
-    console.warn('RESEND_API_KEY not configured, skipping welcome email')
+    console.error('[EMAIL] ❌ RESEND_API_KEY not configured, skipping welcome email')
     return null
   }
 
   try {
+    console.log('[EMAIL] Attempting to send welcome email to:', data.email)
     const { email, firstName, trialEndsAt } = data
 
     const trialEndDate = trialEndsAt 
@@ -394,9 +397,10 @@ This is a system notification about your account. For questions: info@vexnexa.co
       `.trim()
     })
 
+    console.log('[EMAIL] ✅ Welcome email sent successfully to:', email, 'ID:', result?.data?.id)
     return result
   } catch (error) {
-    console.error('Failed to send welcome email:', error)
+    console.error('[EMAIL] ❌ Failed to send welcome email to:', data.email, 'Error:', error)
     throw error
   }
 }
@@ -476,12 +480,15 @@ export interface NewsletterData {
 }
 
 export async function sendNewsletterConfirmation(data: NewsletterData) {
+  console.log('[EMAIL] sendNewsletterConfirmation called for:', data.email, 'source:', data.source)
+
   if (!resend) {
-    console.warn('RESEND_API_KEY not configured, skipping newsletter confirmation')
+    console.error('[EMAIL] ❌ RESEND_API_KEY not configured, skipping newsletter confirmation')
     return null
   }
 
   try {
+    console.log('[EMAIL] Attempting to send newsletter confirmation to:', data.email)
     const { email, source } = data
     const friendlySource = getSourceDisplayName(source)
 
@@ -547,9 +554,10 @@ vexnexa.com
       `.trim()
     })
 
+    console.log('[EMAIL] ✅ Newsletter confirmation sent successfully to:', email, 'ID:', result?.data?.id)
     return result
   } catch (error) {
-    console.error('Failed to send newsletter confirmation:', error)
+    console.error('[EMAIL] ❌ Failed to send newsletter confirmation to:', data.email, 'Error:', error)
     throw error
   }
 }
@@ -665,12 +673,15 @@ export interface NewUserNotificationData {
 }
 
 export async function sendNewUserNotification(data: NewUserNotificationData) {
+  console.log('[EMAIL] sendNewUserNotification called for:', data.email)
+
   if (!resend) {
-    console.warn('RESEND_API_KEY not configured, skipping new user notification')
+    console.error('[EMAIL] ❌ RESEND_API_KEY not configured, skipping new user notification')
     return null
   }
 
   try {
+    console.log('[EMAIL] Attempting to send admin notification for new user:', data.email)
     const {
       email,
       firstName,
@@ -808,9 +819,10 @@ VexNexa Admin Notification System
       `.trim()
     })
 
+    console.log('[EMAIL] ✅ New user admin notification sent successfully, ID:', result?.data?.id)
     return result
   } catch (error) {
-    console.error('Failed to send new user notification:', error)
+    console.error('[EMAIL] ❌ Failed to send new user notification for:', data.email, 'Error:', error)
     throw error
   }
 }
