@@ -98,7 +98,7 @@ export async function middleware(request: NextRequest) {
     "default-src 'self'",
     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com",
     "style-src 'self' 'unsafe-inline'",
-    "connect-src 'self' https://*.vexnexa.com https://vexnexa.com https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com",
+    "connect-src 'self' https://*.vexnexa.com https://vexnexa.com https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com https://www.google.com",
     "img-src 'self' blob: data: https: https://*.supabase.co",
     "font-src 'self' data:",
     "object-src 'none'",
