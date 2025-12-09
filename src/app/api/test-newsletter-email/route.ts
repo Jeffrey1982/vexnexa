@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { addUTMToUrl, addMarketingEmailHeaders, UTM_PRESETS, getSourceDisplayName } from '@/lib/email-utils'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function POST(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   try {
     const body = await request.json()
     const { email, source } = body
@@ -30,7 +35,7 @@ export async function POST(request: NextRequest) {
     )
 
     const baseEmailOptions = {
-      from: 'VexNexa <support@vexnexa.com>',
+      from: 'VexNexa <onboarding@resend.dev>',
       to: [email],
       subject: '🧪 TEST: Confirm your subscription to the VexNexa newsletter',
       html: `

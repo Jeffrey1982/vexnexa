@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import DOMPurify from "dompurify";
 import {
   Save,
   Eye,
@@ -234,7 +235,12 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
             </div>
             {showPreview ? (
               <div className="w-full min-h-[500px] px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 prose prose-sm max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: formData.content.replace(/\n/g, '<br/>') }} />
+                <div dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(formData.content.replace(/\n/g, '<br/>'), {
+                    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'code', 'pre'],
+                    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class']
+                  })
+                }} />
               </div>
             ) : (
               <textarea

@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function POST(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -9,7 +14,7 @@ export async function POST(request: NextRequest) {
     const confirmUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/newsletter/confirm?token=test123`
 
     const result = await resend.emails.send({
-      from: 'VexNexa <support@vexnexa.com>',
+      from: 'VexNexa <onboarding@resend.dev>',
       to: ['test@example.com'],
       subject: 'TEST: Confirm your subscription to the VexNexa newsletter',
       html: `

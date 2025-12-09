@@ -11,11 +11,8 @@ const ScanRequestSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('=== Enhanced Accessibility Scan Request ===')
-
     // Verify user is authenticated
     const user = await requireAuth()
-    console.log('User authenticated:', user.email)
 
     // Parse and validate request
     const body = await request.json()
@@ -29,18 +26,22 @@ export async function POST(request: NextRequest) {
     }
 
     const { url } = validation.data
-    console.log('Scanning URL:', url)
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Scanning URL:', url)
+    }
 
     // Run enhanced accessibility scan
     const startTime = Date.now()
     const result = await runEnhancedAccessibilityScan(url)
     const scanTime = Date.now() - startTime
 
-    console.log('Enhanced scan completed in', scanTime, 'ms')
-    console.log('Overall score:', result.score)
-    console.log('Keyboard navigation score:', result.keyboardNavigation.score)
-    console.log('Screen reader score:', result.screenReaderCompatibility.score)
-    console.log('Mobile accessibility score:', result.mobileAccessibility.score)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Enhanced scan completed in', scanTime, 'ms, score:', result.score)
+      console.log('Keyboard navigation:', result.keyboardNavigation.score)
+      console.log('Screen reader:', result.screenReaderCompatibility.score)
+      console.log('Mobile accessibility:', result.mobileAccessibility.score)
+    }
 
     return NextResponse.json({
       success: true,

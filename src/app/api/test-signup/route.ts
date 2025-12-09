@@ -1,7 +1,12 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { NextRequest, NextResponse } from 'next/server'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function GET(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   const supabase = await createClient()
 
   try {

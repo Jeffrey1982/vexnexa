@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function GET(request: NextRequest) {
+  // Only allow in development
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
   const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
   if (!resend) {
@@ -19,7 +24,7 @@ export async function GET(request: NextRequest) {
     console.log('Sending test email to:', testEmail)
 
     const result = await resend.emails.send({
-      from: 'VexNexa Test <support@vexnexa.com>',
+      from: 'VexNexa Test <onboarding@resend.dev>',
       to: [testEmail],
       subject: 'Test Email - VexNexa Email Verification',
       html: `

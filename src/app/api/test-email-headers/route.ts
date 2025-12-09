@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { addUTMToUrl, addMarketingEmailHeaders, UTM_PRESETS } from '@/lib/email-utils'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function POST(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -16,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     // Base email options
     const baseEmailOptions = {
-      from: 'VexNexa <support@vexnexa.com>',
+      from: 'VexNexa <onboarding@resend.dev>',
       to: ['test@example.com'],
       subject: 'TEST: Professional Email Headers & UTM Tracking',
       html: `

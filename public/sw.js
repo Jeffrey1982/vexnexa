@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v8-oauth-bypass';
+const CACHE_NAME = 'vexnexa-v9-favicon-fix';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -73,6 +73,18 @@ self.addEventListener('fetch', (event) => {
     return; // Let browser handle auth routes directly without SW interference
   }
 
+  // BYPASS SERVICE WORKER FOR NEWSLETTER / LEAD ENDPOINTS
+  // Lead/newsletter API should not be cached or intercepted
+  if (url.pathname === '/api/lead' || url.pathname.startsWith('/api/lead/')) {
+    return; // Let browser handle lead/newsletter API directly
+  }
+
+  // BYPASS SERVICE WORKER FOR GOOGLE FAVICONS
+  // These are external resources that should be fetched directly without caching
+  if (url.hostname === 'www.google.com' || url.hostname === 'google.com' || url.hostname.endsWith('.gstatic.com')) {
+    return; // Let browser handle Google resources directly
+  }
+
   // Handle different types of requests
   if (request.destination === 'document') {
     // Use network-first strategy for HTML pages
@@ -83,7 +95,7 @@ self.addEventListener('fetch', (event) => {
       // Cache-first for specific GET API requests
       event.respondWith(cacheFirstStrategy(request));
     } else {
-      // Network-only for other API requests (POST, PUT, DELETE)
+      // Network-only for other API requests (POST, PUT, DELETE, non-cached GET)
       event.respondWith(networkOnlyStrategy(request));
     }
   } else {
@@ -97,7 +109,17 @@ async function networkFirstStrategy(request) {
   const url = new URL(request.url);
 
   // Check if this is a protected route that might redirect
-  const protectedPaths = ['/main-dashboard', '/analytics', '/advanced-analytics', '/enhanced-dashboard', '/settings', '/admin', '/teams', '/scans', '/sites'];
+  const protectedPaths = [
+    '/main-dashboard',
+    '/analytics',
+    '/advanced-analytics',
+    '/enhanced-dashboard',
+    '/settings',
+    '/admin',
+    '/teams',
+    '/scans',
+    '/sites'
+  ];
   const isProtectedRoute = protectedPaths.some(path => url.pathname.startsWith(path));
 
   try {

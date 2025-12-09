@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pdf, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import React from "react";
+import { requireDevelopment } from '@/lib/dev-only'
 
 // Create styles for the test PDF
 const styles = StyleSheet.create({
@@ -50,6 +51,10 @@ const TestPDFDocument = () => {
 };
 
 export async function GET() {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   try {
     console.log("Generating test PDF...");
 

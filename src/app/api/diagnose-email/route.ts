@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     // Check 3: Can we send a test email?
     try {
       const result = await resend.emails.send({
-        from: 'VexNexa Diagnostics <support@vexnexa.com>',
+        from: 'VexNexa Diagnostics <onboarding@resend.dev>',
         to: ['info@vexnexa.com'],
         subject: `[DIAGNOSTIC] Email test from ${process.env.NODE_ENV}`,
         html: `

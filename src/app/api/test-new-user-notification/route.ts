@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendNewUserNotification } from '@/lib/email'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function POST(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   try {
     const testData = {
       email: 'test.user@example.com',

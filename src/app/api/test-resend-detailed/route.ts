@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function GET(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   const diagnostics: any = {
     timestamp: new Date().toISOString(),
     checks: {}
@@ -50,7 +55,7 @@ export async function GET(request: NextRequest) {
     const testEmail = searchParams.get('email') || 'info@vexnexa.com'
 
     const sendResult = await resend.emails.send({
-      from: 'VexNexa <support@vexnexa.com>',
+      from: 'VexNexa <onboarding@resend.dev>',
       to: [testEmail],
       subject: `Resend Test - ${new Date().toLocaleTimeString()}`,
       html: `

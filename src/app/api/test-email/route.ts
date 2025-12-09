@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server'
 import { sendTestEmail, sendWelcomeEmail, sendPasswordResetEmail, sendTeamInvitation } from '@/lib/email'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function POST() {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
   try {
     // Test basic email functionality
     console.log('Testing email system...')

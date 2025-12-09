@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     )
 
     const baseEmailOptions = {
-      from: 'VexNexa <support@vexnexa.com>',
+      from: 'VexNexa <onboarding@resend.dev>',
       to: [email],
       subject: 'Confirm your subscription to the VexNexa newsletter',
       html: `
@@ -162,7 +162,7 @@ Privacy-first WCAG scanning • Made in the Netherlands
     try {
       const adminEmail = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
       const adminResult = await resend.emails.send({
-        from: 'VexNexa Notifications <support@vexnexa.com>',
+        from: 'VexNexa Notifications <onboarding@resend.dev>',
         to: [adminEmail],
         subject: 'New newsletter subscription',
         html: `

@@ -6,13 +6,12 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('=== Mollie Webhook Received ===')
-    console.log('Timestamp:', new Date().toISOString())
-    console.log('Headers:', Object.fromEntries(request.headers.entries()))
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Mollie webhook received at', new Date().toISOString())
+    }
 
     // Get the raw body for signature verification
     const body = await request.text()
-    console.log('Body:', body)
 
     // Verify webhook signature if secret is configured
     if (process.env.MOLLIE_WEBHOOK_SECRET) {
@@ -54,9 +53,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
 
   } catch (error) {
-    console.error('=== Webhook Processing Error ===')
-    console.error('Error:', error)
-    console.error('Stack:', error instanceof Error ? error.stack : 'No stack')
+    // Log safely without exposing sensitive data
+    if (process.env.NODE_ENV === 'development') {
+      console.error('=== Webhook Processing Error ===')
+      console.error('Error:', error)
+      console.error('Stack:', error instanceof Error ? error.stack : 'No stack')
+    } else {
+      // Production: minimal logging without sensitive details
+      console.error('Mollie webhook processing failed:', {
+        timestamp: new Date().toISOString(),
+        error: error instanceof Error ? error.message : 'Unknown error'
+      })
+    }
 
     // Still return 200 to prevent Mollie from retrying
     // Log the error for manual investigation

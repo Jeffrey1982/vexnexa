@@ -87,7 +87,7 @@ export async function PATCH(
     const body = await req.json();
     const {
       title,
-      slug,
+      slug: newSlug,
       content,
       excerpt,
       coverImage,
@@ -111,9 +111,9 @@ export async function PATCH(
     }
 
     // If slug is changing, check new slug doesn't exist
-    if (slug && slug !== slug) {
+    if (newSlug && newSlug !== slug) {
       const slugExists = await prisma.blogPost.findUnique({
-        where: { slug }
+        where: { slug: newSlug }
       });
       if (slugExists) {
         return NextResponse.json(
@@ -125,7 +125,7 @@ export async function PATCH(
 
     const updateData: any = {};
     if (title) updateData.title = title;
-    if (slug) updateData.slug = slug;
+    if (newSlug) updateData.slug = newSlug;
     if (content) updateData.content = content;
     if (excerpt !== undefined) updateData.excerpt = excerpt;
     if (coverImage !== undefined) updateData.coverImage = coverImage;

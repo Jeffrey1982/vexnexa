@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { mollie } from "@/lib/mollie"
 import { requireAuth } from "@/lib/auth"
+import { requireDevelopment } from "@/lib/dev-only"
 
 export async function GET(request: NextRequest) {
+  // Only allow in development
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
   try {
     // Check authentication
     const user = await requireAuth()

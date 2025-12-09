@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
+import { requireDevelopment } from '@/lib/dev-only'
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function GET() {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
+
   const diagnostics: any = {
     timestamp: new Date().toISOString(),
     environment: {

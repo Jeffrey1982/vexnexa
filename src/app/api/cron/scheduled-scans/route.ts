@@ -14,9 +14,14 @@ import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced'
 export async function GET(request: NextRequest) {
   try {
     // Verify cron secret for security
-    const authHeader = request.headers.get('authorization')
-    const cronSecret = process.env.CRON_SECRET || 'your-secret-key'
+    const cronSecret = process.env.CRON_SECRET
 
+    if (!cronSecret) {
+      console.error('CRON_SECRET not configured')
+      return errorResponse('Server misconfiguration', 500)
+    }
+
+    const authHeader = request.headers.get('authorization')
     if (authHeader !== `Bearer ${cronSecret}`) {
       return errorResponse('Unauthorized', 401)
     }
