@@ -20,13 +20,13 @@ All references to "tutusporta" and "TutusPorta" have been updated to "vexnexa" a
 **Connection Details:**
 - **Host:** aws-1-eu-central-1.pooler.supabase.com (EU region)
 - **Database:** PostgreSQL on Supabase
-- **Password:** Destiney1982! (URL-encoded as Destiney1982%21)
+- **Password:** [REDACTED - stored in Vercel environment variables]
 
 **Connection URLs:**
 ```
-DATABASE_URL=postgresql://postgres.zoljdbuiphzlsqzxdxyy:Destiney1982%21@aws-1-eu-central-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1&sslmode=require
+DATABASE_URL=postgresql://postgres.PROJECT_ID:PASSWORD@aws-1-eu-central-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1&sslmode=require
 
-DIRECT_URL=postgresql://postgres:Destiney1982%21@db.zoljdbuiphzlsqzxdxyy.supabase.co:5432/postgres?sslmode=require
+DIRECT_URL=postgresql://postgres:PASSWORD@db.PROJECT_ID.supabase.co:5432/postgres?sslmode=require
 ```
 
 ### 3. Supabase Authentication

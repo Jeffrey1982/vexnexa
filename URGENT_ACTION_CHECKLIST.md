@@ -16,7 +16,7 @@ vercel env add DIRECT_URL production
 **Mollie Payment API**:
 ```bash
 # 1. Go to: https://www.mollie.com/dashboard/developers/api-keys
-# 2. Delete old key: live_vur5Jktfz6jkdU23SrUWdkst9GJqpa
+# 2. Delete old key: live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # 3. Generate new key
 # 4. Update in Vercel:
 vercel env add MOLLIE_API_KEY production
@@ -26,7 +26,7 @@ vercel env add MOLLIE_WEBHOOK_SECRET production
 **Resend Email**:
 ```bash
 # 1. Go to: https://resend.com/api-keys
-# 2. Delete old key: re_5KGENYCh_GGHLe2EXS4abT4ugyZjnNCpf
+# 2. Delete old key: re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # 3. Generate new key
 # 4. Update in Vercel:
 vercel env add RESEND_API_KEY production

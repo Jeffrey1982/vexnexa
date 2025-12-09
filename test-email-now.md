@@ -69,7 +69,7 @@ If still not working:
 1. **Check Resend API key is active**:
    ```bash
    curl https://api.resend.com/emails \
-     -H "Authorization: Bearer re_5KGENYCh_GGHLe2EXS4abT4ugyZjnNCpf" \
+     -H "Authorization: Bearer YOUR_RESEND_API_KEY" \
      -H "Content-Type: application/json" \
      -d '{"from":"onboarding@resend.dev","to":["YOUR_EMAIL"],"subject":"Test","html":"<p>Test</p>"}'
    ```

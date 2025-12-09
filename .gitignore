@@ -12,8 +12,14 @@ pnpm-lock.yaml
 .vscode/
 .vercel
 
-# environment variables
-.env*
+# environment variables - NEVER COMMIT THESE
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.production.local
+.env*.local
 
 /generated/prisma
 

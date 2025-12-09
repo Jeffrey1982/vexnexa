@@ -12,9 +12,9 @@
 **Risk**: Complete system compromise
 
 **Exposed Credentials**:
-- ✗ Database password: `Destiney1982!`
-- ✗ Mollie Live API key: `live_vur5Jktfz6jkdU23SrUWdkst9GJqpa`
-- ✗ Resend API key: `re_5KGENYCh_GGHLe2EXS4abT4ugyZjnNCpf`
+- ✗ Database password: `REDACTED` (was exposed in git history)
+- ✗ Mollie Live API key: `live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx` (REDACTED - was exposed in git history)
+- ✗ Resend API key: `re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx` (REDACTED - was exposed in git history)
 - ✗ Supabase keys and tokens
 - ✗ Vercel OIDC tokens
 
