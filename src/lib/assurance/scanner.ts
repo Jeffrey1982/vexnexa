@@ -8,41 +8,31 @@
 import { prisma } from '@/lib/prisma';
 import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced';
 import type { AssuranceDomain, AssuranceScan } from '@prisma/client';
-import type { Violation } from '@/lib/axe-types';
 
 /**
- * Calculate WCAG compliance percentages from violations
+ * Calculate WCAG compliance percentages from scan score and violation counts
+ * Uses a simplified model based on accessibility score and impact distribution
  */
-function calculateWCAGCompliance(violations: Violation[]): {
+function calculateWCAGCompliance(
+  score: number,
+  totalViolations: number,
+  criticalCount: number,
+  seriousCount: number
+): {
   wcagAA: number;
   wcagAAA: number;
 } {
-  // Get unique WCAG tags from all violations
-  const wcagTags = new Set<string>();
-  violations.forEach(v => {
-    v.tags?.forEach(tag => {
-      if (tag.startsWith('wcag')) {
-        wcagTags.add(tag);
-      }
-    });
-  });
+  // WCAG AA compliance estimation
+  // Critical and serious violations heavily impact AA compliance
+  const criticalPenalty = criticalCount * 3;
+  const seriousPenalty = seriousCount * 2;
+  const baseAA = Math.max(0, score - criticalPenalty - seriousPenalty);
+  const wcagAA = Math.min(100, Math.round(baseAA));
 
-  // Count violations by WCAG level
-  const wcagAAViolations = violations.filter(v =>
-    v.tags?.some(tag => tag.includes('wcag2a') || tag.includes('wcag21a'))
-  ).length;
-
-  const wcagAAAViolations = violations.filter(v =>
-    v.tags?.some(tag => tag.includes('wcag2aaa') || tag.includes('wcag21aaa'))
-  ).length;
-
-  // Total testable criteria (approximate)
-  const totalAACriteria = 50; // WCAG 2.1 Level A + AA
-  const totalAAACriteria = 78; // WCAG 2.1 Level A + AA + AAA
-
-  // Calculate compliance (100 - percentage of violations)
-  const wcagAA = Math.max(0, Math.round(((totalAACriteria - wcagAAViolations) / totalAACriteria) * 100));
-  const wcagAAA = Math.max(0, Math.round(((totalAAACriteria - wcagAAAViolations) / totalAAACriteria) * 100));
+  // WCAG AAA is stricter - any violations significantly reduce compliance
+  const totalPenalty = totalViolations * 1.5;
+  const baseAAA = Math.max(0, score - totalPenalty);
+  const wcagAAA = Math.min(100, Math.round(baseAAA * 0.85)); // AAA is ~85% of adjusted score
 
   return { wcagAA, wcagAAA };
 }
@@ -148,8 +138,17 @@ export async function executeAssuranceScan(domainId: string): Promise<AssuranceS
       violations: scanResult.violations.length,
     });
 
-    // Calculate WCAG compliance
-    const wcagCompliance = calculateWCAGCompliance(scanResult.violations);
+    // Calculate impact counts
+    const criticalCount = scanResult.violations.filter((v) => v.impact === 'critical').length;
+    const seriousCount = scanResult.violations.filter((v) => v.impact === 'serious').length;
+
+    // Calculate WCAG compliance based on score and violation severity
+    const wcagCompliance = calculateWCAGCompliance(
+      scanResult.score,
+      scanResult.violations.length,
+      criticalCount,
+      seriousCount
+    );
 
     // Store scan in main Scan table (reusing existing infrastructure)
     const scan = await prisma.scan.create({
