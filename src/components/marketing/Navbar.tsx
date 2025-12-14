@@ -18,6 +18,7 @@ import {
 import { Menu, X, Linkedin, Twitter, Github } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useTranslations } from "next-intl";
 
 interface NavbarProps {
@@ -131,6 +132,9 @@ export function Navbar({ className }: NavbarProps) {
             {/* Language Selector */}
             <LanguageSelector />
 
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* Auth Buttons */}
             <div className="flex items-center space-x-3">
             {isLoading ? (
@@ -216,6 +220,12 @@ export function Navbar({ className }: NavbarProps) {
                 <div className="pt-4 pb-2 border-b border-border/20">
                   <p className="text-sm font-medium text-muted-foreground mb-3">{t('language')}</p>
                   <LanguageSelector />
+                </div>
+
+                {/* Theme Toggle - Mobile */}
+                <div className="pt-4 pb-2 border-b border-border/20">
+                  <p className="text-sm font-medium text-muted-foreground mb-3">Theme</p>
+                  <ThemeToggle />
                 </div>
 
                 {/* Social Icons - Mobile */}
