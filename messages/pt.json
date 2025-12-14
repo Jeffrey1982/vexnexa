@@ -1706,5 +1706,216 @@
       "updated": "Número de lugares atualizado",
       "canceled": "Complemento cancelado. O acesso permanece até ao fim do período de faturação."
     }
+  },
+  "assurance": {
+    "product": {
+      "name": "Accessibility Assurance",
+      "tagline": "Automated monitoring & assurance for accessibility compliance",
+      "description": "Low-cost subscription service for schools, governments, and public institutions. Monitor accessibility scores over time with automated scans and reports."
+    },
+    "report": {
+      "title": "Accessibility Monitoring Report",
+      "subtitle": "Automated Accessibility Assessment",
+      "domain": "Domain",
+      "label": "Site Name",
+      "currentScore": "Current Score",
+      "threshold": "Threshold",
+      "trend": "Score Trend (Last 8 Scans)",
+      "trendShort": "Trend",
+      "wcagCompliance": "WCAG Compliance",
+      "wcagAA": "WCAG 2.1 AA",
+      "wcagAAA": "WCAG 2.1 AAA",
+      "generatedAt": "Generated",
+      "monitoredBy": "Monitored by VexNexa Accessibility Assurance",
+      "scoreStatus": {
+        "excellent": "Excellent",
+        "good": "Good",
+        "fair": "Fair",
+        "poor": "Poor",
+        "critical": "Critical"
+      },
+      "thresholdStatus": {
+        "aboveThreshold": "Above Threshold",
+        "belowThreshold": "Below Threshold",
+        "meetingTarget": "Meeting Target"
+      },
+      "disclaimer": {
+        "title": "Important Notice",
+        "text": "This report reflects automated accessibility checks and does not constitute a formal WCAG compliance audit. Results are for monitoring purposes only and should not be considered as legal compliance certification. For comprehensive accessibility evaluation, please consult with qualified accessibility experts.",
+        "limitation": "Automated testing has inherent limitations and cannot detect all accessibility issues. Manual testing and user feedback are essential for complete accessibility assurance."
+      },
+      "summary": {
+        "title": "Summary",
+        "scanDate": "Scan Date",
+        "issuesFound": "Issues Found",
+        "critical": "Critical",
+        "serious": "Serious",
+        "moderate": "Moderate",
+        "minor": "Minor"
+      }
+    },
+    "email": {
+      "reportSubject": "Accessibility Report: {domain}",
+      "alertSubject": "Accessibility Alert: {domain}",
+      "welcomeSubject": "Welcome to Accessibility Assurance",
+      "report": {
+        "greeting": "Your scheduled accessibility report is ready",
+        "body": "We've completed an automated accessibility scan for {domain}. The current score is {score} out of 100.",
+        "viewReport": "View Full Report",
+        "dashboard": "Go to Dashboard"
+      },
+      "alert": {
+        "regression": {
+          "title": "Score Dropped Below Threshold",
+          "body": "The accessibility score for {domain} has dropped to {score}, which is below your threshold of {threshold}."
+        },
+        "scoreChange": {
+          "title": "Significant Score Decrease",
+          "body": "The accessibility score for {domain} decreased from {previousScore} to {currentScore} (−{change} points)."
+        },
+        "criticalIssues": {
+          "title": "Critical Issues Detected",
+          "body": "New critical accessibility issues have been detected on {domain}."
+        }
+      },
+      "welcome": {
+        "headline": "Welcome to Accessibility Assurance",
+        "body": "Thank you for subscribing to VexNexa Accessibility Assurance. Your {tier} plan is now active with monitoring for up to {domains} {domainPlural}.",
+        "features": {
+          "title": "What's included:",
+          "automated": "Automated weekly or bi-weekly scans",
+          "reports": "Professional PDF reports in your language",
+          "alerts": "Instant alerts for score regressions",
+          "multilingual": "Support for 5 languages (EN, NL, FR, ES, PT)"
+        },
+        "nextSteps": {
+          "title": "Next steps:",
+          "addDomain": "Add your first domain to monitor",
+          "configure": "Configure scan frequency and thresholds",
+          "setRecipients": "Add email recipients for reports"
+        }
+      }
+    },
+    "dashboard": {
+      "overview": "Overview",
+      "domains": "Monitored Domains",
+      "reports": "Reports",
+      "alerts": "Alerts",
+      "settings": "Settings",
+      "subscription": "Subscription",
+      "addDomain": "Add Domain",
+      "noDomains": "No monitored domains yet",
+      "noDomainsDescription": "Add your first domain to start monitoring accessibility scores.",
+      "domainLimit": "Domain limit reached",
+      "domainLimitDescription": "Upgrade your plan to monitor more domains."
+    },
+    "domain": {
+      "domain": "Domain",
+      "label": "Site Name",
+      "optional": "optional",
+      "scanFrequency": "Scan Frequency",
+      "weekly": "Weekly",
+      "biweekly": "Bi-weekly (Every 2 Weeks)",
+      "scoreThreshold": "Score Threshold",
+      "thresholdDescription": "Alert when score drops below this value",
+      "language": "Report Language",
+      "emailRecipients": "Email Recipients",
+      "emailRecipientsDescription": "Up to 5 email addresses (one per line)",
+      "addRecipient": "Add Recipient",
+      "dayOfWeek": "Scan Day",
+      "timeOfDay": "Scan Time",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "active": "Active",
+      "inactive": "Inactive",
+      "lastScan": "Last Scan",
+      "nextScan": "Next Scan",
+      "currentScore": "Current Score",
+      "status": "Status",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "scan": "Scan Now",
+      "viewDetails": "View Details",
+      "statistics": "Statistics",
+      "averageScore": "Average Score",
+      "minScore": "Minimum Score",
+      "maxScore": "Maximum Score",
+      "totalScans": "Total Scans",
+      "regressions": "Regressions",
+      "trend": "Trend",
+      "improving": "Improving",
+      "stable": "Stable",
+      "declining": "Declining"
+    },
+    "alerts": {
+      "title": "Alerts",
+      "unresolved": "Unresolved",
+      "resolved": "Resolved",
+      "noAlerts": "No alerts",
+      "severity": {
+        "critical": "Critical",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "type": {
+        "regression": "Regression",
+        "scoreChange": "Score Change",
+        "criticalIssues": "Critical Issues",
+        "scanFailed": "Scan Failed"
+      },
+      "markResolved": "Mark as Resolved",
+      "viewScan": "View Scan"
+    },
+    "subscription": {
+      "tier": {
+        "basic": "Basic",
+        "pro": "Pro",
+        "publicSector": "Public Sector"
+      },
+      "status": "Status",
+      "domains": "Domains",
+      "maxDomains": "Max Domains",
+      "scanFrequency": "Scan Frequency",
+      "changeTier": "Change Plan",
+      "cancel": "Cancel Subscription",
+      "upgrade": "Upgrade",
+      "manageSubscription": "Manage Subscription"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "confirm": "Confirm",
+      "add": "Add",
+      "edit": "Edit",
+      "close": "Close",
+      "download": "Download",
+      "view": "View",
+      "back": "Back"
+    },
+    "validation": {
+      "domainRequired": "Domain is required",
+      "invalidDomain": "Invalid domain format",
+      "invalidEmail": "Invalid email address",
+      "maxRecipients": "Maximum 5 recipients allowed",
+      "thresholdRange": "Threshold must be between 60 and 100",
+      "thresholdFixed": "Threshold is fixed at 90 for your plan"
+    },
+    "messages": {
+      "domainAdded": "Domain added successfully",
+      "domainUpdated": "Domain settings updated",
+      "domainDeleted": "Domain removed",
+      "scanTriggered": "Scan started",
+      "settingsSaved": "Settings saved",
+      "subscriptionCanceled": "Subscription canceled",
+      "alertResolved": "Alert marked as resolved"
+    }
   }
 }

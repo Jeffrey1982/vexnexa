@@ -5,11 +5,11 @@
  * NOTE: Professional translations needed for NL, FR, ES, PT
  */
 
-import enMessages from '@/messages/en.json';
-import nlMessages from '@/messages/nl.json';
-import frMessages from '@/messages/fr.json';
-import esMessages from '@/messages/es.json';
-import ptMessages from '@/messages/pt.json';
+import enMessages from '../../../messages/en.json';
+import nlMessages from '../../../messages/nl.json';
+import frMessages from '../../../messages/fr.json';
+import esMessages from '../../../messages/es.json';
+import ptMessages from '../../../messages/pt.json';
 
 // Type-safe message access
 type Messages = typeof enMessages;
