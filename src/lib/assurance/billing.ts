@@ -132,7 +132,7 @@ export async function createAssuranceSubscription(opts: {
     if (existingSubscription?.mollieSubscriptionId) {
       console.log('[Assurance] Canceling existing subscription:', existingSubscription.mollieSubscriptionId);
       try {
-        await mollie.subscriptions.cancel(
+        await mollie.customerSubscriptions.cancel(
           existingSubscription.mollieSubscriptionId,
           { customerId: mollieCustomerId }
         );
@@ -151,7 +151,7 @@ export async function createAssuranceSubscription(opts: {
     }
 
     // Create Mollie subscription
-    const subscription = await mollie.subscriptions.create({
+    const subscription = await (mollie.customerSubscriptions as any).create({
       customerId: mollieCustomerId,
       amount: {
         value: totalPrice.toFixed(2),
@@ -232,7 +232,7 @@ export async function cancelAssuranceSubscription(subscriptionId: string) {
     // Cancel at Mollie if exists
     if (subscription.mollieSubscriptionId && subscription.user.mollieCustomerId) {
       try {
-        await mollie.subscriptions.cancel(subscription.mollieSubscriptionId, {
+        await mollie.customerSubscriptions.cancel(subscription.mollieSubscriptionId, {
           customerId: subscription.user.mollieCustomerId,
         });
         console.log('[Assurance] Mollie subscription canceled');
@@ -298,7 +298,7 @@ export async function changeAssuranceTier(opts: {
     // Cancel old subscription
     if (subscription.mollieSubscriptionId) {
       try {
-        await mollie.subscriptions.cancel(subscription.mollieSubscriptionId, {
+        await mollie.customerSubscriptions.cancel(subscription.mollieSubscriptionId, {
           customerId: subscription.user.mollieCustomerId,
         });
       } catch (error) {
