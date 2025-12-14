@@ -69,6 +69,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/scans', label: 'Scans', icon: Search },
     { href: '/sites', label: 'Sites', icon: Globe },
+    { href: '/dashboard/assurance', label: 'Assurance', icon: Shield },
     { href: '/teams', label: 'Teams', icon: Users },
     { href: '/dashboard/support', label: 'Support', icon: MessageCircle },
   ];

@@ -91,6 +91,9 @@ model User {
   // Scheduled scans
   scheduledScans ScheduledScan[]
 
+  // Accessibility Assurance subscriptions
+  assuranceSubscriptions AssuranceSubscription[] @relation("AssuranceSubscriptions")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -209,6 +212,9 @@ model Scan {
 
   // Raw scan data
   raw Json?
+
+  // Accessibility Assurance scans
+  assuranceScans AssuranceScan[]
 
   createdAt DateTime @default(now())
 
@@ -1126,4 +1132,209 @@ model AddOn {
   @@index([userId, status])
   @@index([type])
   @@index([status])
+}
+
+// ============================================
+// ACCESSIBILITY ASSURANCE SYSTEM
+// ============================================
+
+enum AssuranceTier {
+  BASIC         // €9.99/mo - 1 domain
+  PRO           // €24.99/mo - 5 domains
+  PUBLIC_SECTOR // €49.99/mo - 20 domains
+}
+
+enum AssuranceFrequency {
+  WEEKLY   // Every 7 days
+  BIWEEKLY // Every 14 days
+}
+
+enum AssuranceAlertType {
+  REGRESSION      // Score dropped below threshold
+  SCORE_DROP      // Significant score decrease (even if above threshold)
+  CRITICAL_ISSUES // New critical accessibility issues detected
+  SCAN_FAILED     // Scheduled scan failed to execute
+}
+
+enum AssuranceAlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+// Accessibility Assurance Subscription
+model AssuranceSubscription {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("AssuranceSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Subscription tier
+  tier   AssuranceTier @default(BASIC)
+  status String        @default("active") // active, canceled, past_due, inactive
+
+  // Mollie integration (separate from main VexNexa subscription)
+  mollieSubscriptionId String? @unique
+  billingCycle         String  @default("monthly") // monthly, semiannual, annual
+
+  // Pricing
+  pricePerMonth Decimal @db.Decimal(10, 2)
+  totalPrice    Decimal @db.Decimal(10, 2)
+
+  // Lifecycle
+  activatedAt DateTime  @default(now())
+  canceledAt  DateTime?
+  expiresAt   DateTime?
+
+  // Relations
+  domains AssuranceDomain[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([tier])
+}
+
+// Monitored Domain Configuration
+model AssuranceDomain {
+  id             String                @id @default(cuid())
+  subscriptionId String
+  subscription   AssuranceSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  // Domain details
+  domain String // e.g., "example.com" or "example.com/specific-page"
+  label  String? // User-friendly name (optional)
+
+  // Monitoring configuration
+  scanFrequency  AssuranceFrequency @default(WEEKLY)
+  scoreThreshold Int                @default(90) // Alert if score drops below this
+  active         Boolean            @default(true)
+  language       String             @default("en") // Report language: en/nl/fr/es/pt
+
+  // Email configuration (up to 5 recipients)
+  emailRecipients String[] // Array of email addresses
+
+  // Scheduling
+  dayOfWeek Int    @default(1) // 0-6 for weekly (1 = Monday default)
+  timeOfDay String @default("09:00") // HH:MM format
+
+  lastRunAt DateTime?
+  nextRunAt DateTime?
+
+  // Relations
+  scans   AssuranceScan[]
+  reports AssuranceReport[]
+  alerts  AssuranceAlert[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([subscriptionId, domain]) // One entry per domain per subscription
+  @@index([subscriptionId])
+  @@index([active, nextRunAt])
+  @@index([nextRunAt])
+}
+
+// Assurance Scan Results (linked to regular Scan table)
+model AssuranceScan {
+  id       String          @id @default(cuid())
+  domainId String
+  domain   AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  // Link to actual scan in main Scan table
+  scanId String
+  scan   Scan   @relation(fields: [scanId], references: [id], onDelete: Cascade)
+
+  // Snapshot metrics (denormalized for fast querying)
+  score             Int
+  wcagAACompliance  Float?
+  wcagAAACompliance Float?
+  issuesCount       Int
+  impactCritical    Int
+  impactSerious     Int
+  impactModerate    Int
+  impactMinor       Int
+
+  // Regression detection
+  previousScanId String?
+  previousScan   AssuranceScan?  @relation("ScanHistory", fields: [previousScanId], references: [id])
+  nextScans      AssuranceScan[] @relation("ScanHistory")
+
+  scoreChange  Int?     @default(0) // Difference from previous scan
+  isRegression Boolean  @default(false) // True if score dropped below threshold
+
+  createdAt DateTime @default(now())
+
+  @@index([domainId])
+  @@index([domainId, createdAt])
+  @@index([scanId])
+  @@index([isRegression])
+}
+
+// PDF Report Generation History
+model AssuranceReport {
+  id       String          @id @default(cuid())
+  domainId String
+  domain   AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  // Report metadata
+  scanId   String
+  pdfUrl   String // Stored in cloud storage (Vercel Blob)
+  language String // en/nl/fr/es/pt
+
+  // Content snapshot
+  score             Int
+  threshold         Int
+  trendData         Json // Last 4-8 scans for chart
+  wcagAACompliance  Float?
+  wcagAAACompliance Float?
+
+  // Delivery tracking
+  emailSentTo String[] // Recipients who received this report
+  sentAt      DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([domainId])
+  @@index([domainId, createdAt])
+  @@index([scanId])
+}
+
+// Alert History (regressions, threshold violations)
+model AssuranceAlert {
+  id       String          @id @default(cuid())
+  domainId String
+  domain   AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  // Alert type and severity
+  type     AssuranceAlertType
+  severity AssuranceAlertSeverity @default(MEDIUM)
+
+  // Alert details
+  title         String
+  message       String @db.Text
+  currentScore  Int
+  threshold     Int?
+  previousScore Int?
+
+  // Related scan
+  scanId String?
+
+  // Notification tracking
+  emailSentTo String[] // Recipients who were notified
+  sentAt      DateTime?
+
+  // Resolution
+  resolved   Boolean   @default(false)
+  resolvedAt DateTime?
+  resolvedBy String? // UserId who resolved it
+
+  createdAt DateTime @default(now())
+
+  @@index([domainId])
+  @@index([domainId, createdAt])
+  @@index([resolved])
+  @@index([type])
 }

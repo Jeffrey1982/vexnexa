@@ -6,6 +6,9 @@ import {
   getNewsletterConfirmationTemplate,
   getPasswordResetTemplate,
   getTeamInvitationTemplate,
+  getAssuranceWelcomeTemplate,
+  getAssuranceReportEmailTemplate,
+  getAssuranceAlertEmailTemplate,
   getPlainTextVersion,
   type BaseEmailTemplate
 } from './email-templates'
@@ -612,6 +615,201 @@ VexNexa Admin Notification System
     return result
   } catch (error) {
     console.error('[EMAIL] ❌ Failed to send new user notification for:', data.email, 'Error:', error)
+    throw error
+  }
+}
+
+/**
+ * VexNexa Accessibility Assurance - Email Functions
+ */
+
+export interface AssuranceWelcomeData {
+  email: string
+  tier: string
+  language: string
+}
+
+export async function sendAssuranceWelcome(data: AssuranceWelcomeData) {
+  console.log('[ASSURANCE EMAIL] sendAssuranceWelcome called for:', data.email, 'tier:', data.tier, 'language:', data.language)
+
+  if (!resend) {
+    console.error('[ASSURANCE EMAIL] ❌ RESEND_API_KEY not configured, skipping welcome email')
+    return null
+  }
+
+  try {
+    console.log('[ASSURANCE EMAIL] Attempting to send Assurance welcome email to:', data.email)
+    const { email, tier, language } = data
+    const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard/assurance`
+
+    const html = getAssuranceWelcomeTemplate(email, tier, language, dashboardUrl)
+    const text = getPlainTextVersion({
+      headline: 'Welcome to VexNexa Accessibility Assurance',
+      bodyText: `Thank you for subscribing to VexNexa Accessibility Assurance (${tier} tier). Your automated monitoring service is now active.`,
+      actionUrl: dashboardUrl,
+      listItems: [
+        'Add domains to monitor',
+        'Configure scan frequency and thresholds',
+        'Set up email recipients for reports and alerts',
+        'Receive automated PDF reports'
+      ]
+    })
+
+    const result = await resend.emails.send({
+      from: 'VexNexa Assurance <onboarding@resend.dev>',
+      to: [email],
+      subject: 'Welcome to VexNexa Accessibility Assurance',
+      html,
+      text
+    })
+
+    console.log('[ASSURANCE EMAIL] ✅ Assurance welcome email sent successfully to:', email, 'ID:', result?.data?.id)
+    return result
+  } catch (error) {
+    console.error('[ASSURANCE EMAIL] ❌ Failed to send Assurance welcome email to:', data.email, 'Error:', error)
+    throw error
+  }
+}
+
+export interface AssuranceReportData {
+  recipients: string[]
+  domain: string
+  score: number
+  threshold: number
+  language: string
+  pdfBuffer?: Buffer
+  pdfUrl?: string
+}
+
+export async function sendAssuranceReport(data: AssuranceReportData) {
+  console.log('[ASSURANCE EMAIL] sendAssuranceReport called for domain:', data.domain, 'recipients:', data.recipients.length)
+
+  if (!resend) {
+    console.error('[ASSURANCE EMAIL] ❌ RESEND_API_KEY not configured, skipping report email')
+    return null
+  }
+
+  try {
+    console.log('[ASSURANCE EMAIL] Attempting to send Assurance report to:', data.recipients)
+    const { recipients, domain, score, threshold, language, pdfBuffer, pdfUrl } = data
+    const reportUrl = pdfUrl || `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard/assurance/reports`
+
+    const html = getAssuranceReportEmailTemplate(recipients[0], domain, score, threshold, language, reportUrl)
+    const text = getPlainTextVersion({
+      headline: `Accessibility Report: ${domain}`,
+      bodyText: `Your scheduled accessibility scan for ${domain} is complete. Current score: ${score}/100 (Threshold: ${threshold}).`,
+      actionUrl: reportUrl,
+      listItems: [
+        `Current Score: ${score}/100`,
+        `Threshold: ${threshold}/100`,
+        `Status: ${score >= threshold ? '✓ Above Threshold' : '⚠ Below Threshold'}`,
+        'Detailed PDF report attached'
+      ]
+    })
+
+    // Prepare email options
+    const emailOptions: any = {
+      from: 'VexNexa Assurance <onboarding@resend.dev>',
+      to: recipients,
+      subject: `Accessibility Report: ${domain} - Score: ${score}/100`,
+      html,
+      text
+    }
+
+    // Attach PDF if buffer is provided
+    if (pdfBuffer) {
+      const timestamp = new Date().toISOString().split('T')[0]
+      emailOptions.attachments = [
+        {
+          filename: `accessibility-report-${domain}-${timestamp}.pdf`,
+          content: pdfBuffer,
+        }
+      ]
+    }
+
+    const result = await resend.emails.send(emailOptions)
+
+    console.log('[ASSURANCE EMAIL] ✅ Assurance report email sent successfully to:', recipients, 'ID:', result?.data?.id)
+    return result
+  } catch (error) {
+    console.error('[ASSURANCE EMAIL] ❌ Failed to send Assurance report email for:', data.domain, 'Error:', error)
+    throw error
+  }
+}
+
+export interface AssuranceAlertData {
+  recipients: string[]
+  domain: string
+  currentScore: number
+  previousScore?: number
+  threshold: number
+  alertType: 'REGRESSION' | 'SCORE_DROP' | 'CRITICAL_ISSUES'
+  language: string
+}
+
+export async function sendAssuranceAlert(data: AssuranceAlertData) {
+  console.log('[ASSURANCE EMAIL] sendAssuranceAlert called for domain:', data.domain, 'type:', data.alertType)
+
+  if (!resend) {
+    console.error('[ASSURANCE EMAIL] ❌ RESEND_API_KEY not configured, skipping alert email')
+    return null
+  }
+
+  try {
+    console.log('[ASSURANCE EMAIL] Attempting to send Assurance alert to:', data.recipients)
+    const { recipients, domain, currentScore, previousScore, threshold, alertType, language } = data
+    const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard/assurance/alerts`
+
+    const html = getAssuranceAlertEmailTemplate(
+      recipients[0],
+      domain,
+      currentScore,
+      previousScore,
+      threshold,
+      alertType,
+      language,
+      dashboardUrl
+    )
+
+    const text = getPlainTextVersion({
+      headline: `⚠ Accessibility Alert: ${domain}`,
+      bodyText: alertType === 'REGRESSION'
+        ? `The accessibility score for ${domain} has dropped below your configured threshold. Current score: ${currentScore}/100 (Threshold: ${threshold}).`
+        : alertType === 'SCORE_DROP'
+        ? `The accessibility score for ${domain} has decreased significantly. Current score: ${currentScore}/100 (Previous: ${previousScore}/100).`
+        : `Critical accessibility issues detected on ${domain}. Current score: ${currentScore}/100.`,
+      actionUrl: dashboardUrl,
+      listItems: alertType === 'REGRESSION'
+        ? [
+            `Current Score: ${currentScore}/100`,
+            `Threshold: ${threshold}/100`,
+            'Action required to restore compliance'
+          ]
+        : alertType === 'SCORE_DROP'
+        ? [
+            `Current Score: ${currentScore}/100`,
+            `Previous Score: ${previousScore}/100`,
+            'Review recent site changes'
+          ]
+        : [
+            `Current Score: ${currentScore}/100`,
+            'New critical accessibility issues detected',
+            'Immediate remediation recommended'
+          ]
+    })
+
+    const result = await resend.emails.send({
+      from: 'VexNexa Assurance Alerts <onboarding@resend.dev>',
+      to: recipients,
+      subject: `⚠ Accessibility Alert: ${domain}`,
+      html,
+      text
+    })
+
+    console.log('[ASSURANCE EMAIL] ✅ Assurance alert email sent successfully to:', recipients, 'ID:', result?.data?.id)
+    return result
+  } catch (error) {
+    console.error('[ASSURANCE EMAIL] ❌ Failed to send Assurance alert email for:', data.domain, 'Error:', error)
     throw error
   }
 }

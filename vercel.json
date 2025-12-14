@@ -32,11 +32,28 @@
     "src/app/api/cron/scheduled-scans/route.*": {
       "maxDuration": 300,
       "memory": 2048
+    },
+    "src/app/api/cron/assurance-scans/route.*": {
+      "maxDuration": 300,
+      "memory": 2048
+    },
+    "src/app/api/cron/cleanup-old-reports/route.*": {
+      "maxDuration": 60
     }
   },
 
-  "crons": [{
-    "path": "/api/cron/scheduled-scans",
-    "schedule": "0 0 * * *"
-  }]
+  "crons": [
+    {
+      "path": "/api/cron/scheduled-scans",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/assurance-scans",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/cleanup-old-reports",
+      "schedule": "0 0 1 * *"
+    }
+  ]
 }
