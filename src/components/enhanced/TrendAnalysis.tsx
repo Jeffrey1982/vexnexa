@@ -362,7 +362,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-gray-700 dark:text-gray-600 dark:text-gray-400">
                 Need more data points for accurate forecasting
               </div>
             )}

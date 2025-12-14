@@ -250,7 +250,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
               </TooltipProvider>
             </>
           ) : (
-            <div className="flex items-center justify-center h-full text-gray-500">
+            <div className="flex items-center justify-center h-full text-gray-700 dark:text-gray-600 dark:text-gray-400">
               <div className="text-center max-w-md">
                 <div className="text-6xl mb-4">🌐</div>
                 <h3 className="text-lg font-semibold mb-2">Live Website Heatmap</h3>

@@ -170,7 +170,7 @@ function CircularProgress({ value, maxValue, color, size = 120 }: {
           >
             {displayValue}
           </motion.div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">/{maxValue}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-600 dark:text-gray-400">/{maxValue}</div>
         </div>
       </div>
     </div>
@@ -300,7 +300,7 @@ export function ProgressAnimations({ score, issues, isLoading = false, className
                   value={issues.minor}
                   maxValue={issues.total}
                   color="#6b7280"
-                  icon={<CheckCircle className="w-4 h-4 text-gray-500" />}
+                  icon={<CheckCircle className="w-4 h-4 text-gray-700 dark:text-gray-600 dark:text-gray-400" />}
                   delay={800}
                 />
               </div>

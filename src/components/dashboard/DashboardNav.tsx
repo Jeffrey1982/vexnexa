@@ -257,7 +257,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
 
             {/* Settings Section */}
             <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
-              <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+              <div className="px-3 py-2 text-xs font-semibold text-gray-700 dark:text-gray-400 uppercase">
                 Settings
               </div>
               {settingsItems.map((item) => {
@@ -284,7 +284,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
             {/* Admin Links (mobile) */}
             {user?.user_metadata?.is_admin && (
               <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
-                <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                <div className="px-3 py-2 text-xs font-semibold text-gray-700 dark:text-gray-400 uppercase">
                   Admin
                 </div>
                 <Link

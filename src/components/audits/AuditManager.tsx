@@ -187,7 +187,7 @@ export default function AuditManager({
                   </option>
                 ))}
               </select>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-1">
                 Link this audit to an automated scan to combine results
               </p>
             </div>

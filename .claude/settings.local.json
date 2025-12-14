@@ -9,7 +9,8 @@
       "Bash(npx prisma db push)",
       "Bash(git add:*)",
       "Bash(node -e:*)",
-      "Bash(tail:*)"
+      "Bash(tail:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

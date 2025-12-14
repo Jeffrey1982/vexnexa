@@ -169,9 +169,9 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="text-center py-8 text-gray-500"
+                  className="text-center py-8 text-gray-700 dark:text-gray-600 dark:text-gray-400"
                 >
-                  <Brain className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                  <Brain className="h-12 w-12 mx-auto mb-4 text-gray-600 dark:text-gray-400" />
                   <p>No insights available for this category.</p>
                 </motion.div>
               ) : (
@@ -216,7 +216,7 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
 
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
                           <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4 text-gray-500" />
+                            <Clock className="h-4 w-4 text-gray-700 dark:text-gray-600 dark:text-gray-400" />
                             <span className="text-xs sm:text-sm">{recommendation.insight.estimatedTimeToFix}</span>
                           </div>
                           <div className="flex items-center gap-1">
@@ -367,7 +367,7 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 p-2 rounded hover:bg-gray-50 transition-colors"
                               >
-                                <ExternalLink className="h-4 w-4 text-gray-500" />
+                                <ExternalLink className="h-4 w-4 text-gray-700 dark:text-gray-600 dark:text-gray-400" />
                                 <div className="flex-1">
                                   <div className="font-medium text-sm">{resource.title}</div>
                                   <div className="text-xs text-gray-600 capitalize">{resource.type}</div>

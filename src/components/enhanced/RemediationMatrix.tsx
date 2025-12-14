@@ -227,7 +227,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                     <div className="text-xs text-gray-600 truncate max-w-xs">
                       {issue.description}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-1">
                       {issue.elementsAffected} elements affected
                     </div>
                   </div>
@@ -327,7 +327,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                         ? `${issue.description.substring(0, 60)}...`
                         : issue.description}
                     </div>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
                       <span>{issue.elementsAffected} elements</span>
                       <span>{issue.estimatedHours}h</span>
                     </div>
@@ -582,7 +582,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                               {issue.description}
                             </p>
 
-                            <div className="flex items-center gap-4 text-xs text-gray-500">
+                            <div className="flex items-center gap-4 text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
                               <div className="flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {issue.estimatedHours}h
@@ -615,7 +615,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                                   {issue.dueDate.toLocaleDateString()}
                                 </div>
                                 {daysUntilDue !== null && (
-                                  <div className="text-xs text-gray-500">
+                                  <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
                                     {isOverdue
                                       ? `${Math.abs(daysUntilDue)} days overdue`
                                       : `${daysUntilDue} days left`
@@ -624,7 +624,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                                 )}
                               </div>
                             ) : (
-                              <div className="text-xs text-gray-400">No due date</div>
+                              <div className="text-xs text-gray-600 dark:text-gray-400">No due date</div>
                             )}
 
                             <Select
@@ -671,7 +671,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
               </div>
 
               {filteredAndSortedIssues.length === 0 && (
-                <div className="text-center py-12 text-gray-500">
+                <div className="text-center py-12 text-gray-700 dark:text-gray-600 dark:text-gray-400">
                   <Calendar className="h-12 w-12 mx-auto mb-3 text-gray-300" />
                   <p>No tasks match the current filters</p>
                 </div>

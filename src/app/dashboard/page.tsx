@@ -573,10 +573,10 @@ export default async function DashboardPage() {
                         </div>
                         <div>
                           <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-blue-600">{t('whiteLabel.fullSettings')}</h3>
-                          <p className="text-xs sm:text-sm text-gray-500">{t('whiteLabel.fullSettingsDescription')}</p>
+                          <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">{t('whiteLabel.fullSettingsDescription')}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-400">{t('whiteLabel.fullSettingsDetails')}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.fullSettingsDetails')}</p>
                     </div>
                   </Link>
 
@@ -587,10 +587,10 @@ export default async function DashboardPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.livePreview')}</h3>
-                        <p className="text-xs sm:text-sm text-gray-500">{t('whiteLabel.livePreviewDescription')}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">{t('whiteLabel.livePreviewDescription')}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400">{t('whiteLabel.livePreviewDetails')}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.livePreviewDetails')}</p>
                   </div>
 
                   <div className="border rounded-lg p-3 sm:p-4 bg-gray-50">
@@ -600,10 +600,10 @@ export default async function DashboardPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.customReports')}</h3>
-                        <p className="text-xs sm:text-sm text-gray-500">{t('whiteLabel.customReportsDescription')}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">{t('whiteLabel.customReportsDescription')}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400">{t('whiteLabel.customReportsDetails')}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.customReportsDetails')}</p>
                   </div>
                 </div>
 

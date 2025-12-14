@@ -70,7 +70,7 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
       >
         <div className="text-sm text-gray-600 mb-2">Before</div>
         <ScoreBadge score={beforeScan.score} size="lg" />
-        <div className="text-xs text-gray-500 mt-2">
+        <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-2">
           {beforeScan.date.toLocaleDateString()}
         </div>
       </motion.div>
@@ -82,7 +82,7 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
       >
         <div className="text-sm text-gray-600 mb-2">After</div>
         <ScoreBadge score={afterScan.score} size="lg" />
-        <div className="text-xs text-gray-500 mt-2">
+        <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-2">
           {afterScan.date.toLocaleDateString()}
         </div>
       </motion.div>

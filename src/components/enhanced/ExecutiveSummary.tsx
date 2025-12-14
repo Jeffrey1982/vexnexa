@@ -123,7 +123,7 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             <div className="text-right">
               <div className={`text-4xl font-bold ${getScoreColor(data.overallScore)}`}>
                 {data.overallScore}
-                <span className="text-lg text-gray-500">/100</span>
+                <span className="text-lg text-gray-700 dark:text-gray-600 dark:text-gray-400">/100</span>
               </div>
               <Badge
                 variant={data.overallScore >= 80 ? 'default' : data.overallScore >= 60 ? 'secondary' : 'destructive'}

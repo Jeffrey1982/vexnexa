@@ -522,7 +522,7 @@ export function DragDropDashboard({ className }: DragDropDashboardProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="text-gray-400">Dragging...</div>
+                  <div className="text-gray-600 dark:text-gray-400">Dragging...</div>
                 </CardContent>
               </Card>
             </div>
@@ -537,7 +537,7 @@ export function DragDropDashboard({ className }: DragDropDashboardProps) {
           className="mt-8"
         >
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <EyeOff className="h-5 w-5 text-gray-400" />
+            <EyeOff className="h-5 w-5 text-gray-600 dark:text-gray-400" />
             Hidden Widgets ({hiddenWidgets.length})
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
