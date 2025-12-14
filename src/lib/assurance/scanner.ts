@@ -8,12 +8,12 @@
 import { prisma } from '@/lib/prisma';
 import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced';
 import type { AssuranceDomain, AssuranceScan } from '@prisma/client';
-import type { AxeViolation } from '@/lib/scanner';
+import type { Violation } from '@/lib/axe-types';
 
 /**
  * Calculate WCAG compliance percentages from violations
  */
-function calculateWCAGCompliance(violations: AxeViolation[]): {
+function calculateWCAGCompliance(violations: Violation[]): {
   wcagAA: number;
   wcagAAA: number;
 } {
