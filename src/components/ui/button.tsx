@@ -14,10 +14,10 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-elev2 hover:bg-destructive/90 hover:shadow-elev3 hover:-translate-y-px",
         outline:
-          "border border-[var(--vn-border)] bg-white shadow-elev1 hover:bg-[var(--vn-muted)] hover:border-[var(--vn-primary)] hover:shadow-elev2 hover:-translate-y-px",
+          "border border-[var(--vn-border)] bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 shadow-elev1 hover:bg-[var(--vn-muted)] hover:border-[var(--vn-primary)] hover:shadow-elev2 hover:-translate-y-px",
         secondary:
-          "glass shadow-elev2 hover:shadow-elev3 hover:-translate-y-px text-[var(--vn-text)]",
-        ghost: "hover:bg-[var(--vn-muted)] hover:text-[var(--vn-text)]",
+          "glass shadow-elev2 hover:shadow-elev3 hover:-translate-y-px text-gray-900 dark:text-gray-100",
+        ghost: "hover:bg-[var(--vn-muted)] text-gray-900 dark:text-gray-100 hover:text-[var(--vn-primary)]",
         link: "text-[var(--vn-primary)] underline-offset-4 hover:underline",
         gradient:
           "bg-gradient-to-r from-[var(--vn-primary)] to-[var(--vn-accent)] text-white shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-[var(--vn-primary-hover)] hover:to-[var(--vn-accent)]",

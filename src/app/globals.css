@@ -168,6 +168,18 @@
     --chart-4: 210 17% 98%; /* Cloud White */
     --chart-5: 214 6% 77%; /* Ash Gray */
 
+    /* Dark mode VexNexa brand tokens */
+    --vn-bg: #1E1E1E; /* Midnight Graphite */
+    --vn-surface: #1E1E1E; /* Dark surface */
+    --vn-muted: #2A2A2A;
+    --vn-border: #3A3A3A;
+    --vn-text: #F8F9FA; /* Cloud White for dark mode */
+    --vn-text-muted: #B0B0B0; /* Lighter muted text */
+    --vn-primary: #FF6B35; /* Aurora Orange */
+    --vn-primary-hover: #FF8A5B;
+    --vn-accent: #FFD166; /* Solar Gold */
+    --vn-teal: #0F5C5C; /* Teal Blue */
+
     /* Dark mode VexNexa gradients */
     --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%);
     --gradient-subtle: linear-gradient(135deg, hsl(0 0% 12%) 0%, hsl(0 0% 15%) 100%);
