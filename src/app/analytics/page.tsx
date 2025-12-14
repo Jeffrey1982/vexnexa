@@ -155,7 +155,7 @@ export default async function AnalyticsPage() {
         </div>
         <Link
           href="/dashboard"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800"
         >
           ← Back to Dashboard
         </Link>
@@ -163,7 +163,7 @@ export default async function AnalyticsPage() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Average Score</div>
@@ -182,7 +182,7 @@ export default async function AnalyticsPage() {
           )}
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Total Scans</div>
@@ -193,7 +193,7 @@ export default async function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Total Issues</div>
@@ -204,7 +204,7 @@ export default async function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Sites Tracked</div>
@@ -217,7 +217,7 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* High Impact Feature 1: Enhanced Score Trends */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
             <TrendingUp className="w-6 h-6 text-blue-600" />
@@ -231,7 +231,7 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* High Impact Feature 2: Issue Severity Heatmap */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
             <Calendar className="w-6 h-6 text-green-600" />
@@ -245,7 +245,7 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* High Impact Feature 3: Top Failing Rules */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
             <AlertTriangle className="w-6 h-6 text-orange-600" />
@@ -259,7 +259,7 @@ export default async function AnalyticsPage() {
       </div>
 
       {/* High Impact Feature 4: Competitive Analysis */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
             <Trophy className="w-6 h-6 text-purple-600" />
@@ -282,7 +282,7 @@ export default async function AnalyticsPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Link
             href="/dashboard"
-            className="flex items-center justify-center px-4 py-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+            className="flex items-center justify-center px-4 py-3 bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow"
           >
             <BarChart3 className="w-5 h-5 text-blue-600 mr-2" />
             <span className="font-medium">Run New Scan</span>
@@ -296,14 +296,14 @@ export default async function AnalyticsPage() {
           </Link>
           <Link
             href="/settings/billing"
-            className="flex items-center justify-center px-4 py-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+            className="flex items-center justify-center px-4 py-3 bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow"
           >
             <TrendingUp className="w-5 h-5 text-green-600 mr-2" />
             <span className="font-medium">Upgrade Plan</span>
           </Link>
           <Link
             href="/settings/white-label"
-            className="flex items-center justify-center px-4 py-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+            className="flex items-center justify-center px-4 py-3 bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow"
           >
             <Trophy className="w-5 h-5 text-purple-600 mr-2" />
             <span className="font-medium">White-label Settings</span>

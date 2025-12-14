@@ -133,7 +133,7 @@ export default function AuditManager({
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+          className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6"
         >
           <div className="flex items-center gap-2 mb-4">
             <FileCheck className="w-5 h-5 text-blue-600" />

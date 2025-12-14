@@ -360,7 +360,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
           </div>
 
           {/* Legend */}
-          <div className="absolute top-4 left-4 bg-white/90 p-3 rounded-lg shadow-sm">
+          <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 p-3 rounded-lg shadow-sm">
             <div className="text-xs font-semibold mb-2">Legend</div>
             <div className="space-y-1 text-xs">
               <div className="flex items-center gap-2">
@@ -379,7 +379,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
           </div>
 
           {/* Stats */}
-          <div className="absolute top-4 right-4 bg-white/90 p-3 rounded-lg shadow-sm">
+          <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 p-3 rounded-lg shadow-sm">
             <div className="text-xs font-semibold mb-2">Site Overview</div>
             <div className="space-y-1 text-xs">
               <div>Pages: {totalStats.pages}</div>
@@ -389,7 +389,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
           </div>
 
           {/* Instructions */}
-          <div className="absolute bottom-4 left-4 bg-white/90 p-3 rounded-lg shadow-sm">
+          <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-slate-900/90 p-3 rounded-lg shadow-sm">
             <div className="text-xs text-gray-600">
               • Click nodes for details<br/>
               • Drag to rotate manually<br/>
@@ -399,7 +399,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
           </div>
 
           {/* Node count */}
-          <div className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-lg shadow-sm">
+          <div className="absolute bottom-4 right-4 bg-white/90 dark:bg-slate-900/90 p-2 rounded-lg shadow-sm">
             <div className="text-xs text-gray-600">
               Showing {positionedNodes.length} nodes
             </div>

@@ -30,7 +30,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
   const logoUrl = settings?.logoUrl;
 
   return (
-    <header className={`bg-white shadow-sm border-b border-gray-200 ${className}`}>
+    <header className={`bg-white dark:bg-slate-900 shadow-sm border-b border-gray-200 dark:border-gray-700 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Company Name */}
@@ -54,7 +54,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   {companyName.charAt(0).toUpperCase()}
                 </div>
               )}
-              <span className="text-xl font-bold text-gray-900">
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {companyName}
               </span>
             </Link>

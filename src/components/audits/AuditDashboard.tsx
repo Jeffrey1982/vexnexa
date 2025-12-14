@@ -125,7 +125,7 @@ export default function AuditDashboard() {
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
         <div className="flex items-center gap-4">
           <Filter className="w-5 h-5 text-gray-400" />
           <div className="flex-1 grid grid-cols-2 gap-4">
@@ -164,7 +164,7 @@ export default function AuditDashboard() {
 
       {/* Statistics */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Audits</p>
@@ -173,7 +173,7 @@ export default function AuditDashboard() {
             <FileCheck className="w-8 h-8 text-blue-500" />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">In Progress</p>
@@ -184,7 +184,7 @@ export default function AuditDashboard() {
             <Clock className="w-8 h-8 text-blue-500" />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Completed</p>
@@ -195,7 +195,7 @@ export default function AuditDashboard() {
             <CheckCircle2 className="w-8 h-8 text-green-500" />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Overdue</p>
@@ -211,7 +211,7 @@ export default function AuditDashboard() {
       {/* Audit list */}
       <div className="space-y-4">
         {audits.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
             <FileCheck className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500">No audits found</p>
             <p className="text-sm text-gray-400 mt-1">

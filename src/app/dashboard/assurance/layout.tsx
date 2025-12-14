@@ -21,7 +21,7 @@ export default async function AssuranceLayout({
   return (
     <div className="min-h-screen bg-background">
       {/* Assurance Branding Header */}
-      <div className="border-b border-teal-200/30 bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-950/20 dark:to-emerald-950/20">
+      <div className="border-b border-teal-200/30 dark:border-teal-700/30 bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-950/20 dark:to-emerald-950/20">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-teal-600 text-white shadow-md">

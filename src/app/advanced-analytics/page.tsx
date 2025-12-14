@@ -146,7 +146,7 @@ export default async function AdvancedAnalyticsPage() {
         </div>
         <Link
           href="/analytics"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Analytics
@@ -155,7 +155,7 @@ export default async function AdvancedAnalyticsPage() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Sites Analyzed</div>
@@ -166,7 +166,7 @@ export default async function AdvancedAnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Avg Performance</div>
@@ -179,7 +179,7 @@ export default async function AdvancedAnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">Legal Risk</div>
@@ -192,7 +192,7 @@ export default async function AdvancedAnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-600">WCAG 2.1</div>
@@ -207,7 +207,7 @@ export default async function AdvancedAnalyticsPage() {
       </div>
 
       {/* Performance Impact Analysis */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
             <Zap className="w-6 h-6 text-green-600" />
@@ -221,7 +221,7 @@ export default async function AdvancedAnalyticsPage() {
       </div>
 
       {/* Multi-Site Portfolio Dashboard */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
             <Building2 className="w-6 h-6 text-blue-600" />
@@ -235,7 +235,7 @@ export default async function AdvancedAnalyticsPage() {
       </div>
 
       {/* Compliance & Legal Assessment */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
             <Scale className="w-6 h-6 text-purple-600" />
@@ -280,7 +280,7 @@ export default async function AdvancedAnalyticsPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Link
