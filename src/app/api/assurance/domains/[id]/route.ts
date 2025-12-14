@@ -16,11 +16,11 @@ import type { AssuranceFrequency } from '@prisma/client';
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const domainId = params.id;
+    const { id: domainId } = await params;
 
     // Get active subscription
     const subscription = await getActiveAssuranceSubscription(user.id);
@@ -120,11 +120,11 @@ export async function GET(
  */
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const domainId = params.id;
+    const { id: domainId } = await params;
     const body = await req.json();
 
     // Get active subscription
@@ -292,11 +292,11 @@ export async function PATCH(
  */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const domainId = params.id;
+    const { id: domainId } = await params;
 
     // Get active subscription
     const subscription = await getActiveAssuranceSubscription(user.id);

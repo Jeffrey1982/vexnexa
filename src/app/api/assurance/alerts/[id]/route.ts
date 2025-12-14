@@ -9,11 +9,11 @@ import { prisma } from '@/lib/prisma';
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const alertId = params.id;
+    const { id: alertId } = await params;
 
     // Get active subscription
     const subscription = await getActiveAssuranceSubscription(user.id);
@@ -91,11 +91,11 @@ export async function GET(
  */
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const alertId = params.id;
+    const { id: alertId } = await params;
     const { resolved } = await req.json();
 
     if (typeof resolved !== 'boolean') {
@@ -173,11 +173,11 @@ export async function PATCH(
  */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const alertId = params.id;
+    const { id: alertId } = await params;
 
     // Get active subscription
     const subscription = await getActiveAssuranceSubscription(user.id);

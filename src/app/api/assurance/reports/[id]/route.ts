@@ -9,11 +9,11 @@ import { prisma } from '@/lib/prisma';
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const reportId = params.id;
+    const { id: reportId } = await params;
 
     // Get active subscription
     const subscription = await getActiveAssuranceSubscription(user.id);
@@ -88,11 +88,11 @@ export async function GET(
  */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuth();
-    const reportId = params.id;
+    const { id: reportId } = await params;
 
     // Get active subscription
     const subscription = await getActiveAssuranceSubscription(user.id);
