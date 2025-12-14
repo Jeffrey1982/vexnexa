@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
       email: user.email,
       tier,
       billingCycle,
-      mollieCustomerId: user.mollieCustomerId || undefined,
     });
 
     const checkoutUrl = payment.getCheckoutUrl();
