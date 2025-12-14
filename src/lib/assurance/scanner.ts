@@ -8,6 +8,44 @@
 import { prisma } from '@/lib/prisma';
 import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced';
 import type { AssuranceDomain, AssuranceScan } from '@prisma/client';
+import type { AxeViolation } from '@/lib/scanner';
+
+/**
+ * Calculate WCAG compliance percentages from violations
+ */
+function calculateWCAGCompliance(violations: AxeViolation[]): {
+  wcagAA: number;
+  wcagAAA: number;
+} {
+  // Get unique WCAG tags from all violations
+  const wcagTags = new Set<string>();
+  violations.forEach(v => {
+    v.tags?.forEach(tag => {
+      if (tag.startsWith('wcag')) {
+        wcagTags.add(tag);
+      }
+    });
+  });
+
+  // Count violations by WCAG level
+  const wcagAAViolations = violations.filter(v =>
+    v.tags?.some(tag => tag.includes('wcag2a') || tag.includes('wcag21a'))
+  ).length;
+
+  const wcagAAAViolations = violations.filter(v =>
+    v.tags?.some(tag => tag.includes('wcag2aaa') || tag.includes('wcag21aaa'))
+  ).length;
+
+  // Total testable criteria (approximate)
+  const totalAACriteria = 50; // WCAG 2.1 Level A + AA
+  const totalAAACriteria = 78; // WCAG 2.1 Level A + AA + AAA
+
+  // Calculate compliance (100 - percentage of violations)
+  const wcagAA = Math.max(0, Math.round(((totalAACriteria - wcagAAViolations) / totalAACriteria) * 100));
+  const wcagAAA = Math.max(0, Math.round(((totalAAACriteria - wcagAAAViolations) / totalAAACriteria) * 100));
+
+  return { wcagAA, wcagAAA };
+}
 
 /**
  * Get or create a Site record for the domain
@@ -110,6 +148,9 @@ export async function executeAssuranceScan(domainId: string): Promise<AssuranceS
       violations: scanResult.violations.length,
     });
 
+    // Calculate WCAG compliance
+    const wcagCompliance = calculateWCAGCompliance(scanResult.violations);
+
     // Store scan in main Scan table (reusing existing infrastructure)
     const scan = await prisma.scan.create({
       data: {
@@ -121,8 +162,8 @@ export async function executeAssuranceScan(domainId: string): Promise<AssuranceS
         impactSerious: scanResult.violations.filter((v) => v.impact === 'serious').length,
         impactModerate: scanResult.violations.filter((v) => v.impact === 'moderate').length,
         impactMinor: scanResult.violations.filter((v) => v.impact === 'minor').length,
-        wcagAACompliance: null,
-        wcagAAACompliance: null,
+        wcagAACompliance: wcagCompliance.wcagAA,
+        wcagAAACompliance: wcagCompliance.wcagAAA,
         raw: scanResult as any,
       },
     });
@@ -156,8 +197,8 @@ export async function executeAssuranceScan(domainId: string): Promise<AssuranceS
         domainId: domain.id,
         scanId: scan.id,
         score: Math.round(scanResult.score),
-        wcagAACompliance: null,
-        wcagAAACompliance: null,
+        wcagAACompliance: wcagCompliance.wcagAA,
+        wcagAAACompliance: wcagCompliance.wcagAAA,
         issuesCount: scanResult.violations.length,
         impactCritical: scanResult.violations.filter((v) => v.impact === 'critical').length,
         impactSerious: scanResult.violations.filter((v) => v.impact === 'serious').length,

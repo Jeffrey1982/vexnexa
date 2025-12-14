@@ -50,10 +50,6 @@
     {
       "path": "/api/cron/assurance-scans",
       "schedule": "0 9 * * *"
-    },
-    {
-      "path": "/api/cron/cleanup-old-reports",
-      "schedule": "0 0 1 * *"
     }
   ]
 }

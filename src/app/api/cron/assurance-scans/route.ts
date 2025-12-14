@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { executeDueScans } from '@/lib/assurance/scanner';
 import { detectRegression, createAlert } from '@/lib/assurance/trends';
+import { deleteOldReports } from '@/lib/assurance/report-generator';
 import { prisma } from '@/lib/prisma';
 
 /**
@@ -43,11 +44,21 @@ export async function GET(req: NextRequest) {
 
     console.log('[Assurance Cron] Results processed:', processedDomains);
 
+    // Run cleanup on the 1st of each month
+    let cleanupResults = null;
+    const today = new Date();
+    if (today.getDate() === 1) {
+      console.log('[Assurance Cron] Running monthly cleanup...');
+      cleanupResults = await runMonthlyCleanup();
+      console.log('[Assurance Cron] Cleanup complete:', cleanupResults);
+    }
+
     return NextResponse.json({
       success: true,
       timestamp: new Date().toISOString(),
       scans: results,
       processed: processedDomains,
+      cleanup: cleanupResults,
     });
   } catch (error) {
     console.error('[Assurance Cron] Error executing cron:', error);
@@ -171,4 +182,43 @@ async function processScanResults(results: {
   }
 
   return processed;
+}
+
+/**
+ * Run monthly cleanup (12-month retention)
+ * Only runs on the 1st of each month
+ */
+async function runMonthlyCleanup() {
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+
+  // Delete old reports (including Blob PDFs)
+  const reportsResult = await deleteOldReports();
+
+  // Delete old scans
+  const scansDeleted = await prisma.assuranceScan.deleteMany({
+    where: {
+      createdAt: {
+        lt: twelveMonthsAgo,
+      },
+    },
+  });
+
+  // Delete old resolved alerts
+  const alertsDeleted = await prisma.assuranceAlert.deleteMany({
+    where: {
+      resolved: true,
+      resolvedAt: {
+        lt: twelveMonthsAgo,
+      },
+    },
+  });
+
+  return {
+    reportsDeleted: reportsResult.deleted,
+    reportsErrors: reportsResult.errors,
+    scansDeleted: scansDeleted.count,
+    alertsDeleted: alertsDeleted.count,
+    cutoffDate: twelveMonthsAgo.toISOString(),
+  };
 }
