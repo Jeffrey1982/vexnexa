@@ -29,14 +29,6 @@ export default async function DomainDetailPage({
       scans: {
         orderBy: { createdAt: 'desc' },
         take: 10,
-        include: {
-          scan: {
-            select: {
-              url: true,
-              createdAt: true,
-            },
-          },
-        },
       },
       alerts: {
         orderBy: { createdAt: 'desc' },
