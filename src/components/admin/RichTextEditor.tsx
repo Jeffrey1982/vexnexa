@@ -3,17 +3,17 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import Table from '@tiptap/extension-table'
-import TableRow from '@tiptap/extension-table-row'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
+import { Table } from '@tiptap/extension-table'
+import { TableRow } from '@tiptap/extension-table-row'
+import { TableCell } from '@tiptap/extension-table-cell'
+import { TableHeader } from '@tiptap/extension-table-header'
 import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
 import Underline from '@tiptap/extension-underline'
 import Color from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
-import { lowlight } from 'lowlight/lib/core'
+import { TextStyle } from '@tiptap/extension-text-style'
+import { createLowlight } from 'lowlight'
 import javascript from 'highlight.js/lib/languages/javascript'
 import typescript from 'highlight.js/lib/languages/typescript'
 import python from 'highlight.js/lib/languages/python'
@@ -21,6 +21,7 @@ import html from 'highlight.js/lib/languages/xml'
 import css from 'highlight.js/lib/languages/css'
 import json from 'highlight.js/lib/languages/json'
 import bash from 'highlight.js/lib/languages/bash'
+
 import {
   Bold,
   Italic,
@@ -43,14 +44,15 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect } from 'react'
 
-// Register languages for syntax highlighting
-lowlight.registerLanguage('javascript', javascript)
-lowlight.registerLanguage('typescript', typescript)
-lowlight.registerLanguage('python', python)
-lowlight.registerLanguage('html', html)
-lowlight.registerLanguage('css', css)
-lowlight.registerLanguage('json', json)
-lowlight.registerLanguage('bash', bash)
+// Create lowlight instance and register languages
+const lowlight = createLowlight()
+lowlight.register('javascript', javascript)
+lowlight.register('typescript', typescript)
+lowlight.register('python', python)
+lowlight.register('html', html)
+lowlight.register('css', css)
+lowlight.register('json', json)
+lowlight.register('bash', bash)
 
 interface RichTextEditorProps {
   value: string
