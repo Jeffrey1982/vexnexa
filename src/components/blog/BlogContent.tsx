@@ -1,128 +1,90 @@
 'use client';
 
-import ReactMarkdown from 'react-markdown';
-import { Card, CardContent } from '@/components/ui/card';
+import { useEffect, useRef } from 'react';
+import DOMPurify from 'dompurify';
+import hljs from 'highlight.js';
+import { Copy, Check } from 'lucide-react';
+import { useState } from 'react';
 
 interface BlogContentProps {
   content: string;
 }
 
 export function BlogContent({ content }: BlogContentProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    // Apply syntax highlighting to all code blocks
+    const codeBlocks = contentRef.current.querySelectorAll('pre code');
+    codeBlocks.forEach((block) => {
+      hljs.highlightElement(block as HTMLElement);
+    });
+
+    // Add copy buttons to code blocks
+    const preBlocks = contentRef.current.querySelectorAll('pre');
+    preBlocks.forEach((pre, index) => {
+      // Check if copy button already exists
+      if (pre.querySelector('.copy-button')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'relative group';
+
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-button absolute top-3 right-3 p-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white opacity-0 group-hover:opacity-100 transition-opacity';
+      copyButton.setAttribute('data-index', index.toString());
+      copyButton.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
+
+      copyButton.addEventListener('click', () => {
+        const code = pre.querySelector('code');
+        if (code) {
+          navigator.clipboard.writeText(code.textContent || '');
+          setCopiedIndex(index);
+          setTimeout(() => setCopiedIndex(null), 2000);
+        }
+      });
+
+      // Wrap pre in the new div
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+      wrapper.appendChild(copyButton);
+    });
+  }, [content]);
+
+  // Sanitize HTML content
+  const sanitizedContent = DOMPurify.sanitize(content, {
+    ALLOWED_TAGS: [
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'p', 'br', 'strong', 'em', 'u', 'strike',
+      'ul', 'ol', 'li',
+      'a', 'img',
+      'blockquote',
+      'pre', 'code',
+      'table', 'thead', 'tbody', 'tr', 'td', 'th',
+      'hr', 'div', 'span'
+    ],
+    ALLOWED_ATTR: [
+      'href', 'src', 'alt', 'title', 'class',
+      'data-language', 'style', 'target', 'rel'
+    ],
+  });
+
   return (
-    <ReactMarkdown
-      components={{
-        h2: ({ children }) => (
-          <h2 className="font-display text-3xl font-bold mt-20 mb-8 first:mt-0">
-            {children}
-          </h2>
-        ),
-        h3: ({ children }) => {
-          const text = children?.toString() || '';
-          // Check if starts with common emoji characters
-          const hasEmoji = text && /^[🎹📢📱🧠🎬🌈⚡🌍🎯📊🚀💼🤖🔄📈🌐🎓]/.test(text);
-
-          if (hasEmoji) {
-            return (
-              <Card className="my-12 overflow-hidden border-l-4 border-l-primary">
-                <CardContent className="p-6">
-                  <h3 className="font-display text-2xl font-bold m-0">
-                    {children}
-                  </h3>
-                </CardContent>
-              </Card>
-            );
-          }
-
-          return (
-            <h3 className="font-display text-xl font-semibold mt-12 mb-4 text-primary">
-              {children}
-            </h3>
-          );
-        },
-        p: ({ children }) => {
-          const text = children?.toString() || '';
-
-          // Check if it's the stats section markers
-          if (text.includes('Data-Driven') || text.includes('User-Centric') || text.includes('Continuous Improvement')) {
-            return (
-              <div className="bg-muted/50 rounded-lg p-6 my-6 border-l-4 border-primary">
-                <p className="text-lg font-medium m-0 leading-relaxed">
-                  {children}
-                </p>
-              </div>
-            );
-          }
-
-          // Check if starts with checkmark
-          if (text.startsWith('✓')) {
-            return (
-              <div className="flex items-start gap-3 my-4">
-                <span className="text-green-500 text-xl flex-shrink-0">✓</span>
-                <p className="text-lg leading-relaxed m-0 flex-1">
-                  {children?.toString().replace('✓', '').trim()}
-                </p>
-              </div>
-            );
-          }
-
-          return (
-            <p className="text-lg leading-[1.8] mb-8 text-foreground">
-              {children}
-            </p>
-          );
-        },
-        blockquote: ({ children }) => (
-          <Card className="my-10 border-l-4 border-l-primary bg-gradient-to-r from-primary/10 to-primary/5">
-            <CardContent className="p-8">
-              <div className="text-2xl font-bold text-foreground space-y-4">
-                {children}
-              </div>
-            </CardContent>
-          </Card>
-        ),
-        ul: ({ children }) => (
-          <ul className="my-8 space-y-4">
-            {children}
-          </ul>
-        ),
-        ol: ({ children }) => (
-          <ol className="my-8 space-y-4">
-            {children}
-          </ol>
-        ),
-        li: ({ children }) => (
-          <li className="text-lg leading-relaxed ml-6">
-            {children}
-          </li>
-        ),
-        hr: () => (
-          <div className="my-16 flex items-center justify-center">
-            <div className="w-16 h-1 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
-          </div>
-        ),
-        strong: ({ children }) => (
-          <strong className="font-semibold text-foreground">
-            {children}
-          </strong>
-        ),
-        a: ({ href, children }) => (
-          <a
-            href={href}
-            className="text-primary hover:underline font-medium"
-            target={href?.startsWith('http') ? '_blank' : undefined}
-            rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-          >
-            {children}
-          </a>
-        ),
-        em: ({ children }) => (
-          <em className="text-muted-foreground italic">
-            {children}
-          </em>
-        ),
-      }}
-    >
-      {content}
-    </ReactMarkdown>
+    <div
+      ref={contentRef}
+      className="blog-content prose prose-lg dark:prose-invert max-w-none"
+      dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+      style={{
+        // Custom styling for Tiptap-generated content
+        '--tw-prose-body': 'hsl(var(--foreground))',
+        '--tw-prose-headings': 'hsl(var(--foreground))',
+        '--tw-prose-links': 'hsl(var(--primary))',
+        '--tw-prose-bold': 'hsl(var(--foreground))',
+        '--tw-prose-code': 'hsl(var(--foreground))',
+        '--tw-prose-pre-bg': 'hsl(var(--muted))',
+      } as React.CSSProperties}
+    />
   );
 }

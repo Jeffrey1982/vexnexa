@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Syntax highlighting for code blocks */
+@import 'highlight.js/styles/atom-one-dark.css';
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -524,4 +527,141 @@
   textarea {
     border-width: 2px;
   }
+}
+
+/* ========================================
+   TIPTAP EDITOR STYLES
+   ======================================== */
+
+/* Tiptap editor content area */
+.ProseMirror {
+  @apply min-h-[300px] focus:outline-none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Tiptap code blocks */
+.ProseMirror pre {
+  @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto my-4;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.ProseMirror pre code {
+  @apply bg-transparent text-inherit p-0;
+}
+
+/* Tiptap tables */
+.ProseMirror table {
+  @apply border-collapse table-auto w-full my-4;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  @apply border border-gray-300 px-3 py-2 text-left;
+  min-width: 100px;
+}
+
+.ProseMirror th {
+  @apply bg-gray-100 font-semibold;
+}
+
+/* Tiptap blockquotes */
+.ProseMirror blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-4;
+}
+
+/* Tiptap lists */
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply pl-6 my-4;
+}
+
+.ProseMirror li {
+  @apply my-1;
+}
+
+/* ========================================
+   BLOG CONTENT STYLES
+   ======================================== */
+
+/* Blog content wrapper */
+.blog-content {
+  @apply text-foreground;
+}
+
+/* Blog content code blocks with syntax highlighting */
+.blog-content pre {
+  @apply relative bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto my-6;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.blog-content pre code {
+  @apply bg-transparent text-inherit p-0;
+}
+
+/* Blog content tables */
+.blog-content table {
+  @apply w-full my-6 border-collapse;
+}
+
+.blog-content th,
+.blog-content td {
+  @apply border border-gray-300 dark:border-gray-700 px-4 py-2 text-left;
+}
+
+.blog-content th {
+  @apply bg-gray-100 dark:bg-gray-800 font-semibold;
+}
+
+/* Blog content blockquotes */
+.blog-content blockquote {
+  @apply border-l-4 border-primary pl-6 italic my-6 text-lg;
+}
+
+/* Blog content lists */
+.blog-content ul,
+.blog-content ol {
+  @apply my-6 space-y-2;
+}
+
+.blog-content li {
+  @apply text-lg leading-relaxed;
+}
+
+/* Blog content headings */
+.blog-content h1 {
+  @apply text-4xl font-bold mt-8 mb-4;
+}
+
+.blog-content h2 {
+  @apply text-3xl font-bold mt-8 mb-4;
+}
+
+.blog-content h3 {
+  @apply text-2xl font-semibold mt-6 mb-3;
+}
+
+/* Blog content images */
+.blog-content img {
+  @apply rounded-lg my-6 max-w-full h-auto;
+}
+
+/* Blog content links */
+.blog-content a {
+  @apply text-primary hover:underline;
+}
+
+/* Blog content horizontal rules */
+.blog-content hr {
+  @apply my-8 border-t border-gray-300 dark:border-gray-700;
 }
