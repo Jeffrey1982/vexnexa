@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import DOMPurify from "dompurify";
 import {
@@ -14,7 +14,11 @@ import {
   BookOpen,
   Clock,
   CheckCircle2,
-  EyeOff
+  EyeOff,
+  Upload,
+  X,
+  Link as LinkIcon,
+  Loader2
 } from "lucide-react";
 
 interface BlogEditorProps {
@@ -56,6 +60,13 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
   const [error, setError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingInline, setUploadingInline] = useState(false);
+  const [showImageDialog, setShowImageDialog] = useState(false);
+  const [imageDialogData, setImageDialogData] = useState({ url: '', alt: '', title: '' });
+  const coverImageInputRef = useRef<HTMLInputElement>(null);
+  const inlineImageInputRef = useRef<HTMLInputElement>(null);
+  const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Calculate word count and reading time
   const stats = useMemo(() => {
@@ -144,6 +155,110 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
     }
   };
 
+  const uploadImage = async (file: File, isCover: boolean = false): Promise<string | null> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/blog/upload-image', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (!result.ok) {
+        setError(result.error || 'Failed to upload image');
+        return null;
+      }
+
+      return result.url;
+    } catch (e: any) {
+      setError(e.message || 'Failed to upload image');
+      return null;
+    }
+  };
+
+  const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingCover(true);
+    setError(null);
+
+    const url = await uploadImage(file, true);
+
+    if (url) {
+      setFormData({ ...formData, coverImage: url });
+    }
+
+    setUploadingCover(false);
+
+    // Reset input
+    if (coverImageInputRef.current) {
+      coverImageInputRef.current.value = '';
+    }
+  };
+
+  const handleInlineImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingInline(true);
+    setError(null);
+
+    const url = await uploadImage(file, false);
+
+    if (url) {
+      // Show dialog for alt text and title
+      setImageDialogData({ url, alt: '', title: '' });
+      setShowImageDialog(true);
+    }
+
+    setUploadingInline(false);
+
+    // Reset input
+    if (inlineImageInputRef.current) {
+      inlineImageInputRef.current.value = '';
+    }
+  };
+
+  const insertImageMarkdown = () => {
+    const { url, alt, title } = imageDialogData;
+    let markdown = `![${alt || 'Image'}](${url})`;
+
+    if (title) {
+      markdown = `![${alt || 'Image'}](${url} "${title}")`;
+    }
+
+    // Insert at cursor position or append
+    const textarea = contentTextareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = formData.content;
+      const before = text.substring(0, start);
+      const after = text.substring(end);
+      const newContent = before + '\n\n' + markdown + '\n\n' + after;
+
+      setFormData({ ...formData, content: newContent });
+
+      // Move cursor after inserted image
+      setTimeout(() => {
+        textarea.focus();
+        const newPos = start + markdown.length + 4;
+        textarea.setSelectionRange(newPos, newPos);
+      }, 0);
+    } else {
+      // Fallback: append to end
+      setFormData({ ...formData, content: formData.content + '\n\n' + markdown + '\n\n' });
+    }
+
+    // Reset dialog
+    setShowImageDialog(false);
+    setImageDialogData({ url: '', alt: '', title: '' });
+  };
+
   return (
     <div className="space-y-6">
       {/* Save Status & Errors */}
@@ -214,6 +329,26 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   <Clock className="w-3 h-3" />
                   {stats.readingTime} min read
                 </span>
+                {!showPreview && (
+                  <button
+                    type="button"
+                    onClick={() => inlineImageInputRef.current?.click()}
+                    disabled={uploadingInline}
+                    className="flex items-center gap-1 px-2 py-1 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors disabled:opacity-50"
+                  >
+                    {uploadingInline ? (
+                      <>
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                        Uploading...
+                      </>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-3 h-3" />
+                        Insert Image
+                      </>
+                    )}
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => setShowPreview(!showPreview)}
@@ -233,6 +368,13 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 </button>
               </div>
             </div>
+            <input
+              type="file"
+              ref={inlineImageInputRef}
+              onChange={handleInlineImageUpload}
+              accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml"
+              className="hidden"
+            />
             {showPreview ? (
               <div className="w-full min-h-[500px] px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 prose prose-sm max-w-none">
                 <div dangerouslySetInnerHTML={{
@@ -244,6 +386,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
               </div>
             ) : (
               <textarea
+                ref={contentTextareaRef}
                 value={formData.content}
                 onChange={e =>
                   setFormData({ ...formData, content: e.target.value })
@@ -327,24 +470,69 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
               <ImageIcon className="w-4 h-4" />
               Cover Image
             </h3>
-            <input
-              type="text"
-              value={formData.coverImage}
-              onChange={e =>
-                setFormData({ ...formData, coverImage: e.target.value })
-              }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              placeholder="Image URL"
-            />
-            {formData.coverImage && (
-              <div className="mt-3 rounded-lg overflow-hidden">
-                <img
-                  src={formData.coverImage}
-                  alt="Cover preview"
-                  className="w-full h-32 object-cover"
-                />
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => coverImageInputRef.current?.click()}
+                  disabled={uploadingCover}
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
+                >
+                  {uploadingCover ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4" />
+                      Upload
+                    </>
+                  )}
+                </button>
+                {formData.coverImage && (
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, coverImage: '' })}
+                    className="px-3 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                    title="Remove image"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
-            )}
+              <input
+                type="file"
+                ref={coverImageInputRef}
+                onChange={handleCoverImageUpload}
+                accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml"
+                className="hidden"
+              />
+              <div className="relative">
+                <input
+                  type="text"
+                  value={formData.coverImage}
+                  onChange={e =>
+                    setFormData({ ...formData, coverImage: e.target.value })
+                  }
+                  className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                  placeholder="Or paste image URL"
+                />
+                <LinkIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              </div>
+              {formData.coverImage && (
+                <div className="mt-3 rounded-lg overflow-hidden border border-gray-200">
+                  <img
+                    src={formData.coverImage}
+                    alt="Cover preview"
+                    className="w-full h-32 object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23ddd" width="100" height="100"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EInvalid%3C/text%3E%3C/svg%3E';
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Category & Tags */}
@@ -488,6 +676,91 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           </button>
         </div>
       </div>
+
+      {/* Image Dialog */}
+      {showImageDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6"
+          >
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Insert Image</h3>
+
+            <div className="space-y-4">
+              {/* Image Preview */}
+              {imageDialogData.url && (
+                <div className="rounded-lg overflow-hidden border border-gray-200">
+                  <img
+                    src={imageDialogData.url}
+                    alt="Preview"
+                    className="w-full h-48 object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Alt Text */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Alt Text <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={imageDialogData.alt}
+                  onChange={e =>
+                    setImageDialogData({ ...imageDialogData, alt: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Describe the image for accessibility"
+                  autoFocus
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Required for SEO and accessibility. Describe what the image shows.
+                </p>
+              </div>
+
+              {/* Title (optional) */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Title <span className="text-gray-400">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={imageDialogData.title}
+                  onChange={e =>
+                    setImageDialogData({ ...imageDialogData, title: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Additional caption or tooltip text"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Shown as a tooltip when hovering over the image
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-2 pt-2">
+                <button
+                  onClick={() => {
+                    setShowImageDialog(false);
+                    setImageDialogData({ url: '', alt: '', title: '' });
+                  }}
+                  className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={insertImageMarkdown}
+                  disabled={!imageDialogData.alt.trim()}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Insert
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
