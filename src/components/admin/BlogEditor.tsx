@@ -36,6 +36,7 @@ interface BlogEditorProps {
     tags?: string[];
     status: string;
     publishedAt?: string;
+    authorName?: string;
   };
   onSave?: (data: any) => void;
   onCancel?: () => void;
@@ -53,7 +54,8 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
     metaKeywords: initialData?.metaKeywords?.join(", ") || "",
     category: initialData?.category || "Accessibility",
     tags: initialData?.tags?.join(", ") || "",
-    status: initialData?.status || "draft"
+    status: initialData?.status || "draft",
+    authorName: initialData?.authorName || ""
   });
 
   const [saving, setSaving] = useState(false);
@@ -112,7 +114,8 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           .split(",")
           .map(t => t.trim())
           .filter(t => t),
-        status: status || formData.status
+        status: status || formData.status,
+        authorName: formData.authorName.trim() || undefined
       };
 
       if (initialData?.id) {
@@ -441,6 +444,24 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   <option value="published">Published</option>
                   <option value="archived">Archived</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Author Name <span className="text-gray-400">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={formData.authorName}
+                  onChange={e =>
+                    setFormData({ ...formData, authorName: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Leave empty to use account name"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Optional: Display a different name or guest author
+                </p>
               </div>
 
               <div className="flex gap-2">

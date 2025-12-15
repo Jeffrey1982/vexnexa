@@ -96,7 +96,8 @@ export async function PATCH(
       metaKeywords,
       category,
       tags,
-      status
+      status,
+      authorName
     } = body;
 
     const existing = await prisma.blogPost.findUnique({
@@ -134,6 +135,7 @@ export async function PATCH(
     if (metaKeywords !== undefined) updateData.metaKeywords = metaKeywords;
     if (category) updateData.category = category;
     if (tags !== undefined) updateData.tags = tags;
+    if (authorName !== undefined) updateData.authorName = authorName || null;
     if (status) {
       updateData.status = status;
       // Auto-set publishedAt when publishing

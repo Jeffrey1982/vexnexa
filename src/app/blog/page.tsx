@@ -114,7 +114,7 @@ export default async function BlogPage() {
 
                           <div className="flex items-center justify-between pt-4">
                             <span className="text-sm text-muted-foreground">
-                              {featuredPost.author.firstName} {featuredPost.author.lastName}
+                              Written by: {featuredPost.authorName || `${featuredPost.author.firstName} ${featuredPost.author.lastName}`}
                             </span>
                             <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
                           </div>
@@ -162,6 +162,10 @@ export default async function BlogPage() {
                               {post.excerpt}
                             </p>
                           )}
+
+                          <p className="text-sm text-muted-foreground pt-2">
+                            Written by: {post.authorName || `${post.author.firstName} ${post.author.lastName}`}
+                          </p>
                         </div>
                       </article>
                     </Link>

@@ -726,8 +726,9 @@ model BlogPost {
   publishedAt DateTime?
 
   // Author
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  author     User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorName String? // Optional custom author name (overrides User.firstName + User.lastName)
 
   // Analytics
   views Int @default(0)

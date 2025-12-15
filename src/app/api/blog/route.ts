@@ -98,7 +98,8 @@ export async function POST(req: Request) {
       category,
       tags,
       status,
-      publishedAt
+      publishedAt,
+      authorName
     } = body;
 
     if (!title || !slug || !content || !category) {
@@ -134,7 +135,8 @@ export async function POST(req: Request) {
         tags: tags || [],
         status: status || "draft",
         publishedAt: publishedAt ? new Date(publishedAt) : status === "published" ? new Date() : null,
-        authorId: user.id
+        authorId: user.id,
+        authorName: authorName || undefined
       },
       include: {
         author: {

@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <span>{post.author.firstName} {post.author.lastName}</span>
+              <span>Written by: {post.authorName || `${post.author.firstName} ${post.author.lastName}`}</span>
               <span>·</span>
               <time>{new Date(post.publishedAt!).toLocaleDateString('nl-NL', {
                 day: 'numeric',
