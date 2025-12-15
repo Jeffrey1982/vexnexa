@@ -35,6 +35,14 @@ import {
   getDiscountBadge,
   getCTAText
 } from "@/lib/pricing";
+import {
+  ASSURANCE_BASE_PRICES,
+  ASSURANCE_PLAN_LIMITS,
+  formatAssurancePriceDisplay,
+  getAssuranceDiscountBadge,
+  type BillingCycle as AssuranceBillingCycle,
+} from "@/lib/assurance/pricing";
+import { AssuranceTier } from "@prisma/client";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 import { useTranslations } from 'next-intl';
 
@@ -410,6 +418,263 @@ function PricingCards() {
   );
 }
 
+function AssurancePricingSection() {
+  const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [billingCycle, setBillingCycle] = useState<AssuranceBillingCycle>('monthly');
+
+  const assurancePlans = [
+    {
+      tier: 'BASIC' as AssuranceTier,
+      name: 'Basic Assurance',
+      description: 'Perfect for single websites and small projects',
+      domains: 1,
+      features: [
+        '1 monitored domain',
+        'Weekly or bi-weekly scans',
+        'Automated alerts',
+        'Email notifications (up to 5 recipients)',
+        'Score trend tracking',
+        '12-month scan history',
+        'Fixed 90% threshold'
+      ],
+      highlighted: false,
+    },
+    {
+      tier: 'PRO' as AssuranceTier,
+      name: 'Pro Assurance',
+      description: 'Ideal for agencies and multi-site organizations',
+      domains: 5,
+      features: [
+        '5 monitored domains',
+        'Weekly or bi-weekly scans',
+        'Automated alerts',
+        'Email notifications (up to 5 recipients)',
+        'Score trend tracking',
+        '12-month scan history',
+        'Fixed 90% threshold'
+      ],
+      highlighted: true,
+    },
+    {
+      tier: 'PUBLIC_SECTOR' as AssuranceTier,
+      name: 'Public Sector',
+      description: 'Built for schools, governments, and public institutions',
+      domains: 20,
+      features: [
+        '20 monitored domains',
+        'Weekly or bi-weekly scans',
+        'Automated alerts',
+        'Email notifications (up to 5 recipients)',
+        'Score trend tracking',
+        '12-month scan history',
+        'Custom threshold (60-100%)',
+        'Compliance reporting'
+      ],
+      highlighted: false,
+    },
+  ];
+
+  const handleSubscribe = async (tier: AssuranceTier) => {
+    setLoading(tier);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/assurance/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tier,
+          billingCycle
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create subscription");
+      }
+
+      window.location.href = data.checkoutUrl || data.url;
+    } catch (err) {
+      console.error("Subscription error:", err);
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+      setLoading(null);
+    }
+  };
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
+      <div className="container mx-auto px-4">
+        {error && (
+          <Alert className="mb-8 max-w-md mx-auto" variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        <div className="text-center mb-12">
+          <Badge variant="outline" className="mb-4 bg-white dark:bg-slate-900">
+            For Institutes & Companies
+          </Badge>
+          <h2 className="text-3xl lg:text-5xl font-bold font-display mb-4 text-gray-900 dark:text-gray-100">
+            Accessibility <span className="text-primary">Assurance</span>
+          </h2>
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+            Continuous monitoring & compliance tracking for schools, governments, and public institutions
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
+            Automated scans • Alerts when scores drop • Peace of mind
+          </p>
+        </div>
+
+        {/* Billing Cycle Toggle */}
+        <div className="flex flex-col items-center mb-12 space-y-4">
+          <div className="inline-flex items-center rounded-lg bg-white dark:bg-slate-900 p-1 shadow-sm border">
+            <button
+              onClick={() => setBillingCycle('monthly')}
+              className={cn(
+                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
+                billingCycle === 'monthly'
+                  ? "bg-primary text-white shadow-sm"
+                  : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setBillingCycle('semiannual')}
+              className={cn(
+                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
+                billingCycle === 'semiannual'
+                  ? "bg-primary text-white shadow-sm"
+                  : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+              )}
+            >
+              6 Months
+              <Badge className="ml-2 bg-green-500 text-white text-xs">
+                Save 8%
+              </Badge>
+            </button>
+            <button
+              onClick={() => setBillingCycle('annual')}
+              className={cn(
+                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
+                billingCycle === 'annual'
+                  ? "bg-primary text-white shadow-sm"
+                  : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+              )}
+            >
+              Annual
+              <Badge className="ml-2 bg-green-600 text-white text-xs">
+                Save 15%
+              </Badge>
+            </button>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+            Save more with longer billing cycles
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {assurancePlans.map((plan) => {
+            const priceDisplay = formatAssurancePriceDisplay(plan.tier, billingCycle);
+            const discountBadge = getAssuranceDiscountBadge(billingCycle, plan.tier);
+
+            return (
+              <Card
+                key={plan.tier}
+                className={cn(
+                  "relative flex flex-col transition-all duration-300 bg-white dark:bg-slate-900",
+                  plan.highlighted && "border-primary shadow-xl lg:scale-105 ring-2 ring-primary/20"
+                )}
+              >
+                {plan.highlighted && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <Badge className="bg-primary text-white hover:bg-primary/90">
+                      <Star className="w-3 h-3 mr-1" />
+                      Most Popular
+                    </Badge>
+                  </div>
+                )}
+
+                {discountBadge && billingCycle !== 'monthly' && (
+                  <div className="absolute -top-2 -right-2">
+                    <Badge variant="secondary" className="bg-green-500 text-white text-xs px-2 py-1">
+                      {discountBadge}
+                    </Badge>
+                  </div>
+                )}
+
+                <CardHeader className="text-center pb-8">
+                  <CardTitle className="font-display text-2xl text-gray-900 dark:text-gray-100">{plan.name}</CardTitle>
+                  <div className="mt-4">
+                    <span className="text-4xl font-bold font-display text-gray-900 dark:text-gray-100">{priceDisplay.mainPrice}</span>
+                    <span className="text-gray-600 dark:text-gray-400">{priceDisplay.period}</span>
+                    {priceDisplay.subtext && (
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        (≈ {priceDisplay.subtext})
+                      </p>
+                    )}
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm">{plan.description}</p>
+                </CardHeader>
+
+                <CardContent className="space-y-6 flex-1 flex flex-col">
+                  <div className="space-y-3 flex-1">
+                    {plan.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-start space-x-3">
+                        <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button
+                    className={cn(
+                      "w-full mt-auto transition-all duration-200",
+                      plan.highlighted && "bg-primary hover:bg-primary/90"
+                    )}
+                    variant={plan.highlighted ? "default" : "outline"}
+                    size="lg"
+                    onClick={() => handleSubscribe(plan.tier)}
+                    disabled={loading === plan.tier}
+                  >
+                    {loading === plan.tier ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        {plan.tier === 'PUBLIC_SECTOR' ? 'Contact Sales' : 'Get Started'}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        <Alert className="mt-12 max-w-4xl mx-auto bg-white dark:bg-slate-900">
+          <Info className="h-4 w-4" />
+          <AlertDescription className="text-gray-700 dark:text-gray-300">
+            <strong>Note:</strong> Accessibility Assurance is a monitoring service only.
+            It does NOT provide audits, certifications, or remediation services.
+            For full accessibility auditing, please choose one of our main scanning plans above.
+          </AlertDescription>
+        </Alert>
+      </div>
+    </section>
+  );
+}
+
 function OverflowPricingSection() {
   const t = useTranslations('pricing.overflow');
 
@@ -614,6 +879,7 @@ export default function PricingPage() {
       <PricingJsonLd />
       <HeroSection />
       <PricingCards />
+      <AssurancePricingSection />
       <OverflowPricingSection />
       <ComplianceDisclaimerSection />
       <ToolComparisonSection />
