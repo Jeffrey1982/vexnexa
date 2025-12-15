@@ -694,7 +694,7 @@ export default async function DashboardPage() {
                             className="rounded flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
-                            <div className="font-medium text-sm truncate">
+                            <div className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
                               {new URL(scan.site.url).hostname}
                             </div>
                             <div className="text-xs text-muted-foreground truncate">
@@ -761,13 +761,13 @@ export default async function DashboardPage() {
                               height={16}
                               className="rounded"
                             />
-                            <span className="font-medium truncate max-w-32">
+                            <span className="font-medium truncate max-w-32 text-gray-900 dark:text-gray-100">
                               {new URL(scan.site.url).hostname}
                             </span>
                           </Link>
                         </TableCell>
                         <TableCell className="hidden lg:table-cell">
-                          <Link href={`/scans/${scan.id}`} className="text-blue-600 hover:text-blue-800 truncate max-w-48 block">
+                          <Link href={`/scans/${scan.id}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 truncate max-w-48 block">
                             {scan.site.url}
                           </Link>
                         </TableCell>
@@ -796,7 +796,7 @@ export default async function DashboardPage() {
                         </TableCell>
                         <TableCell>
                           <Link href={`/scans/${scan.id}`}>
-                            <span className="font-medium">{scan.issues || 0}</span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">{scan.issues || 0}</span>
                           </Link>
                         </TableCell>
                         <TableCell>
