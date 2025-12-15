@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabaseServer';
 import { getCurrentUser } from '@/lib/auth';
 
 /**
@@ -11,6 +11,14 @@ import { getCurrentUser } from '@/lib/auth';
  */
 export async function POST(request: NextRequest) {
   try {
+    // Check if admin client is available
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { ok: false, error: 'Storage service not configured. Please set SUPABASE_SERVICE_ROLE_KEY environment variable.' },
+        { status: 500 }
+      );
+    }
+
     // Check authentication
     let user;
     try {
@@ -69,8 +77,8 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Upload to Supabase storage
-    const { data, error } = await supabase.storage
+    // Upload to Supabase storage using admin client (bypasses RLS)
+    const { data, error } = await supabaseAdmin.storage
       .from('blog-images')
       .upload(filePath, buffer, {
         contentType: file.type,
@@ -87,7 +95,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get public URL
-    const { data: { publicUrl } } = supabase.storage
+    const { data: { publicUrl } } = supabaseAdmin.storage
       .from('blog-images')
       .getPublicUrl(filePath);
 
@@ -115,6 +123,14 @@ export async function POST(request: NextRequest) {
  */
 export async function DELETE(request: NextRequest) {
   try {
+    // Check if admin client is available
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { ok: false, error: 'Storage service not configured. Please set SUPABASE_SERVICE_ROLE_KEY environment variable.' },
+        { status: 500 }
+      );
+    }
+
     // Check authentication
     let user;
     try {
@@ -143,8 +159,8 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Delete from Supabase storage
-    const { error } = await supabase.storage
+    // Delete from Supabase storage using admin client (bypasses RLS)
+    const { error } = await supabaseAdmin.storage
       .from('blog-images')
       .remove([path]);
 

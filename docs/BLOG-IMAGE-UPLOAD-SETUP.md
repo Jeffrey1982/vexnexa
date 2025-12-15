@@ -64,15 +64,25 @@ TO authenticated
 USING (bucket_id = 'blog-images');
 ```
 
-### 3. Verify Environment Variables
+### 3. Set Required Environment Variables
 
-Ensure these environment variables are set in your `.env` file:
+**IMPORTANT:** The `SUPABASE_SERVICE_ROLE_KEY` is **required** for image uploads to work.
+
+Add these to your `.env` or `.env.local` file:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key (optional, for server-side operations)
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```
+
+**Where to find your Service Role Key:**
+1. Go to your Supabase Dashboard
+2. Navigate to **Settings** → **API**
+3. Under "Project API keys", find **`service_role` secret**
+4. Copy this key to your `.env` file
+
+⚠️ **Security Note:** The service role key bypasses RLS policies. Keep it secret and only use it server-side (API routes). Never expose it to the client.
 
 ### 4. Test the Setup
 
@@ -128,6 +138,28 @@ The editor supports standard markdown image syntax:
 
 ## Troubleshooting
 
+### "Upload failed: new row violates row-level security policy"
+
+This error means the `SUPABASE_SERVICE_ROLE_KEY` is not set or is invalid.
+
+**Solution:**
+1. Go to your Supabase Dashboard → **Settings** → **API**
+2. Copy the **`service_role` secret** key
+3. Add it to your `.env` file:
+   ```env
+   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+   ```
+4. Restart your development server: `npm run dev`
+
+### "Storage service not configured" Error
+
+The API cannot find the service role key.
+
+**Solution:**
+- Ensure `SUPABASE_SERVICE_ROLE_KEY` is in your `.env` or `.env.local` file
+- Restart your development/production server
+- Verify the variable name is exactly: `SUPABASE_SERVICE_ROLE_KEY`
+
 ### "Failed to upload image" Error
 
 1. **Check bucket exists:** Ensure the `blog-images` bucket is created in Supabase
@@ -135,6 +167,7 @@ The editor supports standard markdown image syntax:
 3. **Check file size:** Files must be under 10MB
 4. **Check file type:** Only JPEG, PNG, GIF, WebP, and SVG are allowed
 5. **Verify authentication:** You must be logged in as an authenticated user
+6. **Check service role key:** Ensure SUPABASE_SERVICE_ROLE_KEY is set
 
 ### Images Not Displaying
 
