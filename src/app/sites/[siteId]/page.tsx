@@ -100,7 +100,7 @@ export default function SitePage({ params }: PageProps) {
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 Site Details
               </h1>
-              <p className="text-lg text-gray-600 mb-1">{site.url}</p>
+              <p className="text-lg text-gray-800 dark:text-gray-300 mb-1">{site.url}</p>
               <p className="text-sm text-gray-500">
                 {site.pages?.length || 0} pages discovered
               </p>
@@ -125,7 +125,7 @@ export default function SitePage({ params }: PageProps) {
                 className={`${
                   activeTab === 'overview'
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 Overview
@@ -135,7 +135,7 @@ export default function SitePage({ params }: PageProps) {
                 className={`${
                   activeTab === 'analytics'
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 📊 Analytics
@@ -145,7 +145,7 @@ export default function SitePage({ params }: PageProps) {
                 className={`${
                   activeTab === 'monitoring'
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 🔍 Monitoring
@@ -155,7 +155,7 @@ export default function SitePage({ params }: PageProps) {
                 className={`${
                   activeTab === 'reports'
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 📄 Reports
@@ -169,7 +169,7 @@ export default function SitePage({ params }: PageProps) {
           <>
         {/* Crawl Status */}
         {latestCrawl && (
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Latest Site Crawl</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div>
@@ -205,7 +205,7 @@ export default function SitePage({ params }: PageProps) {
             
             {/* Progress bar */}
             <div className="mt-4">
-              <div className="flex justify-between text-sm text-gray-600 mb-2">
+              <div className="flex justify-between text-sm text-gray-800 dark:text-gray-300 mb-2">
                 <span>Progress</span>
                 <span>{latestCrawl.pagesDone} / {latestCrawl.maxPages}</span>
               </div>
@@ -223,7 +223,7 @@ export default function SitePage({ params }: PageProps) {
 
         {/* Site Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Total Pages
             </h3>
@@ -232,7 +232,7 @@ export default function SitePage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Average Score
             </h3>
@@ -249,7 +249,7 @@ export default function SitePage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Critical Issues
             </h3>
@@ -261,7 +261,7 @@ export default function SitePage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Total Issues
             </h3>
@@ -275,7 +275,7 @@ export default function SitePage({ params }: PageProps) {
         </div>
 
         {/* Pages Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900">
               Discovered Pages
@@ -296,16 +296,16 @@ export default function SitePage({ params }: PageProps) {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
                       Started
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
                       Score
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
                       Issues
                     </th>
                   </tr>
@@ -349,7 +349,7 @@ export default function SitePage({ params }: PageProps) {
         {activeTab === 'analytics' && (
           <div className="space-y-6">
             {/* Score Trend Chart */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Accessibility Score Trend</h2>
               <div className="h-64 flex items-end justify-between gap-2">
                 {site.scans?.slice(0, 10).reverse().map((scan: any, idx: number) => {
@@ -367,7 +367,7 @@ export default function SitePage({ params }: PageProps) {
                           title={`Score: ${scan.score}`}
                         ></div>
                       </div>
-                      <span className="text-xs text-gray-500 mt-2">
+                      <span className="text-xs text-gray-700 dark:text-gray-400 mt-2">
                         {new Date(scan.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -378,57 +378,57 @@ export default function SitePage({ params }: PageProps) {
 
             {/* Issues Breakdown */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4">Issues by Impact</h3>
+              <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Issues by Impact</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm">Critical</span>
+                    <span className="text-sm text-gray-900 dark:text-gray-100">Critical</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
+                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div className="bg-red-600 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactCritical || 0), 0) || 0) * 10)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8">
+                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactCritical || 0), 0) || 0}
                       </span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm">Serious</span>
+                    <span className="text-sm text-gray-900 dark:text-gray-100">Serious</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
+                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div className="bg-orange-500 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactSerious || 0), 0) || 0) * 10)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8">
+                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactSerious || 0), 0) || 0}
                       </span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm">Moderate</span>
+                    <span className="text-sm text-gray-900 dark:text-gray-100">Moderate</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
+                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div className="bg-yellow-500 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactModerate || 0), 0) || 0) * 5)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8">
+                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactModerate || 0), 0) || 0}
                       </span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm">Minor</span>
+                    <span className="text-sm text-gray-900 dark:text-gray-100">Minor</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 rounded-full h-2">
+                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div className="bg-blue-500 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactMinor || 0), 0) || 0) * 2)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8">
+                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactMinor || 0), 0) || 0}
                       </span>
                     </div>
@@ -436,7 +436,7 @@ export default function SitePage({ params }: PageProps) {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
                 <h3 className="text-lg font-semibold mb-4">Top Issues</h3>
                 <div className="space-y-2">
                   {topIssues.length > 0 ? (
@@ -451,7 +451,7 @@ export default function SitePage({ params }: PageProps) {
                       </div>
                     ))
                   ) : (
-                    <div className="text-sm text-gray-500 text-center py-4">
+                    <div className="text-sm text-gray-700 dark:text-gray-400 text-center py-4">
                       No issues found. Scan your pages to see violations.
                     </div>
                   )}
@@ -464,25 +464,25 @@ export default function SitePage({ params }: PageProps) {
         {/* Monitoring Tab */}
         {activeTab === 'monitoring' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Site Health Overview</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center p-4 bg-green-50 rounded-lg">
                   <div className="text-3xl font-bold text-green-600">99.8%</div>
-                  <div className="text-sm text-gray-600 mt-1">Uptime (30 days)</div>
+                  <div className="text-sm text-gray-800 dark:text-gray-300 mt-1">Uptime (30 days)</div>
                 </div>
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
                   <div className="text-3xl font-bold text-blue-600">1.2s</div>
-                  <div className="text-sm text-gray-600 mt-1">Avg Response Time</div>
+                  <div className="text-sm text-gray-800 dark:text-gray-300 mt-1">Avg Response Time</div>
                 </div>
                 <div className="text-center p-4 bg-purple-50 rounded-lg">
                   <div className="text-3xl font-bold text-purple-600">{site.pages?.length || 0}</div>
-                  <div className="text-sm text-gray-600 mt-1">Monitored Pages</div>
+                  <div className="text-sm text-gray-800 dark:text-gray-300 mt-1">Monitored Pages</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold mb-4">Recent Scan History</h3>
               <div className="space-y-3">
                 {site.scans?.slice(0, 5).map((scan: any) => (
@@ -510,7 +510,7 @@ export default function SitePage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold mb-4">Automated Scanning</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -539,28 +539,28 @@ export default function SitePage({ params }: PageProps) {
         {/* Reports Tab */}
         {activeTab === 'reports' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Generate Report</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors text-left">
                   <div className="text-2xl mb-2">📊</div>
                   <div className="font-medium">Summary Report</div>
-                  <div className="text-sm text-gray-500 mt-1">Quick overview of all issues</div>
+                  <div className="text-sm text-gray-700 dark:text-gray-400 mt-1">Quick overview of all issues</div>
                 </button>
                 <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors text-left">
                   <div className="text-2xl mb-2">📋</div>
                   <div className="font-medium">Detailed Report</div>
-                  <div className="text-sm text-gray-500 mt-1">In-depth analysis with recommendations</div>
+                  <div className="text-sm text-gray-700 dark:text-gray-400 mt-1">In-depth analysis with recommendations</div>
                 </button>
                 <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors text-left">
                   <div className="text-2xl mb-2">🎯</div>
                   <div className="font-medium">WCAG Compliance</div>
-                  <div className="text-sm text-gray-500 mt-1">Standards compliance report</div>
+                  <div className="text-sm text-gray-700 dark:text-gray-400 mt-1">Standards compliance report</div>
                 </button>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold mb-4">Recent Reports</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -590,7 +590,7 @@ export default function SitePage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold mb-4">Scheduled Reports</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">

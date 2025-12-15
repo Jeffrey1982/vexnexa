@@ -608,9 +608,9 @@ export default async function DashboardPage() {
                 </div>
 
                 {/* White Label Features Overview */}
-                <div className="border rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50">
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">🎨 {t('whiteLabel.featuresTitle')}</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+                <div className="border rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">🎨 {t('whiteLabel.featuresTitle')}</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-gray-900 dark:text-gray-100">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
