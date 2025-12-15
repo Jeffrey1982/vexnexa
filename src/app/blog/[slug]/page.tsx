@@ -11,14 +11,15 @@ import { SafeImage } from '@/components/SafeImage'
 const prisma = new PrismaClient()
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
   const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug }
+    where: { slug }
   });
 
   if (!post) {
@@ -51,8 +52,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 export const revalidate = 3600;
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
   const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
     include: {
       author: {
         select: {
