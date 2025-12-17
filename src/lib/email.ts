@@ -77,7 +77,7 @@ This message was sent via the contact form on vexnexa.com
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: #3B82F6; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
+            <div style="display: inline-block; background: #0F5C5C; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
             <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
             <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
@@ -88,7 +88,7 @@ This message was sent via the contact form on vexnexa.com
             <strong>Thank you for contacting us!</strong> We have successfully received your message and our team will review it shortly.
           </p>
 
-          <div style="background: #EFF6FF; border-left: 4px solid #3B82F6; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+          <div style="background: #EFF6FF; border-left: 4px solid #0F5C5C; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
             <p style="color: #1E40AF; font-size: 16px; margin: 0; font-weight: 600;">
               ⚡ We reply as fast as possible - usually within a few hours!
             </p>
@@ -100,7 +100,7 @@ This message was sent via the contact form on vexnexa.com
           </div>
 
           <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin: 24px 0;">
-            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #3B82F6; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
+            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #0F5C5C; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
           </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -111,7 +111,7 @@ This message was sent via the contact form on vexnexa.com
           </p>
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center; margin-top: 30px;">
-            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3B82F6; text-decoration: none;">vexnexa.com</a><br>
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #0F5C5C; text-decoration: none;">vexnexa.com</a><br>
             Privacy-first WCAG scanning • Made in the Netherlands
           </p>
         </div>
@@ -557,7 +557,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
               </p>
             </div>
 
-            <div style="background: #EFF6FF; padding: 16px; border-radius: 8px; border-left: 4px solid #3B82F6;">
+            <div style="background: #EFF6FF; padding: 16px; border-radius: 8px; border-left: 4px solid #0F5C5C;">
               <h4 style="color: #1E40AF; margin: 0 0 8px 0; font-size: 16px;">Trial Information</h4>
               <p style="margin: 4px 0; color: #1E40AF;">
                 <strong>Trial Ends:</strong> ${trialEndDate}
