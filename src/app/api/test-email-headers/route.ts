@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
           <div style="text-align: center; margin: 32px 0;">
             <h3>Test Links with UTM:</h3>
             <p>
-              <a href="${dashboardUrl}" style="display: inline-block; background: #3B82F6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 8px;">
+              <a href="${dashboardUrl}" style="display: inline-block; background: #0F5C5C; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 8px;">
                 Dashboard (UTM tracked)
               </a>
             </p>

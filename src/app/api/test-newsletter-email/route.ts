@@ -41,12 +41,12 @@ export async function POST(request: NextRequest) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: #3B82F6; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">T</div>
+            <div style="display: inline-block; background: #0F5C5C; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
             <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
             <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
 
-          <div style="background: #EFF6FF; border: 2px solid #3B82F6; padding: 16px; border-radius: 8px; margin: 20px 0;">
+          <div style="background: #EFF6FF; border: 2px solid #0F5C5C; padding: 16px; border-radius: 8px; margin: 20px 0;">
             <h2 style="color: #1E40AF; margin: 0 0 8px 0;">🧪 TEST EMAIL - Friendly Source Names</h2>
             <p style="color: #1E40AF; margin: 0; font-size: 14px;">This is a test to verify friendly source name mapping works correctly.</p>
           </div>
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center;">
-            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3B82F6;">vexnexa.com</a><br>
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #0F5C5C;">vexnexa.com</a><br>
             🧪 TEST EMAIL - Source Name Mapping Verification
           </p>
         </div>
