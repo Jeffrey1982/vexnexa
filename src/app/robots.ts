@@ -7,24 +7,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: [
-          '/',
-          '/features',
-          '/pricing',
-          '/about',
-          '/contact',
-          '/blog',
-          '/changelog',
-          '/legal/privacy',
-          '/legal/terms',
-        ],
         disallow: [
           '/dashboard',
           '/scans',
           '/api/',
           '/admin/',
-          '/_next/',
-          '/static/',
         ],
       },
       {
@@ -36,12 +23,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/',
       },
     ],
-    sitemap: [
-      `${baseUrl}/sitemap.xml`,
-      `${baseUrl}/sitemap_pages.xml`,
-      `${baseUrl}/sitemap_content.xml`,
-      `${baseUrl}/sitemap_blog.xml`,
-    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
   }
 }
