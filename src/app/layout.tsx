@@ -5,6 +5,7 @@ import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import './design-system.css'
 import './globals.css'
 
@@ -80,6 +81,7 @@ export default async function RootLayout({
         <link rel="prefetch" href="/sw.js" />
       </head>
       <body className="font-sans antialiased bg-[var(--tp-muted)]">
+        <GoogleAnalytics />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
