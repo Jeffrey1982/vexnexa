@@ -45,7 +45,7 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com",
               "style-src 'self' 'unsafe-inline'",
-              "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://www.google.com https://*.gstatic.com https://www.google-analytics.com",
+              "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://www.google.com https://*.gstatic.com https://*.google-analytics.com",
               "img-src 'self' data: blob: https://www.google.com https://*.supabase.co https://*.gstatic.com",
               "font-src 'self' data:",
               "object-src 'none'",

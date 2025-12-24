@@ -98,7 +98,7 @@ export async function middleware(request: NextRequest) {
     "default-src 'self'",
     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline'",
-    "connect-src 'self' https://*.vexnexa.com https://vexnexa.com https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com https://www.google.com https://*.gstatic.com https://www.google-analytics.com",
+    "connect-src 'self' https://*.vexnexa.com https://vexnexa.com https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com https://www.google.com https://*.gstatic.com https://*.google-analytics.com",
     "img-src 'self' blob: data: https: https://*.supabase.co https://*.gstatic.com",
     "font-src 'self' data:",
     "object-src 'none'",

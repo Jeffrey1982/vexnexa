@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v10-ga4-bypass';
+const CACHE_NAME = 'vexnexa-v11-ga4-regional';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -86,7 +86,8 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'google.com' ||
     url.hostname.endsWith('.gstatic.com') ||
     url.hostname === 'www.googletagmanager.com' ||
-    url.hostname === 'www.google-analytics.com'
+    url.hostname.endsWith('.google-analytics.com') ||
+    url.hostname === 'google-analytics.com'
   ) {
     return; // Let browser handle Google resources directly
   }
