@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v9-favicon-fix';
+const CACHE_NAME = 'vexnexa-v10-ga4-bypass';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -79,9 +79,15 @@ self.addEventListener('fetch', (event) => {
     return; // Let browser handle lead/newsletter API directly
   }
 
-  // BYPASS SERVICE WORKER FOR GOOGLE FAVICONS
+  // BYPASS SERVICE WORKER FOR GOOGLE RESOURCES (FAVICONS AND ANALYTICS)
   // These are external resources that should be fetched directly without caching
-  if (url.hostname === 'www.google.com' || url.hostname === 'google.com' || url.hostname.endsWith('.gstatic.com')) {
+  if (
+    url.hostname === 'www.google.com' ||
+    url.hostname === 'google.com' ||
+    url.hostname.endsWith('.gstatic.com') ||
+    url.hostname === 'www.googletagmanager.com' ||
+    url.hostname === 'www.google-analytics.com'
+  ) {
     return; // Let browser handle Google resources directly
   }
 
