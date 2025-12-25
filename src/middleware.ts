@@ -5,6 +5,32 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl
   const pathname = url.pathname
 
+  // Legacy Shopify URL patterns
+  const SHOPIFY_PATTERNS = [
+    /^\/products\//,
+    /^\/collections\//,
+    /^\/cart\/?$/,
+    /^\/checkout/,
+    /^\/blogs\//,
+    /^\/account/,
+    /^\/search/,
+  ] as const
+
+  // Check if URL matches legacy Shopify pattern
+  const isShopifyUrl = SHOPIFY_PATTERNS.some(pattern =>
+    pattern.test(pathname.toLowerCase())
+  )
+
+  if (isShopifyUrl) {
+    return new NextResponse(null, {
+      status: 410,
+      headers: {
+        'X-Robots-Tag': 'noindex, nofollow',
+        'Cache-Control': 'public, max-age=31536000, immutable',
+      }
+    })
+  }
+
   // Apply rate limiting to API routes
   if (pathname.startsWith('/api/')) {
     // Different rate limits for different endpoints
@@ -38,6 +64,11 @@ export async function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next()
+
+  // Prevent indexing of ALL API routes
+  if (pathname.startsWith('/api/')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  }
 
   // Handle locale cookie if not set, default to 'en'
   if (!request.cookies.get('NEXT_LOCALE')) {
