@@ -129,7 +129,7 @@ export async function generateActions(
       key: 'poor_core_web_vitals',
       severity: 'high',
       title: 'Poor Core Web Vitals',
-      description: 'LCP and CLS scores are below Google's recommended thresholds. Optimize images, fonts, and layout shifts.',
+      description: 'LCP and CLS scores are below Google recommended thresholds. Optimize images, fonts, and layout shifts.',
       impactPoints: 30,
       metadata: { score: breakdown.p5TechnicalExperience.components.coreWebVitals },
     });
