@@ -22,7 +22,13 @@
       "Bash(lsof:*)",
       "Bash(npm run dev)",
       "Bash(netstat:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git rm:*)",
+      "Bash(robots \")",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(git mv:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []

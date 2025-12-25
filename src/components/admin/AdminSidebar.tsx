@@ -20,6 +20,12 @@ import {
   ChevronRight,
   Menu,
   X,
+  Search,
+  Database,
+  Eye,
+  Award,
+  Bell,
+  Settings as SettingsIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,7 +44,7 @@ interface NavGroup {
 export function AdminSidebar() {
   const pathname = usePathname();
   // Keep all groups permanently expanded for better UX in sidebar
-  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Support']);
+  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Support', 'SEO Health']);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -88,6 +94,18 @@ export function AdminSidebar() {
         { href: '/admin/billing', label: 'Billing', icon: DollarSign },
         { href: '/admin/payments', label: 'Payments', icon: DollarSign },
         { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
+      ]
+    },
+    {
+      label: 'SEO Health',
+      icon: Search,
+      items: [
+        { href: '/admin/seo', label: 'Overview', icon: Search },
+        { href: '/admin/seo/index-health', label: 'Index Health', icon: Database },
+        { href: '/admin/seo/visibility', label: 'Visibility', icon: Eye },
+        { href: '/admin/seo/page-quality', label: 'Page Quality', icon: Award },
+        { href: '/admin/seo/alerts', label: 'Alerts', icon: Bell },
+        { href: '/admin/seo/settings', label: 'Settings', icon: SettingsIcon },
       ]
     },
     {

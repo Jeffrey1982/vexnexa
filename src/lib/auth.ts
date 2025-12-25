@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { prisma } from '@/lib/prisma'
+import { redirect } from 'next/navigation'
 
 export async function getCurrentUser() {
   const supabase = await createClient()
@@ -97,4 +98,59 @@ export async function requireAuth() {
 // Helper to get user ID from request context
 export async function getUserFromRequest() {
   return await getCurrentUser()
+}
+
+/**
+ * ADMIN AUTHORIZATION
+ *
+ * Centralized admin check for all admin routes.
+ * Uses TWO methods to determine admin status:
+ *
+ * 1. Supabase user_metadata.is_admin flag (preferred)
+ * 2. Email allowlist (fallback)
+ *
+ * To add an admin:
+ * - Option A: Set is_admin=true in Supabase user metadata (recommended)
+ * - Option B: Add email to ADMIN_EMAILS env var (comma-separated)
+ *
+ * @throws Redirects to /unauthorized if not authenticated or not admin
+ */
+export async function requireAdmin() {
+  let user;
+
+  try {
+    user = await requireAuth();
+  } catch (error) {
+    // Not authenticated - redirect to login
+    redirect('/auth/login?redirect=/admin');
+  }
+
+  // Admin email allowlist from environment variable
+  const adminEmailsEnv = process.env.ADMIN_EMAILS || 'jeffrey.aay@gmail.com,admin@vexnexa.com';
+  const adminEmails = adminEmailsEnv.split(',').map(email => email.trim());
+
+  // Check admin status via metadata OR email allowlist
+  const isAdmin = user.isAdmin || adminEmails.includes(user.email);
+
+  if (!isAdmin) {
+    console.warn(`Unauthorized admin access attempt by user: ${user.email}`);
+    redirect('/unauthorized');
+  }
+
+  return user;
+}
+
+/**
+ * Check if a user is an admin without redirecting
+ * Useful for conditional UI rendering
+ */
+export async function isAdmin(): Promise<boolean> {
+  try {
+    const user = await getCurrentUser();
+    const adminEmailsEnv = process.env.ADMIN_EMAILS || 'jeffrey.aay@gmail.com,admin@vexnexa.com';
+    const adminEmails = adminEmailsEnv.split(',').map(email => email.trim());
+    return user.isAdmin || adminEmails.includes(user.email);
+  } catch (error) {
+    return false;
+  }
 }

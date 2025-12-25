@@ -1,28 +1,22 @@
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { MainNav } from "@/components/admin/MainNav";
 
-// Admin authorization check using database-driven RBAC
-async function requireAdmin() {
-  const user = await requireAuth();
-
-  // Admin emails whitelist as fallback
-  const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-
-  // Check if user has admin role from database OR is in admin emails list
-  if (!user.isAdmin && !adminEmails.includes(user.email)) {
-    redirect('/dashboard');
-  }
-
-  return user;
-}
-
+/**
+ * Admin Layout - Server-side gated layout for all /admin/* routes
+ *
+ * Security:
+ * - Requires authentication via Supabase
+ * - Requires admin privileges (user_metadata.is_admin OR email allowlist)
+ * - Redirects to /unauthorized if not authorized
+ * - All checks happen server-side
+ */
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Server-side admin check - will redirect if unauthorized
   const user = await requireAdmin();
 
   return (

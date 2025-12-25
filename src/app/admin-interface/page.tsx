@@ -1,8 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -22,28 +21,6 @@ import {
 } from "@/components/admin/layout";
 import { AdminInterfaceFiltersClient } from "./AdminInterfaceFiltersClient";
 import { CreateTestTicketButtonInterface } from "./CreateTestTicketButtonInterface";
-
-// Admin check
-async function requireAdmin() {
-  try {
-    const user = await requireAuth();
-
-    // Check if user is admin
-    const adminEmails = [
-      'jeffrey.aay@gmail.com',
-      'admin@vexnexa.com'
-    ];
-
-    if (!adminEmails.includes(user.email) && !user.isAdmin) {
-      redirect('/dashboard');
-    }
-
-    return user;
-  } catch (error) {
-    console.error('Admin auth error:', error);
-    redirect('/auth/login');
-  }
-}
 
 async function getAllTickets(filters?: {
   status?: string;
@@ -137,6 +114,8 @@ type PageProps = {
 
 export default async function AdminInterfacePage(props: PageProps) {
   const searchParams = await Promise.resolve(props.searchParams);
+
+  // Use centralized admin check
   const user = await requireAdmin();
 
   const stats = await getTicketStats();
