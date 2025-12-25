@@ -53,7 +53,7 @@ export async function fetchGA4LandingPageMetrics(
             },
           },
         },
-        limit,
+        limit: limit.toString(),
         orderBys: [
           {
             metric: { metricName: 'sessions' },
