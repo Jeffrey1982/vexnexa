@@ -16,53 +16,73 @@ export const metadata = {
 };
 
 async function getP2Data() {
-  const latest = await prisma.$queryRaw<any[]>`
-    SELECT
-      date,
-      p2_search_visibility,
-      breakdown
-    FROM score_daily
-    ORDER BY date DESC
-    LIMIT 1
-  `;
-  return latest[0] || null;
+  try {
+    const latest = await prisma.$queryRaw<any[]>`
+      SELECT
+        date,
+        p2_search_visibility,
+        breakdown
+      FROM score_daily
+      ORDER BY date DESC
+      LIMIT 1
+    `;
+    return latest[0] || null;
+  } catch (error) {
+    console.error('Error fetching P2 data:', error);
+    return null;
+  }
 }
 
 async function getTopQueries() {
-  const siteUrl = process.env.GSC_SITE_URL!;
-  const queries = await prisma.$queryRaw<any[]>`
-    SELECT query, impressions, clicks, ctr, position
-    FROM gsc_daily_query_metrics
-    WHERE site_url = ${siteUrl}
-      AND date = (SELECT MAX(date) FROM gsc_daily_query_metrics WHERE site_url = ${siteUrl})
-    ORDER BY impressions DESC
-    LIMIT 20
-  `;
-  return queries;
+  try {
+    const siteUrl = process.env.GSC_SITE_URL!;
+    const queries = await prisma.$queryRaw<any[]>`
+      SELECT query, impressions, clicks, ctr, position
+      FROM gsc_daily_query_metrics
+      WHERE site_url = ${siteUrl}
+        AND date = (SELECT MAX(date) FROM gsc_daily_query_metrics WHERE site_url = ${siteUrl})
+      ORDER BY impressions DESC
+      LIMIT 20
+    `;
+    return queries;
+  } catch (error) {
+    console.error('Error fetching top queries:', error);
+    return [];
+  }
 }
 
 async function getTopPages() {
-  const siteUrl = process.env.GSC_SITE_URL!;
-  const pages = await prisma.$queryRaw<any[]>`
-    SELECT page, impressions, clicks, ctr, position
-    FROM gsc_daily_page_metrics
-    WHERE site_url = ${siteUrl}
-      AND date = (SELECT MAX(date) FROM gsc_daily_page_metrics WHERE site_url = ${siteUrl})
-    ORDER BY impressions DESC
-    LIMIT 20
-  `;
-  return pages;
+  try {
+    const siteUrl = process.env.GSC_SITE_URL!;
+    const pages = await prisma.$queryRaw<any[]>`
+      SELECT page, impressions, clicks, ctr, position
+      FROM gsc_daily_page_metrics
+      WHERE site_url = ${siteUrl}
+        AND date = (SELECT MAX(date) FROM gsc_daily_page_metrics WHERE site_url = ${siteUrl})
+      ORDER BY impressions DESC
+      LIMIT 20
+    `;
+    return pages;
+  } catch (error) {
+    console.error('Error fetching top pages:', error);
+    return [];
+  }
 }
 
 async function getP2Actions() {
-  const actions = await prisma.$queryRaw<any[]>`
-    SELECT pillar, severity, title, description, impact_points
-    FROM score_actions_daily
-    WHERE pillar = 'P2'
-      AND date = (SELECT MAX(date) FROM score_actions_daily)
-    ORDER BY impact_points DESC
-  `;
-  return actions;
+  try {
+    const actions = await prisma.$queryRaw<any[]>`
+      SELECT pillar, severity, title, description, impact_points
+      FROM score_actions_daily
+      WHERE pillar = 'P2'
+        AND date = (SELECT MAX(date) FROM score_actions_daily)
+      ORDER BY impact_points DESC
+    `;
+    return actions;
+  } catch (error) {
+    console.error('Error fetching P2 actions:', error);
+    return [];
+  }
 }
 
 export default async function AdminSeoVisibilityPage() {
