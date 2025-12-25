@@ -119,7 +119,6 @@ export default async function AdminSeoSettingsPage() {
         <AdminTableShell
           title="Alert Rules"
           description="Manage automated monitoring rules and thresholds"
-          icon={AlertCircle}
         >
           <div className="space-y-3">
             {alertRules.map((rule: any) => (
@@ -196,7 +195,6 @@ export default async function AdminSeoSettingsPage() {
           <AdminTableShell
             title="Watched Pages"
             description="Pages monitored for Core Web Vitals via PageSpeed Insights"
-            icon={Eye}
           >
             <div className="overflow-x-auto">
               <table className="w-full">

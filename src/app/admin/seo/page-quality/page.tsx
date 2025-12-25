@@ -329,7 +329,6 @@ export default async function AdminSeoPageQualityPage() {
           <AdminTableShell
             title="Low CTR Pages"
             description="Pages with high impressions but low click-through rate"
-            icon={AlertCircle}
           >
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -385,7 +384,6 @@ export default async function AdminSeoPageQualityPage() {
           <AdminTableShell
             title="Low Engagement Pages"
             description="Pages with poor user engagement metrics"
-            icon={AlertCircle}
           >
             <div className="overflow-x-auto">
               <table className="w-full">

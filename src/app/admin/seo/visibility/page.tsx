@@ -256,7 +256,6 @@ export default async function AdminSeoVisibilityPage() {
           <AdminTableShell
             title="Top Queries"
             description="Highest performing search queries by impressions"
-            icon={TrendingUp}
           >
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -317,7 +316,6 @@ export default async function AdminSeoVisibilityPage() {
           <AdminTableShell
             title="Top Pages"
             description="Highest performing pages by impressions"
-            icon={TrendingUp}
           >
             <div className="overflow-x-auto">
               <table className="w-full">

@@ -204,7 +204,6 @@ export default async function AdminSeoAlertsPage() {
           <AdminTableShell
             title="Active Alerts"
             description="Issues requiring attention, sorted by severity"
-            icon={AlertTriangle}
           >
             <div className="space-y-3">
               {activeAlerts.map((alert: any) => (
