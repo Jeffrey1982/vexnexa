@@ -13,40 +13,50 @@ export const metadata = {
 };
 
 async function getAlertRules() {
-  const rules = await prisma.$queryRaw<any[]>`
-    SELECT
-      id,
-      type,
-      enabled,
-      severity,
-      thresholds,
-      lookback_days,
-      description
-    FROM alert_rules
-    ORDER BY
-      CASE severity
-        WHEN 'critical' THEN 1
-        WHEN 'high' THEN 2
-        WHEN 'medium' THEN 3
-        ELSE 4
-      END,
-      type
-  `;
-  return rules;
+  try {
+    const rules = await prisma.$queryRaw<any[]>`
+      SELECT
+        id,
+        type,
+        enabled,
+        severity,
+        thresholds,
+        lookback_days,
+        description
+      FROM alert_rules
+      ORDER BY
+        CASE severity
+          WHEN 'critical' THEN 1
+          WHEN 'high' THEN 2
+          WHEN 'medium' THEN 3
+          ELSE 4
+        END,
+        type
+    `;
+    return rules;
+  } catch (error) {
+    console.error('Error fetching alert rules:', error);
+    return [];
+  }
 }
 
 async function getWatchedPages() {
-  const pages = await prisma.$queryRaw<any[]>`
-    SELECT
-      id,
-      url,
-      label,
-      active,
-      added_at
-    FROM watched_pages
-    ORDER BY added_at DESC
-  `;
-  return pages;
+  try {
+    const pages = await prisma.$queryRaw<any[]>`
+      SELECT
+        id,
+        url,
+        label,
+        active,
+        added_at
+      FROM watched_pages
+      ORDER BY added_at DESC
+    `;
+    return pages;
+  } catch (error) {
+    console.error('Error fetching watched pages:', error);
+    return [];
+  }
 }
 
 export default async function AdminSeoSettingsPage() {

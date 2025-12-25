@@ -16,72 +16,93 @@ export const metadata = {
 };
 
 async function getAlertStats() {
-  const activeAlerts = await prisma.$queryRaw<any[]>`
-    SELECT
-      COUNT(*) as total_active,
-      COUNT(*) FILTER (WHERE severity = 'critical') as critical_count,
-      COUNT(*) FILTER (WHERE severity = 'high') as high_count,
-      COUNT(*) FILTER (WHERE severity = 'medium') as medium_count
-    FROM alerts
-    WHERE status = 'active'
-  `;
+  try {
+    const activeAlerts = await prisma.$queryRaw<any[]>`
+      SELECT
+        COUNT(*) as total_active,
+        COUNT(*) FILTER (WHERE severity = 'critical') as critical_count,
+        COUNT(*) FILTER (WHERE severity = 'high') as high_count,
+        COUNT(*) FILTER (WHERE severity = 'medium') as medium_count
+      FROM alerts
+      WHERE status = 'active'
+    `;
 
-  const resolved7d = await prisma.$queryRaw<any[]>`
-    SELECT COUNT(*) as count
-    FROM alerts
-    WHERE status = 'resolved'
-      AND resolved_at >= NOW() - INTERVAL '7 days'
-  `;
+    const resolved7d = await prisma.$queryRaw<any[]>`
+      SELECT COUNT(*) as count
+      FROM alerts
+      WHERE status = 'resolved'
+        AND resolved_at >= NOW() - INTERVAL '7 days'
+    `;
 
-  return {
-    totalActive: Number(activeAlerts[0]?.total_active || 0),
-    critical: Number(activeAlerts[0]?.critical_count || 0),
-    high: Number(activeAlerts[0]?.high_count || 0),
-    medium: Number(activeAlerts[0]?.medium_count || 0),
-    resolved7d: Number(resolved7d[0]?.count || 0),
-  };
+    return {
+      totalActive: Number(activeAlerts[0]?.total_active || 0),
+      critical: Number(activeAlerts[0]?.critical_count || 0),
+      high: Number(activeAlerts[0]?.high_count || 0),
+      medium: Number(activeAlerts[0]?.medium_count || 0),
+      resolved7d: Number(resolved7d[0]?.count || 0),
+    };
+  } catch (error) {
+    console.error('Error fetching alert stats:', error);
+    return {
+      totalActive: 0,
+      critical: 0,
+      high: 0,
+      medium: 0,
+      resolved7d: 0,
+    };
+  }
 }
 
 async function getActiveAlerts() {
-  const alerts = await prisma.$queryRaw<any[]>`
-    SELECT
-      id,
-      severity,
-      type,
-      entity_type,
-      entity_key,
-      message,
-      details,
-      created_at
-    FROM alerts
-    WHERE status = 'active'
-    ORDER BY
-      CASE severity
-        WHEN 'critical' THEN 1
-        WHEN 'high' THEN 2
-        WHEN 'medium' THEN 3
-        ELSE 4
-      END,
-      created_at DESC
-  `;
-  return alerts;
+  try {
+    const alerts = await prisma.$queryRaw<any[]>`
+      SELECT
+        id,
+        severity,
+        type,
+        entity_type,
+        entity_key,
+        message,
+        details,
+        created_at
+      FROM alerts
+      WHERE status = 'active'
+      ORDER BY
+        CASE severity
+          WHEN 'critical' THEN 1
+          WHEN 'high' THEN 2
+          WHEN 'medium' THEN 3
+          ELSE 4
+        END,
+        created_at DESC
+    `;
+    return alerts;
+  } catch (error) {
+    console.error('Error fetching active alerts:', error);
+    return [];
+  }
 }
 
 async function getRecentResolvedAlerts() {
-  const alerts = await prisma.$queryRaw<any[]>`
-    SELECT
-      id,
-      severity,
-      type,
-      message,
-      resolved_at
-    FROM alerts
-    WHERE status = 'resolved'
-      AND resolved_at >= NOW() - INTERVAL '7 days'
-    ORDER BY resolved_at DESC
-    LIMIT 10
-  `;
-  return alerts;
+  try {
+    const alerts = await prisma.$queryRaw<any[]>`
+      SELECT
+        id,
+        severity,
+        type,
+        message,
+        resolved_at
+      FROM alerts
+      WHERE status = 'resolved'
+        AND resolved_at >= NOW() - INTERVAL '7 days'
+      ORDER BY resolved_at DESC
+      LIMIT 10
+    `;
+    return alerts;
+  } catch (error) {
+    console.error('Error fetching resolved alerts:', error);
+    return [];
+  }
 }
 
 export default async function AdminSeoAlertsPage() {

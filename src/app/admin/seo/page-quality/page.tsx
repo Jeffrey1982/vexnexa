@@ -16,67 +16,87 @@ export const metadata = {
 };
 
 async function getP3P4Data() {
-  const latest = await prisma.$queryRaw<any[]>`
-    SELECT
-      date,
-      p3_engagement_intent,
-      p4_content_performance,
-      breakdown
-    FROM score_daily
-    ORDER BY date DESC
-    LIMIT 1
-  `;
-  return latest[0] || null;
+  try {
+    const latest = await prisma.$queryRaw<any[]>`
+      SELECT
+        date,
+        p3_engagement_intent,
+        p4_content_performance,
+        breakdown
+      FROM score_daily
+      ORDER BY date DESC
+      LIMIT 1
+    `;
+    return latest[0] || null;
+  } catch (error) {
+    console.error('Error fetching P3/P4 data:', error);
+    return null;
+  }
 }
 
 async function getLowCTRPages() {
-  const siteUrl = process.env.GSC_SITE_URL!;
+  try {
+    const siteUrl = process.env.GSC_SITE_URL!;
 
-  // Find pages with high impressions but low CTR
-  const pages = await prisma.$queryRaw<any[]>`
-    SELECT page, impressions, clicks, ctr, position
-    FROM gsc_daily_page_metrics
-    WHERE site_url = ${siteUrl}
-      AND date = (SELECT MAX(date) FROM gsc_daily_page_metrics WHERE site_url = ${siteUrl})
-      AND impressions >= 100
-      AND ctr < 0.02
-    ORDER BY impressions DESC
-    LIMIT 20
-  `;
-  return pages;
+    // Find pages with high impressions but low CTR
+    const pages = await prisma.$queryRaw<any[]>`
+      SELECT page, impressions, clicks, ctr, position
+      FROM gsc_daily_page_metrics
+      WHERE site_url = ${siteUrl}
+        AND date = (SELECT MAX(date) FROM gsc_daily_page_metrics WHERE site_url = ${siteUrl})
+        AND impressions >= 100
+        AND ctr < 0.02
+      ORDER BY impressions DESC
+      LIMIT 20
+    `;
+    return pages;
+  } catch (error) {
+    console.error('Error fetching low CTR pages:', error);
+    return [];
+  }
 }
 
 async function getLowEngagementPages() {
-  const propertyId = process.env.GA4_PROPERTY_ID!;
+  try {
+    const propertyId = process.env.GA4_PROPERTY_ID!;
 
-  // Find pages with low engagement
-  const pages = await prisma.$queryRaw<any[]>`
-    SELECT
-      landing_page,
-      organic_sessions,
-      engagement_rate,
-      avg_engagement_time_seconds,
-      bounce_rate
-    FROM ga4_daily_landing_metrics
-    WHERE property_id = ${propertyId}
-      AND date = (SELECT MAX(date) FROM ga4_daily_landing_metrics WHERE property_id = ${propertyId})
-      AND organic_sessions >= 10
-      AND engagement_rate < 0.3
-    ORDER BY organic_sessions DESC
-    LIMIT 20
-  `;
-  return pages;
+    // Find pages with low engagement
+    const pages = await prisma.$queryRaw<any[]>`
+      SELECT
+        landing_page,
+        organic_sessions,
+        engagement_rate,
+        avg_engagement_time_seconds,
+        bounce_rate
+      FROM ga4_daily_landing_metrics
+      WHERE property_id = ${propertyId}
+        AND date = (SELECT MAX(date) FROM ga4_daily_landing_metrics WHERE property_id = ${propertyId})
+        AND organic_sessions >= 10
+        AND engagement_rate < 0.3
+      ORDER BY organic_sessions DESC
+      LIMIT 20
+    `;
+    return pages;
+  } catch (error) {
+    console.error('Error fetching low engagement pages:', error);
+    return [];
+  }
 }
 
 async function getP3P4Actions() {
-  const actions = await prisma.$queryRaw<any[]>`
-    SELECT pillar, severity, title, description, impact_points
-    FROM score_actions_daily
-    WHERE pillar IN ('P3', 'P4')
-      AND date = (SELECT MAX(date) FROM score_actions_daily)
-    ORDER BY impact_points DESC
-  `;
-  return actions;
+  try {
+    const actions = await prisma.$queryRaw<any[]>`
+      SELECT pillar, severity, title, description, impact_points
+      FROM score_actions_daily
+      WHERE pillar IN ('P3', 'P4')
+        AND date = (SELECT MAX(date) FROM score_actions_daily)
+      ORDER BY impact_points DESC
+    `;
+    return actions;
+  } catch (error) {
+    console.error('Error fetching P3/P4 actions:', error);
+    return [];
+  }
 }
 
 export default async function AdminSeoPageQualityPage() {
