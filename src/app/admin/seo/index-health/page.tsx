@@ -15,39 +15,54 @@ export const metadata = {
 };
 
 async function getP1Data() {
-  const latest = await prisma.$queryRaw<any[]>`
-    SELECT
-      date,
-      p1_index_crawl_health,
-      breakdown
-    FROM score_daily
-    ORDER BY date DESC
-    LIMIT 1
-  `;
-  return latest[0] || null;
+  try {
+    const latest = await prisma.$queryRaw<any[]>`
+      SELECT
+        date,
+        p1_index_crawl_health,
+        breakdown
+      FROM score_daily
+      ORDER BY date DESC
+      LIMIT 1
+    `;
+    return latest[0] || null;
+  } catch (error) {
+    console.error('Error fetching P1 data:', error);
+    return null;
+  }
 }
 
 async function getImpressionsTrend() {
-  const siteUrl = process.env.GSC_SITE_URL!;
-  const trend = await prisma.$queryRaw<any[]>`
-    SELECT date, impressions, clicks
-    FROM gsc_daily_site_metrics
-    WHERE site_url = ${siteUrl}
-      AND date >= CURRENT_DATE - INTERVAL '30 days'
-    ORDER BY date ASC
-  `;
-  return trend;
+  try {
+    const siteUrl = process.env.GSC_SITE_URL!;
+    const trend = await prisma.$queryRaw<any[]>`
+      SELECT date, impressions, clicks
+      FROM gsc_daily_site_metrics
+      WHERE site_url = ${siteUrl}
+        AND date >= CURRENT_DATE - INTERVAL '30 days'
+      ORDER BY date ASC
+    `;
+    return trend;
+  } catch (error) {
+    console.error('Error fetching impressions trend:', error);
+    return [];
+  }
 }
 
 async function getP1Actions() {
-  const actions = await prisma.$queryRaw<any[]>`
-    SELECT pillar, severity, title, description, impact_points
-    FROM score_actions_daily
-    WHERE pillar = 'P1'
-      AND date = (SELECT MAX(date) FROM score_actions_daily)
-    ORDER BY impact_points DESC
-  `;
-  return actions;
+  try {
+    const actions = await prisma.$queryRaw<any[]>`
+      SELECT pillar, severity, title, description, impact_points
+      FROM score_actions_daily
+      WHERE pillar = 'P1'
+        AND date = (SELECT MAX(date) FROM score_actions_daily)
+      ORDER BY impact_points DESC
+    `;
+    return actions;
+  } catch (error) {
+    console.error('Error fetching P1 actions:', error);
+    return [];
+  }
 }
 
 export default async function AdminSeoIndexHealthPage() {

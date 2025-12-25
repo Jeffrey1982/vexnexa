@@ -15,52 +15,72 @@ export const metadata = {
 };
 
 async function getLatestScore() {
-  const latest = await prisma.$queryRaw<any[]>`
-    SELECT
-      date,
-      total_score,
-      p1_index_crawl_health,
-      p2_search_visibility,
-      p3_engagement_intent,
-      p4_content_performance,
-      p5_technical_experience
-    FROM score_daily
-    ORDER BY date DESC
-    LIMIT 1
-  `;
-  return latest[0] || null;
+  try {
+    const latest = await prisma.$queryRaw<any[]>`
+      SELECT
+        date,
+        total_score,
+        p1_index_crawl_health,
+        p2_search_visibility,
+        p3_engagement_intent,
+        p4_content_performance,
+        p5_technical_experience
+      FROM score_daily
+      ORDER BY date DESC
+      LIMIT 1
+    `;
+    return latest[0] || null;
+  } catch (error) {
+    console.error('Error fetching latest score:', error);
+    return null;
+  }
 }
 
 async function getScoreTrend() {
-  const trend = await prisma.$queryRaw<any[]>`
-    SELECT date, total_score
-    FROM score_daily
-    WHERE date >= CURRENT_DATE - INTERVAL '30 days'
-    ORDER BY date ASC
-  `;
-  return trend;
+  try {
+    const trend = await prisma.$queryRaw<any[]>`
+      SELECT date, total_score
+      FROM score_daily
+      WHERE date >= CURRENT_DATE - INTERVAL '30 days'
+      ORDER BY date ASC
+    `;
+    return trend;
+  } catch (error) {
+    console.error('Error fetching score trend:', error);
+    return [];
+  }
 }
 
 async function getLatestAlerts() {
-  const alerts = await prisma.$queryRaw<any[]>`
-    SELECT id, severity, type, message, created_at
-    FROM alerts
-    WHERE status = 'active'
-    ORDER BY created_at DESC
-    LIMIT 5
-  `;
-  return alerts;
+  try {
+    const alerts = await prisma.$queryRaw<any[]>`
+      SELECT id, severity, type, message, created_at
+      FROM alerts
+      WHERE status = 'active'
+      ORDER BY created_at DESC
+      LIMIT 5
+    `;
+    return alerts;
+  } catch (error) {
+    console.error('Error fetching latest alerts:', error);
+    return [];
+  }
 }
 
 async function getTopActions() {
-  const actions = await prisma.$queryRaw<any[]>`
-    SELECT pillar, severity, title, description, impact_points
-    FROM score_actions_daily
-    WHERE date = (SELECT MAX(date) FROM score_actions_daily)
-    ORDER BY impact_points DESC
-    LIMIT 5
-  `;
-  return actions;
+  try {
+    const actions = await prisma.$queryRaw<any[]>`
+      SELECT pillar, severity, title, description, impact_points
+      FROM score_actions_daily
+      WHERE date = (SELECT MAX(date) FROM score_actions_daily)
+      ORDER BY impact_points DESC
+      LIMIT 5
+    `;
+    return actions;
+  } catch (error) {
+    console.error('Error fetching top actions:', error);
+    return [];
+  }
 }
 
 export default async function AdminSeoPage() {
