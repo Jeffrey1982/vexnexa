@@ -5,7 +5,8 @@
 
 import { validateGoogleCredentials } from '../src/lib/google/auth';
 import { fetchGSCSiteMetrics, getYesterday } from '../src/lib/google/search-console';
-import { fetchGA4LandingMetrics } from '../src/lib/google/analytics';
+import { fetchGA4LandingPageMetrics } from '../src/lib/google/analytics';
+
 
 async function testGoogleIntegration() {
   console.log('🔍 Testing Google API Integration...\n');
@@ -52,7 +53,7 @@ async function testGoogleIntegration() {
 
   try {
     const yesterday = getYesterday();
-    const ga4Metrics = await fetchGA4LandingMetrics(propertyId, yesterday, yesterday, 10);
+    const ga4Metrics = await fetchGA4LandingPageMetrics(propertyId, yesterday, yesterday, 10);
     console.log('✅ Analytics Data API connected');
     console.log(`   Property ID: ${propertyId}`);
     console.log(`   Date: ${yesterday}`);
