@@ -39,6 +39,21 @@
     },
     "src/app/api/cron/cleanup-old-reports/route.*": {
       "maxDuration": 60
+    },
+    "src/app/api/cron/ingest-gsc/route.*": {
+      "maxDuration": 60
+    },
+    "src/app/api/cron/ingest-ga4/route.*": {
+      "maxDuration": 60
+    },
+    "src/app/api/cron/ingest-pagespeed/route.*": {
+      "maxDuration": 300
+    },
+    "src/app/api/cron/compute-score/route.*": {
+      "maxDuration": 60
+    },
+    "src/app/api/cron/run-alerts/route.*": {
+      "maxDuration": 30
     }
   },
 
@@ -50,6 +65,22 @@
     {
       "path": "/api/cron/assurance-scans",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/ingest-gsc",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/ingest-ga4",
+      "schedule": "15 2 * * *"
+    },
+    {
+      "path": "/api/cron/compute-score",
+      "schedule": "30 2 * * *"
+    },
+    {
+      "path": "/api/cron/run-alerts",
+      "schedule": "45 2 * * *"
     }
   ]
 }

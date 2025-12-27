@@ -3,6 +3,11 @@
  * Run with: npx tsx scripts/test-google-integration.ts
  */
 
+// Load environment variables from .env.local
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(__dirname, '../.env.local') });
+
 import { validateGoogleCredentials } from '../src/lib/google/auth';
 import { fetchGSCSiteMetrics, getYesterday } from '../src/lib/google/search-console';
 import { fetchGA4LandingPageMetrics } from '../src/lib/google/analytics';
