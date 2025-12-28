@@ -74,7 +74,7 @@ export function BlogContent({ content }: BlogContentProps) {
   return (
     <div
       ref={contentRef}
-      className="blog-content prose prose-lg dark:prose-invert max-w-none"
+      className="blog-content prose prose-lg lg:prose-xl dark:prose-invert max-w-none prose-headings:font-display prose-p:leading-relaxed prose-li:leading-relaxed"
       dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       style={{
         // Custom styling for Tiptap-generated content

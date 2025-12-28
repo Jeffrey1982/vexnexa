@@ -63,8 +63,8 @@ export default async function BlogPage() {
       </section>
 
       {/* Blog Posts */}
-      <section className="py-20 container mx-auto px-4">
-        <div className="max-w-6xl mx-auto space-y-16">
+      <section className="py-20 container mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-20">
           {posts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-lg text-muted-foreground">
@@ -127,7 +127,7 @@ export default async function BlogPage() {
 
               {/* Other Posts Grid */}
               {otherPosts.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
                   {otherPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.slug}`} className="group">
                       <article className="h-full space-y-4">

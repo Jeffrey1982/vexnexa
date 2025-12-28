@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <div className="min-h-screen">
       {/* Header */}
       <section className="py-8">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6 lg:px-8">
           <Link href="/blog">
             <Button variant="ghost" size="sm" className="gap-2 -ml-2 text-muted-foreground hover:text-foreground">
               <ArrowLeft className="w-4 h-4" />
@@ -91,8 +91,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Hero Section */}
       <section className="py-12 lg:py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto space-y-8">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto space-y-8">
             <div className="space-y-6">
               <h1 className="font-display text-4xl lg:text-6xl font-bold leading-tight tracking-tight">
                 {post.title}
@@ -120,9 +120,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Cover Image */}
       {post.coverImage && (
-        <section className="container mx-auto px-4 pb-16">
-          <div className="max-w-4xl mx-auto">
-            <div className="aspect-video w-full overflow-hidden rounded-lg">
+        <section className="container mx-auto px-6 lg:px-8 pb-16">
+          <div className="max-w-5xl mx-auto">
+            <div className="aspect-video w-full overflow-hidden rounded-xl">
               <SafeImage
                 src={post.coverImage}
                 alt={post.title}
@@ -134,9 +134,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       )}
 
       {/* Article Content */}
-      <article className="pb-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
+      <article className="pb-24">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
             <BlogContent content={post.content} />
           </div>
         </div>
@@ -144,8 +144,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Share & Tags */}
       <div className="border-t">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-3xl mx-auto space-y-8">
+        <div className="container mx-auto px-6 lg:px-8 py-16">
+          <div className="max-w-4xl mx-auto space-y-8">
             <ShareButtons
               title={post.title}
               url={`https://www.vexnexa.com/blog/${post.slug}`}
@@ -166,9 +166,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </div>
 
       {/* Simple CTA */}
-      <section className="py-16 border-t bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
+      <section className="py-20 border-t bg-muted/30">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
             <h2 className="font-display text-2xl font-bold">
               Klaar om je website toegankelijk te maken?
             </h2>
