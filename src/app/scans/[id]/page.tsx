@@ -41,9 +41,9 @@ import {
 } from "@/components/charts";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 async function getScanDetails(id: string) {
@@ -139,7 +139,8 @@ export default async function ScanDetailPage({ params }: PageProps) {
   // Get authenticated user
   const user = await requireAuth();
 
-  const scan = await getScanDetails(params.id);
+  const { id } = await params;
+  const scan = await getScanDetails(id);
 
   if (!scan) {
     notFound();

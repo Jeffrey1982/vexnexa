@@ -31,9 +31,9 @@ import BrandedHeader from "@/components/white-label/BrandedHeader";
 import BrandedFooter from "@/components/white-label/BrandedFooter";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 async function getScanDetails(id: string) {
@@ -103,7 +103,8 @@ async function getEnhancedAnalytics(scan: any) {
 
 
 export default async function PrintReportPage({ params }: PageProps) {
-  const scan = await getScanDetails(params.id);
+  const { id } = await params;
+  const scan = await getScanDetails(id);
 
   if (!scan) {
     notFound();
