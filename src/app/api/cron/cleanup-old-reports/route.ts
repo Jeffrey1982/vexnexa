@@ -1,36 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { deleteOldReports } from '@/lib/assurance/report-generator';
 import { prisma } from '@/lib/prisma';
+import { withCronAuth } from '@/lib/cron-auth';
 
 /**
- * GET /api/cron/cleanup-old-reports
+ * POST /api/cron/cleanup-old-reports
  * Cleanup reports and scans older than 12 months
  *
  * Triggered by Vercel Cron (monthly)
- * Authentication: Bearer token (CRON_SECRET)
+ * Secured by X-CRON-TOKEN header via withCronAuth
  */
-export async function GET(req: NextRequest) {
+async function handler(req: NextRequest) {
   try {
-    // Authenticate cron request
-    const authHeader = req.headers.get('authorization');
-    const cronSecret = process.env.CRON_SECRET;
-
-    if (!cronSecret) {
-      console.error('[Cleanup Cron] CRON_SECRET not configured');
-      return NextResponse.json(
-        { error: 'Server configuration error' },
-        { status: 500 }
-      );
-    }
-
-    if (authHeader !== `Bearer ${cronSecret}`) {
-      console.error('[Cleanup Cron] Invalid authorization token');
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     console.log('[Cleanup Cron] Starting 12-month retention cleanup...');
 
     const twelveMonthsAgo = new Date();
@@ -89,3 +70,6 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+export const POST = withCronAuth(handler);
+export const dynamic = 'force-dynamic';

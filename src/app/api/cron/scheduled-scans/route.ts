@@ -1,31 +1,19 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { successResponse, errorResponse } from '@/lib/api-response'
 import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced'
+import { withCronAuth } from '@/lib/cron-auth'
 
 /**
- * GET /api/cron/scheduled-scans - Execute due scheduled scans
+ * POST /api/cron/scheduled-scans - Execute due scheduled scans
  *
- * This endpoint should be called by a cron job (e.g., Vercel Cron, GitHub Actions)
- * to check for and execute scheduled scans.
+ * This endpoint is called by Vercel Cron to execute scheduled scans.
+ * Secured by X-CRON-TOKEN header via withCronAuth.
  *
  * Configure in vercel.json with appropriate cron schedule.
  */
-export async function GET(request: NextRequest) {
+async function handler(request: NextRequest) {
   try {
-    // Verify cron secret for security
-    const cronSecret = process.env.CRON_SECRET
-
-    if (!cronSecret) {
-      console.error('CRON_SECRET not configured')
-      return errorResponse('Server misconfiguration', 500)
-    }
-
-    const authHeader = request.headers.get('authorization')
-    if (authHeader !== `Bearer ${cronSecret}`) {
-      return errorResponse('Unauthorized', 401)
-    }
-
     const now = new Date()
 
     // Find all active scheduled scans that are due
@@ -170,3 +158,6 @@ async function sendWebhookNotification(webhookUrl: string, scheduledScan: any, s
     console.error('Error sending webhook notification:', error)
   }
 }
+
+export const POST = withCronAuth(handler);
+export const dynamic = 'force-dynamic';

@@ -3,35 +3,16 @@ import { executeDueScans } from '@/lib/assurance/scanner';
 import { detectRegression, createAlert } from '@/lib/assurance/trends';
 import { deleteOldReports } from '@/lib/assurance/report-generator';
 import { prisma } from '@/lib/prisma';
+import { withCronAuth } from '@/lib/cron-auth';
 
 /**
- * GET /api/cron/assurance-scans
+ * POST /api/cron/assurance-scans
  * Execute scheduled Assurance scans (triggered by Vercel Cron)
  *
- * Authentication: Bearer token via CRON_SECRET environment variable
+ * Secured by X-CRON-TOKEN header via withCronAuth
  */
-export async function GET(req: NextRequest) {
+async function handler(req: NextRequest) {
   try {
-    // Authenticate cron request
-    const authHeader = req.headers.get('authorization');
-    const cronSecret = process.env.CRON_SECRET;
-
-    if (!cronSecret) {
-      console.error('[Assurance Cron] CRON_SECRET not configured');
-      return NextResponse.json(
-        { error: 'Cron secret not configured' },
-        { status: 500 }
-      );
-    }
-
-    if (authHeader !== `Bearer ${cronSecret}`) {
-      console.error('[Assurance Cron] Unauthorized cron request');
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     console.log('[Assurance Cron] Starting scheduled scan execution...');
 
     // Execute due scans (max 50 per run)
@@ -222,3 +203,6 @@ async function runMonthlyCleanup() {
     cutoffDate: twelveMonthsAgo.toISOString(),
   };
 }
+
+export const POST = withCronAuth(handler);
+export const dynamic = 'force-dynamic';
