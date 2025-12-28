@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { formatTranslateBlogPost, calculateContentHash } from "@/lib/ai/formatTranslateBlogPost";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,7 +11,7 @@ export async function GET(
   req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await params
+  const { slug } = await params;
 
   try {
     const { searchParams } = new URL(req.url);
@@ -30,10 +31,10 @@ export async function GET(
             id: true,
             email: true,
             firstName: true,
-            lastName: true
-          }
-        }
-      }
+            lastName: true,
+          },
+        },
+      },
     });
 
     if (!post) {
@@ -47,7 +48,7 @@ export async function GET(
     if (!isAdmin && post.status === "published") {
       await prisma.blogPost.update({
         where: { id: post.id },
-        data: { views: { increment: 1 } }
+        data: { views: { increment: 1 } },
       });
     }
 
@@ -66,16 +67,13 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await params
+  const { slug } = await params;
 
   try {
     const user = await requireAuth();
 
     // Check if user is admin by email
-    const adminEmails = [
-      'jeffrey.aay@gmail.com',
-      'admin@vexnexa.com'
-    ];
+    const adminEmails = ["jeffrey.aay@gmail.com", "admin@vexnexa.com"];
 
     if (!adminEmails.includes(user.email)) {
       return NextResponse.json(
@@ -97,11 +95,11 @@ export async function PATCH(
       category,
       tags,
       status,
-      authorName
+      authorName,
     } = body;
 
     const existing = await prisma.blogPost.findUnique({
-      where: { slug: slug }
+      where: { slug: slug },
     });
 
     if (!existing) {
@@ -114,7 +112,7 @@ export async function PATCH(
     // If slug is changing, check new slug doesn't exist
     if (newSlug && newSlug !== slug) {
       const slugExists = await prisma.blogPost.findUnique({
-        where: { slug: newSlug }
+        where: { slug: newSlug },
       });
       if (slugExists) {
         return NextResponse.json(
@@ -136,6 +134,11 @@ export async function PATCH(
     if (category) updateData.category = category;
     if (tags !== undefined) updateData.tags = tags;
     if (authorName !== undefined) updateData.authorName = authorName || null;
+
+    // Detect if status is changing to published
+    const isPublishing = status === "published" && existing.status !== "published";
+    const isAlreadyPublished = status === "published" && existing.status === "published";
+
     if (status) {
       updateData.status = status;
       // Auto-set publishedAt when publishing
@@ -144,6 +147,17 @@ export async function PATCH(
       }
     }
 
+    // Calculate content hash if content is changing
+    let needsLocalization = false;
+    if (content) {
+      const newHash = calculateContentHash(content);
+      if (newHash !== existing.contentHash) {
+        updateData.contentHash = newHash;
+        needsLocalization = true;
+      }
+    }
+
+    // Update the post
     const post = await prisma.blogPost.update({
       where: { slug: slug },
       data: updateData,
@@ -153,11 +167,63 @@ export async function PATCH(
             id: true,
             email: true,
             firstName: true,
-            lastName: true
-          }
-        }
-      }
+            lastName: true,
+          },
+        },
+      },
     });
+
+    // If publishing or content changed and already published, trigger AI localization
+    if ((isPublishing || (isAlreadyPublished && needsLocalization)) && process.env.ANTHROPIC_API_KEY) {
+      console.log(`[Blog Publish] Triggering AI localization for: ${post.slug}`);
+
+      try {
+        const formattedResult = await formatTranslateBlogPost(post);
+
+        // Upsert localized content for all locales
+        const upsertPromises = Object.entries(formattedResult.locales).map(
+          ([locale, localeData]) =>
+            prisma.blogPostLocale.upsert({
+              where: {
+                postId_locale: {
+                  postId: post.id,
+                  locale: locale,
+                },
+              },
+              create: {
+                postId: post.id,
+                locale: locale,
+                title: localeData.title,
+                content: localeData.content,
+                excerpt: localeData.excerpt,
+                metaTitle: localeData.metaTitle,
+                metaDescription: localeData.metaDescription,
+              },
+              update: {
+                title: localeData.title,
+                content: localeData.content,
+                excerpt: localeData.excerpt,
+                metaTitle: localeData.metaTitle,
+                metaDescription: localeData.metaDescription,
+              },
+            })
+        );
+
+        await Promise.all(upsertPromises);
+
+        // Update localizedAt timestamp
+        await prisma.blogPost.update({
+          where: { id: post.id },
+          data: { localizedAt: new Date() },
+        });
+
+        console.log(`[Blog Publish] AI localization complete for: ${post.slug}`);
+      } catch (error) {
+        console.error(`[Blog Publish] AI localization failed for ${post.slug}:`, error);
+        // Don't fail the publish if localization fails
+        // Admin can trigger manual migration later
+      }
+    }
 
     return NextResponse.json({ ok: true, post });
   } catch (e: any) {
@@ -174,16 +240,13 @@ export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await params
+  const { slug } = await params;
 
   try {
     const user = await requireAuth();
 
     // Check if user is admin by email
-    const adminEmails = [
-      'jeffrey.aay@gmail.com',
-      'admin@vexnexa.com'
-    ];
+    const adminEmails = ["jeffrey.aay@gmail.com", "admin@vexnexa.com"];
 
     if (!adminEmails.includes(user.email)) {
       return NextResponse.json(
@@ -193,7 +256,7 @@ export async function DELETE(
     }
 
     const existing = await prisma.blogPost.findUnique({
-      where: { slug: slug }
+      where: { slug: slug },
     });
 
     if (!existing) {
@@ -204,7 +267,7 @@ export async function DELETE(
     }
 
     await prisma.blogPost.delete({
-      where: { slug: slug }
+      where: { slug: slug },
     });
 
     return NextResponse.json({ ok: true });

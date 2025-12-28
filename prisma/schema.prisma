@@ -733,6 +733,13 @@ model BlogPost {
   // Analytics
   views Int @default(0)
 
+  // i18n tracking
+  contentHash String?   // SHA-256 hash of content for change detection
+  localizedAt DateTime? // Last time localization was performed
+
+  // Localized content
+  locales BlogPostLocale[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -741,6 +748,30 @@ model BlogPost {
   @@index([status])
   @@index([category])
   @@index([publishedAt])
+}
+
+model BlogPostLocale {
+  id     String   @id @default(cuid())
+  postId String
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  locale String // en, nl, de, fr, es, pt
+
+  // Localized content
+  title   String
+  content String  @db.Text // HTML content in this locale
+  excerpt String? @db.Text
+
+  // Localized SEO
+  metaTitle       String?
+  metaDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([postId, locale])
+  @@index([locale])
+  @@index([postId, locale])
 }
 
 // Contact form submissions

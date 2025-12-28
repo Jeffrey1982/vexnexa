@@ -31,6 +31,16 @@ export async function middleware(request: NextRequest) {
     })
   }
 
+  // Redirect legacy /blog routes to /en/blog
+  if (pathname === "/blog") {
+    return NextResponse.redirect(new URL("/en/blog", request.url), 301);
+  }
+
+  if (pathname.startsWith("/blog/") && !pathname.startsWith("/blog/upload")) {
+    const slug = pathname.replace("/blog/", "");
+    return NextResponse.redirect(new URL(`/en/blog/${slug}`, request.url), 301);
+  }
+
   // Apply rate limiting to API routes
   if (pathname.startsWith('/api/')) {
     // Different rate limits for different endpoints
