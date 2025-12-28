@@ -49,12 +49,18 @@ export async function GET(
       );
     }
 
+    // If pdfUrl is null or empty, generate on-the-fly
+    if (!report.pdfUrl) {
+      console.log('[Assurance Reports] pdfUrl is null, generating PDF on-the-fly for:', reportId);
+    }
     // If pdfUrl is a full Blob storage URL, redirect to it
-    if (report.pdfUrl.startsWith('https://')) {
+    else if (report.pdfUrl.startsWith('https://')) {
       return NextResponse.redirect(report.pdfUrl);
     }
-
-    console.log('[Assurance Reports] Generating PDF on-the-fly for:', reportId);
+    // Otherwise, it's a placeholder URL - generate on-the-fly
+    else {
+      console.log('[Assurance Reports] Using placeholder URL, generating PDF on-the-fly for:', reportId);
+    }
 
     // Generate PDF on-the-fly (fallback when using placeholder URLs)
     const pdfBuffer = await generateReportPDF({
