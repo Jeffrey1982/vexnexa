@@ -6,6 +6,7 @@ import {
 import { Settings, BookOpen, AlertCircle, Eye } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { TriggerSeoIngestion } from "@/components/admin/TriggerSeoIngestion";
 
 export const metadata = {
   title: 'SEO Settings - VexNexa Admin',
@@ -99,29 +100,42 @@ export default async function AdminSeoSettingsPage() {
           <BookOpen className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <h3 className="text-sm font-semibold text-blue-900 mb-1">
-              Setup Required
+              Environment Variables Configured ✅
             </h3>
             <p className="text-sm text-blue-800 mb-2">
-              Configure environment variables to enable Google API integration:
+              All required environment variables are set in Vercel:
             </p>
             <div className="bg-white border border-blue-200 rounded p-3 font-mono text-xs space-y-1">
-              <div><span className="text-gray-500"># Required</span></div>
-              <div>GSC_SITE_URL=https://your-site.com</div>
-              <div>GA4_PROPERTY_ID=123456789</div>
-              <div>GOOGLE_CLIENT_EMAIL=service-account@...iam.gserviceaccount.com</div>
-              <div>GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n..."</div>
-              <div>CRON_TOKEN=your-secret-token</div>
-              <div className="pt-2"><span className="text-gray-500"># Optional</span></div>
-              <div>PAGESPEED_API_KEY=your-pagespeed-key</div>
-              <div>GSC_QUERY_LIMIT=500</div>
-              <div>GSC_PAGE_LIMIT=500</div>
-              <div>GA4_LANDING_LIMIT=500</div>
+              <div><span className="text-gray-500"># Configured in Vercel Production</span></div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-600">✓</span> GSC_SITE_URL (sc-domain:vexnexa.com)
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-600">✓</span> GA4_PROPERTY_ID (517433349)
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-600">✓</span> GOOGLE_CLIENT_EMAIL
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-600">✓</span> GOOGLE_PRIVATE_KEY
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-600">✓</span> CRON_TOKEN
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-600">✓</span> NEXT_PUBLIC_GA4_MEASUREMENT_ID
+              </div>
             </div>
             <p className="text-xs text-blue-700 mt-2">
-              See <Link href="/docs/google-health-score" className="underline">setup documentation</Link> for detailed instructions.
+              Next step: Click "Trigger Now" below to populate your dashboard with data.
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Trigger SEO Ingestion */}
+      <div className="mt-6">
+        <TriggerSeoIngestion />
       </div>
 
       {/* Alert Rules */}

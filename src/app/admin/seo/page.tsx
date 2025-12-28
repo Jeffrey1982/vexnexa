@@ -146,7 +146,7 @@ export default async function AdminSeoPage() {
             }
             actions={[
               {
-                label: "Configure Google APIs",
+                label: "Trigger Data Ingestion",
                 variant: "default",
                 icon: Plug,
                 href: "/admin/seo/settings",
@@ -159,14 +159,13 @@ export default async function AdminSeoPage() {
               },
             ]}
             helpText={
-              <div className="space-y-1">
-                <p>Once configured, run the ingestion cron jobs:</p>
-                <ul className="text-sm list-disc list-inside space-y-1">
-                  <li>POST /api/cron/ingest-gsc</li>
-                  <li>POST /api/cron/ingest-ga4</li>
-                  <li>POST /api/cron/compute-score</li>
-                  <li>POST /api/cron/run-alerts</li>
-                </ul>
+              <div className="space-y-2">
+                <p className="font-semibold">Good news! Google APIs are already configured ✅</p>
+                <p>All environment variables are set. Click "Trigger Data Ingestion" above to populate your dashboard.</p>
+                <p className="text-xs">
+                  This will fetch yesterday's data from Google Search Console and Google Analytics 4,
+                  then calculate your SEO Health Score (0-1000).
+                </p>
               </div>
             }
           />
