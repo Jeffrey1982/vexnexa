@@ -110,7 +110,7 @@ const analysisPatterns = {
 <nav aria-label="Main navigation">
   <ul role="menubar">
     <li role="none">
-      <a href="/home" role="menuitem">Home</a>
+      <a href="/" role="menuitem">Home</a>
     </li>
     <li role="none">
       <button aria-expanded="false" aria-haspopup="true" role="menuitem">

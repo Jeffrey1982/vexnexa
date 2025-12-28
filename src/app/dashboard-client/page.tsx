@@ -201,7 +201,7 @@ export default function ClientDashboardPage() {
                 </Link>
               </Button>
               <Button variant="outline" asChild>
-                <Link href="/settings">
+                <Link href="/settings/billing">
                   <FileText className="h-4 w-4 mr-2" />
                   Settings
                 </Link>

@@ -103,7 +103,7 @@ export default function MainDashboardPage() {
                 </Link>
               </Button>
               <Button variant="outline" asChild className="h-24 flex-col">
-                <Link href="/settings">
+                <Link href="/settings/billing">
                   <TrendingUp className="h-6 w-6 mb-2" />
                   Settings
                 </Link>

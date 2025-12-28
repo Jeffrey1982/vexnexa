@@ -107,16 +107,23 @@ export default async function AssuranceReportsPage() {
                       >
                         {report.score}
                       </div>
-                      <a
-                        href={report.pdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button variant="outline" size="sm">
+                      {report.pdfUrl ? (
+                        <a
+                          href={report.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline" size="sm">
+                            <Download className="w-4 h-4 mr-2" />
+                            PDF
+                          </Button>
+                        </a>
+                      ) : (
+                        <Button variant="outline" size="sm" disabled title="PDF is being generated">
                           <Download className="w-4 h-4 mr-2" />
-                          PDF
+                          Generating...
                         </Button>
-                      </a>
+                      )}
                     </div>
                   </div>
                 );

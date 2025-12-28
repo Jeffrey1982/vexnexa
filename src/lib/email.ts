@@ -324,7 +324,7 @@ export async function sendNewsletterConfirmation(data: NewsletterData) {
     console.log('[EMAIL] Attempting to send newsletter confirmation to:', data.email)
     const { email, source } = data
     const friendlySource = getSourceDisplayName(source)
-    const confirmUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/newsletter/confirm`
+    const confirmUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/newsletter/confirmed`
 
     const html = getNewsletterConfirmationTemplate(email, confirmUrl)
     const text = getPlainTextVersion({

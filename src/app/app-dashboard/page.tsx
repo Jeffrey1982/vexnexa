@@ -165,7 +165,7 @@ export default async function AppDashboardPage() {
                             </>
                           )}
                           <Button size="sm" asChild>
-                            <Link href={`/sites/${site.id}/scan`}>Scan</Link>
+                            <Link href={`/dashboard?siteId=${site.id}`}>Scan</Link>
                           </Button>
                         </div>
                       </div>
