@@ -102,7 +102,35 @@ async function getAnalyticsData() {
 }
 
 export default async function AdminAnalyticsPage() {
-  const { usersWithMetrics, stats } = await getAnalyticsData();
+  let usersWithMetrics, stats;
+
+  try {
+    const data = await getAnalyticsData();
+    usersWithMetrics = data.usersWithMetrics;
+    stats = data.stats;
+  } catch (error) {
+    console.error('[Analytics] Error loading data:', error);
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto p-6">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">Usage Analytics</h1>
+          </div>
+          <Card>
+            <CardContent className="p-6">
+              <div className="text-center">
+                <AlertTriangle className="w-12 h-12 text-red-600 mx-auto mb-4" />
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Error Loading Analytics</h2>
+                <p className="text-gray-600">
+                  {error instanceof Error ? error.message : 'Failed to load analytics data'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -185,7 +213,14 @@ export default async function AdminAnalyticsPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {usersWithMetrics.map((user) => (
+                  {usersWithMetrics.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="py-8 text-center text-gray-500">
+                        No user data available yet
+                      </td>
+                    </tr>
+                  ) : (
+                    usersWithMetrics.map((user) => (
                     <tr key={user.id} className="text-sm">
                       <td className="py-3">
                         <div className="font-medium text-gray-900">{user.name}</div>
@@ -233,7 +268,7 @@ export default async function AdminAnalyticsPage() {
                         </Link>
                       </td>
                     </tr>
-                  ))}
+                  )))}
                 </tbody>
               </table>
             </div>
