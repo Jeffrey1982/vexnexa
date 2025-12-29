@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "generated_at": "2025-12-28",
+    "total_files": 20,
+    "disclaimer": "ALL files listed have LOW risk and strong evidence of non-usage. However, MANUAL REVIEW is still recommended before deletion."
+  },
+  "files_safe_to_delete": [
+    {
+      "file_path": "src/middleware.ts.backup",
+      "category": "Backup Files",
+      "reason": "Backup file with .backup extension. No references found."
+    },
+    {
+      "file_path": "src/app/dashboard/page-client-backup.tsx",
+      "category": "Backup Files",
+      "reason": "Backup file. No external references."
+    },
+    {
+      "file_path": "src/app/admin/seo/visibility/page.tsx.bak",
+      "category": "Backup Files",
+      "reason": "Backup file with .bak extension. No references."
+    },
+    {
+      "file_path": "email-template.html",
+      "category": "HTML Email Templates",
+      "reason": "Marked as temporary in FIXES_COMPLETED.md. Superseded by email-templates.ts."
+    },
+    {
+      "file_path": "email-verification.html",
+      "category": "HTML Email Templates",
+      "reason": "Marked as temporary. Not used by src/lib/email.ts."
+    },
+    {
+      "file_path": "email-newsletter-signup.html",
+      "category": "HTML Email Templates",
+      "reason": "Marked as temporary. Superseded by email-templates.ts functions."
+    },
+    {
+      "file_path": "test-email-now.md",
+      "category": "Temporary Documentation",
+      "reason": "Explicitly marked as temporary. Referenced in security incident as containing exposed secrets (now redacted)."
+    },
+    {
+      "file_path": "FAVICON_FIX.md",
+      "category": "Temporary Documentation",
+      "reason": "Explicitly marked as temporary. Fix is complete."
+    },
+    {
+      "file_path": "remove-by-vexnexa.js",
+      "category": "One-Off Scripts",
+      "reason": "One-time branding script. Not in package.json."
+    },
+    {
+      "file_path": "replace-branding.js",
+      "category": "One-Off Scripts",
+      "reason": "One-time branding script. Not in package.json."
+    },
+    {
+      "file_path": "update-vercel-env.sh",
+      "category": "One-Off Scripts",
+      "reason": "One-time setup script. Not in package.json."
+    },
+    {
+      "file_path": "update-vercel-env.ps1",
+      "category": "One-Off Scripts",
+      "reason": "One-time setup script (PowerShell). Not in package.json."
+    },
+    {
+      "file_path": "TODO.txt",
+      "category": "Miscellaneous",
+      "reason": "Personal TODO file. No references."
+    },
+    {
+      "file_path": "TRANSLATION_SUMMARY.txt",
+      "category": "Miscellaneous",
+      "reason": "Meta-document summarizing other docs. Redundant."
+    },
+    {
+      "file_path": "featurelist.txt",
+      "category": "Miscellaneous",
+      "reason": "Plain text list. Likely superseded by proper docs."
+    },
+    {
+      "file_path": "test-report.pdf",
+      "category": "Miscellaneous",
+      "reason": "Test artifact. No code references."
+    },
+    {
+      "file_path": "EMAIL_TEMPLATE_INTEGRATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "reason": "Implementation completion record. No active references."
+    },
+    {
+      "file_path": "SETUP_COMPLETE.md",
+      "category": "Historical Documentation",
+      "reason": "Setup completion. Superseded by SETUP.md."
+    },
+    {
+      "file_path": "TRANSLATION_IMPLEMENTATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "reason": "Only referenced by other completion docs."
+    },
+    {
+      "file_path": "TRANSLATION_WORK_COMPLETED.md",
+      "category": "Historical Documentation",
+      "reason": "Historical completion record."
+    },
+    {
+      "file_path": "VERIFICATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "reason": "Verification completion. No active references."
+    },
+    {
+      "file_path": "EMAIL_STATUS.md",
+      "category": "Status Documentation",
+      "reason": "Historical status. System is complete."
+    },
+    {
+      "file_path": "TRANSLATION_STATUS.md",
+      "category": "Status Documentation",
+      "reason": "Only referenced by completion docs. System is complete."
+    },
+    {
+      "file_path": "EMERGENCY_REDIRECT_LOOP_FIX.md",
+      "category": "Fix Documentation",
+      "reason": "Emergency fix doc. Fix is complete and deployed."
+    },
+    {
+      "file_path": "OAUTH_FIX_REDIRECT_URI.md",
+      "category": "Fix Documentation",
+      "reason": "OAuth fix doc. Fix is complete."
+    }
+  ]
+}

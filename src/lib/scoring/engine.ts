@@ -96,8 +96,8 @@ export async function calculateP1(date: string): Promise<ScoreBreakdown['p1Index
       AND site_url = ${siteUrl}
   `;
 
-  const currentImpressions = current[0]?.impressions || 0;
-  const prev7dImpressions = prev7d[0]?.avg_impressions || currentImpressions;
+  const currentImpressions = Number(current[0]?.impressions || 0);
+  const prev7dImpressions = Number(prev7d[0]?.avg_impressions || currentImpressions);
 
   // Component 1: Impressions Trend (0-100)
   const impressionGrowth = pctChange(currentImpressions, prev7dImpressions);
@@ -145,9 +145,9 @@ export async function calculateP2(date: string): Promise<ScoreBreakdown['p2Searc
       AND site_url = ${siteUrl}
   `;
 
-  const currentClicks = current[0]?.clicks || 0;
-  const currentPosition = current[0]?.position || 50;
-  const prev7dClicks = prev7d[0]?.avg_clicks || currentClicks;
+  const currentClicks = Number(current[0]?.clicks || 0);
+  const currentPosition = Number(current[0]?.position || 50);
+  const prev7dClicks = Number(prev7d[0]?.avg_clicks || currentClicks);
 
   // Component 1: Clicks Trend (0-100)
   const clicksGrowth = pctChange(currentClicks, prev7dClicks);
@@ -161,7 +161,7 @@ export async function calculateP2(date: string): Promise<ScoreBreakdown['p2Searc
       AND site_url = ${siteUrl}
       AND position <= 10
   `;
-  const topQueriesCount = topQueries[0]?.count || 0;
+  const topQueriesCount = Number(topQueries[0]?.count || 0);
   const topQueriesPerformance = normLog(topQueriesCount, 10, 5) * 100;
 
   // Component 3: Average Position (0-50)
@@ -204,10 +204,10 @@ export async function calculateP3(date: string): Promise<ScoreBreakdown['p3Engag
     WHERE date = ${date}::date AND property_id = ${propertyId}
   `;
 
-  const ctr = gscMetrics[0]?.ctr || 0;
-  const engagementRate = ga4Metrics[0]?.avg_engagement_rate || 0;
+  const ctr = Number(gscMetrics[0]?.ctr || 0);
+  const engagementRate = Number(ga4Metrics[0]?.avg_engagement_rate || 0);
   const returningRatio = ga4Metrics[0]?.total_returning && ga4Metrics[0]?.total_users
-    ? ga4Metrics[0].total_returning / ga4Metrics[0].total_users
+    ? Number(ga4Metrics[0].total_returning) / Number(ga4Metrics[0].total_users)
     : 0;
 
   // Component 1: CTR Quality (0-80)
@@ -258,8 +258,8 @@ export async function calculateP4(date: string): Promise<ScoreBreakdown['p4Conte
     ) sub
   `;
 
-  const currentPageCount = current[0]?.page_count || 0;
-  const prev7dPageCount = prev7d[0]?.avg_page_count || currentPageCount;
+  const currentPageCount = Number(current[0]?.page_count || 0);
+  const prev7dPageCount = Number(prev7d[0]?.avg_page_count || currentPageCount);
 
   // Component 1: Top Pages Growth (0-80)
   const pagesGrowth = pctChange(currentPageCount, prev7dPageCount);
@@ -271,7 +271,7 @@ export async function calculateP4(date: string): Promise<ScoreBreakdown['p4Conte
     FROM ga4_daily_landing_metrics
     WHERE date = ${date}::date AND property_id = ${propertyId}
   `;
-  const avgTime = contentDepth[0]?.avg_time || 0;
+  const avgTime = Number(contentDepth[0]?.avg_time || 0);
   const contentDepthScore = normLinear(avgTime, 30, 120) * 80;
 
   // Component 3: Conversion Quality (0-40)
@@ -282,7 +282,7 @@ export async function calculateP4(date: string): Promise<ScoreBreakdown['p4Conte
     WHERE date = ${date}::date AND property_id = ${propertyId}
   `;
   const convRate = conversions[0]?.total_sessions > 0
-    ? conversions[0].total_conv / conversions[0].total_sessions
+    ? Number(conversions[0].total_conv) / Number(conversions[0].total_sessions)
     : 0;
   const conversionQuality = normLinear(convRate, 0.01, 0.05) * 40;
 
@@ -327,9 +327,9 @@ export async function calculateP5(date: string): Promise<ScoreBreakdown['p5Techn
     WHERE date = ${date}::date
   `;
 
-  const avgPerf = pageSpeedMetrics[0]?.avg_perf || 50;
-  const avgLcp = pageSpeedMetrics[0]?.avg_lcp || 2500;
-  const avgCls = pageSpeedMetrics[0]?.avg_cls || 0.1;
+  const avgPerf = Number(pageSpeedMetrics[0]?.avg_perf || 50);
+  const avgLcp = Number(pageSpeedMetrics[0]?.avg_lcp || 2500);
+  const avgCls = Number(pageSpeedMetrics[0]?.avg_cls || 0.1);
 
   // Component 1: Core Web Vitals (0-70)
   const lcpScore = normLinear(4000 - avgLcp, 0, 2000) * 30; // Good: <2.5s

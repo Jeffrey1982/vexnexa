@@ -28,7 +28,21 @@
       "Bash(curl:*)",
       "Bash(taskkill:*)",
       "Bash(git mv:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(git checkout:*)",
+      "Bash(mkdir:*)",
+      "Bash(done)",
+      "Bash(npm run lint:*)",
+      "Bash(npx next lint:*)",
+      "Bash(git stash:*)",
+      "Bash(python3:*)",
+      "Bash(bash:*)",
+      "Bash(vercel env:*)",
+      "Bash(vercel ls:*)",
+      "Bash(vercel env ls:*)",
+      "Bash(vercel deployments:*)",
+      "Bash(vercel:*)",
+      "Bash(printf:*)"
     ],
     "deny": [],
     "ask": []

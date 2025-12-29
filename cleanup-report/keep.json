@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "generated_at": "2025-12-28",
+    "total_files": 24,
+    "high_risk_count": 13,
+    "medium_risk_count": 11,
+    "disclaimer": "These files MUST BE KEPT or require careful verification before deletion."
+  },
+  "files_to_keep": [
+    {
+      "file_path": "src/app/dashboard-new/page.tsx",
+      "risk_level": "MEDIUM",
+      "reason": "Experimental dashboard. No external nav found but safest to KEEP until manually verified."
+    },
+    {
+      "file_path": "src/app/analytics/page.tsx",
+      "risk_level": "HIGH",
+      "reason": "CRITICAL: Actively linked from 5+ dashboards. LIVE FEATURE."
+    },
+    {
+      "file_path": "src/app/advanced-analytics/page.tsx",
+      "risk_level": "HIGH",
+      "reason": "CRITICAL: Service worker cached, actively linked. LIVE FEATURE."
+    },
+    {
+      "file_path": "src/app/enhanced-dashboard/page.tsx",
+      "risk_level": "HIGH",
+      "reason": "CRITICAL: Protected by service worker. Premium feature with advanced visualizations. LIVE FEATURE."
+    },
+    {
+      "file_path": "src/app/app-dashboard/page.tsx",
+      "risk_level": "MEDIUM",
+      "reason": "Has incoming link from dashboard-new. Keep until dashboard-new is clarified."
+    },
+    {
+      "file_path": "src/app/dashboard-client/page.tsx",
+      "risk_level": "MEDIUM",
+      "reason": "Complete implementation. Could be for A/B testing. Low cost to keep."
+    },
+    {
+      "file_path": "src/app/main-dashboard/page.tsx",
+      "risk_level": "HIGH",
+      "reason": "CRITICAL: Service worker notification destination. Post-registration redirect. ACTIVE FEATURE."
+    },
+    {
+      "file_path": "fix-schema.sql",
+      "risk_level": "MEDIUM",
+      "reason": "Schema fixes. Useful for recovery/history. Low cost."
+    },
+    {
+      "file_path": "supabase-schema.sql",
+      "risk_level": "MEDIUM",
+      "reason": "Core database schema reference. Keep for documentation."
+    },
+    {
+      "file_path": "design-tokens.json",
+      "risk_level": "HIGH",
+      "reason": "CRITICAL: Core design system file. Referenced in DESIGN_SYSTEM_README.md."
+    },
+    {
+      "file_path": "design-system.md",
+      "risk_level": "HIGH",
+      "reason": "CRITICAL: Main design system documentation. Referenced by README."
+    },
+    {
+      "file_path": "OAUTH_IMPLEMENTATION_COMPLETE.md",
+      "risk_level": "MEDIUM",
+      "reason": "Contains OAuth flow details. Useful for debugging."
+    },
+    {
+      "file_path": "GOOGLE_HEALTH_SCORE_COMPLETE.md",
+      "risk_level": "MEDIUM",
+      "reason": "Referenced in NEXT_STEPS.md. Verify docs/google-health-score.md has all info before deleting."
+    },
+    {
+      "file_path": "ADMIN_STATUS.md",
+      "risk_level": "MEDIUM",
+      "reason": "Referenced in NEXT_STEPS.md. Admin setup instructions."
+    },
+    {
+      "file_path": "OAUTH_BRANDING_FIX.md",
+      "risk_level": "MEDIUM",
+      "reason": "Referenced in OAUTH_SETUP.md as branding guide."
+    },
+    {
+      "file_path": "OAUTH_SERVICE_WORKER_FIX.md",
+      "risk_level": "MEDIUM",
+      "reason": "OAuth + service worker debugging info. Referenced in OAUTH_IMPLEMENTATION_COMPLETE.md."
+    },
+    {
+      "file_path": "README_SECURITY_FIXES.md",
+      "risk_level": "MEDIUM",
+      "reason": "Security documentation. Retain for audit purposes."
+    }
+  ],
+  "critical_active_features": [
+    "/analytics",
+    "/advanced-analytics",
+    "/enhanced-dashboard",
+    "/main-dashboard",
+    "design-tokens.json",
+    "design-system.md"
+  ]
+}

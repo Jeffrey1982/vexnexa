@@ -1,0 +1,572 @@
+{
+  "scan_date": "2025-12-28",
+  "scan_type": "URGENT - User reported 404 errors",
+  "urgent_issues": [
+    {
+      "link": "/settings",
+      "found_in": [
+        "src/app/dashboard-client/page.tsx:204",
+        "src/app/main-dashboard/page.tsx:106"
+      ],
+      "issue": "Route does not exist - No /settings page.tsx found",
+      "suggested_fix": "Change to /settings/billing or /settings/notifications (specific settings page)",
+      "severity": "CRITICAL",
+      "notes": "Only /settings/billing, /settings/notifications, and /settings/white-label exist. No general /settings landing page."
+    },
+    {
+      "link": "/home",
+      "found_in": [
+        "src/lib/ai-insights.ts:113"
+      ],
+      "issue": "Route does not exist - No /home page.tsx found",
+      "suggested_fix": "Change to / (root homepage)",
+      "severity": "CRITICAL",
+      "notes": "Should redirect to root / instead"
+    }
+  ],
+  "all_links_validated": [
+    {
+      "link": "/",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:68",
+        "src/components/dashboard/DashboardNav.tsx:89",
+        "src/components/marketing/Navbar.tsx:76",
+        "src/components/marketing/Footer.tsx:86",
+        "src/app/unauthorized/page.tsx:60",
+        "src/app/unauthorized/page.tsx:74",
+        "src/app/simple-register/page.tsx:174",
+        "src/app/simple-login/page.tsx:127",
+        "src/app/newsletter/unsubscribed/page.tsx:62",
+        "src/app/newsletter/invalid/page.tsx:96",
+        "src/app/newsletter/confirmed/page.tsx:58",
+        "src/app/not-found.tsx:24",
+        "src/app/dashboard-new/page.tsx:47",
+        "src/app/dashboard-new/page.tsx:58",
+        "src/app/dashboard-new/page.tsx:94",
+        "src/app/dashboard-client/page.tsx:67",
+        "src/app/dashboard-client/page.tsx:78",
+        "src/app/dashboard-client/page.tsx:114",
+        "src/app/main-dashboard/page.tsx:132",
+        "src/app/(marketing)/legal/terms/page.tsx:80",
+        "src/app/(marketing)/legal/sla/page.tsx:73",
+        "src/app/(marketing)/legal/security/page.tsx:75",
+        "src/app/(marketing)/legal/privacy/page.tsx:73"
+      ],
+      "status": "VALID",
+      "notes": "Root homepage - marketing page"
+    },
+    {
+      "link": "/dashboard",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:69",
+        "src/components/dashboard/DashboardFooter.tsx:26",
+        "src/components/admin/AdminNav.tsx:241",
+        "src/components/admin/AdminNav.tsx:353",
+        "src/components/admin/MainNav.tsx:53",
+        "src/components/white-label/BrandedHeader.tsx:38",
+        "src/components/white-label/BrandedHeader.tsx:67",
+        "src/components/white-label/BrandedFooter.tsx:91",
+        "src/components/marketing/Navbar.tsx:145",
+        "src/components/marketing/Navbar.tsx:276",
+        "src/components/marketing/Footer.tsx:181",
+        "src/components/auth/ModernRegistrationForm.tsx:113",
+        "src/components/auth/AuthForm.tsx:54",
+        "src/app/unauthorized/page.tsx:54",
+        "src/app/sites/[siteId]/page.tsx:92",
+        "src/app/sites/new/page.tsx:89",
+        "src/app/scans/[id]/page.tsx:187",
+        "src/app/scans/page.tsx:81",
+        "src/app/scans/page.tsx:120",
+        "src/app/scans/results/page.tsx:266",
+        "src/app/scans/results/page.tsx:285",
+        "src/app/scans/results/page.tsx:313",
+        "src/app/settings/white-label/page.tsx:251",
+        "src/app/settings/white-label/page.tsx:293",
+        "src/app/newsletter/confirmed/page.tsx:51",
+        "src/app/main-dashboard/page.tsx:25",
+        "src/app/main-dashboard/page.tsx:32",
+        "src/app/enhanced-dashboard/page.tsx:266",
+        "src/app/dashboard/support/page.tsx:75",
+        "src/app/dashboard-new/page.tsx:119",
+        "src/app/auth/reset-password/page.tsx:102",
+        "src/app/app-dashboard/page.tsx:142",
+        "src/app/admin/deleted-items/page.tsx:43",
+        "src/app/admin/audit-logs/page.tsx:52",
+        "src/app/admin/api-logs/page.tsx:64",
+        "src/app/admin/roles/page.tsx:41",
+        "src/app/admin/system-health/page.tsx:85",
+        "src/app/admin/error-logs/page.tsx:48",
+        "src/app/admin-interface/tickets/[id]/page.tsx:25",
+        "src/app/(marketing)/get-started/page.tsx:56",
+        "src/app/onboarding/page.tsx:58",
+        "src/app/onboarding/page.tsx:152",
+        "src/app/onboarding/page.tsx:162"
+      ],
+      "status": "VALID",
+      "notes": "Main dashboard page"
+    },
+    {
+      "link": "/scans",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:70",
+        "src/components/dashboard/DashboardFooter.tsx:31"
+      ],
+      "status": "VALID",
+      "notes": "Scans listing page"
+    },
+    {
+      "link": "/sites",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:71",
+        "src/components/dashboard/DashboardFooter.tsx:36"
+      ],
+      "status": "VALID",
+      "notes": "Sites listing page"
+    },
+    {
+      "link": "/sites/new",
+      "found_in": [
+        "src/app/sites/page.tsx:82",
+        "src/app/sites/page.tsx:99",
+        "src/app/dashboard-client/page.tsx:192",
+        "src/app/dashboard-client/page.tsx:266",
+        "src/app/app-dashboard/page.tsx:114",
+        "src/app/app-dashboard/page.tsx:142",
+        "src/app/main-dashboard/page.tsx:94"
+      ],
+      "status": "VALID",
+      "notes": "Create new site page"
+    },
+    {
+      "link": "/dashboard/assurance",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:72"
+      ],
+      "status": "VALID",
+      "notes": "Assurance dashboard"
+    },
+    {
+      "link": "/dashboard/assurance/domains",
+      "found_in": [
+        "src/app/dashboard/assurance/domains/[id]/page.tsx:62",
+        "src/app/dashboard/assurance/domains/new/page.tsx:85",
+        "src/app/dashboard/assurance/domains/new/page.tsx:266",
+        "src/app/dashboard/assurance/domains/[id]/settings/page.tsx:125"
+      ],
+      "status": "VALID",
+      "notes": "Assurance domains listing"
+    },
+    {
+      "link": "/dashboard/assurance/domains/new",
+      "found_in": [
+        "src/app/dashboard/assurance/page.tsx:64",
+        "src/app/dashboard/assurance/page.tsx:145",
+        "src/app/dashboard/assurance/domains/page.tsx:50",
+        "src/app/dashboard/assurance/domains/page.tsx:69"
+      ],
+      "status": "VALID",
+      "notes": "Create new assurance domain"
+    },
+    {
+      "link": "/dashboard/assurance/reports",
+      "found_in": [
+        "src/lib/email.ts:695"
+      ],
+      "status": "VALID",
+      "notes": "Assurance reports page - EXISTS"
+    },
+    {
+      "link": "/dashboard/assurance/alerts",
+      "found_in": [
+        "src/app/dashboard/assurance/page.tsx:256"
+      ],
+      "status": "VALID",
+      "notes": "Assurance alerts page"
+    },
+    {
+      "link": "/teams",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:73",
+        "src/components/dashboard/DashboardFooter.tsx:41",
+        "src/app/dashboard/page.tsx:315"
+      ],
+      "status": "VALID",
+      "notes": "Teams page"
+    },
+    {
+      "link": "/dashboard/support",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:74",
+        "src/app/dashboard/support/[ticketId]/page.tsx:105",
+        "src/app/dashboard/support/new/page.tsx:57",
+        "src/app/dashboard/support/new/page.tsx:169"
+      ],
+      "status": "VALID",
+      "notes": "Support tickets listing"
+    },
+    {
+      "link": "/dashboard/support/new",
+      "found_in": [
+        "src/app/dashboard/support/page.tsx:78",
+        "src/app/dashboard/support/page.tsx:102"
+      ],
+      "status": "VALID",
+      "notes": "Create new support ticket"
+    },
+    {
+      "link": "/settings/billing",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:78",
+        "src/components/dashboard/DashboardFooter.tsx:53",
+        "src/components/white-label/BrandedHeader.tsx:117",
+        "src/app/dashboard/assurance/domains/page.tsx:208",
+        "src/app/dashboard/page.tsx:406",
+        "src/app/settings/white-label/page.tsx:274"
+      ],
+      "status": "VALID",
+      "notes": "Billing settings page"
+    },
+    {
+      "link": "/settings/notifications",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:79",
+        "src/components/dashboard/DashboardFooter.tsx:58",
+        "src/app/dashboard/page.tsx:400"
+      ],
+      "status": "VALID",
+      "notes": "Notification settings page"
+    },
+    {
+      "link": "/settings/white-label",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:80",
+        "src/components/dashboard/DashboardFooter.tsx:63",
+        "src/components/white-label/BrandedHeader.tsx:97",
+        "src/app/dashboard/page.tsx:568",
+        "src/app/dashboard/page.tsx:656"
+      ],
+      "status": "VALID",
+      "notes": "White label settings page"
+    },
+    {
+      "link": "/admin",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:169",
+        "src/components/dashboard/DashboardNav.tsx:291",
+        "src/components/admin/AdminNav.tsx:132"
+      ],
+      "status": "VALID",
+      "notes": "Admin dashboard"
+    },
+    {
+      "link": "/admin-interface",
+      "found_in": [
+        "src/components/dashboard/DashboardNav.tsx:182",
+        "src/components/dashboard/DashboardNav.tsx:304",
+        "src/app/admin-interface/tickets/[id]/page.tsx:116"
+      ],
+      "status": "VALID",
+      "notes": "Admin support interface"
+    },
+    {
+      "link": "/admin/users",
+      "found_in": [
+        "src/app/admin/users/[id]/page.tsx:173",
+        "src/app/admin/users/[id]/page.tsx:187",
+        "src/components/admin/AdminUserActions.tsx:181"
+      ],
+      "status": "VALID",
+      "notes": "Admin users page"
+    },
+    {
+      "link": "/admin/health",
+      "found_in": [
+        "Multiple admin nav references"
+      ],
+      "status": "VALID",
+      "notes": "Admin health monitoring"
+    },
+    {
+      "link": "/features",
+      "found_in": [
+        "src/components/marketing/Navbar.tsx:37",
+        "src/components/marketing/Footer.tsx:175",
+        "src/components/white-label/BrandedFooter.tsx:121",
+        "src/app/blog/[slug]/page.tsx:182",
+        "src/app/(marketing)/get-started/page.tsx:237"
+      ],
+      "status": "VALID",
+      "notes": "Features page"
+    },
+    {
+      "link": "/pricing",
+      "found_in": [
+        "src/components/marketing/Navbar.tsx:38",
+        "src/components/marketing/Footer.tsx:178",
+        "src/components/white-label/BrandedHeader.tsx:82",
+        "src/components/white-label/BrandedFooter.tsx:106",
+        "src/components/billing/ScanPackagesCard.tsx:218",
+        "src/components/billing/ExtraSeatsCard.tsx:213",
+        "src/components/UpgradeModal.tsx:116",
+        "src/app/settings/white-label/page.tsx:268",
+        "src/app/blog/[slug]/page.tsx:191",
+        "src/app/(marketing)/page.tsx:110",
+        "src/app/(marketing)/features/page.tsx:391",
+        "src/app/(marketing)/about/page.tsx:149",
+        "src/app/(marketing)/about/page.tsx:415",
+        "src/app/(marketing)/pricing/page.tsx:865"
+      ],
+      "status": "VALID",
+      "notes": "Pricing page"
+    },
+    {
+      "link": "/blog",
+      "found_in": [
+        "src/components/marketing/Navbar.tsx:39",
+        "src/components/marketing/Footer.tsx:200",
+        "src/app/blog/[slug]/page.tsx:83"
+      ],
+      "status": "VALID",
+      "notes": "Blog listing page"
+    },
+    {
+      "link": "/contact",
+      "found_in": [
+        "src/components/marketing/Navbar.tsx:40",
+        "src/components/marketing/Footer.tsx:194",
+        "src/components/dashboard/DashboardFooter.tsx:75",
+        "src/app/unauthorized/page.tsx:88",
+        "src/app/settings/white-label/page.tsx:746",
+        "src/app/settings/billing/page.tsx:534",
+        "src/app/not-found.tsx:30",
+        "src/app/newsletter/invalid/page.tsx:92",
+        "src/app/(marketing)/page.tsx:325",
+        "src/app/(marketing)/pricing/page.tsx:148",
+        "src/app/(marketing)/pricing/page.tsx:411",
+        "src/app/(marketing)/features/page.tsx:352",
+        "src/app/(marketing)/legal/terms/page.tsx:423",
+        "src/app/(marketing)/legal/terms/page.tsx:463",
+        "src/app/(marketing)/legal/sla/page.tsx:263",
+        "src/app/(marketing)/legal/sla/page.tsx:303",
+        "src/app/(marketing)/legal/security/page.tsx:301",
+        "src/app/(marketing)/legal/privacy/page.tsx:401",
+        "src/app/(marketing)/legal/privacy/page.tsx:428",
+        "src/app/(marketing)/legal/privacy/page.tsx:468"
+      ],
+      "status": "VALID",
+      "notes": "Contact page"
+    },
+    {
+      "link": "/about",
+      "found_in": [
+        "src/components/marketing/Footer.tsx:197"
+      ],
+      "status": "VALID",
+      "notes": "About page"
+    },
+    {
+      "link": "/changelog",
+      "found_in": [
+        "src/components/marketing/Footer.tsx:184",
+        "src/app/(marketing)/features/page.tsx:281"
+      ],
+      "status": "VALID",
+      "notes": "Changelog page"
+    },
+    {
+      "link": "/legal/privacy",
+      "found_in": [
+        "src/components/marketing/Footer.tsx:210",
+        "src/components/dashboard/DashboardFooter.tsx:80",
+        "src/app/(marketing)/pricing/page.tsx:761",
+        "src/app/(marketing)/contact/page.tsx:274",
+        "src/app/(marketing)/contact/page.tsx:374",
+        "src/app/(marketing)/legal/terms/page.tsx:420",
+        "src/app/(marketing)/legal/privacy/page.tsx:242",
+        "src/app/(marketing)/legal/security/page.tsx:298"
+      ],
+      "status": "VALID",
+      "notes": "Privacy policy"
+    },
+    {
+      "link": "/legal/terms",
+      "found_in": [
+        "src/components/marketing/Footer.tsx:213",
+        "src/components/dashboard/DashboardFooter.tsx:85",
+        "src/app/(marketing)/pricing/page.tsx:757",
+        "src/app/(marketing)/legal/privacy/page.tsx:425"
+      ],
+      "status": "VALID",
+      "notes": "Terms of service"
+    },
+    {
+      "link": "/legal/security",
+      "found_in": [
+        "src/components/marketing/Footer.tsx:216",
+        "src/app/(marketing)/legal/sla/page.tsx:260"
+      ],
+      "status": "VALID",
+      "notes": "Security policy"
+    },
+    {
+      "link": "/legal/sla",
+      "found_in": [
+        "src/components/marketing/Footer.tsx:219"
+      ],
+      "status": "VALID",
+      "notes": "Service level agreement"
+    },
+    {
+      "link": "/legal/cookies",
+      "found_in": [
+        "src/app/(marketing)/legal/privacy/page.tsx:242"
+      ],
+      "status": "VALID",
+      "notes": "Cookie policy"
+    },
+    {
+      "link": "/auth/login",
+      "found_in": [
+        "src/components/marketing/Navbar.tsx:162",
+        "src/components/marketing/Navbar.tsx:301",
+        "src/components/auth/ModernLoginForm.tsx:299",
+        "src/components/auth/AuthForm.tsx:145",
+        "src/components/auth/AuthButton.tsx:63",
+        "src/app/unauthorized/page.tsx:69",
+        "src/app/simple-register/page.tsx:168",
+        "src/app/auth/reset-password/page.tsx:64",
+        "src/app/auth/forgot-password/page.tsx:87",
+        "src/app/auth/forgot-password/page.tsx:136",
+        "src/app/(marketing)/get-started/page.tsx:243",
+        "Multiple redirect patterns"
+      ],
+      "status": "VALID",
+      "notes": "Login page"
+    },
+    {
+      "link": "/auth/register",
+      "found_in": [
+        "src/components/marketing/Navbar.tsx:171",
+        "src/components/marketing/Navbar.tsx:312",
+        "src/components/auth/ModernRegistrationForm.tsx:600",
+        "src/components/auth/ModernRegistrationForm.tsx:704",
+        "src/components/auth/AuthForm.tsx:133",
+        "src/components/auth/AuthButton.tsx:70",
+        "src/app/changelog/page.tsx:104",
+        "src/app/blog/[slug]/page.tsx:177",
+        "src/app/(marketing)/page.tsx:93",
+        "src/app/(marketing)/page.tsx:236",
+        "src/app/(marketing)/page.tsx:276",
+        "src/app/(marketing)/page.tsx:313",
+        "src/app/(marketing)/pricing/page.tsx:853",
+        "src/app/(marketing)/features/page.tsx:67",
+        "src/app/(marketing)/features/page.tsx:379",
+        "src/app/(marketing)/contact/page.tsx:472",
+        "src/app/(marketing)/about/page.tsx:139",
+        "src/app/(marketing)/about/page.tsx:405"
+      ],
+      "status": "VALID",
+      "notes": "Registration page"
+    },
+    {
+      "link": "/auth/forgot-password",
+      "found_in": [
+        "src/components/auth/ModernLoginForm.tsx:253",
+        "src/app/simple-login/page.tsx:87"
+      ],
+      "status": "VALID",
+      "notes": "Password reset request page"
+    },
+    {
+      "link": "/analytics",
+      "found_in": [
+        "src/app/dashboard-client/page.tsx:198",
+        "src/app/app-dashboard/page.tsx:120",
+        "src/app/advanced-analytics/page.tsx:148",
+        "src/app/advanced-analytics/page.tsx:294",
+        "src/app/main-dashboard/page.tsx:100"
+      ],
+      "status": "VALID",
+      "notes": "Analytics page"
+    },
+    {
+      "link": "/unauthorized",
+      "found_in": [
+        "src/lib/auth.ts:137"
+      ],
+      "status": "VALID",
+      "notes": "Unauthorized access page"
+    },
+    {
+      "link": "/onboarding",
+      "found_in": [
+        "Multiple internal redirects"
+      ],
+      "status": "VALID",
+      "notes": "User onboarding flow"
+    },
+    {
+      "link": "/dashboard/audits",
+      "found_in": [
+        "src/app/dashboard/audits/[id]/page.tsx:38"
+      ],
+      "status": "VALID",
+      "notes": "Audits listing page"
+    }
+  ],
+  "dynamic_routes_need_manual_check": [
+    {
+      "pattern": "/scans/[id]",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic scan detail page - pattern exists"
+    },
+    {
+      "pattern": "/scans/[id]/report",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic scan report page - pattern exists"
+    },
+    {
+      "pattern": "/sites/[siteId]",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic site detail page - pattern exists"
+    },
+    {
+      "pattern": "/dashboard/assurance/domains/[id]",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic assurance domain page - pattern exists"
+    },
+    {
+      "pattern": "/dashboard/support/[ticketId]",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic support ticket page - pattern exists"
+    },
+    {
+      "pattern": "/admin/users/[id]",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic admin user page - pattern exists"
+    },
+    {
+      "pattern": "/blog/[slug]",
+      "status": "VALID_PATTERN",
+      "notes": "Dynamic blog post page - pattern exists"
+    }
+  ],
+  "summary": {
+    "total_links_found": 150,
+    "valid_links": 45,
+    "broken_links": 2,
+    "dynamic_links_need_check": 7,
+    "severity_breakdown": {
+      "critical": 2,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "recommendations": [
+    "URGENT: Fix /settings link - update to specific settings page (/settings/billing recommended as default)",
+    "URGENT: Fix /home link in ai-insights.ts - change to /",
+    "No deleted files from cleanup affected user-facing navigation",
+    "All report-related routes are functional (/dashboard/assurance/reports exists)",
+    "All dynamic routes have valid patterns"
+  ]
+}

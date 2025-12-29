@@ -1,0 +1,381 @@
+{
+  "metadata": {
+    "generated_at": "2025-12-28",
+    "total_candidates": 44,
+    "safe_to_delete": 20,
+    "keep_medium_risk": 11,
+    "keep_high_risk": 13
+  },
+  "candidates": [
+    {
+      "file_path": "src/middleware.ts.backup",
+      "category": "Backup Files",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only found in cleanup-report/all-files.txt. No imports, no code references, no documentation links. This is a backup file with .backup extension indicating it's a temporary copy."
+    },
+    {
+      "file_path": "src/app/dashboard/page-client-backup.tsx",
+      "category": "Backup Files",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only found in cleanup-report/all-files.txt. Contains references TO /analytics but nothing references this backup file itself. It has router redirects and Link components but this is a backup file not used in the active codebase."
+    },
+    {
+      "file_path": "src/app/admin/seo/visibility/page.tsx.bak",
+      "category": "Backup Files",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only found in cleanup-report/all-files.txt. No imports, no references. .bak extension confirms this is a backup file."
+    },
+    {
+      "file_path": "src/app/dashboard-new/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": ["src/app/dashboard-new/page.tsx (self-reference with Links to /main-dashboard and /app-dashboard)"],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "CAUTION: This route has internal Links pointing to /main-dashboard and /app-dashboard. However, I found NO external navigation pointing TO this route. The service worker (public/sw.js) does NOT cache this route. Appears to be an experimental dashboard but safest to KEEP until you manually verify no bookmarks or external links exist."
+    },
+    {
+      "file_path": "src/app/analytics/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": [
+        "src/app/dashboard/page-client-backup.tsx (Link)",
+        "src/app/main-dashboard/page.tsx (Link)",
+        "src/app/app-dashboard/page.tsx (Link)",
+        "src/app/dashboard-client/page.tsx (Link)",
+        "src/app/advanced-analytics/page.tsx (Link back to /analytics)",
+        "featurelist.txt"
+      ],
+      "risk_level": "HIGH",
+      "recommendation": "KEEP",
+      "reason": "CRITICAL: This route is ACTIVELY LINKED from 5+ active dashboard pages. It has a reciprocal link with /advanced-analytics. The admin sidebar points to /admin/analytics (different route). This is a LIVE feature - DO NOT DELETE."
+    },
+    {
+      "file_path": "src/app/advanced-analytics/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": [
+        "src/app/analytics/page.tsx (Link)",
+        "public/sw.js (cache list)",
+        "featurelist.txt"
+      ],
+      "risk_level": "HIGH",
+      "recommendation": "KEEP",
+      "reason": "CRITICAL: This route is actively linked from /analytics page and is cached by the service worker. The admin sidebar has /admin/analytics-advanced (different route). This is a LIVE user-facing feature - DO NOT DELETE."
+    },
+    {
+      "file_path": "src/app/enhanced-dashboard/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": [
+        "public/sw.js (protectedPaths list on lines 120-130)",
+        "ENHANCED_FEATURES.md (documentation)"
+      ],
+      "risk_level": "HIGH",
+      "recommendation": "KEEP",
+      "reason": "CRITICAL: This route is PROTECTED by the service worker as a secured route (line 123 in sw.js). It's documented in ENHANCED_FEATURES.md as a major feature with 10+ components. Contains advanced visualization features (heatmaps, 3D visualizations, ROI calculator). This is a PREMIUM feature - DO NOT DELETE."
+    },
+    {
+      "file_path": "src/app/app-dashboard/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": ["src/app/dashboard-new/page.tsx (Link href)"],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Has incoming link from dashboard-new. Server-side rendered dashboard using requireAuth. No navigation points TO it from main menus but has programmatic reference. Recommend KEEP until dashboard-new status is clarified."
+    },
+    {
+      "file_path": "src/app/dashboard-client/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": [],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Self-contained client-side dashboard with auth checks. NO external references found, but contains complete implementation with analytics links. Could be for A/B testing. Recommend KEEP for safety - low disk space cost."
+    },
+    {
+      "file_path": "src/app/main-dashboard/page.tsx",
+      "category": "Redundant Dashboard Routes",
+      "referenced_in": [
+        "src/app/dashboard-new/page.tsx (Link)",
+        "src/app/simple-register/page.tsx (router.push redirect)",
+        "public/sw.js (notification click handler line 335, protectedPaths line 120)"
+      ],
+      "risk_level": "HIGH",
+      "recommendation": "KEEP",
+      "reason": "CRITICAL: Referenced in service worker as notification click destination. Protected route in SW. Used as post-registration redirect. This appears to be an ACTIVE alternate dashboard. DO NOT DELETE."
+    },
+    {
+      "file_path": "email-template.html",
+      "category": "HTML Email Templates",
+      "referenced_in": ["FIXES_COMPLETED.md (line 185-187 marked as temporary)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Marked as temporary in FIXES_COMPLETED.md. The src/lib/email.ts file uses email-templates.ts (not HTML files) - confirmed by reading the entire file. All email functions call getEmailVerificationTemplate(), getWelcomeTemplate(), etc. from email-templates.ts. No fs.readFile calls for HTML templates found. Safe to delete."
+    },
+    {
+      "file_path": "email-verification.html",
+      "category": "HTML Email Templates",
+      "referenced_in": ["FIXES_COMPLETED.md (line 185-187 marked as temporary)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Marked as temporary in FIXES_COMPLETED.md. No references in src/lib/email.ts which uses programmatic template functions instead. Safe to delete."
+    },
+    {
+      "file_path": "email-newsletter-signup.html",
+      "category": "HTML Email Templates",
+      "referenced_in": ["FIXES_COMPLETED.md (line 185-187 marked as temporary)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Marked as temporary in FIXES_COMPLETED.md. Newsletter emails use getNewsletterConfirmationTemplate() from email-templates.ts (line 329 in email.ts). Safe to delete."
+    },
+    {
+      "file_path": "test-email-now.md",
+      "category": "Temporary Documentation",
+      "referenced_in": [
+        "SECURITY_INCIDENT_RESPONSE.md (line 23 - listed as file that exposed secrets)",
+        "FIXES_COMPLETED.md (line 188 marked as temporary)"
+      ],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Explicitly marked as temporary in FIXES_COMPLETED.md. Referenced in security incident as a file that exposed secrets (now redacted). This was a testing guide that is no longer needed."
+    },
+    {
+      "file_path": "FAVICON_FIX.md",
+      "category": "Temporary Documentation",
+      "referenced_in": ["FIXES_COMPLETED.md (line 189 marked as temporary)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Explicitly marked as temporary in FIXES_COMPLETED.md. This documented a CSP fix for favicons that is now complete. No other references found."
+    },
+    {
+      "file_path": "remove-by-vexnexa.js",
+      "category": "One-Off Scripts",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only in cleanup-report. Not in package.json scripts. No code references. Appears to be a one-time branding cleanup script."
+    },
+    {
+      "file_path": "replace-branding.js",
+      "category": "One-Off Scripts",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only in cleanup-report. Not in package.json scripts. No code references. One-time branding replacement script."
+    },
+    {
+      "file_path": "update-vercel-env.sh",
+      "category": "One-Off Scripts",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Not in package.json scripts. No code references. One-time environment setup script."
+    },
+    {
+      "file_path": "update-vercel-env.ps1",
+      "category": "One-Off Scripts",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Not in package.json scripts. No code references. One-time environment setup script (PowerShell version)."
+    },
+    {
+      "file_path": "TODO.txt",
+      "category": "Miscellaneous",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only in cleanup-report. No documentation references. Personal TODO file not needed in production repo."
+    },
+    {
+      "file_path": "TRANSLATION_SUMMARY.txt",
+      "category": "Miscellaneous",
+      "referenced_in": ["TRANSLATION_SUMMARY.txt (self-references to TRANSLATION_STATUS.md, TRANSLATION_IMPLEMENTATION_COMPLETE.md, TRANSLATION_WORK_COMPLETED.md)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "This is a summary file that references other documentation. It's a meta-document about implementation status. The actual translation implementation is complete and documented in the referenced .md files. This .txt summary is redundant. Safe to delete."
+    },
+    {
+      "file_path": "featurelist.txt",
+      "category": "Miscellaneous",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only in cleanup-report. Plain text feature list likely superseded by proper documentation in docs/ or README. Safe to delete."
+    },
+    {
+      "file_path": "test-report.pdf",
+      "category": "Miscellaneous",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Only in cleanup-report. Test artifact PDF. No code references. Safe to delete."
+    },
+    {
+      "file_path": "fix-schema.sql",
+      "category": "Miscellaneous",
+      "referenced_in": [],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Only in cleanup-report. SQL file that might contain one-time schema fixes. Could be needed for database recovery or understanding schema evolution. LOW disk cost. Recommend KEEP for safety."
+    },
+    {
+      "file_path": "supabase-schema.sql",
+      "category": "Miscellaneous",
+      "referenced_in": [],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Only in cleanup-report. Core database schema file. Could be reference for Supabase setup or disaster recovery. Recommend KEEP as it's documentation of database structure."
+    },
+    {
+      "file_path": "design-tokens.json",
+      "category": "Miscellaneous",
+      "referenced_in": ["DESIGN_SYSTEM_README.md (lines 8, 59, 179, 208)"],
+      "risk_level": "HIGH",
+      "recommendation": "KEEP",
+      "reason": "CRITICAL: Referenced in DESIGN_SYSTEM_README.md with multiple usage examples showing it's imported in React/Vue/JS projects. This is a CORE design system file. DO NOT DELETE."
+    },
+    {
+      "file_path": "design-system.md",
+      "category": "Miscellaneous",
+      "referenced_in": ["DESIGN_SYSTEM_README.md (lines 7, 323)"],
+      "risk_level": "HIGH",
+      "recommendation": "KEEP",
+      "reason": "CRITICAL: Referenced as the main design system documentation in DESIGN_SYSTEM_README.md. Contains design tokens and usage guidelines. This is documentation for developers using the design system. DO NOT DELETE."
+    },
+    {
+      "file_path": "EMAIL_TEMPLATE_INTEGRATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Implementation completion doc. No references in main docs (README.md, SETUP.md). Not in docs/ directory. Historical record of completed work."
+    },
+    {
+      "file_path": "OAUTH_IMPLEMENTATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "referenced_in": ["OAUTH_IMPLEMENTATION_COMPLETE.md (self-reference to OAUTH_SERVICE_WORKER_FIX.md)"],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "References OAUTH_SERVICE_WORKER_FIX.md. Contains important implementation details about OAuth flow. Could be useful for debugging OAuth issues. Recommend KEEP."
+    },
+    {
+      "file_path": "SETUP_COMPLETE.md",
+      "category": "Historical Documentation",
+      "referenced_in": ["SECURITY_INCIDENT_RESPONSE.md (line 22 - listed as file that exposed secrets, now redacted)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Setup completion file. Referenced only in security incident doc as a file that exposed secrets. Likely superseded by SETUP.md. Safe to delete."
+    },
+    {
+      "file_path": "TRANSLATION_IMPLEMENTATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "referenced_in": [
+        "TRANSLATION_SUMMARY.txt (line 77)",
+        "TRANSLATION_WORK_COMPLETED.md (line 455)"
+      ],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Implementation completion doc. Only referenced by other completion docs (TRANSLATION_SUMMARY.txt, TRANSLATION_WORK_COMPLETED.md). These are all historical records that can be archived."
+    },
+    {
+      "file_path": "TRANSLATION_WORK_COMPLETED.md",
+      "category": "Historical Documentation",
+      "referenced_in": ["TRANSLATION_SUMMARY.txt (line 81)"],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Work completion summary. Only referenced by TRANSLATION_SUMMARY.txt (another completion doc). Historical record."
+    },
+    {
+      "file_path": "VERIFICATION_COMPLETE.md",
+      "category": "Historical Documentation",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Verification completion doc. No references in active docs. Historical record."
+    },
+    {
+      "file_path": "GOOGLE_HEALTH_SCORE_COMPLETE.md",
+      "category": "Historical Documentation",
+      "referenced_in": ["NEXT_STEPS.md (line 323 'See GOOGLE_HEALTH_SCORE_COMPLETE.md for full documentation')"],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "CAUTION: Referenced in NEXT_STEPS.md as containing full documentation for Google Health Score system. While NEXT_STEPS.md and docs/google-health-score.md might have newer info, this could contain additional implementation details. Recommend KEEP until you verify docs/google-health-score.md has all necessary info."
+    },
+    {
+      "file_path": "EMAIL_STATUS.md",
+      "category": "Status Documentation",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Status doc. No references in main docs. Email system is complete (per SETUP.md). Historical."
+    },
+    {
+      "file_path": "TRANSLATION_STATUS.md",
+      "category": "Status Documentation",
+      "referenced_in": [
+        "TRANSLATION_IMPLEMENTATION_COMPLETE.md (lines 251, 377)",
+        "TRANSLATION_WORK_COMPLETED.md (line 449)",
+        "TRANSLATION_SUMMARY.txt (line 73)"
+      ],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Status doc only referenced by other completion/summary docs. Translation system is complete. Historical."
+    },
+    {
+      "file_path": "ADMIN_STATUS.md",
+      "category": "Status Documentation",
+      "referenced_in": [
+        "GOOGLE_HEALTH_SCORE_COMPLETE.md (line 370)",
+        "NEXT_STEPS.md (line 324)"
+      ],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Referenced in NEXT_STEPS.md as setup guide for Google Health Score system. Contains detailed admin setup instructions. Recommend KEEP until you verify all info is in docs/google-health-score.md or docs/admin-*.md files."
+    },
+    {
+      "file_path": "EMERGENCY_REDIRECT_LOOP_FIX.md",
+      "category": "Fix Documentation",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "Emergency fix doc. No references. Fix is complete and deployed. Historical."
+    },
+    {
+      "file_path": "OAUTH_BRANDING_FIX.md",
+      "category": "Fix Documentation",
+      "referenced_in": ["OAUTH_SETUP.md (line 286 'For complete branding guide, see: OAUTH_BRANDING_FIX.md')"],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Referenced in OAUTH_SETUP.md as complete branding guide. Contains branding customization instructions for OAuth. Recommend KEEP as it's referenced by active setup documentation."
+    },
+    {
+      "file_path": "OAUTH_FIX_REDIRECT_URI.md",
+      "category": "Fix Documentation",
+      "referenced_in": [],
+      "risk_level": "LOW",
+      "recommendation": "DELETE",
+      "reason": "OAuth redirect fix doc. No references. Fix is complete. Historical."
+    },
+    {
+      "file_path": "OAUTH_SERVICE_WORKER_FIX.md",
+      "category": "Fix Documentation",
+      "referenced_in": ["OAUTH_IMPLEMENTATION_COMPLETE.md (lines 147, 359)"],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Referenced in OAUTH_IMPLEMENTATION_COMPLETE.md as documentation of service worker blocking fix. Contains important debugging info for OAuth + service worker conflicts. Recommend KEEP."
+    },
+    {
+      "file_path": "README_SECURITY_FIXES.md",
+      "category": "Fix Documentation",
+      "referenced_in": [
+        "README_SECURITY_FIXES.md (self-reference line 112)",
+        "VERIFICATION_COMPLETE.md (line 322)"
+      ],
+      "risk_level": "MEDIUM",
+      "recommendation": "KEEP",
+      "reason": "Security fixes documentation. Referenced in VERIFICATION_COMPLETE.md as quick reference. Security docs should be retained for audit purposes. Recommend KEEP."
+    }
+  ]
+}
