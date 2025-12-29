@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PaymentManagementClient } from "@/components/admin/PaymentManagementClient";
+import { MollieQuickLinks } from "@/components/admin/MollieQuickLinks";
 
 export const dynamic = 'force-dynamic';
 async function getPaymentData() {
@@ -112,6 +113,11 @@ export default async function AdminPaymentsPage() {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Mollie Quick Links */}
+        <div className="mb-8">
+          <MollieQuickLinks />
         </div>
 
         {/* Payment Management Client Component */}

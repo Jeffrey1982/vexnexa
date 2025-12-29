@@ -4,6 +4,7 @@ import { ENTITLEMENTS, OVERFLOW_PRICING } from "@/lib/billing/plans";
 import { DollarSign, TrendingUp, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { MollieQuickLinks } from "@/components/admin/MollieQuickLinks";
 
 export const dynamic = 'force-dynamic';
 async function getBillingData() {
@@ -150,6 +151,11 @@ export default async function AdminBillingPage() {
               <div className="text-xs text-gray-500 mt-1">Per user with overage</div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Mollie Quick Links */}
+        <div className="mb-8">
+          <MollieQuickLinks />
         </div>
 
         {/* Overages Alert */}

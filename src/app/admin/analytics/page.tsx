@@ -4,6 +4,7 @@ import { ENTITLEMENTS } from "@/lib/billing/plans";
 import { AlertTriangle, TrendingUp, Users, Database } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { MollieQuickLinks } from "@/components/admin/MollieQuickLinks";
 
 export const dynamic = 'force-dynamic';
 async function getAnalyticsData() {
@@ -190,6 +191,11 @@ export default async function AdminAnalyticsPage() {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Mollie Quick Links */}
+        <div className="mb-8">
+          <MollieQuickLinks />
         </div>
 
         {/* Users Table */}

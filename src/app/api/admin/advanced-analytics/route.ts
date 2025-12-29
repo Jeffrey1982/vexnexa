@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getMollieRevenue } from '@/lib/billing/mollie-analytics';
 
 export async function GET(request: NextRequest) {
   try {
@@ -79,9 +80,10 @@ export async function GET(request: NextRequest) {
       ? ((currentPeriodUsers - previousPeriodUsers) / previousPeriodUsers) * 100
       : 100;
 
-    // Mock revenue data (in a real system, you'd have actual revenue tracking)
-    const totalRevenue = allUsers * 29.99; // Assuming avg $29.99 per user
-    const revenueGrowth = userGrowth; // Simplified - would be based on actual revenue data
+    // Fetch REAL revenue data from Mollie API
+    const mollieData = await getMollieRevenue(startDate, endDate);
+    const totalRevenue = mollieData.totalRevenue;
+    const revenueGrowth = mollieData.revenueGrowth;
     const avgRevenuePerUser = allUsers > 0 ? totalRevenue / allUsers : 0;
     const lifetimeValue = avgRevenuePerUser * 12; // Assuming 12 month average lifetime
 
@@ -149,12 +151,15 @@ export async function GET(request: NextRequest) {
 
       const retentionRate = cohortUsers > 0 ? (retainedUsers / cohortUsers) * 100 : 0;
 
+      // Calculate cohort revenue proportionally based on total revenue
+      const cohortRevenue = allUsers > 0 ? (cohortUsers / allUsers) * totalRevenue : 0;
+
       cohorts.push({
         month: cohortStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
         users: cohortUsers,
         retained: retainedUsers,
         retentionRate,
-        revenue: cohortUsers * 29.99 // Simplified
+        revenue: cohortRevenue
       });
     }
 

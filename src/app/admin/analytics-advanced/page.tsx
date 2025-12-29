@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AdvancedAnalytics } from "@/components/admin/AdvancedAnalytics";
+import { MollieQuickLinks } from "@/components/admin/MollieQuickLinks";
 
 export default function AdvancedAnalyticsPage() {
   const [data, setData] = useState<any>(null);
@@ -33,6 +34,11 @@ export default function AdvancedAnalyticsPage() {
           <p className="text-gray-600 mt-2">
             Comprehensive business intelligence with forecasting and cohort analysis
           </p>
+        </div>
+
+        {/* Mollie Quick Links */}
+        <div className="mb-8">
+          <MollieQuickLinks />
         </div>
 
         {isLoading ? (
