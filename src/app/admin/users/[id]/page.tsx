@@ -147,7 +147,8 @@ async function getUserDetails(userId: string) {
   };
 }
 
-export default async function AdminUserDetailPage({ params }: { params: { id: string } }) {
+export default async function AdminUserDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const {
     user,
     tickets,
@@ -160,7 +161,7 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
     previousMonthPages,
     teamMembersCount,
     overageData
-  } = await getUserDetails(params.id);
+  } = await getUserDetails(id);
 
   if (!user) {
     return (

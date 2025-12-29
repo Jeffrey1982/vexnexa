@@ -11,8 +11,9 @@ import { Badge } from '@/components/ui/badge';
 export default async function DomainDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const user = await requireAuth();
   const subscription = await getActiveAssuranceSubscription(user.id);
 
@@ -22,7 +23,7 @@ export default async function DomainDetailPage({
 
   const domain = await prisma.assuranceDomain.findFirst({
     where: {
-      id: params.id,
+      id,
       subscriptionId: subscription.id,
     },
     include: {

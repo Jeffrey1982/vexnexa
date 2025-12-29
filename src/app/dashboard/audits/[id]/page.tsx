@@ -11,14 +11,15 @@ export const dynamic = "force-dynamic";
 export default async function AuditDetailPage({
   params
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const user = await requireAuth();
 
   // Verify user has access to this audit
   const audit = await prisma.manualAudit.findFirst({
     where: {
-      id: params.id,
+      id,
       OR: [
         { createdById: user.id },
         { assignedToId: user.id },
@@ -43,7 +44,7 @@ export default async function AuditDetailPage({
         </Link>
       </div>
 
-      <AuditChecklist auditId={params.id} />
+      <AuditChecklist auditId={id} />
     </div>
   );
 }
