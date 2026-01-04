@@ -141,10 +141,10 @@ Our platform makes steps 1 and 2 easy. Get started today.`,
   ]
 
   for (const post of blogPosts) {
-    // Add locale field if not present (default to English)
+    // Add locale field (default to English)
     const postData = {
       ...post,
-      locale: post.locale || 'en'
+      locale: 'en'
     };
 
     await prisma.blogPost.upsert({

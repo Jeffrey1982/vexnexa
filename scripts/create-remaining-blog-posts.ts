@@ -3184,10 +3184,10 @@ Start small, build momentum, and remember: accessibility benefits everyone.`,
 
   for (const post of remainingPosts) {
     try {
-      // Add locale field if not present (default to English)
+      // Add locale field (default to English)
       const postData = {
         ...post,
-        locale: post.locale || 'en'
+        locale: 'en'
       };
 
       await prisma.blogPost.upsert({

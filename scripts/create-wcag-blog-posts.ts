@@ -1251,10 +1251,10 @@ Ready to fix contrast issues on your website? Our scanner automatically checks a
 
   for (const post of blogPosts) {
     try {
-      // Add locale field if not present (default to English)
+      // Add locale field (default to English)
       const postData = {
         ...post,
-        locale: post.locale || 'en'
+        locale: 'en'
       };
 
       await prisma.blogPost.upsert({
