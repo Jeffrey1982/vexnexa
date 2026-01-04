@@ -14,11 +14,7 @@ Your Google Health & Visibility Score system is **fully implemented** with:
 - ✅ Documentation and test scripts
 
 **Environment Variables Configured:**
-- ✅ `GA4_PROPERTY_ID=517433349`
-- ✅ `GSC_SITE_URL=https://www.vexnexa.com/`
-- ✅ `GOOGLE_CLIENT_EMAIL` (set)
-- ✅ `GOOGLE_PRIVATE_KEY` (set)
-- ✅ `CRON_TOKEN` (set)
+
 
 ---
 
