@@ -222,8 +222,11 @@ Met jarenlange ervaring in het bouwen van toegankelijke digitale producten, dele
 `;
 
 async function main() {
-  const post = await prisma.blogPost.findUnique({
-    where: { slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa' }
+  const post = await prisma.blogPost.findFirst({
+    where: {
+      slug: 'vexnexa-toekomst-web-toegankelijkheid-vexnexa',
+      locale: 'nl' // This appears to be a Dutch blog post
+    }
   });
 
   if (!post) {

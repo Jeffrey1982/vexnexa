@@ -42,7 +42,10 @@
       "Bash(vercel env ls:*)",
       "Bash(vercel deployments:*)",
       "Bash(vercel:*)",
-      "Bash(printf:*)"
+      "Bash(printf:*)",
+      "Bash(git push)",
+      "Bash(node check-blog-posts.mjs:*)",
+      "Bash(npx prisma migrate dev:*)"
     ],
     "deny": [],
     "ask": []

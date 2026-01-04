@@ -1251,12 +1251,23 @@ Ready to fix contrast issues on your website? Our scanner automatically checks a
 
   for (const post of blogPosts) {
     try {
+      // Add locale field if not present (default to English)
+      const postData = {
+        ...post,
+        locale: post.locale || 'en'
+      };
+
       await prisma.blogPost.upsert({
-        where: { slug: post.slug },
-        update: post,
-        create: post,
+        where: {
+          slug_locale: {
+            slug: postData.slug,
+            locale: postData.locale
+          }
+        },
+        update: postData,
+        create: postData,
       });
-      console.log(`✓ Created/Updated: ${post.title}`);
+      console.log(`✓ Created/Updated: ${postData.title}`);
     } catch (error) {
       console.error(`✗ Error creating post "${post.title}":`, error);
     }

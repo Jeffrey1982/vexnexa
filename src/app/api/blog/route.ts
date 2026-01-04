@@ -98,6 +98,7 @@ export async function POST(req: Request) {
       category,
       tags,
       status,
+      locale,
       publishedAt,
       authorName
     } = body;
@@ -109,14 +110,17 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if slug already exists
-    const existing = await prisma.blogPost.findUnique({
-      where: { slug }
+    // Default to 'en' if locale not provided
+    const postLocale = locale || 'en';
+
+    // Check if slug already exists for this locale
+    const existing = await prisma.blogPost.findFirst({
+      where: { slug, locale: postLocale }
     });
 
     if (existing) {
       return NextResponse.json(
-        { ok: false, error: "A post with this slug already exists" },
+        { ok: false, error: "A post with this slug already exists for this language" },
         { status: 400 }
       );
     }
@@ -134,6 +138,7 @@ export async function POST(req: Request) {
         category,
         tags: tags || [],
         status: status || "draft",
+        locale: postLocale,
         publishedAt: publishedAt ? new Date(publishedAt) : status === "published" ? new Date() : null,
         authorId: user.id,
         authorName: authorName || undefined

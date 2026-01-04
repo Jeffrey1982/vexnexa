@@ -141,12 +141,23 @@ Our platform makes steps 1 and 2 easy. Get started today.`,
   ]
 
   for (const post of blogPosts) {
+    // Add locale field if not present (default to English)
+    const postData = {
+      ...post,
+      locale: post.locale || 'en'
+    };
+
     await prisma.blogPost.upsert({
-      where: { slug: post.slug },
+      where: {
+        slug_locale: {
+          slug: postData.slug,
+          locale: postData.locale
+        }
+      },
       update: {},
-      create: post
+      create: postData
     })
-    console.log(`✓ Created blog post: ${post.title}`)
+    console.log(`✓ Created blog post: ${postData.title}`)
   }
 
   console.log('\n✨ Sample blog posts created successfully!')

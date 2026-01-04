@@ -15,8 +15,9 @@ export async function GET(
   try {
     const { searchParams } = new URL(req.url);
     const isAdmin = searchParams.get("admin") === "true";
+    const locale = searchParams.get("locale") || "en";
 
-    let where: any = { slug: slug };
+    let where: any = { slug: slug, locale: locale };
 
     if (!isAdmin) {
       where.status = "published";
@@ -97,11 +98,15 @@ export async function PATCH(
       category,
       tags,
       status,
+      locale,
       authorName
     } = body;
 
-    const existing = await prisma.blogPost.findUnique({
-      where: { slug: slug }
+    // Default to 'en' if locale not provided
+    const postLocale = locale || 'en';
+
+    const existing = await prisma.blogPost.findFirst({
+      where: { slug: slug, locale: postLocale }
     });
 
     if (!existing) {
@@ -111,14 +116,14 @@ export async function PATCH(
       );
     }
 
-    // If slug is changing, check new slug doesn't exist
+    // If slug is changing, check new slug doesn't exist for this locale
     if (newSlug && newSlug !== slug) {
-      const slugExists = await prisma.blogPost.findUnique({
-        where: { slug: newSlug }
+      const slugExists = await prisma.blogPost.findFirst({
+        where: { slug: newSlug, locale: postLocale }
       });
       if (slugExists) {
         return NextResponse.json(
-          { ok: false, error: "A post with this slug already exists" },
+          { ok: false, error: "A post with this slug already exists for this language" },
           { status: 400 }
         );
       }
@@ -135,6 +140,7 @@ export async function PATCH(
     if (metaKeywords !== undefined) updateData.metaKeywords = metaKeywords;
     if (category) updateData.category = category;
     if (tags !== undefined) updateData.tags = tags;
+    if (locale !== undefined) updateData.locale = locale;
     if (authorName !== undefined) updateData.authorName = authorName || null;
     if (status) {
       updateData.status = status;
@@ -145,7 +151,7 @@ export async function PATCH(
     }
 
     const post = await prisma.blogPost.update({
-      where: { slug: slug },
+      where: { id: existing.id },
       data: updateData,
       include: {
         author: {
@@ -192,8 +198,12 @@ export async function DELETE(
       );
     }
 
-    const existing = await prisma.blogPost.findUnique({
-      where: { slug: slug }
+    // Get locale from query params (default to 'en')
+    const { searchParams } = new URL(req.url);
+    const locale = searchParams.get("locale") || "en";
+
+    const existing = await prisma.blogPost.findFirst({
+      where: { slug: slug, locale: locale }
     });
 
     if (!existing) {
@@ -204,7 +214,7 @@ export async function DELETE(
     }
 
     await prisma.blogPost.delete({
-      where: { slug: slug }
+      where: { id: existing.id }
     });
 
     return NextResponse.json({ ok: true });
