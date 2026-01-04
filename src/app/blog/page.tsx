@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Calendar, User, ArrowRight } from 'lucide-react'
 import { PrismaClient } from '@prisma/client'
 import { SafeImage } from '@/components/SafeImage'
+import { cookies } from 'next/headers'
+import type { Locale } from '@/i18n'
 
 const prisma = new PrismaClient()
 
@@ -30,8 +32,15 @@ export const revalidate = 3600; // Revalidate every hour
 export const dynamic = 'force-dynamic'; // Skip build-time prerendering
 
 export default async function BlogPage() {
+  // Get user's locale from cookie
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+
   const posts = await prisma.blogPost.findMany({
-    where: { status: 'published' },
+    where: {
+      status: 'published',
+      locale: locale // Filter by user's locale
+    },
     include: {
       author: {
         select: {

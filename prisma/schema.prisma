@@ -707,10 +707,13 @@ model AuditAttachment {
 model BlogPost {
   id         String  @id @default(cuid())
   title      String
-  slug       String  @unique
+  slug       String
   content    String  @db.Text
   excerpt    String? @db.Text
   coverImage String?
+
+  // Internationalization
+  locale String @default("en") // en, nl, fr, es, pt
 
   // SEO
   metaTitle       String?
@@ -736,11 +739,13 @@ model BlogPost {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([slug, locale]) // Slug must be unique per locale
   @@index([authorId])
   @@index([slug])
   @@index([status])
   @@index([category])
   @@index([publishedAt])
+  @@index([locale])
 }
 
 // Contact form submissions

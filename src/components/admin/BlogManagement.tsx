@@ -24,6 +24,7 @@ interface BlogPost {
   category: string;
   tags: string[];
   status: string;
+  locale: string; // en, nl, fr, es, pt
   views: number;
   publishedAt: string | null;
   createdAt: string;

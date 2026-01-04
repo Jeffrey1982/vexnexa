@@ -36,6 +36,7 @@ interface BlogEditorProps {
     category: string;
     tags?: string[];
     status: string;
+    locale?: string;
     publishedAt?: string;
     authorName?: string;
   };
@@ -56,6 +57,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
     category: initialData?.category || "Accessibility",
     tags: initialData?.tags?.join(", ") || "",
     status: initialData?.status || "draft",
+    locale: initialData?.locale || "en",
     authorName: initialData?.authorName || ""
   });
 
@@ -344,6 +346,28 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Optional: Display a different name or guest author
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Language
+                </label>
+                <select
+                  value={formData.locale}
+                  onChange={e =>
+                    setFormData({ ...formData, locale: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="en">English</option>
+                  <option value="nl">Nederlands (Dutch)</option>
+                  <option value="fr">Français (French)</option>
+                  <option value="es">Español (Spanish)</option>
+                  <option value="pt">Português (Portuguese)</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">
+                  Select the language for this blog post
                 </p>
               </div>
 

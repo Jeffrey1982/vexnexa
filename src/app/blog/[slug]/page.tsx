@@ -7,8 +7,22 @@ import { PrismaClient } from '@prisma/client'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { BlogContent } from '@/components/blog/BlogContent'
 import { SafeImage } from '@/components/SafeImage'
+import { cookies } from 'next/headers'
+import type { Locale } from '@/i18n'
+import { BlogLanguageSelector } from '@/components/blog/BlogLanguageSelector'
 
 const prisma = new PrismaClient()
+
+// Helper to extract base slug (remove language suffix)
+function getBaseSlug(slug: string): string {
+  const suffixes = ['-en', '-nl', '-fr', '-es', '-pt'];
+  for (const suffix of suffixes) {
+    if (slug.endsWith(suffix)) {
+      return slug.slice(0, -suffix.length);
+    }
+  }
+  return slug;
+}
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -18,8 +32,18 @@ interface BlogPostPageProps {
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
+
+  // Get user's locale from cookie
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+
   const post = await prisma.blogPost.findUnique({
-    where: { slug }
+    where: {
+      slug_locale: {
+        slug: slug,
+        locale: locale
+      }
+    }
   });
 
   if (!post) {
@@ -53,8 +77,18 @@ export const revalidate = 3600;
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
+
+  // Get user's locale from cookie
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+
   const post = await prisma.blogPost.findUnique({
-    where: { slug },
+    where: {
+      slug_locale: {
+        slug: slug,
+        locale: locale
+      }
+    },
     include: {
       author: {
         select: {
@@ -75,17 +109,41 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     data: { views: { increment: 1 } }
   });
 
+  // Get base slug and find available language versions
+  const baseSlug = getBaseSlug(slug);
+  const allVersions = await prisma.blogPost.findMany({
+    where: {
+      status: 'published',
+    },
+    select: {
+      locale: true,
+      slug: true,
+    }
+  });
+
+  // Find all available locales for this post (by matching base slug)
+  const availableLocales = allVersions
+    .filter((v) => getBaseSlug(v.slug) === baseSlug)
+    .map((v) => v.locale);
+
   return (
     <div className="min-h-screen">
       {/* Header */}
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <Link href="/blog">
-            <Button variant="ghost" size="sm" className="gap-2 -ml-2 text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4" />
-              Terug
-            </Button>
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/blog">
+              <Button variant="ghost" size="sm" className="gap-2 -ml-2 text-muted-foreground hover:text-foreground">
+                <ArrowLeft className="w-4 h-4" />
+                Terug
+              </Button>
+            </Link>
+            <BlogLanguageSelector
+              currentLocale={locale}
+              availableLocales={availableLocales}
+              baseSlug={baseSlug}
+            />
+          </div>
         </div>
       </section>
 
