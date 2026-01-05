@@ -37,14 +37,20 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const cookieStore = await cookies();
   const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
 
-  const post = await prisma.blogPost.findUnique({
+  // Try to find post with locale first, fallback to any post with this slug
+  let post = await prisma.blogPost.findFirst({
     where: {
-      slug_locale: {
-        slug: slug,
-        locale: locale
-      }
+      slug: slug,
+      locale: locale
     }
   });
+
+  // If not found with locale, try without locale (backward compatibility)
+  if (!post) {
+    post = await prisma.blogPost.findFirst({
+      where: { slug: slug }
+    });
+  }
 
   if (!post) {
     return {
@@ -82,12 +88,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const cookieStore = await cookies();
   const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
 
-  const post = await prisma.blogPost.findUnique({
+  // Try to find post with locale first, fallback to any post with this slug
+  let post = await prisma.blogPost.findFirst({
     where: {
-      slug_locale: {
-        slug: slug,
-        locale: locale
-      }
+      slug: slug,
+      locale: locale
     },
     include: {
       author: {
@@ -98,6 +103,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       }
     }
   });
+
+  // If not found with locale, try without locale (backward compatibility)
+  if (!post) {
+    post = await prisma.blogPost.findFirst({
+      where: { slug: slug },
+      include: {
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+          }
+        }
+      }
+    });
+  }
 
   if (!post || post.status !== 'published') {
     notFound();
@@ -124,7 +144,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Find all available locales for this post (by matching base slug)
   const availableLocales = allVersions
     .filter((v) => getBaseSlug(v.slug) === baseSlug)
-    .map((v) => v.locale);
+    .map((v) => v.locale || 'en') // Default to 'en' if locale not set
+    .filter((loc, index, self) => self.indexOf(loc) === index); // Remove duplicates
 
   return (
     <div className="min-h-screen">
@@ -139,7 +160,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </Button>
             </Link>
             <BlogLanguageSelector
-              currentLocale={locale}
+              currentLocale={post.locale || locale}
               availableLocales={availableLocales}
               baseSlug={baseSlug}
             />

@@ -36,7 +36,8 @@ export default async function BlogPage() {
   const cookieStore = await cookies();
   const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
 
-  const posts = await prisma.blogPost.findMany({
+  // Try to get posts with locale first
+  let posts = await prisma.blogPost.findMany({
     where: {
       status: 'published',
       locale: locale // Filter by user's locale
@@ -51,6 +52,24 @@ export default async function BlogPage() {
     },
     orderBy: { publishedAt: 'desc' }
   });
+
+  // If no posts found with locale filter, get all published posts (backward compatibility)
+  if (posts.length === 0) {
+    posts = await prisma.blogPost.findMany({
+      where: {
+        status: 'published'
+      },
+      include: {
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+          }
+        }
+      },
+      orderBy: { publishedAt: 'desc' }
+    });
+  }
 
   const featuredPost = posts[0];
   const otherPosts = posts.slice(1);
