@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -336,6 +337,21 @@ function FinalCTASection() {
 // Main Page Component
 export default function HomePage() {
   const tFaq = useTranslations('home.faq');
+
+  useEffect((): void => {
+    if (typeof window === 'undefined') return;
+
+    const hash: string = window.location.hash;
+    if (!hash) return;
+
+    const hashParams: URLSearchParams = new URLSearchParams(hash.substring(1));
+    const type: string | null = hashParams.get('type');
+    const accessToken: string | null = hashParams.get('access_token');
+
+    if (type === 'recovery' && accessToken) {
+      window.location.replace(`/auth/reset-password${hash}`);
+    }
+  }, []);
 
   // REMOVED: Fake client logos and testimonials per brand guidelines
   // VexNexa is pre-launch and cannot make false claims about enterprise clients
