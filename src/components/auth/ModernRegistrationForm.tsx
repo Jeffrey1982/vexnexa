@@ -11,7 +11,6 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { createClient } from '@/lib/supabase/client'
-import { useTranslations } from 'next-intl'
 import { 
   User, 
   Mail, 
@@ -96,11 +95,11 @@ const steps = [
 ]
 
 export default function ModernRegistrationForm() {
-  const t = useTranslations('auth.register')
   const [currentStep, setCurrentStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+
   const router = useRouter()
   const supabase = createClient()
 
@@ -256,11 +255,16 @@ export default function ModernRegistrationForm() {
         setTimeout(() => reject(new Error('Request timeout - email configuration may need adjustment')), 25000)
       )
 
+      const isLocalhost: boolean = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      const origin: string = isLocalhost
+        ? window.location.origin
+        : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || window.location.origin)
+
       const signUpPromise = supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${origin}/auth/callback`,
           data: {
             first_name: formData.firstName,
             last_name: formData.lastName,

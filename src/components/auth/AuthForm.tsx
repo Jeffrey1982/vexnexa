@@ -32,11 +32,16 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
     try {
       if (mode === 'register') {
+        const isLocalhost: boolean = window.location.hostname === 'localhost'
+        const origin: string = isLocalhost
+          ? window.location.origin
+          : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || window.location.origin)
+
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            emailRedirectTo: `${origin}/auth/callback`,
           },
         })
 

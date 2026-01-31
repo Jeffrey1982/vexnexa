@@ -1,0 +1,13 @@
+Verify your email address
+
+We received a request to create a VexNexa account for {{user_email}}.
+
+Verify email:
+{{action_url}}
+
+Open dashboard:
+https://vexnexa.com/dashboard
+
+If you didn't request this, you can safely ignore this email.
+
+Need help? support@vexnexa.com

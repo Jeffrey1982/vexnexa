@@ -3,18 +3,49 @@ import { NextRequest, NextResponse } from 'next/server'
 import { ensureUserInDatabase } from '@/lib/user-sync'
 import { sendWelcomeEmail, sendNewUserNotification } from '@/lib/email'
 
-export async function GET(request: NextRequest) {
+function buildRedirectUrl(params: {
+  requestUrl: URL
+  pathname: string
+  searchParams?: Record<string, string>
+}): URL {
+  const redirectUrl: URL = new URL(params.pathname, params.requestUrl)
+
+  if (params.searchParams) {
+    for (const [key, value] of Object.entries(params.searchParams)) {
+      redirectUrl.searchParams.set(key, value)
+    }
+  }
+
+  return redirectUrl
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
   const type = requestUrl.searchParams.get('type')
   const next = requestUrl.searchParams.get('next')
+  const errorDescription = requestUrl.searchParams.get('error_description')
+
+  const isVerificationFlow: boolean = type === 'signup' || type === 'email_change'
 
   console.log('[Callback] Request params:', { code: code?.substring(0, 10), error, type, next })
 
   // Handle OAuth error
   if (error) {
     console.error('OAuth error:', error)
+    if (isVerificationFlow) {
+      return NextResponse.redirect(
+        buildRedirectUrl({
+          requestUrl,
+          pathname: '/auth/verify-error',
+          searchParams: {
+            reason: errorDescription || error,
+          },
+        })
+      )
+    }
+
     return NextResponse.redirect(new URL('/auth/login?error=oauth_error', request.url))
   }
 
@@ -26,6 +57,18 @@ export async function GET(request: NextRequest) {
 
       if (error) {
         console.error('[Callback] Session exchange error:', error)
+        if (isVerificationFlow) {
+          return NextResponse.redirect(
+            buildRedirectUrl({
+              requestUrl,
+              pathname: '/auth/verify-error',
+              searchParams: {
+                reason: error.message,
+              },
+            })
+          )
+        }
+
         return NextResponse.redirect(new URL('/auth/login?error=session_error', request.url))
       }
 
@@ -97,6 +140,10 @@ export async function GET(request: NextRequest) {
           }
         }
 
+        if (isVerificationFlow) {
+          return NextResponse.redirect(new URL('/auth/verified', request.url))
+        }
+
         if (isNewUser) {
           // Check if profile is complete (has first and last name)
           const hasFirstName = data.user.user_metadata?.first_name || data.user.user_metadata?.given_name
@@ -117,10 +164,34 @@ export async function GET(request: NextRequest) {
       }
     } catch (exchangeError) {
       console.error('Unexpected error during OAuth callback:', exchangeError)
+      if (isVerificationFlow) {
+        return NextResponse.redirect(
+          buildRedirectUrl({
+            requestUrl,
+            pathname: '/auth/verify-error',
+            searchParams: {
+              reason: 'unexpected_error',
+            },
+          })
+        )
+      }
+
       return NextResponse.redirect(new URL('/auth/login?error=unexpected_error', request.url))
     }
   }
 
   // If no code or other issues, redirect to login
+  if (isVerificationFlow) {
+    return NextResponse.redirect(
+      buildRedirectUrl({
+        requestUrl,
+        pathname: '/auth/verify-error',
+        searchParams: {
+          reason: 'missing_code',
+        },
+      })
+    )
+  }
+
   return NextResponse.redirect(new URL('/auth/login', request.url))
 }
