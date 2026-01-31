@@ -38,20 +38,20 @@ export async function sendContactNotification(data: ContactEmailData) {
       subject: `New contact message from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #7C3AED;">New contact message</h2>
+          <h2 style="color: #FF6B35;">New contact message</h2>
 
-          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0;">Contact details</h3>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
           </div>
 
-          <div style="background: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+          <div style="background: #ffffff; padding: 20px; border: 1px solid #C0C3C7; border-radius: 8px;">
             <h3 style="margin-top: 0;">Message</h3>
             <p style="white-space: pre-wrap;">${message}</p>
           </div>
 
-          <p style="margin-top: 30px; color: #6b7280; font-size: 14px;">
+          <p style="margin-top: 30px; color: #4B5563; font-size: 14px;">
             This message was sent via the contact form on vexnexa.com
           </p>
         </div>
@@ -77,9 +77,9 @@ This message was sent via the contact form on vexnexa.com
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: #0F5C5C; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
+            <div style="display: inline-block; background: #FF6B35; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
             <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
-            <p style="color: #6B7280; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
+            <p style="color: #4B5563; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
 
           <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px;">Hello ${name}! 👋</h2>
@@ -88,13 +88,13 @@ This message was sent via the contact form on vexnexa.com
             <strong>Thank you for contacting us!</strong> We have successfully received your message and our team will review it shortly.
           </p>
 
-          <div style="background: #EFF6FF; border-left: 4px solid #0F5C5C; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
-            <p style="color: #1E40AF; font-size: 16px; margin: 0; font-weight: 600;">
+          <div style="background: #F8F9FA; border-left: 4px solid #0F5C5C; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+            <p style="color: #1E1E1E; font-size: 16px; margin: 0; font-weight: 600;">
               ⚡ We reply as fast as possible - usually within a few hours!
             </p>
           </div>
 
-          <div style="background: #F8FAFC; padding: 24px; border-radius: 8px; margin: 24px 0;">
+          <div style="background: #F8F9FA; padding: 24px; border-radius: 8px; margin: 24px 0;">
             <h3 style="color: #1F2937; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">Your message:</h3>
             <p style="white-space: pre-wrap; color: #4B5563; line-height: 1.6; margin: 0;">${message}</p>
           </div>
@@ -398,18 +398,18 @@ export async function sendAdminEmail(data: AdminEmailData) {
       subject: subject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: #7C3AED; padding: 20px; border-radius: 8px 8px 0 0;">
+          <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%); padding: 20px; border-radius: 8px 8px 0 0;">
             <h2 style="color: white; margin: 0;">VexNexa</h2>
           </div>
 
           <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
             <p>Hello,</p>
 
-            <div style="background: #f8f9fa; padding: 20px; border-left: 4px solid #7C3AED; border-radius: 4px; margin: 20px 0;">
+            <div style="background: #F8F9FA; padding: 20px; border-left: 4px solid #0F5C5C; border-radius: 4px; margin: 20px 0;">
               <p style="white-space: pre-wrap; margin: 0;">${message.replace(/\n/g, '<br>')}</p>
             </div>
 
-            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #7C3AED;">info@vexnexa.com</a>.</p>
+            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #0F5C5C;">info@vexnexa.com</a>.</p>
 
             <p style="margin-top: 30px;">
               Best regards,<br>
@@ -421,7 +421,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
           <div style="background: #f8f9fa; padding: 15px; text-align: center; border-radius: 0 0 8px 8px;">
             <p style="color: #6b7280; font-size: 12px; margin: 0;">
               VexNexa - WCAG accessibility scanning platform<br>
-              <a href="https://vexnexa.com" style="color: #7C3AED; text-decoration: none;">vexnexa.com</a>
+              <a href="https://vexnexa.com" style="color: #0F5C5C; text-decoration: none;">vexnexa.com</a>
             </p>
           </div>
         </div>
@@ -500,7 +500,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
       subject: `🎉 New user registration: ${firstName} ${lastName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #059669 0%, #047857 100%); padding: 24px; border-radius: 12px 12px 0 0;">
+          <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%); padding: 24px; border-radius: 12px 12px 0 0;">
             <h2 style="color: white; margin: 0; font-size: 24px;">🎉 New User Registration</h2>
             <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0;">Someone just joined VexNexa!</p>
           </div>
@@ -516,8 +516,9 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Email:</td>
-                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #059669;">${email}</a></td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #0F5C5C;">${email}</a></td>
                 </tr>
+
                 ${company ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Company:</td>
                   <td style="padding: 8px 0; color: #1F2937;">${company}</td>
@@ -532,7 +533,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
                 </tr>` : ''}
                 ${website ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Website:</td>
-                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #059669;" target="_blank">${website}</a></td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #0F5C5C;" target="_blank">${website}</a></td>
                 </tr>` : ''}
                 ${country ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Country:</td>
@@ -545,24 +546,24 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
               <h4 style="color: #1F2937; margin: 0 0 12px 0; font-size: 16px;">Communication Preferences</h4>
               <p style="margin: 4px 0; color: #374151;">
                 <strong style="color: #6B7280;">Marketing Emails:</strong>
-                <span style="color: ${marketingEmails ? '#059669' : '#DC2626'}; font-weight: 600;">
+                <span style="color: ${marketingEmails ? '#FF6B35' : '#DC2626'}; font-weight: 600;">
                   ${marketingEmails ? '✅ Opted In' : '❌ Opted Out'}
                 </span>
               </p>
               <p style="margin: 4px 0; color: #374151;">
                 <strong style="color: #6B7280;">Product Updates:</strong>
-                <span style="color: ${productUpdates ? '#059669' : '#DC2626'}; font-weight: 600;">
+                <span style="color: ${productUpdates ? '#FF6B35' : '#DC2626'}; font-weight: 600;">
                   ${productUpdates ? '✅ Opted In' : '❌ Opted Out'}
                 </span>
               </p>
             </div>
 
-            <div style="background: #EFF6FF; padding: 16px; border-radius: 8px; border-left: 4px solid #0F5C5C;">
-              <h4 style="color: #1E40AF; margin: 0 0 8px 0; font-size: 16px;">Trial Information</h4>
-              <p style="margin: 4px 0; color: #1E40AF;">
+            <div style="background: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #0F5C5C;">
+              <h4 style="color: #1E1E1E; margin: 0 0 8px 0; font-size: 16px;">Trial Information</h4>
+              <p style="margin: 4px 0; color: #1E1E1E;">
                 <strong>Trial Ends:</strong> ${trialEndDate}
               </p>
-              <p style="margin: 4px 0; color: #1E40AF;">
+              <p style="margin: 4px 0; color: #1E1E1E;">
                 <strong>Plan:</strong> 14-day Trial
               </p>
             </div>
