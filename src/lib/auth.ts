@@ -1,8 +1,10 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { prisma } from '@/lib/prisma'
+import { ensureUserInDatabase } from '@/lib/user-sync'
 import { redirect } from 'next/navigation'
+import type { User as SupabaseUser } from '@supabase/supabase-js'
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<any> {
   const supabase = await createClient()
 
   const { data: { user }, error } = await supabase.auth.getUser()
@@ -44,6 +46,35 @@ export async function getCurrentUser() {
     })
   } catch (e) {
     console.error("Failed to fetch user from database:", e)
+  }
+
+  if (!dbUser) {
+    try {
+      await ensureUserInDatabase(user as SupabaseUser)
+
+      if (user.email) {
+        dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            company: true,
+            plan: true,
+            subscriptionStatus: true,
+            trialEndsAt: true,
+            profileCompleted: true,
+            marketingEmails: true,
+            productUpdates: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        })
+      }
+    } catch (e) {
+      console.error('Failed to sync user to database:', e)
+    }
   }
 
   // If user exists in database, use that data; otherwise use Supabase metadata

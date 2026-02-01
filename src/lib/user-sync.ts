@@ -1,18 +1,19 @@
 import { prisma } from '@/lib/prisma'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
-export async function ensureUserInDatabase(supabaseUser: SupabaseUser) {
+export async function ensureUserInDatabase(supabaseUser: SupabaseUser): Promise<any> {
   try {
-    const now = new Date()
-    const trialStart = now
-    const trialEnd = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000) // 14 days
-    const trialOrigin = 'self-signup'
+    const now: Date = new Date()
+    const trialStart: Date = now
+    const trialEnd: Date = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000) // 14 days
+    const trialOrigin: string = 'self-signup'
 
-    // Use upsert for idempotent database sync
+    const email: string = supabaseUser.email!
+
     const dbUser = await prisma.user.upsert({
-      where: { id: supabaseUser.id },
+      where: { email },
       update: {
-        email: supabaseUser.email!,
+        email,
         firstName: supabaseUser.user_metadata?.first_name || null,
         lastName: supabaseUser.user_metadata?.last_name || null,
         company: supabaseUser.user_metadata?.company || null,
@@ -31,7 +32,7 @@ export async function ensureUserInDatabase(supabaseUser: SupabaseUser) {
       },
       create: {
         id: supabaseUser.id,
-        email: supabaseUser.email!,
+        email,
         firstName: supabaseUser.user_metadata?.first_name || null,
         lastName: supabaseUser.user_metadata?.last_name || null,
         company: supabaseUser.user_metadata?.company || null,
@@ -58,12 +59,13 @@ export async function ensureUserInDatabase(supabaseUser: SupabaseUser) {
 
     console.log('User synced to database:', dbUser.id)
     return dbUser
+
   } catch (error) {
     console.error('Error ensuring user in database:', error)
 
     // Return fallback user object if database fails
-    const now = new Date()
-    const trialEnd = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000)
+    const now: Date = new Date()
+    const trialEnd: Date = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000)
 
     return {
       id: supabaseUser.id,

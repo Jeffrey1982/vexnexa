@@ -5,6 +5,8 @@ import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";
 import { assertWithinLimits, addPageUsage, addSiteUsage } from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
+import { ensureUserInDatabase } from "@/lib/user-sync";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 import {
   getPerformanceMetrics,
   analyzeSEOMetrics,
@@ -31,7 +33,7 @@ export async function POST(req: Request) {
     );
 
     // Bepaal "user" context
-    let user: { id: string };
+    let user: { id: string; supabaseUser?: SupabaseUser };
 
     if (isServiceCall) {
       // In automation-mode mag je (optioneel) de user-id meegeven in header,
@@ -65,7 +67,12 @@ export async function POST(req: Request) {
       user = { id: forcedUserId };
     } else {
       // Normale app: ingelogde gebruiker via NextAuth
-      user = await requireAuth();
+      const authUser: Awaited<ReturnType<typeof requireAuth>> = await requireAuth();
+      user = { id: authUser.id, supabaseUser: authUser.supabaseUser };
+
+      if (user.supabaseUser) {
+        await ensureUserInDatabase(user.supabaseUser);
+      }
 
       // Limits alleen toepassen op normale user-scans
       await assertWithinLimits({
@@ -370,6 +377,16 @@ export async function POST(req: Request) {
     console.error("Scan failed:", e);
 
     if (e instanceof Error) {
+      if (e.message === "User not found") {
+        return NextResponse.json(
+          {
+            ok: false,
+            error: "User profile not initialized. Please log out and log back in, then try again.",
+            code: "USER_NOT_INITIALIZED",
+          },
+          { status: 500 }
+        );
+      }
       if ((e as any).code === "UPGRADE_REQUIRED") {
         return NextResponse.json(
           { ok: false, error: e.message, code: "UPGRADE_REQUIRED", feature: (e as any).feature },
