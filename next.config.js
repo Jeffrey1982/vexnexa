@@ -7,6 +7,10 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvbGpkYnVpcGh6bHNxenhkeHl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyNjI2OTAsImV4cCI6MjA3MjgzODY5MH0.K2cLamkHo4KH0POi8XOgUBRSiYlpRXmhBambxyeCI8s',
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com',
   },
+  outputFileTracingIncludes: {
+    'app/api/scan/route.js': ['node_modules/@sparticuz/chromium/**'],
+    'app/api/scan-enhanced/route.js': ['node_modules/@sparticuz/chromium/**'],
+  },
   images: {
     remotePatterns: [
       {
