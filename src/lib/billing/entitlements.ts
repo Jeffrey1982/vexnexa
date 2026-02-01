@@ -2,12 +2,12 @@ import { ENTITLEMENTS } from "./plans"
 import { prisma } from "../prisma"
 import { calculateExtraScans, calculateExtraSeats } from "./addons"
 
-export function getEntitlements(plan: keyof typeof ENTITLEMENTS) {
+export function getEntitlements<P extends keyof typeof ENTITLEMENTS>(plan: P): (typeof ENTITLEMENTS)[P] {
   return ENTITLEMENTS[plan]
 }
 
 // Get total entitlements including add-ons
-export async function getTotalEntitlements(userId: string) {
+export async function getTotalEntitlements(userId: string): Promise<Record<string, any>> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
@@ -42,12 +42,43 @@ export async function getTotalEntitlements(userId: string) {
   }
 }
 
+function getIsoWeekPeriod(now: Date): string {
+  const date: Date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
+  const day: number = date.getUTCDay() || 7
+  date.setUTCDate(date.getUTCDate() + 4 - day)
+  const yearStart: Date = new Date(Date.UTC(date.getUTCFullYear(), 0, 1))
+  const weekNo: number = Math.ceil((((date.getTime() - yearStart.getTime()) / 86400000) + 1) / 7)
+  const year: number = date.getUTCFullYear()
+  return `WEEK-${year}-${String(weekNo).padStart(2, '0')}`
+}
+
+export async function hasWeeklyFreeScanAvailable(userId: string, now?: Date): Promise<boolean> {
+  const current: Date = now ?? new Date()
+  const period: string = getIsoWeekPeriod(current)
+  const usage = await prisma.usage.findUnique({
+    where: { userId_period: { userId, period } }
+  })
+  const used: number = usage?.pages ?? 0
+  return used < 1
+}
+
+export async function consumeWeeklyFreeScan(userId: string, now?: Date): Promise<void> {
+  const current: Date = now ?? new Date()
+  const period: string = getIsoWeekPeriod(current)
+
+  await prisma.usage.upsert({
+    where: { userId_period: { userId, period } },
+    update: { pages: { increment: 1 } },
+    create: { userId, period, pages: 1, sites: 0 },
+  })
+}
+
 export async function assertWithinLimits(opts: {
   userId: string
   action: "scan" | "bulk_scan" | "export_pdf" | "export_word" | "schedule" | "crawl" | "white_label"
   pages?: number
   now?: Date
-}) {
+}): Promise<void> {
   const now = opts.now ?? new Date()
   const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
 
@@ -131,9 +162,9 @@ export async function assertWithinLimits(opts: {
   }
 }
 
-export async function addPageUsage(userId: string, pages: number) {
-  const now = new Date()
-  const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
+export async function addPageUsage(userId: string, pages: number): Promise<void> {
+  const now: Date = new Date()
+  const period: string = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
 
   await prisma.usage.upsert({
     where: { userId_period: { userId, period } },
@@ -142,9 +173,9 @@ export async function addPageUsage(userId: string, pages: number) {
   })
 }
 
-export async function addSiteUsage(userId: string) {
-  const now = new Date()
-  const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
+export async function addSiteUsage(userId: string): Promise<void> {
+  const now: Date = new Date()
+  const period: string = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
 
   await prisma.usage.upsert({
     where: { userId_period: { userId, period } },
@@ -153,9 +184,9 @@ export async function addSiteUsage(userId: string) {
   })
 }
 
-export async function getCurrentUsage(userId: string) {
-  const now = new Date()
-  const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
+export async function getCurrentUsage(userId: string): Promise<{ pages: number; sites: number; period: string }> {
+  const now: Date = new Date()
+  const period: string = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`
 
   const usage = await prisma.usage.findUnique({
     where: { userId_period: { userId, period } }

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";
-import { assertWithinLimits, addPageUsage, addSiteUsage } from "@/lib/billing/entitlements";
+import { assertWithinLimits, addPageUsage, addSiteUsage, consumeWeeklyFreeScan, hasWeeklyFreeScanAvailable } from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
 import { ensureUserInDatabase } from "@/lib/user-sync";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
@@ -34,6 +34,7 @@ export async function POST(req: Request) {
 
     // Bepaal "user" context
     let user: { id: string; supabaseUser?: SupabaseUser };
+    let useWeeklyFreeScan: boolean = false;
 
     if (isServiceCall) {
       // In automation-mode mag je (optioneel) de user-id meegeven in header,
@@ -75,11 +76,30 @@ export async function POST(req: Request) {
       }
 
       // Limits alleen toepassen op normale user-scans
-      await assertWithinLimits({
-        userId: user.id,
-        action: "scan",
-        pages: 1,
-      });
+      try {
+        await assertWithinLimits({
+          userId: user.id,
+          action: "scan",
+          pages: 1,
+        });
+      } catch (limitError: any) {
+        const errorCode: string | undefined = (limitError as any)?.code;
+        const isQuotaError: boolean =
+          errorCode === "TRIAL_LIMIT_REACHED" ||
+          errorCode === "LIMIT_REACHED" ||
+          errorCode === "TRIAL_EXPIRED";
+
+        if (!isQuotaError) {
+          throw limitError;
+        }
+
+        const hasWeekly: boolean = await hasWeeklyFreeScanAvailable(user.id);
+        if (!hasWeekly) {
+          throw limitError;
+        }
+
+        useWeeklyFreeScan = true;
+      }
     }
 
     // ----- 1) Body & URL validatie -----
@@ -126,7 +146,16 @@ export async function POST(req: Request) {
       const plan = (userWithPlan?.plan || "TRIAL") as keyof typeof ENTITLEMENTS;
       const siteLimit = ENTITLEMENTS[plan].sites;
 
-      if (currentSiteCount >= siteLimit) {
+      if (currentSiteCount >= siteLimit && !useWeeklyFreeScan) {
+        const hasWeekly: boolean = await hasWeeklyFreeScanAvailable(user.id);
+        if (hasWeekly) {
+          useWeeklyFreeScan = true;
+        }
+      }
+
+      const maxSitesAllowed: number = useWeeklyFreeScan ? siteLimit + 1 : siteLimit;
+
+      if (currentSiteCount >= maxSitesAllowed) {
         const e: any = new Error(
           `Site limit reached for ${plan} plan (${siteLimit} sites). Upgrade to add more websites.`
         );
@@ -142,7 +171,9 @@ export async function POST(req: Request) {
 
       // Track site creation in usage (only for normal user scans, not service calls)
       if (!isServiceCall) {
-        await addSiteUsage(user.id);
+        if (!useWeeklyFreeScan) {
+          await addSiteUsage(user.id);
+        }
       }
     }
 
@@ -360,7 +391,11 @@ export async function POST(req: Request) {
 
     // Alleen normale user-scans tellen we mee in billing/usage
     if (!isServiceCall) {
-      await addPageUsage(user.id, 1);
+      if (useWeeklyFreeScan) {
+        await consumeWeeklyFreeScan(user.id);
+      } else {
+        await addPageUsage(user.id, 1);
+      }
     }
 
     return NextResponse.json({
