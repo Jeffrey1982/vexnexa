@@ -257,7 +257,7 @@ export default async function AdminTicketsPage(props: PageProps) {
                     {formatDate(ticket.updatedAt)}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href={`/admin/tickets/${ticket.id}`}>
+                    <Link href={`/admin/tickets/tickets/${ticket.id}`}>
                       <Button
                         size="sm"
                         variant="outline"

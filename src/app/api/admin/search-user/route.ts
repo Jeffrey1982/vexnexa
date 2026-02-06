@@ -1,25 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth';
+import { requireAdmin } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic'
-
-// Simple admin check function
-async function requireAdmin() {
-  const user = await requireAuth();
-
-  // Admin emails - replace with your email
-  const adminEmails = [
-    'jeffrey.aay@gmail.com',
-    'admin@vexnexa.com'
-  ];
-
-  if (!adminEmails.includes(user.email)) {
-    throw new Error('Unauthorized: Admin access required');
-  }
-
-  return user;
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -69,13 +52,18 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error: any) {
+    // Let Next.js redirects from requireAdmin() pass through
+    if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
+
     console.error('Admin search user error:', error);
 
-    if (error.message === 'Unauthorized: Admin access required') {
+    if (error.message === 'Authentication required') {
       return NextResponse.json({
         success: false,
-        error: 'Unauthorized: Admin access required'
-      }, { status: 403 });
+        error: 'Unauthorized'
+      }, { status: 401 });
     }
 
     return NextResponse.json({

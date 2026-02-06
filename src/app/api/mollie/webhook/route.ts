@@ -13,8 +13,15 @@ export async function POST(request: NextRequest) {
     // Get the raw body for signature verification
     const body = await request.text()
 
-    // Verify webhook signature if secret is configured
-    if (process.env.MOLLIE_WEBHOOK_SECRET) {
+    // Verify webhook signature (required in production)
+    const webhookSecret = process.env.MOLLIE_WEBHOOK_SECRET
+    if (!webhookSecret) {
+      if (process.env.NODE_ENV === 'production') {
+        console.error('MOLLIE_WEBHOOK_SECRET is not configured — rejecting webhook')
+        return NextResponse.json({ error: "Webhook not configured" }, { status: 500 })
+      }
+      console.warn('MOLLIE_WEBHOOK_SECRET not set — skipping signature check in development')
+    } else {
       const signature = request.headers.get('mollie-signature')
       if (!signature) {
         console.error('Missing Mollie signature header')
@@ -22,7 +29,7 @@ export async function POST(request: NextRequest) {
       }
 
       const expectedSignature = crypto
-        .createHmac('sha256', process.env.MOLLIE_WEBHOOK_SECRET)
+        .createHmac('sha256', webhookSecret)
         .update(body)
         .digest('hex')
 

@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { requireDevelopment } from "@/lib/dev-only"
 
 export async function GET(request: NextRequest) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
+
   try {
     console.log('Running database migration to add missing User columns...')
 

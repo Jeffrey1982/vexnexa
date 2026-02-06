@@ -115,6 +115,36 @@ export async function POST(req: Request) {
     let fullPageUrl: string;
     try {
       const urlObj = new URL(url);
+
+      // SSRF protection: only allow http/https protocols
+      if (!["http:", "https:"].includes(urlObj.protocol)) {
+        return NextResponse.json(
+          { ok: false, error: "Only http and https URLs are allowed" },
+          { status: 400 }
+        );
+      }
+
+      // SSRF protection: block internal/private network addresses
+      const hostname = urlObj.hostname.toLowerCase();
+      const isBlocked =
+        hostname === "localhost" ||
+        hostname === "127.0.0.1" ||
+        hostname === "0.0.0.0" ||
+        hostname === "[::1]" ||
+        hostname.endsWith(".local") ||
+        hostname.endsWith(".internal") ||
+        /^10\./.test(hostname) ||
+        /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
+        /^192\.168\./.test(hostname) ||
+        /^169\.254\./.test(hostname);
+
+      if (isBlocked) {
+        return NextResponse.json(
+          { ok: false, error: "Scanning internal or private network addresses is not allowed" },
+          { status: 400 }
+        );
+      }
+
       siteUrl = urlObj.origin;
       fullPageUrl = url;
     } catch {

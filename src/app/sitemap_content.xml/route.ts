@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 // Configuration
-const BASE_URL = 'https://vexnexa.com'
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 const LOCALES = ['en', 'nl', 'de', 'fr', 'es'] as const
 const LAST_MODIFIED = '2025-12-23' // Stable constant to avoid changing on each request
 

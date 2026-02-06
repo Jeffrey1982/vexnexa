@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireDevelopment } from "@/lib/dev-only";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
+
   try {
     const { url } = await req.json();
 

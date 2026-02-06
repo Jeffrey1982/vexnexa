@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 // Configuration
-const BASE_URL = 'https://vexnexa.com'
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 
 export async function GET() {
   try {

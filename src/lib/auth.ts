@@ -9,16 +9,6 @@ export async function getCurrentUser(): Promise<any> {
 
   const { data: { user }, error } = await supabase.auth.getUser()
 
-  // Add debugging information
-  console.log("Auth debug:", {
-    hasUser: !!user,
-    userId: user?.id,
-    userEmail: user?.email,
-    error: error?.message,
-    hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-    hasSupabaseKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  })
-
   if (error || !user) {
     throw new Error("Authentication required")
   }
@@ -105,7 +95,7 @@ export async function getCurrentUser(): Promise<any> {
     firstName: user.user_metadata?.first_name || null,
     lastName: user.user_metadata?.last_name || null,
     company: user.user_metadata?.company || null,
-    plan: "TRIAL" as any,
+    plan: "TRIAL",
     subscriptionStatus: "trialing",
     trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
     profileCompleted: !!(user.user_metadata?.first_name && user.user_metadata?.last_name),
@@ -157,7 +147,7 @@ export async function requireAdmin() {
   }
 
   // Admin email allowlist from environment variable
-  const adminEmailsEnv = process.env.ADMIN_EMAILS || 'jeffrey.aay@gmail.com,admin@vexnexa.com';
+  const adminEmailsEnv = process.env.ADMIN_EMAILS || '';
   const adminEmails = adminEmailsEnv.split(',').map(email => email.trim());
 
   // Check admin status via metadata OR email allowlist
@@ -178,7 +168,7 @@ export async function requireAdmin() {
 export async function isAdmin(): Promise<boolean> {
   try {
     const user = await getCurrentUser();
-    const adminEmailsEnv = process.env.ADMIN_EMAILS || 'jeffrey.aay@gmail.com,admin@vexnexa.com';
+    const adminEmailsEnv = process.env.ADMIN_EMAILS || '';
     const adminEmails = adminEmailsEnv.split(',').map(email => email.trim());
     return user.isAdmin || adminEmails.includes(user.email);
   } catch (error) {
