@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/lib/supabase/client-new';
 
 interface WhiteLabelSettings {
   id?: string;
@@ -37,7 +37,7 @@ export default function WhiteLabelPage() {
     favicon: false
   });
 
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   useEffect(() => {
     loadSettings();
