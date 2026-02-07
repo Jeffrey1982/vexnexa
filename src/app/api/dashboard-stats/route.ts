@@ -95,7 +95,10 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(stats)
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error('Dashboard stats error:', error)
 
     // Return empty stats on error

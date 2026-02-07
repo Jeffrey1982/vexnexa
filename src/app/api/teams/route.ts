@@ -60,7 +60,10 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json({ teams });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Teams fetch error:", error);
     return NextResponse.json(
       { error: "Failed to fetch teams" },

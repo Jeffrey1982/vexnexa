@@ -6,9 +6,15 @@ import { TeamList } from "@/components/teams/TeamList";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { requireAuth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function TeamsPage() {
-  const user = await requireAuth();
+  let user;
+  try {
+    user = await requireAuth();
+  } catch {
+    redirect("/auth/login?redirect=/teams");
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">

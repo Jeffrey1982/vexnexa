@@ -3,15 +3,13 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { BlogContent } from '@/components/blog/BlogContent'
 import { SafeImage } from '@/components/SafeImage'
 import { cookies } from 'next/headers'
 import type { Locale } from '@/i18n'
 import { BlogLanguageSelector } from '@/components/blog/BlogLanguageSelector'
-
-const prisma = new PrismaClient()
 
 // Helper to extract base slug (remove language suffix)
 function getBaseSlug(slug: string): string {

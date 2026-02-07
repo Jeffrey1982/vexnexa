@@ -1,4 +1,5 @@
 import { requireAuth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import AuditDashboard from "@/components/audits/AuditDashboard";
 import AuditManager from "@/components/audits/AuditManager";
@@ -7,7 +8,12 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export default async function AuditsPage() {
-  const user = await requireAuth();
+  let user;
+  try {
+    user = await requireAuth();
+  } catch {
+    redirect("/auth/login?redirect=/dashboard/audits");
+  }
 
   // Fetch user's sites
   const sitesData = await prisma.site.findMany({

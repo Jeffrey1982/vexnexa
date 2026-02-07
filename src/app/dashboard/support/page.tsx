@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -57,7 +58,12 @@ function getCategoryDisplay(category: string) {
 }
 
 export default async function SupportPage() {
-  const user = await requireAuth();
+  let user;
+  try {
+    user = await requireAuth();
+  } catch {
+    redirect("/auth/login?redirect=/dashboard/support");
+  }
   const tickets = await getUserTickets(user.id);
 
   return (

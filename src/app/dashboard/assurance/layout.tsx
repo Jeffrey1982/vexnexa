@@ -8,7 +8,12 @@ export default async function AssuranceLayout({
 }: {
   children: ReactNode;
 }) {
-  const user = await requireAuth();
+  let user;
+  try {
+    user = await requireAuth();
+  } catch {
+    redirect('/auth/login?redirect=/dashboard/assurance');
+  }
 
   // Check if user has active Assurance subscription
   const subscription = await getActiveAssuranceSubscription(user.id);

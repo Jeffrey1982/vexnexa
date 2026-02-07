@@ -125,6 +125,9 @@ export async function GET(req: Request) {
       filteredCount: realScanIds.length,
     });
   } catch (e: any) {
+    if (e?.message === "Authentication required") {
+      return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Analytics failed:", e);
     return NextResponse.json(
       { ok: false, error: e?.message ?? "Analytics failed" },

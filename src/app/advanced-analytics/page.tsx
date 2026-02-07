@@ -9,7 +9,12 @@ import { BarChart3, Zap, Building2, Scale, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdvancedAnalyticsPage() {
-  const user = await getCurrentUser();
+  let user;
+  try {
+    user = await getCurrentUser();
+  } catch {
+    redirect("/auth/login?redirect=/advanced-analytics");
+  }
 
   if (!user) {
     redirect("/auth/login");

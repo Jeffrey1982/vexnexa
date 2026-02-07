@@ -11,7 +11,12 @@ import { BarChart3, Calendar, AlertTriangle, Trophy, TrendingUp, Users } from "l
 import Link from "next/link";
 
 export default async function AnalyticsPage() {
-  const user = await getCurrentUser();
+  let user;
+  try {
+    user = await getCurrentUser();
+  } catch {
+    redirect("/auth/login?redirect=/analytics");
+  }
 
   if (!user) {
     redirect("/auth/login");

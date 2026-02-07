@@ -76,6 +76,9 @@ export async function GET(req: Request) {
     });
 
   } catch (e: any) {
+    if (e?.message === "Authentication required") {
+      return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Benchmarks failed:", e);
     return NextResponse.json({
       ok: false,
