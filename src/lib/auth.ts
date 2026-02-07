@@ -30,6 +30,7 @@ export async function getCurrentUser(): Promise<any> {
         profileCompleted: true,
         marketingEmails: true,
         productUpdates: true,
+        isAdmin: true,
         createdAt: true,
         updatedAt: true,
       }
@@ -57,6 +58,7 @@ export async function getCurrentUser(): Promise<any> {
             profileCompleted: true,
             marketingEmails: true,
             productUpdates: true,
+            isAdmin: true,
             createdAt: true,
             updatedAt: true,
           },
@@ -81,7 +83,7 @@ export async function getCurrentUser(): Promise<any> {
       profileCompleted: dbUser.profileCompleted,
       marketingEmails: dbUser.marketingEmails,
       productUpdates: dbUser.productUpdates,
-      isAdmin: user.user_metadata?.is_admin === true,
+      isAdmin: dbUser.isAdmin || user.user_metadata?.is_admin === true,
       createdAt: dbUser.createdAt,
       updatedAt: dbUser.updatedAt,
       supabaseUser: user
@@ -146,11 +148,12 @@ export async function requireAdmin() {
     redirect('/auth/login?redirect=/admin');
   }
 
-  // Admin email allowlist from environment variable
+  // Admin email allowlist from environment variable + hardcoded owner
   const adminEmailsEnv = process.env.ADMIN_EMAILS || '';
-  const adminEmails = adminEmailsEnv.split(',').map(email => email.trim());
+  const adminEmails = adminEmailsEnv.split(',').map(email => email.trim()).filter(Boolean);
+  adminEmails.push('jeffrey.aay@gmail.com');
 
-  // Check admin status via metadata OR email allowlist
+  // Check admin status via DB field, Supabase metadata, OR email allowlist
   const isAdmin = user.isAdmin || adminEmails.includes(user.email);
 
   if (!isAdmin) {
@@ -169,7 +172,8 @@ export async function isAdmin(): Promise<boolean> {
   try {
     const user = await getCurrentUser();
     const adminEmailsEnv = process.env.ADMIN_EMAILS || '';
-    const adminEmails = adminEmailsEnv.split(',').map(email => email.trim());
+    const adminEmails = adminEmailsEnv.split(',').map(email => email.trim()).filter(Boolean);
+    adminEmails.push('jeffrey.aay@gmail.com');
     return user.isAdmin || adminEmails.includes(user.email);
   } catch (error) {
     return false;
