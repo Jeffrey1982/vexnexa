@@ -27,18 +27,8 @@ import { getTranslations } from "next-intl/server";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
-import { BeforeAfterComparison } from "@/components/enhanced/BeforeAfterComparison";
-import { DragDropDashboard } from "@/components/enhanced/DragDropDashboard";
-import { TrendAnalysis } from "@/components/enhanced/TrendAnalysis";
-import { CompetitorBenchmark } from "@/components/enhanced/CompetitorBenchmark";
-import { MonitoringDashboard } from "@/components/monitoring/MonitoringDashboard";
 import { ROICalculator } from "@/components/enhanced/ROICalculator";
-import { ExecutiveSummary } from "@/components/enhanced/ExecutiveSummary";
-import { RemediationMatrix } from "@/components/enhanced/RemediationMatrix";
-import { MultiFormatExporter } from "@/components/enhanced/MultiFormatExporter";
 import { ExportButtons } from "@/components/ExportButtons";
-import { AIInsights } from "@/components/enhanced/AIInsights";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getEntitlements } from "@/lib/billing/entitlements";
 import { ENTITLEMENTS } from "@/lib/billing/plans";
@@ -573,7 +563,7 @@ export default async function DashboardPage() {
                         </div>
                         <div>
                           <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-blue-600">{t('whiteLabel.fullSettings')}</h3>
-                          <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">{t('whiteLabel.fullSettingsDescription')}</p>
+                          <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.fullSettingsDescription')}</p>
                         </div>
                       </div>
                       <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.fullSettingsDetails')}</p>
@@ -587,7 +577,7 @@ export default async function DashboardPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.livePreview')}</h3>
-                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">{t('whiteLabel.livePreviewDescription')}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.livePreviewDescription')}</p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.livePreviewDetails')}</p>
@@ -600,7 +590,7 @@ export default async function DashboardPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.customReports')}</h3>
-                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">{t('whiteLabel.customReportsDescription')}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.customReportsDescription')}</p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.customReportsDetails')}</p>
