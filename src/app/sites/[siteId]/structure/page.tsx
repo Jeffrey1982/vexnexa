@@ -51,7 +51,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
   const structureData = await getSiteStructureData(siteId);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-background">
+    <div className="min-h-screen bg-background">
       <BrandedHeader />
 
       <div className="container mx-auto px-4 py-8">
@@ -81,7 +81,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
         </div>
 
         {!structureData ? (
-          <div className="text-center py-16 bg-white dark:bg-card rounded-lg border shadow-sm">
+          <div className="text-center py-16 bg-card rounded-lg border shadow-sm">
             <Globe className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h2 className="text-xl font-semibold mb-2">No scan data available</h2>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
@@ -103,9 +103,9 @@ export default async function SiteStructurePage({ params }: PageProps) {
 
             {/* Site Statistics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white dark:bg-card p-6 rounded-lg shadow-sm border">
+              <div className="bg-card p-6 rounded-lg shadow-sm border">
                 <h3 className="font-semibold text-lg mb-2">Total Pages</h3>
-                <div className="text-3xl font-bold text-blue-600">
+                <div className="text-3xl font-bold text-blue-500">
                   {site.pages.length}
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -113,9 +113,9 @@ export default async function SiteStructurePage({ params }: PageProps) {
                 </p>
               </div>
 
-              <div className="bg-white dark:bg-card p-6 rounded-lg shadow-sm border">
+              <div className="bg-card p-6 rounded-lg shadow-sm border">
                 <h3 className="font-semibold text-lg mb-2">Average Score</h3>
-                <div className="text-3xl font-bold text-green-600">
+                <div className="text-3xl font-bold text-blue-300">
                   {structureData.score}
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -123,9 +123,9 @@ export default async function SiteStructurePage({ params }: PageProps) {
                 </p>
               </div>
 
-              <div className="bg-white dark:bg-card p-6 rounded-lg shadow-sm border">
+              <div className="bg-card p-6 rounded-lg shadow-sm border">
                 <h3 className="font-semibold text-lg mb-2">Total Issues</h3>
-                <div className="text-3xl font-bold text-orange-600">
+                <div className="text-3xl font-bold text-primary-500">
                   {structureData.issues.critical + structureData.issues.serious +
                    structureData.issues.moderate + structureData.issues.minor}
                 </div>
@@ -136,29 +136,29 @@ export default async function SiteStructurePage({ params }: PageProps) {
             </div>
 
             {/* Issue Breakdown */}
-            <div className="bg-white dark:bg-card p-6 rounded-lg shadow-sm border mb-8">
+            <div className="bg-card p-6 rounded-lg shadow-sm border mb-8">
               <h3 className="font-semibold text-lg mb-4">Issue Breakdown</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-red-600">
+                  <div className="text-2xl font-bold text-primary-500">
                     {structureData.issues.critical}
                   </div>
                   <div className="text-sm text-muted-foreground">Critical</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600">
+                  <div className="text-2xl font-bold text-primary-400">
                     {structureData.issues.serious}
                   </div>
                   <div className="text-sm text-muted-foreground">Serious</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-600">
+                  <div className="text-2xl font-bold text-gold-500">
                     {structureData.issues.moderate}
                   </div>
                   <div className="text-sm text-muted-foreground">Moderate</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-600">
+                  <div className="text-2xl font-bold text-blue-400">
                     {structureData.issues.minor}
                   </div>
                   <div className="text-sm text-muted-foreground">Minor</div>
@@ -167,9 +167,9 @@ export default async function SiteStructurePage({ params }: PageProps) {
             </div>
 
             {/* Instructions */}
-            <div className="bg-blue-50 dark:bg-blue-500/10 p-6 rounded-lg border border-blue-200 dark:border-blue-500/30">
-              <h3 className="font-semibold text-lg mb-3 text-blue-900 dark:text-blue-300">How to Use</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800 dark:text-blue-200">
+            <div className="bg-blue-50 dark:bg-blue-500/10 p-6 rounded-lg border border-blue-200 dark:border-blue-400/20">
+              <h3 className="font-semibold text-lg mb-3 text-blue-600 dark:text-blue-300">How to Use</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-600 dark:text-blue-200">
                 <div>
                   <h4 className="font-medium mb-2">Navigation Controls</h4>
                   <ul className="space-y-1">

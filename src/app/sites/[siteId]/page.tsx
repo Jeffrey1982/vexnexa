@@ -87,24 +87,24 @@ export default function SitePage() {
           <nav className="mb-4">
             <Link
               href="/dashboard"
-              className="text-blue-600 hover:text-blue-800 text-sm"
+              className="text-primary-500 hover:text-primary-600 text-sm"
             >
               ← Back to Dashboard
             </Link>
           </nav>
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              <h1 className="text-3xl font-bold text-foreground mb-2">
                 Site Details
               </h1>
-              <p className="text-lg text-gray-800 dark:text-gray-300 mb-1">{site.url}</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-lg text-muted-foreground mb-1">{site.url}</p>
+              <p className="text-sm text-muted-foreground">
                 {site.pages?.length || 0} pages discovered
               </p>
             </div>
             <div className="flex gap-3">
               <Link href={`/sites/${siteId}/structure`}>
-                <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-medium transition-colors">
                   🔮 3D Structure
                 </button>
               </Link>
@@ -115,14 +115,14 @@ export default function SitePage() {
 
         {/* Tabs Navigation */}
         <div className="mb-6">
-          <div className="border-b border-gray-200 dark:border-gray-700">
+          <div className="border-b border-border">
             <nav className="-mb-px flex space-x-8">
               <button
                 onClick={() => setActiveTab('overview')}
                 className={`${
                   activeTab === 'overview'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-500'
+                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 Overview
@@ -131,8 +131,8 @@ export default function SitePage() {
                 onClick={() => setActiveTab('analytics')}
                 className={`${
                   activeTab === 'analytics'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-500'
+                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 📊 Analytics
@@ -141,8 +141,8 @@ export default function SitePage() {
                 onClick={() => setActiveTab('monitoring')}
                 className={`${
                   activeTab === 'monitoring'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-500'
+                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 🔍 Monitoring
@@ -151,8 +151,8 @@ export default function SitePage() {
                 onClick={() => setActiveTab('reports')}
                 className={`${
                   activeTab === 'reports'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-700 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-500'
+                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 📄 Reports
@@ -166,11 +166,11 @@ export default function SitePage() {
           <>
         {/* Crawl Status */}
         {latestCrawl && (
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6 mb-8">
+          <div className="bg-card rounded-lg shadow p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Latest Site Crawl</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div>
-                <p className="text-sm text-gray-500">Status</p>
+                <p className="text-sm text-muted-foreground">Status</p>
                 <p className={`font-medium ${
                   latestCrawl.status === 'done' ? 'text-green-600' :
                   latestCrawl.status === 'running' ? 'text-blue-600' :
@@ -181,19 +181,19 @@ export default function SitePage() {
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Pages Queued</p>
+                <p className="text-sm text-muted-foreground">Pages Queued</p>
                 <p className="font-medium">{latestCrawl.pagesQueued}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Pages Done</p>
+                <p className="text-sm text-muted-foreground">Pages Done</p>
                 <p className="font-medium">{latestCrawl.pagesDone}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Max Pages</p>
+                <p className="text-sm text-muted-foreground">Max Pages</p>
                 <p className="font-medium">{latestCrawl.maxPages}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Started</p>
+                <p className="text-sm text-muted-foreground">Started</p>
                 <p className="font-medium">
                   {new Date(latestCrawl.startedAt).toLocaleString()}
                 </p>
@@ -202,13 +202,13 @@ export default function SitePage() {
             
             {/* Progress bar */}
             <div className="mt-4">
-              <div className="flex justify-between text-sm text-gray-800 dark:text-gray-300 mb-2">
+              <div className="flex justify-between text-sm text-muted-foreground mb-2">
                 <span>Progress</span>
                 <span>{latestCrawl.pagesDone} / {latestCrawl.maxPages}</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-primary-500 h-2 rounded-full transition-all duration-300"
                   style={{
                     width: `${Math.min(100, (latestCrawl.pagesDone / Math.max(1, latestCrawl.maxPages)) * 100)}%`
                   }}
@@ -220,20 +220,20 @@ export default function SitePage() {
 
         {/* Site Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="bg-card rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               Total Pages
             </h3>
-            <p className="text-3xl font-bold text-blue-600">
+            <p className="text-3xl font-bold text-blue-500">
               {site.pages.length}
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="bg-card rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               Average Score
             </h3>
-            <p className="text-3xl font-bold text-green-600">
+            <p className="text-3xl font-bold text-blue-300">
               {site.pages?.length > 0
                 ? Math.round(
                     site.pages
@@ -246,11 +246,11 @@ export default function SitePage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="bg-card rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               Critical Issues
             </h3>
-            <p className="text-3xl font-bold text-red-600">
+            <p className="text-3xl font-bold text-primary-500">
               {site.pages
                 .filter((p: any) => p.scans.length > 0)
                 .reduce((sum: number, p: any) => sum + (p.scans[0]?.impactCritical || 0), 0)
@@ -258,11 +258,11 @@ export default function SitePage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="bg-card rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               Total Issues
             </h3>
-            <p className="text-3xl font-bold text-yellow-600">
+            <p className="text-3xl font-bold text-gold-500">
               {site.pages
                 .filter((p: any) => p.scans.length > 0)
                 .reduce((sum: number, p: any) => sum + (p.scans[0]?.issues || 0), 0)
@@ -272,9 +272,9 @@ export default function SitePage() {
         </div>
 
         {/* Pages Table */}
-        <div className="bg-white dark:bg-slate-900 rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
+          <div className="px-6 py-4 border-b border-border">
+            <h2 className="text-xl font-semibold text-foreground">
               Discovered Pages
             </h2>
           </div>
@@ -283,34 +283,34 @@ export default function SitePage() {
 
         {/* Recent Crawls */}
         {site.scans.length > 0 && (
-          <div className="mt-8 bg-white dark:bg-slate-900 rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          <div className="mt-8 bg-card rounded-lg shadow overflow-hidden">
+            <div className="px-6 py-4 border-b border-border">
+              <h2 className="text-xl font-semibold text-foreground">
                 Recent Crawls
               </h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-slate-800">
+              <table className="min-w-full divide-y divide-border">
+                <thead className="bg-muted">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Started
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Score
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Issues
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-slate-900 divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="bg-card divide-y divide-border">
                   {site.scans.map((scan: any) => (
                     <tr key={scan.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                         {new Date(scan.createdAt).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -326,10 +326,10 @@ export default function SitePage() {
                           {scan.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                         {scan.score || 'N/A'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                         {scan.issues || 0}
                       </td>
                     </tr>
@@ -346,86 +346,91 @@ export default function SitePage() {
         {activeTab === 'analytics' && (
           <div className="space-y-6">
             {/* Score Trend Chart */}
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
+            <div className="bg-card rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Accessibility Score Trend</h2>
-              <div className="h-64 flex items-end justify-between gap-2">
-                {site.scans?.slice(0, 10).reverse().map((scan: any, idx: number) => {
-                  const height = (scan.score || 0);
-                  return (
-                    <div key={scan.id} className="flex-1 flex flex-col items-center">
-                      <div className="w-full bg-gray-200 rounded-t" style={{ height: '256px', display: 'flex', alignItems: 'flex-end' }}>
+              {(!site.scans || site.scans.length === 0) ? (
+                <div className="h-64 flex items-center justify-center text-muted-foreground">
+                  No scan data available yet. Run a scan to see trends.
+                </div>
+              ) : (
+                <div className="h-64 flex items-end gap-2">
+                  {site.scans.slice(0, 10).reverse().map((scan: any) => {
+                    const score = scan.score || 0;
+                    return (
+                      <div key={scan.id} className="flex-1 flex flex-col items-center h-full justify-end">
+                        <div className="text-xs font-medium text-foreground mb-1">{score}</div>
                         <div
-                          className={`w-full rounded-t ${
-                            height >= 90 ? 'bg-green-500' :
-                            height >= 70 ? 'bg-yellow-500' :
-                            'bg-red-500'
+                          className={`w-full rounded-t transition-all ${
+                            score >= 90 ? 'bg-blue-400' :
+                            score >= 70 ? 'bg-gold-500' :
+                            'bg-primary-500'
                           }`}
-                          style={{ height: `${height}%` }}
-                          title={`Score: ${scan.score}`}
-                        ></div>
+                          style={{ height: `${Math.max(score, 2)}%` }}
+                          title={`Score: ${score}`}
+                        />
+                        <span className="text-[10px] text-muted-foreground mt-1.5 truncate w-full text-center">
+                          {new Date(scan.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                        </span>
                       </div>
-                      <span className="text-xs text-gray-700 dark:text-gray-400 mt-2">
-                        {new Date(scan.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Issues Breakdown */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Issues by Impact</h3>
+              <div className="bg-card rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold mb-4 text-foreground">Issues by Impact</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-900 dark:text-gray-100">Critical</span>
+                    <span className="text-sm text-foreground">Critical</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="w-32 bg-muted rounded-full h-2">
                         <div className="bg-red-600 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactCritical || 0), 0) || 0) * 10)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
+                      <span className="text-sm font-medium w-8 text-foreground">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactCritical || 0), 0) || 0}
                       </span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-900 dark:text-gray-100">Serious</span>
+                    <span className="text-sm text-foreground">Serious</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="w-32 bg-muted rounded-full h-2">
                         <div className="bg-orange-500 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactSerious || 0), 0) || 0) * 10)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
+                      <span className="text-sm font-medium w-8 text-foreground">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactSerious || 0), 0) || 0}
                       </span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-900 dark:text-gray-100">Moderate</span>
+                    <span className="text-sm text-foreground">Moderate</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="w-32 bg-muted rounded-full h-2">
                         <div className="bg-yellow-500 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactModerate || 0), 0) || 0) * 5)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
+                      <span className="text-sm font-medium w-8 text-foreground">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactModerate || 0), 0) || 0}
                       </span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-900 dark:text-gray-100">Minor</span>
+                    <span className="text-sm text-foreground">Minor</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="w-32 bg-muted rounded-full h-2">
                         <div className="bg-blue-500 h-2 rounded-full" style={{
                           width: `${Math.min(100, (site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactMinor || 0), 0) || 0) * 2)}%`
                         }}></div>
                       </div>
-                      <span className="text-sm font-medium w-8 text-gray-900 dark:text-gray-100">
+                      <span className="text-sm font-medium w-8 text-foreground">
                         {site.pages?.reduce((sum: number, p: any) => sum + (p.scans[0]?.impactMinor || 0), 0) || 0}
                       </span>
                     </div>
@@ -433,13 +438,13 @@ export default function SitePage() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
+              <div className="bg-card rounded-lg shadow p-6">
                 <h3 className="text-lg font-semibold mb-4">Top Issues</h3>
                 <div className="space-y-2">
                   {topIssues.length > 0 ? (
                     topIssues.map((issue, idx) => (
                       <div key={idx} className="flex justify-between py-2 border-b">
-                        <span className="text-sm text-gray-600" title={issue.id}>
+                        <span className="text-sm text-muted-foreground" title={issue.id}>
                           {issue.description.length > 40
                             ? issue.description.substring(0, 40) + '...'
                             : issue.description}
@@ -448,7 +453,7 @@ export default function SitePage() {
                       </div>
                     ))
                   ) : (
-                    <div className="text-sm text-gray-700 dark:text-gray-400 text-center py-4">
+                    <div className="text-sm text-muted-foreground text-center py-4">
                       No issues found. Scan your pages to see violations.
                     </div>
                   )}
@@ -461,74 +466,58 @@ export default function SitePage() {
         {/* Monitoring Tab */}
         {activeTab === 'monitoring' && (
           <div className="space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
+            <div className="bg-card rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Site Health Overview</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-3xl font-bold text-green-600">99.8%</div>
-                  <div className="text-sm text-gray-800 dark:text-gray-300 mt-1">Uptime (30 days)</div>
+                <div className="text-center p-4 bg-blue-50 dark:bg-blue-500/10 rounded-lg">
+                  <div className="text-3xl font-bold text-blue-500">{site.scans?.length || 0}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Total Scans</div>
                 </div>
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-3xl font-bold text-blue-600">1.2s</div>
-                  <div className="text-sm text-gray-800 dark:text-gray-300 mt-1">Avg Response Time</div>
+                <div className="text-center p-4 bg-primary-50 dark:bg-primary-500/10 rounded-lg">
+                  <div className="text-3xl font-bold text-primary-500">
+                    {site.scans?.filter((s: any) => s.status === 'done').length || 0}
+                  </div>
+                  <div className="text-sm text-muted-foreground mt-1">Completed Scans</div>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <div className="text-3xl font-bold text-purple-600">{site.pages?.length || 0}</div>
-                  <div className="text-sm text-gray-800 dark:text-gray-300 mt-1">Monitored Pages</div>
+                <div className="text-center p-4 bg-gold-50 dark:bg-gold-500/10 rounded-lg">
+                  <div className="text-3xl font-bold text-gold-600">{site.pages?.length || 0}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Monitored Pages</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
+            <div className="bg-card rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold mb-4">Recent Scan History</h3>
-              <div className="space-y-3">
-                {site.scans?.slice(0, 5).map((scan: any) => (
-                  <div key={scan.id} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full ${
-                        scan.status === 'done' ? 'bg-green-500' :
-                        scan.status === 'running' ? 'bg-blue-500' :
-                        'bg-red-500'
-                      }`}></div>
-                      <div>
-                        <div className="font-medium text-sm">{new Date(scan.createdAt).toLocaleString()}</div>
-                        <div className="text-xs text-gray-500">Score: {scan.score} | Issues: {scan.issues}</div>
+              {(!site.scans || site.scans.length === 0) ? (
+                <div className="text-sm text-muted-foreground text-center py-8">
+                  No scans have been run yet. Start a crawl to begin monitoring.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {site.scans.slice(0, 5).map((scan: any) => (
+                    <div key={scan.id} className="flex items-center justify-between p-3 border border-border rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-2 h-2 rounded-full ${
+                          scan.status === 'done' ? 'bg-blue-400' :
+                          scan.status === 'running' ? 'bg-gold-500' :
+                          'bg-primary-500'
+                        }`}></div>
+                        <div>
+                          <div className="font-medium text-sm">{new Date(scan.createdAt).toLocaleString()}</div>
+                          <div className="text-xs text-muted-foreground">Score: {scan.score ?? 'N/A'} | Issues: {scan.issues ?? 0}</div>
+                        </div>
                       </div>
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                        scan.status === 'done' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' :
+                        scan.status === 'running' ? 'bg-gold-100 dark:bg-gold-900/30 text-gold-700 dark:text-gold-300' :
+                        'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
+                      }`}>
+                        {scan.status}
+                      </span>
                     </div>
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      scan.status === 'done' ? 'bg-green-100 text-green-800' :
-                      scan.status === 'running' ? 'bg-blue-100 text-blue-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {scan.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-              <h3 className="text-lg font-semibold mb-4">Automated Scanning</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div>
-                    <div className="font-medium">Daily Scans</div>
-                    <div className="text-sm text-gray-500">Automatically scan all pages every day</div>
-                  </div>
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
-                    Enable
-                  </button>
+                  ))}
                 </div>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div>
-                    <div className="font-medium">Email Alerts</div>
-                    <div className="text-sm text-gray-500">Get notified when critical issues are found</div>
-                  </div>
-                  <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm">
-                    Configure
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         )}
@@ -536,79 +525,37 @@ export default function SitePage() {
         {/* Reports Tab */}
         {activeTab === 'reports' && (
           <div className="space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold mb-4">Generate Report</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors text-left">
-                  <div className="text-2xl mb-2">📊</div>
-                  <div className="font-medium">Summary Report</div>
-                  <div className="text-sm text-gray-700 dark:text-gray-400 mt-1">Quick overview of all issues</div>
-                </button>
-                <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors text-left">
-                  <div className="text-2xl mb-2">📋</div>
-                  <div className="font-medium">Detailed Report</div>
-                  <div className="text-sm text-gray-700 dark:text-gray-400 mt-1">In-depth analysis with recommendations</div>
-                </button>
-                <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors text-left">
-                  <div className="text-2xl mb-2">🎯</div>
-                  <div className="font-medium">WCAG Compliance</div>
-                  <div className="text-sm text-gray-700 dark:text-gray-400 mt-1">Standards compliance report</div>
-                </button>
-              </div>
-            </div>
-
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-              <h3 className="text-lg font-semibold mb-4">Recent Reports</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="text-2xl">📄</div>
-                    <div>
-                      <div className="font-medium">Accessibility Summary - {new Date().toLocaleDateString()}</div>
-                      <div className="text-sm text-gray-500">Generated {new Date().toLocaleString()}</div>
+            <div className="bg-card rounded-lg shadow p-6">
+              <h2 className="text-xl font-semibold mb-4">Scan Reports</h2>
+              {(!site.scans || site.scans.filter((s: any) => s.status === 'done').length === 0) ? (
+                <div className="text-sm text-muted-foreground text-center py-8">
+                  No completed scans yet. Run a scan to generate reports.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {site.scans.filter((s: any) => s.status === 'done').slice(0, 10).map((scan: any) => (
+                    <div key={scan.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">📄</div>
+                        <div>
+                          <div className="font-medium">
+                            Scan Report — Score: {scan.score ?? 'N/A'}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {new Date(scan.createdAt).toLocaleString()} · {scan.issues ?? 0} issues
+                          </div>
+                        </div>
+                      </div>
+                      <Link
+                        href={`/scans/${scan.id}`}
+                        className="text-primary-500 hover:text-primary-600 text-sm font-medium"
+                      >
+                        View Report →
+                      </Link>
                     </div>
-                  </div>
-                  <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                    Download PDF
-                  </button>
+                  ))}
                 </div>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="text-2xl">📄</div>
-                    <div>
-                      <div className="font-medium">WCAG 2.1 Compliance Report</div>
-                      <div className="text-sm text-gray-500">Generated {new Date(Date.now() - 86400000).toLocaleString()}</div>
-                    </div>
-                  </div>
-                  <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                    Download PDF
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-              <h3 className="text-lg font-semibold mb-4">Scheduled Reports</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div>
-                    <div className="font-medium">Weekly Summary</div>
-                    <div className="text-sm text-gray-500">Every Monday at 9:00 AM</div>
-                  </div>
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
-                    Setup
-                  </button>
-                </div>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div>
-                    <div className="font-medium">Monthly Compliance Report</div>
-                    <div className="text-sm text-gray-500">First day of each month</div>
-                  </div>
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
-                    Setup
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         )}
