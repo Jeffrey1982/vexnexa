@@ -198,7 +198,7 @@ function ScanResultsContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p>Loading scan results...</p>
@@ -209,7 +209,7 @@ function ScanResultsContent() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 py-8">
+      <div className="min-h-screen bg-background py-8">
         <div className="container mx-auto px-4 max-w-4xl">
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
@@ -228,7 +228,7 @@ function ScanResultsContent() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 py-8">
+      <div className="min-h-screen bg-background py-8">
         <div className="container mx-auto px-4 max-w-4xl">
           <Alert>
             <Info className="h-4 w-4" />
@@ -259,7 +259,7 @@ function ScanResultsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <DashboardNav user={user} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
@@ -456,7 +456,7 @@ function ScanResultsContent() {
 export default function ScanResultsPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
           <p>Loading scan results...</p>

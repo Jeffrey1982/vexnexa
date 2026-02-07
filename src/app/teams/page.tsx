@@ -11,7 +11,7 @@ export default async function TeamsPage() {
   const user = await requireAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <DashboardNav user={user} />
       <div className="flex-1">
         <div className="container mx-auto py-8">

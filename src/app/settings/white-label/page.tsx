@@ -228,7 +228,7 @@ export default function WhiteLabelPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
+      <div className="min-h-screen bg-background p-8">
         <div className="max-w-4xl mx-auto">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
@@ -245,7 +245,7 @@ export default function WhiteLabelPage() {
 
   if (!hasAccess) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
+      <div className="min-h-screen bg-background p-8">
         <div className="max-w-4xl mx-auto">
           <nav className="mb-6">
             <Link href="/dashboard" className="text-blue-600 hover:text-blue-800 text-sm">

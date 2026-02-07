@@ -80,7 +80,7 @@ export default function NewSitePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <DashboardNav user={user} />
       <div className="flex-1 py-8">
         <div className="container mx-auto px-4 max-w-2xl">

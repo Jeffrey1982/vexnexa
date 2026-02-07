@@ -37,7 +37,7 @@ export default function SitePage({ params }: PageProps) {
   }, [siteId, supabase]);
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">Loading...</div>;
+    return <div className="min-h-screen bg-background p-8">Loading...</div>;
   }
 
   if (!site) {
@@ -83,7 +83,7 @@ export default function SitePage({ params }: PageProps) {
   const topIssues = calculateTopIssues();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <DashboardNav user={user} />
       <div className="flex-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">

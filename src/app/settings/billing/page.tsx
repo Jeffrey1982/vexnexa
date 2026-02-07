@@ -307,7 +307,7 @@ export default function BillingPage() {
   const isTrialExpired = user.trialEndsAt && new Date(user.trialEndsAt) < new Date();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <DashboardNav user={authUser} />
       <div className="flex-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
