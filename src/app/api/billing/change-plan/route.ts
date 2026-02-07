@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { requireAuth } from "@/lib/auth"
-import { changePlan, createUpgradePayment as createPayment } from "@/lib/billing/mollie-flows"
+import { changePlan, createUpgradePayment } from "@/lib/billing/mollie-flows"
 import { PRICES } from "@/lib/billing/plans"
 
 const ChangePlanSchema = z.object({
@@ -42,20 +42,60 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Create checkout payment for plan change
-    const molliePayment = await createPayment({
-      userId: user.id,
-      email: user.email,
-      plan
-    })
+    // Try direct plan change first (works if user has valid Mollie mandate)
+    try {
+      const result = await changePlan({
+        userId: user.id,
+        newPlan: plan
+      })
+      
+      if (result.success) {
+        // Plan changed directly via existing mandate — saved to DB
+        return NextResponse.json({
+          success: true,
+          plan
+        })
+      }
+      
+      if (result.needCheckout) {
+        // No valid mandate — need checkout flow to establish one
+        const molliePayment = await createUpgradePayment({
+          userId: user.id,
+          email: user.email,
+          plan
+        })
+        
+        const paymentObj = molliePayment as any
+        
+        return NextResponse.json({
+          needCheckout: true,
+          checkoutUrl: paymentObj.getCheckoutUrl(),
+          paymentId: paymentObj.id
+        })
+      }
+    } catch (changePlanError) {
+      // If changePlan fails (e.g. no Mollie customer yet), fall back to checkout
+      console.log("changePlan failed, falling back to checkout:", changePlanError instanceof Error ? changePlanError.message : changePlanError)
+      
+      const molliePayment = await createUpgradePayment({
+        userId: user.id,
+        email: user.email,
+        plan
+      })
+      
+      const paymentObj = molliePayment as any
+      
+      return NextResponse.json({
+        needCheckout: true,
+        checkoutUrl: paymentObj.getCheckoutUrl(),
+        paymentId: paymentObj.id
+      })
+    }
     
-    // Type assertion workaround for compiler issue
-    const paymentObj = molliePayment as any
-    
-    return NextResponse.json({
-      url: paymentObj.getCheckoutUrl(),
-      paymentId: paymentObj.id
-    })
+    return NextResponse.json(
+      { error: "Unexpected state during plan change" },
+      { status: 500 }
+    )
     
   } catch (error) {
     console.error("Change plan error:", error)

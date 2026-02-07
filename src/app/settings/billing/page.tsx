@@ -183,8 +183,8 @@ export default function BillingPage() {
       }
 
       setSuccess("Subscription cancelled successfully");
-      // Refresh user data
-      setUser(prev => prev ? { ...prev, subscriptionStatus: "canceled", plan: "TRIAL" } : null);
+      // Refresh all billing data from server
+      await loadUserData();
 
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to cancel subscription");
@@ -193,9 +193,16 @@ export default function BillingPage() {
     setActionLoading(null);
   };
 
+  const PLAN_RANK: Record<string, number> = { TRIAL: 0, STARTER: 1, PRO: 2, BUSINESS: 3 };
+
+  const isUpgrade = (from: string, to: string): boolean => {
+    return (PLAN_RANK[to] ?? 0) > (PLAN_RANK[from] ?? 0);
+  };
+
   const handleChangePlan = async (newPlan: string) => {
     setActionLoading(`change-${newPlan}`);
     setError(null);
+    setSuccess(null);
 
     try {
       const response = await fetch("/api/billing/change-plan", {
@@ -213,12 +220,16 @@ export default function BillingPage() {
       }
 
       if (data.needCheckout) {
-        // Redirect to checkout
+        // Redirect to Mollie checkout
         window.location.href = data.checkoutUrl;
-      } else {
-        setSuccess(`Successfully upgraded to ${newPlan} plan`);
-        // Refresh user data
-        setUser(prev => prev ? { ...prev, plan: newPlan as any, subscriptionStatus: "active" } : null);
+        return;
+      }
+
+      if (data.success) {
+        const action = isUpgrade(user!.plan, newPlan) ? "Upgraded" : "Switched";
+        setSuccess(`${action} to ${PLAN_NAMES[newPlan as keyof typeof PLAN_NAMES] || newPlan} plan successfully`);
+        // Refresh all billing data from server
+        await loadUserData();
       }
 
     } catch (err) {
@@ -451,58 +462,43 @@ export default function BillingPage() {
 
         {/* Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Upgrade Plan */}
-          {(user.plan === "TRIAL" || user.subscriptionStatus !== "canceled") ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>Change Plan</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Upgrade to a higher plan for more features
-                </p>
+          {/* Change Plan */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Change Plan</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Switch to a different plan to adjust your features and limits
+              </p>
 
-                <div className="space-y-2">
-                  {user.plan !== "STARTER" && (
+              <div className="space-y-2">
+                {(["STARTER", "PRO", "BUSINESS"] as const).filter(p => p !== user.plan).map((targetPlan) => {
+                  const up = isUpgrade(user.plan, targetPlan);
+                  const label = up ? "Upgrade" : "Downgrade";
+                  const isLoading = actionLoading === `change-${targetPlan}`;
+                  return (
                     <Button
-                      onClick={() => handleChangePlan("STARTER")}
-                      disabled={actionLoading === "change-STARTER"}
-                      className="w-full justify-start"
-                      variant="outline"
+                      key={targetPlan}
+                      onClick={() => handleChangePlan(targetPlan)}
+                      disabled={!!actionLoading}
+                      className="w-full justify-between"
+                      variant={up && user.plan === "TRIAL" ? "default" : "outline"}
                     >
-                      {actionLoading === "change-STARTER" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      Starter - {formatPrice("STARTER")}
+                      <span className="flex items-center">
+                        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {targetPlan === "PRO" && <Crown className="mr-2 h-4 w-4" />}
+                        {PLAN_NAMES[targetPlan]} - {formatPrice(targetPlan)}
+                      </span>
+                      <Badge variant={up ? "default" : "secondary"} className="ml-2">
+                        {label}
+                      </Badge>
                     </Button>
-                  )}
-
-                  {user.plan !== "PRO" && (
-                    <Button
-                      onClick={() => handleChangePlan("PRO")}
-                      disabled={actionLoading === "change-PRO"}
-                      className="w-full justify-start"
-                      variant={user.plan === "TRIAL" ? "default" : "outline"}
-                    >
-                      {actionLoading === "change-PRO" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      <Crown className="mr-2 h-4 w-4" />
-                      Pro - {formatPrice("PRO")} (Popular)
-                    </Button>
-                  )}
-
-                  {user.plan !== "BUSINESS" && (
-                    <Button
-                      onClick={() => handleChangePlan("BUSINESS")}
-                      disabled={actionLoading === "change-BUSINESS"}
-                      className="w-full justify-start"
-                      variant="outline"
-                    >
-                      {actionLoading === "change-BUSINESS" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      Business - {formatPrice("BUSINESS")}
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ) : null}
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Payment Method */}
           <Card>
@@ -537,7 +533,7 @@ export default function BillingPage() {
           </Card>
 
           {/* Cancel Subscription */}
-          {user.subscriptionStatus === "active" && (
+          {user.plan !== "TRIAL" && user.subscriptionStatus === "active" && (
             <Card className="md:col-span-2">
               <CardHeader>
                 <CardTitle className="text-destructive">Cancel Subscription</CardTitle>
@@ -565,7 +561,9 @@ export default function BillingPage() {
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>
-                        <Button variant="outline">Cancel</Button>
+                        <DialogTrigger asChild>
+                          <Button variant="outline">Keep plan</Button>
+                        </DialogTrigger>
                         <Button
                           variant="destructive"
                           onClick={handleCancelSubscription}
@@ -574,7 +572,7 @@ export default function BillingPage() {
                           {actionLoading === "cancel" ? (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           ) : null}
-                          Yes, cancel
+                          Yes, cancel subscription
                         </Button>
                       </DialogFooter>
                     </DialogContent>
