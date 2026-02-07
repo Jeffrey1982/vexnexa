@@ -122,7 +122,7 @@ export function AdminSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full relative z-10">
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-gray-200">
+      <div className="p-4 border-b border-gray-200 dark:border-border">
         <div className="flex items-center gap-3">
           <div className="relative h-10 w-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
             <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
@@ -130,8 +130,8 @@ export function AdminSidebar() {
             </svg>
           </div>
           <div>
-            <div className="text-gray-900 font-bold text-lg">VexNexa</div>
-            <div className="text-gray-500 text-xs">Admin Panel</div>
+            <div className="text-gray-900 dark:text-foreground font-bold text-lg">VexNexa</div>
+            <div className="text-gray-500 dark:text-muted-foreground text-xs">Admin Panel</div>
           </div>
         </div>
       </div>
@@ -154,8 +154,8 @@ export function AdminSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
                   active
-                    ? 'bg-orange-50 text-orange-600 shadow-sm'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 shadow-sm'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-muted'
                 )}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
@@ -177,7 +177,7 @@ export function AdminSidebar() {
                 <div
                   className={cn(
                     'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold',
-                    active ? 'text-orange-600' : 'text-gray-600'
+                    active ? 'text-orange-600 dark:text-orange-400' : 'text-gray-600 dark:text-gray-400'
                   )}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
@@ -201,8 +201,8 @@ export function AdminSidebar() {
                           className={cn(
                             'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
                             itemActive
-                              ? 'bg-orange-50 text-orange-600'
-                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                              ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400'
+                              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-muted hover:text-gray-900 dark:hover:text-foreground'
                           )}
                         >
                           <ItemIcon className="w-4 h-4 flex-shrink-0" />
@@ -225,12 +225,12 @@ export function AdminSidebar() {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white rounded-lg shadow-lg border border-gray-200"
+        className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white dark:bg-card rounded-lg shadow-lg border border-gray-200 dark:border-border"
       >
         {mobileOpen ? (
-          <X className="w-5 h-5 text-gray-600" />
+          <X className="w-5 h-5 text-gray-600 dark:text-gray-300" />
         ) : (
-          <Menu className="w-5 h-5 text-gray-600" />
+          <Menu className="w-5 h-5 text-gray-600 dark:text-gray-300" />
         )}
       </button>
 
@@ -245,7 +245,7 @@ export function AdminSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-50 h-screen bg-white border-r border-gray-200 transition-transform pointer-events-auto',
+          'fixed top-0 left-0 z-50 h-screen bg-white dark:bg-card border-r border-gray-200 dark:border-border transition-transform pointer-events-auto',
           'w-72',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}

@@ -30,7 +30,7 @@ export default async function AdminLayout({
         <MainNav user={user} />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50">
+        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-background">
           {children}
         </main>
       </div>
