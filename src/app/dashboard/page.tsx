@@ -570,26 +570,26 @@ export default async function DashboardPage() {
                     </div>
                   </Link>
 
-                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50">
+                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50 dark:bg-slate-800 dark:border-gray-700">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-green-100 flex items-center justify-center">
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                         <span className="text-green-600 font-semibold text-sm sm:text-base">📱</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.livePreview')}</h3>
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-gray-100">{t('whiteLabel.livePreview')}</h3>
                         <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.livePreviewDescription')}</p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.livePreviewDetails')}</p>
                   </div>
 
-                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50">
+                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50 dark:bg-slate-800 dark:border-gray-700">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
                         <span className="text-purple-600 font-semibold text-sm sm:text-base">📈</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-gray-900">{t('whiteLabel.customReports')}</h3>
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-gray-100">{t('whiteLabel.customReports')}</h3>
                         <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.customReportsDescription')}</p>
                       </div>
                     </div>

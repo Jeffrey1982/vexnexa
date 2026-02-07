@@ -228,14 +228,14 @@ export default function WhiteLabelPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
         <div className="max-w-4xl mx-auto">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+            <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
             <div className="space-y-4">
-              <div className="h-4 bg-gray-200 rounded w-full"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-1/2"></div>
             </div>
           </div>
         </div>
@@ -245,7 +245,7 @@ export default function WhiteLabelPage() {
 
   if (!hasAccess) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
         <div className="max-w-4xl mx-auto">
           <nav className="mb-6">
             <Link href="/dashboard" className="text-blue-600 hover:text-blue-800 text-sm">
@@ -253,14 +253,14 @@ export default function WhiteLabelPage() {
             </Link>
           </nav>
 
-          <div className="bg-white rounded-lg shadow p-8 text-center">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-8 text-center">
             <div className="text-yellow-500 mb-4">
               <svg className="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.728-.833-2.598 0L4.216 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Upgrade Required</h1>
-            <p className="text-gray-600 mb-6">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Upgrade Required</h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               White labeling is only available for Business plan users. Upgrade your plan to customize your brand.
             </p>
             <div className="space-x-4">
@@ -272,7 +272,7 @@ export default function WhiteLabelPage() {
               </Link>
               <Link 
                 href="/settings/billing" 
-                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                className="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700"
               >
                 Billing Settings
               </Link>
@@ -284,9 +284,9 @@ export default function WhiteLabelPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Custom Header for Branding Page */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-50">
+      <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
@@ -297,7 +297,7 @@ export default function WhiteLabelPage() {
                 Dashboard
               </Link>
               <div className="h-4 w-px bg-gray-300"></div>
-              <h1 className="text-lg font-semibold text-gray-900">Brand Settings</h1>
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Brand Settings</h1>
             </div>
             <div className="flex items-center space-x-3">
               <div className="text-sm text-gray-500">Business Plan</div>
@@ -309,10 +309,10 @@ export default function WhiteLabelPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">
             White Label <span className="text-indigo-600">Branding</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl">
             Customize your brand appearance and contact information. Make VexNexa truly yours with personalized branding.
           </p>
         </div>
@@ -321,7 +321,7 @@ export default function WhiteLabelPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Branding Section */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20 dark:border-gray-700/30">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center mr-4">
                   <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,30 +329,30 @@ export default function WhiteLabelPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Company Branding</h2>
-                  <p className="text-gray-600">Upload your logo and set your company name</p>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Company Branding</h2>
+                  <p className="text-gray-600 dark:text-gray-400">Upload your logo and set your company name</p>
                 </div>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Company Name
                   </label>
                   <input
                     type="text"
                     value={settings.companyName || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, companyName: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                     placeholder="Enter your company name"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                       Company Logo
-                      <span className="text-xs font-normal text-gray-500 ml-2">(Max 2MB)</span>
+                      <span className="text-xs font-normal text-gray-500 dark:text-gray-400 ml-2">(Max 2MB)</span>
                     </label>
                     <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors relative">
                       {settings.logoUrl ? (
@@ -364,7 +364,7 @@ export default function WhiteLabelPage() {
                             height={64}
                             className="h-16 w-16 object-contain mx-auto border rounded-lg shadow-sm"
                           />
-                          <p className="text-sm text-gray-500">Click to replace</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Click to replace</p>
                         </div>
                       ) : (
                         <div className="space-y-4">
@@ -373,7 +373,7 @@ export default function WhiteLabelPage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                           </div>
-                          <p className="text-sm text-gray-500">Upload your logo</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Upload your logo</p>
                         </div>
                       )}
                       <input
@@ -387,7 +387,7 @@ export default function WhiteLabelPage() {
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                       {isUploading.logo && (
-                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl">
+                        <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/80 flex items-center justify-center rounded-xl">
                           <div className="text-indigo-600 flex items-center">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -401,9 +401,9 @@ export default function WhiteLabelPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                       Favicon (16x16)
-                      <span className="text-xs font-normal text-gray-500 ml-2">(Max 2MB)</span>
+                      <span className="text-xs font-normal text-gray-500 dark:text-gray-400 ml-2">(Max 2MB)</span>
                     </label>
                     <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-indigo-300 transition-colors relative">
                       {settings.faviconUrl ? (
@@ -415,7 +415,7 @@ export default function WhiteLabelPage() {
                             height={32}
                             className="h-8 w-8 object-contain mx-auto border rounded shadow-sm"
                           />
-                          <p className="text-sm text-gray-500">Click to replace</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Click to replace</p>
                         </div>
                       ) : (
                         <div className="space-y-4">
@@ -424,7 +424,7 @@ export default function WhiteLabelPage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                           </div>
-                          <p className="text-sm text-gray-500">Upload favicon</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Upload favicon</p>
                         </div>
                       )}
                       <input
@@ -438,7 +438,7 @@ export default function WhiteLabelPage() {
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                       {isUploading.favicon && (
-                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl">
+                        <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/80 flex items-center justify-center rounded-xl">
                           <div className="text-indigo-600 flex items-center">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -455,7 +455,7 @@ export default function WhiteLabelPage() {
             </div>
 
             {/* Colors Section */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20 dark:border-gray-700/30">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
                   <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -463,14 +463,14 @@ export default function WhiteLabelPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Brand Colors</h2>
-                  <p className="text-gray-600">Define your brand&apos;s color palette</p>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Brand Colors</h2>
+                  <p className="text-gray-600 dark:text-gray-400">Define your brand&apos;s color palette</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Primary Color
                   </label>
                   <div className="space-y-3">
@@ -486,14 +486,14 @@ export default function WhiteLabelPage() {
                       type="text"
                       value={settings.primaryColor}
                       onChange={(e) => setSettings(prev => ({ ...prev, primaryColor: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                       placeholder="#3B82F6"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Secondary Color
                   </label>
                   <div className="space-y-3">
@@ -509,14 +509,14 @@ export default function WhiteLabelPage() {
                       type="text"
                       value={settings.secondaryColor}
                       onChange={(e) => setSettings(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                       placeholder="#1F2937"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Accent Color
                   </label>
                   <div className="space-y-3">
@@ -532,7 +532,7 @@ export default function WhiteLabelPage() {
                       type="text"
                       value={settings.accentColor}
                       onChange={(e) => setSettings(prev => ({ ...prev, accentColor: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                       placeholder="#10B981"
                     />
                   </div>
@@ -541,7 +541,7 @@ export default function WhiteLabelPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20 dark:border-gray-700/30">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mr-4">
                   <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -549,75 +549,75 @@ export default function WhiteLabelPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
-                  <p className="text-gray-600">Set your support contact details</p>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Contact Information</h2>
+                  <p className="text-gray-600 dark:text-gray-400">Set your support contact details</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Support Email
                   </label>
                   <input
                     type="email"
                     value={settings.supportEmail || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, supportEmail: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                     placeholder="support@yourcompany.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Website URL
                   </label>
                   <input
                     type="url"
                     value={settings.website || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, website: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                     placeholder="https://yourcompany.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Phone Number
                   </label>
                   <input
                     type="tel"
                     value={settings.phone || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                     placeholder="+1 (555) 123-4567"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Footer Text
                   </label>
                   <textarea
                     value={settings.footerText || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, footerText: e.target.value }))}
                     rows={3}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 resize-none"
-                    placeholder="Copyright © 2025 Your Company. All rights reserved."
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 resize-none dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
+                    placeholder="Copyright 2025 Your Company. All rights reserved."
                   />
                 </div>
               </div>
 
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center">
                   <input
                     id="showPoweredBy"
                     type="checkbox"
                     checked={settings.showPoweredBy}
                     onChange={(e) => setSettings(prev => ({ ...prev, showPoweredBy: e.target.checked }))}
-                    className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded dark:border-gray-600"
                   />
-                  <label htmlFor="showPoweredBy" className="ml-3 block text-sm font-medium text-gray-900">
+                  <label htmlFor="showPoweredBy" className="ml-3 block text-sm font-medium text-gray-900 dark:text-gray-100">
                     Show &quot;Powered by VexNexa&quot; in footer
                   </label>
                 </div>
@@ -625,7 +625,7 @@ export default function WhiteLabelPage() {
             </div>
 
             {/* Domain Settings */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20">
+            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 lg:p-8 border border-white/20 dark:border-gray-700/30">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
                   <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -633,24 +633,24 @@ export default function WhiteLabelPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Domain Settings</h2>
-                  <p className="text-gray-600">Configure your custom domain and subdomain</p>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Domain Settings</h2>
+                  <p className="text-gray-600 dark:text-gray-400">Configure your custom domain and subdomain</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Custom Domain
                   </label>
                   <input
                     type="text"
                     value={settings.customDomain || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, customDomain: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                     placeholder="accessibility.yourcompany.com"
                   />
-                  <p className="text-xs text-gray-500 mt-2 flex items-center">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 flex items-center">
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -659,17 +659,17 @@ export default function WhiteLabelPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Subdomain
                   </label>
                   <input
                     type="text"
                     value={settings.subdomain || ''}
                     onChange={(e) => setSettings(prev => ({ ...prev, subdomain: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600"
                     placeholder="yourcompany"
                   />
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                     Will be available at: yourcompany.vexnexa.com
                   </p>
                 </div>
@@ -681,13 +681,19 @@ export default function WhiteLabelPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
               {/* Preview Card */}
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Live Preview</h3>
+              <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20 dark:border-gray-700/30">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Live Preview</h3>
                 <div className="space-y-4">
-                  <div className="p-4 border border-gray-200 rounded-lg bg-white/50">
+                  <div className="p-4 border border-gray-200 rounded-lg bg-white/50 dark:bg-slate-800/50 dark:text-gray-100 dark:border-gray-600">
                     <div className="flex items-center space-x-3 mb-2">
                       {settings.logoUrl ? (
-                        <Image src={settings.logoUrl} alt="Logo" width={32} height={32} className="h-8 w-8 object-contain" />
+                        <Image
+                          src={settings.logoUrl}
+                          alt="Logo"
+                          width={32}
+                          height={32}
+                          className="h-8 w-8 object-contain"
+                        />
                       ) : (
                         <div className="w-8 h-8 bg-gray-200 rounded"></div>
                       )}
@@ -698,7 +704,7 @@ export default function WhiteLabelPage() {
                       <div className="h-4 rounded" style={{ backgroundColor: settings.secondaryColor }}></div>
                       <div className="h-4 rounded" style={{ backgroundColor: settings.accentColor }}></div>
                     </div>
-                    <div className="text-xs text-gray-600">
+                    <div className="text-xs text-gray-600 dark:text-gray-400">
                       {settings.supportEmail || 'support@company.com'}
                     </div>
                   </div>
@@ -706,8 +712,8 @@ export default function WhiteLabelPage() {
               </div>
 
               {/* Actions Card */}
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Actions</h3>
+              <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-white/20 dark:border-gray-700/30">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Actions</h3>
                 <div className="space-y-3">
                   <button
                     onClick={handleSave}
@@ -729,7 +735,7 @@ export default function WhiteLabelPage() {
 
                   <button
                     onClick={handleReset}
-                    className="w-full px-6 py-3 text-red-600 border-2 border-red-200 rounded-xl hover:bg-red-50 hover:border-red-300 transition-all font-semibold"
+                    className="w-full px-6 py-3 text-red-600 dark:text-red-400 border-2 border-red-200 dark:border-red-800 rounded-xl hover:bg-red-50 dark:hover:bg-red-950 hover:border-red-300 dark:hover:border-red-700 transition-all font-semibold"
                   >
                     Reset to Default
                   </button>
@@ -737,14 +743,14 @@ export default function WhiteLabelPage() {
               </div>
 
               {/* Help Card */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200">
-                <h3 className="text-lg font-bold text-blue-900 mb-2">Need Help?</h3>
-                <p className="text-blue-700 text-sm mb-4">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950 dark:to-indigo-950 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
+                <h3 className="text-lg font-bold text-blue-900 dark:text-blue-100 mb-2">Need Help?</h3>
+                <p className="text-blue-700 dark:text-blue-300 text-sm mb-4">
                   Customize your VexNexa experience with white-label branding. Contact our support team for assistance.
                 </p>
                 <a
                   href="/contact"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm dark:text-blue-300 dark:hover:text-blue-500"
                 >
                   Contact Support
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -757,7 +763,7 @@ export default function WhiteLabelPage() {
         </div>
 
         {/* Custom Footer for Branding Page */}
-        <footer className="mt-16 bg-white/80 backdrop-blur-sm border-t border-gray-200/50">
+        <footer className="mt-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-t border-gray-200/50 dark:border-gray-700/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center space-x-4 mb-4 md:mb-0">
@@ -765,7 +771,7 @@ export default function WhiteLabelPage() {
                   <span className="text-white font-bold text-sm">T</span>
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900">VexNexa</div>
+                  <div className="font-semibold text-gray-900 dark:text-gray-100">VexNexa</div>
                 </div>
               </div>
               <div className="text-sm text-gray-500">

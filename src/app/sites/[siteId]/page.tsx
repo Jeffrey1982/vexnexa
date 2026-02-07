@@ -37,7 +37,7 @@ export default function SitePage({ params }: PageProps) {
   }, [siteId, supabase]);
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 p-8">Loading...</div>;
+    return <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">Loading...</div>;
   }
 
   if (!site) {
@@ -83,7 +83,7 @@ export default function SitePage({ params }: PageProps) {
   const topIssues = calculateTopIssues();
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -97,7 +97,7 @@ export default function SitePage({ params }: PageProps) {
           </nav>
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 Site Details
               </h1>
               <p className="text-lg text-gray-800 dark:text-gray-300 mb-1">{site.url}</p>
@@ -118,7 +118,7 @@ export default function SitePage({ params }: PageProps) {
 
         {/* Tabs Navigation */}
         <div className="mb-6">
-          <div className="border-b border-gray-200">
+          <div className="border-b border-gray-200 dark:border-gray-700">
             <nav className="-mb-px flex space-x-8">
               <button
                 onClick={() => setActiveTab('overview')}
@@ -224,7 +224,7 @@ export default function SitePage({ params }: PageProps) {
         {/* Site Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Total Pages
             </h3>
             <p className="text-3xl font-bold text-blue-600">
@@ -233,7 +233,7 @@ export default function SitePage({ params }: PageProps) {
           </div>
 
           <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Average Score
             </h3>
             <p className="text-3xl font-bold text-green-600">
@@ -250,7 +250,7 @@ export default function SitePage({ params }: PageProps) {
           </div>
 
           <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Critical Issues
             </h3>
             <p className="text-3xl font-bold text-red-600">
@@ -262,7 +262,7 @@ export default function SitePage({ params }: PageProps) {
           </div>
 
           <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Total Issues
             </h3>
             <p className="text-3xl font-bold text-yellow-600">
@@ -276,8 +276,8 @@ export default function SitePage({ params }: PageProps) {
 
         {/* Pages Table */}
         <div className="bg-white dark:bg-slate-900 rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Discovered Pages
             </h2>
           </div>
@@ -286,15 +286,15 @@ export default function SitePage({ params }: PageProps) {
 
         {/* Recent Crawls */}
         {site.scans.length > 0 && (
-          <div className="mt-8 bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
+          <div className="mt-8 bg-white dark:bg-slate-900 rounded-lg shadow overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Recent Crawls
               </h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-slate-800">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400 uppercase tracking-wider">
                       Started
@@ -310,10 +310,10 @@ export default function SitePage({ params }: PageProps) {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-slate-900 divide-y divide-gray-200 dark:divide-gray-700">
                   {site.scans.map((scan: any) => (
                     <tr key={scan.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                         {new Date(scan.createdAt).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -329,10 +329,10 @@ export default function SitePage({ params }: PageProps) {
                           {scan.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                         {scan.score || 'N/A'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                         {scan.issues || 0}
                       </td>
                     </tr>

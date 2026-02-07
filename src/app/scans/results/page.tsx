@@ -185,7 +185,7 @@ function ScanResultsContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p>Loading scan results...</p>
@@ -196,7 +196,7 @@ function ScanResultsContent() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 py-8">
         <div className="container mx-auto px-4 max-w-4xl">
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
@@ -215,7 +215,7 @@ function ScanResultsContent() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 py-8">
         <div className="container mx-auto px-4 max-w-4xl">
           <Alert>
             <Info className="h-4 w-4" />
@@ -246,7 +246,7 @@ function ScanResultsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 py-8">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
@@ -256,10 +256,10 @@ function ScanResultsContent() {
           </Link>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">WCAG Accessibility Report</h1>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">WCAG Accessibility Report</h1>
               <div className="flex items-center gap-2 mt-2">
                 <Globe className="w-4 h-4 text-gray-500" />
-                <span className="text-gray-600">{result.url}</span>
+                <span className="text-gray-600 dark:text-gray-400">{result.url}</span>
               </div>
             </div>
             <Button onClick={handleExportPDF} disabled={exportLoading}>
@@ -338,14 +338,14 @@ function ScanResultsContent() {
 
         {/* Detailed Issues */}
         <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-gray-900">Detailed Issues</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Detailed Issues</h2>
 
           {result.violations.length === 0 ? (
             <Card>
               <CardContent className="py-8 text-center">
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No accessibility issues found!</h3>
-                <p className="text-gray-600">This page meets WCAG 2.1 AA standards.</p>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">No accessibility issues found!</h3>
+                <p className="text-gray-600 dark:text-gray-400">This page meets WCAG 2.1 AA standards.</p>
               </CardContent>
             </Card>
           ) : (
@@ -365,7 +365,7 @@ function ScanResultsContent() {
                         <div>
                           <CardTitle className="text-lg">{violation.help}</CardTitle>
                           <CardDescription className="mt-1">
-                            Rule: <code className="bg-gray-100 px-1 rounded">{violation.id}</code>
+                            Rule: <code className="bg-gray-100 dark:bg-slate-800 px-1 rounded">{violation.id}</code>
                           </CardDescription>
                         </div>
                       </div>
@@ -380,16 +380,16 @@ function ScanResultsContent() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700 mb-4">{violation.description}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">{violation.description}</p>
 
-                    <div className="border-l-4 border-gray-200 pl-4">
-                      <h4 className="font-semibold text-gray-900 mb-2">Affected Elements:</h4>
+                    <div className="border-l-4 border-gray-200 dark:border-gray-700 pl-4">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Affected Elements:</h4>
                       {violation.nodes.map((node, nodeIndex) => (
                         <div key={nodeIndex} className="mb-3">
-                          <div className="text-sm font-mono text-gray-600 mb-1">
-                            Selector: <code className="bg-gray-100 px-1 rounded">{node.target.join(', ')}</code>
+                          <div className="text-sm font-mono text-gray-600 dark:text-gray-400 mb-1">
+                            Selector: <code className="bg-gray-100 dark:bg-slate-800 px-1 rounded">{node.target.join(', ')}</code>
                           </div>
-                          <div className="text-sm font-mono bg-gray-50 p-2 rounded border">
+                          <div className="text-sm font-mono bg-gray-50 dark:bg-slate-800 p-2 rounded border dark:border-gray-700">
                             {node.html}
                           </div>
                         </div>
@@ -439,7 +439,7 @@ function ScanResultsContent() {
 export default function ScanResultsPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
           <p>Loading scan results...</p>

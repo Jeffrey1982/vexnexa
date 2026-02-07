@@ -75,12 +75,12 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
           </button>
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-64">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 min-w-64">
           <h3 className="text-lg font-semibold mb-4">Crawl Options</h3>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Max Pages
               </label>
               <input
@@ -89,7 +89,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
                 onChange={(e) => setMaxPages(parseInt(e.target.value) || 50)}
                 min="1"
                 max="1000"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800 dark:text-gray-100"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Maximum number of pages to crawl (1-1000)
@@ -97,7 +97,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Max Depth
               </label>
               <input
@@ -106,7 +106,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
                 onChange={(e) => setMaxDepth(parseInt(e.target.value) || 3)}
                 min="1"
                 max="10"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-800 dark:text-gray-100"
               />
               <p className="text-xs text-gray-500 mt-1">
                 How deep to follow links (1-10)
@@ -117,7 +117,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
           <div className="flex gap-2 mt-6">
             <button
               onClick={() => setShowOptions(false)}
-              className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+              className="flex-1 px-4 py-2 bg-gray-300 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-400 dark:hover:bg-slate-600"
             >
               Cancel
             </button>

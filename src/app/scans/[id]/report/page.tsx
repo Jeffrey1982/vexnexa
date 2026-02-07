@@ -145,7 +145,7 @@ export default async function PrintReportPage({ params }: PageProps) {
         @page { margin: 1in; size: A4; }
       `}} />
 
-      <div className="max-w-4xl mx-auto p-8 bg-white min-h-screen">
+      <div className="max-w-4xl mx-auto p-8 bg-white dark:bg-slate-950 min-h-screen">
         <div className="flex justify-between items-center mb-6 no-print">
           <PrintButton />
           <ThemeToggle />
@@ -168,21 +168,21 @@ export default async function PrintReportPage({ params }: PageProps) {
           <table className="print-table w-full mb-6">
             <tbody>
               <tr>
-                <td className="font-semibold bg-gray-50">Scan Date</td>
+                <td className="font-semibold bg-gray-50 dark:bg-slate-800">Scan Date</td>
                 <td>{formatDate(scan.createdAt)}</td>
-                <td className="font-semibold bg-gray-50">Score</td>
+                <td className="font-semibold bg-gray-50 dark:bg-slate-800">Score</td>
                 <td className="font-bold text-lg">{scan.score || 0}/100</td>
               </tr>
               <tr>
-                <td className="font-semibold bg-gray-50">Status</td>
+                <td className="font-semibold bg-gray-50 dark:bg-slate-800">Status</td>
                 <td className="uppercase">{scan.status}</td>
-                <td className="font-semibold bg-gray-50">Total Issues</td>
+                <td className="font-semibold bg-gray-50 dark:bg-slate-800">Total Issues</td>
                 <td className="font-bold text-lg">{stats.total}</td>
               </tr>
               <tr>
-                <td className="font-semibold bg-gray-50">WCAG AA Compliance</td>
+                <td className="font-semibold bg-gray-50 dark:bg-slate-800">WCAG AA Compliance</td>
                 <td className="font-bold text-lg">{wcagAACompliance}%</td>
-                <td className="font-semibold bg-gray-50">WCAG AAA Compliance</td>
+                <td className="font-semibold bg-gray-50 dark:bg-slate-800">WCAG AAA Compliance</td>
                 <td className="font-bold text-lg">{wcagAAACompliance}%</td>
               </tr>
             </tbody>
@@ -230,7 +230,7 @@ export default async function PrintReportPage({ params }: PageProps) {
               {analytics.benchmarkComparison && (
                 <div>
                   <h2 className="text-2xl font-semibold mb-4">Industry Benchmark</h2>
-                  <div className="bg-white border border-gray-200 rounded-lg p-6">
+                  <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                     <BenchmarkChart
                       comparison={analytics.benchmarkComparison}
                       height={250}
@@ -242,7 +242,7 @@ export default async function PrintReportPage({ params }: PageProps) {
               {/* Violation Distribution */}
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Issues Distribution</h2>
-                <div className="bg-white border border-gray-200 rounded-lg p-6">
+                <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                   <ViolationDistributionChart
                     data={{
                       critical: stats.critical,
@@ -260,7 +260,7 @@ export default async function PrintReportPage({ params }: PageProps) {
                 <div>
                   <h2 className="text-2xl font-semibold mb-4">Historical Trends</h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div className="bg-white border border-gray-200 rounded-lg p-6">
+                    <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                       <h3 className="text-lg font-semibold mb-4">Score Trend</h3>
                       <ScoreTrendChart
                         data={analytics.trendData}
@@ -268,7 +268,7 @@ export default async function PrintReportPage({ params }: PageProps) {
                         showLegend={false}
                       />
                     </div>
-                    <div className="bg-white border border-gray-200 rounded-lg p-6">
+                    <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                       <h3 className="text-lg font-semibold mb-4">Issues Trend</h3>
                       <IssuesTrendChart
                         data={analytics.trendData}
@@ -284,7 +284,7 @@ export default async function PrintReportPage({ params }: PageProps) {
               {analytics.violationTrends.length > 0 && (
                 <div>
                   <h2 className="text-2xl font-semibold mb-4">Violation Trends</h2>
-                  <div className="bg-white border border-gray-200 rounded-lg p-6">
+                  <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                     <ViolationTrendChart
                       violations={analytics.violationTrends}
                       height={350}
