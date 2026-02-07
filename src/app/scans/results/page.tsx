@@ -50,68 +50,8 @@ function ScanResultsContent() {
 
   useEffect(() => {
     const scanId = searchParams.get('scanId');
-    const mockData = searchParams.get('mock');
 
-    if (mockData) {
-      // Show mock results for testing
-      setResult({
-        scanId: "test-" + Date.now(),
-        url: searchParams.get('url') || 'https://example.com',
-        score: 75,
-        issues: 4,
-        violations: [
-          {
-            id: "color-contrast",
-            impact: "serious",
-            help: "Elements must have sufficient color contrast",
-            description: "Text and background colors must have a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text.",
-            nodes: [
-              {
-                target: [".header-nav"],
-                html: '<div class="header-nav">Navigation</div>'
-              }
-            ]
-          },
-          {
-            id: "missing-alt-text",
-            impact: "critical",
-            help: "Images must have alternative text",
-            description: "All images must have alt attributes that describe the content or purpose of the image.",
-            nodes: [
-              {
-                target: ["img"],
-                html: '<img src="banner.jpg">'
-              }
-            ]
-          },
-          {
-            id: "form-labels",
-            impact: "moderate",
-            help: "Form elements must have labels",
-            description: "Every form control must have a programmatically associated label.",
-            nodes: [
-              {
-                target: ["#email-input"],
-                html: '<input type="email" id="email-input" placeholder="Enter email">'
-              }
-            ]
-          },
-          {
-            id: "heading-structure",
-            impact: "minor",
-            help: "Heading levels should not be skipped",
-            description: "Headings should be used in a logical, hierarchical order.",
-            nodes: [
-              {
-                target: ["h4"],
-                html: '<h4>Skipped to h4 without h2 or h3</h4>'
-              }
-            ]
-          }
-        ]
-      });
-      setLoading(false);
-    } else if (scanId) {
+    if (scanId) {
       // Fetch real scan results
       fetch(`/api/scans/${scanId}`)
         .then(res => res.json())
