@@ -61,6 +61,18 @@ export async function POST(req: NextRequest) {
       violations = [];
     }
 
+    // Fetch white-label settings for the user
+    const whiteLabel = await prisma.whiteLabel.findUnique({
+      where: { userId: user.id }
+    });
+
+    const brandName = whiteLabel?.companyName || "VexNexa";
+    const primaryColor = whiteLabel?.primaryColor || "#3B82F6";
+    const brandLogo = whiteLabel?.logoUrl || undefined;
+    const footerText = whiteLabel?.footerText || undefined;
+    const supportEmail = whiteLabel?.supportEmail || undefined;
+    const showPoweredBy = whiteLabel?.showPoweredBy !== false;
+
     // Prepare scan data for PDF
     const scanData = {
       id: scan.id,
@@ -70,21 +82,26 @@ export async function POST(req: NextRequest) {
       createdAt: scan.createdAt
     };
 
-    // Generate PDF using React PDF
+    // Generate PDF using React PDF with white-label branding
     const pdfDoc = React.createElement(PDFReport, {
       scanData,
-      brandName: "VexNexa",
-      primaryColor: "#3B82F6"
+      brandName,
+      brandLogo,
+      primaryColor,
+      footerText,
+      supportEmail,
+      showPoweredBy,
     });
 
     // Convert to buffer
     const pdfBuffer = await pdf(pdfDoc as any).toBuffer();
 
     // Return PDF as downloadable file
+    const filePrefix = brandName.toLowerCase().replace(/[^a-z0-9]/gi, '-');
     return new NextResponse(pdfBuffer as any, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="vexnexa-accessibility-report-${scanId}.pdf"`,
+        "Content-Disposition": `attachment; filename="${filePrefix}-accessibility-report-${scanId}.pdf"`,
       },
     });
 

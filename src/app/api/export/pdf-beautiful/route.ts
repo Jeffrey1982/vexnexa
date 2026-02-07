@@ -50,6 +50,9 @@ export async function POST(req: NextRequest) {
     const brandLogo = whiteLabel?.logoUrl;
     const primaryColor = whiteLabel?.primaryColor || '#3b82f6';
     const secondaryColor = whiteLabel?.secondaryColor || '#1e40af';
+    const footerText = whiteLabel?.footerText || undefined;
+    const supportEmail = whiteLabel?.supportEmail || undefined;
+    const showPoweredBy = whiteLabel?.showPoweredBy !== false;
 
     // Extract violations
     let violations: Violation[] = [];
@@ -731,8 +734,12 @@ export async function POST(req: NextRequest) {
                     ${brandLogo ? `<img src="${brandLogo}" alt="${brandName}" />` : '🛡️ '}
                     <span>${brandName} Accessibility Platform</span>
                 </div>
-                <div>This report was generated automatically using axe-core accessibility testing engine.</div>
-                <div>For detailed remediation guidance, visit your dashboard${whiteLabel?.supportEmail ? ` or contact ${whiteLabel.supportEmail}` : ''}.</div>
+                ${footerText
+                    ? `<div>${footerText}</div>`
+                    : `<div>This report was generated automatically using axe-core accessibility testing engine.</div>`
+                }
+                ${supportEmail ? `<div>For detailed remediation guidance, visit your dashboard or contact ${supportEmail}.</div>` : ''}
+                ${showPoweredBy && brandName !== 'VexNexa' ? `<div style="margin-top: 6px; font-size: 9px; color: #9ca3af;">Powered by VexNexa</div>` : ''}
             </div>
         </body>
         </html>

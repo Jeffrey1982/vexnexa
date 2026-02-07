@@ -258,13 +258,19 @@ interface PDFReportProps {
   brandName: string;
   brandLogo?: string;
   primaryColor?: string;
+  footerText?: string;
+  supportEmail?: string;
+  showPoweredBy?: boolean;
 }
 
 export const PDFReport: React.FC<PDFReportProps> = ({
   scanData,
   brandName,
   brandLogo,
-  primaryColor = '#3B82F6'
+  primaryColor = '#3B82F6',
+  footerText,
+  supportEmail,
+  showPoweredBy = true,
 }) => {
   const getScoreColor = (score: number) => {
     if (score >= 90) return '#10B981'; // Green
@@ -309,8 +315,11 @@ export const PDFReport: React.FC<PDFReportProps> = ({
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={styles.header}>
+        <View style={[styles.header, { backgroundColor: primaryColor }]}>
           <View style={styles.headerContent}>
+            {brandLogo && !brandLogo.startsWith('data:') ? (
+              <Image src={brandLogo} style={{ width: 120, height: 40, marginBottom: 8, objectFit: 'contain' as any }} />
+            ) : null}
             <Text style={styles.brandName}>{brandName}</Text>
             <Text style={styles.reportTitle}>Accessibility Compliance Report</Text>
             <Text style={styles.reportSubtitle}>Professional WCAG Analysis & Assessment</Text>
@@ -360,7 +369,7 @@ export const PDFReport: React.FC<PDFReportProps> = ({
 
         {/* Impact Breakdown */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Issue Severity Breakdown</Text>
+          <Text style={[styles.sectionTitle, { borderLeft: `3pt solid ${primaryColor}` }]}>Issue Severity Breakdown</Text>
           <View style={styles.impactGrid}>
             <View style={[styles.impactCard, styles.critical]}>
               <Text style={[styles.impactValue, { color: '#DC2626' }]}>{stats.critical}</Text>
@@ -384,7 +393,7 @@ export const PDFReport: React.FC<PDFReportProps> = ({
         {/* Top Violations */}
         {Array.isArray(scanData.violations) && scanData.violations.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Priority Issues Requiring Attention</Text>
+            <Text style={[styles.sectionTitle, { borderLeft: `3pt solid ${primaryColor}` }]}>Priority Issues Requiring Attention</Text>
             <View style={styles.violationsContainer}>
               <View style={styles.violationsHeader}>
                 <Text style={styles.violationsTitle}>Top {Math.min(scanData.violations.length, 10)} Most Critical Issues</Text>
@@ -431,9 +440,18 @@ export const PDFReport: React.FC<PDFReportProps> = ({
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerLogo}>{brandName} Accessibility Platform</Text>
-          <Text style={styles.footerText}>This report was generated automatically using axe-core accessibility testing engine.</Text>
-          <Text style={styles.footerText}>For detailed remediation guidance, visit your dashboard or contact support.</Text>
+          <Text style={[styles.footerLogo, { color: primaryColor }]}>{brandName} Accessibility Platform</Text>
+          {footerText ? (
+            <Text style={styles.footerText}>{footerText}</Text>
+          ) : (
+            <Text style={styles.footerText}>This report was generated automatically using axe-core accessibility testing engine.</Text>
+          )}
+          {supportEmail && (
+            <Text style={styles.footerText}>Support: {supportEmail}</Text>
+          )}
+          {showPoweredBy && brandName !== 'VexNexa' && (
+            <Text style={[styles.footerText, { marginTop: 4, fontSize: 8 }]}>Powered by VexNexa</Text>
+          )}
         </View>
       </Page>
     </Document>
