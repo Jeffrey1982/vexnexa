@@ -10,12 +10,13 @@ import Link from "next/link";
 import { ArrowLeft, Globe } from "lucide-react";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     siteId: string;
-  };
+  }>;
 }
 
 export default async function SiteStructurePage({ params }: PageProps) {
+  const { siteId } = await params;
   let user;
   try {
     user = await requireAuth();
@@ -26,7 +27,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
   // Verify site ownership
   const site = await prisma.site.findUnique({
     where: {
-      id: params.siteId,
+      id: siteId,
       userId: user.id
     },
     include: {
@@ -47,7 +48,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
   }
 
   // Get site structure data from real scans
-  const structureData = await getSiteStructureData(params.siteId);
+  const structureData = await getSiteStructureData(siteId);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-background">
@@ -56,7 +57,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
       <div className="container mx-auto px-4 py-8">
         {/* Navigation */}
         <div className="flex items-center gap-4 mb-6">
-          <Link href={`/sites/${params.siteId}`}>
+          <Link href={`/sites/${siteId}`}>
             <Button variant="ghost" size="sm" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Site
@@ -86,7 +87,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
               Run an accessibility scan on this site first to generate the structure visualization.
             </p>
-            <Link href={`/sites/${params.siteId}`}>
+            <Link href={`/sites/${siteId}`}>
               <Button>
                 Go to Site Dashboard
               </Button>

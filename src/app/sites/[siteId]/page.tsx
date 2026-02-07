@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import Link from "next/link";
 import StartCrawlButton from "./StartCrawlButton";
 import PagesTable from "./PagesTable";
@@ -9,14 +9,8 @@ import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 
-interface PageProps {
-  params: {
-    siteId: string;
-  };
-}
-
-export default function SitePage({ params }: PageProps) {
-  const { siteId } = params;
+export default function SitePage() {
+  const { siteId } = useParams<{ siteId: string }>();
   const [activeTab, setActiveTab] = useState<'overview' | 'analytics' | 'monitoring' | 'reports'>('overview');
   const [site, setSite] = useState<any>(null);
   const [loading, setLoading] = useState(true);
