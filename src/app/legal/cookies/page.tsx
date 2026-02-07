@@ -182,8 +182,7 @@ export default function CookiesPage() {
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                   <p className="mb-2"><strong>Email:</strong> <a href="mailto:info@vexnexa.com" className="text-blue-600 hover:text-blue-800">info@vexnexa.com</a></p>
                   <p className="mb-2"><strong>Website:</strong> <a href="/contact" className="text-blue-600 hover:text-blue-800">Contact form</a></p>
-                  <p className="mb-2"><strong>Business Type:</strong> Sole proprietorship (Eenmanszaak)</p>
-                  <p className="mb-2"><strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands</p>
+                  <p className="mb-2"><strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands</p>
                   <p className="mb-2"><strong>Chamber of Commerce:</strong> 94848262</p>
                   <p><strong>Establishment Number:</strong> 000060294744</p>
                 </div>

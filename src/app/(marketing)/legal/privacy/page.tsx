@@ -154,8 +154,7 @@ export default async function PrivacyPage() {
             <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
               <p className="font-medium">{t('section1.contactTitle')}</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Business Type:</strong> Sole proprietorship (Eenmanszaak) <br />
-                <strong>Address:</strong> Gagarinstraat 28, 1562TB Krommenie, Netherlands <br />
+                <strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands <br />
                 <strong>Chamber of Commerce:</strong> 94848262 &nbsp;|&nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
                 <strong>{t('section1.email')}:</strong>{' '}
                 <a href="mailto:info@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
