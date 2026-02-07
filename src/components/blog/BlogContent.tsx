@@ -53,8 +53,8 @@ export function BlogContent({ content }: BlogContentProps) {
     });
   }, [content]);
 
-  // Sanitize HTML content
-  const sanitizedContent = DOMPurify.sanitize(content, {
+  // Sanitize HTML content (guard for SSR where DOMPurify needs a DOM)
+  const sanitizedContent = typeof window !== 'undefined' ? DOMPurify.sanitize(content, {
     ALLOWED_TAGS: [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'p', 'br', 'strong', 'em', 'u', 'strike',
@@ -69,7 +69,7 @@ export function BlogContent({ content }: BlogContentProps) {
       'href', 'src', 'alt', 'title', 'class',
       'data-language', 'style', 'target', 'rel'
     ],
-  });
+  }) : content;
 
   return (
     <div
