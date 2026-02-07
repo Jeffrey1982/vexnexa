@@ -21,6 +21,7 @@ import { SiteImage } from "@/components/SiteImage";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
 import { requireAuth } from "@/lib/auth";
 import { EnhancedScanResults } from "@/components/EnhancedScanResults";
@@ -180,16 +181,17 @@ export default async function ScanDetailPage({ params }: PageProps) {
   const wcagAAACompliance = (scan as any).wcagAAACompliance || calculateWCAGCompliance(violations, "AAA");
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
       <DashboardNav user={user} />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Link href="/dashboard" className="hover:text-foreground">
-          Dashboard
-        </Link>
-        <span>/</span>
-        <span>Scan Details</span>
+      <div className="flex-1">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link href="/dashboard" className="hover:text-foreground">
+              Dashboard
+            </Link>
+            <span>/</span>
+            <span>Scan Details</span>
       </div>
 
       {/* Header */}
@@ -625,9 +627,11 @@ export default async function ScanDetailPage({ params }: PageProps) {
               />
             </CardContent>
           </Card>
-        </div>
       </div>
       </div>
+      </div>
+      </div>
+      <DashboardFooter />
     </div>
   );
 }

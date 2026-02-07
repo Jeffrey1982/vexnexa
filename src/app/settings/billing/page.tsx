@@ -8,6 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
+import { createClient } from "@/lib/supabase/client-new";
 import {
   CreditCard,
   Calendar,
@@ -118,6 +121,17 @@ function FeatureRow({ label, included }: { label: string; included: boolean }) {
 }
 
 export default function BillingPage() {
+  const [authUser, setAuthUser] = useState<any>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getAuthUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setAuthUser(user);
+    };
+    getAuthUser();
+  }, [supabase]);
+
   const [user, setUser] = useState<UserData | null>(null);
   const [usage, setUsage] = useState<UsageData | null>(null);
   const [actualUsage, setActualUsage] = useState<ActualUsageData | null>(null);
@@ -293,7 +307,10 @@ export default function BillingPage() {
   const isTrialExpired = user.trialEndsAt && new Date(user.trialEndsAt) < new Date();
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+      <DashboardNav user={authUser} />
+      <div className="flex-1">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div>
@@ -599,6 +616,9 @@ export default function BillingPage() {
           </CardContent>
         </Card>
       </div>
+      </div>
+      </div>
+      <DashboardFooter />
     </div>
   );
 }

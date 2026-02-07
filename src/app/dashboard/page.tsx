@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ROICalculator } from "@/components/enhanced/ROICalculator";
@@ -192,8 +193,9 @@ export default async function DashboardPage() {
   const hasWhiteLabelAccess = userEntitlements.whiteLabel;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
       <DashboardNav user={user} />
+      <div className="flex-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
 
 
@@ -804,6 +806,8 @@ export default async function DashboardPage() {
         </CardContent>
       </Card>
       </div>
+      </div>
+      <DashboardFooter />
     </div>
   );
 }// Force deployment Wed, Sep 24, 2025  6:21:38 PM

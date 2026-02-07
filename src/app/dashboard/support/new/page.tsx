@@ -13,9 +13,24 @@ import { ArrowLeft, Send } from "lucide-react";
 import Link from "next/link";
 import { createTicket } from "@/app/actions/support-tickets";
 import { TicketCategory, TicketPriority } from "@prisma/client";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
+import { createClient } from "@/lib/supabase/client-new";
+import { useEffect } from "react";
 
 export default function NewTicketPage() {
   const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, [supabase]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -50,8 +65,10 @@ export default function NewTicketPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-6">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+      <DashboardNav user={user} />
+      <div className="flex-1">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-3xl">
         {/* Header */}
         <div className="mb-8">
           <Link href="/dashboard/support" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-4">
@@ -176,6 +193,8 @@ export default function NewTicketPage() {
           </CardContent>
         </Card>
       </div>
+      </div>
+      <DashboardFooter />
     </div>
   );
 }

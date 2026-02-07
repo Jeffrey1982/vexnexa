@@ -9,6 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Plus, Ticket, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 
 async function getUserTickets(userId: string) {
   return await prisma.supportTicket.findMany({
@@ -59,8 +61,10 @@ export default async function SupportPage() {
   const tickets = await getUserTickets(user.id);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+      <DashboardNav user={user} />
+      <div className="flex-1">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -164,6 +168,8 @@ export default async function SupportPage() {
           </CardContent>
         </Card>
       </div>
+      </div>
+      <DashboardFooter />
     </div>
   );
 }

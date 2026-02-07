@@ -9,6 +9,8 @@ import { ArrowLeft, Clock, User as UserIcon, Shield } from "lucide-react";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
 import { TicketReplyForm } from "./TicketReplyForm";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 
 async function getTicket(ticketId: string, userId: string) {
   const ticket = await prisma.supportTicket.findUnique({
@@ -98,8 +100,10 @@ export default async function TicketDetailPage(props: PageProps) {
   const canReply = ticket.status !== 'CLOSED';
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-6">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex flex-col">
+      <DashboardNav user={user} />
+      <div className="flex-1">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-5xl">
         {/* Header */}
         <div className="mb-6">
           <Link href="/dashboard/support" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-4">
@@ -208,6 +212,8 @@ export default async function TicketDetailPage(props: PageProps) {
           </Card>
         )}
       </div>
+      </div>
+      <DashboardFooter />
     </div>
   );
 }
