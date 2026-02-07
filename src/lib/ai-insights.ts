@@ -411,7 +411,7 @@ function generateTrendInsight(type: 'declining' | 'improving', trend: number): A
       estimatedImprovement: Math.abs(trend),
       dependencies: ['Process improvements', 'Tool integration'],
       resources: [
-        { title: 'Accessibility Testing in CI/CD', url: 'https://web.dev/accessibility-testing/', type: 'tutorial' }
+        { title: 'Accessibility Testing in CI/CD', url: 'https://web.dev/articles/accessibility', type: 'tutorial' }
       ]
     };
   } else {
@@ -440,7 +440,7 @@ function generateTrendInsight(type: 'declining' | 'improving', trend: number): A
       estimatedImprovement: 0,
       dependencies: [],
       resources: [
-        { title: 'Accessibility Champions Guide', url: 'https://accessibility.digital.gov/', type: 'documentation' }
+        { title: 'Accessibility Champions Guide', url: 'https://www.w3.org/WAI/planning/involving-users/', type: 'documentation' }
       ]
     };
   }

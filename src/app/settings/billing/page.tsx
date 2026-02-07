@@ -17,7 +17,13 @@ import {
   Loader2,
   Crown,
   Zap,
-  RefreshCw
+  RefreshCw,
+  Users,
+  Globe,
+  FileText,
+  Check,
+  X,
+  BarChart3,
 } from "lucide-react";
 import { PLAN_NAMES, formatPrice, ENTITLEMENTS } from "@/lib/billing/plans";
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
@@ -36,6 +42,12 @@ interface UsageData {
   pages: number;
   sites: number;
   period: string;
+}
+
+interface ActualUsageData {
+  sites: number;
+  scansThisMonth: number;
+  teamMembers: number;
 }
 
 interface AddOnData {
@@ -66,9 +78,49 @@ interface EntitlementsData {
   };
 }
 
+function UsageBar({ label, used, limit, icon: Icon }: { label: string; used: number; limit: number; icon: React.ElementType }) {
+  const percentage = Math.min(100, (used / limit) * 100);
+  const isNearLimit = percentage >= 80;
+  const isAtLimit = percentage >= 100;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm text-muted-foreground flex items-center gap-1.5">
+          <Icon className="h-4 w-4" />
+          {label}
+        </span>
+        <span className={`text-sm font-medium ${isAtLimit ? "text-destructive" : isNearLimit ? "text-amber-600" : ""}`}>
+          {used.toLocaleString()} / {limit.toLocaleString()}
+        </span>
+      </div>
+      <div className="w-full bg-secondary rounded-full h-2">
+        <div
+          className={`rounded-full h-2 transition-all ${isAtLimit ? "bg-destructive" : isNearLimit ? "bg-amber-500" : "bg-primary"}`}
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function FeatureRow({ label, included }: { label: string; included: boolean }) {
+  return (
+    <div className="flex items-center justify-between py-1.5">
+      <span className="text-sm">{label}</span>
+      {included ? (
+        <Check className="h-4 w-4 text-green-600" />
+      ) : (
+        <X className="h-4 w-4 text-muted-foreground" />
+      )}
+    </div>
+  );
+}
+
 export default function BillingPage() {
   const [user, setUser] = useState<UserData | null>(null);
   const [usage, setUsage] = useState<UsageData | null>(null);
+  const [actualUsage, setActualUsage] = useState<ActualUsageData | null>(null);
   const [entitlements, setEntitlements] = useState<EntitlementsData | null>(null);
   const [addOns, setAddOns] = useState<AddOnData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,6 +152,7 @@ export default function BillingPage() {
         period: data.usage.period,
       });
 
+      setActualUsage(data.actualUsage);
       setEntitlements(data.entitlements);
       setAddOns(data.addOns || []);
 
@@ -117,33 +170,33 @@ export default function BillingPage() {
   const handleCancelSubscription = async () => {
     setActionLoading("cancel");
     setError(null);
-    
+
     try {
       const response = await fetch("/api/billing/cancel", {
         method: "POST",
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || "Failed to cancel subscription");
       }
-      
+
       setSuccess("Subscription cancelled successfully");
       // Refresh user data
       setUser(prev => prev ? { ...prev, subscriptionStatus: "canceled", plan: "TRIAL" } : null);
-      
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to cancel subscription");
     }
-    
+
     setActionLoading(null);
   };
 
   const handleChangePlan = async (newPlan: string) => {
     setActionLoading(`change-${newPlan}`);
     setError(null);
-    
+
     try {
       const response = await fetch("/api/billing/change-plan", {
         method: "POST",
@@ -152,13 +205,13 @@ export default function BillingPage() {
         },
         body: JSON.stringify({ plan: newPlan }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || "Failed to change plan");
       }
-      
+
       if (data.needCheckout) {
         // Redirect to checkout
         window.location.href = data.checkoutUrl;
@@ -167,36 +220,36 @@ export default function BillingPage() {
         // Refresh user data
         setUser(prev => prev ? { ...prev, plan: newPlan as any, subscriptionStatus: "active" } : null);
       }
-      
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to change plan");
     }
-    
+
     setActionLoading(null);
   };
 
   const handleResetPaymentMethod = async () => {
     setActionLoading("reset-payment");
     setError(null);
-    
+
     try {
       const response = await fetch("/api/billing/payment-method/reset", {
         method: "POST",
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || "Failed to reset payment method");
       }
-      
+
       // Redirect to payment setup
       window.location.href = data.url;
-      
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to reset payment method");
     }
-    
+
     setActionLoading(null);
   };
 
@@ -228,16 +281,13 @@ export default function BillingPage() {
   const planEntitlements = ENTITLEMENTS[user.plan];
   const isTrialExpired = user.trialEndsAt && new Date(user.trialEndsAt) < new Date();
 
-  // Get used seats (from teams)
-  const usedSeats = 1; // At minimum, the owner uses 1 seat. TODO: Count actual team members
-
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">Facturering & Abonnement</h1>
-          <p className="text-muted-foreground">Beheer je abonnement en betalingen</p>
+          <h1 className="text-3xl font-bold">Billing & Subscription</h1>
+          <p className="text-muted-foreground">Manage your subscription and payments</p>
         </div>
 
         {/* Alerts */}
@@ -260,7 +310,7 @@ export default function BillingPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Crown className="h-5 w-5" />
-              Huidig Plan
+              Current Plan
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -268,7 +318,7 @@ export default function BillingPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-2xl font-bold">{PLAN_NAMES[user.plan]}</h3>
-                  <Badge 
+                  <Badge
                     variant={user.subscriptionStatus === "active" ? "default" : "secondary"}
                     className="capitalize"
                   >
@@ -278,84 +328,96 @@ export default function BillingPage() {
                   </Badge>
                 </div>
                 <p className="text-muted-foreground">
-                  {user.plan === "TRIAL" 
-                    ? `Trial ${isTrialExpired ? "verlopen" : `eindigt ${new Date(user.trialEndsAt!).toLocaleDateString()}`}`
-                    : `${formatPrice(user.plan as any)} per maand`
+                  {user.plan === "TRIAL"
+                    ? `Trial ${isTrialExpired ? "expired" : `ends ${new Date(user.trialEndsAt!).toLocaleDateString()}`}`
+                    : `${formatPrice(user.plan as any)} per month`
                   }
                 </p>
               </div>
-              
+
               {user.plan !== "TRIAL" && (
                 <div className="text-right">
-                  <p className="text-sm text-muted-foreground">Volgende factuur</p>
+                  <p className="text-sm text-muted-foreground">Next invoice</p>
                   <p className="font-semibold">
                     {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
                   </p>
                 </div>
               )}
             </div>
-
-            {/* Plan Features */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t">
-              <div>
-                <p className="text-sm text-muted-foreground">Pagina&apos;s/maand</p>
-                <p className="font-semibold">{planEntitlements.pagesPerMonth.toLocaleString()}</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Websites</p>
-                <p className="font-semibold">{planEntitlements.sites}</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Word export</p>
-                <p className="font-semibold">{planEntitlements.word ? "✅" : "❌"}</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Scheduling</p>
-                <p className="font-semibold">{planEntitlements.schedule ? "✅" : "❌"}</p>
-              </div>
-            </div>
           </CardContent>
         </Card>
 
-        {/* Usage */}
-        {usage && entitlements && (
+        {/* Usage Overview */}
+        {usage && entitlements && actualUsage && (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
-                Gebruik ({usage.period})
+                <BarChart3 className="h-5 w-5" />
+                Usage ({usage.period})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <UsageBar
+                  label="Sites"
+                  used={actualUsage.sites}
+                  limit={entitlements.sites}
+                  icon={Globe}
+                />
+                <UsageBar
+                  label="Pages scanned"
+                  used={usage.pages}
+                  limit={entitlements.pagesPerMonth}
+                  icon={FileText}
+                />
+                <UsageBar
+                  label="Team members"
+                  used={actualUsage.teamMembers}
+                  limit={entitlements.users}
+                  icon={Users}
+                />
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-muted-foreground flex items-center gap-1.5">
+                      <Zap className="h-4 w-4" />
+                      Scans this month
+                    </span>
+                    <span className="text-sm font-medium">
+                      {actualUsage.scansThisMonth.toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Total scan runs across all sites</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Plan Features */}
+        {entitlements && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Plan Features
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-8">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Pagina&apos;s gescand</span>
-                    <span className="text-sm font-medium">
-                      {usage.pages.toLocaleString()} / {entitlements.pagesPerMonth.toLocaleString()}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
+                <FeatureRow label="PDF export" included={entitlements.pdf} />
+                <FeatureRow label="Word export" included={entitlements.word} />
+                <FeatureRow label="Scheduling" included={entitlements.schedule} />
+                <FeatureRow label="Site crawling" included={entitlements.crawl} />
+                <FeatureRow label="White label" included={!!entitlements.whiteLabel} />
+                <div className="flex items-center justify-between py-1.5">
+                  <span className="text-sm">Integrations</span>
+                  {entitlements.integrations.length > 0 ? (
+                    <span className="text-sm text-muted-foreground">
+                      {entitlements.integrations.map(i => i.charAt(0).toUpperCase() + i.slice(1)).join(", ")}
                     </span>
-                  </div>
-                  <div className="w-full bg-secondary rounded-full h-2">
-                    <div
-                      className="bg-primary rounded-full h-2 transition-all"
-                      style={{ width: `${Math.min(100, (usage.pages / entitlements.pagesPerMonth) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Websites</span>
-                    <span className="text-sm font-medium">
-                      {usage.sites} / {entitlements.sites}
-                    </span>
-                  </div>
-                  <div className="w-full bg-secondary rounded-full h-2">
-                    <div
-                      className="bg-primary rounded-full h-2 transition-all"
-                      style={{ width: `${Math.min(100, (usage.sites / entitlements.sites) * 100)}%` }}
-                    />
-                  </div>
+                  ) : (
+                    <X className="h-4 w-4 text-muted-foreground" />
+                  )}
                 </div>
               </div>
             </CardContent>
@@ -363,11 +425,11 @@ export default function BillingPage() {
         )}
 
         {/* Extra Seats - Show to everyone */}
-        {entitlements && (
+        {entitlements && actualUsage && (
           <ExtraSeatsCard
             baseSeats={entitlements.base.users}
             extraSeats={entitlements.addOns.users}
-            usedSeats={usedSeats}
+            usedSeats={actualUsage.teamMembers}
             addOns={addOns}
             onRefresh={loadUserData}
             isTrial={user.plan === "TRIAL"}
@@ -393,16 +455,16 @@ export default function BillingPage() {
           {(user.plan === "TRIAL" || user.subscriptionStatus !== "canceled") ? (
             <Card>
               <CardHeader>
-                <CardTitle>Plan Wijzigen</CardTitle>
+                <CardTitle>Change Plan</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground">
-                  Upgrade naar een hoger plan voor meer functionaliteit
+                  Upgrade to a higher plan for more features
                 </p>
-                
+
                 <div className="space-y-2">
                   {user.plan !== "STARTER" && (
-                    <Button 
+                    <Button
                       onClick={() => handleChangePlan("STARTER")}
                       disabled={actionLoading === "change-STARTER"}
                       className="w-full justify-start"
@@ -412,9 +474,9 @@ export default function BillingPage() {
                       Starter - {formatPrice("STARTER")}
                     </Button>
                   )}
-                  
+
                   {user.plan !== "PRO" && (
-                    <Button 
+                    <Button
                       onClick={() => handleChangePlan("PRO")}
                       disabled={actionLoading === "change-PRO"}
                       className="w-full justify-start"
@@ -422,12 +484,12 @@ export default function BillingPage() {
                     >
                       {actionLoading === "change-PRO" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                       <Crown className="mr-2 h-4 w-4" />
-                      Pro - {formatPrice("PRO")} (Populair)
+                      Pro - {formatPrice("PRO")} (Popular)
                     </Button>
                   )}
-                  
+
                   {user.plan !== "BUSINESS" && (
-                    <Button 
+                    <Button
                       onClick={() => handleChangePlan("BUSINESS")}
                       disabled={actionLoading === "change-BUSINESS"}
                       className="w-full justify-start"
@@ -447,18 +509,18 @@ export default function BillingPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
-                Betaalmethode
+                Payment Method
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                {user.subscriptionStatus === "active" 
-                  ? "Beheer je betaalmethode via Mollie"
-                  : "Stel een betaalmethode in voor abonnementen"
+                {user.subscriptionStatus === "active"
+                  ? "Manage your payment method via Mollie"
+                  : "Set up a payment method for subscriptions"
                 }
               </p>
-              
-              <Button 
+
+              <Button
                 onClick={handleResetPaymentMethod}
                 disabled={actionLoading === "reset-payment"}
                 variant="outline"
@@ -469,7 +531,7 @@ export default function BillingPage() {
                 ) : (
                   <RefreshCw className="mr-2 h-4 w-4" />
                 )}
-                Betaalmethode instellen
+                Set up payment method
               </Button>
             </CardContent>
           </Card>
@@ -478,41 +540,41 @@ export default function BillingPage() {
           {user.subscriptionStatus === "active" && (
             <Card className="md:col-span-2">
               <CardHeader>
-                <CardTitle className="text-destructive">Abonnement opzeggen</CardTitle>
+                <CardTitle className="text-destructive">Cancel Subscription</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Je abonnement wordt direct geannuleerd en je wordt teruggeschakeld naar het gratis trial plan.
+                      Your subscription will be cancelled immediately and you will be downgraded to the free trial plan.
                     </p>
                   </div>
-                  
+
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button variant="destructive">
-                        Abonnement opzeggen
+                        Cancel Subscription
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
-                        <DialogTitle>Abonnement opzeggen?</DialogTitle>
+                        <DialogTitle>Cancel subscription?</DialogTitle>
                         <DialogDescription>
-                          Weet je zeker dat je je {PLAN_NAMES[user.plan]} abonnement wilt opzeggen? 
-                          Je wordt direct teruggeschakeld naar het gratis trial plan met beperkte functionaliteit.
+                          Are you sure you want to cancel your {PLAN_NAMES[user.plan]} subscription?
+                          You will be immediately downgraded to the free trial plan with limited features.
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>
-                        <Button variant="outline">Annuleren</Button>
-                        <Button 
-                          variant="destructive" 
+                        <Button variant="outline">Cancel</Button>
+                        <Button
+                          variant="destructive"
                           onClick={handleCancelSubscription}
                           disabled={actionLoading === "cancel"}
                         >
                           {actionLoading === "cancel" ? (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           ) : null}
-                          Ja, opzeggen
+                          Yes, cancel
                         </Button>
                       </DialogFooter>
                     </DialogContent>
@@ -528,11 +590,11 @@ export default function BillingPage() {
           <CardContent className="pt-6">
             <div className="text-center space-y-2">
               <p className="text-sm text-muted-foreground">
-                Vragen over facturering?
+                Questions about billing?
               </p>
               <Button variant="outline" asChild>
                 <Link href="/contact">
-                  Contact opnemen
+                  Contact Us
                 </Link>
               </Button>
             </div>

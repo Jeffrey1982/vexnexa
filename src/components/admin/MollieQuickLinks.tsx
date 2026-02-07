@@ -41,11 +41,7 @@ export function MollieQuickLinks() {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="flex items-center gap-2">
-              <img
-                src="https://www.mollie.com/assets/images/mollie/logo-dark.svg"
-                alt="Mollie"
-                className="h-6"
-              />
+              <span className="font-bold text-black dark:text-white">Mollie</span>
               Quick Links
             </CardTitle>
             <CardDescription>Access Mollie dashboard directly</CardDescription>

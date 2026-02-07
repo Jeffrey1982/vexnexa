@@ -16,12 +16,7 @@
 
   "functions": {
     "src/app/api/scan*/route.*": {
-      "maxDuration": 60,
-      "memory": 2048
-    },
-    "app/api/scan*/route.*": {
-      "maxDuration": 60,
-      "memory": 2048
+      "maxDuration": 60
     },
     "src/app/api/white-label/upload/route.*": {
       "maxDuration": 30
@@ -30,12 +25,10 @@
       "maxDuration": 30
     },
     "src/app/api/cron/scheduled-scans/route.*": {
-      "maxDuration": 300,
-      "memory": 2048
+      "maxDuration": 300
     },
     "src/app/api/cron/assurance-scans/route.*": {
-      "maxDuration": 300,
-      "memory": 2048
+      "maxDuration": 300
     },
     "src/app/api/cron/cleanup-old-reports/route.*": {
       "maxDuration": 60

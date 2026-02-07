@@ -22,7 +22,7 @@ export const mollie = new Proxy({} as ReturnType<typeof createMollieClient>, {
 })
 
 export function appUrl(path = "") {
-  const base = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/+$/,"")
+  const base = (process.env.NEXT_PUBLIC_APP_URL || "https://vexnexa.com").replace(/\/+$/,"")
   return `${base}${path.startsWith("/") ? "" : "/"}${path}`
 }
 

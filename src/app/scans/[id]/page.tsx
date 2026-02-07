@@ -170,7 +170,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
   }).slice(0, 5);
 
   const siteUrl = scan.page?.url || scan.site.url;
-  const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/scans/${scan.id}`;
+  const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/scans/${scan.id}`;
 
   // Get enhanced analytics
   const analytics = await getEnhancedAnalytics(scan);

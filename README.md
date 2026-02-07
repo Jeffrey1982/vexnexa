@@ -42,3 +42,8 @@ npm run dev
   ```bash
   USE_AXE_UMD=1 npm run dev
   ```
+
+## Documentation
+- [/docs/design/](/docs/design/)
+- [/docs/architecture/](/docs/architecture/)
+- [/docs/notes/](/docs/notes/)

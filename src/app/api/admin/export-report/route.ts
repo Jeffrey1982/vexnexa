@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server-new'
 import { prisma } from '@/lib/prisma'
 import { errorResponse, unauthorizedResponse, forbiddenResponse } from '@/lib/api-response'
 import { isAdmin } from '@/lib/admin'

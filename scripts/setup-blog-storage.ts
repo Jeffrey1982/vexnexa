@@ -1,4 +1,12 @@
-import { supabaseAdmin } from '../src/lib/supabaseServer';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseAdmin = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
+  ? createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      { auth: { autoRefreshToken: false, persistSession: false } }
+    )
+  : null;
 
 /**
  * This script creates the 'blog-images' storage bucket in Supabase for blog post images.
