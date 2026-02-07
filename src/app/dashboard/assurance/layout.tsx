@@ -15,7 +15,7 @@ export default async function AssuranceLayout({
 
   if (!subscription) {
     // Redirect to subscription page
-    redirect('/dashboard/assurance/subscribe');
+    redirect('/dashboard/subscribe-assurance');
   }
 
   return (
