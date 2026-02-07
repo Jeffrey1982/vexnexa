@@ -284,7 +284,10 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(monitoringData);
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Monitoring dashboard error:", error);
     return NextResponse.json(
       { error: "Failed to fetch monitoring data" },

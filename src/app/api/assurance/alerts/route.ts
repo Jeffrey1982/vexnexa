@@ -103,7 +103,10 @@ export async function GET(req: NextRequest) {
         hasMore: offset + alerts.length < total,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error('[Assurance Alerts] Error listing alerts:', error);
     return NextResponse.json(
       {

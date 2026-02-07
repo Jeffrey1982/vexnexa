@@ -225,7 +225,10 @@ export async function GET(req: NextRequest) {
       regressions: regressions.slice(0, 50) // Limit to 50 most recent/important
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Regression detection error:", error);
     return NextResponse.json(
       { error: "Failed to detect regressions" },

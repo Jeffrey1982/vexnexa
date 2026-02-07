@@ -13,7 +13,10 @@ export async function GET(req: NextRequest) {
     const addOns = await getUserAddOns(user.id)
 
     return NextResponse.json({ addOns })
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     console.error("Get add-ons error:", error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed to fetch add-ons" },

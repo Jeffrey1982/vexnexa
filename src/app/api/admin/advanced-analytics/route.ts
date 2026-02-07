@@ -207,6 +207,9 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    }
     console.error('Advanced analytics error:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },

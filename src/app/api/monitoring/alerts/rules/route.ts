@@ -88,7 +88,10 @@ export async function GET(req: NextRequest) {
       rules: alertRules
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Alert rules fetch error:", error);
     return NextResponse.json(
       { error: "Failed to fetch alert rules" },

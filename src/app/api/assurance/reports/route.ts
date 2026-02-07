@@ -90,7 +90,10 @@ export async function GET(req: NextRequest) {
         hasMore: offset + reports.length < total,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error('[Assurance Reports] Error listing reports:', error);
     return NextResponse.json(
       {

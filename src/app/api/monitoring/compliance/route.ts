@@ -237,7 +237,10 @@ export async function GET(req: NextRequest) {
       sites: siteCompliance
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Compliance tracking error:", error);
     return NextResponse.json(
       { error: "Failed to fetch compliance data" },

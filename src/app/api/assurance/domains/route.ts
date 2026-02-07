@@ -79,7 +79,10 @@ export async function GET() {
         status: subscription.status,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error('[Assurance Domains] Error fetching domains:', error);
     return NextResponse.json(
       { error: 'Failed to fetch domains' },

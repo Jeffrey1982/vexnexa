@@ -23,7 +23,10 @@ export async function GET() {
       productUpdates: user.productUpdates,
       securityAlerts: true, // Always true for security
     })
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     console.error('Failed to get notification settings:', error)
     return NextResponse.json(
       { error: 'Failed to get notification settings' },

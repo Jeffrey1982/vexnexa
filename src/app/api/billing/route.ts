@@ -51,7 +51,10 @@ export async function GET() {
         teamMembers: teamMembers + 1, // +1 for owner
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Failed to fetch billing data:", error);
     return NextResponse.json(
       { error: "Failed to fetch billing data" },

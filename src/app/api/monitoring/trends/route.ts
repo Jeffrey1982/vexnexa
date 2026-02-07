@@ -254,7 +254,10 @@ export async function GET(req: NextRequest) {
       }
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Trend analysis error:", error);
     return NextResponse.json(
       { error: "Failed to fetch trend analysis" },

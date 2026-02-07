@@ -52,7 +52,10 @@ export async function GET() {
         maxDomains: limits.domains,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === "Authentication required") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error('[Assurance] Error fetching subscription:', error);
     return NextResponse.json(
       { error: 'Failed to fetch subscription' },

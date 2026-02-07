@@ -42,6 +42,9 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ ok: true, audits });
   } catch (e: any) {
+    if (e?.message === "Authentication required") {
+      return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Failed to fetch audits:", e);
     return NextResponse.json(
       { ok: false, error: e.message || "Failed to fetch audits" },
