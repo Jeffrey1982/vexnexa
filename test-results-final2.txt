@@ -1,0 +1,247 @@
+﻿ÔòöÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòù
+Ôòæ         VEXNEXA COMPREHENSIVE TEST SUITE                Ôòæ
+Ôòæ         Target: https://www.vexnexa.com                    Ôòæ
+Ôòæ         Time:   2026-02-07T23:50:50.752Z       Ôòæ
+ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  1. TESTING PAGES
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+--- Public Pages ---
+  Ô£à / ÔåÆ 200
+  Ô£à /about ÔåÆ 200
+  Ô£à /contact ÔåÆ 200
+  ­ƒöÇ /demo ÔåÆ 307
+  Ô£à /features ÔåÆ 200
+  Ô£à /get-started ÔåÆ 200
+  Ô£à /legal/privacy ÔåÆ 200
+  Ô£à /legal/security ÔåÆ 200
+  Ô£à /legal/sla ÔåÆ 200
+  Ô£à /legal/terms ÔåÆ 200
+  Ô£à /pricing ÔåÆ 200
+  Ô£à /test ÔåÆ 200
+  Ô£à /auth/login ÔåÆ 200
+  Ô£à /auth/register ÔåÆ 200
+  Ô£à /auth/forgot-password ÔåÆ 200
+  Ô£à /auth/reset-password ÔåÆ 200
+  Ô£à /auth/verified ÔåÆ 200
+  Ô£à /auth/verify-error ÔåÆ 200
+  Ô£à /blog ÔåÆ 200
+  Ô£à /changelog ÔåÆ 200
+  Ô£à /legal/cookies ÔåÆ 200
+  Ô£à /newsletter/confirmed ÔåÆ 200
+  Ô£à /newsletter/invalid ÔåÆ 200
+  Ô£à /newsletter/unsubscribed ÔåÆ 200
+  Ô£à /unauthorized ÔåÆ 200
+
+--- Auth-Required Pages ---
+  ­ƒöÆ /dashboard ÔåÆ 307
+  ­ƒöÆ /dashboard/assurance ÔåÆ 307
+  ­ƒöÆ /dashboard/assurance/alerts ÔåÆ 307
+  ­ƒöÆ /dashboard/assurance/domains ÔåÆ 307
+  ­ƒöÆ /dashboard/assurance/domains/new ÔåÆ 307
+  ­ƒöÆ /dashboard/assurance/reports ÔåÆ 307
+  ­ƒöÆ /dashboard/audits ÔåÆ 307
+  Ô£à /dashboard/subscribe-assurance ÔåÆ 200
+  ­ƒöÆ /dashboard/support ÔåÆ 307
+  Ô£à /dashboard/support/new ÔåÆ 200
+  Ô£à /onboarding ÔåÆ 200
+  ­ƒöÆ /scans ÔåÆ 307
+  Ô£à /scans/results ÔåÆ 200
+  Ô£à /settings/billing ÔåÆ 200
+  Ô£à /settings/notifications ÔåÆ 200
+  Ô£à /settings/white-label ÔåÆ 200
+  ­ƒöÆ /sites ÔåÆ 307
+  Ô£à /sites/new ÔåÆ 200
+  ­ƒöÆ /teams ÔåÆ 307
+  ­ƒöÆ /analytics ÔåÆ 307
+  ­ƒöÆ /advanced-analytics ÔåÆ 307
+  Ô£à /test-enhanced-scan ÔåÆ 200
+  ­ƒöÆ /admin ÔåÆ 307
+  ­ƒöÆ /admin/analytics ÔåÆ 307
+  ­ƒöÆ /admin/analytics-advanced ÔåÆ 307
+  ­ƒöÆ /admin/api-logs ÔåÆ 307
+  ­ƒöÆ /admin/audit-logs ÔåÆ 307
+  ­ƒöÆ /admin/billing ÔåÆ 307
+  ­ƒöÆ /admin/blog ÔåÆ 307
+  ­ƒöÆ /admin/contact-messages ÔåÆ 307
+  ­ƒöÆ /admin/deleted-items ÔåÆ 307
+  ­ƒöÆ /admin/error-logs ÔåÆ 307
+  ­ƒöÆ /admin/health ÔåÆ 307
+  ­ƒöÆ /admin/payments ÔåÆ 307
+  ­ƒöÆ /admin/roles ÔåÆ 307
+  ­ƒöÆ /admin/seo ÔåÆ 307
+  ­ƒöÆ /admin/seo/alerts ÔåÆ 307
+  ­ƒöÆ /admin/seo/index-health ÔåÆ 307
+  ­ƒöÆ /admin/seo/page-quality ÔåÆ 307
+  ­ƒöÆ /admin/seo/settings ÔåÆ 307
+  ­ƒöÆ /admin/seo/visibility ÔåÆ 307
+  ­ƒöÆ /admin/sites ÔåÆ 307
+  ­ƒöÆ /admin/system-health ÔåÆ 307
+  ­ƒöÆ /admin/teams ÔåÆ 307
+  ­ƒöÆ /admin/test ÔåÆ 307
+  ­ƒöÆ /admin/tickets ÔåÆ 307
+  ­ƒöÆ /admin/upgrade ÔåÆ 307
+  ­ƒöÆ /admin/users ÔåÆ 307
+  ­ƒöÆ /admin/white-label ÔåÆ 307
+  ­ƒöÆ /admin-interface ÔåÆ 307
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  2. TESTING API ROUTES (GET)
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+  Ô£à /api/health ÔåÆ 200
+  ÔØî /api/dbtest ÔåÆ 404
+  ÔØî /api/debug-db ÔåÆ 404
+  ­ƒöÆ /api/analytics ÔåÆ 401
+  ­ƒöÆ /api/benchmarks ÔåÆ 401
+  Ô£à /api/blog ÔåÆ 200
+  ­ƒöÆ /api/dashboard-stats ÔåÆ 401
+  ­ƒöÆ /api/issues ÔåÆ 401
+  ­ƒöÆ /api/notifications ÔåÆ 401
+  ­ƒöÆ /api/portfolios ÔåÆ 401
+  ÔÜá´©Å /api/reports ÔåÆ 405
+  ­ƒöÆ /api/scheduled-scans ÔåÆ 401
+  ­ƒöÆ /api/teams ÔåÆ 401
+  ­ƒöÆ /api/user/profile ÔåÆ 401
+  ÔÜá´©Å /api/user/account ÔåÆ 405
+  ­ƒöÆ /api/user/activity ÔåÆ 401
+  ­ƒöÆ /api/user/notification-settings ÔåÆ 401
+  Ô£à /api/white-label ÔåÆ 200
+  ­ƒöÆ /api/webhooks ÔåÆ 401
+  ­ƒöÆ /api/assurance/alerts ÔåÆ 401
+  ­ƒöÆ /api/assurance/domains ÔåÆ 401
+  ­ƒöÆ /api/assurance/reports ÔåÆ 401
+  ­ƒöÆ /api/assurance/subscription ÔåÆ 401
+  ­ƒöÆ /api/billing ÔåÆ 401
+  ­ƒöÆ /api/billing/addons ÔåÆ 401
+  ­ƒöÆ /api/admin/system/health ÔåÆ 401
+  ­ƒöÆ /api/admin/system/api-logs ÔåÆ 401
+  ­ƒöÆ /api/admin/system/api-stats ÔåÆ 401
+  ­ƒöÆ /api/admin/system/errors ÔåÆ 401
+  ­ƒöÆ /api/admin/system/performance ÔåÆ 401
+  ­ƒöÆ /api/admin/advanced-analytics ÔåÆ 401
+  ­ƒöÆ /api/admin/audit-logs ÔåÆ 401
+  ­ƒöÆ /api/admin/scheduled-reports ÔåÆ 401
+  ­ƒöÆ /api/monitoring/dashboard ÔåÆ 401
+  ­ƒöÆ /api/monitoring/compliance ÔåÆ 401
+  ­ƒöÆ /api/monitoring/trends ÔåÆ 401
+  ­ƒöÆ /api/monitoring/regressions ÔåÆ 401
+  ­ƒöÆ /api/monitoring/alerts/history ÔåÆ 401
+  ­ƒöÆ /api/monitoring/alerts/rules ÔåÆ 401
+  ­ƒöÆ /api/audits ÔåÆ 401
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  3. TESTING DATABASE TABLES
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+  Ô£à Health endpoint ÔåÆ DB connected
+  ÔØî DB test endpoint ÔåÆ 404
+
+  --- Table connectivity via API routes ---
+  ­ƒöÆ User ÔåÆ /api/admin/system/health ÔåÆ 401 (via admin health)
+  ­ƒöÆ Site ÔåÆ /api/sites/test-nonexistent ÔåÆ 404 (expects 404 = DB works)
+  Ô£à BlogPost ÔåÆ /api/blog ÔåÆ 200 (public blog list)
+  ­ƒöÆ Scan ÔåÆ /api/benchmarks ÔåÆ 401 (benchmarks query scans)
+  ­ƒöÆ ContactMessage ÔåÆ /api/contact ÔåÆ 405 (POST-only, GET=405 is OK)
+  ­ƒöÆ Notification ÔåÆ /api/notifications ÔåÆ 401 (auth required)
+  ­ƒöÆ Team ÔåÆ /api/teams ÔåÆ 401 (auth required)
+  ­ƒöÆ Portfolio ÔåÆ /api/portfolios ÔåÆ 401 (auth required)
+  ­ƒöÆ Issue ÔåÆ /api/issues ÔåÆ 401 (auth required)
+  ­ƒöÆ WebhookEndpoint ÔåÆ /api/webhooks ÔåÆ 401 (auth required)
+  ­ƒöÆ ScheduledScan ÔåÆ /api/scheduled-scans ÔåÆ 401 (auth required)
+  ­ƒöÆ ManualAudit ÔåÆ /api/audits ÔåÆ 401 (auth required)
+  ­ƒöÆ AssuranceDomain ÔåÆ /api/assurance/domains ÔåÆ 401 (auth required)
+  ­ƒöÆ AssuranceAlert ÔåÆ /api/assurance/alerts ÔåÆ 401 (auth required)
+  ­ƒöÆ AssuranceReport ÔåÆ /api/assurance/reports ÔåÆ 401 (auth required)
+  ­ƒöÆ AssuranceSubscription ÔåÆ /api/assurance/subscription ÔåÆ 401 (auth required)
+  ­ƒöÆ AddOn ÔåÆ /api/billing/addons ÔåÆ 401 (auth required)
+  ­ƒöÆ ErrorLog ÔåÆ /api/admin/system/errors ÔåÆ 401 (admin required)
+  ­ƒöÆ ApiLog ÔåÆ /api/admin/system/api-logs ÔåÆ 401 (admin required)
+  ­ƒöÆ AuditLog ÔåÆ /api/admin/audit-logs ÔåÆ 401 (admin required)
+
+  Ôä╣´©Å  19 tables not directly testable via public GET (nested/write-only):
+     Page, Usage, Crawl, CrawlUrl, Benchmark, WhiteLabel, TeamMember, TeamInvite, IssueComment, IssueActivity, AuditTemplate, AuditCriterion, AuditItem, AuditAttachment, SupportTicket, SupportTicketMessage, AdminUserNote, UserAdminEvent, AssuranceScan
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  4. TESTING INTERNAL LINKS
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+  Found 27 unique internal links across 13 pages
+
+  Ô£à / ÔåÆ 200
+  Ô£à /_next/static/chunks/2d86744186daac41.css ÔåÆ 200
+  Ô£à /_next/static/chunks/3bb2e1c98cdd6b35.css ÔåÆ 200
+  Ô£à /_next/static/chunks/cb30b861b95de514.js ÔåÆ 200
+  Ô£à /about ÔåÆ 200
+  Ô£à /auth/login ÔåÆ 200
+  Ô£à /auth/register ÔåÆ 200
+  Ô£à /blog ÔåÆ 200
+  Ô£à /blog/accessibility-testing-tools-automated-vs-manual ÔåÆ 200
+  Ô£à /blog/legal-implications-web-accessibility-businesses ÔåÆ 200
+  Ô£à /blog/wcag-2-1-accessibility-guidelines-what-you-need-to-know ÔåÆ 200
+  Ô£à /blog/wcag-aaa-vs-aa-when-aim-higher ÔåÆ 200
+  Ô£à /changelog ÔåÆ 200
+  Ô£à /contact ÔåÆ 200
+  Ô£à /dashboard ÔåÆ 307
+  Ô£à /favicon.svg ÔåÆ 200
+  Ô£à /features ÔåÆ 200
+  Ô£à /icon-192.svg ÔåÆ 200
+  Ô£à /icon.svg ÔåÆ 200
+  Ô£à /legal/cookies ÔåÆ 200
+  Ô£à /legal/privacy ÔåÆ 200
+  Ô£à /legal/security ÔåÆ 200
+  Ô£à /legal/sla ÔåÆ 200
+  Ô£à /legal/terms ÔåÆ 200
+  Ô£à /manifest.json ÔåÆ 200
+  Ô£à /pricing ÔåÆ 200
+  Ô£à /sw.js ÔåÆ 200
+
+
+ÔòöÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòù
+Ôòæ              VEXNEXA TEST SUITE SUMMARY                  Ôòæ
+ÔòÜÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòØ
+
+ÔöîÔöÇ PAGES ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+Ôöé  Ô£à Pass:          33
+Ôöé  ­ƒöÇ Redirect:      1
+Ôöé  ­ƒöÆ Auth Required: 41
+Ôöé  ÔØî Fail:          0
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+ÔöîÔöÇ API ROUTES ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+Ôöé  Ô£à Pass:          3
+Ôöé  ­ƒöÇ Redirect:      0
+Ôöé  ­ƒöÆ Auth Required: 33
+Ôöé  ÔØî Fail:          4
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+  FAILURES:
+    ÔØî /api/dbtest ÔåÆ 404
+    ÔØî /api/debug-db ÔåÆ 404
+    ÔØî /api/reports ÔåÆ 405
+    ÔØî /api/user/account ÔåÆ 405
+
+ÔöîÔöÇ DATABASE ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+Ôöé  Ô£à Pass:          21
+Ôöé  ÔØî Fail:          1
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+  FAILURES:
+    ÔØî DB test endpoint ÔåÆ 404
+
+ÔöîÔöÇ LINKS ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+Ôöé  Ô£à Pass:          27
+Ôöé  ÔØî Fail:          0
+Ôöé  ­ƒîÉ External:      120
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  TOTAL PASS:          84
+  TOTAL REDIRECT:      1
+  TOTAL AUTH REQUIRED: 74
+  TOTAL FAIL:          5
+  HEALTH:              ­ƒö┤ ISSUES FOUND
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
