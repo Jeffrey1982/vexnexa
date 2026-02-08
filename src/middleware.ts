@@ -4,20 +4,6 @@ import { apiLimiter, authLimiter } from '@/lib/rate-limit'
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl
   const pathname = url.pathname
-  const host = request.headers.get('host') ?? ''
-
-  // Canonical host redirect: www.vexnexa.com -> vexnexa.com (308 Permanent)
-  // Skip for Vercel internal assets and _next/ paths
-  if (
-    host.startsWith('www.') &&
-    !pathname.startsWith('/_next/') &&
-    !pathname.startsWith('/_vercel/')
-  ) {
-    const canonicalUrl = new URL(request.url)
-    canonicalUrl.host = host.replace(/^www\./, '')
-    return NextResponse.redirect(canonicalUrl, 308)
-  }
-
   // Legacy Shopify URL patterns
   const SHOPIFY_PATTERNS = [
     /^\/products\//,

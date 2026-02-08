@@ -7,7 +7,7 @@ After deployment, verify that API routes are reachable and NOT intercepted by th
 ### 1. PWA Debug
 
 ```
-GET https://vexnexa.com/api/_debug/pwa
+GET https://www.vexnexa.com/api/_debug/pwa
 ```
 
 **Expected response (200 JSON):**
@@ -15,8 +15,8 @@ GET https://vexnexa.com/api/_debug/pwa
 {
   "ok": true,
   "ts": "2026-02-08T14:00:00.000Z",
-  "host": "vexnexa.com",
-  "url": "https://vexnexa.com/api/_debug/pwa",
+  "host": "www.vexnexa.com",
+  "url": "https://www.vexnexa.com/api/_debug/pwa",
   "note": "If you see this JSON, the service worker is NOT intercepting /api/* requests."
 }
 ```
@@ -26,7 +26,7 @@ If you see the "You're Offline" HTML page instead, the old service worker is sti
 ### 2. Email Webhook (GET test)
 
 ```
-GET https://vexnexa.com/api/email/webhook
+GET https://www.vexnexa.com/api/email/webhook
 ```
 
 **Expected response (200 JSON):**
@@ -34,7 +34,7 @@ GET https://vexnexa.com/api/email/webhook
 {
   "ok": true,
   "hint": "POST only for Mailgun",
-  "host": "vexnexa.com"
+  "host": "www.vexnexa.com"
 }
 ```
 
@@ -43,7 +43,7 @@ The actual Mailgun webhook uses POST with signature verification.
 ### 3. Email Send (GET test)
 
 ```
-GET https://vexnexa.com/api/email/send
+GET https://www.vexnexa.com/api/email/send
 ```
 
 **Expected response (200 JSON):**
@@ -51,7 +51,7 @@ GET https://vexnexa.com/api/email/send
 {
   "ok": true,
   "hint": "POST to send",
-  "host": "vexnexa.com"
+  "host": "www.vexnexa.com"
 }
 ```
 
@@ -59,12 +59,12 @@ The actual send endpoint uses POST with a JSON body.
 
 ## Canonical Host
 
-All requests to `www.vexnexa.com` are redirected (308 Permanent) to `vexnexa.com`. This is enforced by middleware at `src/middleware.ts`.
+The production canonical host is **https://www.vexnexa.com**. Vercel handles the redirect from `vexnexa.com` → `www.vexnexa.com` (308 Permanent) via domain settings. No custom redirect logic exists in middleware.
 
 Test:
 ```bash
 curl -I https://www.vexnexa.com/api/_debug/pwa
-# Should return 308 -> https://vexnexa.com/api/_debug/pwa
+# Should return 200 with JSON body
 ```
 
 ## Cache-Control
@@ -91,13 +91,13 @@ Or clear all site data:
 ### Chrome (Android)
 
 1. Chrome menu → **Settings** → **Site settings** → **All sites**
-2. Find `vexnexa.com` → **Clear & reset**
+2. Find `www.vexnexa.com` → **Clear & reset**
 3. Revisit the site
 
 ### iOS Safari
 
 1. **Settings** → **Safari** → **Clear History and Website Data**
-2. Revisit `https://vexnexa.com`
+2. Revisit `https://www.vexnexa.com`
 
 ### iOS PWA (Home Screen App)
 
