@@ -1,30 +1,49 @@
 import { redirect } from "next/navigation";
-import { requireAuth } from "@/lib/auth";
-import { hasAdminSecret } from "@/lib/adminFetch";
+import { requireAdmin } from "@/lib/auth";
+import { sendEmail } from "@/lib/mailgun";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SendHorizonal, AlertTriangle } from "lucide-react";
+import { SendHorizonal } from "lucide-react";
 
 export const dynamic = "force-dynamic";
+
+async function sendTestAction(formData: FormData): Promise<void> {
+  "use server";
+
+  await requireAdmin();
+
+  const to: string = formData.get("to") as string;
+  const subject: string = formData.get("subject") as string;
+  const html: string | undefined = (formData.get("html") as string) || undefined;
+  const text: string | undefined = (formData.get("text") as string) || undefined;
+  const tag: string | undefined = (formData.get("tag") as string) || undefined;
+
+  if (!to || !subject) {
+    redirect("/admin/email/send-test?error=to+and+subject+are+required");
+  }
+
+  try {
+    const result = await sendEmail({
+      to,
+      subject,
+      html,
+      text: text || (!html ? "(empty test email)" : undefined),
+      tag,
+    });
+    const messageId: string = (result.id ?? "").replace(/^<|>$/g, "");
+    redirect(`/admin/email/send-test?sent=${encodeURIComponent(messageId)}`);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    if (msg.includes("NEXT_REDIRECT")) throw err;
+    redirect(`/admin/email/send-test?error=${encodeURIComponent(msg)}`);
+  }
+}
 
 interface PageProps {
   searchParams: Promise<{ sent?: string; error?: string }>;
 }
 
 export default async function SendTestPage({ searchParams }: PageProps) {
-  try { await requireAuth(); } catch { redirect("/auth/login?redirect=/admin/email/send-test"); }
-
-  if (!hasAdminSecret()) {
-    return (
-      <div className="p-8 flex justify-center">
-        <Card className="rounded-2xl max-w-md">
-          <CardContent className="pt-6 pb-6 px-6 text-center">
-            <AlertTriangle className="h-10 w-10 text-orange-500 mx-auto mb-3" />
-            <p className="text-muted-foreground text-sm">ADMIN_DASH_SECRET is not configured.</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  await requireAdmin();
 
   const params = await searchParams;
 
@@ -55,7 +74,7 @@ export default async function SendTestPage({ searchParams }: PageProps) {
           <CardTitle className="text-lg font-display">Compose</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action="/api/admin/email/send-test" method="POST" className="space-y-4">
+          <form action={sendTestAction} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">To</label>
               <input name="to" type="email" placeholder="recipient@example.com" required
