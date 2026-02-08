@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendEmail, type SendEmailParams } from "@/lib/mailgun";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
+export const runtime = "nodejs";
+
+const NO_STORE = { "Cache-Control": "no-store" } as const;
+
 interface SendRequestBody {
   to: string | string[];
   subject: string;
@@ -12,6 +16,13 @@ interface SendRequestBody {
   meta?: Record<string, string>;
 }
 
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  return NextResponse.json(
+    { ok: true, hint: "POST to send", host: req.headers.get("host") ?? "unknown" },
+    { headers: NO_STORE }
+  );
+}
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body: SendRequestBody = await req.json();
@@ -19,14 +30,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!body.to || !body.subject) {
       return NextResponse.json(
         { error: "Missing required fields: to, subject" },
-        { status: 400 }
+        { status: 400, headers: NO_STORE }
       );
     }
 
     if (!body.text && !body.html) {
       return NextResponse.json(
         { error: "At least one of text or html is required" },
-        { status: 400 }
+        { status: 400, headers: NO_STORE }
       );
     }
 
@@ -66,15 +77,18 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       console.error("[email/send] Failed to insert email_logs row:", dbError);
     }
 
-    return NextResponse.json({
-      success: true,
-      message_id: messageId,
-      mailgun_response: result.message,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message_id: messageId,
+        mailgun_response: result.message,
+      },
+      { headers: NO_STORE }
+    );
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : "Unknown error sending email";
     console.error("[email/send] Error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 500, headers: NO_STORE });
   }
 }

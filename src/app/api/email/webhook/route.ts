@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const runtime = "nodejs";
 
+const NO_STORE = { "Cache-Control": "no-store" } as const;
+
 const SIGNING_KEY: string | undefined = process.env.MAILGUN_WEBHOOK_SIGNING_KEY;
 
 /** Status-updating event types that should propagate to email_logs */
@@ -56,6 +58,13 @@ function verifySignature(
   );
 }
 
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  return NextResponse.json(
+    { ok: true, hint: "POST only for Mailgun", host: req.headers.get("host") ?? "unknown" },
+    { headers: NO_STORE }
+  );
+}
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,7 +80,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     ) {
       return NextResponse.json(
         { error: "Missing signature fields" },
-        { status: 400 }
+        { status: 400, headers: NO_STORE }
       );
     }
 
@@ -84,7 +93,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!valid) {
       return NextResponse.json(
         { error: "Invalid webhook signature" },
-        { status: 403 }
+        { status: 403, headers: NO_STORE }
       );
     }
 
@@ -145,11 +154,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { headers: NO_STORE });
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : "Unknown webhook error";
     console.error("[email/webhook] Error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 500, headers: NO_STORE });
   }
 }
