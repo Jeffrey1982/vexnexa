@@ -26,6 +26,16 @@ import {
   Award,
   Bell,
   Settings as SettingsIcon,
+  ScrollText,
+  HeartPulse,
+  Webhook,
+  ShieldBan,
+  LayoutTemplate,
+  SendHorizonal,
+  ServerCog,
+  MessageSquare,
+  ClipboardList,
+  Inbox,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -44,7 +54,7 @@ interface NavGroup {
 export function AdminSidebar() {
   const pathname = usePathname();
   // Keep all groups permanently expanded for better UX in sidebar
-  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Support', 'SEO Health']);
+  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Mail', 'Support', 'SEO Health']);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -109,11 +119,26 @@ export function AdminSidebar() {
       ]
     },
     {
+      label: 'Mail',
+      icon: Mail,
+      items: [
+        { href: '/admin/email', label: 'Email Overview', icon: Mail },
+        { href: '/admin/email/logs', label: 'Message Logs', icon: ScrollText },
+        { href: '/admin/email/health', label: 'Delivery Health', icon: HeartPulse },
+        { href: '/admin/email/events', label: 'Webhook Events', icon: Webhook },
+        { href: '/admin/email/suppressions', label: 'Suppressions', icon: ShieldBan },
+        { href: '/admin/email/templates', label: 'Templates', icon: LayoutTemplate },
+        { href: '/admin/email/send-test', label: 'Send Test', icon: SendHorizonal },
+        { href: '/admin/email/domains', label: 'Domains & DNS', icon: ServerCog },
+      ]
+    },
+    {
       label: 'Support',
       icon: Ticket,
       items: [
-        { href: '/admin/tickets', label: 'Tickets', icon: Ticket },
-        { href: '/admin/contact-messages', label: 'Messages', icon: Mail },
+        { href: '/admin/support/tickets', label: 'Tickets', icon: Ticket },
+        { href: '/admin/support/messages', label: 'Messages', icon: Inbox },
+        { href: '/admin/support/contact-logs', label: 'Contact Form Logs', icon: ClipboardList },
         { href: '/admin/blog', label: 'Blog', icon: FileText },
       ]
     },

@@ -109,11 +109,23 @@ export function AdminNav({ user }: AdminNavProps) {
       ]
     },
     {
+      label: 'Mail',
+      icon: Mail,
+      items: [
+        { href: '/admin/email', label: 'Email Overview', icon: Mail },
+        { href: '/admin/email/logs', label: 'Message Logs', icon: Mail },
+        { href: '/admin/email/health', label: 'Delivery Health', icon: Activity },
+        { href: '/admin/email/events', label: 'Webhook Events', icon: Activity },
+        { href: '/admin/email/send-test', label: 'Send Test', icon: Mail },
+      ]
+    },
+    {
       label: 'Support',
       icon: Ticket,
       items: [
-        { href: '/admin/tickets', label: 'Tickets', icon: Ticket },
-        { href: '/admin/contact-messages', label: 'Messages', icon: Mail },
+        { href: '/admin/support/tickets', label: 'Tickets', icon: Ticket },
+        { href: '/admin/support/messages', label: 'Messages', icon: Mail },
+        { href: '/admin/support/contact-logs', label: 'Contact Form Logs', icon: FileText },
         { href: '/admin/blog', label: 'Blog', icon: FileText },
       ]
     },
