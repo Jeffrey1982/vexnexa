@@ -25,7 +25,7 @@ export default async function AdminLayout({
       <AdminSidebar />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:ml-72 overflow-hidden">
+      <div className="flex-1 flex flex-col lg:ml-72 overflow-hidden pt-14 lg:pt-0">
         {/* Top Navigation Bar */}
         <MainNav user={user} />
 

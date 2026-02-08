@@ -214,7 +214,7 @@ export default async function AdminEmailPage({ searchParams }: PageProps) {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
         <Mail className="h-8 w-8 text-[var(--vn-primary)]" />

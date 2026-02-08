@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { sendEmail } from "@/lib/mailgun";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SendHorizonal } from "lucide-react";
 
@@ -29,7 +30,23 @@ async function sendTestAction(formData: FormData): Promise<void> {
       text: text || (!html ? "(empty test email)" : undefined),
       tag,
     });
-    const messageId: string = (result.id ?? "").replace(/^<|>$/g, "");
+    const rawId: string = result.id ?? "";
+    const messageId: string = rawId.replace(/^<|>$/g, "");
+
+    // Log to email_logs so it shows up in the admin dashboard
+    const { error: dbError } = await supabaseAdmin.from("email_logs").insert({
+      user_id: null,
+      to_email: to,
+      subject,
+      tag: tag ?? null,
+      mailgun_message_id: messageId || null,
+      mailgun_api_id: rawId || null,
+      status: "sent",
+    });
+    if (dbError) {
+      console.error("[send-test] Failed to insert email_logs row:", dbError);
+    }
+
     redirect(`/admin/email/send-test?sent=${encodeURIComponent(messageId)}`);
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Unknown error";
