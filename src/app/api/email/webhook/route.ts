@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
+export const runtime = "nodejs";
+
 const SIGNING_KEY: string | undefined = process.env.MAILGUN_WEBHOOK_SIGNING_KEY;
 
 /** Status-updating event types that should propagate to email_logs */

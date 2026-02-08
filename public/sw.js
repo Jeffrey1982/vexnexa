@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v11-ga4-regional';
+const CACHE_NAME = 'vexnexa-v12-api-bypass';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -8,11 +8,8 @@ const STATIC_CACHE_URLS = [
   // Removed auth pages from cache to prevent redirect conflicts
 ];
 
-const API_CACHE_URLS = [
-  '/api/auth',
-  '/api/user',
-  // Add more API endpoints that can be cached
-];
+// API requests are NEVER cached or intercepted by the service worker.
+// They always go straight to the network (including POST webhooks).
 
 // Install event - cache critical resources
 self.addEventListener('install', (event) => {
@@ -73,10 +70,11 @@ self.addEventListener('fetch', (event) => {
     return; // Let browser handle auth routes directly without SW interference
   }
 
-  // BYPASS SERVICE WORKER FOR NEWSLETTER / LEAD ENDPOINTS
-  // Lead/newsletter API should not be cached or intercepted
-  if (url.pathname === '/api/lead' || url.pathname.startsWith('/api/lead/')) {
-    return; // Let browser handle lead/newsletter API directly
+  // BYPASS SERVICE WORKER FOR ALL API ROUTES
+  // API requests (GET, POST, etc.) must always reach the server.
+  // This is critical for webhooks (e.g. Mailgun), auth callbacks, and data endpoints.
+  if (url.pathname.startsWith('/api/')) {
+    return; // Let browser handle ALL API requests directly – NetworkOnly
   }
 
   // BYPASS SERVICE WORKER FOR GOOGLE RESOURCES (FAVICONS AND ANALYTICS)
@@ -94,19 +92,10 @@ self.addEventListener('fetch', (event) => {
 
   // Handle different types of requests
   if (request.destination === 'document') {
-    // Use network-first strategy for HTML pages
+    // Use network-first strategy for HTML pages (offline fallback only for navigations)
     event.respondWith(networkFirstStrategy(request));
-  } else if (url.pathname.startsWith('/api/')) {
-    // Handle API requests
-    if (request.method === 'GET' && API_CACHE_URLS.some(pattern => url.pathname.includes(pattern))) {
-      // Cache-first for specific GET API requests
-      event.respondWith(cacheFirstStrategy(request));
-    } else {
-      // Network-only for other API requests (POST, PUT, DELETE, non-cached GET)
-      event.respondWith(networkOnlyStrategy(request));
-    }
   } else {
-    // Use cache-first strategy for static assets
+    // Use cache-first strategy for static assets (JS, CSS, images, fonts)
     event.respondWith(cacheFirstStrategy(request));
   }
 });
