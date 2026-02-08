@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { requireAuth } from "@/lib/auth";
-import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -16,6 +15,18 @@ import {
 
 export const dynamic = "force-dynamic";
 
+const ADMIN_SECRET: string | undefined = process.env.ADMIN_DASH_SECRET;
+
+/**
+ * Resolve the internal base URL for server-side fetch.
+ * Uses VERCEL_URL (set automatically by Vercel) or falls back to APP_URL.
+ */
+function getBaseUrl(): string {
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  return "http://localhost:3000";
+}
+
 interface HealthMetrics {
   total_sent: number;
   delivered: number;
@@ -26,40 +37,28 @@ interface HealthMetrics {
   complained: number;
 }
 
-async function getHealthMetrics(hours: number): Promise<HealthMetrics> {
-  const since: string = new Date(
-    Date.now() - hours * 60 * 60 * 1000
-  ).toISOString();
+async function getHealthMetrics(range: string): Promise<HealthMetrics> {
+  const base = getBaseUrl();
+  const res = await fetch(`${base}/api/admin/email/health?range=${range}`, {
+    headers: { "x-admin-secret": ADMIN_SECRET ?? "" },
+    cache: "no-store",
+  });
 
-  const [eventsResult, sentResult] = await Promise.all([
-    supabaseAdmin
-      .from("email_events")
-      .select("event_type")
-      .gte("occurred_at", since),
-    supabaseAdmin
-      .from("email_logs")
-      .select("id", { count: "exact", head: true })
-      .gte("created_at", since),
-  ]);
-
-  const counts: HealthMetrics = {
-    total_sent: sentResult.count ?? 0,
-    delivered: 0,
-    failed: 0,
-    opened: 0,
-    clicked: 0,
-    unsubscribed: 0,
-    complained: 0,
-  };
-
-  for (const row of eventsResult.data ?? []) {
-    const t: string = row.event_type;
-    if (t !== "total_sent" && t in counts) {
-      counts[t as keyof Omit<HealthMetrics, "total_sent">]++;
-    }
+  if (!res.ok) {
+    console.error("[admin/email] health fetch failed:", res.status, await res.text());
+    return { total_sent: 0, delivered: 0, failed: 0, opened: 0, clicked: 0, unsubscribed: 0, complained: 0 };
   }
 
-  return counts;
+  const data = await res.json();
+  return {
+    total_sent: data.total_sent ?? 0,
+    delivered: data.delivered ?? 0,
+    failed: data.failed ?? 0,
+    opened: data.opened ?? 0,
+    clicked: data.clicked ?? 0,
+    unsubscribed: data.unsubscribed ?? 0,
+    complained: data.complained ?? 0,
+  };
 }
 
 interface EmailLog {
@@ -82,27 +81,26 @@ async function getRecentLogs(
   limit: number = 50,
   offset: number = 0
 ): Promise<{ logs: EmailLog[]; total: number }> {
-  let qb = supabaseAdmin
-    .from("email_logs")
-    .select("*", { count: "exact" })
-    .order("created_at", { ascending: false })
-    .range(offset, offset + limit - 1);
+  const base = getBaseUrl();
+  const params = new URLSearchParams();
+  params.set("limit", String(limit));
+  params.set("offset", String(offset));
+  if (query) params.set("query", query);
+  if (tag) params.set("tag", tag);
+  if (status) params.set("status", status);
 
-  if (tag) qb = qb.eq("tag", tag);
-  if (status) qb = qb.eq("status", status);
-  if (query) {
-    qb = qb.or(
-      `to_email.ilike.%${query}%,subject.ilike.%${query}%,user_id.ilike.%${query}%`
-    );
-  }
+  const res = await fetch(`${base}/api/admin/email/logs?${params.toString()}`, {
+    headers: { "x-admin-secret": ADMIN_SECRET ?? "" },
+    cache: "no-store",
+  });
 
-  const { data, count, error } = await qb;
-  if (error) {
-    console.error("[admin/email] logs query error:", error);
+  if (!res.ok) {
+    console.error("[admin/email] logs fetch failed:", res.status, await res.text());
     return { logs: [], total: 0 };
   }
 
-  return { logs: (data as EmailLog[]) ?? [], total: count ?? 0 };
+  const data = await res.json();
+  return { logs: (data.logs as EmailLog[]) ?? [], total: data.total ?? 0 };
 }
 
 function statusBadge(status: string): React.ReactNode {
@@ -136,16 +134,30 @@ export default async function AdminEmailPage({ searchParams }: PageProps) {
     redirect("/auth/login?redirect=/admin/email");
   }
 
+  if (!ADMIN_SECRET) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <Card className="rounded-2xl max-w-md">
+          <CardContent className="pt-6 pb-6 px-6 text-center">
+            <AlertTriangle className="h-10 w-10 text-orange-500 mx-auto mb-3" />
+            <h2 className="text-lg font-bold mb-2">Configuration Error</h2>
+            <p className="text-muted-foreground text-sm">
+              ADMIN_DASH_SECRET is not configured in production.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const params = await searchParams;
   const rangeParam: string = params.range ?? "24h";
-  const hours: number =
-    rangeParam === "30d" ? 720 : rangeParam === "7d" ? 168 : 24;
   const currentPage: number = Math.max(1, Number(params.page ?? "1"));
   const pageSize = 25;
   const offset: number = (currentPage - 1) * pageSize;
 
   const [metrics, { logs, total }] = await Promise.all([
-    getHealthMetrics(hours),
+    getHealthMetrics(rangeParam),
     getRecentLogs(params.query, params.tag, params.status, pageSize, offset),
   ]);
 
