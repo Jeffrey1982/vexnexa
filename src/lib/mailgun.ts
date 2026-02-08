@@ -1,24 +1,32 @@
 import Mailgun from "mailgun.js";
 import FormData from "form-data";
 
-const apiKey: string | undefined = process.env.MAILGUN_API_KEY;
-const domain: string | undefined = process.env.MAILGUN_DOMAIN;
-const region: string | undefined = process.env.MAILGUN_REGION; // "EU" | "US"
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _mgClient: any = null;
+let _domain: string | undefined;
 
-if (!apiKey) {
-  throw new Error("Missing MAILGUN_API_KEY environment variable.");
+function getMgClient(): { client: any; domain: string } {
+  if (!_mgClient) {
+    const apiKey: string | undefined = process.env.MAILGUN_API_KEY;
+    _domain = process.env.MAILGUN_DOMAIN;
+    const region: string | undefined = process.env.MAILGUN_REGION; // "EU" | "US"
+
+    if (!apiKey) {
+      throw new Error("Missing MAILGUN_API_KEY environment variable.");
+    }
+    if (!_domain) {
+      throw new Error("Missing MAILGUN_DOMAIN environment variable.");
+    }
+
+    const mailgun = new Mailgun(FormData);
+    _mgClient = mailgun.client({
+      username: "api",
+      key: apiKey,
+      url: region === "EU" ? "https://api.eu.mailgun.net" : undefined,
+    });
+  }
+  return { client: _mgClient, domain: _domain! };
 }
-if (!domain) {
-  throw new Error("Missing MAILGUN_DOMAIN environment variable.");
-}
-
-const mailgun = new Mailgun(FormData);
-
-const mgClient = mailgun.client({
-  username: "api",
-  key: apiKey,
-  url: region === "EU" ? "https://api.eu.mailgun.net" : undefined,
-});
 
 export interface SendEmailParams {
   to: string | string[];
@@ -42,6 +50,7 @@ export interface SendEmailResult {
 export async function sendEmail(
   params: SendEmailParams
 ): Promise<SendEmailResult> {
+  const { client, domain } = getMgClient();
   const { to, subject, text, html, tag, user_id, meta } = params;
 
   const toArray: string[] = Array.isArray(to) ? to : [to];
@@ -65,7 +74,7 @@ export async function sendEmail(
 
   // mailgun.js types don't account for custom variables (v:*) and options (o:*)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result = await mgClient.messages.create(domain!, messageData as any);
+  const result = await client.messages.create(domain, messageData as any);
 
   return {
     id: result.id ?? "",
@@ -73,4 +82,6 @@ export async function sendEmail(
   };
 }
 
-export { domain as mailgunDomain };
+export function getMailgunDomain(): string {
+  return getMgClient().domain;
+}
