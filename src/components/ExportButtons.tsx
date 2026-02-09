@@ -27,20 +27,14 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   const exportPdf = async () => {
     setExportingPdf(true);
     try {
-      const response = await fetch("/api/export/pdf", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ scanId }),
-      });
+      const response = await fetch(`/api/reports/${scanId}/pdf?reportStyle=premium`);
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF");
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `vexnexa-accessibility-report-${scanId}.pdf`);
+      downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
     } catch (error) {
       console.error("PDF export failed:", error);
       alert("Failed to export PDF. Please try again.");
@@ -52,20 +46,14 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   const exportWord = async () => {
     setExportingWord(true);
     try {
-      const response = await fetch("/api/export/docx", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ scanId }),
-      });
+      const response = await fetch(`/api/reports/${scanId}/docx?reportStyle=premium`);
 
       if (!response.ok) {
         throw new Error("Failed to export Word document");
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `vexnexa-${scanId}.docx`);
+      downloadBlob(blob, `accessibility-report-${scanId}.docx`);
     } catch (error) {
       console.error("Word export failed:", error);
       alert("Failed to export Word document. Please try again.");

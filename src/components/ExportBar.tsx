@@ -31,32 +31,17 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   const exportPdf = async () => {
     setPdfStatus('loading');
     try {
-      const response = await fetch("/api/export/pdf-beautiful", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ scanId }),
-      });
+      const response = await fetch(`/api/reports/${scanId}/pdf?reportStyle=premium`);
 
       if (!response.ok) {
-        throw new Error("Failed to generate report");
+        throw new Error("Failed to generate PDF report");
       }
 
-      const htmlContent = await response.text();
-      const printWindow = window.open("", "_blank");
-      if (printWindow) {
-        printWindow.document.write(htmlContent);
-        printWindow.document.close();
-        printWindow.focus();
-        
-        setTimeout(() => {
-          printWindow.print();
-        }, 500);
-        
-        setPdfStatus('success');
-        setTimeout(() => setPdfStatus('idle'), 3000);
-      }
+      const blob = await response.blob();
+      downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+
+      setPdfStatus('success');
+      setTimeout(() => setPdfStatus('idle'), 3000);
     } catch (error) {
       console.error("PDF export failed:", error);
       setPdfStatus('error');
@@ -67,21 +52,15 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   const exportWord = async () => {
     setWordStatus('loading');
     try {
-      const response = await fetch("/api/export/docx", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ scanId }),
-      });
+      const response = await fetch(`/api/reports/${scanId}/docx?reportStyle=premium`);
 
       if (!response.ok) {
         throw new Error("Failed to export Word document");
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `vexnexa-${scanId}.docx`);
-      
+      downloadBlob(blob, `accessibility-report-${scanId}.docx`);
+
       setWordStatus('success');
       setTimeout(() => setWordStatus('idle'), 3000);
     } catch (error) {
