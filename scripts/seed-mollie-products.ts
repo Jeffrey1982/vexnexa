@@ -26,9 +26,9 @@ function buildProductDefs(): ProductDef[] {
     EXTRA_WEBSITE_10: 99,
     ASSURANCE_STARTER: 9,
     ASSURANCE_PRO:     19,
-    PAGE_PACK_25K:    29,
+    PAGE_PACK_25K:    19,
     PAGE_PACK_100K:   79,
-    PAGE_PACK_250K:   149,
+    PAGE_PACK_250K:   179,
   };
 
   const defs: ProductDef[] = [];

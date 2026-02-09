@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import { PLAN_NAMES, formatPrice, ENTITLEMENTS } from "@/lib/billing/plans";
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
-import { ScanPackagesCard } from "@/components/billing/ScanPackagesCard";
+
 import { AddOnType } from "@prisma/client";
 
 interface UserData {
@@ -458,19 +458,6 @@ export default function BillingPage() {
             baseSeats={entitlements.base.users}
             extraSeats={entitlements.addOns.users}
             usedSeats={actualUsage.teamMembers}
-            addOns={addOns}
-            onRefresh={loadUserData}
-            isTrial={user.plan === "TRIAL"}
-          />
-        )}
-
-        {/* Scan Packages - Show to everyone */}
-        {usage && entitlements && (
-          <ScanPackagesCard
-            baseScans={entitlements.base.pagesPerMonth}
-            extraScans={entitlements.addOns.pagesPerMonth}
-            usedScans={usage.pages}
-            currentPeriod={usage.period}
             addOns={addOns}
             onRefresh={loadUserData}
             isTrial={user.plan === "TRIAL"}

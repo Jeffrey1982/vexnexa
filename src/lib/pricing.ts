@@ -43,9 +43,9 @@ export const WEBSITE_PACK_PRICES = {
 
 /* ─── Page Volume Pack prices (monthly) ─── */
 export const PAGE_PACK_PRICES = {
-  PAGE_PACK_25K:  29.00,
+  PAGE_PACK_25K:  19.00,
   PAGE_PACK_100K: 79.00,
-  PAGE_PACK_250K: 149.00,
+  PAGE_PACK_250K: 179.00,
 } as const;
 
 /* ─── Assurance add-on prices (monthly, per tier) ─── */

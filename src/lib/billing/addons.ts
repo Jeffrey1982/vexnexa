@@ -78,7 +78,7 @@ export const ADDON_PRICING: Record<AddOnType, {
   },
   // New page volume packs (replaces legacy scan packs for new customers)
   PAGE_PACK_25K: {
-    pricePerUnit: 29.00,
+    pricePerUnit: 19.00,
     currency: "EUR",
     interval: "1 month",
     description: "+25,000 pages/month",
@@ -94,7 +94,7 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 0,
   },
   PAGE_PACK_250K: {
-    pricePerUnit: 149.00,
+    pricePerUnit: 179.00,
     currency: "EUR",
     interval: "1 month",
     description: "+250,000 pages/month",

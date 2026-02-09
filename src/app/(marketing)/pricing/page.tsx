@@ -406,9 +406,9 @@ function AddOnsSection() {
   ];
 
   const volumePacks = [
-    { label: "+25,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_25K },
-    { label: "+100,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_100K },
-    { label: "+250,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_250K },
+    { label: "+25,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_25K, pages: 25000 },
+    { label: "+100,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_100K, pages: 100000 },
+    { label: "+250,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_250K, pages: 250000 },
   ];
 
   const assuranceFeatures = [
@@ -461,16 +461,27 @@ function AddOnsSection() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {volumePacks.map((pack, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
-                    <span className="font-medium text-sm">{pack.label}</span>
-                    <span className="font-bold">{formatEuro(pack.price)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
-                  </div>
-                ))}
+                {volumePacks.map((pack, i) => {
+                  const perPage = (pack.price / pack.pages).toFixed(5);
+                  return (
+                    <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                      <div>
+                        <span className="font-medium text-sm">{pack.label}</span>
+                        <span className="block text-[10px] text-muted-foreground">≈ €{perPage}/page</span>
+                      </div>
+                      <span className="font-bold">{formatEuro(pack.price)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="mt-4 p-3 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
-                <p className="text-xs text-green-700 dark:text-green-300">
-                  <strong>Business</strong> includes 25,000 pages/month &middot; <strong>Enterprise</strong> includes 100,000 pages/month
+              <div className="mt-4 space-y-3">
+                <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
+                  <p className="text-xs text-green-700 dark:text-green-300">
+                    <strong>Business</strong> includes 25,000 pages/month &middot; <strong>Enterprise</strong> includes 100,000 pages/month
+                  </p>
+                </div>
+                <p className="text-xs text-muted-foreground text-center">
+                  Need higher capacity? <Link href="/contact?subject=enterprise-volume" className="text-primary hover:underline font-medium">Contact sales</Link> for enterprise volume.
                 </p>
               </div>
             </CardContent>
