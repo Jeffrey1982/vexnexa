@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server-new";
 import { prisma } from "@/lib/prisma";
 import { transformScanToReport } from "@/lib/report";
-import type { ReportData, ReportIssue, Severity } from "@/lib/report/types";
+import type { ReportData, ReportIssue, Severity, ReportStyle } from "@/lib/report/types";
 import {
   Document,
   Packer,
@@ -323,6 +323,10 @@ export async function GET(
     const wlColor: string = url.searchParams.get("color") ?? "";
     const wlCompany: string = url.searchParams.get("company") ?? "";
     const wlBranding: boolean = url.searchParams.get("branding") !== "false";
+    const styleParam: string = url.searchParams.get("reportStyle") ?? "bold";
+    const ctaUrl: string = url.searchParams.get("ctaUrl") ?? "";
+    const ctaText: string = url.searchParams.get("ctaText") ?? "";
+    const supportEmail: string = url.searchParams.get("supportEmail") ?? "";
 
     const reportData = transformScanToReport(
       {
@@ -346,7 +350,13 @@ export async function GET(
         primaryColor: wlColor || undefined,
         companyNameOverride: wlCompany,
         showVexNexaBranding: wlBranding,
-      }
+      },
+      {
+        ctaUrl: ctaUrl || undefined,
+        ctaText: ctaText || undefined,
+        supportEmail: supportEmail || undefined,
+      },
+      (styleParam === "corporate" ? "corporate" : "bold") as ReportStyle
     );
 
     const doc = buildDocx(reportData);

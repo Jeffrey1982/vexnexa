@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server-new";
 import { prisma } from "@/lib/prisma";
 import { transformScanToReport, renderReportHTML } from "@/lib/report";
+import type { ReportStyle } from "@/lib/report";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -44,6 +45,10 @@ export async function GET(
     const wlColor: string = url.searchParams.get("color") ?? "";
     const wlCompany: string = url.searchParams.get("company") ?? "";
     const wlBranding: boolean = url.searchParams.get("branding") !== "false";
+    const styleParam: string = url.searchParams.get("reportStyle") ?? "bold";
+    const ctaUrl: string = url.searchParams.get("ctaUrl") ?? "";
+    const ctaText: string = url.searchParams.get("ctaText") ?? "";
+    const supportEmail: string = url.searchParams.get("supportEmail") ?? "";
 
     // Transform scan data to report
     const reportData = transformScanToReport(
@@ -68,7 +73,13 @@ export async function GET(
         primaryColor: wlColor || undefined,
         companyNameOverride: wlCompany,
         showVexNexaBranding: wlBranding,
-      }
+      },
+      {
+        ctaUrl: ctaUrl || undefined,
+        ctaText: ctaText || undefined,
+        supportEmail: supportEmail || undefined,
+      },
+      (styleParam === "corporate" ? "corporate" : "bold") as ReportStyle
     );
 
     // Render HTML

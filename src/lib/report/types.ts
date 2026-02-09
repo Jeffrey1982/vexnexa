@@ -1,3 +1,6 @@
+/** Report visual style */
+export type ReportStyle = "bold" | "corporate";
+
 /** Theme configuration for the report */
 export interface ReportThemeConfig {
   primaryColor: string;
@@ -5,6 +8,13 @@ export interface ReportThemeConfig {
   accentColor: string;
   backgroundColor: string;
   darkColor: string;
+}
+
+/** CTA configuration for white-label partners */
+export interface CTAConfig {
+  ctaUrl: string;
+  ctaText: string;
+  supportEmail: string;
 }
 
 /** White-label configuration */
@@ -69,6 +79,8 @@ export interface ReportData {
   engineVersion: string;
   themeConfig: ReportThemeConfig;
   whiteLabelConfig: WhiteLabelConfig;
+  ctaConfig: CTAConfig;
+  reportStyle: ReportStyle;
   pageTitle?: string;
   pagesScanned?: number;
 }
@@ -80,6 +92,13 @@ export const DEFAULT_THEME: ReportThemeConfig = {
   accentColor: "#FFD166",
   backgroundColor: "#F8F9FA",
   darkColor: "#1E1E1E",
+};
+
+/** Default CTA config */
+export const DEFAULT_CTA: CTAConfig = {
+  ctaUrl: "https://www.vexnexa.com/pricing",
+  ctaText: "View Plans & Pricing",
+  supportEmail: "",
 };
 
 /** Default white-label config (VexNexa branded) */

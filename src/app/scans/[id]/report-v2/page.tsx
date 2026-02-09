@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { transformScanToReport, renderReportHTML } from "@/lib/report";
+import type { ReportStyle } from "@/lib/report";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Download, FileDown } from "lucide-react";
@@ -10,9 +11,10 @@ export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function ReportV2Page({ params }: PageProps) {
+export default async function ReportV2Page({ params, searchParams }: PageProps) {
   let user;
   try {
     user = await requireAuth();
@@ -21,6 +23,8 @@ export default async function ReportV2Page({ params }: PageProps) {
   }
 
   const { id } = await params;
+  const sp = await searchParams;
+  const styleParam: ReportStyle = sp.reportStyle === "corporate" ? "corporate" : "bold";
 
   const scan = await prisma.scan.findUnique({
     where: { id },
@@ -31,23 +35,30 @@ export default async function ReportV2Page({ params }: PageProps) {
     notFound();
   }
 
-  const reportData = transformScanToReport({
-    id: scan.id,
-    score: scan.score,
-    issues: scan.issues,
-    impactCritical: scan.impactCritical,
-    impactSerious: scan.impactSerious,
-    impactModerate: scan.impactModerate,
-    impactMinor: scan.impactMinor,
-    wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
-    wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
-    createdAt: scan.createdAt.toISOString(),
-    raw: scan.raw,
-    site: { url: scan.site.url },
-    page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
-  });
+  const reportData = transformScanToReport(
+    {
+      id: scan.id,
+      score: scan.score,
+      issues: scan.issues,
+      impactCritical: scan.impactCritical,
+      impactSerious: scan.impactSerious,
+      impactModerate: scan.impactModerate,
+      impactMinor: scan.impactMinor,
+      wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
+      wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
+      createdAt: scan.createdAt.toISOString(),
+      raw: scan.raw,
+      site: { url: scan.site.url },
+      page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
+    },
+    undefined,
+    undefined,
+    undefined,
+    styleParam
+  );
 
   const reportHtml: string = renderReportHTML(reportData);
+  const styleQs: string = styleParam === "corporate" ? "?reportStyle=corporate" : "";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -65,19 +76,26 @@ export default async function ReportV2Page({ params }: PageProps) {
                   </h1>
                   <p className="text-muted-foreground text-sm">
                     {scan.site.url} · {new Date(scan.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                    {styleParam === "corporate" ? " · Corporate Style" : ""}
                   </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <a
-                  href={`/api/reports/${id}/pdf`}
+                  href={styleParam === "corporate" ? `/scans/${id}/report-v2` : `/scans/${id}/report-v2?reportStyle=corporate`}
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-4 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
+                >
+                  {styleParam === "corporate" ? "Bold Style" : "Corporate Style"}
+                </a>
+                <a
+                  href={`/api/reports/${id}/pdf${styleQs}`}
                   className="inline-flex items-center gap-2 rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors"
                 >
                   <Download className="w-4 h-4" />
                   Download PDF
                 </a>
                 <a
-                  href={`/api/reports/${id}/docx`}
+                  href={`/api/reports/${id}/docx${styleQs}`}
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
                 >
                   <FileDown className="w-4 h-4" />
@@ -103,7 +121,7 @@ export default async function ReportV2Page({ params }: PageProps) {
             <p className="text-center text-xs text-muted-foreground mt-4">
               You can also open the{" "}
               <a
-                href={`/api/reports/${id}/html`}
+                href={`/api/reports/${id}/html${styleQs}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--vn-primary)] hover:underline"

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server-new";
 import { prisma } from "@/lib/prisma";
 import { transformScanToReport, renderReportHTML } from "@/lib/report";
+import type { ReportStyle } from "@/lib/report";
 
 export const runtime = "nodejs";
 
@@ -36,23 +37,26 @@ export async function GET(
     const wlColor: string = url.searchParams.get("color") ?? "";
     const wlCompany: string = url.searchParams.get("company") ?? "";
     const wlBranding: boolean = url.searchParams.get("branding") !== "false";
+    const styleParam: string = url.searchParams.get("reportStyle") ?? "bold";
+    const ctaUrl: string = url.searchParams.get("ctaUrl") ?? "";
+    const ctaText: string = url.searchParams.get("ctaText") ?? "";
+    const supportEmail: string = url.searchParams.get("supportEmail") ?? "";
 
-    const { page: scanPage, site: scanSite, ...scanRest } = scan;
     const reportData = transformScanToReport(
       {
-        id: scanRest.id,
-        score: scanRest.score,
-        issues: scanRest.issues,
-        impactCritical: scanRest.impactCritical,
-        impactSerious: scanRest.impactSerious,
-        impactModerate: scanRest.impactModerate,
-        impactMinor: scanRest.impactMinor,
-        wcagAACompliance: (scanRest as Record<string, unknown>).wcagAACompliance as number | null | undefined,
-        wcagAAACompliance: (scanRest as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
-        createdAt: scanRest.createdAt.toISOString(),
-        raw: scanRest.raw,
-        site: { url: scanSite.url },
-        page: scanPage ? { url: scanPage.url, title: scanPage.title ?? undefined } : null,
+        id: scan.id,
+        score: scan.score,
+        issues: scan.issues,
+        impactCritical: scan.impactCritical,
+        impactSerious: scan.impactSerious,
+        impactModerate: scan.impactModerate,
+        impactMinor: scan.impactMinor,
+        wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
+        wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
+        createdAt: scan.createdAt.toISOString(),
+        raw: scan.raw,
+        site: { url: scan.site.url },
+        page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
       },
       undefined,
       {
@@ -60,7 +64,13 @@ export async function GET(
         primaryColor: wlColor || undefined,
         companyNameOverride: wlCompany,
         showVexNexaBranding: wlBranding,
-      }
+      },
+      {
+        ctaUrl: ctaUrl || undefined,
+        ctaText: ctaText || undefined,
+        supportEmail: supportEmail || undefined,
+      },
+      (styleParam === "corporate" ? "corporate" : "bold") as ReportStyle
     );
 
     const html: string = renderReportHTML(reportData);

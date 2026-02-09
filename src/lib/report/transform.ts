@@ -7,8 +7,10 @@ import type {
   MaturityLevel,
   ReportThemeConfig,
   WhiteLabelConfig,
+  CTAConfig,
+  ReportStyle,
 } from "./types";
-import { DEFAULT_THEME, DEFAULT_WHITE_LABEL } from "./types";
+import { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";
 
 /** Human-readable explanations for common axe rule IDs */
 const RULE_EXPLANATIONS: Record<string, { title: string; explanation: string; impact: string; recommendation: string }> = {
@@ -162,7 +164,9 @@ export function transformScanToReport(
     page?: { url?: string; title?: string | null } | null;
   },
   themeConfig?: Partial<ReportThemeConfig>,
-  whiteLabelConfig?: Partial<WhiteLabelConfig>
+  whiteLabelConfig?: Partial<WhiteLabelConfig>,
+  ctaConfig?: Partial<CTAConfig>,
+  reportStyle?: ReportStyle
 ): ReportData {
   const score: number = scan.score ?? 0;
   const breakdown: IssueBreakdown = {
@@ -224,6 +228,8 @@ export function transformScanToReport(
 
   const theme: ReportThemeConfig = { ...DEFAULT_THEME, ...themeConfig };
   const wl: WhiteLabelConfig = { ...DEFAULT_WHITE_LABEL, ...whiteLabelConfig };
+  const cta: CTAConfig = { ...DEFAULT_CTA, ...ctaConfig };
+  const style: ReportStyle = reportStyle ?? "bold";
   if (wl.primaryColor) theme.primaryColor = wl.primaryColor;
 
   const scanDate: string = typeof scan.createdAt === "string"
@@ -251,6 +257,8 @@ export function transformScanToReport(
     engineVersion: "4.10",
     themeConfig: theme,
     whiteLabelConfig: wl,
+    ctaConfig: cta,
+    reportStyle: style,
     pageTitle: scan.page?.title ?? undefined,
     pagesScanned: 1,
   };
