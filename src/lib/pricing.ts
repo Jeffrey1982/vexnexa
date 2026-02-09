@@ -127,6 +127,9 @@ export function formatPriceDisplay(
   const pricing = getPlanPricing(planKey);
 
   if (planKey === 'ENTERPRISE') {
+    if (cycle === 'yearly') {
+      return { mainPrice: 'Custom', period: '', subtext: 'Contact us for a tailored quote' };
+    }
     return { mainPrice: formatEuro(pricing.monthly, locale), period: '/month', subtext: 'Custom billing available' };
   }
 
