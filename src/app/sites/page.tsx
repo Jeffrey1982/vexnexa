@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Globe, Plus, TrendingUp, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
+import { DeleteSiteButton } from "@/components/sites/DeleteSiteButton";
 import { getFaviconFromUrl, formatDate } from "@/lib/format";
 import { redirect } from "next/navigation";
 
@@ -130,6 +131,10 @@ export default async function SitesPage() {
                               {site.url}
                             </CardDescription>
                           </div>
+                          <DeleteSiteButton
+                            siteId={site.id}
+                            siteName={new URL(site.url).hostname}
+                          />
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
