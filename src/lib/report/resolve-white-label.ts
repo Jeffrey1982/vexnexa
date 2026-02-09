@@ -16,6 +16,7 @@ export interface QueryParamOverrides {
   ctaUrl?: string;
   ctaText?: string;
   supportEmail?: string;
+  footer?: string;
 }
 
 /** Stored white-label settings (per user / workspace) */
@@ -100,7 +101,7 @@ export function resolveWhiteLabelConfig(
   const primaryColor = validateHex(queryParams.color) || validateHex(stored.primaryColor) || DEFAULT_WHITE_LABEL.primaryColor;
   const companyName = queryParams.company || stored.companyName || DEFAULT_WHITE_LABEL.companyNameOverride;
   const faviconUrl = validateImageUrl(queryParams.favicon) || validateImageUrl(stored.faviconUrl) || "";
-  const footerText = stored.footerText || DEFAULT_WHITE_LABEL.footerText;
+  const footerText = queryParams.footer || stored.footerText || DEFAULT_WHITE_LABEL.footerText;
 
   const showBranding = queryParams.branding === "false"
     ? false
@@ -150,5 +151,6 @@ export function extractQueryOverrides(url: URL): QueryParamOverrides {
     ctaUrl: url.searchParams.get("ctaUrl") ?? undefined,
     ctaText: url.searchParams.get("ctaText") ?? undefined,
     supportEmail: url.searchParams.get("supportEmail") ?? undefined,
+    footer: url.searchParams.get("footer") ?? undefined,
   };
 }

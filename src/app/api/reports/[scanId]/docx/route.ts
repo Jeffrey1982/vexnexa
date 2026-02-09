@@ -37,72 +37,104 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   const children: Paragraph[] = [];
 
-  // ── Cover ──
-  children.push(new Paragraph({ spacing: { after: 400 } }));
+  // ── Cover: Brand Block (top-left, prominent) ──
 
-  // Logo (embedded image or company name text)
+  // Logo image (if available)
   if (logoBuffer) {
     children.push(
       new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 200 },
+        alignment: AlignmentType.LEFT,
+        spacing: { after: 120 },
         children: [
           new ImageRun({
             data: logoBuffer,
-            transformation: { width: 160, height: 40 },
+            transformation: { width: 180, height: 45 },
             type: "png",
           }),
         ],
       })
     );
   }
+
+  // Company name (large, prominent, primary color)
   if (data.companyName) {
     children.push(
       new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 200 },
+        alignment: AlignmentType.LEFT,
+        spacing: { after: 60 },
         children: [
-          new TextRun({ text: data.companyName, bold: true, size: 48, color: primaryHex }),
+          new TextRun({ text: data.companyName, bold: true, size: 44, color: primaryHex }),
         ],
       })
     );
   }
 
+  // Domain
   children.push(
     new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 100 },
+      alignment: AlignmentType.LEFT,
+      spacing: { after: 200 },
+      children: [
+        new TextRun({ text: data.domain, size: 24, color: "6B7280" }),
+      ],
+    })
+  );
+
+  // Accent divider line (uses primary color via border)
+  children.push(
+    new Paragraph({
+      spacing: { after: 300 },
+      border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: primaryHex } },
+      children: [],
+    })
+  );
+
+  // Report title
+  children.push(
+    new Paragraph({
+      alignment: AlignmentType.LEFT,
+      spacing: { after: 120 },
       children: [
         new TextRun({ text: "Accessibility Compliance Report", bold: true, size: 56, color: "1E1E1E" }),
       ],
-    }),
+    })
+  );
+
+  // Score + Grade
+  children.push(
     new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 200 },
-      children: [
-        new TextRun({ text: data.domain, size: 28, color: "6B7280" }),
-      ],
-    }),
-    new Paragraph({
-      alignment: AlignmentType.CENTER,
+      alignment: AlignmentType.LEFT,
       spacing: { after: 100 },
       children: [
-        new TextRun({ text: `Score: ${data.score}/100  •  Grade ${scoreGrade(data.score)}`, bold: true, size: 40, color: data.score >= 80 ? "16A34A" : data.score >= 60 ? "D97706" : "DC2626" }),
+        new TextRun({ text: `Score: ${data.score}/100`, bold: true, size: 40, color: data.score >= 80 ? "16A34A" : data.score >= 60 ? "D97706" : "DC2626" }),
+        new TextRun({ text: `  •  Grade ${scoreGrade(data.score)}`, bold: true, size: 40, color: "374151" }),
       ],
-    }),
+    })
+  );
+
+  // Meta row
+  children.push(
     new Paragraph({
-      alignment: AlignmentType.CENTER,
+      alignment: AlignmentType.LEFT,
       spacing: { after: 100 },
       children: [
         new TextRun({ text: `${data.complianceLevel}  •  Risk: ${data.riskLevel}  •  EAA 2025: ${data.eaaReady ? "Ready" : "Action Needed"}`, size: 22, color: "6B7280" }),
       ],
-    }),
+    })
+  );
+
+  // Date + footer
+  const footerRuns: TextRun[] = [
+    new TextRun({ text: `Report generated ${fmtDate(data.scanDate)}`, size: 20, color: "9CA3AF" }),
+  ];
+  if (data.whiteLabelConfig.footerText) {
+    footerRuns.push(new TextRun({ text: `  •  ${data.whiteLabelConfig.footerText}`, size: 20, color: "9CA3AF" }));
+  }
+  children.push(
     new Paragraph({
-      alignment: AlignmentType.CENTER,
+      alignment: AlignmentType.LEFT,
       spacing: { after: 600 },
-      children: [
-        new TextRun({ text: `Report generated ${fmtDate(data.scanDate)}`, size: 20, color: "9CA3AF" }),
-      ],
+      children: footerRuns,
     }),
     new Paragraph({ children: [], pageBreakBefore: true })
   );
