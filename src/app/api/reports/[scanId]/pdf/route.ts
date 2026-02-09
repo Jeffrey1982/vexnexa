@@ -14,12 +14,15 @@ export async function GET(
   const { scanId } = await params;
 
   try {
+    console.log(`[reports/pdf] START scan=${scanId}`);
+
     // Auth check
     const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    console.log(`[reports/pdf] AUTH OK user=${user.id}`);
 
     // Fetch scan
     const scan = await prisma.scan.findUnique({
@@ -38,6 +41,7 @@ export async function GET(
     if (scan.site.userId !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+    console.log(`[reports/pdf] SCAN FOUND score=${scan.score} issues=${scan.issues}`);
 
     // Parse optional white-label config from query params
     const url = new URL(req.url);
@@ -45,51 +49,68 @@ export async function GET(
     const wlColor: string = url.searchParams.get("color") ?? "";
     const wlCompany: string = url.searchParams.get("company") ?? "";
     const wlBranding: boolean = url.searchParams.get("branding") !== "false";
-    const styleParam: string = url.searchParams.get("reportStyle") ?? "bold";
+    const styleParam: string = url.searchParams.get("reportStyle") ?? "premium";
     const ctaUrl: string = url.searchParams.get("ctaUrl") ?? "";
     const ctaText: string = url.searchParams.get("ctaText") ?? "";
     const supportEmail: string = url.searchParams.get("supportEmail") ?? "";
 
     // Transform scan data to report
-    const reportData = transformScanToReport(
-      {
-        id: scan.id,
-        score: scan.score,
-        issues: scan.issues,
-        impactCritical: scan.impactCritical,
-        impactSerious: scan.impactSerious,
-        impactModerate: scan.impactModerate,
-        impactMinor: scan.impactMinor,
-        wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
-        wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
-        createdAt: scan.createdAt.toISOString(),
-        raw: scan.raw,
-        site: { url: scan.site.url },
-        page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
-      },
-      undefined,
-      {
-        logoUrl: wlLogo,
-        primaryColor: wlColor || undefined,
-        companyNameOverride: wlCompany,
-        showVexNexaBranding: wlBranding,
-      },
-      {
-        ctaUrl: ctaUrl || undefined,
-        ctaText: ctaText || undefined,
-        supportEmail: supportEmail || undefined,
-      },
-      (styleParam === "corporate" ? "corporate" : "premium") as ReportStyle
-    );
+    console.log(`[reports/pdf] TRANSFORMING...`);
+    let reportData;
+    try {
+      reportData = transformScanToReport(
+        {
+          id: scan.id,
+          score: scan.score,
+          issues: scan.issues,
+          impactCritical: scan.impactCritical,
+          impactSerious: scan.impactSerious,
+          impactModerate: scan.impactModerate,
+          impactMinor: scan.impactMinor,
+          wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
+          wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
+          createdAt: scan.createdAt.toISOString(),
+          raw: scan.raw,
+          site: { url: scan.site.url },
+          page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
+        },
+        undefined,
+        {
+          logoUrl: wlLogo,
+          primaryColor: wlColor || undefined,
+          companyNameOverride: wlCompany,
+          showVexNexaBranding: wlBranding,
+        },
+        {
+          ctaUrl: ctaUrl || undefined,
+          ctaText: ctaText || undefined,
+          supportEmail: supportEmail || undefined,
+        },
+        (styleParam === "corporate" ? "corporate" : "premium") as ReportStyle
+      );
+    } catch (transformErr: unknown) {
+      const tMsg = transformErr instanceof Error ? transformErr.message : "unknown";
+      console.error(`[reports/pdf] TRANSFORM FAILED: ${tMsg}`, transformErr);
+      return NextResponse.json({ error: `Transform failed: ${tMsg}` }, { status: 500 });
+    }
+    console.log(`[reports/pdf] TRANSFORM OK domain=${reportData.domain} style=${reportData.reportStyle}`);
 
-    // Render v2 HTML (render-html.ts output ONLY)
-    const html: string = renderReportHTML(reportData);
-    console.log(`[reports/pdf] Rendering v2 report for scan=${scanId} style=${styleParam}`);
+    // Render v2 HTML
+    let html: string;
+    try {
+      html = renderReportHTML(reportData);
+    } catch (renderErr: unknown) {
+      const rMsg = renderErr instanceof Error ? renderErr.message : "unknown";
+      console.error(`[reports/pdf] RENDER FAILED: ${rMsg}`, renderErr);
+      return NextResponse.json({ error: `Render failed: ${rMsg}` }, { status: 500 });
+    }
+    console.log(`[reports/pdf] RENDER OK html=${html.length} chars`);
 
     const filename = `accessibility-report-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.pdf`;
 
     // Try Puppeteer PDF generation
     try {
+      console.log(`[reports/pdf] PUPPETEER starting...`);
       const chromium = await import("@sparticuz/chromium").then((m) => m.default);
       const puppeteer = await import("puppeteer-core");
 
@@ -111,7 +132,7 @@ export async function GET(
       });
 
       await browser.close();
-      console.log(`[reports/pdf] PDF generated, ${pdfUint8.byteLength} bytes`);
+      console.log(`[reports/pdf] PUPPETEER OK ${pdfUint8.byteLength} bytes`);
 
       return new Response(pdfUint8.buffer as ArrayBuffer, {
         headers: {
@@ -121,9 +142,9 @@ export async function GET(
         },
       });
     } catch (puppeteerError: unknown) {
-      // Puppeteer unavailable on this environment — return v2 HTML for browser print
+      // Puppeteer unavailable — return v2 HTML for browser print-to-PDF
       const pMsg = puppeteerError instanceof Error ? puppeteerError.message : "unknown";
-      console.warn(`[reports/pdf] Puppeteer unavailable (${pMsg}), returning v2 HTML for print`);
+      console.warn(`[reports/pdf] PUPPETEER FAILED (${pMsg}), returning v2 HTML for print`);
       return new NextResponse(html, {
         headers: {
           "Content-Type": "text/html; charset=utf-8",
@@ -134,7 +155,8 @@ export async function GET(
     }
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    console.error("[reports/pdf] Error:", message);
+    const stack = error instanceof Error ? error.stack : "";
+    console.error(`[reports/pdf] OUTER ERROR: ${message}\n${stack}`);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
