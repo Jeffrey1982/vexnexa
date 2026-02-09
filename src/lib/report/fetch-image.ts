@@ -11,6 +11,9 @@ export async function fetchImageAsDataUrl(url: string): Promise<string> {
   const validated = validateImageUrl(url);
   if (!validated) return "";
 
+  // Already a data URL — no need to fetch
+  if (validated.startsWith("data:")) return validated;
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
@@ -43,6 +46,17 @@ export async function fetchImageAsDataUrl(url: string): Promise<string> {
 export async function fetchImageAsBuffer(url: string): Promise<Buffer | null> {
   const validated = validateImageUrl(url);
   if (!validated) return null;
+
+  // Already a data URL — decode base64 directly
+  if (validated.startsWith("data:")) {
+    try {
+      const base64 = validated.split(",")[1];
+      if (!base64) return null;
+      return Buffer.from(base64, "base64");
+    } catch {
+      return null;
+    }
+  }
 
   try {
     const controller = new AbortController();

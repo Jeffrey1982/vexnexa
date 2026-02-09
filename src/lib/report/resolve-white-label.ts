@@ -67,9 +67,11 @@ const ALLOWED_IMAGE_HOSTS: string[] = [
   "res.cloudinary.com",
 ];
 
-/** Validate URL is http(s) and on an allowed host */
+/** Validate URL is http(s) on an allowed host, or a data: URL (base64 image) */
 export function validateImageUrl(url: string | undefined | null): string {
   if (!url) return "";
+  // Allow data: URLs (logos stored as base64 in DB)
+  if (url.startsWith("data:image/")) return url;
   try {
     const parsed = new URL(url);
     if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
