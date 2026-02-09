@@ -237,7 +237,7 @@ export function transformScanToReport(
     : scan.createdAt.toISOString();
 
   return {
-    companyName: wl.companyNameOverride || "VexNexa",
+    companyName: wl.companyNameOverride || "",
     domain: hostname,
     scanDate,
     scanId: scan.id,

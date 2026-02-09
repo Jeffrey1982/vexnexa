@@ -60,10 +60,6 @@ function grade(s: number): string {
 function ratingLabel(s: number): string {
   if (s >= 90) return "Excellent"; if (s >= 80) return "Good"; if (s >= 70) return "Fair"; if (s >= 50) return "Needs Work"; return "Poor";
 }
-function recommendedPlan(d: ReportData): "Pro" | "Business" {
-  if (d.riskLevel === "CRITICAL" || d.riskLevel === "HIGH" || d.issueBreakdown.critical >= 3) return "Business";
-  return "Pro";
-}
 function corp(s: ReportStyle): boolean { return s === "corporate"; }
 
 function sevChip(sv: Severity): string {
@@ -190,7 +186,6 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
     </div>
   </div>
   <div class="cover-bottom-bar">
-    ${d.whiteLabelConfig.showVexNexaBranding ? `<span class="cover-powered">Powered by VexNexa</span>` : `<span></span>`}
     <span class="cover-scanid">Scan ${esc(d.scanId).slice(0, 8)}</span>
   </div>
 </section>`;
@@ -226,7 +221,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
   </div>
   <div class="cover-bottom-bar cover-bottom-dark">
     <span class="cover-date-prem">${fmtDate(d.scanDate)}</span>
-    ${d.whiteLabelConfig.showVexNexaBranding ? `<span class="cover-powered-prem">Powered by VexNexa</span>` : ""}
+    <span></span>
   </div>
 </section>`;
 }
@@ -480,61 +475,25 @@ function renderCTA(d: ReportData, primary: string, s: ReportStyle): string {
   const wl = d.whiteLabelConfig;
   const cta = d.ctaConfig;
 
-  if (!wl.showVexNexaBranding) {
-    return `<section class="page cta-page">
+  return `<section class="page cta-page">
   <div class="cta-2col">
     <div class="cta-left">
-      <h2>Next Steps</h2>
+      <h2 style="color:${primary}">Next Steps</h2>
       <p>Based on this assessment, we recommend prioritising the ${d.issueBreakdown.critical > 0 ? "critical and serious" : "identified"} findings to reduce legal risk and improve user experience.</p>
       <ul class="cta-bullets">
         <li>Detailed remediation roadmap</li>
         <li>Ongoing compliance monitoring</li>
         <li>Audit-ready documentation</li>
+        <li>Developer training on accessibility standards</li>
       </ul>
       ${cta.supportEmail ? `<p class="cta-contact">Contact: <a href="mailto:${esc(cta.supportEmail)}">${esc(cta.supportEmail)}</a></p>` : ""}
     </div>
     <div class="cta-right">
       ${cta.ctaUrl ? `<a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || "Get Started")}</a>` : ""}
-      <p class="cta-footer-text">${esc(wl.footerText)}</p>
+      ${wl.footerText ? `<p class="cta-footer-text">${esc(wl.footerText)}</p>` : ""}
     </div>
   </div>
 </section>`;
-  }
-
-  const rec = recommendedPlan(d);
-  return `<section class="page cta-page">
-  <div class="cta-2col">
-    <div class="cta-left">
-      <h2 style="color:${primary}">Protect Your Compliance</h2>
-      <p>Your site scored <strong>${d.score}/100</strong> with <strong>${d.issueBreakdown.total} issues</strong>.
-      ${d.riskLevel === "LOW" ? "Maintain this standard" : "Reduce your legal exposure"} with continuous monitoring.</p>
-      <ul class="cta-trust">
-        <li>Audit evidence &mdash; exportable compliance history</li>
-        <li>Regression alerts &mdash; catch issues before users do</li>
-        <li>Scan history &mdash; track improvement over time</li>
-        <li>Team access &mdash; share reports with stakeholders</li>
-      </ul>
-    </div>
-    <div class="cta-right">
-      <div class="plan-cards">
-        ${renderPlanCard("Free", ["5 scans/month", "Basic reports", "Email support"], false, primary, rec)}
-        ${renderPlanCard("Pro", ["Unlimited scans", "Weekly monitoring", "Premium reports", "3 team members"], true, primary, rec)}
-        ${renderPlanCard("Business", ["Everything in Pro", "Daily monitoring", "White-label reports", "Unlimited team", "API access"], false, primary, rec)}
-      </div>
-      <a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || "View Plans & Pricing")}</a>
-    </div>
-  </div>
-</section>`;
-}
-
-function renderPlanCard(name: string, features: string[], highlighted: boolean, primary: string, rec: string): string {
-  const isRec = name === rec;
-  const cls = highlighted ? "plan-card plan-card-hl" : "plan-card";
-  return `<div class="${cls}" ${highlighted ? `style="border-color:${primary}"` : ""}>
-  ${isRec ? `<div class="plan-rec" style="background:${primary}">Recommended</div>` : ""}
-  <h4 class="plan-name" ${highlighted ? `style="color:${primary}"` : ""}>${name}</h4>
-  <ul class="plan-features">${features.map(f => `<li>${f}</li>`).join("")}</ul>
-</div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════
