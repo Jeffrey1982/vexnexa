@@ -44,13 +44,10 @@ function fmtDate(iso: string): string {
   catch { return iso; }
 }
 function sevClr(sv: Severity): string {
-  return ({ critical: "#DC2626", serious: "#EA580C", moderate: "#D97706", minor: "#2563EB" })[sv];
+  return ({ critical: "#DC2626", serious: "#F97316", moderate: "#FACC15", minor: "#9CA3AF" })[sv];
 }
 function sevBg(sv: Severity): string {
   return ({ critical: "#FEF2F2", serious: "#FFF7ED", moderate: "#FFFBEB", minor: "#EFF6FF" })[sv];
-}
-function sevGray(sv: Severity): string {
-  return ({ critical: "#1E1E1E", serious: "#4B5563", moderate: "#6B7280", minor: "#9CA3AF" })[sv];
 }
 function riskClr(r: string): string {
   return ({ LOW: "#16A34A", MEDIUM: "#D97706", HIGH: "#EA580C", CRITICAL: "#DC2626" })[r] ?? "#6B7280";
@@ -101,11 +98,11 @@ function scoreRingSVG(score: number, primary: string): string {
 
 function donutChart(bk: { critical: number; serious: number; moderate: number; minor: number }, s: ReportStyle): string {
   const total = bk.critical + bk.serious + bk.moderate + bk.minor || 1;
-  const segs: { v: number; c: string; gc: string; l: string }[] = [
-    { v: bk.critical, c: "#DC2626", gc: "#1E1E1E", l: "Critical" },
-    { v: bk.serious, c: "#EA580C", gc: "#4B5563", l: "Serious" },
-    { v: bk.moderate, c: "#D97706", gc: "#9CA3AF", l: "Moderate" },
-    { v: bk.minor, c: "#2563EB", gc: "#D1D5DB", l: "Minor" },
+  const segs: { v: number; c: string; l: string }[] = [
+    { v: bk.critical, c: "#DC2626", l: "Critical" },
+    { v: bk.serious, c: "#F97316", l: "Serious" },
+    { v: bk.moderate, c: "#FACC15", l: "Moderate" },
+    { v: bk.minor, c: "#9CA3AF", l: "Minor" },
   ];
   const isC = corp(s);
   const r = 70; const circ = 2 * Math.PI * r; const sw = isC ? 18 : 28;
@@ -113,7 +110,7 @@ function donutChart(bk: { critical: number; serious: number; moderate: number; m
   for (const seg of segs) {
     if (seg.v === 0) continue;
     const dl = (seg.v / total) * circ;
-    arcs += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${isC ? seg.gc : seg.c}" stroke-width="${sw}"
+    arcs += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${seg.c}" stroke-width="${sw}"
       stroke-dasharray="${dl} ${circ - dl}" stroke-dashoffset="${-cum}" transform="rotate(-90 100 100)"/>`;
     cum += dl;
   }
@@ -121,7 +118,7 @@ function donutChart(bk: { critical: number; serious: number; moderate: number; m
   for (const seg of segs) {
     const pct = total > 0 ? Math.round((seg.v / total) * 100) : 0;
     legend += `<div class="legend-row">
-      <span class="legend-chip" style="background:${isC ? seg.gc : seg.c}"></span>
+      <span class="legend-chip" style="background:${seg.c}"></span>
       <span class="legend-label">${seg.l}</span>
       <span class="legend-val">${seg.v} (${pct}%)</span>
     </div>`;
@@ -448,7 +445,7 @@ function renderIssuesTable(d: ReportData, primary: string): string {
     <tbody>
     ${pg.map((iss, i) => `<tr>
       <td>${pi * perPage + i + 1}</td>
-      <td><span class="ft-sev" style="color:${sevGray(iss.severity)}">${iss.severity.toUpperCase()}</span></td>
+      <td><span class="ft-sev" style="color:${sevClr(iss.severity)}">${iss.severity.toUpperCase()}</span></td>
       <td class="ft-title">${esc(iss.title)}</td>
       <td class="ft-desc">${esc(iss.impact).slice(0, 120)}${iss.impact.length > 120 ? "\u2026" : ""}</td>
       <td class="ft-desc">${esc(iss.recommendation).slice(0, 100)}${iss.recommendation.length > 100 ? "\u2026" : ""}</td>
@@ -542,7 +539,8 @@ function buildCSS(primary: string, _secondary: string, _accent: string, bg: stri
   const titleWeight = isC ? "700" : "800";
 
   return `
-:root{--r:${radius};--rs:${radiusSm};--shadow:${shadow};--card-bg:${cardBg};--card-border:${cardBorder};--dark:${dark};--bg:${bg};--primary:${primary}}
+:root{--r:${radius};--rs:${radiusSm};--shadow:${shadow};--card-bg:${cardBg};--card-border:${cardBorder};--dark:${dark};--bg:${bg};--primary:${primary};
+  --sev-critical:#DC2626;--sev-serious:#F97316;--sev-moderate:#FACC15;--sev-minor:#9CA3AF}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 @page{size:A4;margin:0}
 body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
@@ -640,7 +638,7 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 /* ══════════════════════════════════════
    COVER — Corporate (white, clean)
    ══════════════════════════════════════ */
-.cover-corp{background:white;border-bottom:4px solid var(--primary)}
+.cover-corp{background:white}
 .cover-title-corp{font-size:28px;font-weight:700;line-height:1.15;color:${dark};letter-spacing:-0.5px;margin-bottom:10px}
 .cover-meta-row{display:flex;gap:20px}
 .cover-meta-item{font-size:13px;color:#374151}
