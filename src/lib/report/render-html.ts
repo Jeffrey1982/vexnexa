@@ -714,11 +714,12 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 
 /* ── Audit Cards (premium) ── */
 .issues-list{display:flex;flex-direction:column;gap:14px}
-.audit-card{border:var(--card-border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);page-break-inside:avoid}
-.ac-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--card-bg);border-bottom:var(--card-border)}
+.audit-card{border:var(--card-border);border-radius:var(--r);box-shadow:var(--shadow);page-break-inside:avoid}
+.ac-header{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:var(--card-bg);border-bottom:var(--card-border)}
 .ac-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;color:white;
   font-size:12px;font-weight:700;flex-shrink:0;background:var(--primary);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.ac-title{font-size:14px;font-weight:700;color:var(--dark);flex:1}
+.ac-title{font-size:14px;font-weight:700;color:var(--dark);flex:1;min-width:0;
+  white-space:normal;overflow-wrap:anywhere;word-break:break-word;line-height:1.4}
 .ac-body{padding:14px 16px}
 .ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
 .ac-section{margin-bottom:6px}
@@ -737,8 +738,8 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .findings-table td{padding:8px 10px;border:1px solid #D1D5DB;vertical-align:top}
 .findings-table tbody tr:nth-child(even){background:#FAFAFA}
 .ft-sev{font-weight:700;font-size:10px;letter-spacing:0.3px}
-.ft-title{font-weight:600;max-width:140px}
-.ft-desc{max-width:160px;font-size:11px;color:#4B5563}
+.ft-title{font-weight:600;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+.ft-desc{font-size:11px;color:#4B5563;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
 .ft-num{text-align:center;white-space:nowrap}
 
 .empty-state{text-align:center;padding:60px 20px;color:#6B7280;font-size:16px}
