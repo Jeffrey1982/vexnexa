@@ -190,9 +190,9 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
     <div class="cover-main-left">
       <h1 class="cover-title-corp">Accessibility<br/>Compliance Report</h1>
       <div class="cover-meta-row">
-        <span class="cover-meta-item"><span class="cover-meta-label">Standard</span>${esc(d.complianceLevel)}</span>
+        <span class="cover-meta-item"><span class="cover-meta-label">Standard</span><span style="color:#16A34A;font-weight:700">${esc(d.complianceLevel)}</span></span>
         <span class="cover-meta-item"><span class="cover-meta-label">Risk</span><span style="color:${riskClr(d.riskLevel)};font-weight:700">${d.riskLevel}</span></span>
-        <span class="cover-meta-item"><span class="cover-meta-label">EAA 2025</span>${d.eaaReady ? "Ready" : "Action Needed"}</span>
+        <span class="cover-meta-item"><span class="cover-meta-label">EAA 2025</span><span style="color:${d.eaaReady ? "#16A34A" : "#D97706"};font-weight:700">${d.eaaReady ? "Ready" : "Action Needed"}</span></span>
       </div>
     </div>
     <div class="cover-main-right">
@@ -229,7 +229,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
       <h1 class="cover-title-prem">Accessibility<br/>Compliance Report</h1>
       <div class="cover-badges">
         ${sevChip(d.riskLevel === "LOW" ? "minor" : d.riskLevel === "MEDIUM" ? "moderate" : d.riskLevel === "HIGH" ? "serious" : "critical")}
-        <span class="sev-chip" style="background:rgba(255,255,255,.1);color:white;border:1px solid rgba(255,255,255,.2)">${esc(d.complianceLevel)}</span>
+        <span class="sev-chip" style="background:rgba(22,163,74,.15);color:#4ADE80;border:1px solid rgba(22,163,74,.3)">${esc(d.complianceLevel)}</span>
         <span class="sev-chip" style="background:${d.eaaReady ? "rgba(22,163,74,.15)" : "rgba(217,119,6,.15)"};color:${d.eaaReady ? "#4ADE80" : "#FCD34D"};border:1px solid ${d.eaaReady ? "rgba(22,163,74,.3)" : "rgba(217,119,6,.3)"}">EAA 2025 ${d.eaaReady ? "Ready" : "Needs Work"}</span>
       </div>
       <div class="cover-kpi-strip">
@@ -488,7 +488,7 @@ function renderComplianceLegal(d: ReportData, primary: string, s: ReportStyle): 
         <tr><td>Scan ID</td><td><code>${esc(d.scanId)}</code></td></tr>
         <tr><td>Scan Date</td><td>${fmtDate(d.scanDate)}</td></tr>
         <tr><td>Engine</td><td>${esc(d.engineName)} v${esc(d.engineVersion)}</td></tr>
-        <tr><td>Standard</td><td>${esc(d.complianceLevel)}</td></tr>
+        <tr><td>Standard</td><td><span style="color:#16A34A;font-weight:600">${esc(d.complianceLevel)}</span></td></tr>
         <tr><td>Domain</td><td>${esc(d.domain)}</td></tr>
         <tr><td>Pages Scanned</td><td>${d.pagesScanned ?? 1}</td></tr>
       </table>
