@@ -521,6 +521,20 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .page{width:210mm;min-height:297mm;padding:20mm 22mm;margin:0 auto;position:relative;
   page-break-after:always;page-break-inside:avoid;background:white}
 @media screen{.page{box-shadow:0 4px 24px rgba(0,0,0,.08);margin-bottom:24px;border-radius:4px}}
+@media screen and (max-width:800px){
+  .page{width:100%;min-height:auto;padding:16px 20px}
+  .cover-top-bar{padding:16px 20px 0}
+  .cover-hero{padding:20px;flex-direction:column}
+  .cover-hero-left,.cover-hero-right{flex:none;width:100%}
+  .cover-bottom-bar{padding:0 20px 16px}
+  .cover-title-prem{font-size:26px}
+  .cover-title-corp{font-size:24px}
+  .cover-kpi-strip{flex-wrap:wrap}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .breakdown-grid{grid-template-columns:1fr}
+  .cta-2col{grid-template-columns:1fr}
+  .ac-grid{grid-template-columns:1fr}
+}
 
 /* ── Version marker (debug) ── */
 .version-marker{text-align:center;font-size:9px;color:#D1D5DB;padding:6px 0;font-family:monospace}
@@ -537,6 +551,8 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
    ══════════════════════════════════════ */
 .cover-page{padding:0;display:flex;flex-direction:column}
 .cover-premium{background:linear-gradient(160deg,${dark} 0%,#2D2D3A 60%,${dark} 100%);color:white}
+.cover-logo{max-height:40px;max-width:200px;width:auto;height:auto;object-fit:contain}
+.cover-logo-text{font-size:20px;font-weight:800;letter-spacing:-0.5px}
 .cover-top-bar{display:flex;align-items:center;justify-content:space-between;padding:24mm 22mm 0}
 .cover-top-dark .cover-logo-text{color:white}
 .cover-hero{display:flex;flex:1;padding:16mm 22mm;gap:24px;align-items:center}
@@ -709,9 +725,12 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .cta-button{display:inline-block;padding:12px 28px;color:white;border-radius:var(--r);font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.12)}
 
 @media print{
-  body{background:white}
+  body{background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .page{box-shadow:none;margin:0;border-radius:0;width:100%;min-height:auto;padding:15mm 18mm;page-break-after:always}
-  .cover-premium{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cover-premium{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(160deg,${dark} 0%,#2D2D3A 60%,${dark} 100%)!important}
+  .cover-logo{max-height:36px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .sev-chip{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ac-num{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .cta-button{border:2px solid ${primary};color:${primary}!important;background:transparent!important}
   .version-marker{display:block}
 }
