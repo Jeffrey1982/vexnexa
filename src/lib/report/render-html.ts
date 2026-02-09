@@ -34,8 +34,9 @@ ${renderCTA(data, primary, s)}
    Shared helpers
    ═══════════════════════════════════════════════════════════ */
 
-function esc(s: string): string {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+function esc(s: string | undefined | null): string {
+  const v = s ?? "";
+  return v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 function fmtDate(iso: string): string {
   try { return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }); }
