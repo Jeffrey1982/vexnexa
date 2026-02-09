@@ -75,11 +75,11 @@ export default async function SupportPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+              <h1 className="text-3xl font-bold text-foreground flex items-center gap-2">
                 <Ticket className="text-primary" />
                 Support Tickets
               </h1>
-              <p className="text-gray-600 mt-1">View and manage your support requests</p>
+              <p className="text-muted-foreground mt-1">View and manage your support requests</p>
             </div>
             <div className="flex gap-3">
               <Link href="/dashboard">
@@ -104,9 +104,9 @@ export default async function SupportPage() {
           <CardContent>
             {tickets.length === 0 ? (
               <div className="text-center py-12">
-                <Ticket className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No tickets yet</h3>
-                <p className="text-gray-600 mb-6">
+                <Ticket className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">No tickets yet</h3>
+                <p className="text-muted-foreground mb-6">
                   Create your first support ticket to get help from our team
                 </p>
                 <Link href="/dashboard/support/new">
@@ -151,11 +151,11 @@ export default async function SupportPage() {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1">
-                            <MessageSquare className="w-4 h-4 text-gray-500" />
+                            <MessageSquare className="w-4 h-4 text-muted-foreground" />
                             <span>{ticket._count.messages}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="text-gray-600">
+                        <TableCell className="text-muted-foreground">
                           {formatDate(ticket.updatedAt)}
                         </TableCell>
                         <TableCell>

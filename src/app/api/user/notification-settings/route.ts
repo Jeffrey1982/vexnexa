@@ -21,7 +21,10 @@ export async function GET() {
     return NextResponse.json({
       marketingEmails: user.marketingEmails,
       productUpdates: user.productUpdates,
-      securityAlerts: true, // Always true for security
+      securityAlerts: true, // Always true — not stored in DB
+      teamInvitations: user.teamInvitations,
+      scanNotifications: user.scanNotifications,
+      weeklyReports: user.weeklyReports,
     })
   } catch (error: any) {
     if (error?.message === "Authentication required") {
@@ -50,12 +53,15 @@ export async function PUT(request: NextRequest) {
 
     const settings = validation.data
 
-    // Update user settings (excluding securityAlerts which is always true)
+    // Update user settings
     await prisma.user.update({
       where: { id: user.id },
       data: {
         marketingEmails: settings.marketingEmails,
         productUpdates: settings.productUpdates,
+        teamInvitations: settings.teamInvitations,
+        scanNotifications: settings.scanNotifications,
+        weeklyReports: settings.weeklyReports,
       },
     })
 

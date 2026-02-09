@@ -113,11 +113,11 @@ export default function NotificationSettingsPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-gray-200 rounded w-1/3"></div>
-            <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+            <div className="h-8 bg-muted rounded w-1/3"></div>
+            <div className="h-4 bg-muted rounded w-2/3"></div>
             <div className="space-y-3">
               {[1, 2, 3, 4, 5, 6].map(i => (
-                <div key={i} className="h-16 bg-gray-200 rounded"></div>
+                <div key={i} className="h-16 bg-muted rounded"></div>
               ))}
             </div>
           </div>
@@ -295,9 +295,9 @@ export default function NotificationSettingsPage() {
               </div>
 
               {/* Unsubscribe Note */}
-              <Card className="border-amber-200 bg-amber-50">
+              <Card className="border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30">
                 <CardContent className="pt-6">
-                  <p className="text-sm text-amber-800">
+                  <p className="text-sm text-amber-800 dark:text-amber-200">
                     <strong>Let op:</strong> Je kunt je ook uitschrijven via de link onderaan elke email die we versturen.
                     Sommige emails (zoals beveiligingsalerts) kunnen niet worden uitgeschakeld voor je veiligheid.
                   </p>
