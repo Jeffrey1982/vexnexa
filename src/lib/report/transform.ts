@@ -229,7 +229,7 @@ export function transformScanToReport(
   const theme: ReportThemeConfig = { ...DEFAULT_THEME, ...themeConfig };
   const wl: WhiteLabelConfig = { ...DEFAULT_WHITE_LABEL, ...whiteLabelConfig };
   const cta: CTAConfig = { ...DEFAULT_CTA, ...ctaConfig };
-  const style: ReportStyle = reportStyle ?? "bold";
+  const style: ReportStyle = reportStyle ?? "premium";
   if (wl.primaryColor) theme.primaryColor = wl.primaryColor;
 
   const scanDate: string = typeof scan.createdAt === "string"

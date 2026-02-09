@@ -1,5 +1,5 @@
 /** Report visual style */
-export type ReportStyle = "bold" | "corporate";
+export type ReportStyle = "premium" | "corporate";
 
 /** Theme configuration for the report */
 export interface ReportThemeConfig {

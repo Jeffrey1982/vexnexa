@@ -8,10 +8,10 @@ export function renderReportHTML(data: ReportData): string {
   const t = data.themeConfig;
   const wl = data.whiteLabelConfig;
   const primary = wl.primaryColor || t.primaryColor;
-  const s: ReportStyle = data.reportStyle ?? "bold";
+  const s: ReportStyle = data.reportStyle === "corporate" ? "corporate" : "premium";
 
   return `<!DOCTYPE html>
-<html lang="en" data-style="${s}">
+<html lang="en" data-style="${s}" data-report-version="v2">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@ ${renderVisualBreakdown(data, primary, s)}
 ${renderPriorityIssues(data, primary, s)}
 ${renderComplianceLegal(data, primary, s)}
 ${renderCTA(data, primary, s)}
-${renderFooter(data)}
+<div class="version-marker" data-report-version="v2">Report v2 | ${s} | ${esc(data.scanId)}</div>
 </body>
 </html>`;
 }
@@ -41,21 +41,17 @@ function fmtDate(iso: string): string {
   try { return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }); }
   catch { return iso; }
 }
-function sevClr(s: Severity): string {
-  const m: Record<Severity, string> = { critical: "#DC2626", serious: "#EA580C", moderate: "#D97706", minor: "#2563EB" };
-  return m[s];
+function sevClr(sv: Severity): string {
+  return ({ critical: "#DC2626", serious: "#EA580C", moderate: "#D97706", minor: "#2563EB" })[sv];
 }
-function sevBg(s: Severity): string {
-  const m: Record<Severity, string> = { critical: "#FEF2F2", serious: "#FFF7ED", moderate: "#FFFBEB", minor: "#EFF6FF" };
-  return m[s];
+function sevBg(sv: Severity): string {
+  return ({ critical: "#FEF2F2", serious: "#FFF7ED", moderate: "#FFFBEB", minor: "#EFF6FF" })[sv];
 }
-function sevGray(s: Severity): string {
-  const m: Record<Severity, string> = { critical: "#1E1E1E", serious: "#4B5563", moderate: "#6B7280", minor: "#9CA3AF" };
-  return m[s];
+function sevGray(sv: Severity): string {
+  return ({ critical: "#1E1E1E", serious: "#4B5563", moderate: "#6B7280", minor: "#9CA3AF" })[sv];
 }
 function riskClr(r: string): string {
-  const m: Record<string, string> = { LOW: "#16A34A", MEDIUM: "#D97706", HIGH: "#EA580C", CRITICAL: "#DC2626" };
-  return m[r] ?? "#6B7280";
+  return ({ LOW: "#16A34A", MEDIUM: "#D97706", HIGH: "#EA580C", CRITICAL: "#DC2626" })[r] ?? "#6B7280";
 }
 function grade(s: number): string {
   if (s >= 90) return "A"; if (s >= 80) return "B"; if (s >= 70) return "C"; if (s >= 50) return "D"; return "F";
@@ -67,60 +63,42 @@ function recommendedPlan(d: ReportData): "Pro" | "Business" {
   if (d.riskLevel === "CRITICAL" || d.riskLevel === "HIGH" || d.issueBreakdown.critical >= 3) return "Business";
   return "Pro";
 }
+function corp(s: ReportStyle): boolean { return s === "corporate"; }
 
-/* ═══════════════════════════════════════════════════════════
-   Structural helpers
-   ═══════════════════════════════════════════════════════════ */
-
-function renderHeader(d: ReportData, primary: string): string {
-  const logo = d.whiteLabelConfig.logoUrl
-    ? `<img src="${esc(d.whiteLabelConfig.logoUrl)}" alt="${esc(d.companyName)}" class="hdr-logo"/>`
-    : `<span class="hdr-logo-text" style="color:${primary}">${esc(d.companyName)}</span>`;
-  return `<div class="page-hdr">${logo}<span class="hdr-domain">${esc(d.domain)}</span></div>`;
+function sevChip(sv: Severity): string {
+  return `<span class="sev-chip sev-${sv}" style="background:${sevBg(sv)};color:${sevClr(sv)}">${sv.toUpperCase()}</span>`;
+}
+function riskBar(level: string, primary: string): string {
+  const pct: Record<string, number> = { LOW: 25, MEDIUM: 50, HIGH: 75, CRITICAL: 100 };
+  const w = pct[level] ?? 50;
+  return `<div class="risk-bar-track"><div class="risk-bar-fill" style="width:${w}%;background:${riskClr(level)}"></div></div>`;
 }
 
-function renderFooter(d: ReportData): string {
-  if (!d.whiteLabelConfig.footerText) return "";
-  return `<div class="global-footer">${esc(d.whiteLabelConfig.footerText)}</div>`;
-}
-
-function pageSection(title: string, primary: string, s: ReportStyle, body: string, extra?: string): string {
-  const cls = s === "corporate" ? "section-title corp-title" : "section-title";
+function pageSection(title: string, primary: string, s: ReportStyle, body: string): string {
+  const cls = corp(s) ? "section-title corp-title" : "section-title";
   return `<section class="page">
   <h2 class="${cls}" style="border-color:${primary}">${title}</h2>
   ${body}
-  ${extra ?? ""}
 </section>`;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SVG Charts — upgraded with thicker strokes & legend chips
+   SVG Charts
    ═══════════════════════════════════════════════════════════ */
 
-function scoreCircleBold(score: number, primary: string): string {
-  const r = 82; const circ = 2 * Math.PI * r;
+function scoreRingSVG(score: number, primary: string): string {
+  const r = 80; const circ = 2 * Math.PI * r;
   const offset = circ - (score / 100) * circ;
   const gc = score >= 80 ? "#16A34A" : score >= 60 ? "#D97706" : "#DC2626";
-  return `<svg width="240" height="260" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg">
+  return `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
   <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${primary}"/><stop offset="100%" stop-color="${gc}"/></linearGradient></defs>
-  <circle cx="120" cy="120" r="${r}" fill="none" stroke="#E5E7EB" stroke-width="16"/>
-  <circle cx="120" cy="120" r="${r}" fill="none" stroke="url(#sg)" stroke-width="16"
-    stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round" transform="rotate(-90 120 120)"/>
-  <text x="120" y="108" text-anchor="middle" font-size="56" font-weight="900" fill="${gc}">${score}</text>
-  <text x="120" y="132" text-anchor="middle" font-size="14" fill="#6B7280" font-weight="500">out of 100</text>
-  <text x="120" y="160" text-anchor="middle" font-size="20" font-weight="800" fill="${gc}">Grade ${grade(score)}</text>
-  <text x="120" y="185" text-anchor="middle" font-size="13" fill="#9CA3AF">Rating: ${ratingLabel(score)}</text>
+  <circle cx="100" cy="100" r="${r}" fill="none" stroke="#E5E7EB" stroke-width="14"/>
+  <circle cx="100" cy="100" r="${r}" fill="none" stroke="url(#sg)" stroke-width="14"
+    stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+  <text x="100" y="90" text-anchor="middle" font-size="48" font-weight="900" fill="${gc}">${score}</text>
+  <text x="100" y="112" text-anchor="middle" font-size="13" fill="#6B7280" font-weight="500">out of 100</text>
+  <text x="100" y="136" text-anchor="middle" font-size="16" font-weight="800" fill="${gc}">Grade ${grade(score)}</text>
 </svg>`;
-}
-
-function scoreBoxCorporate(score: number, primary: string): string {
-  const gc = score >= 80 ? "#16A34A" : score >= 60 ? "#D97706" : "#DC2626";
-  const pct = Math.min(100, score);
-  return `<div class="corp-score-box">
-  <div class="corp-score-num" style="color:${gc}">${score}<span class="corp-score-of">/100</span></div>
-  <div class="corp-score-label">Accessibility Score — Grade ${grade(score)}</div>
-  <div class="corp-progress-track"><div class="corp-progress-fill" style="width:${pct}%;background:${gc}"></div></div>
-</div>`;
 }
 
 function donutChart(bk: { critical: number; serious: number; moderate: number; minor: number }, s: ReportStyle): string {
@@ -131,51 +109,50 @@ function donutChart(bk: { critical: number; serious: number; moderate: number; m
     { v: bk.moderate, c: "#D97706", gc: "#9CA3AF", l: "Moderate" },
     { v: bk.minor, c: "#2563EB", gc: "#D1D5DB", l: "Minor" },
   ];
-  const isCorp = s === "corporate";
-  const r = 72; const circ = 2 * Math.PI * r; const sw = isCorp ? 20 : 32;
+  const isC = corp(s);
+  const r = 70; const circ = 2 * Math.PI * r; const sw = isC ? 18 : 28;
   let cum = 0; let arcs = "";
   for (const seg of segs) {
     if (seg.v === 0) continue;
     const dl = (seg.v / total) * circ;
-    arcs += `<circle cx="110" cy="110" r="${r}" fill="none" stroke="${isCorp ? seg.gc : seg.c}" stroke-width="${sw}"
-      stroke-dasharray="${dl} ${circ - dl}" stroke-dashoffset="${-cum}" transform="rotate(-90 110 110)"/>`;
+    arcs += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${isC ? seg.gc : seg.c}" stroke-width="${sw}"
+      stroke-dasharray="${dl} ${circ - dl}" stroke-dashoffset="${-cum}" transform="rotate(-90 100 100)"/>`;
     cum += dl;
   }
-  let legend = ""; let ly = 16;
+  let legend = "";
   for (const seg of segs) {
     const pct = total > 0 ? Math.round((seg.v / total) * 100) : 0;
-    legend += `<div class="legend-row" style="top:${ly}px">
-      <span class="legend-chip" style="background:${isCorp ? seg.gc : seg.c}"></span>
+    legend += `<div class="legend-row">
+      <span class="legend-chip" style="background:${isC ? seg.gc : seg.c}"></span>
       <span class="legend-label">${seg.l}</span>
       <span class="legend-val">${seg.v} (${pct}%)</span>
     </div>`;
-    ly += 28;
   }
   return `<div class="donut-wrap">
-  <svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+  <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
     ${arcs}
-    <circle cx="110" cy="110" r="${r - sw / 2 - 4}" fill="white"/>
-    <text x="110" y="106" text-anchor="middle" font-size="32" font-weight="800" fill="#1E1E1E">${total}</text>
-    <text x="110" y="126" text-anchor="middle" font-size="11" fill="#6B7280">Total Issues</text>
+    <circle cx="100" cy="100" r="${r - sw / 2 - 4}" fill="white"/>
+    <text x="100" y="96" text-anchor="middle" font-size="28" font-weight="800" fill="#1E1E1E">${total}</text>
+    <text x="100" y="114" text-anchor="middle" font-size="11" fill="#6B7280">Total Issues</text>
   </svg>
   <div class="legend-col">${legend}</div>
 </div>`;
 }
 
 function progressBar(label: string, pct: number, color: string, s: ReportStyle): string {
-  const h = s === "corporate" ? 10 : 18;
-  const rx = s === "corporate" ? 2 : 9;
-  const w = 280; const bw = w - 90; const fw = Math.round((Math.min(100, pct) / 100) * bw);
-  return `<svg width="${w}" height="36" viewBox="0 0 ${w} 36" xmlns="http://www.w3.org/2000/svg">
-  <text x="0" y="23" font-size="12" fill="#374151" font-weight="500">${esc(label)}</text>
-  <rect x="90" y="${(36 - h) / 2}" width="${bw}" height="${h}" rx="${rx}" fill="${s === "corporate" ? "#E5E7EB" : "#F3F4F6"}"/>
-  <rect x="90" y="${(36 - h) / 2}" width="${fw}" height="${h}" rx="${rx}" fill="${color}"/>
-  <text x="${90 + bw + 6}" y="24" font-size="12" font-weight="700" fill="${color}">${pct}%</text>
-</svg>`;
+  const h = corp(s) ? 8 : 14;
+  const rx = corp(s) ? 2 : 7;
+  return `<div class="pbar-row">
+  <span class="pbar-label">${esc(label)}</span>
+  <div class="pbar-track" style="height:${h}px;border-radius:${rx}px">
+    <div class="pbar-fill" style="width:${Math.min(100, pct)}%;height:${h}px;border-radius:${rx}px;background:${color}"></div>
+  </div>
+  <span class="pbar-val" style="color:${color}">${pct}%</span>
+</div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Page 1 — Cover
+   Page 1 — Cover (2-column hero)
    ═══════════════════════════════════════════════════════════ */
 
 function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
@@ -183,49 +160,93 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
     ? `<img src="${esc(d.whiteLabelConfig.logoUrl)}" alt="${esc(d.companyName)}" class="cover-logo"/>`
     : `<div class="cover-logo-text" style="color:${primary}">${esc(d.companyName)}</div>`;
 
-  const scoreBlock = s === "corporate"
-    ? scoreBoxCorporate(d.score, primary)
-    : `<div class="cover-score-wrap">${scoreCircleBold(d.score, primary)}</div>`;
+  const gc = d.score >= 80 ? "#16A34A" : d.score >= 60 ? "#D97706" : "#DC2626";
 
-  const coverCls = s === "corporate" ? "page cover-page cover-corp" : "page cover-page";
-
-  return `<section class="${coverCls}">
-  <div class="cover-top">${logo}</div>
-  <div class="cover-center">
-    <h1 class="cover-title">${s === "corporate" ? "Accessibility Compliance Report" : "Accessibility<br/>Compliance Report"}</h1>
-    <p class="cover-domain">${esc(d.domain)}</p>
-    ${scoreBlock}
-    <div class="cover-badges">
-      <span class="badge badge-compliance">${esc(d.complianceLevel)}</span>
-      <span class="badge" style="background:${d.eaaReady ? "#DCFCE7" : "#FEF9C3"};color:${d.eaaReady ? "#166534" : "#854D0E"}">EAA 2025 ${d.eaaReady ? "Ready" : "Action Needed"}</span>
-      <span class="badge" style="background:${sevBg(d.riskLevel === "LOW" ? "minor" : d.riskLevel === "MEDIUM" ? "moderate" : "critical")};color:${riskClr(d.riskLevel)}">Risk: ${d.riskLevel}</span>
+  if (corp(s)) {
+    return `<section class="page cover-page cover-corp">
+  <div class="cover-top-bar">${logo}<span class="cover-date-sm">${fmtDate(d.scanDate)}</span></div>
+  <div class="cover-hero">
+    <div class="cover-hero-left">
+      <h1 class="cover-title-corp">Accessibility<br/>Compliance Report</h1>
+      <p class="cover-domain-corp">${esc(d.domain)}</p>
+      <div class="cover-meta-row">
+        <span class="cover-meta-item"><span class="cover-meta-label">Standard</span>${esc(d.complianceLevel)}</span>
+        <span class="cover-meta-item"><span class="cover-meta-label">Risk</span><span style="color:${riskClr(d.riskLevel)};font-weight:700">${d.riskLevel}</span></span>
+        <span class="cover-meta-item"><span class="cover-meta-label">EAA 2025</span>${d.eaaReady ? "Ready" : "Action Needed"}</span>
+      </div>
+    </div>
+    <div class="cover-hero-right">
+      <div class="cover-score-card-corp">
+        <div class="csc-score" style="color:${gc}">${d.score}</div>
+        <div class="csc-of">/100</div>
+        <div class="csc-grade">Grade ${grade(d.score)} &mdash; ${ratingLabel(d.score)}</div>
+        <div class="csc-bar-track"><div class="csc-bar-fill" style="width:${Math.min(100, d.score)}%;background:${gc}"></div></div>
+        <div class="csc-meta">
+          <span>${d.issueBreakdown.total} issues</span>
+          <span>Fix: ${esc(d.estimatedFixTime)}</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="cover-bottom">
-    <p class="cover-date">Report generated ${fmtDate(d.scanDate)}</p>
-    ${d.whiteLabelConfig.showVexNexaBranding ? `<p class="cover-powered">Powered by VexNexa</p>` : ""}
+  <div class="cover-bottom-bar">
+    ${d.whiteLabelConfig.showVexNexaBranding ? `<span class="cover-powered">Powered by VexNexa</span>` : `<span></span>`}
+    <span class="cover-scanid">Scan ${esc(d.scanId).slice(0, 8)}</span>
+  </div>
+</section>`;
+  }
+
+  // Premium: dark hero cover
+  return `<section class="page cover-page cover-premium">
+  <div class="cover-top-bar cover-top-dark">${logo}</div>
+  <div class="cover-hero">
+    <div class="cover-hero-left">
+      <h1 class="cover-title-prem">Accessibility<br/>Compliance Report</h1>
+      <p class="cover-domain-prem">${esc(d.domain)}</p>
+      <div class="cover-badges">
+        ${sevChip(d.riskLevel === "LOW" ? "minor" : d.riskLevel === "MEDIUM" ? "moderate" : d.riskLevel === "HIGH" ? "serious" : "critical")}
+        <span class="sev-chip" style="background:#EFF6FF;color:#1D4ED8">${esc(d.complianceLevel)}</span>
+        <span class="sev-chip" style="background:${d.eaaReady ? "#DCFCE7" : "#FEF9C3"};color:${d.eaaReady ? "#166534" : "#854D0E"}">EAA 2025 ${d.eaaReady ? "Ready" : "Needs Work"}</span>
+      </div>
+      <div class="cover-kpi-strip">
+        <div class="cover-kpi"><span class="cover-kpi-val" style="color:#DC2626">${d.issueBreakdown.critical}</span><span class="cover-kpi-lbl">Critical</span></div>
+        <div class="cover-kpi"><span class="cover-kpi-val" style="color:#EA580C">${d.issueBreakdown.serious}</span><span class="cover-kpi-lbl">Serious</span></div>
+        <div class="cover-kpi"><span class="cover-kpi-val" style="color:#D97706">${d.issueBreakdown.moderate}</span><span class="cover-kpi-lbl">Moderate</span></div>
+        <div class="cover-kpi"><span class="cover-kpi-val" style="color:#2563EB">${d.issueBreakdown.minor}</span><span class="cover-kpi-lbl">Minor</span></div>
+      </div>
+    </div>
+    <div class="cover-hero-right">
+      <div class="cover-score-card">
+        ${scoreRingSVG(d.score, primary)}
+        <div class="csc-label">${ratingLabel(d.score)}</div>
+        <div class="csc-risk">Risk: <strong style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</strong></div>
+        <div class="csc-fix">Est. fix: <strong>${esc(d.estimatedFixTime)}</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bottom-bar cover-bottom-dark">
+    <span class="cover-date-prem">${fmtDate(d.scanDate)}</span>
+    ${d.whiteLabelConfig.showVexNexaBranding ? `<span class="cover-powered-prem">Powered by VexNexa</span>` : ""}
   </div>
 </section>`;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Page 2 — Executive Summary
+   Page 2 — Executive Summary (always shown)
    ═══════════════════════════════════════════════════════════ */
 
 function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle): string {
   const metrics: { label: string; value: string | number; color: string }[] = [
+    { label: "Score", value: `${d.score}/100`, color: primary },
     { label: "Total Issues", value: d.issueBreakdown.total, color: "#6B7280" },
     { label: "Critical", value: d.issueBreakdown.critical, color: "#DC2626" },
     { label: "Serious", value: d.issueBreakdown.serious, color: "#EA580C" },
     { label: "Moderate", value: d.issueBreakdown.moderate, color: "#D97706" },
     { label: "Minor", value: d.issueBreakdown.minor, color: "#2563EB" },
-    { label: "Score", value: `${d.score}/100`, color: primary },
     { label: "Compliance", value: `${d.compliancePercentage}%`, color: "#16A34A" },
     { label: "Est. Fix Time", value: d.estimatedFixTime, color: "#7C3AED" },
   ];
 
-  if (s === "corporate") {
-    // Table-forward layout
+  if (corp(s)) {
     return pageSection("Executive Summary", primary, s, `
     <table class="corp-summary-table">
       <tr><td class="cst-label">Domain</td><td>${esc(d.domain)}</td><td class="cst-label">Score</td><td><strong style="color:${primary}">${d.score}/100</strong> (Grade ${grade(d.score)})</td></tr>
@@ -240,25 +261,28 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     </div>`);
   }
 
-  // Bold style
+  // Premium
   return pageSection("Executive Summary", primary, s, `
-  <div class="summary-status">
-    <div class="status-card">
+  <div class="exec-cards">
+    <div class="exec-card">
       <h3>Accessibility Status</h3>
-      <p>Your website <strong>${esc(d.domain)}</strong> achieved an accessibility score of
+      <p>Your website <strong>${esc(d.domain)}</strong> achieved a score of
       <strong style="color:${primary}">${d.score}/100</strong> (Grade ${grade(d.score)}).
       ${d.issueBreakdown.critical > 0
         ? `There are <strong style="color:#DC2626">${d.issueBreakdown.critical} critical issues</strong> requiring immediate attention.`
         : "No critical issues were detected."}</p>
     </div>
-    <div class="status-card">
+    <div class="exec-card">
       <h3>Legal Risk Assessment</h3>
-      <p style="color:${riskClr(d.riskLevel)};font-weight:600">${d.riskLevel} Risk</p>
+      <div class="exec-risk-row">
+        <span class="exec-risk-label" style="color:${riskClr(d.riskLevel)}">${d.riskLevel} Risk</span>
+        ${riskBar(d.riskLevel, primary)}
+      </div>
       <p>${esc(d.legalRisk)}</p>
     </div>
-    <div class="status-card">
-      <h3>Estimated Remediation</h3>
-      <p>Based on ${d.issueBreakdown.total} identified issues, the estimated developer effort is
+    <div class="exec-card">
+      <h3>Remediation Estimate</h3>
+      <p>Based on <strong>${d.issueBreakdown.total} issues</strong>, estimated developer effort is
       <strong style="color:#7C3AED">${esc(d.estimatedFixTime)}</strong>.</p>
     </div>
   </div>
@@ -307,9 +331,10 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
       <div class="maturity-indicator">
         ${matLevels.map((lv, i) => {
           const reached = i <= curIdx;
-          return `<div class="maturity-step ${lv === d.maturityLevel ? "active" : ""}" style="${reached ? `border-color:${s === "corporate" ? "#374151" : primary}` : ""}">
-            <div class="maturity-dot" style="background:${reached ? (s === "corporate" ? "#374151" : primary) : "#D1D5DB"}"></div>
-            <span style="${reached ? `color:${s === "corporate" ? "#1E1E1E" : primary};font-weight:600` : ""}">${lv}</span>
+          const ac = corp(s) ? "#374151" : primary;
+          return `<div class="maturity-step ${lv === d.maturityLevel ? "active" : ""}" style="${reached ? `border-color:${ac}` : ""}">
+            <div class="maturity-dot" style="background:${reached ? ac : "#D1D5DB"}"></div>
+            <span style="${reached ? `color:${ac};font-weight:600` : ""}">${lv}</span>
           </div>`;
         }).join("")}
       </div>
@@ -318,19 +343,20 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Page 4 — Priority Issues (Audit Cards / Table)
+   Page 4+ — Priority Issues (Consultancy Cards / Table)
    ═══════════════════════════════════════════════════════════ */
 
 function renderPriorityIssues(d: ReportData, primary: string, s: ReportStyle): string {
   if (d.priorityIssues.length === 0) {
-    return pageSection("Audit Findings", primary, s, `<div class="empty-state"><p>No accessibility issues were detected. Excellent work!</p></div>`);
+    return pageSection("Audit Findings", primary, s,
+      `<div class="empty-state"><p>No accessibility issues were detected during this scan.</p></div>`);
   }
 
-  if (s === "corporate") {
+  if (corp(s)) {
     return renderIssuesTable(d, primary);
   }
 
-  // Bold: audit cards, max 3 per page
+  // Premium: consultancy-style cards, max 3 per page
   const pages: ReportIssue[][] = [];
   for (let i = 0; i < d.priorityIssues.length; i += 3) {
     pages.push(d.priorityIssues.slice(i, i + 3));
@@ -346,36 +372,41 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string): string
   return `<div class="audit-card">
   <div class="ac-header">
     <span class="ac-num" style="background:${primary}">${num}</span>
-    <span class="ac-sev" style="background:${sevBg(iss.severity)};color:${sevClr(iss.severity)}">${iss.severity.toUpperCase()}</span>
+    ${sevChip(iss.severity)}
     <h4 class="ac-title">${esc(iss.title)}</h4>
   </div>
   <div class="ac-body">
     <div class="ac-grid">
       <div class="ac-section">
-        <div class="ac-label">Business Impact</div>
+        <div class="ac-label">Impact</div>
         <p>${esc(iss.impact)}</p>
+      </div>
+      <div class="ac-section">
+        <div class="ac-label">Recommendation</div>
+        <p>${esc(iss.recommendation)}</p>
+      </div>
+    </div>
+    <div class="ac-grid">
+      <div class="ac-section">
+        <div class="ac-label">Effort</div>
+        <p>${esc(iss.estimatedFixTime)} &middot; ${iss.affectedElements} element${iss.affectedElements !== 1 ? "s" : ""} affected</p>
       </div>
       <div class="ac-section">
         <div class="ac-label">User Impact</div>
         <p>${esc(iss.explanation)}</p>
       </div>
     </div>
-    <div class="ac-section">
-      <div class="ac-label">Recommended Fix</div>
-      <p>${esc(iss.recommendation)}</p>
-    </div>
     <div class="ac-footer">
+      ${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join("")}
       <span class="ac-chip">${iss.affectedElements} element${iss.affectedElements !== 1 ? "s" : ""}</span>
       <span class="ac-chip">Est. ${esc(iss.estimatedFixTime)}</span>
-      ${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join("")}
     </div>
-    <details class="ac-tech"><summary>Technical details</summary><p>Rule: <code>${esc(iss.id)}</code></p></details>
+    <div class="ac-tech-row"><span class="ac-tech-label">Rule:</span> <code>${esc(iss.id)}</code></div>
   </div>
 </div>`;
 }
 
 function renderIssuesTable(d: ReportData, primary: string): string {
-  // Corporate: table-forward, split across pages
   const perPage = 8;
   const pages: ReportIssue[][] = [];
   for (let i = 0; i < d.priorityIssues.length; i += perPage) {
@@ -391,8 +422,8 @@ function renderIssuesTable(d: ReportData, primary: string): string {
       <td>${pi * perPage + i + 1}</td>
       <td><span class="ft-sev" style="color:${sevGray(iss.severity)}">${iss.severity.toUpperCase()}</span></td>
       <td class="ft-title">${esc(iss.title)}</td>
-      <td class="ft-desc">${esc(iss.impact).slice(0, 120)}${iss.impact.length > 120 ? "…" : ""}</td>
-      <td class="ft-desc">${esc(iss.recommendation).slice(0, 100)}${iss.recommendation.length > 100 ? "…" : ""}</td>
+      <td class="ft-desc">${esc(iss.impact).slice(0, 120)}${iss.impact.length > 120 ? "\u2026" : ""}</td>
+      <td class="ft-desc">${esc(iss.recommendation).slice(0, 100)}${iss.recommendation.length > 100 ? "\u2026" : ""}</td>
       <td class="ft-num">${iss.affectedElements}</td>
       <td class="ft-num">${esc(iss.estimatedFixTime)}</td>
     </tr>`).join("")}
@@ -419,7 +450,6 @@ function renderComplianceLegal(d: ReportData, primary: string, s: ReportStyle): 
     </div>
     <div class="legal-card">
       <h3>Continuous Monitoring Recommendation</h3>
-      <p>Accessibility is not a one-time fix. We recommend:</p>
       <ul>
         <li>Automated weekly scans to catch regressions</li>
         <li>Manual audit every quarter for complex interactions</li>
@@ -442,14 +472,13 @@ function renderComplianceLegal(d: ReportData, primary: string, s: ReportStyle): 
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Page 6 — CTA (conversion-optimized / white-label)
+   Page 6 — CTA
    ═══════════════════════════════════════════════════════════ */
 
 function renderCTA(d: ReportData, primary: string, s: ReportStyle): string {
   const wl = d.whiteLabelConfig;
   const cta = d.ctaConfig;
 
-  // White-label partner CTA
   if (!wl.showVexNexaBranding) {
     return `<section class="page cta-page">
   <div class="cta-2col">
@@ -464,14 +493,13 @@ function renderCTA(d: ReportData, primary: string, s: ReportStyle): string {
       ${cta.supportEmail ? `<p class="cta-contact">Contact: <a href="mailto:${esc(cta.supportEmail)}">${esc(cta.supportEmail)}</a></p>` : ""}
     </div>
     <div class="cta-right">
-      ${cta.ctaUrl ? `<a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || "Get Started")} →</a>` : ""}
-      <p class="cta-footer">${esc(wl.footerText)}</p>
+      ${cta.ctaUrl ? `<a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || "Get Started")}</a>` : ""}
+      <p class="cta-footer-text">${esc(wl.footerText)}</p>
     </div>
   </div>
 </section>`;
   }
 
-  // VexNexa branded CTA — conversion-optimized
   const rec = recommendedPlan(d);
   return `<section class="page cta-page">
   <div class="cta-2col">
@@ -480,19 +508,19 @@ function renderCTA(d: ReportData, primary: string, s: ReportStyle): string {
       <p>Your site scored <strong>${d.score}/100</strong> with <strong>${d.issueBreakdown.total} issues</strong>.
       ${d.riskLevel === "LOW" ? "Maintain this standard" : "Reduce your legal exposure"} with continuous monitoring.</p>
       <ul class="cta-trust">
-        <li><strong>Audit evidence</strong> — exportable compliance history</li>
-        <li><strong>Regression alerts</strong> — catch issues before users do</li>
-        <li><strong>Scan history</strong> — track improvement over time</li>
-        <li><strong>Team access</strong> — share reports with stakeholders</li>
+        <li>Audit evidence &mdash; exportable compliance history</li>
+        <li>Regression alerts &mdash; catch issues before users do</li>
+        <li>Scan history &mdash; track improvement over time</li>
+        <li>Team access &mdash; share reports with stakeholders</li>
       </ul>
     </div>
     <div class="cta-right">
       <div class="plan-cards">
         ${renderPlanCard("Free", ["5 scans/month", "Basic reports", "Email support"], false, primary, rec)}
-        ${renderPlanCard("Pro", ["Unlimited scans", "Weekly monitoring", "Premium reports", "3 team members", "Email priority support"], true, primary, rec)}
-        ${renderPlanCard("Business", ["Everything in Pro", "Daily monitoring", "White-label reports", "Unlimited team", "Dedicated support", "API access"], false, primary, rec)}
+        ${renderPlanCard("Pro", ["Unlimited scans", "Weekly monitoring", "Premium reports", "3 team members"], true, primary, rec)}
+        ${renderPlanCard("Business", ["Everything in Pro", "Daily monitoring", "White-label reports", "Unlimited team", "API access"], false, primary, rec)}
       </div>
-      <a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || "View Plans & Pricing")} →</a>
+      <a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || "View Plans & Pricing")}</a>
     </div>
   </div>
 </section>`;
@@ -509,72 +537,112 @@ function renderPlanCard(name: string, features: string[], highlighted: boolean, 
 }
 
 /* ═══════════════════════════════════════════════════════════
-   CSS — design tokens + two style modes
+   CSS — design tokens + premium / corporate modes
    ═══════════════════════════════════════════════════════════ */
 
-function buildCSS(primary: string, secondary: string, _accent: string, bg: string, dark: string, s: ReportStyle): string {
-  const isCorp = s === "corporate";
-  const radius = isCorp ? "4px" : "12px";
-  const radiusSm = isCorp ? "2px" : "8px";
-  const shadow = isCorp ? "none" : "0 1px 3px rgba(0,0,0,.04)";
-  const cardBg = isCorp ? "white" : bg;
-  const cardBorder = isCorp ? "1px solid #D1D5DB" : "1px solid #E5E7EB";
-  const titleWeight = isCorp ? "700" : "800";
-  const coverBg = isCorp ? "white" : `linear-gradient(180deg,${bg} 0%,white 100%)`;
+function buildCSS(primary: string, _secondary: string, _accent: string, bg: string, dark: string, s: ReportStyle): string {
+  const isC = corp(s);
+  const radius = isC ? "4px" : "12px";
+  const radiusSm = isC ? "2px" : "8px";
+  const shadow = isC ? "none" : "0 2px 8px rgba(0,0,0,.06)";
+  const cardBg = isC ? "white" : bg;
+  const cardBorder = isC ? "1px solid #D1D5DB" : "1px solid #E5E7EB";
+  const titleWeight = isC ? "700" : "800";
 
   return `
 :root{--r:${radius};--rs:${radiusSm};--shadow:${shadow};--card-bg:${cardBg};--card-border:${cardBorder};--dark:${dark};--bg:${bg};--primary:${primary}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 @page{size:A4;margin:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-  color:${dark};background:white;line-height:1.6;font-size:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  color:${dark};background:white;line-height:1.6;font-size:14px;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
 
-/* Page */
-.page{width:210mm;min-height:297mm;padding:20mm 24mm;margin:0 auto;position:relative;page-break-after:always;page-break-inside:avoid;background:white}
+.page{width:210mm;min-height:297mm;padding:20mm 22mm;margin:0 auto;position:relative;
+  page-break-after:always;page-break-inside:avoid;background:white}
 @media screen{.page{box-shadow:0 4px 24px rgba(0,0,0,.08);margin-bottom:24px;border-radius:4px}}
 
-/* Header */
-.page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #E5E7EB}
-.hdr-logo{max-height:28px;max-width:140px}.hdr-logo-text{font-size:16px;font-weight:700}
-.hdr-domain{font-size:11px;color:#9CA3AF}
+/* ── Version marker (debug) ── */
+.version-marker{text-align:center;font-size:9px;color:#D1D5DB;padding:6px 0;font-family:monospace}
 
-/* Cover */
-.cover-page{display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:${coverBg}}
+/* ── Severity chips (replace emoji) ── */
+.sev-chip{display:inline-block;padding:3px 10px;border-radius:${radiusSm};font-size:10px;font-weight:700;letter-spacing:0.4px}
+
+/* ── Risk bar ── */
+.risk-bar-track{height:6px;background:#E5E7EB;border-radius:3px;margin:6px 0 10px;overflow:hidden}
+.risk-bar-fill{height:100%;border-radius:3px}
+
+/* ══════════════════════════════════════
+   COVER — Premium (dark hero)
+   ══════════════════════════════════════ */
+.cover-page{padding:0;display:flex;flex-direction:column}
+.cover-premium{background:linear-gradient(160deg,${dark} 0%,#2D2D3A 60%,${dark} 100%);color:white}
+.cover-top-bar{display:flex;align-items:center;justify-content:space-between;padding:24mm 22mm 0}
+.cover-top-dark .cover-logo-text{color:white}
+.cover-hero{display:flex;flex:1;padding:16mm 22mm;gap:24px;align-items:center}
+.cover-hero-left{flex:1.2}
+.cover-hero-right{flex:0.8;display:flex;justify-content:center}
+
+.cover-title-prem{font-size:38px;font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:white;margin-bottom:10px}
+.cover-domain-prem{font-size:17px;color:rgba(255,255,255,.6);margin-bottom:16px}
+.cover-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cover-kpi-strip{display:flex;gap:16px;margin-top:8px}
+.cover-kpi{text-align:center}
+.cover-kpi-val{display:block;font-size:28px;font-weight:800;line-height:1.1}
+.cover-kpi-lbl{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:0.5px}
+
+.cover-score-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:24px;text-align:center;backdrop-filter:blur(8px)}
+.csc-label{font-size:14px;color:rgba(255,255,255,.7);margin-top:4px}
+.csc-risk{font-size:13px;color:rgba(255,255,255,.5);margin-top:6px}
+.csc-fix{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
+
+.cover-bottom-bar{display:flex;justify-content:space-between;padding:0 22mm 16mm;align-items:center}
+.cover-bottom-dark{color:rgba(255,255,255,.3)}
+.cover-date-prem{font-size:12px}.cover-powered-prem{font-size:11px}
+
+/* ══════════════════════════════════════
+   COVER — Corporate (white, clean)
+   ══════════════════════════════════════ */
 .cover-corp{background:white;border-bottom:4px solid ${primary}}
-.cover-top{width:100%;text-align:left}
-.cover-logo{max-height:48px;max-width:200px}
-.cover-logo-text{font-size:${isCorp ? "22px" : "28px"};font-weight:${titleWeight};letter-spacing:-0.5px}
-.cover-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:${isCorp ? "12px" : "16px"}}
-.cover-title{font-size:${isCorp ? "28px" : "36px"};font-weight:${titleWeight};line-height:1.15;color:${dark};letter-spacing:-1px}
-.cover-domain{font-size:${isCorp ? "15px" : "18px"};color:#6B7280;margin-top:4px}
-.cover-score-wrap{margin:20px 0}
-.cover-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.badge{display:inline-block;padding:${isCorp ? "4px 12px" : "6px 16px"};border-radius:${isCorp ? "3px" : "20px"};font-size:12px;font-weight:600;letter-spacing:0.3px}
-.badge-compliance{background:#EFF6FF;color:#1D4ED8}
-.cover-bottom{width:100%;text-align:center;padding-top:16px;border-top:1px solid #E5E7EB}
-.cover-date{font-size:13px;color:#9CA3AF}.cover-powered{font-size:11px;color:#D1D5DB;margin-top:4px}
+.cover-corp .cover-top-bar{padding:20mm 22mm 0}
+.cover-date-sm{font-size:11px;color:#9CA3AF}
+.cover-corp .cover-hero{padding:12mm 22mm}
+.cover-title-corp{font-size:30px;font-weight:700;line-height:1.15;color:${dark};letter-spacing:-0.5px;margin-bottom:6px}
+.cover-domain-corp{font-size:15px;color:#6B7280;margin-bottom:14px}
+.cover-meta-row{display:flex;gap:20px}
+.cover-meta-item{font-size:13px;color:#374151}
+.cover-meta-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#9CA3AF;font-weight:600;margin-bottom:2px}
 
-/* Corporate score box */
-.corp-score-box{text-align:center;padding:24px;border:${cardBorder};border-radius:var(--r)}
-.corp-score-num{font-size:48px;font-weight:800;line-height:1}.corp-score-of{font-size:20px;font-weight:400;color:#9CA3AF}
-.corp-score-label{font-size:13px;color:#6B7280;margin:6px 0 12px}
-.corp-progress-track{height:8px;background:#E5E7EB;border-radius:4px;overflow:hidden;max-width:300px;margin:0 auto}
-.corp-progress-fill{height:100%;border-radius:4px;transition:width .3s}
+.cover-score-card-corp{background:#F9FAFB;border:1px solid #D1D5DB;border-radius:4px;padding:24px;text-align:center;min-width:200px}
+.csc-score{font-size:52px;font-weight:800;line-height:1;display:inline}
+.csc-of{font-size:20px;font-weight:400;color:#9CA3AF;display:inline}
+.csc-grade{font-size:13px;color:#6B7280;margin:6px 0 12px}
+.csc-bar-track{height:6px;background:#E5E7EB;border-radius:3px;overflow:hidden;max-width:200px;margin:0 auto}
+.csc-bar-fill{height:100%;border-radius:3px}
+.csc-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:#9CA3AF}
 
-/* Section titles */
-.section-title{font-size:${isCorp ? "20px" : "24px"};font-weight:${titleWeight};margin-bottom:20px;padding-bottom:10px;border-bottom:${isCorp ? "2px" : "3px"} solid ${primary};letter-spacing:-0.5px}
+.cover-corp .cover-bottom-bar{padding:0 22mm 14mm}
+.cover-scanid{font-size:10px;color:#D1D5DB;font-family:monospace}
+.cover-powered{font-size:11px;color:#D1D5DB}
+
+/* ── Section titles ── */
+.section-title{font-size:${isC ? "20px" : "24px"};font-weight:${titleWeight};margin-bottom:20px;padding-bottom:10px;
+  border-bottom:${isC ? "2px" : "3px"} solid ${primary};letter-spacing:-0.5px}
 .corp-title{border-bottom-width:2px}
 .subsection-title{font-size:16px;font-weight:700;margin:20px 0 12px;color:#374151}
 
-/* Executive Summary */
-.summary-status{display:grid;gap:16px;margin-bottom:24px}
-.status-card{background:var(--card-bg);border-radius:var(--r);padding:20px;border:var(--card-border)}
-.status-card h3{font-size:14px;font-weight:700;color:#374151;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
-.status-card p{font-size:13px;color:#4B5563;margin-bottom:4px}
+/* ── Executive Summary ── */
+.exec-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+.exec-card{background:var(--card-bg);border-radius:var(--r);padding:18px 20px;border:var(--card-border);box-shadow:var(--shadow)}
+.exec-card h3{font-size:13px;font-weight:700;color:#374151;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.exec-card p{font-size:13px;color:#4B5563;margin-bottom:4px;line-height:1.6}
+.exec-risk-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.exec-risk-label{font-size:14px;font-weight:700;white-space:nowrap}
+
 .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.metric-card{background:white;border:var(--card-border);border-radius:var(--r);padding:16px;text-align:center;box-shadow:var(--shadow)}
-.metric-value{font-size:28px;font-weight:800;line-height:1.1}
-.metric-label{font-size:11px;color:#6B7280;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+.metric-card{background:white;border:var(--card-border);border-radius:var(--r);padding:16px 10px;text-align:center;box-shadow:var(--shadow)}
+.metric-value{font-size:26px;font-weight:800;line-height:1.1}
+.metric-label{font-size:10px;color:#6B7280;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
 
 /* Corporate summary table */
 .corp-summary-table{width:100%;border-collapse:collapse;margin-bottom:20px}
@@ -583,80 +651,91 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 .corp-prose{margin-top:16px}.corp-prose h3{font-size:14px;font-weight:700;margin-bottom:6px;color:#374151}
 .corp-prose p{font-size:13px;color:#4B5563;margin-bottom:6px}
 
-/* Visual Breakdown */
-.breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.breakdown-card{background:var(--card-bg);border-radius:var(--r);padding:20px;border:var(--card-border)}
-.breakdown-card h3{font-size:14px;font-weight:700;color:#374151;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px}
+/* ── Visual Breakdown ── */
+.breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.breakdown-card{background:var(--card-bg);border-radius:var(--r);padding:18px;border:var(--card-border);box-shadow:var(--shadow)}
+.breakdown-card h3{font-size:13px;font-weight:700;color:#374151;margin-bottom:14px;text-transform:uppercase;letter-spacing:0.5px}
 .chart-center{display:flex;justify-content:center}
-.progress-stack{display:flex;flex-direction:column;gap:16px;padding-top:8px}
-.mt-24{margin-top:24px}
-.donut-wrap{display:flex;align-items:center;gap:16px}
-.legend-col{position:relative;min-width:120px;height:120px}
-.legend-row{position:absolute;left:0;display:flex;align-items:center;gap:6px}
-.legend-chip{width:14px;height:14px;border-radius:3px;flex-shrink:0}
-.legend-label{font-size:12px;color:#374151;font-weight:500}.legend-val{font-size:12px;color:#6B7280}
+.progress-stack{display:flex;flex-direction:column;gap:14px;padding-top:6px}
+.mt-24{margin-top:18px}
+
+.donut-wrap{display:flex;align-items:center;gap:14px}
+.legend-col{display:flex;flex-direction:column;gap:6px}
+.legend-row{display:flex;align-items:center;gap:6px}
+.legend-chip{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.legend-label{font-size:12px;color:#374151;font-weight:500}
+.legend-val{font-size:12px;color:#6B7280}
+
+.pbar-row{display:flex;align-items:center;gap:10px}
+.pbar-label{font-size:12px;font-weight:500;color:#374151;min-width:70px}
+.pbar-track{flex:1;background:${isC ? "#E5E7EB" : "#F3F4F6"};border-radius:7px;overflow:hidden}
+.pbar-fill{transition:width .3s}
+.pbar-val{font-size:12px;font-weight:700;min-width:40px;text-align:right}
 
 .status-table{width:100%;border-collapse:collapse}
 .status-table td{padding:10px 12px;border-bottom:1px solid #E5E7EB;font-size:13px}
 .status-table td:first-child{font-weight:600;color:#374151}
 .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
 .maturity-indicator{display:flex;gap:8px;margin-top:12px}
 .maturity-step{flex:1;text-align:center;padding:12px 4px;border-radius:var(--rs);border:2px solid #E5E7EB;font-size:11px;color:#9CA3AF}
 .maturity-step.active{background:var(--card-bg)}
 .maturity-dot{width:12px;height:12px;border-radius:50%;margin:0 auto 6px}
 
-/* Audit Cards (bold) */
-.issues-list{display:flex;flex-direction:column;gap:16px}
+/* ── Audit Cards (premium) ── */
+.issues-list{display:flex;flex-direction:column;gap:14px}
 .audit-card{border:var(--card-border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);page-break-inside:avoid}
 .ac-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--card-bg);border-bottom:var(--card-border)}
-.ac-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;color:white;font-size:13px;font-weight:700;flex-shrink:0}
-.ac-sev{padding:3px 10px;border-radius:var(--rs);font-size:10px;font-weight:700;letter-spacing:0.5px;flex-shrink:0}
+.ac-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;color:white;font-size:12px;font-weight:700;flex-shrink:0}
 .ac-title{font-size:14px;font-weight:700;color:var(--dark);flex:1}
 .ac-body{padding:14px 16px}
 .ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
-.ac-section{margin-bottom:8px}
-.ac-label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;font-weight:700;margin-bottom:3px}
-.ac-section p{font-size:12.5px;color:#374151;line-height:1.5}
-.ac-footer{display:flex;flex-wrap:wrap;gap:8px;padding-top:10px;border-top:1px solid #F3F4F6}
-.ac-chip{font-size:10px;padding:3px 8px;border-radius:var(--rs);background:#F3F4F6;color:#6B7280;font-weight:600}
+.ac-section{margin-bottom:6px}
+.ac-label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;font-weight:700;margin-bottom:2px}
+.ac-section p{font-size:12px;color:#374151;line-height:1.5}
+.ac-footer{display:flex;flex-wrap:wrap;gap:6px;padding-top:10px;border-top:1px solid #F3F4F6}
+.ac-chip{font-size:10px;padding:2px 8px;border-radius:var(--rs);background:#F3F4F6;color:#6B7280;font-weight:600}
 .ac-chip-wcag{background:#EFF6FF;color:#1D4ED8}
-.ac-tech{margin-top:8px;font-size:11px;color:#9CA3AF}
-.ac-tech summary{cursor:pointer;font-weight:600}
-.ac-tech code{font-family:'SF Mono',Consolas,monospace;font-size:10px;background:#F3F4F6;padding:1px 4px;border-radius:3px}
+.ac-tech-row{margin-top:6px;font-size:10px;color:#9CA3AF}
+.ac-tech-label{font-weight:600}
+.ac-tech-row code{font-family:'SF Mono',Consolas,monospace;font-size:10px;background:#F3F4F6;padding:1px 4px;border-radius:3px}
 
-/* Findings table (corporate) */
+/* ── Findings table (corporate) ── */
 .findings-table{width:100%;border-collapse:collapse;font-size:12px}
 .findings-table th{background:#F3F4F6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #D1D5DB;font-size:11px;text-transform:uppercase;letter-spacing:0.3px}
 .findings-table td{padding:8px 10px;border:1px solid #D1D5DB;vertical-align:top}
 .findings-table tbody tr:nth-child(even){background:#FAFAFA}
 .ft-sev{font-weight:700;font-size:10px;letter-spacing:0.3px}
-.ft-title{font-weight:600;max-width:140px}.ft-desc{max-width:160px;font-size:11px;color:#4B5563}.ft-num{text-align:center;white-space:nowrap}
+.ft-title{font-weight:600;max-width:140px}
+.ft-desc{max-width:160px;font-size:11px;color:#4B5563}
+.ft-num{text-align:center;white-space:nowrap}
 
 .empty-state{text-align:center;padding:60px 20px;color:#6B7280;font-size:16px}
 
-/* Compliance & Legal */
-.legal-grid{display:flex;flex-direction:column;gap:16px}
-.legal-card{background:var(--card-bg);border-radius:var(--r);padding:20px;border:var(--card-border)}
-.legal-card h3{font-size:14px;font-weight:700;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+/* ── Compliance & Legal ── */
+.legal-grid{display:flex;flex-direction:column;gap:14px}
+.legal-card{background:var(--card-bg);border-radius:var(--r);padding:18px 20px;border:var(--card-border);box-shadow:var(--shadow)}
+.legal-card h3{font-size:13px;font-weight:700;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
 .legal-card p{font-size:13px;color:#4B5563;margin-bottom:8px;line-height:1.6}
-.legal-card ul{margin:8px 0 0 20px;font-size:13px;color:#4B5563}.legal-card li{margin-bottom:4px}
+.legal-card ul{margin:8px 0 0 20px;font-size:13px;color:#4B5563}
+.legal-card li{margin-bottom:4px}
 .audit-table{width:100%;border-collapse:collapse}
 .audit-table td{padding:8px 12px;border-bottom:1px solid #E5E7EB;font-size:13px}
 .audit-table td:first-child{font-weight:600;color:#374151;width:140px}
 .audit-table code{font-family:'SF Mono',Consolas,monospace;font-size:11px;background:#F3F4F6;padding:2px 6px;border-radius:4px}
 
-/* CTA */
+/* ── CTA ── */
 .cta-page{display:flex;align-items:center;justify-content:center}
-.cta-2col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;max-width:700px;width:100%}
+.cta-2col{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;max-width:700px;width:100%}
 .cta-left h2{font-size:22px;font-weight:${titleWeight};margin-bottom:10px}
 .cta-left p{font-size:13px;color:#4B5563;line-height:1.6;margin-bottom:12px}
 .cta-trust,.cta-bullets{list-style:none;padding:0;margin:0 0 16px}
 .cta-trust li,.cta-bullets li{font-size:12px;color:#374151;padding:4px 0;padding-left:16px;position:relative}
-.cta-trust li::before,.cta-bullets li::before{content:"✓";position:absolute;left:0;color:${primary};font-weight:700}
+.cta-trust li::before,.cta-bullets li::before{content:"\\2713";position:absolute;left:0;color:${primary};font-weight:700}
 .cta-contact{font-size:12px;color:#6B7280}.cta-contact a{color:${primary}}
 .cta-right{display:flex;flex-direction:column;align-items:center;gap:12px}
+.cta-footer-text{font-size:11px;color:#D1D5DB;margin-top:12px;text-align:center}
 
-/* Plan cards */
 .plan-cards{display:flex;gap:10px;width:100%}
 .plan-card{flex:1;border:1px solid #E5E7EB;border-radius:var(--r);padding:14px 10px;text-align:center;position:relative}
 .plan-card-hl{border-width:2px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -664,19 +743,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 .plan-name{font-size:15px;font-weight:700;margin:8px 0 6px}
 .plan-features{list-style:none;padding:0;text-align:left}
 .plan-features li{font-size:10px;color:#4B5563;padding:2px 0;padding-left:14px;position:relative}
-.plan-features li::before{content:"•";position:absolute;left:4px;color:#9CA3AF}
+.plan-features li::before{content:"\\2022";position:absolute;left:4px;color:#9CA3AF}
 
 .cta-button{display:inline-block;padding:12px 28px;color:white;border-radius:var(--r);font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.12)}
-.cta-footer{font-size:11px;color:#D1D5DB;margin-top:16px;text-align:center}
-
-/* Global footer */
-.global-footer{text-align:center;font-size:10px;color:#D1D5DB;padding:8px 0}
 
 @media print{
   body{background:white}
-  .page{box-shadow:none;margin:0;border-radius:0;width:100%;min-height:auto;padding:15mm 20mm;page-break-after:always}
+  .page{box-shadow:none;margin:0;border-radius:0;width:100%;min-height:auto;padding:15mm 18mm;page-break-after:always}
+  .cover-premium{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .cta-button{border:2px solid ${primary};color:${primary}!important;background:transparent!important}
-  .ac-tech{display:none}
+  .version-marker{display:block}
 }
 `;
 }

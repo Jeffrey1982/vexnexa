@@ -79,55 +79,46 @@ export async function GET(
         ctaText: ctaText || undefined,
         supportEmail: supportEmail || undefined,
       },
-      (styleParam === "corporate" ? "corporate" : "bold") as ReportStyle
+      (styleParam === "corporate" ? "corporate" : "premium") as ReportStyle
     );
 
-    // Render HTML
+    // Render v2 HTML (render-html.ts output ONLY — no fallback to old template)
     const html: string = renderReportHTML(reportData);
+    console.log(`[reports/pdf] Rendering v2 report for scan=${scanId} style=${styleParam}`);
 
-    // Try Puppeteer PDF generation
-    try {
-      const chromium = await import("@sparticuz/chromium").then((m) => m.default);
-      const puppeteer = await import("puppeteer-core");
+    // Puppeteer PDF generation — NO silent fallback
+    const chromium = await import("@sparticuz/chromium").then((m) => m.default);
+    const puppeteer = await import("puppeteer-core");
 
-      const browser = await puppeteer.default.launch({
-        args: chromium.args,
-        defaultViewport: { width: 1280, height: 800 },
-        executablePath: await chromium.executablePath(),
-        headless: true,
-      });
+    const browser = await puppeteer.default.launch({
+      args: chromium.args,
+      defaultViewport: { width: 1280, height: 900 },
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    });
 
-      const page = await browser.newPage();
-      await page.setContent(html, { waitUntil: "networkidle0" });
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "networkidle0" });
 
-      const pdfUint8 = await page.pdf({
-        format: "A4",
-        printBackground: true,
-        margin: { top: "0", right: "0", bottom: "0", left: "0" },
-      });
+    const pdfUint8 = await page.pdf({
+      format: "A4",
+      printBackground: true,
+      preferCSSPageSize: true,
+      margin: { top: "0mm", right: "0mm", bottom: "0mm", left: "0mm" },
+    });
 
-      await browser.close();
+    await browser.close();
+    console.log(`[reports/pdf] PDF generated, ${pdfUint8.byteLength} bytes`);
 
-      const filename = `accessibility-report-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.pdf`;
+    const filename = `accessibility-report-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.pdf`;
 
-      return new Response(pdfUint8.buffer as ArrayBuffer, {
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": `attachment; filename="${filename}"`,
-          "Cache-Control": "no-store",
-        },
-      });
-    } catch (puppeteerError) {
-      // Fallback: return HTML for client-side print
-      console.error("[reports/pdf] Puppeteer failed, returning HTML:", puppeteerError);
-      return new NextResponse(html, {
-        headers: {
-          "Content-Type": "text/html; charset=utf-8",
-          "Cache-Control": "no-store",
-          "X-Report-Fallback": "html",
-        },
-      });
-    }
+    return new Response(pdfUint8.buffer as ArrayBuffer, {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Cache-Control": "no-store",
+      },
+    });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("[reports/pdf] Error:", message);

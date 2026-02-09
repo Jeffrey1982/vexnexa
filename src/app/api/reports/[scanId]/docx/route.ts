@@ -356,7 +356,7 @@ export async function GET(
         ctaText: ctaText || undefined,
         supportEmail: supportEmail || undefined,
       },
-      (styleParam === "corporate" ? "corporate" : "bold") as ReportStyle
+      (styleParam === "corporate" ? "corporate" : "premium") as ReportStyle
     );
 
     const doc = buildDocx(reportData);

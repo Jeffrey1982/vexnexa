@@ -24,7 +24,7 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
 
   const { id } = await params;
   const sp = await searchParams;
-  const styleParam: ReportStyle = sp.reportStyle === "corporate" ? "corporate" : "bold";
+  const styleParam: ReportStyle = sp.reportStyle === "corporate" ? "corporate" : "premium";
 
   const scan = await prisma.scan.findUnique({
     where: { id },
@@ -85,7 +85,7 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
                   href={styleParam === "corporate" ? `/scans/${id}/report-v2` : `/scans/${id}/report-v2?reportStyle=corporate`}
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-4 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
                 >
-                  {styleParam === "corporate" ? "Bold Style" : "Corporate Style"}
+                  {styleParam === "corporate" ? "Premium Style" : "Corporate Style"}
                 </a>
                 <a
                   href={`/api/reports/${id}/pdf${styleQs}`}
