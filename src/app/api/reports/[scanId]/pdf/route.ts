@@ -45,7 +45,9 @@ export async function GET(
     const url = new URL(req.url);
     const qp = extractQueryOverrides(url);
     const storedWL = await getStoredWhiteLabel(user.id);
+    console.log(`[reports/pdf] userId=${user.id} storedWL=${JSON.stringify(storedWL ? { companyName: storedWL.companyName, logoUrl: storedWL.logoUrl ? storedWL.logoUrl.slice(0, 40) + '...' : null, primaryColor: storedWL.primaryColor, showVexNexaBranding: storedWL.showVexNexaBranding } : null)}`);
     const resolved = resolveWhiteLabelConfig(qp, storedWL);
+    console.log(`[reports/pdf] resolved company=${resolved.whiteLabelConfig.companyNameOverride} color=${resolved.whiteLabelConfig.primaryColor} logo=${resolved.whiteLabelConfig.logoUrl ? resolved.whiteLabelConfig.logoUrl.slice(0, 40) + '...' : 'none'}`);
 
     // Embed logo as data URL so it renders in print/PDF
     if (resolved.whiteLabelConfig.logoUrl) {
