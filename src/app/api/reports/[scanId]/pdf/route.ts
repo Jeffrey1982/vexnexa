@@ -104,55 +104,17 @@ export async function GET(
       console.error(`[reports/pdf] RENDER FAILED: ${rMsg}`, renderErr);
       return NextResponse.json({ error: `Render failed: ${rMsg}` }, { status: 500 });
     }
-    console.log(`[reports/pdf] RENDER OK html=${html.length} chars`);
+    console.log(`[reports/pdf] RENDER OK html=${html.length} chars, returning v2 HTML for print`);
 
-    const filename = `accessibility-report-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.pdf`;
-
-    // Try Puppeteer PDF generation
-    try {
-      console.log(`[reports/pdf] PUPPETEER starting...`);
-      const chromium = await import("@sparticuz/chromium").then((m) => m.default);
-      const puppeteer = await import("puppeteer-core");
-
-      const browser = await puppeteer.default.launch({
-        args: chromium.args,
-        defaultViewport: { width: 1280, height: 900 },
-        executablePath: await chromium.executablePath(),
-        headless: true,
-      });
-
-      const page = await browser.newPage();
-      await page.setContent(html, { waitUntil: "networkidle0" });
-
-      const pdfUint8 = await page.pdf({
-        format: "A4",
-        printBackground: true,
-        preferCSSPageSize: true,
-        margin: { top: "0mm", right: "0mm", bottom: "0mm", left: "0mm" },
-      });
-
-      await browser.close();
-      console.log(`[reports/pdf] PUPPETEER OK ${pdfUint8.byteLength} bytes`);
-
-      return new Response(pdfUint8.buffer as ArrayBuffer, {
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": `attachment; filename="${filename}"`,
-          "Cache-Control": "no-store",
-        },
-      });
-    } catch (puppeteerError: unknown) {
-      // Puppeteer unavailable — return v2 HTML for browser print-to-PDF
-      const pMsg = puppeteerError instanceof Error ? puppeteerError.message : "unknown";
-      console.warn(`[reports/pdf] PUPPETEER FAILED (${pMsg}), returning v2 HTML for print`);
-      return new NextResponse(html, {
-        headers: {
-          "Content-Type": "text/html; charset=utf-8",
-          "Cache-Control": "no-store",
-          "X-Report-Fallback": "html-v2",
-        },
-      });
-    }
+    // Return v2 HTML — client opens in new tab and triggers window.print()
+    // (puppeteer-core is not installed, so server-side PDF generation is not available)
+    return new NextResponse(html, {
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Report-Version": "v2",
+      },
+    });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     const stack = error instanceof Error ? error.stack : "";
