@@ -7,6 +7,7 @@ import {
   extractQueryOverrides,
   fetchImageAsBuffer,
   getStoredWhiteLabel,
+  computeLogoDimensions,
 } from "@/lib/report";
 import type { ReportData, ReportIssue, Severity } from "@/lib/report/types";
 import {
@@ -39,8 +40,9 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   // ── Cover: Brand Block (top-left, prominent) ──
 
-  // Logo image (if available)
+  // Logo image (if available) — aspect-ratio-preserving sizing
   if (logoBuffer) {
+    const logoDims = computeLogoDimensions(logoBuffer);
     children.push(
       new Paragraph({
         alignment: AlignmentType.LEFT,
@@ -48,7 +50,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         children: [
           new ImageRun({
             data: logoBuffer,
-            transformation: { width: 180, height: 45 },
+            transformation: { width: logoDims.width, height: logoDims.height },
             type: "png",
           }),
         ],

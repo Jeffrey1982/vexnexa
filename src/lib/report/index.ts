@@ -13,6 +13,8 @@ export type {
 } from "./resolve-white-label";
 export { fetchImageAsDataUrl, fetchImageAsBuffer } from "./fetch-image";
 export { getStoredWhiteLabel } from "./get-stored-white-label";
+export { getImageDimensions, computeLogoDimensions } from "./image-dimensions";
+export type { ImageDimensions, LogoSize } from "./image-dimensions";
 export type {
   ReportData,
   ReportThemeConfig,
