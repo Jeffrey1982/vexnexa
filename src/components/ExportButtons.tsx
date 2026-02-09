@@ -33,8 +33,16 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
         throw new Error("Failed to generate PDF");
       }
 
-      const blob = await response.blob();
-      downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+      const ct = response.headers.get("Content-Type") ?? "";
+      if (ct.includes("application/pdf")) {
+        const blob = await response.blob();
+        downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+      } else {
+        // Puppeteer unavailable — open v2 HTML for browser print
+        const html = await response.text();
+        const w = window.open("", "_blank");
+        if (w) { w.document.write(html); w.document.close(); w.focus(); w.print(); }
+      }
     } catch (error) {
       console.error("PDF export failed:", error);
       alert("Failed to export PDF. Please try again.");

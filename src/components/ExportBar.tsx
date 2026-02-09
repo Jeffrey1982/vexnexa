@@ -37,8 +37,16 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
         throw new Error("Failed to generate PDF report");
       }
 
-      const blob = await response.blob();
-      downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+      const ct = response.headers.get("Content-Type") ?? "";
+      if (ct.includes("application/pdf")) {
+        const blob = await response.blob();
+        downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+      } else {
+        // Puppeteer unavailable — open v2 HTML in new tab for Ctrl+P print
+        const html = await response.text();
+        const w = window.open("", "_blank");
+        if (w) { w.document.write(html); w.document.close(); w.focus(); w.print(); }
+      }
 
       setPdfStatus('success');
       setTimeout(() => setPdfStatus('idle'), 3000);
