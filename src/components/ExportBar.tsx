@@ -31,7 +31,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   const exportPdf = async () => {
     setPdfStatus('loading');
     try {
-      const response = await fetch(`/api/reports/${scanId}/pdf?reportStyle=premium`);
+      const response = await fetch(`/api/reports/${scanId}/pdf`);
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF report");
@@ -60,7 +60,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   const exportWord = async () => {
     setWordStatus('loading');
     try {
-      const response = await fetch(`/api/reports/${scanId}/docx?reportStyle=premium`);
+      const response = await fetch(`/api/reports/${scanId}/docx`);
 
       if (!response.ok) {
         throw new Error("Failed to export Word document");

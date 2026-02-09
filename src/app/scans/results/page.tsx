@@ -89,8 +89,8 @@ function ScanResultsContent() {
     if (!result) return;
     setExportLoading(true);
     try {
-      // Use the v2 premium PDF report route
-      window.open(`/api/reports/${result.scanId}/pdf?reportStyle=premium`, "_blank");
+      // Use the v2 PDF report route (defaults to corporate/light)
+      window.open(`/api/reports/${result.scanId}/pdf`, "_blank");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Failed to generate PDF";
       setError(msg);

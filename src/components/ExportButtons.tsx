@@ -27,7 +27,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   const exportPdf = async () => {
     setExportingPdf(true);
     try {
-      const response = await fetch(`/api/reports/${scanId}/pdf?reportStyle=premium`);
+      const response = await fetch(`/api/reports/${scanId}/pdf`);
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF");
@@ -54,7 +54,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   const exportWord = async () => {
     setExportingWord(true);
     try {
-      const response = await fetch(`/api/reports/${scanId}/docx?reportStyle=premium`);
+      const response = await fetch(`/api/reports/${scanId}/docx`);
 
       if (!response.ok) {
         throw new Error("Failed to export Word document");

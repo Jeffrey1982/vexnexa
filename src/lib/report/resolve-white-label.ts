@@ -108,7 +108,7 @@ export function resolveWhiteLabelConfig(
     : stored.showVexNexaBranding ?? DEFAULT_WHITE_LABEL.showVexNexaBranding;
 
   const reportStyle: ReportStyle =
-    queryParams.reportStyle === "corporate" ? "corporate" : "premium";
+    queryParams.reportStyle === "premium" ? "premium" : "corporate";
 
   const ctaUrl = queryParams.ctaUrl || stored.ctaUrl || DEFAULT_CTA.ctaUrl;
   const ctaText = queryParams.ctaText || stored.ctaText || DEFAULT_CTA.ctaText;
