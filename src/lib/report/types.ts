@@ -83,6 +83,7 @@ export interface ReportData {
   reportStyle: ReportStyle;
   pageTitle?: string;
   pagesScanned?: number;
+  faviconUrl?: string;
 }
 
 /** Default theme */

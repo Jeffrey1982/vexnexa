@@ -11,10 +11,15 @@ export async function GET(
   const { scanId } = await params;
 
   try {
-    // Dynamic imports to avoid bundler pulling in chromium/puppeteer artifacts
     const { createClient } = await import("@/lib/supabase/server-new");
     const { prisma } = await import("@/lib/prisma");
-    const { transformScanToReport, renderReportHTML } = await import("@/lib/report");
+    const {
+      transformScanToReport,
+      renderReportHTML,
+      resolveWhiteLabelConfig,
+      extractQueryOverrides,
+      fetchImageAsDataUrl,
+    } = await import("@/lib/report");
 
     // Auth
     const supabase = await createClient();
@@ -35,16 +40,16 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Query params
+    // Resolve white-label config (query params > stored > defaults)
     const url = new URL(req.url);
-    const wlLogo: string = url.searchParams.get("logo") ?? "";
-    const wlColor: string = url.searchParams.get("color") ?? "";
-    const wlCompany: string = url.searchParams.get("company") ?? "";
-    const wlBranding: boolean = url.searchParams.get("branding") !== "false";
-    const styleParam: string = url.searchParams.get("reportStyle") ?? "premium";
-    const ctaUrl: string = url.searchParams.get("ctaUrl") ?? "";
-    const ctaText: string = url.searchParams.get("ctaText") ?? "";
-    const supportEmail: string = url.searchParams.get("supportEmail") ?? "";
+    const qp = extractQueryOverrides(url);
+    const resolved = resolveWhiteLabelConfig(qp);
+
+    // Embed logo as data URL so it renders in print/PDF
+    if (resolved.whiteLabelConfig.logoUrl) {
+      const dataUrl = await fetchImageAsDataUrl(resolved.whiteLabelConfig.logoUrl);
+      if (dataUrl) resolved.whiteLabelConfig.logoUrl = dataUrl;
+    }
 
     // Transform + render
     const reportData = transformScanToReport(
@@ -63,19 +68,10 @@ export async function GET(
         site: { url: scan.site.url },
         page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
       },
-      undefined,
-      {
-        logoUrl: wlLogo,
-        primaryColor: wlColor || undefined,
-        companyNameOverride: wlCompany,
-        showVexNexaBranding: wlBranding,
-      },
-      {
-        ctaUrl: ctaUrl || undefined,
-        ctaText: ctaText || undefined,
-        supportEmail: supportEmail || undefined,
-      },
-      (styleParam === "corporate" ? "corporate" : "premium") as "premium" | "corporate"
+      resolved.themeConfig,
+      resolved.whiteLabelConfig,
+      resolved.ctaConfig,
+      resolved.reportStyle
     );
 
     const html: string = renderReportHTML(reportData);

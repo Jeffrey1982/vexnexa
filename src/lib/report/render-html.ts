@@ -16,6 +16,7 @@ export function renderReportHTML(data: ReportData): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Accessibility Compliance Report — ${esc(data.domain)}</title>
+${data.faviconUrl ? `<link rel="icon" href="${esc(data.faviconUrl)}" />` : ""}
 <style>${buildCSS(primary, t.secondaryColor, t.accentColor, t.backgroundColor, t.darkColor, s)}</style>
 </head>
 <body class="style-${s}">

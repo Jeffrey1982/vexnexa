@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server-new";
 import { prisma } from "@/lib/prisma";
-import { transformScanToReport } from "@/lib/report";
-import type { ReportData, ReportIssue, Severity, ReportStyle } from "@/lib/report/types";
+import {
+  transformScanToReport,
+  resolveWhiteLabelConfig,
+  extractQueryOverrides,
+  fetchImageAsBuffer,
+} from "@/lib/report";
+import type { ReportData, ReportIssue, Severity } from "@/lib/report/types";
 import {
   Document,
   Packer,
   Paragraph,
   TextRun,
+  ImageRun,
   HeadingLevel,
   AlignmentType,
   Table,
@@ -24,21 +30,44 @@ function severityLabel(s: Severity): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function buildDocx(data: ReportData): Document {
+function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   const primary = data.whiteLabelConfig.primaryColor || data.themeConfig.primaryColor;
+  const primaryHex = primary.replace("#", "");
 
   const children: Paragraph[] = [];
 
   // ── Cover ──
+  children.push(new Paragraph({ spacing: { after: 400 } }));
+
+  // Logo (embedded image or company name text)
+  if (logoBuffer) {
+    children.push(
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 200 },
+        children: [
+          new ImageRun({
+            data: logoBuffer,
+            transformation: { width: 160, height: 40 },
+            type: "png",
+          }),
+        ],
+      })
+    );
+  }
+  if (data.companyName) {
+    children.push(
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 200 },
+        children: [
+          new TextRun({ text: data.companyName, bold: true, size: 48, color: primaryHex }),
+        ],
+      })
+    );
+  }
+
   children.push(
-    new Paragraph({ spacing: { after: 400 } }),
-    new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 200 },
-      children: [
-        new TextRun({ text: data.companyName, bold: true, size: 48, color: primary.replace("#", "") }),
-      ],
-    }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { after: 100 },
@@ -318,15 +347,16 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    // Resolve white-label config (query params > stored > defaults)
     const url = new URL(req.url);
-    const wlLogo: string = url.searchParams.get("logo") ?? "";
-    const wlColor: string = url.searchParams.get("color") ?? "";
-    const wlCompany: string = url.searchParams.get("company") ?? "";
-    const wlBranding: boolean = url.searchParams.get("branding") !== "false";
-    const styleParam: string = url.searchParams.get("reportStyle") ?? "bold";
-    const ctaUrl: string = url.searchParams.get("ctaUrl") ?? "";
-    const ctaText: string = url.searchParams.get("ctaText") ?? "";
-    const supportEmail: string = url.searchParams.get("supportEmail") ?? "";
+    const qp = extractQueryOverrides(url);
+    const resolved = resolveWhiteLabelConfig(qp);
+
+    // Fetch logo as buffer for DOCX embedding
+    let logoBuffer: Buffer | null = null;
+    if (resolved.whiteLabelConfig.logoUrl) {
+      logoBuffer = await fetchImageAsBuffer(resolved.whiteLabelConfig.logoUrl);
+    }
 
     const reportData = transformScanToReport(
       {
@@ -344,22 +374,13 @@ export async function GET(
         site: { url: scan.site.url },
         page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
       },
-      undefined,
-      {
-        logoUrl: wlLogo,
-        primaryColor: wlColor || undefined,
-        companyNameOverride: wlCompany,
-        showVexNexaBranding: wlBranding,
-      },
-      {
-        ctaUrl: ctaUrl || undefined,
-        ctaText: ctaText || undefined,
-        supportEmail: supportEmail || undefined,
-      },
-      (styleParam === "corporate" ? "corporate" : "premium") as ReportStyle
+      resolved.themeConfig,
+      resolved.whiteLabelConfig,
+      resolved.ctaConfig,
+      resolved.reportStyle
     );
 
-    const doc = buildDocx(reportData);
+    const doc = buildDocx(reportData, logoBuffer);
     const arrayBuf = await Packer.toBuffer(doc);
 
     const filename = `accessibility-report-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.docx`;
