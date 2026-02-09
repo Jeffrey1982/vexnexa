@@ -43,9 +43,14 @@ model User {
   mollieCustomerId     String? @unique
   mollieSubscriptionId String? // actuele sub (1 actief tegelijk)
 
-  // Add-ons (extra seats, scan packages)
+  // Billing details
+  billingInterval String  @default("monthly") // monthly, yearly
+  hasAssurance    Boolean @default(false) // Assurance add-on active
+  extraWebsiteCount Int   @default(0) // Extra websites purchased via packs
+
+  // Add-ons (extra seats, scan packages, website packs)
   extraSeats Int     @default(0) // Additional team seats purchased
-  addOns     AddOn[] // Scan packages and seat subscriptions
+  addOns     AddOn[] // Scan packages, seat subscriptions, website packs
 
   usages     Usage[]
   whiteLabel WhiteLabel?
@@ -229,6 +234,7 @@ enum Plan {
   STARTER
   PRO
   BUSINESS
+  ENTERPRISE
 }
 
 model Usage {
@@ -1103,9 +1109,16 @@ model ScheduledScan {
 
 enum AddOnType {
   EXTRA_SEAT // €15/month per seat
-  SCAN_PACK_100 // +100 scans, €19/month
-  SCAN_PACK_500 // +500 scans, €69/month
-  SCAN_PACK_1500 // +1500 scans, €179/month
+  SCAN_PACK_100 // legacy — do not use for new subscriptions
+  SCAN_PACK_500 // legacy — do not use for new subscriptions
+  SCAN_PACK_1500 // legacy — do not use for new subscriptions
+  EXTRA_WEBSITE_1 // +1 website, €15/month
+  EXTRA_WEBSITE_5 // +5 websites, €59/month
+  EXTRA_WEBSITE_10 // +10 websites, €99/month
+  ASSURANCE // Continuous monitoring add-on (tier-dependent pricing)
+  PAGE_PACK_25K // +25,000 pages/month, €29/month
+  PAGE_PACK_100K // +100,000 pages/month, €79/month
+  PAGE_PACK_250K // +250,000 pages/month, €149/month
 }
 
 model AddOn {
@@ -1138,6 +1151,38 @@ model AddOn {
   @@index([userId, status])
   @@index([type])
   @@index([status])
+}
+
+// ============================================
+// MOLLIE PRODUCT SYNC
+// ============================================
+
+model MollieProduct {
+  id String @id @default(cuid())
+
+  // What this product represents
+  productType String // "tier" | "addon"
+  productKey  String // e.g. "STARTER", "PRO", "EXTRA_WEBSITE_1", "ASSURANCE_STARTER"
+  interval    String // "monthly" | "yearly"
+
+  // Mollie IDs (never edit existing prices — create new ones)
+  mollieProductId String? // Mollie product ID
+  molliePriceId   String? // Mollie price ID (for recurring)
+
+  // Pricing snapshot
+  amount   Decimal @db.Decimal(10, 2)
+  currency String  @default("EUR")
+
+  // Status
+  active Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productKey, interval])
+  @@index([productType])
+  @@index([active])
+  @@index([productKey, interval, active])
 }
 
 // ============================================

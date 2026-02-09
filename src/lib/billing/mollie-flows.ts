@@ -159,7 +159,7 @@ export async function createUpgradePayment(opts: {
 
     // Calculate price based on billing cycle
     const totalPrice = calculatePrice(plan as PlanKey, billingCycle)
-    const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : billingCycle === 'semiannual' ? '6-Month' : 'Annual'
+    const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Annual'
 
     // Get or create Mollie customer
     console.log('Getting or creating Mollie customer...')
@@ -254,8 +254,8 @@ export async function createSubscription(opts: {
 
   // Calculate price and interval based on billing cycle
   const totalPrice = calculatePrice(plan as PlanKey, billingCycle)
-  const interval = billingCycle === 'monthly' ? '1 month' : billingCycle === 'semiannual' ? '6 months' : '12 months'
-  const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : billingCycle === 'semiannual' ? '6-Month' : 'Annual'
+  const interval = billingCycle === 'monthly' ? '1 month' : '12 months'
+  const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Yearly'
 
   // Create new subscription
   const subscription = await (mollie.customerSubscriptions as any).create({
@@ -279,6 +279,7 @@ export async function createSubscription(opts: {
     where: { id: userId },
     data: {
       plan,
+      billingInterval: billingCycle,
       subscriptionStatus: "active",
       mollieSubscriptionId: subscription.id,
       trialEndsAt: null

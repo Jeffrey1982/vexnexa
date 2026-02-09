@@ -8,8 +8,8 @@ import type { MolliePayment } from "@/types/mollie"
 export const dynamic = 'force-dynamic'
 
 const CheckoutSchema = z.object({
-  plan: z.enum(["STARTER", "PRO", "BUSINESS"]),
-  billingCycle: z.enum(["monthly", "semiannual", "annual"]).optional().default("monthly")
+  plan: z.enum(["STARTER", "PRO", "BUSINESS", "ENTERPRISE"]),
+  billingCycle: z.enum(["monthly", "yearly"]).optional().default("monthly")
 })
 
 export async function POST(request: NextRequest) {

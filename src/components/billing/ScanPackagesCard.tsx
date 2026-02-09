@@ -25,10 +25,19 @@ interface ScanPackagesCardProps {
   isTrial?: boolean
 }
 
-const SCAN_PACKAGES = [
-  { type: "SCAN_PACK_100" as AddOnType, scans: 100, price: 19 },
-  { type: "SCAN_PACK_500" as AddOnType, scans: 500, price: 69 },
-  { type: "SCAN_PACK_1500" as AddOnType, scans: 1500, price: 179 },
+const VOLUME_PACKS: Array<{ type: AddOnType; pages: number; price: number }> = [
+  { type: "PAGE_PACK_25K" as AddOnType, pages: 25000, price: 29 },
+  { type: "PAGE_PACK_100K" as AddOnType, pages: 100000, price: 79 },
+  { type: "PAGE_PACK_250K" as AddOnType, pages: 250000, price: 149 },
+]
+
+const PAGE_ADDON_TYPES: AddOnType[] = [
+  "PAGE_PACK_25K" as AddOnType,
+  "PAGE_PACK_100K" as AddOnType,
+  "PAGE_PACK_250K" as AddOnType,
+  "SCAN_PACK_100" as AddOnType,
+  "SCAN_PACK_500" as AddOnType,
+  "SCAN_PACK_1500" as AddOnType,
 ]
 
 export function ScanPackagesCard({
@@ -44,13 +53,13 @@ export function ScanPackagesCard({
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
-  const totalScans = baseScans + extraScans
-  const usagePercentage = (usedScans / totalScans) * 100
+  const totalPages = baseScans + extraScans
+  const usagePercentage = totalPages > 0 ? (usedScans / totalPages) * 100 : 0
   const isWarning = usagePercentage >= 80
   const isCritical = usagePercentage >= 95
 
-  const activeScanPacks = addOns.filter(a =>
-    a.type !== "EXTRA_SEAT" && a.status === "active"
+  const activePagePacks = addOns.filter(a =>
+    PAGE_ADDON_TYPES.includes(a.type) && a.status === "active"
   )
 
   const handlePurchase = async (type: AddOnType) => {
@@ -66,7 +75,7 @@ export function ScanPackagesCard({
       })
 
       const data = await response.json()
-      if (!response.ok) throw new Error(data.error || "Failed to purchase scan package")
+      if (!response.ok) throw new Error(data.error || "Aankoop mislukt")
       setSuccess(data.message)
 
       setTimeout(() => {
@@ -74,10 +83,8 @@ export function ScanPackagesCard({
         setSuccess(null)
       }, 2000)
     } catch (err: any) {
-      // Show user-friendly error
-      setError(err?.message || "Failed to purchase scan package")
+      setError(err?.message || "Aankoop mislukt")
 
-      // Auto-redirect if needed
       if (err?.redirectUrl) {
         setTimeout(() => window.location.href = err.redirectUrl, 2000)
       }
@@ -87,7 +94,7 @@ export function ScanPackagesCard({
   }
 
   const handleCancel = async (addonId: string) => {
-    const confirmed = confirm("Wil je dit scan pakket annuleren? Toegang blijft tot einde van de huidige betaalperiode.")
+    const confirmed = confirm("Wil je dit volume pakket annuleren? Toegang blijft tot einde van de huidige betaalperiode.")
     if (!confirmed) return
 
     setLoading(addonId)
@@ -100,7 +107,7 @@ export function ScanPackagesCard({
       })
 
       const data = await response.json()
-      if (!response.ok) throw new Error(data.error || "Failed to cancel scan package")
+      if (!response.ok) throw new Error(data.error || "Annulering mislukt")
       setSuccess(data.message)
 
       setTimeout(() => {
@@ -108,7 +115,7 @@ export function ScanPackagesCard({
         setSuccess(null)
       }, 2000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to cancel scan package")
+      setError(err instanceof Error ? err.message : "Annulering mislukt")
     } finally {
       setLoading(null)
     }
@@ -119,10 +126,10 @@ export function ScanPackagesCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Zap className="h-5 w-5" />
-          Scan Paketten
+          Pages per maand
         </CardTitle>
         <CardDescription>
-          Verhoog je maandelijkse scan limiet met extra pakketten
+          Verhoog je maandelijkse scan capaciteit met volume pakketten
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -131,7 +138,7 @@ export function ScanPackagesCard({
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-muted-foreground">Gebruik ({currentPeriod})</span>
             <span className="text-sm font-medium">
-              {usedScans.toLocaleString()} / {totalScans.toLocaleString()} scans
+              {usedScans.toLocaleString()} / {totalPages.toLocaleString()} pages
             </span>
           </div>
           <div className="w-full bg-secondary rounded-full h-3">
@@ -161,7 +168,7 @@ export function ScanPackagesCard({
           <Alert>
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              Je hebt al {usagePercentage.toFixed(0)}% van je scans gebruikt. Overweeg een extra pakket.
+              Je hebt al {usagePercentage.toFixed(0)}% van je paginalimiet gebruikt. Overweeg een volume pakket.
             </AlertDescription>
           </Alert>
         )}
@@ -170,16 +177,16 @@ export function ScanPackagesCard({
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              Je hebt bijna je scan limiet bereikt ({usagePercentage.toFixed(0)}%)! Koop extra scans om door te kunnen gaan.
+              Je hebt bijna je paginalimiet bereikt ({usagePercentage.toFixed(0)}%)! Koop extra capaciteit om door te kunnen scannen.
             </AlertDescription>
           </Alert>
         )}
 
-        {/* Active packages */}
-        {activeScanPacks.length > 0 && (
+        {/* Active packages (legacy + new) */}
+        {activePagePacks.length > 0 && (
           <div className="space-y-2">
             <h4 className="text-sm font-medium">Actieve pakketten</h4>
-            {activeScanPacks.map(addon => (
+            {activePagePacks.map(addon => (
               <div key={addon.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-600" />
@@ -207,14 +214,14 @@ export function ScanPackagesCard({
           </div>
         )}
 
-        {/* Available packages */}
+        {/* Available volume packs */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Beschikbare pakketten</h4>
+          <h4 className="text-sm font-medium">Beschikbare volume pakketten</h4>
           {isTrial ? (
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                Upgrade naar een betaald plan om extra scan pakketten te kunnen kopen.
+                Upgrade naar een betaald plan om volume pakketten te kunnen kopen.
                 <a href="/pricing" className="ml-2 underline font-medium">
                   Bekijk plannen →
                 </a>
@@ -222,9 +229,8 @@ export function ScanPackagesCard({
             </Alert>
           ) : (
             <div className="grid gap-2">
-              {SCAN_PACKAGES.map(pkg => {
-                const isActive = activeScanPacks.some(a => a.type === pkg.type)
-                const pricing = ADDON_PRICING[pkg.type]
+              {VOLUME_PACKS.map(pkg => {
+                const isActive = activePagePacks.some(a => a.type === pkg.type)
 
                 return (
                   <div
@@ -235,10 +241,10 @@ export function ScanPackagesCard({
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <p className="font-medium">+{pkg.scans.toLocaleString()} scans</p>
+                        <p className="font-medium">+{pkg.pages.toLocaleString()} pages/maand</p>
                         {isActive && <Badge variant="secondary">Actief</Badge>}
                       </div>
-                      <p className="text-sm text-muted-foreground">{pricing.description}</p>
+                      <p className="text-sm text-muted-foreground">{ADDON_PRICING[pkg.type].description}</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-right">

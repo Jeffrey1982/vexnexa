@@ -1,6 +1,7 @@
 import { ENTITLEMENTS } from "./plans"
 import { prisma } from "../prisma"
-import { calculateExtraScans, calculateExtraSeats } from "./addons"
+import { calculateExtraScans, calculateExtraSeats, calculateExtraWebsites, hasActiveAssurance } from "./addons"
+import { planIncludesAssurance, type PlanKey } from "../pricing"
 
 export function getEntitlements<P extends keyof typeof ENTITLEMENTS>(plan: P): (typeof ENTITLEMENTS)[P] {
   return ENTITLEMENTS[plan]
@@ -25,19 +26,26 @@ export async function getTotalEntitlements(userId: string): Promise<Record<strin
   // Calculate add-ons
   const extraScans = calculateExtraScans(user.addOns)
   const extraSeats = calculateExtraSeats(user.addOns)
+  const extraWebsites = calculateExtraWebsites(user.addOns)
+  const assuranceActive = (plan !== "TRIAL" && planIncludesAssurance(plan as import("../pricing").PlanKey)) || user.hasAssurance || hasActiveAssurance(user.addOns)
 
   return {
     ...baseEntitlements,
+    sites: baseEntitlements.sites + extraWebsites,
     pagesPerMonth: baseEntitlements.pagesPerMonth + extraScans,
     users: baseEntitlements.users + extraSeats,
+    hasAssurance: assuranceActive,
     // Track what came from where for transparency
     base: {
+      sites: baseEntitlements.sites,
       pagesPerMonth: baseEntitlements.pagesPerMonth,
       users: baseEntitlements.users,
     },
     addOns: {
+      sites: extraWebsites,
       pagesPerMonth: extraScans,
       users: extraSeats,
+      assurance: assuranceActive,
     }
   }
 }

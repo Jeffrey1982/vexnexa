@@ -1,52 +1,66 @@
 /**
  * VexNexa Pricing Configuration
  *
- * This file contains all pricing data, billing cycles, and discount logic.
- * Clean 3-tier SaaS pricing with automatic discounts for longer billing cycles.
+ * 4-tier SaaS pricing: Starter, Pro, Business, Enterprise
+ * Billing cycles: monthly + yearly (semiannual removed)
+ * Add-ons: Extra Website Packs, Page Volume Packs, Assurance
  */
 
-export type BillingCycle = 'monthly' | 'semiannual' | 'annual';
-export type PlanKey = 'STARTER' | 'PRO' | 'BUSINESS';
+export type BillingCycle = 'monthly' | 'yearly';
+export type PlanKey = 'STARTER' | 'PRO' | 'BUSINESS' | 'ENTERPRISE';
 
 export interface PlanPrice {
   monthly: number;
-  semiannual: {
-    total: number;
-    perMonth: number;
-    discount: number;
-  };
-  annual: {
+  yearly: {
     total: number;
     perMonth: number;
     discount: number;
   };
 }
 
-/**
- * Base monthly prices (EUR, ending with .99 for psychological pricing)
- */
+/* ─── Base monthly prices (EUR) ─── */
 export const BASE_PRICES: Record<PlanKey, number> = {
-  STARTER: 19.99,
-  PRO: 49.99,
-  BUSINESS: 99.99,
+  STARTER: 24.99,
+  PRO: 59.99,
+  BUSINESS: 129.00,
+  ENTERPRISE: 299.00,
 } as const;
 
-/**
- * Fixed 6-month prices with custom discounts
- */
-export const SEMIANNUAL_PRICES: Record<PlanKey, number> = {
-  STARTER: 109.99,   // 8.3% discount
-  PRO: 274.99,       // 8.3% discount
-  BUSINESS: 549.99,  // 8.3% discount
-} as const;
-
-/**
- * Fixed annual prices with custom discounts
- */
+/* ─── Fixed annual prices ─── */
 export const ANNUAL_PRICES: Record<PlanKey, number> = {
-  STARTER: 209.99,   // 12.5% discount
-  PRO: 529.99,       // 11.7% discount
-  BUSINESS: 999.00,  // 16.7% discount
+  STARTER: 249.00,   // ~17% discount
+  PRO: 599.00,       // ~17% discount
+  BUSINESS: 1299.00, // ~16% discount
+  ENTERPRISE: 0,     // Custom billing
+} as const;
+
+/* ─── Extra Website Pack prices (monthly) ─── */
+export const WEBSITE_PACK_PRICES = {
+  EXTRA_WEBSITE_1:  15.00,
+  EXTRA_WEBSITE_5:  59.00,
+  EXTRA_WEBSITE_10: 99.00,
+} as const;
+
+/* ─── Page Volume Pack prices (monthly) ─── */
+export const PAGE_PACK_PRICES = {
+  PAGE_PACK_25K:  29.00,
+  PAGE_PACK_100K: 79.00,
+  PAGE_PACK_250K: 149.00,
+} as const;
+
+/* ─── Assurance add-on prices (monthly, per tier) ─── */
+export const ASSURANCE_ADDON_PRICES: Partial<Record<PlanKey, number>> = {
+  STARTER: 9.00,
+  PRO: 19.00,
+  // BUSINESS & ENTERPRISE: included
+} as const;
+
+/* ─── History retention per tier (months) ─── */
+export const HISTORY_MONTHS: Record<PlanKey, number> = {
+  STARTER: 6,
+  PRO: 12,
+  BUSINESS: 24,
+  ENTERPRISE: 36,
 } as const;
 
 /**
@@ -54,43 +68,18 @@ export const ANNUAL_PRICES: Record<PlanKey, number> = {
  */
 export function getDiscountPercentage(planKey: PlanKey, cycle: BillingCycle): number {
   if (cycle === 'monthly') return 0;
+  if (planKey === 'ENTERPRISE') return 0; // custom billing
 
-  const basePrice = BASE_PRICES[planKey];
-  const months = cycle === 'semiannual' ? 6 : 12;
-  const fullPrice = basePrice * months;
-  const discountedPrice = cycle === 'semiannual'
-    ? SEMIANNUAL_PRICES[planKey]
-    : ANNUAL_PRICES[planKey];
-
-  return Math.round(((fullPrice - discountedPrice) / fullPrice) * 100);
-}
-
-/**
- * Get semi-annual price for a plan
- */
-export function getSemiAnnualPrice(planKey: PlanKey): number {
-  return SEMIANNUAL_PRICES[planKey];
-}
-
-/**
- * Get annual price for a plan
- */
-export function getAnnualPrice(planKey: PlanKey): number {
-  return ANNUAL_PRICES[planKey];
+  const fullPrice = BASE_PRICES[planKey] * 12;
+  const annualPrice = ANNUAL_PRICES[planKey];
+  return Math.round(((fullPrice - annualPrice) / fullPrice) * 100);
 }
 
 /**
  * Calculate price for a given plan and billing cycle
  */
 export function calculatePrice(planKey: PlanKey, cycle: BillingCycle): number {
-  if (cycle === 'monthly') {
-    return BASE_PRICES[planKey];
-  }
-
-  if (cycle === 'semiannual') {
-    return SEMIANNUAL_PRICES[planKey];
-  }
-
+  if (cycle === 'monthly') return BASE_PRICES[planKey];
   return ANNUAL_PRICES[planKey];
 }
 
@@ -99,20 +88,14 @@ export function calculatePrice(planKey: PlanKey, cycle: BillingCycle): number {
  */
 export function getPlanPricing(planKey: PlanKey): PlanPrice {
   const monthly = BASE_PRICES[planKey];
-  const semiannual = SEMIANNUAL_PRICES[planKey];
   const annual = ANNUAL_PRICES[planKey];
 
   return {
     monthly,
-    semiannual: {
-      total: semiannual,
-      perMonth: semiannual / 6,
-      discount: getDiscountPercentage(planKey, 'semiannual'),
-    },
-    annual: {
+    yearly: {
       total: annual,
-      perMonth: annual / 12,
-      discount: getDiscountPercentage(planKey, 'annual'),
+      perMonth: annual > 0 ? annual / 12 : 0,
+      discount: getDiscountPercentage(planKey, 'yearly'),
     },
   };
 }
@@ -143,27 +126,19 @@ export function formatPriceDisplay(
 } {
   const pricing = getPlanPricing(planKey);
 
-  switch (cycle) {
-    case 'monthly':
-      return {
-        mainPrice: formatEuro(pricing.monthly, locale),
-        period: '/month',
-      };
-
-    case 'semiannual':
-      return {
-        mainPrice: formatEuro(pricing.semiannual.total, locale),
-        period: '/6 months',
-        subtext: `${formatEuro(pricing.semiannual.perMonth, locale)}/month`,
-      };
-
-    case 'annual':
-      return {
-        mainPrice: formatEuro(pricing.annual.total, locale),
-        period: '/year',
-        subtext: `${formatEuro(pricing.annual.perMonth, locale)}/month`,
-      };
+  if (planKey === 'ENTERPRISE') {
+    return { mainPrice: formatEuro(pricing.monthly, locale), period: '/month', subtext: 'Custom billing available' };
   }
+
+  if (cycle === 'yearly') {
+    return {
+      mainPrice: formatEuro(pricing.yearly.total, locale),
+      period: '/year',
+      subtext: `${formatEuro(pricing.yearly.perMonth, locale)}/month`,
+    };
+  }
+
+  return { mainPrice: formatEuro(pricing.monthly, locale), period: '/month' };
 }
 
 /**
@@ -171,50 +146,75 @@ export function formatPriceDisplay(
  */
 export function getDiscountBadge(cycle: BillingCycle, planKey?: PlanKey): string | null {
   if (cycle === 'monthly') return null;
+  if (planKey === 'ENTERPRISE') return null;
 
-  // If planKey is provided, calculate specific discount
   if (planKey) {
     const discount = getDiscountPercentage(planKey, cycle);
-    return `Save ${discount}%`;
+    return discount > 0 ? `Save ${discount}%` : null;
   }
 
-  // Generic discount for cycle (use typical discount as reference)
-  if (cycle === 'semiannual') return 'Save up to 8%';
-  if (cycle === 'annual') return 'Save up to 17%';
-
-  return null;
+  return 'Save up to 17%';
 }
 
 /**
  * Get CTA button text based on billing cycle and plan
  */
 export function getCTAText(cycle: BillingCycle, planKey?: PlanKey): string {
-  // Plan-specific CTAs
   if (planKey === 'STARTER') return 'Get Started';
   if (planKey === 'PRO') return 'Upgrade Now';
   if (planKey === 'BUSINESS') return 'Scale Your Agency';
+  if (planKey === 'ENTERPRISE') return 'Contact Sales';
 
-  // Generic cycle-based CTAs
-  switch (cycle) {
-    case 'monthly':
-      return 'Start Monthly Plan';
-    case 'semiannual':
-      return 'Start 6-Month Plan';
-    case 'annual':
-      return 'Start Annual Plan';
-  }
+  return cycle === 'monthly' ? 'Start Monthly Plan' : 'Start Annual Plan';
 }
 
 /**
- * Legacy compatibility - keep old PRICES export for existing code
+ * Whether a plan includes Assurance for free
+ */
+export function planIncludesAssurance(planKey: PlanKey): boolean {
+  return planKey === 'BUSINESS' || planKey === 'ENTERPRISE';
+}
+
+/**
+ * Get assurance add-on price for a tier (0 if included)
+ */
+export function getAssurancePrice(planKey: PlanKey): number {
+  if (planIncludesAssurance(planKey)) return 0;
+  return ASSURANCE_ADDON_PRICES[planKey] ?? 0;
+}
+
+/**
+ * Calculate total monthly price including add-ons
+ */
+export function calculateTotalMonthly(opts: {
+  planKey: PlanKey;
+  extraWebsitePack?: keyof typeof WEBSITE_PACK_PRICES | null;
+  assurance?: boolean;
+}): number {
+  let total = BASE_PRICES[opts.planKey];
+
+  if (opts.extraWebsitePack) {
+    total += WEBSITE_PACK_PRICES[opts.extraWebsitePack];
+  }
+
+  if (opts.assurance && !planIncludesAssurance(opts.planKey)) {
+    total += getAssurancePrice(opts.planKey);
+  }
+
+  return total;
+}
+
+/**
+ * Legacy compatibility — keep old PRICES export for existing code
  */
 export const PRICES = {
-  STARTER: { amount: "19.99", currency: "EUR", interval: "1 month" },
-  PRO: { amount: "49.99", currency: "EUR", interval: "1 month" },
-  BUSINESS: { amount: "99.99", currency: "EUR", interval: "1 month" },
+  STARTER: { amount: "24.99", currency: "EUR", interval: "1 month" },
+  PRO: { amount: "59.99", currency: "EUR", interval: "1 month" },
+  BUSINESS: { amount: "129.00", currency: "EUR", interval: "1 month" },
+  ENTERPRISE: { amount: "299.00", currency: "EUR", interval: "1 month" },
 } as const;
 
-export function formatPrice(plan: keyof typeof PRICES) {
+export function formatPrice(plan: keyof typeof PRICES): string {
   const price = PRICES[plan];
   return `€${price.amount}/${price.interval.split(' ')[1]}`;
 }

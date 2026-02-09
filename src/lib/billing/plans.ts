@@ -1,7 +1,8 @@
 export const PRICES = {
-  STARTER: { amount: "19.99", currency: "EUR", interval: "1 month" },
-  PRO:     { amount: "49.99", currency: "EUR", interval: "1 month" },
-  BUSINESS:{ amount: "99.99", currency: "EUR", interval: "1 month" },
+  STARTER:    { amount: "24.99",  currency: "EUR", interval: "1 month" },
+  PRO:        { amount: "59.99",  currency: "EUR", interval: "1 month" },
+  BUSINESS:   { amount: "129.00", currency: "EUR", interval: "1 month" },
+  ENTERPRISE: { amount: "299.00", currency: "EUR", interval: "1 month" },
 } as const
 
 // Overflow pricing - charges when plan limits are exceeded
@@ -21,17 +22,22 @@ export type Entitlements = {
   crawl: boolean;
   integrations: string[]; 
   whiteLabel?: boolean;
+  historyMonths: number;
+  prioritySupport?: boolean;
+  sla?: boolean;
+  accountManager?: boolean;
 }
 
-export const ENTITLEMENTS: Record<"TRIAL"|"STARTER"|"PRO"|"BUSINESS", Entitlements> = {
-  TRIAL:     { sites: 1,  pagesPerMonth: 100,   users: 1,  pdf: true,  word: false, schedule: false, crawl: false, integrations: [] },
-  STARTER:   { sites: 1,  pagesPerMonth: 500,   users: 1,  pdf: true,  word: false, schedule: false, crawl: true,  integrations: [] },
-  PRO:       { sites: 3,  pagesPerMonth: 5000,  users: 5,  pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira"] },
-  BUSINESS:  { sites: 10, pagesPerMonth: 25000, users: 15, pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira","teams"], whiteLabel: true },
+export const ENTITLEMENTS: Record<"TRIAL"|"STARTER"|"PRO"|"BUSINESS"|"ENTERPRISE", Entitlements> = {
+  TRIAL:      { sites: 1,  pagesPerMonth: 100,    users: 1,  pdf: true,  word: false, schedule: false, crawl: false, integrations: [],                          historyMonths: 1 },
+  STARTER:    { sites: 1,  pagesPerMonth: 500,    users: 1,  pdf: true,  word: false, schedule: false, crawl: true,  integrations: [],                          historyMonths: 6 },
+  PRO:        { sites: 3,  pagesPerMonth: 5000,   users: 5,  pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira"],             historyMonths: 12, prioritySupport: true },
+  BUSINESS:   { sites: 10, pagesPerMonth: 25000,  users: 15, pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira","teams"],     historyMonths: 24, whiteLabel: true, prioritySupport: true },
+  ENTERPRISE: { sites: 25, pagesPerMonth: 100000, users: 999,pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira","teams","api"],historyMonths: 36, whiteLabel: true, prioritySupport: true, sla: true, accountManager: true },
 }
 
 export function planKeyFromString(p: string) {
-  return (["TRIAL","STARTER","PRO","BUSINESS"] as const).includes(p as any) ? p as any : "TRIAL"
+  return (["TRIAL","STARTER","PRO","BUSINESS","ENTERPRISE"] as const).includes(p as any) ? p as any : "TRIAL"
 }
 
 export function formatPrice(plan: keyof typeof PRICES) {
@@ -43,5 +49,6 @@ export const PLAN_NAMES = {
   TRIAL: 'Trial',
   STARTER: 'Starter',
   PRO: 'Pro', 
-  BUSINESS: 'Business'
+  BUSINESS: 'Business',
+  ENTERPRISE: 'Enterprise',
 } as const
