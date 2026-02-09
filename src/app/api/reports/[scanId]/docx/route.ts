@@ -6,6 +6,7 @@ import {
   resolveWhiteLabelConfig,
   extractQueryOverrides,
   fetchImageAsBuffer,
+  getStoredWhiteLabel,
 } from "@/lib/report";
 import type { ReportData, ReportIssue, Severity } from "@/lib/report/types";
 import {
@@ -347,10 +348,11 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Resolve white-label config (query params > stored > defaults)
+    // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);
     const qp = extractQueryOverrides(url);
-    const resolved = resolveWhiteLabelConfig(qp);
+    const storedWL = await getStoredWhiteLabel(user.id);
+    const resolved = resolveWhiteLabelConfig(qp, storedWL);
 
     // Fetch logo as buffer for DOCX embedding
     let logoBuffer: Buffer | null = null;

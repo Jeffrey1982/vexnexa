@@ -19,6 +19,7 @@ export async function GET(
       resolveWhiteLabelConfig,
       extractQueryOverrides,
       fetchImageAsDataUrl,
+      getStoredWhiteLabel,
     } = await import("@/lib/report");
 
     // Auth
@@ -40,10 +41,11 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Resolve white-label config (query params > stored > defaults)
+    // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);
     const qp = extractQueryOverrides(url);
-    const resolved = resolveWhiteLabelConfig(qp);
+    const storedWL = await getStoredWhiteLabel(user.id);
+    const resolved = resolveWhiteLabelConfig(qp, storedWL);
 
     // Embed logo as data URL so it renders in print/PDF
     if (resolved.whiteLabelConfig.logoUrl) {

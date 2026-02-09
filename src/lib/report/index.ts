@@ -12,6 +12,7 @@ export type {
   ResolvedWhiteLabel,
 } from "./resolve-white-label";
 export { fetchImageAsDataUrl, fetchImageAsBuffer } from "./fetch-image";
+export { getStoredWhiteLabel } from "./get-stored-white-label";
 export type {
   ReportData,
   ReportThemeConfig,
