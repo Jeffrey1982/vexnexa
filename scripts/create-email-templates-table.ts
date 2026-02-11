@@ -28,6 +28,14 @@ async function main(): Promise<void> {
   `);
   console.log('Index created (or already exists).');
 
+  await prisma.$executeRawUnsafe(`ALTER TABLE email_templates DISABLE ROW LEVEL SECURITY;`);
+  console.log('RLS disabled on email_templates.');
+
+  await prisma.$executeRawUnsafe(`
+    GRANT ALL ON email_templates TO anon, authenticated, service_role;
+  `);
+  console.log('Permissions granted.');
+
   console.log('Done! email_templates table is ready.');
 }
 
