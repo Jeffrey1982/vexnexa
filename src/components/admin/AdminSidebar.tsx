@@ -36,6 +36,9 @@ import {
   MessageSquare,
   ClipboardList,
   Inbox,
+  Megaphone,
+  Building2,
+  Upload,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -54,7 +57,7 @@ interface NavGroup {
 export function AdminSidebar() {
   const pathname = usePathname();
   // Keep all groups permanently expanded for better UX in sidebar
-  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Mail', 'Support', 'SEO Health']);
+  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Mail', 'Outreach', 'Support', 'SEO Health']);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -130,6 +133,17 @@ export function AdminSidebar() {
         { href: '/admin/email/templates', label: 'Templates', icon: LayoutTemplate },
         { href: '/admin/email/send-test', label: 'Send Test', icon: SendHorizonal },
         { href: '/admin/email/domains', label: 'Domains & DNS', icon: ServerCog },
+      ]
+    },
+    {
+      label: 'Outreach',
+      icon: Megaphone,
+      items: [
+        { href: '/admin/outreach', label: 'Overview', icon: Megaphone },
+        { href: '/admin/outreach/companies', label: 'Companies', icon: Building2 },
+        { href: '/admin/outreach/contacts', label: 'Contacts', icon: Users },
+        { href: '/admin/outreach/import', label: 'Import CSV', icon: Upload },
+        { href: '/admin/outreach/campaigns', label: 'Campaigns', icon: SendHorizonal },
       ]
     },
     {
