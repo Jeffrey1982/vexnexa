@@ -28,8 +28,6 @@ const PAGE_SIZE = 25;
 export default async function TemplatesPage() {
   try { await requireAuth(); } catch { redirect("/auth/login?redirect=/admin/email/templates"); }
 
-  const adminSecret: string = process.env.ADMIN_DASH_SECRET ?? "";
-
   if (!hasAdminSecret()) {
     return (
       <div className="p-8 flex justify-center">
@@ -57,7 +55,6 @@ export default async function TemplatesPage() {
     <TemplatesClient
       initialTemplates={templates}
       initialTotal={total}
-      adminSecret={adminSecret}
       pageSize={PAGE_SIZE}
     />
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,12 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import {
+  fetchTemplates,
+  createTemplate,
+  updateTemplate,
+  deleteTemplate as deleteTemplateAction,
+} from './actions';
 
 interface EmailTemplate {
   id: string;
@@ -32,14 +38,12 @@ interface EmailTemplate {
 interface TemplatesClientProps {
   initialTemplates: EmailTemplate[];
   initialTotal: number;
-  adminSecret: string;
   pageSize: number;
 }
 
 export default function TemplatesClient({
   initialTemplates,
   initialTotal,
-  adminSecret,
   pageSize,
 }: TemplatesClientProps) {
   // ── State ──────────────────────────────────────────────────────────
@@ -64,45 +68,25 @@ export default function TemplatesClient({
   // Preview
   const [previewHtml, setPreviewHtml] = useState<string | null>(null);
   const [previewSubject, setPreviewSubject] = useState<string>('');
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const totalPages: number = Math.max(1, Math.ceil(total / pageSize));
 
   // ── Helpers ────────────────────────────────────────────────────────
-  const apiFetch = useCallback(
-    async (path: string, init?: RequestInit) => {
-      const res = await fetch(path, {
-        ...init,
-        headers: {
-          'x-admin-secret': adminSecret,
-          'Content-Type': 'application/json',
-          ...(init?.headers ?? {}),
-        },
-      });
-      if (!res.ok) {
-        const body = await res.text().catch(() => '');
-        throw new Error(body || `API error ${res.status}`);
-      }
-      return res.json();
-    },
-    [adminSecret]
-  );
-
   const fetchPage = useCallback(
     async (page: number) => {
       try {
         const offset = (page - 1) * pageSize;
-        const data = await apiFetch(
-          `/api/admin/email/templates?limit=${pageSize}&offset=${offset}`
-        );
-        setTemplates(data.templates ?? []);
-        setTotal(data.total ?? 0);
-        setCurrentPage(page);
+        const result = await fetchTemplates(pageSize, offset);
+        if (result.ok && result.data) {
+          setTemplates(result.data.templates ?? []);
+          setTotal(result.data.total ?? 0);
+          setCurrentPage(page);
+        }
       } catch (e: unknown) {
         console.error('Failed to fetch templates:', e);
       }
     },
-    [apiFetch, pageSize]
+    [pageSize]
   );
 
   const clearForm = () => {
@@ -130,19 +114,17 @@ export default function TemplatesClient({
     setError(null);
 
     try {
+      let result;
       if (formMode === 'edit' && editId) {
-        await apiFetch('/api/admin/email/templates', {
-          method: 'PUT',
-          body: JSON.stringify({ id: editId, name, subject, html, text }),
-        });
-        flash('Template updated.');
+        result = await updateTemplate({ id: editId, name, subject, html, text });
       } else {
-        await apiFetch('/api/admin/email/templates', {
-          method: 'POST',
-          body: JSON.stringify({ name, subject, html, text }),
-        });
-        flash('Template created.');
+        result = await createTemplate({ name, subject, html, text });
       }
+      if (!result.ok) {
+        setError(result.error || 'Save failed');
+        return;
+      }
+      flash(formMode === 'edit' ? 'Template updated.' : 'Template created.');
       clearForm();
       await fetchPage(currentPage);
     } catch (e: unknown) {
@@ -158,7 +140,11 @@ export default function TemplatesClient({
     if (!confirm('Delete this template permanently?')) return;
     setDeleting(id);
     try {
-      await apiFetch(`/api/admin/email/templates?id=${id}`, { method: 'DELETE' });
+      const result = await deleteTemplateAction(id);
+      if (!result.ok) {
+        alert(result.error || 'Failed to delete template.');
+        return;
+      }
       flash('Template deleted.');
       await fetchPage(currentPage);
     } catch (e: unknown) {
