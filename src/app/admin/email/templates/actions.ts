@@ -1,6 +1,6 @@
 'use server';
 
-import { adminFetch } from '@/lib/adminFetch';
+import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
 interface EmailTemplate {
   id: string;
@@ -29,10 +29,18 @@ export async function fetchTemplates(
   offset: number
 ): Promise<ActionResult<TemplatesResponse>> {
   try {
-    const data = await adminFetch<TemplatesResponse>(
-      `/api/admin/email/templates?limit=${limit}&offset=${offset}`
-    );
-    return { ok: true, data };
+    const { data, count, error } = await supabaseAdmin
+      .from('email_templates')
+      .select('*', { count: 'exact' })
+      .order('updated_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (error) {
+      console.error('[actions/fetchTemplates]', error);
+      return { ok: false, error: error.message };
+    }
+
+    return { ok: true, data: { templates: data ?? [], total: count ?? 0 } };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Failed to fetch templates';
     return { ok: false, error: msg };
@@ -46,11 +54,28 @@ export async function createTemplate(payload: {
   text: string;
 }): Promise<ActionResult<EmailTemplate>> {
   try {
-    const data = await adminFetch<{ template: EmailTemplate }>(
-      '/api/admin/email/templates',
-      { method: 'POST', body: JSON.stringify(payload) }
-    );
-    return { ok: true, data: data.template };
+    if (!payload.name?.trim()) {
+      return { ok: false, error: 'Template name is required' };
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from('email_templates')
+      .insert({
+        name: payload.name,
+        subject: payload.subject ?? '',
+        html: payload.html ?? '',
+        text: payload.text ?? '',
+        variables: [],
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[actions/createTemplate]', error);
+      return { ok: false, error: error.message };
+    }
+
+    return { ok: true, data };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Failed to create template';
     return { ok: false, error: msg };
@@ -65,11 +90,29 @@ export async function updateTemplate(payload: {
   text: string;
 }): Promise<ActionResult<EmailTemplate>> {
   try {
-    const data = await adminFetch<{ template: EmailTemplate }>(
-      '/api/admin/email/templates',
-      { method: 'PUT', body: JSON.stringify(payload) }
-    );
-    return { ok: true, data: data.template };
+    if (!payload.id) {
+      return { ok: false, error: 'Template id is required' };
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from('email_templates')
+      .update({
+        name: payload.name,
+        subject: payload.subject,
+        html: payload.html,
+        text: payload.text,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', payload.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[actions/updateTemplate]', error);
+      return { ok: false, error: error.message };
+    }
+
+    return { ok: true, data };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Failed to update template';
     return { ok: false, error: msg };
@@ -80,10 +123,20 @@ export async function deleteTemplate(
   id: string
 ): Promise<ActionResult> {
   try {
-    await adminFetch<{ success: boolean }>(
-      `/api/admin/email/templates?id=${id}`,
-      { method: 'DELETE' }
-    );
+    if (!id) {
+      return { ok: false, error: 'Template id is required' };
+    }
+
+    const { error } = await supabaseAdmin
+      .from('email_templates')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('[actions/deleteTemplate]', error);
+      return { ok: false, error: error.message };
+    }
+
     return { ok: true };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Failed to delete template';
