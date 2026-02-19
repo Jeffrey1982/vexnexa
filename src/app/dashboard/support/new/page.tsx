@@ -80,11 +80,13 @@ export default function NewTicketPage() {
         </div>
 
         {/* Error Alert */}
-        {error && (
-          <Alert variant="destructive" className="mb-6">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
+        <div aria-live="assertive" aria-atomic="true">
+          {error && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </div>
 
         {/* Form */}
         <Card>

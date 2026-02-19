@@ -125,11 +125,13 @@ export default function NewSitePage() {
                 </p>
               </div>
 
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
+              <div aria-live="assertive" aria-atomic="true">
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+              </div>
 
               <div className="flex gap-4">
                 <Button
