@@ -152,7 +152,10 @@ export function ViolationMapper({ violations, websiteUrl, className }: Violation
                   <div
                     key={index}
                     className="border rounded-md p-3 hover:bg-muted/50 cursor-pointer transition-colors"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setSelectedViolation(mapped)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedViolation(mapped); } }}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-2">

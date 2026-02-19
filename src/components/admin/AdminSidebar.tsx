@@ -187,6 +187,7 @@ export function AdminSidebar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
+                aria-current={active ? 'page' : undefined}
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
                   active
@@ -231,6 +232,7 @@ export function AdminSidebar() {
                           key={item.href}
                           href={item.href}
                           onClick={() => setMobileOpen(false)}
+                          aria-current={itemActive ? 'page' : undefined}
                           className={cn(
                             'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
                             itemActive
@@ -258,6 +260,9 @@ export function AdminSidebar() {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
+        aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={mobileOpen}
+        aria-controls="admin-sidebar"
         className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white dark:bg-card rounded-lg shadow-lg border border-gray-200 dark:border-border"
       >
         {mobileOpen ? (
@@ -277,6 +282,9 @@ export function AdminSidebar() {
 
       {/* Sidebar */}
       <aside
+        id="admin-sidebar"
+        role="navigation"
+        aria-label="Admin navigation"
         className={cn(
           'fixed top-0 left-0 z-50 h-screen bg-white dark:bg-card border-r border-gray-200 dark:border-border transition-transform pointer-events-auto',
           'w-72',

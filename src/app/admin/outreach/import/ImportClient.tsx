@@ -120,7 +120,10 @@ export default function ImportClient() {
           <div className="flex flex-col items-center gap-4">
             <div
               className="w-full border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl p-8 text-center cursor-pointer hover:border-[var(--vn-primary)] transition-colors"
+              role="button"
+              tabIndex={0}
               onClick={() => fileRef.current?.click()}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileRef.current?.click(); } }}
             >
               <FileSpreadsheet className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
               <p className="text-sm font-medium">{fileName || 'Click to select a CSV file'}</p>

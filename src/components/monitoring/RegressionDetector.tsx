@@ -265,7 +265,10 @@ export function RegressionDetector({ className }: RegressionDetectorProps) {
                     "p-4 rounded-lg border transition-colors cursor-pointer hover:bg-muted/50",
                     getSeverityColor(regression.severity)
                   )}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setSelectedRegression(regression)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedRegression(regression); } }}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3 min-w-0 flex-1">

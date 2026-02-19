@@ -80,10 +80,11 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label htmlFor="crawl-max-pages" className="block text-sm font-medium text-foreground mb-1">
                 Max Pages
               </label>
               <input
+                id="crawl-max-pages"
                 type="number"
                 value={maxPages}
                 onChange={(e) => setMaxPages(parseInt(e.target.value) || 50)}
@@ -97,10 +98,11 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label htmlFor="crawl-max-depth" className="block text-sm font-medium text-foreground mb-1">
                 Max Depth
               </label>
               <input
+                id="crawl-max-depth"
                 type="number"
                 value={maxDepth}
                 onChange={(e) => setMaxDepth(parseInt(e.target.value) || 3)}

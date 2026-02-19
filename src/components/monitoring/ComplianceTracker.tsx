@@ -291,7 +291,10 @@ export function ComplianceTracker({ className }: ComplianceTrackerProps) {
                 <div
                   key={site.siteId}
                   className="p-4 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer"
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setSelectedSite(site)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedSite(site); } }}
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">

@@ -359,7 +359,10 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
+                role="button"
+                tabIndex={0}
                 onClick={() => toggleUser(user.id)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleUser(user.id); } }}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 flex items-center justify-center">
