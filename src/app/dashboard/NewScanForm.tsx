@@ -99,12 +99,14 @@ export function NewScanForm() {
         </TouchButton>
       </div>
 
-      {error && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
+      <div aria-live="assertive" aria-atomic="true">
+        {error && (
+          <Alert variant="destructive" id="scan-error">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+      </div>
 
       <div className="space-y-2">
         <p className="text-xs text-muted-foreground">

@@ -659,11 +659,13 @@ export default function ModernRegistrationForm() {
       <CardContent className="space-y-6">
         {renderCurrentStep()}
         
-        {error && (
-          <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
+        <div aria-live="assertive" aria-atomic="true">
+          {error && (
+            <Alert variant="destructive" id="register-error">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </div>
 
         <div className="flex justify-between gap-4">
           <Button

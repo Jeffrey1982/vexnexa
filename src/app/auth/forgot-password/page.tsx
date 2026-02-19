@@ -105,15 +105,18 @@ export default function ForgotPasswordPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       placeholder={t('emailPlaceholder')}
+                      aria-describedby="forgot-error"
                       className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200"
                     />
                   </div>
 
-                  {error && (
-                    <Alert variant="destructive" className="animate-in slide-in-from-top-1">
-                      <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                  )}
+                  <div aria-live="assertive" aria-atomic="true">
+                    {error && (
+                      <Alert variant="destructive" className="animate-in slide-in-from-top-1" id="forgot-error">
+                        <AlertDescription>{error}</AlertDescription>
+                      </Alert>
+                    )}
+                  </div>
 
                   <Button
                     type="submit"

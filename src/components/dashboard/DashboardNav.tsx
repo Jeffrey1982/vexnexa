@@ -104,6 +104,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    aria-current={isActive(item.href) ? 'page' : undefined}
                     className={cn(
                       'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
                       'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
@@ -122,6 +123,8 @@ export default function DashboardNav({ user }: DashboardNavProps) {
               <div className="relative">
                 <button
                   onClick={() => setSettingsOpen(!settingsOpen)}
+                  aria-expanded={settingsOpen}
+                  aria-haspopup="true"
                   className={cn(
                     'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
                     pathname?.startsWith('/settings')
@@ -146,6 +149,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                           key={item.href}
                           href={item.href}
                           onClick={() => setSettingsOpen(false)}
+                          aria-current={isActive(item.href) ? 'page' : undefined}
                           className={cn(
                             'flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200',
                             isActive(item.href)
@@ -219,6 +223,8 @@ export default function DashboardNav({ user }: DashboardNavProps) {
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
               className="inline-flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 focus:outline-none transition-colors"
             >
               {mobileMenuOpen ? (
@@ -242,6 +248,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
                   className={cn(
                     'flex items-center px-3 py-2 text-base font-medium rounded-md',
                     isActive(item.href)
@@ -267,6 +274,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
+                    aria-current={isActive(item.href) ? 'page' : undefined}
                     className={cn(
                       'flex items-center px-3 py-2 text-base font-medium rounded-md',
                       isActive(item.href)
