@@ -41,11 +41,13 @@ export function TicketReplyForm({ ticketId }: { ticketId: string }) {
         <CardTitle>Reply to Ticket</CardTitle>
       </CardHeader>
       <CardContent>
-        {error && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
+        <div aria-live="assertive" aria-atomic="true">
+          {error && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <Textarea

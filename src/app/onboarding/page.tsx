@@ -369,11 +369,13 @@ export default function OnboardingPage() {
                 </div>
               </div>
 
-              {error && (
-                <Alert variant="destructive" className="animate-in slide-in-from-top-1">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
+              <div aria-live="assertive" aria-atomic="true">
+                {error && (
+                  <Alert variant="destructive" className="animate-in slide-in-from-top-1">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+              </div>
 
               {/* Trial Info */}
               <div className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 dark:from-blue-950 dark:to-purple-950 dark:border-blue-800">

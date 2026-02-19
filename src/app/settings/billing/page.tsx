@@ -319,19 +319,23 @@ export default function BillingPage() {
         </div>
 
         {/* Alerts */}
-        {error && (
-          <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
+        <div aria-live="assertive" aria-atomic="true">
+          {error && (
+            <Alert variant="destructive">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </div>
 
-        {success && (
-          <Alert variant="default">
-            <CheckCircle className="h-4 w-4" />
-            <AlertDescription>{success}</AlertDescription>
-          </Alert>
-        )}
+        <div aria-live="polite" aria-atomic="true">
+          {success && (
+            <Alert variant="default">
+              <CheckCircle className="h-4 w-4" />
+              <AlertDescription>{success}</AlertDescription>
+            </Alert>
+          )}
+        </div>
 
         {/* Current Plan */}
         <Card>
