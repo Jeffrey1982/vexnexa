@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { requireDevelopment } from '@/lib/dev-only'
 
 export async function GET(request: NextRequest) {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
   const diagnostics = {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,

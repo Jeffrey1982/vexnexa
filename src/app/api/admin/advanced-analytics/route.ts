@@ -1,20 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth';
+import { requireAdminAPI } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { getMollieRevenue } from '@/lib/billing/mollie-analytics';
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await requireAuth();
-
-    // Check if user is admin
-    const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-    if (!adminEmails.includes(user.email) && !user.isAdmin) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 403 }
-      );
-    }
+    const user = await requireAdminAPI();
 
     const { searchParams } = new URL(request.url);
     const range = searchParams.get('range') || '30d';
@@ -207,8 +198,8 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error: any) {
-    if (error?.message === "Authentication required") {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    if (error?.message === "Authentication required" || error?.message === "Unauthorized: Admin access required") {
+      return NextResponse.json({ success: false, error: error.message }, { status: error?.message === "Authentication required" ? 401 : 403 });
     }
     console.error('Advanced analytics error:', error);
     return NextResponse.json(

@@ -1,19 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth';
+import { requireAdminAPI } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuth();
-
-    // Check if user is admin
-    const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-    if (!adminEmails.includes(user.email) && !user.isAdmin) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 403 }
-      );
-    }
+    const user = await requireAdminAPI();
 
     const body = await request.json();
     const { userId, amount, reason } = body;

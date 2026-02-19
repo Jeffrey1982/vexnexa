@@ -1,29 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth';
+import { requireAdminAPI } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { ENTITLEMENTS } from '@/lib/billing/plans';
-
-// Simple admin check function
-async function requireAdmin() {
-  const user = await requireAuth();
-
-  // Admin emails - replace with your email
-  const adminEmails = [
-    'jeffrey.aay@gmail.com',
-    'admin@vexnexa.com'
-  ];
-
-  if (!adminEmails.includes(user.email)) {
-    throw new Error('Unauthorized: Admin access required');
-  }
-
-  return user;
-}
 
 export async function POST(req: NextRequest) {
   try {
     // Check admin access
-    await requireAdmin();
+    await requireAdminAPI();
 
     const { userId, newPlan } = await req.json();
 

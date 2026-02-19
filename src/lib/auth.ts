@@ -165,6 +165,32 @@ export async function requireAdmin() {
 }
 
 /**
+ * ADMIN AUTHORIZATION FOR API ROUTES
+ *
+ * Like requireAdmin() but throws instead of redirecting.
+ * Use in API route handlers where redirect is not appropriate.
+ *
+ * @throws Error("Authentication required") if not logged in
+ * @throws Error("Unauthorized: Admin access required") if not admin
+ */
+export async function requireAdminAPI(): Promise<any> {
+  const user = await requireAuth();
+
+  const adminEmailsEnv = process.env.ADMIN_EMAILS || '';
+  const adminEmails = adminEmailsEnv.split(',').map(email => email.trim()).filter(Boolean);
+  adminEmails.push('jeffrey.aay@gmail.com');
+
+  const admin = user.isAdmin || adminEmails.includes(user.email);
+
+  if (!admin) {
+    console.warn(`Unauthorized admin API access attempt by user: ${user.email}`);
+    throw new Error('Unauthorized: Admin access required');
+  }
+
+  return user;
+}
+
+/**
  * Check if a user is an admin without redirecting
  * Useful for conditional UI rendering
  */

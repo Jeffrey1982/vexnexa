@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth';
+import { requireAdminAPI } from '@/lib/auth';
 
 /**
  * POST /api/admin/trigger-seo-ingestion
@@ -13,15 +13,7 @@ import { requireAuth } from '@/lib/auth';
 export async function POST(request: NextRequest) {
   try {
     // Require admin authentication
-    const user = await requireAuth();
-    const adminEmails = ['jeffrey.aay@gmail.com', 'admin@vexnexa.com'];
-
-    if (!adminEmails.includes(user.email)) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Admin access required' },
-        { status: 403 }
-      );
-    }
+    await requireAdminAPI();
 
     const cronToken = process.env.CRON_TOKEN;
 

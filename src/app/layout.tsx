@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { inter, spaceGrotesk } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
@@ -33,12 +33,13 @@ export const metadata: Metadata = {
     title: 'VexNexa - Accessibility Testing Platform',
     description: 'Professional accessibility testing and compliance monitoring platform for websites',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   themeColor: '#FF6B35',
 }
 

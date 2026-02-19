@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail, type SendEmailParams } from "@/lib/mailgun";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { assertAdmin } from "@/lib/adminAuth";
 
 export const runtime = "nodejs";
 
@@ -17,6 +18,11 @@ interface SendRequestBody {
 }
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  try {
+    assertAdmin(req);
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: NO_STORE });
+  }
   return NextResponse.json(
     { ok: true, hint: "POST to send", host: req.headers.get("host") ?? "unknown" },
     { headers: NO_STORE }
@@ -24,6 +30,12 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  try {
+    assertAdmin(req);
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: NO_STORE });
+  }
+
   try {
     const body: SendRequestBody = await req.json();
 

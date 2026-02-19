@@ -186,10 +186,7 @@ export function AdminSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => {
-                  console.log('[AdminSidebar] Navigating to:', item.href, item.label);
-                  setMobileOpen(false);
-                }}
+                onClick={() => setMobileOpen(false)}
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
                   active
@@ -233,10 +230,7 @@ export function AdminSidebar() {
                         <Link
                           key={item.href}
                           href={item.href}
-                          onClick={() => {
-                            console.log('[AdminSidebar] Navigating to:', item.href, item.label);
-                            setMobileOpen(false);
-                          }}
+                          onClick={() => setMobileOpen(false)}
                           className={cn(
                             'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
                             itemActive
