@@ -153,7 +153,7 @@ describe('Billing: appUrl usage (root cause fix)', () => {
   const billing = readFile('src/lib/assurance/billing.ts');
 
   it('imports appUrl as a function from mollie module', () => {
-    expect(billing).toContain("import { mollie, appUrl } from '../mollie'");
+    expect(billing).toContain("import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from '../mollie'");
   });
 
   it('calls appUrl as a function for redirectUrl (NOT string concat)', () => {
@@ -162,8 +162,10 @@ describe('Billing: appUrl usage (root cause fix)', () => {
     expect(billing).not.toContain('`${appUrl}/dashboard');
   });
 
-  it('includes locale in payment creation', () => {
-    expect(billing).toContain('Locale.nl_NL');
+  it('does NOT hardcode locale (allows Mollie to auto-detect)', () => {
+    // Hardcoding locale restricts payment methods to a single region.
+    // Mollie auto-detects locale from the customer's browser.
+    expect(billing).not.toContain('Locale.nl_NL');
   });
 
   it('includes sessionToken in metadata', () => {

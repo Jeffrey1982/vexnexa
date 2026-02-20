@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getMollieClient } from '@/lib/mollie';
+import { getMollieClient, formatMollieAmount, isMollieTestMode } from '@/lib/mollie';
+import { calculatePrice, type PlanKey } from '@/lib/pricing';
 import { SequenceType } from '@mollie/api-client';
 
 /**
@@ -25,9 +26,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // Mollie methods.list returns all enabled methods for the profile
     // sequenceType: 'first' returns methods usable as first payment in recurring
     const mollie = getMollieClient();
+    const amount = tier ? getAmountForTier(tier, billingCycle) : undefined;
     const methods = await mollie.methods.list({
       sequenceType: SequenceType.first,
-      amount: tier ? getAmountForTier(tier, billingCycle) : undefined,
+      amount,
+      ...(amount ? { currency: 'EUR' } : {}),
     });
 
     const available: MethodInfo[] = [];
@@ -66,16 +69,16 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 }
 
 function getAmountForTier(tier: string, billingCycle: string): { value: string; currency: string } | undefined {
-  const prices: Record<string, Record<string, number>> = {
-    BASIC: { monthly: 9.99, semiannual: 55.99, annual: 101.99 },
-    PRO: { monthly: 24.99, semiannual: 137.99, annual: 254.99 },
-    PUBLIC_SECTOR: { monthly: 49.99, semiannual: 275.99, annual: 509.99 },
-  };
+  const validPlans: PlanKey[] = ['STARTER', 'PRO', 'BUSINESS', 'ENTERPRISE'];
+  if (!validPlans.includes(tier as PlanKey)) return undefined;
 
-  const price = prices[tier]?.[billingCycle];
-  if (!price) return undefined;
-
-  return { value: price.toFixed(2), currency: 'EUR' };
+  const cycle = billingCycle === 'yearly' ? 'yearly' : 'monthly';
+  try {
+    const price = calculatePrice(tier as PlanKey, cycle);
+    return { value: formatMollieAmount(price), currency: 'EUR' };
+  } catch {
+    return undefined;
+  }
 }
 
 function getFallbackMethods(): MethodInfo[] {

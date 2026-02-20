@@ -1,4 +1,4 @@
-import { mollie, appUrl } from "../mollie"
+import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "../mollie"
 import { prisma } from "../prisma"
 import { PRICES, planKeyFromString } from "./plans"
 import { calculatePrice, type BillingCycle, type PlanKey } from "../pricing"
@@ -171,24 +171,20 @@ export async function createUpgradePayment(opts: {
       mode: customer.mode
     })
 
-    // Check what payment methods are available (general list, not customer-specific)
-    try {
-      const availableMethods = await mollie.methods.list()
-      console.log('Available methods (general):', availableMethods.map(m => ({ id: m.id, description: m.description, status: m.status })))
-    } catch (methodError) {
-      console.log('Could not check available methods:', methodError instanceof Error ? methodError.message : 'Unknown error')
-    }
-
     // Create payment for the selected plan
+    // NOTE: We intentionally omit `method` / `methods` so Mollie's hosted
+    // checkout shows ALL eligible payment methods automatically.
+    // sequenceType: 'first' is required to create a mandate for recurring billing.
     const paymentData: PaymentCreateParams = {
       amount: {
         currency: 'EUR',
-        value: totalPrice.toFixed(2)
+        value: formatMollieAmount(totalPrice)
       },
       description: `VexNexa ${plan} Plan (${billingCycleLabel})`,
       redirectUrl: appUrl("/dashboard?checkout=success"),
-
       webhookUrl: appUrl("/api/mollie/webhook"),
+      customerId: customer.id,
+      sequenceType: SequenceType.first,
       metadata: {
         userId,
         plan,
@@ -197,7 +193,15 @@ export async function createUpgradePayment(opts: {
       }
     }
 
-    console.log('Payment data to send:', JSON.stringify(paymentData, null, 2))
+    if (process.env.NODE_ENV === 'development' || isMollieTestMode()) {
+      console.log('[Mollie] Payment payload:', {
+        amount: paymentData.amount,
+        currency: 'EUR',
+        sequenceType: 'first',
+        forcedMethods: 'none (automatic)',
+        mode: isMollieTestMode() ? 'TEST (limited methods expected)' : 'LIVE',
+      })
+    }
 
     const payment = await mollie.payments.create(paymentData)
     console.log('Payment created successfully:', {
@@ -262,7 +266,7 @@ export async function createSubscription(opts: {
     customerId,
     amount: {
       currency: 'EUR',
-      value: totalPrice.toFixed(2)
+      value: formatMollieAmount(totalPrice)
     },
     interval,
     description: `VexNexa ${plan} Plan (${billingCycleLabel})`,
@@ -408,13 +412,16 @@ export async function createPaymentMethodResetPayment(userId: string, email: str
   // Get or create customer
   const customer = await createOrGetMollieCustomer(userId, email)
   
-  // Create a small first payment to establish new mandate
+  // Create a small first payment to establish new mandate.
+  // NOTE: €0.01 is below the minimum for some methods (e.g. Bancontact requires €0.02).
+  // This is acceptable because this is a mandate-setup payment, not a real charge.
+  // Mollie will only show methods that support this amount.
   const paymentData: PaymentCreateParams = {
     amount: {
       currency: "EUR",
-      value: "0.01" // 1 cent
+      value: formatMollieAmount(0.01)
     },
-    description: "VexNexa - Payment Method Setup (Vexnexa)",
+    description: "VexNexa - Payment Method Setup",
     customerId: customer.id,
     sequenceType: SequenceType.first,
     redirectUrl: appUrl("/settings/billing?setup=success"),
@@ -423,6 +430,13 @@ export async function createPaymentMethodResetPayment(userId: string, email: str
       userId,
       type: "payment_method_reset"
     }
+  }
+
+  if (process.env.NODE_ENV === 'development' || isMollieTestMode()) {
+    console.log('[Mollie] Payment method reset payload:', {
+      amount: paymentData.amount,
+      mode: isMollieTestMode() ? 'TEST' : 'LIVE',
+    })
   }
 
   const payment = await mollie.payments.create(paymentData)

@@ -5,7 +5,7 @@
  * Separate from main VexNexa scanner subscriptions
  */
 
-import { mollie, appUrl } from '../mollie';
+import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from '../mollie';
 import { prisma } from '../prisma';
 import {
   calculateAssurancePrice,
@@ -15,7 +15,7 @@ import {
 import { determineTax, calculateAmountBreakdown, type TaxDecision, type TaxRegime } from '../billing/tax';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
-import { Locale, SequenceType } from '@mollie/api-client';
+import { SequenceType } from '@mollie/api-client';
 
 /**
  * Create Mollie checkout payment for Assurance subscription
@@ -59,9 +59,12 @@ export async function createAssuranceCheckoutPayment(opts: {
     const sessionToken = `${userId}_${Date.now().toString(36)}`;
 
     // Create payment
+    // NOTE: We intentionally omit `method`, `methods`, and `locale` so Mollie's
+    // hosted checkout shows ALL eligible payment methods automatically.
+    // Hardcoding locale (e.g. nl_NL) restricts methods to that region only.
     const paymentData: PaymentCreateParams = {
       amount: {
-        value: amount.toFixed(2),
+        value: formatMollieAmount(amount),
         currency: 'EUR',
       },
       description: `VexNexa Assurance ${tier} - ${billingCycle}${tax.regime === 'EU_REVERSE_CHARGE' ? ' (reverse charge)' : ''}`,
@@ -69,7 +72,6 @@ export async function createAssuranceCheckoutPayment(opts: {
       webhookUrl: appUrl('/api/assurance/webhook'),
       customerId: customer.id,
       sequenceType: SequenceType.first, // First payment for mandate creation
-      locale: Locale.nl_NL,
       metadata: {
         userId,
         tier,
@@ -85,11 +87,13 @@ export async function createAssuranceCheckoutPayment(opts: {
       },
     };
 
-    console.log('[Assurance] Creating payment with data:', {
-      amount: paymentData.amount,
-      description: paymentData.description,
-      customerId: customer.id,
-    });
+    if (process.env.NODE_ENV === 'development' || isMollieTestMode()) {
+      console.log('[Assurance] Payment payload:', {
+        amount: paymentData.amount,
+        forcedMethods: 'none (automatic)',
+        mode: isMollieTestMode() ? 'TEST (limited methods expected)' : 'LIVE',
+      });
+    }
 
     const payment = await mollie.payments.create(paymentData);
 
@@ -177,7 +181,7 @@ export async function createAssuranceSubscription(opts: {
     const subscription = await (mollie.customerSubscriptions as any).create({
       customerId: mollieCustomerId,
       amount: {
-        value: totalPrice.toFixed(2),
+        value: formatMollieAmount(totalPrice),
         currency: 'EUR',
       },
       interval,
