@@ -9,8 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TrendingUp, FileText, MessageSquare, Mail, Settings, Ban, UserX, PlayCircle, Trash2 } from "lucide-react";
-import { changeUserPlan, changeUserStatus, addAdminNote, createTicketForUser, sendEmailToUser, suspendUser, reactivateUser, deleteUser } from "@/app/actions/admin-user";
+import { changeUserStatus, addAdminNote, createTicketForUser, sendEmailToUser, suspendUser, reactivateUser, deleteUser } from "@/app/actions/admin-user";
 import { useRouter } from "next/navigation";
+import { useToast } from '@/hooks/use-toast';
+import { ChangePlanDialog } from './ChangePlanDialog';
 import type { Plan } from "@prisma/client";
 
 interface AdminUserActionsProps {
@@ -21,6 +23,7 @@ interface AdminUserActionsProps {
 
 export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUserActionsProps) {
   const router = useRouter();
+  const { toast } = useToast();
   const [changePlanOpen, setChangePlanOpen] = useState(false);
   const [changeStatusOpen, setChangeStatusOpen] = useState(false);
   const [addNoteOpen, setAddNoteOpen] = useState(false);
@@ -30,7 +33,6 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
   const [reactivateOpen, setReactivateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
-  const [newPlan, setNewPlan] = useState<Plan>(currentPlan);
   const [newStatus, setNewStatus] = useState(currentStatus);
   const [note, setNote] = useState('');
   const [ticketSubject, setTicketSubject] = useState('');
@@ -48,18 +50,8 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
 
   const isSuspended = currentStatus === 'suspended';
 
-  const handleChangePlan = async () => {
-    if (!confirm(`Change plan to ${newPlan}?`)) return;
-    setLoading(true);
-    try {
-      await changeUserPlan(userId, newPlan);
-      setChangePlanOpen(false);
-      router.refresh();
-    } catch (error) {
-      alert('Failed to change plan');
-    } finally {
-      setLoading(false);
-    }
+  const handlePlanChangeSuccess = () => {
+    router.refresh();
   };
 
   const handleChangeStatus = async () => {
@@ -197,44 +189,17 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
       <CardContent>
         <div className="flex flex-wrap gap-3">
           {/* Change Plan */}
-          <Dialog open={changePlanOpen} onOpenChange={setChangePlanOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="gap-2">
-                <TrendingUp className="w-4 h-4" />
-                Change Plan
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Change User Plan</DialogTitle>
-                <DialogDescription>
-                  Change the subscription plan for this user. Current plan: {currentPlan}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <Label>New Plan</Label>
-                  <Select value={newPlan} onValueChange={(value) => setNewPlan(value as Plan)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="TRIAL">Trial</SelectItem>
-                      <SelectItem value="STARTER">Starter</SelectItem>
-                      <SelectItem value="PRO">Pro</SelectItem>
-                      <SelectItem value="BUSINESS">Business</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setChangePlanOpen(false)}>Cancel</Button>
-                <Button onClick={handleChangePlan} disabled={loading}>
-                  {loading ? 'Changing...' : 'Change Plan'}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <Button variant="outline" className="gap-2" onClick={() => setChangePlanOpen(true)}>
+            <TrendingUp className="w-4 h-4" />
+            Change Plan
+          </Button>
+          <ChangePlanDialog
+            open={changePlanOpen}
+            onOpenChange={setChangePlanOpen}
+            userId={userId}
+            currentPlan={currentPlan}
+            onSuccess={handlePlanChangeSuccess}
+          />
 
           {/* Change Status */}
           <Dialog open={changeStatusOpen} onOpenChange={setChangeStatusOpen}>

@@ -15,6 +15,7 @@ import {
   Upload,
   Loader2
 } from 'lucide-react';
+import { ChangePlanDialog } from './ChangePlanDialog';
 
 interface User {
   id: string;
@@ -33,6 +34,7 @@ interface BulkUserActionsProps {
 export function BulkUserActions({ users }: BulkUserActionsProps) {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [isProcessing, setIsProcessing] = useState(false);
+  const [changePlanOpen, setChangePlanOpen] = useState(false);
   const { toast } = useToast();
 
   const toggleUser = (userId: string) => {
@@ -103,61 +105,20 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
     }
   };
 
-  const handleBulkPlanChange = async () => {
+  const handleOpenBulkPlanChange = () => {
     if (selectedUsers.size === 0) {
       toast({
         variant: 'destructive',
-        title: 'No users selected'
+        title: 'No users selected',
       });
       return;
     }
+    setChangePlanOpen(true);
+  };
 
-    const newPlan = prompt('Enter new plan (TRIAL, STARTER, PRO, BUSINESS):');
-    if (!newPlan || !['TRIAL', 'STARTER', 'PRO', 'BUSINESS'].includes(newPlan)) {
-      toast({
-        variant: 'destructive',
-        title: 'Invalid plan',
-        description: 'Must be TRIAL, STARTER, PRO, or BUSINESS'
-      });
-      return;
-    }
-
-    if (!confirm(`Change ${selectedUsers.size} user(s) to ${newPlan} plan?`)) {
-      return;
-    }
-
-    setIsProcessing(true);
-    try {
-      const response = await fetch('/api/admin/bulk-plan-change', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userIds: Array.from(selectedUsers),
-          newPlan
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        toast({
-          title: 'Plans updated successfully',
-          description: `Updated ${data.updated} users to ${newPlan}`
-        });
-        setSelectedUsers(new Set());
-        window.location.reload();
-      } else {
-        throw new Error(data.error);
-      }
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed to update plans',
-        description: error.message
-      });
-    } finally {
-      setIsProcessing(false);
-    }
+  const handleBulkPlanChangeSuccess = () => {
+    setSelectedUsers(new Set());
+    window.location.reload();
   };
 
   const handleBulkCredit = async () => {
@@ -305,7 +266,7 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
           </Button>
 
           <Button
-            onClick={handleBulkPlanChange}
+            onClick={handleOpenBulkPlanChange}
             disabled={selectedUsers.size === 0 || isProcessing}
             variant="outline"
             size="sm"
@@ -317,6 +278,13 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
             )}
             Change Plan
           </Button>
+          <ChangePlanDialog
+            open={changePlanOpen}
+            onOpenChange={setChangePlanOpen}
+            userIds={Array.from(selectedUsers)}
+            userCount={selectedUsers.size}
+            onSuccess={handleBulkPlanChangeSuccess}
+          />
 
           <Button
             onClick={handleBulkCredit}
