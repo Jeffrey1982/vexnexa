@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Table,
@@ -53,6 +52,7 @@ import { useTranslations } from 'next-intl';
 import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
 import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
 import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
+import { CompanyDetailsModal, type CompanyFields } from "@/components/checkout/CompanyDetailsModal";
 
 // JSON-LD for pricing
 function PricingJsonLd() {
@@ -180,25 +180,12 @@ function PricingCards() {
   const [quoteLoading, setQuoteLoading] = useState(false);
   const [displayMode] = usePriceDisplayMode();
   const [purchaseAs, setPurchaseAs] = useState<'individual' | 'company'>('individual');
-  const [companyFields, setCompanyFields] = useState({
-    companyName: '', registrationNumber: '', vatId: '', billingCountry: 'NL',
-  });
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [companyModalOpen, setCompanyModalOpen] = useState(false);
+  const [companyModalSubmitting, setCompanyModalSubmitting] = useState(false);
+  const [companyModalError, setCompanyModalError] = useState<string | null>(null);
 
   /** Whether company details are required at checkout */
   const requiresCompanyDetails = displayMode === 'excl' || purchaseAs === 'company';
-
-  /** Validate company fields — returns true if valid */
-  const validateCompanyFields = (): boolean => {
-    if (!requiresCompanyDetails) return true;
-    const errors: Record<string, string> = {};
-    if (!companyFields.companyName.trim()) errors.companyName = 'Company name is required';
-    if (!companyFields.registrationNumber.trim()) errors.registrationNumber = 'Registration number is required';
-    if (!companyFields.vatId.trim()) errors.vatId = 'VAT number is required';
-    if (!companyFields.billingCountry.trim()) errors.billingCountry = 'Billing country is required';
-    setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   /** Convert a gross price for display based on current mode */
   const dp = (gross: number): number =>
@@ -315,7 +302,6 @@ function PricingCards() {
     setQuoteLoading(true);
     setTaxQuote(null);
     setError(null);
-    setFieldErrors({});
     // Default purchaseAs to 'company' when in excl mode
     if (displayMode === 'excl') setPurchaseAs('company');
 
@@ -336,44 +322,70 @@ function PricingCards() {
     }
   };
 
-  const handleConfirmCheckout = async () => {
+  /** Call unified create-payment endpoint */
+  const callCreatePayment = async (companyFields?: CompanyFields) => {
     if (!confirmPlan) return;
-    // Validate company fields if required
-    if (!validateCompanyFields()) return;
-
     setLoading(confirmPlan);
     setError(null);
 
     try {
-      // Save company details to billing profile if provided
-      if (requiresCompanyDetails) {
-        await fetch('/api/billing/profile', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            billingType: purchaseAs === 'company' ? 'business' : 'individual',
-            companyName: companyFields.companyName || undefined,
-            countryCode: companyFields.billingCountry,
-            vatId: companyFields.vatId || undefined,
-            registrationNumber: companyFields.registrationNumber || undefined,
-          }),
-        });
-      }
-
-      const response = await fetch("/api/mollie/checkout", {
+      const response = await fetch("/api/billing/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: confirmPlan, billingCycle }),
+        body: JSON.stringify({
+          plan: confirmPlan,
+          billingCycle,
+          priceMode: displayMode,
+          purchaseAs,
+          ...(companyFields ? {
+            companyName: companyFields.companyName,
+            billingCountry: companyFields.billingCountry,
+            registrationNumber: companyFields.registrationNumber,
+            vatId: companyFields.vatId,
+          } : {}),
+        }),
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Failed to create checkout");
-      window.location.href = data.url;
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create payment");
+      }
+      window.location.href = data.checkoutUrl;
     } catch (err) {
       console.error("Checkout error:", err);
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setLoading(null);
-      setConfirmPlan(null);
+    }
+  };
+
+  /** "Verder naar betaling" click handler */
+  const handleConfirmCheckout = async () => {
+    if (!confirmPlan) return;
+
+    if (requiresCompanyDetails) {
+      // Open company details modal — payment created after modal submit
+      setCompanyModalError(null);
+      setCompanyModalOpen(true);
+      return;
+    }
+
+    // Individual + incl mode → proceed directly
+    await callCreatePayment();
+  };
+
+  /** Called when company modal is submitted with validated fields */
+  const handleCompanyModalSubmit = async (fields: CompanyFields) => {
+    setCompanyModalSubmitting(true);
+    setCompanyModalError(null);
+    try {
+      await callCreatePayment(fields);
+      setCompanyModalOpen(false);
+    } catch (err) {
+      setCompanyModalError(
+        err instanceof Error ? err.message : "Something went wrong."
+      );
+    } finally {
+      setCompanyModalSubmitting(false);
     }
   };
 
@@ -522,7 +534,7 @@ function PricingCards() {
         </div>
 
         {/* Checkout Confirmation Dialog */}
-        <Dialog open={!!confirmPlan} onOpenChange={(open) => { if (!open) { setConfirmPlan(null); setTaxQuote(null); setFieldErrors({}); } }}>
+        <Dialog open={!!confirmPlan} onOpenChange={(open) => { if (!open) { setConfirmPlan(null); setTaxQuote(null); } }}>
           <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
@@ -555,18 +567,21 @@ function PricingCards() {
                   <div className="flex justify-between items-center py-2 border-b border-border">
                     <span className="text-sm text-muted-foreground">{taxQuote.tax.label}</span>
                     <span className="font-medium">
-                      {taxQuote.vatAmount === 0 ? '—' : formatEuro(taxQuote.vatAmount)}
+                      {taxQuote.vatAmount === 0 ? '\u2014' : formatEuro(taxQuote.vatAmount)}
                     </span>
                   </div>
                   {taxQuote.tax.mode === 'reverse_charge' && (
                     <p className="text-xs text-muted-foreground italic">
-                      VAT reverse charge applies — you account for VAT
+                      VAT reverse charge applies \u2014 you account for VAT
                     </p>
                   )}
-                  <div className="flex justify-between items-center py-2">
+                  <div className="flex justify-between items-center py-2 bg-muted/30 rounded-md px-2">
                     <span className="text-sm font-semibold">Total</span>
                     <span className="text-xl font-bold">{formatEuro(taxQuote.totalAmount)}</span>
                   </div>
+                  <p className="text-[10px] text-muted-foreground text-center">
+                    You will pay {formatEuro(taxQuote.totalAmount)} at Mollie
+                  </p>
                 </>
               ) : confirmPlan ? (
                 <div className="flex justify-between items-center py-2">
@@ -582,7 +597,7 @@ function PricingCards() {
             </div>
 
             {/* Purchase As selector */}
-            <div className="border-t border-border pt-4 space-y-4">
+            <div className="border-t border-border pt-4 space-y-3">
               <div>
                 <Label className="text-sm font-medium">Purchase as</Label>
                 <div className="inline-flex items-center rounded-md bg-muted p-0.5 text-xs mt-1.5 w-full">
@@ -603,71 +618,24 @@ function PricingCards() {
                 </div>
               </div>
 
-              {/* Company details form — shown when required */}
               {requiresCompanyDetails && (
-                <div className="space-y-3 p-3 rounded-lg bg-muted/30 border border-border">
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Company details</p>
-                  <div className="space-y-2">
-                    <div>
-                      <Label htmlFor="ck-company" className="text-xs">Company name *</Label>
-                      <Input
-                        id="ck-company"
-                        value={companyFields.companyName}
-                        onChange={(e) => { setCompanyFields(f => ({ ...f, companyName: e.target.value })); setFieldErrors(e2 => ({ ...e2, companyName: '' })); }}
-                        placeholder="Acme B.V."
-                        className={cn("h-9 text-sm", fieldErrors.companyName && "border-destructive")}
-                      />
-                      {fieldErrors.companyName && <p className="text-xs text-destructive mt-0.5">{fieldErrors.companyName}</p>}
-                    </div>
-                    <div>
-                      <Label htmlFor="ck-reg" className="text-xs">
-                        {companyFields.billingCountry === 'NL' ? 'KvK-nummer' : 'Chamber of Commerce number'} *
-                      </Label>
-                      <Input
-                        id="ck-reg"
-                        value={companyFields.registrationNumber}
-                        onChange={(e) => { setCompanyFields(f => ({ ...f, registrationNumber: e.target.value })); setFieldErrors(e2 => ({ ...e2, registrationNumber: '' })); }}
-                        placeholder={companyFields.billingCountry === 'NL' ? '12345678' : 'Registration number'}
-                        className={cn("h-9 text-sm", fieldErrors.registrationNumber && "border-destructive")}
-                      />
-                      {fieldErrors.registrationNumber && <p className="text-xs text-destructive mt-0.5">{fieldErrors.registrationNumber}</p>}
-                    </div>
-                    <div>
-                      <Label htmlFor="ck-vat" className="text-xs">VAT number *</Label>
-                      <Input
-                        id="ck-vat"
-                        value={companyFields.vatId}
-                        onChange={(e) => { setCompanyFields(f => ({ ...f, vatId: e.target.value })); setFieldErrors(e2 => ({ ...e2, vatId: '' })); }}
-                        placeholder="NL123456789B01"
-                        className={cn("h-9 text-sm", fieldErrors.vatId && "border-destructive")}
-                      />
-                      {fieldErrors.vatId && <p className="text-xs text-destructive mt-0.5">{fieldErrors.vatId}</p>}
-                    </div>
-                    <div>
-                      <Label htmlFor="ck-country" className="text-xs">Billing country *</Label>
-                      <Input
-                        id="ck-country"
-                        value={companyFields.billingCountry}
-                        onChange={(e) => { setCompanyFields(f => ({ ...f, billingCountry: e.target.value.toUpperCase().slice(0, 2) })); setFieldErrors(e2 => ({ ...e2, billingCountry: '' })); }}
-                        placeholder="NL"
-                        maxLength={2}
-                        className={cn("h-9 text-sm w-20", fieldErrors.billingCountry && "border-destructive")}
-                      />
-                      {fieldErrors.billingCountry && <p className="text-xs text-destructive mt-0.5">{fieldErrors.billingCountry}</p>}
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-muted-foreground">Details saved to your billing profile for future invoices.</p>
-                </div>
+                <p className="text-xs text-muted-foreground bg-muted/30 rounded-md p-2 border border-border">
+                  Bedrijfsgegevens worden gevraagd in de volgende stap.
+                </p>
               )}
+
+              <p className="text-[10px] text-muted-foreground">
+                Final taxes are calculated at checkout based on billing details.
+              </p>
             </div>
 
             <DialogFooter className="flex gap-2 sm:gap-0">
               <Button
                 variant="outline"
-                onClick={() => { setConfirmPlan(null); setTaxQuote(null); setFieldErrors({}); }}
+                onClick={() => { setConfirmPlan(null); setTaxQuote(null); }}
                 disabled={!!loading}
               >
-                Cancel
+                Annuleren
               </Button>
               <Button
                 onClick={handleConfirmCheckout}
@@ -675,14 +643,23 @@ function PricingCards() {
                 className="bg-[#FF7A00] hover:bg-[#FF7A00]/90 text-white"
               >
                 {loading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Processing...</>
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Bezig...</>
                 ) : (
-                  <>Proceed to Payment<ArrowRight className="ml-2 h-4 w-4" /></>
+                  <>Verder naar betaling<ArrowRight className="ml-2 h-4 w-4" /></>
                 )}
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Company Details Modal — opens when excl/company mode requires fields before Mollie */}
+        <CompanyDetailsModal
+          open={companyModalOpen}
+          onOpenChange={(open) => { if (!open) setCompanyModalOpen(false); }}
+          onSubmit={handleCompanyModalSubmit}
+          submitting={companyModalSubmitting}
+          serverError={companyModalError}
+        />
       </div>
     </section>
   );

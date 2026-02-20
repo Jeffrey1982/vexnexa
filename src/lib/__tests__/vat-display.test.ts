@@ -199,9 +199,9 @@ describe("PriceModeToggle component", () => {
   });
 });
 
-// ── 8. Checkout validation: excl mode requires company fields ──
+// ── 8. Checkout validation: modal-based company field gating ──
 
-describe("Checkout validation: company fields required", () => {
+describe("Checkout validation: modal-based company field gating", () => {
   const pricingPage = readFile("src/app/(marketing)/pricing/page.tsx");
 
   it("has purchaseAs state (individual/company)", () => {
@@ -218,33 +218,28 @@ describe("Checkout validation: company fields required", () => {
     expect(pricingPage).toContain("purchaseAs === 'company'");
   });
 
-  it("validates companyName is required", () => {
-    expect(pricingPage).toContain("Company name is required");
+  it("opens CompanyDetailsModal when company details required", () => {
+    expect(pricingPage).toContain("setCompanyModalOpen(true)");
   });
 
-  it("validates registrationNumber is required", () => {
-    expect(pricingPage).toContain("Registration number is required");
+  it("proceeds directly when individual + incl mode", () => {
+    expect(pricingPage).toContain("callCreatePayment()");
   });
 
-  it("validates vatId is required", () => {
-    expect(pricingPage).toContain("VAT number is required");
+  it("uses unified /api/billing/create-payment endpoint", () => {
+    expect(pricingPage).toContain("/api/billing/create-payment");
   });
 
-  it("validates billingCountry is required", () => {
-    expect(pricingPage).toContain("Billing country is required");
-  });
-
-  it("saves company details to billing profile before checkout", () => {
-    expect(pricingPage).toContain("/api/billing/profile");
+  it("sends company fields from modal to server", () => {
     expect(pricingPage).toContain("companyFields.companyName");
+    expect(pricingPage).toContain("companyFields.billingCountry");
+    expect(pricingPage).toContain("companyFields.registrationNumber");
+    expect(pricingPage).toContain("companyFields.vatId");
   });
 
-  it("shows KvK-nummer label for NL", () => {
-    expect(pricingPage).toContain("KvK-nummer");
-  });
-
-  it("shows Chamber of Commerce label for non-NL", () => {
-    expect(pricingPage).toContain("Chamber of Commerce number");
+  it("sends priceMode and purchaseAs to server", () => {
+    expect(pricingPage).toContain("priceMode: displayMode");
+    expect(pricingPage).toContain("purchaseAs,");
   });
 });
 
@@ -375,7 +370,233 @@ describe("Billing settings page includes PriceModeToggle", () => {
   });
 });
 
-// ── 13. Display rate API route structure ──
+// ── 13. Prompt-specified grossToNet example ──
+
+describe("grossToNet prompt example", () => {
+  it("€49.99 incl @21% → €41.31 net (rounded)", () => {
+    expect(grossToNet(49.99, 0.21)).toBe(41.31);
+  });
+
+  it("no double VAT: grossToNet then netToGross roundtrips", () => {
+    const gross = 49.99;
+    const net = grossToNet(gross, 0.21);
+    const backToGross = netToGross(net, 0.21);
+    expect(Math.abs(backToGross - gross)).toBeLessThanOrEqual(0.01);
+  });
+
+  it("gross should not be multiplied again without net conversion", () => {
+    // Ensure grossToNet(gross) !== gross * 0.21 (that would be double-apply)
+    const gross = 121;
+    const net = grossToNet(gross, 0.21);
+    expect(net).toBe(100);
+    // Wrong: gross * (1 + 0.21) = 146.41 — that's double-applying
+    expect(net).not.toBe(gross * (1 + 0.21));
+  });
+});
+
+// ── 14. create-payment endpoint: server-side validation ──
+
+describe("POST /api/billing/create-payment structure", () => {
+  const src = readFile("src/app/api/billing/create-payment/route.ts");
+
+  it("exports POST handler", () => {
+    expect(src).toContain("export async function POST");
+  });
+
+  it("accepts priceMode parameter", () => {
+    expect(src).toContain('priceMode: z.enum(["incl", "excl"])');
+  });
+
+  it("accepts purchaseAs parameter", () => {
+    expect(src).toContain('purchaseAs: z.enum(["individual", "company"])');
+  });
+
+  it("validates company fields when excl mode", () => {
+    expect(src).toContain('priceMode === "excl"');
+    expect(src).toContain('purchaseAs === "company"');
+  });
+
+  it("returns 400 with fieldErrors when company fields missing", () => {
+    expect(src).toContain("fieldErrors");
+    expect(src).toContain("Company details required for excl. VAT checkout");
+  });
+
+  it("requires companyName server-side", () => {
+    expect(src).toContain("Company name is required");
+  });
+
+  it("requires billingCountry server-side", () => {
+    expect(src).toContain("Billing country is required");
+  });
+
+  it("requires registrationNumber server-side", () => {
+    expect(src).toContain("Registration number is required");
+  });
+
+  it("requires vatId server-side", () => {
+    expect(src).toContain("VAT / Tax number is required");
+  });
+
+  it("upserts billing profile before payment", () => {
+    expect(src).toContain("prisma.billingProfile.upsert");
+  });
+
+  it("uses approach B: grossToNet then calculateTaxBreakdown", () => {
+    expect(src).toContain("grossToNet(planGross, BASE_VAT_RATE)");
+    expect(src).toContain("calculateTaxBreakdown(netBase, taxDecision)");
+  });
+
+  it("creates Mollie payment with breakdown.gross as amount", () => {
+    expect(src).toContain("formatMollieAmount(breakdown.gross)");
+  });
+
+  it("includes priceMode and purchaseAs in metadata", () => {
+    expect(src).toContain("priceMode,");
+    expect(src).toContain("purchaseAs,");
+  });
+
+  it("includes company fields in metadata", () => {
+    expect(src).toContain('companyName: billingProfile.companyName');
+    expect(src).toContain('registrationNumber: billingProfile.registrationNumber');
+    expect(src).toContain('vatId: billingProfile.vatId');
+  });
+
+  it("persists tax quote snapshot", () => {
+    expect(src).toContain("prisma.checkoutQuote.create");
+  });
+
+  it("returns checkoutUrl and breakdown", () => {
+    expect(src).toContain("checkoutUrl,");
+    expect(src).toContain("breakdown:");
+    expect(src).toContain("totalToCharge: breakdown.gross");
+  });
+
+  it("adds locale hint from billing country", () => {
+    expect(src).toContain("countryToMollieLocale");
+    expect(src).toContain("nl_NL");
+  });
+
+  it("does not force Mollie payment methods", () => {
+    expect(src).not.toContain('"method":');
+    expect(src).not.toContain("methods:");
+  });
+});
+
+// ── 15. CompanyDetailsModal structure ──
+
+describe("CompanyDetailsModal component", () => {
+  const src = readFile("src/components/checkout/CompanyDetailsModal.tsx");
+
+  it("has Dutch title", () => {
+    expect(src).toContain("Bedrijfsgegevens nodig voor excl. btw");
+  });
+
+  it("has Dutch subtitle", () => {
+    expect(src).toContain("Vul dit in om excl. btw af te rekenen");
+  });
+
+  it("has 'Verder naar betaling' submit button", () => {
+    expect(src).toContain("Verder naar betaling");
+  });
+
+  it("has 'Annuleren' cancel button", () => {
+    expect(src).toContain("Annuleren");
+  });
+
+  it("validates companyName required", () => {
+    expect(src).toContain("Bedrijfsnaam is verplicht");
+  });
+
+  it("validates billingCountry required", () => {
+    expect(src).toContain("Landcode is verplicht");
+  });
+
+  it("validates registrationNumber required", () => {
+    expect(src).toContain("KvK-nummer is verplicht");
+  });
+
+  it("validates vatId required", () => {
+    expect(src).toContain("BTW-nummer is verplicht");
+  });
+
+  it("shows KvK label for NL", () => {
+    expect(src).toContain("KvK-nummer");
+  });
+
+  it("shows Chamber of Commerce label for non-NL", () => {
+    expect(src).toContain("Chamber of Commerce / Registration number");
+  });
+
+  it("pre-fills from billing profile", () => {
+    expect(src).toContain("/api/billing/profile");
+    expect(src).toContain("profile.companyName");
+  });
+
+  it("exports CompanyFields type", () => {
+    expect(src).toContain("export interface CompanyFields");
+  });
+
+  it("calls onSubmit with validated fields", () => {
+    expect(src).toContain("onSubmit(fields)");
+  });
+
+  it("shows server error when provided", () => {
+    expect(src).toContain("serverError");
+  });
+});
+
+// ── 16. Pricing page uses CompanyDetailsModal + new endpoint ──
+
+describe("Pricing page uses CompanyDetailsModal + create-payment", () => {
+  const src = readFile("src/app/(marketing)/pricing/page.tsx");
+
+  it("imports CompanyDetailsModal", () => {
+    expect(src).toContain('import { CompanyDetailsModal');
+  });
+
+  it("renders CompanyDetailsModal", () => {
+    expect(src).toContain("<CompanyDetailsModal");
+  });
+
+  it("calls /api/billing/create-payment", () => {
+    expect(src).toContain("/api/billing/create-payment");
+  });
+
+  it("sends priceMode to server", () => {
+    expect(src).toContain("priceMode: displayMode");
+  });
+
+  it("sends purchaseAs to server", () => {
+    expect(src).toContain("purchaseAs,");
+  });
+
+  it("has 'Verder naar betaling' button text", () => {
+    expect(src).toContain("Verder naar betaling");
+  });
+
+  it("has 'Annuleren' cancel text", () => {
+    expect(src).toContain("Annuleren");
+  });
+
+  it("opens modal when company details required", () => {
+    expect(src).toContain("setCompanyModalOpen(true)");
+  });
+
+  it("proceeds directly for individual incl mode", () => {
+    expect(src).toContain("callCreatePayment()");
+  });
+
+  it("shows 'You will pay' confirmation with Mollie amount", () => {
+    expect(src).toContain("You will pay");
+    expect(src).toContain("at Mollie");
+  });
+
+  it("shows disclaimer about final taxes", () => {
+    expect(src).toContain("Final taxes are calculated at checkout based on billing details");
+  });
+});
+
+// ── 17. Display rate API route structure ──
 
 describe("Display rate API route", () => {
   const src = readFile("src/app/api/tax/display-rate/route.ts");
