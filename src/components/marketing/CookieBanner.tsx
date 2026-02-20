@@ -42,7 +42,7 @@ export function CookieBanner({ className }: CookieBannerProps) {
   }
 
   return (
-    <div className={cn(
+    <aside aria-label="Cookie consent" className={cn(
       "fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-sm",
       className
     )}>
@@ -91,6 +91,6 @@ export function CookieBanner({ className }: CookieBannerProps) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </aside>
   );
 }

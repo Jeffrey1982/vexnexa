@@ -89,7 +89,7 @@ export function Footer({ className }: FooterProps) {
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-bold text-2xl">VexNexa</span>
-                <span className="text-xs text-muted-foreground/80">Your Secure Path to Accessibility</span>
+                <span className="text-xs text-muted-foreground">Your Secure Path to Accessibility</span>
               </div>
             </Link>
 
