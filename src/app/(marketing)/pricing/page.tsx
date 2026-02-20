@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import {
   Check,
   X,
@@ -25,6 +26,7 @@ import {
   AlertTriangle,
   Info,
   HelpCircle,
+  CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ENTITLEMENTS, PLAN_NAMES, OVERFLOW_PRICING } from "@/lib/billing/plans";
@@ -143,11 +145,32 @@ function HeroSection() {
   );
 }
 
+interface TaxQuote {
+  baseAmount: number;
+  vatAmount: number;
+  totalAmount: number;
+  tax: {
+    ratePercent: number;
+    mode: string;
+    label: string;
+    notes: string | null;
+  };
+  customer: {
+    type: string;
+    country: string;
+    companyName: string | null;
+    hasValidVat: boolean;
+  };
+}
+
 function PricingCards() {
   const t = useTranslations('pricing');
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
+  const [confirmPlan, setConfirmPlan] = useState<string | null>(null);
+  const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
+  const [quoteLoading, setQuoteLoading] = useState(false);
 
   const plans: Array<{
     key: PlanKey;
@@ -238,14 +261,40 @@ function PricingCards() {
       window.location.href = "/contact?subject=enterprise";
       return;
     }
-    setLoading(planKey);
+
+    // Open confirmation dialog and fetch tax quote
+    setConfirmPlan(planKey);
+    setQuoteLoading(true);
+    setTaxQuote(null);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/checkout/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: planKey, billingCycle }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setTaxQuote(data);
+      }
+    } catch {
+      // Non-fatal: dialog still shows, just without tax breakdown
+    } finally {
+      setQuoteLoading(false);
+    }
+  };
+
+  const handleConfirmCheckout = async () => {
+    if (!confirmPlan) return;
+    setLoading(confirmPlan);
     setError(null);
 
     try {
       const response = await fetch("/api/mollie/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: planKey, billingCycle }),
+        body: JSON.stringify({ plan: confirmPlan, billingCycle }),
       });
 
       const data = await response.json();
@@ -255,6 +304,7 @@ function PricingCards() {
       console.error("Checkout error:", err);
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setLoading(null);
+      setConfirmPlan(null);
     }
   };
 
@@ -393,6 +443,89 @@ function PricingCards() {
             </Link>
           </p>
         </div>
+
+        {/* Checkout Confirmation Dialog */}
+        <Dialog open={!!confirmPlan} onOpenChange={(open) => { if (!open) { setConfirmPlan(null); setTaxQuote(null); } }}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-primary" />
+                Checkout Summary
+              </DialogTitle>
+            </DialogHeader>
+
+            <div className="space-y-3 py-2">
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="text-sm text-muted-foreground">Plan</span>
+                <span className="font-medium">VexNexa {confirmPlan}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="text-sm text-muted-foreground">Billing</span>
+                <span className="font-medium">{billingCycle === 'monthly' ? 'Monthly' : 'Annual'}</span>
+              </div>
+
+              {quoteLoading ? (
+                <div className="flex items-center justify-center py-4">
+                  <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                  <span className="ml-2 text-sm text-muted-foreground">Calculating tax...</span>
+                </div>
+              ) : taxQuote ? (
+                <>
+                  <div className="flex justify-between items-center py-2 border-b border-border">
+                    <span className="text-sm text-muted-foreground">Subtotal (ex. VAT)</span>
+                    <span className="font-medium">{formatEuro(taxQuote.baseAmount)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-border">
+                    <span className="text-sm text-muted-foreground">{taxQuote.tax.label}</span>
+                    <span className="font-medium">
+                      {taxQuote.vatAmount === 0 ? '—' : formatEuro(taxQuote.vatAmount)}
+                    </span>
+                  </div>
+                  {taxQuote.tax.mode === 'reverse_charge' && (
+                    <p className="text-xs text-muted-foreground italic">
+                      VAT reverse charge applies — you account for VAT
+                    </p>
+                  )}
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-sm font-semibold">Total</span>
+                    <span className="text-xl font-bold">{formatEuro(taxQuote.totalAmount)}</span>
+                  </div>
+                </>
+              ) : confirmPlan ? (
+                <div className="flex justify-between items-center py-2">
+                  <span className="text-sm font-semibold">Price</span>
+                  <span className="text-xl font-bold">
+                    {formatPriceDisplay(confirmPlan as PlanKey, billingCycle).mainPrice}
+                    <span className="text-sm font-normal text-muted-foreground">
+                      {formatPriceDisplay(confirmPlan as PlanKey, billingCycle).period}
+                    </span>
+                  </span>
+                </div>
+              ) : null}
+            </div>
+
+            <DialogFooter className="flex gap-2 sm:gap-0">
+              <Button
+                variant="outline"
+                onClick={() => { setConfirmPlan(null); setTaxQuote(null); }}
+                disabled={!!loading}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirmCheckout}
+                disabled={!!loading || quoteLoading}
+                className="bg-[#FF7A00] hover:bg-[#FF7A00]/90 text-white"
+              >
+                {loading ? (
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Processing...</>
+                ) : (
+                  <>Proceed to Payment<ArrowRight className="ml-2 h-4 w-4" /></>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );

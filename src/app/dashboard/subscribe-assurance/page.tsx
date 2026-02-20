@@ -51,6 +51,18 @@ interface PaymentMethod {
   imageSvg: string;
 }
 
+interface TaxQuote {
+  baseAmount: number;
+  vatAmount: number;
+  totalAmount: number;
+  tax: {
+    ratePercent: number;
+    mode: string;
+    label: string;
+    notes: string | null;
+  };
+}
+
 const PLANS: PlanConfig[] = [
   {
     tier: "BASIC",
@@ -154,6 +166,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
   const [selectedPlan, setSelectedPlan] = useState<AssuranceTier | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(false);
+  const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
 
   // Hydration-safe mount gating
   useEffect(() => {
@@ -183,10 +196,47 @@ export default function SubscribeAssurancePage(): JSX.Element {
     }
   }, []);
 
+  // Fetch tax quote from server when plan/cycle changes
+  const fetchTaxQuote = useCallback(async (): Promise<void> => {
+    try {
+      const res = await fetch('/api/billing/profile');
+      if (!res.ok) return;
+      const { profile } = await res.json();
+      if (!profile) return;
+
+      // Use the billing profile to compute tax via the quote endpoint
+      // For assurance, we pass the plan as the tier
+      const quoteRes = await fetch('/api/checkout/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: 'STARTER', billingCycle: 'monthly' }),
+      });
+      if (!quoteRes.ok) return;
+      const quoteData = await quoteRes.json();
+
+      // We only need the tax rate info, we'll apply it to the assurance price
+      if (selectedPlan) {
+        const plan = PLANS.find((p) => p.tier === selectedPlan);
+        if (!plan) return;
+        const basePrice = getPrice(plan, billingCycle);
+        const vatAmount = Math.round(basePrice * (quoteData.tax.ratePercent / 100) * 100) / 100;
+        setTaxQuote({
+          baseAmount: basePrice,
+          vatAmount,
+          totalAmount: Math.round((basePrice + vatAmount) * 100) / 100,
+          tax: quoteData.tax,
+        });
+      }
+    } catch {
+      // Non-fatal: tax quote just won't show
+    }
+  }, [selectedPlan, billingCycle]);
+
   useEffect(() => {
     if (!mounted || !selectedPlan) return;
     fetchMethods(selectedPlan, billingCycle);
-  }, [mounted, selectedPlan, billingCycle, fetchMethods]);
+    fetchTaxQuote();
+  }, [mounted, selectedPlan, billingCycle, fetchMethods, fetchTaxQuote]);
 
   const handleSelectPlan = (tier: AssuranceTier): void => {
     setSelectedPlan(tier);
@@ -537,15 +587,34 @@ export default function SubscribeAssurancePage(): JSX.Element {
                         {activePlan.domains === 1 ? "1 domain" : `Up to ${activePlan.domains} domains`}
                       </span>
                     </div>
+                    <div className="flex justify-between items-center py-2 border-b border-border">
+                      <span className="text-sm text-muted-foreground">Subtotal (ex. VAT)</span>
+                      <span className="font-medium text-foreground">
+                        {formatEuro(getPrice(activePlan, billingCycle))}
+                      </span>
+                    </div>
+                    {taxQuote && (
+                      <div className="flex justify-between items-center py-2 border-b border-border">
+                        <span className="text-sm text-muted-foreground">{taxQuote.tax.label}</span>
+                        <span className="font-medium text-foreground">
+                          {taxQuote.vatAmount === 0 ? '—' : formatEuro(taxQuote.vatAmount)}
+                        </span>
+                      </div>
+                    )}
+                    {taxQuote?.tax.mode === 'reverse_charge' && (
+                      <div className="text-xs text-muted-foreground italic py-1">
+                        VAT reverse charge applies — you account for VAT
+                      </div>
+                    )}
                     <div className="flex justify-between items-center py-2">
                       <span className="text-sm font-medium text-foreground">Total</span>
                       <div className="text-right">
                         <span className="text-xl font-bold text-foreground">
-                          {formatEuro(getPrice(activePlan, billingCycle))}
+                          {formatEuro(taxQuote ? taxQuote.totalAmount : getPrice(activePlan, billingCycle))}
                         </span>
                         {billingCycle !== "monthly" && (
                           <div className="text-xs text-muted-foreground">
-                            ({formatEuro(getPerMonth(activePlan, billingCycle))}/month)
+                            ({formatEuro(taxQuote ? taxQuote.totalAmount / (billingCycle === 'semiannual' ? 6 : 12) : getPerMonth(activePlan, billingCycle))}/month)
                           </div>
                         )}
                       </div>
