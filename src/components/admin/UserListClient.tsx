@@ -171,7 +171,7 @@ export function UserListClient({ users }: UserListClientProps) {
           {filteredUsers.length === 0 ? (
             <div className="text-center py-12">
               <Search className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No users found</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-2">No users found</h3>
               <p className="text-muted-foreground">
                 {searchQuery
                   ? `No users match "${searchQuery}". Try a different search term.`

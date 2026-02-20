@@ -18,7 +18,7 @@ export function UserBasicInfo({ user }: UserBasicInfoProps) {
               <User className="w-8 h-8" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {user.firstName} {user.lastName}
               </h1>
               <p className="text-muted-foreground flex items-center gap-2 mt-1">

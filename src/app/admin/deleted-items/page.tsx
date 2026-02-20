@@ -207,13 +207,13 @@ export default function DeletedItemsPage() {
         <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-8">
           <div className="flex gap-4">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
                 Filter by Type
               </label>
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">All Types</option>
                 <option value="user">Users</option>
@@ -234,13 +234,13 @@ export default function DeletedItemsPage() {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
+                <thead className="bg-gray-50 dark:bg-white/[0.03] border-b border-gray-200 dark:border-white/[0.06]">
                   <tr>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Type</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Name/Email</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Deleted At</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Deleted By</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Type</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Name/Email</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Deleted At</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Deleted By</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -250,7 +250,7 @@ export default function DeletedItemsPage() {
                         {getTypeBadge(item.type)}
                       </td>
                       <td className="py-3 px-4">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-foreground">
                           {item.email || item.name}
                         </div>
                         {item.url && (

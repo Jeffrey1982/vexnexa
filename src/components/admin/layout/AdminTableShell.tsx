@@ -73,7 +73,7 @@ export function AdminTableShell({
         {children}
       </CardContent>
       {footer && (
-        <div className="border-t bg-gray-50 px-6 py-4">
+        <div className="border-t bg-gray-50 dark:bg-white/[0.03] px-6 py-4">
           {footer}
         </div>
       )}

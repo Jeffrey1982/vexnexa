@@ -27,10 +27,10 @@ export default function AdvancedAnalyticsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Advanced Analytics</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">Advanced Analytics</h1>
           <p className="text-muted-foreground mt-2">
             Comprehensive business intelligence with forecasting and cohort analysis
           </p>

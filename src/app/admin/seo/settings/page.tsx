@@ -148,7 +148,7 @@ export default async function AdminSeoSettingsPage() {
             {alertRules.map((rule: any) => (
               <div
                 key={rule.id}
-                className="flex items-start gap-4 p-4 border border-gray-200 rounded-md"
+                className="flex items-start gap-4 p-4 border border-gray-200 dark:border-white/[0.06] rounded-md"
               >
                 <div className="flex-shrink-0 pt-1">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -162,7 +162,7 @@ export default async function AdminSeoSettingsPage() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-sm font-semibold text-gray-900">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-foreground">
                       {getAlertTypeLabel(rule.type)}
                     </h3>
                     <div className={`px-2 py-0.5 text-xs font-medium rounded ${
@@ -202,7 +202,7 @@ export default async function AdminSeoSettingsPage() {
 
                 <div className="flex-shrink-0">
                   <button
-                    className="px-3 py-1.5 text-xs border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+                    className="px-3 py-1.5 text-xs border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors"
                   >
                     Edit
                   </button>
@@ -223,7 +223,7 @@ export default async function AdminSeoSettingsPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 dark:border-white/[0.06]">
                     <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       URL
                     </th>
@@ -244,10 +244,10 @@ export default async function AdminSeoSettingsPage() {
                 <tbody>
                   {watchedPages.map((page: any) => (
                     <tr key={page.id} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900 max-w-md truncate">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground max-w-md truncate">
                         {page.url}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground">
                         {page.label || '—'}
                       </td>
                       <td className="py-3 px-4">
@@ -261,7 +261,7 @@ export default async function AdminSeoSettingsPage() {
                         {new Date(page.added_at).toLocaleDateString()}
                       </td>
                       <td className="py-3 px-4 text-right">
-                        <button className="px-3 py-1.5 text-xs border border-gray-200 rounded-md hover:bg-gray-50 transition-colors">
+                        <button className="px-3 py-1.5 text-xs border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors">
                           Remove
                         </button>
                       </td>
@@ -275,8 +275,8 @@ export default async function AdminSeoSettingsPage() {
       )}
 
       {/* Cron Jobs Info */}
-      <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="mt-6 bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
           Cron Job Endpoints
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
@@ -285,24 +285,24 @@ export default async function AdminSeoSettingsPage() {
         <div className="space-y-2 font-mono text-xs">
           <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
-            <span className="text-gray-900">/api/cron/ingest-gsc</span>
+            <span className="text-gray-900 dark:text-foreground">/api/cron/ingest-gsc</span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
-            <span className="text-gray-900">/api/cron/ingest-ga4</span>
+            <span className="text-gray-900 dark:text-foreground">/api/cron/ingest-ga4</span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
-            <span className="text-gray-900">/api/cron/ingest-pagespeed</span>
+            <span className="text-gray-900 dark:text-foreground">/api/cron/ingest-pagespeed</span>
             <span className="text-xs text-muted-foreground">(optional)</span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
-            <span className="text-gray-900">/api/cron/compute-score</span>
+            <span className="text-gray-900 dark:text-foreground">/api/cron/compute-score</span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
-            <span className="text-gray-900">/api/cron/run-alerts</span>
+            <span className="text-gray-900 dark:text-foreground">/api/cron/run-alerts</span>
           </div>
         </div>
         <p className="text-xs text-muted-foreground mt-3">

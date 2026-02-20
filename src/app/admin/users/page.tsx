@@ -36,14 +36,14 @@ export default async function AdminUsersPage() {
   const users = await getAllUsers();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground flex items-center gap-2">
                   <Users className="text-blue-500" />
                   User Management
                 </h1>

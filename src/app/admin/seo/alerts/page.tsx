@@ -148,7 +148,7 @@ export default async function AdminSeoAlertsPage() {
           actions={
             <Link
               href="/admin/seo/settings"
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors"
             >
               <Settings className="w-4 h-4" />
               Alert Settings
@@ -208,7 +208,7 @@ export default async function AdminSeoAlertsPage() {
         actions={
           <Link
             href="/admin/seo/settings"
-            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors"
           >
             <Settings className="w-4 h-4" />
             Alert Settings
@@ -230,7 +230,7 @@ export default async function AdminSeoAlertsPage() {
               {activeAlerts.map((alert: any) => (
                 <div
                   key={alert.id}
-                  className="flex items-start gap-4 p-4 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+                  className="flex items-start gap-4 p-4 border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex-shrink-0">
                     <div className={`px-2 py-0.5 text-xs font-medium rounded ${
@@ -245,7 +245,7 @@ export default async function AdminSeoAlertsPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 rounded">
+                      <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 dark:text-muted-foreground rounded">
                         {alert.type}
                       </span>
                       {alert.entity_type && (
@@ -255,7 +255,7 @@ export default async function AdminSeoAlertsPage() {
                       )}
                     </div>
 
-                    <p className="text-sm font-medium text-gray-900 mb-2">
+                    <p className="text-sm font-medium text-gray-900 dark:text-foreground mb-2">
                       {alert.message}
                     </p>
 
@@ -277,7 +277,7 @@ export default async function AdminSeoAlertsPage() {
 
                   <div className="flex-shrink-0">
                     <button
-                      className="px-3 py-1.5 text-xs border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+                      className="px-3 py-1.5 text-xs border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors"
                     >
                       Resolve
                     </button>
@@ -292,18 +292,18 @@ export default async function AdminSeoAlertsPage() {
       {/* Recently Resolved */}
       {resolvedAlerts.length > 0 && (
         <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
             Recently Resolved (Last 7 Days)
           </h2>
           <div className="space-y-2">
             {resolvedAlerts.map((alert: any) => (
               <div
                 key={alert.id}
-                className="flex items-center gap-3 p-3 bg-gray-50 rounded-md"
+                className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/[0.03] rounded-md"
               >
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-900">{alert.message}</p>
+                  <p className="text-sm text-gray-900 dark:text-foreground">{alert.message}</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     Resolved {new Date(alert.resolved_at).toLocaleString()}
                   </p>

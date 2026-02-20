@@ -237,7 +237,7 @@ export function AdminSidebar() {
                             'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
                             itemActive
                               ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400'
-                              : 'text-muted-foreground hover:bg-gray-50 dark:hover:bg-muted hover:text-gray-900 dark:hover:text-foreground'
+                              : 'text-muted-foreground hover:bg-gray-50 dark:hover:bg-muted hover:text-gray-900 dark:text-foreground dark:hover:text-foreground'
                           )}
                         >
                           <ItemIcon className="w-4 h-4 flex-shrink-0" />

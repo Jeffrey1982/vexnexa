@@ -14,7 +14,7 @@ interface ThemeProviderProps {
 export function ThemeProvider({
   children,
   attribute = "class",
-  defaultTheme = "light",
+  defaultTheme = "system",
   enableSystem = true,
   disableTransitionOnChange = false
 }: ThemeProviderProps) {

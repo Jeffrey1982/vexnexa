@@ -157,7 +157,7 @@ export default function ErrorLogsPage() {
           ) : (
             <div className="space-y-3">
               {errorData?.recentErrors.map((error) => (
-                <div key={error.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                <div key={error.id} className="border border-gray-200 dark:border-white/[0.06] rounded-lg p-4 hover:bg-gray-50">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
@@ -178,7 +178,7 @@ export default function ErrorLogsPage() {
                           </span>
                         )}
                       </div>
-                      <div className="font-medium text-gray-900 mb-1">{error.message}</div>
+                      <div className="font-medium text-gray-900 dark:text-foreground mb-1">{error.message}</div>
                       {error.source && (
                         <div className="text-sm text-muted-foreground mb-1">Source: {error.source}</div>
                       )}
@@ -213,7 +213,7 @@ export default function ErrorLogsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold mb-3 text-gray-900">Sentry Integration</h3>
+                <h3 className="font-semibold mb-3 text-gray-900 dark:text-foreground">Sentry Integration</h3>
                 <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
                   <li>Install Sentry SDK: <code className="bg-gray-100 px-2 py-1 rounded">npm install @sentry/nextjs</code></li>
                   <li>Run setup wizard: <code className="bg-gray-100 px-2 py-1 rounded">npx @sentry/wizard -i nextjs</code></li>
@@ -224,7 +224,7 @@ export default function ErrorLogsPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-3 text-gray-900">DataDog Integration</h3>
+                <h3 className="font-semibold mb-3 text-gray-900 dark:text-foreground">DataDog Integration</h3>
                 <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
                   <li>Install DataDog browser SDK</li>
                   <li>Configure RUM (Real User Monitoring)</li>

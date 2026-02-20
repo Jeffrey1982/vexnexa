@@ -52,11 +52,11 @@ export default async function AdminSitesPage() {
   const { sites, stats } = await getSitesData();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Site Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">Site Management</h1>
           <p className="text-muted-foreground mt-2">Manage all customer websites across the platform</p>
         </div>
 
@@ -135,7 +135,7 @@ export default async function AdminSitesPage() {
                           <div className="flex items-center gap-2">
                             <Globe className="w-4 h-4 text-muted-foreground" />
                             <div>
-                              <div className="font-medium text-gray-900 max-w-xs truncate">
+                              <div className="font-medium text-gray-900 dark:text-foreground max-w-xs truncate">
                                 {site.url}
                               </div>
                               <div className="text-xs text-muted-foreground">
@@ -146,7 +146,7 @@ export default async function AdminSitesPage() {
                         </td>
                         <td className="py-3">
                           <div>
-                            <div className="font-medium text-gray-900">{userName}</div>
+                            <div className="font-medium text-gray-900 dark:text-foreground">{userName}</div>
                             <div className="text-xs text-muted-foreground">{site.user.email}</div>
                           </div>
                         </td>
@@ -159,7 +159,7 @@ export default async function AdminSitesPage() {
                         <td className="py-3">
                           {lastScan ? (
                             <div>
-                              <div className="text-xs text-gray-900">
+                              <div className="text-xs text-gray-900 dark:text-foreground">
                                 {new Date(lastScan.createdAt).toLocaleDateString()}
                               </div>
                               {lastScan.score !== null && (
@@ -178,7 +178,7 @@ export default async function AdminSitesPage() {
                               Active
                             </Badge>
                           ) : (
-                            <Badge variant="outline" className="border-gray-300 text-muted-foreground">
+                            <Badge variant="outline" className="border-gray-300 dark:border-white/[0.08] text-muted-foreground">
                               Inactive
                             </Badge>
                           )}

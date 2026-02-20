@@ -64,7 +64,7 @@ export function AdminFilterBar({
               variant="ghost"
               size="sm"
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 -ml-2"
+              className="text-sm font-medium text-gray-700 dark:text-muted-foreground hover:text-gray-900 dark:text-foreground -ml-2"
             >
               {isCollapsed ? (
                 <ChevronDown className="w-4 h-4 mr-1" />
@@ -85,7 +85,7 @@ export function AdminFilterBar({
               variant="ghost"
               size="sm"
               onClick={onClearFilters}
-              className="text-sm text-muted-foreground hover:text-gray-900"
+              className="text-sm text-muted-foreground hover:text-gray-900 dark:text-foreground"
               disabled={disabled}
             >
               <X className="w-4 h-4 mr-1" />

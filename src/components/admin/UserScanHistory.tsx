@@ -125,9 +125,9 @@ export function UserScanHistory({ scans, userId }: UserScanHistoryProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-white/[0.03] rounded-lg">
           <div className="text-center">
-            <div className="text-2xl font-bold text-gray-900">{statsData.total}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-foreground">{statsData.total}</div>
             <div className="text-xs text-muted-foreground">Total Scans</div>
           </div>
           <div className="text-center">

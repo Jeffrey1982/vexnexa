@@ -58,6 +58,17 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
+        {/* Browser color-scheme hint — ensures form controls, scrollbars render in correct mode */}
+        <meta name="color-scheme" content="light dark" />
+
+        {/* Early theme script — apply class before first paint to prevent white flash.
+            next-themes@0.4 injects its own script, but this ensures zero-delay coverage. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme:dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`,
+          }}
+        />
+
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
 
@@ -88,7 +99,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >

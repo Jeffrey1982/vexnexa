@@ -219,49 +219,49 @@ export default async function AdminSeoVisibilityPage() {
 
       {/* Component Breakdown */}
       <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
           Score Components
         </h2>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Clicks Trend</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Clicks Trend</p>
               <p className="text-xs text-muted-foreground mt-1">
                 7-day growth vs. previous period
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p2Components.clicksTrend}
               </p>
               <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Top Queries Performance</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Top Queries Performance</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Queries ranking in top 10
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p2Components.topQueriesPerformance}
               </p>
               <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Average Position</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Average Position</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Average ranking position across queries
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p2Components.avgPosition}
               </p>
               <p className="text-xs text-muted-foreground">/ 50</p>
@@ -280,7 +280,7 @@ export default async function AdminSeoVisibilityPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 dark:border-white/[0.06]">
                     <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Query
                     </th>
@@ -301,16 +301,16 @@ export default async function AdminSeoVisibilityPage() {
                 <tbody>
                   {topQueries.map((query: any, idx: number) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground">
                         {query.query}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {query.impressions.toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {query.clicks.toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {(query.ctr * 100).toFixed(2)}%
                       </td>
                       <td className="py-3 px-4 text-sm text-right">
@@ -340,7 +340,7 @@ export default async function AdminSeoVisibilityPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 dark:border-white/[0.06]">
                     <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Page
                     </th>
@@ -361,16 +361,16 @@ export default async function AdminSeoVisibilityPage() {
                 <tbody>
                   {topPages.map((page: any, idx: number) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900 max-w-md truncate">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground max-w-md truncate">
                         {page.page}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {page.impressions.toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {page.clicks.toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {(page.ctr * 100).toFixed(2)}%
                       </td>
                       <td className="py-3 px-4 text-sm text-right">
@@ -393,12 +393,12 @@ export default async function AdminSeoVisibilityPage() {
       {/* Recommended Actions */}
       {p2Actions.length > 0 && (
         <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
             Recommended Actions
           </h2>
           <div className="space-y-3">
             {p2Actions.map((action: any, idx: number) => (
-              <div key={idx} className="flex items-start gap-3 p-4 border border-gray-200 rounded-md">
+              <div key={idx} className="flex items-start gap-3 p-4 border border-gray-200 dark:border-white/[0.06] rounded-md">
                 <div className={`px-2 py-0.5 text-xs font-medium rounded ${
                   action.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   action.severity === 'high' ? 'bg-orange-100 text-orange-700' :
@@ -408,7 +408,7 @@ export default async function AdminSeoVisibilityPage() {
                   {action.severity}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{action.title}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-foreground">{action.title}</p>
                   <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
                   <p className="text-xs text-muted-foreground mt-2">
                     Potential Impact: +{action.impact_points} points

@@ -357,7 +357,7 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                 className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all cursor-pointer ${
                   isSelected
                     ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-gray-200 dark:border-white/[0.06] hover:border-gray-300 dark:border-white/[0.08]'
                 }`}
                 role="button"
                 tabIndex={0}
@@ -373,7 +373,7 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                     )}
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-900">{userName}</div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-foreground">{userName}</div>
                     <div className="text-xs text-muted-foreground">{user.email}</div>
                   </div>
                 </div>

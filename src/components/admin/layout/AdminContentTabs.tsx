@@ -52,7 +52,7 @@ export function AdminContentTabs({
       onValueChange={onValueChange}
       className={cn("w-full", className)}
     >
-      <TabsList className="mb-4 bg-white border border-gray-200 p-1">
+      <TabsList className="mb-4 bg-white border border-gray-200 dark:border-white/[0.06] p-1">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}

@@ -42,11 +42,11 @@ export default async function AdminWhiteLabelPage() {
   const { whiteLabels, stats } = await getWhiteLabelData();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">White-Label Configuration</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">White-Label Configuration</h1>
           <p className="text-muted-foreground mt-2">Manage all customer white-label branding settings</p>
         </div>
 
@@ -164,7 +164,7 @@ export default async function AdminWhiteLabelPage() {
                                 </div>
                               )}
                               <div>
-                                <div className="font-medium text-gray-900">
+                                <div className="font-medium text-gray-900 dark:text-foreground">
                                   {wl.companyName || 'Not Set'}
                                 </div>
                                 <div className="text-xs text-muted-foreground">
@@ -175,7 +175,7 @@ export default async function AdminWhiteLabelPage() {
                           </td>
                           <td className="py-3">
                             <div>
-                              <div className="font-medium text-gray-900">{userName}</div>
+                              <div className="font-medium text-gray-900 dark:text-foreground">{userName}</div>
                               <div className="text-xs text-muted-foreground">{wl.user.email}</div>
                               <Badge variant="outline" className="mt-1">{wl.user.plan}</Badge>
                             </div>
@@ -203,17 +203,17 @@ export default async function AdminWhiteLabelPage() {
                           <td className="py-3">
                             <div className="flex gap-1">
                               <div
-                                className="w-6 h-6 rounded border border-gray-200"
+                                className="w-6 h-6 rounded border border-gray-200 dark:border-white/[0.06]"
                                 style={{ backgroundColor: wl.primaryColor }}
                                 title={`Primary: ${wl.primaryColor}`}
                               />
                               <div
-                                className="w-6 h-6 rounded border border-gray-200"
+                                className="w-6 h-6 rounded border border-gray-200 dark:border-white/[0.06]"
                                 style={{ backgroundColor: wl.secondaryColor }}
                                 title={`Secondary: ${wl.secondaryColor}`}
                               />
                               <div
-                                className="w-6 h-6 rounded border border-gray-200"
+                                className="w-6 h-6 rounded border border-gray-200 dark:border-white/[0.06]"
                                 style={{ backgroundColor: wl.accentColor }}
                                 title={`Accent: ${wl.accentColor}`}
                               />
@@ -222,7 +222,7 @@ export default async function AdminWhiteLabelPage() {
                           <td className="py-3">
                             <div className="space-y-1">
                               {wl.customDomain ? (
-                                <div className="text-xs text-gray-900 flex items-center gap-1">
+                                <div className="text-xs text-gray-900 dark:text-foreground flex items-center gap-1">
                                   <Globe className="w-3 h-3" />
                                   {wl.customDomain}
                                 </div>
@@ -240,7 +240,7 @@ export default async function AdminWhiteLabelPage() {
                           <td className="py-3">
                             <div className="space-y-1 max-w-xs">
                               {wl.supportEmail && (
-                                <div className="text-xs text-gray-900 truncate">{wl.supportEmail}</div>
+                                <div className="text-xs text-gray-900 dark:text-foreground truncate">{wl.supportEmail}</div>
                               )}
                               {wl.website && (
                                 <div className="text-xs text-muted-foreground truncate">{wl.website}</div>

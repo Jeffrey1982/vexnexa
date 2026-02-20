@@ -29,10 +29,10 @@ export function TriggerSeoIngestion() {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900">Manual Data Ingestion</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground">Manual Data Ingestion</h2>
           <p className="text-sm text-muted-foreground mt-1">
             Trigger all SEO data ingestion cron jobs manually to populate your dashboard
           </p>
@@ -96,13 +96,13 @@ export function TriggerSeoIngestion() {
 
           {result.jobs && result.jobs.length > 0 && (
             <div className="mt-4 space-y-2">
-              <p className="text-sm font-medium text-gray-900">Job Results:</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Job Results:</p>
               {result.jobs.map((job: any, idx: number) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-2 bg-gray-50 rounded text-xs"
+                  className="flex items-center justify-between p-2 bg-gray-50 dark:bg-white/[0.03] rounded text-xs"
                 >
-                  <span className="text-gray-900">{job.name}</span>
+                  <span className="text-gray-900 dark:text-foreground">{job.name}</span>
                   <div className="flex items-center gap-2">
                     {job.status === 'success' ? (
                       <span className="flex items-center gap-1 text-green-600">

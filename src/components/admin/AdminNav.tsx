@@ -217,7 +217,7 @@ export function AdminNav({ user }: AdminNavProps) {
                       <div
                         className="absolute top-full left-0 pt-1 w-48 z-50"
                       >
-                        <div className="bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden"
+                        <div className="bg-white rounded-lg shadow-xl border border-gray-200 dark:border-white/[0.06] overflow-hidden"
                         >
                         {group.items.map((item) => {
                           const ItemIcon = item.icon;
@@ -230,7 +230,7 @@ export function AdminNav({ user }: AdminNavProps) {
                                 'flex items-center gap-3 px-4 py-3 text-sm transition-colors',
                                 itemActive
                                   ? 'bg-orange-50 text-orange-600 font-medium'
-                                  : 'text-gray-700 hover:bg-gray-50'
+                                  : 'text-gray-700 dark:text-muted-foreground hover:bg-gray-50'
                               )}
                               onClick={() => setOpenDropdown(null)}
                             >

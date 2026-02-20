@@ -98,7 +98,7 @@ export default function AdminUpgradePage() {
         <div className="mb-8">
           <div className="flex items-center justify-start">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground flex items-center gap-2">
                 <TrendingUp className="text-blue-500" />
                 Manual User Upgrade
               </h1>
@@ -155,7 +155,7 @@ export default function AdminUpgradePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               {/* User Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 dark:bg-white/[0.03] rounded-lg">
                 <div>
                   <label className="text-sm font-medium text-muted-foreground">Name</label>
                   <div className="text-lg font-semibold">
@@ -189,7 +189,7 @@ export default function AdminUpgradePage() {
                 <h4 className="text-lg font-semibold mb-4">Upgrade Plan</h4>
                 <div className="flex items-end gap-4">
                   <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
                       New Plan
                     </label>
                     <Select value={newPlan} onValueChange={setNewPlan}>

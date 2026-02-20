@@ -57,7 +57,7 @@ export function MainNav({ user }: MainNavProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="text-muted-foreground hover:text-gray-900 dark:hover:text-foreground"
+              className="text-muted-foreground hover:text-gray-900 dark:text-foreground dark:hover:text-foreground"
             >
               <Home className="w-4 h-4 mr-2" />
               My Dashboard
@@ -73,7 +73,7 @@ export function MainNav({ user }: MainNavProps) {
             onClick={handleSignOut}
             variant="ghost"
             size="sm"
-            className="text-muted-foreground hover:text-gray-900 dark:hover:text-foreground"
+            className="text-muted-foreground hover:text-gray-900 dark:text-foreground dark:hover:text-foreground"
           >
             <LogOut className="w-4 h-4" />
           </Button>

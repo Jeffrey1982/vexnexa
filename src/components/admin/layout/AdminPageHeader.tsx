@@ -53,7 +53,7 @@ export function AdminPageHeader({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-1">
             {Icon && <Icon className={cn("w-7 h-7 flex-shrink-0", iconColor)} />}
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 truncate">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-foreground truncate">
               {title}
             </h1>
           </div>

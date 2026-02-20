@@ -30,12 +30,12 @@ export default async function ContactMessagesPage() {
   const stats = await getStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground flex items-center gap-2">
               <Mail className="text-blue-500" />
               Contact Form Submissions
             </h1>
@@ -46,7 +46,7 @@ export default async function ContactMessagesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <div className="text-sm font-medium text-muted-foreground mb-1">Total Messages</div>
-              <div className="text-3xl font-bold text-gray-900">{stats.total}</div>
+              <div className="text-3xl font-bold text-gray-900 dark:text-foreground">{stats.total}</div>
             </div>
             <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <div className="text-sm font-medium text-muted-foreground mb-1">Replied</div>

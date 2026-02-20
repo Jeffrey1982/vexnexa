@@ -41,7 +41,7 @@ export function AdminNotesViewer({ notes }: AdminNotesViewerProps) {
               return (
                 <div
                   key={note.id}
-                  className="border border-gray-200 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  className="border border-gray-200 dark:border-white/[0.06] rounded-lg p-4 bg-gray-50 dark:bg-white/[0.03] hover:bg-gray-100 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
@@ -49,7 +49,7 @@ export function AdminNotesViewer({ notes }: AdminNotesViewerProps) {
                         <User className="w-4 h-4 text-blue-600" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{adminName}</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-foreground">{adminName}</p>
                         <p className="text-xs text-muted-foreground">{formatDate(note.createdAt)}</p>
                       </div>
                     </div>
@@ -58,7 +58,7 @@ export function AdminNotesViewer({ notes }: AdminNotesViewerProps) {
                     </Badge>
                   </div>
                   <div className="mt-3 pl-10">
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap">{note.note}</p>
+                    <p className="text-sm text-gray-700 dark:text-muted-foreground whitespace-pre-wrap">{note.note}</p>
                   </div>
                   {note.updatedAt.getTime() !== note.createdAt.getTime() && (
                     <p className="text-xs text-muted-foreground mt-2 pl-10">

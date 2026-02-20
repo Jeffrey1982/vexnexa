@@ -193,7 +193,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                   <DollarSign className="w-4 h-4" />
                   Amount
                 </div>
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-lg font-bold text-gray-900 dark:text-foreground">
                   {subscription.amount.currency} {subscription.amount.value} / {subscription.interval}
                 </p>
               </div>
@@ -202,7 +202,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                   <CalendarIcon className="w-4 h-4" />
                   Next Payment
                 </div>
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-lg font-bold text-gray-900 dark:text-foreground">
                   {subscription.nextPaymentDate ? formatDate(new Date(subscription.nextPaymentDate)) : 'N/A'}
                 </p>
               </div>
@@ -220,7 +220,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                   <CreditCard className="w-4 h-4" />
                   Payment Method
                 </div>
-                <p className="text-lg font-bold text-gray-900 capitalize">
+                <p className="text-lg font-bold text-gray-900 dark:text-foreground capitalize">
                   {subscription.method || 'N/A'}
                 </p>
               </div>

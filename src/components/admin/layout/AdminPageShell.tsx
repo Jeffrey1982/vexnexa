@@ -24,7 +24,7 @@ interface AdminPageShellProps {
 export function AdminPageShell({ children, className, dense = false }: AdminPageShellProps) {
   return (
     <div className={cn(
-      "min-h-full bg-gray-50",
+      "min-h-full bg-gray-50 dark:bg-white/[0.03]",
       dense ? "p-4" : "p-6",
       className
     )}>

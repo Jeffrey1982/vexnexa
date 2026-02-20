@@ -239,49 +239,49 @@ export default async function AdminSeoPageQualityPage() {
 
       {/* P3: Engagement & Intent Breakdown */}
       <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
           P3: Engagement & Intent Components
         </h2>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">CTR Quality</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">CTR Quality</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Click-through rate vs. expected baseline
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p3Components.ctrQuality}
               </p>
               <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Engagement Rate</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Engagement Rate</p>
               <p className="text-xs text-muted-foreground mt-1">
                 User engagement on landing pages
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p3Components.engagementRate}
               </p>
               <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Returning Users</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Returning Users</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Percentage of returning visitors
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p3Components.returningUsers}
               </p>
               <p className="text-xs text-muted-foreground">/ 40</p>
@@ -292,49 +292,49 @@ export default async function AdminSeoPageQualityPage() {
 
       {/* P4: Content Performance Breakdown */}
       <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
           P4: Content Performance Components
         </h2>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Top Pages Growth</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Top Pages Growth</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Growth in top-performing pages
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p4Components.topPagesGrowth}
               </p>
               <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Content Depth</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Content Depth</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Average engagement time on pages
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p4Components.contentDepth}
               </p>
               <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Conversion Quality</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Conversion Quality</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Conversion rate from organic traffic
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p4Components.conversionQuality}
               </p>
               <p className="text-xs text-muted-foreground">/ 40</p>
@@ -353,7 +353,7 @@ export default async function AdminSeoPageQualityPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 dark:border-white/[0.06]">
                     <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Page
                     </th>
@@ -374,13 +374,13 @@ export default async function AdminSeoPageQualityPage() {
                 <tbody>
                   {lowCTRPages.map((page: any, idx: number) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900 max-w-md truncate">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground max-w-md truncate">
                         {page.page}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {page.impressions.toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {page.clicks.toLocaleString()}
                       </td>
                       <td className="py-3 px-4 text-sm text-red-600 text-right font-medium">
@@ -408,7 +408,7 @@ export default async function AdminSeoPageQualityPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 dark:border-white/[0.06]">
                     <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Landing Page
                     </th>
@@ -429,10 +429,10 @@ export default async function AdminSeoPageQualityPage() {
                 <tbody>
                   {lowEngagementPages.map((page: any, idx: number) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-sm text-gray-900 max-w-md truncate">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground max-w-md truncate">
                         {page.landing_page}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-900 text-right">
+                      <td className="py-3 px-4 text-sm text-gray-900 dark:text-foreground text-right">
                         {page.organic_sessions.toLocaleString()}
                       </td>
                       <td className="py-3 px-4 text-sm text-red-600 text-right font-medium">
@@ -456,12 +456,12 @@ export default async function AdminSeoPageQualityPage() {
       {/* Recommended Actions */}
       {actions.length > 0 && (
         <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
             Recommended Actions
           </h2>
           <div className="space-y-3">
             {actions.map((action: any, idx: number) => (
-              <div key={idx} className="flex items-start gap-3 p-4 border border-gray-200 rounded-md">
+              <div key={idx} className="flex items-start gap-3 p-4 border border-gray-200 dark:border-white/[0.06] rounded-md">
                 <div className={`px-2 py-0.5 text-xs font-medium rounded ${
                   action.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   action.severity === 'high' ? 'bg-orange-100 text-orange-700' :
@@ -471,7 +471,7 @@ export default async function AdminSeoPageQualityPage() {
                   {action.pillar} • {action.severity}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{action.title}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-foreground">{action.title}</p>
                   <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
                   <p className="text-xs text-muted-foreground mt-2">
                     Potential Impact: +{action.impact_points} points

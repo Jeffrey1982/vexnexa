@@ -319,7 +319,7 @@ export function AdvancedAnalytics({ data }: AdvancedAnalyticsProps) {
             {data.forecast.map((item) => (
               <div key={item.month} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="flex-1">
-                  <div className="font-medium text-gray-900">{item.month}</div>
+                  <div className="font-medium text-gray-900 dark:text-foreground">{item.month}</div>
                   <div className="text-sm text-muted-foreground mt-1">
                     Confidence: {item.confidence.toFixed(0)}%
                   </div>
@@ -327,13 +327,13 @@ export function AdvancedAnalytics({ data }: AdvancedAnalyticsProps) {
                 <div className="flex items-center gap-6">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Revenue</div>
-                    <div className="text-lg font-bold text-gray-900">
+                    <div className="text-lg font-bold text-gray-900 dark:text-foreground">
                       ${item.predictedRevenue.toLocaleString()}
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Users</div>
-                    <div className="text-lg font-bold text-gray-900">
+                    <div className="text-lg font-bold text-gray-900 dark:text-foreground">
                       {item.predictedUsers.toLocaleString()}
                     </div>
                   </div>

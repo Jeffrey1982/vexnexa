@@ -102,7 +102,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">{event.description}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-foreground">{event.description}</p>
                     <p className="text-xs text-muted-foreground mt-1">{formatDate(event.createdAt)}</p>
                     {event.metadata && (
                       <div className="mt-2">
@@ -121,7 +121,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                     <User className="w-5 h-5" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">User account created</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-foreground">User account created</p>
                     <p className="text-xs text-muted-foreground mt-1">{formatDate(item.date)}</p>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                     <Activity className="w-5 h-5" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">{item.data.description}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-foreground">{item.data.description}</p>
                     <p className="text-xs text-muted-foreground mt-1">{formatDate(item.date)}</p>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-gray-900">{scanData.description}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-foreground">{scanData.description}</p>
                       {scanData.score && (
                         <Badge variant={scanData.score >= 80 ? 'default' : 'destructive'}>
                           Score: {scanData.score}

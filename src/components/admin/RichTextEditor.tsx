@@ -173,9 +173,9 @@ export default function RichTextEditor({
   }
 
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
+    <div className="border border-gray-300 dark:border-white/[0.08] rounded-lg overflow-hidden bg-white">
       {/* Toolbar */}
-      <div className="bg-gray-50 border-b border-gray-300 p-2 flex flex-wrap gap-1">
+      <div className="bg-gray-50 dark:bg-white/[0.03] border-b border-gray-300 dark:border-white/[0.08] p-2 flex flex-wrap gap-1">
         {/* Text Formatting */}
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}

@@ -232,20 +232,20 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
         {/* Main content */}
         <div className="col-span-2 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
               Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={e => handleTitleChange(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-lg font-medium"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500 text-lg font-medium"
               placeholder="Enter blog post title"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
               Slug <span className="text-red-500">*</span>
             </label>
             <div className="flex items-center gap-2">
@@ -256,7 +256,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 onChange={e =>
                   setFormData({ ...formData, slug: e.target.value })
                 }
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                 placeholder="post-slug"
               />
             </div>
@@ -264,7 +264,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground">
                 Content <span className="text-red-500">*</span>
               </label>
               <div className="flex items-center gap-4 text-xs text-muted-foreground">
@@ -290,7 +290,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
               Excerpt
             </label>
             <textarea
@@ -299,7 +299,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 setFormData({ ...formData, excerpt: e.target.value })
               }
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="A brief summary of the post (optional)"
             />
           </div>
@@ -308,14 +308,14 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Publishing */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-foreground mb-3 flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               Publishing
             </h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
                   Status
                 </label>
                 <select
@@ -323,7 +323,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, status: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
@@ -332,7 +332,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
                   Author Name <span className="text-muted-foreground">(optional)</span>
                 </label>
                 <input
@@ -341,7 +341,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, authorName: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="Leave empty to use account name"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
@@ -350,7 +350,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
                   Language
                 </label>
                 <select
@@ -358,7 +358,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, locale: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="en">English</option>
                   <option value="nl">Nederlands (Dutch)</option>
@@ -375,7 +375,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 <button
                   onClick={() => handleSave("draft")}
                   disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 dark:text-muted-foreground rounded-lg hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
                 >
                   <Save className="w-4 h-4" />
                   Save Draft
@@ -393,8 +393,8 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           </div>
 
           {/* Cover Image */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-foreground mb-3 flex items-center gap-2">
               <ImageIcon className="w-4 h-4" />
               Cover Image
             </h3>
@@ -443,13 +443,13 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, coverImage: e.target.value })
                   }
-                  className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3 py-2 pr-8 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                   placeholder="Or paste image URL"
                 />
                 <LinkIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               </div>
               {formData.coverImage && (
-                <div className="mt-3 rounded-lg overflow-hidden border border-gray-200">
+                <div className="mt-3 rounded-lg overflow-hidden border border-gray-200 dark:border-white/[0.06]">
                   <img
                     src={formData.coverImage}
                     alt="Cover preview"
@@ -464,14 +464,14 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           </div>
 
           {/* Category & Tags */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-foreground mb-3 flex items-center gap-2">
               <Tag className="w-4 h-4" />
               Organization
             </h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
                   Category <span className="text-red-500">*</span>
                 </label>
                 <select
@@ -479,7 +479,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, category: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="Accessibility">Accessibility</option>
                   <option value="WCAG">WCAG</option>
@@ -490,7 +490,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
                   Tags
                 </label>
                 <input
@@ -499,7 +499,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, tags: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="tag1, tag2, tag3"
                 />
               </div>
@@ -507,15 +507,15 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           </div>
 
           {/* SEO */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-foreground mb-3 flex items-center gap-2">
               <FileText className="w-4 h-4" />
               SEO
             </h3>
             <div className="space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground">
                     Meta Title
                   </label>
                   <span className={`text-xs ${formData.metaTitle.length > 60 ? 'text-orange-600' : 'text-muted-foreground'}`}>
@@ -529,13 +529,13 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                     setFormData({ ...formData, metaTitle: e.target.value })
                   }
                   maxLength={70}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="SEO title (50-60 characters)"
                 />
               </div>
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground">
                     Meta Description
                   </label>
                   <span className={`text-xs ${formData.metaDescription.length > 160 ? 'text-orange-600' : 'text-muted-foreground'}`}>
@@ -552,12 +552,12 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   }
                   rows={3}
                   maxLength={170}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="SEO description (150-160 characters)"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
                   Keywords
                 </label>
                 <input
@@ -566,7 +566,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   onChange={e =>
                     setFormData({ ...formData, metaKeywords: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="keyword1, keyword2"
                 />
               </div>
@@ -576,11 +576,11 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
       </div>
 
       {/* Actions */}
-      <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+      <div className="flex justify-between items-center pt-6 border-t border-gray-200 dark:border-white/[0.06]">
         <button
           onClick={onCancel}
           disabled={saving}
-          className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
+          className="px-4 py-2 text-gray-700 dark:text-muted-foreground bg-gray-100 rounded-lg hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
         >
           Cancel
         </button>

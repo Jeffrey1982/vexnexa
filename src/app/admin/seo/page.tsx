@@ -220,7 +220,7 @@ export default async function AdminSeoPage() {
         actions={
           <Link
             href="/admin/seo/settings"
-            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 dark:border-white/[0.06] rounded-md hover:bg-gray-50 transition-colors"
           >
             <Settings className="w-4 h-4" />
             Settings
@@ -237,7 +237,7 @@ export default async function AdminSeoPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-muted-foreground" />
-              <h2 className="text-lg font-semibold text-gray-900">30-Day Score Trend</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground">30-Day Score Trend</h2>
             </div>
             <Link
               href="/admin/seo/index-health"
@@ -276,7 +276,7 @@ export default async function AdminSeoPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-500" />
-              <h2 className="text-lg font-semibold text-gray-900">Latest Alerts</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground">Latest Alerts</h2>
             </div>
             <Link
               href="/admin/seo/alerts"
@@ -287,7 +287,7 @@ export default async function AdminSeoPage() {
           </div>
           <div className="space-y-3">
             {latestAlerts.map((alert: any) => (
-              <div key={alert.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-md">
+              <div key={alert.id} className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-white/[0.03] rounded-md">
                 <div className={`px-2 py-0.5 text-xs font-medium rounded ${
                   alert.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   alert.severity === 'high' ? 'bg-orange-100 text-orange-700' :
@@ -297,7 +297,7 @@ export default async function AdminSeoPage() {
                   {alert.severity}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{alert.message}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-foreground">{alert.message}</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     {new Date(alert.created_at).toLocaleString()}
                   </p>
@@ -312,7 +312,7 @@ export default async function AdminSeoPage() {
       {topActions.length > 0 && (
         <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Recommended Actions</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground">Recommended Actions</h2>
             <Link
               href="/admin/seo/index-health"
               className="text-sm text-[#e8570e] hover:text-[#b8450b] transition-colors"
@@ -322,7 +322,7 @@ export default async function AdminSeoPage() {
           </div>
           <div className="space-y-3">
             {topActions.map((action: any, idx: number) => (
-              <div key={idx} className="flex items-start gap-3 p-3 border border-gray-200 rounded-md">
+              <div key={idx} className="flex items-start gap-3 p-3 border border-gray-200 dark:border-white/[0.06] rounded-md">
                 <div className={`px-2 py-0.5 text-xs font-medium rounded ${
                   action.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   action.severity === 'high' ? 'bg-orange-100 text-orange-700' :
@@ -332,7 +332,7 @@ export default async function AdminSeoPage() {
                   {action.pillar}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{action.title}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-foreground">{action.title}</p>
                   <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     Impact: +{action.impact_points} points

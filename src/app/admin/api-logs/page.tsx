@@ -205,8 +205,8 @@ export default function ApiLogsPage() {
           <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-6">
             <h2 className="text-lg font-semibold mb-4">Top API Endpoints (Last 24h)</h2>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-white/[0.06]">
+                <thead className="bg-gray-50 dark:bg-white/[0.03]">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Method</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Path</th>
@@ -227,8 +227,8 @@ export default function ApiLogsPage() {
                           {endpoint.method}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-900 font-mono">{endpoint.path}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{endpoint.calls}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900 dark:text-foreground font-mono">{endpoint.path}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-foreground">{endpoint.calls}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -249,8 +249,8 @@ export default function ApiLogsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-white/[0.06]">
+                <thead className="bg-gray-50 dark:bg-white/[0.03]">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Time</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Method</th>
@@ -277,7 +277,7 @@ export default function ApiLogsPage() {
                           {log.method}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-900 font-mono">{log.path}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900 dark:text-foreground font-mono">{log.path}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-semibold rounded ${
                           log.statusCode >= 500 ? 'bg-red-100 text-red-800' :
@@ -288,7 +288,7 @@ export default function ApiLogsPage() {
                           {log.statusCode}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-foreground">
                         {log.duration}ms
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">

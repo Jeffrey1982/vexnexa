@@ -165,11 +165,11 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
         <div className="max-w-7xl mx-auto p-6">
           <Card>
             <CardContent className="p-12 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">User Not Found</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-2">User Not Found</h2>
               <p className="text-muted-foreground mb-6">The requested user could not be found.</p>
               <Link href="/admin/users">
                 <Button>Back to Users</Button>
@@ -182,7 +182,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
 
       <div className="max-w-7xl mx-auto p-6">
         <Link href="/admin/users">

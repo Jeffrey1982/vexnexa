@@ -136,7 +136,7 @@ export default function BlogManagement() {
     return (
       <div>
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">
             {editingPost ? "Edit Post" : "Create New Post"}
           </h2>
         </div>
@@ -154,7 +154,7 @@ export default function BlogManagement() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Blog Management</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">Blog Management</h2>
           <p className="text-muted-foreground mt-1">Manage your blog posts and content</p>
         </div>
         <button
@@ -168,23 +168,23 @@ export default function BlogManagement() {
 
       {/* Statistics */}
       <div className="grid grid-cols-5 gap-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-2xl font-bold text-gray-900">{statusStats.total}</div>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
+          <div className="text-2xl font-bold text-gray-900 dark:text-foreground">{statusStats.total}</div>
           <div className="text-sm text-muted-foreground">Total Posts</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
           <div className="text-2xl font-bold text-green-600">{statusStats.published}</div>
           <div className="text-sm text-muted-foreground">Published</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
           <div className="text-2xl font-bold text-yellow-600">{statusStats.draft}</div>
           <div className="text-sm text-muted-foreground">Drafts</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
           <div className="text-2xl font-bold text-muted-foreground">{statusStats.archived}</div>
           <div className="text-sm text-muted-foreground">Archived</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-blue-500" />
             <div className="text-2xl font-bold text-blue-600">{totalViews}</div>
@@ -194,7 +194,7 @@ export default function BlogManagement() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-4">
         <div className="flex items-center gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -203,7 +203,7 @@ export default function BlogManagement() {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search posts..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export default function BlogManagement() {
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">All Status</option>
               <option value="published">Published</option>
@@ -228,7 +228,7 @@ export default function BlogManagement() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       ) : filteredPosts.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-12 text-center">
           <p className="text-muted-foreground">No posts found</p>
         </div>
       ) : (
@@ -239,19 +239,19 @@ export default function BlogManagement() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+              className="bg-white rounded-lg shadow-sm border border-gray-200 dark:border-white/[0.06] p-6 hover:shadow-md transition-shadow"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900">{post.title}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-foreground">{post.title}</h3>
                     <span
                       className={`px-2 py-1 text-xs font-medium rounded ${
                         post.status === "published"
                           ? "bg-green-100 text-green-700"
                           : post.status === "draft"
                           ? "bg-yellow-100 text-yellow-700"
-                          : "bg-gray-100 text-gray-700"
+                          : "bg-gray-100 text-gray-700 dark:text-muted-foreground"
                       }`}
                     >
                       {post.status}

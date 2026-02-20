@@ -150,7 +150,7 @@ export default function AuditLogsPage() {
         <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
                 Filter by Action
               </label>
               <input
@@ -161,12 +161,12 @@ export default function AuditLogsPage() {
                   setFilterAction(e.target.value)
                   setPage(1)
                 }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
                 Filter by Entity
               </label>
               <select
@@ -175,7 +175,7 @@ export default function AuditLogsPage() {
                   setFilterEntity(e.target.value)
                   setPage(1)
                 }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">All Entities</option>
                 <option value="User">User</option>
@@ -188,7 +188,7 @@ export default function AuditLogsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">
                 Search by Actor Email
               </label>
               <input
@@ -199,7 +199,7 @@ export default function AuditLogsPage() {
                   setSearchEmail(e.target.value)
                   setPage(1)
                 }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -215,14 +215,14 @@ export default function AuditLogsPage() {
             <>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                  <thead className="bg-gray-50 dark:bg-white/[0.03] border-b border-gray-200 dark:border-white/[0.06]">
                     <tr>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Timestamp</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Action / Actor</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Entity</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Actor</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Description</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Changes</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Timestamp</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Action / Actor</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Entity</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Actor</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Description</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Changes</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -235,7 +235,7 @@ export default function AuditLogsPage() {
                           {getActionBadge(log.action, log.actorType)}
                         </td>
                         <td className="py-3 px-4">
-                          <div className="text-sm font-medium text-gray-900">{log.entity}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-foreground">{log.entity}</div>
                           {log.entityId && (
                             <div className="text-xs text-muted-foreground font-mono">
                               ID: {log.entityId.substring(0, 8)}...
@@ -243,7 +243,7 @@ export default function AuditLogsPage() {
                           )}
                         </td>
                         <td className="py-3 px-4">
-                          <div className="text-sm text-gray-900">{log.actorEmail || 'System'}</div>
+                          <div className="text-sm text-gray-900 dark:text-foreground">{log.actorEmail || 'System'}</div>
                           {log.ip && (
                             <div className="text-xs text-muted-foreground">
                               IP: {log.ip}
@@ -260,7 +260,7 @@ export default function AuditLogsPage() {
                               <div className="mt-2 space-y-2">
                                 {log.oldValues && (
                                   <div>
-                                    <div className="font-semibold text-gray-700">Before:</div>
+                                    <div className="font-semibold text-gray-700 dark:text-muted-foreground">Before:</div>
                                     <pre className="bg-gray-100 p-2 rounded text-xs overflow-x-auto">
                                       {JSON.stringify(log.oldValues, null, 2)}
                                     </pre>
@@ -268,7 +268,7 @@ export default function AuditLogsPage() {
                                 )}
                                 {log.newValues && (
                                   <div>
-                                    <div className="font-semibold text-gray-700">After:</div>
+                                    <div className="font-semibold text-gray-700 dark:text-muted-foreground">After:</div>
                                     <pre className="bg-gray-100 p-2 rounded text-xs overflow-x-auto">
                                       {JSON.stringify(log.newValues, null, 2)}
                                     </pre>
@@ -286,11 +286,11 @@ export default function AuditLogsPage() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
+                <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-white/[0.06]">
                   <button
                     onClick={() => setPage(Math.max(1, page - 1))}
                     disabled={page === 1}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100 disabled:cursor-not-allowed"
+                    className="px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg hover:bg-gray-50 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100 disabled:cursor-not-allowed"
                   >
                     Previous
                   </button>
@@ -300,7 +300,7 @@ export default function AuditLogsPage() {
                   <button
                     onClick={() => setPage(Math.min(totalPages, page + 1))}
                     disabled={page === totalPages}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100 disabled:cursor-not-allowed"
+                    className="px-4 py-2 border border-gray-300 dark:border-white/[0.08] rounded-lg hover:bg-gray-50 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100 disabled:cursor-not-allowed"
                   >
                     Next
                   </button>

@@ -62,7 +62,7 @@ export function AdminEmptyState({
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">
+      <h3 className="text-xl font-semibold text-gray-900 dark:text-foreground mb-2">
         {title}
       </h3>
 
@@ -110,7 +110,7 @@ export function AdminEmptyState({
 
       {/* Help Text */}
       {helpText && (
-        <div className="text-sm text-muted-foreground max-w-lg border-t border-gray-200 pt-6">
+        <div className="text-sm text-muted-foreground max-w-lg border-t border-gray-200 dark:border-white/[0.06] pt-6">
           {helpText}
         </div>
       )}

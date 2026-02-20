@@ -125,7 +125,7 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
           {filteredMessages.length === 0 ? (
             <div className="text-center py-12">
               <Mail className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No messages found</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-2">No messages found</h3>
               <p className="text-muted-foreground">
                 {searchQuery || statusFilter !== 'all'
                   ? 'Try adjusting your filters'
@@ -219,7 +219,7 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
               </div>
               <div>
                 <Label className="text-muted-foreground">Message</Label>
-                <div className="mt-2 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="mt-2 p-4 bg-gray-50 dark:bg-white/[0.03] rounded-lg border border-gray-200 dark:border-white/[0.06]">
                   <p className="whitespace-pre-wrap text-sm">{selectedMessage.message}</p>
                 </div>
               </div>
@@ -274,7 +274,7 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
               </div>
               <div>
                 <Label>Message Preview</Label>
-                <div className="mt-1 p-3 bg-gray-50 rounded border text-sm">
+                <div className="mt-1 p-3 bg-gray-50 dark:bg-white/[0.03] rounded border text-sm">
                   {selectedMessage.message.substring(0, 200)}
                   {selectedMessage.message.length > 200 && '...'}
                 </div>

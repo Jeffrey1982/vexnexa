@@ -212,7 +212,7 @@ export default async function AdminSeoIndexHealthPage() {
       {/* Impressions Trend Chart */}
       {impressionsTrend.length > 0 && (
         <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
             30-Day Impressions Trend
           </h2>
           <div className="grid grid-cols-7 gap-2">
@@ -230,7 +230,7 @@ export default async function AdminSeoIndexHealthPage() {
                   <span className="text-xs text-muted-foreground">
                     {new Date(day.date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })}
                   </span>
-                  <span className="text-xs font-medium text-gray-700">
+                  <span className="text-xs font-medium text-gray-700 dark:text-muted-foreground">
                     {day.impressions.toLocaleString()}
                   </span>
                 </div>
@@ -242,49 +242,49 @@ export default async function AdminSeoIndexHealthPage() {
 
       {/* Component Breakdown */}
       <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
           Score Components
         </h2>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Impressions Trend</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Impressions Trend</p>
               <p className="text-xs text-muted-foreground mt-1">
                 7-day growth vs. previous period
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p1Components.impressionsTrend}
               </p>
               <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Index Coverage</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Index Coverage</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Pages successfully indexed
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p1Components.indexCoverage}
               </p>
               <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.03] rounded-md">
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">Crawl Errors</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-foreground">Crawl Errors</p>
               <p className="text-xs text-muted-foreground mt-1">
                 No critical crawl errors detected
               </p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
                 {p1Components.crawlErrors}
               </p>
               <p className="text-xs text-muted-foreground">/ 50</p>
@@ -296,12 +296,12 @@ export default async function AdminSeoIndexHealthPage() {
       {/* Recommended Actions */}
       {p1Actions.length > 0 && (
         <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-4">
             Recommended Actions
           </h2>
           <div className="space-y-3">
             {p1Actions.map((action: any, idx: number) => (
-              <div key={idx} className="flex items-start gap-3 p-4 border border-gray-200 rounded-md">
+              <div key={idx} className="flex items-start gap-3 p-4 border border-gray-200 dark:border-white/[0.06] rounded-md">
                 <div className={`px-2 py-0.5 text-xs font-medium rounded ${
                   action.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   action.severity === 'high' ? 'bg-orange-100 text-orange-700' :
@@ -311,7 +311,7 @@ export default async function AdminSeoIndexHealthPage() {
                   {action.severity}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{action.title}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-foreground">{action.title}</p>
                   <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
                   <p className="text-xs text-muted-foreground mt-2">
                     Potential Impact: +{action.impact_points} points

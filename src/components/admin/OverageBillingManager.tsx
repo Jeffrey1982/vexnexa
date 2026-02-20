@@ -133,7 +133,7 @@ export function OverageBillingManager({
       <CardContent className="space-y-6">
         {/* Overage Breakdown */}
         <div className="space-y-3">
-          <div className="font-medium text-sm text-gray-700">Overage Breakdown</div>
+          <div className="font-medium text-sm text-gray-700 dark:text-muted-foreground">Overage Breakdown</div>
 
           {currentOverage.sites > 0 && (
             <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
@@ -209,7 +209,7 @@ export function OverageBillingManager({
             </div>
 
             {/* Apply Credit Section */}
-            <div className="border rounded-lg p-4 space-y-3 bg-gray-50">
+            <div className="border rounded-lg p-4 space-y-3 bg-gray-50 dark:bg-white/[0.03]">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <Gift className="w-4 h-4" />
                 <span>Apply Credit or Adjustment</span>
@@ -270,7 +270,7 @@ export function OverageBillingManager({
             <div className="text-sm font-medium mb-3">Adjustment History</div>
             <div className="space-y-2">
               {customAdjustments.map((adj) => (
-                <div key={adj.id} className="flex items-start justify-between p-2 bg-gray-50 rounded text-sm">
+                <div key={adj.id} className="flex items-start justify-between p-2 bg-gray-50 dark:bg-white/[0.03] rounded text-sm">
                   <div className="flex-1">
                     <div className="font-medium">€{adj.amount.toFixed(2)} credit applied</div>
                     <div className="text-xs text-muted-foreground">{adj.reason}</div>
