@@ -24,6 +24,7 @@ import {
   WidthType,
   BorderStyle,
   ShadingType,
+  TableOfContents,
 } from "docx";
 
 export const runtime = "nodejs";
@@ -141,7 +142,16 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     new Paragraph({ children: [], pageBreakBefore: true })
   );
 
-  // ── Executive Summary (Task 1 — upgraded) ──
+  // ── Table of Contents (Word auto-generates from heading styles) ──
+  children.push(
+    new TableOfContents("Table of Contents", {
+      hyperlink: true,
+      headingStyleRange: "1-3",
+    }) as unknown as Paragraph,
+    new Paragraph({ children: [], pageBreakBefore: true })
+  );
+
+  // ── Executive Summary ──
   const hs = data.healthScore;
   const hsHex = hs.value >= 80 ? "16A34A" : hs.value >= 60 ? "D97706" : "DC2626";
 
@@ -156,6 +166,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         new TextRun({ text: `  (Grade ${hs.grade} — ${hs.label})`, size: 22, color: "6B7280" }),
       ],
     }),
+    para(`The Health Score is derived from the number and severity of detected issues, normalized by pages analyzed. A higher score indicates fewer and less severe accessibility barriers.`),
     para(`Your website ${data.domain} achieved a health score of ${hs.value}/100 (Grade ${hs.grade}). ${data.issueBreakdown.critical > 0 ? `There are ${data.issueBreakdown.critical} critical issues requiring immediate attention.` : "No critical issues were detected."}`),
     spacer(),
     subheading("Severity Distribution"),
@@ -298,18 +309,36 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     children.push(new Paragraph({ children: [], pageBreakBefore: true }));
   }
 
-  // ── Priority Issues (with Enterprise Evidence Tables — Task 4) ──
+  // ── Priority Issues (with Enterprise Evidence Tables) ──
   children.push(heading("Audit Findings"));
 
   if (data.priorityIssues.length === 0) {
     children.push(para("No accessibility issues were detected. Excellent work!"));
   } else {
+    const DOCX_EVIDENCE_CHUNK = 50;
+    const evBorders = { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } };
+    const evShading = { type: ShadingType.SOLID, color: "F3F4F6" } as const;
+
+    function evHeaderRow(): TableRow {
+      return new TableRow({
+        tableHeader: true,
+        children: [
+          new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Page / URL", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })] }),
+        ],
+      });
+    }
+
     data.priorityIssues.forEach((issue: ReportIssue, idx: number) => {
+      // Heading 3 for each finding — enables Word TOC navigation
       children.push(
         new Paragraph({
+          heading: HeadingLevel.HEADING_3,
           spacing: { before: 200, after: 100 },
           children: [
-            new TextRun({ text: `#${idx + 1}  `, bold: true, size: 22, color: primary.replace("#", "") }),
+            new TextRun({ text: `#${idx + 1}  `, bold: true, size: 22, color: primaryHex }),
             new TextRun({ text: `[${severityLabel(issue.severity).toUpperCase()}]  `, bold: true, size: 20, color: sevColor(issue.severity) }),
             new TextRun({ text: issue.title, bold: true, size: 22 }),
           ],
@@ -320,42 +349,38 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         para(`${issue.affectedElements} element(s) affected  •  Est. ${issue.estimatedFixTime}${issue.wcagCriteria.length > 0 ? `  •  ${issue.wcagCriteria.join(", ")}` : ""}`, "9CA3AF"),
       );
 
-      // Enterprise Evidence Table (Task 4) — structured table with Selector + HTML columns
+      // Evidence tables — chunked for large lists, header row repeats on page breaks
       const details = issue.affectedElementDetails ?? [];
       if (details.length > 0) {
-        children.push(
-          new Paragraph({
-            spacing: { before: 80, after: 40 },
-            children: [new TextRun({ text: "Affected Elements:", bold: true, size: 20, color: "6B7280" })],
-          })
-        );
-
-        const evBorders = { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } };
-        const evShading = { type: ShadingType.SOLID, color: "F3F4F6" } as const;
-        const evidenceTable = new Table({
-          width: { size: 100, type: WidthType.PERCENTAGE },
-          rows: [
-            new TableRow({
-              children: [
-                new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })] }),
-                new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Page / URL", bold: true, size: 18 })] })] }),
-                new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })] }),
-                new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })] }),
-              ],
-            }),
-            ...details.map((el, elIdx: number) =>
-              new TableRow({
-                children: [
-                  new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(elIdx + 1), size: 16, color: "6B7280" })] })] }),
-                  new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.pageUrl || data.domain, size: 16, color: "6B7280" })] })] }),
-                  new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 16, font: "Consolas", color: "374151" })] })] }),
-                  new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.html || "—", size: 14, font: "Consolas", color: "6B7280" })] })] }),
-                ],
-              })
-            ),
-          ],
-        });
-        children.push(evidenceTable as unknown as Paragraph);
+        const totalChunks = Math.ceil(details.length / DOCX_EVIDENCE_CHUNK);
+        for (let ci = 0; ci < totalChunks; ci++) {
+          const chunk = details.slice(ci * DOCX_EVIDENCE_CHUNK, (ci + 1) * DOCX_EVIDENCE_CHUNK);
+          const offset = ci * DOCX_EVIDENCE_CHUNK;
+          const chunkLabel = totalChunks > 1 ? ` (${ci + 1}/${totalChunks})` : "";
+          children.push(
+            new Paragraph({
+              spacing: { before: 80, after: 40 },
+              children: [new TextRun({ text: `Affected Elements${chunkLabel}:`, bold: true, size: 20, color: "6B7280" })],
+            })
+          );
+          const evidenceTable = new Table({
+            width: { size: 100, type: WidthType.PERCENTAGE },
+            rows: [
+              evHeaderRow(),
+              ...chunk.map((el, elIdx: number) =>
+                new TableRow({
+                  children: [
+                    new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(offset + elIdx + 1), size: 16, color: "6B7280" })] })] }),
+                    new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.pageUrl || data.domain, size: 16, color: "6B7280" })] })] }),
+                    new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 16, font: "Consolas", color: "374151" })] })] }),
+                    new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.html || "—", size: 14, font: "Consolas", color: "6B7280" })] })] }),
+                  ],
+                })
+              ),
+            ],
+          });
+          children.push(evidenceTable as unknown as Paragraph);
+        }
       }
 
       children.push(

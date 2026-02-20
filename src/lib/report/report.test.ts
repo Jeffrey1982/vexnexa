@@ -377,10 +377,15 @@ describe("HTML export — golden-file regression", () => {
     expect(html).not.toMatch(/legal exposure/i);
   });
 
-  it("contains Health Score with exponential formula reference", () => {
+  it("contains Health Score without formula display", () => {
     const html = getHTML();
     expect(html).toContain("Health Score");
-    expect(html).toContain("exp(");
+    // Formula must NOT appear in customer-facing exports
+    expect(html).not.toContain("exp(");
+    expect(html).not.toMatch(/0\.05/);
+    expect(html).not.toMatch(/100\s*[×x]\s*exp/i);
+    // Microcopy should be present instead
+    expect(html).toContain("derived from the number and severity");
   });
 
   it("contains coverage note", () => {
@@ -431,10 +436,170 @@ describe("HTML export — golden-file regression", () => {
     const evRows = (html.match(/class="ev-num"/g) || []).length;
     expect(evRows).toBe(25);
   });
+
+  it("has anchor IDs on all major sections", () => {
+    const html = getHTML();
+    expect(html).toContain('id="exec-summary"');
+    expect(html).toContain('id="visual-breakdown"');
+    expect(html).toContain('id="wcag-matrix"');
+    expect(html).toContain('id="findings-index"');
+    expect(html).toContain('id="scan-config"');
+    expect(html).toContain('id="appendix"');
+  });
+
+  it("has per-finding anchor IDs", () => {
+    const html = getHTML();
+    // Default fixture has color-contrast, image-alt, label, link-name
+    expect(html).toContain('id="finding-color-contrast"');
+    expect(html).toContain('id="finding-image-alt"');
+    expect(html).toContain('id="finding-label"');
+    expect(html).toContain('id="finding-link-name"');
+  });
 });
 
 /* ═══════════════════════════════════════════════════════════
-   Task 5C — Score Determinism (comprehensive)
+   TOC — Table of Contents for long reports
+   ═══════════════════════════════════════════════════════════ */
+
+describe("TOC — Table of Contents", () => {
+  function makeLongReport(): string {
+    const manyViolations = Array.from({ length: 25 }, (_, i) => ({
+      id: `rule-${i}`, impact: "serious" as const,
+      help: `Rule ${i}`, description: `Desc ${i}`,
+      tags: ["wcag143"],
+      nodes: Array.from({ length: 10 }, (_, j) => ({
+        target: [`.el-${i}-${j}`], html: `<div>${j}</div>`,
+      })),
+    }));
+    return renderReportHTML(getReport({ violations: manyViolations }));
+  }
+
+  it("renders TOC for long reports (>=20 findings)", () => {
+    const html = makeLongReport();
+    expect(html).toContain('id="toc"');
+    expect(html).toContain("toc-nav");
+    expect(html).toContain("Table of Contents");
+  });
+
+  it("TOC has links to all major sections", () => {
+    const html = makeLongReport();
+    expect(html).toContain('href="#exec-summary"');
+    expect(html).toContain('href="#visual-breakdown"');
+    expect(html).toContain('href="#wcag-matrix"');
+    expect(html).toContain('href="#findings-index"');
+    expect(html).toContain('href="#scan-config"');
+    expect(html).toContain('href="#appendix"');
+  });
+
+  it("TOC has links to individual findings", () => {
+    const html = makeLongReport();
+    expect(html).toContain('href="#finding-rule-0"');
+    expect(html).toContain('href="#finding-rule-24"');
+  });
+
+  it("TOC entries have correct level classes", () => {
+    const html = makeLongReport();
+    expect(html).toContain('toc-level-2');
+    expect(html).toContain('toc-level-3');
+  });
+
+  it("does NOT render TOC for short reports (<20 findings)", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).not.toContain('id="toc"');
+    // toc-nav appears in CSS, so check for the actual nav element
+    expect(html).not.toContain('<nav class="toc-nav">');
+  });
+
+  it("renders TOC when totalElements >= 200 even with few findings", () => {
+    // 5 findings × 50 elements each = 250 total elements
+    const violations = Array.from({ length: 5 }, (_, i) => ({
+      id: `big-${i}`, impact: "critical" as const,
+      help: `Big ${i}`, description: `Desc ${i}`,
+      tags: ["wcag143"],
+      nodes: Array.from({ length: 50 }, (_, j) => ({
+        target: [`.el-${i}-${j}`], html: `<div>${j}</div>`,
+      })),
+    }));
+    const html = renderReportHTML(getReport({ violations }));
+    expect(html).toContain('id="toc"');
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Evidence Table Layout Guardrails
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Evidence table layout guardrails", () => {
+  it("chunks evidence tables > 50 rows with labels", () => {
+    const report = getReport({
+      violations: [{
+        id: "huge-rule", impact: "serious",
+        help: "Huge rule", description: "Many elements",
+        tags: ["wcag143"],
+        nodes: Array.from({ length: 120 }, (_, j) => ({
+          target: [`.huge-${j}`], html: `<div>${j}</div>`,
+        })),
+      }],
+    });
+    const html = renderReportHTML(report);
+    // Should have chunk labels (1/3), (2/3), (3/3)
+    expect(html).toContain("(1/3)");
+    expect(html).toContain("(2/3)");
+    expect(html).toContain("(3/3)");
+    // All 120 rows still rendered
+    const evRows = (html.match(/class="ev-num"/g) || []).length;
+    expect(evRows).toBe(120);
+  });
+
+  it("does not chunk tables <= 50 rows", () => {
+    const report = getReport({
+      violations: [{
+        id: "med-rule", impact: "moderate",
+        help: "Med rule", description: "Some elements",
+        tags: ["wcag143"],
+        nodes: Array.from({ length: 50 }, (_, j) => ({
+          target: [`.med-${j}`], html: `<div>${j}</div>`,
+        })),
+      }],
+    });
+    const html = renderReportHTML(report);
+    expect(html).not.toContain("(1/");
+    const evRows = (html.match(/class="ev-num"/g) || []).length;
+    expect(evRows).toBe(50);
+  });
+
+  it("print CSS includes thead repeat and row break avoidance", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toContain("table-header-group");
+    expect(html).toContain("page-break-inside:avoid");
+  });
+
+  it("evidence table has word-wrap CSS for selectors and snippets", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toContain("overflow-wrap:anywhere");
+    expect(html).toContain("word-break:break-all");
+  });
+
+  it("chunked numbering is continuous across chunks", () => {
+    const report = getReport({
+      violations: [{
+        id: "num-rule", impact: "critical",
+        help: "Num rule", description: "Numbering test",
+        tags: ["wcag143"],
+        nodes: Array.from({ length: 75 }, (_, j) => ({
+          target: [`.n-${j}`], html: `<div>${j}</div>`,
+        })),
+      }],
+    });
+    const html = renderReportHTML(report);
+    // Row 51 should exist (in second chunk, numbered 51 not 1)
+    expect(html).toContain('>51<');
+    expect(html).toContain('>75<');
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Score Determinism (comprehensive)
    ═══════════════════════════════════════════════════════════ */
 
 describe("Score determinism — comprehensive", () => {

@@ -10,6 +10,10 @@ export function renderReportHTML(data: ReportData): string {
   const primary = wl.primaryColor || t.primaryColor;
   const s: ReportStyle = data.reportStyle === "corporate" ? "corporate" : "premium";
 
+  // Determine if report is "long" and needs a TOC
+  const totalElements = data.priorityIssues.reduce((sum, i) => sum + (i.affectedElementDetails?.length ?? 0), 0);
+  const isLong = data.priorityIssues.length >= 20 || totalElements >= 200;
+
   return `<!DOCTYPE html>
 <html lang="en" data-style="${s}" data-report-version="v2">
 <head>
@@ -21,6 +25,7 @@ ${data.faviconUrl ? `<link rel="icon" href="${esc(data.faviconUrl)}" />` : ""}
 </head>
 <body class="style-${s}">
 ${renderCover(data, primary, s)}
+${isLong ? renderTOC(data, primary, s) : ""}
 ${renderExecutiveSummary(data, primary, s)}
 ${renderVisualBreakdown(data, primary, s)}
 ${renderWcagMatrix(data, primary, s)}
@@ -71,11 +76,40 @@ function riskBar(level: string, primary: string): string {
   return `<div class="risk-bar-track"><div class="risk-bar-fill" style="width:${w}%;background:${riskClr(level)}"></div></div>`;
 }
 
-function pageSection(title: string, primary: string, s: ReportStyle, body: string): string {
+function pageSection(title: string, primary: string, s: ReportStyle, body: string, anchorId?: string): string {
   const cls = corp(s) ? "section-title corp-title" : "section-title";
-  return `<section class="page">
+  const idAttr = anchorId ? ` id="${anchorId}"` : "";
+  return `<section class="page"${idAttr}>
   <h2 class="${cls}" style="border-color:${primary}">${title}</h2>
   ${body}
+</section>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Table of Contents (for long reports)
+   ═══════════════════════════════════════════════════════════ */
+
+function renderTOC(d: ReportData, primary: string, s: ReportStyle): string {
+  const cls = corp(s) ? "section-title corp-title" : "section-title";
+  const entries: { label: string; anchor: string; level: number }[] = [
+    { label: "Executive Summary", anchor: "exec-summary", level: 2 },
+    { label: "Visual Breakdown", anchor: "visual-breakdown", level: 2 },
+  ];
+  if (d.wcagMatrix && d.wcagMatrix.length > 0) {
+    entries.push({ label: "WCAG 2.2 Compliance Matrix", anchor: "wcag-matrix", level: 2 });
+  }
+  entries.push({ label: "Audit Findings", anchor: "findings-index", level: 2 });
+  d.priorityIssues.forEach((iss, i) => {
+    entries.push({ label: `#${i + 1} ${iss.title}`, anchor: `finding-${iss.id}`, level: 3 });
+  });
+  entries.push({ label: "Scan Configuration", anchor: "scan-config", level: 2 });
+  entries.push({ label: "Compliance &amp; Legal", anchor: "appendix", level: 2 });
+
+  return `<section class="page" id="toc">
+  <h2 class="${cls}" style="border-color:${primary}">Table of Contents</h2>
+  <nav class="toc-nav">
+    ${entries.map(e => `<a href="#${e.anchor}" class="toc-entry toc-level-${e.level}">${e.label}</a>`).join("\n    ")}
+  </nav>
 </section>`;
 }
 
@@ -281,6 +315,8 @@ function renderTopPriorityFixes(fixes: TopPriorityFix[], s: ReportStyle): string
 }
 
 function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle): string {
+  // Anchor ID for TOC linking
+  const anchorId = "exec-summary";
   const hs = d.healthScore;
   const hsColor = hs.value >= 80 ? "#16A34A" : hs.value >= 60 ? "#D97706" : "#DC2626";
   const metrics: { label: string; value: string | number; color: string }[] = [
@@ -314,7 +350,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <p>Estimated remediation effort: <strong>${esc(d.estimatedFixTime)}</strong>.</p>
     </div>
     ${renderTopPriorityFixes(d.topPriorityFixes, s)}
-    ${coverageNote}`);
+    ${coverageNote}`, anchorId);
   }
 
   // Premium
@@ -325,8 +361,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <div class="ehb-meta"><span class="ehb-grade">Grade ${hs.grade}</span><span class="ehb-label">${hs.label}</span></div>
     </div>
     <div class="exec-health-detail">
-      <p>Normalized penalty: <strong>${hs.normalizedPenalty.toFixed(1)}</strong> (weighted: ${hs.weightedPenalty})</p>
-      <p class="exec-health-formula">Formula: 100 &times; exp(&minus;0.05 &times; penalty / pages)</p>
+      <p>The Health Score is derived from the number and severity of detected issues, normalized by pages analyzed. A higher score indicates fewer and less severe accessibility barriers.</p>
     </div>
   </div>
   <div class="exec-cards">
@@ -357,7 +392,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   <div class="metrics-grid">
     ${metrics.map((m) => `<div class="metric-card"><div class="metric-value" style="color:${m.color}">${m.value}</div><div class="metric-label">${m.label}</div></div>`).join("")}
   </div>
-  ${coverageNote}`);
+  ${coverageNote}`, anchorId);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -407,7 +442,7 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
         }).join("")}
       </div>
     </div>
-  </div>`);
+  </div>`, "visual-breakdown");
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -443,7 +478,7 @@ function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): strin
   }
 
   return pages.map((pg, pi) => `
-<section class="page">
+<section class="page"${pi === 0 ? ' id="wcag-matrix"' : ''}>
   <h2 class="${corp(s) ? "section-title corp-title" : "section-title"}" style="border-color:${primary}">${pi === 0 ? "WCAG 2.2 Compliance Matrix" : "WCAG 2.2 Compliance Matrix (continued)"}</h2>
   ${pi === 0 ? `<div class="matrix-legend">
     <span class="ml-item"><span class="wcag-status-chip" style="background:#DCFCE7;color:#16A34A">Pass</span> No violations detected</span>
@@ -490,17 +525,47 @@ function renderScanConfiguration(d: ReportData, primary: string, s: ReportStyle)
     <tr><td class="sct-label">Viewport</td><td>${esc(sc.viewport)}</td></tr>
     <tr><td class="sct-label">Standards Tested</td><td>${sc.standardsTested.map((st) => `<span class="ac-chip ac-chip-wcag">${esc(st)}</span>`).join(" ")}</td></tr>
     <tr><td class="sct-label">Engine</td><td>${esc(sc.engineName)} v${esc(sc.engineVersion)}</td></tr>
-  </table>`);
+  </table>`, "scan-config");
 }
 
 /* ═══════════════════════════════════════════════════════════
    Page 4+ — Priority Issues (Consultancy Cards / Table)
    ═══════════════════════════════════════════════════════════ */
 
+// Evidence table chunking threshold — tables larger than this get split
+const EVIDENCE_CHUNK_SIZE = 50;
+
+function renderChunkedEvidenceTable(details: ReportData["priorityIssues"][0]["affectedElementDetails"], domain: string): string {
+  if (details.length === 0) return "";
+  const totalChunks = Math.ceil(details.length / EVIDENCE_CHUNK_SIZE);
+  const chunks: typeof details[] = [];
+  for (let i = 0; i < details.length; i += EVIDENCE_CHUNK_SIZE) {
+    chunks.push(details.slice(i, i + EVIDENCE_CHUNK_SIZE));
+  }
+  return chunks.map((chunk, ci) => {
+    const offset = ci * EVIDENCE_CHUNK_SIZE;
+    const label = totalChunks > 1 ? ` <span class="ev-chunk-label">(${ci + 1}/${totalChunks})</span>` : "";
+    return `<div class="ac-section" style="margin-top:8px">
+      <div class="ac-label">Affected Elements${label}</div>
+      <table class="evidence-table">
+        <thead><tr><th>#</th><th>Page / URL</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
+        <tbody>
+          ${chunk.map((el, idx) => `<tr>
+            <td class="ev-num">${offset + idx + 1}</td>
+            <td class="ev-url">${esc(el.pageUrl || domain)}</td>
+            <td class="ev-mono">${esc(el.selector)}</td>
+            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>`;
+  }).join("");
+}
+
 function renderPriorityIssues(d: ReportData, primary: string, s: ReportStyle): string {
   if (d.priorityIssues.length === 0) {
     return pageSection("Audit Findings", primary, s,
-      `<div class="empty-state"><p>No accessibility issues were detected during this scan.</p></div>`);
+      `<div class="empty-state"><p>No accessibility issues were detected during this scan.</p></div>`, "findings-index");
   }
 
   if (corp(s)) {
@@ -513,14 +578,15 @@ function renderPriorityIssues(d: ReportData, primary: string, s: ReportStyle): s
     pages.push(d.priorityIssues.slice(i, i + 3));
   }
   return pages.map((pg, pi) => `
-<section class="page">
+<section class="page"${pi === 0 ? ' id="findings-index"' : ''}>
   <h2 class="section-title" style="border-color:${primary}">${pi === 0 ? "Audit Findings" : "Audit Findings (continued)"}</h2>
   <div class="issues-list">${pg.map((iss, i) => renderAuditCard(iss, pi * 3 + i + 1, primary, d.domain)).join("")}</div>
 </section>`).join("");
 }
 
 function renderAuditCard(iss: ReportIssue, num: number, primary: string, domain: string): string {
-  return `<div class="audit-card">
+  const details = iss.affectedElementDetails ?? [];
+  return `<div class="audit-card" id="finding-${esc(iss.id)}">
   <div class="ac-header">
     <span class="ac-num">${num}</span>
     ${sevChip(iss.severity)}
@@ -547,20 +613,7 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string, domain:
         <p>${esc(iss.explanation)}</p>
       </div>
     </div>
-    ${(iss.affectedElementDetails ?? []).length > 0 ? `<div class="ac-section" style="margin-top:8px">
-      <div class="ac-label">Affected Elements</div>
-      <table class="evidence-table">
-        <thead><tr><th>#</th><th>Page / URL</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
-        <tbody>
-          ${(iss.affectedElementDetails ?? []).map((el, idx) => `<tr>
-            <td class="ev-num">${idx + 1}</td>
-            <td class="ev-url">${esc(el.pageUrl || domain)}</td>
-            <td class="ev-mono">${esc(el.selector)}</td>
-            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
-          </tr>`).join("")}
-        </tbody>
-      </table>
-    </div>` : ""}
+    ${renderChunkedEvidenceTable(details, domain)}
     <div class="ac-footer">
       ${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join("")}
       <span class="ac-chip">${iss.affectedElements} element${iss.affectedElements !== 1 ? "s" : ""}</span>
@@ -578,7 +631,7 @@ function renderIssuesTable(d: ReportData, primary: string): string {
     pages.push(d.priorityIssues.slice(i, i + perPage));
   }
   return pages.map((pg, pi) => `
-<section class="page">
+<section class="page"${pi === 0 ? ' id="findings-index"' : ''}>
   <h2 class="section-title corp-title" style="border-color:${primary}">${pi === 0 ? "Audit Findings" : "Audit Findings (continued)"}</h2>
   ${pg.map((iss, i) => renderIssueDetailCard(iss, pi * perPage + i + 1, primary, d.domain)).join("")}
 </section>`).join("");
@@ -586,7 +639,7 @@ function renderIssuesTable(d: ReportData, primary: string): string {
 
 function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string, domain: string): string {
   const details = (iss.affectedElementDetails ?? []);
-  return `<div class="issue-detail-card" style="border-left:4px solid ${sevClr(iss.severity)};background:${sevBg(iss.severity)}">
+  return `<div class="issue-detail-card" id="finding-${esc(iss.id)}" style="border-left:4px solid ${sevClr(iss.severity)};background:${sevBg(iss.severity)}">
   <div class="idc-header">
     <span class="idc-num" style="background:${sevClr(iss.severity)};color:#fff">${num}</span>
     <span class="ft-sev" style="color:${sevClr(iss.severity)}">${iss.severity.toUpperCase()}</span>
@@ -606,20 +659,7 @@ function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string, d
       <div class="idc-label">WCAG Criteria</div>
       <p>${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join(" ")}</p>
     </div>` : ""}
-    ${details.length > 0 ? `<div class="idc-section">
-      <div class="idc-label">Affected Elements</div>
-      <table class="evidence-table">
-        <thead><tr><th>#</th><th>Page / URL</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
-        <tbody>
-          ${details.map((el, idx) => `<tr>
-            <td class="ev-num">${idx + 1}</td>
-            <td class="ev-url">${esc(el.pageUrl || domain)}</td>
-            <td class="ev-mono">${esc(el.selector)}</td>
-            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
-          </tr>`).join("")}
-        </tbody>
-      </table>
-    </div>` : ""}
+    ${renderChunkedEvidenceTable(details, domain)}
     <div class="idc-rule"><span class="idc-label">Rule:</span> <code>${esc(iss.id)}</code></div>
   </div>
 </div>`;
@@ -661,7 +701,7 @@ function renderComplianceLegal(d: ReportData, primary: string, s: ReportStyle): 
         <tr><td>Pages Scanned</td><td>${d.pagesScanned ?? 1}</td></tr>
       </table>
     </div>
-  </div>`);
+  </div>`, "appendix");
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -945,7 +985,6 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .ehb-label{font-size:12px;color:#6B7280}
 .exec-health-detail{flex:1}
 .exec-health-detail p{font-size:13px;color:#4B5563;margin-bottom:4px}
-.exec-health-formula{font-size:11px;color:#9CA3AF;font-family:'SF Mono',Consolas,monospace}
 
 /* ── Top Priority Fixes ── */
 .tpf-section{margin-top:16px}
@@ -987,7 +1026,15 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .sct-label{font-weight:600;color:#374151;width:160px;background:#F9FAFB}
 .scan-config-table code{font-family:'SF Mono',Consolas,monospace;font-size:11px;background:#F3F4F6;padding:2px 6px;border-radius:4px}
 
+/* ── Table of Contents ── */
+.toc-nav{display:flex;flex-direction:column;gap:0}
+.toc-entry{display:block;padding:8px 12px;font-size:13px;color:#374151;text-decoration:none;border-bottom:1px solid #F3F4F6;transition:background .15s}
+.toc-entry:hover{background:#F9FAFB}
+.toc-level-2{font-weight:600;padding-left:12px}
+.toc-level-3{font-weight:400;padding-left:32px;font-size:12px;color:#6B7280}
+
 /* ── Enterprise Evidence Tables ── */
+.ev-chunk-label{font-weight:400;color:#9CA3AF;font-size:10px}
 .evidence-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px;table-layout:fixed}
 .evidence-table th{background:#F3F4F6;padding:6px 8px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
   font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
@@ -1041,6 +1088,11 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   .cover-premium{background:linear-gradient(170deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%)!important}
   .cta-button{border:2px solid var(--primary);color:var(--primary)!important;background:transparent!important}
   .version-marker{display:block}
+  /* Evidence table guardrails */
+  .evidence-table thead{display:table-header-group}
+  .evidence-table tr{page-break-inside:avoid}
+  .audit-card,.issue-detail-card{page-break-inside:avoid}
+  .toc-entry{border-bottom:1px solid #E5E7EB}
 }
 `;
 }
