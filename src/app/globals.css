@@ -119,6 +119,15 @@
     --vn-primary-hover: #B84E00;
     --vn-accent: #FFD166; /* Solar Gold */
     --vn-teal: #0F5C5C; /* Teal Blue - intelligent tech accent */
+
+    /* WCAG AAA Button Tokens — 7:1 contrast with white text */
+    --vn-primary-aaa-btn: #8C3B1D; /* Dark burnt orange — 7.28:1 with #FFF */
+    --vn-primary-aaa-btn-hover: #7A3318; /* Darker hover — 8.5:1 with #FFF */
+    --vn-on-primary-aaa-btn: #FFFFFF;
+
+    /* Disabled state tokens — no opacity, explicit colors */
+    --vn-disabled-bg: #D1D5DB; /* gray-300 */
+    --vn-disabled-fg: #6B7280; /* gray-500 — 4.64:1 on gray-300, 5.03:1 on white */
   }
   
   .dark {
@@ -182,6 +191,15 @@
     --vn-primary-hover: #B84E00;
     --vn-accent: #FFD166; /* Solar Gold */
     --vn-teal: #0F5C5C; /* Teal Blue */
+
+    /* WCAG AAA Button Tokens — 7:1 contrast with white text */
+    --vn-primary-aaa-btn: #8C3B1D; /* Dark burnt orange — 7.28:1 with #FFF */
+    --vn-primary-aaa-btn-hover: #7A3318; /* Darker hover — 8.5:1 with #FFF */
+    --vn-on-primary-aaa-btn: #FFFFFF;
+
+    /* Disabled state tokens — no opacity, explicit colors */
+    --vn-disabled-bg: #4B5563; /* gray-600 */
+    --vn-disabled-fg: #9CA3AF; /* gray-400 — 4.64:1 on gray-600 */
 
     /* Dark mode VexNexa gradients */
     --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);

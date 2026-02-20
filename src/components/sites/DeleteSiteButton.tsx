@@ -59,7 +59,7 @@ export function DeleteSiteButton({ siteId, siteName }: DeleteSiteButtonProps) {
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="inline-flex items-center gap-1 rounded-lg bg-destructive px-2.5 py-1 text-xs font-medium text-destructive-foreground hover:bg-destructive/90 transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1 rounded-lg bg-destructive px-2.5 py-1 text-xs font-medium text-destructive-foreground hover:bg-destructive/90 transition-colors disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
         >
           {deleting ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
           Yes
@@ -67,7 +67,7 @@ export function DeleteSiteButton({ siteId, siteName }: DeleteSiteButtonProps) {
         <button
           onClick={handleCancel}
           disabled={deleting}
-          className="rounded-lg border px-2.5 py-1 text-xs font-medium hover:bg-muted transition-colors disabled:opacity-50"
+          className="rounded-lg border px-2.5 py-1 text-xs font-medium hover:bg-muted transition-colors disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
         >
           No
         </button>

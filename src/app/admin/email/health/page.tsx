@@ -81,7 +81,7 @@ export default async function DeliveryHealthPage({ searchParams }: PageProps) {
           <a key={r} href={`/admin/email/health?range=${r}`}
             className={`rounded-xl px-4 py-1.5 text-sm font-medium transition-colors ${
               rangeParam === r
-                ? "bg-[var(--vn-primary)] text-white shadow-sm"
+                ? "bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] shadow-sm"
                 : "bg-muted hover:bg-muted/80"
             }`}>
             {r === "24h" ? "Last 24h" : r === "7d" ? "Last 7 days" : "Last 30 days"}

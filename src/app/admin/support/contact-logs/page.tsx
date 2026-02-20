@@ -78,7 +78,7 @@ export default async function ContactLogsPage({ searchParams }: PageProps) {
             <input name="query" type="text" placeholder="Search email, name, message…" defaultValue={params.query ?? ""}
               className="flex-1 min-w-[200px] rounded-xl border border-[var(--vn-border)] bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--vn-primary)]" />
             <button type="submit"
-              className="rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors">
+              className="rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors">
               Search
             </button>
           </form>

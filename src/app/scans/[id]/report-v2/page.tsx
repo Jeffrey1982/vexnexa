@@ -89,7 +89,7 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
                 </a>
                 <a
                   href={`/api/reports/${id}/pdf${styleQs}`}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors"
                 >
                   <Download className="w-4 h-4" />
                   Download PDF

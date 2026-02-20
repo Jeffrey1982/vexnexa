@@ -533,7 +533,7 @@ export default function ModernRegistrationForm() {
             <div className="grid gap-1.5 leading-none">
               <label
                 htmlFor="marketingEmails"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--vn-disabled-fg)] peer-disabled:opacity-100"
               >
                 Marketing Emails
               </label>
@@ -552,7 +552,7 @@ export default function ModernRegistrationForm() {
             <div className="grid gap-1.5 leading-none">
               <label
                 htmlFor="productUpdates"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--vn-disabled-fg)] peer-disabled:opacity-100"
               >
                 Product Updates
               </label>

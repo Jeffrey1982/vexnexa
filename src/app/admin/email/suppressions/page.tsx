@@ -96,7 +96,7 @@ export default async function SuppressionsPage({ searchParams }: PageProps) {
             <input name="reason" type="text" placeholder="Reason (optional)"
               className="w-48 rounded-xl border border-[var(--vn-border)] bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--vn-primary)]" />
             <button type="submit"
-              className="rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors">
+              className="rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors">
               Add
             </button>
           </form>
@@ -118,7 +118,7 @@ export default async function SuppressionsPage({ searchParams }: PageProps) {
               <option value="unsubscribe">Unsubscribe</option>
             </select>
             <button type="submit"
-              className="rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors">
+              className="rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors">
               Filter
             </button>
           </form>

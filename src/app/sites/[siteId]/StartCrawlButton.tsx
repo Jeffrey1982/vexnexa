@@ -61,7 +61,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
         <div className="flex gap-2">
           <button
             onClick={() => setShowOptions(true)}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
             disabled={isLoading}
           >
             Configure Crawl
@@ -69,7 +69,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
           <button
             onClick={handleStartCrawl}
             disabled={isLoading}
-            className="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 disabled:opacity-50"
+            className="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
           >
             {isLoading ? 'Starting...' : 'Quick Crawl'}
           </button>
@@ -126,7 +126,7 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
             <button
               onClick={handleStartCrawl}
               disabled={isLoading}
-              className="flex-1 px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
             >
               {isLoading ? 'Starting...' : 'Start Crawl'}
             </button>

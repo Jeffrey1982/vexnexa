@@ -118,7 +118,7 @@ export default async function SendTestPage({ searchParams }: PageProps) {
                 className="w-full rounded-xl border border-[var(--vn-border)] bg-background px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[var(--vn-primary)]" />
             </div>
             <button type="submit"
-              className="rounded-xl bg-[var(--vn-primary)] text-white px-6 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors">
+              className="rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-6 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors">
               Send Test Email
             </button>
           </form>

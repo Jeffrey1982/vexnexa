@@ -327,7 +327,7 @@ export default function RichTextEditor({
         <button
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
-          className="p-2 rounded hover:bg-gray-200 disabled:opacity-50"
+          className="p-2 rounded hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
           title="Undo (Ctrl+Z)"
         >
           <Undo className="w-4 h-4" />
@@ -336,7 +336,7 @@ export default function RichTextEditor({
         <button
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
-          className="p-2 rounded hover:bg-gray-200 disabled:opacity-50"
+          className="p-2 rounded hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
           title="Redo (Ctrl+Shift+Z)"
         >
           <Redo className="w-4 h-4" />

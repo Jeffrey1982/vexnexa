@@ -118,7 +118,7 @@ export default async function TicketsPage({ searchParams }: PageProps) {
               <option value="urgent">Urgent</option>
             </select>
             <button type="submit"
-              className="rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors">
+              className="rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors">
               Search
             </button>
           </form>

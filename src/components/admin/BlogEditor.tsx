@@ -375,7 +375,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 <button
                   onClick={() => handleSave("draft")}
                   disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
                 >
                   <Save className="w-4 h-4" />
                   Save Draft
@@ -383,7 +383,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                 <button
                   onClick={() => handleSave("published")}
                   disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
                 >
                   <Eye className="w-4 h-4" />
                   Publish
@@ -404,7 +404,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   type="button"
                   onClick={() => coverImageInputRef.current?.click()}
                   disabled={uploadingCover}
-                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
                 >
                   {uploadingCover ? (
                     <>
@@ -580,7 +580,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
         <button
           onClick={onCancel}
           disabled={saving}
-          className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+          className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
         >
           Cancel
         </button>
@@ -588,7 +588,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
           <button
             onClick={() => handleSave()}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
           >
             {saving ? (
               <>

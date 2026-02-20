@@ -53,7 +53,7 @@ export default function ScanForm() {
           className="flex-1 border rounded-xl px-3 py-2"
           required
         />
-        <button disabled={loading} className="px-4 py-2 rounded-xl bg-black text-white disabled:opacity-50">
+        <button disabled={loading} className="px-4 py-2 rounded-xl bg-black text-white disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100">
           {loading ? t("button.loading") : t("button.idle")}
         </button>
       </form>

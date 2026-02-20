@@ -236,7 +236,7 @@ export default async function AdminEmailPage({ searchParams }: PageProps) {
             href={`/admin/email?range=${r}${params.query ? `&query=${params.query}` : ""}${params.tag ? `&tag=${params.tag}` : ""}${params.status ? `&status=${params.status}` : ""}`}
             className={`rounded-xl px-4 py-1.5 text-sm font-medium transition-colors ${
               rangeParam === r
-                ? "bg-[var(--vn-primary)] text-white shadow-sm"
+                ? "bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] shadow-sm"
                 : "bg-muted hover:bg-muted/80"
             }`}
           >
@@ -296,7 +296,7 @@ export default async function AdminEmailPage({ searchParams }: PageProps) {
             </select>
             <button
               type="submit"
-              className="rounded-xl bg-[var(--vn-primary)] text-white px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-hover)] transition-colors"
+              className="rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors"
             >
               Search
             </button>

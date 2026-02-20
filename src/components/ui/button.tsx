@@ -5,12 +5,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100 disabled:shadow-none disabled:translate-y-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--vn-primary)] text-white shadow-elev2 hover:bg-[var(--vn-primary-hover)] hover:shadow-elev3 hover:-translate-y-px",
+          "bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] shadow-elev2 hover:bg-[var(--vn-primary-aaa-btn-hover)] hover:shadow-elev3 hover:-translate-y-px",
         destructive:
           "bg-destructive text-destructive-foreground shadow-elev2 hover:bg-destructive/90 hover:shadow-elev3 hover:-translate-y-px",
         outline:
@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-[var(--vn-muted)] text-foreground hover:text-[var(--vn-primary)]",
         link: "text-[var(--vn-primary)] underline-offset-4 hover:underline",
         gradient:
-          "bg-gradient-to-r from-[var(--vn-primary)] to-[var(--vn-accent)] text-white shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-[var(--vn-primary-hover)] hover:to-[var(--vn-accent)]",
+          "bg-gradient-to-r from-[var(--vn-primary-aaa-btn)] to-[var(--vn-accent)] text-[var(--vn-on-primary-aaa-btn)] shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-[var(--vn-primary-aaa-btn-hover)] hover:to-[var(--vn-accent)]",
       },
       size: {
         default: "h-10 px-4 py-2",

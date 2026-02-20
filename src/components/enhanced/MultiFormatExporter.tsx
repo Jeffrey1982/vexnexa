@@ -396,7 +396,7 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
                 <div className="grid gap-1.5 leading-none">
                   <Label
                     htmlFor={section.id}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--vn-disabled-fg)] peer-disabled:opacity-100"
                   >
                     {section.label}
                   </Label>
