@@ -69,7 +69,7 @@ export function UserListClient({ users }: UserListClientProps) {
       <Card className="mb-8">
         <CardContent className="pt-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               type="text"
               value={searchQuery}
@@ -80,14 +80,14 @@ export function UserListClient({ users }: UserListClientProps) {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-muted-foreground"
               >
                 <X className="w-5 h-5" />
               </button>
             )}
           </div>
           {searchQuery && (
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm text-muted-foreground mt-2">
               Found {filteredUsers.length} of {users.length} users
             </p>
           )}
@@ -98,7 +98,7 @@ export function UserListClient({ users }: UserListClientProps) {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Total</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
@@ -107,7 +107,7 @@ export function UserListClient({ users }: UserListClientProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Active</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Active</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">{stats.active}</div>
@@ -116,7 +116,7 @@ export function UserListClient({ users }: UserListClientProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Trial</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Trial</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-600">{stats.trial}</div>
@@ -125,7 +125,7 @@ export function UserListClient({ users }: UserListClientProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Starter</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Starter</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-cyan-600">{stats.starter}</div>
@@ -134,7 +134,7 @@ export function UserListClient({ users }: UserListClientProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Pro</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Pro</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-indigo-600">{stats.pro}</div>
@@ -143,7 +143,7 @@ export function UserListClient({ users }: UserListClientProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Business</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Business</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-600">{stats.business}</div>
@@ -170,9 +170,9 @@ export function UserListClient({ users }: UserListClientProps) {
         <CardContent>
           {filteredUsers.length === 0 ? (
             <div className="text-center py-12">
-              <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <Search className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No users found</h3>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 {searchQuery
                   ? `No users match "${searchQuery}". Try a different search term.`
                   : 'No users in the system yet.'
@@ -211,7 +211,7 @@ export function UserListClient({ users }: UserListClientProps) {
                           <div className="font-medium">
                             {user.firstName} {user.lastName}
                           </div>
-                          <div className="text-sm text-gray-500 flex items-center gap-1">
+                          <div className="text-sm text-muted-foreground flex items-center gap-1">
                             <Mail className="w-3 h-3" />
                             {user.email}
                           </div>
@@ -221,11 +221,11 @@ export function UserListClient({ users }: UserListClientProps) {
                         <div className="flex items-center gap-1 text-sm">
                           {user.company ? (
                             <>
-                              <Building className="w-3 h-3 text-gray-400" />
+                              <Building className="w-3 h-3 text-muted-foreground" />
                               {user.company}
                             </>
                           ) : (
-                            <span className="text-gray-400">N/A</span>
+                            <span className="text-muted-foreground">N/A</span>
                           )}
                         </div>
                       </TableCell>
@@ -253,7 +253,7 @@ export function UserListClient({ users }: UserListClientProps) {
                       </TableCell>
                       <TableCell>
                         <div className="text-sm flex items-center gap-1">
-                          <Calendar className="w-3 h-3 text-gray-400" />
+                          <Calendar className="w-3 h-3 text-muted-foreground" />
                           {formatDate(user.createdAt)}
                         </div>
                       </TableCell>

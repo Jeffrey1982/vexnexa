@@ -104,7 +104,7 @@ export default async function SupportPage() {
           <CardContent>
             {tickets.length === 0 ? (
               <div className="text-center py-12">
-                <Ticket className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
+                <Ticket className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">No tickets yet</h3>
                 <p className="text-muted-foreground mb-6">
                   Create your first support ticket to get help from our team

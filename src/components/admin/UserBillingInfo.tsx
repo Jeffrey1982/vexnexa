@@ -189,7 +189,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                   <DollarSign className="w-4 h-4" />
                   Amount
                 </div>
@@ -198,7 +198,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                 </p>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                   <CalendarIcon className="w-4 h-4" />
                   Next Payment
                 </div>
@@ -207,7 +207,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                 </p>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                   <Clock className="w-4 h-4" />
                   Status
                 </div>
@@ -216,7 +216,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                 </Badge>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                   <CreditCard className="w-4 h-4" />
                   Payment Method
                 </div>
@@ -252,7 +252,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium text-gray-600">Mollie Customer ID</label>
+              <label className="text-sm font-medium text-muted-foreground">Mollie Customer ID</label>
               <div className="mt-1 flex items-center gap-2">
                 {user.mollieCustomerId ? (
                   <>
@@ -267,12 +267,12 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                     </a>
                   </>
                 ) : (
-                  <span className="text-gray-500">Not set</span>
+                  <span className="text-muted-foreground">Not set</span>
                 )}
               </div>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-600">Mollie Subscription ID</label>
+              <label className="text-sm font-medium text-muted-foreground">Mollie Subscription ID</label>
               <div className="mt-1 flex items-center gap-2">
                 {user.mollieSubscriptionId ? (
                   <>
@@ -287,7 +287,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                     </a>
                   </>
                 ) : (
-                  <span className="text-gray-500">Not set</span>
+                  <span className="text-muted-foreground">Not set</span>
                 )}
               </div>
             </div>
@@ -320,7 +320,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
         </CardHeader>
         <CardContent>
           {!user.mollieCustomerId ? (
-            <p className="text-gray-500 text-center py-8">No Mollie customer ID set</p>
+            <p className="text-muted-foreground text-center py-8">No Mollie customer ID set</p>
           ) : error ? (
             <div className="flex items-center justify-center gap-2 py-8 text-red-600">
               <AlertCircle className="w-5 h-5" />
@@ -328,11 +328,11 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
             </div>
           ) : loading && payments.length === 0 ? (
             <div className="text-center py-8">
-              <RefreshCw className="w-8 h-8 mx-auto text-gray-400 animate-spin" />
-              <p className="text-gray-500 mt-2">Loading payments...</p>
+              <RefreshCw className="w-8 h-8 mx-auto text-muted-foreground animate-spin" />
+              <p className="text-muted-foreground mt-2">Loading payments...</p>
             </div>
           ) : payments.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No payment history found</p>
+            <p className="text-muted-foreground text-center py-8">No payment history found</p>
           ) : (
             <div className="overflow-x-auto">
               <Table>
@@ -424,7 +424,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                 onChange={(e) => setRefundAmount(e.target.value)}
                 placeholder="Enter amount to refund"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Leave empty or enter full amount for complete refund
               </p>
             </div>

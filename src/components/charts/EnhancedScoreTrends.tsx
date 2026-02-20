@@ -149,7 +149,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
             Score: {payload[0].value}/100
           </p>
           {!isPred && (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Issues: {data.issues}
             </p>
           )}
@@ -161,9 +161,9 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
 
   if (!data || data.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-64 text-muted-foreground ${className}`}>
         <div className="text-center">
-          <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <Calendar className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
           <div className="text-lg font-semibold">No trend data available</div>
           <div className="text-sm">Run more scans to see trends</div>
         </div>
@@ -189,7 +189,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
                 className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
                   selectedPeriod === period.key
                     ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:text-gray-900"
+                    : "text-muted-foreground hover:text-gray-900"
                 }`}
               >
                 {period.label}
@@ -215,11 +215,11 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Trend</div>
+                <div className="text-sm font-medium text-muted-foreground">Trend</div>
                 <div className={`text-2xl font-bold ${analytics.isImproving ? 'text-green-600' : 'text-red-600'}`}>
                   {analytics.isImproving ? '+' : ''}{analytics.scoreDiff}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-muted-foreground">
                   {analytics.percentChange >= 0 ? '+' : ''}{analytics.percentChange.toFixed(1)}%
                 </div>
               </div>
@@ -232,23 +232,23 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm font-medium text-gray-600">Average</div>
+            <div className="text-sm font-medium text-muted-foreground">Average</div>
             <div className="text-2xl font-bold text-blue-600">{analytics.avgScore}</div>
-            <div className="text-xs text-gray-500">out of 100</div>
+            <div className="text-xs text-muted-foreground">out of 100</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm font-medium text-gray-600">Peak Score</div>
+            <div className="text-sm font-medium text-muted-foreground">Peak Score</div>
             <div className="text-2xl font-bold text-green-600">{analytics.peakScore}</div>
-            <div className="text-xs text-gray-500">best performance</div>
+            <div className="text-xs text-muted-foreground">best performance</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Current Streak</div>
+                <div className="text-sm font-medium text-muted-foreground">Current Streak</div>
                 <div className="text-2xl font-bold text-purple-600">{analytics.currentStreak}</div>
-                <div className="text-xs text-gray-500">improving scans</div>
+                <div className="text-xs text-muted-foreground">improving scans</div>
               </div>
               <Target className="w-8 h-8 text-purple-600" />
             </div>
@@ -260,7 +260,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Accessibility Score Trend</h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Track your accessibility performance over time
             {showPrediction && " with predictive forecasting"}
           </p>

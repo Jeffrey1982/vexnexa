@@ -71,12 +71,12 @@ export default function NewTicketPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-3xl">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/dashboard/support" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-4">
+          <Link href="/dashboard/support" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-gray-900 mb-4">
             <ArrowLeft className="w-4 h-4" />
             Back to Tickets
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">Create Support Ticket</h1>
-          <p className="text-gray-600 mt-1">We&apos;ll get back to you as soon as possible</p>
+          <p className="text-muted-foreground mt-1">We&apos;ll get back to you as soon as possible</p>
         </div>
 
         {/* Error Alert */}
@@ -109,7 +109,7 @@ export default function NewTicketPage() {
                   required
                   maxLength={200}
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {formData.subject.length}/200 characters
                 </p>
               </div>
@@ -164,7 +164,7 @@ export default function NewTicketPage() {
                   rows={8}
                   className="resize-none"
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {formData.initialMessage.length} characters
                 </p>
               </div>

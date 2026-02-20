@@ -39,21 +39,21 @@ export default async function ContactMessagesPage() {
               <Mail className="text-blue-500" />
               Contact Form Submissions
             </h1>
-            <p className="text-gray-600 mt-1">View and manage all contact form submissions</p>
+            <p className="text-muted-foreground mt-1">View and manage all contact form submissions</p>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm font-medium text-gray-600 mb-1">Total Messages</div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">Total Messages</div>
               <div className="text-3xl font-bold text-gray-900">{stats.total}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm font-medium text-gray-600 mb-1">Replied</div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">Replied</div>
               <div className="text-3xl font-bold text-green-600">{stats.replied}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm font-medium text-gray-600 mb-1">Pending</div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">Pending</div>
               <div className="text-3xl font-bold text-orange-600">{stats.pending}</div>
             </div>
           </div>

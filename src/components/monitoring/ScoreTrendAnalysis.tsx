@@ -135,7 +135,7 @@ export function ScoreTrendAnalysis({
       );
     } else {
       return (
-        <div className="flex items-center gap-1 text-gray-600">
+        <div className="flex items-center gap-1 text-muted-foreground">
           <Minus className="w-3 h-3" />
           <span className="text-xs">0%</span>
         </div>
@@ -422,7 +422,7 @@ export function ScoreTrendAnalysis({
               </div>
 
               {/* Y-axis labels */}
-              <div className="absolute left-0 top-4 bottom-4 flex flex-col justify-between text-xs text-gray-500">
+              <div className="absolute left-0 top-4 bottom-4 flex flex-col justify-between text-xs text-muted-foreground">
                 <span>100</span>
                 <span>75</span>
                 <span>50</span>
@@ -432,7 +432,7 @@ export function ScoreTrendAnalysis({
             </div>
 
             {/* X-axis Date Labels */}
-            <div className="flex justify-between text-xs text-gray-600 px-4">
+            <div className="flex justify-between text-xs text-muted-foreground px-4">
               <span>{data.trends[0]?.date}</span>
               <span className="text-center">
                 {data.trends[Math.floor(data.trends.length / 2)]?.date}
@@ -446,11 +446,11 @@ export function ScoreTrendAnalysis({
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50 sticky top-0">
                     <tr>
-                      <th className="text-left p-3 text-xs font-medium text-gray-600">Date</th>
-                      <th className="text-right p-3 text-xs font-medium text-gray-600">Score</th>
-                      <th className="text-right p-3 text-xs font-medium text-gray-600">Issues</th>
-                      <th className="text-right p-3 text-xs font-medium text-gray-600">WCAG AA</th>
-                      <th className="text-left p-3 text-xs font-medium text-gray-600">Site</th>
+                      <th className="text-left p-3 text-xs font-medium text-muted-foreground">Date</th>
+                      <th className="text-right p-3 text-xs font-medium text-muted-foreground">Score</th>
+                      <th className="text-right p-3 text-xs font-medium text-muted-foreground">Issues</th>
+                      <th className="text-right p-3 text-xs font-medium text-muted-foreground">WCAG AA</th>
+                      <th className="text-left p-3 text-xs font-medium text-muted-foreground">Site</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -471,7 +471,7 @@ export function ScoreTrendAnalysis({
                         <td className="p-3 text-right">
                           {point.wcagAACompliance ? `${point.wcagAACompliance.toFixed(1)}%` : '-'}
                         </td>
-                        <td className="p-3 text-xs text-gray-600 truncate max-w-xs">
+                        <td className="p-3 text-xs text-muted-foreground truncate max-w-xs">
                           {point.siteUrl}
                         </td>
                       </tr>
@@ -485,15 +485,15 @@ export function ScoreTrendAnalysis({
             <div className="flex items-center justify-center gap-6 text-xs">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded" />
-                <span className="text-gray-600">Excellent (80+)</span>
+                <span className="text-muted-foreground">Excellent (80+)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-yellow-500 rounded" />
-                <span className="text-gray-600">Good (60-79)</span>
+                <span className="text-muted-foreground">Good (60-79)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-red-500 rounded" />
-                <span className="text-gray-600">Needs Work (&lt;60)</span>
+                <span className="text-muted-foreground">Needs Work (&lt;60)</span>
               </div>
             </div>
           </div>

@@ -232,7 +232,7 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="border-b">
-                <tr className="text-left text-sm text-gray-600">
+                <tr className="text-left text-sm text-muted-foreground">
                   <th className="pb-3 font-medium">Customer</th>
                   <th className="pb-3 font-medium">Plan</th>
                   <th className="pb-3 font-medium">Status</th>
@@ -254,7 +254,7 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
                       <td className="py-3">
                         <div>
                           <div className="font-medium text-gray-900">{userName}</div>
-                          <div className="text-xs text-gray-500">{user.email}</div>
+                          <div className="text-xs text-muted-foreground">{user.email}</div>
                         </div>
                       </td>
                       <td className="py-3">
@@ -265,15 +265,15 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
                       </td>
                       <td className="py-3">
                         {user.mollieSubscriptionId ? (
-                          <div className="text-xs font-mono text-gray-600">
+                          <div className="text-xs font-mono text-muted-foreground">
                             {user.mollieSubscriptionId.substring(0, 16)}...
                           </div>
                         ) : (
-                          <span className="text-xs text-gray-400">No subscription</span>
+                          <span className="text-xs text-muted-foreground">No subscription</span>
                         )}
                       </td>
                       <td className="py-3">
-                        <div className="text-xs text-gray-600">
+                        <div className="text-xs text-muted-foreground">
                           {new Date(user.createdAt).toLocaleDateString()}
                         </div>
                       </td>

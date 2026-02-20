@@ -207,15 +207,15 @@ export default function SystemHealthPage() {
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Status:</span>
+                  <span className="text-muted-foreground">Status:</span>
                   <span className="font-medium">{health.database.status}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Latency:</span>
+                  <span className="text-muted-foreground">Latency:</span>
                   <span className="font-medium">{health.database.latency}ms</span>
                 </div>
                 <div className="border-t pt-3 mt-3">
-                  <div className="text-sm text-gray-600 mb-2">Record Counts:</div>
+                  <div className="text-sm text-muted-foreground mb-2">Record Counts:</div>
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>Users: <span className="font-medium">{health.database.recordCounts.users}</span></div>
                     <div>Sites: <span className="font-medium">{health.database.recordCounts.sites}</span></div>
@@ -233,24 +233,24 @@ export default function SystemHealthPage() {
               <h3 className="text-lg font-semibold mb-4">Memory Usage</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Heap Used:</span>
+                  <span className="text-muted-foreground">Heap Used:</span>
                   <span className="font-medium">{formatBytes(health.memory.heapUsed)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Heap Total:</span>
+                  <span className="text-muted-foreground">Heap Total:</span>
                   <span className="font-medium">{formatBytes(health.memory.heapTotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">External:</span>
+                  <span className="text-muted-foreground">External:</span>
                   <span className="font-medium">{formatBytes(health.memory.external)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">RSS:</span>
+                  <span className="text-muted-foreground">RSS:</span>
                   <span className="font-medium">{formatBytes(health.memory.rss)}</span>
                 </div>
                 <div className="border-t pt-3 mt-3">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Uptime:</span>
+                    <span className="text-muted-foreground">Uptime:</span>
                     <span className="font-medium">{formatUptime(health.uptime)}</span>
                   </div>
                 </div>
@@ -266,15 +266,15 @@ export default function SystemHealthPage() {
               <h3 className="text-lg font-semibold mb-4">Database Performance</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Avg Query Time:</span>
+                  <span className="text-muted-foreground">Avg Query Time:</span>
                   <span className="font-medium">{performance.database.avgQueryTime}ms</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Slow Queries:</span>
+                  <span className="text-muted-foreground">Slow Queries:</span>
                   <span className="font-medium">{performance.database.slowQueries}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Active Connections:</span>
+                  <span className="text-muted-foreground">Active Connections:</span>
                   <span className="font-medium">{performance.database.activeConnections}</span>
                 </div>
               </div>
@@ -284,19 +284,19 @@ export default function SystemHealthPage() {
               <h3 className="text-lg font-semibold mb-4">Request Stats</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Total Requests:</span>
+                  <span className="text-muted-foreground">Total Requests:</span>
                   <span className="font-medium">{performance.requests.total}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Successful:</span>
+                  <span className="text-muted-foreground">Successful:</span>
                   <span className="font-medium text-green-600">{performance.requests.successful}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Failed:</span>
+                  <span className="text-muted-foreground">Failed:</span>
                   <span className="font-medium text-red-600">{performance.requests.failed}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Avg Response:</span>
+                  <span className="text-muted-foreground">Avg Response:</span>
                   <span className="font-medium">{performance.requests.avgResponseTime}ms</span>
                 </div>
               </div>
@@ -307,7 +307,7 @@ export default function SystemHealthPage() {
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between mb-1">
-                    <span className="text-gray-600">CPU Usage:</span>
+                    <span className="text-muted-foreground">CPU Usage:</span>
                     <span className="font-medium">{performance.resources.cpuUsage}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
@@ -319,7 +319,7 @@ export default function SystemHealthPage() {
                 </div>
                 <div>
                   <div className="flex justify-between mb-1">
-                    <span className="text-gray-600">Memory Usage:</span>
+                    <span className="text-muted-foreground">Memory Usage:</span>
                     <span className="font-medium">{performance.resources.memoryUsage}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
@@ -334,7 +334,7 @@ export default function SystemHealthPage() {
           </div>
         )}
 
-        <div className="mt-6 text-center text-sm text-gray-500">
+        <div className="mt-6 text-center text-sm text-muted-foreground">
           Auto-refreshes every 30 seconds
         </div>
       </div>

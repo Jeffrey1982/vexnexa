@@ -76,7 +76,7 @@ export function UserScanHistory({ scans, userId }: UserScanHistoryProps) {
       case "scanning":
         return <Clock className="w-4 h-4 text-blue-600" />;
       default:
-        return <AlertCircle className="w-4 h-4 text-gray-600" />;
+        return <AlertCircle className="w-4 h-4 text-muted-foreground" />;
     }
   };
 
@@ -128,25 +128,25 @@ export function UserScanHistory({ scans, userId }: UserScanHistoryProps) {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
           <div className="text-center">
             <div className="text-2xl font-bold text-gray-900">{statsData.total}</div>
-            <div className="text-xs text-gray-500">Total Scans</div>
+            <div className="text-xs text-muted-foreground">Total Scans</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{statsData.completed}</div>
-            <div className="text-xs text-gray-500">Completed</div>
+            <div className="text-xs text-muted-foreground">Completed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-red-600">{statsData.failed}</div>
-            <div className="text-xs text-gray-500">Failed</div>
+            <div className="text-xs text-muted-foreground">Failed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{statsData.pending}</div>
-            <div className="text-xs text-gray-500">Pending</div>
+            <div className="text-xs text-muted-foreground">Pending</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">
               {statsData.avgScore !== null ? statsData.avgScore.toFixed(0) : "N/A"}
             </div>
-            <div className="text-xs text-gray-500">Avg Score</div>
+            <div className="text-xs text-muted-foreground">Avg Score</div>
           </div>
         </div>
 
@@ -197,7 +197,7 @@ export function UserScanHistory({ scans, userId }: UserScanHistoryProps) {
               <TableBody>
                 {filteredScans.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                       {scans.length === 0 ? "No scans found" : "No scans match your filters"}
                     </TableCell>
                   </TableRow>
@@ -213,14 +213,14 @@ export function UserScanHistory({ scans, userId }: UserScanHistoryProps) {
                       <TableCell>
                         <div className="max-w-md">
                           <div className="font-medium truncate">{scan.site.url}</div>
-                          <div className="text-xs text-gray-500 truncate">ID: {scan.id.substring(0, 8)}</div>
+                          <div className="text-xs text-muted-foreground truncate">ID: {scan.id.substring(0, 8)}</div>
                         </div>
                       </TableCell>
                       <TableCell>
                         {scan.score !== null ? (
                           <ScoreBadge score={scan.score} size="sm" />
                         ) : (
-                          <span className="text-gray-400 text-sm">—</span>
+                          <span className="text-muted-foreground text-sm">—</span>
                         )}
                       </TableCell>
                       <TableCell>

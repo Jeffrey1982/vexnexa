@@ -58,10 +58,10 @@ export function AdminPageHeader({
             </h1>
           </div>
           {subtitle && (
-            <p className="text-sm text-gray-600 mt-1">{subtitle}</p>
+            <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
           )}
           {metadata && (
-            <div className="mt-2 text-sm text-gray-500">{metadata}</div>
+            <div className="mt-2 text-sm text-muted-foreground">{metadata}</div>
           )}
         </div>
 

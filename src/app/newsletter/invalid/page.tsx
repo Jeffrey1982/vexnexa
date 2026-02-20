@@ -57,7 +57,7 @@ function NewsletterInvalidContent() {
         <CardContent className="space-y-6">
           <div className="space-y-3">
             <h3 className="font-semibold text-gray-900">{t("possibleCauses")}</h3>
-            <ul className="space-y-1 text-sm text-gray-600">
+            <ul className="space-y-1 text-sm text-muted-foreground">
               {content.details.map((detail, index) => (
                 <li key={index} className="flex items-start">
                   <span className="mr-2 mt-0.5">•</span>

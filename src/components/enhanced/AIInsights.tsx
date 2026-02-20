@@ -66,7 +66,7 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
       case 'trend':
         return <TrendingUp className="h-5 w-5 text-purple-600" />;
       default:
-        return <Brain className="h-5 w-5 text-gray-600" />;
+        return <Brain className="h-5 w-5 text-muted-foreground" />;
     }
   }, []);
 
@@ -169,9 +169,9 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="text-center py-8 text-gray-700 dark:text-gray-600 dark:text-gray-400"
+                  className="text-center py-8 text-muted-foreground"
                 >
-                  <Brain className="h-12 w-12 mx-auto mb-4 text-gray-600 dark:text-gray-400" />
+                  <Brain className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                   <p>No insights available for this category.</p>
                 </motion.div>
               ) : (
@@ -216,7 +216,7 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
 
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
                           <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4 text-gray-700 dark:text-gray-600 dark:text-gray-400" />
+                            <Clock className="h-4 w-4 text-muted-foreground" />
                             <span className="text-xs sm:text-sm">{recommendation.insight.estimatedTimeToFix}</span>
                           </div>
                           <div className="flex items-center gap-1">
@@ -259,7 +259,7 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
                     {getInsightIcon(selectedInsight.insight.type)}
                     <div>
                       <h2 className="text-2xl font-bold">{selectedInsight.insight.title}</h2>
-                      <p className="text-gray-600">{selectedInsight.insight.category} • {selectedInsight.insight.priority} priority</p>
+                      <p className="text-muted-foreground">{selectedInsight.insight.category} • {selectedInsight.insight.priority} priority</p>
                     </div>
                   </div>
                   <Button variant="outline" onClick={() => setSelectedInsight(null)}>
@@ -327,25 +327,25 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
                       </CardHeader>
                       <CardContent className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Confidence</span>
+                          <span className="text-sm text-muted-foreground">Confidence</span>
                           <span className="font-medium">{selectedInsight.insight.confidence}%</span>
                         </div>
                         <Progress value={selectedInsight.insight.confidence} className="h-2" />
 
                         <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Effort Required</span>
+                          <span className="text-sm text-muted-foreground">Effort Required</span>
                           <Badge className={getEffortBadge(selectedInsight.insight.effort)}>
                             {selectedInsight.insight.effort}
                           </Badge>
                         </div>
 
                         <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Score Improvement</span>
+                          <span className="text-sm text-muted-foreground">Score Improvement</span>
                           <span className="font-medium text-green-600">+{selectedInsight.estimatedImprovement}</span>
                         </div>
 
                         <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Time to Fix</span>
+                          <span className="text-sm text-muted-foreground">Time to Fix</span>
                           <span className="font-medium">{selectedInsight.insight.estimatedTimeToFix}</span>
                         </div>
                       </CardContent>
@@ -367,10 +367,10 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 p-2 rounded hover:bg-gray-50 transition-colors"
                               >
-                                <ExternalLink className="h-4 w-4 text-gray-700 dark:text-gray-600 dark:text-gray-400" />
+                                <ExternalLink className="h-4 w-4 text-muted-foreground" />
                                 <div className="flex-1">
                                   <div className="font-medium text-sm">{resource.title}</div>
-                                  <div className="text-xs text-gray-600 capitalize">{resource.type}</div>
+                                  <div className="text-xs text-muted-foreground capitalize">{resource.type}</div>
                                 </div>
                               </a>
                             ))}

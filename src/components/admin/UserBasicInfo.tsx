@@ -21,7 +21,7 @@ export function UserBasicInfo({ user }: UserBasicInfoProps) {
               <h1 className="text-2xl font-bold text-gray-900">
                 {user.firstName} {user.lastName}
               </h1>
-              <p className="text-gray-600 flex items-center gap-2 mt-1">
+              <p className="text-muted-foreground flex items-center gap-2 mt-1">
                 <Mail className="w-4 h-4" />
                 {user.email}
               </p>

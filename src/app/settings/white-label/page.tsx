@@ -269,7 +269,7 @@ export default function WhiteLabelPage() {
                           </div>
                         ) : (
                           <div className="space-y-3">
-                            <Upload className="w-8 h-8 text-muted-foreground/50 mx-auto" />
+                            <Upload className="w-8 h-8 text-muted-foreground mx-auto" />
                             <p className="text-sm text-muted-foreground">Upload your logo</p>
                           </div>
                         )}
@@ -292,7 +292,7 @@ export default function WhiteLabelPage() {
                           </div>
                         ) : (
                           <div className="space-y-3">
-                            <Upload className="w-6 h-6 text-muted-foreground/50 mx-auto" />
+                            <Upload className="w-6 h-6 text-muted-foreground mx-auto" />
                             <p className="text-sm text-muted-foreground">Upload favicon</p>
                           </div>
                         )}

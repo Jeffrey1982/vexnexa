@@ -122,7 +122,7 @@ export function RegressionDetector({ className }: RegressionDetectorProps) {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'resolved': return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case 'false_positive': return <XCircle className="w-4 h-4 text-gray-600" />;
+      case 'false_positive': return <XCircle className="w-4 h-4 text-muted-foreground" />;
       case 'investigating': return <Eye className="w-4 h-4 text-blue-600" />;
       case 'confirmed': return <AlertTriangle className="w-4 h-4 text-orange-600" />;
       default: return <Clock className="w-4 h-4 text-yellow-600" />;
@@ -219,7 +219,7 @@ export function RegressionDetector({ className }: RegressionDetectorProps) {
               </div>
               <PlayCircle className={cn(
                 "w-8 h-8",
-                detectionSettings.realTimeMonitoring ? "text-green-600" : "text-gray-400"
+                detectionSettings.realTimeMonitoring ? "text-green-600" : "text-muted-foreground"
               )} />
             </div>
           </CardContent>
@@ -376,7 +376,7 @@ export function RegressionDetector({ className }: RegressionDetectorProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Settings className="w-5 h-5 text-gray-600" />
+            <Settings className="w-5 h-5 text-muted-foreground" />
             Detection Settings
           </CardTitle>
           <CardDescription>

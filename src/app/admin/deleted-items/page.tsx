@@ -228,7 +228,7 @@ export default function DeletedItemsPage() {
         {/* Deleted Items Table */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           {items.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-muted-foreground">
               No deleted items found
             </div>
           ) : (
@@ -254,13 +254,13 @@ export default function DeletedItemsPage() {
                           {item.email || item.name}
                         </div>
                         {item.url && (
-                          <div className="text-xs text-gray-500">{item.url}</div>
+                          <div className="text-xs text-muted-foreground">{item.url}</div>
                         )}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-600">
+                      <td className="py-3 px-4 text-sm text-muted-foreground">
                         {formatDate(item.deletedAt)}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-600">
+                      <td className="py-3 px-4 text-sm text-muted-foreground">
                         {item.deletedBy}
                       </td>
                       <td className="py-3 px-4">

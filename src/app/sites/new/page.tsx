@@ -91,7 +91,7 @@ export default function NewSitePage() {
             Back to Dashboard
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">Add New Website</h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-muted-foreground mt-2">
             Enter a website URL to start running accessibility scans
           </p>
         </div>
@@ -120,7 +120,7 @@ export default function NewSitePage() {
                   className="h-12"
                   disabled={loading}
                 />
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground">
                   You can enter just the domain name or the full URL
                 </p>
               </div>
@@ -182,7 +182,7 @@ export default function NewSitePage() {
           <CardHeader>
             <CardTitle className="text-lg">Quick Tips</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-gray-600">
+          <CardContent className="space-y-3 text-sm text-muted-foreground">
             <p>
               <strong>First scan?</strong> Try scanning your homepage first to get an overview of your site&apos;s accessibility status.
             </p>

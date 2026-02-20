@@ -181,9 +181,9 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
 
   if (!sites || sites.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-64 text-muted-foreground ${className}`}>
         <div className="text-center">
-          <Building2 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <Building2 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
           <div className="text-lg font-semibold">No portfolio data available</div>
           <div className="text-sm">Add sites to see portfolio analytics</div>
         </div>
@@ -199,31 +199,31 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Total Sites</div>
+                <div className="text-sm font-medium text-muted-foreground">Total Sites</div>
                 <div className="text-2xl font-bold text-blue-600">{analytics.totalSites}</div>
-                <div className="text-xs text-gray-500">in portfolio</div>
+                <div className="text-xs text-muted-foreground">in portfolio</div>
               </div>
               <Building2 className="w-8 h-8 text-blue-600" />
             </div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm font-medium text-gray-600">Portfolio Average</div>
+            <div className="text-sm font-medium text-muted-foreground">Portfolio Average</div>
             <div className={`text-2xl font-bold ${
               analytics.avgScore >= 80 ? 'text-green-600' :
               analytics.avgScore >= 60 ? 'text-yellow-600' : 'text-red-600'
             }`}>
               {analytics.avgScore}
             </div>
-            <div className="text-xs text-gray-500">accessibility score</div>
+            <div className="text-xs text-muted-foreground">accessibility score</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Improving</div>
+                <div className="text-sm font-medium text-muted-foreground">Improving</div>
                 <div className="text-2xl font-bold text-green-600">{analytics.improvingSites}</div>
-                <div className="text-xs text-gray-500">sites trending up</div>
+                <div className="text-xs text-muted-foreground">sites trending up</div>
               </div>
               <ArrowUpRight className="w-8 h-8 text-green-600" />
             </div>
@@ -232,11 +232,11 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">High Risk</div>
+                <div className="text-sm font-medium text-muted-foreground">High Risk</div>
                 <div className="text-2xl font-bold text-red-600">
                   {analytics.riskDistribution.HIGH + analytics.riskDistribution.CRITICAL}
                 </div>
-                <div className="text-xs text-gray-500">sites need attention</div>
+                <div className="text-xs text-muted-foreground">sites need attention</div>
               </div>
               <AlertTriangle className="w-8 h-8 text-red-600" />
             </div>
@@ -314,10 +314,10 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Priority Matrix</h3>
-              <p className="text-sm text-gray-600">Sites prioritized by impact vs effort ratio</p>
+              <p className="text-sm text-muted-foreground">Sites prioritized by impact vs effort ratio</p>
             </div>
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gray-400" />
+              <Filter className="w-4 h-4 text-muted-foreground" />
               <select
                 value={selectedFilter}
                 onChange={(e) => setSelectedFilter(e.target.value as any)}
@@ -392,7 +392,7 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
                         ) : site.trend < 0 ? (
                           <ArrowDownRight className="w-4 h-4 text-red-600" />
                         ) : (
-                          <span className="text-gray-400">-</span>
+                          <span className="text-muted-foreground">-</span>
                         )}
                       </div>
                     </td>

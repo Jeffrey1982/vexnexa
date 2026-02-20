@@ -55,7 +55,7 @@ export default async function AssuranceReportsPage() {
         <CardContent>
           {reports.length === 0 ? (
             <div className="text-center py-12">
-              <FileText className="mx-auto h-12 w-12 text-muted-foreground/50" />
+              <FileText className="mx-auto h-12 w-12 text-muted-foreground" />
               <h3 className="mt-4 text-lg font-semibold">No reports yet</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Reports will be generated automatically after each scheduled scan

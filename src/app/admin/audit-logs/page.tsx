@@ -208,7 +208,7 @@ export default function AuditLogsPage() {
         {/* Audit Logs Table */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           {logs.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-muted-foreground">
               No audit logs found
             </div>
           ) : (
@@ -228,7 +228,7 @@ export default function AuditLogsPage() {
                   <tbody>
                     {logs.map((log) => (
                       <tr key={log.id} className="border-b border-gray-100 hover:bg-gray-50">
-                        <td className="py-3 px-4 text-sm text-gray-600 whitespace-nowrap">
+                        <td className="py-3 px-4 text-sm text-muted-foreground whitespace-nowrap">
                           {formatDate(log.createdAt)}
                         </td>
                         <td className="py-3 px-4">
@@ -237,7 +237,7 @@ export default function AuditLogsPage() {
                         <td className="py-3 px-4">
                           <div className="text-sm font-medium text-gray-900">{log.entity}</div>
                           {log.entityId && (
-                            <div className="text-xs text-gray-500 font-mono">
+                            <div className="text-xs text-muted-foreground font-mono">
                               ID: {log.entityId.substring(0, 8)}...
                             </div>
                           )}
@@ -245,12 +245,12 @@ export default function AuditLogsPage() {
                         <td className="py-3 px-4">
                           <div className="text-sm text-gray-900">{log.actorEmail || 'System'}</div>
                           {log.ip && (
-                            <div className="text-xs text-gray-500">
+                            <div className="text-xs text-muted-foreground">
                               IP: {log.ip}
                             </div>
                           )}
                         </td>
-                        <td className="py-3 px-4 text-sm text-gray-600">
+                        <td className="py-3 px-4 text-sm text-muted-foreground">
                           {log.description}
                         </td>
                         <td className="py-3 px-4 text-xs">
@@ -294,7 +294,7 @@ export default function AuditLogsPage() {
                   >
                     Previous
                   </button>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-muted-foreground">
                     Page {page} of {totalPages}
                   </span>
                   <button

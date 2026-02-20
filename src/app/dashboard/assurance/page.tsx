@@ -137,7 +137,7 @@ export default async function AssuranceDashboardPage() {
         <CardContent>
           {domains.length === 0 ? (
             <div className="text-center py-12">
-              <Shield className="mx-auto h-12 w-12 text-muted-foreground/50" />
+              <Shield className="mx-auto h-12 w-12 text-muted-foreground" />
               <h3 className="mt-4 text-lg font-semibold">No domains yet</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Add your first domain to start monitoring accessibility compliance

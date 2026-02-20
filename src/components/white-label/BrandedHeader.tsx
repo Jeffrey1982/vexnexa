@@ -54,7 +54,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   {companyName.charAt(0).toUpperCase()}
                 </div>
               )}
-              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              <span className="text-xl font-bold text-foreground">
                 {companyName}
               </span>
             </Link>

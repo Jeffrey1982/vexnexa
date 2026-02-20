@@ -79,7 +79,7 @@ export function AdminKpiGrid({ kpis, columns = 4, className }: AdminKpiGridProps
             )}>
               <CardTitle className={cn(
                 "text-sm font-medium flex items-center gap-2",
-                isPrimary ? "text-gray-900" : "text-gray-600"
+                isPrimary ? "text-gray-900" : "text-muted-foreground"
               )}>
                 {Icon && <Icon className={cn("w-4 h-4", isPrimary && "text-orange-500")} />}
                 {kpi.label}
@@ -94,14 +94,14 @@ export function AdminKpiGrid({ kpis, columns = 4, className }: AdminKpiGridProps
                 {kpi.value}
               </div>
               {kpi.subtitle && (
-                <p className="text-xs text-gray-500 mt-1">{kpi.subtitle}</p>
+                <p className="text-xs text-muted-foreground mt-1">{kpi.subtitle}</p>
               )}
               {kpi.trend && (
                 <div className={cn(
                   "text-xs mt-2 font-medium flex items-center gap-1",
                   kpi.trend.direction === 'up' && "text-green-600",
                   kpi.trend.direction === 'down' && "text-red-600",
-                  kpi.trend.direction === 'neutral' && "text-gray-500"
+                  kpi.trend.direction === 'neutral' && "text-muted-foreground"
                 )}>
                   {kpi.trend.direction === 'up' && '↑'}
                   {kpi.trend.direction === 'down' && '↓'}

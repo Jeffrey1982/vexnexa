@@ -178,7 +178,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
           <div className="mb-6">
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-gray-900 dark:hover:text-gray-200"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Dashboard
@@ -190,10 +190,10 @@ export default function SubscribeAssurancePage(): JSX.Element {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500 text-white shadow-glow-teal mb-4">
               <Shield className="w-8 h-8" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100">
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
               Accessibility Assurance
             </h1>
-            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               Automated accessibility monitoring for your websites. Get alerted
               when scores drop and track WCAG compliance over time.
             </p>
@@ -229,10 +229,10 @@ export default function SubscribeAssurancePage(): JSX.Element {
               >
                 <feature.icon className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                  <div className="font-medium text-foreground text-sm">
                     {feature.title}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-muted-foreground dark:text-gray-400">
                     {feature.desc}
                   </div>
                 </div>
@@ -256,7 +256,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                   className={`relative px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                     billingCycle === option.value
                       ? "bg-primary-500 text-white shadow-sm"
-                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                      : "text-muted-foreground hover:text-gray-900 dark:hover:text-gray-200"
                   }`}
                 >
                   {option.label}
@@ -308,15 +308,15 @@ export default function SubscribeAssurancePage(): JSX.Element {
                     {/* Price */}
                     <div className="mb-6">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                        <span className="text-3xl font-bold text-foreground">
                           {formatEuro(billingCycle === "monthly" ? price : perMonth)}
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-sm text-muted-foreground dark:text-gray-400">
                           /month
                         </span>
                       </div>
                       {billingCycle !== "monthly" && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-xs text-muted-foreground dark:text-gray-400 mt-1">
                           {formatEuro(price)} billed{" "}
                           {billingCycle === "semiannual"
                             ? "every 6 months"
@@ -330,7 +330,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                       {plan.features.map((feature) => (
                         <li
                           key={feature}
-                          className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
+                          className="flex items-start gap-2 text-sm text-foreground/80"
                         >
                           <Check className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
                           {feature}
@@ -365,7 +365,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
           </div>
 
           {/* FAQ / Info */}
-          <div className="mt-12 max-w-2xl mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
+          <div className="mt-12 max-w-2xl mx-auto text-center text-sm text-muted-foreground dark:text-gray-400">
             <p>
               All plans include a secure payment via Mollie. You can cancel
               anytime with a 7-day grace period. Prices are in EUR and exclude

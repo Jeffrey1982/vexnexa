@@ -85,7 +85,7 @@ export function AdminFilterBar({
               variant="ghost"
               size="sm"
               onClick={onClearFilters}
-              className="text-sm text-gray-600 hover:text-gray-900"
+              className="text-sm text-muted-foreground hover:text-gray-900"
               disabled={disabled}
             >
               <X className="w-4 h-4 mr-1" />
@@ -106,7 +106,7 @@ export function AdminFilterBar({
 
         {/* Collapsed State Message */}
         {isCollapsed && autoCollapse && (
-          <p className="text-sm text-gray-500 pt-1">
+          <p className="text-sm text-muted-foreground pt-1">
             Filters available when data is present
           </p>
         )}

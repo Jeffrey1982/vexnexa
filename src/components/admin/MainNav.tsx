@@ -44,7 +44,7 @@ export function MainNav({ user }: MainNavProps) {
       <div className="flex justify-between items-center h-16 px-6">
         {/* Left side - could add breadcrumbs or page title here */}
         <div className="flex items-center gap-4">
-          <div className="text-sm text-gray-500 dark:text-muted-foreground">
+          <div className="text-sm text-muted-foreground dark:text-muted-foreground">
             Admin Panel
           </div>
         </div>
@@ -57,7 +57,7 @@ export function MainNav({ user }: MainNavProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-foreground"
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-foreground"
             >
               <Home className="w-4 h-4 mr-2" />
               My Dashboard
@@ -73,7 +73,7 @@ export function MainNav({ user }: MainNavProps) {
             onClick={handleSignOut}
             variant="ghost"
             size="sm"
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-foreground"
+            className="text-muted-foreground hover:text-gray-900 dark:hover:text-foreground"
           >
             <LogOut className="w-4 h-4" />
           </Button>

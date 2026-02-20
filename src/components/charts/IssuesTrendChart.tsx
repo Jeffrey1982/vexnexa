@@ -27,7 +27,7 @@ export function IssuesTrendChart({
 }: IssuesTrendChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-[${height}px] text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-[${height}px] text-muted-foreground ${className}`}>
         No data available for trend analysis
       </div>
     );

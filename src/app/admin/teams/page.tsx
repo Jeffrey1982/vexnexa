@@ -112,7 +112,7 @@ export default async function AdminTeamsPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Team Management</h1>
-          <p className="text-gray-600 mt-2">Manage all teams and member permissions across the platform</p>
+          <p className="text-muted-foreground mt-2">Manage all teams and member permissions across the platform</p>
         </div>
 
         {/* Stats Grid */}
@@ -138,7 +138,7 @@ export default async function AdminTeamsPage() {
                 <UserCheck className="w-5 h-5 text-green-600" />
                 <div className="text-3xl font-bold text-green-600">{stats.totalMembers}</div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Avg {stats.avgMembersPerTeam} per team</div>
+              <div className="text-xs text-muted-foreground mt-1">Avg {stats.avgMembersPerTeam} per team</div>
             </CardContent>
           </Card>
 
@@ -191,8 +191,8 @@ export default async function AdminTeamsPage() {
           </CardHeader>
           <CardContent>
             {teams.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
-                <Users className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+              <div className="text-center py-12 text-muted-foreground">
+                <Users className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
                 <div className="font-medium">No teams created yet</div>
                 <div className="text-sm">Teams will appear here once users start collaborating</div>
               </div>
@@ -209,11 +209,11 @@ export default async function AdminTeamsPage() {
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">{team.name}</h3>
                           {team.description && (
-                            <p className="text-sm text-gray-600 mt-1">{team.description}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{team.description}</p>
                           )}
                           <div className="flex items-center gap-2 mt-2">
                             <Badge variant="outline">{team.owner.plan}</Badge>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-muted-foreground">
                               Created {new Date(team.createdAt).toLocaleDateString()}
                             </span>
                           </div>
@@ -232,7 +232,7 @@ export default async function AdminTeamsPage() {
                           </div>
                           <div>
                             <div className="font-semibold text-gray-900">{team._count.members}</div>
-                            <div className="text-xs text-gray-500">Members</div>
+                            <div className="text-xs text-muted-foreground">Members</div>
                           </div>
                         </div>
 
@@ -242,7 +242,7 @@ export default async function AdminTeamsPage() {
                           </div>
                           <div>
                             <div className="font-semibold text-gray-900">{team._count.sites}</div>
-                            <div className="text-xs text-gray-500">Sites</div>
+                            <div className="text-xs text-muted-foreground">Sites</div>
                           </div>
                         </div>
 
@@ -252,18 +252,18 @@ export default async function AdminTeamsPage() {
                           </div>
                           <div>
                             <div className="font-semibold text-gray-900">{team._count.invites}</div>
-                            <div className="text-xs text-gray-500">Pending Invites</div>
+                            <div className="text-xs text-muted-foreground">Pending Invites</div>
                           </div>
                         </div>
                       </div>
 
                       {/* Team Owner */}
                       <div className="mb-3 pb-3 border-b">
-                        <div className="text-xs font-semibold text-gray-600 mb-2">OWNER</div>
+                        <div className="text-xs font-semibold text-muted-foreground mb-2">OWNER</div>
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="text-sm font-medium text-gray-900">{ownerName}</div>
-                            <div className="text-xs text-gray-500">{team.owner.email}</div>
+                            <div className="text-xs text-muted-foreground">{team.owner.email}</div>
                           </div>
                           <Badge variant="outline" className="bg-purple-100 text-purple-800 border-purple-200">
                             <Crown className="w-3 h-3 mr-1" />
@@ -275,7 +275,7 @@ export default async function AdminTeamsPage() {
                       {/* Team Members */}
                       {team.members.length > 0 && (
                         <div>
-                          <div className="text-xs font-semibold text-gray-600 mb-2">MEMBERS</div>
+                          <div className="text-xs font-semibold text-muted-foreground mb-2">MEMBERS</div>
                           <div className="space-y-2">
                             {team.members.map((member) => {
                               const memberName = member.user.firstName && member.user.lastName
@@ -286,13 +286,13 @@ export default async function AdminTeamsPage() {
                                 <div key={member.id} className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
                                   <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                                      <span className="text-xs font-semibold text-gray-600">
+                                      <span className="text-xs font-semibold text-muted-foreground">
                                         {(member.user.firstName?.[0] || member.user.email[0]).toUpperCase()}
                                       </span>
                                     </div>
                                     <div>
                                       <div className="text-sm font-medium text-gray-900">{memberName}</div>
-                                      <div className="text-xs text-gray-500">{member.user.email}</div>
+                                      <div className="text-xs text-muted-foreground">{member.user.email}</div>
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2">
@@ -321,7 +321,7 @@ export default async function AdminTeamsPage() {
                       {/* Pending Invites */}
                       {team.invites.length > 0 && (
                         <div className="mt-3 pt-3 border-t">
-                          <div className="text-xs font-semibold text-gray-600 mb-2">PENDING INVITES</div>
+                          <div className="text-xs font-semibold text-muted-foreground mb-2">PENDING INVITES</div>
                           <div className="space-y-2">
                             {team.invites.map((invite) => (
                               <div key={invite.id} className="flex items-center justify-between py-2 px-3 bg-orange-50 rounded-lg">

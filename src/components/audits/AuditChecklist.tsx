@@ -222,7 +222,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
   if (!audit) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-700 dark:text-gray-600 dark:text-gray-400">Audit not found</p>
+        <p className="text-muted-foreground">Audit not found</p>
       </div>
     );
   }
@@ -245,11 +245,11 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
       case "fail":
         return <XCircle className="w-5 h-5 text-red-500" />;
       case "na":
-        return <Circle className="w-5 h-5 text-gray-600 dark:text-gray-400" />;
+        return <Circle className="w-5 h-5 text-muted-foreground" />;
       case "needs_review":
         return <AlertCircle className="w-5 h-5 text-yellow-500" />;
       default:
-        return <Circle className="w-5 h-5 text-gray-300" />;
+        return <Circle className="w-5 h-5 text-muted-foreground" />;
     }
   };
 
@@ -265,9 +265,9 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
           <div>
             <h2 className="text-2xl font-bold text-gray-900">{audit.name}</h2>
             {audit.description && (
-              <p className="text-gray-600 mt-1">{audit.description}</p>
+              <p className="text-muted-foreground mt-1">{audit.description}</p>
             )}
-            <div className="flex items-center gap-4 mt-2 text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Link2 className="w-4 h-4" />
                 {audit.site.name || audit.site.url}
@@ -284,7 +284,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
             <div className="text-3xl font-bold text-blue-600">
               {Math.round(progressPercentage)}%
             </div>
-            <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">Complete</div>
+            <div className="text-sm text-muted-foreground">Complete</div>
           </div>
         </div>
 
@@ -302,21 +302,21 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
         <div className="grid grid-cols-4 gap-4 mt-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-gray-900">{audit.completedCriteria}</div>
-            <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Completed</div>
+            <div className="text-xs text-muted-foreground">Completed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{audit.passedCriteria}</div>
-            <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Passed</div>
+            <div className="text-xs text-muted-foreground">Passed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-red-600">{audit.failedCriteria}</div>
-            <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Failed</div>
+            <div className="text-xs text-muted-foreground">Failed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">
               {audit.overallScore !== null ? audit.overallScore.toFixed(1) : "-"}
             </div>
-            <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Score</div>
+            <div className="text-xs text-muted-foreground">Score</div>
           </div>
         </div>
       </div>
@@ -341,14 +341,14 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
               >
                 <div className="flex items-center gap-3">
                   {expandedCategories.has(category) ? (
-                    <ChevronDown className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
                   ) : (
-                    <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
                   )}
                   <span className="font-semibold text-gray-900">
                     {categoryLabels[category] || category}
                   </span>
-                  <span className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                  <span className="text-sm text-muted-foreground">
                     {categoryCompleted} / {categoryTotal}
                   </span>
                 </div>
@@ -359,7 +359,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
                       style={{ width: `${categoryProgress}%` }}
                     />
                   </div>
-                  <span className="text-sm font-medium text-gray-600">
+                  <span className="text-sm font-medium text-muted-foreground">
                     {Math.round(categoryProgress)}%
                   </span>
                 </div>
@@ -404,7 +404,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
                                     </h4>
                                     {item.wcagCriterion && (
                                       <div className="flex items-center gap-2 mt-1">
-                                        <span className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                                        <span className="text-xs text-muted-foreground">
                                           {item.wcagCriterion}
                                         </span>
                                         <span
@@ -474,7 +474,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
                                         <h5 className="text-sm font-medium text-gray-700 mb-1">
                                           Description
                                         </h5>
-                                        <p className="text-sm text-gray-600">
+                                        <p className="text-sm text-muted-foreground">
                                           {item.description}
                                         </p>
                                       </div>
@@ -485,7 +485,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
                                         <h5 className="text-sm font-medium text-gray-700 mb-1">
                                           How to Test
                                         </h5>
-                                        <p className="text-sm text-gray-600 whitespace-pre-wrap">
+                                        <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                                           {item.howToTest}
                                         </p>
                                       </div>
@@ -612,7 +612,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
                                             <span className="font-medium text-gray-700">
                                               Notes:
                                             </span>{" "}
-                                            <span className="text-gray-600">{item.notes}</span>
+                                            <span className="text-muted-foreground">{item.notes}</span>
                                           </div>
                                         )}
                                         {item.pageUrl && (
@@ -635,13 +635,13 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
                                             <span className="font-medium text-gray-700">
                                               Element:
                                             </span>{" "}
-                                            <code className="text-gray-600 bg-gray-100 px-1 py-0.5 rounded">
+                                            <code className="text-muted-foreground bg-gray-100 px-1 py-0.5 rounded">
                                               {item.elementSelector}
                                             </code>
                                           </div>
                                         )}
                                         {item.testedAt && (
-                                          <div className="flex items-center gap-1 text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                                          <div className="flex items-center gap-1 text-muted-foreground">
                                             <Clock className="w-3 h-3" />
                                             Tested {new Date(item.testedAt).toLocaleString()}
                                             {item.testedBy && (

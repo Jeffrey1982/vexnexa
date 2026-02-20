@@ -132,9 +132,9 @@ export default async function AnalyticsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-gray-600 dark:text-gray-400" />
+          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Analytics Dashboard</h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-muted-foreground mb-8">
             Run some accessibility scans to see detailed analytics and insights
           </p>
           <Link
@@ -154,13 +154,13 @@ export default async function AnalyticsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-muted-foreground mt-1">
             Comprehensive accessibility insights and competitive analysis
           </p>
         </div>
         <Link
           href="/dashboard"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-foreground/80 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800"
         >
           ← Back to Dashboard
         </Link>
@@ -171,9 +171,9 @@ export default async function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Average Score</div>
+              <div className="text-sm font-medium text-muted-foreground">Average Score</div>
               <div className="text-3xl font-bold text-blue-600">{avgScore}</div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">out of 100</div>
+              <div className="text-sm text-muted-foreground">out of 100</div>
             </div>
             <TrendingUp className="w-10 h-10 text-blue-600" />
           </div>
@@ -182,7 +182,7 @@ export default async function AnalyticsPage() {
               <span className={monthlyChange > 0 ? 'text-green-600' : 'text-red-600'}>
                 {monthlyChange > 0 ? '+' : ''}{monthlyChange} points
               </span>
-              <span className="text-gray-700 dark:text-gray-600 dark:text-gray-400 ml-1">vs last month</span>
+              <span className="text-muted-foreground ml-1">vs last month</span>
             </div>
           )}
         </div>
@@ -190,9 +190,9 @@ export default async function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Total Scans</div>
+              <div className="text-sm font-medium text-muted-foreground">Total Scans</div>
               <div className="text-3xl font-bold text-green-600">{totalScans}</div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">accessibility scans</div>
+              <div className="text-sm text-muted-foreground">accessibility scans</div>
             </div>
             <BarChart3 className="w-10 h-10 text-green-600" />
           </div>
@@ -201,9 +201,9 @@ export default async function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Total Issues</div>
+              <div className="text-sm font-medium text-muted-foreground">Total Issues</div>
               <div className="text-3xl font-bold text-orange-600">{totalIssues}</div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">violations found</div>
+              <div className="text-sm text-muted-foreground">violations found</div>
             </div>
             <AlertTriangle className="w-10 h-10 text-orange-600" />
           </div>
@@ -212,9 +212,9 @@ export default async function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Sites Tracked</div>
+              <div className="text-sm font-medium text-muted-foreground">Sites Tracked</div>
               <div className="text-3xl font-bold text-purple-600">{sites.length}</div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">websites monitored</div>
+              <div className="text-sm text-muted-foreground">websites monitored</div>
             </div>
             <Users className="w-10 h-10 text-purple-600" />
           </div>
@@ -229,7 +229,7 @@ export default async function AnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Accessibility Score Trends</h2>
-            <p className="text-gray-600">Track performance over time with predictive insights</p>
+            <p className="text-muted-foreground">Track performance over time with predictive insights</p>
           </div>
         </div>
         <EnhancedScoreTrends data={trendData} />
@@ -243,7 +243,7 @@ export default async function AnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Activity Heatmap</h2>
-            <p className="text-gray-600">Visual calendar of scan activity and performance streaks</p>
+            <p className="text-muted-foreground">Visual calendar of scan activity and performance streaks</p>
           </div>
         </div>
         <SeverityHeatmap data={trendData} />
@@ -257,7 +257,7 @@ export default async function AnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Top Failing Rules</h2>
-            <p className="text-gray-600">Most frequent violations with actionable fix recommendations</p>
+            <p className="text-muted-foreground">Most frequent violations with actionable fix recommendations</p>
           </div>
         </div>
         <TopFailingRulesDashboard violations={allViolations} />
@@ -271,7 +271,7 @@ export default async function AnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Competitive Analysis</h2>
-            <p className="text-gray-600">Market positioning and competitive benchmarking</p>
+            <p className="text-muted-foreground">Market positioning and competitive benchmarking</p>
           </div>
         </div>
         <CompetitiveAnalysis

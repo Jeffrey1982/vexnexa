@@ -104,7 +104,7 @@ export default async function AdminBillingPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Billing & Overages</h1>
-          <p className="text-gray-600 mt-2">Monitor overage charges and billing opportunities</p>
+          <p className="text-muted-foreground mt-2">Monitor overage charges and billing opportunities</p>
         </div>
 
         {/* Stats Grid */}
@@ -120,7 +120,7 @@ export default async function AdminBillingPage() {
                   €{stats.totalOverageRevenue.toFixed(2)}
                 </div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">This billing cycle</div>
+              <div className="text-xs text-muted-foreground mt-1">This billing cycle</div>
             </CardContent>
           </Card>
 
@@ -133,7 +133,7 @@ export default async function AdminBillingPage() {
                 <AlertCircle className="w-5 h-5 text-orange-600" />
                 <div className="text-3xl font-bold text-orange-600">{stats.usersWithOverages}</div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Require attention</div>
+              <div className="text-xs text-muted-foreground mt-1">Require attention</div>
             </CardContent>
           </Card>
 
@@ -148,7 +148,7 @@ export default async function AdminBillingPage() {
                   €{stats.averageOverage.toFixed(2)}
                 </div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Per user with overage</div>
+              <div className="text-xs text-muted-foreground mt-1">Per user with overage</div>
             </CardContent>
           </Card>
         </div>
@@ -185,7 +185,7 @@ export default async function AdminBillingPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="border-b">
-                    <tr className="text-left text-sm text-gray-600">
+                    <tr className="text-left text-sm text-muted-foreground">
                       <th className="pb-3 font-medium">User</th>
                       <th className="pb-3 font-medium">Plan</th>
                       <th className="pb-3 font-medium">Site Overage</th>
@@ -199,7 +199,7 @@ export default async function AdminBillingPage() {
                       <tr key={user.id} className="text-sm">
                         <td className="py-3">
                           <div className="font-medium text-gray-900">{user.name}</div>
-                          <div className="text-xs text-gray-500">{user.email}</div>
+                          <div className="text-xs text-muted-foreground">{user.email}</div>
                         </td>
                         <td className="py-3">
                           <Badge variant="outline">{user.plan}</Badge>
@@ -208,10 +208,10 @@ export default async function AdminBillingPage() {
                           {user.siteOverage > 0 ? (
                             <div>
                               <div className="text-red-600 font-medium">+{user.siteOverage} sites</div>
-                              <div className="text-xs text-gray-500">€{user.siteOverageCost.toFixed(2)}</div>
+                              <div className="text-xs text-muted-foreground">€{user.siteOverageCost.toFixed(2)}</div>
                             </div>
                           ) : (
-                            <span className="text-gray-400">—</span>
+                            <span className="text-muted-foreground">—</span>
                           )}
                         </td>
                         <td className="py-3">
@@ -220,10 +220,10 @@ export default async function AdminBillingPage() {
                               <div className="text-red-600 font-medium">
                                 +{user.pageOverage.toLocaleString()} pages
                               </div>
-                              <div className="text-xs text-gray-500">€{user.pageOverageCost.toFixed(2)}</div>
+                              <div className="text-xs text-muted-foreground">€{user.pageOverageCost.toFixed(2)}</div>
                             </div>
                           ) : (
-                            <span className="text-gray-400">—</span>
+                            <span className="text-muted-foreground">—</span>
                           )}
                         </td>
                         <td className="py-3">
@@ -258,7 +258,7 @@ export default async function AdminBillingPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="border-b">
-                  <tr className="text-left text-sm text-gray-600">
+                  <tr className="text-left text-sm text-muted-foreground">
                     <th className="pb-3 font-medium">User</th>
                     <th className="pb-3 font-medium">Plan</th>
                     <th className="pb-3 font-medium">Overage Charges</th>
@@ -271,7 +271,7 @@ export default async function AdminBillingPage() {
                     <tr key={user.id} className="text-sm">
                       <td className="py-3">
                         <div className="font-medium text-gray-900">{user.name}</div>
-                        <div className="text-xs text-gray-500">{user.email}</div>
+                        <div className="text-xs text-muted-foreground">{user.email}</div>
                       </td>
                       <td className="py-3">
                         <Badge variant="outline">{user.plan}</Badge>
@@ -280,7 +280,7 @@ export default async function AdminBillingPage() {
                         {user.totalOverage > 0 ? (
                           <span className="font-medium text-red-600">€{user.totalOverage.toFixed(2)}</span>
                         ) : (
-                          <span className="text-gray-400">€0.00</span>
+                          <span className="text-muted-foreground">€0.00</span>
                         )}
                       </td>
                       <td className="py-3">

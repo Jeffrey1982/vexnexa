@@ -97,24 +97,24 @@ export default async function AdminSeoPage() {
       {
         label: "Health Score",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
         primary: true,
         subtitle: "Connect Google to track",
       },
       {
         label: "Index Health",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Visibility",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Active Alerts",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
     ];
 
@@ -236,7 +236,7 @@ export default async function AdminSeoPage() {
         <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-gray-400" />
+              <TrendingUp className="w-5 h-5 text-muted-foreground" />
               <h2 className="text-lg font-semibold text-gray-900">30-Day Score Trend</h2>
             </div>
             <Link
@@ -260,7 +260,7 @@ export default async function AdminSeoPage() {
                       style={{ height: `${percentage}%` }}
                     />
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-foreground">
                     {new Date(day.date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })}
                   </span>
                 </div>
@@ -298,7 +298,7 @@ export default async function AdminSeoPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{alert.message}</p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     {new Date(alert.created_at).toLocaleString()}
                   </p>
                 </div>
@@ -333,8 +333,8 @@ export default async function AdminSeoPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{action.title}</p>
-                  <p className="text-sm text-gray-600 mt-1">{action.description}</p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
                     Impact: +{action.impact_points} points
                   </p>
                 </div>

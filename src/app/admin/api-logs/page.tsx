@@ -139,14 +139,14 @@ export default function ApiLogsPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Total API Calls</div>
+                    <div className="text-sm text-muted-foreground">Total API Calls</div>
                     <div className="text-2xl font-bold text-blue-600">{stats.periods.last24h.apiCalls}</div>
                   </div>
                   <div className="text-3xl">📡</div>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Errors (4xx/5xx)</div>
+                    <div className="text-sm text-muted-foreground">Errors (4xx/5xx)</div>
                     <div className="text-2xl font-bold text-red-600">{stats.periods.last24h.apiErrors}</div>
                   </div>
                   <div className="text-3xl">⚠️</div>
@@ -159,14 +159,14 @@ export default function ApiLogsPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Avg Response Time</div>
+                    <div className="text-sm text-muted-foreground">Avg Response Time</div>
                     <div className="text-2xl font-bold text-green-600">{stats.periods.last24h.avgResponseTime}ms</div>
                   </div>
                   <div className="text-3xl">⚡</div>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Error Rate</div>
+                    <div className="text-sm text-muted-foreground">Error Rate</div>
                     <div className="text-2xl font-bold text-purple-600">
                       {stats.periods.last24h.apiCalls > 0
                         ? ((stats.periods.last24h.apiErrors / stats.periods.last24h.apiCalls) * 100).toFixed(1)
@@ -183,14 +183,14 @@ export default function ApiLogsPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">New Users (24h)</div>
+                    <div className="text-sm text-muted-foreground">New Users (24h)</div>
                     <div className="text-2xl font-bold text-orange-600">{stats.periods.last24h.newUsers}</div>
                   </div>
                   <div className="text-3xl">👥</div>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-cyan-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Scans Run (24h)</div>
+                    <div className="text-sm text-muted-foreground">Scans Run (24h)</div>
                     <div className="text-2xl font-bold text-cyan-600">{stats.periods.last24h.scans}</div>
                   </div>
                   <div className="text-3xl">🔍</div>
@@ -208,9 +208,9 @@ export default function ApiLogsPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Path</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Requests</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Method</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Path</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Requests</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -242,8 +242,8 @@ export default function ApiLogsPage() {
           <h2 className="text-lg font-semibold mb-4">Recent API Requests</h2>
           {recentLogs.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-gray-500 mb-4">No API requests logged yet</p>
-              <div className="text-sm text-gray-400">
+              <p className="text-muted-foreground mb-4">No API requests logged yet</p>
+              <div className="text-sm text-muted-foreground">
                 Use <code className="bg-gray-100 px-2 py-1 rounded">logApiRequest()</code> from src/lib/logging.ts to track API calls
               </div>
             </div>
@@ -252,18 +252,18 @@ export default function ApiLogsPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Path</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Time</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Method</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Path</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Duration</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">User</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {recentLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                         {new Date(log.createdAt).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -291,7 +291,7 @@ export default function ApiLogsPage() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {log.duration}ms
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                         {log.userEmail || '-'}
                       </td>
                     </tr>

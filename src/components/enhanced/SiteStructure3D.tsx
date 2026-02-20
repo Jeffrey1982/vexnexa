@@ -390,7 +390,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
 
           {/* Instructions */}
           <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-slate-900/90 p-3 rounded-lg shadow-sm">
-            <div className="text-xs text-gray-600">
+            <div className="text-xs text-muted-foreground">
               • Click nodes for details<br/>
               • Drag to rotate manually<br/>
               • Use filters to focus<br/>
@@ -400,7 +400,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
 
           {/* Node count */}
           <div className="absolute bottom-4 right-4 bg-white/90 dark:bg-slate-900/90 p-2 rounded-lg shadow-sm">
-            <div className="text-xs text-gray-600">
+            <div className="text-xs text-muted-foreground">
               Showing {positionedNodes.length} nodes
             </div>
           </div>
@@ -415,7 +415,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h4 className="font-semibold">{selectedNode.title}</h4>
-                <p className="text-sm text-gray-600">{selectedNode.url}</p>
+                <p className="text-sm text-muted-foreground">{selectedNode.url}</p>
               </div>
               <Button
                 variant="ghost"
@@ -429,25 +429,25 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
                 <div className="text-lg font-bold">{selectedNode.score}</div>
-                <div className="text-xs text-gray-600">Score</div>
+                <div className="text-xs text-muted-foreground">Score</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-red-600">{selectedNode.issues.critical}</div>
-                <div className="text-xs text-gray-600">Critical</div>
+                <div className="text-xs text-muted-foreground">Critical</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-orange-600">{selectedNode.issues.serious}</div>
-                <div className="text-xs text-gray-600">Serious</div>
+                <div className="text-xs text-muted-foreground">Serious</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-yellow-600">{selectedNode.issues.moderate}</div>
-                <div className="text-xs text-gray-600">Moderate</div>
+                <div className="text-xs text-muted-foreground">Moderate</div>
               </div>
             </div>
 
             {selectedNode.children.length > 0 && (
               <div className="mt-3 pt-3 border-t">
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-muted-foreground">
                   Connected to {selectedNode.children.length} child page{selectedNode.children.length !== 1 ? 's' : ''}
                 </div>
               </div>

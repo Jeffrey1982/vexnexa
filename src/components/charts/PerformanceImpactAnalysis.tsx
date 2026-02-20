@@ -138,7 +138,7 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
             <div>Accessibility: {data.accessibilityScore}/100</div>
             <div>Performance: {data.performanceScore}/100</div>
             <div>SEO: {data.seoScore}/100</div>
-            <div className="text-xs text-gray-500 mt-2">{data.date}</div>
+            <div className="text-xs text-muted-foreground mt-2">{data.date}</div>
           </div>
         </div>
       );
@@ -148,9 +148,9 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
 
   if (!data || data.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-64 text-muted-foreground ${className}`}>
         <div className="text-center">
-          <Gauge className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <Gauge className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
           <div className="text-lg font-semibold">No performance data available</div>
           <div className="text-sm">Run scans to see performance analysis</div>
         </div>
@@ -166,14 +166,14 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Correlation</div>
+                <div className="text-sm font-medium text-muted-foreground">Correlation</div>
                 <div className={`text-2xl font-bold ${
                   analytics.correlation > 0.5 ? 'text-green-600' :
                   analytics.correlation > 0 ? 'text-yellow-600' : 'text-red-600'
                 }`}>
                   {(analytics.correlation * 100).toFixed(0)}%
                 </div>
-                <div className="text-xs text-gray-500">accessibility-performance</div>
+                <div className="text-xs text-muted-foreground">accessibility-performance</div>
               </div>
               <TrendingUp className="w-8 h-8 text-blue-600" />
             </div>
@@ -182,41 +182,41 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Web Vitals</div>
+                <div className="text-sm font-medium text-muted-foreground">Web Vitals</div>
                 <div className={`text-2xl font-bold ${
                   analytics.webVitalsScore >= 75 ? 'text-green-600' :
                   analytics.webVitalsScore >= 50 ? 'text-yellow-600' : 'text-red-600'
                 }`}>
                   {analytics.webVitalsScore}%
                 </div>
-                <div className="text-xs text-gray-500">passing thresholds</div>
+                <div className="text-xs text-muted-foreground">passing thresholds</div>
               </div>
               <Zap className="w-8 h-8 text-orange-600" />
             </div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm font-medium text-gray-600">Avg Performance</div>
+            <div className="text-sm font-medium text-muted-foreground">Avg Performance</div>
             <div className={`text-2xl font-bold ${
               analytics.avgPerformance >= 80 ? 'text-green-600' :
               analytics.avgPerformance >= 60 ? 'text-yellow-600' : 'text-red-600'
             }`}>
               {analytics.avgPerformance}
             </div>
-            <div className="text-xs text-gray-500">performance score</div>
+            <div className="text-xs text-muted-foreground">performance score</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">SEO Impact</div>
+                <div className="text-sm font-medium text-muted-foreground">SEO Impact</div>
                 <div className={`text-2xl font-bold ${
                   analytics.avgSEO >= 80 ? 'text-green-600' :
                   analytics.avgSEO >= 60 ? 'text-yellow-600' : 'text-red-600'
                 }`}>
                   {analytics.avgSEO}
                 </div>
-                <div className="text-xs text-gray-500">SEO score</div>
+                <div className="text-xs text-muted-foreground">SEO score</div>
               </div>
               <Target className="w-8 h-8 text-purple-600" />
             </div>
@@ -228,7 +228,7 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Performance vs Accessibility</h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Correlation analysis between accessibility and performance scores
           </p>
         </div>
@@ -292,7 +292,7 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Core Web Vitals Trends</h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Track key performance metrics over time
           </p>
         </div>
@@ -397,9 +397,9 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
                     ) : analytics.trend < 0 ? (
                       <ArrowDown className="w-4 h-4 text-red-600" />
                     ) : (
-                      <span className="text-gray-600">Stable</span>
+                      <span className="text-muted-foreground">Stable</span>
                     )}
-                    <span className={analytics.trend > 0 ? 'text-green-600' : analytics.trend < 0 ? 'text-red-600' : 'text-gray-600'}>
+                    <span className={analytics.trend > 0 ? 'text-green-600' : analytics.trend < 0 ? 'text-red-600' : 'text-muted-foreground'}>
                       {Math.abs(analytics.trend)} points
                     </span>
                   </div>

@@ -123,9 +123,9 @@ export default async function AdvancedAnalyticsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-gray-600 dark:text-gray-400" />
+          <BarChart3 className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Advanced Analytics</h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-muted-foreground mb-8">
             Run some accessibility scans to see advanced performance and compliance analytics
           </p>
           <Link
@@ -145,13 +145,13 @@ export default async function AdvancedAnalyticsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Advanced Analytics</h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-muted-foreground mt-1">
             Performance optimization, portfolio management, and legal compliance insights
           </p>
         </div>
         <Link
           href="/analytics"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-foreground/80 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Analytics
@@ -163,9 +163,9 @@ export default async function AdvancedAnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Sites Analyzed</div>
+              <div className="text-sm font-medium text-muted-foreground">Sites Analyzed</div>
               <div className="text-3xl font-bold text-blue-600">{sitesWithScans.length}</div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">with performance data</div>
+              <div className="text-sm text-muted-foreground">with performance data</div>
             </div>
             <Building2 className="w-10 h-10 text-blue-600" />
           </div>
@@ -174,11 +174,11 @@ export default async function AdvancedAnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Avg Performance</div>
+              <div className="text-sm font-medium text-muted-foreground">Avg Performance</div>
               <div className="text-3xl font-bold text-green-600">
                 {Math.round(performanceData.reduce((sum, d) => sum + d.performanceScore, 0) / performanceData.length)}
               </div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">performance score</div>
+              <div className="text-sm text-muted-foreground">performance score</div>
             </div>
             <Zap className="w-10 h-10 text-green-600" />
           </div>
@@ -187,11 +187,11 @@ export default async function AdvancedAnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">Legal Risk</div>
+              <div className="text-sm font-medium text-muted-foreground">Legal Risk</div>
               <div className="text-3xl font-bold text-yellow-600">
                 {portfolioSites.filter(s => s.riskLevel === 'HIGH' || s.riskLevel === 'CRITICAL').length}
               </div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">high risk sites</div>
+              <div className="text-sm text-muted-foreground">high risk sites</div>
             </div>
             <Scale className="w-10 h-10 text-yellow-600" />
           </div>
@@ -200,11 +200,11 @@ export default async function AdvancedAnalyticsPage() {
         <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-600">WCAG 2.1</div>
+              <div className="text-sm font-medium text-muted-foreground">WCAG 2.1</div>
               <div className="text-3xl font-bold text-purple-600">
                 {Math.round(complianceData.reduce((sum, d) => sum + d.wcag21Compliance, 0) / complianceData.length)}%
               </div>
-              <div className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">avg compliance</div>
+              <div className="text-sm text-muted-foreground">avg compliance</div>
             </div>
             <BarChart3 className="w-10 h-10 text-purple-600" />
           </div>
@@ -219,7 +219,7 @@ export default async function AdvancedAnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Performance Impact Analysis</h2>
-            <p className="text-gray-600">Correlation between accessibility, performance, and SEO</p>
+            <p className="text-muted-foreground">Correlation between accessibility, performance, and SEO</p>
           </div>
         </div>
         <PerformanceImpactAnalysis data={performanceData} />
@@ -233,7 +233,7 @@ export default async function AdvancedAnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Portfolio Dashboard</h2>
-            <p className="text-gray-600">Cross-site performance comparison and priority matrix</p>
+            <p className="text-muted-foreground">Cross-site performance comparison and priority matrix</p>
           </div>
         </div>
         <PortfolioDashboard sites={portfolioSites} />
@@ -247,7 +247,7 @@ export default async function AdvancedAnalyticsPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Legal Compliance Assessment</h2>
-            <p className="text-gray-600">WCAG compliance tracking and ADA risk evaluation</p>
+            <p className="text-muted-foreground">WCAG compliance tracking and ADA risk evaluation</p>
           </div>
         </div>
         <ComplianceLegalAssessment data={complianceData} />
@@ -313,7 +313,7 @@ export default async function AdvancedAnalyticsPage() {
             href="/settings/white-label"
             className="flex items-center justify-center px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            <Building2 className="w-5 h-5 text-gray-600 mr-2" />
+            <Building2 className="w-5 h-5 text-muted-foreground mr-2" />
             <span className="font-medium">White-label</span>
           </Link>
         </div>

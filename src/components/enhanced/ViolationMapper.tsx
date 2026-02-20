@@ -130,7 +130,7 @@ export function ViolationMapper({ violations, websiteUrl, className }: Violation
             <div className="text-sm text-muted-foreground">Moderate</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-gray-600">
+            <div className="text-2xl font-bold text-muted-foreground">
               {violations.filter(v => normalizeImpact(v.impact) === 'minor').length}
             </div>
             <div className="text-sm text-muted-foreground">Minor</div>

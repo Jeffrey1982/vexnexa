@@ -33,7 +33,7 @@ export function ViolationTrendChart({
 }: ViolationTrendChartProps) {
   if (!violations || violations.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-[${height}px] text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-[${height}px] text-muted-foreground ${className}`}>
         No violation trend data available
       </div>
     );
@@ -83,7 +83,7 @@ export function ViolationTrendChart({
                 <p style={{ color: entry.color }} className="font-medium">
                   {violation?.ruleName || entry.dataKey}
                 </p>
-                <p className="text-gray-600">{entry.value} issues</p>
+                <p className="text-muted-foreground">{entry.value} issues</p>
               </div>
             );
           })}
@@ -95,7 +95,7 @@ export function ViolationTrendChart({
 
   const getTrendIcon = (isImproving: boolean, currentCount: number) => {
     if (currentCount === 0) {
-      return <Minus className="w-4 h-4 text-gray-500" />;
+      return <Minus className="w-4 h-4 text-muted-foreground" />;
     }
     return isImproving ?
       <TrendingDown className="w-4 h-4 text-green-600" /> :

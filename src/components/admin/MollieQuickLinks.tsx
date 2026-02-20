@@ -31,7 +31,7 @@ export function MollieQuickLinks() {
       label: 'Settings',
       description: 'Configure payment methods',
       icon: Settings,
-      color: 'text-gray-600'
+      color: 'text-muted-foreground'
     }
   ];
 
@@ -73,10 +73,10 @@ export function MollieQuickLinks() {
                 <div className="text-sm font-medium text-gray-900 text-center">
                   {link.label}
                 </div>
-                <div className="text-xs text-gray-500 text-center mt-1">
+                <div className="text-xs text-muted-foreground text-center mt-1">
                   {link.description}
                 </div>
-                <ExternalLink className="w-3 h-3 text-gray-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-3 h-3 text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
             );
           })}

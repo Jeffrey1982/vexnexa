@@ -57,7 +57,7 @@ export default async function AdminSitesPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Site Management</h1>
-          <p className="text-gray-600 mt-2">Manage all customer websites across the platform</p>
+          <p className="text-muted-foreground mt-2">Manage all customer websites across the platform</p>
         </div>
 
         {/* Stats Grid */}
@@ -83,7 +83,7 @@ export default async function AdminSitesPage() {
                 <Globe className="w-5 h-5 text-green-600" />
                 <div className="text-3xl font-bold text-green-600">{stats.activeSites}</div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">With scan history</div>
+              <div className="text-xs text-muted-foreground mt-1">With scan history</div>
             </CardContent>
           </Card>
 
@@ -93,10 +93,10 @@ export default async function AdminSitesPage() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <Globe className="w-5 h-5 text-gray-400" />
-                <div className="text-3xl font-bold text-gray-600">{stats.inactiveSites}</div>
+                <Globe className="w-5 h-5 text-muted-foreground" />
+                <div className="text-3xl font-bold text-muted-foreground">{stats.inactiveSites}</div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Never scanned</div>
+              <div className="text-xs text-muted-foreground mt-1">Never scanned</div>
             </CardContent>
           </Card>
         </div>
@@ -111,7 +111,7 @@ export default async function AdminSitesPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="border-b">
-                  <tr className="text-left text-sm text-gray-600">
+                  <tr className="text-left text-sm text-muted-foreground">
                     <th className="pb-3 font-medium">Website</th>
                     <th className="pb-3 font-medium">Owner</th>
                     <th className="pb-3 font-medium">Plan</th>
@@ -133,12 +133,12 @@ export default async function AdminSitesPage() {
                       <tr key={site.id} className="text-sm">
                         <td className="py-3">
                           <div className="flex items-center gap-2">
-                            <Globe className="w-4 h-4 text-gray-400" />
+                            <Globe className="w-4 h-4 text-muted-foreground" />
                             <div>
                               <div className="font-medium text-gray-900 max-w-xs truncate">
                                 {site.url}
                               </div>
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-muted-foreground">
                                 Added {new Date(site.createdAt).toLocaleDateString()}
                               </div>
                             </div>
@@ -147,7 +147,7 @@ export default async function AdminSitesPage() {
                         <td className="py-3">
                           <div>
                             <div className="font-medium text-gray-900">{userName}</div>
-                            <div className="text-xs text-gray-500">{site.user.email}</div>
+                            <div className="text-xs text-muted-foreground">{site.user.email}</div>
                           </div>
                         </td>
                         <td className="py-3">
@@ -163,13 +163,13 @@ export default async function AdminSitesPage() {
                                 {new Date(lastScan.createdAt).toLocaleDateString()}
                               </div>
                               {lastScan.score !== null && (
-                                <div className="text-xs text-gray-500">
+                                <div className="text-xs text-muted-foreground">
                                   Score: {lastScan.score}
                                 </div>
                               )}
                             </div>
                           ) : (
-                            <span className="text-xs text-gray-400">Never</span>
+                            <span className="text-xs text-muted-foreground">Never</span>
                           )}
                         </td>
                         <td className="py-3">
@@ -178,7 +178,7 @@ export default async function AdminSitesPage() {
                               Active
                             </Badge>
                           ) : (
-                            <Badge variant="outline" className="border-gray-300 text-gray-500">
+                            <Badge variant="outline" className="border-gray-300 text-muted-foreground">
                               Inactive
                             </Badge>
                           )}

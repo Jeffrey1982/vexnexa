@@ -290,7 +290,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                   <div className="text-2xl font-bold text-green-600">
                     {calculations.roi.toFixed(0)}%
                   </div>
-                  <div className="text-sm text-gray-600">ROI</div>
+                  <div className="text-sm text-muted-foreground">ROI</div>
                 </div>
               </motion.div>
 
@@ -305,7 +305,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                   <div className="text-2xl font-bold text-blue-600">
                     {calculations.paybackMonths.toFixed(1)}
                   </div>
-                  <div className="text-sm text-gray-600">Months to Payback</div>
+                  <div className="text-sm text-muted-foreground">Months to Payback</div>
                 </div>
               </motion.div>
 
@@ -320,7 +320,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                   <div className="text-2xl font-bold text-purple-600">
                     {formatCurrency(calculations.netPresentValue)}
                   </div>
-                  <div className="text-sm text-gray-600">Net Present Value</div>
+                  <div className="text-sm text-muted-foreground">Net Present Value</div>
                 </div>
               </motion.div>
 
@@ -335,7 +335,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                   <div className="text-2xl font-bold text-orange-600">
                     +{calculations.conversionLift.toFixed(1)}%
                   </div>
-                  <div className="text-sm text-gray-600">Conversion Lift</div>
+                  <div className="text-sm text-muted-foreground">Conversion Lift</div>
                 </div>
               </motion.div>
             </div>
@@ -393,7 +393,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                         {metric.icon}
                         <div>
                           <div className="font-medium text-sm">{metric.label}</div>
-                          <div className="text-xs text-gray-600">{metric.change}</div>
+                          <div className="text-xs text-muted-foreground">{metric.change}</div>
                         </div>
                       </div>
                       <div className="font-bold text-right">{metric.value}</div>
@@ -410,19 +410,19 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                   <div className="text-lg font-bold text-red-600">
                     {formatCurrency(calculations.totalCosts)}
                   </div>
-                  <div className="text-sm text-gray-600">Total Investment</div>
+                  <div className="text-sm text-muted-foreground">Total Investment</div>
                 </div>
                 <div className="text-center p-3 bg-green-50 rounded-lg">
                   <div className="text-lg font-bold text-green-600">
                     {formatCurrency(calculations.totalBenefits)}
                   </div>
-                  <div className="text-sm text-gray-600">Total Benefits</div>
+                  <div className="text-sm text-muted-foreground">Total Benefits</div>
                 </div>
                 <div className="text-center p-3 bg-blue-50 rounded-lg">
                   <div className="text-lg font-bold text-blue-600">
                     {formatCurrency(calculations.totalBenefits - calculations.totalCosts)}
                   </div>
-                  <div className="text-sm text-gray-600">Net Profit</div>
+                  <div className="text-sm text-muted-foreground">Net Profit</div>
                 </div>
               </div>
             </Card>
@@ -500,7 +500,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                         <Badge variant={item.level === 'Low' ? 'default' : 'secondary'} className="text-xs mb-1">
                           {item.level} Risk
                         </Badge>
-                        <div className="text-xs text-gray-600">{item.savings}</div>
+                        <div className="text-xs text-muted-foreground">{item.savings}</div>
                       </div>
                     </div>
                   ))}

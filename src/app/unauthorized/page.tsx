@@ -33,16 +33,16 @@ export default async function UnauthorizedPage() {
           </h1>
 
           {/* Description */}
-          <p className="text-gray-600 mb-2">
+          <p className="text-muted-foreground mb-2">
             You don't have permission to access this resource.
           </p>
 
           {user ? (
-            <p className="text-sm text-gray-500 mb-8">
+            <p className="text-sm text-muted-foreground mb-8">
               Logged in as <span className="font-medium">{user.email}</span>
             </p>
           ) : (
-            <p className="text-sm text-gray-500 mb-8">
+            <p className="text-sm text-muted-foreground mb-8">
               Please sign in with an authorized account.
             </p>
           )}
@@ -83,7 +83,7 @@ export default async function UnauthorizedPage() {
 
           {/* Help Text */}
           <div className="mt-8 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               Need admin access?{' '}
               <Link href="/contact" className="text-orange-600 hover:text-orange-700 font-medium">
                 Contact support
@@ -93,7 +93,7 @@ export default async function UnauthorizedPage() {
         </div>
 
         {/* Footer Note */}
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-muted-foreground mt-6">
           Error Code: 403 - Forbidden
         </p>
       </div>

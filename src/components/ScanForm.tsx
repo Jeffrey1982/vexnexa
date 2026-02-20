@@ -62,11 +62,11 @@ export default function ScanForm() {
 
       {res && (
         <div className="rounded-xl border p-4">
-          <div className="text-sm text-gray-600">Site</div>
+          <div className="text-sm text-muted-foreground">Site</div>
           <div className="font-medium mb-2">{res.site}</div>
-          <div className="text-sm text-gray-600">Score</div>
+          <div className="text-sm text-muted-foreground">Score</div>
           <div className="text-2xl font-semibold mb-2">{res.score}</div>
-          <div className="text-sm text-gray-600">Top issues</div>
+          <div className="text-sm text-muted-foreground">Top issues</div>
           <pre className="mt-1 whitespace-pre-wrap text-sm bg-gray-50 p-3 rounded-lg">
             {JSON.stringify(res.summary?.top ?? [], null, 2)}
           </pre>

@@ -135,7 +135,7 @@ export default async function AdminSeoAlertsPage() {
       {
         label: "Resolved (7d)",
         value: "0",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
     ];
 
@@ -193,7 +193,7 @@ export default async function AdminSeoAlertsPage() {
     {
       label: "Resolved (7d)",
       value: stats.resolved7d.toString(),
-      valueColor: "text-gray-600",
+      valueColor: "text-muted-foreground",
       subtitle: "last week",
     },
   ];
@@ -249,7 +249,7 @@ export default async function AdminSeoAlertsPage() {
                         {alert.type}
                       </span>
                       {alert.entity_type && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-muted-foreground">
                           {alert.entity_type}: {alert.entity_key}
                         </span>
                       )}
@@ -260,7 +260,7 @@ export default async function AdminSeoAlertsPage() {
                     </p>
 
                     {alert.details && typeof alert.details === 'object' && (
-                      <div className="flex flex-wrap gap-3 text-xs text-gray-600">
+                      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
                         {Object.entries(alert.details).map(([key, value]) => (
                           <div key={key} className="flex items-center gap-1">
                             <span className="font-medium">{key}:</span>
@@ -270,7 +270,7 @@ export default async function AdminSeoAlertsPage() {
                       </div>
                     )}
 
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-muted-foreground mt-2">
                       {new Date(alert.created_at).toLocaleString()}
                     </p>
                   </div>
@@ -304,7 +304,7 @@ export default async function AdminSeoAlertsPage() {
                 <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-gray-900">{alert.message}</p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     Resolved {new Date(alert.resolved_at).toLocaleString()}
                   </p>
                 </div>

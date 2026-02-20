@@ -117,7 +117,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
       case 'low': return 'text-green-600 bg-green-50';
       case 'medium': return 'text-yellow-600 bg-yellow-50';
       case 'high': return 'text-red-600 bg-red-50';
-      default: return 'text-gray-600 bg-gray-50';
+      default: return 'text-muted-foreground bg-gray-50';
     }
   };
 
@@ -224,10 +224,10 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                 <td className="border border-gray-200 p-2">
                   <div>
                     <div className="font-semibold text-sm">{issue.rule}</div>
-                    <div className="text-xs text-gray-600 truncate max-w-xs">
+                    <div className="text-xs text-muted-foreground truncate max-w-xs">
                       {issue.description}
                     </div>
-                    <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-1">
+                    <div className="text-xs text-muted-foreground mt-1">
                       {issue.elementsAffected} elements affected
                     </div>
                   </div>
@@ -322,12 +322,12 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                       </Badge>
                     </div>
                     <div className="font-semibold text-sm mb-1">{issue.rule}</div>
-                    <div className="text-xs text-gray-600 mb-2">
+                    <div className="text-xs text-muted-foreground mb-2">
                       {issue.description.length > 60
                         ? `${issue.description.substring(0, 60)}...`
                         : issue.description}
                     </div>
-                    <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>{issue.elementsAffected} elements</span>
                       <span>{issue.estimatedHours}h</span>
                     </div>
@@ -388,23 +388,23 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <div className="text-center p-3 bg-blue-50 rounded-lg">
             <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
-            <div className="text-sm text-gray-600">Total Issues</div>
+            <div className="text-sm text-muted-foreground">Total Issues</div>
           </div>
           <div className="text-center p-3 bg-green-50 rounded-lg">
             <div className="text-2xl font-bold text-green-600">{stats.completed}</div>
-            <div className="text-sm text-gray-600">Completed</div>
+            <div className="text-sm text-muted-foreground">Completed</div>
           </div>
           <div className="text-center p-3 bg-yellow-50 rounded-lg">
             <div className="text-2xl font-bold text-yellow-600">{stats.inProgress}</div>
-            <div className="text-sm text-gray-600">In Progress</div>
+            <div className="text-sm text-muted-foreground">In Progress</div>
           </div>
           <div className="text-center p-3 bg-red-50 rounded-lg">
             <div className="text-2xl font-bold text-red-600">{stats.blocked}</div>
-            <div className="text-sm text-gray-600">Blocked</div>
+            <div className="text-sm text-muted-foreground">Blocked</div>
           </div>
           <div className="text-center p-3 bg-purple-50 rounded-lg">
             <div className="text-2xl font-bold text-purple-600">{stats.remainingHours}</div>
-            <div className="text-sm text-gray-600">Hours Left</div>
+            <div className="text-sm text-muted-foreground">Hours Left</div>
           </div>
         </div>
 
@@ -528,7 +528,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                 <Badge variant="outline" className="text-xs">
                   Showing {filteredAndSortedIssues.length} tasks
                 </Badge>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-muted-foreground">
                   Tasks are ordered by due date and priority
                 </div>
               </div>
@@ -578,11 +578,11 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                               </Badge>
                             </div>
 
-                            <p className="text-xs text-gray-600 mb-2">
+                            <p className="text-xs text-muted-foreground mb-2">
                               {issue.description}
                             </p>
 
-                            <div className="flex items-center gap-4 text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
                               <div className="flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {issue.estimatedHours}h
@@ -610,12 +610,12 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                                   text-xs font-medium
                                   ${isOverdue ? 'text-red-600' : ''}
                                   ${isUpcoming ? 'text-yellow-600' : ''}
-                                  ${!isOverdue && !isUpcoming ? 'text-gray-600' : ''}
+                                  ${!isOverdue && !isUpcoming ? 'text-muted-foreground' : ''}
                                 `}>
                                   {issue.dueDate.toLocaleDateString()}
                                 </div>
                                 {daysUntilDue !== null && (
-                                  <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                                  <div className="text-xs text-muted-foreground">
                                     {isOverdue
                                       ? `${Math.abs(daysUntilDue)} days overdue`
                                       : `${daysUntilDue} days left`
@@ -624,7 +624,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                                 )}
                               </div>
                             ) : (
-                              <div className="text-xs text-gray-600 dark:text-gray-400">No due date</div>
+                              <div className="text-xs text-muted-foreground">No due date</div>
                             )}
 
                             <Select
@@ -671,8 +671,8 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
               </div>
 
               {filteredAndSortedIssues.length === 0 && (
-                <div className="text-center py-12 text-gray-700 dark:text-gray-600 dark:text-gray-400">
-                  <Calendar className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                <div className="text-center py-12 text-muted-foreground">
+                  <Calendar className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
                   <p>No tasks match the current filters</p>
                 </div>
               )}

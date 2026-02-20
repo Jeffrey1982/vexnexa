@@ -258,7 +258,7 @@ export default function CampaignDetailClient({ campaignId }: CampaignDetailClien
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-3 px-4 flex flex-col items-center text-center gap-1">
-            <SkipForward className="h-5 w-5 text-gray-500" />
+            <SkipForward className="h-5 w-5 text-muted-foreground" />
             <span className="text-xl font-bold">{counts.skipped}</span>
             <span className="text-xs text-muted-foreground">Skipped</span>
           </CardContent>

@@ -155,7 +155,7 @@ export default function BlogManagement() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Blog Management</h2>
-          <p className="text-gray-600 mt-1">Manage your blog posts and content</p>
+          <p className="text-muted-foreground mt-1">Manage your blog posts and content</p>
         </div>
         <button
           onClick={handleCreate}
@@ -170,26 +170,26 @@ export default function BlogManagement() {
       <div className="grid grid-cols-5 gap-4">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="text-2xl font-bold text-gray-900">{statusStats.total}</div>
-          <div className="text-sm text-gray-500">Total Posts</div>
+          <div className="text-sm text-muted-foreground">Total Posts</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="text-2xl font-bold text-green-600">{statusStats.published}</div>
-          <div className="text-sm text-gray-500">Published</div>
+          <div className="text-sm text-muted-foreground">Published</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="text-2xl font-bold text-yellow-600">{statusStats.draft}</div>
-          <div className="text-sm text-gray-500">Drafts</div>
+          <div className="text-sm text-muted-foreground">Drafts</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-2xl font-bold text-gray-600">{statusStats.archived}</div>
-          <div className="text-sm text-gray-500">Archived</div>
+          <div className="text-2xl font-bold text-muted-foreground">{statusStats.archived}</div>
+          <div className="text-sm text-muted-foreground">Archived</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-blue-500" />
             <div className="text-2xl font-bold text-blue-600">{totalViews}</div>
           </div>
-          <div className="text-sm text-gray-500">Total Views</div>
+          <div className="text-sm text-muted-foreground">Total Views</div>
         </div>
       </div>
 
@@ -197,7 +197,7 @@ export default function BlogManagement() {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
         <div className="flex items-center gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
               value={searchQuery}
@@ -207,7 +207,7 @@ export default function BlogManagement() {
             />
           </div>
           <div className="flex items-center gap-2">
-            <Filter className="w-5 h-5 text-gray-400" />
+            <Filter className="w-5 h-5 text-muted-foreground" />
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
@@ -229,7 +229,7 @@ export default function BlogManagement() {
         </div>
       ) : filteredPosts.length === 0 ? (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <p className="text-gray-500">No posts found</p>
+          <p className="text-muted-foreground">No posts found</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -258,9 +258,9 @@ export default function BlogManagement() {
                     </span>
                   </div>
                   {post.excerpt && (
-                    <p className="text-gray-600 text-sm mb-3">{post.excerpt}</p>
+                    <p className="text-muted-foreground text-sm mb-3">{post.excerpt}</p>
                   )}
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       {post.publishedAt
@@ -279,13 +279,13 @@ export default function BlogManagement() {
                         {post.tags.slice(0, 3).map((tag, i) => (
                           <span
                             key={i}
-                            className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs"
+                            className="px-2 py-1 bg-gray-100 text-muted-foreground rounded text-xs"
                           >
                             {tag}
                           </span>
                         ))}
                         {post.tags.length > 3 && (
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-muted-foreground">
                             +{post.tags.length - 3}
                           </span>
                         )}
@@ -299,7 +299,7 @@ export default function BlogManagement() {
                       href={`/blog/${post.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="View post"
                     >
                       <Eye className="w-4 h-4" />
@@ -307,14 +307,14 @@ export default function BlogManagement() {
                   )}
                   <button
                     onClick={() => handleEdit(post)}
-                    className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                     title="Edit post"
                   >
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(post.slug)}
-                    className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-muted-foreground hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     title="Delete post"
                   >
                     <Trash2 className="w-4 h-4" />

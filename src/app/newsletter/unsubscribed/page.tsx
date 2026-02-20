@@ -15,7 +15,7 @@ export default function NewsletterUnsubscribedPage() {
       <Card className="w-full max-w-2xl">
         <CardHeader className="text-center">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="w-8 h-8 text-gray-600" />
+            <CheckCircle className="w-8 h-8 text-muted-foreground" />
           </div>
           <CardTitle className="text-2xl text-gray-800">{t("title")}</CardTitle>
           <CardDescription className="text-lg">
@@ -26,7 +26,7 @@ export default function NewsletterUnsubscribedPage() {
         <CardContent className="text-center space-y-6">
           <div className="bg-gray-50 p-4 rounded-lg">
             <div className="flex items-center justify-center mb-2">
-              <Mail className="w-5 h-5 text-gray-600 mr-2" />
+              <Mail className="w-5 h-5 text-muted-foreground mr-2" />
               <span className="font-semibold text-gray-800">{t("confirmationSent")}</span>
             </div>
             <p className="text-gray-700 text-sm">
@@ -38,7 +38,7 @@ export default function NewsletterUnsubscribedPage() {
             <h3 className="font-semibold text-gray-900">{t("whatThisMeans")}</h3>
             <div className="space-y-2 text-sm text-left">
               {details.map((item, index) => (
-                <div key={index} className="flex items-start text-gray-600">
+                <div key={index} className="flex items-start text-muted-foreground">
                   <span className="mr-2 mt-0.5">{item.icon}</span>
                   <span>{item.text}</span>
                 </div>
@@ -63,7 +63,7 @@ export default function NewsletterUnsubscribedPage() {
             </Button>
           </div>
 
-          <div className="text-xs text-gray-500 pt-4 border-t">
+          <div className="text-xs text-muted-foreground pt-4 border-t">
             <p dangerouslySetInnerHTML={{ __html: t("feedbackNote") }} />
           </div>
         </CardContent>

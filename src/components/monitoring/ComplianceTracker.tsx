@@ -123,7 +123,7 @@ export function ComplianceTracker({ className }: ComplianceTrackerProps) {
     switch (trend) {
       case 'improving': return <TrendingUp className="w-4 h-4 text-green-600" />;
       case 'declining': return <TrendingDown className="w-4 h-4 text-red-600" />;
-      default: return <BarChart3 className="w-4 h-4 text-gray-600" />;
+      default: return <BarChart3 className="w-4 h-4 text-muted-foreground" />;
     }
   };
 

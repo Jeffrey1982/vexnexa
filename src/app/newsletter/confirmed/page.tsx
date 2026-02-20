@@ -38,7 +38,7 @@ export default function NewsletterConfirmedPage() {
             <h3 className="font-semibold text-gray-900">{t("whatToExpect")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
               {expectations.map((item, index) => (
-                <div key={index} className="flex items-center text-gray-600">
+                <div key={index} className="flex items-center text-muted-foreground">
                   <span className="mr-2">{item.icon}</span>
                   {item.text}
                 </div>
@@ -59,7 +59,7 @@ export default function NewsletterConfirmedPage() {
             </Button>
           </div>
 
-          <div className="text-xs text-gray-500 pt-4 border-t">
+          <div className="text-xs text-muted-foreground pt-4 border-t">
             <p dangerouslySetInnerHTML={{ __html: t("gdprNote") }} />
           </div>
         </CardContent>

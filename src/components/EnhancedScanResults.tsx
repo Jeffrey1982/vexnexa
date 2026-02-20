@@ -76,19 +76,19 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div className="text-center">
                 <div className="text-red-600 font-semibold">{result.impactCritical}</div>
-                <div className="text-gray-600">Critical</div>
+                <div className="text-muted-foreground">Critical</div>
               </div>
               <div className="text-center">
                 <div className="text-orange-600 font-semibold">{result.impactSerious}</div>
-                <div className="text-gray-600">Serious</div>
+                <div className="text-muted-foreground">Serious</div>
               </div>
               <div className="text-center">
                 <div className="text-yellow-600 font-semibold">{result.impactModerate}</div>
-                <div className="text-gray-600">Moderate</div>
+                <div className="text-muted-foreground">Moderate</div>
               </div>
               <div className="text-center">
                 <div className="text-blue-600 font-semibold">{result.impactMinor}</div>
-                <div className="text-gray-600">Minor</div>
+                <div className="text-muted-foreground">Minor</div>
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.keyboardNavigation.focusableElements}</div>
-                  <div className="text-sm text-gray-600">Focusable Elements</div>
+                  <div className="text-sm text-muted-foreground">Focusable Elements</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -156,7 +156,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Skip Links</div>
+                  <div className="text-sm text-muted-foreground">Skip Links</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -165,7 +165,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Focus Visible</div>
+                  <div className="text-sm text-muted-foreground">Focus Visible</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -174,7 +174,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Tab Order</div>
+                  <div className="text-sm text-muted-foreground">Tab Order</div>
                 </div>
               </div>
 
@@ -209,15 +209,15 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.screenReaderCompatibility.ariaLabels}</div>
-                  <div className="text-sm text-gray-600">ARIA Labels</div>
+                  <div className="text-sm text-muted-foreground">ARIA Labels</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.screenReaderCompatibility.landmarks}</div>
-                  <div className="text-sm text-gray-600">Landmarks</div>
+                  <div className="text-sm text-muted-foreground">Landmarks</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.screenReaderCompatibility.altTexts}</div>
-                  <div className="text-sm text-gray-600">Alt Texts</div>
+                  <div className="text-sm text-muted-foreground">Alt Texts</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -226,7 +226,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Heading Structure</div>
+                  <div className="text-sm text-muted-foreground">Heading Structure</div>
                 </div>
               </div>
 
@@ -261,7 +261,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.mobileAccessibility.touchTargets}</div>
-                  <div className="text-sm text-gray-600">Adequate Touch Targets</div>
+                  <div className="text-sm text-muted-foreground">Adequate Touch Targets</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -270,7 +270,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Viewport</div>
+                  <div className="text-sm text-muted-foreground">Viewport</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -279,7 +279,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Orientation</div>
+                  <div className="text-sm text-muted-foreground">Orientation</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -288,7 +288,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Gesture Alternatives</div>
+                  <div className="text-sm text-muted-foreground">Gesture Alternatives</div>
                 </div>
               </div>
             </CardContent>
@@ -315,7 +315,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">No Timeouts</div>
+                  <div className="text-sm text-muted-foreground">No Timeouts</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -324,11 +324,11 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Error Handling</div>
+                  <div className="text-sm text-muted-foreground">Error Handling</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold">{Math.round(result.cognitiveAccessibility.simpleLanguage)}%</div>
-                  <div className="text-sm text-gray-600">Simple Language</div>
+                  <div className="text-sm text-muted-foreground">Simple Language</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -337,7 +337,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Consistent Navigation</div>
+                  <div className="text-sm text-muted-foreground">Consistent Navigation</div>
                 </div>
               </div>
             </CardContent>
@@ -364,7 +364,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Reduced Motion</div>
+                  <div className="text-sm text-muted-foreground">Reduced Motion</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -373,7 +373,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">No Autoplay</div>
+                  <div className="text-sm text-muted-foreground">No Autoplay</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -382,7 +382,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Parallax Safe</div>
+                  <div className="text-sm text-muted-foreground">Parallax Safe</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -391,7 +391,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Vestibular Safe</div>
+                  <div className="text-sm text-muted-foreground">Vestibular Safe</div>
                 </div>
               </div>
             </CardContent>
@@ -418,7 +418,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Deuteranopia</div>
+                  <div className="text-sm text-muted-foreground">Deuteranopia</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -427,7 +427,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Protanopia</div>
+                  <div className="text-sm text-muted-foreground">Protanopia</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -436,7 +436,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Tritanopia</div>
+                  <div className="text-sm text-muted-foreground">Tritanopia</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -445,7 +445,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Achromatopsia</div>
+                  <div className="text-sm text-muted-foreground">Achromatopsia</div>
                 </div>
               </div>
             </CardContent>
@@ -467,11 +467,11 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.performanceImpact.loadTime}ms</div>
-                  <div className="text-sm text-gray-600">Load Time</div>
+                  <div className="text-sm text-muted-foreground">Load Time</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.performanceImpact.largeElements}</div>
-                  <div className="text-sm text-gray-600">DOM Elements</div>
+                  <div className="text-sm text-muted-foreground">DOM Elements</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -480,7 +480,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">AT Friendly</div>
+                  <div className="text-sm text-muted-foreground">AT Friendly</div>
                 </div>
               </div>
             </CardContent>
@@ -504,7 +504,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                   <div className="text-lg font-semibold">
                     {result.languageSupport.languageDetected || 'None'}
                   </div>
-                  <div className="text-sm text-gray-600">Language</div>
+                  <div className="text-sm text-muted-foreground">Language</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -513,16 +513,16 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                       <XCircle className="h-6 w-6 text-red-600" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Directionality</div>
+                  <div className="text-sm text-muted-foreground">Directionality</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
                     {result.languageSupport.multiLanguage ?
                       <CheckCircle className="h-6 w-6 text-green-600" /> :
-                      <Info className="h-6 w-6 text-gray-400" />
+                      <Info className="h-6 w-6 text-muted-foreground" />
                     }
                   </div>
-                  <div className="text-sm text-gray-600">Multi-language</div>
+                  <div className="text-sm text-muted-foreground">Multi-language</div>
                 </div>
               </div>
             </CardContent>
@@ -549,7 +549,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                   </AlertTitle>
                   <AlertDescription className="mt-2">
                     <p className="break-words">{violation.description}</p>
-                    <p className="text-sm text-gray-600 mt-1 break-words">
+                    <p className="text-sm text-muted-foreground mt-1 break-words">
                       Rule: {violation.id} • {violation.nodes?.length || 0} element(s) affected
                     </p>
                   </AlertDescription>

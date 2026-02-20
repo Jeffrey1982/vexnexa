@@ -170,7 +170,7 @@ export function AdminSidebar() {
           </div>
           <div>
             <div className="text-gray-900 dark:text-foreground font-bold text-lg">VexNexa</div>
-            <div className="text-gray-500 dark:text-muted-foreground text-xs">Admin Panel</div>
+            <div className="text-muted-foreground dark:text-muted-foreground text-xs">Admin Panel</div>
           </div>
         </div>
       </div>
@@ -192,7 +192,7 @@ export function AdminSidebar() {
                   'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
                   active
                     ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 shadow-sm'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-muted'
+                    : 'text-foreground/80 hover:bg-gray-50 dark:hover:bg-muted'
                 )}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
@@ -214,7 +214,7 @@ export function AdminSidebar() {
                 <div
                   className={cn(
                     'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold',
-                    active ? 'text-orange-600 dark:text-orange-400' : 'text-gray-600 dark:text-gray-400'
+                    active ? 'text-orange-600 dark:text-orange-400' : 'text-muted-foreground'
                   )}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
@@ -237,7 +237,7 @@ export function AdminSidebar() {
                             'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
                             itemActive
                               ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400'
-                              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-muted hover:text-gray-900 dark:hover:text-foreground'
+                              : 'text-muted-foreground hover:bg-gray-50 dark:hover:bg-muted hover:text-gray-900 dark:hover:text-foreground'
                           )}
                         >
                           <ItemIcon className="w-4 h-4 flex-shrink-0" />
@@ -266,9 +266,9 @@ export function AdminSidebar() {
         className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white dark:bg-card rounded-lg shadow-lg border border-gray-200 dark:border-border"
       >
         {mobileOpen ? (
-          <X className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          <X className="w-5 h-5 text-muted-foreground" />
         ) : (
-          <Menu className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          <Menu className="w-5 h-5 text-muted-foreground" />
         )}
       </button>
 

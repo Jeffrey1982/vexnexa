@@ -63,7 +63,7 @@ function MetricCard({ title, value, maxValue, color, icon, delay = 0 }: MetricCa
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           {icon}
-          <span className="font-medium text-sm text-gray-900 dark:text-gray-100">{title}</span>
+          <span className="font-medium text-sm text-foreground">{title}</span>
         </div>
         <Badge variant="outline" className="text-xs">
           {displayValue}/{maxValue}
@@ -86,7 +86,7 @@ function MetricCard({ title, value, maxValue, color, icon, delay = 0 }: MetricCa
             />
           </motion.div>
         </div>
-        <div className="flex justify-between text-xs text-gray-700 dark:text-gray-400">
+        <div className="flex justify-between text-xs text-muted-foreground">
           <span>{percentage.toFixed(0)}%</span>
           <motion.span
             initial={{ opacity: 0 }}
@@ -163,14 +163,14 @@ function CircularProgress({ value, maxValue, color, size = 120 }: {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center">
           <motion.div
-            className="text-2xl font-bold text-gray-900 dark:text-gray-100"
+            className="text-2xl font-bold text-foreground"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
             {displayValue}
           </motion.div>
-          <div className="text-xs text-gray-700 dark:text-gray-400">/{maxValue}</div>
+          <div className="text-xs text-muted-foreground">/{maxValue}</div>
         </div>
       </div>
     </div>
@@ -300,7 +300,7 @@ export function ProgressAnimations({ score, issues, isLoading = false, className
                   value={issues.minor}
                   maxValue={issues.total}
                   color="#6b7280"
-                  icon={<CheckCircle className="w-4 h-4 text-gray-700 dark:text-gray-400" />}
+                  icon={<CheckCircle className="w-4 h-4 text-muted-foreground" />}
                   delay={800}
                 />
               </div>
@@ -313,8 +313,8 @@ export function ProgressAnimations({ score, issues, isLoading = false, className
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">Overall Assessment</h4>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                    <h4 className="font-semibold text-foreground">Overall Assessment</h4>
+                    <p className="text-sm text-foreground/80 mt-1">
                       {score >= 80 && "Excellent accessibility! Your site meets most WCAG guidelines."}
                       {score >= 60 && score < 80 && "Good progress! Focus on fixing critical and serious issues."}
                       {score < 60 && "Needs improvement. Address critical issues first for better accessibility."}

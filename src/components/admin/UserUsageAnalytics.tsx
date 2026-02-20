@@ -86,7 +86,7 @@ export function UserUsageAnalytics({
           </div>
           {totalOverflowCost > 0 && (
             <div className="text-right">
-              <div className="text-sm text-gray-500">Estimated Overflow</div>
+              <div className="text-sm text-muted-foreground">Estimated Overflow</div>
               <div className="text-2xl font-bold text-red-600">€{totalOverflowCost.toFixed(2)}</div>
             </div>
           )}
@@ -127,7 +127,7 @@ export function UserUsageAnalytics({
             </span>
           </div>
           <Progress value={pagesPercent} className={pagesPercent >= 100 ? "bg-red-100" : ""} />
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>{currentMonthScans} scans this month</span>
             <div className="flex items-center gap-1">
               {pagesTrend > 0 ? (
@@ -135,7 +135,7 @@ export function UserUsageAnalytics({
               ) : pagesTrend < 0 ? (
                 <TrendingDown className="w-3 h-3 text-green-500" />
               ) : (
-                <Minus className="w-3 h-3 text-gray-400" />
+                <Minus className="w-3 h-3 text-muted-foreground" />
               )}
               <span>{Math.abs(pagesTrend).toFixed(1)}% vs last month</span>
             </div>
@@ -175,7 +175,7 @@ export function UserUsageAnalytics({
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm font-medium">Total Estimated Overflow Charges</div>
-                <div className="text-xs text-gray-500">Will be added to next invoice</div>
+                <div className="text-xs text-muted-foreground">Will be added to next invoice</div>
               </div>
               <div className="text-2xl font-bold text-red-600">€{totalOverflowCost.toFixed(2)}</div>
             </div>

@@ -171,7 +171,7 @@ export function ScheduledScansManager() {
                     variant="outline"
                     onClick={() => toggleActive(scan.id, scan.active)}
                   >
-                    <Power className={`w-4 h-4 ${scan.active ? 'text-green-600' : 'text-gray-400'}`} />
+                    <Power className={`w-4 h-4 ${scan.active ? 'text-green-600' : 'text-muted-foreground'}`} />
                   </Button>
                   <Button
                     size="sm"

@@ -68,9 +68,9 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
         animate={{ opacity: 1, x: 0 }}
         className="text-center"
       >
-        <div className="text-sm text-gray-600 mb-2">Before</div>
+        <div className="text-sm text-muted-foreground mb-2">Before</div>
         <ScoreBadge score={beforeScan.score} size="lg" />
-        <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-2">
+        <div className="text-xs text-muted-foreground mt-2">
           {beforeScan.date.toLocaleDateString()}
         </div>
       </motion.div>
@@ -80,9 +80,9 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
         animate={{ opacity: 1, x: 0 }}
         className="text-center"
       >
-        <div className="text-sm text-gray-600 mb-2">After</div>
+        <div className="text-sm text-muted-foreground mb-2">After</div>
         <ScoreBadge score={afterScan.score} size="lg" />
-        <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400 mt-2">
+        <div className="text-xs text-muted-foreground mt-2">
           {afterScan.date.toLocaleDateString()}
         </div>
       </motion.div>
@@ -105,8 +105,8 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
               <span className="font-medium">{label}</span>
             </div>
             <div className="flex items-center gap-4">
-              <div className="text-sm text-gray-600">{before} → {after}</div>
-              <div className={`flex items-center gap-1 ${diff < 0 ? 'text-green-600' : diff > 0 ? 'text-red-600' : 'text-gray-600'}`}>
+              <div className="text-sm text-muted-foreground">{before} → {after}</div>
+              <div className={`flex items-center gap-1 ${diff < 0 ? 'text-green-600' : diff > 0 ? 'text-red-600' : 'text-muted-foreground'}`}>
                 {diff < 0 ? (
                   <TrendingDown className="w-4 h-4" />
                 ) : diff > 0 ? (
@@ -152,7 +152,7 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg"
           >
-            <RotateCcw className="w-6 h-6 text-gray-600" />
+            <RotateCcw className="w-6 h-6 text-muted-foreground" />
           </motion.div>
         </div>
       </motion.div>
@@ -257,25 +257,25 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
             <div className="text-2xl font-bold text-green-600">
               {comparison.scoreImprovement >= 0 ? '+' : ''}{comparison.scoreImprovement}
             </div>
-            <div className="text-xs text-gray-600">Score Change</div>
+            <div className="text-xs text-muted-foreground">Score Change</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">
               {comparison.issuesReduced >= 0 ? '+' : ''}{comparison.issuesReduced}
             </div>
-            <div className="text-xs text-gray-600">Issues Fixed</div>
+            <div className="text-xs text-muted-foreground">Issues Fixed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-red-600">
               {comparison.criticalReduced >= 0 ? '+' : ''}{comparison.criticalReduced}
             </div>
-            <div className="text-xs text-gray-600">Critical Fixed</div>
+            <div className="text-xs text-muted-foreground">Critical Fixed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">
               {comparison.seriousReduced >= 0 ? '+' : ''}{comparison.seriousReduced}
             </div>
-            <div className="text-xs text-gray-600">Serious Fixed</div>
+            <div className="text-xs text-muted-foreground">Serious Fixed</div>
           </div>
         </motion.div>
       </CardContent>

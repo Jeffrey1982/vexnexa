@@ -170,7 +170,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
           <Card>
             <CardContent className="p-12 text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">User Not Found</h2>
-              <p className="text-gray-600 mb-6">The requested user could not be found.</p>
+              <p className="text-muted-foreground mb-6">The requested user could not be found.</p>
               <Link href="/admin/users">
                 <Button>Back to Users</Button>
               </Link>

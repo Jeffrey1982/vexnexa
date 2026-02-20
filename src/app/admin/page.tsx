@@ -179,7 +179,7 @@ export default async function AdminDashboard() {
                     <p className="text-sm text-muted-foreground">Total Tickets</p>
                     <p className="text-2xl font-bold text-gray-900 dark:text-foreground">{stats.tickets.total}</p>
                   </div>
-                  <Ticket className="w-8 h-8 text-gray-400 dark:text-muted-foreground" />
+                  <Ticket className="w-8 h-8 text-muted-foreground dark:text-muted-foreground" />
                 </div>
               </div>
               <div className="bg-white dark:bg-card rounded-lg p-4 shadow-sm">
@@ -236,7 +236,7 @@ export default async function AdminDashboard() {
 
             {stats.tickets.total === 0 && (
               <div className="text-center py-8">
-                <Ticket className="w-12 h-12 text-gray-300 dark:text-muted-foreground mx-auto mb-3" />
+                <Ticket className="w-12 h-12 text-muted-foreground dark:text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground">No support tickets yet</p>
               </div>
             )}

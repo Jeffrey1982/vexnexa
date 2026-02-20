@@ -122,7 +122,7 @@ export default async function AdminAnalyticsPage() {
               <div className="text-center">
                 <AlertTriangle className="w-12 h-12 text-red-600 mx-auto mb-4" />
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">Error Loading Analytics</h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   {error instanceof Error ? error.message : 'Failed to load analytics data'}
                 </p>
               </div>
@@ -139,7 +139,7 @@ export default async function AdminAnalyticsPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Usage Analytics</h1>
-          <p className="text-gray-600 mt-2">Monitor customer usage and identify support opportunities</p>
+          <p className="text-muted-foreground mt-2">Monitor customer usage and identify support opportunities</p>
         </div>
 
         {/* Stats Grid */}
@@ -208,7 +208,7 @@ export default async function AdminAnalyticsPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="border-b">
-                  <tr className="text-left text-sm text-gray-600">
+                  <tr className="text-left text-sm text-muted-foreground">
                     <th className="pb-3 font-medium">User</th>
                     <th className="pb-3 font-medium">Plan</th>
                     <th className="pb-3 font-medium">Sites</th>
@@ -221,7 +221,7 @@ export default async function AdminAnalyticsPage() {
                 <tbody className="divide-y">
                   {usersWithMetrics.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-gray-500">
+                      <td colSpan={7} className="py-8 text-center text-muted-foreground">
                         No user data available yet
                       </td>
                     </tr>
@@ -230,7 +230,7 @@ export default async function AdminAnalyticsPage() {
                     <tr key={user.id} className="text-sm">
                       <td className="py-3">
                         <div className="font-medium text-gray-900">{user.name}</div>
-                        <div className="text-xs text-gray-500">{user.email}</div>
+                        <div className="text-xs text-muted-foreground">{user.email}</div>
                       </td>
                       <td className="py-3">
                         <Badge variant="outline">{user.plan}</Badge>

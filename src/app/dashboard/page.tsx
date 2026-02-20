@@ -568,7 +568,7 @@ export default async function DashboardPage() {
                           <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.fullSettingsDescription')}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.fullSettingsDetails')}</p>
+                      <p className="text-xs text-muted-foreground">{t('whiteLabel.fullSettingsDetails')}</p>
                     </div>
                   </Link>
 
@@ -578,11 +578,11 @@ export default async function DashboardPage() {
                         <span className="text-green-600 font-semibold text-sm sm:text-base">📱</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-gray-100">{t('whiteLabel.livePreview')}</h3>
+                        <h3 className="font-semibold text-sm sm:text-base text-foreground">{t('whiteLabel.livePreview')}</h3>
                         <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.livePreviewDescription')}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.livePreviewDetails')}</p>
+                    <p className="text-xs text-muted-foreground">{t('whiteLabel.livePreviewDetails')}</p>
                   </div>
 
                   <div className="border rounded-lg p-3 sm:p-4 bg-gray-50 dark:bg-slate-800 dark:border-gray-700">
@@ -591,18 +591,18 @@ export default async function DashboardPage() {
                         <span className="text-purple-600 font-semibold text-sm sm:text-base">📈</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-gray-100">{t('whiteLabel.customReports')}</h3>
+                        <h3 className="font-semibold text-sm sm:text-base text-foreground">{t('whiteLabel.customReports')}</h3>
                         <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.customReportsDescription')}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">{t('whiteLabel.customReportsDetails')}</p>
+                    <p className="text-xs text-muted-foreground">{t('whiteLabel.customReportsDetails')}</p>
                   </div>
                 </div>
 
                 {/* White Label Features Overview */}
                 <div className="border rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">🎨 {t('whiteLabel.featuresTitle')}</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-gray-900 dark:text-gray-100">
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">🎨 {t('whiteLabel.featuresTitle')}</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-foreground">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="text-green-500">✓</span>
@@ -686,7 +686,7 @@ export default async function DashboardPage() {
                             className="rounded flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
-                            <div className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
+                            <div className="font-medium text-sm truncate text-foreground">
                               {new URL(scan.site.url).hostname}
                             </div>
                             <div className="text-xs text-muted-foreground truncate">
@@ -753,7 +753,7 @@ export default async function DashboardPage() {
                               height={16}
                               className="rounded"
                             />
-                            <span className="font-medium truncate max-w-32 text-gray-900 dark:text-gray-100">
+                            <span className="font-medium truncate max-w-32 text-foreground">
                               {new URL(scan.site.url).hostname}
                             </span>
                           </Link>
@@ -788,7 +788,7 @@ export default async function DashboardPage() {
                         </TableCell>
                         <TableCell>
                           <Link href={`/scans/${scan.id}`}>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">{scan.issues || 0}</span>
+                            <span className="font-medium text-foreground">{scan.issues || 0}</span>
                           </Link>
                         </TableCell>
                         <TableCell>

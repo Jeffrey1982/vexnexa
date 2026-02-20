@@ -369,12 +369,12 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                     {isSelected ? (
                       <CheckSquare className="w-5 h-5 text-blue-600" />
                     ) : (
-                      <Square className="w-5 h-5 text-gray-400" />
+                      <Square className="w-5 h-5 text-muted-foreground" />
                     )}
                   </div>
                   <div>
                     <div className="text-sm font-medium text-gray-900">{userName}</div>
-                    <div className="text-xs text-gray-500">{user.email}</div>
+                    <div className="text-xs text-muted-foreground">{user.email}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -386,7 +386,7 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                         ? 'border-green-500 text-green-600'
                         : user.subscriptionStatus === 'trialing'
                         ? 'border-blue-500 text-blue-600'
-                        : 'border-gray-500 text-gray-600'
+                        : 'border-gray-500 text-muted-foreground'
                     }
                   >
                     {user.subscriptionStatus}

@@ -127,7 +127,7 @@ export default function AuditDashboard() {
       {/* Filters */}
       <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
         <div className="flex items-center gap-4">
-          <Filter className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+          <Filter className="w-5 h-5 text-muted-foreground" />
           <div className="flex-1 grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -167,7 +167,7 @@ export default function AuditDashboard() {
         <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">Total Audits</p>
+              <p className="text-sm text-muted-foreground">Total Audits</p>
               <p className="text-2xl font-bold text-gray-900">{audits.length}</p>
             </div>
             <FileCheck className="w-8 h-8 text-blue-500" />
@@ -176,7 +176,7 @@ export default function AuditDashboard() {
         <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">In Progress</p>
+              <p className="text-sm text-muted-foreground">In Progress</p>
               <p className="text-2xl font-bold text-blue-600">
                 {audits.filter(a => a.status === "in_progress").length}
               </p>
@@ -187,7 +187,7 @@ export default function AuditDashboard() {
         <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">Completed</p>
+              <p className="text-sm text-muted-foreground">Completed</p>
               <p className="text-2xl font-bold text-green-600">
                 {audits.filter(a => a.status === "completed" || a.status === "reviewed").length}
               </p>
@@ -198,7 +198,7 @@ export default function AuditDashboard() {
         <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">Overdue</p>
+              <p className="text-sm text-muted-foreground">Overdue</p>
               <p className="text-2xl font-bold text-red-600">
                 {audits.filter(a => isOverdue(a)).length}
               </p>
@@ -212,9 +212,9 @@ export default function AuditDashboard() {
       <div className="space-y-4">
         {audits.length === 0 ? (
           <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
-            <FileCheck className="w-12 h-12 text-gray-600 dark:text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-700 dark:text-gray-600 dark:text-gray-400">No audits found</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <FileCheck className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">No audits found</p>
+            <p className="text-sm text-muted-foreground mt-1">
               Create a new manual audit to get started
             </p>
           </div>
@@ -249,9 +249,9 @@ export default function AuditDashboard() {
                         )}
                       </div>
                       {audit.description && (
-                        <p className="text-sm text-gray-600 mb-2">{audit.description}</p>
+                        <p className="text-sm text-muted-foreground mb-2">{audit.description}</p>
                       )}
-                      <div className="flex items-center gap-4 text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <ExternalLink className="w-4 h-4" />
                           {audit.site.name || audit.site.url}
@@ -279,7 +279,7 @@ export default function AuditDashboard() {
                           <div className="text-2xl font-bold text-blue-600">
                             {audit.overallScore.toFixed(0)}%
                           </div>
-                          <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Score</div>
+                          <div className="text-xs text-muted-foreground">Score</div>
                         </div>
                       )}
                     </div>
@@ -288,7 +288,7 @@ export default function AuditDashboard() {
                   {/* Progress bar */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         Progress: {audit.completedCriteria} / {audit.totalCriteria} criteria
                       </span>
                       <span className="text-sm font-medium text-gray-700">
@@ -309,30 +309,30 @@ export default function AuditDashboard() {
                       <div className="text-lg font-semibold text-gray-900">
                         {audit._count.items}
                       </div>
-                      <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Items</div>
+                      <div className="text-xs text-muted-foreground">Items</div>
                     </div>
                     <div className="text-center">
                       <div className="text-lg font-semibold text-green-600">
                         {audit.passedCriteria}
                       </div>
-                      <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Passed</div>
+                      <div className="text-xs text-muted-foreground">Passed</div>
                     </div>
                     <div className="text-center">
                       <div className="text-lg font-semibold text-red-600">
                         {audit.failedCriteria}
                       </div>
-                      <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Failed</div>
+                      <div className="text-xs text-muted-foreground">Failed</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-gray-600">
+                      <div className="text-lg font-semibold text-muted-foreground">
                         {audit.totalCriteria - audit.completedCriteria}
                       </div>
-                      <div className="text-xs text-gray-700 dark:text-gray-600 dark:text-gray-400">Remaining</div>
+                      <div className="text-xs text-muted-foreground">Remaining</div>
                     </div>
                   </div>
 
                   {/* Footer metadata */}
-                  <div className="flex items-center justify-between text-sm text-gray-700 dark:text-gray-600 dark:text-gray-400 pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-gray-100">
                     <div className="flex items-center gap-4">
                       {audit.createdBy && (
                         <span className="flex items-center gap-1">

@@ -300,7 +300,7 @@ function FinalCTASection() {
           <h2 className="text-3xl lg:text-4xl font-bold font-display animate-slide-up">
             {t('title')}
           </h2>
-          <p className="text-xl opacity-90 animate-slide-up leading-relaxed">
+          <p className="text-xl animate-slide-up leading-relaxed">
             {t('subtitle')}
           </p>
 

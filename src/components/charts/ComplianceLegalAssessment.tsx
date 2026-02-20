@@ -165,7 +165,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
       case 'MEDIUM': return 'text-yellow-600 bg-yellow-50 border-yellow-200';
       case 'HIGH': return 'text-orange-600 bg-orange-50 border-orange-200';
       case 'CRITICAL': return 'text-red-600 bg-red-50 border-red-200';
-      default: return 'text-gray-600 bg-gray-50 border-gray-200';
+      default: return 'text-muted-foreground bg-gray-50 border-gray-200';
     }
   }
 
@@ -179,9 +179,9 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
 
   if (!data || data.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-64 text-muted-foreground ${className}`}>
         <div className="text-center">
-          <Scale className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <Scale className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
           <div className="text-lg font-semibold">No compliance data available</div>
           <div className="text-sm">Run scans to see legal compliance assessment</div>
         </div>
@@ -199,11 +199,11 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">WCAG 2.1</div>
+                <div className="text-sm font-medium text-muted-foreground">WCAG 2.1</div>
                 <div className={`text-2xl font-bold ${getComplianceLevel(analytics.current.wcag21).color}`}>
                   {Math.round(analytics.current.wcag21)}%
                 </div>
-                <div className="text-xs text-gray-500">{getComplianceLevel(analytics.current.wcag21).level}</div>
+                <div className="text-xs text-muted-foreground">{getComplianceLevel(analytics.current.wcag21).level}</div>
               </div>
               {analytics.trends.wcag21 > 0 ? (
                 <TrendingUp className="w-8 h-8 text-green-600" />
@@ -214,17 +214,17 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm font-medium text-gray-600">WCAG 2.2</div>
+            <div className="text-sm font-medium text-muted-foreground">WCAG 2.2</div>
             <div className={`text-2xl font-bold ${getComplianceLevel(analytics.current.wcag22).color}`}>
               {Math.round(analytics.current.wcag22)}%
             </div>
-            <div className="text-xs text-gray-500">{getComplianceLevel(analytics.current.wcag22).level}</div>
+            <div className="text-xs text-muted-foreground">{getComplianceLevel(analytics.current.wcag22).level}</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Legal Risk</div>
+                <div className="text-sm font-medium text-muted-foreground">Legal Risk</div>
                 <div className={`text-2xl font-bold ${
                   analytics.current.legalRisk < 25 ? 'text-green-600' :
                   analytics.current.legalRisk < 50 ? 'text-yellow-600' :
@@ -232,7 +232,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
                 }`}>
                   {Math.round(analytics.current.legalRisk)}
                 </div>
-                <div className="text-xs text-gray-500">risk score</div>
+                <div className="text-xs text-muted-foreground">risk score</div>
               </div>
               <AlertTriangle className={`w-8 h-8 ${
                 analytics.current.legalRisk < 25 ? 'text-green-600' :
@@ -245,11 +245,11 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Time to Compliance</div>
+                <div className="text-sm font-medium text-muted-foreground">Time to Compliance</div>
                 <div className="text-2xl font-bold text-purple-600">
                   {analytics.timeToCompliance}
                 </div>
-                <div className="text-xs text-gray-500">weeks (estimated)</div>
+                <div className="text-xs text-muted-foreground">weeks (estimated)</div>
               </div>
               <Clock className="w-8 h-8 text-purple-600" />
             </div>
@@ -292,7 +292,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
           <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
             {wcagRadarData.map(item => (
               <div key={item.category} className="flex items-center justify-between">
-                <span className="text-gray-600">{item.category}:</span>
+                <span className="text-muted-foreground">{item.category}:</span>
                 <span className={`font-semibold ${
                   item.score >= 80 ? 'text-green-600' :
                   item.score >= 60 ? 'text-yellow-600' : 'text-red-600'
@@ -364,7 +364,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
 
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-600">Current ADA Risk Level:</span>
+              <span className="text-sm font-medium text-muted-foreground">Current ADA Risk Level:</span>
               <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getRiskColor(latest.adaRiskLevel)}`}>
                 {latest.adaRiskLevel}
               </span>
@@ -420,7 +420,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
                     </span>
                   </div>
 
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-muted-foreground">
                     <div className="font-medium mb-1">{gap.issues.length} issues:</div>
                     <ul className="space-y-1">
                       {gap.issues.slice(0, 3).map((issue, i) => (
@@ -430,7 +430,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
                         </li>
                       ))}
                       {gap.issues.length > 3 && (
-                        <li className="text-xs text-gray-500 pl-5">
+                        <li className="text-xs text-muted-foreground pl-5">
                           +{gap.issues.length - 3} more issues...
                         </li>
                       )}
@@ -443,7 +443,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
             <div className="text-center py-8">
               <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-500" />
               <div className="text-lg font-semibold text-green-600">No Compliance Gaps!</div>
-              <div className="text-sm text-gray-600">All WCAG categories are compliant</div>
+              <div className="text-sm text-muted-foreground">All WCAG categories are compliant</div>
             </div>
           )}
         </div>

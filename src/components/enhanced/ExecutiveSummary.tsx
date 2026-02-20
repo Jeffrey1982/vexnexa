@@ -118,12 +118,12 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-xl font-bold">Overall Accessibility Score</h3>
-              <p className="text-gray-600">Current accessibility rating and performance</p>
+              <p className="text-muted-foreground">Current accessibility rating and performance</p>
             </div>
             <div className="text-right">
               <div className={`text-4xl font-bold ${getScoreColor(data.overallScore)}`}>
                 {data.overallScore}
-                <span className="text-lg text-gray-700 dark:text-gray-600 dark:text-gray-400">/100</span>
+                <span className="text-lg text-muted-foreground">/100</span>
               </div>
               <Badge
                 variant={data.overallScore >= 80 ? 'default' : data.overallScore >= 60 ? 'secondary' : 'destructive'}
@@ -218,14 +218,14 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-sm font-medium">WCAG AA Compliance</span>
-                <span className="text-sm text-gray-600">{data.wcagCompliance.aa}%</span>
+                <span className="text-sm text-muted-foreground">{data.wcagCompliance.aa}%</span>
               </div>
               <Progress value={data.wcagCompliance.aa} className="h-2" />
             </div>
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-sm font-medium">WCAG AAA Compliance</span>
-                <span className="text-sm text-gray-600">{data.wcagCompliance.aaa}%</span>
+                <span className="text-sm text-muted-foreground">{data.wcagCompliance.aaa}%</span>
               </div>
               <Progress value={data.wcagCompliance.aaa} className="h-2" />
             </div>
@@ -250,13 +250,13 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
               <div key={index} className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className={`w-4 h-4 rounded-full ${issue.color} mx-auto mb-2`} />
                 <div className="text-lg font-bold">{issue.count}</div>
-                <div className="text-sm text-gray-600">{issue.label}</div>
+                <div className="text-sm text-muted-foreground">{issue.label}</div>
               </div>
             ))}
           </div>
           <div className="text-center pt-2">
             <div className="text-2xl font-bold">{data.issues.total}</div>
-            <div className="text-sm text-gray-600">Total Issues Found</div>
+            <div className="text-sm text-muted-foreground">Total Issues Found</div>
           </div>
         </motion.div>
 
@@ -295,7 +295,7 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
                   </div>
                 </div>
                 <p className="text-sm text-gray-700 mb-2">{rec.impact}</p>
-                <div className="flex justify-between text-xs text-gray-600">
+                <div className="flex justify-between text-xs text-muted-foreground">
                   <span>Effort: {rec.effort}</span>
                   <span>Impact: {rec.impact}</span>
                 </div>

@@ -35,7 +35,7 @@ export default function VerifyErrorPage(props: VerifyErrorPageProps): JSX.Elemen
               We couldn’t verify your email
             </h1>
 
-            <p className="mt-3 text-sm md:text-base text-gray-600 dark:text-gray-300 max-w-prose">
+            <p className="mt-3 text-sm md:text-base text-muted-foreground max-w-prose">
               This can happen if the link has already been used, expired, or was opened in a different browser.
             </p>
           </div>
@@ -56,7 +56,7 @@ export default function VerifyErrorPage(props: VerifyErrorPageProps): JSX.Elemen
             </Button>
           </div>
 
-          <p className="mt-6 text-xs text-gray-500 dark:text-gray-400 text-center">
+          <p className="mt-6 text-xs text-muted-foreground dark:text-gray-400 text-center">
             Need help? Email{' '}
             <a className="underline" href="mailto:support@vexnexa.com">
               support@vexnexa.com

@@ -174,10 +174,10 @@ function ScanResultsContent() {
             </Link>
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">WCAG Accessibility Report</h1>
+                <h1 className="text-3xl font-bold text-foreground">WCAG Accessibility Report</h1>
                 <div className="flex items-center gap-2 mt-2">
-                  <Globe className="w-4 h-4 text-gray-500" />
-                  <span className="text-gray-600 dark:text-gray-400">{result.url}</span>
+                  <Globe className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">{result.url}</span>
                 </div>
               </div>
               <Button onClick={handleExportPDF} disabled={exportLoading}>
@@ -195,13 +195,13 @@ function ScanResultsContent() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Accessibility Score</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Accessibility Score</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className={`text-3xl font-bold ${getScoreColor(result.score)}`}>
                   {result.score}/100
                 </div>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   {result.score >= 90 ? 'Excellent' : result.score >= 70 ? 'Good' : 'Needs Improvement'}
                 </p>
               </CardContent>
@@ -209,23 +209,23 @@ function ScanResultsContent() {
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Total Issues</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Issues</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-gray-900">{result.issues}</div>
-                <p className="text-sm text-gray-500 mt-1">Issues found</p>
+                <p className="text-sm text-muted-foreground mt-1">Issues found</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Scan Date</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Scan Date</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-lg font-semibold text-gray-900">
                   {new Date().toLocaleDateString()}
                 </div>
-                <p className="text-sm text-gray-500 mt-1">Latest scan</p>
+                <p className="text-sm text-muted-foreground mt-1">Latest scan</p>
               </CardContent>
             </Card>
           </div>
@@ -246,7 +246,7 @@ function ScanResultsContent() {
                     <div key={impact} className="text-center">
                       <div className={`w-3 h-3 ${impactColors[impact as keyof typeof impactColors]} rounded-full mx-auto mb-2`}></div>
                       <div className="text-2xl font-bold">{violations.length}</div>
-                      <div className="text-sm text-gray-600 capitalize">{impact}</div>
+                      <div className="text-sm text-muted-foreground capitalize">{impact}</div>
                     </div>
                   );
                 })}
@@ -256,14 +256,14 @@ function ScanResultsContent() {
 
           {/* Detailed Issues */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Detailed Issues</h2>
+            <h2 className="text-2xl font-bold text-foreground">Detailed Issues</h2>
 
             {result.violations.length === 0 ? (
               <Card>
                 <CardContent className="py-8 text-center">
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">No accessibility issues found!</h3>
-                  <p className="text-gray-600 dark:text-gray-400">This page meets WCAG 2.1 AA standards.</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">No accessibility issues found!</h3>
+                  <p className="text-muted-foreground">This page meets WCAG 2.1 AA standards.</p>
                 </CardContent>
               </Card>
             ) : (
@@ -298,13 +298,13 @@ function ScanResultsContent() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-700 dark:text-gray-300 mb-4">{violation.description}</p>
+                      <p className="text-foreground/80 mb-4">{violation.description}</p>
 
                       <div className="border-l-4 border-gray-200 dark:border-gray-700 pl-4">
-                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Affected Elements:</h4>
+                        <h4 className="font-semibold text-foreground mb-2">Affected Elements:</h4>
                         {violation.nodes.map((node, nodeIndex) => (
                           <div key={nodeIndex} className="mb-3">
-                            <div className="text-sm font-mono text-gray-600 dark:text-gray-400 mb-1">
+                            <div className="text-sm font-mono text-muted-foreground mb-1">
                               Selector: <code className="bg-gray-100 dark:bg-slate-800 px-1 rounded">{node.target.join(', ')}</code>
                             </div>
                             <div className="text-sm font-mono bg-gray-50 dark:bg-slate-800 p-2 rounded border dark:border-gray-700">

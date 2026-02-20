@@ -200,7 +200,7 @@ export default function AdminRolesPage() {
           <h2 className="text-xl font-semibold mb-4">Current Admin Users</h2>
 
           {adminUsers.length === 0 ? (
-            <p className="text-gray-500">No admin users found</p>
+            <p className="text-muted-foreground">No admin users found</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">

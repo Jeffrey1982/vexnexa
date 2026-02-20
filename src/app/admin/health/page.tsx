@@ -192,7 +192,7 @@ export default async function AdminHealthPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Customer Health Monitoring</h1>
-          <p className="text-gray-600 mt-2">Proactive monitoring of at-risk customers requiring attention</p>
+          <p className="text-muted-foreground mt-2">Proactive monitoring of at-risk customers requiring attention</p>
         </div>
 
         {/* Stats Grid */}
@@ -266,7 +266,7 @@ export default async function AdminHealthPage() {
           </CardHeader>
           <CardContent>
             {atRiskUsers.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
+              <div className="text-center py-12 text-muted-foreground">
                 <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-green-500" />
                 <div className="font-medium">All customers healthy!</div>
                 <div className="text-sm">No customers currently at risk</div>
@@ -275,7 +275,7 @@ export default async function AdminHealthPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="border-b">
-                    <tr className="text-left text-sm text-gray-600">
+                    <tr className="text-left text-sm text-muted-foreground">
                       <th className="pb-3 font-medium">User</th>
                       <th className="pb-3 font-medium">Plan</th>
                       <th className="pb-3 font-medium">Risk Level</th>
@@ -289,7 +289,7 @@ export default async function AdminHealthPage() {
                       <tr key={user.id} className="text-sm">
                         <td className="py-3">
                           <div className="font-medium text-gray-900">{user.name}</div>
-                          <div className="text-xs text-gray-500">{user.email}</div>
+                          <div className="text-xs text-muted-foreground">{user.email}</div>
                         </td>
                         <td className="py-3">
                           <Badge variant="outline">{user.plan}</Badge>
@@ -297,13 +297,13 @@ export default async function AdminHealthPage() {
                         <td className="py-3">
                           <div className="flex items-center gap-2">
                             {getRiskBadge(user.riskScore)}
-                            <span className="text-xs text-gray-500">({user.riskScore})</span>
+                            <span className="text-xs text-muted-foreground">({user.riskScore})</span>
                           </div>
                         </td>
                         <td className="py-3">
                           <div className="space-y-1">
                             {user.riskFactors.map((factor, idx) => (
-                              <div key={idx} className="text-xs text-gray-600 flex items-center gap-1">
+                              <div key={idx} className="text-xs text-muted-foreground flex items-center gap-1">
                                 <div className="w-1 h-1 bg-red-500 rounded-full"></div>
                                 {factor}
                               </div>
@@ -316,12 +316,12 @@ export default async function AdminHealthPage() {
                               <div className="text-xs text-gray-900">
                                 {user.daysSinceLastScan === 0 ? 'Today' : `${user.daysSinceLastScan}d ago`}
                               </div>
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-muted-foreground">
                                 {user.lastScanDate.toLocaleDateString()}
                               </div>
                             </div>
                           ) : (
-                            <span className="text-xs text-gray-400">Never</span>
+                            <span className="text-xs text-muted-foreground">Never</span>
                           )}
                         </td>
                         <td className="py-3">

@@ -113,24 +113,24 @@ export default async function AdminSeoPageQualityPage() {
       {
         label: "Engagement Score (P3)",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
         primary: true,
         subtitle: "Connect Google to track",
       },
       {
         label: "Content Score (P4)",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "CTR Issues",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Low Engagement",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
     ];
 
@@ -246,7 +246,7 @@ export default async function AdminSeoPageQualityPage() {
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">CTR Quality</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Click-through rate vs. expected baseline
               </p>
             </div>
@@ -254,14 +254,14 @@ export default async function AdminSeoPageQualityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p3Components.ctrQuality}
               </p>
-              <p className="text-xs text-gray-500">/ 80</p>
+              <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Engagement Rate</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 User engagement on landing pages
               </p>
             </div>
@@ -269,14 +269,14 @@ export default async function AdminSeoPageQualityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p3Components.engagementRate}
               </p>
-              <p className="text-xs text-gray-500">/ 80</p>
+              <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Returning Users</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Percentage of returning visitors
               </p>
             </div>
@@ -284,7 +284,7 @@ export default async function AdminSeoPageQualityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p3Components.returningUsers}
               </p>
-              <p className="text-xs text-gray-500">/ 40</p>
+              <p className="text-xs text-muted-foreground">/ 40</p>
             </div>
           </div>
         </div>
@@ -299,7 +299,7 @@ export default async function AdminSeoPageQualityPage() {
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Top Pages Growth</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Growth in top-performing pages
               </p>
             </div>
@@ -307,14 +307,14 @@ export default async function AdminSeoPageQualityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p4Components.topPagesGrowth}
               </p>
-              <p className="text-xs text-gray-500">/ 80</p>
+              <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Content Depth</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Average engagement time on pages
               </p>
             </div>
@@ -322,14 +322,14 @@ export default async function AdminSeoPageQualityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p4Components.contentDepth}
               </p>
-              <p className="text-xs text-gray-500">/ 80</p>
+              <p className="text-xs text-muted-foreground">/ 80</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Conversion Quality</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Conversion rate from organic traffic
               </p>
             </div>
@@ -337,7 +337,7 @@ export default async function AdminSeoPageQualityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p4Components.conversionQuality}
               </p>
-              <p className="text-xs text-gray-500">/ 40</p>
+              <p className="text-xs text-muted-foreground">/ 40</p>
             </div>
           </div>
         </div>
@@ -354,19 +354,19 @@ export default async function AdminSeoPageQualityPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Page
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Impressions
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Clicks
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       CTR
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Position
                     </th>
                   </tr>
@@ -386,7 +386,7 @@ export default async function AdminSeoPageQualityPage() {
                       <td className="py-3 px-4 text-sm text-red-600 text-right font-medium">
                         {(page.ctr * 100).toFixed(2)}%
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-600 text-right">
+                      <td className="py-3 px-4 text-sm text-muted-foreground text-right">
                         {page.position.toFixed(1)}
                       </td>
                     </tr>
@@ -409,19 +409,19 @@ export default async function AdminSeoPageQualityPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Landing Page
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Sessions
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Engagement Rate
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Avg Time (s)
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Bounce Rate
                     </th>
                   </tr>
@@ -438,10 +438,10 @@ export default async function AdminSeoPageQualityPage() {
                       <td className="py-3 px-4 text-sm text-red-600 text-right font-medium">
                         {(page.engagement_rate * 100).toFixed(1)}%
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-600 text-right">
+                      <td className="py-3 px-4 text-sm text-muted-foreground text-right">
                         {page.avg_engagement_time_seconds?.toFixed(0) || 0}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-600 text-right">
+                      <td className="py-3 px-4 text-sm text-muted-foreground text-right">
                         {(page.bounce_rate * 100).toFixed(1)}%
                       </td>
                     </tr>
@@ -472,8 +472,8 @@ export default async function AdminSeoPageQualityPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{action.title}</p>
-                  <p className="text-sm text-gray-600 mt-1">{action.description}</p>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
+                  <p className="text-xs text-muted-foreground mt-2">
                     Potential Impact: +{action.impact_points} points
                   </p>
                 </div>

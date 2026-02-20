@@ -106,7 +106,7 @@ export default async function TicketDetailPage(props: PageProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-5xl">
         {/* Header */}
         <div className="mb-6">
-          <Link href="/dashboard/support" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-4">
+          <Link href="/dashboard/support" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-gray-900 mb-4">
             <ArrowLeft className="w-4 h-4" />
             Back to Tickets
           </Link>
@@ -186,7 +186,7 @@ export default async function TicketDetailPage(props: PageProps) {
                             Admin
                           </Badge>
                         )}
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-muted-foreground">
                           {formatDate(message.createdAt)}
                         </span>
                       </div>
@@ -206,7 +206,7 @@ export default async function TicketDetailPage(props: PageProps) {
           <TicketReplyForm ticketId={ticket.id} />
         ) : (
           <Card>
-            <CardContent className="py-8 text-center text-gray-600">
+            <CardContent className="py-8 text-center text-muted-foreground">
               This ticket is closed and cannot receive new messages.
             </CardContent>
           </Card>

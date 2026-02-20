@@ -63,7 +63,7 @@ export function AdminContentTabs({
             {tab.count !== undefined && (
               <span className={cn(
                 "ml-2 px-2 py-0.5 text-xs rounded-full font-medium",
-                "bg-gray-100 text-gray-600",
+                "bg-gray-100 text-muted-foreground",
                 "data-[state=active]:bg-orange-100 data-[state=active]:text-orange-700"
               )}>
                 {tab.count}

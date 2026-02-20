@@ -129,7 +129,7 @@ export function Footer({ className }: FooterProps) {
                   href="https://linkedin.com/company/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
                   aria-label="Visit VexNexa on LinkedIn"
                 >
                   <Linkedin className="w-5 h-5" aria-hidden="true" />
@@ -138,7 +138,7 @@ export function Footer({ className }: FooterProps) {
                   href="https://twitter.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
                   aria-label="Visit VexNexa on Twitter"
                 >
                   <Twitter className="w-5 h-5" aria-hidden="true" />
@@ -147,7 +147,7 @@ export function Footer({ className }: FooterProps) {
                   href="https://github.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
                   aria-label="Visit VexNexa on GitHub"
                 >
                   <Github className="w-5 h-5" aria-hidden="true" />
@@ -156,7 +156,7 @@ export function Footer({ className }: FooterProps) {
                   href="https://facebook.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-[var(--vn-muted)] hover:bg-[var(--vn-primary)] text-[var(--vn-text-muted)] hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
+                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
                   aria-label="Visit VexNexa on Facebook"
                 >
                   <Facebook className="w-5 h-5" aria-hidden="true" />

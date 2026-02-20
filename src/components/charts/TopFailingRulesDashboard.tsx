@@ -233,8 +233,8 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
       case 'critical': return 'text-red-600 bg-red-50 border-red-200';
       case 'serious': return 'text-orange-600 bg-orange-50 border-orange-200';
       case 'moderate': return 'text-yellow-600 bg-yellow-50 border-yellow-200';
-      case 'minor': return 'text-gray-600 bg-gray-50 border-gray-200';
-      default: return 'text-gray-600 bg-gray-50 border-gray-200';
+      case 'minor': return 'text-muted-foreground bg-gray-50 border-gray-200';
+      default: return 'text-muted-foreground bg-gray-50 border-gray-200';
     }
   }
 
@@ -249,7 +249,7 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
 
   if (!violations || violations.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-64 text-muted-foreground ${className}`}>
         <div className="text-center">
           <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-500" />
           <div className="text-lg font-semibold text-green-600">No Accessibility Issues!</div>
@@ -269,13 +269,13 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
               <AlertTriangle className="w-6 h-6 text-orange-500" />
               Top Failing Rules
             </h3>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Most frequent accessibility violations with quick-fix recommendations
             </p>
           </div>
           <div className="text-right">
             <div className="text-2xl font-bold text-red-600">{topRules.length}</div>
-            <div className="text-sm text-gray-600">rules need attention</div>
+            <div className="text-sm text-muted-foreground">rules need attention</div>
           </div>
         </div>
       </div>
@@ -299,7 +299,7 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
                   </span>
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-1">{rule.ruleName}</h4>
-                <p className="text-sm text-gray-600 line-clamp-2">{rule.description}</p>
+                <p className="text-sm text-muted-foreground line-clamp-2">{rule.description}</p>
               </div>
             </div>
 
@@ -307,15 +307,15 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
             <div className="grid grid-cols-3 gap-4 mb-4">
               <div className="text-center">
                 <div className="text-lg font-bold text-red-600">{rule.frequency}</div>
-                <div className="text-xs text-gray-500">occurrences</div>
+                <div className="text-xs text-muted-foreground">occurrences</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-orange-600">{rule.sitesAffected}</div>
-                <div className="text-xs text-gray-500">sites affected</div>
+                <div className="text-xs text-muted-foreground">sites affected</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-blue-600">{rule.totalElements}</div>
-                <div className="text-xs text-gray-500">elements</div>
+                <div className="text-xs text-muted-foreground">elements</div>
               </div>
             </div>
 
@@ -324,7 +324,7 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
               <div className="flex items-center gap-2 mb-2">
                 <Zap className="w-4 h-4 text-blue-600" />
                 <span className="font-medium text-blue-900">Quick Fix</span>
-                <span className="flex items-center gap-1 text-xs text-gray-600">
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Clock className="w-3 h-3" />
                   {rule.estimatedTime}
                 </span>
@@ -339,7 +339,7 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
                 ))}
               </ol>
               {rule.quickFix.codeExample && (
-                <div className="mt-3 p-2 bg-gray-800 rounded text-xs text-gray-300 font-mono overflow-x-auto">
+                <div className="mt-3 p-2 bg-gray-800 rounded text-xs text-muted-foreground font-mono overflow-x-auto">
                   <pre>{rule.quickFix.codeExample}</pre>
                 </div>
               )}
@@ -381,7 +381,7 @@ export function TopFailingRulesDashboard({ violations, className = "" }: TopFail
               </span>
               , significantly improving your overall accessibility score.
             </p>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-muted-foreground">
               <span className="font-medium">Estimated total time:</span>{' '}
               {topRules.reduce((total, rule) => {
                 const time = parseInt(rule.estimatedTime);

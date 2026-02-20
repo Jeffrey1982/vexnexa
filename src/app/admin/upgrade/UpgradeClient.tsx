@@ -102,7 +102,7 @@ export default function AdminUpgradePage() {
                 <TrendingUp className="text-blue-500" />
                 Manual User Upgrade
               </h1>
-              <p className="text-gray-600 mt-1">Search and upgrade user plans manually</p>
+              <p className="text-muted-foreground mt-1">Search and upgrade user plans manually</p>
             </div>
             
           </div>
@@ -157,21 +157,21 @@ export default function AdminUpgradePage() {
               {/* User Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
                 <div>
-                  <label className="text-sm font-medium text-gray-600">Name</label>
+                  <label className="text-sm font-medium text-muted-foreground">Name</label>
                   <div className="text-lg font-semibold">
                     {selectedUser.firstName} {selectedUser.lastName}
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-600">Email</label>
+                  <label className="text-sm font-medium text-muted-foreground">Email</label>
                   <div className="text-lg font-semibold">{selectedUser.email}</div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-600">Company</label>
+                  <label className="text-sm font-medium text-muted-foreground">Company</label>
                   <div className="text-lg font-semibold">{selectedUser.company || 'N/A'}</div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-600">Current Plan</label>
+                  <label className="text-sm font-medium text-muted-foreground">Current Plan</label>
                   <div>
                     <Badge variant={
                       selectedUser.plan === 'BUSINESS' ? 'default' :

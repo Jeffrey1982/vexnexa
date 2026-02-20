@@ -92,7 +92,7 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
           {/* Filters */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
                 value={searchQuery}
@@ -103,7 +103,7 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-muted-foreground"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -124,9 +124,9 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
           {/* Messages Table */}
           {filteredMessages.length === 0 ? (
             <div className="text-center py-12">
-              <Mail className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <Mail className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No messages found</h3>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 {searchQuery || statusFilter !== 'all'
                   ? 'Try adjusting your filters'
                   : 'No contact form submissions yet'}
@@ -148,7 +148,7 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
                 <TableBody>
                   {filteredMessages.map((message) => (
                     <TableRow key={message.id}>
-                      <TableCell className="text-sm text-gray-600">
+                      <TableCell className="text-sm text-muted-foreground">
                         {formatDate(message.createdAt)}
                       </TableCell>
                       <TableCell className="font-medium">{message.name}</TableCell>
@@ -209,22 +209,22 @@ export function ContactMessagesTable({ messages }: ContactMessagesTableProps) {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-gray-600">Name</Label>
+                  <Label className="text-muted-foreground">Name</Label>
                   <p className="font-medium mt-1">{selectedMessage.name}</p>
                 </div>
                 <div>
-                  <Label className="text-gray-600">Email</Label>
+                  <Label className="text-muted-foreground">Email</Label>
                   <p className="font-medium mt-1">{selectedMessage.email}</p>
                 </div>
               </div>
               <div>
-                <Label className="text-gray-600">Message</Label>
+                <Label className="text-muted-foreground">Message</Label>
                 <div className="mt-2 p-4 bg-gray-50 rounded-lg border border-gray-200">
                   <p className="whitespace-pre-wrap text-sm">{selectedMessage.message}</p>
                 </div>
               </div>
               <div>
-                <Label className="text-gray-600">Status</Label>
+                <Label className="text-muted-foreground">Status</Label>
                 <div className="mt-1">
                   {selectedMessage.replied ? (
                     <Badge variant="default" className="gap-1">

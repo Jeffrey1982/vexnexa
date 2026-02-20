@@ -238,7 +238,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
                               {point.impact}
                             </Badge>
                             <div className="text-xs">{point.selector}</div>
-                            <div className="text-xs text-gray-600 max-w-xs">
+                            <div className="text-xs text-muted-foreground max-w-xs">
                               {point.description}
                             </div>
                           </div>
@@ -250,7 +250,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
               </TooltipProvider>
             </>
           ) : (
-            <div className="flex items-center justify-center h-full text-gray-700 dark:text-gray-600 dark:text-gray-400">
+            <div className="flex items-center justify-center h-full text-muted-foreground">
               <div className="text-center max-w-md">
                 <div className="text-6xl mb-4">🌐</div>
                 <h3 className="text-lg font-semibold mb-2">Live Website Heatmap</h3>
@@ -308,7 +308,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
               </Button>
             </div>
             <p className="text-gray-700 mb-3">{selectedPoint.description}</p>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-muted-foreground">
               <strong>Element:</strong> <code className="bg-gray-100 px-1 rounded">{selectedPoint.selector}</code>
             </div>
           </motion.div>
@@ -323,7 +323,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
                   className="w-3 h-3 rounded-full border border-white shadow-sm"
                   style={{ backgroundColor: getImpactColor(impact) }}
                 />
-                <span className="text-xs text-gray-600 capitalize">{impact}</span>
+                <span className="text-xs text-muted-foreground capitalize">{impact}</span>
               </div>
             ))}
           </div>

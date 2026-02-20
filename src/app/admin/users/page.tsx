@@ -47,7 +47,7 @@ export default async function AdminUsersPage() {
                   <Users className="text-blue-500" />
                   User Management
                 </h1>
-                <p className="text-gray-600 mt-1">View and manage all platform users</p>
+                <p className="text-muted-foreground mt-1">View and manage all platform users</p>
               </div>
             </div>
           </div>

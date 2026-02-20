@@ -50,7 +50,7 @@ export default async function AuditsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Manual Accessibility Audits</h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-muted-foreground mt-2">
           Conduct comprehensive manual accessibility testing to supplement automated scans and
           achieve full WCAG 2.1 compliance.
         </p>

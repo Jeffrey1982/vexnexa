@@ -49,7 +49,7 @@ export default async function AdminPaymentsPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Payment & Subscription Management</h1>
-          <p className="text-gray-600 mt-2">Manage subscriptions, process refunds, and handle payment issues</p>
+          <p className="text-muted-foreground mt-2">Manage subscriptions, process refunds, and handle payment issues</p>
         </div>
 
         {/* Stats Grid */}

@@ -153,7 +153,7 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
       case "fair": return "text-black";
       case "poor": return "text-white";
       case "critical": return "text-white";
-      default: return "text-gray-400";
+      default: return "text-muted-foreground";
     }
   }
 
@@ -170,9 +170,9 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
 
   if (!data || data.length === 0) {
     return (
-      <div className={`flex items-center justify-center h-64 text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-64 text-muted-foreground ${className}`}>
         <div className="text-center">
-          <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <Calendar className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
           <div className="text-lg font-semibold">No scan data available</div>
           <div className="text-sm">Run some scans to see your activity heatmap</div>
         </div>
@@ -188,16 +188,16 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Current Streak</div>
-                <div className={`text-2xl font-bold ${analytics.isOnStreak ? 'text-green-600' : 'text-gray-600'}`}>
+                <div className="text-sm font-medium text-muted-foreground">Current Streak</div>
+                <div className={`text-2xl font-bold ${analytics.isOnStreak ? 'text-green-600' : 'text-muted-foreground'}`}>
                   {analytics.currentStreak}
                 </div>
-                <div className="text-xs text-gray-500">good days</div>
+                <div className="text-xs text-muted-foreground">good days</div>
               </div>
               {analytics.isOnStreak ? (
                 <Flame className="w-8 h-8 text-orange-500" />
               ) : (
-                <Shield className="w-8 h-8 text-gray-400" />
+                <Shield className="w-8 h-8 text-muted-foreground" />
               )}
             </div>
           </div>
@@ -205,31 +205,31 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Best Streak</div>
+                <div className="text-sm font-medium text-muted-foreground">Best Streak</div>
                 <div className="text-2xl font-bold text-purple-600">{analytics.bestStreak}</div>
-                <div className="text-xs text-gray-500">consecutive good days</div>
+                <div className="text-xs text-muted-foreground">consecutive good days</div>
               </div>
               <Award className="w-8 h-8 text-purple-600" />
             </div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm font-medium text-gray-600">Total Scans</div>
+            <div className="text-sm font-medium text-muted-foreground">Total Scans</div>
             <div className="text-2xl font-bold text-blue-600">{analytics.totalScans}</div>
-            <div className="text-xs text-gray-500">all time</div>
+            <div className="text-xs text-muted-foreground">all time</div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Recent Average</div>
+                <div className="text-sm font-medium text-muted-foreground">Recent Average</div>
                 <div className={`text-2xl font-bold ${
                   analytics.recentAverage >= 75 ? 'text-green-600' :
                   analytics.recentAverage >= 60 ? 'text-yellow-600' : 'text-red-600'
                 }`}>
                   {analytics.recentAverage}
                 </div>
-                <div className="text-xs text-gray-500">last 7 days</div>
+                <div className="text-xs text-muted-foreground">last 7 days</div>
               </div>
               <TrendingUp className="w-8 h-8 text-blue-600" />
             </div>
@@ -243,7 +243,7 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Activity Heatmap</h3>
-            <p className="text-sm text-gray-600">Accessibility scan activity and performance</p>
+            <p className="text-sm text-muted-foreground">Accessibility scan activity and performance</p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -273,7 +273,7 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
           {/* Day headers */}
           <div className="grid grid-cols-7 gap-1 mb-2">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
-              <div key={day} className="text-xs font-medium text-gray-500 text-center py-2">
+              <div key={day} className="text-xs font-medium text-muted-foreground text-center py-2">
                 {day}
               </div>
             ))}
@@ -317,7 +317,7 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
 
         {/* Legend */}
         <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-muted-foreground">
             Fewer scans
           </div>
 
@@ -330,12 +330,12 @@ export function SeverityHeatmap({ data, className = "" }: SeverityHeatmapProps) 
             <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
           </div>
 
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-muted-foreground">
             More scans
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-6 mt-2 text-xs text-gray-600">
+        <div className="flex items-center justify-center gap-6 mt-2 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <div className="w-3 h-3 bg-red-500 rounded-sm"></div>
             Critical (&lt;40)

@@ -99,24 +99,24 @@ export default async function AdminSeoVisibilityPage() {
       {
         label: "P2 Score",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
         primary: true,
         subtitle: "Connect Google to track",
       },
       {
         label: "Clicks Trend",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Top Queries",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Avg Position",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
     ];
 
@@ -226,7 +226,7 @@ export default async function AdminSeoVisibilityPage() {
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Clicks Trend</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 7-day growth vs. previous period
               </p>
             </div>
@@ -234,14 +234,14 @@ export default async function AdminSeoVisibilityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p2Components.clicksTrend}
               </p>
-              <p className="text-xs text-gray-500">/ 100</p>
+              <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Top Queries Performance</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Queries ranking in top 10
               </p>
             </div>
@@ -249,14 +249,14 @@ export default async function AdminSeoVisibilityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p2Components.topQueriesPerformance}
               </p>
-              <p className="text-xs text-gray-500">/ 100</p>
+              <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Average Position</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Average ranking position across queries
               </p>
             </div>
@@ -264,7 +264,7 @@ export default async function AdminSeoVisibilityPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p2Components.avgPosition}
               </p>
-              <p className="text-xs text-gray-500">/ 50</p>
+              <p className="text-xs text-muted-foreground">/ 50</p>
             </div>
           </div>
         </div>
@@ -281,19 +281,19 @@ export default async function AdminSeoVisibilityPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Query
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Impressions
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Clicks
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       CTR
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Position
                     </th>
                   </tr>
@@ -316,7 +316,7 @@ export default async function AdminSeoVisibilityPage() {
                       <td className="py-3 px-4 text-sm text-right">
                         <span className={`${
                           query.position <= 10 ? 'text-green-600 font-medium' :
-                          query.position <= 20 ? 'text-yellow-600' : 'text-gray-600'
+                          query.position <= 20 ? 'text-yellow-600' : 'text-muted-foreground'
                         }`}>
                           {query.position.toFixed(1)}
                         </span>
@@ -341,19 +341,19 @@ export default async function AdminSeoVisibilityPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Page
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Impressions
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Clicks
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       CTR
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Position
                     </th>
                   </tr>
@@ -376,7 +376,7 @@ export default async function AdminSeoVisibilityPage() {
                       <td className="py-3 px-4 text-sm text-right">
                         <span className={`${
                           page.position <= 10 ? 'text-green-600 font-medium' :
-                          page.position <= 20 ? 'text-yellow-600' : 'text-gray-600'
+                          page.position <= 20 ? 'text-yellow-600' : 'text-muted-foreground'
                         }`}>
                           {page.position.toFixed(1)}
                         </span>
@@ -409,8 +409,8 @@ export default async function AdminSeoVisibilityPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{action.title}</p>
-                  <p className="text-sm text-gray-600 mt-1">{action.description}</p>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
+                  <p className="text-xs text-muted-foreground mt-2">
                     Potential Impact: +{action.impact_points} points
                   </p>
                 </div>

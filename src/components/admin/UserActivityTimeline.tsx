@@ -38,7 +38,7 @@ const eventColors = {
   PLAN_CHANGE: 'text-blue-600 bg-blue-100',
   STATUS_CHANGE: 'text-green-600 bg-green-100',
   PAYMENT_REFUND: 'text-red-600 bg-red-100',
-  NOTE_ADDED: 'text-gray-600 bg-gray-100',
+  NOTE_ADDED: 'text-muted-foreground bg-gray-100',
   TICKET_CREATED: 'text-purple-600 bg-purple-100',
   TICKET_CLOSED: 'text-green-600 bg-green-100',
   CONTACT_CONVERTED: 'text-orange-600 bg-orange-100',
@@ -94,7 +94,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
             if (item.type === 'admin_event') {
               const event = item.data as UserAdminEvent;
               const Icon = eventIcons[event.eventType] || Activity;
-              const colorClass = eventColors[event.eventType] || 'text-gray-600 bg-gray-100';
+              const colorClass = eventColors[event.eventType] || 'text-muted-foreground bg-gray-100';
 
               return (
                 <div key={`event-${index}`} className="flex gap-4">
@@ -103,7 +103,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">{event.description}</p>
-                    <p className="text-xs text-gray-500 mt-1">{formatDate(event.createdAt)}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{formatDate(event.createdAt)}</p>
                     {event.metadata && (
                       <div className="mt-2">
                         <code className="text-xs bg-gray-100 px-2 py-1 rounded">
@@ -122,7 +122,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">User account created</p>
-                    <p className="text-xs text-gray-500 mt-1">{formatDate(item.date)}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{formatDate(item.date)}</p>
                   </div>
                 </div>
               );
@@ -134,7 +134,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">{item.data.description}</p>
-                    <p className="text-xs text-gray-500 mt-1">{formatDate(item.date)}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{formatDate(item.date)}</p>
                   </div>
                 </div>
               );
@@ -154,7 +154,7 @@ export function UserActivityTimeline({ events, user }: UserActivityTimelineProps
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">{formatDate(item.date)}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{formatDate(item.date)}</p>
                   </div>
                 </div>
               );

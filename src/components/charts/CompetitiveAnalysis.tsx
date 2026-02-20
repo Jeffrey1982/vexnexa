@@ -199,7 +199,7 @@ export function CompetitiveAnalysis({
       case "challenger": return <Trophy className="w-5 h-5 text-blue-500" />;
       case "follower": return <Target className="w-5 h-5 text-green-500" />;
       case "niche": return <Award className="w-5 h-5 text-purple-500" />;
-      default: return <Award className="w-5 h-5 text-gray-500" />;
+      default: return <Award className="w-5 h-5 text-muted-foreground" />;
     }
   };
 
@@ -223,7 +223,7 @@ export function CompetitiveAnalysis({
               <Trophy className="w-6 h-6 text-blue-600" />
               Competitive Analysis
             </h3>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               See how you compare against industry competitors
             </p>
           </div>
@@ -240,7 +240,7 @@ export function CompetitiveAnalysis({
                 className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
                   viewMode === mode.key
                     ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:text-gray-900"
+                    : "text-muted-foreground hover:text-gray-900"
                 }`}
               >
                 {mode.label}
@@ -253,11 +253,11 @@ export function CompetitiveAnalysis({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-3 border border-gray-200 rounded-lg">
             <div className="text-2xl font-bold text-blue-600">#{marketPosition.rank}</div>
-            <div className="text-sm text-gray-600">Market Rank</div>
+            <div className="text-sm text-muted-foreground">Market Rank</div>
           </div>
           <div className="text-center p-3 border border-gray-200 rounded-lg">
             <div className="text-2xl font-bold text-green-600">{marketPosition.percentile}%</div>
-            <div className="text-sm text-gray-600">Percentile</div>
+            <div className="text-sm text-muted-foreground">Percentile</div>
           </div>
           <div className="text-center p-3 border border-gray-200 rounded-lg">
             <div className="flex items-center justify-center mb-1">
@@ -267,7 +267,7 @@ export function CompetitiveAnalysis({
           </div>
           <div className="text-center p-3 border border-gray-200 rounded-lg">
             <div className="text-2xl font-bold text-purple-600">{industry}</div>
-            <div className="text-sm text-gray-600">Industry</div>
+            <div className="text-sm text-muted-foreground">Industry</div>
           </div>
         </div>
       </div>
@@ -429,33 +429,33 @@ export function CompetitiveAnalysis({
             <div className="grid grid-cols-4 gap-2 mb-3 text-center">
               <div>
                 <div className="text-sm font-bold text-red-600">{competitor.issues.critical}</div>
-                <div className="text-xs text-gray-500">Critical</div>
+                <div className="text-xs text-muted-foreground">Critical</div>
               </div>
               <div>
                 <div className="text-sm font-bold text-orange-600">{competitor.issues.serious}</div>
-                <div className="text-xs text-gray-500">Serious</div>
+                <div className="text-xs text-muted-foreground">Serious</div>
               </div>
               <div>
                 <div className="text-sm font-bold text-yellow-600">{competitor.issues.moderate}</div>
-                <div className="text-xs text-gray-500">Moderate</div>
+                <div className="text-xs text-muted-foreground">Moderate</div>
               </div>
               <div>
-                <div className="text-sm font-bold text-gray-600">{competitor.issues.minor}</div>
-                <div className="text-xs text-gray-500">Minor</div>
+                <div className="text-sm font-bold text-muted-foreground">{competitor.issues.minor}</div>
+                <div className="text-xs text-muted-foreground">Minor</div>
               </div>
             </div>
 
             <div className="space-y-2">
               <div>
                 <div className="text-xs font-medium text-green-700 mb-1">Strengths:</div>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-muted-foreground">
                   {competitor.strengths.slice(0, 2).join(", ")}
                 </div>
               </div>
               {competitor.weaknesses.length > 0 && (
                 <div>
                   <div className="text-xs font-medium text-red-700 mb-1">Areas for improvement:</div>
-                  <div className="text-xs text-gray-600">
+                  <div className="text-xs text-muted-foreground">
                     {competitor.weaknesses.slice(0, 2).join(", ")}
                   </div>
                 </div>

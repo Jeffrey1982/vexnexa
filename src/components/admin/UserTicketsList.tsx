@@ -24,7 +24,7 @@ export function UserTicketsList({ tickets, userId }: UserTicketsListProps) {
       </CardHeader>
       <CardContent>
         {tickets.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">No support tickets</p>
+          <p className="text-muted-foreground text-center py-8">No support tickets</p>
         ) : (
           <Table>
             <TableHeader>

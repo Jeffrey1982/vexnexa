@@ -12,7 +12,7 @@ export default function CookiesPage() {
               Cookie Policy
             </h1>
 
-            <div className="text-gray-600 mb-6">
+            <div className="text-muted-foreground mb-6">
               <p className="mb-4">Last updated: {new Date().toLocaleDateString('en-US')}</p>
             </div>
 
@@ -77,7 +77,7 @@ export default function CookiesPage() {
                     <div className="flex items-center justify-between p-4 bg-white rounded border">
                       <div>
                         <h4 className="font-semibold">Essential Cookies</h4>
-                        <p className="text-sm text-gray-600">Always active - required for basic functionality</p>
+                        <p className="text-sm text-muted-foreground">Always active - required for basic functionality</p>
                       </div>
                       <div className="bg-gray-400 rounded-full w-12 h-6 flex items-center">
                         <div className="bg-gray-600 w-5 h-5 rounded-full ml-1"></div>
@@ -87,7 +87,7 @@ export default function CookiesPage() {
                     <div className="flex items-center justify-between p-4 bg-white rounded border">
                       <div>
                         <h4 className="font-semibold">Functional Cookies</h4>
-                        <p className="text-sm text-gray-600">For enhanced user experience</p>
+                        <p className="text-sm text-muted-foreground">For enhanced user experience</p>
                       </div>
                       <button
                         type="button"
@@ -101,7 +101,7 @@ export default function CookiesPage() {
                     <div className="flex items-center justify-between p-4 bg-white rounded border">
                       <div>
                         <h4 className="font-semibold">Analytics Cookies</h4>
-                        <p className="text-sm text-gray-600">For website analysis and improvement</p>
+                        <p className="text-sm text-muted-foreground">For website analysis and improvement</p>
                       </div>
                       <button
                         type="button"

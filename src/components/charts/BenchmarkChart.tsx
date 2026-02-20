@@ -60,7 +60,7 @@ export function BenchmarkChart({
       case "below_average":
         return "text-red-600";
       default:
-        return "text-gray-600";
+        return "text-muted-foreground";
     }
   };
 
@@ -84,7 +84,7 @@ export function BenchmarkChart({
             {getCategoryText()}
           </span>
         </div>
-        <div className="text-xs text-gray-600">
+        <div className="text-xs text-muted-foreground">
           {comparison.difference >= 0 ? "+" : ""}{comparison.difference.toFixed(1)} points from average
           <span className="ml-2">({comparison.percentile}th percentile)</span>
         </div>

@@ -58,7 +58,7 @@ export function AdminEmptyState({
     )}>
       {/* Icon */}
       <div className="mb-6 p-4 bg-gray-100 rounded-full">
-        <Icon className="w-12 h-12 text-gray-400" />
+        <Icon className="w-12 h-12 text-muted-foreground" />
       </div>
 
       {/* Title */}
@@ -67,7 +67,7 @@ export function AdminEmptyState({
       </h3>
 
       {/* Description */}
-      <div className="text-gray-600 max-w-md mb-6">
+      <div className="text-muted-foreground max-w-md mb-6">
         {typeof description === 'string' ? <p>{description}</p> : description}
       </div>
 
@@ -110,7 +110,7 @@ export function AdminEmptyState({
 
       {/* Help Text */}
       {helpText && (
-        <div className="text-sm text-gray-500 max-w-lg border-t border-gray-200 pt-6">
+        <div className="text-sm text-muted-foreground max-w-lg border-t border-gray-200 pt-6">
           {helpText}
         </div>
       )}

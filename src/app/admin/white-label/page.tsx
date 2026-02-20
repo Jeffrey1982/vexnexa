@@ -47,7 +47,7 @@ export default async function AdminWhiteLabelPage() {
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">White-Label Configuration</h1>
-          <p className="text-gray-600 mt-2">Manage all customer white-label branding settings</p>
+          <p className="text-muted-foreground mt-2">Manage all customer white-label branding settings</p>
         </div>
 
         {/* Stats Grid */}
@@ -121,8 +121,8 @@ export default async function AdminWhiteLabelPage() {
           </CardHeader>
           <CardContent>
             {whiteLabels.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
-                <Palette className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+              <div className="text-center py-12 text-muted-foreground">
+                <Palette className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
                 <div className="font-medium">No white-label configurations yet</div>
                 <div className="text-sm">Customers will need Business plans to enable white-labeling</div>
               </div>
@@ -130,7 +130,7 @@ export default async function AdminWhiteLabelPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="border-b">
-                    <tr className="text-left text-sm text-gray-600">
+                    <tr className="text-left text-sm text-muted-foreground">
                       <th className="pb-3 font-medium">Company</th>
                       <th className="pb-3 font-medium">Owner</th>
                       <th className="pb-3 font-medium">Branding</th>
@@ -160,14 +160,14 @@ export default async function AdminWhiteLabelPage() {
                                 />
                               ) : (
                                 <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-                                  <Palette className="w-4 h-4 text-gray-400" />
+                                  <Palette className="w-4 h-4 text-muted-foreground" />
                                 </div>
                               )}
                               <div>
                                 <div className="font-medium text-gray-900">
                                   {wl.companyName || 'Not Set'}
                                 </div>
-                                <div className="text-xs text-gray-500">
+                                <div className="text-xs text-muted-foreground">
                                   Updated {new Date(wl.updatedAt).toLocaleDateString()}
                                 </div>
                               </div>
@@ -176,7 +176,7 @@ export default async function AdminWhiteLabelPage() {
                           <td className="py-3">
                             <div>
                               <div className="font-medium text-gray-900">{userName}</div>
-                              <div className="text-xs text-gray-500">{wl.user.email}</div>
+                              <div className="text-xs text-muted-foreground">{wl.user.email}</div>
                               <Badge variant="outline" className="mt-1">{wl.user.plan}</Badge>
                             </div>
                           </td>
@@ -186,7 +186,7 @@ export default async function AdminWhiteLabelPage() {
                                 {wl.logoUrl ? (
                                   <CheckCircle2 className="w-3 h-3 text-green-600" />
                                 ) : (
-                                  <XCircle className="w-3 h-3 text-gray-400" />
+                                  <XCircle className="w-3 h-3 text-muted-foreground" />
                                 )}
                                 <span className="text-xs">Logo</span>
                               </div>
@@ -194,7 +194,7 @@ export default async function AdminWhiteLabelPage() {
                                 {wl.faviconUrl ? (
                                   <CheckCircle2 className="w-3 h-3 text-green-600" />
                                 ) : (
-                                  <XCircle className="w-3 h-3 text-gray-400" />
+                                  <XCircle className="w-3 h-3 text-muted-foreground" />
                                 )}
                                 <span className="text-xs">Favicon</span>
                               </div>
@@ -228,12 +228,12 @@ export default async function AdminWhiteLabelPage() {
                                 </div>
                               ) : null}
                               {wl.subdomain ? (
-                                <div className="text-xs text-gray-600">
+                                <div className="text-xs text-muted-foreground">
                                   {wl.subdomain}.vexnexa.com
                                 </div>
                               ) : null}
                               {!wl.customDomain && !wl.subdomain && (
-                                <span className="text-xs text-gray-400">No domain</span>
+                                <span className="text-xs text-muted-foreground">No domain</span>
                               )}
                             </div>
                           </td>
@@ -243,10 +243,10 @@ export default async function AdminWhiteLabelPage() {
                                 <div className="text-xs text-gray-900 truncate">{wl.supportEmail}</div>
                               )}
                               {wl.website && (
-                                <div className="text-xs text-gray-600 truncate">{wl.website}</div>
+                                <div className="text-xs text-muted-foreground truncate">{wl.website}</div>
                               )}
                               {wl.phone && (
-                                <div className="text-xs text-gray-600">{wl.phone}</div>
+                                <div className="text-xs text-muted-foreground">{wl.phone}</div>
                               )}
                               <div className="flex items-center gap-1 pt-1">
                                 {wl.showPoweredBy ? (

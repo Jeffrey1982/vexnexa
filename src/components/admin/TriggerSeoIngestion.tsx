@@ -33,7 +33,7 @@ export function TriggerSeoIngestion() {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">Manual Data Ingestion</h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Trigger all SEO data ingestion cron jobs manually to populate your dashboard
           </p>
         </div>
@@ -42,7 +42,7 @@ export function TriggerSeoIngestion() {
           disabled={isTriggering}
           className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-colors ${
             isTriggering
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              ? 'bg-gray-100 text-muted-foreground cursor-not-allowed'
               : 'bg-[#e8570e] text-white hover:bg-[#b8450b]'
           }`}
         >
@@ -115,14 +115,14 @@ export function TriggerSeoIngestion() {
                         {job.status}
                       </span>
                     )}
-                    <span className="text-gray-500">({job.statusCode || 'N/A'})</span>
+                    <span className="text-muted-foreground">({job.statusCode || 'N/A'})</span>
                   </div>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="mt-3 text-xs text-gray-500">
+          <div className="mt-3 text-xs text-muted-foreground">
             <p>Triggered at: {new Date(result.timestamp).toLocaleString()}</p>
           </div>
         </div>

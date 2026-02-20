@@ -48,7 +48,7 @@ export function UserContactMessages({ contactMessages, userEmail }: UserContactM
       </CardHeader>
       <CardContent>
         {contactMessages.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">No contact messages</p>
+          <p className="text-muted-foreground text-center py-8">No contact messages</p>
         ) : (
           <Table>
             <TableHeader>
@@ -66,7 +66,7 @@ export function UserContactMessages({ contactMessages, userEmail }: UserContactM
                   <TableCell className="text-sm">{formatDate(contact.createdAt)}</TableCell>
                   <TableCell className="font-medium">{contact.name}</TableCell>
                   <TableCell className="max-w-md">
-                    <p className="text-sm text-gray-600 truncate">{contact.message}</p>
+                    <p className="text-sm text-muted-foreground truncate">{contact.message}</p>
                   </TableCell>
                   <TableCell>
                     <Badge

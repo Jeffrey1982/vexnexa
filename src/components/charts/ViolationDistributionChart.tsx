@@ -45,11 +45,11 @@ export function ViolationDistributionChart({
 
   if (total === 0) {
     return (
-      <div className={`flex items-center justify-center h-[${height}px] text-gray-500 ${className}`}>
+      <div className={`flex items-center justify-center h-[${height}px] text-muted-foreground ${className}`}>
         <div className="text-center">
           <div className="text-6xl mb-2">🎉</div>
           <div className="text-lg font-semibold text-green-600">No Issues Found!</div>
-          <div className="text-sm text-gray-600">This page has excellent accessibility</div>
+          <div className="text-sm text-muted-foreground">This page has excellent accessibility</div>
         </div>
       </div>
     );

@@ -27,9 +27,9 @@ export function AdminNotesViewer({ notes }: AdminNotesViewerProps) {
       <CardContent>
         {notes.length === 0 ? (
           <div className="text-center py-8">
-            <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500">No admin notes yet</p>
-            <p className="text-sm text-gray-400 mt-1">Use the &quot;Add Note&quot; action to create internal notes</p>
+            <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+            <p className="text-muted-foreground">No admin notes yet</p>
+            <p className="text-sm text-muted-foreground mt-1">Use the &quot;Add Note&quot; action to create internal notes</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -50,7 +50,7 @@ export function AdminNotesViewer({ notes }: AdminNotesViewerProps) {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">{adminName}</p>
-                        <p className="text-xs text-gray-500">{formatDate(note.createdAt)}</p>
+                        <p className="text-xs text-muted-foreground">{formatDate(note.createdAt)}</p>
                       </div>
                     </div>
                     <Badge variant="outline" className="text-xs">
@@ -61,7 +61,7 @@ export function AdminNotesViewer({ notes }: AdminNotesViewerProps) {
                     <p className="text-sm text-gray-700 whitespace-pre-wrap">{note.note}</p>
                   </div>
                   {note.updatedAt.getTime() !== note.createdAt.getTime() && (
-                    <p className="text-xs text-gray-400 mt-2 pl-10">
+                    <p className="text-xs text-muted-foreground mt-2 pl-10">
                       Last edited: {formatDate(note.updatedAt)}
                     </p>
                   )}

@@ -8,7 +8,7 @@ export default async function RecentScans() {
       take: 20,
       include: { site: true, page: true },
     });
-    if (!scans.length) return <div className="text-sm text-gray-500">Nog geen scans.</div>;
+    if (!scans.length) return <div className="text-sm text-muted-foreground">Nog geen scans.</div>;
     return (
       <div className="space-y-2">
         <h2 className="text-lg font-semibold">Recente scans</h2>
@@ -22,7 +22,7 @@ export default async function RecentScans() {
                 <div className="text-sm text-gray-700 truncate">
                   {s.page?.url ? new URL(s.page.url).pathname : "hele site / onbekende pagina"}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-muted-foreground">
                   {new Date(s.createdAt).toLocaleString()} • {s.issues || 0} issues
                 </div>
               </div>

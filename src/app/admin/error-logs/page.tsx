@@ -115,7 +115,7 @@ export default function ErrorLogsPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Total Errors</div>
+                    <div className="text-sm text-muted-foreground">Total Errors</div>
                     <div className="text-2xl font-bold text-red-600">
                       {errorData.totalErrors24h}
                     </div>
@@ -124,7 +124,7 @@ export default function ErrorLogsPage() {
                 </div>
                 <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
                   <div>
-                    <div className="text-sm text-gray-600">Critical Errors</div>
+                    <div className="text-sm text-muted-foreground">Critical Errors</div>
                     <div className="text-2xl font-bold text-orange-600">
                       {errorData.criticalErrors}
                     </div>
@@ -138,9 +138,9 @@ export default function ErrorLogsPage() {
               <h2 className="text-lg font-semibold mb-4">Error Rate Trends</h2>
               <div className="space-y-4">
                 <div className="p-4 bg-green-50 rounded-lg text-center">
-                  <div className="text-sm text-gray-600 mb-2">System Status</div>
+                  <div className="text-sm text-muted-foreground mb-2">System Status</div>
                   <div className="text-xl font-bold text-green-600">Healthy</div>
-                  <div className="text-xs text-gray-500 mt-1">No error tracking configured</div>
+                  <div className="text-xs text-muted-foreground mt-1">No error tracking configured</div>
                 </div>
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function ErrorLogsPage() {
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Recent Errors</h2>
           {errorData?.recentErrors.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-muted-foreground">
               No recent errors logged
             </div>
           ) : (
@@ -168,9 +168,9 @@ export default function ErrorLogsPage() {
                         }`}>
                           {error.level.toUpperCase()}
                         </span>
-                        <span className="text-sm text-gray-500">{new Date(error.timestamp).toLocaleString()}</span>
+                        <span className="text-sm text-muted-foreground">{new Date(error.timestamp).toLocaleString()}</span>
                         {error.userEmail && (
-                          <span className="text-sm text-gray-500">• {error.userEmail}</span>
+                          <span className="text-sm text-muted-foreground">• {error.userEmail}</span>
                         )}
                         {error.resolved && (
                           <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
@@ -180,10 +180,10 @@ export default function ErrorLogsPage() {
                       </div>
                       <div className="font-medium text-gray-900 mb-1">{error.message}</div>
                       {error.source && (
-                        <div className="text-sm text-gray-600 mb-1">Source: {error.source}</div>
+                        <div className="text-sm text-muted-foreground mb-1">Source: {error.source}</div>
                       )}
                       {error.url && (
-                        <div className="text-sm text-gray-600 mb-1">URL: {error.method} {error.url}</div>
+                        <div className="text-sm text-muted-foreground mb-1">URL: {error.method} {error.url}</div>
                       )}
                       {error.stack && (
                         <details className="mt-2">
@@ -207,14 +207,14 @@ export default function ErrorLogsPage() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-semibold mb-4">Implementing Error Tracking</h2>
           <div className="prose max-w-none">
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted-foreground mb-4">
               To implement comprehensive error tracking and monitoring:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold mb-3 text-gray-900">Sentry Integration</h3>
-                <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
+                <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
                   <li>Install Sentry SDK: <code className="bg-gray-100 px-2 py-1 rounded">npm install @sentry/nextjs</code></li>
                   <li>Run setup wizard: <code className="bg-gray-100 px-2 py-1 rounded">npx @sentry/wizard -i nextjs</code></li>
                   <li>Configure DSN in environment variables</li>
@@ -225,7 +225,7 @@ export default function ErrorLogsPage() {
 
               <div>
                 <h3 className="font-semibold mb-3 text-gray-900">DataDog Integration</h3>
-                <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
+                <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
                   <li>Install DataDog browser SDK</li>
                   <li>Configure RUM (Real User Monitoring)</li>
                   <li>Set up log collection</li>

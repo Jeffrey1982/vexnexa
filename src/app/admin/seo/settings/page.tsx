@@ -106,7 +106,7 @@ export default async function AdminSeoSettingsPage() {
               All required environment variables are set in Vercel:
             </p>
             <div className="bg-white border border-blue-200 rounded p-3 font-mono text-xs space-y-1">
-              <div><span className="text-gray-500"># Configured in Vercel Production</span></div>
+              <div><span className="text-muted-foreground"># Configured in Vercel Production</span></div>
               <div className="flex items-center gap-2">
                 <span className="text-green-600">✓</span> GSC_SITE_URL (sc-domain:vexnexa.com)
               </div>
@@ -155,7 +155,7 @@ export default async function AdminSeoSettingsPage() {
                     rule.enabled ? 'bg-green-100' : 'bg-gray-100'
                   }`}>
                     <AlertCircle className={`w-5 h-5 ${
-                      rule.enabled ? 'text-green-600' : 'text-gray-400'
+                      rule.enabled ? 'text-green-600' : 'text-muted-foreground'
                     }`} />
                   </div>
                 </div>
@@ -174,17 +174,17 @@ export default async function AdminSeoSettingsPage() {
                       {rule.severity}
                     </div>
                     <div className={`px-2 py-0.5 text-xs font-medium rounded ${
-                      rule.enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                      rule.enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-muted-foreground'
                     }`}>
                       {rule.enabled ? 'Enabled' : 'Disabled'}
                     </div>
                   </div>
 
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-muted-foreground mb-2">
                     {rule.description || 'No description'}
                   </p>
 
-                  <div className="flex flex-wrap gap-4 text-xs text-gray-600">
+                  <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
                     <div>
                       <span className="font-medium">Lookback:</span> {rule.lookback_days} days
                     </div>
@@ -224,19 +224,19 @@ export default async function AdminSeoSettingsPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       URL
                     </th>
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Label
                     </th>
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Status
                     </th>
-                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Added
                     </th>
-                    <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">
+                    <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase">
                       Actions
                     </th>
                   </tr>
@@ -252,12 +252,12 @@ export default async function AdminSeoSettingsPage() {
                       </td>
                       <td className="py-3 px-4">
                         <span className={`px-2 py-0.5 text-xs font-medium rounded ${
-                          page.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                          page.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-muted-foreground'
                         }`}>
                           {page.active ? 'Active' : 'Paused'}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-600">
+                      <td className="py-3 px-4 text-sm text-muted-foreground">
                         {new Date(page.added_at).toLocaleDateString()}
                       </td>
                       <td className="py-3 px-4 text-right">
@@ -279,7 +279,7 @@ export default async function AdminSeoSettingsPage() {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Cron Job Endpoints
         </h2>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Schedule these endpoints to run daily via Vercel Cron or your preferred scheduler:
         </p>
         <div className="space-y-2 font-mono text-xs">
@@ -294,7 +294,7 @@ export default async function AdminSeoSettingsPage() {
           <div className="flex items-center gap-2 p-2 bg-white rounded border">
             <span className="text-blue-600 font-semibold">POST</span>
             <span className="text-gray-900">/api/cron/ingest-pagespeed</span>
-            <span className="text-xs text-gray-500">(optional)</span>
+            <span className="text-xs text-muted-foreground">(optional)</span>
           </div>
           <div className="flex items-center gap-2 p-2 bg-white rounded border">
             <span className="text-blue-600 font-semibold">POST</span>
@@ -305,7 +305,7 @@ export default async function AdminSeoSettingsPage() {
             <span className="text-gray-900">/api/cron/run-alerts</span>
           </div>
         </div>
-        <p className="text-xs text-gray-500 mt-3">
+        <p className="text-xs text-muted-foreground mt-3">
           All endpoints require <code className="bg-gray-200 px-1 rounded">X-CRON-TOKEN</code> header matching your <code className="bg-gray-200 px-1 rounded">CRON_TOKEN</code> environment variable.
         </p>
       </div>

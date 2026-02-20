@@ -220,7 +220,7 @@ export function AdvancedAnalytics({ data }: AdvancedAnalyticsProps) {
             <div className="text-3xl font-bold">
               {data.metrics.activeUsers.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600 mt-1">
+            <div className="text-sm text-muted-foreground mt-1">
               Churn Rate: {data.metrics.churnRate.toFixed(1)}%
             </div>
           </CardContent>
@@ -237,7 +237,7 @@ export function AdvancedAnalytics({ data }: AdvancedAnalyticsProps) {
             <div className="text-3xl font-bold">
               ${data.metrics.avgRevenuePerUser.toFixed(2)}
             </div>
-            <div className="text-sm text-gray-600 mt-1">
+            <div className="text-sm text-muted-foreground mt-1">
               LTV: ${data.metrics.lifetimeValue.toFixed(2)}
             </div>
           </CardContent>
@@ -254,7 +254,7 @@ export function AdvancedAnalytics({ data }: AdvancedAnalyticsProps) {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="border-b">
-                <tr className="text-left text-sm text-gray-600">
+                <tr className="text-left text-sm text-muted-foreground">
                   <th className="pb-3 font-medium">Cohort Month</th>
                   <th className="pb-3 font-medium">New Users</th>
                   <th className="pb-3 font-medium">Retained</th>
@@ -320,19 +320,19 @@ export function AdvancedAnalytics({ data }: AdvancedAnalyticsProps) {
               <div key={item.month} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="flex-1">
                   <div className="font-medium text-gray-900">{item.month}</div>
-                  <div className="text-sm text-gray-600 mt-1">
+                  <div className="text-sm text-muted-foreground mt-1">
                     Confidence: {item.confidence.toFixed(0)}%
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="text-right">
-                    <div className="text-sm text-gray-600">Revenue</div>
+                    <div className="text-sm text-muted-foreground">Revenue</div>
                     <div className="text-lg font-bold text-gray-900">
                       ${item.predictedRevenue.toLocaleString()}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-gray-600">Users</div>
+                    <div className="text-sm text-muted-foreground">Users</div>
                     <div className="text-lg font-bold text-gray-900">
                       {item.predictedUsers.toLocaleString()}
                     </div>

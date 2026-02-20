@@ -353,7 +353,7 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
                   {format.icon}
                   <span className="font-medium">{format.label}</span>
                 </div>
-                <p className="text-sm text-gray-600">{format.description}</p>
+                <p className="text-sm text-muted-foreground">{format.description}</p>
               </motion.div>
             ))}
           </div>
@@ -374,7 +374,7 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
                 <SelectItem key={template.value} value={template.value}>
                   <div>
                     <div className="font-medium">{template.label}</div>
-                    <div className="text-sm text-gray-600">{template.description}</div>
+                    <div className="text-sm text-muted-foreground">{template.description}</div>
                   </div>
                 </SelectItem>
               ))}
@@ -519,7 +519,7 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
         </div>
 
         {/* File Preview */}
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-muted-foreground">
           <strong>File name:</strong> {generateFileName()}
         </div>
       </CardContent>

@@ -78,24 +78,24 @@ export default async function AdminSeoIndexHealthPage() {
       {
         label: "P1 Score",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
         primary: true,
         subtitle: "Connect Google to track",
       },
       {
         label: "Impressions Trend",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Index Coverage",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
       {
         label: "Crawl Errors",
         value: "—",
-        valueColor: "text-gray-400",
+        valueColor: "text-muted-foreground",
       },
     ];
 
@@ -227,7 +227,7 @@ export default async function AdminSeoIndexHealthPage() {
                       style={{ height: `${percentage}%` }}
                     />
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-foreground">
                     {new Date(day.date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })}
                   </span>
                   <span className="text-xs font-medium text-gray-700">
@@ -249,7 +249,7 @@ export default async function AdminSeoIndexHealthPage() {
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Impressions Trend</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 7-day growth vs. previous period
               </p>
             </div>
@@ -257,14 +257,14 @@ export default async function AdminSeoIndexHealthPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p1Components.impressionsTrend}
               </p>
-              <p className="text-xs text-gray-500">/ 100</p>
+              <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Index Coverage</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Pages successfully indexed
               </p>
             </div>
@@ -272,14 +272,14 @@ export default async function AdminSeoIndexHealthPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p1Components.indexCoverage}
               </p>
-              <p className="text-xs text-gray-500">/ 100</p>
+              <p className="text-xs text-muted-foreground">/ 100</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-md">
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">Crawl Errors</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 No critical crawl errors detected
               </p>
             </div>
@@ -287,7 +287,7 @@ export default async function AdminSeoIndexHealthPage() {
               <p className="text-2xl font-bold text-gray-900">
                 {p1Components.crawlErrors}
               </p>
-              <p className="text-xs text-gray-500">/ 50</p>
+              <p className="text-xs text-muted-foreground">/ 50</p>
             </div>
           </div>
         </div>
@@ -312,8 +312,8 @@ export default async function AdminSeoIndexHealthPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{action.title}</p>
-                  <p className="text-sm text-gray-600 mt-1">{action.description}</p>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-sm text-muted-foreground mt-1">{action.description}</p>
+                  <p className="text-xs text-muted-foreground mt-2">
                     Potential Impact: +{action.impact_points} points
                   </p>
                 </div>

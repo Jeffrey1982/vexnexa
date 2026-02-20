@@ -124,7 +124,7 @@ export function OverageBillingManager({
           </div>
           {subtotal > 0 && (
             <div className="text-right">
-              <div className="text-sm text-gray-500">Current Overage</div>
+              <div className="text-sm text-muted-foreground">Current Overage</div>
               <div className="text-2xl font-bold text-orange-600">€{subtotal.toFixed(2)}</div>
             </div>
           )}
@@ -139,7 +139,7 @@ export function OverageBillingManager({
             <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
               <div>
                 <div className="text-sm font-medium">Extra Websites</div>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-muted-foreground">
                   {currentOverage.sites} site{currentOverage.sites !== 1 ? 's' : ''} × €{OVERFLOW_PRICING.extraSite.amount.toFixed(2)}
                 </div>
               </div>
@@ -153,7 +153,7 @@ export function OverageBillingManager({
             <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
               <div>
                 <div className="text-sm font-medium">Extra Pages Scanned</div>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-muted-foreground">
                   {currentOverage.pages.toLocaleString()} pages × €{OVERFLOW_PRICING.extraPage.amount.toFixed(4)}
                 </div>
               </div>
@@ -167,7 +167,7 @@ export function OverageBillingManager({
             <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
               <div>
                 <div className="text-sm font-medium">Extra Team Members</div>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-muted-foreground">
                   {currentOverage.users} user{currentOverage.users !== 1 ? 's' : ''} × €{OVERFLOW_PRICING.extraUser.amount.toFixed(2)}
                 </div>
               </div>
@@ -178,7 +178,7 @@ export function OverageBillingManager({
           )}
 
           {subtotal === 0 && (
-            <div className="text-center py-6 text-gray-500">
+            <div className="text-center py-6 text-muted-foreground">
               <DollarSign className="w-8 h-8 mx-auto mb-2 text-green-500" />
               <div className="text-sm font-medium">No Current Overages</div>
               <div className="text-xs">Customer is within plan limits</div>
@@ -191,7 +191,7 @@ export function OverageBillingManager({
             {/* Summary */}
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Overage Subtotal</span>
+                <span className="text-muted-foreground">Overage Subtotal</span>
                 <span className="font-medium">€{subtotal.toFixed(2)}</span>
               </div>
               {appliedCredits > 0 && (
@@ -273,8 +273,8 @@ export function OverageBillingManager({
                 <div key={adj.id} className="flex items-start justify-between p-2 bg-gray-50 rounded text-sm">
                   <div className="flex-1">
                     <div className="font-medium">€{adj.amount.toFixed(2)} credit applied</div>
-                    <div className="text-xs text-gray-600">{adj.reason}</div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-muted-foreground">{adj.reason}</div>
+                    <div className="text-xs text-muted-foreground">
                       {new Date(adj.createdAt).toLocaleDateString()}
                     </div>
                   </div>

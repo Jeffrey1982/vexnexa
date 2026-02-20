@@ -84,7 +84,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
       );
     } else {
       return (
-        <div className="flex items-center gap-1 text-gray-600">
+        <div className="flex items-center gap-1 text-muted-foreground">
           <span>0</span>
         </div>
       );
@@ -153,22 +153,22 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
           >
             <div className="text-center">
               <div className="text-2xl font-bold">{statistics.avgScore.toFixed(1)}</div>
-              <div className="text-sm text-gray-600 mb-1">Avg Score</div>
+              <div className="text-sm text-muted-foreground mb-1">Avg Score</div>
               {getChangeIndicator(statistics.scoreChange)}
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold">{Math.round(statistics.avgIssues)}</div>
-              <div className="text-sm text-gray-600 mb-1">Avg Issues</div>
+              <div className="text-sm text-muted-foreground mb-1">Avg Issues</div>
               {getChangeIndicator(statistics.issuesChange)}
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold">{statistics.bestScore}</div>
-              <div className="text-sm text-gray-600 mb-1">Best Score</div>
+              <div className="text-sm text-muted-foreground mb-1">Best Score</div>
               <Badge variant="default" className="text-xs">Peak</Badge>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-600">{statistics.criticalChange >= 0 ? '+' : ''}{statistics.criticalChange}</div>
-              <div className="text-sm text-gray-600 mb-1">Critical Δ</div>
+              <div className="text-sm text-muted-foreground mb-1">Critical Δ</div>
               <Badge variant={statistics.criticalChange <= 0 ? 'default' : 'destructive'} className="text-xs">
                 {statistics.criticalChange <= 0 ? 'Better' : 'Worse'}
               </Badge>
@@ -299,7 +299,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                       {item.icon}
                       <div>
                         <div className="font-medium text-sm">{item.achievement}</div>
-                        <div className="text-xs text-gray-600">{item.date}</div>
+                        <div className="text-xs text-muted-foreground">{item.date}</div>
                       </div>
                     </motion.div>
                   ))}
@@ -318,7 +318,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                       <div className="text-2xl font-bold text-blue-600">
                         {prediction.nextScore.toFixed(1)}
                       </div>
-                      <div className="text-sm text-gray-600">Predicted Next Score</div>
+                      <div className="text-sm text-muted-foreground">Predicted Next Score</div>
                       <Badge
                         variant={prediction.trend.includes('improvement') ? 'default' : 'destructive'}
                         className="mt-1"
@@ -330,13 +330,13 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                       <div className="text-2xl font-bold text-green-600">
                         {Math.round(prediction.slope * 30)}
                       </div>
-                      <div className="text-sm text-gray-600">Points/Month Trend</div>
+                      <div className="text-sm text-muted-foreground">Points/Month Trend</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-purple-600">
                         {Math.max(1, Math.round((85 - (statistics?.avgScore || 0)) / Math.abs(prediction.slope) / 7))}
                       </div>
-                      <div className="text-sm text-gray-600">Weeks to 85+ Score</div>
+                      <div className="text-sm text-muted-foreground">Weeks to 85+ Score</div>
                     </div>
                   </div>
                 </Card>
@@ -362,7 +362,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-700 dark:text-gray-600 dark:text-gray-400">
+              <div className="text-center py-8 text-muted-foreground">
                 Need more data points for accurate forecasting
               </div>
             )}
