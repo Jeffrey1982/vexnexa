@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FileText, Download, Loader2 } from "lucide-react";
+import { openPdf } from "@/lib/pdf/open-pdf";
+import { shouldUseInlinePdfOpen } from "@/lib/device";
+import { toast } from "@/hooks/use-toast";
 
 interface ExportButtonsProps {
   scanId: string;
@@ -13,20 +16,20 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   const [exportingPdf, setExportingPdf] = useState(false);
   const [exportingWord, setExportingWord] = useState(false);
 
-  const downloadBlob = (blob: Blob, filename: string) => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  };
-
   const exportPdf = async () => {
     setExportingPdf(true);
     try {
+      // On iOS / PWA, navigate directly to the PDF URL for inline viewing
+      // because <a download> and blob downloads silently fail.
+      if (shouldUseInlinePdfOpen()) {
+        openPdf({ url: `/api/reports/${scanId}/pdf` });
+        toast({
+          title: "PDF opened",
+          description: "Use Share \u2192 Save to Files to download.",
+        });
+        return;
+      }
+
       const response = await fetch(`/api/reports/${scanId}/pdf`);
 
       if (!response.ok) {
@@ -36,7 +39,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
       const ct = response.headers.get("Content-Type") ?? "";
       if (ct.includes("application/pdf")) {
         const blob = await response.blob();
-        downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+        openPdf({ blob, filename: `accessibility-report-${scanId}.pdf` });
       } else {
         // Puppeteer unavailable — open v2 HTML for browser print
         const html = await response.text();
@@ -61,7 +64,14 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `accessibility-report-${scanId}.docx`);
+      openPdf({ blob, filename: `accessibility-report-${scanId}.docx` });
+
+      if (shouldUseInlinePdfOpen()) {
+        toast({
+          title: "Document opened",
+          description: "Use Share \u2192 Save to Files to download.",
+        });
+      }
     } catch (error) {
       console.error("Word export failed:", error);
       alert("Failed to export Word document. Please try again.");

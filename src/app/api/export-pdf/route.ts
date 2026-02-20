@@ -366,7 +366,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="accessibility-report-${result.url.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.pdf"`
+        'Content-Disposition': `inline; filename="accessibility-report-${result.url.replace(/[^a-z0-9]/gi, '-')}-${Date.now()}.pdf"`
       }
     });
 

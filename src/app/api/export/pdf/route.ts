@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(pdfBuffer as any, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${filePrefix}-accessibility-report-${scanId}.pdf"`,
+        "Content-Disposition": `inline; filename="${filePrefix}-accessibility-report-${scanId}.pdf"`,
       },
     });
 

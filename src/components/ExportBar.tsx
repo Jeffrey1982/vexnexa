@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Download, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { openPdf } from "@/lib/pdf/open-pdf";
+import { shouldUseInlinePdfOpen } from "@/lib/device";
+import { toast } from "@/hooks/use-toast";
 
 interface ExportBarProps {
   scanId: string;
@@ -17,20 +20,22 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   const [pdfStatus, setPdfStatus] = useState<ExportStatus>('idle');
   const [wordStatus, setWordStatus] = useState<ExportStatus>('idle');
 
-  const downloadBlob = (blob: Blob, filename: string) => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  };
-
   const exportPdf = async () => {
     setPdfStatus('loading');
     try {
+      // On iOS / PWA, navigate directly to the PDF URL for inline viewing
+      // because <a download> and blob downloads silently fail.
+      if (shouldUseInlinePdfOpen()) {
+        openPdf({ url: `/api/reports/${scanId}/pdf` });
+        setPdfStatus('success');
+        setTimeout(() => setPdfStatus('idle'), 3000);
+        toast({
+          title: "PDF opened",
+          description: "Use Share → Save to Files to download.",
+        });
+        return;
+      }
+
       const response = await fetch(`/api/reports/${scanId}/pdf`);
 
       if (!response.ok) {
@@ -40,7 +45,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
       const ct = response.headers.get("Content-Type") ?? "";
       if (ct.includes("application/pdf")) {
         const blob = await response.blob();
-        downloadBlob(blob, `accessibility-report-${scanId}.pdf`);
+        openPdf({ blob, filename: `accessibility-report-${scanId}.pdf` });
       } else {
         // Puppeteer unavailable — open v2 HTML in new tab for Ctrl+P print
         const html = await response.text();
@@ -67,7 +72,14 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
       }
 
       const blob = await response.blob();
-      downloadBlob(blob, `accessibility-report-${scanId}.docx`);
+      openPdf({ blob, filename: `accessibility-report-${scanId}.docx` });
+
+      if (shouldUseInlinePdfOpen()) {
+        toast({
+          title: "Document opened",
+          description: "Use Share → Save to Files to download.",
+        });
+      }
 
       setWordStatus('success');
       setTimeout(() => setWordStatus('idle'), 3000);

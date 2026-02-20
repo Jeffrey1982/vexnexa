@@ -547,7 +547,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(buffer as BodyInit, {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "Content-Disposition": `attachment; filename="${filePrefix}-${scanId}.docx"`,
+        "Content-Disposition": `inline; filename="${filePrefix}-${scanId}.docx"`,
       },
     });
 

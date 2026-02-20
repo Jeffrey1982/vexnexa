@@ -68,9 +68,9 @@ export async function GET(
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="assurance-report-${report.domain.domain}-${report.createdAt.toISOString().split('T')[0]}.pdf"`,
+        'Content-Disposition': `inline; filename="assurance-report-${report.domain.domain}-${report.createdAt.toISOString().split('T')[0]}.pdf"`,
         'Content-Length': pdfBuffer.length.toString(),
-        'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
+        'Cache-Control': 'no-store',
       },
     });
   } catch (error) {

@@ -742,7 +742,7 @@ export async function GET(
     return new Response(new Uint8Array(arrayBuf), {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Content-Disposition": `inline; filename="${filename}"`,
         "Cache-Control": "no-store",
       },
     });

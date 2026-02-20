@@ -11,6 +11,9 @@ import Link from "next/link";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
+import { openPdf } from "@/lib/pdf/open-pdf";
+import { shouldUseInlinePdfOpen } from "@/lib/device";
+import { toast } from "@/hooks/use-toast";
 
 interface ScanResult {
   scanId: string;
@@ -90,7 +93,14 @@ function ScanResultsContent() {
     setExportLoading(true);
     try {
       // Use the v2 PDF report route (defaults to corporate/light)
-      window.open(`/api/reports/${result.scanId}/pdf`, "_blank");
+      openPdf({ url: `/api/reports/${result.scanId}/pdf` });
+
+      if (shouldUseInlinePdfOpen()) {
+        toast({
+          title: "PDF opened",
+          description: "Use Share \u2192 Save to Files to download.",
+        });
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Failed to generate PDF";
       setError(msg);

@@ -70,7 +70,7 @@ export async function GET(req: Request) {
     return new NextResponse(pdfBuffer, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="accessibility-report-${site.url.replace(/[^a-z0-9]/gi, '-')}.pdf"`
+        "Content-Disposition": `inline; filename="accessibility-report-${site.url.replace(/[^a-z0-9]/gi, '-')}.pdf"`
       }
     });
   } catch (e: any) {
