@@ -26,5 +26,10 @@ export type {
   Severity,
   RiskLevel,
   MaturityLevel,
+  HealthScore,
+  WcagMatrixRow,
+  ScanConfiguration,
+  TopPriorityFix,
+  AffectedElementDetail,
 } from "./types";
 export { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";

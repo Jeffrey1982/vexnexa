@@ -39,6 +39,54 @@ export type MaturityLevel = "Basic" | "Structured" | "Proactive" | "Continuous";
 export interface AffectedElementDetail {
   selector: string;
   html: string;
+  pageUrl?: string;
+}
+
+/**
+ * Accessibility Health Score — weighted scoring model.
+ *
+ * Formula:
+ *   weightedPenalty = (critical × 10) + (serious × 6) + (moderate × 3) + (minor × 1)
+ *   rawScore = max(0, 100 − weightedPenalty)
+ *   healthScore = clamp(rawScore, 0, 100), rounded to integer
+ *
+ * Weights: Critical=10, Serious=6, Moderate=3, Minor=1
+ */
+export interface HealthScore {
+  value: number;
+  grade: string;
+  label: string;
+  weightedPenalty: number;
+}
+
+/** A single row in the WCAG Compliance Matrix */
+export interface WcagMatrixRow {
+  criterion: string;
+  level: "A" | "AA" | "AAA";
+  status: "Pass" | "Fail" | "Needs Review" | "Not Tested";
+  relatedFindings: number;
+}
+
+/** Scan configuration / methodology metadata */
+export interface ScanConfiguration {
+  domain: string;
+  pagesAnalyzed: number;
+  crawlDepth: string;
+  scanDateTime: string;
+  userAgent: string;
+  viewport: string;
+  standardsTested: string[];
+  engineName: string;
+  engineVersion: string;
+}
+
+/** Top priority fix item for executive summary */
+export interface TopPriorityFix {
+  rank: number;
+  title: string;
+  severity: Severity;
+  affectedElements: number;
+  weightedImpact: number;
 }
 
 /** A single priority issue for the report */
@@ -91,6 +139,10 @@ export interface ReportData {
   pageTitle?: string;
   pagesScanned?: number;
   faviconUrl?: string;
+  healthScore: HealthScore;
+  wcagMatrix: WcagMatrixRow[];
+  scanConfig: ScanConfiguration;
+  topPriorityFixes: TopPriorityFix[];
 }
 
 /** Default theme */

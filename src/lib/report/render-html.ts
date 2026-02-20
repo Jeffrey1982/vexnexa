@@ -1,4 +1,4 @@
-import type { ReportData, ReportIssue, Severity, ReportStyle } from "./types";
+import type { ReportData, ReportIssue, Severity, ReportStyle, WcagMatrixRow, TopPriorityFix } from "./types";
 
 /* ═══════════════════════════════════════════════════════════
    Public API
@@ -23,7 +23,9 @@ ${data.faviconUrl ? `<link rel="icon" href="${esc(data.faviconUrl)}" />` : ""}
 ${renderCover(data, primary, s)}
 ${renderExecutiveSummary(data, primary, s)}
 ${renderVisualBreakdown(data, primary, s)}
+${renderWcagMatrix(data, primary, s)}
 ${renderPriorityIssues(data, primary, s)}
+${renderScanConfiguration(data, primary, s)}
 ${renderComplianceLegal(data, primary, s)}
 ${renderCTA(data, primary, s)}
 <div class="version-marker" data-report-version="v2">Report v2 | ${s} | ${esc(data.scanId)}</div>
@@ -259,9 +261,30 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
    Page 2 — Executive Summary (always shown)
    ═══════════════════════════════════════════════════════════ */
 
+function renderTopPriorityFixes(fixes: TopPriorityFix[], s: ReportStyle): string {
+  if (fixes.length === 0) return "";
+  return `<div class="tpf-section">
+    <h3 class="subsection-title">Top Priority Fixes</h3>
+    <table class="tpf-table">
+      <thead><tr><th>#</th><th>Issue</th><th>Severity</th><th>Elements</th><th>Impact Score</th></tr></thead>
+      <tbody>
+        ${fixes.map((f) => `<tr>
+          <td class="tpf-rank">${f.rank}</td>
+          <td class="tpf-title">${esc(f.title)}</td>
+          <td>${sevChip(f.severity)}</td>
+          <td class="tpf-num">${f.affectedElements}</td>
+          <td class="tpf-num"><strong>${f.weightedImpact}</strong></td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+  </div>`;
+}
+
 function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle): string {
+  const hs = d.healthScore;
+  const hsColor = hs.value >= 80 ? "#16A34A" : hs.value >= 60 ? "#D97706" : "#DC2626";
   const metrics: { label: string; value: string | number; color: string }[] = [
-    { label: "Score", value: `${d.score}/100`, color: primary },
+    { label: "Health Score", value: `${hs.value}/100`, color: hsColor },
     { label: "Total Issues", value: d.issueBreakdown.total, color: "#6B7280" },
     { label: "Critical", value: d.issueBreakdown.critical, color: "#DC2626" },
     { label: "Serious", value: d.issueBreakdown.serious, color: "#EA580C" },
@@ -271,10 +294,16 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     { label: "Est. Fix Time", value: d.estimatedFixTime, color: "#7C3AED" },
   ];
 
+  const coverageNote = `<div class="coverage-note"><strong>Note:</strong> Automated testing does not cover all WCAG requirements. Manual review is recommended.</div>`;
+
   if (corp(s)) {
     return pageSection("Executive Summary", primary, s, `
+    <div class="exec-health-badge" style="border-color:${hsColor}">
+      <div class="ehb-score" style="color:${hsColor}">${hs.value}</div>
+      <div class="ehb-meta"><span class="ehb-grade">Grade ${hs.grade}</span><span class="ehb-label">${hs.label}</span></div>
+    </div>
     <table class="corp-summary-table">
-      <tr><td class="cst-label">Domain</td><td>${esc(d.domain)}</td><td class="cst-label">Score</td><td><strong style="color:${primary}">${d.score}/100</strong> (Grade ${grade(d.score)})</td></tr>
+      <tr><td class="cst-label">Domain</td><td>${esc(d.domain)}</td><td class="cst-label">Health Score</td><td><strong style="color:${hsColor}">${hs.value}/100</strong> (Grade ${hs.grade})</td></tr>
       <tr><td class="cst-label">Risk Level</td><td style="color:${riskClr(d.riskLevel)};font-weight:600">${d.riskLevel}</td><td class="cst-label">Compliance</td><td>${d.compliancePercentage}%</td></tr>
       <tr><td class="cst-label">Total Issues</td><td>${d.issueBreakdown.total}</td><td class="cst-label">Est. Fix Time</td><td>${esc(d.estimatedFixTime)}</td></tr>
       <tr><td class="cst-label">Critical</td><td style="color:#DC2626">${d.issueBreakdown.critical}</td><td class="cst-label">Serious</td><td style="color:#EA580C">${d.issueBreakdown.serious}</td></tr>
@@ -283,16 +312,28 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <h3>Assessment</h3>
       <p>${esc(d.legalRisk)}</p>
       <p>Estimated remediation effort: <strong>${esc(d.estimatedFixTime)}</strong>.</p>
-    </div>`);
+    </div>
+    ${renderTopPriorityFixes(d.topPriorityFixes, s)}
+    ${coverageNote}`);
   }
 
   // Premium
   return pageSection("Executive Summary", primary, s, `
+  <div class="exec-health-row">
+    <div class="exec-health-badge" style="border-color:${hsColor}">
+      <div class="ehb-score" style="color:${hsColor}">${hs.value}</div>
+      <div class="ehb-meta"><span class="ehb-grade">Grade ${hs.grade}</span><span class="ehb-label">${hs.label}</span></div>
+    </div>
+    <div class="exec-health-detail">
+      <p>Weighted penalty: <strong>${hs.weightedPenalty}</strong> points deducted from 100.</p>
+      <p class="exec-health-formula">Formula: 100 &minus; (Critical&times;10 + Serious&times;6 + Moderate&times;3 + Minor&times;1)</p>
+    </div>
+  </div>
   <div class="exec-cards">
     <div class="exec-card">
       <h3>Accessibility Status</h3>
-      <p>Your website <strong>${esc(d.domain)}</strong> achieved a score of
-      <strong style="color:${primary}">${d.score}/100</strong> (Grade ${grade(d.score)}).
+      <p>Your website <strong>${esc(d.domain)}</strong> achieved a health score of
+      <strong style="color:${hsColor}">${hs.value}/100</strong> (Grade ${hs.grade}).
       ${d.issueBreakdown.critical > 0
         ? `There are <strong style="color:#DC2626">${d.issueBreakdown.critical} critical issues</strong> requiring immediate attention.`
         : "No critical issues were detected."}</p>
@@ -311,10 +352,12 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <strong style="color:#7C3AED">${esc(d.estimatedFixTime)}</strong>.</p>
     </div>
   </div>
+  ${renderTopPriorityFixes(d.topPriorityFixes, s)}
   <h3 class="subsection-title">Key Metrics</h3>
   <div class="metrics-grid">
     ${metrics.map((m) => `<div class="metric-card"><div class="metric-value" style="color:${m.color}">${m.value}</div><div class="metric-label">${m.label}</div></div>`).join("")}
-  </div>`);
+  </div>
+  ${coverageNote}`);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -365,6 +408,81 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
       </div>
     </div>
   </div>`);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Page — WCAG Compliance Matrix (Task 2)
+   ═══════════════════════════════════════════════════════════ */
+
+function wcagStatusChip(status: WcagMatrixRow["status"]): string {
+  const colors: Record<string, { bg: string; fg: string }> = {
+    Pass: { bg: "#DCFCE7", fg: "#16A34A" },
+    Fail: { bg: "#FEF2F2", fg: "#DC2626" },
+    "Needs Review": { bg: "#FFF7ED", fg: "#EA580C" },
+    "Not Tested": { bg: "#F3F4F6", fg: "#6B7280" },
+  };
+  const c = colors[status] ?? colors["Not Tested"];
+  return `<span class="wcag-status-chip" style="background:${c.bg};color:${c.fg}">${status}</span>`;
+}
+
+function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): string {
+  const matrix = d.wcagMatrix ?? [];
+  if (matrix.length === 0) return "";
+
+  // Show failing criteria first, then a summary of passing
+  const failing = matrix.filter((r) => r.status === "Fail");
+  const passing = matrix.filter((r) => r.status === "Pass");
+  const notTested = matrix.filter((r) => r.status === "Not Tested");
+
+  const perPage = 18;
+  const allRows = [...failing, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
+  const pages: WcagMatrixRow[][] = [];
+  for (let i = 0; i < allRows.length; i += perPage) {
+    pages.push(allRows.slice(i, i + perPage));
+  }
+
+  return pages.map((pg, pi) => `
+<section class="page">
+  <h2 class="${corp(s) ? "section-title corp-title" : "section-title"}" style="border-color:${primary}">${pi === 0 ? "WCAG 2.2 Compliance Matrix" : "WCAG 2.2 Compliance Matrix (continued)"}</h2>
+  ${pi === 0 ? `<p class="matrix-summary">Tested against <strong>${matrix.length}</strong> WCAG 2.2 success criteria.
+    <strong style="color:#16A34A">${passing.length} Pass</strong> &middot;
+    <strong style="color:#DC2626">${failing.length} Fail</strong> &middot;
+    <span style="color:#6B7280">${notTested.length} Not Tested</span></p>` : ""}
+  <table class="wcag-matrix-table">
+    <thead>
+      <tr><th>Success Criterion</th><th>Level</th><th>Status</th><th>Findings</th></tr>
+    </thead>
+    <tbody>
+      ${pg.map((row) => `<tr class="wcag-row-${row.status.toLowerCase().replace(/\s/g, "-")}">
+        <td class="wcag-criterion">${esc(row.criterion)}</td>
+        <td class="wcag-level"><span class="wcag-level-badge">${row.level}</span></td>
+        <td>${wcagStatusChip(row.status)}</td>
+        <td class="wcag-count">${row.relatedFindings > 0 ? `<strong style="color:#DC2626">${row.relatedFindings}</strong>` : "&mdash;"}</td>
+      </tr>`).join("")}
+    </tbody>
+  </table>
+</section>`).join("");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Page — Scan Configuration (Task 3)
+   ═══════════════════════════════════════════════════════════ */
+
+function renderScanConfiguration(d: ReportData, primary: string, s: ReportStyle): string {
+  const sc = d.scanConfig;
+  if (!sc) return "";
+
+  return pageSection("Scan Configuration", primary, s, `
+  <table class="scan-config-table">
+    <tr><td class="sct-label">Domain Scanned</td><td>${esc(sc.domain)}</td></tr>
+    <tr><td class="sct-label">Pages Analyzed</td><td>${sc.pagesAnalyzed}</td></tr>
+    <tr><td class="sct-label">Crawl Depth</td><td>${esc(sc.crawlDepth)}</td></tr>
+    <tr><td class="sct-label">Scan Date/Time</td><td>${fmtDate(sc.scanDateTime)}</td></tr>
+    <tr><td class="sct-label">User Agent</td><td><code>${esc(sc.userAgent)}</code></td></tr>
+    <tr><td class="sct-label">Viewport</td><td>${esc(sc.viewport)}</td></tr>
+    <tr><td class="sct-label">Standards Tested</td><td>${sc.standardsTested.map((st) => `<span class="ac-chip ac-chip-wcag">${esc(st)}</span>`).join(" ")}</td></tr>
+    <tr><td class="sct-label">Engine</td><td>${esc(sc.engineName)} v${esc(sc.engineVersion)}</td></tr>
+  </table>`);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -423,15 +541,16 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string): string
     </div>
     ${(iss.affectedElementDetails ?? []).length > 0 ? `<div class="ac-section" style="margin-top:8px">
       <div class="ac-label">Affected Elements</div>
-      <div class="idc-elements">
-        ${(iss.affectedElementDetails ?? []).map((el, idx) => `<div class="idc-element">
-          <div class="idc-el-num">${idx + 1}.</div>
-          <div class="idc-el-body">
-            <div class="idc-el-selector"><strong>Selector:</strong> <code>${esc(el.selector)}</code></div>
-            ${el.html ? `<div class="idc-el-html"><strong>HTML:</strong> <code>${esc(el.html)}</code></div>` : ""}
-          </div>
-        </div>`).join("")}
-      </div>
+      <table class="evidence-table">
+        <thead><tr><th>#</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
+        <tbody>
+          ${(iss.affectedElementDetails ?? []).map((el, idx) => `<tr>
+            <td class="ev-num">${idx + 1}</td>
+            <td class="ev-mono">${esc(el.selector)}</td>
+            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
     </div>` : ""}
     <div class="ac-footer">
       ${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join("")}
@@ -480,15 +599,16 @@ function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string): 
     </div>` : ""}
     ${details.length > 0 ? `<div class="idc-section">
       <div class="idc-label">Affected Elements</div>
-      <div class="idc-elements">
-        ${details.map((el, idx) => `<div class="idc-element">
-          <div class="idc-el-num">${idx + 1}.</div>
-          <div class="idc-el-body">
-            <div class="idc-el-selector"><strong>Selector:</strong> <code>${esc(el.selector)}</code></div>
-            ${el.html ? `<div class="idc-el-html"><strong>HTML:</strong> <code>${esc(el.html)}</code></div>` : ""}
-          </div>
-        </div>`).join("")}
-      </div>
+      <table class="evidence-table">
+        <thead><tr><th>#</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
+        <tbody>
+          ${details.map((el, idx) => `<tr>
+            <td class="ev-num">${idx + 1}</td>
+            <td class="ev-mono">${esc(el.selector)}</td>
+            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
     </div>` : ""}
     <div class="idc-rule"><span class="idc-label">Rule:</span> <code>${esc(iss.id)}</code></div>
   </div>
@@ -804,6 +924,68 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .idc-rule code{font-family:'SF Mono',Consolas,monospace;font-size:10px;background:#F3F4F6;padding:1px 4px;border-radius:3px}
 
 .empty-state{text-align:center;padding:60px 20px;color:#6B7280;font-size:16px}
+
+/* ── Health Score Badge ── */
+.exec-health-row{display:flex;align-items:center;gap:20px;margin-bottom:18px}
+.exec-health-badge{display:flex;align-items:center;gap:14px;border:3px solid;border-radius:var(--r);padding:14px 20px;
+  background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ehb-score{font-size:42px;font-weight:900;line-height:1}
+.ehb-meta{display:flex;flex-direction:column;gap:2px}
+.ehb-grade{font-size:14px;font-weight:700;color:#374151}
+.ehb-label{font-size:12px;color:#6B7280}
+.exec-health-detail{flex:1}
+.exec-health-detail p{font-size:13px;color:#4B5563;margin-bottom:4px}
+.exec-health-formula{font-size:11px;color:#9CA3AF;font-family:'SF Mono',Consolas,monospace}
+
+/* ── Top Priority Fixes ── */
+.tpf-section{margin-top:16px}
+.tpf-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.tpf-table th{background:#F3F4F6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
+  font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
+.tpf-table td{padding:8px 10px;border:1px solid #E5E7EB;vertical-align:middle}
+.tpf-table tbody tr:nth-child(even){background:#FAFAFA}
+.tpf-rank{text-align:center;font-weight:700;color:#6B7280;width:30px}
+.tpf-title{font-weight:600;color:#374151}
+.tpf-num{text-align:center;white-space:nowrap}
+
+/* ── Coverage Note ── */
+.coverage-note{margin-top:16px;padding:10px 14px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:var(--rs);
+  font-size:11px;color:#92400E;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* ── WCAG Compliance Matrix ── */
+.matrix-summary{font-size:13px;color:#4B5563;margin-bottom:14px;line-height:1.6}
+.wcag-matrix-table{width:100%;border-collapse:collapse;font-size:12px}
+.wcag-matrix-table th{background:#F3F4F6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #D1D5DB;
+  font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
+.wcag-matrix-table td{padding:7px 10px;border:1px solid #E5E7EB;vertical-align:middle}
+.wcag-matrix-table tbody tr:nth-child(even){background:#FAFAFA}
+.wcag-row-fail{background:#FEF2F2!important}
+.wcag-criterion{font-weight:500;color:#374151}
+.wcag-level{text-align:center}
+.wcag-level-badge{display:inline-block;padding:2px 8px;border-radius:var(--rs);background:#EFF6FF;color:#1D4ED8;
+  font-size:10px;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.wcag-status-chip{display:inline-block;padding:3px 10px;border-radius:var(--rs);font-size:10px;font-weight:700;
+  letter-spacing:0.3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.wcag-count{text-align:center;font-weight:600}
+
+/* ── Scan Configuration ── */
+.scan-config-table{width:100%;border-collapse:collapse}
+.scan-config-table td{padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:13px}
+.sct-label{font-weight:600;color:#374151;width:160px;background:#F9FAFB}
+.scan-config-table code{font-family:'SF Mono',Consolas,monospace;font-size:11px;background:#F3F4F6;padding:2px 6px;border-radius:4px}
+
+/* ── Enterprise Evidence Tables ── */
+.evidence-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px;table-layout:fixed}
+.evidence-table th{background:#F3F4F6;padding:6px 8px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
+  font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
+.evidence-table th:first-child{width:30px}
+.evidence-table th:nth-child(2){width:40%}
+.evidence-table th:nth-child(3){width:auto}
+.evidence-table td{padding:5px 8px;border:1px solid #E5E7EB;vertical-align:top}
+.evidence-table tbody tr:nth-child(even){background:#FAFAFA}
+.ev-num{text-align:center;font-weight:600;color:#6B7280;width:30px}
+.ev-mono{font-family:'SF Mono',Consolas,monospace;font-size:10px;color:#374151;
+  overflow-wrap:anywhere;word-break:break-all;white-space:pre-wrap;line-height:1.4}
 
 /* ── Compliance & Legal ── */
 .legal-grid{display:flex;flex-direction:column;gap:14px}

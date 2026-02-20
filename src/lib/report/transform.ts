@@ -9,6 +9,10 @@ import type {
   WhiteLabelConfig,
   CTAConfig,
   ReportStyle,
+  HealthScore,
+  WcagMatrixRow,
+  ScanConfiguration,
+  TopPriorityFix,
 } from "./types";
 import { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";
 
@@ -142,8 +146,185 @@ function determineLegalRisk(riskLevel: RiskLevel): string {
 function extractWcagCriteria(tags: string[]): string[] {
   return tags
     .filter((t: string) => t.startsWith("wcag") && /\d/.test(t))
-    .map((t: string) => t.replace("wcag", "WCAG ").replace(/(\d)(\d)(\d+)/, "$1.$2.$3"))
-    .slice(0, 3);
+    .map((t: string) => t.replace("wcag", "WCAG ").replace(/(\d)(\d)(\d+)/, "$1.$2.$3"));
+}
+
+/** Severity weights for the Health Score model */
+const SEVERITY_WEIGHTS: Record<Severity, number> = {
+  critical: 10,
+  serious: 6,
+  moderate: 3,
+  minor: 1,
+};
+
+/**
+ * Compute Accessibility Health Score (0–100).
+ *
+ * Algorithm:
+ *   1. weightedPenalty = sum(count_per_severity × weight)
+ *   2. rawScore = max(0, 100 − weightedPenalty)
+ *   3. Clamp to [0, 100], round to integer.
+ *
+ * Weights: Critical=10, Serious=6, Moderate=3, Minor=1
+ */
+function computeHealthScore(breakdown: IssueBreakdown): HealthScore {
+  const weightedPenalty: number =
+    breakdown.critical * SEVERITY_WEIGHTS.critical +
+    breakdown.serious * SEVERITY_WEIGHTS.serious +
+    breakdown.moderate * SEVERITY_WEIGHTS.moderate +
+    breakdown.minor * SEVERITY_WEIGHTS.minor;
+
+  const raw: number = Math.max(0, 100 - weightedPenalty);
+  const value: number = Math.round(Math.min(100, Math.max(0, raw)));
+
+  let gradeVal: string;
+  if (value >= 90) gradeVal = "A";
+  else if (value >= 80) gradeVal = "B";
+  else if (value >= 70) gradeVal = "C";
+  else if (value >= 50) gradeVal = "D";
+  else gradeVal = "F";
+
+  let label: string;
+  if (value >= 90) label = "Excellent";
+  else if (value >= 80) label = "Good";
+  else if (value >= 70) label = "Fair";
+  else if (value >= 50) label = "Needs Work";
+  else label = "Poor";
+
+  return { value, grade: gradeVal, label, weightedPenalty };
+}
+
+/**
+ * Known WCAG 2.2 success criteria mapped from axe-core tags.
+ * Each entry: tag prefix → { criterion display name, level }
+ */
+const WCAG_CRITERIA_MAP: Record<string, { criterion: string; level: "A" | "AA" | "AAA" }> = {
+  "wcag111": { criterion: "1.1.1 Non-text Content", level: "A" },
+  "wcag121": { criterion: "1.2.1 Audio-only and Video-only", level: "A" },
+  "wcag131": { criterion: "1.3.1 Info and Relationships", level: "A" },
+  "wcag132": { criterion: "1.3.2 Meaningful Sequence", level: "A" },
+  "wcag133": { criterion: "1.3.3 Sensory Characteristics", level: "A" },
+  "wcag134": { criterion: "1.3.4 Orientation", level: "AA" },
+  "wcag135": { criterion: "1.3.5 Identify Input Purpose", level: "AA" },
+  "wcag141": { criterion: "1.4.1 Use of Color", level: "A" },
+  "wcag142": { criterion: "1.4.2 Audio Control", level: "A" },
+  "wcag143": { criterion: "1.4.3 Contrast (Minimum)", level: "AA" },
+  "wcag144": { criterion: "1.4.4 Resize Text", level: "AA" },
+  "wcag145": { criterion: "1.4.5 Images of Text", level: "AA" },
+  "wcag1410": { criterion: "1.4.10 Reflow", level: "AA" },
+  "wcag1411": { criterion: "1.4.11 Non-text Contrast", level: "AA" },
+  "wcag1412": { criterion: "1.4.12 Text Spacing", level: "AA" },
+  "wcag1413": { criterion: "1.4.13 Content on Hover or Focus", level: "AA" },
+  "wcag211": { criterion: "2.1.1 Keyboard", level: "A" },
+  "wcag212": { criterion: "2.1.2 No Keyboard Trap", level: "A" },
+  "wcag214": { criterion: "2.1.4 Character Key Shortcuts", level: "A" },
+  "wcag221": { criterion: "2.2.1 Timing Adjustable", level: "A" },
+  "wcag222": { criterion: "2.2.2 Pause, Stop, Hide", level: "A" },
+  "wcag231": { criterion: "2.3.1 Three Flashes or Below", level: "A" },
+  "wcag241": { criterion: "2.4.1 Bypass Blocks", level: "A" },
+  "wcag242": { criterion: "2.4.2 Page Titled", level: "A" },
+  "wcag243": { criterion: "2.4.3 Focus Order", level: "A" },
+  "wcag244": { criterion: "2.4.4 Link Purpose (In Context)", level: "A" },
+  "wcag245": { criterion: "2.4.5 Multiple Ways", level: "AA" },
+  "wcag246": { criterion: "2.4.6 Headings and Labels", level: "AA" },
+  "wcag247": { criterion: "2.4.7 Focus Visible", level: "AA" },
+  "wcag2411": { criterion: "2.4.11 Focus Not Obscured", level: "AA" },
+  "wcag251": { criterion: "2.5.1 Pointer Gestures", level: "A" },
+  "wcag252": { criterion: "2.5.2 Pointer Cancellation", level: "A" },
+  "wcag253": { criterion: "2.5.3 Label in Name", level: "A" },
+  "wcag254": { criterion: "2.5.4 Motion Actuation", level: "A" },
+  "wcag258": { criterion: "2.5.8 Target Size (Minimum)", level: "AA" },
+  "wcag311": { criterion: "3.1.1 Language of Page", level: "A" },
+  "wcag312": { criterion: "3.1.2 Language of Parts", level: "AA" },
+  "wcag321": { criterion: "3.2.1 On Focus", level: "A" },
+  "wcag322": { criterion: "3.2.2 On Input", level: "A" },
+  "wcag326": { criterion: "3.2.6 Consistent Help", level: "A" },
+  "wcag331": { criterion: "3.3.1 Error Identification", level: "A" },
+  "wcag332": { criterion: "3.3.2 Labels or Instructions", level: "A" },
+  "wcag333": { criterion: "3.3.3 Error Suggestion", level: "AA" },
+  "wcag337": { criterion: "3.3.7 Redundant Entry", level: "A" },
+  "wcag338": { criterion: "3.3.8 Accessible Authentication", level: "AA" },
+  "wcag411": { criterion: "4.1.1 Parsing", level: "A" },
+  "wcag412": { criterion: "4.1.2 Name, Role, Value", level: "A" },
+  "wcag413": { criterion: "4.1.3 Status Messages", level: "AA" },
+};
+
+/** Build WCAG Compliance Matrix from raw violations */
+function buildWcagMatrix(
+  rawViolations: Array<{ tags?: string[]; nodes?: Array<unknown> }>
+): WcagMatrixRow[] {
+  // Count findings per WCAG criterion tag
+  const findingsMap = new Map<string, number>();
+  for (const v of rawViolations) {
+    for (const tag of v.tags ?? []) {
+      const normalized = tag.toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (WCAG_CRITERIA_MAP[normalized]) {
+        findingsMap.set(normalized, (findingsMap.get(normalized) ?? 0) + 1);
+      }
+    }
+  }
+
+  const rows: WcagMatrixRow[] = [];
+  for (const [tag, meta] of Object.entries(WCAG_CRITERIA_MAP)) {
+    const count = findingsMap.get(tag) ?? 0;
+    let status: WcagMatrixRow["status"];
+    if (count > 0) status = "Fail";
+    else if (rawViolations.length > 0) status = "Pass";
+    else status = "Not Tested";
+
+    rows.push({
+      criterion: meta.criterion,
+      level: meta.level,
+      status,
+      relatedFindings: count,
+    });
+  }
+
+  // Sort: Fail first, then by criterion number
+  rows.sort((a, b) => {
+    const statusOrder: Record<string, number> = { Fail: 0, "Needs Review": 1, Pass: 2, "Not Tested": 3 };
+    const diff = (statusOrder[a.status] ?? 3) - (statusOrder[b.status] ?? 3);
+    if (diff !== 0) return diff;
+    return a.criterion.localeCompare(b.criterion);
+  });
+
+  return rows;
+}
+
+/** Build scan configuration metadata */
+function buildScanConfig(
+  scan: { site: { url: string }; page?: { url?: string } | null; createdAt: string | Date },
+  pagesScanned: number,
+  engineName: string,
+  engineVersion: string
+): ScanConfiguration {
+  const scanDate = typeof scan.createdAt === "string" ? scan.createdAt : scan.createdAt.toISOString();
+  return {
+    domain: scan.page?.url ?? scan.site.url,
+    pagesAnalyzed: pagesScanned,
+    crawlDepth: pagesScanned > 1 ? "Multi-page" : "Single page",
+    scanDateTime: scanDate,
+    userAgent: "axe-core (headless browser)",
+    viewport: "1280×720",
+    standardsTested: ["WCAG 2.2 Level A", "WCAG 2.2 Level AA"],
+    engineName,
+    engineVersion,
+  };
+}
+
+/** Compute top 5 priority fixes by weighted impact */
+function computeTopPriorityFixes(issues: ReportIssue[]): TopPriorityFix[] {
+  return issues
+    .map((iss) => ({
+      title: iss.title,
+      severity: iss.severity,
+      affectedElements: iss.affectedElements,
+      weightedImpact: SEVERITY_WEIGHTS[iss.severity] * iss.affectedElements,
+      rank: 0,
+    }))
+    .sort((a, b) => b.weightedImpact - a.weightedImpact)
+    .slice(0, 5)
+    .map((fix, idx) => ({ ...fix, rank: idx + 1 }));
 }
 
 /** Transform a raw scan result into ReportData */
@@ -243,13 +424,19 @@ export function transformScanToReport(
     ? scan.createdAt
     : scan.createdAt.toISOString();
 
+  const healthScore = computeHealthScore(breakdown);
+  const wcagMatrix = buildWcagMatrix(rawViolations);
+  const pagesScanned = 1;
+  const scanConfig = buildScanConfig(scan, pagesScanned, "axe-core", "4.10");
+  const topPriorityFixes = computeTopPriorityFixes(priorityIssues);
+
   return {
     companyName: wl.companyNameOverride || "",
     domain: hostname,
     scanDate,
     scanId: scan.id,
     score,
-    complianceLevel: "WCAG 2.1 AA",
+    complianceLevel: "WCAG 2.2 AA",
     compliancePercentage,
     wcagAAStatus: determineWcagStatus(compliancePercentage),
     wcagAAAStatus: determineWcagStatus(scan.wcagAAACompliance ?? Math.round(score * 0.7)),
@@ -267,6 +454,10 @@ export function transformScanToReport(
     ctaConfig: cta,
     reportStyle: style,
     pageTitle: scan.page?.title ?? undefined,
-    pagesScanned: 1,
+    pagesScanned,
+    healthScore,
+    wcagMatrix,
+    scanConfig,
+    topPriorityFixes,
   };
 }

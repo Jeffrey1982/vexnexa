@@ -9,7 +9,7 @@ import {
   getStoredWhiteLabel,
   computeLogoDimensions,
 } from "@/lib/report";
-import type { ReportData, ReportIssue, Severity } from "@/lib/report/types";
+import type { ReportData, ReportIssue, Severity, WcagMatrixRow, TopPriorityFix } from "@/lib/report/types";
 import {
   Document,
   Packer,
@@ -141,10 +141,43 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     new Paragraph({ children: [], pageBreakBefore: true })
   );
 
-  // ── Executive Summary ──
+  // ── Executive Summary (Task 1 — upgraded) ──
+  const hs = data.healthScore;
+  const hsHex = hs.value >= 80 ? "16A34A" : hs.value >= 60 ? "D97706" : "DC2626";
+
   children.push(
     heading("Executive Summary"),
-    para(`Your website ${data.domain} achieved an accessibility score of ${data.score}/100 (Grade ${scoreGrade(data.score)}). ${data.issueBreakdown.critical > 0 ? `There are ${data.issueBreakdown.critical} critical issues requiring immediate attention.` : "No critical issues were detected."}`),
+    // Health Score badge
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [
+        new TextRun({ text: `Health Score: `, bold: true, size: 24, color: "374151" }),
+        new TextRun({ text: `${hs.value}/100`, bold: true, size: 36, color: hsHex }),
+        new TextRun({ text: `  (Grade ${hs.grade} — ${hs.label})`, size: 22, color: "6B7280" }),
+      ],
+    }),
+    para(`Your website ${data.domain} achieved a health score of ${hs.value}/100 (Grade ${hs.grade}). ${data.issueBreakdown.critical > 0 ? `There are ${data.issueBreakdown.critical} critical issues requiring immediate attention.` : "No critical issues were detected."}`),
+    spacer(),
+    subheading("Severity Distribution"),
+  );
+
+  // Severity distribution table
+  const sevTable = new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [
+      tableRow(["Critical", "Serious", "Moderate", "Minor", "Total"], true),
+      tableRow([
+        String(data.issueBreakdown.critical),
+        String(data.issueBreakdown.serious),
+        String(data.issueBreakdown.moderate),
+        String(data.issueBreakdown.minor),
+        String(data.issueBreakdown.total),
+      ]),
+    ],
+  });
+  children.push(sevTable as unknown as Paragraph);
+
+  children.push(
     spacer(),
     subheading("Legal Risk Assessment"),
     para(`${data.riskLevel} Risk — ${data.legalRisk}`),
@@ -152,31 +185,59 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     subheading("Estimated Remediation"),
     para(`Based on ${data.issueBreakdown.total} identified issues, the estimated developer effort is ${data.estimatedFixTime}.`),
     spacer(),
-    subheading("Key Metrics"),
   );
 
-  // Metrics table
+  // Top Priority Fixes (Task 1)
+  if (data.topPriorityFixes && data.topPriorityFixes.length > 0) {
+    children.push(subheading("Top Priority Fixes"));
+    const tpfTable = new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      rows: [
+        tableRow(["#", "Issue", "Severity", "Elements", "Impact"], true),
+        ...data.topPriorityFixes.map((f: TopPriorityFix) =>
+          tableRow([String(f.rank), f.title, f.severity.toUpperCase(), String(f.affectedElements), String(f.weightedImpact)])
+        ),
+      ],
+    });
+    children.push(tpfTable as unknown as Paragraph);
+    children.push(spacer());
+  }
+
+  // Key Metrics
+  children.push(subheading("Key Metrics"));
   const metricsTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     rows: [
       tableRow(
-        ["Total Issues", "Critical", "Serious", "Moderate", "Minor", "Score", "Compliance", "Est. Fix"],
+        ["Health Score", "Total Issues", "Critical", "Serious", "Moderate", "Minor", "Compliance", "Est. Fix"],
         true
       ),
       tableRow([
+        `${hs.value}/100`,
         String(data.issueBreakdown.total),
         String(data.issueBreakdown.critical),
         String(data.issueBreakdown.serious),
         String(data.issueBreakdown.moderate),
         String(data.issueBreakdown.minor),
-        `${data.score}/100`,
         `${data.compliancePercentage}%`,
         data.estimatedFixTime,
       ]),
     ],
   });
-  children.push(new Paragraph({ children: [] }));
-  children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  children.push(metricsTable as unknown as Paragraph);
+
+  // Coverage note
+  children.push(
+    spacer(),
+    new Paragraph({
+      spacing: { after: 80 },
+      children: [
+        new TextRun({ text: "Note: ", bold: true, size: 20, color: "92400E" }),
+        new TextRun({ text: "Automated testing does not cover all WCAG requirements. Manual review is recommended.", size: 20, color: "92400E", italics: true }),
+      ],
+    }),
+    new Paragraph({ children: [], pageBreakBefore: true })
+  );
 
   // ── Visual Breakdown ──
   children.push(
@@ -185,8 +246,8 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     para(`Critical: ${data.issueBreakdown.critical}  |  Serious: ${data.issueBreakdown.serious}  |  Moderate: ${data.issueBreakdown.moderate}  |  Minor: ${data.issueBreakdown.minor}`),
     spacer(),
     subheading("WCAG Level Status"),
-    para(`WCAG 2.1 Level AA: ${data.wcagAAStatus === "pass" ? "Compliant" : data.wcagAAStatus === "partial" ? "Partial" : "Non-compliant"} (${data.compliancePercentage}%)`),
-    para(`WCAG 2.1 Level AAA: ${data.wcagAAAStatus === "pass" ? "Compliant" : data.wcagAAAStatus === "partial" ? "Partial" : "Non-compliant"}`),
+    para(`WCAG 2.2 Level AA: ${data.wcagAAStatus === "pass" ? "Compliant" : data.wcagAAStatus === "partial" ? "Partial" : "Non-compliant"} (${data.compliancePercentage}%)`),
+    para(`WCAG 2.2 Level AAA: ${data.wcagAAAStatus === "pass" ? "Compliant" : data.wcagAAAStatus === "partial" ? "Partial" : "Non-compliant"}`),
     para(`EAA 2025 Readiness: ${data.eaaReady ? "Ready" : "Action Needed"}`),
     spacer(),
     subheading("Accessibility Maturity Level"),
@@ -194,8 +255,35 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     new Paragraph({ children: [], pageBreakBefore: true })
   );
 
-  // ── Priority Issues ──
-  children.push(heading("Priority Issues"));
+  // ── WCAG 2.2 Compliance Matrix (Task 2) ──
+  if (data.wcagMatrix && data.wcagMatrix.length > 0) {
+    const failing = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Fail");
+    const passing = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Pass");
+    const notTested = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Not Tested");
+
+    children.push(
+      heading("WCAG 2.2 Compliance Matrix"),
+      para(`Tested against ${data.wcagMatrix.length} WCAG 2.2 success criteria. ${passing.length} Pass, ${failing.length} Fail, ${notTested.length} Not Tested.`),
+      spacer(),
+    );
+
+    // Show all failing, then sample of passing
+    const matrixRows = [...failing, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
+    const wcagTable = new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      rows: [
+        tableRow(["Success Criterion", "Level", "Status", "Findings"], true),
+        ...matrixRows.map((row: WcagMatrixRow) =>
+          tableRow([row.criterion, row.level, row.status, row.relatedFindings > 0 ? String(row.relatedFindings) : "—"])
+        ),
+      ],
+    });
+    children.push(wcagTable as unknown as Paragraph);
+    children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  }
+
+  // ── Priority Issues (with Enterprise Evidence Tables — Task 4) ──
+  children.push(heading("Audit Findings"));
 
   if (data.priorityIssues.length === 0) {
     children.push(para("No accessibility issues were detected. Excellent work!"));
@@ -216,7 +304,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         para(`${issue.affectedElements} element(s) affected  •  Est. ${issue.estimatedFixTime}${issue.wcagCriteria.length > 0 ? `  •  ${issue.wcagCriteria.join(", ")}` : ""}`, "9CA3AF"),
       );
 
-      // Add affected element details (selector + HTML snippet)
+      // Enterprise Evidence Table (Task 4) — structured table with Selector + HTML columns
       const details = issue.affectedElementDetails ?? [];
       if (details.length > 0) {
         children.push(
@@ -225,19 +313,56 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
             children: [new TextRun({ text: "Affected Elements:", bold: true, size: 20, color: "6B7280" })],
           })
         );
-        details.forEach((el, elIdx: number) => {
-          const runs: TextRun[] = [
-            new TextRun({ text: `${elIdx + 1}. Selector: `, bold: true, size: 18, color: "374151" }),
-            new TextRun({ text: el.selector, size: 18, font: "Consolas", color: "374151" }),
-          ];
-          if (el.html) {
-            runs.push(
-              new TextRun({ text: `  |  HTML: `, bold: true, size: 18, color: "6B7280" }),
-              new TextRun({ text: el.html, size: 16, font: "Consolas", color: "6B7280" }),
-            );
-          }
-          children.push(new Paragraph({ spacing: { after: 30 }, children: runs }));
+
+        const evidenceTable = new Table({
+          width: { size: 100, type: WidthType.PERCENTAGE },
+          rows: [
+            new TableRow({
+              children: [
+                new TableCell({
+                  width: { size: 5, type: WidthType.PERCENTAGE },
+                  shading: { type: ShadingType.SOLID, color: "F3F4F6" },
+                  borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
+                  children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })],
+                }),
+                new TableCell({
+                  width: { size: 45, type: WidthType.PERCENTAGE },
+                  shading: { type: ShadingType.SOLID, color: "F3F4F6" },
+                  borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
+                  children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })],
+                }),
+                new TableCell({
+                  width: { size: 50, type: WidthType.PERCENTAGE },
+                  shading: { type: ShadingType.SOLID, color: "F3F4F6" },
+                  borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
+                  children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })],
+                }),
+              ],
+            }),
+            ...details.map((el, elIdx: number) =>
+              new TableRow({
+                children: [
+                  new TableCell({
+                    width: { size: 5, type: WidthType.PERCENTAGE },
+                    borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
+                    children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(elIdx + 1), size: 16, color: "6B7280" })] })],
+                  }),
+                  new TableCell({
+                    width: { size: 45, type: WidthType.PERCENTAGE },
+                    borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
+                    children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 16, font: "Consolas", color: "374151" })] })],
+                  }),
+                  new TableCell({
+                    width: { size: 50, type: WidthType.PERCENTAGE },
+                    borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
+                    children: [new Paragraph({ children: [new TextRun({ text: el.html || "—", size: 14, font: "Consolas", color: "6B7280" })] })],
+                  }),
+                ],
+              })
+            ),
+          ],
         });
+        children.push(evidenceTable as unknown as Paragraph);
       }
 
       children.push(
@@ -253,6 +378,29 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   }
 
   children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+
+  // ── Scan Configuration (Task 3) ──
+  if (data.scanConfig) {
+    const sc = data.scanConfig;
+    children.push(
+      heading("Scan Configuration"),
+    );
+    const scanConfigTable = new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      rows: [
+        configRow("Domain Scanned", sc.domain),
+        configRow("Pages Analyzed", String(sc.pagesAnalyzed)),
+        configRow("Crawl Depth", sc.crawlDepth),
+        configRow("Scan Date/Time", fmtDate(sc.scanDateTime)),
+        configRow("User Agent", sc.userAgent),
+        configRow("Viewport", sc.viewport),
+        configRow("Standards Tested", sc.standardsTested.join(", ")),
+        configRow("Engine", `${sc.engineName} v${sc.engineVersion}`),
+      ],
+    });
+    children.push(scanConfigTable as unknown as Paragraph);
+    children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  }
 
   // ── Compliance & Legal ──
   children.push(
@@ -283,21 +431,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     );
   }
 
-  const sections = [
-    {
-      children: [...children],
-    },
-  ];
-
-  // Insert metrics table after the Key Metrics heading
-  const metricsIdx = children.findIndex(
-    (p) => p instanceof Paragraph && JSON.stringify(p).includes("Key Metrics")
-  );
-  if (metricsIdx >= 0) {
-    sections[0].children.splice(metricsIdx + 1, 0, metricsTable as unknown as Paragraph);
-  }
-
-  return new Document({ sections });
+  return new Document({ sections: [{ children: [...children] }] });
 }
 
 /* ── DOCX Helpers ──────────────────────────────────────── */
@@ -337,6 +471,34 @@ function labeledPara(label: string, text: string): Paragraph {
 
 function spacer(): Paragraph {
   return new Paragraph({ spacing: { after: 120 }, children: [] });
+}
+
+function configRow(label: string, value: string): TableRow {
+  return new TableRow({
+    children: [
+      new TableCell({
+        width: { size: 30, type: WidthType.PERCENTAGE },
+        shading: { type: ShadingType.SOLID, color: "F9FAFB" },
+        borders: {
+          top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+        },
+        children: [new Paragraph({ children: [new TextRun({ text: label, bold: true, size: 20, color: "374151" })] })],
+      }),
+      new TableCell({
+        width: { size: 70, type: WidthType.PERCENTAGE },
+        borders: {
+          top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+        },
+        children: [new Paragraph({ children: [new TextRun({ text: value, size: 20 })] })],
+      }),
+    ],
+  });
 }
 
 function tableRow(cells: string[], isHeader: boolean = false): TableRow {
