@@ -231,8 +231,8 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="border-b">
-                <tr className="text-left text-sm text-muted-foreground">
+              <thead className="border-b dark:border-white/[0.06]">
+                <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
                   <th className="pb-3 font-medium">Customer</th>
                   <th className="pb-3 font-medium">Plan</th>
                   <th className="pb-3 font-medium">Status</th>
@@ -241,7 +241,7 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
                   <th className="pb-3 font-medium">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y">
+              <tbody className="divide-y dark:divide-white/[0.04]">
                 {filteredUsers.map((user) => {
                   const userName = user.firstName && user.lastName
                     ? `${user.firstName} ${user.lastName}`
@@ -250,10 +250,10 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
                   const isProcessing = processingUserId === user.id;
 
                   return (
-                    <tr key={user.id} className="text-sm">
+                    <tr key={user.id} className="text-sm transition-colors hover:bg-muted/50 dark:hover:bg-white/[0.03] dark:even:bg-white/[0.015]">
                       <td className="py-3">
                         <div>
-                          <div className="font-medium text-gray-900">{userName}</div>
+                          <div className="font-medium text-foreground">{userName}</div>
                           <div className="text-xs text-muted-foreground">{user.email}</div>
                         </div>
                       </td>
@@ -278,7 +278,7 @@ export function PaymentManagementClient({ users }: PaymentManagementClientProps)
                         </div>
                       </td>
                       <td className="py-3">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                           <Link href={`/admin/users/${user.id}`}>
                             <Button variant="outline" size="sm">
                               View User

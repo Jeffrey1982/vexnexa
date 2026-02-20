@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-elev2 hover:bg-destructive/90 hover:shadow-elev3 hover:-translate-y-px",
         outline:
-          "border border-[var(--vn-border)] bg-white dark:bg-slate-900 text-foreground shadow-elev1 hover:bg-[var(--vn-muted)] hover:border-[var(--vn-primary)] hover:shadow-elev2 hover:-translate-y-px",
+          "border border-[var(--vn-border)] bg-white dark:bg-[var(--surface-2)] dark:border-white/[0.08] text-foreground shadow-elev1 dark:shadow-none hover:bg-[var(--vn-muted)] dark:hover:bg-[var(--surface-3)] hover:border-[var(--vn-primary)] dark:hover:border-white/[0.12] hover:shadow-elev2 dark:hover:shadow-none hover:-translate-y-px",
         secondary:
           "glass shadow-elev2 hover:shadow-elev3 hover:-translate-y-px text-foreground",
         ghost: "hover:bg-[var(--vn-muted)] text-foreground hover:text-[var(--vn-primary)]",

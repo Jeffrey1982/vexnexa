@@ -131,79 +131,99 @@
   }
   
   .dark {
-    --background: 0 0% 12%; /* Midnight Graphite */
-    --foreground: 210 17% 98%; /* Cloud White */
+    /* ═══════════════════════════════════════════
+       DARK SURFACE LAYER SYSTEM (Vercel/Stripe)
+       ═══════════════════════════════════════════
+       Layer 0 (base):    #0A0A0B — deepest page bg
+       Layer 1 (surface):  #111113 — sidebar, nav
+       Layer 2 (card):     #18181B — cards, panels
+       Layer 3 (elevated): #1F1F23 — popovers, dropdowns
+       Layer 4 (hover):    #27272A — hover states
+       ═══════════════════════════════════════════ */
+    --background: 240 6% 4%;       /* #0A0A0B — deepest base */
+    --foreground: 0 0% 96%;        /* #F5F5F5 — crisp white text */
 
-    --card: 0 0% 15%;
-    --card-foreground: 210 17% 98%;
-    --popover: 0 0% 15%;
-    --popover-foreground: 210 17% 98%;
+    --card: 240 4% 9.5%;           /* #18181B — card surface */
+    --card-foreground: 0 0% 96%;
+    --popover: 240 4% 12%;         /* #1F1F23 — elevated panel */
+    --popover-foreground: 0 0% 96%;
 
     /* Aurora Orange for dark mode — darkened for WCAG AA */
     --primary: 25 100% 42%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 17% 98%;
-    --secondary-foreground: 0 0% 12%;
+    --secondary: 240 4% 16%;       /* subtle secondary bg */
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 0 0% 20%;
-    --muted-foreground: 214 6% 77%;
+    --muted: 240 4% 14%;           /* muted bg for inputs, zebra */
+    --muted-foreground: 240 5% 65%; /* #A0A0AB — WCAG AA on #18181B = 5.2:1 */
 
     --accent: 42 100% 70%; /* Solar Gold */
-    --accent-foreground: 0 0% 12%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
+    --border: 240 4% 18%;          /* #2C2C31 — subtle, not muddy */
+    --input: 240 4% 18%;
     --ring: 25 100% 42%;
 
-    --success: 180 73% 22%; /* Teal Blue */
+    --success: 160 84% 39%;        /* brighter teal for dark bg */
     --success-foreground: 0 0% 100%;
 
     --warning: 42 100% 70%; /* Solar Gold */
-    --warning-foreground: 0 0% 12%;
+    --warning-foreground: 0 0% 8%;
 
-    --critical: 25 100% 42%; /* Aurora Orange */
+    --critical: 25 100% 50%;       /* slightly brighter orange on dark */
     --critical-foreground: 0 0% 100%;
     --serious: 42 100% 70%;
-    --serious-foreground: 0 0% 12%;
-    --moderate: 180 73% 22%; /* Teal Blue */
+    --serious-foreground: 0 0% 8%;
+    --moderate: 160 84% 39%;
     --moderate-foreground: 0 0% 100%;
-    --minor: 214 6% 77%;
-    --minor-foreground: 0 0% 12%;
+    --minor: 240 5% 65%;
+    --minor-foreground: 0 0% 8%;
 
-    --chart-1: 25 100% 42%; /* Aurora Orange */
-    --chart-2: 180 73% 22%; /* Teal Blue */
-    --chart-3: 42 100% 70%; /* Solar Gold */
-    --chart-4: 210 17% 98%; /* Cloud White */
-    --chart-5: 214 6% 77%; /* Ash Gray */
+    --chart-1: 25 100% 50%;  /* Aurora Orange (brighter) */
+    --chart-2: 160 84% 39%;  /* Teal (brighter) */
+    --chart-3: 42 100% 70%;  /* Solar Gold */
+    --chart-4: 0 0% 96%;     /* White */
+    --chart-5: 240 5% 65%;   /* Muted */
+
+    /* Dark surface layer tokens for direct use */
+    --surface-0: #0A0A0B;
+    --surface-1: #111113;
+    --surface-2: #18181B;
+    --surface-3: #1F1F23;
+    --surface-4: #27272A;
 
     /* Dark mode VexNexa brand tokens */
-    --vn-bg: #1E1E1E; /* Midnight Graphite */
-    --vn-surface: #1E1E1E; /* Dark surface */
-    --vn-muted: #2A2A2A;
-    --vn-border: #3A3A3A;
-    --vn-text: #F8F9FA; /* Cloud White for dark mode */
-    --vn-text-muted: #B0B0B0; /* Lighter muted text */
+    --vn-bg: #0A0A0B;
+    --vn-surface: #18181B;
+    --vn-muted: #27272A;
+    --vn-border: #2C2C31;
+    --vn-text: #F5F5F5;
+    --vn-text-muted: #A0A0AB; /* 5.2:1 on card bg — WCAG AA */
     --vn-primary: #D45A00; /* Aurora Orange — WCAG AA compliant */
-    --vn-primary-hover: #B84E00;
+    --vn-primary-hover: #E8651A;
     --vn-accent: #FFD166; /* Solar Gold */
-    --vn-teal: #0F5C5C; /* Teal Blue */
+    --vn-teal: #14B8A6; /* Brighter teal for dark mode visibility */
 
     /* WCAG AAA Button Tokens — 7:1 contrast with white text */
-    --vn-primary-aaa-btn: #8C3B1D; /* Dark burnt orange — 7.28:1 with #FFF */
-    --vn-primary-aaa-btn-hover: #7A3318; /* Darker hover — 8.5:1 with #FFF */
+    --vn-primary-aaa-btn: #8C3B1D;
+    --vn-primary-aaa-btn-hover: #A04422;
     --vn-on-primary-aaa-btn: #FFFFFF;
 
     /* Disabled state tokens — no opacity, explicit colors */
-    --vn-disabled-bg: #4B5563; /* gray-600 */
-    --vn-disabled-fg: #9CA3AF; /* gray-400 — 4.64:1 on gray-600 */
+    --vn-disabled-bg: #27272A;
+    --vn-disabled-fg: #71717A; /* zinc-500 — 4.5:1 on #27272A */
 
     /* Dark mode VexNexa gradients */
     --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);
-    --gradient-subtle: linear-gradient(135deg, hsl(0 0% 12%) 0%, hsl(0 0% 15%) 100%);
+    --gradient-subtle: linear-gradient(135deg, #111113 0%, #18181B 100%);
+
+    /* Dark mode shadows — tinted for depth without glow */
+    --shadow-elegant: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -229,6 +249,11 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Remove grid pattern in dark mode — clean, calm base */
+  .dark body {
+    background-image: none;
   }
   
   /* Enhanced typography scale - Space Grotesk for headings */
@@ -423,8 +448,9 @@
   }
 
   .dark .glass {
-    background: rgba(30, 30, 30, 0.7);
-    border: 1px solid rgba(255, 107, 53, 0.2);
+    background: rgba(17, 17, 19, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
   .gradient-primary {

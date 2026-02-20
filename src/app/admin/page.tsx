@@ -98,7 +98,7 @@ export default async function AdminDashboard() {
   const stats = await getAdminStats();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-background">
+    <div className="min-h-screen bg-gray-50 dark:bg-[var(--surface-0)]">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
@@ -117,43 +117,63 @@ export default async function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-blue-500/10 dark:bg-blue-400/10">
+                  <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{stats.totalUsers}</div>
+              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-blue-600 dark:text-blue-400">{stats.totalUsers}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Active Subscriptions</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Active Subscriptions</CardTitle>
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-emerald-500/10 dark:bg-emerald-400/10">
+                  <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{stats.activeSubscriptions}</div>
+              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-emerald-600 dark:text-emerald-400">{stats.activeSubscriptions}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Business Plans</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Business Plans</CardTitle>
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-purple-500/10 dark:bg-purple-400/10">
+                  <Crown className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-600">{stats.planBreakdown.BUSINESS}</div>
+              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-purple-600 dark:text-purple-400">{stats.planBreakdown.BUSINESS}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Trial Users</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Trial Users</CardTitle>
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-orange-500/10 dark:bg-orange-400/10">
+                  <AlertCircle className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-orange-600">{stats.planBreakdown.TRIAL}</div>
+              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-orange-600 dark:text-orange-400">{stats.planBreakdown.TRIAL}</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Support Tickets Overview - NEW */}
-        <Card className="mb-8 border-2 border-orange-200 dark:border-orange-500/30 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-500/10 dark:to-yellow-500/5">
+        {/* Support Tickets Overview */}
+        <Card className="mb-8 border-2 border-orange-200 dark:border-orange-400/20 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-500/[0.07] dark:to-yellow-500/[0.03]">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -173,31 +193,37 @@ export default async function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white dark:bg-card rounded-lg p-4 shadow-sm">
+              <div className="bg-white dark:bg-[var(--surface-2)] rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">Total Tickets</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-foreground">{stats.tickets.total}</p>
+                    <p className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-foreground">{stats.tickets.total}</p>
                   </div>
-                  <Ticket className="w-8 h-8 text-muted-foreground dark:text-muted-foreground" />
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/[0.06]">
+                    <Ticket className="w-5 h-5 text-muted-foreground" />
+                  </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-card rounded-lg p-4 shadow-sm">
+              <div className="bg-white dark:bg-[var(--surface-2)] rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">Open Tickets</p>
-                    <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.tickets.open}</p>
+                    <p className="text-3xl font-extrabold tracking-tight text-blue-600 dark:text-blue-400">{stats.tickets.open}</p>
                   </div>
-                  <AlertCircle className="w-8 h-8 text-blue-400" />
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-400/10">
+                    <AlertCircle className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+                  </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-card rounded-lg p-4 shadow-sm">
+              <div className="bg-white dark:bg-[var(--surface-2)] rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">In Progress</p>
-                    <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{stats.tickets.inProgress}</p>
+                    <p className="text-3xl font-extrabold tracking-tight text-yellow-600 dark:text-yellow-400">{stats.tickets.inProgress}</p>
                   </div>
-                  <MessageCircle className="w-8 h-8 text-yellow-400" />
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-yellow-50 dark:bg-yellow-400/10">
+                    <MessageCircle className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -205,13 +231,13 @@ export default async function AdminDashboard() {
             {/* Recent Tickets */}
             {stats.tickets.recent.length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-foreground mb-3">Recent Tickets</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-muted-foreground mb-3">Recent Tickets</h3>
                 <div className="space-y-2">
                   {stats.tickets.recent.map((ticket) => {
                     const userName = `${ticket.user.firstName || ''} ${ticket.user.lastName || ''}`.trim() || ticket.user.email;
                     return (
                       <Link key={ticket.id} href={`/admin-interface/tickets/${ticket.id}`}>
-                        <div className="bg-white dark:bg-card p-3 rounded-lg border border-gray-200 dark:border-border hover:border-orange-300 dark:hover:border-orange-500/50 hover:shadow-sm transition-all cursor-pointer">
+                        <div className="bg-white dark:bg-[var(--surface-2)] p-3 rounded-lg border border-gray-200 dark:border-white/[0.06] hover:border-orange-300 dark:hover:border-orange-400/30 hover:shadow-sm dark:hover:bg-[var(--surface-3)] transition-all cursor-pointer">
                           <div className="flex items-center justify-between">
                             <div className="flex-1 min-w-0">
                               <p className="font-medium text-gray-900 dark:text-foreground truncate">{ticket.subject}</p>
@@ -236,7 +262,7 @@ export default async function AdminDashboard() {
 
             {stats.tickets.total === 0 && (
               <div className="text-center py-8">
-                <Ticket className="w-12 h-12 text-muted-foreground dark:text-muted-foreground mx-auto mb-3" />
+                <Ticket className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground">No support tickets yet</p>
               </div>
             )}
@@ -330,10 +356,10 @@ export default async function AdminDashboard() {
                   <TableRow key={user.id}>
                     <TableCell>
                       <div>
-                        <div className="font-medium">
+                        <div className="font-medium text-foreground">
                           {user.firstName} {user.lastName}
                         </div>
-                        <div className="text-sm text-muted-foreground">{user.email}</div>
+                        <div className="text-sm text-muted-foreground truncate max-w-[200px]">{user.email}</div>
                       </div>
                     </TableCell>
                     <TableCell>{user.company || 'N/A'}</TableCell>

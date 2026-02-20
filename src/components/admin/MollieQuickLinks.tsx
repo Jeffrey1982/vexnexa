@@ -67,16 +67,18 @@ export function MollieQuickLinks() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all group"
+                className="flex flex-col items-center p-4 rounded-xl border border-border/50 dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-primary/30 bg-card dark:bg-[var(--surface-2)] hover:bg-muted/50 dark:hover:bg-[var(--surface-3)] transition-all duration-200 group dark:ring-1 dark:ring-inset dark:ring-white/[0.04] dark:hover:ring-white/[0.08] focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <Icon className={`w-6 h-6 ${link.color} mb-2`} />
-                <div className="text-sm font-medium text-gray-900 text-center">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted/50 dark:bg-white/[0.06] mb-2 group-hover:scale-105 transition-transform duration-200">
+                  <Icon className={`w-5 h-5 ${link.color} dark:opacity-90`} />
+                </div>
+                <div className="text-sm font-medium text-foreground text-center">
                   {link.label}
                 </div>
                 <div className="text-xs text-muted-foreground text-center mt-1">
                   {link.description}
                 </div>
-                <ExternalLink className="w-3 h-3 text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-3 h-3 text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
               </a>
             );
           })}
