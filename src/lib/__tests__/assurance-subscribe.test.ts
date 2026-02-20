@@ -157,9 +157,17 @@ describe('Billing: appUrl usage (root cause fix)', () => {
   });
 
   it('calls appUrl as a function for redirectUrl (NOT string concat)', () => {
-    // Must be appUrl('/path') not `${appUrl}/path`
-    expect(billing).toContain("appUrl('/dashboard/assurance?payment=success')");
+    // Must be appUrl('/path...') not `${appUrl}/path`
+    expect(billing).toContain("appUrl(`/dashboard/billing/success?");
     expect(billing).not.toContain('`${appUrl}/dashboard');
+  });
+
+  it('includes locale in payment creation', () => {
+    expect(billing).toContain('Locale.nl_NL');
+  });
+
+  it('includes sessionToken in metadata', () => {
+    expect(billing).toContain('sessionToken');
   });
 
   it('calls appUrl as a function for webhookUrl (NOT string concat)', () => {
@@ -259,8 +267,41 @@ describe('Client Page: /dashboard/subscribe-assurance', () => {
   // ── Double-submit prevention ──
 
   it('prevents double-submit', () => {
-    expect(page).toContain('if (loadingTier) return');
-    expect(page).toContain('disabled={isLoading || loadingTier !== null}');
+    expect(page).toContain('if (!selectedPlan || loadingTier) return');
+    expect(page).toContain('disabled={loadingTier !== null}');
+  });
+
+  // ── Checkout Summary ──
+
+  it('has checkout summary card', () => {
+    expect(page).toContain('Checkout Summary');
+    expect(page).toContain('CYCLE_LABELS');
+    expect(page).toContain('Domains included');
+  });
+
+  it('has secure payment section with trust badges', () => {
+    expect(page).toContain('Secure payment');
+    expect(page).toContain('PCI DSS compliant');
+    expect(page).toContain('256-bit SSL encryption');
+    expect(page).toContain('Cancel anytime');
+    expect(page).toContain('Mollie');
+  });
+
+  it('fetches payment methods dynamically', () => {
+    expect(page).toContain('/api/billing/methods');
+    expect(page).toContain('paymentMethods');
+    expect(page).toContain('Payment methods (where available)');
+  });
+
+  it('has plan selection flow before checkout', () => {
+    expect(page).toContain('selectedPlan');
+    expect(page).toContain('handleSelectPlan');
+    expect(page).toContain('activePlan');
+  });
+
+  it('has proceed to payment button with price', () => {
+    expect(page).toContain('Proceed to Payment');
+    expect(page).toContain('Redirecting to secure checkout');
   });
 
   // ── Payload correctness ──
@@ -273,7 +314,7 @@ describe('Client Page: /dashboard/subscribe-assurance', () => {
   });
 
   it('sends billingCycle as lowercase', () => {
-    expect(page).toContain('body: JSON.stringify({ tier, billingCycle })');
+    expect(page).toContain('body: JSON.stringify({ tier: selectedPlan, billingCycle })');
     // billingCycle state is typed as "monthly" | "semiannual" | "annual"
     expect(page).toContain('type BillingCycle = "monthly" | "semiannual" | "annual"');
   });
@@ -288,5 +329,161 @@ describe('Client Page: /dashboard/subscribe-assurance', () => {
 
   it('uses bg-primary for active billing toggle', () => {
     expect(page).toContain('bg-primary text-primary-foreground shadow-sm');
+  });
+
+  it('sends billingCycle with selectedPlan (not tier param)', () => {
+    expect(page).toContain('tier: selectedPlan, billingCycle');
+  });
+});
+
+// ── 5. Success Page ──
+
+describe('Success Page: /dashboard/billing/success', () => {
+  const page = readFile('src/app/dashboard/billing/success/page.tsx');
+
+  it('is a client component', () => {
+    expect(page.trimStart()).toMatch(/^"use client"/);
+  });
+
+  it('uses mounted gating for hydration safety', () => {
+    expect(page).toContain('const [mounted, setMounted] = useState(false)');
+    expect(page).toContain('setMounted(true)');
+  });
+
+  it('shows payment successful message', () => {
+    expect(page).toContain('Payment Successful');
+  });
+
+  it('shows subscription activated status', () => {
+    expect(page).toContain('Subscription Activated');
+  });
+
+  it('reads tier and cycle from search params', () => {
+    expect(page).toContain('useSearchParams');
+    expect(page).toContain("searchParams.get(\"tier\")");
+    expect(page).toContain("searchParams.get(\"cycle\")");
+  });
+
+  it('has next steps section', () => {
+    expect(page).toContain('Next Steps');
+    expect(page).toContain('Add your domains');
+    expect(page).toContain('Configure scan schedule');
+    expect(page).toContain('Set up alerts');
+  });
+
+  it('has CTA to assurance settings', () => {
+    expect(page).toContain('Go to Assurance Settings');
+    expect(page).toContain('/dashboard/assurance');
+  });
+
+  it('has back to dashboard link', () => {
+    expect(page).toContain('Back to Dashboard');
+    expect(page).toContain('/dashboard');
+  });
+});
+
+// ── 6. Cancelled Page ──
+
+describe('Cancelled Page: /dashboard/billing/cancelled', () => {
+  const page = readFile('src/app/dashboard/billing/cancelled/page.tsx');
+
+  it('is a client component', () => {
+    expect(page.trimStart()).toMatch(/^"use client"/);
+  });
+
+  it('uses mounted gating for hydration safety', () => {
+    expect(page).toContain('const [mounted, setMounted] = useState(false)');
+  });
+
+  it('shows payment cancelled message', () => {
+    expect(page).toContain('Payment Cancelled');
+  });
+
+  it('explains no charges were made', () => {
+    expect(page).toContain('No charges have been made');
+  });
+
+  it('has retry CTA', () => {
+    expect(page).toContain('Try Again');
+    expect(page).toContain('/dashboard/subscribe-assurance');
+  });
+
+  it('has back to dashboard link', () => {
+    expect(page).toContain('Back to Dashboard');
+  });
+
+  it('has support contact', () => {
+    expect(page).toContain('info@vexnexa.com');
+  });
+});
+
+// ── 7. Billing Methods Endpoint ──
+
+describe('Billing Methods Endpoint: /api/billing/methods', () => {
+  const route = readFile('src/app/api/billing/methods/route.ts');
+
+  it('exports GET handler', () => {
+    expect(route).toContain('export async function GET');
+  });
+
+  it('queries Mollie methods with sequenceType first', () => {
+    expect(route).toContain('SequenceType.first');
+    expect(route).toContain('mollie.methods.list');
+  });
+
+  it('accepts tier and billingCycle query params', () => {
+    expect(route).toContain("searchParams.get('tier')");
+    expect(route).toContain("searchParams.get('billingCycle')");
+  });
+
+  it('returns method id, description, and images', () => {
+    expect(route).toContain('method.id');
+    expect(route).toContain('method.description');
+    expect(route).toContain('imageUrl');
+    expect(route).toContain('imageSvg');
+  });
+
+  it('has fallback methods when Mollie is not configured', () => {
+    expect(route).toContain('getFallbackMethods');
+    expect(route).toContain('creditcard');
+    expect(route).toContain('ideal');
+    expect(route).toContain('paypal');
+  });
+
+  it('calculates amount for tier/cycle to filter methods', () => {
+    expect(route).toContain('getAmountForTier');
+  });
+});
+
+// ── 8. CSP Sentry Fix ──
+
+describe('CSP: Sentry CDN allowed', () => {
+  const middleware = readFile('src/middleware.ts');
+
+  it('includes browser.sentry-cdn.com in script-src', () => {
+    expect(middleware).toContain('https://browser.sentry-cdn.com');
+    // Verify it appears in the script-src line
+    const scriptSrc = middleware.split('\n').find(l => l.includes('script-src'));
+    expect(scriptSrc).toContain('browser.sentry-cdn.com');
+  });
+
+  it('includes sentry.io in connect-src', () => {
+    const connectSrc = middleware.split('\n').find(l => l.includes('connect-src'));
+    expect(connectSrc).toContain('https://*.sentry.io');
+    expect(connectSrc).toContain('https://browser.sentry-cdn.com');
+  });
+
+  it('includes mollie.com in img-src for payment method icons', () => {
+    const imgSrc = middleware.split('\n').find(l => l.includes('img-src'));
+    expect(imgSrc).toContain('https://*.mollie.com');
+  });
+
+  it('does not use broad wildcards', () => {
+    const cspSection = middleware.split('\n')
+      .filter(l => l.includes('-src'))
+      .join('\n');
+    // No * without a domain prefix
+    expect(cspSection).not.toMatch(/\s\*\s/);
+    expect(cspSection).not.toMatch(/\s\*;/);
   });
 });

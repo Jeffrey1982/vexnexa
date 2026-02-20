@@ -14,7 +14,7 @@ import {
 } from './pricing';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
-import { SequenceType } from '@mollie/api-client';
+import { Locale, SequenceType } from '@mollie/api-client';
 
 /**
  * Create Mollie checkout payment for Assurance subscription
@@ -47,6 +47,9 @@ export async function createAssuranceCheckoutPayment(opts: {
 
     console.log('[Assurance] Using Mollie customer:', customer.id);
 
+    // Generate a session token for the success page
+    const sessionToken = `${userId}_${Date.now().toString(36)}`;
+
     // Create payment
     const paymentData: PaymentCreateParams = {
       amount: {
@@ -54,15 +57,17 @@ export async function createAssuranceCheckoutPayment(opts: {
         currency: 'EUR',
       },
       description: `VexNexa Assurance ${tier} - ${billingCycle}`,
-      redirectUrl: appUrl('/dashboard/assurance?payment=success'),
+      redirectUrl: appUrl(`/dashboard/billing/success?session=${sessionToken}&tier=${tier}&cycle=${billingCycle}`),
       webhookUrl: appUrl('/api/assurance/webhook'),
       customerId: customer.id,
       sequenceType: SequenceType.first, // First payment for mandate creation
+      locale: Locale.nl_NL,
       metadata: {
         userId,
         tier,
         billingCycle,
         product: 'assurance',
+        sessionToken,
       },
     };
 

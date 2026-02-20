@@ -126,10 +126,10 @@ export async function middleware(request: NextRequest) {
   // Enhanced CSP header for additional security with Supabase support
   const cspHeader = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com",
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com https://browser.sentry-cdn.com",
     "style-src 'self' 'unsafe-inline'",
-    "connect-src 'self' https://*.vexnexa.com https://vexnexa.com https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com https://www.google.com https://*.gstatic.com https://*.google-analytics.com",
-    "img-src 'self' blob: data: https: https://*.supabase.co https://*.gstatic.com",
+    "connect-src 'self' https://*.vexnexa.com https://vexnexa.com https://*.supabase.co https://va.vercel-scripts.com wss://*.supabase.co https://*.mollie.com https://www.google.com https://*.gstatic.com https://*.google-analytics.com https://*.sentry.io https://browser.sentry-cdn.com",
+    "img-src 'self' blob: data: https: https://*.supabase.co https://*.gstatic.com https://*.mollie.com",
     "font-src 'self' data:",
     "object-src 'none'",
     "base-uri 'self'",
