@@ -25,7 +25,24 @@ import {
   BorderStyle,
   ShadingType,
   TableOfContents,
+  TableLayoutType,
 } from "docx";
+
+// A4 usable width ≈ 9072 twips (158.75mm at 1440 twips/inch)
+const DOCX_TABLE_WIDTH = 9072;
+const DOCX_COL_HASH = Math.round(DOCX_TABLE_WIDTH * 0.05);   // # col ~454
+const DOCX_COL_URL = Math.round(DOCX_TABLE_WIDTH * 0.25);    // URL col ~2268
+const DOCX_COL_SEL = Math.round(DOCX_TABLE_WIDTH * 0.25);    // Selector col ~2268
+const DOCX_COL_HTML = DOCX_TABLE_WIDTH - DOCX_COL_HASH - DOCX_COL_URL - DOCX_COL_SEL; // HTML col ~4082
+
+const DOCX_CELL_MARGINS = {
+  top: 60, bottom: 60, left: 80, right: 80,
+} as const;
+
+/** Insert zero-width spaces after URL break characters for Word wrapping */
+function softBreakUrl(url: string): string {
+  return url.replace(/([/?.&=])/g, "$1\u200B");
+}
 
 export const runtime = "nodejs";
 
@@ -323,10 +340,10 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
       return new TableRow({
         tableHeader: true,
         children: [
-          new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })] }),
-          new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Page / URL", bold: true, size: 18 })] })] }),
-          new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })] }),
-          new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_HASH, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_URL, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "Page / URL", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_SEL, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_HTML, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })] }),
         ],
       });
     }
@@ -364,16 +381,17 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
             })
           );
           const evidenceTable = new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
+            width: { size: DOCX_TABLE_WIDTH, type: WidthType.DXA },
+            layout: TableLayoutType.FIXED,
             rows: [
               evHeaderRow(),
               ...chunk.map((el, elIdx: number) =>
                 new TableRow({
                   children: [
-                    new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(offset + elIdx + 1), size: 16, color: "6B7280" })] })] }),
-                    new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.pageUrl || data.domain, size: 16, color: "6B7280" })] })] }),
-                    new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 16, font: "Consolas", color: "374151" })] })] }),
-                    new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.html || "—", size: 14, font: "Consolas", color: "6B7280" })] })] }),
+                    new TableCell({ width: { size: DOCX_COL_HASH, type: WidthType.DXA }, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(offset + elIdx + 1), size: 18, color: "6B7280" })] })] }),
+                    new TableCell({ width: { size: DOCX_COL_URL, type: WidthType.DXA }, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: softBreakUrl(el.pageUrl || data.domain), size: 18, color: "6B7280" })] })] }),
+                    new TableCell({ width: { size: DOCX_COL_SEL, type: WidthType.DXA }, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 18, font: "Consolas", color: "374151" })] })] }),
+                    new TableCell({ width: { size: DOCX_COL_HTML, type: WidthType.DXA }, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: el.html || "\u2014", size: 16, font: "Consolas", color: "6B7280" })] })] }),
                   ],
                 })
               ),

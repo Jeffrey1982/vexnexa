@@ -577,7 +577,7 @@ describe("Evidence table layout guardrails", () => {
   it("evidence table has word-wrap CSS for selectors and snippets", () => {
     const html = renderReportHTML(getReport());
     expect(html).toContain("overflow-wrap:anywhere");
-    expect(html).toContain("word-break:break-all");
+    expect(html).toContain("word-break:break-word");
   });
 
   it("chunked numbering is continuous across chunks", () => {
@@ -595,6 +595,81 @@ describe("Evidence table layout guardrails", () => {
     // Row 51 should exist (in second chunk, numbered 51 not 1)
     expect(html).toContain('>51<');
     expect(html).toContain('>75<');
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PDF/HTML Layout — Safe Margins & Table Sizing
+   ═══════════════════════════════════════════════════════════ */
+
+describe("PDF/HTML layout — safe margins & table sizing", () => {
+  function getHTML(): string {
+    return renderReportHTML(getReport());
+  }
+
+  it("@page rule has mm-based margins", () => {
+    const html = getHTML();
+    expect(html).toMatch(/@page\s*\{[^}]*margin:\s*18mm\s+16mm/);
+  });
+
+  it(".page container has generous padding", () => {
+    const html = getHTML();
+    expect(html).toMatch(/\.page\{[^}]*padding:\s*22mm\s+24mm/);
+  });
+
+  it("evidence table uses table-layout:fixed", () => {
+    const html = getHTML();
+    expect(html).toContain("table-layout:fixed");
+  });
+
+  it("evidence table column widths sum correctly (5+25+25+45)", () => {
+    const html = getHTML();
+    expect(html).toMatch(/\.evidence-table th:first-child\{width:5%\}/);
+    expect(html).toMatch(/\.evidence-table th:nth-child\(2\)\{width:25%\}/);
+    expect(html).toMatch(/\.evidence-table th:nth-child\(3\)\{width:25%\}/);
+    expect(html).toMatch(/\.evidence-table th:nth-child\(4\)\{width:45%\}/);
+  });
+
+  it("evidence table cells have adequate padding (8px+)", () => {
+    const html = getHTML();
+    expect(html).toMatch(/\.evidence-table td\{[^}]*padding:\s*8px\s+10px/);
+  });
+
+  it("print CSS prevents orphan headers", () => {
+    const html = getHTML();
+    expect(html).toContain("page-break-after:avoid");
+  });
+
+  it("print CSS uses matching safe margins", () => {
+    const html = getHTML();
+    expect(html).toMatch(/\.page\{[^}]*padding:\s*18mm\s+16mm/);
+  });
+
+  it("evidence table has max-width:100% to prevent overflow", () => {
+    const html = getHTML();
+    expect(html).toContain("max-width:100%");
+  });
+
+  it("stress test: long URLs and selectors render without errors", () => {
+    const longUrl = "https://example.com/" + "very-long-path/".repeat(20) + "?param=" + "x".repeat(100);
+    const longSelector = ".container > .wrapper > " + ".deeply-nested-element > ".repeat(15) + ".target";
+    const longHtml = "<div class='" + "a".repeat(200) + "'>" + "content".repeat(50) + "</div>";
+    const report = getReport({
+      violations: [{
+        id: "long-content", impact: "serious",
+        help: "Long content test", description: "Stress test",
+        tags: ["wcag143"],
+        nodes: [{ target: [longSelector], html: longHtml }],
+      }],
+    });
+    // Override pageUrl for the long URL test
+    report.priorityIssues[0].affectedElementDetails[0].pageUrl = longUrl;
+    const html = renderReportHTML(report);
+    expect(html).toContain("evidence-table");
+    expect(html).toContain("table-layout:fixed");
+    // Verify content is present, not truncated
+    expect(html).toContain("very-long-path");
+    expect(html).toContain("deeply-nested-element");
   });
 });
 

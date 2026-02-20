@@ -750,16 +750,16 @@ function buildCSS(primary: string, _secondary: string, _accent: string, bg: stri
 :root{--r:${radius};--rs:${radiusSm};--shadow:${shadow};--card-bg:${cardBg};--card-border:${cardBorder};--dark:${dark};--bg:${bg};--primary:${primary};
   --sev-critical:#DC2626;--sev-serious:#F97316;--sev-moderate:#FACC15;--sev-minor:#9CA3AF}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-@page{size:A4;margin:0}
+@page{size:A4;margin:18mm 16mm}
 body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   color:${dark};background:white;line-height:1.6;font-size:14px;
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 
-.page{width:210mm;min-height:297mm;padding:20mm 22mm;margin:0 auto;position:relative;
+.page{width:210mm;min-height:297mm;padding:22mm 24mm;margin:0 auto;position:relative;
   page-break-after:always;page-break-inside:avoid;background:white}
 @media screen{.page{box-shadow:0 4px 24px rgba(0,0,0,.08);margin-bottom:24px;border-radius:4px}}
 @media screen and (max-width:800px){
-  .page{width:100%;min-height:auto;padding:16px 20px}
+  .page{width:100%;min-height:auto;padding:18px 22px}
   .report-header{padding:16px 20px}
   .cover-main{padding:20px;flex-direction:column}
   .cover-main-left,.cover-main-right{flex:none;width:100%}
@@ -861,10 +861,10 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .csc-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:#9CA3AF}
 
 /* ── Section titles ── */
-.section-title{font-size:${isC ? "20px" : "24px"};font-weight:${titleWeight};margin-bottom:20px;padding-bottom:10px;
+.section-title{font-size:${isC ? "20px" : "24px"};font-weight:${titleWeight};margin-bottom:22px;padding-bottom:12px;
   border-bottom:${isC ? "2px" : "3px"} solid var(--primary);letter-spacing:-0.5px}
 .corp-title{border-bottom-width:2px}
-.subsection-title{font-size:16px;font-weight:700;margin:20px 0 12px;color:#374151}
+.subsection-title{font-size:16px;font-weight:700;margin:22px 0 14px;color:#374151}
 
 /* ── Executive Summary ── */
 .exec-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
@@ -919,7 +919,7 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .maturity-dot{width:12px;height:12px;border-radius:50%;margin:0 auto 6px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 
 /* ── Audit Cards (premium) ── */
-.issues-list{display:flex;flex-direction:column;gap:14px}
+.issues-list{display:flex;flex-direction:column;gap:20px}
 .audit-card{border:var(--card-border);border-radius:var(--r);box-shadow:var(--shadow);page-break-inside:avoid}
 .ac-header{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:var(--card-bg);border-bottom:var(--card-border)}
 .ac-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;color:white;
@@ -949,7 +949,7 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .ft-num{text-align:center;white-space:nowrap}
 
 /* ── Issue Detail Cards (corporate full-text) ── */
-.issue-detail-card{border-radius:var(--r);padding:16px 18px;margin-bottom:14px;page-break-inside:avoid;
+.issue-detail-card{border-radius:var(--r);padding:18px 20px;margin-bottom:20px;page-break-inside:avoid;
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 .idc-header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .idc-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;
@@ -1035,19 +1035,19 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 
 /* ── Enterprise Evidence Tables ── */
 .ev-chunk-label{font-weight:400;color:#9CA3AF;font-size:10px}
-.evidence-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px;table-layout:fixed}
-.evidence-table th{background:#F3F4F6;padding:6px 8px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
+.evidence-table{width:100%;max-width:100%;border-collapse:collapse;font-size:11px;margin-top:10px;margin-bottom:14px;table-layout:fixed}
+.evidence-table th{background:#F3F4F6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
   font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
-.evidence-table th:first-child{width:28px}
+.evidence-table th:first-child{width:5%}
 .evidence-table th:nth-child(2){width:25%}
-.evidence-table th:nth-child(3){width:30%}
-.evidence-table th:nth-child(4){width:auto}
-.ev-url{font-size:10px;color:#6B7280;overflow-wrap:anywhere;word-break:break-all;line-height:1.3}
-.evidence-table td{padding:5px 8px;border:1px solid #E5E7EB;vertical-align:top}
+.evidence-table th:nth-child(3){width:25%}
+.evidence-table th:nth-child(4){width:45%}
+.ev-url{font-size:10px;color:#6B7280;overflow-wrap:anywhere;word-break:break-word;line-height:1.4}
+.evidence-table td{padding:8px 10px;border:1px solid #E5E7EB;vertical-align:top;font-size:10px}
 .evidence-table tbody tr:nth-child(even){background:#FAFAFA}
-.ev-num{text-align:center;font-weight:600;color:#6B7280;width:30px}
+.ev-num{text-align:center;font-weight:600;color:#6B7280;width:5%}
 .ev-mono{font-family:'SF Mono',Consolas,monospace;font-size:10px;color:#374151;
-  overflow-wrap:anywhere;word-break:break-all;white-space:pre-wrap;line-height:1.4}
+  white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;line-height:1.5}
 
 /* ── Compliance & Legal ── */
 .legal-grid{display:flex;flex-direction:column;gap:14px}
@@ -1079,19 +1079,24 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 @media print{
   body{background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .page{box-shadow:none;margin:0;border-radius:0;width:100%;min-height:auto;padding:15mm 18mm;page-break-after:always}
+  .page{box-shadow:none;margin:0;border-radius:0;width:100%;min-height:auto;padding:18mm 16mm;page-break-after:always}
   .cover-page{padding:0}
-  .cover-page .report-header{padding:18px 18mm 14px}
-  .cover-page .header-divider{margin:0 18mm}
-  .cover-page .cover-main{padding:18px 18mm}
-  .cover-page .cover-footer{padding:0 18mm 14px}
+  .cover-page .report-header{padding:18px 16mm 14px}
+  .cover-page .header-divider{margin:0 16mm}
+  .cover-page .cover-main{padding:18px 16mm}
+  .cover-page .cover-footer{padding:0 16mm 14px}
   .cover-premium{background:linear-gradient(170deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%)!important}
   .cta-button{border:2px solid var(--primary);color:var(--primary)!important;background:transparent!important}
   .version-marker{display:block}
   /* Evidence table guardrails */
+  .evidence-table{max-width:100%;table-layout:fixed}
   .evidence-table thead{display:table-header-group}
   .evidence-table tr{page-break-inside:avoid}
+  .evidence-table td,.evidence-table th{padding:8px 10px}
   .audit-card,.issue-detail-card{page-break-inside:avoid}
+  /* Orphan header prevention */
+  .section-title{page-break-after:avoid}
+  .ac-header,.idc-header{page-break-after:avoid}
   .toc-entry{border-bottom:1px solid #E5E7EB}
 }
 `;
