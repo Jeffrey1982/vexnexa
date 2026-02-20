@@ -39,6 +39,7 @@ import {
   Megaphone,
   Building2,
   Upload,
+  Calendar,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -108,6 +109,7 @@ export function AdminSidebar() {
         { href: '/admin/payments', label: 'Payments', icon: DollarSign },
         { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
         { href: '/admin/coupons', label: 'Coupons', icon: Ticket },
+        { href: '/admin/assurance-schedules', label: 'Assurance Schedules', icon: Calendar },
       ]
     },
     {

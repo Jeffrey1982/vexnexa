@@ -95,6 +95,7 @@ model User {
 
   // Scheduled scans
   scheduledScans ScheduledScan[]
+  scanSchedules  ScanSchedule[]  @relation("UserScanSchedules")
 
   // Accessibility Assurance subscriptions
   assuranceSubscriptions AssuranceSubscription[] @relation("AssuranceSubscriptions")
@@ -130,6 +131,7 @@ model Site {
 
   // Scheduled scans
   scheduledScans ScheduledScan[]
+  scanSchedules  ScanSchedule[]  @relation("SiteScanSchedules")
 
   // Soft delete
   deletedAt DateTime?
@@ -1483,4 +1485,91 @@ model CouponRedemption {
   @@index([couponId])
   @@index([userId])
   @@index([redeemedAt])
+}
+
+// ============================================
+// ASSURANCE SCHEDULING SYSTEM
+// ============================================
+
+enum ScheduleFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum DeliverFormat {
+  PDF
+  PDF_AND_DOCX
+  PDF_AND_HTML
+}
+
+model ScanSchedule {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("UserScanSchedules", fields: [userId], references: [id], onDelete: Cascade)
+  siteId String
+  site   Site   @relation("SiteScanSchedules", fields: [siteId], references: [id], onDelete: Cascade)
+
+  // Toggle
+  isEnabled Boolean @default(true)
+
+  // Timezone (IANA)
+  timezone String @default("Europe/Amsterdam")
+
+  // Frequency
+  frequency  ScheduleFrequency @default(WEEKLY)
+  daysOfWeek Int[]             // 0-6 for weekly (0 = Sunday)
+  dayOfMonth Int?              // 1-31 for monthly
+  timeOfDay  String            @default("09:00") // HH:MM
+
+  // Date range
+  startsAt DateTime  @default(now())
+  endsAt   DateTime?
+
+  // Execution tracking
+  lastRunAt DateTime?
+  nextRunAt DateTime
+
+  // Delivery
+  recipients                 String[] // email addresses
+  deliverFormat              DeliverFormat @default(PDF)
+  includeExecutiveSummaryOnly Boolean      @default(false)
+
+  // Failure tracking (admin can disable after repeated failures)
+  consecutiveFailures Int @default(0)
+
+  // Relations
+  runs ScheduleRun[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([siteId])
+  @@index([isEnabled, nextRunAt])
+  @@index([nextRunAt])
+}
+
+model ScheduleRun {
+  id         String       @id @default(cuid())
+  scheduleId String
+  schedule   ScanSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  // Idempotency: the window this run covers (e.g. "2025-02-20T09:00:00Z")
+  windowKey String
+
+  status    String // pending | running | success | failed
+  error     String?
+  scanScore Int?
+
+  // Delivery tracking
+  emailSentAt DateTime?
+  emailId     String? // Resend message ID
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  @@unique([scheduleId, windowKey]) // Idempotency constraint
+  @@index([scheduleId])
+  @@index([status])
 }
