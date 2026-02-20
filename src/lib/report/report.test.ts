@@ -614,7 +614,7 @@ describe("PDF/HTML layout — safe margins & table sizing", () => {
 
   it(".page container has generous padding", () => {
     const html = getHTML();
-    expect(html).toMatch(/\.page\{[^}]*padding:\s*22mm\s+24mm/);
+    expect(html).toMatch(/\.page\{[^}]*padding:\s*22mm\s+var\(--space-lg\)/);
   });
 
   it("evidence table uses table-layout:fixed", () => {
@@ -630,9 +630,9 @@ describe("PDF/HTML layout — safe margins & table sizing", () => {
     expect(html).toMatch(/\.evidence-table th:nth-child\(4\)\{width:45%\}/);
   });
 
-  it("evidence table cells have adequate padding (8px+)", () => {
+  it("evidence table cells have adequate padding (token-based)", () => {
     const html = getHTML();
-    expect(html).toMatch(/\.evidence-table td\{[^}]*padding:\s*8px\s+10px/);
+    expect(html).toMatch(/\.evidence-table td\{[^}]*padding:\s*var\(--space-sm\)\s+var\(--space-sm\)/);
   });
 
   it("print CSS prevents orphan headers", () => {
@@ -1131,9 +1131,113 @@ describe("Layout sanity — no regressions", () => {
     expect(html).toMatch(/\.csb-sep\{[^}]*color:\s*#E5E7EB/);
   });
 
-  it("exec card spacing is tightened (gap 12px, padding 16px)", () => {
+  it("exec card spacing uses design tokens", () => {
     const html = renderReportHTML(getReport());
-    expect(html).toMatch(/\.exec-cards\{[^}]*gap:\s*12px/);
-    expect(html).toMatch(/\.exec-card\{[^}]*padding:\s*16px/);
+    expect(html).toMatch(/\.exec-cards\{[^}]*gap:\s*var\(--space-md\)/);
+    expect(html).toMatch(/\.exec-card\{[^}]*padding:\s*var\(--space-md\)\s+var\(--space-lg\)/);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Enterprise UX Polish — spacing tokens & hardening
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Spacing token system", () => {
+  it("defines all spacing custom properties in :root", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toContain("--space-xs:4px");
+    expect(html).toContain("--space-sm:8px");
+    expect(html).toContain("--space-md:16px");
+    expect(html).toContain("--space-lg:24px");
+    expect(html).toContain("--space-xl:32px");
+    expect(html).toContain("--space-2xl:48px");
+  });
+
+  it("defines monospace font stack as --mono custom property", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/--mono:\s*ui-monospace/);
+    expect(html).toContain("Consolas");
+  });
+
+  it("section titles use spacing tokens for margin and padding", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.section-title\{[^}]*margin-bottom:\s*var\(--space-lg\)/);
+    expect(html).toMatch(/\.section-title\{[^}]*padding-bottom:\s*var\(--space-sm\)/);
+  });
+});
+
+describe("Evidence table hardening", () => {
+  it("evidence table uses table-layout:fixed and full width", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.evidence-table\{[^}]*table-layout:\s*fixed/);
+    expect(html).toMatch(/\.evidence-table\{[^}]*width:\s*100%/);
+  });
+
+  it("ev-mono uses monospace font stack via var(--mono)", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.ev-mono\{[^}]*font-family:\s*var\(--mono\)/);
+  });
+
+  it("ev-url uses monospace font and break-all for long URLs", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.ev-url\{[^}]*font-family:\s*var\(--mono\)/);
+    expect(html).toMatch(/\.ev-url\{[^}]*word-break:\s*break-all/);
+  });
+
+  it("evidence table cells have min-height for readability", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.evidence-table td\{[^}]*min-height:\s*32px/);
+  });
+});
+
+describe("iPad and narrow viewport protection", () => {
+  it("includes iPad-specific media query (768-1024px)", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/min-width:\s*768px.*max-width:\s*1024px/);
+  });
+
+  it("mobile breakpoint stacks exec-health-row vertically", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.exec-health-row\{[^}]*flex-direction:\s*column/);
+  });
+});
+
+describe("Print & PDF hardening", () => {
+  it("print media prevents widows and orphans in paragraphs", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/p\{orphans:\s*3;widows:\s*3\}/);
+  });
+
+  it("print media prevents page breaks inside cards and breakdown", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.breakdown-card.*page-break-inside:\s*avoid/);
+  });
+
+  it("print media repeats table headers for multi-page tables", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.tpf-table thead.*display:\s*table-header-group/);
+    expect(html).toMatch(/\.wcag-matrix-table thead.*display:\s*table-header-group/);
+  });
+
+  it("h3 elements prevent orphan headers in print", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/h3\{page-break-after:\s*avoid\}/);
+  });
+});
+
+describe("Executive summary hero polish", () => {
+  it("health score badge has larger font size (48px)", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.ehb-score\{[^}]*font-size:\s*48px/);
+  });
+
+  it("health score badge uses token-based padding", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.exec-health-badge\{[^}]*padding:\s*var\(--space-md\)\s+var\(--space-lg\)/);
+  });
+
+  it("metric values use tabular-nums for alignment", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toMatch(/\.metric-value\{[^}]*font-variant-numeric:\s*tabular-nums/);
   });
 });
