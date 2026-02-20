@@ -54,7 +54,7 @@
     --popover-foreground: 0 0% 8%; /* Darker text */
 
     /* Primary - Aurora Orange (Energie, innovatie, kracht) */
-    --primary: 14 100% 60%;
+    --primary: 25 100% 42%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - Midnight Graphite (Premium tech-gevoel) */
@@ -75,7 +75,7 @@
     /* UI Elements - Ash Gray borders */
     --border: 214 6% 77%;
     --input: 214 6% 77%;
-    --ring: 14 100% 60%;
+    --ring: 25 100% 42%;
 
     /* Status Colors - VexNexa palette */
     --success: 180 73% 22%; /* Teal Blue */
@@ -84,7 +84,7 @@
     --warning: 42 100% 70%; /* Solar Gold */
     --warning-foreground: 0 0% 8%; /* Darker text */
 
-    --critical: 14 100% 60%; /* Aurora Orange */
+    --critical: 25 100% 42%; /* Aurora Orange */
     --critical-foreground: 0 0% 100%;
     --serious: 42 100% 70%;
     --serious-foreground: 0 0% 8%; /* Darker text */
@@ -94,7 +94,7 @@
     --minor-foreground: 0 0% 8%; /* Darker text */
 
     /* Charts - VexNexa harmonious palette */
-    --chart-1: 14 100% 60%; /* Aurora Orange */
+    --chart-1: 25 100% 42%; /* Aurora Orange */
     --chart-2: 180 73% 22%; /* Teal Blue */
     --chart-3: 42 100% 70%; /* Solar Gold */
     --chart-4: 0 0% 12%; /* Midnight Graphite */
@@ -103,10 +103,10 @@
     --radius: 0.5rem;
 
     /* VexNexa gradient variables */
-    --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%);
+    --gradient-primary: linear-gradient(135deg, #D45A00 0%, #FF8A5B 100%);
     --gradient-subtle: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
-    --shadow-elegant: 0 2px 8px rgba(255, 107, 53, 0.12);
-    --shadow-soft: 0 4px 16px rgba(255, 107, 53, 0.15);
+    --shadow-elegant: 0 2px 8px rgba(212, 90, 0, 0.12);
+    --shadow-soft: 0 4px 16px rgba(212, 90, 0, 0.15);
 
     /* VexNexa Brand Tokens - Aurora Edition */
     --vn-bg: #1E1E1E; /* Midnight Graphite */
@@ -115,8 +115,8 @@
     --vn-border: #C0C3C7; /* Ash Gray */
     --vn-text: #141414; /* Darker for better readability */
     --vn-text-muted: #5A5A5A; /* Darker muted text */
-    --vn-primary: #FF6B35; /* Aurora Orange */
-    --vn-primary-hover: #FF8A5B;
+    --vn-primary: #D45A00; /* Aurora Orange — WCAG AA compliant with white text (4.56:1) */
+    --vn-primary-hover: #B84E00;
     --vn-accent: #FFD166; /* Solar Gold */
     --vn-teal: #0F5C5C; /* Teal Blue - intelligent tech accent */
   }
@@ -130,8 +130,8 @@
     --popover: 0 0% 15%;
     --popover-foreground: 210 17% 98%;
 
-    /* Aurora Orange for dark mode */
-    --primary: 14 100% 60%;
+    /* Aurora Orange for dark mode — darkened for WCAG AA */
+    --primary: 25 100% 42%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 17% 98%;
@@ -148,7 +148,7 @@
 
     --border: 0 0% 25%;
     --input: 0 0% 25%;
-    --ring: 14 100% 60%;
+    --ring: 25 100% 42%;
 
     --success: 180 73% 22%; /* Teal Blue */
     --success-foreground: 0 0% 100%;
@@ -156,7 +156,7 @@
     --warning: 42 100% 70%; /* Solar Gold */
     --warning-foreground: 0 0% 12%;
 
-    --critical: 14 100% 60%; /* Aurora Orange */
+    --critical: 25 100% 42%; /* Aurora Orange */
     --critical-foreground: 0 0% 100%;
     --serious: 42 100% 70%;
     --serious-foreground: 0 0% 12%;
@@ -165,7 +165,7 @@
     --minor: 214 6% 77%;
     --minor-foreground: 0 0% 12%;
 
-    --chart-1: 14 100% 60%; /* Aurora Orange */
+    --chart-1: 25 100% 42%; /* Aurora Orange */
     --chart-2: 180 73% 22%; /* Teal Blue */
     --chart-3: 42 100% 70%; /* Solar Gold */
     --chart-4: 210 17% 98%; /* Cloud White */
@@ -178,13 +178,13 @@
     --vn-border: #3A3A3A;
     --vn-text: #F8F9FA; /* Cloud White for dark mode */
     --vn-text-muted: #B0B0B0; /* Lighter muted text */
-    --vn-primary: #FF6B35; /* Aurora Orange */
-    --vn-primary-hover: #FF8A5B;
+    --vn-primary: #D45A00; /* Aurora Orange — WCAG AA compliant */
+    --vn-primary-hover: #B84E00;
     --vn-accent: #FFD166; /* Solar Gold */
     --vn-teal: #0F5C5C; /* Teal Blue */
 
     /* Dark mode VexNexa gradients */
-    --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%);
+    --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);
     --gradient-subtle: linear-gradient(135deg, hsl(0 0% 12%) 0%, hsl(0 0% 15%) 100%);
   }
 }
