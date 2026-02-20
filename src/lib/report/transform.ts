@@ -390,7 +390,6 @@ export function transformScanToReport(
   ctaConfig?: Partial<CTAConfig>,
   reportStyle?: ReportStyle
 ): ReportData {
-  const score: number = scan.score ?? 0;
   const breakdown: IssueBreakdown = {
     total: scan.issues ?? 0,
     critical: scan.impactCritical ?? 0,
@@ -399,8 +398,12 @@ export function transformScanToReport(
     minor: scan.impactMinor ?? 0,
   };
 
-  const riskLevel: RiskLevel = determineRiskLevel(score, breakdown);
-  const compliancePercentage: number = scan.wcagAACompliance ?? Math.round(score * 0.95);
+  // Canonical health score — single source of truth for the entire report
+  const pagesScanned = 1;
+  const healthScore = computeHealthScore(breakdown, pagesScanned);
+
+  const riskLevel: RiskLevel = determineRiskLevel(healthScore.value, breakdown);
+  const compliancePercentage: number = scan.wcagAACompliance ?? Math.round(healthScore.value * 0.95);
 
   // Extract violations from raw scan data
   let rawViolations: Array<{
@@ -468,8 +471,6 @@ export function transformScanToReport(
     ? scan.createdAt
     : scan.createdAt.toISOString();
 
-  const pagesScanned = 1;
-  const healthScore = computeHealthScore(breakdown, pagesScanned);
   const wcagMatrix = buildWcagMatrix(rawViolations);
   const scanConfig = buildScanConfig(scan, pagesScanned, "axe-core", "4.10");
   const topPriorityFixes = computeTopPriorityFixes(priorityIssues);
@@ -479,14 +480,14 @@ export function transformScanToReport(
     domain: hostname,
     scanDate,
     scanId: scan.id,
-    score,
+    score: healthScore.value,
     complianceLevel: "WCAG 2.2 AA",
     compliancePercentage,
     wcagAAStatus: determineWcagStatus(compliancePercentage),
-    wcagAAAStatus: determineWcagStatus(scan.wcagAAACompliance ?? Math.round(score * 0.7)),
-    eaaReady: score >= 80 && breakdown.critical === 0,
+    wcagAAAStatus: determineWcagStatus(scan.wcagAAACompliance ?? Math.round(healthScore.value * 0.7)),
+    eaaReady: healthScore.value >= 80 && breakdown.critical === 0,
     riskLevel,
-    maturityLevel: determineMaturityLevel(score),
+    maturityLevel: determineMaturityLevel(healthScore.value),
     issueBreakdown: breakdown,
     priorityIssues,
     legalRisk: determineRiskSummary(riskLevel),

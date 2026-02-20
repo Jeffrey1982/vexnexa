@@ -209,7 +209,9 @@ function renderBrandBlock(d: ReportData, primary: string, isDark: boolean): stri
 }
 
 function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
-  const gc = d.score >= 80 ? "#16A34A" : d.score >= 60 ? "#D97706" : "#DC2626";
+  // Use canonical healthScore — single source of truth (same as exec summary)
+  const hs = d.healthScore;
+  const gc = hs.value >= 80 ? "#16A34A" : hs.value >= 60 ? "#D97706" : "#DC2626";
   const isDark = !corp(s);
 
   const pagesAnalyzed = d.pagesScanned ?? d.scanConfig?.pagesAnalyzed ?? 1;
@@ -238,13 +240,14 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
         <div class="cover-meta-cell"><span class="cover-meta-label">Scan Date</span><span class="cover-meta-value">${fmtDate(d.scanDate)}</span></div>
         <div class="cover-meta-cell"><span class="cover-meta-label">Pages Analyzed</span><span class="cover-meta-value">${pagesAnalyzed}</span></div>
       </div>
+      <div class="cover-info-line">${d.issueBreakdown.total} issue${d.issueBreakdown.total !== 1 ? "s" : ""} detected across ${pagesAnalyzed} page${pagesAnalyzed !== 1 ? "s" : ""}</div>
     </div>
     <div class="cover-main-right">
       <div class="cover-score-card-corp">
-        <div class="csc-score" style="color:${gc}">${d.score}</div>
+        <div class="csc-score" style="color:${gc}">${hs.value}</div>
         <div class="csc-of">/100</div>
-        <div class="csc-grade">Grade ${grade(d.score)} &mdash; ${ratingLabel(d.score)}</div>
-        <div class="csc-bar-track"><div class="csc-bar-fill" style="width:${Math.min(100, d.score)}%;background:${gc}"></div></div>
+        <div class="csc-grade">Grade ${hs.grade} &mdash; ${hs.label}</div>
+        <div class="csc-bar-track"><div class="csc-bar-fill" style="width:${Math.min(100, hs.value)}%;background:${gc}"></div></div>
         <div class="csc-meta">
           <span>${d.issueBreakdown.total} issues</span>
           <span>Fix: ${esc(d.estimatedFixTime)}</span>
@@ -287,6 +290,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
         <div class="cover-meta-cell"><span class="cover-meta-label" style="color:rgba(255,255,255,.35)">Scan Date</span><span class="cover-meta-value" style="color:rgba(255,255,255,.7)">${fmtDate(d.scanDate)}</span></div>
         <div class="cover-meta-cell"><span class="cover-meta-label" style="color:rgba(255,255,255,.35)">Pages</span><span class="cover-meta-value" style="color:rgba(255,255,255,.7)">${pagesAnalyzed}</span></div>
       </div>
+      <div class="cover-info-line" style="color:rgba(255,255,255,.4)">${d.issueBreakdown.total} issue${d.issueBreakdown.total !== 1 ? "s" : ""} detected across ${pagesAnalyzed} page${pagesAnalyzed !== 1 ? "s" : ""}</div>
       <div class="cover-kpi-strip">
         <div class="cover-kpi"><span class="cover-kpi-val" style="color:#FCA5A5">${d.issueBreakdown.critical}</span><span class="cover-kpi-lbl">Critical</span></div>
         <div class="cover-kpi"><span class="cover-kpi-val" style="color:#FDBA74">${d.issueBreakdown.serious}</span><span class="cover-kpi-lbl">Serious</span></div>
@@ -296,8 +300,8 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
     </div>
     <div class="cover-main-right">
       <div class="cover-score-card">
-        ${scoreRingSVG(d.score, primary)}
-        <div class="csc-label">${ratingLabel(d.score)}</div>
+        ${scoreRingSVG(hs.value, primary)}
+        <div class="csc-label">${hs.label}</div>
         <div class="csc-risk">Risk: <strong style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</strong></div>
         <div class="csc-fix">Est. fix: <strong>${esc(d.estimatedFixTime)}</strong></div>
       </div>
@@ -869,24 +873,27 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .cover-corp{background:white}
 .cover-title-corp{font-size:28px;font-weight:700;line-height:1.15;color:${dark};letter-spacing:-0.5px;margin-bottom:8px}
 
-/* ── Cover: Audit type label (Task 4) ── */
-.cover-audit-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:#9CA3AF;margin-bottom:8px}
+/* ── Cover: Audit type label ── */
+.cover-audit-label{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#9CA3AF;margin-bottom:8px}
 
-/* ── Cover: Hero domain block (Task 1) ── */
-.cover-domain-block{display:flex;flex-direction:column;gap:2px;margin-bottom:18px}
+/* ── Cover: Hero domain block ── */
+.cover-domain-block{display:flex;flex-direction:column;gap:3px;margin-bottom:20px}
 .cover-domain-label{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#9CA3AF}
-.cover-domain-value{font-size:18px;font-weight:700;line-height:1.3;overflow-wrap:anywhere;word-break:break-word}
+.cover-domain-value{font-size:20px;font-weight:600;line-height:1.3;overflow-wrap:anywhere;word-break:break-word}
 .cover-domain-value-dark{color:white}
 
-/* ── Cover: Meta grid (Task 2) ── */
-.cover-meta-grid{display:grid;grid-template-columns:repeat(4,auto);gap:6px 24px;margin-bottom:16px}
+/* ── Cover: Meta grid ── */
+.cover-meta-grid{display:grid;grid-template-columns:repeat(4,auto);gap:6px 24px;margin-bottom:12px}
 .cover-meta-grid-dark{border-top:1px solid rgba(255,255,255,.08);padding-top:14px;margin-top:4px}
 .cover-meta-cell{display:flex;flex-direction:column;gap:2px}
 .cover-meta-label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:0.8px;color:#9CA3AF;font-weight:600}
 .cover-meta-value{font-size:13px;font-weight:700;color:#374151}
 
-.cover-score-card-corp{background:#F9FAFB;border:1px solid #D1D5DB;border-radius:6px;padding:28px 24px;text-align:center;min-width:200px;
-  box-shadow:0 1px 4px rgba(0,0,0,.04);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+/* ── Cover: Info summary line ── */
+.cover-info-line{font-size:12px;color:#9CA3AF;margin-bottom:14px;line-height:1.4}
+
+.cover-score-card-corp{background:#F9FAFB;border:1px solid #C6CBD2;border-radius:6px;padding:30px 26px;text-align:center;min-width:200px;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-score{font-size:52px;font-weight:800;line-height:1;display:inline}
 .csc-of{font-size:20px;font-weight:400;color:#9CA3AF;display:inline}
 .csc-grade{font-size:13px;color:#6B7280;margin:6px 0 12px}

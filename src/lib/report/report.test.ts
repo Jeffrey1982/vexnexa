@@ -762,3 +762,94 @@ describe("Executive Summary", () => {
     }
   });
 });
+
+/* ═══════════════════════════════════════════════════════════
+   Score Consistency — single canonical source
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Score consistency — cover vs executive summary", () => {
+  it("d.score === d.healthScore.value (single canonical source)", () => {
+    const report = getReport();
+    expect(report.score).toBe(report.healthScore.value);
+  });
+
+  it("score consistency holds across different issue counts", () => {
+    const testCases = [
+      { impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 0, issues: 0 },
+      { impactCritical: 5, impactSerious: 10, impactModerate: 15, impactMinor: 20, issues: 50 },
+      { impactCritical: 50, impactSerious: 50, impactModerate: 50, impactMinor: 50, issues: 200 },
+    ];
+    for (const tc of testCases) {
+      const r = getReport(tc);
+      expect(r.score).toBe(r.healthScore.value);
+    }
+  });
+
+  it("grade label in HTML cover matches exec summary grade", () => {
+    const report = getReport();
+    const html = renderReportHTML(report);
+    const gradeStr = `Grade ${report.healthScore.grade}`;
+    // Must appear at least twice: once in cover, once in exec summary
+    const matches = html.match(new RegExp(gradeStr.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || [];
+    expect(matches.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("cover score value matches exec summary score value in HTML", () => {
+    const report = getReport();
+    const html = renderReportHTML(report);
+    const scoreStr = `${report.healthScore.value}/100`;
+    // Must appear in both cover (csc-meta or csc-score) and exec summary
+    const matches = html.match(new RegExp(scoreStr.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || [];
+    expect(matches.length).toBeGreaterThanOrEqual(2);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Cover Polish — domain prominence, info line, scorecard
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Cover polish — domain, info line, scorecard", () => {
+  function getHTML(): string {
+    return renderReportHTML(getReport());
+  }
+
+  it("domain renders with cover-domain-value class (prominent)", () => {
+    const html = getHTML();
+    expect(html).toContain("cover-domain-value");
+  });
+
+  it("domain block has SCANNED DOMAIN label", () => {
+    const html = getHTML();
+    expect(html).toContain("Scanned Domain");
+  });
+
+  it("domain CSS uses font-size >= 20px and font-weight 600", () => {
+    const html = getHTML();
+    expect(html).toMatch(/\.cover-domain-value\{[^}]*font-size:\s*20px/);
+    expect(html).toMatch(/\.cover-domain-value\{[^}]*font-weight:\s*600/);
+  });
+
+  it("cover info line renders with issue and page count", () => {
+    const html = getHTML();
+    expect(html).toContain("cover-info-line");
+    expect(html).toMatch(/\d+ issues? detected across \d+ pages?/);
+  });
+
+  it("cover info line pluralizes correctly for 1 page", () => {
+    const html = getHTML();
+    expect(html).toContain("across 1 page");
+    expect(html).not.toContain("across 1 pages");
+  });
+
+  it("scorecard has print-safe border and shadow", () => {
+    const html = getHTML();
+    expect(html).toMatch(/\.cover-score-card-corp\{[^}]*border:\s*1px solid/);
+    expect(html).toMatch(/\.cover-score-card-corp\{[^}]*print-color-adjust:\s*exact/);
+  });
+
+  it("audit type label appears above title", () => {
+    const html = getHTML();
+    expect(html).toContain("cover-audit-label");
+    expect(html).toContain("Automated Accessibility Audit");
+  });
+});
