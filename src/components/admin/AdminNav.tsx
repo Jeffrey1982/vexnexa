@@ -229,7 +229,7 @@ export function AdminNav({ user }: AdminNavProps) {
                               className={cn(
                                 'flex items-center gap-3 px-4 py-3 text-sm transition-colors',
                                 itemActive
-                                  ? 'bg-orange-50 text-orange-600 font-medium'
+                                  ? 'bg-orange-50 dark:bg-orange-950/30 text-orange-600 font-medium'
                                   : 'text-gray-700 dark:text-muted-foreground hover:bg-gray-50'
                               )}
                               onClick={() => setOpenDropdown(null)}

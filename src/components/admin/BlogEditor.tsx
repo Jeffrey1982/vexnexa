@@ -212,9 +212,9 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
       <div className="flex items-center justify-between">
         <div className="flex-1">
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+            <div className="p-3 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-2">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-red-800">{error}</p>
+              <p className="text-sm text-red-800 dark:text-red-300">{error}</p>
             </div>
           )}
         </div>
@@ -404,7 +404,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   type="button"
                   onClick={() => coverImageInputRef.current?.click()}
                   disabled={uploadingCover}
-                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-950/30 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors disabled:bg-[var(--vn-disabled-bg)] disabled:text-[var(--vn-disabled-fg)] disabled:opacity-100"
                 >
                   {uploadingCover ? (
                     <>
@@ -422,7 +422,7 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, coverImage: '' })}
-                    className="px-3 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                    className="px-3 py-2 text-red-600 bg-red-50 dark:bg-red-950/30 rounded-lg hover:bg-red-100 transition-colors"
                     title="Remove image"
                   >
                     <X className="w-4 h-4" />

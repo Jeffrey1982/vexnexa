@@ -283,7 +283,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-green-50 rounded-lg border border-green-200"
+                className="p-4 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800"
               >
                 <div className="text-center">
                   <DollarSign className="h-6 w-6 mx-auto mb-2 text-green-600" />
@@ -298,7 +298,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="p-4 bg-blue-50 rounded-lg border border-blue-200"
+                className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800"
               >
                 <div className="text-center">
                   <Clock className="h-6 w-6 mx-auto mb-2 text-blue-600" />
@@ -388,7 +388,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                       icon: <TrendingUp className="h-4 w-4" />
                     }
                   ].map((metric, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-white/[0.03] rounded-lg">
                       <div className="flex items-center gap-2">
                         {metric.icon}
                         <div>
@@ -406,19 +406,19 @@ export function ROICalculator({ className }: ROICalculatorProps) {
             <Card className="p-4">
               <h4 className="font-semibold mb-3">Investment Summary</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-3 bg-red-50 rounded-lg">
+                <div className="text-center p-3 bg-red-50 dark:bg-red-950/30 rounded-lg">
                   <div className="text-lg font-bold text-red-600">
                     {formatCurrency(calculations.totalCosts)}
                   </div>
                   <div className="text-sm text-muted-foreground">Total Investment</div>
                 </div>
-                <div className="text-center p-3 bg-green-50 rounded-lg">
+                <div className="text-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
                   <div className="text-lg font-bold text-green-600">
                     {formatCurrency(calculations.totalBenefits)}
                   </div>
                   <div className="text-sm text-muted-foreground">Total Benefits</div>
                 </div>
-                <div className="text-center p-3 bg-blue-50 rounded-lg">
+                <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                   <div className="text-lg font-bold text-blue-600">
                     {formatCurrency(calculations.totalBenefits - calculations.totalCosts)}
                   </div>

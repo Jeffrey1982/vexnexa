@@ -149,7 +149,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 dark:bg-white/[0.03] rounded-lg"
           >
             <div className="text-center">
               <div className="text-2xl font-bold">{statistics.avgScore.toFixed(1)}</div>
@@ -267,7 +267,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <motion.div
-                          className="bg-blue-500 h-2 rounded-full"
+                          className="bg-blue-50 dark:bg-blue-950/300 h-2 rounded-full"
                           initial={{ width: 0 }}
                           animate={{ width: `${milestone.progress}%` }}
                           transition={{ duration: 1, delay: index * 0.2 }}
@@ -294,7 +294,7 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-3 p-2 rounded-lg bg-gray-50"
+                      className="flex items-center gap-3 p-2 rounded-lg bg-gray-50 dark:bg-white/[0.03]"
                     >
                       {item.icon}
                       <div>
@@ -341,9 +341,9 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                   </div>
                 </Card>
 
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <h5 className="font-semibold text-blue-900 mb-2">Recommendations</h5>
-                  <ul className="text-sm text-blue-800 space-y-1">
+                <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <h5 className="font-semibold text-blue-900 dark:text-blue-200 mb-2">Recommendations</h5>
+                  <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-1">
                     {prediction.trend.includes('decline') && (
                       <>
                         <li>• Prioritize fixing critical accessibility issues</li>

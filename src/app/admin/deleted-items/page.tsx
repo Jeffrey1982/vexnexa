@@ -146,10 +146,10 @@ export default function DeletedItemsPage() {
 
   const getTypeBadge = (type: string) => {
     const colors: Record<string, string> = {
-      user: 'bg-blue-100 text-blue-800',
-      site: 'bg-green-100 text-green-800',
+      user: 'bg-blue-100 text-blue-800 dark:text-blue-300',
+      site: 'bg-green-100 text-green-800 dark:text-green-300',
       scan: 'bg-purple-100 text-purple-800',
-      portfolio: 'bg-yellow-100 text-yellow-800',
+      portfolio: 'bg-yellow-100 text-yellow-800 dark:text-yellow-300',
     }
 
     return (
@@ -179,15 +179,15 @@ export default function DeletedItemsPage() {
         {message && (
           <div className={`mb-6 p-4 rounded-lg ${
             message.type === 'success'
-              ? 'bg-green-100 text-green-800 border border-green-200'
-              : 'bg-red-100 text-red-800 border border-red-200'
+              ? 'bg-green-100 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800'
+              : 'bg-red-100 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800'
           }`}>
             <p className="font-medium">{message.text}</p>
           </div>
         )}
 
         {/* Info about soft-delete retention */}
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+        <div className="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-400 p-4 mb-6">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
@@ -195,7 +195,7 @@ export default function DeletedItemsPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm text-blue-700">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
                 <strong>Soft-delete recovery:</strong> Deleted items are retained for 30 days and can be restored below.
                 After 30 days, items are automatically purged permanently.
               </p>

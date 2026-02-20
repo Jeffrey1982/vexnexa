@@ -271,7 +271,7 @@ export default function BlogManagement() {
                       <Eye className="w-4 h-4" />
                       {post.views} views
                     </span>
-                    <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">
+                    <span className="px-2 py-1 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 rounded text-xs">
                       {post.category}
                     </span>
                     {post.tags.length > 0 && (
@@ -299,7 +299,7 @@ export default function BlogManagement() {
                       href={`/blog/${post.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 dark:bg-blue-950/30 rounded-lg transition-colors"
                       title="View post"
                     >
                       <Eye className="w-4 h-4" />
@@ -307,14 +307,14 @@ export default function BlogManagement() {
                   )}
                   <button
                     onClick={() => handleEdit(post)}
-                    className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="p-2 text-muted-foreground hover:text-blue-600 hover:bg-blue-50 dark:bg-blue-950/30 rounded-lg transition-colors"
                     title="Edit post"
                   >
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(post.slug)}
-                    className="p-2 text-muted-foreground hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:bg-red-950/30 rounded-lg transition-colors"
                     title="Delete post"
                   >
                     <Trash2 className="w-4 h-4" />

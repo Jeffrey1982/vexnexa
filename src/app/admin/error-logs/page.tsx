@@ -91,7 +91,7 @@ export default function ErrorLogsPage() {
 
         {/* System Status */}
         {errorData && errorData.totalErrors24h === 0 && (
-          <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+          <div className="bg-green-50 dark:bg-green-950/30 border-l-4 border-green-400 p-4 mb-6">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
@@ -113,7 +113,7 @@ export default function ErrorLogsPage() {
             <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Error Summary (Last 24h)</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">Total Errors</div>
                     <div className="text-2xl font-bold text-red-600">
@@ -122,7 +122,7 @@ export default function ErrorLogsPage() {
                   </div>
                   <div className="text-3xl">🔴</div>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">Critical Errors</div>
                     <div className="text-2xl font-bold text-orange-600">
@@ -137,7 +137,7 @@ export default function ErrorLogsPage() {
             <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Error Rate Trends</h2>
               <div className="space-y-4">
-                <div className="p-4 bg-green-50 rounded-lg text-center">
+                <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-lg text-center">
                   <div className="text-sm text-muted-foreground mb-2">System Status</div>
                   <div className="text-xl font-bold text-green-600">Healthy</div>
                   <div className="text-xs text-muted-foreground mt-1">No error tracking configured</div>
@@ -162,8 +162,8 @@ export default function ErrorLogsPage() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <span className={`px-2 py-1 text-xs font-medium rounded ${
-                          error.level === 'critical' ? 'bg-red-100 text-red-800' :
-                          error.level === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                          error.level === 'critical' ? 'bg-red-100 text-red-800 dark:text-red-300' :
+                          error.level === 'warning' ? 'bg-yellow-100 text-yellow-800 dark:text-yellow-300' :
                           'bg-orange-100 text-orange-800'
                         }`}>
                           {error.level.toUpperCase()}
@@ -173,7 +173,7 @@ export default function ErrorLogsPage() {
                           <span className="text-sm text-muted-foreground">• {error.userEmail}</span>
                         )}
                         {error.resolved && (
-                          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
+                          <span className="px-2 py-1 bg-green-100 text-green-800 dark:text-green-300 text-xs font-medium rounded">
                             RESOLVED
                           </span>
                         )}
@@ -235,9 +235,9 @@ export default function ErrorLogsPage() {
               </div>
             </div>
 
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold mb-2 text-blue-900">Benefits of Error Tracking:</h3>
-              <ul className="list-disc list-inside text-sm text-blue-800 space-y-1">
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+              <h3 className="font-semibold mb-2 text-blue-900 dark:text-blue-200">Benefits of Error Tracking:</h3>
+              <ul className="list-disc list-inside text-sm text-blue-800 dark:text-blue-300 space-y-1">
                 <li>Real-time error notifications</li>
                 <li>Stack traces with source maps</li>
                 <li>User context and session replay</li>

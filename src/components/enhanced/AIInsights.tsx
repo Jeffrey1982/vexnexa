@@ -73,21 +73,21 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
   const getPriorityColor = useCallback((priority: string) => {
     switch (priority) {
       case 'high':
-        return 'border-red-200 bg-red-50';
+        return 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30';
       case 'medium':
         return 'border-yellow-200 bg-yellow-50';
       case 'low':
-        return 'border-green-200 bg-green-50';
+        return 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30';
       default:
-        return 'border-gray-200 bg-gray-50';
+        return 'border-gray-200 dark:border-white/[0.06] bg-gray-50 dark:bg-white/[0.03]';
     }
   }, []);
 
   const getEffortBadge = useCallback((effort: string) => {
     const colors = {
-      low: 'bg-green-100 text-green-800',
+      low: 'bg-green-100 text-green-800 dark:text-green-300',
       medium: 'bg-yellow-100 text-yellow-800',
-      high: 'bg-red-100 text-red-800'
+      high: 'bg-red-100 text-red-800 dark:text-red-300'
     };
     return colors[effort as keyof typeof colors] || colors.medium;
   }, []);
@@ -121,10 +121,10 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-center p-4 bg-red-50 rounded-lg"
+            className="text-center p-4 bg-red-50 dark:bg-red-950/30 rounded-lg"
           >
             <AlertTriangle className="h-6 w-6 mx-auto mb-2 text-red-600" />
-            <div className="text-2xl font-bold text-red-800">{priorityStats.high}</div>
+            <div className="text-2xl font-bold text-red-800 dark:text-red-300">{priorityStats.high}</div>
             <div className="text-sm text-red-600">Critical Issues</div>
           </motion.div>
 
@@ -132,10 +132,10 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-center p-4 bg-blue-50 rounded-lg"
+            className="text-center p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg"
           >
             <TrendingUp className="h-6 w-6 mx-auto mb-2 text-blue-600" />
-            <div className="text-2xl font-bold text-blue-800">+{priorityStats.totalImprovement}</div>
+            <div className="text-2xl font-bold text-blue-800 dark:text-blue-300">+{priorityStats.totalImprovement}</div>
             <div className="text-sm text-blue-600">Potential Score Gain</div>
           </motion.div>
 
@@ -143,10 +143,10 @@ export function AIInsights({ violations, currentScore, trend, className }: AIIns
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-center p-4 bg-green-50 rounded-lg"
+            className="text-center p-4 bg-green-50 dark:bg-green-950/30 rounded-lg"
           >
             <CheckCircle className="h-6 w-6 mx-auto mb-2 text-green-600" />
-            <div className="text-2xl font-bold text-green-800">
+            <div className="text-2xl font-bold text-green-800 dark:text-green-300">
               {Math.round(insights.reduce((sum, i) => sum + i.insight.confidence, 0) / insights.length)}%
             </div>
             <div className="text-sm text-green-600">Avg Confidence</div>

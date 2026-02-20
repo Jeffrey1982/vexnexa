@@ -182,7 +182,7 @@ export default async function AdminHealthPage() {
 
   const getRiskBadge = (score: number) => {
     if (score >= 50) return <Badge variant="destructive">Critical</Badge>;
-    if (score >= 30) return <Badge className="bg-orange-500">High</Badge>;
+    if (score >= 30) return <Badge className="bg-orange-50 dark:bg-orange-950/300">High</Badge>;
     return <Badge variant="outline" className="border-yellow-500 text-yellow-600">Medium</Badge>;
   };
 
@@ -304,7 +304,7 @@ export default async function AdminHealthPage() {
                           <div className="space-y-1">
                             {user.riskFactors.map((factor, idx) => (
                               <div key={idx} className="text-xs text-muted-foreground flex items-center gap-1">
-                                <div className="w-1 h-1 bg-red-500 rounded-full"></div>
+                                <div className="w-1 h-1 bg-red-50 dark:bg-red-950/300 rounded-full"></div>
                                 {factor}
                               </div>
                             ))}

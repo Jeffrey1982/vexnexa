@@ -223,7 +223,7 @@ export default async function AdminSeoIndexHealthPage() {
                 <div key={day.date} className="flex flex-col items-center gap-1">
                   <div className="w-full h-32 bg-gray-100 rounded relative overflow-hidden">
                     <div
-                      className="absolute bottom-0 w-full bg-blue-500"
+                      className="absolute bottom-0 w-full bg-blue-50 dark:bg-blue-950/300"
                       style={{ height: `${percentage}%` }}
                     />
                   </div>
@@ -306,7 +306,7 @@ export default async function AdminSeoIndexHealthPage() {
                   action.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   action.severity === 'high' ? 'bg-orange-100 text-orange-700' :
                   action.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                  'bg-blue-100 text-blue-700'
+                  'bg-blue-100 text-blue-700 dark:text-blue-300'
                 }`}>
                   {action.severity}
                 </div>

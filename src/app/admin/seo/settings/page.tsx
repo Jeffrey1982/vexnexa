@@ -95,14 +95,14 @@ export default async function AdminSeoSettingsPage() {
       />
 
       {/* Environment Variables Info */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
         <div className="flex items-start gap-3">
           <BookOpen className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
-            <h3 className="text-sm font-semibold text-blue-900 mb-1">
+            <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
               Environment Variables Configured ✅
             </h3>
-            <p className="text-sm text-blue-800 mb-2">
+            <p className="text-sm text-blue-800 dark:text-blue-300 mb-2">
               All required environment variables are set in Vercel:
             </p>
             <div className="bg-white dark:bg-card border border-blue-200 dark:border-blue-500/20 rounded p-3 font-mono text-xs space-y-1">
@@ -126,7 +126,7 @@ export default async function AdminSeoSettingsPage() {
                 <span className="text-green-600">✓</span> NEXT_PUBLIC_GA4_MEASUREMENT_ID
               </div>
             </div>
-            <p className="text-xs text-blue-700 mt-2">
+            <p className="text-xs text-blue-700 dark:text-blue-300 mt-2">
               Next step: Click "Trigger Now" below to populate your dashboard with data.
             </p>
           </div>
@@ -169,7 +169,7 @@ export default async function AdminSeoSettingsPage() {
                       rule.severity === 'critical' ? 'bg-red-100 text-red-700' :
                       rule.severity === 'high' ? 'bg-orange-100 text-orange-700' :
                       rule.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-blue-100 text-blue-700'
+                      'bg-blue-100 text-blue-700 dark:text-blue-300'
                     }`}>
                       {rule.severity}
                     </div>

@@ -530,8 +530,8 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
-                <div className="bg-red-50 border border-red-200 rounded p-3">
-                  <p className="text-sm text-red-800 font-medium">What will be deleted:</p>
+                <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded p-3">
+                  <p className="text-sm text-red-800 dark:text-red-300 font-medium">What will be deleted:</p>
                   <ul className="text-sm text-red-700 mt-2 space-y-1">
                     <li>• User account and profile</li>
                     <li>• All websites and scans</li>

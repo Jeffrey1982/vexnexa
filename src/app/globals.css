@@ -128,6 +128,18 @@
     /* Disabled state tokens — no opacity, explicit colors */
     --vn-disabled-bg: #D1D5DB; /* gray-300 */
     --vn-disabled-fg: #6B7280; /* gray-500 — 4.64:1 on gray-300, 5.03:1 on white */
+
+    /* ═══════════════════════════════════════════
+       SELECTION STATE TOKENS (Light)
+       ═══════════════════════════════════════════
+       Selected bg stays tinted, text stays dark.
+       Contrast: --foreground on --selected-bg ≥ 10:1
+       ═══════════════════════════════════════════ */
+    --selected-bg: 25 100% 97%;          /* very subtle orange tint — #FFF8F5 */
+    --selected-border: 25 100% 42%;      /* Aurora Orange — matches --primary */
+    --selected-ring: 25 100% 42% / 0.35; /* primary at 35% opacity for ring */
+    --selected-text: 0 0% 8%;            /* same as --foreground */
+    --selected-text-muted: 0 0% 35%;     /* same as --muted-foreground */
   }
   
   .dark {
@@ -224,6 +236,19 @@
     /* Dark mode shadows — tinted for depth without glow */
     --shadow-elegant: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    /* ═══════════════════════════════════════════
+       SELECTION STATE TOKENS (Dark)
+       ═══════════════════════════════════════════
+       Selected bg stays DARK — slightly lighter than card.
+       Accent ring/border for emphasis, NOT light fill.
+       Contrast: --foreground (#F5F5F5) on --selected-bg (#1F1F23) = 14.5:1 ✓
+       ═══════════════════════════════════════════ */
+    --selected-bg: 240 4% 12%;            /* #1F1F23 — surface-3, one step above card */
+    --selected-border: 25 100% 42%;       /* Aurora Orange — matches --primary */
+    --selected-ring: 25 100% 50% / 0.35;  /* primary at 35% opacity for ring */
+    --selected-text: 0 0% 96%;            /* same as --foreground */
+    --selected-text-muted: 240 5% 65%;    /* same as --muted-foreground */
   }
 }
 
@@ -453,6 +478,33 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
+  /* ═══════════════════════════════════════════
+     ADMIN SELECTION UTILITIES
+     ═══════════════════════════════════════════
+     Reusable classes for selected/active states.
+     Guarantees readable text in both themes.
+     ═══════════════════════════════════════════ */
+  .admin-selected {
+    background-color: hsl(var(--selected-bg));
+    border-color: hsl(var(--selected-border));
+    color: hsl(var(--selected-text));
+    box-shadow: 0 0 0 1px hsl(var(--selected-ring));
+  }
+
+  .admin-selected-row {
+    background-color: hsl(var(--selected-bg));
+    color: hsl(var(--selected-text));
+    box-shadow: inset 2px 0 0 hsl(var(--selected-border));
+  }
+
+  .admin-selected-text {
+    color: hsl(var(--selected-text));
+  }
+
+  .admin-selected-text-muted {
+    color: hsl(var(--selected-text-muted));
+  }
+
   .gradient-primary {
     background: var(--gradient-primary);
   }

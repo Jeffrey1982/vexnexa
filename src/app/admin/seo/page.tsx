@@ -254,8 +254,8 @@ export default async function AdminSeoPage() {
                   <div className="w-full h-32 bg-gray-100 rounded relative overflow-hidden">
                     <div
                       className={`absolute bottom-0 w-full ${
-                        percentage >= 75 ? 'bg-green-500' :
-                        percentage >= 50 ? 'bg-yellow-500' : 'bg-red-500'
+                        percentage >= 75 ? 'bg-green-50 dark:bg-green-950/300' :
+                        percentage >= 50 ? 'bg-yellow-50 dark:bg-yellow-950/300' : 'bg-red-50 dark:bg-red-950/300'
                       }`}
                       style={{ height: `${percentage}%` }}
                     />
@@ -292,7 +292,7 @@ export default async function AdminSeoPage() {
                   alert.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   alert.severity === 'high' ? 'bg-orange-100 text-orange-700' :
                   alert.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                  'bg-blue-100 text-blue-700'
+                  'bg-blue-100 text-blue-700 dark:text-blue-300'
                 }`}>
                   {alert.severity}
                 </div>
@@ -327,7 +327,7 @@ export default async function AdminSeoPage() {
                   action.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   action.severity === 'high' ? 'bg-orange-100 text-orange-700' :
                   action.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                  'bg-blue-100 text-blue-700'
+                  'bg-blue-100 text-blue-700 dark:text-blue-300'
                 }`}>
                   {action.pillar}
                 </div>

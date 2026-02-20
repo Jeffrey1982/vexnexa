@@ -50,7 +50,7 @@ export function ViolationMapper({ violations, websiteUrl, className }: Violation
       case 'critical':
         return 'bg-red-600 border-red-700 text-white';
       case 'serious':
-        return 'bg-red-500 border-red-600 text-white';
+        return 'bg-red-50 dark:bg-red-950/300 border-red-600 text-white';
       case 'moderate':
         return 'bg-amber-500 border-amber-600 text-white';
       case 'minor':
@@ -270,7 +270,7 @@ export function ViolationMapper({ violations, websiteUrl, className }: Violation
         )}
 
         {/* Privacy Notice */}
-        <div className="mt-6 p-3 bg-green-50 rounded-lg border border-green-200 text-xs text-green-700">
+        <div className="mt-6 p-3 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800 text-xs text-green-700">
           <strong>Privacy-Respecting Approach:</strong> This mapper uses only the DOM selector and HTML context data from your accessibility scan results. No external website content is captured or stored.
         </div>
       </CardContent>

@@ -183,7 +183,7 @@ export function UserUsageAnalytics({
         )}
 
         {sitesPercent >= 80 || pagesPercent >= 80 || usersPercent >= 80 ? (
-          <div className="pt-4 border-t bg-orange-50 -mx-6 -mb-6 px-6 py-4 rounded-b-lg">
+          <div className="pt-4 border-t bg-orange-50 dark:bg-orange-950/30 -mx-6 -mb-6 px-6 py-4 rounded-b-lg">
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-5 h-5 text-orange-600 mt-0.5" />
               <div>

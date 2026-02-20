@@ -63,9 +63,9 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
   };
 
   const getScoreBg = (score: number) => {
-    if (score >= 80) return 'bg-green-50 border-green-200';
+    if (score >= 80) return 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800';
     if (score >= 60) return 'bg-yellow-50 border-yellow-200';
-    return 'bg-red-50 border-red-200';
+    return 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800';
   };
 
   const getScoreLabel = (score: number) => {
@@ -151,13 +151,13 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 }}
-            className="p-4 bg-red-50 rounded-lg border border-red-200"
+            className="p-4 bg-red-50 dark:bg-red-950/30 rounded-lg border border-red-200 dark:border-red-800"
           >
             <div className="flex items-center justify-between mb-2">
               <AlertTriangle className="h-5 w-5 text-red-600" />
               <span className="text-2xl font-bold text-red-600">{data.issues.critical}</span>
             </div>
-            <div className="text-sm font-medium text-red-800">Critical Issues</div>
+            <div className="text-sm font-medium text-red-800 dark:text-red-300">Critical Issues</div>
             <div className="text-xs text-red-600">Require immediate attention</div>
           </motion.div>
 
@@ -165,13 +165,13 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="p-4 bg-blue-50 rounded-lg border border-blue-200"
+            className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800"
           >
             <div className="flex items-center justify-between mb-2">
               <Shield className="h-5 w-5 text-blue-600" />
               <span className="text-2xl font-bold text-blue-600">{data.wcagCompliance.aa}%</span>
             </div>
-            <div className="text-sm font-medium text-blue-800">WCAG AA</div>
+            <div className="text-sm font-medium text-blue-800 dark:text-blue-300">WCAG AA</div>
             <div className="text-xs text-blue-600">Compliance level</div>
           </motion.div>
 
@@ -179,13 +179,13 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="p-4 bg-green-50 rounded-lg border border-green-200"
+            className="p-4 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800"
           >
             <div className="flex items-center justify-between mb-2">
               <Users className="h-5 w-5 text-green-600" />
               <span className="text-2xl font-bold text-green-600">{formatNumber(data.businessImpact.potentialUsers)}</span>
             </div>
-            <div className="text-sm font-medium text-green-800">Users Impacted</div>
+            <div className="text-sm font-medium text-green-800 dark:text-green-300">Users Impacted</div>
             <div className="text-xs text-green-600">Potential reach improvement</div>
           </motion.div>
 
@@ -242,12 +242,12 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
           <h4 className="font-semibold text-lg">Issues Breakdown</h4>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'Critical', count: data.issues.critical, color: 'bg-red-500' },
+              { label: 'Critical', count: data.issues.critical, color: 'bg-red-50 dark:bg-red-950/300' },
               { label: 'Serious', count: data.issues.serious, color: 'bg-orange-500' },
               { label: 'Moderate', count: data.issues.moderate, color: 'bg-yellow-500' },
-              { label: 'Minor', count: data.issues.minor, color: 'bg-gray-500' },
+              { label: 'Minor', count: data.issues.minor, color: 'bg-gray-50 dark:bg-white/[0.03]0' },
             ].map((issue, index) => (
-              <div key={index} className="text-center p-3 bg-gray-50 rounded-lg">
+              <div key={index} className="text-center p-3 bg-gray-50 dark:bg-white/[0.03] rounded-lg">
                 <div className={`w-4 h-4 rounded-full ${issue.color} mx-auto mb-2`} />
                 <div className="text-lg font-bold">{issue.count}</div>
                 <div className="text-sm text-muted-foreground">{issue.label}</div>
@@ -277,10 +277,10 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
                 key={index}
                 className={`p-4 rounded-lg border-l-4 ${
                   rec.priority === 'high'
-                    ? 'border-red-500 bg-red-50'
+                    ? 'border-red-500 bg-red-50 dark:bg-red-950/30'
                     : rec.priority === 'medium'
                     ? 'border-yellow-500 bg-yellow-50'
-                    : 'border-green-500 bg-green-50'
+                    : 'border-green-500 bg-green-50 dark:bg-green-950/30'
                 }`}
               >
                 <div className="flex justify-between items-start mb-2">
@@ -336,9 +336,9 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
           >
-            <Alert className="border-red-200 bg-red-50">
+            <Alert className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30">
               <AlertTriangle className="h-4 w-4 text-red-600" />
-              <AlertDescription className="text-red-800">
+              <AlertDescription className="text-red-800 dark:text-red-300">
                 <strong>Critical Action Required:</strong> {data.issues.critical} critical accessibility
                 issues found that may expose your organization to legal risk and prevent users with
                 disabilities from accessing your content. Immediate remediation is recommended.
@@ -354,9 +354,9 @@ export function ExecutiveSummary({ data, className }: ExecutiveSummaryProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
           >
-            <Alert className="border-green-200 bg-green-50">
+            <Alert className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30">
               <CheckCircle className="h-4 w-4 text-green-600" />
-              <AlertDescription className="text-green-800">
+              <AlertDescription className="text-green-800 dark:text-green-300">
                 <strong>Excellent Accessibility:</strong> Your website demonstrates strong
                 accessibility practices. Continue monitoring and maintaining these high standards
                 to ensure ongoing compliance and inclusive user experience.

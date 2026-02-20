@@ -104,20 +104,20 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
 
   const getImpactColor = (impact: string) => {
     switch (impact) {
-      case 'critical': return 'bg-red-500';
+      case 'critical': return 'bg-red-50 dark:bg-red-950/300';
       case 'serious': return 'bg-orange-500';
       case 'moderate': return 'bg-yellow-500';
-      case 'minor': return 'bg-gray-500';
+      case 'minor': return 'bg-gray-50 dark:bg-white/[0.03]0';
       default: return 'bg-gray-300';
     }
   };
 
   const getEffortColor = (effort: string) => {
     switch (effort) {
-      case 'low': return 'text-green-600 bg-green-50';
+      case 'low': return 'text-green-600 bg-green-50 dark:bg-green-950/30';
       case 'medium': return 'text-yellow-600 bg-yellow-50';
-      case 'high': return 'text-red-600 bg-red-50';
-      default: return 'text-muted-foreground bg-gray-50';
+      case 'high': return 'text-red-600 bg-red-50 dark:bg-red-950/30';
+      default: return 'text-muted-foreground bg-gray-50 dark:bg-white/[0.03]';
     }
   };
 
@@ -175,10 +175,10 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
   const renderMatrixView = () => (
     <div className="space-y-4">
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-200">
+        <table className="w-full border-collapse border border-gray-200 dark:border-white/[0.06]">
           <thead>
-            <tr className="bg-gray-50">
-              <th className="border border-gray-200 p-2 text-left">
+            <tr className="bg-gray-50 dark:bg-white/[0.03]">
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">
                 <Checkbox
                   checked={selectedIssues.length === filteredAndSortedIssues.length}
                   onCheckedChange={(checked) => {
@@ -190,14 +190,14 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                   }}
                 />
               </th>
-              <th className="border border-gray-200 p-2 text-left">Priority</th>
-              <th className="border border-gray-200 p-2 text-left">Issue</th>
-              <th className="border border-gray-200 p-2 text-left">Impact</th>
-              <th className="border border-gray-200 p-2 text-left">Effort</th>
-              <th className="border border-gray-200 p-2 text-left">Category</th>
-              <th className="border border-gray-200 p-2 text-left">Status</th>
-              <th className="border border-gray-200 p-2 text-left">Hours</th>
-              <th className="border border-gray-200 p-2 text-left">Business Value</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Priority</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Issue</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Impact</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Effort</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Category</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Status</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Hours</th>
+              <th className="border border-gray-200 dark:border-white/[0.06] p-2 text-left">Business Value</th>
             </tr>
           </thead>
           <tbody>
@@ -207,21 +207,21 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className={`hover:bg-gray-50 ${selectedIssues.includes(issue.id) ? 'bg-blue-50' : ''}`}
+                className={`hover:bg-gray-50 dark:hover:bg-white/[0.03] ${selectedIssues.includes(issue.id) ? 'admin-selected-row' : ''}`}
               >
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <Checkbox
                     checked={selectedIssues.includes(issue.id)}
                     onCheckedChange={() => handleIssueSelect(issue.id)}
                   />
                 </td>
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <div className="flex items-center gap-2">
                     <div className={`w-3 h-3 rounded-full ${getImpactColor(issue.impact)}`} />
                     <span className="font-semibold">{getPriorityScore(issue).toFixed(1)}</span>
                   </div>
                 </td>
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <div>
                     <div className="font-semibold text-sm">{issue.rule}</div>
                     <div className="text-xs text-muted-foreground truncate max-w-xs">
@@ -232,7 +232,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                     </div>
                   </div>
                 </td>
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <Badge
                     variant={issue.impact === 'critical' ? 'destructive' : 'secondary'}
                     className="capitalize"
@@ -240,18 +240,18 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                     {issue.impact}
                   </Badge>
                 </td>
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <Badge className={`capitalize ${getEffortColor(issue.effort)}`}>
                     {issue.effort}
                   </Badge>
                 </td>
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <div className="flex items-center gap-2">
                     {getCategoryIcon(issue.category)}
                     <span className="text-sm capitalize">{issue.category}</span>
                   </div>
                 </td>
-                <td className="border border-gray-200 p-2">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2">
                   <div className="flex items-center gap-2">
                     {getStatusIcon(issue.status)}
                     <Select
@@ -272,10 +272,10 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                     </Select>
                   </div>
                 </td>
-                <td className="border border-gray-200 p-2 text-center">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2 text-center">
                   {issue.estimatedHours}h
                 </td>
-                <td className="border border-gray-200 p-2 text-center">
+                <td className="border border-gray-200 dark:border-white/[0.06] p-2 text-center">
                   <div className="text-sm font-semibold">{issue.businessValue}</div>
                 </td>
               </motion.tr>
@@ -288,10 +288,10 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
 
   const renderKanbanView = () => {
     const columns = [
-      { status: 'not-started', title: 'To Do', color: 'bg-gray-50' },
-      { status: 'in-progress', title: 'In Progress', color: 'bg-blue-50' },
-      { status: 'blocked', title: 'Blocked', color: 'bg-red-50' },
-      { status: 'completed', title: 'Completed', color: 'bg-green-50' }
+      { status: 'not-started', title: 'To Do', color: 'bg-gray-50 dark:bg-white/[0.03]' },
+      { status: 'in-progress', title: 'In Progress', color: 'bg-blue-50 dark:bg-blue-950/30' },
+      { status: 'blocked', title: 'Blocked', color: 'bg-red-50 dark:bg-red-950/30' },
+      { status: 'completed', title: 'Completed', color: 'bg-green-50 dark:bg-green-950/30' }
     ];
 
     return (
@@ -386,11 +386,11 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
       <CardContent className="space-y-6">
         {/* Stats Overview */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="text-center p-3 bg-blue-50 rounded-lg">
+          <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
             <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
             <div className="text-sm text-muted-foreground">Total Issues</div>
           </div>
-          <div className="text-center p-3 bg-green-50 rounded-lg">
+          <div className="text-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
             <div className="text-2xl font-bold text-green-600">{stats.completed}</div>
             <div className="text-sm text-muted-foreground">Completed</div>
           </div>
@@ -398,7 +398,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
             <div className="text-2xl font-bold text-yellow-600">{stats.inProgress}</div>
             <div className="text-sm text-muted-foreground">In Progress</div>
           </div>
-          <div className="text-center p-3 bg-red-50 rounded-lg">
+          <div className="text-center p-3 bg-red-50 dark:bg-red-950/30 rounded-lg">
             <div className="text-2xl font-bold text-red-600">{stats.blocked}</div>
             <div className="text-sm text-muted-foreground">Blocked</div>
           </div>
@@ -477,7 +477,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200"
+            className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800"
           >
             <span className="text-sm font-medium">{selectedIssues.length} issues selected</span>
             <div className="flex gap-2">
@@ -556,7 +556,7 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                         transition={{ delay: index * 0.05 }}
                         className={`
                           p-4 rounded-lg border-l-4
-                          ${isOverdue ? 'border-l-red-500 bg-red-50' : ''}
+                          ${isOverdue ? 'border-l-red-500 bg-red-50 dark:bg-red-950/30' : ''}
                           ${isUpcoming ? 'border-l-yellow-500 bg-yellow-50' : ''}
                           ${!isOverdue && !isUpcoming ? 'border-l-blue-500 bg-white' : ''}
                           hover:shadow-md transition-shadow
@@ -651,9 +651,9 @@ export function RemediationMatrix({ issues, onUpdateIssue, className }: Remediat
                           <motion.div
                             className={`
                               h-full rounded-full
-                              ${issue.status === 'completed' ? 'bg-green-500' : ''}
-                              ${issue.status === 'in-progress' ? 'bg-blue-500' : ''}
-                              ${issue.status === 'blocked' ? 'bg-red-500' : ''}
+                              ${issue.status === 'completed' ? 'bg-green-50 dark:bg-green-950/300' : ''}
+                              ${issue.status === 'in-progress' ? 'bg-blue-50 dark:bg-blue-950/300' : ''}
+                              ${issue.status === 'blocked' ? 'bg-red-50 dark:bg-red-950/300' : ''}
                               ${issue.status === 'not-started' ? 'bg-gray-400' : ''}
                             `}
                             initial={{ width: 0 }}

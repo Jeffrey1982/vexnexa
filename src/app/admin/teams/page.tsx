@@ -98,9 +98,9 @@ export default async function AdminTeamsPage() {
   const getRoleColor = (role: string) => {
     switch (role) {
       case 'ADMIN':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'bg-yellow-100 text-yellow-800 dark:text-yellow-300 border-yellow-200 dark:border-yellow-800';
       case 'EDITOR':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-blue-100 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-800';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200 dark:border-white/[0.06]';
     }
@@ -324,7 +324,7 @@ export default async function AdminTeamsPage() {
                           <div className="text-xs font-semibold text-muted-foreground mb-2">PENDING INVITES</div>
                           <div className="space-y-2">
                             {team.invites.map((invite) => (
-                              <div key={invite.id} className="flex items-center justify-between py-2 px-3 bg-orange-50 rounded-lg">
+                              <div key={invite.id} className="flex items-center justify-between py-2 px-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
                                 <div className="text-sm text-gray-900 dark:text-foreground">{invite.email}</div>
                                 <Badge variant="outline" className="border-orange-500 text-orange-600">
                                   <ExternalLink className="w-3 h-3 mr-1" />

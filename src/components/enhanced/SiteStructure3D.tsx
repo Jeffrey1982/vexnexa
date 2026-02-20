@@ -47,9 +47,9 @@ function Node3D({
   onNodeClick: (node: PageNode) => void;
 }) {
   const getNodeColor = (score: number) => {
-    if (score >= 80) return 'bg-green-500';
+    if (score >= 80) return 'bg-green-50 dark:bg-green-950/300';
     if (score >= 60) return 'bg-yellow-500';
-    return 'bg-red-500';
+    return 'bg-red-50 dark:bg-red-950/300';
   };
 
   const getNodeSize = (level: number) => {
@@ -364,7 +364,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
             <div className="text-xs font-semibold mb-2">Legend</div>
             <div className="space-y-1 text-xs">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full" />
+                <div className="w-3 h-3 bg-green-50 dark:bg-green-950/300 rounded-full" />
                 <span>Score 80+</span>
               </div>
               <div className="flex items-center gap-2">
@@ -372,7 +372,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
                 <span>Score 60-79</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full" />
+                <div className="w-3 h-3 bg-red-50 dark:bg-red-950/300 rounded-full" />
                 <span>Score &lt;60</span>
               </div>
             </div>
@@ -410,7 +410,7 @@ export function SiteStructure3D({ siteData, className }: SiteStructure3DProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-gray-50 rounded-lg border"
+            className="p-4 bg-gray-50 dark:bg-white/[0.03] rounded-lg border"
           >
             <div className="flex items-center justify-between mb-3">
               <div>

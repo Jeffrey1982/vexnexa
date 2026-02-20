@@ -110,7 +110,7 @@ export default function AdminUpgradePage() {
 
         {/* Message Alert */}
         {message && (
-          <Alert className={`mb-6 ${message.type === 'success' ? 'border-green-200' : 'border-red-200'}`}>
+          <Alert className={`mb-6 ${message.type === 'success' ? 'border-green-200 dark:border-green-800' : 'border-red-200 dark:border-red-800'}`}>
             <div className="flex items-center gap-2">
               {message.type === 'success' ?
                 <CheckCircle className="w-4 h-4 text-green-500" /> :
@@ -234,8 +234,8 @@ export default function AdminUpgradePage() {
                 </div>
 
                 {newPlan && newPlan !== selectedUser.plan && (
-                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-sm text-blue-700">
+                  <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
                       <strong>Note:</strong> This will immediately upgrade the user to {PLAN_NAMES[newPlan as keyof typeof PLAN_NAMES]} and
                       set their subscription status to &apos;active&apos;. They will gain access to all features of the new plan.
                     </p>

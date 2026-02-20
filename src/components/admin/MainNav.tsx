@@ -65,7 +65,7 @@ export function MainNav({ user }: MainNavProps) {
           </Link>
 
           <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-muted rounded-lg text-sm border border-gray-200 dark:border-border">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <div className="w-2 h-2 bg-green-50 dark:bg-green-950/300 rounded-full"></div>
             <span className="text-gray-700 dark:text-foreground font-medium">{userName}</span>
           </div>
 

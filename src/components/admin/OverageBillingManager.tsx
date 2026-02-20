@@ -136,7 +136,7 @@ export function OverageBillingManager({
           <div className="font-medium text-sm text-gray-700 dark:text-muted-foreground">Overage Breakdown</div>
 
           {currentOverage.sites > 0 && (
-            <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
               <div>
                 <div className="text-sm font-medium">Extra Websites</div>
                 <div className="text-xs text-muted-foreground">
@@ -150,7 +150,7 @@ export function OverageBillingManager({
           )}
 
           {currentOverage.pages > 0 && (
-            <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
               <div>
                 <div className="text-sm font-medium">Extra Pages Scanned</div>
                 <div className="text-xs text-muted-foreground">
@@ -164,7 +164,7 @@ export function OverageBillingManager({
           )}
 
           {currentOverage.users > 0 && (
-            <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
               <div>
                 <div className="text-sm font-medium">Extra Team Members</div>
                 <div className="text-xs text-muted-foreground">
@@ -286,7 +286,7 @@ export function OverageBillingManager({
 
         {/* Warning Message */}
         {totalAfterCredits > 50 && (
-          <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 rounded-lg p-4">
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
               <div>

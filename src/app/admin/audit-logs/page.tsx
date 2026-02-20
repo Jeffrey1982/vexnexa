@@ -89,15 +89,15 @@ export default function AuditLogsPage() {
 
   const getActionBadge = (action: string, actorType: string) => {
     const actionColors: Record<string, string> = {
-      created: 'bg-green-100 text-green-800',
-      updated: 'bg-blue-100 text-blue-800',
-      deleted: 'bg-red-100 text-red-800',
-      suspended: 'bg-yellow-100 text-yellow-800',
-      activated: 'bg-green-100 text-green-800',
+      created: 'bg-green-100 text-green-800 dark:text-green-300',
+      updated: 'bg-blue-100 text-blue-800 dark:text-blue-300',
+      deleted: 'bg-red-100 text-red-800 dark:text-red-300',
+      suspended: 'bg-yellow-100 text-yellow-800 dark:text-yellow-300',
+      activated: 'bg-green-100 text-green-800 dark:text-green-300',
     }
 
     const actorColors: Record<string, string> = {
-      user: 'bg-blue-100 text-blue-800',
+      user: 'bg-blue-100 text-blue-800 dark:text-blue-300',
       admin: 'bg-purple-100 text-purple-800',
       system: 'bg-gray-100 text-gray-800',
       api: 'bg-cyan-100 text-cyan-800',

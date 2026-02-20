@@ -237,7 +237,7 @@ export default async function AdminSeoAlertsPage() {
                       alert.severity === 'critical' ? 'bg-red-100 text-red-700' :
                       alert.severity === 'high' ? 'bg-orange-100 text-orange-700' :
                       alert.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-blue-100 text-blue-700'
+                      'bg-blue-100 text-blue-700 dark:text-blue-300'
                     }`}>
                       {alert.severity}
                     </div>
@@ -312,7 +312,7 @@ export default async function AdminSeoAlertsPage() {
                   alert.severity === 'critical' ? 'bg-red-100 text-red-700' :
                   alert.severity === 'high' ? 'bg-orange-100 text-orange-700' :
                   alert.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                  'bg-blue-100 text-blue-700'
+                  'bg-blue-100 text-blue-700 dark:text-blue-300'
                 }`}>
                   was {alert.severity}
                 </div>

@@ -75,13 +75,13 @@ export default async function SendTestPage({ searchParams }: PageProps) {
       </div>
 
       {params.sent && (
-        <div className="rounded-xl bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 px-4 py-3 text-sm text-green-700 dark:text-green-400">
+        <div className="rounded-xl bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-500/20 px-4 py-3 text-sm text-green-700 dark:text-green-400">
           Email sent successfully! Message ID: {params.sent}
         </div>
       )}
 
       {params.error && (
-        <div className="rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 px-4 py-3 text-sm text-red-700 dark:text-red-400">
+        <div className="rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-500/20 px-4 py-3 text-sm text-red-700 dark:text-red-400">
           Error: {params.error}
         </div>
       )}

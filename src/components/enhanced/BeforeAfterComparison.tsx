@@ -99,7 +99,7 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
       ].map(({ label, before, after, color }) => {
         const diff = after - before;
         return (
-          <div key={label} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <div key={label} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-white/[0.03]">
             <div className="flex items-center gap-3">
               <div className={`w-3 h-3 rounded-full bg-${color}-400`} />
               <span className="font-medium">{label}</span>
@@ -131,17 +131,17 @@ export function BeforeAfterComparison({ beforeScan, afterScan, className }: Befo
         className="relative w-full h-64 bg-gradient-to-r from-red-100 to-green-100 rounded-lg overflow-hidden"
       >
         <div className="absolute inset-0 flex">
-          <div className="w-1/2 bg-red-50 flex items-center justify-center">
+          <div className="w-1/2 bg-red-50 dark:bg-red-950/30 flex items-center justify-center">
             <div className="text-center">
               <div className="text-lg font-semibold text-red-700">Before</div>
-              <div className="text-3xl font-bold text-red-800">{beforeScan.issues.total}</div>
+              <div className="text-3xl font-bold text-red-800 dark:text-red-300">{beforeScan.issues.total}</div>
               <div className="text-sm text-red-600">issues</div>
             </div>
           </div>
-          <div className="w-1/2 bg-green-50 flex items-center justify-center">
+          <div className="w-1/2 bg-green-50 dark:bg-green-950/30 flex items-center justify-center">
             <div className="text-center">
               <div className="text-lg font-semibold text-green-700">After</div>
-              <div className="text-3xl font-bold text-green-800">{afterScan.issues.total}</div>
+              <div className="text-3xl font-bold text-green-800 dark:text-green-300">{afterScan.issues.total}</div>
               <div className="text-sm text-green-600">issues</div>
             </div>
           </div>

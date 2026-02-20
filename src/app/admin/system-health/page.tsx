@@ -146,8 +146,8 @@ export default function SystemHealthPage() {
 
   const getStatusBadge = (status: string) => {
     return status === 'healthy'
-      ? 'bg-green-100 text-green-800 border-green-200'
-      : 'bg-red-100 text-red-800 border-red-200'
+      ? 'bg-green-100 text-green-800 dark:text-green-300 border-green-200 dark:border-green-800'
+      : 'bg-red-100 text-red-800 dark:text-red-300 border-red-200 dark:border-red-800'
   }
 
   if (loading) {

@@ -119,7 +119,7 @@ export default async function AdminDashboard() {
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-blue-500/10 dark:bg-blue-400/10">
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-400/10">
                   <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default async function AdminDashboard() {
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Business Plans</CardTitle>
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-purple-500/10 dark:bg-purple-400/10">
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-400/10">
                   <Crown className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default async function AdminDashboard() {
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Trial Users</CardTitle>
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-orange-500/10 dark:bg-orange-400/10">
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-orange-50 dark:bg-orange-400/10">
                   <AlertCircle className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                 </div>
               </div>
@@ -244,9 +244,9 @@ export default async function AdminDashboard() {
                               <p className="text-sm text-muted-foreground">{userName} • {ticket._count.messages} messages</p>
                             </div>
                             <Badge className={
-                              ticket.status === 'OPEN' ? 'bg-blue-100 text-blue-800' :
-                              ticket.status === 'IN_PROGRESS' ? 'bg-yellow-100 text-yellow-800' :
-                              ticket.status === 'RESOLVED' ? 'bg-green-100 text-green-800' :
+                              ticket.status === 'OPEN' ? 'bg-blue-100 text-blue-800 dark:text-blue-300' :
+                              ticket.status === 'IN_PROGRESS' ? 'bg-yellow-100 text-yellow-800 dark:text-yellow-300' :
+                              ticket.status === 'RESOLVED' ? 'bg-green-100 text-green-800 dark:text-green-300' :
                               'bg-gray-100 text-gray-800'
                             }>
                               {ticket.status.replace(/_/g, ' ')}

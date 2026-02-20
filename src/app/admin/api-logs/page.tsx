@@ -115,7 +115,7 @@ export default function ApiLogsPage() {
 
         {/* System Status */}
         {stats && stats.periods.last24h.apiCalls === 0 && (
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+          <div className="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-400 p-4 mb-6">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
@@ -123,7 +123,7 @@ export default function ApiLogsPage() {
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-blue-700">
+                <p className="text-sm text-blue-700 dark:text-blue-300">
                   No API requests logged yet. Use the logging helpers in src/lib/logging.ts to track API calls.
                 </p>
               </div>
@@ -137,14 +137,14 @@ export default function ApiLogsPage() {
             <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Request Volume (24h)</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">Total API Calls</div>
                     <div className="text-2xl font-bold text-blue-600">{stats.periods.last24h.apiCalls}</div>
                   </div>
                   <div className="text-3xl">📡</div>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">Errors (4xx/5xx)</div>
                     <div className="text-2xl font-bold text-red-600">{stats.periods.last24h.apiErrors}</div>
@@ -157,14 +157,14 @@ export default function ApiLogsPage() {
             <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Performance Metrics</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-green-50 dark:bg-green-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">Avg Response Time</div>
                     <div className="text-2xl font-bold text-green-600">{stats.periods.last24h.avgResponseTime}ms</div>
                   </div>
                   <div className="text-3xl">⚡</div>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">Error Rate</div>
                     <div className="text-2xl font-bold text-purple-600">
@@ -181,7 +181,7 @@ export default function ApiLogsPage() {
             <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Activity Summary</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
                   <div>
                     <div className="text-sm text-muted-foreground">New Users (24h)</div>
                     <div className="text-2xl font-bold text-orange-600">{stats.periods.last24h.newUsers}</div>
@@ -218,10 +218,10 @@ export default function ApiLogsPage() {
                     <tr key={index} className="hover:bg-gray-50 dark:hover:bg-white/[0.03]">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                          endpoint.method === 'GET' ? 'bg-blue-100 text-blue-800' :
-                          endpoint.method === 'POST' ? 'bg-green-100 text-green-800' :
-                          endpoint.method === 'PUT' ? 'bg-yellow-100 text-yellow-800' :
-                          endpoint.method === 'DELETE' ? 'bg-red-100 text-red-800' :
+                          endpoint.method === 'GET' ? 'bg-blue-100 text-blue-800 dark:text-blue-300' :
+                          endpoint.method === 'POST' ? 'bg-green-100 text-green-800 dark:text-green-300' :
+                          endpoint.method === 'PUT' ? 'bg-yellow-100 text-yellow-800 dark:text-yellow-300' :
+                          endpoint.method === 'DELETE' ? 'bg-red-100 text-red-800 dark:text-red-300' :
                           'bg-gray-100 text-gray-800'
                         }`}>
                           {endpoint.method}
@@ -268,10 +268,10 @@ export default function ApiLogsPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                          log.method === 'GET' ? 'bg-blue-100 text-blue-800' :
-                          log.method === 'POST' ? 'bg-green-100 text-green-800' :
-                          log.method === 'PUT' ? 'bg-yellow-100 text-yellow-800' :
-                          log.method === 'DELETE' ? 'bg-red-100 text-red-800' :
+                          log.method === 'GET' ? 'bg-blue-100 text-blue-800 dark:text-blue-300' :
+                          log.method === 'POST' ? 'bg-green-100 text-green-800 dark:text-green-300' :
+                          log.method === 'PUT' ? 'bg-yellow-100 text-yellow-800 dark:text-yellow-300' :
+                          log.method === 'DELETE' ? 'bg-red-100 text-red-800 dark:text-red-300' :
                           'bg-gray-100 text-gray-800'
                         }`}>
                           {log.method}
@@ -280,10 +280,10 @@ export default function ApiLogsPage() {
                       <td className="px-6 py-4 text-sm text-gray-900 dark:text-foreground font-mono">{log.path}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                          log.statusCode >= 500 ? 'bg-red-100 text-red-800' :
-                          log.statusCode >= 400 ? 'bg-yellow-100 text-yellow-800' :
-                          log.statusCode >= 300 ? 'bg-blue-100 text-blue-800' :
-                          'bg-green-100 text-green-800'
+                          log.statusCode >= 500 ? 'bg-red-100 text-red-800 dark:text-red-300' :
+                          log.statusCode >= 400 ? 'bg-yellow-100 text-yellow-800 dark:text-yellow-300' :
+                          log.statusCode >= 300 ? 'bg-blue-100 text-blue-800 dark:text-blue-300' :
+                          'bg-green-100 text-green-800 dark:text-green-300'
                         }`}>
                           {log.statusCode}
                         </span>

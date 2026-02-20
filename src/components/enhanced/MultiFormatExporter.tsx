@@ -314,9 +314,9 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
               exit={{ opacity: 0, y: -10 }}
             >
               <Alert className={
-                exportStatus === 'success' ? 'border-green-200 bg-green-50' :
-                exportStatus === 'error' ? 'border-red-200 bg-red-50' :
-                'border-blue-200 bg-blue-50'
+                exportStatus === 'success' ? 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30' :
+                exportStatus === 'error' ? 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30' :
+                'border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30'
               }>
                 <div className="flex items-center gap-2">
                   {exportStatus === 'processing' && <Clock className="h-4 w-4 text-blue-600" />}
@@ -345,7 +345,7 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
                 className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                   exportOptions.format === format.value
                     ? 'border-primary bg-primary/5'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-gray-200 dark:border-white/[0.06] hover:border-gray-300'
                 }`}
                 onClick={() => setExportOptions(prev => ({ ...prev, format: format.value as any }))}
               >

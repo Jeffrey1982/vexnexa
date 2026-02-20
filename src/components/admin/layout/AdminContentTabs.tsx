@@ -57,7 +57,7 @@ export function AdminContentTabs({
           <TabsTrigger
             key={tab.value}
             value={tab.value}
-            className="data-[state=active]:bg-orange-50 data-[state=active]:text-orange-700 data-[state=active]:shadow-sm"
+            className="data-[state=active]:bg-orange-50 dark:bg-orange-950/30 data-[state=active]:text-orange-700 data-[state=active]:shadow-sm"
           >
             {tab.label}
             {tab.count !== undefined && (

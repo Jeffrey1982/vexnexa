@@ -135,7 +135,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
     <div className="space-y-6">
       {/* Subscription Info */}
       {subscription && (
-        <Card className="border-blue-200 bg-blue-50/50">
+        <Card className="border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30/50">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -261,7 +261,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                       href={`https://www.mollie.com/dashboard/customers/${user.mollieCustomerId}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-700"
+                      className="text-blue-600 hover:text-blue-700 dark:text-blue-300"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
@@ -281,7 +281,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                       href={`https://www.mollie.com/dashboard/subscriptions/${user.mollieSubscriptionId}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-700"
+                      className="text-blue-600 hover:text-blue-700 dark:text-blue-300"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
@@ -294,7 +294,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
           </div>
 
           {user.trialEndsAt && (
-            <div className="flex items-center gap-2 p-3 bg-orange-50 border border-orange-200 rounded">
+            <div className="flex items-center gap-2 p-3 bg-orange-50 dark:bg-orange-950/30 border border-orange-200 rounded">
               <AlertCircle className="w-4 h-4 text-orange-600" />
               <span className="text-sm text-orange-800">
                 Trial ends: {formatDate(user.trialEndsAt)}
@@ -376,7 +376,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
                             href={`https://www.mollie.com/dashboard/payments/${payment.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-700"
+                            className="text-blue-600 hover:text-blue-700 dark:text-blue-300"
                             title="View in Mollie"
                           >
                             <ExternalLink className="w-4 h-4" />

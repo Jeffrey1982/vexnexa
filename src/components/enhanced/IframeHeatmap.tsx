@@ -168,7 +168,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="relative w-full h-[500px] border rounded-lg overflow-hidden bg-gray-50">
+        <div className="relative w-full h-[500px] border rounded-lg overflow-hidden bg-gray-50 dark:bg-white/[0.03]">
           {showIframe ? (
             <>
               {/* Live iframe of the website */}
@@ -277,7 +277,7 @@ export function IframeHeatmap({ violations, websiteUrl, className }: IframeHeatm
                   </div>
                 </div>
 
-                <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 text-xs text-blue-700">
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800 text-xs text-blue-700 dark:text-blue-300">
                   <strong>Live Preview:</strong> Shows your actual website with estimated violation locations based on accessibility scan results
                 </div>
               </div>

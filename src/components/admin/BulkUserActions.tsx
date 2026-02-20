@@ -356,8 +356,8 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                 key={user.id}
                 className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all cursor-pointer ${
                   isSelected
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 dark:border-white/[0.06] hover:border-gray-300 dark:border-white/[0.08]'
+                    ? 'admin-selected border-[hsl(var(--selected-border))] bg-[hsl(var(--selected-bg))] text-[hsl(var(--selected-text))]'
+                    : 'border-gray-200 dark:border-white/[0.06] hover:border-gray-300 dark:hover:border-white/[0.08]'
                 }`}
                 role="button"
                 tabIndex={0}
@@ -367,7 +367,7 @@ export function BulkUserActions({ users }: BulkUserActionsProps) {
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 flex items-center justify-center">
                     {isSelected ? (
-                      <CheckSquare className="w-5 h-5 text-blue-600" />
+                      <CheckSquare className="w-5 h-5 text-primary" />
                     ) : (
                       <Square className="w-5 h-5 text-muted-foreground" />
                     )}

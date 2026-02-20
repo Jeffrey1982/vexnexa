@@ -160,7 +160,7 @@ export default async function AdminBillingPage() {
 
         {/* Overages Alert */}
         {usersWithOverages.length > 0 && (
-          <Card className="mb-8 border-orange-200 bg-orange-50">
+          <Card className="mb-8 border-orange-200 bg-orange-50 dark:bg-orange-950/30">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-orange-600" />

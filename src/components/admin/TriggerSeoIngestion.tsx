@@ -64,8 +64,8 @@ export function TriggerSeoIngestion() {
         <div className="mt-4">
           <div className={`flex items-center gap-2 p-3 rounded-md ${
             result.success
-              ? 'bg-green-50 border border-green-200'
-              : 'bg-red-50 border border-red-200'
+              ? 'bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800'
+              : 'bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800'
           }`}>
             {result.success ? (
               <>
@@ -128,18 +128,18 @@ export function TriggerSeoIngestion() {
         </div>
       )}
 
-      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
-        <p className="text-sm text-blue-900">
+      <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded">
+        <p className="text-sm text-blue-900 dark:text-blue-200">
           <strong>What this does:</strong>
         </p>
-        <ul className="text-xs text-blue-800 mt-2 space-y-1 list-disc list-inside">
+        <ul className="text-xs text-blue-800 dark:text-blue-300 mt-2 space-y-1 list-disc list-inside">
           <li>Fetches yesterday's Google Search Console data</li>
           <li>Fetches Google Analytics 4 landing page metrics</li>
           <li>Fetches PageSpeed Insights performance scores</li>
           <li>Calculates your SEO Health Score (0-1000)</li>
           <li>Detects issues and creates alerts</li>
         </ul>
-        <p className="text-xs text-blue-700 mt-2">
+        <p className="text-xs text-blue-700 dark:text-blue-300 mt-2">
           Processing takes 2-5 minutes. After completion, your dashboard will display real data.
         </p>
       </div>
