@@ -5,6 +5,7 @@ import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { getMollieClient } from '@/lib/mollie';
 import { sendAdminEmail } from '@/lib/email';
+import { softDeleteUser } from '@/lib/soft-delete';
 import type { Plan, TicketCategory, TicketPriority } from '@prisma/client';
 
 // Admin check helper
@@ -594,11 +595,8 @@ export async function deleteUser(userId: string, reason: string) {
       }
     });
 
-    // Hard delete user (cascade will handle related records)
-    // TODO: Switch to softDeleteUser() after running migration 20251204_add_soft_deletes
-    await prisma.user.delete({
-      where: { id: userId }
-    });
+    // Soft delete user (sets deletedAt timestamp, recoverable for 30 days)
+    await softDeleteUser(userId, { deletedBy: admin.id });
 
     revalidatePath('/admin/users');
     return { success: true };
