@@ -27,14 +27,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const next = requestUrl.searchParams.get('next')
   const errorDescription = requestUrl.searchParams.get('error_description')
 
-  const isVerificationFlow: boolean = type === 'signup' || type === 'email_change'
+  // Supabase PKCE flow does NOT send type= as a query param for email verification.
+  // We detect it via: (a) explicit ?type= param, (b) our custom ?flow=verify hint,
+  // (c) after code exchange, by checking email_confirmed_at freshness.
+  const flow = requestUrl.searchParams.get('flow')
+  const isVerificationHint: boolean =
+    type === 'signup' || type === 'email_change' || flow === 'verify'
 
-  console.log('[Callback] Request params:', { code: code?.substring(0, 10), error, type, next })
+  console.log('[Callback] Request params:', { code: code?.substring(0, 10), error, type, flow, next })
 
   // Handle OAuth error
   if (error) {
     console.error('OAuth error:', error)
-    if (isVerificationFlow) {
+    // Any error with a verification hint → show verify-error page
+    if (isVerificationHint) {
       return NextResponse.redirect(
         buildRedirectUrl({
           requestUrl,
@@ -57,7 +63,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
       if (error) {
         console.error('[Callback] Session exchange error:', error)
-        if (isVerificationFlow) {
+
+        // Detect verification-related errors even without type= param
+        const isVerificationError: boolean =
+          isVerificationHint ||
+          error.message?.includes('expired') ||
+          error.message?.includes('Email link') ||
+          error.message?.includes('otp') ||
+          error.message?.includes('token')
+
+        if (isVerificationError) {
           return NextResponse.redirect(
             buildRedirectUrl({
               requestUrl,
@@ -99,6 +114,24 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         // Get redirect parameter - default to dashboard
         const redirect = requestUrl.searchParams.get('redirect') || '/dashboard'
         console.log('🔐 Auth callback, redirecting to:', redirect)
+
+        // Detect email verification: email_confirmed_at was set within the last 2 minutes
+        // This works regardless of whether type=signup was in the URL
+        const emailConfirmedAt = data.user.email_confirmed_at
+          ? new Date(data.user.email_confirmed_at).getTime()
+          : 0
+        const justVerified: boolean =
+          emailConfirmedAt > 0 && (Date.now() - emailConfirmedAt) < 120_000 // 2 min
+
+        const isVerificationFlow: boolean = isVerificationHint || justVerified
+
+        if (isVerificationFlow) {
+          console.log('[Callback] Email verification detected for:', data.user.email, {
+            justVerified,
+            isVerificationHint,
+            emailConfirmedAt: data.user.email_confirmed_at,
+          })
+        }
 
         // Check if this is a new user (first time login)
         // Small tolerance for timestamp comparison (1 second)
@@ -164,7 +197,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }
     } catch (exchangeError) {
       console.error('Unexpected error during OAuth callback:', exchangeError)
-      if (isVerificationFlow) {
+      if (isVerificationHint) {
         return NextResponse.redirect(
           buildRedirectUrl({
             requestUrl,
@@ -181,7 +214,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 
   // If no code or other issues, redirect to login
-  if (isVerificationFlow) {
+  if (isVerificationHint) {
     return NextResponse.redirect(
       buildRedirectUrl({
         requestUrl,

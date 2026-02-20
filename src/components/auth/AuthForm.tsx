@@ -41,7 +41,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           email,
           password,
           options: {
-            emailRedirectTo: `${origin}/auth/callback`,
+            emailRedirectTo: `${origin}/auth/callback?flow=verify`,
           },
         })
 

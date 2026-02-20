@@ -259,7 +259,7 @@ export default function ModernRegistrationForm() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: `${origin}/auth/callback`,
+          emailRedirectTo: `${origin}/auth/callback?flow=verify`,
           data: {
             first_name: formData.firstName,
             last_name: formData.lastName,
