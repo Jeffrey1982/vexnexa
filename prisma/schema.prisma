@@ -1419,3 +1419,68 @@ model AssuranceAlert {
   @@index([resolved])
   @@index([type])
 }
+
+// ============================================
+// COUPON / PROMO CODE SYSTEM
+// ============================================
+
+enum CouponGrantType {
+  PLAN_TRIAL
+  PLAN_STARTER
+  PLAN_PRO
+  PLAN_BUSINESS
+  FREE_SCANS
+}
+
+model Coupon {
+  id          String          @id @default(cuid())
+  code        String          @unique // Uppercase promo code
+  name        String? // Human-friendly label
+  description String?
+
+  // What the coupon grants
+  grantType  CouponGrantType
+  grantValue String // e.g. "14" (trial days), "5" (scans), "PRO" (plan name)
+
+  // Limits
+  maxRedemptions Int? // null = unlimited
+  redeemedCount  Int  @default(0)
+  perUserLimit   Int  @default(1)
+
+  // Scheduling
+  startsAt  DateTime?
+  expiresAt DateTime?
+
+  // Status
+  isActive Boolean @default(true)
+
+  // Audit
+  createdBy String // Admin user ID
+
+  // Relations
+  redemptions CouponRedemption[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([code])
+  @@index([isActive])
+  @@index([createdBy])
+  @@index([expiresAt])
+}
+
+model CouponRedemption {
+  id       String @id @default(cuid())
+  couponId String
+  coupon   Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  userId   String
+
+  metadata Json? // Grant details snapshot
+
+  redeemedAt DateTime @default(now())
+
+  @@unique([couponId, userId]) // Enforces per-user limit of 1 (default); app logic handles > 1
+  @@index([couponId])
+  @@index([userId])
+  @@index([redeemedAt])
+}

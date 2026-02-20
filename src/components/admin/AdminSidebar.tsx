@@ -107,6 +107,7 @@ export function AdminSidebar() {
         { href: '/admin/billing', label: 'Billing', icon: DollarSign },
         { href: '/admin/payments', label: 'Payments', icon: DollarSign },
         { href: '/admin/upgrade', label: 'Upgrades', icon: TrendingUp },
+        { href: '/admin/coupons', label: 'Coupons', icon: Ticket },
       ]
     },
     {
