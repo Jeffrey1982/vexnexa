@@ -38,7 +38,7 @@ export async function sendContactNotification(data: ContactEmailData) {
       subject: `New contact message from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #FF6B35;">New contact message</h2>
+          <h2 style="color: #D45A00;">New contact message</h2>
 
           <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0;">Contact details</h3>
@@ -77,7 +77,7 @@ This message was sent via the contact form on vexnexa.com
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: #FF6B35; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
+            <div style="display: inline-block; background: #D45A00; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
             <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
             <p style="color: #4B5563; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
           </div>
@@ -398,7 +398,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
       subject: subject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%); padding: 20px; border-radius: 8px 8px 0 0;">
+          <div style="background: linear-gradient(135deg, #D45A00 0%, #FF8A5B 100%); padding: 20px; border-radius: 8px 8px 0 0;">
             <h2 style="color: white; margin: 0;">VexNexa</h2>
           </div>
 
@@ -500,7 +500,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
       subject: `🎉 New user registration: ${firstName} ${lastName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%); padding: 24px; border-radius: 12px 12px 0 0;">
+          <div style="background: linear-gradient(135deg, #D45A00 0%, #FF8A5B 100%); padding: 24px; border-radius: 12px 12px 0 0;">
             <h2 style="color: white; margin: 0; font-size: 24px;">🎉 New User Registration</h2>
             <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0;">Someone just joined VexNexa!</p>
           </div>
@@ -546,13 +546,13 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
               <h4 style="color: #1F2937; margin: 0 0 12px 0; font-size: 16px;">Communication Preferences</h4>
               <p style="margin: 4px 0; color: #374151;">
                 <strong style="color: #6B7280;">Marketing Emails:</strong>
-                <span style="color: ${marketingEmails ? '#FF6B35' : '#DC2626'}; font-weight: 600;">
+                <span style="color: ${marketingEmails ? '#D45A00' : '#DC2626'}; font-weight: 600;">
                   ${marketingEmails ? '✅ Opted In' : '❌ Opted Out'}
                 </span>
               </p>
               <p style="margin: 4px 0; color: #374151;">
                 <strong style="color: #6B7280;">Product Updates:</strong>
-                <span style="color: ${productUpdates ? '#FF6B35' : '#DC2626'}; font-weight: 600;">
+                <span style="color: ${productUpdates ? '#D45A00' : '#DC2626'}; font-weight: 600;">
                   ${productUpdates ? '✅ Opted In' : '❌ Opted Out'}
                 </span>
               </p>

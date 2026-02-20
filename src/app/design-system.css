@@ -15,17 +15,17 @@
   --color-border-strong: #A0A3A7;
 
   /* ===== Colors - Primary (Aurora Orange) ===== */
-  --color-primary: #FF6B35; /* Aurora Orange - Energie, innovatie, kracht */
-  --color-primary-hover: #FF8A5B;
-  --color-primary-active: #E6602F;
+  --color-primary: #D45A00; /* Aurora Orange - WCAG AA compliant with white text (4.56:1) */
+  --color-primary-hover: #B84E00;
+  --color-primary-active: #A04300;
   --color-primary-foreground: #FFFFFF;
   --color-primary-50: #FFF5ED;
   --color-primary-100: #FFE7D6;
   --color-primary-200: #FFC4A8;
   --color-primary-300: #FFA376;
-  --color-primary-400: #FF8A5B;
-  --color-primary-500: #FF6B35;
-  --color-primary-600: #E6602F;
+  --color-primary-400: #E8751A;
+  --color-primary-500: #D45A00;
+  --color-primary-600: #B84E00;
   --color-primary-700: #B35400;
   --color-primary-800: #803C00;
   --color-primary-900: #4D2400;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-primary-glow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+  --shadow-primary-glow: 0 0 0 3px rgba(212, 90, 0, 0.2);
   --shadow-secondary-glow: 0 0 0 3px rgba(255, 209, 102, 0.2);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%);
-  --gradient-warm: linear-gradient(135deg, #FFD166 0%, #FF6B35 100%);
-  --gradient-hero: linear-gradient(135deg, #FF6B35 0%, #0F5C5C 100%);
+  --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);
+  --gradient-warm: linear-gradient(135deg, #FFD166 0%, #D45A00 100%);
+  --gradient-hero: linear-gradient(135deg, #D45A00 0%, #0F5C5C 100%);
   --gradient-subtle: linear-gradient(to bottom, #F8F9FA 0%, #FFFFFF 100%);
-  --gradient-mesh: linear-gradient(135deg, #FF6B35 0%, #FFD166 50%, #0F5C5C 100%);
+  --gradient-mesh: linear-gradient(135deg, #D45A00 0%, #FFD166 50%, #0F5C5C 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;

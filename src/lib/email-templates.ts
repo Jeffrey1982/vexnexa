@@ -84,7 +84,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                             <td style="padding: 28px 32px 0 32px; text-align: center;">
                                 <table role="presentation" align="center" style="margin: 0 auto; border-collapse: collapse;">
                                     <tr>
-                                        <td style="border-radius: 6px; background-color: #FF6B35; background-image: linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%);">
+                                        <td style="border-radius: 6px; background-color: #D45A00; background-image: linear-gradient(135deg, #D45A00 0%, #FF8A5B 100%);">
                                             <a href="${actionUrl}" target="_blank" style="display: inline-block; padding: 13px 32px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 500; color: #ffffff; text-decoration: none;">${ctaButtonText}</a>
                                         </td>
                                     </tr>
