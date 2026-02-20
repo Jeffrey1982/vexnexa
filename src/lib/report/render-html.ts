@@ -57,7 +57,7 @@ function sevBg(sv: Severity): string {
   return ({ critical: "#FEF2F2", serious: "#FFF7ED", moderate: "#FFFBEB", minor: "#EFF6FF" })[sv];
 }
 function riskClr(r: string): string {
-  return ({ LOW: "#16A34A", MEDIUM: "#D97706", HIGH: "#EA580C", CRITICAL: "#DC2626" })[r] ?? "#6B7280";
+  return ({ Low: "#16A34A", Moderate: "#D97706", High: "#EA580C", Critical: "#DC2626" })[r] ?? "#6B7280";
 }
 function grade(s: number): string {
   if (s >= 90) return "A"; if (s >= 80) return "B"; if (s >= 70) return "C"; if (s >= 50) return "D"; return "F";
@@ -71,7 +71,7 @@ function sevChip(sv: Severity): string {
   return `<span class="sev-chip sev-${sv}" style="background:${sevBg(sv)};color:${sevClr(sv)}">${sv.toUpperCase()}</span>`;
 }
 function riskBar(level: string, primary: string): string {
-  const pct: Record<string, number> = { LOW: 25, MEDIUM: 50, HIGH: 75, CRITICAL: 100 };
+  const pct: Record<string, number> = { Low: 25, Moderate: 50, High: 75, Critical: 100 };
   const w = pct[level] ?? 50;
   return `<div class="risk-bar-track"><div class="risk-bar-fill" style="width:${w}%;background:${riskClr(level)}"></div></div>`;
 }
@@ -241,6 +241,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
         <div class="cover-meta-cell"><span class="cover-meta-label">Pages Analyzed</span><span class="cover-meta-value">${pagesAnalyzed}</span></div>
       </div>
       <div class="cover-info-line">${d.issueBreakdown.total} issue${d.issueBreakdown.total !== 1 ? "s" : ""} detected across ${pagesAnalyzed} page${pagesAnalyzed !== 1 ? "s" : ""}</div>
+      <div class="cover-severity-bar"><span class="csb-item"><span class="csb-count" style="color:#DC2626">${d.issueBreakdown.critical}</span> Critical</span><span class="csb-sep">•</span><span class="csb-item"><span class="csb-count" style="color:#EA580C">${d.issueBreakdown.serious}</span> Serious</span><span class="csb-sep">•</span><span class="csb-item"><span class="csb-count" style="color:#D97706">${d.issueBreakdown.moderate}</span> Moderate</span><span class="csb-sep">•</span><span class="csb-item"><span class="csb-count" style="color:#6B7280">${d.issueBreakdown.minor}</span> Minor</span></div>
     </div>
     <div class="cover-main-right">
       <div class="cover-score-card-corp">
@@ -280,7 +281,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
         <span class="cover-domain-value cover-domain-value-dark">${esc(d.domain)}</span>
       </div>
       <div class="cover-badges">
-        ${sevChip(d.riskLevel === "LOW" ? "minor" : d.riskLevel === "MEDIUM" ? "moderate" : d.riskLevel === "HIGH" ? "serious" : "critical")}
+        ${sevChip(d.riskLevel === "Low" ? "minor" : d.riskLevel === "Moderate" ? "moderate" : d.riskLevel === "High" ? "serious" : "critical")}
         <span class="sev-chip" style="background:rgba(22,163,74,.15);color:#4ADE80;border:1px solid rgba(22,163,74,.3)">${esc(d.complianceLevel)}</span>
         <span class="sev-chip" style="background:${d.eaaReady ? "rgba(22,163,74,.15)" : "rgba(217,119,6,.15)"};color:${d.eaaReady ? "#4ADE80" : "#FCD34D"};border:1px solid ${d.eaaReady ? "rgba(22,163,74,.3)" : "rgba(217,119,6,.3)"}">EAA 2025 ${d.eaaReady ? "Ready" : "Needs Work"}</span>
       </div>
@@ -349,7 +350,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     { label: "Serious", value: d.issueBreakdown.serious, color: "#EA580C" },
     { label: "Moderate", value: d.issueBreakdown.moderate, color: "#D97706" },
     { label: "Minor", value: d.issueBreakdown.minor, color: "#2563EB" },
-    { label: "Compliance", value: `${d.compliancePercentage}%`, color: "#16A34A" },
+    { label: "WCAG Checks Passed", value: `${d.compliancePercentage}%`, color: "#16A34A" },
     { label: "Est. Fix Time", value: d.estimatedFixTime, color: "#7C3AED" },
   ];
 
@@ -363,7 +364,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     </div>
     <table class="corp-summary-table">
       <tr><td class="cst-label">Domain</td><td>${esc(d.domain)}</td><td class="cst-label">Health Score</td><td><strong style="color:${hsColor}">${hs.value}/100</strong> (Grade ${hs.grade})</td></tr>
-      <tr><td class="cst-label">Risk Level</td><td style="color:${riskClr(d.riskLevel)};font-weight:600">${d.riskLevel}</td><td class="cst-label">Compliance</td><td>${d.compliancePercentage}%</td></tr>
+      <tr><td class="cst-label">Risk Level</td><td style="color:${riskClr(d.riskLevel)};font-weight:600">${d.riskLevel}</td><td class="cst-label">WCAG Checks Passed</td><td>${d.compliancePercentage}%</td></tr>
       <tr><td class="cst-label">Total Issues</td><td>${d.issueBreakdown.total}</td><td class="cst-label">Est. Fix Time</td><td>${esc(d.estimatedFixTime)}</td></tr>
       <tr><td class="cst-label">Critical</td><td style="color:#DC2626">${d.issueBreakdown.critical}</td><td class="cst-label">Serious</td><td style="color:#EA580C">${d.issueBreakdown.serious}</td></tr>
     </table>
@@ -449,7 +450,7 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
       <table class="status-table">
         <tr><td>WCAG 2.1 Level AA</td><td><span class="status-dot" style="background:${aaClr}"></span>${d.wcagAAStatus === "pass" ? "Compliant" : d.wcagAAStatus === "partial" ? "Partial" : "Non-compliant"}</td></tr>
         <tr><td>WCAG 2.1 Level AAA</td><td><span class="status-dot" style="background:${aaaClr}"></span>${d.wcagAAAStatus === "pass" ? "Compliant" : d.wcagAAAStatus === "partial" ? "Partial" : "Non-compliant"}</td></tr>
-        <tr><td>EAA 2025 Readiness</td><td><span class="status-dot" style="background:${d.eaaReady ? "#16A34A" : "#D97706"}"></span>${d.eaaReady ? "Ready" : "Action Needed"}</td></tr>
+        <tr><td>EAA 2025 Readiness</td><td><span class="status-dot" style="background:${d.eaaReady ? "#16A34A" : "#D97706"}"></span>${d.eaaReady ? "Ready" : "Needs Work"}</td></tr>
       </table>
     </div>
     <div class="breakdown-card">
@@ -826,7 +827,7 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .cover-page{padding:0;display:flex;flex-direction:column}
 
 /* Header row */
-.report-header{display:flex;align-items:center;justify-content:space-between;padding:28px 32px 20px;flex-shrink:0}
+.report-header{display:flex;align-items:center;justify-content:space-between;padding:22px 32px 16px;flex-shrink:0}
 .report-header-dark .brand-name{color:white}
 .header-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .header-date{font-size:12px;color:#9CA3AF}
@@ -837,7 +838,7 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 
 /* Main content row */
-.cover-main{display:flex;flex:1;padding:24px 32px;gap:28px;align-items:flex-start}
+.cover-main{display:flex;flex:1;padding:18px 32px 24px;gap:28px;align-items:flex-start}
 .cover-main-left{flex:1.3}
 .cover-main-right{flex:0.7;display:flex;justify-content:center}
 
@@ -859,8 +860,8 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .cover-kpi-val{display:block;font-size:28px;font-weight:800;line-height:1.1}
 .cover-kpi-lbl{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:0.5px}
 
-.cover-score-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;padding:28px 24px;text-align:center;backdrop-filter:blur(8px);
+.cover-score-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;padding:30px 26px;text-align:center;backdrop-filter:blur(8px);
   box-shadow:0 2px 16px rgba(0,0,0,.15);
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-label{font-size:14px;color:rgba(255,255,255,.7);margin-top:4px}
@@ -874,10 +875,10 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .cover-title-corp{font-size:28px;font-weight:700;line-height:1.15;color:${dark};letter-spacing:-0.5px;margin-bottom:8px}
 
 /* ── Cover: Audit type label ── */
-.cover-audit-label{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#9CA3AF;margin-bottom:8px}
+.cover-audit-label{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#9CA3AF;margin-bottom:6px}
 
 /* ── Cover: Hero domain block ── */
-.cover-domain-block{display:flex;flex-direction:column;gap:3px;margin-bottom:20px}
+.cover-domain-block{display:flex;flex-direction:column;gap:3px;margin-bottom:16px}
 .cover-domain-label{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#9CA3AF}
 .cover-domain-value{font-size:20px;font-weight:600;line-height:1.3;overflow-wrap:anywhere;word-break:break-word}
 .cover-domain-value-dark{color:white}
@@ -890,14 +891,22 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .cover-meta-value{font-size:13px;font-weight:700;color:#374151}
 
 /* ── Cover: Info summary line ── */
-.cover-info-line{font-size:12px;color:#9CA3AF;margin-bottom:14px;line-height:1.4}
+.cover-info-line{font-size:12px;color:#9CA3AF;margin-bottom:8px;line-height:1.4}
 
-.cover-score-card-corp{background:#F9FAFB;border:1px solid #C6CBD2;border-radius:6px;padding:30px 26px;text-align:center;min-width:200px;
+/* ── Cover: Severity mini-bar ── */
+.cover-severity-bar{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:11px;color:#6B7280;margin-bottom:14px;line-height:1.4}
+.csb-item{white-space:nowrap}
+.csb-count{font-weight:700;margin-right:2px}
+.csb-sep{color:#D1D5DB;font-size:9px}
+.cover-severity-bar-dark{color:rgba(255,255,255,.5)}
+.cover-severity-bar-dark .csb-sep{color:rgba(255,255,255,.2)}
+
+.cover-score-card-corp{background:#F9FAFB;border:1px solid #B8BEC6;border-radius:6px;padding:30px 26px;text-align:center;min-width:200px;
   box-shadow:0 1px 4px rgba(0,0,0,.05);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.csc-score{font-size:52px;font-weight:800;line-height:1;display:inline}
+.csc-score{font-size:52px;font-weight:900;line-height:1;display:inline}
 .csc-of{font-size:20px;font-weight:400;color:#9CA3AF;display:inline}
 .csc-grade{font-size:13px;color:#6B7280;margin:6px 0 12px}
-.csc-bar-track{height:8px;background:#E5E7EB;border-radius:4px;overflow:hidden;max-width:200px;margin:0 auto}
+.csc-bar-track{height:9px;background:#E5E7EB;border-radius:4px;overflow:hidden;max-width:200px;margin:0 auto}
 .csc-bar-fill{height:100%;border-radius:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:#9CA3AF}
 

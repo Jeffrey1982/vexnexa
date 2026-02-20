@@ -853,3 +853,118 @@ describe("Cover polish — domain, info line, scorecard", () => {
     expect(html).toContain("Automated Accessibility Audit");
   });
 });
+
+/* ═══════════════════════════════════════════════════════════
+   Risk Normalization — canonical enterprise scale
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Risk normalization — canonical scale", () => {
+  it("risk level uses Title Case (Low/Moderate/High/Critical)", () => {
+    const report = getReport();
+    expect(["Low", "Moderate", "High", "Critical"]).toContain(report.riskLevel);
+  });
+
+  it("same findings always produce the same risk label", () => {
+    const a = getReport();
+    const b = getReport();
+    expect(a.riskLevel).toBe(b.riskLevel);
+  });
+
+  it("zero issues → Low risk", () => {
+    const r = getReport({
+      impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 0,
+      issues: 0, violations: [],
+    });
+    expect(r.riskLevel).toBe("Low");
+  });
+
+  it("many critical issues → Critical risk", () => {
+    const r = getReport({
+      impactCritical: 50, impactSerious: 50, impactModerate: 50, impactMinor: 50,
+      issues: 200,
+    });
+    expect(r.riskLevel).toBe("Critical");
+  });
+
+  it("no ALL-CAPS risk levels appear in HTML output", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).not.toMatch(/>LOW</);
+    expect(html).not.toMatch(/>MEDIUM</);
+    expect(html).not.toMatch(/>HIGH</);
+    // CRITICAL can appear in severity chips (e.g., "CRITICAL" for severity), so check risk-specific context
+    expect(html).not.toContain("MEDIUM");
+  });
+
+  it("no 'Action Needed' wording in HTML output", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).not.toContain("Action Needed");
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Severity Mini-Bar — compact cover summary
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Severity mini-bar on cover", () => {
+  function getCorpHTML(): string {
+    const report = getReport();
+    report.reportStyle = "corporate";
+    return renderReportHTML(report);
+  }
+
+  it("renders cover-severity-bar element on corporate cover", () => {
+    const html = getCorpHTML();
+    expect(html).toContain("cover-severity-bar");
+  });
+
+  it("severity counts match issue breakdown", () => {
+    const report = getReport();
+    report.reportStyle = "corporate";
+    const html = renderReportHTML(report);
+    // Extract all csb-count spans: <span class="csb-count" style="...">N</span>
+    const countMatches = [...html.matchAll(/class="csb-count"[^>]*>(\d+)<\/span>/g)];
+    const counts = countMatches.map(m => parseInt(m[1], 10));
+    expect(counts).toContain(report.issueBreakdown.critical);
+    expect(counts).toContain(report.issueBreakdown.serious);
+    expect(counts).toContain(report.issueBreakdown.moderate);
+    expect(counts).toContain(report.issueBreakdown.minor);
+  });
+
+  it("has CSS for severity mini-bar (flex, wrap)", () => {
+    const html = getCorpHTML();
+    expect(html).toMatch(/\.cover-severity-bar\{[^}]*display:\s*flex/);
+    expect(html).toMatch(/\.cover-severity-bar\{[^}]*flex-wrap:\s*wrap/);
+  });
+
+  it("labels match severity names", () => {
+    const html = getCorpHTML();
+    expect(html).toContain("Critical</span>");
+    expect(html).toContain("Serious</span>");
+    expect(html).toContain("Moderate</span>");
+    expect(html).toContain("Minor</span>");
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Compliance Wording — no ambiguous "Compliance XX%"
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Compliance wording — WCAG Checks Passed", () => {
+  it("HTML uses 'WCAG Checks Passed' instead of bare 'Compliance'", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toContain("WCAG Checks Passed");
+  });
+
+  it("no bare 'Compliance</td>' label in corp summary table", () => {
+    const report = getReport();
+    report.reportStyle = "corporate";
+    const html = renderReportHTML(report);
+    expect(html).not.toMatch(/>Compliance<\/td>/);
+  });
+
+  it("metrics grid uses 'WCAG Checks Passed' label", () => {
+    const html = renderReportHTML(getReport());
+    expect(html).toContain("WCAG Checks Passed");
+    expect(html).toMatch(/WCAG Checks Passed<\/div>/);
+  });
+});

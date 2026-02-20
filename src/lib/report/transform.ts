@@ -105,12 +105,12 @@ function estimateTotalFixTime(breakdown: IssueBreakdown): string {
   return days === 1 ? "~1 day" : `~${days} days`;
 }
 
-/** Determine risk level from score */
+/** Determine risk level from score — canonical enterprise scale */
 function determineRiskLevel(score: number, breakdown: IssueBreakdown): RiskLevel {
-  if (score >= 90 && breakdown.critical === 0) return "LOW";
-  if (score >= 70 && breakdown.critical <= 1) return "MEDIUM";
-  if (score >= 50) return "HIGH";
-  return "CRITICAL";
+  if (score >= 90 && breakdown.critical === 0) return "Low";
+  if (score >= 70 && breakdown.critical <= 1) return "Moderate";
+  if (score >= 50) return "High";
+  return "Critical";
 }
 
 /** Determine maturity level */
@@ -131,13 +131,13 @@ function determineWcagStatus(compliancePercentage: number): "pass" | "partial" |
 /** Determine accessibility risk summary text (safe, non-legal wording) */
 function determineRiskSummary(riskLevel: RiskLevel): string {
   switch (riskLevel) {
-    case "LOW":
+    case "Low":
       return "Low risk. Your site demonstrates strong accessibility practices. Continue monitoring to maintain this standard.";
-    case "MEDIUM":
+    case "Moderate":
       return "Moderate risk. Some accessibility gaps exist that may affect users with disabilities. Remediation recommended within 30 days.";
-    case "HIGH":
+    case "High":
       return "High risk. Significant accessibility barriers exist that may prevent users from completing key tasks. Immediate remediation strongly recommended.";
-    case "CRITICAL":
+    case "Critical":
       return "Critical risk. Severe accessibility barriers affect core functionality. Urgent remediation required.";
   }
 }

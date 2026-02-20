@@ -29,8 +29,8 @@ export interface WhiteLabelConfig {
 /** Severity level */
 export type Severity = "critical" | "serious" | "moderate" | "minor";
 
-/** Risk level */
-export type RiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+/** Risk level — canonical enterprise scale */
+export type RiskLevel = "Low" | "Moderate" | "High" | "Critical";
 
 /** Maturity level */
 export type MaturityLevel = "Basic" | "Structured" | "Proactive" | "Continuous";

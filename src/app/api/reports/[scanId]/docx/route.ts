@@ -138,7 +138,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
       alignment: AlignmentType.LEFT,
       spacing: { after: 100 },
       children: [
-        new TextRun({ text: `${data.complianceLevel}  •  Risk: ${data.riskLevel}  •  EAA 2025: ${data.eaaReady ? "Ready" : "Action Needed"}`, size: 22, color: "6B7280" }),
+        new TextRun({ text: `${data.complianceLevel}  •  Risk: ${data.riskLevel}  •  EAA 2025: ${data.eaaReady ? "Ready" : "Needs Work"}`, size: 22, color: "6B7280" }),
       ],
     })
   );
@@ -237,7 +237,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     width: { size: 100, type: WidthType.PERCENTAGE },
     rows: [
       tableRow(
-        ["Health Score", "Total Issues", "Critical", "Serious", "Moderate", "Minor", "Compliance", "Est. Fix"],
+        ["Health Score", "Total Issues", "Critical", "Serious", "Moderate", "Minor", "WCAG Checks Passed", "Est. Fix"],
         true
       ),
       tableRow([
@@ -276,7 +276,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     subheading("WCAG Level Status"),
     para(`WCAG 2.2 Level AA: ${data.wcagAAStatus === "pass" ? "Compliant" : data.wcagAAStatus === "partial" ? "Partial" : "Non-compliant"} (${data.compliancePercentage}%)`),
     para(`WCAG 2.2 Level AAA: ${data.wcagAAAStatus === "pass" ? "Compliant" : data.wcagAAAStatus === "partial" ? "Partial" : "Non-compliant"}`),
-    para(`EAA 2025 Readiness: ${data.eaaReady ? "Ready" : "Action Needed"}`),
+    para(`EAA 2025 Readiness: ${data.eaaReady ? "Ready" : "Needs Work"}`),
     spacer(),
     subheading("Accessibility Maturity Level"),
     para(`Current level: ${data.maturityLevel}`),
