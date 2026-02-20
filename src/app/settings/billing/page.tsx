@@ -28,8 +28,11 @@ import {
   X,
   BarChart3,
 } from "lucide-react";
-import { PLAN_NAMES, formatPrice, ENTITLEMENTS } from "@/lib/billing/plans";
+import { PLAN_NAMES, formatPrice, ENTITLEMENTS, PRICES } from "@/lib/billing/plans";
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
+import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
+import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
+import { grossToNet } from "@/lib/pricing/vat-math";
 
 import { AddOnType } from "@prisma/client";
 
@@ -141,6 +144,16 @@ export default function BillingPage() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [displayMode] = usePriceDisplayMode();
+
+  /** Format plan price respecting display mode */
+  const fmtPlanPrice = (plan: keyof typeof PRICES): string => {
+    const price = PRICES[plan];
+    const amount = parseFloat(price.amount);
+    const displayed = displayMode === 'excl' ? grossToNet(amount) : amount;
+    const suffix = displayMode === 'excl' ? ' excl. VAT' : '';
+    return `€${displayed.toFixed(2)}/${price.interval.split(' ')[1]}${suffix}`;
+  };
 
   // Load real billing and usage data from API
   const loadUserData = async () => {
@@ -313,9 +326,12 @@ export default function BillingPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Billing & Subscription</h1>
-          <p className="text-muted-foreground">Manage your subscription and payments</p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Billing & Subscription</h1>
+            <p className="text-muted-foreground">Manage your subscription and payments</p>
+          </div>
+          <PriceModeToggle />
         </div>
 
         {/* Alerts */}
@@ -362,7 +378,7 @@ export default function BillingPage() {
                 <p className="text-muted-foreground">
                   {user.plan === "TRIAL"
                     ? `Trial ${isTrialExpired ? "expired" : `ends ${new Date(user.trialEndsAt!).toLocaleDateString()}`}`
-                    : `${formatPrice(user.plan as any)} per month`
+                    : `${fmtPlanPrice(user.plan as any)} per month`
                   }
                 </p>
               </div>
@@ -496,7 +512,7 @@ export default function BillingPage() {
                       <span className="flex items-center">
                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         {targetPlan === "PRO" && <Crown className="mr-2 h-4 w-4" />}
-                        {PLAN_NAMES[targetPlan]} - {formatPrice(targetPlan)}
+                        {PLAN_NAMES[targetPlan]} - {fmtPlanPrice(targetPlan)}
                       </span>
                       <Badge variant={up ? "default" : "secondary"} className="ml-2">
                         {label}

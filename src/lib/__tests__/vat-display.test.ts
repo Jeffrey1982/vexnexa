@@ -344,7 +344,38 @@ describe("Roundtrip: grossToNet → netToGross", () => {
   });
 });
 
-// ── 12. Display rate API route structure ──
+// ── 12. Billing settings page includes PriceModeToggle ──
+
+describe("Billing settings page includes PriceModeToggle", () => {
+  const billingPage = readFile("src/app/settings/billing/page.tsx");
+
+  it("imports PriceModeToggle", () => {
+    expect(billingPage).toContain('import { PriceModeToggle }');
+  });
+
+  it("renders PriceModeToggle", () => {
+    expect(billingPage).toContain("<PriceModeToggle");
+  });
+
+  it("imports usePriceDisplayMode", () => {
+    expect(billingPage).toContain("usePriceDisplayMode");
+  });
+
+  it("imports grossToNet", () => {
+    expect(billingPage).toContain("grossToNet");
+  });
+
+  it("has fmtPlanPrice helper that respects display mode", () => {
+    expect(billingPage).toContain("fmtPlanPrice");
+    expect(billingPage).toContain("displayMode === 'excl'");
+  });
+
+  it("shows excl. VAT suffix when in excl mode", () => {
+    expect(billingPage).toContain("excl. VAT");
+  });
+});
+
+// ── 13. Display rate API route structure ──
 
 describe("Display rate API route", () => {
   const src = readFile("src/app/api/tax/display-rate/route.ts");
