@@ -31,6 +31,7 @@ import {
   PageNumber,
   TabStopPosition,
   TabStopType,
+  VerticalAlign,
 } from "docx";
 
 // A4 usable width ≈ 9072 twips (158.75mm at 1440 twips/inch)
@@ -43,6 +44,12 @@ const DOCX_COL_HTML = DOCX_TABLE_WIDTH - DOCX_COL_HASH - DOCX_COL_URL - DOCX_COL
 const DOCX_CELL_MARGINS = {
   top: 60, bottom: 60, left: 80, right: 80,
 } as const;
+
+// WCAG matrix column widths (fixed DXA) — ~37% / 13% / 18% / 32%
+const WCAG_COL_CRITERION = Math.round(DOCX_TABLE_WIDTH * 0.37);  // ~3357
+const WCAG_COL_LEVEL     = Math.round(DOCX_TABLE_WIDTH * 0.13);  // ~1179
+const WCAG_COL_STATUS    = Math.round(DOCX_TABLE_WIDTH * 0.18);  // ~1633
+const WCAG_COL_FINDINGS  = DOCX_TABLE_WIDTH - WCAG_COL_CRITERION - WCAG_COL_LEVEL - WCAG_COL_STATUS; // remainder ~2903
 
 /** Insert zero-width spaces after URL break characters for Word wrapping */
 function softBreakUrl(url: string): string {
@@ -319,11 +326,12 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     // Show all failing, then manual review, then sample of passing
     const matrixRows = [...failing, ...manualReview, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
     const wcagTable = new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
+      width: { size: DOCX_TABLE_WIDTH, type: WidthType.DXA },
+      layout: TableLayoutType.FIXED,
       rows: [
-        tableRow(["Success Criterion", "Level", "Status", "Findings"], true),
+        wcagMatrixRow(["Success Criterion", "Level", "Status", "Findings"], true),
         ...matrixRows.map((row: WcagMatrixRow) =>
-          tableRow([row.criterion, row.level, row.status, row.relatedFindings > 0 ? String(row.relatedFindings) : "—"])
+          wcagMatrixRow([row.criterion, row.level, row.status, row.relatedFindings > 0 ? String(row.relatedFindings) : "—"])
         ),
       ],
     });
@@ -581,6 +589,37 @@ function configRow(label: string, value: string): TableRow {
         children: [new Paragraph({ children: [new TextRun({ text: value, size: 20 })] })],
       }),
     ],
+  });
+}
+
+const WCAG_COL_WIDTHS = [WCAG_COL_CRITERION, WCAG_COL_LEVEL, WCAG_COL_STATUS, WCAG_COL_FINDINGS];
+const WCAG_COL_ALIGNS = [AlignmentType.LEFT, AlignmentType.CENTER, AlignmentType.CENTER, AlignmentType.CENTER];
+
+function wcagMatrixRow(cells: string[], isHeader: boolean = false): TableRow {
+  return new TableRow({
+    children: cells.map((text, idx) => {
+      const isFirstCol = idx === 0;
+      return new TableCell({
+        width: { size: WCAG_COL_WIDTHS[idx] ?? Math.floor(DOCX_TABLE_WIDTH / cells.length), type: WidthType.DXA },
+        verticalAlign: VerticalAlign.TOP,
+        shading: isHeader ? { type: ShadingType.SOLID, color: "F3F4F6" } : undefined,
+        margins: DOCX_CELL_MARGINS,
+        borders: {
+          top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+          right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" },
+        },
+        children: [
+          new Paragraph({
+            alignment: isHeader ? AlignmentType.CENTER : (WCAG_COL_ALIGNS[idx] ?? AlignmentType.CENTER),
+            spacing: { before: 0, after: 0, line: 240 },
+            indent: isFirstCol && !isHeader ? { left: 0, hanging: 0 } : undefined,
+            children: [new TextRun({ text, bold: isHeader, size: 20 })],
+          }),
+        ],
+      });
+    }),
   });
 }
 

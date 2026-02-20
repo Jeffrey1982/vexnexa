@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "fs";
+import { join } from "path";
 import { transformScanToReport } from "./transform";
 import { renderReportHTML } from "./render-html";
 import type { ReportData } from "./types";
@@ -1239,5 +1241,99 @@ describe("Executive summary hero polish", () => {
   it("metric values use tabular-nums for alignment", () => {
     const html = renderReportHTML(getReport());
     expect(html).toMatch(/\.metric-value\{[^}]*font-variant-numeric:\s*tabular-nums/);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   DOCX WCAG Matrix — Alignment & Layout Regression
+   ═══════════════════════════════════════════════════════════ */
+
+describe("DOCX WCAG Matrix — alignment and layout", () => {
+  const docxRoute = readFileSync(
+    join(process.cwd(), "src/app/api/reports/[scanId]/docx/route.ts"),
+    "utf-8"
+  );
+
+  it("imports VerticalAlign from docx", () => {
+    expect(docxRoute).toContain("VerticalAlign,");
+    expect(docxRoute).toContain('} from "docx"');
+  });
+
+  it("uses a dedicated wcagMatrixRow function (not generic tableRow)", () => {
+    expect(docxRoute).toContain("function wcagMatrixRow(");
+    // The WCAG table should call wcagMatrixRow, not tableRow
+    expect(docxRoute).toContain('wcagMatrixRow(["Success Criterion"');
+  });
+
+  it("sets Success Criterion column (index 0) to AlignmentType.LEFT", () => {
+    expect(docxRoute).toContain("WCAG_COL_ALIGNS = [AlignmentType.LEFT,");
+  });
+
+  it("does NOT use CENTER alignment for Success Criterion data cells", () => {
+    // The WCAG_COL_ALIGNS array must start with LEFT
+    const alignLine = docxRoute.split("\n").find((l: string) => l.includes("WCAG_COL_ALIGNS"));
+    expect(alignLine).toBeDefined();
+    expect(alignLine).toMatch(/AlignmentType\.LEFT/);
+    // First element must be LEFT
+    const match = alignLine!.match(/\[([^\]]+)\]/);
+    expect(match).toBeDefined();
+    const firstAlign = match![1].split(",")[0].trim();
+    expect(firstAlign).toBe("AlignmentType.LEFT");
+  });
+
+  it("sets verticalAlign to VerticalAlign.TOP for all WCAG cells", () => {
+    // Inside wcagMatrixRow function
+    const fnBody = docxRoute.slice(
+      docxRoute.indexOf("function wcagMatrixRow("),
+      docxRoute.indexOf("function tableRow(")
+    );
+    expect(fnBody).toContain("verticalAlign: VerticalAlign.TOP");
+  });
+
+  it("uses TableLayoutType.FIXED for the WCAG table", () => {
+    // The wcagTable construction should use FIXED layout
+    const tableSection = docxRoute.slice(
+      docxRoute.indexOf("const wcagTable = new Table"),
+      docxRoute.indexOf("children.push(wcagTable")
+    );
+    expect(tableSection).toContain("layout: TableLayoutType.FIXED");
+  });
+
+  it("uses DXA width type for WCAG table (not PERCENTAGE)", () => {
+    const tableSection = docxRoute.slice(
+      docxRoute.indexOf("const wcagTable = new Table"),
+      docxRoute.indexOf("children.push(wcagTable")
+    );
+    expect(tableSection).toContain("type: WidthType.DXA");
+    expect(tableSection).not.toContain("WidthType.PERCENTAGE");
+  });
+
+  it("defines WCAG column widths summing to DOCX_TABLE_WIDTH", () => {
+    expect(docxRoute).toContain("WCAG_COL_CRITERION");
+    expect(docxRoute).toContain("WCAG_COL_LEVEL");
+    expect(docxRoute).toContain("WCAG_COL_STATUS");
+    expect(docxRoute).toContain("WCAG_COL_FINDINGS");
+    // Criterion column should be ~37% (largest)
+    expect(docxRoute).toContain("DOCX_TABLE_WIDTH * 0.37");
+  });
+
+  it("applies DOCX_CELL_MARGINS to WCAG cells", () => {
+    const fnBody = docxRoute.slice(
+      docxRoute.indexOf("function wcagMatrixRow("),
+      docxRoute.indexOf("function tableRow(")
+    );
+    expect(fnBody).toContain("margins: DOCX_CELL_MARGINS");
+  });
+
+  it("sets paragraph spacing (before: 0, after: 0, line: 240) in WCAG cells", () => {
+    const fnBody = docxRoute.slice(
+      docxRoute.indexOf("function wcagMatrixRow("),
+      docxRoute.indexOf("function tableRow(")
+    );
+    expect(fnBody).toContain("spacing: { before: 0, after: 0, line: 240 }");
+  });
+
+  it("DOCX_CELL_MARGINS has correct values (top/bottom: 60, left/right: 80)", () => {
+    expect(docxRoute).toContain("top: 60, bottom: 60, left: 80, right: 80");
   });
 });
