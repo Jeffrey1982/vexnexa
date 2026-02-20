@@ -128,17 +128,17 @@ function determineWcagStatus(compliancePercentage: number): "pass" | "partial" |
   return "fail";
 }
 
-/** Determine accessibility risk summary text (safe, non-legal wording) */
+/** Determine accessibility risk summary text (consultancy-grade, neutral tone) */
 function determineRiskSummary(riskLevel: RiskLevel): string {
   switch (riskLevel) {
     case "Low":
-      return "Low risk. Your site demonstrates strong accessibility practices. Continue monitoring to maintain this standard.";
+      return "The assessed pages demonstrate strong accessibility practices with minimal barriers detected. Continued monitoring is recommended to maintain this standard.";
     case "Moderate":
-      return "Moderate risk. Some accessibility gaps exist that may affect users with disabilities. Remediation recommended within 30 days.";
+      return "Several accessibility gaps were identified that may affect users relying on assistive technologies. Targeted remediation within 30 days is recommended to reduce compliance risk.";
     case "High":
-      return "High risk. Significant accessibility barriers exist that may prevent users from completing key tasks. Immediate remediation strongly recommended.";
+      return "Significant accessibility barriers were detected that are likely to prevent some users from completing key tasks. Prioritised remediation is strongly recommended to improve usability and reduce compliance exposure.";
     case "Critical":
-      return "Critical risk. Severe accessibility barriers affect core functionality. Urgent remediation required.";
+      return "Critical accessibility barriers were detected that may impact key user journeys and core functionality. Prompt remediation is strongly recommended to reduce compliance risk and improve the experience for all users.";
   }
 }
 
@@ -505,5 +505,6 @@ export function transformScanToReport(
     wcagMatrix,
     scanConfig,
     topPriorityFixes,
+    scanTimestamp: typeof scan.createdAt === "string" ? scan.createdAt : scan.createdAt.toISOString(),
   };
 }

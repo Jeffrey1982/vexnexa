@@ -83,6 +83,13 @@ export interface ScanConfiguration {
   engineVersion: string;
 }
 
+/** Optional branding override for white-label partners (Task 5) */
+export interface ReportBranding {
+  companyName?: string;
+  logoUrl?: string;
+  primaryColor?: string;
+}
+
 /** Top priority fix item for executive summary */
 export interface TopPriorityFix {
   rank: number;
@@ -148,6 +155,12 @@ export interface ReportData {
   wcagMatrix: WcagMatrixRow[];
   scanConfig: ScanConfiguration;
   topPriorityFixes: TopPriorityFix[];
+  /** Optional branding override — if absent, default VexNexa branding applies */
+  reportBranding?: ReportBranding;
+  /** Previous health score for trend comparison (future use) */
+  healthScorePrevious?: number;
+  /** ISO timestamp of the scan execution (future use) */
+  scanTimestamp?: string;
 }
 
 /** Default theme */
