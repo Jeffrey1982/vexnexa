@@ -431,7 +431,6 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string): string
             ${el.html ? `<div class="idc-el-html"><strong>HTML:</strong> <code>${esc(el.html)}</code></div>` : ""}
           </div>
         </div>`).join("")}
-        ${iss.affectedElements > 5 ? `<p class="idc-more">… and ${iss.affectedElements - 5} more element${iss.affectedElements - 5 !== 1 ? "s" : ""}</p>` : ""}
       </div>
     </div>` : ""}
     <div class="ac-footer">
@@ -489,7 +488,6 @@ function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string): 
             ${el.html ? `<div class="idc-el-html"><strong>HTML:</strong> <code>${esc(el.html)}</code></div>` : ""}
           </div>
         </div>`).join("")}
-        ${iss.affectedElements > 5 ? `<p class="idc-more">… and ${iss.affectedElements - 5} more element${iss.affectedElements - 5 !== 1 ? "s" : ""}</p>` : ""}
       </div>
     </div>` : ""}
     <div class="idc-rule"><span class="idc-label">Rule:</span> <code>${esc(iss.id)}</code></div>

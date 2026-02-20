@@ -233,14 +233,11 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
           if (el.html) {
             runs.push(
               new TextRun({ text: `  |  HTML: `, bold: true, size: 18, color: "6B7280" }),
-              new TextRun({ text: el.html.slice(0, 200), size: 16, font: "Consolas", color: "6B7280" }),
+              new TextRun({ text: el.html, size: 16, font: "Consolas", color: "6B7280" }),
             );
           }
           children.push(new Paragraph({ spacing: { after: 30 }, children: runs }));
         });
-        if (issue.affectedElements > 5) {
-          children.push(para(`… and ${issue.affectedElements - 5} more element(s)`, "9CA3AF"));
-        }
       }
 
       children.push(

@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     }
 
     const stats = computeIssueStats(violations);
-    const topViolations = getTopViolations(violations, 20);
+    const topViolations = getTopViolations(violations, violations.length);
     const siteUrl = scan.page?.url || scan.site.url;
 
     // Fetch white-label settings for the user
@@ -310,7 +310,7 @@ export async function POST(req: NextRequest) {
               new Paragraph({
                 children: [
                   new TextRun({
-                    text: `Top ${Math.min(topViolations.length, 20)} Violations`,
+                    text: `All Violations (${topViolations.length})`,
                     size: 24,
                     bold: true,
                   }),
@@ -363,7 +363,7 @@ export async function POST(req: NextRequest) {
                     ],
                   }),
                   // Violation rows
-                  ...topViolations.slice(0, 15).map((violation) => 
+                  ...topViolations.map((violation) => 
                     new TableRow({
                       children: [
                         new TableCell({
@@ -396,9 +396,7 @@ export async function POST(req: NextRequest) {
                         new TableCell({
                           children: [new Paragraph({
                             children: [new TextRun({ 
-                              text: violation.description.length > 150 
-                                ? violation.description.substring(0, 150) + "..."
-                                : violation.description,
+                              text: violation.description,
                               size: 16,
                             })],
                           })],
@@ -411,7 +409,7 @@ export async function POST(req: NextRequest) {
             ] : []),
 
             // Detailed Violations
-            ...(topViolations.length > 0 ? [
+            ...(violations.length > 0 ? [
               new Paragraph({
                 children: [
                   new TextRun({
@@ -424,7 +422,7 @@ export async function POST(req: NextRequest) {
                 spacing: { before: 400, after: 200 },
               }),
               
-              ...topViolations.slice(0, 10).flatMap((violation, index) => [
+              ...violations.flatMap((violation, index) => [
                 new Paragraph({
                   children: [
                     new TextRun({
@@ -462,11 +460,11 @@ export async function POST(req: NextRequest) {
                 ...(violation.nodes.length > 0 ? [
                   new Paragraph({
                     children: [
-                      new TextRun({ text: "Sample Affected Elements:", bold: true }),
+                      new TextRun({ text: "Affected Elements:", bold: true }),
                     ],
                     spacing: { after: 100 },
                   }),
-                  ...violation.nodes.slice(0, 5).map((node: any) => 
+                  ...violation.nodes.slice(0, 5000).map((node: any) => 
                     new Paragraph({
                       children: [
                         new TextRun({ text: "• " }),
@@ -475,18 +473,6 @@ export async function POST(req: NextRequest) {
                       indent: { left: convertInchesToTwip(0.25) },
                     })
                   ),
-                  ...(violation.nodes.length > 5 ? [
-                    new Paragraph({
-                      children: [
-                        new TextRun({ 
-                          text: `... and ${violation.nodes.length - 5} more elements`,
-                          italics: true,
-                          color: "6B7280",
-                        }),
-                      ],
-                      indent: { left: convertInchesToTwip(0.25) },
-                    }),
-                  ] : []),
                 ] : []),
               ]),
             ] : []),

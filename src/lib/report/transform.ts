@@ -200,14 +200,15 @@ export function transformScanToReport(
       const severityOrder: Record<string, number> = { critical: 0, serious: 1, moderate: 2, minor: 3 };
       return (severityOrder[a.impact ?? "minor"] ?? 3) - (severityOrder[b.impact ?? "minor"] ?? 3);
     })
-    .slice(0, 15)
     .map((v) => {
       const severity: Severity = (v.impact as Severity) ?? "minor";
       const known = RULE_EXPLANATIONS[v.id];
-      const elementCount: number = v.nodes?.length ?? 1;
-      const elementDetails = (v.nodes ?? []).slice(0, 5).map((n) => ({
+      const allNodes = v.nodes ?? [];
+      const elementCount: number = allNodes.length || 1;
+      // Full element details for export-grade reports (safety cap: 5000)
+      const elementDetails = allNodes.slice(0, 5000).map((n) => ({
         selector: (n.target ?? []).join(" > ") || "unknown",
-        html: (n.html ?? "").slice(0, 300),
+        html: (n.html ?? "").slice(0, 1000),
       }));
 
       return {
