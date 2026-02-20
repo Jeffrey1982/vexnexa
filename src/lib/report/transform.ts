@@ -205,6 +205,11 @@ export function transformScanToReport(
       const severity: Severity = (v.impact as Severity) ?? "minor";
       const known = RULE_EXPLANATIONS[v.id];
       const elementCount: number = v.nodes?.length ?? 1;
+      const elementDetails = (v.nodes ?? []).slice(0, 5).map((n) => ({
+        selector: (n.target ?? []).join(" > ") || "unknown",
+        html: (n.html ?? "").slice(0, 300),
+      }));
+
       return {
         id: v.id,
         severity,
@@ -215,6 +220,7 @@ export function transformScanToReport(
         affectedElements: elementCount,
         estimatedFixTime: estimateFixTime(severity, elementCount),
         wcagCriteria: extractWcagCriteria(v.tags ?? []),
+        affectedElementDetails: elementDetails,
       };
     });
 

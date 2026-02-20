@@ -421,6 +421,19 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string): string
         <p>${esc(iss.explanation)}</p>
       </div>
     </div>
+    ${(iss.affectedElementDetails ?? []).length > 0 ? `<div class="ac-section" style="margin-top:8px">
+      <div class="ac-label">Affected Elements</div>
+      <div class="idc-elements">
+        ${(iss.affectedElementDetails ?? []).map((el, idx) => `<div class="idc-element">
+          <div class="idc-el-num">${idx + 1}.</div>
+          <div class="idc-el-body">
+            <div class="idc-el-selector"><strong>Selector:</strong> <code>${esc(el.selector)}</code></div>
+            ${el.html ? `<div class="idc-el-html"><strong>HTML:</strong> <code>${esc(el.html)}</code></div>` : ""}
+          </div>
+        </div>`).join("")}
+        ${iss.affectedElements > 5 ? `<p class="idc-more">… and ${iss.affectedElements - 5} more element${iss.affectedElements - 5 !== 1 ? "s" : ""}</p>` : ""}
+      </div>
+    </div>` : ""}
     <div class="ac-footer">
       ${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join("")}
       <span class="ac-chip">${iss.affectedElements} element${iss.affectedElements !== 1 ? "s" : ""}</span>
@@ -432,7 +445,7 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string): string
 }
 
 function renderIssuesTable(d: ReportData, primary: string): string {
-  const perPage = 8;
+  const perPage = 3;
   const pages: ReportIssue[][] = [];
   for (let i = 0; i < d.priorityIssues.length; i += perPage) {
     pages.push(d.priorityIssues.slice(i, i + perPage));
@@ -440,21 +453,48 @@ function renderIssuesTable(d: ReportData, primary: string): string {
   return pages.map((pg, pi) => `
 <section class="page">
   <h2 class="section-title corp-title" style="border-color:${primary}">${pi === 0 ? "Audit Findings" : "Audit Findings (continued)"}</h2>
-  <table class="findings-table">
-    <thead><tr><th>#</th><th>Severity</th><th>Finding</th><th>Impact</th><th>Fix</th><th>Elements</th><th>Time</th></tr></thead>
-    <tbody>
-    ${pg.map((iss, i) => `<tr>
-      <td>${pi * perPage + i + 1}</td>
-      <td><span class="ft-sev" style="color:${sevClr(iss.severity)}">${iss.severity.toUpperCase()}</span></td>
-      <td class="ft-title">${esc(iss.title)}</td>
-      <td class="ft-desc">${esc(iss.impact).slice(0, 120)}${iss.impact.length > 120 ? "\u2026" : ""}</td>
-      <td class="ft-desc">${esc(iss.recommendation).slice(0, 100)}${iss.recommendation.length > 100 ? "\u2026" : ""}</td>
-      <td class="ft-num">${iss.affectedElements}</td>
-      <td class="ft-num">${esc(iss.estimatedFixTime)}</td>
-    </tr>`).join("")}
-    </tbody>
-  </table>
+  ${pg.map((iss, i) => renderIssueDetailCard(iss, pi * perPage + i + 1, primary)).join("")}
 </section>`).join("");
+}
+
+function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string): string {
+  const details = (iss.affectedElementDetails ?? []);
+  return `<div class="issue-detail-card" style="border-left:4px solid ${sevClr(iss.severity)};background:${sevBg(iss.severity)}">
+  <div class="idc-header">
+    <span class="idc-num" style="background:${sevClr(iss.severity)};color:#fff">${num}</span>
+    <span class="ft-sev" style="color:${sevClr(iss.severity)}">${iss.severity.toUpperCase()}</span>
+    <strong class="idc-title">${esc(iss.title)}</strong>
+    <span class="idc-meta">${iss.affectedElements} element${iss.affectedElements !== 1 ? "s" : ""} &middot; Est. ${esc(iss.estimatedFixTime)}</span>
+  </div>
+  <div class="idc-body">
+    <div class="idc-section">
+      <div class="idc-label">Impact</div>
+      <p>${esc(iss.impact)}</p>
+    </div>
+    <div class="idc-section">
+      <div class="idc-label">How to Fix</div>
+      <p>${esc(iss.recommendation)}</p>
+    </div>
+    ${iss.wcagCriteria.length > 0 ? `<div class="idc-section">
+      <div class="idc-label">WCAG Criteria</div>
+      <p>${iss.wcagCriteria.map(c => `<span class="ac-chip ac-chip-wcag">${c}</span>`).join(" ")}</p>
+    </div>` : ""}
+    ${details.length > 0 ? `<div class="idc-section">
+      <div class="idc-label">Affected Elements</div>
+      <div class="idc-elements">
+        ${details.map((el, idx) => `<div class="idc-element">
+          <div class="idc-el-num">${idx + 1}.</div>
+          <div class="idc-el-body">
+            <div class="idc-el-selector"><strong>Selector:</strong> <code>${esc(el.selector)}</code></div>
+            ${el.html ? `<div class="idc-el-html"><strong>HTML:</strong> <code>${esc(el.html)}</code></div>` : ""}
+          </div>
+        </div>`).join("")}
+        ${iss.affectedElements > 5 ? `<p class="idc-more">… and ${iss.affectedElements - 5} more element${iss.affectedElements - 5 !== 1 ? "s" : ""}</p>` : ""}
+      </div>
+    </div>` : ""}
+    <div class="idc-rule"><span class="idc-label">Rule:</span> <code>${esc(iss.id)}</code></div>
+  </div>
+</div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -739,6 +779,31 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .ft-title{font-weight:600;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
 .ft-desc{font-size:11px;color:#4B5563;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
 .ft-num{text-align:center;white-space:nowrap}
+
+/* ── Issue Detail Cards (corporate full-text) ── */
+.issue-detail-card{border-radius:var(--r);padding:16px 18px;margin-bottom:14px;page-break-inside:avoid;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.idc-header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.idc-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;
+  font-size:11px;font-weight:700;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.idc-title{font-size:14px;font-weight:700;color:var(--dark);flex:1;min-width:0;
+  white-space:normal;overflow-wrap:anywhere;word-break:break-word;line-height:1.4}
+.idc-meta{font-size:11px;color:#6B7280;white-space:nowrap}
+.idc-body{display:flex;flex-direction:column;gap:10px}
+.idc-section{margin:0}
+.idc-label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;font-weight:700;margin-bottom:3px}
+.idc-section p{font-size:12px;color:#374151;line-height:1.6;margin:0}
+.idc-elements{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.idc-element{display:flex;gap:6px;align-items:flex-start}
+.idc-el-num{font-size:11px;font-weight:700;color:#6B7280;min-width:18px;flex-shrink:0}
+.idc-el-body{flex:1;min-width:0}
+.idc-el-selector{font-size:11px;color:#374151;margin-bottom:2px}
+.idc-el-selector code,.idc-el-html code{font-family:'SF Mono',Consolas,monospace;font-size:10px;background:rgba(0,0,0,.05);
+  padding:2px 5px;border-radius:3px;display:inline-block;max-width:100%;overflow-wrap:anywhere;word-break:break-all}
+.idc-el-html{font-size:10px;color:#6B7280}
+.idc-more{font-size:11px;color:#9CA3AF;font-style:italic;margin-top:4px}
+.idc-rule{font-size:10px;color:#9CA3AF;margin-top:4px;padding-top:8px;border-top:1px solid rgba(0,0,0,.06)}
+.idc-rule code{font-family:'SF Mono',Consolas,monospace;font-size:10px;background:#F3F4F6;padding:1px 4px;border-radius:3px}
 
 .empty-state{text-align:center;padding:60px 20px;color:#6B7280;font-size:16px}
 

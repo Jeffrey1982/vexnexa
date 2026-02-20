@@ -212,8 +212,45 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         }),
         labeledPara("What's happening", issue.explanation),
         labeledPara("Business impact", issue.impact),
-        labeledPara("Recommended fix", issue.recommendation),
+        labeledPara("How to fix", issue.recommendation),
         para(`${issue.affectedElements} element(s) affected  •  Est. ${issue.estimatedFixTime}${issue.wcagCriteria.length > 0 ? `  •  ${issue.wcagCriteria.join(", ")}` : ""}`, "9CA3AF"),
+      );
+
+      // Add affected element details (selector + HTML snippet)
+      const details = issue.affectedElementDetails ?? [];
+      if (details.length > 0) {
+        children.push(
+          new Paragraph({
+            spacing: { before: 80, after: 40 },
+            children: [new TextRun({ text: "Affected Elements:", bold: true, size: 20, color: "6B7280" })],
+          })
+        );
+        details.forEach((el, elIdx: number) => {
+          const runs: TextRun[] = [
+            new TextRun({ text: `${elIdx + 1}. Selector: `, bold: true, size: 18, color: "374151" }),
+            new TextRun({ text: el.selector, size: 18, font: "Consolas", color: "374151" }),
+          ];
+          if (el.html) {
+            runs.push(
+              new TextRun({ text: `  |  HTML: `, bold: true, size: 18, color: "6B7280" }),
+              new TextRun({ text: el.html.slice(0, 200), size: 16, font: "Consolas", color: "6B7280" }),
+            );
+          }
+          children.push(new Paragraph({ spacing: { after: 30 }, children: runs }));
+        });
+        if (issue.affectedElements > 5) {
+          children.push(para(`… and ${issue.affectedElements - 5} more element(s)`, "9CA3AF"));
+        }
+      }
+
+      children.push(
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [
+            new TextRun({ text: "Rule: ", bold: true, size: 18, color: "9CA3AF" }),
+            new TextRun({ text: issue.id, size: 18, font: "Consolas", color: "9CA3AF" }),
+          ],
+        })
       );
     });
   }

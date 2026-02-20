@@ -35,6 +35,12 @@ export type RiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 /** Maturity level */
 export type MaturityLevel = "Basic" | "Structured" | "Proactive" | "Continuous";
 
+/** Detail about a single affected DOM element */
+export interface AffectedElementDetail {
+  selector: string;
+  html: string;
+}
+
 /** A single priority issue for the report */
 export interface ReportIssue {
   id: string;
@@ -46,6 +52,7 @@ export interface ReportIssue {
   affectedElements: number;
   estimatedFixTime: string;
   wcagCriteria: string[];
+  affectedElementDetails: AffectedElementDetail[];
 }
 
 /** Issue breakdown counts */
