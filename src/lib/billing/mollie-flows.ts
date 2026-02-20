@@ -3,6 +3,7 @@ import { prisma } from "../prisma"
 import { PRICES, planKeyFromString } from "./plans"
 import { calculatePrice, type BillingCycle, type PlanKey } from "../pricing"
 import { computeTaxDecision, calculateTaxBreakdown, type TaxDecision, type CustomerType } from "../tax/rules"
+import { grossToNet, BASE_VAT_RATE } from "../pricing/vat-math"
 import type { Plan } from "@prisma/client"
 import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
@@ -158,8 +159,11 @@ export async function createUpgradePayment(opts: {
       throw new Error(`Invalid plan: ${plan}`)
     }
 
-    // Calculate base price (net, ex-VAT)
-    const basePrice = calculatePrice(plan as PlanKey, billingCycle)
+    // Plan prices are stored GROSS (incl. NL 21% VAT).
+    // Approach B: convert gross→net using base NL rate, then re-apply
+    // the customer's actual country tax to get the final charged amount.
+    const planGross = calculatePrice(plan as PlanKey, billingCycle)
+    const netBase = grossToNet(planGross, BASE_VAT_RATE)
     const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Annual'
 
     // Fetch billing profile for tax computation (server-side)
@@ -183,8 +187,8 @@ export async function createUpgradePayment(opts: {
       productType: 'saas_subscription',
     })
 
-    // Calculate gross amount (base + VAT) — this is what Mollie charges
-    const breakdown = calculateTaxBreakdown(basePrice, taxDecision)
+    // Re-apply customer's country tax to the net base price
+    const breakdown = calculateTaxBreakdown(netBase, taxDecision)
 
     // Build description with tax info
     const taxLabel = taxDecision.taxMode === 'reverse_charge'

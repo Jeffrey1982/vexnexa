@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -43,9 +45,14 @@ import {
   PAGE_PACK_PRICES,
   ASSURANCE_ADDON_PRICES,
   calculateTotalMonthly,
+  BASE_PRICES,
+  ANNUAL_PRICES,
 } from "@/lib/pricing";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 import { useTranslations } from 'next-intl';
+import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
+import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
+import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
 
 // JSON-LD for pricing
 function PricingJsonLd() {
@@ -171,6 +178,47 @@ function PricingCards() {
   const [confirmPlan, setConfirmPlan] = useState<string | null>(null);
   const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
+  const [displayMode] = usePriceDisplayMode();
+  const [purchaseAs, setPurchaseAs] = useState<'individual' | 'company'>('individual');
+  const [companyFields, setCompanyFields] = useState({
+    companyName: '', registrationNumber: '', vatId: '', billingCountry: 'NL',
+  });
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  /** Whether company details are required at checkout */
+  const requiresCompanyDetails = displayMode === 'excl' || purchaseAs === 'company';
+
+  /** Validate company fields — returns true if valid */
+  const validateCompanyFields = (): boolean => {
+    if (!requiresCompanyDetails) return true;
+    const errors: Record<string, string> = {};
+    if (!companyFields.companyName.trim()) errors.companyName = 'Company name is required';
+    if (!companyFields.registrationNumber.trim()) errors.registrationNumber = 'Registration number is required';
+    if (!companyFields.vatId.trim()) errors.vatId = 'VAT number is required';
+    if (!companyFields.billingCountry.trim()) errors.billingCountry = 'Billing country is required';
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  /** Convert a gross price for display based on current mode */
+  const dp = (gross: number): number =>
+    displayMode === 'excl' ? grossToNet(gross) : gross;
+
+  /** Format price display with VAT mode awareness */
+  const fmtPrice = (planKey: PlanKey, cycle: BillingCycle): {
+    mainPrice: string; period: string; subtext?: string;
+  } => {
+    if (planKey === 'ENTERPRISE') {
+      if (cycle === 'yearly') return { mainPrice: 'Custom', period: '', subtext: 'Contact us for a tailored quote' };
+      return { mainPrice: formatEuro(dp(BASE_PRICES.ENTERPRISE)), period: '/month', subtext: 'Custom billing available' };
+    }
+    if (cycle === 'yearly') {
+      const total = dp(ANNUAL_PRICES[planKey]);
+      const perMonth = total / 12;
+      return { mainPrice: formatEuro(total), period: '/year', subtext: `${formatEuro(perMonth)}/month` };
+    }
+    return { mainPrice: formatEuro(dp(BASE_PRICES[planKey])), period: '/month' };
+  };
 
   const plans: Array<{
     key: PlanKey;
@@ -267,6 +315,9 @@ function PricingCards() {
     setQuoteLoading(true);
     setTaxQuote(null);
     setError(null);
+    setFieldErrors({});
+    // Default purchaseAs to 'company' when in excl mode
+    if (displayMode === 'excl') setPurchaseAs('company');
 
     try {
       const res = await fetch('/api/checkout/quote', {
@@ -287,10 +338,28 @@ function PricingCards() {
 
   const handleConfirmCheckout = async () => {
     if (!confirmPlan) return;
+    // Validate company fields if required
+    if (!validateCompanyFields()) return;
+
     setLoading(confirmPlan);
     setError(null);
 
     try {
+      // Save company details to billing profile if provided
+      if (requiresCompanyDetails) {
+        await fetch('/api/billing/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            billingType: purchaseAs === 'company' ? 'business' : 'individual',
+            companyName: companyFields.companyName || undefined,
+            countryCode: companyFields.billingCountry,
+            vatId: companyFields.vatId || undefined,
+            registrationNumber: companyFields.registrationNumber || undefined,
+          }),
+        });
+      }
+
       const response = await fetch("/api/mollie/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -318,43 +387,48 @@ function PricingCards() {
           </Alert>
         )}
 
-        {/* Billing Cycle Toggle — Monthly / Yearly */}
+        {/* Billing Cycle Toggle + VAT Mode Toggle */}
         <div className="flex flex-col items-center mb-12 space-y-4">
-          <div className="inline-flex items-center rounded-lg bg-muted p-1 shadow-sm">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={cn(
-                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
-                billingCycle === 'monthly'
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle('yearly')}
-              className={cn(
-                "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
-                billingCycle === 'yearly'
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              Yearly
-              <Badge className="ml-2 bg-primary text-xs">
-                Save up to 17%
-              </Badge>
-            </button>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="inline-flex items-center rounded-lg bg-muted p-1 shadow-sm">
+              <button
+                onClick={() => setBillingCycle('monthly')}
+                className={cn(
+                  "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
+                  billingCycle === 'monthly'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setBillingCycle('yearly')}
+                className={cn(
+                  "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
+                  billingCycle === 'yearly'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Yearly
+                <Badge className="ml-2 bg-primary text-xs">
+                  Save up to 17%
+                </Badge>
+              </button>
+            </div>
+            <PriceModeToggle />
           </div>
           <p className="text-sm text-muted-foreground text-center">
-            Save more with annual billing. All prices exclude VAT.
+            {displayMode === 'excl'
+              ? 'Prices shown excl. VAT. Company details required at checkout.'
+              : 'Save more with annual billing. All prices incl. VAT.'}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {plans.map((plan) => {
-            const priceDisplay = formatPriceDisplay(plan.key, billingCycle);
+            const priceDisplay = fmtPrice(plan.key, billingCycle);
             const discountBadge = getDiscountBadge(billingCycle, plan.key);
             const ctaText = getCTAText(billingCycle, plan.key);
 
@@ -392,6 +466,9 @@ function PricingCards() {
                       <p className="text-xs text-muted-foreground mt-1">
                         (≈ {priceDisplay.subtext})
                       </p>
+                    )}
+                    {displayMode === 'excl' && plan.key !== 'ENTERPRISE' && (
+                      <p className="text-[10px] text-muted-foreground mt-0.5">excl. VAT</p>
                     )}
                   </div>
                   <p className="text-muted-foreground mt-2 text-xs">{plan.description}</p>
@@ -445,8 +522,8 @@ function PricingCards() {
         </div>
 
         {/* Checkout Confirmation Dialog */}
-        <Dialog open={!!confirmPlan} onOpenChange={(open) => { if (!open) { setConfirmPlan(null); setTaxQuote(null); } }}>
-          <DialogContent className="sm:max-w-md">
+        <Dialog open={!!confirmPlan} onOpenChange={(open) => { if (!open) { setConfirmPlan(null); setTaxQuote(null); setFieldErrors({}); } }}>
+          <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5 text-primary" />
@@ -495,19 +572,99 @@ function PricingCards() {
                 <div className="flex justify-between items-center py-2">
                   <span className="text-sm font-semibold">Price</span>
                   <span className="text-xl font-bold">
-                    {formatPriceDisplay(confirmPlan as PlanKey, billingCycle).mainPrice}
+                    {fmtPrice(confirmPlan as PlanKey, billingCycle).mainPrice}
                     <span className="text-sm font-normal text-muted-foreground">
-                      {formatPriceDisplay(confirmPlan as PlanKey, billingCycle).period}
+                      {fmtPrice(confirmPlan as PlanKey, billingCycle).period}
                     </span>
                   </span>
                 </div>
               ) : null}
             </div>
 
+            {/* Purchase As selector */}
+            <div className="border-t border-border pt-4 space-y-4">
+              <div>
+                <Label className="text-sm font-medium">Purchase as</Label>
+                <div className="inline-flex items-center rounded-md bg-muted p-0.5 text-xs mt-1.5 w-full">
+                  {(['individual', 'company'] as const).map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setPurchaseAs(opt)}
+                      className={cn(
+                        "flex-1 px-3 py-1.5 rounded-[5px] font-medium transition-all duration-150 capitalize",
+                        purchaseAs === opt
+                          ? "bg-background text-foreground shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Company details form — shown when required */}
+              {requiresCompanyDetails && (
+                <div className="space-y-3 p-3 rounded-lg bg-muted/30 border border-border">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Company details</p>
+                  <div className="space-y-2">
+                    <div>
+                      <Label htmlFor="ck-company" className="text-xs">Company name *</Label>
+                      <Input
+                        id="ck-company"
+                        value={companyFields.companyName}
+                        onChange={(e) => { setCompanyFields(f => ({ ...f, companyName: e.target.value })); setFieldErrors(e2 => ({ ...e2, companyName: '' })); }}
+                        placeholder="Acme B.V."
+                        className={cn("h-9 text-sm", fieldErrors.companyName && "border-destructive")}
+                      />
+                      {fieldErrors.companyName && <p className="text-xs text-destructive mt-0.5">{fieldErrors.companyName}</p>}
+                    </div>
+                    <div>
+                      <Label htmlFor="ck-reg" className="text-xs">
+                        {companyFields.billingCountry === 'NL' ? 'KvK-nummer' : 'Chamber of Commerce number'} *
+                      </Label>
+                      <Input
+                        id="ck-reg"
+                        value={companyFields.registrationNumber}
+                        onChange={(e) => { setCompanyFields(f => ({ ...f, registrationNumber: e.target.value })); setFieldErrors(e2 => ({ ...e2, registrationNumber: '' })); }}
+                        placeholder={companyFields.billingCountry === 'NL' ? '12345678' : 'Registration number'}
+                        className={cn("h-9 text-sm", fieldErrors.registrationNumber && "border-destructive")}
+                      />
+                      {fieldErrors.registrationNumber && <p className="text-xs text-destructive mt-0.5">{fieldErrors.registrationNumber}</p>}
+                    </div>
+                    <div>
+                      <Label htmlFor="ck-vat" className="text-xs">VAT number *</Label>
+                      <Input
+                        id="ck-vat"
+                        value={companyFields.vatId}
+                        onChange={(e) => { setCompanyFields(f => ({ ...f, vatId: e.target.value })); setFieldErrors(e2 => ({ ...e2, vatId: '' })); }}
+                        placeholder="NL123456789B01"
+                        className={cn("h-9 text-sm", fieldErrors.vatId && "border-destructive")}
+                      />
+                      {fieldErrors.vatId && <p className="text-xs text-destructive mt-0.5">{fieldErrors.vatId}</p>}
+                    </div>
+                    <div>
+                      <Label htmlFor="ck-country" className="text-xs">Billing country *</Label>
+                      <Input
+                        id="ck-country"
+                        value={companyFields.billingCountry}
+                        onChange={(e) => { setCompanyFields(f => ({ ...f, billingCountry: e.target.value.toUpperCase().slice(0, 2) })); setFieldErrors(e2 => ({ ...e2, billingCountry: '' })); }}
+                        placeholder="NL"
+                        maxLength={2}
+                        className={cn("h-9 text-sm w-20", fieldErrors.billingCountry && "border-destructive")}
+                      />
+                      {fieldErrors.billingCountry && <p className="text-xs text-destructive mt-0.5">{fieldErrors.billingCountry}</p>}
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground">Details saved to your billing profile for future invoices.</p>
+                </div>
+              )}
+            </div>
+
             <DialogFooter className="flex gap-2 sm:gap-0">
               <Button
                 variant="outline"
-                onClick={() => { setConfirmPlan(null); setTaxQuote(null); }}
+                onClick={() => { setConfirmPlan(null); setTaxQuote(null); setFieldErrors({}); }}
                 disabled={!!loading}
               >
                 Cancel
@@ -532,6 +689,10 @@ function PricingCards() {
 }
 
 function AddOnsSection() {
+  const [displayMode] = usePriceDisplayMode();
+  const dp = (gross: number): number =>
+    displayMode === 'excl' ? grossToNet(gross) : gross;
+
   const websitePacks = [
     { label: "+1 website", price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1 },
     { label: "+5 websites", price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5 },
@@ -579,7 +740,7 @@ function AddOnsSection() {
                 {websitePacks.map((pack, i) => (
                   <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
                     <span className="font-medium text-sm">{pack.label}</span>
-                    <span className="font-bold">{formatEuro(pack.price)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                    <span className="font-bold">{formatEuro(dp(pack.price))}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
                   </div>
                 ))}
               </div>
@@ -595,14 +756,15 @@ function AddOnsSection() {
             <CardContent>
               <div className="space-y-3">
                 {volumePacks.map((pack, i) => {
-                  const perPage = (pack.price / pack.pages).toFixed(5);
+                  const displayPrice = dp(pack.price);
+                  const perPage = (displayPrice / pack.pages).toFixed(5);
                   return (
                     <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
                       <div>
                         <span className="font-medium text-sm">{pack.label}</span>
                         <span className="block text-[10px] text-muted-foreground">≈ €{perPage}/page</span>
                       </div>
-                      <span className="font-bold">{formatEuro(pack.price)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                      <span className="font-bold">{formatEuro(displayPrice)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
                     </div>
                   );
                 })}
@@ -641,11 +803,11 @@ function AddOnsSection() {
               <div className="space-y-2 border-t pt-3">
                 <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <span className="text-sm">Starter</span>
-                  <span className="font-bold text-sm">+{formatEuro(ASSURANCE_ADDON_PRICES.STARTER ?? 0)}/mo</span>
+                  <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.STARTER ?? 0))}/mo</span>
                 </div>
                 <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <span className="text-sm">Pro</span>
-                  <span className="font-bold text-sm">+{formatEuro(ASSURANCE_ADDON_PRICES.PRO ?? 0)}/mo</span>
+                  <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.PRO ?? 0))}/mo</span>
                 </div>
                 <div className="flex items-center justify-between p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
                   <span className="text-sm">Business & Enterprise</span>

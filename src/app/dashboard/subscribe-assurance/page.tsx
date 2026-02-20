@@ -22,6 +22,9 @@ import {
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
+import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
+import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
+import { grossToNet } from "@/lib/pricing/vat-math";
 
 type BillingCycle = "monthly" | "semiannual" | "annual";
 type AssuranceTier = "BASIC" | "PRO" | "PUBLIC_SECTOR";
@@ -167,6 +170,11 @@ export default function SubscribeAssurancePage(): JSX.Element {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(false);
   const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
+  const [displayMode] = usePriceDisplayMode();
+
+  /** Convert a gross price for display based on current mode */
+  const dp = (gross: number): number =>
+    displayMode === 'excl' ? grossToNet(gross) : gross;
 
   // Hydration-safe mount gating
   useEffect(() => {
@@ -396,8 +404,9 @@ export default function SubscribeAssurancePage(): JSX.Element {
             ))}
           </div>
 
-          {/* Billing Cycle Toggle */}
-          <div className="flex justify-center mb-8">
+          {/* Billing Cycle Toggle + VAT Mode Toggle */}
+          <div className="flex flex-col items-center gap-3 mb-8">
+            <div className="flex flex-wrap items-center justify-center gap-4">
             <div className="inline-flex items-center bg-card border border-border rounded-lg p-1">
               {(
                 [
@@ -424,6 +433,11 @@ export default function SubscribeAssurancePage(): JSX.Element {
                 </button>
               ))}
             </div>
+            <PriceModeToggle />
+            </div>
+            {displayMode === 'excl' && (
+              <p className="text-xs text-muted-foreground">Prices shown excl. VAT. Company details required at checkout.</p>
+            )}
           </div>
 
           {/* Error Banner */}
@@ -489,7 +503,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                     <div className="mb-6">
                       <div className="flex items-baseline gap-1">
                         <span className="text-3xl font-bold text-foreground">
-                          {formatEuro(billingCycle === "monthly" ? price : perMonth)}
+                          {formatEuro(dp(billingCycle === "monthly" ? price : perMonth))}
                         </span>
                         <span className="text-sm text-muted-foreground">
                           /month
@@ -497,11 +511,14 @@ export default function SubscribeAssurancePage(): JSX.Element {
                       </div>
                       {billingCycle !== "monthly" && (
                         <p className="text-xs text-muted-foreground mt-1">
-                          {formatEuro(price)} billed{" "}
+                          {formatEuro(dp(price))} billed{" "}
                           {billingCycle === "semiannual"
                             ? "every 6 months"
                             : "annually"}
                         </p>
+                      )}
+                      {displayMode === 'excl' && (
+                        <p className="text-[10px] text-muted-foreground mt-0.5">excl. VAT</p>
                       )}
                     </div>
 
