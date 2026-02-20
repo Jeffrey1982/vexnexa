@@ -179,8 +179,8 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   children.push(
     spacer(),
-    subheading("Legal Risk Assessment"),
-    para(`${data.riskLevel} Risk — ${data.legalRisk}`),
+    subheading("Accessibility Risk Summary"),
+    para(`${data.riskLevel} Risk — ${data.riskSummary}`),
     spacer(),
     subheading("Estimated Remediation"),
     para(`Based on ${data.issueBreakdown.total} identified issues, the estimated developer effort is ${data.estimatedFixTime}.`),
@@ -258,17 +258,33 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   // ── WCAG 2.2 Compliance Matrix (Task 2) ──
   if (data.wcagMatrix && data.wcagMatrix.length > 0) {
     const failing = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Fail");
+    const manualReview = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Needs Manual Review");
     const passing = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Pass");
     const notTested = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Not Tested");
 
     children.push(
       heading("WCAG 2.2 Compliance Matrix"),
-      para(`Tested against ${data.wcagMatrix.length} WCAG 2.2 success criteria. ${passing.length} Pass, ${failing.length} Fail, ${notTested.length} Not Tested.`),
+      // Legend
+      new Paragraph({
+        spacing: { after: 40 },
+        children: [
+          new TextRun({ text: "Legend: ", bold: true, size: 20, color: "374151" }),
+          new TextRun({ text: "Pass", bold: true, size: 18, color: "16A34A" }),
+          new TextRun({ text: " — No violations detected  |  ", size: 18, color: "6B7280" }),
+          new TextRun({ text: "Fail", bold: true, size: 18, color: "DC2626" }),
+          new TextRun({ text: " — Automated violations detected  |  ", size: 18, color: "6B7280" }),
+          new TextRun({ text: "Needs Manual Review", bold: true, size: 18, color: "EA580C" }),
+          new TextRun({ text: " — Cannot be fully verified automatically  |  ", size: 18, color: "6B7280" }),
+          new TextRun({ text: "Not Tested", bold: true, size: 18, color: "9CA3AF" }),
+          new TextRun({ text: " — Outside scan scope", size: 18, color: "6B7280" }),
+        ],
+      }),
+      para(`Tested against ${data.wcagMatrix.length} WCAG 2.2 success criteria. ${passing.length} Pass, ${failing.length} Fail, ${manualReview.length} Needs Manual Review, ${notTested.length} Not Tested.`),
       spacer(),
     );
 
-    // Show all failing, then sample of passing
-    const matrixRows = [...failing, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
+    // Show all failing, then manual review, then sample of passing
+    const matrixRows = [...failing, ...manualReview, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
     const wcagTable = new Table({
       width: { size: 100, type: WidthType.PERCENTAGE },
       rows: [
@@ -314,49 +330,26 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
           })
         );
 
+        const evBorders = { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } };
+        const evShading = { type: ShadingType.SOLID, color: "F3F4F6" } as const;
         const evidenceTable = new Table({
           width: { size: 100, type: WidthType.PERCENTAGE },
           rows: [
             new TableRow({
               children: [
-                new TableCell({
-                  width: { size: 5, type: WidthType.PERCENTAGE },
-                  shading: { type: ShadingType.SOLID, color: "F3F4F6" },
-                  borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
-                  children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })],
-                }),
-                new TableCell({
-                  width: { size: 45, type: WidthType.PERCENTAGE },
-                  shading: { type: ShadingType.SOLID, color: "F3F4F6" },
-                  borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
-                  children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })],
-                }),
-                new TableCell({
-                  width: { size: 50, type: WidthType.PERCENTAGE },
-                  shading: { type: ShadingType.SOLID, color: "F3F4F6" },
-                  borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
-                  children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })],
-                }),
+                new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })] }),
+                new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Page / URL", bold: true, size: 18 })] })] }),
+                new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })] }),
+                new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, shading: evShading, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })] }),
               ],
             }),
             ...details.map((el, elIdx: number) =>
               new TableRow({
                 children: [
-                  new TableCell({
-                    width: { size: 5, type: WidthType.PERCENTAGE },
-                    borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
-                    children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(elIdx + 1), size: 16, color: "6B7280" })] })],
-                  }),
-                  new TableCell({
-                    width: { size: 45, type: WidthType.PERCENTAGE },
-                    borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
-                    children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 16, font: "Consolas", color: "374151" })] })],
-                  }),
-                  new TableCell({
-                    width: { size: 50, type: WidthType.PERCENTAGE },
-                    borders: { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } },
-                    children: [new Paragraph({ children: [new TextRun({ text: el.html || "—", size: 14, font: "Consolas", color: "6B7280" })] })],
-                  }),
+                  new TableCell({ width: { size: 5, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(elIdx + 1), size: 16, color: "6B7280" })] })] }),
+                  new TableCell({ width: { size: 25, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.pageUrl || data.domain, size: 16, color: "6B7280" })] })] }),
+                  new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.selector, size: 16, font: "Consolas", color: "374151" })] })] }),
+                  new TableCell({ width: { size: 35, type: WidthType.PERCENTAGE }, borders: evBorders, children: [new Paragraph({ children: [new TextRun({ text: el.html || "—", size: 14, font: "Consolas", color: "6B7280" })] })] }),
                 ],
               })
             ),

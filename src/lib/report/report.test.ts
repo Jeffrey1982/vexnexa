@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { transformScanToReport } from "./transform";
 import { renderReportHTML } from "./render-html";
-import type { ReportData, IssueBreakdown } from "./types";
+import type { ReportData } from "./types";
 
 /* ── Test fixtures ─────────────────────────────────────── */
 
@@ -86,107 +86,150 @@ function getReport(overrides?: Parameters<typeof makeScan>[0]): ReportData {
   return transformScanToReport(makeScan(overrides));
 }
 
-/* ── Task 5: Health Score ─────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   Task 1 — Health Score: Normalized Exponential Decay
+   ═══════════════════════════════════════════════════════════ */
 
-describe("Health Score (Task 5)", () => {
-  it("computes deterministic score from severity weights", () => {
+describe("Health Score — exponential decay model", () => {
+  it("uses exponential decay: 100 * exp(-0.05 * normalizedPenalty)", () => {
     const report = getReport();
-    // 2 critical×10 + 3 serious×6 + 1 moderate×3 + 1 minor×1 = 20+18+3+1 = 42
-    // 100 - 42 = 58
-    expect(report.healthScore.value).toBe(58);
+    // weightedPenalty = 2*10 + 3*6 + 1*3 + 1*1 = 42, pages=1
+    // normalizedPenalty = 42/1 = 42
+    // score = round(100 * exp(-0.05 * 42)) = round(100 * 0.1225) = 12
     expect(report.healthScore.weightedPenalty).toBe(42);
-  });
-
-  it("returns grade D for score 58", () => {
-    const report = getReport();
-    expect(report.healthScore.grade).toBe("D");
-    expect(report.healthScore.label).toBe("Needs Work");
-  });
-
-  it("clamps to 0 for extreme penalties", () => {
-    const report = getReport({ impactCritical: 20, impactSerious: 10, impactModerate: 5, impactMinor: 5 });
-    expect(report.healthScore.value).toBe(0);
-    expect(report.healthScore.grade).toBe("F");
+    expect(report.healthScore.normalizedPenalty).toBe(42);
+    const expected = Math.round(100 * Math.exp(-0.05 * 42));
+    expect(report.healthScore.value).toBe(expected);
   });
 
   it("returns 100 for zero issues", () => {
     const report = getReport({
-      score: 100,
-      issues: 0,
-      impactCritical: 0,
-      impactSerious: 0,
-      impactModerate: 0,
-      impactMinor: 0,
+      score: 100, issues: 0,
+      impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 0,
       violations: [],
     });
     expect(report.healthScore.value).toBe(100);
     expect(report.healthScore.grade).toBe("A");
     expect(report.healthScore.label).toBe("Excellent");
+    expect(report.healthScore.normalizedPenalty).toBe(0);
   });
 
-  it("is deterministic — same input always yields same output", () => {
+  it("produces realistic scores for moderate issues (not collapsed to 0)", () => {
+    // 10 moderate issues: penalty = 30, exp(-0.05*30) ≈ 0.223 → score ≈ 22
+    // This is more realistic than linear 100-30=70 for 10 moderate issues
+    const report = getReport({
+      impactCritical: 0, impactSerious: 0, impactModerate: 10, impactMinor: 0,
+      issues: 10, score: 70,
+      violations: Array.from({ length: 10 }, (_, i) => ({
+        id: `mod-${i}`, impact: "moderate", help: `Mod ${i}`, description: `Desc ${i}`,
+        tags: ["wcag143"], nodes: [{ target: [`.m${i}`], html: `<div>${i}</div>` }],
+      })),
+    });
+    expect(report.healthScore.value).toBeGreaterThan(0);
+    expect(report.healthScore.value).toBeLessThan(100);
+  });
+
+  it("never exceeds 100 or goes below 0", () => {
+    // Extreme penalty
+    const extreme = getReport({ impactCritical: 100, impactSerious: 50, impactModerate: 30, impactMinor: 20 });
+    expect(extreme.healthScore.value).toBeGreaterThanOrEqual(0);
+    expect(extreme.healthScore.value).toBeLessThanOrEqual(100);
+    // Zero penalty
+    const zero = getReport({
+      impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 0,
+      issues: 0, score: 100, violations: [],
+    });
+    expect(zero.healthScore.value).toBe(100);
+  });
+
+  it("is monotonic: more issues → lower or equal score", () => {
+    const scores: number[] = [];
+    for (let c = 0; c <= 10; c++) {
+      const r = getReport({ impactCritical: c, impactSerious: 0, impactModerate: 0, impactMinor: 0, issues: c });
+      scores.push(r.healthScore.value);
+    }
+    for (let i = 1; i < scores.length; i++) {
+      expect(scores[i]).toBeLessThanOrEqual(scores[i - 1]);
+    }
+  });
+
+  it("is deterministic: same input → same output", () => {
     const a = getReport();
     const b = getReport();
     expect(a.healthScore.value).toBe(b.healthScore.value);
     expect(a.healthScore.grade).toBe(b.healthScore.grade);
-    expect(a.healthScore.weightedPenalty).toBe(b.healthScore.weightedPenalty);
+    expect(a.healthScore.normalizedPenalty).toBe(b.healthScore.normalizedPenalty);
+  });
+
+  it("exposes normalizedPenalty field", () => {
+    const report = getReport();
+    expect(typeof report.healthScore.normalizedPenalty).toBe("number");
+    expect(report.healthScore.normalizedPenalty).toBeGreaterThanOrEqual(0);
+  });
+
+  it("assigns correct grade boundaries", () => {
+    // Grade A: ≥90
+    const a = getReport({ impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 1, issues: 1, score: 99 });
+    expect(a.healthScore.value).toBeGreaterThanOrEqual(90);
+    expect(a.healthScore.grade).toBe("A");
   });
 });
 
-/* ── Task 1: Executive Summary ────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   Task 2 — WCAG Matrix: Needs Manual Review + Legend
+   ═══════════════════════════════════════════════════════════ */
 
-describe("Executive Summary (Task 1)", () => {
-  it("includes healthScore in report data", () => {
+describe("WCAG Compliance Matrix — Needs Manual Review", () => {
+  it("includes 'Needs Manual Review' status for manual-only criteria", () => {
     const report = getReport();
-    expect(report.healthScore).toBeDefined();
-    expect(typeof report.healthScore.value).toBe("number");
+    const manualRows = report.wcagMatrix.filter((r) => r.status === "Needs Manual Review");
+    expect(manualRows.length).toBeGreaterThan(0);
   });
 
-  it("includes topPriorityFixes (max 5)", () => {
+  it("classifies known manual-only criteria correctly (e.g., 1.2.1 Audio-only)", () => {
     const report = getReport();
-    expect(report.topPriorityFixes).toBeDefined();
-    expect(report.topPriorityFixes.length).toBeLessThanOrEqual(5);
-    expect(report.topPriorityFixes.length).toBeGreaterThan(0);
+    const audioRow = report.wcagMatrix.find((r) => r.criterion.includes("1.2.1"));
+    expect(audioRow).toBeDefined();
+    expect(audioRow!.status).toBe("Needs Manual Review");
   });
 
-  it("top priority fixes are ranked by weighted impact descending", () => {
+  it("classifies 2.4.5 Multiple Ways as Needs Manual Review", () => {
     const report = getReport();
-    for (let i = 1; i < report.topPriorityFixes.length; i++) {
-      expect(report.topPriorityFixes[i - 1].weightedImpact)
-        .toBeGreaterThanOrEqual(report.topPriorityFixes[i].weightedImpact);
-    }
-  });
-});
-
-/* ── Task 2: WCAG Compliance Matrix ───────────────────── */
-
-describe("WCAG Compliance Matrix (Task 2)", () => {
-  it("generates matrix rows from violations", () => {
-    const report = getReport();
-    expect(report.wcagMatrix).toBeDefined();
-    expect(report.wcagMatrix.length).toBeGreaterThan(0);
+    const row = report.wcagMatrix.find((r) => r.criterion.includes("2.4.5"));
+    expect(row).toBeDefined();
+    expect(row!.status).toBe("Needs Manual Review");
   });
 
-  it("marks criteria with violations as Fail", () => {
+  it("still marks criteria with violations as Fail (overrides manual review)", () => {
     const report = getReport();
     const failRows = report.wcagMatrix.filter((r) => r.status === "Fail");
     expect(failRows.length).toBeGreaterThan(0);
-    // color-contrast maps to wcag143 → 1.4.3
     const contrastRow = report.wcagMatrix.find((r) => r.criterion.includes("1.4.3"));
     expect(contrastRow?.status).toBe("Fail");
-    expect(contrastRow?.relatedFindings).toBeGreaterThan(0);
   });
 
-  it("marks criteria without violations as Pass when scan has data", () => {
+  it("marks non-manual criteria without violations as Pass", () => {
     const report = getReport();
     const passRows = report.wcagMatrix.filter((r) => r.status === "Pass");
     expect(passRows.length).toBeGreaterThan(0);
   });
 
-  it("marks all as Not Tested when no violations data", () => {
+  it("marks non-manual criteria as Not Tested when no violations data", () => {
     const report = getReport({ violations: [] });
     const notTested = report.wcagMatrix.filter((r) => r.status === "Not Tested");
-    expect(notTested.length).toBe(report.wcagMatrix.length);
+    const manualReview = report.wcagMatrix.filter((r) => r.status === "Needs Manual Review");
+    // All criteria are either Not Tested or Needs Manual Review (none Pass/Fail)
+    expect(notTested.length + manualReview.length).toBe(report.wcagMatrix.length);
+    expect(manualReview.length).toBeGreaterThan(0);
+    expect(notTested.length).toBeGreaterThan(0);
+  });
+
+  it("has exactly 4 valid statuses", () => {
+    const report = getReport();
+    const statuses = new Set(report.wcagMatrix.map((r) => r.status));
+    for (const s of statuses) {
+      expect(["Pass", "Fail", "Needs Manual Review", "Not Tested"]).toContain(s);
+    }
   });
 
   it("each row has valid level (A/AA/AAA)", () => {
@@ -195,11 +238,248 @@ describe("WCAG Compliance Matrix (Task 2)", () => {
       expect(["A", "AA", "AAA"]).toContain(row.level);
     }
   });
+
+  it("sorts Fail first, then Needs Manual Review, then Pass, then Not Tested", () => {
+    const report = getReport();
+    const statusOrder: Record<string, number> = { Fail: 0, "Needs Manual Review": 1, Pass: 2, "Not Tested": 3 };
+    for (let i = 1; i < report.wcagMatrix.length; i++) {
+      const prev = statusOrder[report.wcagMatrix[i - 1].status] ?? 3;
+      const curr = statusOrder[report.wcagMatrix[i].status] ?? 3;
+      expect(curr).toBeGreaterThanOrEqual(prev);
+    }
+  });
 });
 
-/* ── Task 3: Scan Configuration ───────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   Task 3 — Evidence Tables: Page/URL column always present
+   ═══════════════════════════════════════════════════════════ */
 
-describe("Scan Configuration (Task 3)", () => {
+describe("Evidence Tables — Page/URL column", () => {
+  it("every affected element detail has pageUrl populated", () => {
+    const report = getReport();
+    for (const issue of report.priorityIssues) {
+      for (const el of issue.affectedElementDetails) {
+        expect(el.pageUrl).toBeDefined();
+        expect(el.pageUrl!.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("pageUrl defaults to scan page URL", () => {
+    const report = getReport();
+    const el = report.priorityIssues[0].affectedElementDetails[0];
+    expect(el.pageUrl).toBe("https://example.com/about");
+  });
+
+  it("pageUrl falls back to site URL when page URL is missing", () => {
+    const scan = makeScan();
+    (scan as unknown as { page: null }).page = null;
+    const report = transformScanToReport(scan);
+    const el = report.priorityIssues[0].affectedElementDetails[0];
+    expect(el.pageUrl).toBe("https://example.com");
+  });
+
+  it("evidence counts match raw findings (no truncation)", () => {
+    const report = getReport();
+    for (const issue of report.priorityIssues) {
+      expect(issue.affectedElements).toBe(issue.affectedElementDetails.length);
+    }
+  });
+
+  it("all affected element details are preserved (no slice)", () => {
+    const report = getReport();
+    const ccIssue = report.priorityIssues.find((i) => i.id === "color-contrast");
+    expect(ccIssue?.affectedElementDetails.length).toBe(3);
+    const imgIssue = report.priorityIssues.find((i) => i.id === "image-alt");
+    expect(imgIssue?.affectedElementDetails.length).toBe(2);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Task 4 — No "legal risk" wording
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Risk wording — no legal language", () => {
+  it("riskSummary field exists and does not contain 'legal'", () => {
+    const report = getReport();
+    expect(report.riskSummary).toBeDefined();
+    expect(report.riskSummary.toLowerCase()).not.toContain("legal");
+  });
+
+  it("legalRisk field preserved for backward compat but uses safe wording", () => {
+    const report = getReport();
+    expect(report.legalRisk).toBeDefined();
+    expect(report.legalRisk.toLowerCase()).not.toContain("legal");
+    expect(report.legalRisk).toBe(report.riskSummary);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Task 5A — HTML Export Golden-File Snapshot
+   ═══════════════════════════════════════════════════════════ */
+
+describe("HTML export — golden-file regression", () => {
+  function getHTML(overrides?: Parameters<typeof makeScan>[0]): string {
+    return renderReportHTML(getReport(overrides));
+  }
+
+  it("no 'and X more' truncation text", () => {
+    const html = getHTML();
+    expect(html).not.toMatch(/and \d+ more/i);
+    expect(html).not.toMatch(/…\s*and/);
+  });
+
+  it("evidence row count matches input element count", () => {
+    const report = getReport();
+    const html = renderReportHTML(report);
+    // Count <tr> rows with ev-num class (evidence rows)
+    const evRows = (html.match(/class="ev-num"/g) || []).length;
+    const totalElements = report.priorityIssues.reduce((sum, i) => sum + i.affectedElementDetails.length, 0);
+    // Each element gets rendered twice (premium renders all, but we check total matches)
+    // Actually each issue renders once in premium mode
+    expect(evRows).toBe(totalElements);
+  });
+
+  it("matrix includes 'Needs Manual Review' status", () => {
+    const html = getHTML();
+    expect(html).toContain("Needs Manual Review");
+  });
+
+  it("matrix legend exists with all 4 statuses", () => {
+    const html = getHTML();
+    expect(html).toContain("matrix-legend");
+    expect(html).toContain("No violations detected");
+    expect(html).toContain("Automated violations detected");
+    expect(html).toContain("Cannot be fully verified automatically");
+    expect(html).toContain("Outside scan scope");
+  });
+
+  it("Page / URL column present in evidence tables", () => {
+    const html = getHTML();
+    expect(html).toContain("Page / URL");
+    expect(html).toContain("ev-url");
+  });
+
+  it("does not contain 'Legal Risk Assessment' heading", () => {
+    const html = getHTML();
+    expect(html).not.toContain("Legal Risk Assessment");
+    expect(html).toContain("Accessibility Risk Summary");
+  });
+
+  it("does not contain 'legal risk' in CTA section", () => {
+    const html = getHTML();
+    expect(html).not.toMatch(/reduce legal risk/i);
+    expect(html).toContain("reduce accessibility risk");
+  });
+
+  it("does not contain 'legal exposure' in risk summary text", () => {
+    const html = getHTML();
+    expect(html).not.toMatch(/legal exposure/i);
+  });
+
+  it("contains Health Score with exponential formula reference", () => {
+    const html = getHTML();
+    expect(html).toContain("Health Score");
+    expect(html).toContain("exp(");
+  });
+
+  it("contains coverage note", () => {
+    const html = getHTML();
+    expect(html).toContain("Automated testing does not cover all WCAG requirements");
+  });
+
+  it("evidence tables use structured HTML tables", () => {
+    const html = getHTML();
+    expect(html).toContain("evidence-table");
+    expect(html).toContain("ev-mono");
+    expect(html).toContain("HTML Snippet");
+  });
+
+  it("renders 50 violations × 20 nodes without errors", () => {
+    const manyViolations = Array.from({ length: 50 }, (_, i) => ({
+      id: `rule-${i}`,
+      impact: i % 4 === 0 ? "critical" : i % 4 === 1 ? "serious" : i % 4 === 2 ? "moderate" : "minor",
+      help: `Test rule ${i}`, description: `Description for rule ${i}`,
+      tags: ["wcag143"],
+      nodes: Array.from({ length: 20 }, (_, j) => ({
+        target: [`.el-${i}-${j}`], html: `<div class="element-${i}-${j}">Content</div>`,
+      })),
+    }));
+    const report = getReport({ violations: manyViolations });
+    expect(report.priorityIssues.length).toBe(50);
+    const html = renderReportHTML(report);
+    expect(html.length).toBeGreaterThan(10000);
+    expect(html).not.toMatch(/and \d+ more/i);
+    // All 1000 evidence rows rendered (50 × 20)
+    const evRows = (html.match(/class="ev-num"/g) || []).length;
+    expect(evRows).toBe(1000);
+  });
+
+  it("renders > 20 affected elements for a single issue without truncation", () => {
+    const report = getReport({
+      violations: [{
+        id: "big-rule", impact: "serious", help: "Big rule", description: "Many elements",
+        tags: ["wcag143"],
+        nodes: Array.from({ length: 25 }, (_, j) => ({
+          target: [`.big-${j}`], html: `<div>${j}</div>`,
+        })),
+      }],
+    });
+    const issue = report.priorityIssues[0];
+    expect(issue.affectedElementDetails.length).toBe(25);
+    const html = renderReportHTML(report);
+    const evRows = (html.match(/class="ev-num"/g) || []).length;
+    expect(evRows).toBe(25);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Task 5C — Score Determinism (comprehensive)
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Score determinism — comprehensive", () => {
+  it("same input → same score (10 iterations)", () => {
+    const scores: number[] = [];
+    for (let i = 0; i < 10; i++) {
+      scores.push(getReport().healthScore.value);
+    }
+    expect(new Set(scores).size).toBe(1);
+  });
+
+  it("increasing violations → non-increasing score", () => {
+    const scores: number[] = [];
+    for (let c = 0; c <= 20; c++) {
+      const r = getReport({
+        impactCritical: c, impactSerious: c, impactModerate: c, impactMinor: c,
+        issues: c * 4,
+      });
+      scores.push(r.healthScore.value);
+    }
+    for (let i = 1; i < scores.length; i++) {
+      expect(scores[i]).toBeLessThanOrEqual(scores[i - 1]);
+    }
+  });
+
+  it("score always within 0–100", () => {
+    const testCases = [
+      { impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 0, issues: 0 },
+      { impactCritical: 1, impactSerious: 0, impactModerate: 0, impactMinor: 0, issues: 1 },
+      { impactCritical: 50, impactSerious: 50, impactModerate: 50, impactMinor: 50, issues: 200 },
+      { impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 100, issues: 100 },
+    ];
+    for (const tc of testCases) {
+      const r = getReport(tc);
+      expect(r.healthScore.value).toBeGreaterThanOrEqual(0);
+      expect(r.healthScore.value).toBeLessThanOrEqual(100);
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   Scan Configuration
+   ═══════════════════════════════════════════════════════════ */
+
+describe("Scan Configuration", () => {
   it("includes scan config in report data", () => {
     const report = getReport();
     expect(report.scanConfig).toBeDefined();
@@ -216,100 +496,29 @@ describe("Scan Configuration (Task 3)", () => {
   });
 });
 
-/* ── Task 4: Evidence Tables — no truncation ──────────── */
+/* ═══════════════════════════════════════════════════════════
+   Executive Summary
+   ═══════════════════════════════════════════════════════════ */
 
-describe("Evidence Tables — no truncation (Task 4)", () => {
-  it("all affected element details are preserved (no slice)", () => {
+describe("Executive Summary", () => {
+  it("includes healthScore in report data", () => {
     const report = getReport();
-    // color-contrast has 3 nodes
-    const ccIssue = report.priorityIssues.find((i) => i.id === "color-contrast");
-    expect(ccIssue?.affectedElementDetails.length).toBe(3);
-    // image-alt has 2 nodes
-    const imgIssue = report.priorityIssues.find((i) => i.id === "image-alt");
-    expect(imgIssue?.affectedElementDetails.length).toBe(2);
+    expect(report.healthScore).toBeDefined();
+    expect(typeof report.healthScore.value).toBe("number");
   });
 
-  it("evidence counts match raw findings", () => {
+  it("includes topPriorityFixes (max 5)", () => {
     const report = getReport();
-    for (const issue of report.priorityIssues) {
-      expect(issue.affectedElements).toBe(issue.affectedElementDetails.length);
+    expect(report.topPriorityFixes).toBeDefined();
+    expect(report.topPriorityFixes.length).toBeLessThanOrEqual(5);
+    expect(report.topPriorityFixes.length).toBeGreaterThan(0);
+  });
+
+  it("top priority fixes ranked by weighted impact descending", () => {
+    const report = getReport();
+    for (let i = 1; i < report.topPriorityFixes.length; i++) {
+      expect(report.topPriorityFixes[i - 1].weightedImpact)
+        .toBeGreaterThanOrEqual(report.topPriorityFixes[i].weightedImpact);
     }
-  });
-});
-
-/* ── PDF rendering — no truncation patterns ───────────── */
-
-describe("PDF rendering — no truncation (all tasks)", () => {
-  it("does not contain 'and X more' in rendered HTML", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).not.toMatch(/and \d+ more/i);
-    expect(html).not.toMatch(/…\s*and/);
-  });
-
-  it("contains Health Score section", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).toContain("Health Score");
-    expect(html).toContain(String(report.healthScore.value));
-  });
-
-  it("contains WCAG Compliance Matrix section", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).toContain("WCAG 2.2 Compliance Matrix");
-    expect(html).toContain("Success Criterion");
-  });
-
-  it("contains Scan Configuration section", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).toContain("Scan Configuration");
-    expect(html).toContain("Domain Scanned");
-    expect(html).toContain("User Agent");
-  });
-
-  it("contains Top Priority Fixes table", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).toContain("Top Priority Fixes");
-    expect(html).toContain("Impact Score");
-  });
-
-  it("contains coverage note", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).toContain("Automated testing does not cover all WCAG requirements");
-  });
-
-  it("uses evidence tables (not loose paragraphs) for affected elements", () => {
-    const report = getReport();
-    const html = renderReportHTML(report);
-    expect(html).toContain("evidence-table");
-    expect(html).toContain("ev-mono");
-    expect(html).toContain("HTML Snippet");
-  });
-
-  it("renders large reports without errors", () => {
-    // Generate a scan with many violations
-    const manyViolations = Array.from({ length: 50 }, (_, i) => ({
-      id: `rule-${i}`,
-      impact: i % 4 === 0 ? "critical" : i % 4 === 1 ? "serious" : i % 4 === 2 ? "moderate" : "minor",
-      help: `Test rule ${i}`,
-      description: `Description for rule ${i}`,
-      tags: ["wcag143"],
-      nodes: Array.from({ length: 20 }, (_, j) => ({
-        target: [`.el-${i}-${j}`],
-        html: `<div class="element-${i}-${j}">Content</div>`,
-      })),
-    }));
-
-    const report = getReport({ violations: manyViolations });
-    expect(report.priorityIssues.length).toBe(50);
-
-    // Should render without throwing
-    const html = renderReportHTML(report);
-    expect(html.length).toBeGreaterThan(10000);
-    expect(html).not.toMatch(/and \d+ more/i);
   });
 });

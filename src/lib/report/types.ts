@@ -43,13 +43,15 @@ export interface AffectedElementDetail {
 }
 
 /**
- * Accessibility Health Score — weighted scoring model.
+ * Accessibility Health Score — normalized exponential decay model.
  *
  * Formula:
- *   weightedPenalty = (critical × 10) + (serious × 6) + (moderate × 3) + (minor × 1)
- *   rawScore = max(0, 100 − weightedPenalty)
- *   healthScore = clamp(rawScore, 0, 100), rounded to integer
+ *   Step A: weightedPenalty = (critical × 10) + (serious × 6) + (moderate × 3) + (minor × 1)
+ *   Step B: normalizedPenalty = weightedPenalty / max(1, pagesAnalyzed)
+ *   Step C: healthScore = round(100 × exp(−k × normalizedPenalty)), k = 0.05
+ *   Step D: clamp to [0, 100]
  *
+ * Properties: deterministic, monotonic, bounded 0–100
  * Weights: Critical=10, Serious=6, Moderate=3, Minor=1
  */
 export interface HealthScore {
@@ -57,13 +59,14 @@ export interface HealthScore {
   grade: string;
   label: string;
   weightedPenalty: number;
+  normalizedPenalty: number;
 }
 
 /** A single row in the WCAG Compliance Matrix */
 export interface WcagMatrixRow {
   criterion: string;
   level: "A" | "AA" | "AAA";
-  status: "Pass" | "Fail" | "Needs Review" | "Not Tested";
+  status: "Pass" | "Fail" | "Needs Manual Review" | "Not Tested";
   relatedFindings: number;
 }
 
@@ -128,7 +131,9 @@ export interface ReportData {
   maturityLevel: MaturityLevel;
   issueBreakdown: IssueBreakdown;
   priorityIssues: ReportIssue[];
+  /** @deprecated Use riskSummary. Kept for backward compatibility. */
   legalRisk: string;
+  riskSummary: string;
   estimatedFixTime: string;
   engineName: string;
   engineVersion: string;

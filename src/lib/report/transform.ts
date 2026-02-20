@@ -128,17 +128,17 @@ function determineWcagStatus(compliancePercentage: number): "pass" | "partial" |
   return "fail";
 }
 
-/** Determine legal risk text */
-function determineLegalRisk(riskLevel: RiskLevel): string {
+/** Determine accessibility risk summary text (safe, non-legal wording) */
+function determineRiskSummary(riskLevel: RiskLevel): string {
   switch (riskLevel) {
     case "LOW":
-      return "Low legal exposure. Your site demonstrates strong accessibility compliance. Continue monitoring to maintain this standard.";
+      return "Low risk. Your site demonstrates strong accessibility practices. Continue monitoring to maintain this standard.";
     case "MEDIUM":
-      return "Moderate legal exposure. Some accessibility gaps exist that could result in complaints or regulatory attention. Remediation recommended within 30 days.";
+      return "Moderate risk. Some accessibility gaps exist that may affect users with disabilities. Remediation recommended within 30 days.";
     case "HIGH":
-      return "High legal exposure. Significant accessibility barriers exist that may violate ADA, EAA, or equivalent regulations. Immediate remediation strongly recommended.";
+      return "High risk. Significant accessibility barriers exist that may prevent users from completing key tasks. Immediate remediation strongly recommended.";
     case "CRITICAL":
-      return "Critical legal exposure. Your site has severe accessibility barriers affecting core functionality. Urgent remediation required to avoid potential legal action.";
+      return "Critical risk. Severe accessibility barriers affect core functionality. Urgent remediation required.";
   }
 }
 
@@ -157,25 +157,36 @@ const SEVERITY_WEIGHTS: Record<Severity, number> = {
   minor: 1,
 };
 
+/** Decay constant for exponential scoring curve */
+const HEALTH_SCORE_K = 0.05;
+
 /**
- * Compute Accessibility Health Score (0–100).
+ * Compute Accessibility Health Score (0–100) using normalized exponential decay.
  *
  * Algorithm:
- *   1. weightedPenalty = sum(count_per_severity × weight)
- *   2. rawScore = max(0, 100 − weightedPenalty)
- *   3. Clamp to [0, 100], round to integer.
+ *   Step A: weightedPenalty = (critical×10) + (serious×6) + (moderate×3) + (minor×1)
+ *   Step B: normalizedPenalty = weightedPenalty / max(1, pagesAnalyzed)
+ *   Step C: healthScore = round(100 × exp(−k × normalizedPenalty)), k = 0.05
+ *   Step D: clamp to [0, 100]
+ *
+ * Properties:
+ *   - Deterministic: same input always yields same output
+ *   - Monotonic: more issues → lower score (never increases)
+ *   - Bounded: always in [0, 100]
+ *   - Realistic: a site with 10 moderate issues scores ~86, not 70
  *
  * Weights: Critical=10, Serious=6, Moderate=3, Minor=1
  */
-function computeHealthScore(breakdown: IssueBreakdown): HealthScore {
+function computeHealthScore(breakdown: IssueBreakdown, pagesAnalyzed: number = 1): HealthScore {
   const weightedPenalty: number =
     breakdown.critical * SEVERITY_WEIGHTS.critical +
     breakdown.serious * SEVERITY_WEIGHTS.serious +
     breakdown.moderate * SEVERITY_WEIGHTS.moderate +
     breakdown.minor * SEVERITY_WEIGHTS.minor;
 
-  const raw: number = Math.max(0, 100 - weightedPenalty);
-  const value: number = Math.round(Math.min(100, Math.max(0, raw)));
+  const normalizedPenalty: number = weightedPenalty / Math.max(1, pagesAnalyzed);
+  const rawScore: number = 100 * Math.exp(-HEALTH_SCORE_K * normalizedPenalty);
+  const value: number = Math.round(Math.min(100, Math.max(0, rawScore)));
 
   let gradeVal: string;
   if (value >= 90) gradeVal = "A";
@@ -191,7 +202,7 @@ function computeHealthScore(breakdown: IssueBreakdown): HealthScore {
   else if (value >= 50) label = "Needs Work";
   else label = "Poor";
 
-  return { value, grade: gradeVal, label, weightedPenalty };
+  return { value, grade: gradeVal, label, weightedPenalty, normalizedPenalty };
 }
 
 /**
@@ -249,6 +260,30 @@ const WCAG_CRITERIA_MAP: Record<string, { criterion: string; level: "A" | "AA" |
   "wcag413": { criterion: "4.1.3 Status Messages", level: "AA" },
 };
 
+/**
+ * WCAG 2.2 criteria that typically require manual review.
+ * Automated tools cannot fully evaluate these — they involve
+ * human judgement (media alternatives, cognitive load, navigation patterns).
+ */
+const MANUAL_REVIEW_CRITERIA: ReadonlySet<string> = new Set([
+  "wcag121",  // 1.2.1 Audio-only and Video-only
+  "wcag133",  // 1.3.3 Sensory Characteristics
+  "wcag141",  // 1.4.1 Use of Color
+  "wcag142",  // 1.4.2 Audio Control
+  "wcag214",  // 2.1.4 Character Key Shortcuts
+  "wcag221",  // 2.2.1 Timing Adjustable
+  "wcag222",  // 2.2.2 Pause, Stop, Hide
+  "wcag231",  // 2.3.1 Three Flashes or Below
+  "wcag243",  // 2.4.3 Focus Order
+  "wcag245",  // 2.4.5 Multiple Ways
+  "wcag251",  // 2.5.1 Pointer Gestures
+  "wcag254",  // 2.5.4 Motion Actuation
+  "wcag321",  // 3.2.1 On Focus
+  "wcag322",  // 3.2.2 On Input
+  "wcag326",  // 3.2.6 Consistent Help
+  "wcag337",  // 3.3.7 Redundant Entry
+]);
+
 /** Build WCAG Compliance Matrix from raw violations */
 function buildWcagMatrix(
   rawViolations: Array<{ tags?: string[]; nodes?: Array<unknown> }>
@@ -268,9 +303,15 @@ function buildWcagMatrix(
   for (const [tag, meta] of Object.entries(WCAG_CRITERIA_MAP)) {
     const count = findingsMap.get(tag) ?? 0;
     let status: WcagMatrixRow["status"];
-    if (count > 0) status = "Fail";
-    else if (rawViolations.length > 0) status = "Pass";
-    else status = "Not Tested";
+    if (count > 0) {
+      status = "Fail";
+    } else if (MANUAL_REVIEW_CRITERIA.has(tag)) {
+      status = "Needs Manual Review";
+    } else if (rawViolations.length > 0) {
+      status = "Pass";
+    } else {
+      status = "Not Tested";
+    }
 
     rows.push({
       criterion: meta.criterion,
@@ -280,9 +321,9 @@ function buildWcagMatrix(
     });
   }
 
-  // Sort: Fail first, then by criterion number
+  // Sort: Fail first, then Needs Manual Review, Pass, Not Tested
   rows.sort((a, b) => {
-    const statusOrder: Record<string, number> = { Fail: 0, "Needs Review": 1, Pass: 2, "Not Tested": 3 };
+    const statusOrder: Record<string, number> = { Fail: 0, "Needs Manual Review": 1, Pass: 2, "Not Tested": 3 };
     const diff = (statusOrder[a.status] ?? 3) - (statusOrder[b.status] ?? 3);
     if (diff !== 0) return diff;
     return a.criterion.localeCompare(b.criterion);
@@ -387,9 +428,12 @@ export function transformScanToReport(
       const allNodes = v.nodes ?? [];
       const elementCount: number = allNodes.length || 1;
       // Full element details for export-grade reports (safety cap: 5000)
+      // pageUrl populated from scan context for evidence table Page/URL column
+      const pageUrl: string = scan.page?.url ?? scan.site.url;
       const elementDetails = allNodes.slice(0, 5000).map((n) => ({
         selector: (n.target ?? []).join(" > ") || "unknown",
         html: (n.html ?? "").slice(0, 1000),
+        pageUrl,
       }));
 
       return {
@@ -424,9 +468,9 @@ export function transformScanToReport(
     ? scan.createdAt
     : scan.createdAt.toISOString();
 
-  const healthScore = computeHealthScore(breakdown);
-  const wcagMatrix = buildWcagMatrix(rawViolations);
   const pagesScanned = 1;
+  const healthScore = computeHealthScore(breakdown, pagesScanned);
+  const wcagMatrix = buildWcagMatrix(rawViolations);
   const scanConfig = buildScanConfig(scan, pagesScanned, "axe-core", "4.10");
   const topPriorityFixes = computeTopPriorityFixes(priorityIssues);
 
@@ -445,7 +489,8 @@ export function transformScanToReport(
     maturityLevel: determineMaturityLevel(score),
     issueBreakdown: breakdown,
     priorityIssues,
-    legalRisk: determineLegalRisk(riskLevel),
+    legalRisk: determineRiskSummary(riskLevel),
+    riskSummary: determineRiskSummary(riskLevel),
     estimatedFixTime: estimateTotalFixTime(breakdown),
     engineName: "axe-core",
     engineVersion: "4.10",

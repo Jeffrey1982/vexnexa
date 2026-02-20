@@ -310,7 +310,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     </table>
     <div class="corp-prose">
       <h3>Assessment</h3>
-      <p>${esc(d.legalRisk)}</p>
+      <p>${esc(d.riskSummary)}</p>
       <p>Estimated remediation effort: <strong>${esc(d.estimatedFixTime)}</strong>.</p>
     </div>
     ${renderTopPriorityFixes(d.topPriorityFixes, s)}
@@ -325,8 +325,8 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <div class="ehb-meta"><span class="ehb-grade">Grade ${hs.grade}</span><span class="ehb-label">${hs.label}</span></div>
     </div>
     <div class="exec-health-detail">
-      <p>Weighted penalty: <strong>${hs.weightedPenalty}</strong> points deducted from 100.</p>
-      <p class="exec-health-formula">Formula: 100 &minus; (Critical&times;10 + Serious&times;6 + Moderate&times;3 + Minor&times;1)</p>
+      <p>Normalized penalty: <strong>${hs.normalizedPenalty.toFixed(1)}</strong> (weighted: ${hs.weightedPenalty})</p>
+      <p class="exec-health-formula">Formula: 100 &times; exp(&minus;0.05 &times; penalty / pages)</p>
     </div>
   </div>
   <div class="exec-cards">
@@ -339,12 +339,12 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
         : "No critical issues were detected."}</p>
     </div>
     <div class="exec-card">
-      <h3>Legal Risk Assessment</h3>
+      <h3>Accessibility Risk Summary</h3>
       <div class="exec-risk-row">
         <span class="exec-risk-label" style="color:${riskClr(d.riskLevel)}">${d.riskLevel} Risk</span>
         ${riskBar(d.riskLevel, primary)}
       </div>
-      <p>${esc(d.legalRisk)}</p>
+      <p>${esc(d.riskSummary)}</p>
     </div>
     <div class="exec-card">
       <h3>Remediation Estimate</h3>
@@ -418,7 +418,7 @@ function wcagStatusChip(status: WcagMatrixRow["status"]): string {
   const colors: Record<string, { bg: string; fg: string }> = {
     Pass: { bg: "#DCFCE7", fg: "#16A34A" },
     Fail: { bg: "#FEF2F2", fg: "#DC2626" },
-    "Needs Review": { bg: "#FFF7ED", fg: "#EA580C" },
+    "Needs Manual Review": { bg: "#FFF7ED", fg: "#EA580C" },
     "Not Tested": { bg: "#F3F4F6", fg: "#6B7280" },
   };
   const c = colors[status] ?? colors["Not Tested"];
@@ -429,13 +429,14 @@ function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): strin
   const matrix = d.wcagMatrix ?? [];
   if (matrix.length === 0) return "";
 
-  // Show failing criteria first, then a summary of passing
+  // Show failing criteria first, then manual review, passing, not tested
   const failing = matrix.filter((r) => r.status === "Fail");
+  const manualReview = matrix.filter((r) => r.status === "Needs Manual Review");
   const passing = matrix.filter((r) => r.status === "Pass");
   const notTested = matrix.filter((r) => r.status === "Not Tested");
 
   const perPage = 18;
-  const allRows = [...failing, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
+  const allRows = [...failing, ...manualReview, ...passing.slice(0, 10), ...notTested.slice(0, 5)];
   const pages: WcagMatrixRow[][] = [];
   for (let i = 0; i < allRows.length; i += perPage) {
     pages.push(allRows.slice(i, i + perPage));
@@ -444,9 +445,16 @@ function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): strin
   return pages.map((pg, pi) => `
 <section class="page">
   <h2 class="${corp(s) ? "section-title corp-title" : "section-title"}" style="border-color:${primary}">${pi === 0 ? "WCAG 2.2 Compliance Matrix" : "WCAG 2.2 Compliance Matrix (continued)"}</h2>
-  ${pi === 0 ? `<p class="matrix-summary">Tested against <strong>${matrix.length}</strong> WCAG 2.2 success criteria.
+  ${pi === 0 ? `<div class="matrix-legend">
+    <span class="ml-item"><span class="wcag-status-chip" style="background:#DCFCE7;color:#16A34A">Pass</span> No violations detected</span>
+    <span class="ml-item"><span class="wcag-status-chip" style="background:#FEF2F2;color:#DC2626">Fail</span> Automated violations detected</span>
+    <span class="ml-item"><span class="wcag-status-chip" style="background:#FFF7ED;color:#EA580C">Needs Manual Review</span> Cannot be fully verified automatically</span>
+    <span class="ml-item"><span class="wcag-status-chip" style="background:#F3F4F6;color:#6B7280">Not Tested</span> Outside scan scope</span>
+  </div>
+  <p class="matrix-summary">Tested against <strong>${matrix.length}</strong> WCAG 2.2 success criteria.
     <strong style="color:#16A34A">${passing.length} Pass</strong> &middot;
     <strong style="color:#DC2626">${failing.length} Fail</strong> &middot;
+    <strong style="color:#EA580C">${manualReview.length} Needs Manual Review</strong> &middot;
     <span style="color:#6B7280">${notTested.length} Not Tested</span></p>` : ""}
   <table class="wcag-matrix-table">
     <thead>
@@ -507,11 +515,11 @@ function renderPriorityIssues(d: ReportData, primary: string, s: ReportStyle): s
   return pages.map((pg, pi) => `
 <section class="page">
   <h2 class="section-title" style="border-color:${primary}">${pi === 0 ? "Audit Findings" : "Audit Findings (continued)"}</h2>
-  <div class="issues-list">${pg.map((iss, i) => renderAuditCard(iss, pi * 3 + i + 1, primary)).join("")}</div>
+  <div class="issues-list">${pg.map((iss, i) => renderAuditCard(iss, pi * 3 + i + 1, primary, d.domain)).join("")}</div>
 </section>`).join("");
 }
 
-function renderAuditCard(iss: ReportIssue, num: number, primary: string): string {
+function renderAuditCard(iss: ReportIssue, num: number, primary: string, domain: string): string {
   return `<div class="audit-card">
   <div class="ac-header">
     <span class="ac-num">${num}</span>
@@ -542,10 +550,11 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string): string
     ${(iss.affectedElementDetails ?? []).length > 0 ? `<div class="ac-section" style="margin-top:8px">
       <div class="ac-label">Affected Elements</div>
       <table class="evidence-table">
-        <thead><tr><th>#</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
+        <thead><tr><th>#</th><th>Page / URL</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
         <tbody>
           ${(iss.affectedElementDetails ?? []).map((el, idx) => `<tr>
             <td class="ev-num">${idx + 1}</td>
+            <td class="ev-url">${esc(el.pageUrl || domain)}</td>
             <td class="ev-mono">${esc(el.selector)}</td>
             <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
           </tr>`).join("")}
@@ -571,11 +580,11 @@ function renderIssuesTable(d: ReportData, primary: string): string {
   return pages.map((pg, pi) => `
 <section class="page">
   <h2 class="section-title corp-title" style="border-color:${primary}">${pi === 0 ? "Audit Findings" : "Audit Findings (continued)"}</h2>
-  ${pg.map((iss, i) => renderIssueDetailCard(iss, pi * perPage + i + 1, primary)).join("")}
+  ${pg.map((iss, i) => renderIssueDetailCard(iss, pi * perPage + i + 1, primary, d.domain)).join("")}
 </section>`).join("");
 }
 
-function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string): string {
+function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string, domain: string): string {
   const details = (iss.affectedElementDetails ?? []);
   return `<div class="issue-detail-card" style="border-left:4px solid ${sevClr(iss.severity)};background:${sevBg(iss.severity)}">
   <div class="idc-header">
@@ -600,10 +609,11 @@ function renderIssueDetailCard(iss: ReportIssue, num: number, primary: string): 
     ${details.length > 0 ? `<div class="idc-section">
       <div class="idc-label">Affected Elements</div>
       <table class="evidence-table">
-        <thead><tr><th>#</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
+        <thead><tr><th>#</th><th>Page / URL</th><th>Selector</th><th>HTML Snippet</th></tr></thead>
         <tbody>
           ${details.map((el, idx) => `<tr>
             <td class="ev-num">${idx + 1}</td>
+            <td class="ev-url">${esc(el.pageUrl || domain)}</td>
             <td class="ev-mono">${esc(el.selector)}</td>
             <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
           </tr>`).join("")}
@@ -666,7 +676,7 @@ function renderCTA(d: ReportData, primary: string, s: ReportStyle): string {
   <div class="cta-2col">
     <div class="cta-left">
       <h2 style="color:${primary}">Next Steps</h2>
-      <p>Based on this assessment, we recommend prioritising the ${d.issueBreakdown.critical > 0 ? "critical and serious" : "identified"} findings to reduce legal risk and improve user experience.</p>
+      <p>Based on this assessment, we recommend prioritising the ${d.issueBreakdown.critical > 0 ? "critical and serious" : "identified"} findings to reduce accessibility risk and improve user experience.</p>
       <ul class="cta-bullets">
         <li>Detailed remediation roadmap</li>
         <li>Ongoing compliance monitoring</li>
@@ -953,6 +963,9 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   font-size:11px;color:#92400E;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 
 /* ── WCAG Compliance Matrix ── */
+.matrix-legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:12px;padding:10px 14px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:var(--rs);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ml-item{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#374151}
 .matrix-summary{font-size:13px;color:#4B5563;margin-bottom:14px;line-height:1.6}
 .wcag-matrix-table{width:100%;border-collapse:collapse;font-size:12px}
 .wcag-matrix-table th{background:#F3F4F6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #D1D5DB;
@@ -978,9 +991,11 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .evidence-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px;table-layout:fixed}
 .evidence-table th{background:#F3F4F6;padding:6px 8px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
   font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
-.evidence-table th:first-child{width:30px}
-.evidence-table th:nth-child(2){width:40%}
-.evidence-table th:nth-child(3){width:auto}
+.evidence-table th:first-child{width:28px}
+.evidence-table th:nth-child(2){width:25%}
+.evidence-table th:nth-child(3){width:30%}
+.evidence-table th:nth-child(4){width:auto}
+.ev-url{font-size:10px;color:#6B7280;overflow-wrap:anywhere;word-break:break-all;line-height:1.3}
 .evidence-table td{padding:5px 8px;border:1px solid #E5E7EB;vertical-align:top}
 .evidence-table tbody tr:nth-child(even){background:#FAFAFA}
 .ev-num{text-align:center;font-weight:600;color:#6B7280;width:30px}
