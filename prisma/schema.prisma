@@ -100,6 +100,9 @@ model User {
   // Accessibility Assurance subscriptions
   assuranceSubscriptions AssuranceSubscription[] @relation("AssuranceSubscriptions")
 
+  // Billing profile
+  billingProfile BillingProfile?
+
   // Soft delete
   deletedAt DateTime?
   deletedBy String?
@@ -1246,6 +1249,42 @@ enum AssuranceAlertSeverity {
   CRITICAL
 }
 
+// Billing Profile (VAT / tax identity)
+model BillingProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  billingType String @default("individual") // individual | business
+
+  // Personal / business identity
+  fullName    String?
+  companyName String?
+  countryCode String @default("NL") // ISO 3166-1 alpha-2
+
+  // VAT
+  vatId       String?
+  vatValid    Boolean   @default(false)
+  vatCheckedAt DateTime?
+
+  // NL-specific
+  kvkNumber String? // KvK (Chamber of Commerce)
+
+  // Non-EU tax ID
+  taxId String?
+
+  // Billing address (optional)
+  addressLine1 String?
+  addressCity  String?
+  addressPostal String?
+  addressRegion String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
 // Accessibility Assurance Subscription
 model AssuranceSubscription {
   id     String @id @default(cuid())
@@ -1263,6 +1302,12 @@ model AssuranceSubscription {
   // Pricing
   pricePerMonth Decimal @db.Decimal(10, 2)
   totalPrice    Decimal @db.Decimal(10, 2)
+
+  // Tax / VAT audit trail
+  vatRate     Decimal? @db.Decimal(5, 4) // e.g. 0.2100
+  taxRegime   String?  // NL_VAT | EU_REVERSE_CHARGE | NON_EU_NO_VAT
+  countryCode String?  // ISO alpha-2 at time of purchase
+  vatId       String?  // VAT ID at time of purchase (if any)
 
   // Lifecycle
   activatedAt DateTime  @default(now())

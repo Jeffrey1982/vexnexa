@@ -12,6 +12,7 @@ import {
   type BillingCycle,
   ASSURANCE_BASE_PRICES,
 } from './pricing';
+import { determineTax, calculateAmountBreakdown, type TaxDecision, type TaxRegime } from '../billing/tax';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
 import { Locale, SequenceType } from '@mollie/api-client';
@@ -25,19 +26,26 @@ export async function createAssuranceCheckoutPayment(opts: {
   tier: AssuranceTier;
   billingCycle?: BillingCycle;
   mollieCustomerId?: string;
+  taxDecision?: TaxDecision;
+  countryCode?: string;
+  vatId?: string;
 }) {
   try {
-    const { userId, email, tier, billingCycle = 'monthly', mollieCustomerId } = opts;
+    const { userId, email, tier, billingCycle = 'monthly', mollieCustomerId, taxDecision, countryCode, vatId } = opts;
 
     console.log('[Assurance] Creating checkout payment:', {
       userId,
       email,
       tier,
       billingCycle,
+      taxRegime: taxDecision?.regime,
     });
 
     // Calculate price for tier and cycle
-    const amount = calculateAssurancePrice(tier, billingCycle);
+    const netAmount = calculateAssurancePrice(tier, billingCycle);
+    const tax = taxDecision ?? { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' };
+    const breakdown = calculateAmountBreakdown(netAmount, tax);
+    const amount = breakdown.gross;
 
     // Create or get Mollie customer
     const { createOrGetMollieCustomer } = await import('../billing/mollie-flows');
@@ -56,7 +64,7 @@ export async function createAssuranceCheckoutPayment(opts: {
         value: amount.toFixed(2),
         currency: 'EUR',
       },
-      description: `VexNexa Assurance ${tier} - ${billingCycle}`,
+      description: `VexNexa Assurance ${tier} - ${billingCycle}${tax.regime === 'EU_REVERSE_CHARGE' ? ' (reverse charge)' : ''}`,
       redirectUrl: appUrl(`/dashboard/billing/success?session=${sessionToken}&tier=${tier}&cycle=${billingCycle}`),
       webhookUrl: appUrl('/api/assurance/webhook'),
       customerId: customer.id,
@@ -68,6 +76,12 @@ export async function createAssuranceCheckoutPayment(opts: {
         billingCycle,
         product: 'assurance',
         sessionToken,
+        vatRate: String(tax.vatRate),
+        taxRegime: tax.regime,
+        countryCode: countryCode || 'NL',
+        vatId: vatId || '',
+        netAmount: String(breakdown.net),
+        vatAmount: String(breakdown.vat),
       },
     };
 
@@ -100,9 +114,13 @@ export async function createAssuranceSubscription(opts: {
   tier: AssuranceTier;
   mollieCustomerId: string;
   billingCycle?: BillingCycle;
+  vatRate?: number;
+  taxRegime?: string;
+  countryCode?: string;
+  vatId?: string;
 }) {
   try {
-    const { userId, tier, mollieCustomerId, billingCycle = 'monthly' } = opts;
+    const { userId, tier, mollieCustomerId, billingCycle = 'monthly', vatRate, taxRegime, countryCode, vatId } = opts;
 
     console.log('[Assurance] Creating subscription:', {
       userId,
@@ -193,6 +211,10 @@ export async function createAssuranceSubscription(opts: {
         billingCycle,
         pricePerMonth: monthlyPrice,
         totalPrice,
+        vatRate: vatRate ?? 0.21,
+        taxRegime: taxRegime ?? 'NL_VAT',
+        countryCode: countryCode ?? 'NL',
+        vatId: vatId ?? null,
         activatedAt: new Date(),
       },
       update: {
@@ -202,6 +224,10 @@ export async function createAssuranceSubscription(opts: {
         billingCycle,
         pricePerMonth: monthlyPrice,
         totalPrice,
+        vatRate: vatRate ?? 0.21,
+        taxRegime: taxRegime ?? 'NL_VAT',
+        countryCode: countryCode ?? 'NL',
+        vatId: vatId ?? null,
         activatedAt: new Date(),
         canceledAt: null,
         expiresAt: null,

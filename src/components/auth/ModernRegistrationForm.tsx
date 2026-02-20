@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { CountrySelect } from '@/components/ui/country-select'
 import { createClient } from '@/lib/supabase/client-new'
 import { 
   User, 
@@ -61,11 +61,6 @@ interface RegistrationData {
   marketingEmails: boolean
   productUpdates: boolean
 }
-
-const countries = [
-  'Netherlands', 'Belgium', 'Germany', 'France', 'United Kingdom', 
-  'United States', 'Canada', 'Australia', 'Other'
-]
 
 const steps = [
   { 
@@ -495,18 +490,11 @@ export default function ModernRegistrationForm() {
             <MapPin className="w-4 h-4" />
             Country
           </Label>
-          <Select value={formData.country} onValueChange={(value) => updateFormData('country', value)}>
-            <SelectTrigger className="h-12">
-              <SelectValue placeholder="Select your country" />
-            </SelectTrigger>
-            <SelectContent>
-              {countries.map((country) => (
-                <SelectItem key={country} value={country}>
-                  {country}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <CountrySelect
+            value={formData.country}
+            onValueChange={(code) => updateFormData('country', code)}
+            placeholder="Select your country"
+          />
         </div>
       </div>
     </div>

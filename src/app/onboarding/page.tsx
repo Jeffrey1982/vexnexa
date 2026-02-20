@@ -8,8 +8,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { CountrySelect } from '@/components/ui/country-select'
 import { createClient } from '@/lib/supabase/client-new'
+import { isEuCountry, isNlCountry } from '@/lib/billing/countries'
 import {
   User,
   Building,
@@ -21,13 +22,14 @@ import {
   Sparkles,
   Shield,
   Zap,
-  CheckCircle
+  CheckCircle,
+  FileText,
+  CheckCircle2,
+  AlertCircle,
+  Loader2
 } from 'lucide-react'
 
-const countries = [
-  'Netherlands', 'Belgium', 'Germany', 'France', 'United Kingdom',
-  'United States', 'Canada', 'Australia', 'Other'
-]
+type BillingType = 'individual' | 'business'
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -37,6 +39,8 @@ export default function OnboardingPage() {
   const [error, setError] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [userName, setUserName] = useState('')
+  const [vatValidating, setVatValidating] = useState(false)
+  const [vatStatus, setVatStatus] = useState<'idle' | 'valid' | 'invalid' | 'error'>('idle')
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -47,7 +51,16 @@ export default function OnboardingPage() {
     website: '',
     country: '',
     marketingEmails: false,
-    productUpdates: true
+    productUpdates: true,
+    billingType: 'individual' as BillingType,
+    companyName: '',
+    vatId: '',
+    kvkNumber: '',
+    taxId: '',
+    addressLine1: '',
+    addressCity: '',
+    addressPostal: '',
+    addressRegion: '',
   })
 
   useEffect(() => {
@@ -146,6 +159,27 @@ export default function OnboardingPage() {
       if (!response.ok) {
         const errorData = await response.json()
         throw new Error(errorData.error || 'Failed to update profile')
+      }
+
+      // Save billing profile if country is set
+      if (formData.country) {
+        await fetch('/api/billing/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            billingType: formData.billingType,
+            fullName: `${formData.firstName} ${formData.lastName}`.trim() || undefined,
+            companyName: formData.companyName || undefined,
+            countryCode: formData.country,
+            vatId: formData.vatId || undefined,
+            kvkNumber: formData.kvkNumber || undefined,
+            taxId: formData.taxId || undefined,
+            addressLine1: formData.addressLine1 || undefined,
+            addressCity: formData.addressCity || undefined,
+            addressPostal: formData.addressPostal || undefined,
+            addressRegion: formData.addressRegion || undefined,
+          }),
+        })
       }
 
       // Redirect to dashboard with welcome
@@ -304,21 +338,192 @@ export default function OnboardingPage() {
                         <MapPin className="w-4 h-4 inline mr-1" />
                         Country
                       </Label>
-                      <Select value={formData.country} onValueChange={(value) => updateFormData('country', value)}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select your country" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {countries.map((country) => (
-                            <SelectItem key={country} value={country}>
-                              {country}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <CountrySelect
+                        value={formData.country}
+                        onValueChange={(code) => updateFormData('country', code)}
+                        placeholder="Select your country"
+                      />
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Billing Identity */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#0F5C5C]">
+                  <FileText className="w-4 h-4" />
+                  Billing Identity (Optional)
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => updateFormData('billingType', 'individual')}
+                    className={`flex-1 px-4 py-3 rounded-lg border text-sm font-medium transition-all ${
+                      formData.billingType === 'individual'
+                        ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                        : 'bg-card border-border text-foreground hover:bg-accent'
+                    }`}
+                  >
+                    <User className="w-4 h-4 inline mr-2" />
+                    Individual
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateFormData('billingType', 'business')}
+                    className={`flex-1 px-4 py-3 rounded-lg border text-sm font-medium transition-all ${
+                      formData.billingType === 'business'
+                        ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                        : 'bg-card border-border text-foreground hover:bg-accent'
+                    }`}
+                  >
+                    <Building className="w-4 h-4 inline mr-2" />
+                    Business
+                  </button>
+                </div>
+
+                {formData.billingType === 'business' && (
+                  <div className="space-y-4 p-4 rounded-lg border bg-card animate-in slide-in-from-top-2 duration-200">
+                    <div className="space-y-2">
+                      <Label htmlFor="companyName">
+                        Company Name *
+                      </Label>
+                      <Input
+                        id="companyName"
+                        value={formData.companyName}
+                        onChange={(e) => updateFormData('companyName', e.target.value)}
+                        placeholder="Your company name"
+                        className="h-12"
+                        required
+                      />
+                    </div>
+
+                    {formData.country && isEuCountry(formData.country) && (
+                      <div className="space-y-2">
+                        <Label htmlFor="vatId">
+                          VAT ID (optional)
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id="vatId"
+                            value={formData.vatId}
+                            onChange={(e) => {
+                              updateFormData('vatId', e.target.value)
+                              setVatStatus('idle')
+                            }}
+                            placeholder={formData.country === 'NL' ? 'NL123456789B01' : `${formData.country}...`}
+                            className="h-12 flex-1"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            disabled={!formData.vatId || vatValidating}
+                            onClick={async () => {
+                              setVatValidating(true)
+                              setVatStatus('idle')
+                              try {
+                                const res = await fetch('/api/billing/validate-vat', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ countryCode: formData.country, vatId: formData.vatId }),
+                                })
+                                const data = await res.json()
+                                setVatStatus(data.valid ? 'valid' : 'invalid')
+                              } catch {
+                                setVatStatus('error')
+                              } finally {
+                                setVatValidating(false)
+                              }
+                            }}
+                            className="h-12 px-4"
+                          >
+                            {vatValidating ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              'Validate'
+                            )}
+                          </Button>
+                        </div>
+                        {vatStatus === 'valid' && (
+                          <p className="text-sm text-green-600 dark:text-green-400 flex items-center gap-1">
+                            <CheckCircle2 className="w-4 h-4" /> Valid VAT ID
+                          </p>
+                        )}
+                        {vatStatus === 'invalid' && (
+                          <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                            <AlertCircle className="w-4 h-4" /> Could not validate VAT ID
+                          </p>
+                        )}
+                        {vatStatus === 'error' && (
+                          <p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                            <AlertCircle className="w-4 h-4" /> VIES service unavailable — you can continue
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {formData.country && isNlCountry(formData.country) && (
+                      <div className="space-y-2">
+                        <Label htmlFor="kvkNumber">
+                          KvK Number (optional)
+                        </Label>
+                        <Input
+                          id="kvkNumber"
+                          value={formData.kvkNumber}
+                          onChange={(e) => updateFormData('kvkNumber', e.target.value)}
+                          placeholder="12345678"
+                          className="h-12"
+                        />
+                      </div>
+                    )}
+
+                    {formData.country && !isEuCountry(formData.country) && (
+                      <div className="space-y-2">
+                        <Label htmlFor="taxId">
+                          Tax ID (optional)
+                        </Label>
+                        <Input
+                          id="taxId"
+                          value={formData.taxId}
+                          onChange={(e) => updateFormData('taxId', e.target.value)}
+                          placeholder="Tax identification number"
+                          className="h-12"
+                        />
+                      </div>
+                    )}
+
+                    {/* Optional billing address */}
+                    <div className="space-y-2">
+                      <Label className="text-xs text-muted-foreground">Billing Address (optional)</Label>
+                      <Input
+                        value={formData.addressLine1}
+                        onChange={(e) => updateFormData('addressLine1', e.target.value)}
+                        placeholder="Street address"
+                        className="h-10"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <Input
+                          value={formData.addressCity}
+                          onChange={(e) => updateFormData('addressCity', e.target.value)}
+                          placeholder="City"
+                          className="h-10"
+                        />
+                        <Input
+                          value={formData.addressPostal}
+                          onChange={(e) => updateFormData('addressPostal', e.target.value)}
+                          placeholder="Postal code"
+                          className="h-10"
+                        />
+                      </div>
+                      <Input
+                        value={formData.addressRegion}
+                        onChange={(e) => updateFormData('addressRegion', e.target.value)}
+                        placeholder="State / Province / Region"
+                        className="h-10"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Preferences */}

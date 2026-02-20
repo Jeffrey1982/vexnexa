@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
 import { createAssuranceCheckoutPayment } from '@/lib/assurance/billing';
+import { prisma } from '@/lib/prisma';
+import { determineTax } from '@/lib/billing/tax';
 import type { AssuranceTier } from '@prisma/client';
 import type { BillingCycle } from '@/lib/assurance/pricing';
 
@@ -82,13 +84,45 @@ export async function POST(req: NextRequest) {
     console.warn(`[Assurance][${requestId}] NEXT_PUBLIC_APP_URL not set, using fallback`);
   }
 
-  // 5. Create Mollie checkout payment
+  // 5. Fetch billing profile and compute tax
+  let taxDecision = undefined;
+  let countryCode: string | undefined;
+  let vatId: string | undefined;
+
+  try {
+    const billingProfile = await prisma.billingProfile.findUnique({
+      where: { userId: user.id },
+    });
+
+    if (billingProfile) {
+      countryCode = billingProfile.countryCode;
+      vatId = billingProfile.vatId ?? undefined;
+      taxDecision = determineTax({
+        countryCode: billingProfile.countryCode,
+        billingType: billingProfile.billingType as 'individual' | 'business',
+        vatValid: billingProfile.vatValid,
+      });
+
+      console.log(`[Assurance][${requestId}] Tax decision:`, {
+        regime: taxDecision.regime,
+        vatRate: taxDecision.vatRate,
+        countryCode,
+      });
+    }
+  } catch (taxErr) {
+    console.warn(`[Assurance][${requestId}] Could not fetch billing profile, using default NL VAT:`, taxErr);
+  }
+
+  // 6. Create Mollie checkout payment
   try {
     const payment = await createAssuranceCheckoutPayment({
       userId: user.id,
       email: user.email,
       tier: tier as AssuranceTier,
       billingCycle: billingCycle as BillingCycle,
+      taxDecision,
+      countryCode,
+      vatId,
     });
 
     const checkoutUrl = payment.getCheckoutUrl();
