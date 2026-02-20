@@ -168,6 +168,28 @@ interface LanguageIssue {
   impact: "minor" | "moderate" | "serious" | "critical";
 }
 
+/**
+ * Retry helper: re-runs a page.evaluate if the execution context is destroyed
+ * (e.g. due to a client-side navigation/redirect after initial page load).
+ */
+async function safeEvaluate<T>(page: any, fn: (...args: any[]) => T, ...args: any[]): Promise<T> {
+  const MAX_RETRIES = 3;
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      return await page.evaluate(fn, ...args);
+    } catch (err: any) {
+      const msg: string = err?.message ?? '';
+      if (msg.includes('Execution context was destroyed') || msg.includes('navigation')) {
+        console.warn(`[a11y] Context destroyed (attempt ${attempt + 1}/${MAX_RETRIES}), waiting for page to settle...`);
+        await new Promise(r => setTimeout(r, 1500));
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw new Error('Page execution context kept getting destroyed after retries — the target page may be in a redirect loop.');
+}
+
 // ===== Scanner class =====
 export class EnhancedAccessibilityScanner {
   private browser: any | null = null;
@@ -261,15 +283,30 @@ export class EnhancedAccessibilityScanner {
 
   private async scanUrlWithPuppeteer(url: string): Promise<EnhancedScanResult> {
     const page = this.page!;
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: DEFAULT_TIMEOUT_MS });
+
+    // Use networkidle2 so client-side redirects / SPA navigations settle
+    // before we start evaluating. Fall back to domcontentloaded on timeout.
+    try {
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: DEFAULT_TIMEOUT_MS });
+    } catch (navErr: any) {
+      if (navErr?.message?.includes('timeout')) {
+        console.warn('[a11y] networkidle2 timed out, falling back to domcontentloaded');
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: DEFAULT_TIMEOUT_MS });
+      } else {
+        throw navErr;
+      }
+    }
+
+    // Small extra settle time for late JS redirects
+    await new Promise(r => setTimeout(r, 500));
 
     // Import axe source from bundled TypeScript module
     const { axeSource } = await import('./axe-source');
 
     console.log('[a11y] Loaded unminified axe.js from TS module, length:', axeSource.length);
 
-    // Execute everything in one atomic page.evaluate
-    const axeResults = await page.evaluate((axeSource: string) => {
+    // Execute everything in one atomic page.evaluate, with retry on context destruction
+    const axeResults: any = await safeEvaluate(page, (axeSource: string) => {
       return new Promise((resolve, reject) => {
         try {
           // Execute the source to set window.axe
@@ -418,19 +455,19 @@ export class EnhancedAccessibilityScanner {
 
   // ===== Heuristics (kept minimal & deterministic) =====
   private async testKeyboardNavigation(page: any): Promise<KeyboardNavigationResult> {
-    const focusableElements: number = await page.evaluate(() => {
+    const focusableElements: number = await safeEvaluate(page, () => {
       const nodes = document.querySelectorAll(
         'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
       );
       return nodes.length;
     });
 
-    const skipLinks: boolean = await page.evaluate(() => {
+    const skipLinks: boolean = await safeEvaluate(page, () => {
       const link = document.querySelector('a[href^="#"]');
       return !!link && (link.textContent || "").toLowerCase().includes("skip");
     });
 
-    const focusVisible: boolean = await page.evaluate(() => {
+    const focusVisible: boolean = await safeEvaluate(page, () => {
       const el = document.querySelector(":focus-visible");
       return el != null;
     });
@@ -467,8 +504,8 @@ export class EnhancedAccessibilityScanner {
   }
 
   private async testScreenReaderCompatibility(page: any): Promise<ScreenReaderResult> {
-    const ariaLabels: number = await page.evaluate(() => document.querySelectorAll("[aria-label], [aria-labelledby]").length);
-    const landmarks: number = await page.evaluate(
+    const ariaLabels: number = await safeEvaluate(page, () => document.querySelectorAll("[aria-label], [aria-labelledby]").length);
+    const landmarks: number = await safeEvaluate(page, 
       () => document.querySelectorAll("main, nav, aside, header, footer, [role='main'], [role='navigation']").length
     );
 
@@ -484,7 +521,7 @@ export class EnhancedAccessibilityScanner {
       score -= 20;
     }
 
-    const headingStructure: boolean = await page.evaluate(() => {
+    const headingStructure: boolean = await safeEvaluate(page, () => {
       const headings = Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6"));
       const levels = headings.map((h) => parseInt(h.tagName[1], 10));
       const hasH1 = levels.includes(1);
@@ -508,7 +545,7 @@ export class EnhancedAccessibilityScanner {
       score -= 30;
     }
 
-    const altTexts: number = await page.evaluate(() => {
+    const altTexts: number = await safeEvaluate(page, () => {
       const imgs = Array.from(document.querySelectorAll("img"));
       return imgs.filter((img) => !!img.alt && !!img.alt.trim()).length;
     });
@@ -519,7 +556,7 @@ export class EnhancedAccessibilityScanner {
   private async testMobileAccessibility(page: any): Promise<MobileAccessibilityResult> {
     await page.setViewport({ width: 375, height: 667 });
 
-    const touchStats = await page.evaluate(() => {
+    const touchStats = await safeEvaluate(page, () => {
       const clickable = Array.from(document.querySelectorAll("a, button, [onclick], [role='button']"));
       let adequate = 0;
       clickable.forEach((el) => {
@@ -541,7 +578,7 @@ export class EnhancedAccessibilityScanner {
       score -= 25;
     }
 
-    const viewport = await page.evaluate(() => {
+    const viewport = await safeEvaluate(page, () => {
       const meta = document.querySelector('meta[name="viewport"]');
       return !!meta && (meta.getAttribute("content") || "").includes("width=device-width");
     });
@@ -572,7 +609,7 @@ export class EnhancedAccessibilityScanner {
     let score = 100;
     const issues: CognitiveIssue[] = [];
 
-    const errorHandling = await page.evaluate(() => {
+    const errorHandling = await safeEvaluate(page, () => {
       const forms = document.querySelectorAll("form");
       let hasError = false;
       forms.forEach((f) => {
@@ -591,7 +628,7 @@ export class EnhancedAccessibilityScanner {
       score -= 20;
     }
 
-    const simpleLanguage = await page.evaluate(() => {
+    const simpleLanguage = await safeEvaluate(page, () => {
       const text = (document.body.textContent || "").trim();
       if (!text) return 100;
       const words = text.split(/\s+/);
@@ -633,12 +670,12 @@ export class EnhancedAccessibilityScanner {
   }
 
   private async testPerformanceImpact(page: any): Promise<PerformanceImpactResult> {
-    const loadTime = await page.evaluate(() => {
+    const loadTime = await safeEvaluate(page, () => {
       const t = performance.timing as any;
       return Math.max(0, (t.loadEventEnd || 0) - (t.navigationStart || 0));
     });
 
-    const domSize: number = await page.evaluate(() => document.querySelectorAll("*").length);
+    const domSize: number = await safeEvaluate(page, () => document.querySelectorAll("*").length);
 
     const issues: PerformanceIssue[] = [];
     let score = 100;
@@ -671,10 +708,10 @@ export class EnhancedAccessibilityScanner {
   }
 
   private async testLanguageSupport(page: any): Promise<LanguageSupportResult> {
-    const languageDetected = await page.evaluate(
+    const languageDetected = await safeEvaluate(page, 
       () => document.documentElement.lang || document.querySelector("[lang]")?.getAttribute("lang") || null
     );
-    const directionality = await page.evaluate(() => {
+    const directionality = await safeEvaluate(page, () => {
       const dir = document.documentElement.dir;
       return dir === "ltr" || dir === "rtl" || dir === "";
     });
