@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,11 +14,11 @@ import {
   Bell,
   BarChart3,
   Clock,
+  AlertTriangle,
 } from "lucide-react";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
-import { useEffect } from "react";
 
 type BillingCycle = "monthly" | "semiannual" | "annual";
 type AssuranceTier = "BASIC" | "PRO" | "PUBLIC_SECTOR";
@@ -34,6 +33,12 @@ interface PlanConfig {
   annual: number;
   features: string[];
   popular?: boolean;
+}
+
+interface SubscribeError {
+  message: string;
+  requestId?: string;
+  isConfigIssue?: boolean;
 }
 
 const PLANS: PlanConfig[] = [
@@ -125,14 +130,21 @@ function getPerMonth(plan: PlanConfig, cycle: BillingCycle): number {
 }
 
 export default function SubscribeAssurancePage(): JSX.Element {
-  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const [loadingTier, setLoadingTier] = useState<AssuranceTier | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<SubscribeError | null>(null);
   const [authUser, setAuthUser] = useState<any>(null);
-  const supabase = createClient();
 
+  // Hydration-safe mount gating
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Fetch user after mount (client-only)
+  useEffect(() => {
+    if (!mounted) return;
+    const supabase = createClient();
     const getUser = async (): Promise<void> => {
       const {
         data: { user },
@@ -140,9 +152,10 @@ export default function SubscribeAssurancePage(): JSX.Element {
       setAuthUser(user);
     };
     getUser();
-  }, [supabase]);
+  }, [mounted]);
 
   const handleSubscribe = async (tier: AssuranceTier): Promise<void> => {
+    if (loadingTier) return; // Prevent double-submit
     setLoadingTier(tier);
     setError(null);
 
@@ -155,19 +168,71 @@ export default function SubscribeAssurancePage(): JSX.Element {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to create subscription");
+      if (!res.ok || data.ok === false) {
+        const isConfigIssue = data.code === 'CONFIG_MISSING_ENV' || data.code === 'CONFIG_MISSING_PRICE_ID';
+        setError({
+          message: data.message || "Payment setup failed. Please try again.",
+          requestId: data.requestId,
+          isConfigIssue,
+        });
+        return;
       }
 
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
       }
-    } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      setError({
+        message: "Something went wrong. Please check your connection and try again.",
+      });
     } finally {
       setLoadingTier(null);
     }
   };
+
+  // SSR-safe skeleton: render a stable shell that matches server output
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <div className="h-16 border-b border-border" />
+        <div className="flex-1">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500 text-white mb-4">
+                <Shield className="w-8 h-8" />
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+                Accessibility Assurance
+              </h1>
+              <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
+                Automated accessibility monitoring for your websites. Get alerted
+                when scores drop and track WCAG compliance over time.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {PLANS.map((plan) => (
+                <Card key={plan.tier} className="relative flex flex-col border-border">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-xl">{plan.name}</CardTitle>
+                    <CardDescription>{plan.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex flex-col">
+                    <div className="h-8 bg-muted/30 rounded animate-pulse mb-6" />
+                    <div className="space-y-2.5 mb-6 flex-1">
+                      {plan.features.map((f) => (
+                        <div key={f} className="h-4 bg-muted/20 rounded animate-pulse" />
+                      ))}
+                    </div>
+                    <div className="h-10 bg-muted/30 rounded animate-pulse" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -178,7 +243,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
           <div className="mb-6">
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-gray-900 dark:hover:text-gray-200"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Dashboard
@@ -225,14 +290,14 @@ export default function SubscribeAssurancePage(): JSX.Element {
             ].map((feature) => (
               <div
                 key={feature.title}
-                className="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700"
+                className="flex items-start gap-3 p-4 rounded-lg bg-card border border-border"
               >
                 <feature.icon className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
                 <div>
                   <div className="font-medium text-foreground text-sm">
                     {feature.title}
                   </div>
-                  <div className="text-xs text-muted-foreground dark:text-gray-400">
+                  <div className="text-xs text-muted-foreground">
                     {feature.desc}
                   </div>
                 </div>
@@ -242,7 +307,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
 
           {/* Billing Cycle Toggle */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex items-center bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
+            <div className="inline-flex items-center bg-card border border-border rounded-lg p-1">
               {(
                 [
                   { value: "monthly" as const, label: "Monthly", badge: "" },
@@ -255,13 +320,13 @@ export default function SubscribeAssurancePage(): JSX.Element {
                   onClick={() => setBillingCycle(option.value)}
                   className={`relative px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                     billingCycle === option.value
-                      ? "bg-primary-500 text-white shadow-sm"
-                      : "text-muted-foreground hover:text-gray-900 dark:hover:text-gray-200"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {option.label}
                   {option.badge && billingCycle !== option.value && (
-                    <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-[10px] font-semibold bg-gold-100 text-gold-700 dark:bg-gold-900 dark:text-gold-300 rounded-full">
+                    <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-[10px] font-semibold bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300 rounded-full">
                       {option.badge}
                     </span>
                   )}
@@ -270,10 +335,23 @@ export default function SubscribeAssurancePage(): JSX.Element {
             </div>
           </div>
 
-          {/* Error */}
+          {/* Error Banner */}
           {error && (
-            <div className="max-w-md mx-auto mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm text-center">
-              {error}
+            <div className="max-w-md mx-auto mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-lg text-sm text-center">
+              <div className="flex items-center justify-center gap-2 text-destructive mb-1">
+                <AlertTriangle className="w-4 h-4 shrink-0" />
+                <span className="font-medium">{error.message}</span>
+              </div>
+              {error.isConfigIssue && (
+                <p className="text-muted-foreground text-xs mt-1">
+                  Support has been notified and is looking into this.
+                </p>
+              )}
+              {error.requestId && (
+                <p className="text-muted-foreground text-xs mt-1">
+                  Ref: {error.requestId}
+                </p>
+              )}
             </div>
           )}
 
@@ -289,13 +367,13 @@ export default function SubscribeAssurancePage(): JSX.Element {
                   key={plan.tier}
                   className={`relative flex flex-col ${
                     plan.popular
-                      ? "border-primary-500 dark:border-primary-400 shadow-lg ring-1 ring-primary-500/20"
-                      : "border-gray-200 dark:border-gray-700"
+                      ? "border-primary shadow-lg ring-1 ring-primary/20"
+                      : "border-border"
                   }`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <Badge className="bg-primary-500 hover:bg-primary-500 text-white">
+                      <Badge className="bg-primary hover:bg-primary text-primary-foreground">
                         Most Popular
                       </Badge>
                     </div>
@@ -311,12 +389,12 @@ export default function SubscribeAssurancePage(): JSX.Element {
                         <span className="text-3xl font-bold text-foreground">
                           {formatEuro(billingCycle === "monthly" ? price : perMonth)}
                         </span>
-                        <span className="text-sm text-muted-foreground dark:text-gray-400">
+                        <span className="text-sm text-muted-foreground">
                           /month
                         </span>
                       </div>
                       {billingCycle !== "monthly" && (
-                        <p className="text-xs text-muted-foreground dark:text-gray-400 mt-1">
+                        <p className="text-xs text-muted-foreground mt-1">
                           {formatEuro(price)} billed{" "}
                           {billingCycle === "semiannual"
                             ? "every 6 months"
@@ -344,7 +422,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                       disabled={isLoading || loadingTier !== null}
                       className={`w-full ${
                         plan.popular
-                          ? "bg-primary-500 hover:bg-primary-600 text-white"
+                          ? "bg-primary hover:bg-primary/90 text-primary-foreground"
                           : ""
                       }`}
                       variant={plan.popular ? "default" : "outline"}
@@ -365,7 +443,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
           </div>
 
           {/* FAQ / Info */}
-          <div className="mt-12 max-w-2xl mx-auto text-center text-sm text-muted-foreground dark:text-gray-400">
+          <div className="mt-12 max-w-2xl mx-auto text-center text-sm text-muted-foreground">
             <p>
               All plans include a secure payment via Mollie. You can cancel
               anytime with a 7-day grace period. Prices are in EUR and exclude

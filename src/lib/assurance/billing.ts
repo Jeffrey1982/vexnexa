@@ -54,8 +54,8 @@ export async function createAssuranceCheckoutPayment(opts: {
         currency: 'EUR',
       },
       description: `VexNexa Assurance ${tier} - ${billingCycle}`,
-      redirectUrl: `${appUrl}/dashboard/assurance?payment=success`,
-      webhookUrl: `${appUrl}/api/assurance/webhook`,
+      redirectUrl: appUrl('/dashboard/assurance?payment=success'),
+      webhookUrl: appUrl('/api/assurance/webhook'),
       customerId: customer.id,
       sequenceType: SequenceType.first, // First payment for mandate creation
       metadata: {
@@ -159,7 +159,7 @@ export async function createAssuranceSubscription(opts: {
       },
       interval,
       description: `VexNexa Assurance ${tier}`,
-      webhookUrl: `${appUrl}/api/assurance/webhook`,
+      webhookUrl: appUrl('/api/assurance/webhook'),
       metadata: {
         userId,
         tier,
