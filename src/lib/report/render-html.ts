@@ -212,6 +212,8 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
   const gc = d.score >= 80 ? "#16A34A" : d.score >= 60 ? "#D97706" : "#DC2626";
   const isDark = !corp(s);
 
+  const pagesAnalyzed = d.pagesScanned ?? d.scanConfig?.pagesAnalyzed ?? 1;
+
   if (corp(s)) {
     return `<section class="page cover-page cover-corp">
   <header class="report-header">
@@ -224,11 +226,17 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
   <div class="header-divider" style="background:${primary}"></div>
   <div class="cover-main">
     <div class="cover-main-left">
+      <div class="cover-audit-label">Automated Accessibility Audit</div>
       <h1 class="cover-title-corp">Accessibility<br/>Compliance Report</h1>
-      <div class="cover-meta-row">
-        <span class="cover-meta-item"><span class="cover-meta-label">Standard</span><span style="color:#16A34A;font-weight:700">${esc(d.complianceLevel)}</span></span>
-        <span class="cover-meta-item"><span class="cover-meta-label">Risk</span><span style="color:${riskClr(d.riskLevel)};font-weight:700">${d.riskLevel}</span></span>
-        <span class="cover-meta-item"><span class="cover-meta-label">EAA 2025</span><span style="color:${d.eaaReady ? "#16A34A" : "#D97706"};font-weight:700">${d.eaaReady ? "Ready" : "Action Needed"}</span></span>
+      <div class="cover-domain-block">
+        <span class="cover-domain-label">Scanned Domain</span>
+        <span class="cover-domain-value" style="color:${primary}">${esc(d.domain)}</span>
+      </div>
+      <div class="cover-meta-grid">
+        <div class="cover-meta-cell"><span class="cover-meta-label">Standard</span><span class="cover-meta-value" style="color:#16A34A">${esc(d.complianceLevel)}</span></div>
+        <div class="cover-meta-cell"><span class="cover-meta-label">Risk Level</span><span class="cover-meta-value" style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</span></div>
+        <div class="cover-meta-cell"><span class="cover-meta-label">Scan Date</span><span class="cover-meta-value">${fmtDate(d.scanDate)}</span></div>
+        <div class="cover-meta-cell"><span class="cover-meta-label">Pages Analyzed</span><span class="cover-meta-value">${pagesAnalyzed}</span></div>
       </div>
     </div>
     <div class="cover-main-right">
@@ -262,11 +270,22 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
   <div class="header-divider" style="background:${primary}"></div>
   <div class="cover-main">
     <div class="cover-main-left">
+      <div class="cover-audit-label" style="color:rgba(255,255,255,.45)">Automated Accessibility Audit</div>
       <h1 class="cover-title-prem">Accessibility<br/>Compliance Report</h1>
+      <div class="cover-domain-block">
+        <span class="cover-domain-label" style="color:rgba(255,255,255,.4)">Scanned Domain</span>
+        <span class="cover-domain-value cover-domain-value-dark">${esc(d.domain)}</span>
+      </div>
       <div class="cover-badges">
         ${sevChip(d.riskLevel === "LOW" ? "minor" : d.riskLevel === "MEDIUM" ? "moderate" : d.riskLevel === "HIGH" ? "serious" : "critical")}
         <span class="sev-chip" style="background:rgba(22,163,74,.15);color:#4ADE80;border:1px solid rgba(22,163,74,.3)">${esc(d.complianceLevel)}</span>
         <span class="sev-chip" style="background:${d.eaaReady ? "rgba(22,163,74,.15)" : "rgba(217,119,6,.15)"};color:${d.eaaReady ? "#4ADE80" : "#FCD34D"};border:1px solid ${d.eaaReady ? "rgba(22,163,74,.3)" : "rgba(217,119,6,.3)"}">EAA 2025 ${d.eaaReady ? "Ready" : "Needs Work"}</span>
+      </div>
+      <div class="cover-meta-grid cover-meta-grid-dark">
+        <div class="cover-meta-cell"><span class="cover-meta-label" style="color:rgba(255,255,255,.35)">Standard</span><span class="cover-meta-value" style="color:#4ADE80">${esc(d.complianceLevel)}</span></div>
+        <div class="cover-meta-cell"><span class="cover-meta-label" style="color:rgba(255,255,255,.35)">Risk Level</span><span class="cover-meta-value" style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</span></div>
+        <div class="cover-meta-cell"><span class="cover-meta-label" style="color:rgba(255,255,255,.35)">Scan Date</span><span class="cover-meta-value" style="color:rgba(255,255,255,.7)">${fmtDate(d.scanDate)}</span></div>
+        <div class="cover-meta-cell"><span class="cover-meta-label" style="color:rgba(255,255,255,.35)">Pages</span><span class="cover-meta-value" style="color:rgba(255,255,255,.7)">${pagesAnalyzed}</span></div>
       </div>
       <div class="cover-kpi-strip">
         <div class="cover-kpi"><span class="cover-kpi-val" style="color:#FCA5A5">${d.issueBreakdown.critical}</span><span class="cover-kpi-lbl">Critical</span></div>
@@ -829,15 +848,16 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
    ══════════════════════════════════════ */
 .cover-premium{background:linear-gradient(170deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);color:white}
 
-.cover-title-prem{font-size:34px;font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:white;margin-bottom:12px}
-.cover-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.cover-kpi-strip{display:flex;gap:20px;margin-top:12px}
+.cover-title-prem{font-size:34px;font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:white;margin-bottom:8px}
+.cover-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cover-kpi-strip{display:flex;gap:20px;margin-top:14px}
 .cover-kpi{text-align:center}
 .cover-kpi-val{display:block;font-size:28px;font-weight:800;line-height:1.1}
 .cover-kpi-lbl{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:0.5px}
 
-.cover-score-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:16px;padding:24px;text-align:center;backdrop-filter:blur(8px);
+.cover-score-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:28px 24px;text-align:center;backdrop-filter:blur(8px);
+  box-shadow:0 2px 16px rgba(0,0,0,.15);
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-label{font-size:14px;color:rgba(255,255,255,.7);margin-top:4px}
 .csc-risk{font-size:13px;color:rgba(255,255,255,.5);margin-top:6px}
@@ -847,16 +867,30 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
    COVER — Corporate (white, clean)
    ══════════════════════════════════════ */
 .cover-corp{background:white}
-.cover-title-corp{font-size:28px;font-weight:700;line-height:1.15;color:${dark};letter-spacing:-0.5px;margin-bottom:10px}
-.cover-meta-row{display:flex;gap:20px}
-.cover-meta-item{font-size:13px;color:#374151}
-.cover-meta-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#9CA3AF;font-weight:600;margin-bottom:2px}
+.cover-title-corp{font-size:28px;font-weight:700;line-height:1.15;color:${dark};letter-spacing:-0.5px;margin-bottom:8px}
 
-.cover-score-card-corp{background:#F9FAFB;border:1px solid #D1D5DB;border-radius:4px;padding:24px;text-align:center;min-width:200px}
+/* ── Cover: Audit type label (Task 4) ── */
+.cover-audit-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:#9CA3AF;margin-bottom:8px}
+
+/* ── Cover: Hero domain block (Task 1) ── */
+.cover-domain-block{display:flex;flex-direction:column;gap:2px;margin-bottom:18px}
+.cover-domain-label{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#9CA3AF}
+.cover-domain-value{font-size:18px;font-weight:700;line-height:1.3;overflow-wrap:anywhere;word-break:break-word}
+.cover-domain-value-dark{color:white}
+
+/* ── Cover: Meta grid (Task 2) ── */
+.cover-meta-grid{display:grid;grid-template-columns:repeat(4,auto);gap:6px 24px;margin-bottom:16px}
+.cover-meta-grid-dark{border-top:1px solid rgba(255,255,255,.08);padding-top:14px;margin-top:4px}
+.cover-meta-cell{display:flex;flex-direction:column;gap:2px}
+.cover-meta-label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:0.8px;color:#9CA3AF;font-weight:600}
+.cover-meta-value{font-size:13px;font-weight:700;color:#374151}
+
+.cover-score-card-corp{background:#F9FAFB;border:1px solid #D1D5DB;border-radius:6px;padding:28px 24px;text-align:center;min-width:200px;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-score{font-size:52px;font-weight:800;line-height:1;display:inline}
 .csc-of{font-size:20px;font-weight:400;color:#9CA3AF;display:inline}
 .csc-grade{font-size:13px;color:#6B7280;margin:6px 0 12px}
-.csc-bar-track{height:6px;background:#E5E7EB;border-radius:3px;overflow:hidden;max-width:200px;margin:0 auto}
+.csc-bar-track{height:8px;background:#E5E7EB;border-radius:4px;overflow:hidden;max-width:200px;margin:0 auto}
 .csc-bar-fill{height:100%;border-radius:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:#9CA3AF}
 
