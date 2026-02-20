@@ -105,7 +105,7 @@ export default async function AdminSeoSettingsPage() {
             <p className="text-sm text-blue-800 mb-2">
               All required environment variables are set in Vercel:
             </p>
-            <div className="bg-white border border-blue-200 rounded p-3 font-mono text-xs space-y-1">
+            <div className="bg-white dark:bg-card border border-blue-200 dark:border-blue-500/20 rounded p-3 font-mono text-xs space-y-1">
               <div><span className="text-muted-foreground"># Configured in Vercel Production</span></div>
               <div className="flex items-center gap-2">
                 <span className="text-green-600">✓</span> GSC_SITE_URL (sc-domain:vexnexa.com)
@@ -283,24 +283,24 @@ export default async function AdminSeoSettingsPage() {
           Schedule these endpoints to run daily via Vercel Cron or your preferred scheduler:
         </p>
         <div className="space-y-2 font-mono text-xs">
-          <div className="flex items-center gap-2 p-2 bg-white rounded border">
+          <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
             <span className="text-gray-900">/api/cron/ingest-gsc</span>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-white rounded border">
+          <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
             <span className="text-gray-900">/api/cron/ingest-ga4</span>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-white rounded border">
+          <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
             <span className="text-gray-900">/api/cron/ingest-pagespeed</span>
             <span className="text-xs text-muted-foreground">(optional)</span>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-white rounded border">
+          <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
             <span className="text-gray-900">/api/cron/compute-score</span>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-white rounded border">
+          <div className="flex items-center gap-2 p-2 bg-white dark:bg-card rounded border dark:border-white/[0.06]">
             <span className="text-blue-600 font-semibold">POST</span>
             <span className="text-gray-900">/api/cron/run-alerts</span>
           </div>

@@ -30,7 +30,7 @@ export default async function AdminLayout({
         <MainNav user={user} />
 
         {/* Page Content */}
-        <main id="main-content" className="flex-1 overflow-y-auto bg-gray-50 dark:bg-background" tabIndex={-1}>
+        <main id="main-content" className="flex-1 overflow-y-auto bg-gray-50 dark:bg-[var(--surface-0)]" tabIndex={-1}>
           {children}
         </main>
       </div>

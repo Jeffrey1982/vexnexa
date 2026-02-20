@@ -291,7 +291,7 @@ export default async function AdminSeoAlertsPage() {
 
       {/* Recently Resolved */}
       {resolvedAlerts.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Recently Resolved (Last 7 Days)
           </h2>

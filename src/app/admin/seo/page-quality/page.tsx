@@ -238,7 +238,7 @@ export default async function AdminSeoPageQualityPage() {
       <AdminKpiGrid kpis={kpis} columns={4} />
 
       {/* P3: Engagement & Intent Breakdown */}
-      <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+      <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           P3: Engagement & Intent Components
         </h2>
@@ -291,7 +291,7 @@ export default async function AdminSeoPageQualityPage() {
       </div>
 
       {/* P4: Content Performance Breakdown */}
-      <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+      <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           P4: Content Performance Components
         </h2>
@@ -455,7 +455,7 @@ export default async function AdminSeoPageQualityPage() {
 
       {/* Recommended Actions */}
       {actions.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Recommended Actions
           </h2>

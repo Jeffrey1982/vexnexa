@@ -134,7 +134,7 @@ export default function ApiLogsPage() {
         {/* API Performance Metrics */}
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Request Volume (24h)</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
@@ -154,7 +154,7 @@ export default function ApiLogsPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Performance Metrics</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
@@ -178,7 +178,7 @@ export default function ApiLogsPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Activity Summary</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
@@ -202,7 +202,7 @@ export default function ApiLogsPage() {
 
         {/* Top Endpoints */}
         {stats && stats.topEndpoints && stats.topEndpoints.length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-6">
             <h2 className="text-lg font-semibold mb-4">Top API Endpoints (Last 24h)</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
@@ -213,9 +213,9 @@ export default function ApiLogsPage() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Requests</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-transparent divide-y divide-gray-200 dark:divide-white/[0.04]">
                   {stats.topEndpoints.map((endpoint, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
+                    <tr key={index} className="hover:bg-gray-50 dark:hover:bg-white/[0.03]">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs font-semibold rounded ${
                           endpoint.method === 'GET' ? 'bg-blue-100 text-blue-800' :
@@ -238,7 +238,7 @@ export default function ApiLogsPage() {
         )}
 
         {/* Recent API Requests */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
           <h2 className="text-lg font-semibold mb-4">Recent API Requests</h2>
           {recentLogs.length === 0 ? (
             <div className="text-center py-8">
@@ -260,9 +260,9 @@ export default function ApiLogsPage() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">User</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-transparent divide-y divide-gray-200 dark:divide-white/[0.04]">
                   {recentLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-gray-50">
+                    <tr key={log.id} className="hover:bg-gray-50 dark:hover:bg-white/[0.03]">
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                         {new Date(log.createdAt).toLocaleString()}
                       </td>

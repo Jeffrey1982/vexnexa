@@ -233,7 +233,7 @@ export default async function AdminSeoPage() {
 
       {/* Score Trend */}
       {scoreTrend.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-muted-foreground" />
@@ -272,7 +272,7 @@ export default async function AdminSeoPage() {
 
       {/* Latest Alerts */}
       {latestAlerts.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-500" />
@@ -310,7 +310,7 @@ export default async function AdminSeoPage() {
 
       {/* Top Actions */}
       {topActions.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">Recommended Actions</h2>
             <Link

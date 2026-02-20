@@ -175,7 +175,7 @@ export default function AdminRolesPage() {
         )}
 
         {/* Grant Admin Section */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Grant Admin Role</h2>
           <div className="flex gap-4">
             <input
@@ -183,7 +183,7 @@ export default function AdminRolesPage() {
               placeholder="Enter user email"
               value={searchEmail}
               onChange={(e) => setSearchEmail(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-white/[0.08] dark:bg-[var(--surface-2)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-foreground"
               onKeyPress={(e) => e.key === 'Enter' && grantAdminRole()}
             />
             <button
@@ -196,7 +196,7 @@ export default function AdminRolesPage() {
         </div>
 
         {/* Current Admins List */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
           <h2 className="text-xl font-semibold mb-4">Current Admin Users</h2>
 
           {adminUsers.length === 0 ? (
@@ -205,16 +205,16 @@ export default function AdminRolesPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Name</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Admin Since</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
+                  <tr className="border-b border-gray-200 dark:border-white/[0.06]">
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Email</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Name</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Admin Since</th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-muted-foreground">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {adminUsers.map((admin) => (
-                    <tr key={admin.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <tr key={admin.id} className="border-b border-gray-100 dark:border-white/[0.04] hover:bg-gray-50 dark:hover:bg-white/[0.03]">
                       <td className="py-3 px-4">{admin.email}</td>
                       <td className="py-3 px-4">
                         {admin.firstName || admin.lastName

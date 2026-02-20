@@ -110,7 +110,7 @@ export default function ErrorLogsPage() {
         {/* Current Statistics */}
         {errorData && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Error Summary (Last 24h)</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
@@ -134,7 +134,7 @@ export default function ErrorLogsPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h2 className="text-lg font-semibold mb-4">Error Rate Trends</h2>
               <div className="space-y-4">
                 <div className="p-4 bg-green-50 rounded-lg text-center">
@@ -148,7 +148,7 @@ export default function ErrorLogsPage() {
         )}
 
         {/* Recent Errors */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Recent Errors</h2>
           {errorData?.recentErrors.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
@@ -204,7 +204,7 @@ export default function ErrorLogsPage() {
         </div>
 
         {/* Implementation Guide */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
           <h2 className="text-lg font-semibold mb-4">Implementing Error Tracking</h2>
           <div className="prose max-w-none">
             <p className="text-muted-foreground mb-4">

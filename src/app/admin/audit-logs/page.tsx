@@ -147,7 +147,7 @@ export default function AuditLogsPage() {
         <h1 className="text-3xl font-bold mb-8">Audit Logs</h1>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -206,7 +206,7 @@ export default function AuditLogsPage() {
         </div>
 
         {/* Audit Logs Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] overflow-hidden">
           {logs.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground">
               No audit logs found

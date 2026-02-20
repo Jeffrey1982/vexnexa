@@ -286,7 +286,7 @@ export function AdminSidebar() {
         role="navigation"
         aria-label="Admin navigation"
         className={cn(
-          'fixed top-0 left-0 z-50 h-screen bg-white dark:bg-card border-r border-gray-200 dark:border-border transition-transform pointer-events-auto',
+          'fixed top-0 left-0 z-50 h-screen bg-white dark:bg-[var(--surface-1)] border-r border-gray-200 dark:border-white/[0.06] transition-transform pointer-events-auto',
           'w-72',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}

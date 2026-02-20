@@ -211,7 +211,7 @@ export default async function AdminSeoIndexHealthPage() {
 
       {/* Impressions Trend Chart */}
       {impressionsTrend.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             30-Day Impressions Trend
           </h2>
@@ -241,7 +241,7 @@ export default async function AdminSeoIndexHealthPage() {
       )}
 
       {/* Component Breakdown */}
-      <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+      <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Score Components
         </h2>
@@ -295,7 +295,7 @@ export default async function AdminSeoIndexHealthPage() {
 
       {/* Recommended Actions */}
       {p1Actions.length > 0 && (
-        <div className="mt-6 bg-white border border-gray-200 rounded-lg p-6">
+        <div className="mt-6 bg-white dark:bg-card border border-gray-200 dark:border-white/[0.06] rounded-lg p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Recommended Actions
           </h2>

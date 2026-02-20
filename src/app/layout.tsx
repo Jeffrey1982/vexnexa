@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   creator: 'Vexnexa',
   publisher: 'Vexnexa',
   manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    apple: '/icon-192.svg',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -49,11 +56,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
-        {/* Default favicon - will be replaced by white label if configured */}
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
 
@@ -79,7 +83,7 @@ export default async function RootLayout({
         {/* Preload Service Worker */}
         <link rel="prefetch" href="/sw.js" />
       </head>
-      <body className="font-sans antialiased bg-[var(--tp-muted)]">
+      <body className="min-h-screen font-sans antialiased bg-background text-foreground" suppressHydrationWarning>
         <GoogleAnalytics />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider

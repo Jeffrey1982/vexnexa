@@ -40,7 +40,7 @@ export function MainNav({ user }: MainNavProps) {
     : user?.email;
 
   return (
-    <nav className="sticky top-0 z-20 border-b bg-white dark:bg-card shadow-sm dark:border-border">
+    <nav className="sticky top-0 z-20 border-b bg-white dark:bg-[var(--surface-1)] shadow-sm dark:shadow-none dark:border-white/[0.06]">
       <div className="flex justify-between items-center h-16 px-6">
         {/* Left side - could add breadcrumbs or page title here */}
         <div className="flex items-center gap-4">

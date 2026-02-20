@@ -204,7 +204,7 @@ export default function DeletedItemsPage() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6 mb-8">
           <div className="flex gap-4">
             <div className="flex-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -226,7 +226,7 @@ export default function DeletedItemsPage() {
         </div>
 
         {/* Deleted Items Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] overflow-hidden">
           {items.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground">
               No deleted items found

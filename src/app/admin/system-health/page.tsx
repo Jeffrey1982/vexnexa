@@ -200,7 +200,7 @@ export default function SystemHealthPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {/* Database Health */}
           {health && (
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <span className={getStatusColor(health.database.status)}>●</span>
                 Database
@@ -229,7 +229,7 @@ export default function SystemHealthPage() {
 
           {/* Memory Usage */}
           {health && (
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h3 className="text-lg font-semibold mb-4">Memory Usage</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
@@ -262,7 +262,7 @@ export default function SystemHealthPage() {
         {/* Performance Metrics */}
         {performance && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h3 className="text-lg font-semibold mb-4">Database Performance</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
@@ -280,7 +280,7 @@ export default function SystemHealthPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h3 className="text-lg font-semibold mb-4">Request Stats</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
@@ -302,7 +302,7 @@ export default function SystemHealthPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white dark:bg-card rounded-lg shadow-md dark:shadow-none dark:ring-1 dark:ring-white/[0.06] p-6">
               <h3 className="text-lg font-semibold mb-4">Resource Usage</h3>
               <div className="space-y-3">
                 <div>
