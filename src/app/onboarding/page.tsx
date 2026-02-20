@@ -56,6 +56,7 @@ export default function OnboardingPage() {
     companyName: '',
     vatId: '',
     kvkNumber: '',
+    registrationNumber: '',
     taxId: '',
     addressLine1: '',
     addressCity: '',
@@ -173,6 +174,7 @@ export default function OnboardingPage() {
             countryCode: formData.country,
             vatId: formData.vatId || undefined,
             kvkNumber: formData.kvkNumber || undefined,
+            registrationNumber: formData.registrationNumber || undefined,
             taxId: formData.taxId || undefined,
             addressLine1: formData.addressLine1 || undefined,
             addressCity: formData.addressCity || undefined,
@@ -465,13 +467,28 @@ export default function OnboardingPage() {
                     {formData.country && isNlCountry(formData.country) && (
                       <div className="space-y-2">
                         <Label htmlFor="kvkNumber">
-                          KvK Number (optional)
+                          KvK-nummer (optional)
                         </Label>
                         <Input
                           id="kvkNumber"
                           value={formData.kvkNumber}
                           onChange={(e) => updateFormData('kvkNumber', e.target.value)}
                           placeholder="12345678"
+                          className="h-12"
+                        />
+                      </div>
+                    )}
+
+                    {formData.country && isEuCountry(formData.country) && !isNlCountry(formData.country) && (
+                      <div className="space-y-2">
+                        <Label htmlFor="registrationNumber">
+                          Chamber of Commerce number (optional)
+                        </Label>
+                        <Input
+                          id="registrationNumber"
+                          value={formData.registrationNumber}
+                          onChange={(e) => updateFormData('registrationNumber', e.target.value)}
+                          placeholder="Registration number"
                           className="h-12"
                         />
                       </div>

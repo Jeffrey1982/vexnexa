@@ -2,6 +2,7 @@ import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "../mollie"
 import { prisma } from "../prisma"
 import { PRICES, planKeyFromString } from "./plans"
 import { calculatePrice, type BillingCycle, type PlanKey } from "../pricing"
+import { computeTaxDecision, calculateTaxBreakdown, type TaxDecision, type CustomerType } from "../tax/rules"
 import type { Plan } from "@prisma/client"
 import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
@@ -157,9 +158,41 @@ export async function createUpgradePayment(opts: {
       throw new Error(`Invalid plan: ${plan}`)
     }
 
-    // Calculate price based on billing cycle
-    const totalPrice = calculatePrice(plan as PlanKey, billingCycle)
+    // Calculate base price (net, ex-VAT)
+    const basePrice = calculatePrice(plan as PlanKey, billingCycle)
     const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Annual'
+
+    // Fetch billing profile for tax computation (server-side)
+    const billingProfile = await prisma.billingProfile.findUnique({
+      where: { userId },
+      select: {
+        billingType: true,
+        countryCode: true,
+        vatId: true,
+        vatValid: true,
+        companyName: true,
+      },
+    })
+
+    // Compute tax decision server-side
+    const taxDecision = computeTaxDecision({
+      customerCountry: billingProfile?.countryCode ?? 'NL',
+      customerType: (billingProfile?.billingType ?? 'individual') as CustomerType,
+      vatId: billingProfile?.vatId,
+      vatIdValid: billingProfile?.vatValid,
+      productType: 'saas_subscription',
+    })
+
+    // Calculate gross amount (base + VAT) — this is what Mollie charges
+    const breakdown = calculateTaxBreakdown(basePrice, taxDecision)
+
+    // Build description with tax info
+    const taxLabel = taxDecision.taxMode === 'reverse_charge'
+      ? ' (Reverse charge)'
+      : taxDecision.taxMode === 'vat_standard'
+        ? ' (VAT included)'
+        : ''
+    const description = `VexNexa ${plan} Plan (${billingCycleLabel})${taxLabel}`
 
     // Get or create Mollie customer
     console.log('Getting or creating Mollie customer...')
@@ -178,9 +211,9 @@ export async function createUpgradePayment(opts: {
     const paymentData: PaymentCreateParams = {
       amount: {
         currency: 'EUR',
-        value: formatMollieAmount(totalPrice)
+        value: formatMollieAmount(breakdown.gross)
       },
-      description: `VexNexa ${plan} Plan (${billingCycleLabel})`,
+      description,
       redirectUrl: appUrl("/dashboard?checkout=success"),
       webhookUrl: appUrl("/api/mollie/webhook"),
       customerId: customer.id,
@@ -189,7 +222,16 @@ export async function createUpgradePayment(opts: {
         userId,
         plan,
         billingCycle,
-        type: "upgrade"
+        type: "upgrade",
+        // Tax snapshot for audit trail
+        taxRatePercent: String(taxDecision.taxRatePercent),
+        taxMode: taxDecision.taxMode,
+        customerCountry: taxDecision.countryCode,
+        customerType: billingProfile?.billingType ?? 'individual',
+        vatId: billingProfile?.vatId ?? '',
+        vatIdValid: String(billingProfile?.vatValid ?? false),
+        netAmount: String(breakdown.net),
+        vatAmount: String(breakdown.vat),
       }
     }
 
@@ -200,6 +242,7 @@ export async function createUpgradePayment(opts: {
         sequenceType: 'first',
         forcedMethods: 'none (automatic)',
         mode: isMollieTestMode() ? 'TEST (limited methods expected)' : 'LIVE',
+        tax: { taxDecision, breakdown },
       })
     }
 
@@ -210,6 +253,35 @@ export async function createUpgradePayment(opts: {
       sequenceType: payment.sequenceType,
       checkoutUrl: payment.getCheckoutUrl()
     })
+
+    // Persist checkout quote snapshot for invoice/audit trail
+    try {
+      await prisma.checkoutQuote.create({
+        data: {
+          userId,
+          product: 'subscription',
+          plan,
+          billingCycle,
+          baseAmount: breakdown.net,
+          vatAmount: breakdown.vat,
+          totalAmount: breakdown.gross,
+          currency: 'EUR',
+          taxRatePercent: taxDecision.taxRatePercent,
+          taxMode: taxDecision.taxMode,
+          taxNotes: taxDecision.notes,
+          customerType: billingProfile?.billingType ?? 'individual',
+          customerCountry: taxDecision.countryCode,
+          companyName: billingProfile?.companyName,
+          vatId: billingProfile?.vatId,
+          vatIdValid: billingProfile?.vatValid ?? false,
+          molliePaymentId: payment.id,
+        },
+      })
+    } catch (quoteError) {
+      // Non-fatal: don't block payment if quote persistence fails
+      console.error('[Mollie] Failed to persist checkout quote:', quoteError)
+    }
+
     return payment
   } catch (error) {
     console.error('=== Error in createUpgradePayment ===')

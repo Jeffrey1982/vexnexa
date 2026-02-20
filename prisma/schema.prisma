@@ -103,6 +103,9 @@ model User {
   // Billing profile
   billingProfile BillingProfile?
 
+  // Checkout quotes (tax snapshots)
+  checkoutQuotes CheckoutQuote[]
+
   // Soft delete
   deletedAt DateTime?
   deletedBy String?
@@ -1270,6 +1273,9 @@ model BillingProfile {
   // NL-specific
   kvkNumber String? // KvK (Chamber of Commerce)
 
+  // Generic registration number (Chamber of Commerce for non-NL EU countries)
+  registrationNumber String?
+
   // Non-EU tax ID
   taxId String?
 
@@ -1283,6 +1289,48 @@ model BillingProfile {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+  @@index([vatId])
+  @@index([countryCode])
+}
+
+// Checkout Quote — tax snapshot persisted at checkout time for invoice/audit trail.
+// Each payment attempt creates one quote so the tax details at time of purchase are immutable.
+model CheckoutQuote {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // What was purchased
+  product       String // 'subscription' | 'assurance' | 'addon'
+  plan          String? // STARTER, PRO, BUSINESS, ENTERPRISE
+  billingCycle  String? // monthly, yearly
+
+  // Price breakdown (all in EUR)
+  baseAmount    Decimal  @db.Decimal(10, 2) // Net price ex-VAT
+  vatAmount     Decimal  @db.Decimal(10, 2) // VAT amount
+  totalAmount   Decimal  @db.Decimal(10, 2) // Gross price inc-VAT
+  currency      String   @default("EUR")
+
+  // Tax decision snapshot
+  taxRatePercent  Decimal @db.Decimal(5, 2) // e.g. 21.00
+  taxMode         String  // vat_standard | reverse_charge | no_tax
+  taxNotes        String? // Human-readable tax note
+
+  // Customer snapshot at time of purchase
+  customerType    String  // individual | company
+  customerCountry String  // ISO alpha-2
+  companyName     String?
+  vatId           String?
+  vatIdValid      Boolean @default(false)
+
+  // Mollie reference
+  molliePaymentId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([molliePaymentId])
+  @@index([createdAt])
 }
 
 // Accessibility Assurance Subscription

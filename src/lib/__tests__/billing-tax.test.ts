@@ -314,7 +314,7 @@ describe('Onboarding Page: Billing Identity', () => {
 
   it('shows KvK field for NL country', () => {
     expect(page).toContain('isNlCountry(formData.country)');
-    expect(page).toContain('KvK Number (optional)');
+    expect(page).toContain('KvK-nummer (optional)');
     expect(page).toContain('id="kvkNumber"');
   });
 
