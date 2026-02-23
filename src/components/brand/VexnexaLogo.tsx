@@ -10,8 +10,8 @@ interface VexnexaLogoProps {
 }
 
 export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) {
-  // The logo SVG has a ~3.5:1 aspect ratio (2048×585)
-  const width = Math.round(size * 3.5);
+  // The logo SVG has a ~3.3:1 aspect ratio (1020×310)
+  const width = Math.round(size * 3.3);
 
   return (
     <Image
