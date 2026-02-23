@@ -15,7 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X, Linkedin, Twitter, Github } from "lucide-react";
+import { Menu, X, Linkedin, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -112,15 +112,6 @@ export function Navbar({ className }: NavbarProps) {
                 aria-label="Visit VexNexa on Twitter"
               >
                 <Twitter className="w-4 h-4" aria-hidden="true" />
-              </a>
-              <a
-                href="https://github.com/vexnexa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-9 w-9 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary flex items-center justify-center transition-all duration-200"
-                aria-label="Visit VexNexa on GitHub"
-              >
-                <Github className="w-4 h-4" aria-hidden="true" />
               </a>
             </div>
 
@@ -238,15 +229,6 @@ export function Navbar({ className }: NavbarProps) {
                       aria-label="Visit VexNexa on Twitter"
                     >
                       <Twitter className="w-5 h-5" aria-hidden="true" />
-                    </a>
-                    <a
-                      href="https://github.com/vexnexa"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
-                      aria-label="Visit VexNexa on GitHub"
-                    >
-                      <Github className="w-5 h-5" aria-hidden="true" />
                     </a>
                   </div>
                 </div>
