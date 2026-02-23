@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Heart, Mail, Linkedin, Twitter, Github, Facebook } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import VexnexaLogo from "@/components/brand/VexnexaLogo";
 
 interface FooterProps {
   className?: string;
@@ -84,13 +85,7 @@ export function Footer({ className }: FooterProps) {
           {/* Brand & Description */}
           <div className="lg:col-span-1 space-y-6">
             <Link href="/" className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center shadow-sm">
-                <span className="text-primary-foreground font-bold">T</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-2xl">VexNexa</span>
-                <span className="text-xs text-muted-foreground">Your Secure Path to Accessibility</span>
-              </div>
+              <VexnexaLogo size={36} />
             </Link>
 
             <p className="text-muted-foreground leading-relaxed max-w-sm">

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import VexnexaLogo from '@/components/brand/VexnexaLogo';
 
 export default function DashboardFooter() {
   const currentYear = new Date().getFullYear();
@@ -9,11 +10,10 @@ export default function DashboardFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="font-display font-bold text-sm mb-3">VexNexa</h3>
+            <Link href="/" className="inline-block mb-2">
+              <VexnexaLogo size={28} />
+            </Link>
             <p className="text-xs text-muted-foreground">
-              Your Secure Path to Accessibility
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">
               Professional accessibility testing and compliance monitoring.
             </p>
           </div>

@@ -28,6 +28,7 @@ import {
   Zap
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import VexnexaLogo from '@/components/brand/VexnexaLogo'
 
 // OAuth provider icons as SVG components
 const GoogleIcon = () => (
@@ -320,8 +321,8 @@ export default function ModernRegistrationForm() {
   const renderStep1 = () => (
     <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
-        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto flex items-center justify-center mb-4">
-          <Shield className="w-8 h-8 text-white" />
+        <div className="mx-auto mb-4">
+          <VexnexaLogo size={40} />
         </div>
         <h2 className="text-2xl font-bold">Create Your Account</h2>
         <p className="text-muted-foreground">Join VexNexa and start improving accessibility</p>

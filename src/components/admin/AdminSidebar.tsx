@@ -42,6 +42,7 @@ import {
   Calendar,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import VexnexaLogo from '@/components/brand/VexnexaLogo';
 
 interface NavItem {
   href: string;
@@ -166,14 +167,10 @@ export function AdminSidebar() {
       {/* Sidebar Header */}
       <div className="p-4 border-b border-gray-200 dark:border-border">
         <div className="flex items-center gap-3">
-          <div className="relative h-10 w-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-md">
-            <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-              <path d="M2 8 L12 20 L22 8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
+          <VexnexaLogo size={32} />
           <div>
-            <div className="text-gray-900 dark:text-foreground font-bold text-lg">VexNexa</div>
-            <div className="text-muted-foreground dark:text-muted-foreground text-xs">Admin Panel</div>
+            <div className="text-gray-900 dark:text-foreground font-bold text-lg">Admin</div>
+            <div className="text-muted-foreground dark:text-muted-foreground text-xs">Panel</div>
           </div>
         </div>
       </div>

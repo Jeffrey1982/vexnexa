@@ -27,6 +27,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client-new';
+import VexnexaLogo from '@/components/brand/VexnexaLogo';
 
 interface AdminNavProps {
   user?: {
@@ -142,16 +143,8 @@ export function AdminNav({ user }: AdminNavProps) {
           {/* Logo */}
           <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/admin" className="flex items-center gap-3 group">
-              <div className="relative h-10 w-10 bg-white rounded-lg flex items-center justify-center shadow-md transition-transform group-hover:scale-105">
-                <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                  <path d="M2 8 L12 20 L22 8" stroke="url(#vexGradient)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                  <defs>
-                    <linearGradient id="vexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FF7A00"/>
-                      <stop offset="100%" stopColor="#FF9933"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
+              <div className="bg-white rounded-lg p-1.5 shadow-md transition-transform group-hover:scale-105">
+                <VexnexaLogo size={28} />
               </div>
               <div className="hidden sm:block">
                 <div className="text-white font-bold text-xl tracking-tight">VexNexa</div>

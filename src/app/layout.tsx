@@ -19,10 +19,10 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/brand/vexnexa-icon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico', sizes: '32x32' },
     ],
-    apple: '/icon-192.svg',
+    apple: '/brand/vexnexa-icon.svg',
   },
   appleWebApp: {
     capable: true,
@@ -76,7 +76,7 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="VexNexa" />
-        <link rel="apple-touch-icon" href="/icon-192.svg" />
+        <link rel="apple-touch-icon" href="/brand/vexnexa-icon.svg" />
 
         {/* Android PWA Support */}
         <meta name="mobile-web-app-capable" content="yes" />

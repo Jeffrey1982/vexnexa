@@ -65,7 +65,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                     <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; box-shadow: 0 1px 3px rgba(30, 30, 30, 0.08);">
                         <tr>
                             <td style="padding: 40px 32px 0 32px; text-align: center;">
-                                <h1 style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 600; color: #1E1E1E; letter-spacing: -0.01em;">VexNexa</h1>
+                                <img src="https://vexnexa.com/brand/vexnexa-logo.png" alt="VexNexa" width="180" height="51" style="display: inline-block; max-width: 180px; height: auto;" />
                                 <p style="margin: 6px 0 0 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; color: #5A5A5A;">Accessibility Monitoring Platform</p>
                             </td>
                         </tr>

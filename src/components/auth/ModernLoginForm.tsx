@@ -19,6 +19,7 @@ import {
   Shield,
   Zap
 } from 'lucide-react'
+import VexnexaLogo from '@/components/brand/VexnexaLogo'
 
 // OAuth provider icons as SVG components
 const GoogleIcon = () => (
@@ -158,8 +159,8 @@ export default function ModernLoginForm() {
 
         <Card className="backdrop-blur-sm bg-white/90 dark:bg-[#1E1E1E]/90 shadow-2xl border border-[#C0C3C7]/20">
           <CardHeader className="text-center pb-2">
-            <div className="w-16 h-16 gradient-primary rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg">
-              <Shield className="w-8 h-8 text-white" />
+            <div className="mx-auto mb-4">
+              <VexnexaLogo size={40} />
             </div>
             <CardTitle className="text-2xl font-bold font-display text-[#1E1E1E] dark:text-white">
               Welcome Back

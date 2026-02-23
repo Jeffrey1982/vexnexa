@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client-new';
 import { LanguageSelector } from '@/components/LanguageSelector';
+import VexnexaLogo from '@/components/brand/VexnexaLogo';
 
 interface DashboardNavProps {
   user?: {
@@ -86,14 +87,8 @@ export default function DashboardNav({ user }: DashboardNavProps) {
         <div className="flex justify-between items-center h-20">
           {/* Logo and Desktop Nav */}
           <div className="flex">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-elegant group-hover:scale-105 transition-all duration-300 group-hover:shadow-soft">
-                <span className="text-primary-foreground font-bold text-xl">V</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-xl group-hover:text-primary transition-colors duration-200">VexNexa</span>
-                <span className="text-[10px] text-muted-foreground -mt-0.5">Developer-friendly WCAG scanning</span>
-              </div>
+            <Link href="/" className="flex items-center group">
+              <VexnexaLogo size={36} className="group-hover:opacity-90 transition-opacity duration-200" />
             </Link>
 
             {/* Desktop Navigation */}

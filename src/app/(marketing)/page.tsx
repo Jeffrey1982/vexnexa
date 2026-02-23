@@ -31,7 +31,7 @@ function JsonLd() {
     name: "VexNexa",
     description: "Advanced web accessibility and compliance scanner with coverage beyond traditional WCAG checks",
     url: "https://vexnexa.com",
-    logo: "https://vexnexa.com/logo.png",
+    logo: "https://vexnexa.com/brand/vexnexa-logo.png",
     sameAs: [
       "https://linkedin.com/company/vexnexa",
       "https://twitter.com/vexnexa",

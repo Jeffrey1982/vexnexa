@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useTranslations } from "next-intl";
+import VexnexaLogo from "@/components/brand/VexnexaLogo";
 
 interface NavbarProps {
   className?: string;
@@ -73,14 +74,8 @@ export function Navbar({ className }: NavbarProps) {
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-elegant group-hover:scale-105 transition-all duration-300 group-hover:shadow-soft">
-              <span className="text-primary-foreground font-bold text-xl">V</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-xl group-hover:text-primary transition-colors duration-200">VexNexa</span>
-              <span className="text-[10px] text-muted-foreground -mt-0.5">Developer-friendly WCAG scanning</span>
-            </div>
+          <Link href="/" className="flex items-center group">
+            <VexnexaLogo size={36} className="group-hover:opacity-90 transition-opacity duration-200" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -189,14 +184,8 @@ export function Navbar({ className }: NavbarProps) {
             <SheetContent side="right" className="w-[320px] sm:w-[400px] glass">
               <SheetHeader className="border-b border-border/20 pb-6">
                 <SheetTitle>
-                  <Link href="/" className="flex items-center space-x-3 group" onClick={() => setIsOpen(false)}>
-                    <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-elegant group-hover:scale-105 transition-all duration-300">
-                      <span className="text-primary-foreground font-bold text-base">T</span>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-display font-bold text-xl">VexNexa</span>
-                      <span className="text-[10px] text-muted-foreground -mt-0.5">Your Secure Path to Accessibility</span>
-                    </div>
+                  <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                    <VexnexaLogo size={32} />
                   </Link>
                 </SheetTitle>
                 <SheetDescription className="text-left pt-2">
