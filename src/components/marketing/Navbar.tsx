@@ -75,7 +75,7 @@ export function Navbar({ className }: NavbarProps) {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <VexnexaLogo size={36} className="group-hover:opacity-90 transition-opacity duration-200" />
+            <VexnexaLogo size={48} className="group-hover:opacity-90 transition-opacity duration-200" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -185,7 +185,7 @@ export function Navbar({ className }: NavbarProps) {
               <SheetHeader className="border-b border-border/20 pb-6">
                 <SheetTitle>
                   <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
-                    <VexnexaLogo size={32} />
+                    <VexnexaLogo size={40} />
                   </Link>
                 </SheetTitle>
                 <SheetDescription className="text-left pt-2">

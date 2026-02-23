@@ -11,7 +11,7 @@ export default function DashboardFooter() {
           {/* About */}
           <div>
             <Link href="/" className="inline-block mb-2">
-              <VexnexaLogo size={28} />
+              <VexnexaLogo size={38} />
             </Link>
             <p className="text-xs text-muted-foreground">
               Professional accessibility testing and compliance monitoring.

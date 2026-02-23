@@ -160,7 +160,7 @@ export default function ModernLoginForm() {
         <Card className="backdrop-blur-sm bg-white/90 dark:bg-[#1E1E1E]/90 shadow-2xl border border-[#C0C3C7]/20">
           <CardHeader className="text-center pb-2">
             <div className="mx-auto mb-4">
-              <VexnexaLogo size={40} />
+              <VexnexaLogo size={56} />
             </div>
             <CardTitle className="text-2xl font-bold font-display text-[#1E1E1E] dark:text-white">
               Welcome Back

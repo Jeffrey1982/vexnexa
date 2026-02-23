@@ -88,7 +88,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
           {/* Logo and Desktop Nav */}
           <div className="flex">
             <Link href="/" className="flex items-center group">
-              <VexnexaLogo size={36} className="group-hover:opacity-90 transition-opacity duration-200" />
+              <VexnexaLogo size={48} className="group-hover:opacity-90 transition-opacity duration-200" />
             </Link>
 
             {/* Desktop Navigation */}

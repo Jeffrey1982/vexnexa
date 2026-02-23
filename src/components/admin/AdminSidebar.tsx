@@ -167,7 +167,7 @@ export function AdminSidebar() {
       {/* Sidebar Header */}
       <div className="p-4 border-b border-gray-200 dark:border-border">
         <div className="flex items-center gap-3">
-          <VexnexaLogo size={32} />
+          <VexnexaLogo size={42} />
           <div>
             <div className="text-gray-900 dark:text-foreground font-bold text-lg">Admin</div>
             <div className="text-muted-foreground dark:text-muted-foreground text-xs">Panel</div>

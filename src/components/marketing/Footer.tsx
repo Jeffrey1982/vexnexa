@@ -85,7 +85,7 @@ export function Footer({ className }: FooterProps) {
           {/* Brand & Description */}
           <div className="lg:col-span-1 space-y-6">
             <Link href="/" className="flex items-center space-x-3">
-              <VexnexaLogo size={36} />
+              <VexnexaLogo size={48} />
             </Link>
 
             <p className="text-muted-foreground leading-relaxed max-w-sm">

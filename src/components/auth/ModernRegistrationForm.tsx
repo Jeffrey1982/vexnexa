@@ -322,7 +322,7 @@ export default function ModernRegistrationForm() {
     <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
         <div className="mx-auto mb-4">
-          <VexnexaLogo size={40} />
+          <VexnexaLogo size={56} />
         </div>
         <h2 className="text-2xl font-bold">Create Your Account</h2>
         <p className="text-muted-foreground">Join VexNexa and start improving accessibility</p>
