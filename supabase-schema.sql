@@ -1,3 +1,4 @@
+
 -- Create Lead table for newsletter signups with GDPR compliance
 CREATE TABLE IF NOT EXISTS "Lead" (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
