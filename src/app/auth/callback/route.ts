@@ -161,9 +161,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           console.error('[Callback] ⚠️  Database sync failed (non-fatal):', dbError)
         }
 
-        // Get redirect parameter - default to dashboard (sanitized against open redirects)
-        const redirect: string = sanitizeRedirectParam(requestUrl.searchParams.get('redirect'), '/dashboard')
-        console.log('🔐 Auth callback, redirecting to:', redirect)
+        // Get redirect parameter - honor both 'redirect' and 'next' params (sanitized against open redirects)
+        const redirect: string = sanitizeRedirectParam(
+          requestUrl.searchParams.get('redirect') || requestUrl.searchParams.get('next'),
+          '/dashboard'
+        )
+        console.log('[Callback] callback_next=' + redirect)
 
         // Detect email verification: email_confirmed_at was set within the last 2 minutes
         // This works regardless of whether type=signup was in the URL
