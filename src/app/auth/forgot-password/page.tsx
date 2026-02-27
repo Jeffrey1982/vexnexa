@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
+import { getAuthOrigin } from '@/lib/auth-origin'
 import { useTranslations } from 'next-intl'
 import {
   Mail,
@@ -33,13 +34,8 @@ export default function ForgotPasswordPage() {
     setMessage('')
 
     try {
-      const isLocalhost: boolean = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-      const origin: string = isLocalhost
-        ? window.location.origin
-        : (process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com')
-
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${origin}/auth/reset-password`,
+        redirectTo: `${getAuthOrigin()}/auth/reset-password`,
       })
 
       if (error) throw error

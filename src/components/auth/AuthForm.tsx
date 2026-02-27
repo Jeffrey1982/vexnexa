@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
+import { getAuthOrigin } from '@/lib/auth-origin'
 import { useTranslations } from 'next-intl'
 
 interface AuthFormProps {
@@ -32,16 +33,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
     try {
       if (mode === 'register') {
-        const isLocalhost: boolean = window.location.hostname === 'localhost'
-        const origin: string = isLocalhost
-          ? window.location.origin
-          : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com')
-
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${origin}/auth/callback?flow=verify`,
+            emailRedirectTo: `${getAuthOrigin()}/auth/callback?flow=verify`,
           },
         })
 

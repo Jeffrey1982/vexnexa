@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server-new'
 import { prisma } from '@/lib/prisma'
 import { successResponse, errorResponse, unauthorizedResponse, forbiddenResponse, notFoundResponse } from '@/lib/api-response'
 import { isAdmin } from '@/lib/admin'
+import { getAuthOrigin } from '@/lib/auth-origin'
 
 /**
  * POST /api/admin/users/[id]/reset-password - Force password reset (admin only)
@@ -38,7 +39,7 @@ export async function POST(
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       targetUser.email,
       {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`,
+        redirectTo: `${getAuthOrigin()}/auth/reset-password`,
       }
     )
 

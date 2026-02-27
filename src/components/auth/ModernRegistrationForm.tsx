@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CountrySelect } from '@/components/ui/country-select'
 import { createClient } from '@/lib/supabase/client-new'
+import { getAuthOrigin, getSiteOrigin } from '@/lib/auth-origin'
 import { 
   User, 
   Mail, 
@@ -121,15 +122,10 @@ export default function ModernRegistrationForm() {
     setError('')
 
     try {
-      const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-      const origin = isLocalhost
-        ? window.location.origin
-        : (process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com')
-
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${origin}/auth/callback?redirect=/dashboard`
+          redirectTo: `${getSiteOrigin()}/auth/callback?redirect=/dashboard`
         }
       })
 
@@ -254,16 +250,11 @@ export default function ModernRegistrationForm() {
         setTimeout(() => reject(new Error('Request timeout - email configuration may need adjustment')), 25000)
       )
 
-      const isLocalhost: boolean = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-      const origin: string = isLocalhost
-        ? window.location.origin
-        : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com')
-
       const signUpPromise = supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: `${origin}/auth/callback?flow=verify`,
+          emailRedirectTo: `${getAuthOrigin()}/auth/callback?flow=verify`,
           data: {
             first_name: formData.firstName,
             last_name: formData.lastName,

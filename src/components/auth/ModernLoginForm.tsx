@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
+import { getSiteOrigin } from '@/lib/auth-origin'
 import { useTranslations } from 'next-intl'
 import {
   Mail,
@@ -168,15 +169,11 @@ export default function ModernLoginForm() {
 
     try {
       const redirect = searchParams.get('redirect') || '/dashboard'
-      const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-      const origin = isLocalhost
-        ? window.location.origin
-        : (process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com')
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${origin}/auth/callback?redirect=${encodeURIComponent(redirect)}`
+          redirectTo: `${getSiteOrigin()}/auth/callback?redirect=${encodeURIComponent(redirect)}`
         }
       })
 
