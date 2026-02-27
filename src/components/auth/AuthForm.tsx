@@ -35,7 +35,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         const isLocalhost: boolean = window.location.hostname === 'localhost'
         const origin: string = isLocalhost
           ? window.location.origin
-          : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || window.location.origin)
+          : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com')
 
         const { error } = await supabase.auth.signUp({
           email,

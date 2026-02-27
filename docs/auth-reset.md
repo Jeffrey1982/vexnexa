@@ -2,26 +2,12 @@
 
 ## Canonical Domain: `https://vexnexa.com` (non-www)
 
-**All production URLs must use `https://vexnexa.com` (non-www).** The `www.` subdomain is NOT canonical.
+**All production URLs must use `https://vexnexa.com` (non-www).** See [`docs/domain-canonical.md`](./domain-canonical.md) for full details on Vercel domain settings, code guardrails, and regression tests.
 
-### Enforcement layers
-
-1. **`next.config.js` redirects** — Any request to `www.vexnexa.com/*` is 301-redirected to `vexnexa.com/*` (path + query preserved). This runs at Vercel edge before the app.
-2. **Vercel domain settings** — In Vercel → Project → Settings → Domains, `vexnexa.com` should be the **primary domain**. If `www.vexnexa.com` is listed, it should redirect to the apex (non-www).
-3. **`NEXT_PUBLIC_SITE_URL`** — Set to `https://vexnexa.com` in Vercel env vars. All auth `redirectTo` URLs use this instead of `window.location.origin`.
-4. **`/auth/callback`** — The `next` query param is normalized at runtime: `www.vexnexa.com` → `vexnexa.com`.
-5. **Hardcoded URLs** — No `www.vexnexa.com` in source code. Fallback strings use `https://vexnexa.com`.
-
-### Vercel Domain Configuration
-
-In **Vercel → Project → Settings → Domains**:
-
-| Domain | Configuration |
-|--------|--------------|
-| `vexnexa.com` | **Primary** (serves the app) |
-| `www.vexnexa.com` | **Redirects to** `vexnexa.com` (308/301) |
-
-If `www.vexnexa.com` is currently set as primary, change it: remove it, re-add it as redirect-to-apex.
+Key points:
+- **Vercel** handles www→non-www via a 308 redirect at edge. No code-level redirect needed.
+- **`NEXT_PUBLIC_SITE_URL=https://vexnexa.com`** is used for all auth `redirectTo` URLs.
+- **`/auth/callback`** sanitizes the `next` query param: normalizes www→non-www, blocks external hosts.
 
 ## Supabase Dashboard Settings
 
@@ -136,7 +122,8 @@ If clicking the reset link redirects to `/login` instead of showing the reset fo
 If visiting `https://vexnexa.com/auth/reset-password` ends up on `https://www.vexnexa.com/...`:
 
 1. **Check Vercel domain settings**: In Vercel → Project → Settings → Domains, ensure `vexnexa.com` is the **primary** domain and `www.vexnexa.com` is set to redirect to it (not the other way around).
-2. **Check `next.config.js`**: The `redirects()` function should contain a rule redirecting host `www.vexnexa.com` to `https://vexnexa.com/:path*` with `permanent: true`.
+2. **Do NOT add code-level redirects**: Vercel handles www→non-www at edge (308). Adding redirects in `next.config.js` or `middleware.ts` causes double-redirect chains.
 3. **Check `NEXT_PUBLIC_SITE_URL`**: Must be `https://vexnexa.com` (no www) in Vercel environment variables.
 4. **Check Supabase Site URL**: Must be `https://vexnexa.com` (no www). If set to `www.vexnexa.com`, Supabase will generate email links pointing to www.
-5. **Check for hardcoded www**: Run `grep -r "www.vexnexa.com" src/` — there should be zero matches (except the image allowlist in `resolve-white-label.ts`).
+5. **Check for hardcoded www**: Run `grep -r "www.vexnexa.com" src/` — there should be zero matches (except the image allowlist in `resolve-white-label.ts` and the callback allowlist).
+6. **Safari cache**: Safari aggressively caches 301/308 redirects. Clear website data or use Private Browsing when testing domain changes.

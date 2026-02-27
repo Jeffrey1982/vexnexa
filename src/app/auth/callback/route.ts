@@ -19,14 +19,54 @@ function buildRedirectUrl(params: {
   return redirectUrl
 }
 
+// Allowed hostnames for redirect params (next, redirect).
+// Any other hostname is treated as an open-redirect attempt → fallback to /dashboard.
+const ALLOWED_HOSTS: ReadonlySet<string> = new Set([
+  'vexnexa.com',
+  'www.vexnexa.com',   // accepted but normalized to non-www
+  'vexnexa.vercel.app',
+  'localhost',
+])
+
+/**
+ * Sanitize a redirect target from a query param.
+ * - Relative paths (/foo) are returned as-is.
+ * - Absolute URLs are validated against ALLOWED_HOSTS; www is normalized to non-www.
+ * - External / malformed URLs are discarded (returns fallback).
+ */
+function sanitizeRedirectParam(raw: string | null, fallback: string = '/dashboard'): string {
+  if (!raw) return fallback
+
+  // Relative path — safe
+  if (raw.startsWith('/') && !raw.startsWith('//')) {
+    return raw
+  }
+
+  try {
+    const parsed = new URL(raw)
+    if (!ALLOWED_HOSTS.has(parsed.hostname)) {
+      console.warn('[Callback] Blocked external redirect:', parsed.hostname)
+      return fallback
+    }
+    // Normalize www → non-www
+    if (parsed.hostname === 'www.vexnexa.com') {
+      parsed.hostname = 'vexnexa.com'
+    }
+    return parsed.pathname + parsed.search
+  } catch {
+    // Not a valid URL and not a relative path → discard
+    return fallback
+  }
+}
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
   const type = requestUrl.searchParams.get('type')
-  const rawNext = requestUrl.searchParams.get('next')
-  // Normalize www → non-www in next param to prevent canonical domain leaks
-  const next: string | null = rawNext?.replace('://www.vexnexa.com', '://vexnexa.com') ?? null
+  const next: string | null = requestUrl.searchParams.get('next')
+    ? sanitizeRedirectParam(requestUrl.searchParams.get('next'), '/dashboard')
+    : null
   const errorDescription = requestUrl.searchParams.get('error_description')
 
   // Supabase PKCE flow does NOT send type= as a query param for email verification.
@@ -121,8 +161,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           console.error('[Callback] ⚠️  Database sync failed (non-fatal):', dbError)
         }
 
-        // Get redirect parameter - default to dashboard
-        const redirect = requestUrl.searchParams.get('redirect') || '/dashboard'
+        // Get redirect parameter - default to dashboard (sanitized against open redirects)
+        const redirect: string = sanitizeRedirectParam(requestUrl.searchParams.get('redirect'), '/dashboard')
         console.log('🔐 Auth callback, redirecting to:', redirect)
 
         // Detect email verification: email_confirmed_at was set within the last 2 minutes

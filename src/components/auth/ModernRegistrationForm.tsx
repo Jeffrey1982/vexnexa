@@ -254,7 +254,7 @@ export default function ModernRegistrationForm() {
       const isLocalhost: boolean = typeof window !== 'undefined' && window.location.hostname === 'localhost'
       const origin: string = isLocalhost
         ? window.location.origin
-        : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || window.location.origin)
+        : (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com')
 
       const signUpPromise = supabase.auth.signUp({
         email: formData.email,

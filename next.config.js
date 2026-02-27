@@ -26,16 +26,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.vexnexa.com' }],
-        destination: 'https://vexnexa.com/:path*',
-        permanent: true,
-      },
-    ];
-  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       // Externalize playwright-core for server builds
