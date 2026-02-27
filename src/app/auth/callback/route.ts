@@ -91,10 +91,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         console.log('[Callback] Session created for user:', data.user.email)
 
         // Check if this is a password recovery/reset flow
-        // Can be detected via type param OR next param pointing to reset-password
-        if (type === 'recovery' || next === '/auth/reset-password') {
-          console.log('[Callback] Password recovery flow detected, redirecting to reset-password')
-          // Create a new response that sets the session cookie and redirects
+        // Detection: (a) explicit ?type=recovery, (b) next param contains reset-password
+        // (could be full URL or path), (c) session AMR contains 'recovery'
+        const isRecoveryFromNext: boolean = typeof next === 'string' && next.includes('/auth/reset-password')
+        const amrList = (data.session?.user as any)?.amr as Array<{ method: string }> | undefined
+        const isRecoveryFromAmr: boolean = Array.isArray(amrList) &&
+          amrList.some((entry) => entry.method === 'recovery')
+        const isRecoveryFlow: boolean = type === 'recovery' || isRecoveryFromNext || isRecoveryFromAmr
+
+        if (isRecoveryFlow) {
+          console.log('[Callback] Password recovery flow detected, redirecting to reset-password', {
+            type, next, isRecoveryFromAmr,
+          })
           const response = NextResponse.redirect(new URL('/auth/reset-password', request.url))
           return response
         }

@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -17,11 +18,16 @@ import {
   Eye,
   EyeOff,
   CheckCircle,
-  Shield
+  Shield,
+  AlertTriangle,
+  ArrowLeft
 } from 'lucide-react'
+
+type PageState = 'loading' | 'ready' | 'invalid_link' | 'error'
 
 function ResetPasswordForm() {
   const t = useTranslations('auth.resetPassword')
+  const searchParams = useSearchParams()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -29,46 +35,86 @@ function ResetPasswordForm() {
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [pageState, setPageState] = useState<PageState>('loading')
+  const [pageError, setPageError] = useState('')
   const router = useRouter()
   const supabase = createClient()
 
-  useEffect(() => {
-    // Check if we're in the browser (not during SSR/static generation)
-    if (typeof window === 'undefined') return
-
-    const checkAuthAndHandleTokens = async () => {
-      // First check if we have access token in URL hash (from direct email link)
-      const hashParams = new URLSearchParams(window.location.hash.substring(1))
-      const accessToken = hashParams.get('access_token')
-      const refreshToken = hashParams.get('refresh_token')
-      const type = hashParams.get('type')
-
-      console.log('[ResetPassword] Hash params:', { hasAccessToken: !!accessToken, type })
-
-      if (accessToken && refreshToken && type === 'recovery') {
-        console.log('[ResetPassword] Setting session from hash tokens')
-        // Set the session from tokens in URL
-        await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken
-        })
-        // Clean up URL by removing hash
+  const establishSession = useCallback(async () => {
+    try {
+      // --- (1) PKCE code in query params (direct link or if callback didn't handle it) ---
+      const code: string | null = searchParams.get('code')
+      if (code) {
+        console.log('[ResetPassword] Exchanging PKCE code for session')
+        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+        if (exchangeError) {
+          console.error('[ResetPassword] Code exchange failed:', exchangeError.message)
+          if (exchangeError.message?.includes('expired') || exchangeError.message?.includes('invalid')) {
+            setPageError('This reset link has expired. Please request a new one.')
+            setPageState('invalid_link')
+            return
+          }
+          setPageError(exchangeError.message)
+          setPageState('error')
+          return
+        }
+        // Clean up URL
         window.history.replaceState(null, '', window.location.pathname)
       }
 
-      // Now check if user is authenticated
+      // --- (2) Implicit flow: hash tokens (legacy / fallback) ---
+      const hashParams = new URLSearchParams(window.location.hash.substring(1))
+      const accessToken: string | null = hashParams.get('access_token')
+      const refreshToken: string | null = hashParams.get('refresh_token')
+      const hashType: string | null = hashParams.get('type')
+
+      if (accessToken && refreshToken && hashType === 'recovery') {
+        console.log('[ResetPassword] Setting session from hash tokens')
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        })
+        if (sessionError) {
+          console.error('[ResetPassword] Hash session failed:', sessionError.message)
+          setPageError(sessionError.message)
+          setPageState('error')
+          return
+        }
+        window.history.replaceState(null, '', window.location.pathname)
+      }
+
+      // --- (3) Check URL error params (Supabase sends errors here) ---
+      const urlError: string | null = searchParams.get('error')
+      const urlErrorDesc: string | null = searchParams.get('error_description')
+      if (urlError) {
+        console.error('[ResetPassword] URL error:', urlError, urlErrorDesc)
+        setPageError(urlErrorDesc || urlError)
+        setPageState('invalid_link')
+        return
+      }
+
+      // --- (4) Verify we have a valid session (set by callback or above) ---
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) {
-        // Not authenticated, redirect to login
         console.error('[ResetPassword] No authenticated user found')
-        router.push('/auth/login?error=session_expired')
-      } else {
-        console.log('[ResetPassword] User authenticated:', user.email)
+        setPageError('This reset link is invalid or has expired. Please request a new one.')
+        setPageState('invalid_link')
+        return
       }
-    }
 
-    checkAuthAndHandleTokens()
-  }, [supabase.auth, router])
+      console.log('[ResetPassword] User authenticated:', user.email)
+      setPageState('ready')
+    } catch (err: any) {
+      console.error('[ResetPassword] Unexpected error:', err)
+      setPageError(err?.message || 'An unexpected error occurred')
+      setPageState('error')
+    }
+  }, [searchParams, supabase.auth])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    establishSession()
+  }, [establishSession])
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -132,123 +178,183 @@ function ResetPasswordForm() {
           </CardHeader>
 
           <CardContent className="space-y-6">
-            {message ? (
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
-                </div>
-                <Alert className="border-green-200 bg-green-50">
-                  <AlertDescription className="text-green-800">
-                    {message}
-                  </AlertDescription>
-                </Alert>
+            {/* --- Loading state --- */}
+            {pageState === 'loading' && (
+              <div className="text-center space-y-4 py-8">
+                <div className="w-12 h-12 border-4 border-[#FF6B35]/30 border-t-[#FF6B35] rounded-full animate-spin mx-auto"></div>
+                <p className="text-sm text-[#5A5A5A] dark:text-[#C0C3C7]">Verifying your reset link...</p>
               </div>
-            ) : (
-              <form onSubmit={handlePasswordReset} className="space-y-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium">
-                      <Lock className="w-4 h-4" />
-                      {t('passwordLabel')}
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        placeholder={t('passwordPlaceholder')}
-                        aria-describedby={error ? 'reset-error' : undefined}
-                        className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200 pr-12"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-0 top-0 h-12 w-12 hover:bg-transparent"
-                        onClick={() => setShowPassword(!showPassword)}
-                        aria-label={showPassword ? 'Hide password' : 'Show password'}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
-                        ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-medium">
-                      <Lock className="w-4 h-4" />
-                      {t('confirmPasswordLabel')}
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                        placeholder={t('confirmPasswordPlaceholder')}
-                        aria-describedby={error ? 'reset-error' : undefined}
-                        className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200 pr-12"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-0 top-0 h-12 w-12 hover:bg-transparent"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
-                      >
-                        {showConfirmPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
-                        ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div aria-live="assertive" aria-atomic="true">
-                  {error && (
-                    <Alert variant="destructive" className="animate-in slide-in-from-top-1" id="reset-error">
-                      <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                  )}
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
-                >
-                  {loading ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                      {t('resetting')}
-                    </div>
-                  ) : (
-                    t('resetButton')
-                  )}
-                </Button>
-              </form>
             )}
 
-            {/* Security tips */}
-            <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
-              <div className="text-xs text-[#5A5A5A] dark:text-[#C0C3C7] space-y-1">
-                <p className="font-medium">Tips for a strong password:</p>
-                <ul className="list-disc list-inside space-y-1 ml-2">
-                  <li>At least 8 characters long</li>
-                  <li>Combination of letters, numbers and symbols</li>
-                  <li>Not guessable from personal information</li>
-                </ul>
+            {/* --- Invalid / expired link state --- */}
+            {pageState === 'invalid_link' && (
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-full mx-auto flex items-center justify-center">
+                  <AlertTriangle className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+                </div>
+                <Alert className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20">
+                  <AlertDescription className="text-amber-800 dark:text-amber-300">
+                    {pageError || 'This reset link is invalid or has expired.'}
+                  </AlertDescription>
+                </Alert>
+                <Link href="/auth/forgot-password">
+                  <Button className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg">
+                    Request a new reset email
+                  </Button>
+                </Link>
+                <Link
+                  href="/auth/login"
+                  className="text-sm text-[#5A5A5A] hover:text-[#FF6B35] transition-colors flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to login
+                </Link>
               </div>
-            </div>
+            )}
+
+            {/* --- Generic error state --- */}
+            {pageState === 'error' && (
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full mx-auto flex items-center justify-center">
+                  <AlertTriangle className="w-8 h-8 text-red-600 dark:text-red-400" />
+                </div>
+                <Alert variant="destructive">
+                  <AlertDescription>
+                    {pageError || 'Something went wrong. Please try again.'}
+                  </AlertDescription>
+                </Alert>
+                <Link href="/auth/forgot-password">
+                  <Button variant="outline" className="w-full">
+                    Request a new reset email
+                  </Button>
+                </Link>
+              </div>
+            )}
+
+            {/* --- Ready: show form or success --- */}
+            {pageState === 'ready' && (
+              <>
+                {message ? (
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
+                      <CheckCircle className="w-8 h-8 text-green-600" />
+                    </div>
+                    <Alert className="border-green-200 bg-green-50">
+                      <AlertDescription className="text-green-800">
+                        {message}
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                ) : (
+                  <form onSubmit={handlePasswordReset} className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium">
+                          <Lock className="w-4 h-4" />
+                          {t('passwordLabel')}
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            placeholder={t('passwordPlaceholder')}
+                            aria-describedby={error ? 'reset-error' : undefined}
+                            className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200 pr-12"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute right-0 top-0 h-12 w-12 hover:bg-transparent"
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4 text-muted-foreground" />
+                            ) : (
+                              <Eye className="h-4 w-4 text-muted-foreground" />
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-medium">
+                          <Lock className="w-4 h-4" />
+                          {t('confirmPasswordLabel')}
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            id="confirmPassword"
+                            type={showConfirmPassword ? "text" : "password"}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                            placeholder={t('confirmPasswordPlaceholder')}
+                            aria-describedby={error ? 'reset-error' : undefined}
+                            className="h-12 bg-white/50 dark:bg-[#2A2A2A]/50 backdrop-blur-sm border-[#C0C3C7] dark:border-[#444] transition-all duration-200 pr-12"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute right-0 top-0 h-12 w-12 hover:bg-transparent"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                          >
+                            {showConfirmPassword ? (
+                              <EyeOff className="h-4 w-4 text-muted-foreground" />
+                            ) : (
+                              <Eye className="h-4 w-4 text-muted-foreground" />
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div aria-live="assertive" aria-atomic="true">
+                      {error && (
+                        <Alert variant="destructive" className="animate-in slide-in-from-top-1" id="reset-error">
+                          <AlertDescription>{error}</AlertDescription>
+                        </Alert>
+                      )}
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                    >
+                      {loading ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                          {t('resetting')}
+                        </div>
+                      ) : (
+                        t('resetButton')
+                      )}
+                    </Button>
+                  </form>
+                )}
+
+                {/* Security tips */}
+                {!message && (
+                  <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
+                    <div className="text-xs text-[#5A5A5A] dark:text-[#C0C3C7] space-y-1">
+                      <p className="font-medium">Tips for a strong password:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li>At least 8 characters long</li>
+                        <li>Combination of letters, numbers and symbols</li>
+                        <li>Not guessable from personal information</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
