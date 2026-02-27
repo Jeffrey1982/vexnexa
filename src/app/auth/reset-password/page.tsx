@@ -62,7 +62,30 @@ function ResetPasswordForm() {
         window.history.replaceState(null, '', window.location.pathname)
       }
 
-      // --- (2) Implicit flow: hash tokens (legacy / fallback) ---
+      // --- (2) OTP token_hash flow (?token_hash=...&type=recovery) ---
+      const tokenHash: string | null = searchParams.get('token_hash')
+      const otpType: string | null = searchParams.get('type')
+      if (tokenHash && otpType === 'recovery') {
+        console.log('[ResetPassword] Verifying OTP token_hash for recovery')
+        const { error: otpError } = await supabase.auth.verifyOtp({
+          type: 'recovery',
+          token_hash: tokenHash,
+        })
+        if (otpError) {
+          console.error('[ResetPassword] OTP verification failed:', otpError.message)
+          if (otpError.message?.includes('expired') || otpError.message?.includes('invalid')) {
+            setPageError('This reset link has expired. Please request a new one.')
+            setPageState('invalid_link')
+            return
+          }
+          setPageError(otpError.message)
+          setPageState('error')
+          return
+        }
+        window.history.replaceState(null, '', window.location.pathname)
+      }
+
+      // --- (3) Implicit flow: hash tokens (legacy fallback) ---
       const hashParams = new URLSearchParams(window.location.hash.substring(1))
       const accessToken: string | null = hashParams.get('access_token')
       const refreshToken: string | null = hashParams.get('refresh_token')
@@ -83,7 +106,7 @@ function ResetPasswordForm() {
         window.history.replaceState(null, '', window.location.pathname)
       }
 
-      // --- (3) Check URL error params (Supabase sends errors here) ---
+      // --- (4) Check URL error params (Supabase sends errors here) ---
       const urlError: string | null = searchParams.get('error')
       const urlErrorDesc: string | null = searchParams.get('error_description')
       if (urlError) {
@@ -93,7 +116,7 @@ function ResetPasswordForm() {
         return
       }
 
-      // --- (4) Verify we have a valid session (set by callback or above) ---
+      // --- (5) Verify we have a valid session (set by callback or above) ---
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) {
         console.error('[ResetPassword] No authenticated user found')
