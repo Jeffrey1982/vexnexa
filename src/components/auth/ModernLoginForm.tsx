@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -40,12 +40,52 @@ export default function ModernLoginForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [interceptingRecovery, setInterceptingRecovery] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
+  const recoveryChecked = useRef(false)
 
-  // Check if user is already logged in and redirect
+  // ── Recovery interception: if hash contains recovery tokens, forward to /auth/reset-password ──
+  // This catches legacy links or old emails that land on /auth/login#access_token=...&type=recovery
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (recoveryChecked.current) return
+    recoveryChecked.current = true
+
+    const hash: string = window.location.hash
+    const hashParams = new URLSearchParams(hash.substring(1))
+    const hasRecoveryHash: boolean =
+      !!hashParams.get('access_token') &&
+      !!hashParams.get('refresh_token')
+
+    // Also check if "next" param points to reset-password
+    const nextParam: string | null = searchParams.get('next')
+    const nextPointsToReset: boolean =
+      typeof nextParam === 'string' && nextParam.includes('/auth/reset-password')
+
+    // Check query param type=recovery
+    const typeParam: string | null = searchParams.get('type')
+    const isRecoveryType: boolean = typeParam === 'recovery'
+
+    if (hasRecoveryHash || nextPointsToReset || isRecoveryType) {
+      console.log('[Login] intercepted_recovery_link=true', {
+        hasRecoveryHash,
+        nextPointsToReset,
+        isRecoveryType,
+      })
+      setInterceptingRecovery(true)
+      // Preserve the hash fragment so reset-password page can consume the tokens
+      window.location.replace('/auth/reset-password' + hash)
+      return
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Check if user is already logged in and redirect (skip if intercepting recovery)
+  useEffect(() => {
+    if (interceptingRecovery) return
+
     const checkAuthStatus = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
@@ -57,7 +97,7 @@ export default function ModernLoginForm() {
     }
 
     checkAuthStatus()
-  }, [supabase, router, searchParams])
+  }, [supabase, router, searchParams, interceptingRecovery])
 
   // Handle OAuth errors from URL params
   useEffect(() => {
@@ -145,6 +185,18 @@ export default function ModernLoginForm() {
       setError(error.message)
       setLoading(false)
     }
+  }
+
+  // Show minimal redirecting UI while forwarding recovery tokens — prevents login form flash
+  if (interceptingRecovery) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-[#FF6B35]/30 border-t-[#FF6B35] rounded-full animate-spin mx-auto"></div>
+          <p className="text-sm text-[#5A5A5A] dark:text-[#C0C3C7]">Redirecting to password reset...</p>
+        </div>
+      </div>
+    )
   }
 
   return (

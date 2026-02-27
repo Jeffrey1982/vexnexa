@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic'
@@ -40,104 +40,140 @@ function ResetPasswordForm() {
   const router = useRouter()
   const supabase = createClient()
 
-  const establishSession = useCallback(async () => {
-    try {
-      // --- (1) PKCE code in query params (direct link or if callback didn't handle it) ---
-      const code: string | null = searchParams.get('code')
-      if (code) {
-        console.log('[ResetPassword] Exchanging PKCE code for session')
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
-        if (exchangeError) {
-          console.error('[ResetPassword] Code exchange failed:', exchangeError.message)
-          if (exchangeError.message?.includes('expired') || exchangeError.message?.includes('invalid')) {
-            setPageError('This reset link has expired. Please request a new one.')
-            setPageState('invalid_link')
-            return
-          }
-          setPageError(exchangeError.message)
-          setPageState('error')
-          return
-        }
-        // Clean up URL
-        window.history.replaceState(null, '', window.location.pathname)
-      }
-
-      // --- (2) OTP token_hash flow (?token_hash=...&type=recovery) ---
-      const tokenHash: string | null = searchParams.get('token_hash')
-      const otpType: string | null = searchParams.get('type')
-      if (tokenHash && otpType === 'recovery') {
-        console.log('[ResetPassword] Verifying OTP token_hash for recovery')
-        const { error: otpError } = await supabase.auth.verifyOtp({
-          type: 'recovery',
-          token_hash: tokenHash,
-        })
-        if (otpError) {
-          console.error('[ResetPassword] OTP verification failed:', otpError.message)
-          if (otpError.message?.includes('expired') || otpError.message?.includes('invalid')) {
-            setPageError('This reset link has expired. Please request a new one.')
-            setPageState('invalid_link')
-            return
-          }
-          setPageError(otpError.message)
-          setPageState('error')
-          return
-        }
-        window.history.replaceState(null, '', window.location.pathname)
-      }
-
-      // --- (3) Implicit flow: hash tokens (legacy fallback) ---
-      const hashParams = new URLSearchParams(window.location.hash.substring(1))
-      const accessToken: string | null = hashParams.get('access_token')
-      const refreshToken: string | null = hashParams.get('refresh_token')
-      const hashType: string | null = hashParams.get('type')
-
-      if (accessToken && refreshToken && hashType === 'recovery') {
-        console.log('[ResetPassword] Setting session from hash tokens')
-        const { error: sessionError } = await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken,
-        })
-        if (sessionError) {
-          console.error('[ResetPassword] Hash session failed:', sessionError.message)
-          setPageError(sessionError.message)
-          setPageState('error')
-          return
-        }
-        window.history.replaceState(null, '', window.location.pathname)
-      }
-
-      // --- (4) Check URL error params (Supabase sends errors here) ---
-      const urlError: string | null = searchParams.get('error')
-      const urlErrorDesc: string | null = searchParams.get('error_description')
-      if (urlError) {
-        console.error('[ResetPassword] URL error:', urlError, urlErrorDesc)
-        setPageError(urlErrorDesc || urlError)
-        setPageState('invalid_link')
-        return
-      }
-
-      // --- (5) Verify we have a valid session (set by callback or above) ---
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        console.error('[ResetPassword] No authenticated user found')
-        setPageError('This reset link is invalid or has expired. Please request a new one.')
-        setPageState('invalid_link')
-        return
-      }
-
-      console.log('[ResetPassword] User authenticated:', user.email)
-      setPageState('ready')
-    } catch (err: any) {
-      console.error('[ResetPassword] Unexpected error:', err)
-      setPageError(err?.message || 'An unexpected error occurred')
-      setPageState('error')
-    }
-  }, [searchParams, supabase.auth])
+  // Run-once guard: prevent re-execution on React strict mode or searchParam changes
+  const sessionAttempted = useRef(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+    if (sessionAttempted.current) return
+    sessionAttempted.current = true
+
+    const establishSession = async (): Promise<void> => {
+      try {
+        // ── Read hash fragment FIRST (before anything clears it) ──
+        // Hash tokens are the PRIMARY flow (email template sends implicit tokens).
+        const rawHash: string = window.location.hash.substring(1)
+        const hashParams = new URLSearchParams(rawHash)
+        const accessToken: string | null = hashParams.get('access_token')
+        const refreshToken: string | null = hashParams.get('refresh_token')
+        const hashType: string | null = hashParams.get('type')
+        const hashError: string | null = hashParams.get('error')
+        const hashErrorDesc: string | null = hashParams.get('error_description')
+
+        // ── Read query params ──
+        const code: string | null = searchParams.get('code')
+        const tokenHash: string | null = searchParams.get('token_hash')
+        const otpType: string | null = searchParams.get('type')
+        const urlError: string | null = searchParams.get('error')
+        const urlErrorDesc: string | null = searchParams.get('error_description')
+
+        // ── (0) Check for error params in hash or query ──
+        if (hashError) {
+          console.error('[ResetPassword] Hash error:', hashError)
+          window.history.replaceState(null, '', window.location.pathname)
+          setPageError(hashErrorDesc || hashError)
+          setPageState('invalid_link')
+          return
+        }
+        if (urlError) {
+          console.error('[ResetPassword] URL error:', urlError)
+          setPageError(urlErrorDesc || urlError)
+          setPageState('invalid_link')
+          return
+        }
+
+        // ── (1) Implicit hash tokens (PRIMARY — email template sends these) ──
+        if (accessToken && refreshToken) {
+          console.log('[ResetPassword] recovery_flow=hash_tokens')
+          // Clean hash IMMEDIATELY to prevent token leakage in referrer/history
+          window.history.replaceState(null, '', window.location.pathname)
+          const { error: sessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+          if (sessionError) {
+            console.error('[ResetPassword] setSession failed:', sessionError.message)
+            if (sessionError.message?.includes('expired') || sessionError.message?.includes('invalid')) {
+              setPageError('This reset link has expired. Please request a new one.')
+              setPageState('invalid_link')
+              return
+            }
+            setPageError(sessionError.message)
+            setPageState('error')
+            return
+          }
+          // Session established via hash tokens — show form
+          const { data: { user } } = await supabase.auth.getUser()
+          console.log('[ResetPassword] Session established for:', user?.email ?? 'unknown')
+          setPageState('ready')
+          return
+        }
+
+        // ── (2) PKCE code in query params ──
+        if (code) {
+          console.log('[ResetPassword] recovery_flow=pkce_code')
+          const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+          if (exchangeError) {
+            console.error('[ResetPassword] Code exchange failed:', exchangeError.message)
+            if (exchangeError.message?.includes('expired') || exchangeError.message?.includes('invalid')) {
+              setPageError('This reset link has expired. Please request a new one.')
+              setPageState('invalid_link')
+              return
+            }
+            setPageError(exchangeError.message)
+            setPageState('error')
+            return
+          }
+          window.history.replaceState(null, '', window.location.pathname)
+          setPageState('ready')
+          return
+        }
+
+        // ── (3) OTP token_hash flow (?token_hash=...&type=recovery) ──
+        if (tokenHash && otpType === 'recovery') {
+          console.log('[ResetPassword] recovery_flow=otp')
+          const { error: otpError } = await supabase.auth.verifyOtp({
+            type: 'recovery',
+            token_hash: tokenHash,
+          })
+          if (otpError) {
+            console.error('[ResetPassword] OTP verification failed:', otpError.message)
+            if (otpError.message?.includes('expired') || otpError.message?.includes('invalid')) {
+              setPageError('This reset link has expired. Please request a new one.')
+              setPageState('invalid_link')
+              return
+            }
+            setPageError(otpError.message)
+            setPageState('error')
+            return
+          }
+          window.history.replaceState(null, '', window.location.pathname)
+          setPageState('ready')
+          return
+        }
+
+        // ── (4) Existing session (e.g. redirected from /auth/callback after recovery) ──
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          console.log('[ResetPassword] recovery_flow=existing_session, user:', user.email)
+          setPageState('ready')
+          return
+        }
+
+        // ── (5) No tokens, no session — invalid link ──
+        console.warn('[ResetPassword] recovery_flow=none — no tokens or session found')
+        setPageError('This reset link is invalid or has expired. Please request a new one.')
+        setPageState('invalid_link')
+      } catch (err: any) {
+        console.error('[ResetPassword] Unexpected error:', err)
+        setPageError(err?.message || 'An unexpected error occurred')
+        setPageState('error')
+      }
+    }
+
     establishSession()
-  }, [establishSession])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault()
