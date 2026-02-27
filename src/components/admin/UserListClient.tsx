@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { PLAN_NAMES } from "@/lib/billing/plans";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
-import { Search, Mail, Building, Calendar, Eye, X } from "lucide-react";
+import { Search, Mail, Building, Calendar, Eye, X, RefreshCw } from "lucide-react";
 import type { Plan } from "@prisma/client";
 import { BulkUserActions } from "./BulkUserActions";
+import { useToast } from "@/hooks/use-toast";
 
 interface UserWithSites {
   id: string;
@@ -34,8 +35,60 @@ interface UserListClientProps {
   users: UserWithSites[];
 }
 
-export function UserListClient({ users }: UserListClientProps) {
+const POLL_INTERVAL_MS: number = 10_000;
+
+export function UserListClient({ users: initialUsers }: UserListClientProps) {
+  const [users, setUsers] = useState<UserWithSites[]>(initialUsers);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isPolling, setIsPolling] = useState(true);
+  const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const knownIdsRef = useRef<Set<string>>(new Set(initialUsers.map(u => u.id)));
+  const { toast } = useToast();
+
+  const fetchUsers = useCallback(async (showRefreshIndicator: boolean = false): Promise<void> => {
+    if (showRefreshIndicator) setIsRefreshing(true);
+    try {
+      const res = await fetch('/api/admin/users', { cache: 'no-store' });
+      if (!res.ok) return;
+      const json = await res.json();
+      const freshUsers: UserWithSites[] = json.data ?? [];
+
+      // Detect new users
+      const freshIds = new Set(freshUsers.map((u: UserWithSites) => u.id));
+      const newUsers = freshUsers.filter((u: UserWithSites) => !knownIdsRef.current.has(u.id));
+
+      if (newUsers.length > 0) {
+        for (const nu of newUsers) {
+          toast({
+            title: 'New user signed up',
+            description: `${nu.firstName ? `${nu.firstName} ${nu.lastName || ''}`.trim() : nu.email}`,
+          });
+        }
+      }
+
+      knownIdsRef.current = freshIds;
+      setUsers(freshUsers);
+      setLastRefreshed(new Date());
+    } catch (err) {
+      console.error('[AdminUsers] Poll failed:', err);
+    } finally {
+      if (showRefreshIndicator) setIsRefreshing(false);
+    }
+  }, [toast]);
+
+  // Polling effect
+  useEffect(() => {
+    if (!isPolling) return;
+    const interval = setInterval(() => fetchUsers(false), POLL_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [isPolling, fetchUsers]);
+
+  // Sync if server data changes on navigation
+  useEffect(() => {
+    setUsers(initialUsers);
+    knownIdsRef.current = new Set(initialUsers.map(u => u.id));
+  }, [initialUsers]);
 
   // Filter users based on search query
   const filteredUsers = useMemo(() => {
@@ -65,32 +118,63 @@ export function UserListClient({ users }: UserListClientProps) {
 
   return (
     <>
-      {/* Search Bar */}
+      {/* Search Bar + Live indicator */}
       <Card className="mb-8">
         <CardContent className="pt-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <Input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by name, email, or company..."
-              className="pl-10 pr-10"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-muted-foreground"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            )}
+          <div className="flex items-center gap-3 mb-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by name, email, or company..."
+                className="pl-10 pr-10"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-muted-foreground"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fetchUsers(true)}
+              disabled={isRefreshing}
+              className="gap-1.5 shrink-0"
+            >
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
           </div>
-          {searchQuery && (
-            <p className="text-sm text-muted-foreground mt-2">
-              Found {filteredUsers.length} of {users.length} users
-            </p>
-          )}
+          <div className="flex items-center justify-between">
+            {searchQuery && (
+              <p className="text-sm text-muted-foreground">
+                Found {filteredUsers.length} of {users.length} users
+              </p>
+            )}
+            <div className="flex items-center gap-2 text-xs text-muted-foreground ml-auto">
+              {isPolling && (
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  Live
+                </span>
+              )}
+              <span>Updated {lastRefreshed.toLocaleTimeString()}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground"
+                onClick={() => setIsPolling(!isPolling)}
+              >
+                {isPolling ? 'Pause' : 'Resume'}
+              </Button>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

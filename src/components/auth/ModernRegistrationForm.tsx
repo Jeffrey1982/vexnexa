@@ -95,6 +95,9 @@ export default function ModernRegistrationForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const [resendLoading, setResendLoading] = useState(false)
+  const [resendMessage, setResendMessage] = useState('')
+  const [signupEmail, setSignupEmail] = useState('')
 
   const router = useRouter()
   const supabase = createClient()
@@ -279,7 +282,9 @@ export default function ModernRegistrationForm() {
 
       if (error) throw error
 
-      setMessage('🎉 Account created! Please check your email to confirm your account.')
+      setSignupEmail(formData.email)
+      setMessage('Account created! Please check your email to confirm your account.')
+      console.log('[Signup] Account created for:', formData.email, '— awaiting email confirmation')
     } catch (error: any) {
       if (error.message?.includes('timeout')) {
         setError('Registration is taking too long. This is likely due to email configuration. Please contact support or try again later.')
@@ -577,18 +582,78 @@ export default function ModernRegistrationForm() {
     }
   }
 
+  const handleResendConfirmation = async (): Promise<void> => {
+    if (!signupEmail) return
+    setResendLoading(true)
+    setResendMessage('')
+    try {
+      const { error: resendError } = await supabase.auth.resend({
+        type: 'signup',
+        email: signupEmail,
+      })
+      if (resendError) throw resendError
+      setResendMessage('Confirmation email resent! Please check your inbox (and spam folder).')
+      console.log('[Signup] Resend confirmation email triggered for:', signupEmail)
+    } catch (err: any) {
+      setResendMessage(`Failed to resend: ${err.message}`)
+      console.error('[Signup] Resend failed:', err.message)
+    } finally {
+      setResendLoading(false)
+    }
+  }
+
   if (message) {
     return (
       <Card className="mx-auto max-w-md">
         <CardContent className="pt-6">
           <div className="text-center space-y-4">
-            <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
-              <CheckCircle className="w-8 h-8 text-green-600" />
+            <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full mx-auto flex items-center justify-center">
+              <Mail className="w-8 h-8 text-green-600 dark:text-green-400" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold">Almost there!</h3>
-              <p className="text-muted-foreground mt-2">{message}</p>
+              <h3 className="text-lg font-semibold text-foreground">Check your email</h3>
+              <p className="text-muted-foreground mt-2">
+                We sent a confirmation link to <strong className="text-foreground">{signupEmail}</strong>.
+                Click the link to activate your account.
+              </p>
             </div>
+
+            <div className="text-xs text-muted-foreground bg-muted/50 rounded-lg p-3 text-left space-y-1">
+              <p className="font-medium">Didn&apos;t receive it?</p>
+              <ul className="list-disc list-inside space-y-0.5 ml-1">
+                <li>Check your <strong>spam/promotions</strong> folder</li>
+                <li>Make sure <strong>{signupEmail}</strong> is correct</li>
+                <li>Wait a few minutes — emails can be delayed</li>
+              </ul>
+            </div>
+
+            {resendMessage && (
+              <Alert className={resendMessage.startsWith('Failed') ? 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20' : 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'}>
+                <AlertDescription className={resendMessage.startsWith('Failed') ? 'text-red-800 dark:text-red-300' : 'text-green-800 dark:text-green-300'}>
+                  {resendMessage}
+                </AlertDescription>
+              </Alert>
+            )}
+
+            <Button
+              onClick={handleResendConfirmation}
+              disabled={resendLoading}
+              variant="outline"
+              className="w-full"
+            >
+              {resendLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-muted-foreground/20 border-t-muted-foreground rounded-full animate-spin" />
+                  Resending...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  Resend confirmation email
+                </div>
+              )}
+            </Button>
+
             <Button
               onClick={() => router.push('/auth/login')}
               className="w-full"
