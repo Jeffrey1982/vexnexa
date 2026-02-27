@@ -1,5 +1,28 @@
 # Password Reset — Configuration & Troubleshooting
 
+## Canonical Domain: `https://vexnexa.com` (non-www)
+
+**All production URLs must use `https://vexnexa.com` (non-www).** The `www.` subdomain is NOT canonical.
+
+### Enforcement layers
+
+1. **`next.config.js` redirects** — Any request to `www.vexnexa.com/*` is 301-redirected to `vexnexa.com/*` (path + query preserved). This runs at Vercel edge before the app.
+2. **Vercel domain settings** — In Vercel → Project → Settings → Domains, `vexnexa.com` should be the **primary domain**. If `www.vexnexa.com` is listed, it should redirect to the apex (non-www).
+3. **`NEXT_PUBLIC_SITE_URL`** — Set to `https://vexnexa.com` in Vercel env vars. All auth `redirectTo` URLs use this instead of `window.location.origin`.
+4. **`/auth/callback`** — The `next` query param is normalized at runtime: `www.vexnexa.com` → `vexnexa.com`.
+5. **Hardcoded URLs** — No `www.vexnexa.com` in source code. Fallback strings use `https://vexnexa.com`.
+
+### Vercel Domain Configuration
+
+In **Vercel → Project → Settings → Domains**:
+
+| Domain | Configuration |
+|--------|--------------|
+| `vexnexa.com` | **Primary** (serves the app) |
+| `www.vexnexa.com` | **Redirects to** `vexnexa.com` (308/301) |
+
+If `www.vexnexa.com` is currently set as primary, change it: remove it, re-add it as redirect-to-apex.
+
 ## Supabase Dashboard Settings
 
 ### A) Auth → URL Configuration
@@ -8,16 +31,16 @@
 |---------|-------|
 | **Site URL** | `https://vexnexa.com` |
 
-**Additional Redirect URLs** (add all):
+**Additional Redirect URLs** (add all, **non-www only**):
 
 ```
 https://vexnexa.com/auth/callback
 https://vexnexa.com/auth/reset-password
-https://scan.vexnexa.com/auth/callback
-https://scan.vexnexa.com/auth/reset-password
 http://localhost:3000/auth/callback
 http://localhost:3000/auth/reset-password
 ```
+
+> Do **NOT** add `www.vexnexa.com` entries. Supabase validates `redirectTo` against this list — if the non-www URL isn't listed, the redirect will fail silently.
 
 ### B) Auth → Email Templates → Reset Password
 
@@ -26,13 +49,14 @@ The default template variable `{{ .ConfirmationURL }}` works for recovery emails
 
 **Do NOT** manually construct URLs with `{{ .Code }}` unless you have disabled PKCE.
 
-The `redirectTo` in the `resetPasswordForEmail()` call controls where the user lands after the code exchange. Our code passes:
+The `redirectTo` in the `resetPasswordForEmail()` call controls where the user lands after the code exchange. Our code uses `NEXT_PUBLIC_SITE_URL` to guarantee non-www:
 
 ```
-redirectTo: `${window.location.origin}/auth/reset-password`
+const origin = isLocalhost ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com')
+redirectTo: `${origin}/auth/reset-password`
 ```
 
-This ensures Supabase adds `?next=/auth/reset-password` (or the full URL) to the callback, so our callback route detects recovery and redirects accordingly.
+This ensures Supabase adds `?next=https://vexnexa.com/auth/reset-password` to the callback, so our callback route detects recovery and redirects accordingly.
 
 ## How the Flow Works
 
@@ -106,3 +130,13 @@ If clicking the reset link redirects to `/login` instead of showing the reset fo
 3. **Check reset page session**: If the callback redirects correctly but the reset page shows "invalid link", the session cookie may not be set. Check browser DevTools → Application → Cookies for Supabase auth cookies.
 4. **Check email template**: Ensure the Supabase "Reset Password" email template uses `{{ .ConfirmationURL }}` (which Supabase auto-generates for PKCE).
 5. **Check CSP headers**: The Content-Security-Policy in middleware must allow `connect-src` to `*.supabase.co` and `wss://*.supabase.co`.
+
+## Troubleshooting: "Redirects to www"
+
+If visiting `https://vexnexa.com/auth/reset-password` ends up on `https://www.vexnexa.com/...`:
+
+1. **Check Vercel domain settings**: In Vercel → Project → Settings → Domains, ensure `vexnexa.com` is the **primary** domain and `www.vexnexa.com` is set to redirect to it (not the other way around).
+2. **Check `next.config.js`**: The `redirects()` function should contain a rule redirecting host `www.vexnexa.com` to `https://vexnexa.com/:path*` with `permanent: true`.
+3. **Check `NEXT_PUBLIC_SITE_URL`**: Must be `https://vexnexa.com` (no www) in Vercel environment variables.
+4. **Check Supabase Site URL**: Must be `https://vexnexa.com` (no www). If set to `www.vexnexa.com`, Supabase will generate email links pointing to www.
+5. **Check for hardcoded www**: Run `grep -r "www.vexnexa.com" src/` — there should be zero matches (except the image allowlist in `resolve-white-label.ts`).

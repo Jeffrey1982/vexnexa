@@ -9,7 +9,7 @@ export default async function DomainsPage() {
   try { await requireAuth(); } catch { redirect("/auth/login?redirect=/admin/email/domains"); }
 
   const domain: string = process.env.MAILGUN_DOMAIN ?? "(not set)";
-  const webhookUrl = "https://www.vexnexa.com/api/email/webhook";
+  const webhookUrl = "https://vexnexa.com/api/email/webhook";
 
   const checklist: { label: string; description: string }[] = [
     { label: "SPF Record", description: `Add a TXT record: v=spf1 include:mailgun.org ~all` },

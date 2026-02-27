@@ -225,7 +225,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="max-w-3xl mx-auto space-y-8">
             <ShareButtons
               title={post.title}
-              url={`https://www.vexnexa.com/blog/${post.slug}`}
+              url={`https://vexnexa.com/blog/${post.slug}`}
             />
 
             {/* Tags */}

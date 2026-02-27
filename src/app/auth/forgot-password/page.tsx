@@ -33,8 +33,13 @@ export default function ForgotPasswordPage() {
     setMessage('')
 
     try {
+      const isLocalhost: boolean = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      const origin: string = isLocalhost
+        ? window.location.origin
+        : (process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com')
+
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
+        redirectTo: `${origin}/auth/reset-password`,
       })
 
       if (error) throw error

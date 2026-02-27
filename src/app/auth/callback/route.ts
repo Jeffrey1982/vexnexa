@@ -24,7 +24,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
   const type = requestUrl.searchParams.get('type')
-  const next = requestUrl.searchParams.get('next')
+  const rawNext = requestUrl.searchParams.get('next')
+  // Normalize www → non-www in next param to prevent canonical domain leaks
+  const next: string | null = rawNext?.replace('://www.vexnexa.com', '://vexnexa.com') ?? null
   const errorDescription = requestUrl.searchParams.get('error_description')
 
   // Supabase PKCE flow does NOT send type= as a query param for email verification.

@@ -63,7 +63,7 @@ export default async function UnsubscribePage({ searchParams }: PageProps) {
           )}
           <div className="mt-6">
             <a
-              href="https://www.vexnexa.com"
+              href="https://vexnexa.com"
               className="text-sm text-[var(--vn-primary)] hover:underline"
             >
               ← Back to VexNexa

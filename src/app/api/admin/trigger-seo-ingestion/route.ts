@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.vexnexa.com';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com';
     const results: any = {
       success: false,
       jobs: [],

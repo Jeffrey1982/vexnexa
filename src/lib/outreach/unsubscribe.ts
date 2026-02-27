@@ -22,7 +22,7 @@ export function verifyUnsubscribeToken(email: string, token: string): boolean {
  * Build a full unsubscribe URL for a given email.
  */
 export function buildUnsubscribeUrl(email: string): string {
-  const base: string = process.env.NEXT_PUBLIC_APP_URL || 'https://www.vexnexa.com';
+  const base: string = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com';
   const token = generateUnsubscribeToken(email);
   return `${base}/unsubscribe?email=${encodeURIComponent(email)}&token=${token}`;
 }
