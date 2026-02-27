@@ -23,6 +23,22 @@ import {
 
 type PageState = 'loading' | 'ready' | 'invalid_link' | 'error' | 'pwa_standalone'
 
+/** Detect if a Supabase auth error indicates an expired or invalid token/code. */
+function isTokenError(error: any): boolean {
+  if (!error) return false
+  const status: number | undefined = error.status
+  if (status === 400 || status === 401 || status === 403) return true
+  const msg: string = (error.message || '').toLowerCase()
+  return (
+    msg.includes('expired') ||
+    msg.includes('invalid') ||
+    msg.includes('token') ||
+    msg.includes('otp') ||
+    msg.includes('not found') ||
+    msg.includes('already used')
+  )
+}
+
 function ResetPasswordForm() {
   const t = useTranslations('auth.resetPassword')
   const searchParams = useSearchParams()
@@ -105,8 +121,9 @@ function ResetPasswordForm() {
             refresh_token: refreshToken,
           })
           if (sessionError) {
-            console.error('[ResetPassword] setSession failed:', sessionError.message)
-            if (sessionError.message?.includes('expired') || sessionError.message?.includes('invalid')) {
+            const reason: string = isTokenError(sessionError) ? 'expired_or_invalid_token' : 'session_error'
+            console.error('[ResetPassword] failure_reason=' + reason, sessionError.message)
+            if (isTokenError(sessionError)) {
               setPageError('This reset link has expired. Please request a new one.')
               setPageState('invalid_link')
               return
@@ -127,8 +144,9 @@ function ResetPasswordForm() {
           console.log('[ResetPassword] recovery_flow=pkce_code')
           const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
           if (exchangeError) {
-            console.error('[ResetPassword] Code exchange failed:', exchangeError.message)
-            if (exchangeError.message?.includes('expired') || exchangeError.message?.includes('invalid')) {
+            const reason: string = isTokenError(exchangeError) ? 'expired_or_invalid_code' : 'exchange_error'
+            console.error('[ResetPassword] failure_reason=' + reason, exchangeError.message)
+            if (isTokenError(exchangeError)) {
               setPageError('This reset link has expired. Please request a new one.')
               setPageState('invalid_link')
               return
@@ -150,8 +168,9 @@ function ResetPasswordForm() {
             token_hash: tokenHash,
           })
           if (otpError) {
-            console.error('[ResetPassword] OTP verification failed:', otpError.message)
-            if (otpError.message?.includes('expired') || otpError.message?.includes('invalid')) {
+            const reason: string = isTokenError(otpError) ? 'expired_or_invalid_otp' : 'otp_error'
+            console.error('[ResetPassword] failure_reason=' + reason, otpError.message)
+            if (isTokenError(otpError)) {
               setPageError('This reset link has expired. Please request a new one.')
               setPageState('invalid_link')
               return

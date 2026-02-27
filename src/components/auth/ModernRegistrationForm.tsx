@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { CountrySelect } from '@/components/ui/country-select'
 import { createClient } from '@/lib/supabase/client-new'
 import { getAuthOrigin, getSiteOrigin } from '@/lib/auth-origin'
+import { useAuthCooldown, isRateLimitError } from '@/hooks/use-auth-cooldown'
 import { 
   User, 
   Mail, 
@@ -26,7 +27,8 @@ import {
   ArrowRight,
   Sparkles,
   Shield,
-  Zap
+  Zap,
+  Clock
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import VexnexaLogo from '@/components/brand/VexnexaLogo'
@@ -102,6 +104,7 @@ export default function ModernRegistrationForm() {
 
   const router = useRouter()
   const supabase = createClient()
+  const { isCoolingDown: isResendCooling, countdownLabel: resendCountdown, startCooldown: startResendCooldown } = useAuthCooldown('signup-resend', signupEmail)
 
   // Check if user is already logged in and redirect
   useEffect(() => {
@@ -271,15 +274,24 @@ export default function ModernRegistrationForm() {
 
       const { error } = await Promise.race([signUpPromise, timeoutPromise]) as any
 
-      if (error) throw error
+      if (error) {
+        if (isRateLimitError(error)) {
+          console.warn('[Signup] auth_signup_rate_limited')
+          setError('Too many requests. Please wait a few minutes before trying again.')
+          return
+        }
+        throw error
+      }
 
       setSignupEmail(formData.email)
+      startResendCooldown()
       setMessage('Account created! Please check your email to confirm your account.')
       console.log('[Signup] Account created for:', formData.email, '— awaiting email confirmation')
     } catch (error: any) {
       if (error.message?.includes('timeout')) {
         setError('Registration is taking too long. This is likely due to email configuration. Please contact support or try again later.')
       } else {
+        console.error('[Signup] failure_reason=', error.message)
         setError(error.message)
       }
     } finally {
@@ -574,7 +586,7 @@ export default function ModernRegistrationForm() {
   }
 
   const handleResendConfirmation = async (): Promise<void> => {
-    if (!signupEmail) return
+    if (!signupEmail || isResendCooling) return
     setResendLoading(true)
     setResendMessage('')
     try {
@@ -582,12 +594,21 @@ export default function ModernRegistrationForm() {
         type: 'signup',
         email: signupEmail,
       })
-      if (resendError) throw resendError
+      if (resendError) {
+        if (isRateLimitError(resendError)) {
+          console.warn('[Signup] auth_resend_rate_limited')
+          startResendCooldown()
+          setResendMessage('Too many requests. Please wait a few minutes before trying again.')
+          return
+        }
+        throw resendError
+      }
+      startResendCooldown()
       setResendMessage('Confirmation email resent! Please check your inbox (and spam folder).')
       console.log('[Signup] Resend confirmation email triggered for:', signupEmail)
     } catch (err: any) {
-      setResendMessage(`Failed to resend: ${err.message}`)
       console.error('[Signup] Resend failed:', err.message)
+      setResendMessage(`Failed to resend: ${err.message}`)
     } finally {
       setResendLoading(false)
     }
@@ -628,14 +649,19 @@ export default function ModernRegistrationForm() {
 
             <Button
               onClick={handleResendConfirmation}
-              disabled={resendLoading}
+              disabled={resendLoading || isResendCooling}
               variant="outline"
-              className="w-full"
+              className="w-full disabled:opacity-60"
             >
               {resendLoading ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-muted-foreground/20 border-t-muted-foreground rounded-full animate-spin" />
                   Resending...
+                </div>
+              ) : isResendCooling ? (
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Resend available in {resendCountdown}
                 </div>
               ) : (
                 <div className="flex items-center gap-2">

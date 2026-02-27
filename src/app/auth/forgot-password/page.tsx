@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -10,12 +10,14 @@ import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
 import { getAuthOrigin } from '@/lib/auth-origin'
+import { useAuthCooldown, isRateLimitError } from '@/hooks/use-auth-cooldown'
 import { useTranslations } from 'next-intl'
 import {
   Mail,
   ArrowLeft,
   CheckCircle,
-  Shield
+  Shield,
+  Clock
 } from 'lucide-react'
 
 export default function ForgotPasswordPage() {
@@ -26,9 +28,11 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState('')
   const router = useRouter()
   const supabase = createClient()
+  const { isCoolingDown, countdownLabel, startCooldown } = useAuthCooldown('recover', email)
 
-  const handlePasswordReset = async (e: React.FormEvent) => {
+  const handlePasswordReset = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
+    if (isCoolingDown) return
     setLoading(true)
     setError('')
     setMessage('')
@@ -38,15 +42,26 @@ export default function ForgotPasswordPage() {
         redirectTo: `${getAuthOrigin()}/auth/reset-password`,
       })
 
-      if (error) throw error
+      if (error) {
+        if (isRateLimitError(error)) {
+          console.warn('[ForgotPassword] auth_recover_rate_limited')
+          startCooldown()
+          setError('Too many requests. Please wait a few minutes before trying again.')
+          return
+        }
+        throw error
+      }
 
+      // Start cooldown on success too (prevent spamming)
+      startCooldown()
       setMessage(t('success'))
     } catch (error: any) {
+      console.error('[ForgotPassword] failure_reason=', error.message)
       setError(error.message)
     } finally {
       setLoading(false)
     }
-  }
+  }, [email, isCoolingDown, startCooldown, supabase, t])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">
@@ -121,13 +136,18 @@ export default function ForgotPasswordPage() {
 
                   <Button
                     type="submit"
-                    disabled={loading}
-                    className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                    disabled={loading || isCoolingDown}
+                    className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-60"
                   >
                     {loading ? (
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                         {t('sending')}
+                      </div>
+                    ) : isCoolingDown ? (
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        Resend available in {countdownLabel}
                       </div>
                     ) : (
                       t('sendButton')
