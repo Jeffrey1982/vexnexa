@@ -1,9 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef, Suspense } from 'react'
-
-// Force dynamic rendering for this page
-export const dynamic = 'force-dynamic'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -187,7 +184,7 @@ function ResetPasswordForm() {
       return
     }
 
-    if (password.length < 6) {
+    if (password.length < 8) {
       setError(t('errors.passwordLength'))
       setLoading(false)
       return
