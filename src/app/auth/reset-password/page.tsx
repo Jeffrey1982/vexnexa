@@ -17,10 +17,11 @@ import {
   CheckCircle,
   Shield,
   AlertTriangle,
-  ArrowLeft
+  ArrowLeft,
+  ExternalLink
 } from 'lucide-react'
 
-type PageState = 'loading' | 'ready' | 'invalid_link' | 'error'
+type PageState = 'loading' | 'ready' | 'invalid_link' | 'error' | 'pwa_standalone'
 
 function ResetPasswordForm() {
   const t = useTranslations('auth.resetPassword')
@@ -44,6 +45,21 @@ function ResetPasswordForm() {
     if (typeof window === 'undefined') return
     if (sessionAttempted.current) return
     sessionAttempted.current = true
+
+    // ── PWA standalone detection ──
+    // If the page is opened inside an installed PWA, auth tokens often fail
+    // because the PWA context can interfere with hash fragments and cookies.
+    // Show a warning and offer to open in the system browser instead.
+    const isStandalone: boolean =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true ||
+      document.referrer.includes('android-app://')
+
+    if (isStandalone) {
+      console.log('[ResetPassword] PWA standalone mode detected — showing browser redirect prompt')
+      setPageState('pwa_standalone')
+      return
+    }
 
     const establishSession = async (): Promise<void> => {
       try {
@@ -234,6 +250,36 @@ function ResetPasswordForm() {
           </CardHeader>
 
           <CardContent className="space-y-6">
+            {/* --- PWA standalone warning --- */}
+            {pageState === 'pwa_standalone' && (
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mx-auto flex items-center justify-center">
+                  <ExternalLink className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                </div>
+                <Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/20">
+                  <AlertDescription className="text-blue-800 dark:text-blue-300 text-sm leading-relaxed">
+                    <strong>This link needs to be opened in your browser.</strong><br />
+                    Password reset links don&apos;t work inside the installed app.
+                    Tap the button below or use your device&apos;s menu (⋯) and choose
+                    &quot;Open in Browser&quot;.
+                  </AlertDescription>
+                </Alert>
+                <Button
+                  onClick={() => {
+                    // Attempt to open the current URL (with hash/query) in the system browser
+                    window.open(window.location.href, '_blank', 'noopener,noreferrer')
+                  }}
+                  className="w-full h-12 gradient-primary hover:opacity-90 text-white font-medium rounded-lg shadow-lg"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Open in Browser
+                </Button>
+                <p className="text-xs text-[#5A5A5A] dark:text-[#C0C3C7]">
+                  After opening in your browser, you can close this window.
+                </p>
+              </div>
+            )}
+
             {/* --- Loading state --- */}
             {pageState === 'loading' && (
               <div className="text-center space-y-4 py-8">
