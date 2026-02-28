@@ -30,33 +30,42 @@ NEXT_PUBLIC_AUTH_SITE_URL=https://auth.vexnexa.com
 
 ## Helper Functions
 
-File: `src/lib/auth-origin.ts`
+File: `src/lib/urls.ts` (canonical)  
+File: `src/lib/auth-origin.ts` (deprecated re-export shim)
 
-### `getAuthOrigin(): string`
+### `getAuthSiteUrl(): string`
 Returns the origin for **email-delivered auth links** (password reset, signup verification).
 - Production: `NEXT_PUBLIC_AUTH_SITE_URL` → `https://auth.vexnexa.com`
 - Localhost: `window.location.origin` → `http://localhost:3000`
 
-Use for:
-- `resetPasswordForEmail({ redirectTo })` — password reset emails
-- `signUp({ options: { emailRedirectTo } })` — signup confirmation emails
-
-### `getSiteOrigin(): string`
+### `getSiteUrl(): string`
 Returns the main site origin for **in-browser redirects** (OAuth callbacks).
 - Production: `NEXT_PUBLIC_SITE_URL` → `https://vexnexa.com`
 - Localhost: `window.location.origin` → `http://localhost:3000`
 
+### `buildAuthUrl(path: string): string`
+Convenience: joins `getAuthSiteUrl()` + path with correct slashing.
+
+```ts
+buildAuthUrl('/auth/reset-password')
+// → "https://auth.vexnexa.com/auth/reset-password"
+```
+
 Use for:
-- `signInWithOAuth({ options: { redirectTo } })` — OAuth providers redirect back in-browser
+- `resetPasswordForEmail({ redirectTo: buildAuthUrl('/auth/reset-password') })`
+- `signUp({ options: { emailRedirectTo: buildAuthUrl('/auth/callback?flow=signup') } })`
+
+### `getSiteUrl()` usage
+- `signInWithOAuth({ options: { redirectTo: \`\${getSiteUrl()}/auth/callback\` } })`
 
 ## Which origin to use
 
 | Action | Helper | Domain | Reason |
 |--------|--------|--------|--------|
-| Password reset email link | `getAuthOrigin()` | `auth.vexnexa.com` | Opens in browser, not PWA |
-| Signup verification email link | `getAuthOrigin()` | `auth.vexnexa.com` | Opens in browser, not PWA |
-| Admin-initiated password reset | `getAuthOrigin()` | `auth.vexnexa.com` | Opens in browser, not PWA |
-| Google OAuth redirect | `getSiteOrigin()` | `vexnexa.com` | Already in browser; should land in app |
+| Password reset email link | `buildAuthUrl()` | `auth.vexnexa.com` | Opens in browser, not PWA |
+| Signup verification email link | `buildAuthUrl()` | `auth.vexnexa.com` | Opens in browser, not PWA |
+| Admin-initiated password reset | `buildAuthUrl()` | `auth.vexnexa.com` | Opens in browser, not PWA |
+| Google OAuth redirect | `getSiteUrl()` | `vexnexa.com` | Already in browser; should land in app |
 | In-app navigation | N/A (relative paths) | N/A | Use `/auth/login`, `/dashboard`, etc. |
 
 ## Supabase Dashboard Configuration
@@ -104,12 +113,16 @@ No changes to the manifest are needed.
 
 | File | Change |
 |------|--------|
-| `src/lib/auth-origin.ts` | **NEW** — `getAuthOrigin()` and `getSiteOrigin()` helpers |
-| `src/app/auth/forgot-password/page.tsx` | Use `getAuthOrigin()` for reset email `redirectTo` |
-| `src/app/api/admin/users/[id]/reset-password/route.ts` | Use `getAuthOrigin()` for admin reset `redirectTo` |
-| `src/components/auth/AuthForm.tsx` | Use `getAuthOrigin()` for signup `emailRedirectTo` |
-| `src/components/auth/ModernRegistrationForm.tsx` | Use `getAuthOrigin()` for signup, `getSiteOrigin()` for OAuth |
-| `src/components/auth/ModernLoginForm.tsx` | Use `getSiteOrigin()` for OAuth `redirectTo` |
+| `src/lib/urls.ts` | **NEW** — `getSiteUrl()`, `getAuthSiteUrl()`, `buildAuthUrl()` |
+| `src/lib/auth-origin.ts` | **DEPRECATED** — re-exports from `urls.ts` for backwards compat |
+| `src/hooks/use-auth-cooldown.ts` | **NEW** — Cooldown hook + `isRateLimitError()` (localStorage key: `vx:cooldown:<action>:<email>`) |
+| `src/app/auth/forgot-password/page.tsx` | `buildAuthUrl()` for reset `redirectTo` + 429 cooldown |
+| `src/app/api/admin/users/[id]/reset-password/route.ts` | `buildAuthUrl()` for admin reset `redirectTo` |
+| `src/components/auth/AuthForm.tsx` | `buildAuthUrl()` for signup `emailRedirectTo` (`?flow=signup`) |
+| `src/components/auth/ModernRegistrationForm.tsx` | `buildAuthUrl()` for signup, `getSiteUrl()` for OAuth, 429 cooldown on resend |
+| `src/components/auth/ModernLoginForm.tsx` | `getSiteUrl()` for OAuth `redirectTo` + recovery interception |
+| `src/app/auth/reset-password/page.tsx` | PWA standalone detection + Copy URL button + `isTokenError()` |
+| `src/app/auth/callback/route.ts` | `auth.vexnexa.com` added to `ALLOWED_HOSTS` + `flow=signup` accepted |
 
 ## Testing
 
@@ -117,6 +130,9 @@ No changes to the manifest are needed.
 2. Add `auth.vexnexa.com` as a Vercel domain alias
 3. Add `https://auth.vexnexa.com/auth/reset-password` and `https://auth.vexnexa.com/auth/callback` to Supabase Redirect URLs
 4. Request a password reset → verify email link points to `auth.vexnexa.com/auth/reset-password`
-5. On a device with VexNexa installed as PWA → verify the link opens in the browser
-6. Sign up → verify confirmation email link points to `auth.vexnexa.com/auth/callback?flow=verify`
+5. On a device with VexNexa installed as PWA → verify the link opens in the browser (not inside the app)
+6. Sign up → verify confirmation email link points to `auth.vexnexa.com/auth/callback?flow=signup`
 7. Google OAuth → verify redirect goes to `vexnexa.com/auth/callback` (main domain, in-app)
+8. Trigger 429 rate limit → verify cooldown timer appears and persists across page refresh
+9. Open reset-password link inside installed PWA → verify "Open in Browser" + "Copy link" buttons appear
+10. Visit `/auth/login` with recovery hash → verify redirect to `/auth/reset-password` preserving hash

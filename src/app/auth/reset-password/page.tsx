@@ -18,7 +18,8 @@ import {
   Shield,
   AlertTriangle,
   ArrowLeft,
-  ExternalLink
+  ExternalLink,
+  Copy
 } from 'lucide-react'
 
 type PageState = 'loading' | 'ready' | 'invalid_link' | 'error' | 'pwa_standalone'
@@ -51,6 +52,7 @@ function ResetPasswordForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [pageState, setPageState] = useState<PageState>('loading')
   const [pageError, setPageError] = useState('')
+  const [urlCopied, setUrlCopied] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -292,6 +294,23 @@ function ResetPasswordForm() {
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Open in Browser
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(window.location.href)
+                      setUrlCopied(true)
+                      setTimeout(() => setUrlCopied(false), 2500)
+                    } catch { /* clipboard not available */ }
+                  }}
+                  className="w-full"
+                >
+                  {urlCopied ? (
+                    <><CheckCircle className="w-4 h-4 mr-2 text-green-600" /> Copied!</>
+                  ) : (
+                    <><Copy className="w-4 h-4 mr-2" /> Copy link to clipboard</>
+                  )}
                 </Button>
                 <p className="text-xs text-[#5A5A5A] dark:text-[#C0C3C7]">
                   After opening in your browser, you can close this window.

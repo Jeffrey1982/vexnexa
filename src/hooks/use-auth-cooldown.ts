@@ -16,7 +16,7 @@ function getCooldownSeconds(): number {
 
 /** localStorage key for persisting cooldown expiry per email + action. */
 function storageKey(action: string, email: string): string {
-  return `vexnexa:cooldown:${action}:${email.toLowerCase().trim()}`
+  return `vx:cooldown:${action}:${email.toLowerCase().trim()}`
 }
 
 /**

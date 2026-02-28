@@ -24,6 +24,7 @@ function buildRedirectUrl(params: {
 const ALLOWED_HOSTS: ReadonlySet<string> = new Set([
   'vexnexa.com',
   'www.vexnexa.com',   // accepted but normalized to non-www
+  'auth.vexnexa.com',  // browser-only auth subdomain for email links
   'vexnexa.vercel.app',
   'localhost',
 ])
@@ -74,7 +75,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   // (c) after code exchange, by checking email_confirmed_at freshness.
   const flow = requestUrl.searchParams.get('flow')
   const isVerificationHint: boolean =
-    type === 'signup' || type === 'email_change' || flow === 'verify'
+    type === 'signup' || type === 'email_change' || flow === 'verify' || flow === 'signup'
 
   console.log('[Callback] Request params:', { code: code?.substring(0, 10), error, type, flow, next })
 

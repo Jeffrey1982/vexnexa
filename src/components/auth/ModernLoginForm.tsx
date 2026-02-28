@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
-import { getSiteOrigin } from '@/lib/auth-origin'
+import { getSiteUrl } from '@/lib/urls'
 import { useTranslations } from 'next-intl'
 import {
   Mail,
@@ -173,7 +173,7 @@ export default function ModernLoginForm() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${getSiteOrigin()}/auth/callback?redirect=${encodeURIComponent(redirect)}`
+          redirectTo: `${getSiteUrl()}/auth/callback?redirect=${encodeURIComponent(redirect)}`
         }
       })
 

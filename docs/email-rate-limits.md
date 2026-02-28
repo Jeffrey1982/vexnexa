@@ -35,8 +35,8 @@ File: `src/hooks/use-auth-cooldown.ts`
 
 | Component | Action | Cooldown Key |
 |-----------|--------|-------------|
-| `forgot-password/page.tsx` | `resetPasswordForEmail` | `vexnexa:cooldown:recover:<email>` |
-| `ModernRegistrationForm.tsx` | `resend({ type: 'signup' })` | `vexnexa:cooldown:signup-resend:<email>` |
+| `forgot-password/page.tsx` | `resetPasswordForEmail` | `vx:cooldown:recover:<email>` |
+| `ModernRegistrationForm.tsx` | `resend({ type: 'signup' })` | `vx:cooldown:signup-resend:<email>` |
 
 ### Behavior
 
@@ -105,6 +105,8 @@ Custom SMTP bypasses Supabase's built-in email limits and gives you:
 | File | Change |
 |------|--------|
 | `src/hooks/use-auth-cooldown.ts` | **NEW** — Shared cooldown hook + `isRateLimitError()` |
-| `src/app/auth/forgot-password/page.tsx` | 429 handling + cooldown timer |
-| `src/components/auth/ModernRegistrationForm.tsx` | 429 handling on signup + resend cooldown |
-| `src/app/auth/reset-password/page.tsx` | Improved `isTokenError()` detection + structured `failure_reason` logs |
+| `src/lib/urls.ts` | **NEW** — `getSiteUrl()`, `getAuthSiteUrl()`, `buildAuthUrl()` central URL helpers |
+| `src/app/auth/forgot-password/page.tsx` | 429 handling + cooldown timer, uses `buildAuthUrl()` |
+| `src/components/auth/ModernRegistrationForm.tsx` | 429 handling on signup + resend cooldown, uses `buildAuthUrl()` |
+| `src/app/auth/reset-password/page.tsx` | `isTokenError()` detection + structured `failure_reason` logs + PWA Copy URL |
+| `src/app/auth/callback/route.ts` | `auth.vexnexa.com` in `ALLOWED_HOSTS` + `flow=signup` accepted |
