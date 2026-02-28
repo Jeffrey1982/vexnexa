@@ -47,37 +47,45 @@ export default function ModernLoginForm() {
   const supabase = createClient()
   const recoveryChecked = useRef(false)
 
-  // ── Recovery interception: if hash contains recovery tokens, forward to /auth/reset-password ──
-  // This catches legacy links or old emails that land on /auth/login#access_token=...&type=recovery
+  // ── Recovery interception ──
+  // If the login page is reached with recovery-related params (hash tokens, ?code=, ?token_hash=,
+  // ?type=recovery, or ?next=/auth/reset-password), forward everything to /auth/reset-password.
+  // Uses window.location.replace (not router.replace) to preserve hash fragments.
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (recoveryChecked.current) return
     recoveryChecked.current = true
 
     const hash: string = window.location.hash
+    const search: string = window.location.search
     const hashParams = new URLSearchParams(hash.substring(1))
+
+    // Legacy implicit-grant hash tokens
     const hasRecoveryHash: boolean =
       !!hashParams.get('access_token') &&
       !!hashParams.get('refresh_token')
 
-    // Also check if "next" param points to reset-password
+    // PKCE code or OTP token_hash in query params
+    const hasCode: boolean = !!searchParams.get('code')
+    const hasTokenHash: boolean = !!searchParams.get('token_hash')
+
+    // "next" param or type=recovery
     const nextParam: string | null = searchParams.get('next')
     const nextPointsToReset: boolean =
       typeof nextParam === 'string' && nextParam.includes('/auth/reset-password')
+    const isRecoveryType: boolean = searchParams.get('type') === 'recovery'
 
-    // Check query param type=recovery
-    const typeParam: string | null = searchParams.get('type')
-    const isRecoveryType: boolean = typeParam === 'recovery'
-
-    if (hasRecoveryHash || nextPointsToReset || isRecoveryType) {
+    if (hasRecoveryHash || hasCode || hasTokenHash || nextPointsToReset || isRecoveryType) {
       console.log('[Login] intercepted_recovery_link=true', {
         hasRecoveryHash,
+        hasCode,
+        hasTokenHash,
         nextPointsToReset,
         isRecoveryType,
       })
       setInterceptingRecovery(true)
-      // Preserve the hash fragment so reset-password page can consume the tokens
-      window.location.replace('/auth/reset-password' + hash)
+      // Preserve BOTH search params and hash so reset-password can consume them
+      window.location.replace('/auth/reset-password' + search + hash)
       return
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

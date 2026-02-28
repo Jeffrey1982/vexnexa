@@ -81,22 +81,31 @@ function ResetPasswordForm() {
 
     const establishSession = async (): Promise<void> => {
       try {
-        // ── Read hash fragment FIRST (before anything clears it) ──
-        // Hash tokens are the PRIMARY flow (email template sends implicit tokens).
+        // ── Gather all available token sources ──
         const rawHash: string = window.location.hash.substring(1)
         const hashParams = new URLSearchParams(rawHash)
         const accessToken: string | null = hashParams.get('access_token')
         const refreshToken: string | null = hashParams.get('refresh_token')
-        const hashType: string | null = hashParams.get('type')
         const hashError: string | null = hashParams.get('error')
         const hashErrorDesc: string | null = hashParams.get('error_description')
 
-        // ── Read query params ──
         const code: string | null = searchParams.get('code')
         const tokenHash: string | null = searchParams.get('token_hash')
         const otpType: string | null = searchParams.get('type')
         const urlError: string | null = searchParams.get('error')
         const urlErrorDesc: string | null = searchParams.get('error_description')
+
+        // ── Diagnostics (no token values logged) ──
+        const detectedFlow: string =
+          code ? 'pkce_code' :
+          tokenHash ? 'otp_token_hash' :
+          (accessToken && refreshToken) ? 'hash_tokens' :
+          'none'
+        console.log('[ResetPassword] diagnostics', {
+          hasSearchParams: !!(code || tokenHash || otpType),
+          hashLength: rawHash.length,
+          detectedFlow,
+        })
 
         // ── (0) Check for error params in hash or query ──
         if (hashError) {
@@ -113,35 +122,21 @@ function ResetPasswordForm() {
           return
         }
 
-        // ── (1) Implicit hash tokens (PRIMARY — email template sends these) ──
-        if (accessToken && refreshToken) {
-          console.log('[ResetPassword] recovery_flow=hash_tokens')
-          // Clean hash IMMEDIATELY to prevent token leakage in referrer/history
-          window.history.replaceState(null, '', window.location.pathname)
-          const { error: sessionError } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-          })
-          if (sessionError) {
-            const reason: string = isTokenError(sessionError) ? 'expired_or_invalid_token' : 'session_error'
-            console.error('[ResetPassword] failure_reason=' + reason, sessionError.message)
-            if (isTokenError(sessionError)) {
-              setPageError('This reset link has expired. Please request a new one.')
-              setPageState('invalid_link')
-              return
-            }
-            setPageError(sessionError.message)
-            setPageState('error')
-            return
+        // ── (1) Existing session (e.g. redirected from /auth/callback after PKCE recovery) ──
+        // Check this FIRST — if the callback route already exchanged the code and created
+        // a session, we should just use it rather than trying to re-exchange a spent code.
+        const { data: { user: existingUser } } = await supabase.auth.getUser()
+        if (existingUser) {
+          console.log('[ResetPassword] recovery_flow=existing_session, user:', existingUser.email)
+          // Clean URL to remove any leftover params
+          if (code || tokenHash || rawHash.length > 0) {
+            window.history.replaceState(null, '', window.location.pathname)
           }
-          // Session established via hash tokens — show form
-          const { data: { user } } = await supabase.auth.getUser()
-          console.log('[ResetPassword] Session established for:', user?.email ?? 'unknown')
           setPageState('ready')
           return
         }
 
-        // ── (2) PKCE code in query params ──
+        // ── (2) PKCE code in query params (PREFERRED — survives redirects) ──
         if (code) {
           console.log('[ResetPassword] recovery_flow=pkce_code')
           const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
@@ -164,7 +159,7 @@ function ResetPasswordForm() {
 
         // ── (3) OTP token_hash flow (?token_hash=...&type=recovery) ──
         if (tokenHash && otpType === 'recovery') {
-          console.log('[ResetPassword] recovery_flow=otp')
+          console.log('[ResetPassword] recovery_flow=otp_token_hash')
           const { error: otpError } = await supabase.auth.verifyOtp({
             type: 'recovery',
             token_hash: tokenHash,
@@ -186,16 +181,38 @@ function ResetPasswordForm() {
           return
         }
 
-        // ── (4) Existing session (e.g. redirected from /auth/callback after recovery) ──
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          console.log('[ResetPassword] recovery_flow=existing_session, user:', user.email)
+        // ── (4) Legacy hash tokens (fallback — fragile, easily lost during redirects) ──
+        if (accessToken && refreshToken) {
+          console.log('[ResetPassword] recovery_flow=hash_tokens (legacy)')
+          window.history.replaceState(null, '', window.location.pathname)
+          const { error: sessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+          if (sessionError) {
+            const reason: string = isTokenError(sessionError) ? 'expired_or_invalid_token' : 'session_error'
+            console.error('[ResetPassword] failure_reason=' + reason, sessionError.message)
+            if (isTokenError(sessionError)) {
+              setPageError('This reset link has expired. Please request a new one.')
+              setPageState('invalid_link')
+              return
+            }
+            setPageError(sessionError.message)
+            setPageState('error')
+            return
+          }
+          const { data: { user } } = await supabase.auth.getUser()
+          console.log('[ResetPassword] Session established for:', user?.email ?? 'unknown')
           setPageState('ready')
           return
         }
 
         // ── (5) No tokens, no session — invalid link ──
-        console.warn('[ResetPassword] recovery_flow=none — no tokens or session found')
+        console.warn('[ResetPassword] recovery_flow=none — no tokens or session found', {
+          href: window.location.href.replace(/[?#].*/, '…'),
+          hasSearch: window.location.search.length > 1,
+          hasHash: window.location.hash.length > 1,
+        })
         setPageError('This reset link is invalid or has expired. Please request a new one.')
         setPageState('invalid_link')
       } catch (err: any) {
