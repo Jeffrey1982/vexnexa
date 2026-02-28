@@ -16,6 +16,11 @@
  *   NEXT_PUBLIC_AUTH_SITE_URL  = https://auth.vexnexa.com  (browser-only auth subdomain)
  */
 
+/** Strip www. from any vexnexa.com origin to enforce canonical non-www host. */
+function normalizeOrigin(origin: string): string {
+  return origin.replace(/^(https?:\/\/)www\.vexnexa\.com/, '$1vexnexa.com')
+}
+
 /**
  * Returns the main site origin.
  * In local dev (localhost), returns the current window origin.
@@ -25,7 +30,7 @@ export function getSiteUrl(): string {
     return window.location.origin
   }
 
-  return (
+  return normalizeOrigin(
     process.env.NEXT_PUBLIC_SITE_URL ||
     'https://vexnexa.com'
   )
@@ -40,7 +45,7 @@ export function getAuthSiteUrl(): string {
     return window.location.origin
   }
 
-  return (
+  return normalizeOrigin(
     process.env.NEXT_PUBLIC_AUTH_SITE_URL ||
     process.env.NEXT_PUBLIC_SITE_URL ||
     'https://vexnexa.com'

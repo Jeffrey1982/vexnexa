@@ -210,10 +210,11 @@ function ResetPasswordForm() {
         // ── (5) No tokens, no session — invalid link ──
         console.warn('[ResetPassword] recovery_flow=none — no tokens or session found', {
           href: window.location.href.replace(/[?#].*/, '…'),
-          hasSearch: window.location.search.length > 1,
-          hasHash: window.location.hash.length > 1,
+          searchPresent: window.location.search.length > 1,
+          hashLength: rawHash.length,
+          selectedFlow: 'none',
         })
-        setPageError('This reset link is invalid or has expired. Please request a new one.')
+        setPageError('This link is missing required parameters. Please request a new reset email.')
         setPageState('invalid_link')
       } catch (err: any) {
         console.error('[ResetPassword] Unexpected error:', err)
