@@ -199,47 +199,43 @@ describe("PriceModeToggle component", () => {
   });
 });
 
-// ── 8. Checkout validation: modal-based company field gating ──
+// ── 8. Checkout validation: CheckoutDialog-based company field gating ──
 
-describe("Checkout validation: modal-based company field gating", () => {
-  const pricingPage = readFile("src/app/(marketing)/pricing/page.tsx");
+describe("Checkout validation: CheckoutDialog handles Individual/Company flow", () => {
+  const checkoutDialog = readFile("src/components/checkout/CheckoutDialog.tsx");
 
   it("has purchaseAs state (individual/company)", () => {
-    expect(pricingPage).toContain("purchaseAs");
-    expect(pricingPage).toContain("'individual' | 'company'");
+    expect(checkoutDialog).toContain("purchaseAs");
+    expect(checkoutDialog).toContain('"individual"');
+    expect(checkoutDialog).toContain('"company"');
   });
 
-  it("requires company details when displayMode is excl", () => {
-    expect(pricingPage).toContain("displayMode === 'excl'");
-    expect(pricingPage).toContain("requiresCompanyDetails");
-  });
-
-  it("requires company details when purchaseAs is company", () => {
-    expect(pricingPage).toContain("purchaseAs === 'company'");
-  });
-
-  it("opens CompanyDetailsModal when company details required", () => {
-    expect(pricingPage).toContain("setCompanyModalOpen(true)");
-  });
-
-  it("proceeds directly when individual + incl mode", () => {
-    expect(pricingPage).toContain("callCreatePayment()");
+  it("validates company fields before submission", () => {
+    expect(checkoutDialog).toContain("Company name is required");
+    expect(checkoutDialog).toContain("Country is required");
+    expect(checkoutDialog).toContain("VAT number is required");
   });
 
   it("uses unified /api/billing/create-payment endpoint", () => {
-    expect(pricingPage).toContain("/api/billing/create-payment");
+    expect(checkoutDialog).toContain("/api/billing/create-payment");
   });
 
-  it("sends company fields from modal to server", () => {
-    expect(pricingPage).toContain("companyFields.companyName");
-    expect(pricingPage).toContain("companyFields.billingCountry");
-    expect(pricingPage).toContain("companyFields.registrationNumber");
-    expect(pricingPage).toContain("companyFields.vatId");
+  it("sends company fields to server when company selected", () => {
+    expect(checkoutDialog).toContain("companyFields.companyName");
+    expect(checkoutDialog).toContain("companyFields.billingCountry");
+    expect(checkoutDialog).toContain("companyFields.registrationNumber");
+    expect(checkoutDialog).toContain("companyFields.vatId");
   });
 
   it("sends priceMode and purchaseAs to server", () => {
-    expect(pricingPage).toContain("priceMode: displayMode");
-    expect(pricingPage).toContain("purchaseAs,");
+    expect(checkoutDialog).toContain("priceMode:");
+    expect(checkoutDialog).toContain("purchaseAs,");
+  });
+
+  it("pricing page delegates to CheckoutDialog", () => {
+    const pricingPage = readFile("src/app/(marketing)/pricing/page.tsx");
+    expect(pricingPage).toContain("<CheckoutDialog");
+    expect(pricingPage).toContain("checkoutPlan");
   });
 });
 
@@ -545,54 +541,94 @@ describe("CompanyDetailsModal component", () => {
   });
 });
 
-// ── 16. Pricing page uses CompanyDetailsModal + new endpoint ──
+// ── 16. Pricing page uses CheckoutDialog ──
 
-describe("Pricing page uses CompanyDetailsModal + create-payment", () => {
+describe("Pricing page uses CheckoutDialog", () => {
   const src = readFile("src/app/(marketing)/pricing/page.tsx");
 
-  it("imports CompanyDetailsModal", () => {
-    expect(src).toContain('import { CompanyDetailsModal');
+  it("imports CheckoutDialog", () => {
+    expect(src).toContain('import { CheckoutDialog }');
   });
 
-  it("renders CompanyDetailsModal", () => {
-    expect(src).toContain("<CompanyDetailsModal");
+  it("renders CheckoutDialog component", () => {
+    expect(src).toContain("<CheckoutDialog");
+  });
+
+  it("passes planKey and billingCycle to CheckoutDialog", () => {
+    expect(src).toContain("planKey={checkoutPlan}");
+    expect(src).toContain("billingCycle={billingCycle}");
+  });
+
+  it("manages checkoutPlan state", () => {
+    expect(src).toContain("setCheckoutPlan(");
+  });
+});
+
+// ── 16b. CheckoutDialog component structure ──
+
+describe("CheckoutDialog component", () => {
+  const src = readFile("src/components/checkout/CheckoutDialog.tsx");
+
+  it("has Individual and Company purchase-as buttons", () => {
+    expect(src).toContain("Individual");
+    expect(src).toContain("Company");
+    expect(src).toContain('purchaseAs === "individual"');
+    expect(src).toContain('purchaseAs === "company"');
   });
 
   it("calls /api/billing/create-payment", () => {
     expect(src).toContain("/api/billing/create-payment");
   });
 
-  it("sends priceMode to server", () => {
-    expect(src).toContain("priceMode: displayMode");
-  });
-
-  it("sends purchaseAs to server", () => {
+  it("sends purchaseAs and priceMode to server", () => {
     expect(src).toContain("purchaseAs,");
+    expect(src).toContain("priceMode:");
   });
 
-  it("has 'Verder naar betaling' button text", () => {
-    expect(src).toContain("Verder naar betaling");
+  it("has VAT validation flow calling validate-vat endpoint", () => {
+    expect(src).toContain("/api/billing/validate-vat");
+    expect(src).toContain("handleValidateVat");
   });
 
-  it("has 'Annuleren' cancel text", () => {
-    expect(src).toContain("Annuleren");
+  it("shows EU VAT number verified success message", () => {
+    expect(src).toContain("EU VAT number verified");
   });
 
-  it("opens modal when company details required", () => {
-    expect(src).toContain("setCompanyModalOpen(true)");
+  it("shows Invalid VAT number error message", () => {
+    expect(src).toContain("Invalid VAT number");
   });
 
-  it("proceeds directly for individual incl mode", () => {
-    expect(src).toContain("callCreatePayment()");
+  it("shows reverse charge note in price summary", () => {
+    expect(src).toContain("VAT reverse charge applies");
+    expect(src).toContain("isReverseCharge");
   });
 
-  it("shows 'You will pay' confirmation with Mollie amount", () => {
-    expect(src).toContain("You will pay");
-    expect(src).toContain("at Mollie");
+  it("shows 'Continue to payment' CTA", () => {
+    expect(src).toContain("Continue to payment");
   });
 
-  it("shows disclaimer about final taxes", () => {
-    expect(src).toContain("Final taxes are calculated at checkout based on billing details");
+  it("has Cancel button", () => {
+    expect(src).toContain("Cancel");
+  });
+
+  it("shows Mollie charge amount confirmation", () => {
+    expect(src).toContain("You will be charged");
+    expect(src).toContain("at Mollie checkout");
+  });
+
+  it("has KvK lookup for NL companies", () => {
+    expect(src).toContain("/api/billing/kvk-lookup");
+    expect(src).toContain("handleKvkLookup");
+  });
+
+  it("computes client-side prices for display", () => {
+    expect(src).toContain("computeClientPrices");
+    expect(src).toContain("grossToNet");
+  });
+
+  it("pre-fills from billing profile", () => {
+    expect(src).toContain("/api/billing/profile");
+    expect(src).toContain("setProfileLoaded(true)");
   });
 });
 

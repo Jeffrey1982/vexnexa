@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -15,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import {
   Check,
   X,
@@ -27,7 +25,6 @@ import {
   AlertTriangle,
   Info,
   HelpCircle,
-  CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ENTITLEMENTS, PLAN_NAMES, OVERFLOW_PRICING } from "@/lib/billing/plans";
@@ -52,7 +49,7 @@ import { useTranslations } from 'next-intl';
 import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
 import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
 import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
-import { CompanyDetailsModal, type CompanyFields } from "@/components/checkout/CompanyDetailsModal";
+import { CheckoutDialog } from "@/components/checkout/CheckoutDialog";
 
 // JSON-LD for pricing
 function PricingJsonLd() {
@@ -152,40 +149,13 @@ function HeroSection() {
   );
 }
 
-interface TaxQuote {
-  baseAmount: number;
-  vatAmount: number;
-  totalAmount: number;
-  tax: {
-    ratePercent: number;
-    mode: string;
-    label: string;
-    notes: string | null;
-  };
-  customer: {
-    type: string;
-    country: string;
-    companyName: string | null;
-    hasValidVat: boolean;
-  };
-}
-
 function PricingCards() {
   const t = useTranslations('pricing');
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
-  const [confirmPlan, setConfirmPlan] = useState<string | null>(null);
-  const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
-  const [quoteLoading, setQuoteLoading] = useState(false);
+  const [checkoutPlan, setCheckoutPlan] = useState<PlanKey | null>(null);
   const [displayMode] = usePriceDisplayMode();
-  const [purchaseAs, setPurchaseAs] = useState<'individual' | 'company'>('individual');
-  const [companyModalOpen, setCompanyModalOpen] = useState(false);
-  const [companyModalSubmitting, setCompanyModalSubmitting] = useState(false);
-  const [companyModalError, setCompanyModalError] = useState<string | null>(null);
-
-  /** Whether company details are required at checkout */
-  const requiresCompanyDetails = displayMode === 'excl' || purchaseAs === 'company';
 
   /** Convert a gross price for display based on current mode */
   const dp = (gross: number): number =>
@@ -291,102 +261,13 @@ function PricingCards() {
     },
   ];
 
-  const handleUpgrade = async (planKey: string) => {
+  const handleUpgrade = (planKey: string) => {
     if (planKey === "ENTERPRISE") {
       window.location.href = "/contact?subject=enterprise";
       return;
     }
-
-    // Open confirmation dialog and fetch tax quote
-    setConfirmPlan(planKey);
-    setQuoteLoading(true);
-    setTaxQuote(null);
+    setCheckoutPlan(planKey as PlanKey);
     setError(null);
-    // Default purchaseAs to 'company' when in excl mode
-    if (displayMode === 'excl') setPurchaseAs('company');
-
-    try {
-      const res = await fetch('/api/checkout/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planKey, billingCycle }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setTaxQuote(data);
-      }
-    } catch {
-      // Non-fatal: dialog still shows, just without tax breakdown
-    } finally {
-      setQuoteLoading(false);
-    }
-  };
-
-  /** Call unified create-payment endpoint */
-  const callCreatePayment = async (companyFields?: CompanyFields) => {
-    if (!confirmPlan) return;
-    setLoading(confirmPlan);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/billing/create-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          plan: confirmPlan,
-          billingCycle,
-          priceMode: displayMode,
-          purchaseAs,
-          ...(companyFields ? {
-            companyName: companyFields.companyName,
-            billingCountry: companyFields.billingCountry,
-            registrationNumber: companyFields.registrationNumber,
-            vatId: companyFields.vatId,
-          } : {}),
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create payment");
-      }
-      window.location.href = data.checkoutUrl;
-    } catch (err) {
-      console.error("Checkout error:", err);
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-      setLoading(null);
-    }
-  };
-
-  /** "Verder naar betaling" click handler */
-  const handleConfirmCheckout = async () => {
-    if (!confirmPlan) return;
-
-    if (requiresCompanyDetails) {
-      // Open company details modal — payment created after modal submit
-      setCompanyModalError(null);
-      setCompanyModalOpen(true);
-      return;
-    }
-
-    // Individual + incl mode → proceed directly
-    await callCreatePayment();
-  };
-
-  /** Called when company modal is submitted with validated fields */
-  const handleCompanyModalSubmit = async (fields: CompanyFields) => {
-    setCompanyModalSubmitting(true);
-    setCompanyModalError(null);
-    try {
-      await callCreatePayment(fields);
-      setCompanyModalOpen(false);
-    } catch (err) {
-      setCompanyModalError(
-        err instanceof Error ? err.message : "Something went wrong."
-      );
-    } finally {
-      setCompanyModalSubmitting(false);
-    }
   };
 
   return (
@@ -533,132 +414,12 @@ function PricingCards() {
           </p>
         </div>
 
-        {/* Checkout Confirmation Dialog */}
-        <Dialog open={!!confirmPlan} onOpenChange={(open) => { if (!open) { setConfirmPlan(null); setTaxQuote(null); } }}>
-          <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <CreditCard className="w-5 h-5 text-primary" />
-                Checkout Summary
-              </DialogTitle>
-            </DialogHeader>
-
-            <div className="space-y-3 py-2">
-              <div className="flex justify-between items-center py-2 border-b border-border">
-                <span className="text-sm text-muted-foreground">Plan</span>
-                <span className="font-medium">VexNexa {confirmPlan}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 border-b border-border">
-                <span className="text-sm text-muted-foreground">Billing</span>
-                <span className="font-medium">{billingCycle === 'monthly' ? 'Monthly' : 'Annual'}</span>
-              </div>
-
-              {quoteLoading ? (
-                <div className="flex items-center justify-center py-4">
-                  <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
-                  <span className="ml-2 text-sm text-muted-foreground">Calculating tax...</span>
-                </div>
-              ) : taxQuote ? (
-                <>
-                  <div className="flex justify-between items-center py-2 border-b border-border">
-                    <span className="text-sm text-muted-foreground">Subtotal (ex. VAT)</span>
-                    <span className="font-medium">{formatEuro(taxQuote.baseAmount)}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-border">
-                    <span className="text-sm text-muted-foreground">{taxQuote.tax.label}</span>
-                    <span className="font-medium">
-                      {taxQuote.vatAmount === 0 ? '\u2014' : formatEuro(taxQuote.vatAmount)}
-                    </span>
-                  </div>
-                  {taxQuote.tax.mode === 'reverse_charge' && (
-                    <p className="text-xs text-muted-foreground italic">
-                      VAT reverse charge applies \u2014 you account for VAT
-                    </p>
-                  )}
-                  <div className="flex justify-between items-center py-2 bg-muted/30 rounded-md px-2">
-                    <span className="text-sm font-semibold">Total</span>
-                    <span className="text-xl font-bold">{formatEuro(taxQuote.totalAmount)}</span>
-                  </div>
-                  <p className="text-[10px] text-muted-foreground text-center">
-                    You will pay {formatEuro(taxQuote.totalAmount)} at Mollie
-                  </p>
-                </>
-              ) : confirmPlan ? (
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-sm font-semibold">Price</span>
-                  <span className="text-xl font-bold">
-                    {fmtPrice(confirmPlan as PlanKey, billingCycle).mainPrice}
-                    <span className="text-sm font-normal text-muted-foreground">
-                      {fmtPrice(confirmPlan as PlanKey, billingCycle).period}
-                    </span>
-                  </span>
-                </div>
-              ) : null}
-            </div>
-
-            {/* Purchase As selector */}
-            <div className="border-t border-border pt-4 space-y-3">
-              <div>
-                <Label className="text-sm font-medium">Purchase as</Label>
-                <div className="inline-flex items-center rounded-md bg-muted p-0.5 text-xs mt-1.5 w-full">
-                  {(['individual', 'company'] as const).map((opt) => (
-                    <button
-                      key={opt}
-                      onClick={() => setPurchaseAs(opt)}
-                      className={cn(
-                        "flex-1 px-3 py-1.5 rounded-[5px] font-medium transition-all duration-150 capitalize",
-                        purchaseAs === opt
-                          ? "bg-background text-foreground shadow-sm"
-                          : "text-muted-foreground hover:text-foreground"
-                      )}
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {requiresCompanyDetails && (
-                <p className="text-xs text-muted-foreground bg-muted/30 rounded-md p-2 border border-border">
-                  Bedrijfsgegevens worden gevraagd in de volgende stap.
-                </p>
-              )}
-
-              <p className="text-[10px] text-muted-foreground">
-                Final taxes are calculated at checkout based on billing details.
-              </p>
-            </div>
-
-            <DialogFooter className="flex gap-2 sm:gap-0">
-              <Button
-                variant="outline"
-                onClick={() => { setConfirmPlan(null); setTaxQuote(null); }}
-                disabled={!!loading}
-              >
-                Annuleren
-              </Button>
-              <Button
-                onClick={handleConfirmCheckout}
-                disabled={!!loading || quoteLoading}
-                className="bg-[#FF7A00] hover:bg-[#FF7A00]/90 text-white"
-              >
-                {loading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Bezig...</>
-                ) : (
-                  <>Verder naar betaling<ArrowRight className="ml-2 h-4 w-4" /></>
-                )}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Company Details Modal — opens when excl/company mode requires fields before Mollie */}
-        <CompanyDetailsModal
-          open={companyModalOpen}
-          onOpenChange={(open) => { if (!open) setCompanyModalOpen(false); }}
-          onSubmit={handleCompanyModalSubmit}
-          submitting={companyModalSubmitting}
-          serverError={companyModalError}
+        {/* Checkout Dialog — unified Individual/Company flow with VAT validation */}
+        <CheckoutDialog
+          open={!!checkoutPlan}
+          onOpenChange={(open) => { if (!open) setCheckoutPlan(null); }}
+          planKey={checkoutPlan}
+          billingCycle={billingCycle}
         />
       </div>
     </section>
