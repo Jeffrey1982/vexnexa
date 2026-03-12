@@ -4,13 +4,20 @@ import { prisma } from "@/lib/prisma";
 import { isEuCountry } from "@/lib/billing/countries";
 import { normalizeVatId, validateVatIdFormat } from "@/lib/billing/tax";
 
+/** Result from the VIES REST API check */
+interface ViesResult {
+  valid: boolean;
+  companyName?: string;
+  address?: string;
+}
+
 /**
  * POST /api/billing/validate-vat
  *
  * Validates a EU VAT ID:
  *  1. Local format check
- *  2. VIES SOAP check (EU only)
- *  3. Persists result to BillingProfile
+ *  2. VIES REST API check (EU only)
+ *  3. Persists result + company info to BillingProfile
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -52,41 +59,52 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       });
     }
 
-    // 2. VIES check
-    let viesValid = false;
+    // 2. VIES check (REST API with SOAP fallback)
+    let viesResult: ViesResult = { valid: false };
     let viesError: string | null = null;
 
     try {
-      viesValid = await checkVies(countryCode, vatId);
-    } catch (err) {
-      viesError =
-        err instanceof Error ? err.message : "VIES service unavailable";
-      console.warn("[validate-vat] VIES check failed:", viesError);
+      viesResult = await checkViesRest(countryCode, vatId);
+    } catch (restErr) {
+      console.warn("[validate-vat] VIES REST failed, trying SOAP fallback:", restErr);
+      try {
+        viesResult = await checkViesSoap(countryCode, vatId);
+      } catch (soapErr) {
+        viesError =
+          soapErr instanceof Error ? soapErr.message : "VIES service unavailable";
+        console.warn("[validate-vat] VIES SOAP also failed:", viesError);
+      }
     }
 
-    // 3. Persist to BillingProfile
+    // 3. Persist to BillingProfile (include company info from VIES if available)
     const now = new Date();
+    const updateData: Record<string, unknown> = {
+      vatId,
+      vatValid: viesResult.valid,
+      vatCheckedAt: now,
+    };
+    // Auto-fill company name from VIES if not already set
+    if (viesResult.companyName) {
+      updateData.companyName = viesResult.companyName;
+    }
+
     await prisma.billingProfile.upsert({
       where: { userId: user.id },
       create: {
         userId: user.id,
         countryCode,
-        vatId,
-        vatValid: viesValid,
-        vatCheckedAt: now,
         billingType: "business",
+        ...updateData,
       },
-      update: {
-        vatId,
-        vatValid: viesValid,
-        vatCheckedAt: now,
-      },
+      update: updateData,
     });
 
     return NextResponse.json({
-      valid: viesValid,
+      valid: viesResult.valid,
       vatId,
       countryCode,
+      companyName: viesResult.companyName ?? null,
+      address: viesResult.address ?? null,
       checkedAt: now.toISOString(),
       ...(viesError ? { warning: `VIES unavailable: ${viesError}` } : {}),
     });
@@ -100,18 +118,63 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 }
 
 /**
- * Query the EU VIES SOAP service to validate a VAT number.
+ * Query the EU VIES REST API to validate a VAT number.
  *
- * The VIES service is at:
- *   https://ec.europa.eu/taxation_customs/vies/services/checkVatService
+ * Endpoint:
+ *   POST https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number
  *
- * We use a simple SOAP envelope rather than a full SOAP client.
+ * Returns validity, company name, and address.
  */
-async function checkVies(
+async function checkViesRest(
   countryCode: string,
   vatId: string
-): Promise<boolean> {
+): Promise<ViesResult> {
   // Strip the country prefix if the VAT ID already includes it
+  const vatNumber = vatId.startsWith(countryCode)
+    ? vatId.slice(countryCode.length)
+    : vatId;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const response = await fetch(
+      "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          countryCode,
+          vatNumber,
+        }),
+        signal: controller.signal,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`VIES REST returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return {
+      valid: data.valid === true,
+      companyName: cleanViesString(data.name),
+      address: cleanViesString(data.address),
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/**
+ * Fallback: Query the EU VIES SOAP service.
+ * Used when the REST API is down.
+ */
+async function checkViesSoap(
+  countryCode: string,
+  vatId: string
+): Promise<ViesResult> {
   const vatNumber = vatId.startsWith(countryCode)
     ? vatId.slice(countryCode.length)
     : vatId;
@@ -146,16 +209,31 @@ async function checkVies(
 
     const text = await response.text();
 
-    // Parse the <valid> element from the SOAP response
     const validMatch = text.match(/<valid>(true|false)<\/valid>/i);
     if (!validMatch) {
-      throw new Error("Could not parse VIES response");
+      throw new Error("Could not parse VIES SOAP response");
     }
 
-    return validMatch[1].toLowerCase() === "true";
+    const nameMatch = text.match(/<name>([^<]*)<\/name>/i);
+    const addressMatch = text.match(/<address>([^<]*)<\/address>/i);
+
+    return {
+      valid: validMatch[1].toLowerCase() === "true",
+      companyName: cleanViesString(nameMatch?.[1]),
+      address: cleanViesString(addressMatch?.[1]),
+    };
   } finally {
     clearTimeout(timeout);
   }
+}
+
+/** Clean VIES string: trim, collapse whitespace, return undefined if empty/dash */
+function cleanViesString(str?: string | null): string | undefined {
+  if (!str) return undefined;
+  const cleaned = str.replace(/\s+/g, " ").trim();
+  // VIES returns "---" for unavailable data
+  if (!cleaned || cleaned === "---" || cleaned === "-") return undefined;
+  return cleaned;
 }
 
 function escapeXml(str: string): string {

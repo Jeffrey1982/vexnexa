@@ -326,8 +326,8 @@ describe('Onboarding Page: Billing Identity', () => {
 
   it('has VAT validation button and status messages', () => {
     expect(page).toContain('/api/billing/validate-vat');
-    expect(page).toContain('Valid VAT ID');
-    expect(page).toContain('Could not validate VAT ID');
+    expect(page).toContain('EU VAT number verified');
+    expect(page).toContain('Invalid VAT number');
     expect(page).toContain('VIES service unavailable');
   });
 
@@ -495,14 +495,20 @@ describe('VAT validation endpoint: /api/billing/validate-vat', () => {
     expect(route).toContain('Invalid VAT ID format');
   });
 
-  it('calls VIES SOAP service', () => {
-    expect(route).toContain('checkVies(countryCode, vatId)');
-    expect(route).toContain('ec.europa.eu/taxation_customs/vies');
+  it('calls VIES REST API with SOAP fallback', () => {
+    expect(route).toContain('checkViesRest(countryCode, vatId)');
+    expect(route).toContain('checkViesSoap(countryCode, vatId)');
+    expect(route).toContain('ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number');
+  });
+
+  it('returns companyName and address from VIES', () => {
+    expect(route).toContain('companyName: viesResult.companyName');
+    expect(route).toContain('address: viesResult.address');
   });
 
   it('persists result to BillingProfile', () => {
     expect(route).toContain('prisma.billingProfile.upsert');
-    expect(route).toContain('vatValid: viesValid');
+    expect(route).toContain('vatValid: viesResult.valid');
     expect(route).toContain('vatCheckedAt: now');
   });
 

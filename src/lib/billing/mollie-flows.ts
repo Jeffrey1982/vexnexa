@@ -332,25 +332,61 @@ export async function createSubscription(opts: {
     }
   }
 
-  // Calculate price and interval based on billing cycle
-  const totalPrice = calculatePrice(plan as PlanKey, billingCycle)
+  // Calculate tax-aware price for the subscription
+  // Plan prices are stored GROSS (incl. NL 21% VAT).
+  // Convert gross→net, then re-apply customer's actual tax rate.
+  const planGross = calculatePrice(plan as PlanKey, billingCycle)
+  const netBase = grossToNet(planGross, BASE_VAT_RATE)
+
+  // Fetch billing profile for tax computation
+  const billingProfile = await prisma.billingProfile.findUnique({
+    where: { userId },
+    select: {
+      billingType: true,
+      countryCode: true,
+      vatId: true,
+      vatValid: true,
+      companyName: true,
+    },
+  })
+
+  const taxDecision = computeTaxDecision({
+    customerCountry: billingProfile?.countryCode ?? 'NL',
+    customerType: (billingProfile?.billingType ?? 'individual') as CustomerType,
+    vatId: billingProfile?.vatId,
+    vatIdValid: billingProfile?.vatValid,
+    productType: 'saas_subscription',
+  })
+
+  const breakdown = calculateTaxBreakdown(netBase, taxDecision)
+
   const interval = billingCycle === 'monthly' ? '1 month' : '12 months'
   const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Yearly'
+  const taxLabel = taxDecision.taxMode === 'reverse_charge'
+    ? ' (Reverse charge)'
+    : taxDecision.taxMode === 'vat_standard'
+      ? ' (VAT included)'
+      : ''
 
-  // Create new subscription
+  // Create new subscription with tax-aware amount
   const subscription = await (mollie.customerSubscriptions as any).create({
     customerId,
     amount: {
       currency: 'EUR',
-      value: formatMollieAmount(totalPrice)
+      value: formatMollieAmount(breakdown.gross)
     },
     interval,
-    description: `VexNexa ${plan} Plan (${billingCycleLabel})`,
+    description: `VexNexa ${plan} Plan (${billingCycleLabel})${taxLabel}`,
     startDate: new Date().toISOString().split('T')[0], // Start today
     metadata: {
       userId,
       plan,
-      billingCycle
+      billingCycle,
+      taxRatePercent: String(taxDecision.taxRatePercent),
+      taxMode: taxDecision.taxMode,
+      customerCountry: taxDecision.countryCode,
+      netAmount: String(breakdown.net),
+      vatAmount: String(breakdown.vat),
     }
   })
 

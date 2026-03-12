@@ -41,6 +41,8 @@ export default function OnboardingPage() {
   const [userName, setUserName] = useState('')
   const [vatValidating, setVatValidating] = useState(false)
   const [vatStatus, setVatStatus] = useState<'idle' | 'valid' | 'invalid' | 'error'>('idle')
+  const [kvkLoading, setKvkLoading] = useState(false)
+  const [kvkStatus, setKvkStatus] = useState<'idle' | 'found' | 'not_found' | 'error'>('idle')
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -431,6 +433,10 @@ export default function OnboardingPage() {
                                 })
                                 const data = await res.json()
                                 setVatStatus(data.valid ? 'valid' : 'invalid')
+                                // Auto-fill company name from VIES if returned
+                                if (data.valid && data.companyName && !formData.companyName) {
+                                  updateFormData('companyName', data.companyName)
+                                }
                               } catch {
                                 setVatStatus('error')
                               } finally {
@@ -442,18 +448,23 @@ export default function OnboardingPage() {
                             {vatValidating ? (
                               <Loader2 className="w-4 h-4 animate-spin" />
                             ) : (
-                              'Validate'
+                              'Verify VAT'
                             )}
                           </Button>
                         </div>
                         {vatStatus === 'valid' && (
-                          <p className="text-sm text-green-600 dark:text-green-400 flex items-center gap-1">
-                            <CheckCircle2 className="w-4 h-4" /> Valid VAT ID
-                          </p>
+                          <div className="rounded-md bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3">
+                            <p className="text-sm text-green-700 dark:text-green-400 flex items-center gap-1.5 font-medium">
+                              <CheckCircle2 className="w-4 h-4 shrink-0" /> EU VAT number verified
+                            </p>
+                            <p className="text-xs text-green-600 dark:text-green-500 mt-1 ml-5.5">
+                              VAT will be removed from the invoice
+                            </p>
+                          </div>
                         )}
                         {vatStatus === 'invalid' && (
                           <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
-                            <AlertCircle className="w-4 h-4" /> Could not validate VAT ID
+                            <AlertCircle className="w-4 h-4" /> Invalid VAT number
                           </p>
                         )}
                         {vatStatus === 'error' && (
@@ -469,13 +480,78 @@ export default function OnboardingPage() {
                         <Label htmlFor="kvkNumber">
                           KvK-nummer (optional)
                         </Label>
-                        <Input
-                          id="kvkNumber"
-                          value={formData.kvkNumber}
-                          onChange={(e) => updateFormData('kvkNumber', e.target.value)}
-                          placeholder="12345678"
-                          className="h-12"
-                        />
+                        <div className="flex gap-2">
+                          <Input
+                            id="kvkNumber"
+                            value={formData.kvkNumber}
+                            onChange={(e) => {
+                              updateFormData('kvkNumber', e.target.value)
+                              setKvkStatus('idle')
+                            }}
+                            placeholder="12345678"
+                            className="h-12 flex-1"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            disabled={!formData.kvkNumber || formData.kvkNumber.replace(/\D/g, '').length !== 8 || kvkLoading}
+                            onClick={async () => {
+                              setKvkLoading(true)
+                              setKvkStatus('idle')
+                              try {
+                                const res = await fetch('/api/billing/kvk-lookup', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ kvkNumber: formData.kvkNumber }),
+                                })
+                                const data = await res.json()
+                                if (data.found) {
+                                  setKvkStatus('found')
+                                  if (data.companyName && !formData.companyName) {
+                                    updateFormData('companyName', data.companyName)
+                                  }
+                                  if (data.address && !formData.addressLine1) {
+                                    updateFormData('addressLine1', data.address)
+                                  }
+                                  if (data.city && !formData.addressCity) {
+                                    updateFormData('addressCity', data.city)
+                                  }
+                                  if (data.postalCode && !formData.addressPostal) {
+                                    updateFormData('addressPostal', data.postalCode)
+                                  }
+                                } else {
+                                  setKvkStatus('not_found')
+                                }
+                              } catch {
+                                setKvkStatus('error')
+                              } finally {
+                                setKvkLoading(false)
+                              }
+                            }}
+                            className="h-12 px-4"
+                          >
+                            {kvkLoading ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              'Lookup'
+                            )}
+                          </Button>
+                        </div>
+                        {kvkStatus === 'found' && (
+                          <p className="text-sm text-green-600 dark:text-green-400 flex items-center gap-1">
+                            <CheckCircle2 className="w-4 h-4" /> Company details found and auto-filled
+                          </p>
+                        )}
+                        {kvkStatus === 'not_found' && (
+                          <p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                            <AlertCircle className="w-4 h-4" /> KvK number not found
+                          </p>
+                        )}
+                        {kvkStatus === 'error' && (
+                          <p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                            <AlertCircle className="w-4 h-4" /> KvK service unavailable — you can fill in manually
+                          </p>
+                        )}
                       </div>
                     )}
 
