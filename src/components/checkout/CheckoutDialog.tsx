@@ -48,13 +48,16 @@ import { COUNTRIES, isEuCountry, isNlCountry } from "@/lib/billing/countries";
 
 type PurchaseAs = "individual" | "company";
 type VatStatus = "idle" | "validating" | "valid" | "invalid" | "error";
-type KvkStatus = "idle" | "loading" | "found" | "not_found" | "error";
+type KvkStatus = "idle" | "loading" | "found" | "not_found" | "error" | "format_error";
 
 interface CompanyFields {
   companyName: string;
   billingCountry: string;
   registrationNumber: string;
   vatId: string;
+  street: string;
+  postalCode: string;
+  city: string;
 }
 
 interface TaxQuote {
@@ -141,7 +144,13 @@ export function CheckoutDialog({
     billingCountry: "NL",
     registrationNumber: "",
     vatId: "",
+    street: "",
+    postalCode: "",
+    city: "",
   });
+
+  /** Track which fields the user has manually edited (don't overwrite on autofill) */
+  const userTouchedRef = useRef<Set<keyof CompanyFields>>(new Set());
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [vatStatus, setVatStatus] = useState<VatStatus>("idle");
   const [vatMessage, setVatMessage] = useState<string>("");
@@ -166,6 +175,7 @@ export function CheckoutDialog({
           setPurchaseAs("company");
         }
         setCompanyFields((prev) => ({
+          ...prev,
           companyName: profile.companyName || prev.companyName,
           billingCountry: profile.countryCode || prev.billingCountry,
           registrationNumber:
@@ -194,12 +204,16 @@ export function CheckoutDialog({
       setVatMessage("");
       setKvkStatus("idle");
       setSubmitting(false);
+      userTouchedRef.current = new Set();
     }
   }, [open]);
 
   // ── Reset VAT status when country or vatId changes ──
   const updateCompanyField = useCallback(
-    (key: keyof CompanyFields, value: string) => {
+    (key: keyof CompanyFields, value: string, isUserEdit = true) => {
+      if (isUserEdit) {
+        userTouchedRef.current.add(key);
+      }
       setCompanyFields((prev) => ({ ...prev, [key]: value }));
       setFieldErrors((prev) => {
         if (!prev[key]) return prev;
@@ -249,12 +263,9 @@ export function CheckoutDialog({
       if (data.valid) {
         setVatStatus("valid");
         setVatMessage("EU VAT number verified");
-        // Auto-fill company name from VIES
-        if (data.companyName && !companyFields.companyName) {
-          setCompanyFields((prev) => ({
-            ...prev,
-            companyName: data.companyName,
-          }));
+        // Auto-fill company name from VIES (only if user hasn't manually edited)
+        if (data.companyName && !userTouchedRef.current.has("companyName")) {
+          updateCompanyField("companyName", data.companyName, false);
         }
       } else {
         setVatStatus("invalid");
@@ -273,33 +284,53 @@ export function CheckoutDialog({
 
   // ── KvK Lookup ──
   const handleKvkLookup = useCallback(async () => {
-    const kvkNumber = companyFields.registrationNumber.replace(/\D/g, "");
-    if (kvkNumber.length !== 8) return;
+    const kvkDigits = companyFields.registrationNumber.replace(/\D/g, "");
+
+    // Client-side format validation
+    if (kvkDigits.length !== 8) {
+      setKvkStatus("format_error");
+      return;
+    }
 
     setKvkStatus("loading");
 
     try {
-      const res = await fetch("/api/billing/kvk-lookup", {
+      const res = await fetch("/api/kvk/lookup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kvkNumber }),
+        body: JSON.stringify({ kvk: kvkDigits }),
       });
 
       const data = await res.json();
 
       if (data.found) {
         setKvkStatus("found");
-        setCompanyFields((prev) => ({
-          ...prev,
-          companyName: data.companyName || prev.companyName,
-        }));
+
+        // Auto-fill only fields the user hasn't manually edited
+        const touched = userTouchedRef.current;
+
+        if (data.name && !touched.has("companyName")) {
+          updateCompanyField("companyName", data.name, false);
+        }
+        if (data.street && !touched.has("street")) {
+          updateCompanyField("street", data.street, false);
+        }
+        if (data.postalCode && !touched.has("postalCode")) {
+          updateCompanyField("postalCode", data.postalCode, false);
+        }
+        if (data.city && !touched.has("city")) {
+          updateCompanyField("city", data.city, false);
+        }
+        if (data.country && !touched.has("billingCountry")) {
+          updateCompanyField("billingCountry", data.country, false);
+        }
       } else {
         setKvkStatus("not_found");
       }
     } catch {
       setKvkStatus("error");
     }
-  }, [companyFields.registrationNumber]);
+  }, [companyFields.registrationNumber, updateCompanyField]);
 
   // ── Submit to Mollie ──
   const handleSubmit = useCallback(async () => {
@@ -340,6 +371,9 @@ export function CheckoutDialog({
         body.billingCountry = companyFields.billingCountry;
         body.registrationNumber = companyFields.registrationNumber;
         body.vatId = companyFields.vatId;
+        body.street = companyFields.street;
+        body.postalCode = companyFields.postalCode;
+        body.city = companyFields.city;
       }
 
       const res = await fetch("/api/billing/create-payment", {
@@ -699,7 +733,6 @@ export function CheckoutDialog({
                       variant="outline"
                       size="default"
                       disabled={
-                        companyFields.registrationNumber.replace(/\D/g, "").length !== 8 ||
                         kvkStatus === "loading" ||
                         submitting
                       }
@@ -720,15 +753,74 @@ export function CheckoutDialog({
                 {kvkStatus === "found" && (
                   <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" />
-                    Company details found and applied
+                    Company found in Dutch Chamber of Commerce
                   </p>
                 )}
                 {kvkStatus === "not_found" && (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                    <AlertTriangle className="w-3 h-3" />
+                  <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                    <XCircle className="w-3 h-3" />
                     KvK number not found
                   </p>
                 )}
+                {kvkStatus === "format_error" && (
+                  <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                    <XCircle className="w-3 h-3" />
+                    KvK numbers must contain 8 digits.
+                  </p>
+                )}
+                {kvkStatus === "error" && (
+                  <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3" />
+                    KvK lookup failed. You can continue without it.
+                  </p>
+                )}
+              </div>
+
+              {/* Address fields */}
+              <div className="space-y-1.5">
+                <Label htmlFor="co-street" className="text-sm">
+                  Street address{" "}
+                  <span className="text-muted-foreground text-xs">(optional)</span>
+                </Label>
+                <Input
+                  id="co-street"
+                  value={companyFields.street}
+                  onChange={(e) => updateCompanyField("street", e.target.value)}
+                  placeholder="Keizersgracht 123"
+                  className="h-10"
+                  disabled={submitting}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="co-postal" className="text-sm">
+                    Postal code{" "}
+                    <span className="text-muted-foreground text-xs">(optional)</span>
+                  </Label>
+                  <Input
+                    id="co-postal"
+                    value={companyFields.postalCode}
+                    onChange={(e) => updateCompanyField("postalCode", e.target.value)}
+                    placeholder="1015 AB"
+                    className="h-10"
+                    disabled={submitting}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="co-city" className="text-sm">
+                    City{" "}
+                    <span className="text-muted-foreground text-xs">(optional)</span>
+                  </Label>
+                  <Input
+                    id="co-city"
+                    value={companyFields.city}
+                    onChange={(e) => updateCompanyField("city", e.target.value)}
+                    placeholder="Amsterdam"
+                    className="h-10"
+                    disabled={submitting}
+                  />
+                </div>
               </div>
             </div>
           )}

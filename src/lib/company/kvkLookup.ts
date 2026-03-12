@@ -13,7 +13,7 @@
 export interface KvkResult {
   found: boolean;
   companyName?: string;
-  address?: string;
+  street?: string;
   city?: string;
   postalCode?: string;
   kvkNumber?: string;
@@ -75,7 +75,7 @@ export async function lookupKvk(kvkNumber: string): Promise<KvkResult> {
     return {
       found: true,
       companyName: companyName || undefined,
-      address: address?.street || undefined,
+      street: address?.street || undefined,
       city: address?.city || undefined,
       postalCode: address?.postalCode || undefined,
       kvkNumber: cleaned,

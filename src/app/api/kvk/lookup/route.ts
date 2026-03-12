@@ -3,12 +3,20 @@ import { createClient } from "@/lib/supabase/server-new";
 import { lookupKvk } from "@/lib/company/kvkLookup";
 
 /**
- * POST /api/billing/kvk-lookup
+ * POST /api/kvk/lookup
  *
  * Looks up a Dutch company by KvK number and returns
- * company name + address for auto-fill.
+ * normalized company details for auto-fill.
  *
- * Requires authentication. KVK_API_KEY must be configured.
+ * Request body: { kvk: string }
+ *
+ * Success response:
+ *   { found: true, name: string, street: string, postalCode: string, city: string, country: "NL" }
+ *
+ * Not-found response:
+ *   { found: false }
+ *
+ * Requires authentication. KVK_API_KEY must be configured server-side.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -23,21 +31,31 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     const body = await req.json();
-    const kvkNumber: string = (body.kvkNumber ?? "").replace(/\D/g, "");
+    const kvkRaw: string = String(body.kvk ?? "").replace(/\D/g, "");
 
-    if (!kvkNumber || kvkNumber.length !== 8) {
+    if (!kvkRaw || kvkRaw.length !== 8) {
       return NextResponse.json(
         { found: false, error: "KvK number must be 8 digits" },
         { status: 400 }
       );
     }
 
-    const result = await lookupKvk(kvkNumber);
+    const result = await lookupKvk(kvkRaw);
 
-    // Return normalized format (backward-compatible)
-    return NextResponse.json(result);
+    if (!result.found) {
+      return NextResponse.json({ found: false });
+    }
+
+    return NextResponse.json({
+      found: true,
+      name: result.companyName ?? "",
+      street: result.street ?? "",
+      postalCode: result.postalCode ?? "",
+      city: result.city ?? "",
+      country: "NL" as const,
+    });
   } catch (error) {
-    console.error("[kvk-lookup] Error:", error);
+    console.error("[kvk/lookup] Error:", error);
     return NextResponse.json(
       { found: false, error: "Internal server error" },
       { status: 500 }
