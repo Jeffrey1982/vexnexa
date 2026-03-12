@@ -223,7 +223,6 @@ describe("Checkout validation: CheckoutDialog handles Individual/Company flow", 
   it("sends company fields to server when company selected", () => {
     expect(checkoutDialog).toContain("companyFields.companyName");
     expect(checkoutDialog).toContain("companyFields.billingCountry");
-    expect(checkoutDialog).toContain("companyFields.registrationNumber");
     expect(checkoutDialog).toContain("companyFields.vatId");
   });
 
@@ -616,11 +615,6 @@ describe("CheckoutDialog component", () => {
     expect(src).toContain("at Mollie checkout");
   });
 
-  it("has KvK lookup for NL companies", () => {
-    expect(src).toContain("/api/kvk/lookup");
-    expect(src).toContain("handleKvkLookup");
-  });
-
   it("computes client-side prices for display", () => {
     expect(src).toContain("computeClientPrices");
     expect(src).toContain("grossToNet");
@@ -629,137 +623,6 @@ describe("CheckoutDialog component", () => {
   it("pre-fills from billing profile", () => {
     expect(src).toContain("/api/billing/profile");
     expect(src).toContain("setProfileLoaded(true)");
-  });
-});
-
-// ── 16c. KvK lookup behavior in CheckoutDialog ──
-
-describe("KvK lookup behavior in CheckoutDialog", () => {
-  const src = readFile("src/components/checkout/CheckoutDialog.tsx");
-
-  it("validates 8-digit format client-side before API call", () => {
-    expect(src).toContain("kvkDigits.length !== 8");
-    expect(src).toContain('"format_error"');
-  });
-
-  it("shows format error message for invalid KvK number", () => {
-    expect(src).toContain("KvK numbers must contain 8 digits.");
-  });
-
-  it("calls /api/kvk/lookup with { kvk } body field", () => {
-    expect(src).toContain("/api/kvk/lookup");
-    expect(src).toContain("kvk: kvkDigits");
-  });
-
-  it("shows success message from Dutch Chamber of Commerce", () => {
-    expect(src).toContain("Company found in Dutch Chamber of Commerce");
-  });
-
-  it("shows red error for KvK not found", () => {
-    expect(src).toContain("KvK number not found");
-  });
-
-  it("tracks user-touched fields to prevent overwrite", () => {
-    expect(src).toContain("userTouchedRef");
-    expect(src).toContain('touched.has("companyName")');
-    expect(src).toContain('touched.has("street")');
-    expect(src).toContain('touched.has("postalCode")');
-    expect(src).toContain('touched.has("city")');
-  });
-
-  it("auto-fills address fields from KvK response", () => {
-    expect(src).toContain('updateCompanyField("street", data.street, false)');
-    expect(src).toContain('updateCompanyField("postalCode", data.postalCode, false)');
-    expect(src).toContain('updateCompanyField("city", data.city, false)');
-  });
-
-  it("has address form fields (street, postalCode, city)", () => {
-    expect(src).toContain('id="co-street"');
-    expect(src).toContain('id="co-postal"');
-    expect(src).toContain('id="co-city"');
-  });
-
-  it("sends address fields in payment request", () => {
-    expect(src).toContain("body.street = companyFields.street");
-    expect(src).toContain("body.postalCode = companyFields.postalCode");
-    expect(src).toContain("body.city = companyFields.city");
-  });
-});
-
-// ── 16d. KvK lookup API route ──
-
-describe("KvK lookup API route /api/kvk/lookup", () => {
-  const src = readFile("src/app/api/kvk/lookup/route.ts");
-
-  it("exports POST handler", () => {
-    expect(src).toContain("export async function POST");
-  });
-
-  it("requires authentication", () => {
-    expect(src).toContain("Unauthorized");
-    expect(src).toContain("supabase.auth.getUser");
-  });
-
-  it("accepts { kvk } body field", () => {
-    expect(src).toContain("body.kvk");
-  });
-
-  it("validates 8-digit format", () => {
-    expect(src).toContain("kvkRaw.length !== 8");
-    expect(src).toContain("KvK number must be 8 digits");
-  });
-
-  it("returns normalized response with name, street, postalCode, city, country", () => {
-    expect(src).toContain("name: result.companyName");
-    expect(src).toContain("street: result.street");
-    expect(src).toContain("postalCode: result.postalCode");
-    expect(src).toContain("city: result.city");
-    expect(src).toContain('country: "NL"');
-  });
-
-  it("returns { found: false } when not found", () => {
-    expect(src).toContain("{ found: false }");
-  });
-
-  it("calls lookupKvk from lib", () => {
-    expect(src).toContain("lookupKvk(kvkRaw)");
-  });
-});
-
-// ── 16e. KvK lookup lib utility ──
-
-describe("KvK lookup lib utility", () => {
-  const src = readFile("src/lib/company/kvkLookup.ts");
-
-  it("calls KvK basisprofielen API", () => {
-    expect(src).toContain("https://api.kvk.nl/api/v1/basisprofielen/");
-  });
-
-  it("requires KVK_API_KEY env var", () => {
-    expect(src).toContain("KVK_API_KEY");
-  });
-
-  it("validates 8-digit format", () => {
-    expect(src).toContain("cleaned.length !== 8");
-  });
-
-  it("returns street (not address) in KvkResult", () => {
-    expect(src).toContain("street?: string");
-    expect(src).toContain("street: address?.street");
-  });
-
-  it("extracts address from embedded hoofdvestiging", () => {
-    expect(src).toContain("hoofdvestiging");
-    expect(src).toContain("bezoekadres");
-  });
-
-  it("has 8-second timeout", () => {
-    expect(src).toContain("8000");
-  });
-
-  it("handles 404 as not found", () => {
-    expect(src).toContain("response.status === 404");
-    expect(src).toContain("found: false");
   });
 });
 
