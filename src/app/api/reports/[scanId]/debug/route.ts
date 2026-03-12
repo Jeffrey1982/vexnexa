@@ -64,13 +64,34 @@ export async function GET(
     );
     steps.push(`7-transform-ok domain=${reportData.domain}`);
 
+    const scoreDebug = {
+      "scan.score (DB)": scan.score,
+      "scan.impactCritical": scan.impactCritical,
+      "scan.impactSerious": scan.impactSerious,
+      "scan.impactModerate": scan.impactModerate,
+      "scan.impactMinor": scan.impactMinor,
+      "scan.issues": scan.issues,
+      "scan.wcagAACompliance": (scan as Record<string, unknown>).wcagAACompliance,
+      "reportData.score": reportData.score,
+      "reportData.healthScore.value": reportData.healthScore.value,
+      "reportData.healthScore.grade": reportData.healthScore.grade,
+      "reportData.healthScore.label": reportData.healthScore.label,
+      "reportData.healthScore.weightedPenalty": reportData.healthScore.weightedPenalty,
+      "reportData.healthScore.normalizedPenalty": reportData.healthScore.normalizedPenalty,
+      "reportData.compliancePercentage": reportData.compliancePercentage,
+      "reportData.riskLevel": reportData.riskLevel,
+      "reportData.maturityLevel": reportData.maturityLevel,
+      "DB score === report score": scan.score === reportData.score,
+      "DB score === healthScore.value": scan.score === reportData.healthScore.value,
+    };
+
     const { renderReportHTML } = await import("@/lib/report");
     steps.push("8-import-render-ok");
 
     const html = renderReportHTML(reportData);
     steps.push(`9-render-ok length=${html.length}`);
 
-    return NextResponse.json({ steps, ok: true, htmlLength: html.length });
+    return NextResponse.json({ steps, ok: true, htmlLength: html.length, scoreDebug });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     const stack = error instanceof Error ? error.stack : "";

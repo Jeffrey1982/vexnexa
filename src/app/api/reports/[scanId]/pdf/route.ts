@@ -76,6 +76,15 @@ export async function GET(
       resolved.reportStyle
     );
 
+    console.log("[reports/pdf] SCORE DEBUG:", {
+      "scan.score (DB)": scan.score,
+      "reportData.score": reportData.score,
+      "reportData.healthScore.value": reportData.healthScore.value,
+      "reportData.healthScore.grade": reportData.healthScore.grade,
+      "reportData.compliancePercentage": reportData.compliancePercentage,
+      "reportData.riskLevel": reportData.riskLevel,
+    });
+
     const html: string = renderReportHTML(reportData);
 
     return new NextResponse(html, {

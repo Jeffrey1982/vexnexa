@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
 import { apiLimiter, authLimiter } from '@/lib/rate-limit'
 
 export async function middleware(request: NextRequest) {
@@ -62,7 +63,39 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const response = NextResponse.next()
+  // ── Supabase session refresh ──
+  // Required so that session cookies set by /auth/callback (server-side)
+  // are visible to the browser client on the next page load (e.g. /auth/reset-password).
+  let response = NextResponse.next({
+    request: { headers: request.headers },
+  })
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (supabaseUrl && supabaseAnonKey) {
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
+          response = NextResponse.next({
+            request: { headers: request.headers },
+          })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          )
+        },
+      },
+    })
+
+    // This refreshes the session if expired and sets updated cookies
+    await supabase.auth.getUser()
+  }
 
   // Prevent indexing of ALL API routes
   if (pathname.startsWith('/api/')) {
