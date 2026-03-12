@@ -93,15 +93,14 @@ function getReport(overrides?: Parameters<typeof makeScan>[0]): ReportData {
    ═══════════════════════════════════════════════════════════ */
 
 describe("Health Score — exponential decay model", () => {
-  it("uses exponential decay: 100 * exp(-0.05 * normalizedPenalty)", () => {
+  it("uses canonical DB score (from scoreFromAxe) as health score value", () => {
     const report = getReport();
+    // scan.score defaults to 65 in makeScan → healthScore.value must equal it
+    expect(report.healthScore.value).toBe(65);
+    // Penalty fields are back-computed from breakdown for display only
     // weightedPenalty = 2*10 + 3*6 + 1*3 + 1*1 = 42, pages=1
-    // normalizedPenalty = 42/1 = 42
-    // score = round(100 * exp(-0.05 * 42)) = round(100 * 0.1225) = 12
     expect(report.healthScore.weightedPenalty).toBe(42);
     expect(report.healthScore.normalizedPenalty).toBe(42);
-    const expected = Math.round(100 * Math.exp(-0.05 * 42));
-    expect(report.healthScore.value).toBe(expected);
   });
 
   it("returns 100 for zero issues", () => {
@@ -147,7 +146,8 @@ describe("Health Score — exponential decay model", () => {
   it("is monotonic: more issues → lower or equal score", () => {
     const scores: number[] = [];
     for (let c = 0; c <= 10; c++) {
-      const r = getReport({ impactCritical: c, impactSerious: 0, impactModerate: 0, impactMinor: 0, issues: c });
+      // Pass decreasing canonical scores to simulate increasing violations
+      const r = getReport({ score: 100 - c * 10, impactCritical: c, impactSerious: 0, impactModerate: 0, impactMinor: 0, issues: c });
       scores.push(r.healthScore.value);
     }
     for (let i = 1; i < scores.length; i++) {
@@ -387,7 +387,7 @@ describe("HTML export — golden-file regression", () => {
     expect(html).not.toMatch(/0\.05/);
     expect(html).not.toMatch(/100\s*[×x]\s*exp/i);
     // Microcopy should be present instead
-    expect(html).toContain("derived from the number and severity");
+    expect(html).toContain("reflects the number and severity");
   });
 
   it("contains coverage note", () => {
@@ -874,6 +874,7 @@ describe("Risk normalization — canonical scale", () => {
 
   it("zero issues → Low risk", () => {
     const r = getReport({
+      score: 100,
       impactCritical: 0, impactSerious: 0, impactModerate: 0, impactMinor: 0,
       issues: 0, violations: [],
     });
@@ -882,6 +883,7 @@ describe("Risk normalization — canonical scale", () => {
 
   it("many critical issues → Critical risk", () => {
     const r = getReport({
+      score: 10,
       impactCritical: 50, impactSerious: 50, impactModerate: 50, impactMinor: 50,
       issues: 200,
     });

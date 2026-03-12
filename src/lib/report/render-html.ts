@@ -388,7 +388,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <div class="ehb-meta"><span class="ehb-grade">Grade ${hs.grade}</span><span class="ehb-label">${hs.label}</span></div>
     </div>
     <div class="exec-health-detail">
-      <p>The Health Score is derived from the number and severity of detected issues, normalized by pages analyzed. A higher score indicates fewer and less severe accessibility barriers.</p>
+      <p>The Accessibility Health Score reflects the number and severity of detected issues. This is the same score shown on your dashboard. A higher score indicates fewer and less severe accessibility barriers. Note: a high health score does not guarantee full WCAG compliance — critical violations can exist even at moderate scores.</p>
     </div>
   </div>
   <div class="exec-cards">

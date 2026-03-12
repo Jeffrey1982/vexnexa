@@ -206,6 +206,46 @@ function computeHealthScore(breakdown: IssueBreakdown, pagesAnalyzed: number = 1
 }
 
 /**
+ * Build a HealthScore from the canonical DB-persisted score (from scoreFromAxe).
+ *
+ * This ensures dashboard and exports always show the same number.
+ * The grade/label are derived from the canonical score value.
+ * The weightedPenalty and normalizedPenalty are back-computed from the breakdown
+ * for informational display only — they don't influence the score itself.
+ */
+function buildHealthScoreFromCanonical(
+  canonicalScore: number,
+  breakdown: IssueBreakdown,
+  pagesAnalyzed: number = 1
+): HealthScore {
+  const value: number = Math.round(Math.min(100, Math.max(0, canonicalScore)));
+
+  let grade: string;
+  if (value >= 90) grade = "A";
+  else if (value >= 80) grade = "B";
+  else if (value >= 70) grade = "C";
+  else if (value >= 50) grade = "D";
+  else grade = "F";
+
+  let label: string;
+  if (value >= 90) label = "Excellent";
+  else if (value >= 80) label = "Good";
+  else if (value >= 70) label = "Fair";
+  else if (value >= 50) label = "Needs Work";
+  else label = "Poor";
+
+  // Back-compute penalty fields from breakdown for informational display
+  const weightedPenalty: number =
+    breakdown.critical * SEVERITY_WEIGHTS.critical +
+    breakdown.serious * SEVERITY_WEIGHTS.serious +
+    breakdown.moderate * SEVERITY_WEIGHTS.moderate +
+    breakdown.minor * SEVERITY_WEIGHTS.minor;
+  const normalizedPenalty: number = weightedPenalty / Math.max(1, pagesAnalyzed);
+
+  return { value, grade, label, weightedPenalty, normalizedPenalty };
+}
+
+/**
  * Known WCAG 2.2 success criteria mapped from axe-core tags.
  * Each entry: tag prefix → { criterion display name, level }
  */
@@ -398,9 +438,12 @@ export function transformScanToReport(
     minor: scan.impactMinor ?? 0,
   };
 
-  // Canonical health score — single source of truth for the entire report
+  // Canonical health score — use the DB-persisted score (from scoreFromAxe)
+  // so dashboard and exports always display the same number.
   const pagesScanned = 1;
-  const healthScore = computeHealthScore(breakdown, pagesScanned);
+  const healthScore: HealthScore = scan.score != null
+    ? buildHealthScoreFromCanonical(scan.score, breakdown, pagesScanned)
+    : computeHealthScore(breakdown, pagesScanned);
 
   const riskLevel: RiskLevel = determineRiskLevel(healthScore.value, breakdown);
   const compliancePercentage: number = scan.wcagAACompliance ?? Math.round(healthScore.value * 0.95);
