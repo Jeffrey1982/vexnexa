@@ -12,9 +12,9 @@ The toggle is display-only on the client; the server is the single source of tru
 
 All plan prices in `src/lib/pricing.ts` (`BASE_PRICES`, `ANNUAL_PRICES`, add-on prices) are **inclusive of NL 21% VAT**.
 
-- Starter: €24.99/mo (gross)
-- Pro: €59.99/mo (gross)
-- Business: €129/mo (gross)
+- Starter: €14.99/mo (gross)
+- Pro: €34.99/mo (gross)
+- Business: €99.99/mo (gross)
 - Enterprise: €299/mo (gross)
 
 These values are **never changed** by the toggle. The toggle only affects how they are displayed.
@@ -78,8 +78,8 @@ When the user clicks **"Verder naar betaling"**:
 3. **Upsert billing profile** with company fields
 4. **Compute price breakdown** (Approach B):
    ```
-   planGross = calculatePrice(plan, billingCycle)     // e.g. €24.99
-   netBase   = grossToNet(planGross, 0.21)            // e.g. €20.65
+   planGross = calculatePrice(plan, billingCycle)     // e.g. €14.99
+   netBase   = grossToNet(planGross, 0.21)            // e.g. €12.39
    taxDecision = computeTaxDecision(country, type, vatId)
    breakdown = calculateTaxBreakdown(netBase, taxDecision)
    totalToCharge = breakdown.gross                     // net + country tax

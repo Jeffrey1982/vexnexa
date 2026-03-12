@@ -1,7 +1,7 @@
 export const PRICES = {
-  STARTER:    { amount: "24.99",  currency: "EUR", interval: "1 month" },
-  PRO:        { amount: "59.99",  currency: "EUR", interval: "1 month" },
-  BUSINESS:   { amount: "129.00", currency: "EUR", interval: "1 month" },
+  STARTER:    { amount: "14.99",  currency: "EUR", interval: "1 month" },
+  PRO:        { amount: "34.99",  currency: "EUR", interval: "1 month" },
+  BUSINESS:   { amount: "99.99",  currency: "EUR", interval: "1 month" },
   ENTERPRISE: { amount: "299.00", currency: "EUR", interval: "1 month" },
 } as const
 

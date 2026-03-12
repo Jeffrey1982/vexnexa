@@ -37,9 +37,9 @@ const PLAN_RANK: Record<PlanType, number> = {
 
 const PLAN_LABELS: Record<SelectablePlan, string> = {
   TRIAL: 'Trial',
-  STARTER: 'Starter — €24.99/mo',
-  PRO: 'Pro — €59.99/mo',
-  BUSINESS: 'Business — €129/mo',
+  STARTER: 'Starter — €14,99/mo',
+  PRO: 'Pro — €34,99/mo',
+  BUSINESS: 'Business — €99,99/mo',
 };
 
 interface ChangePlanDialogProps {

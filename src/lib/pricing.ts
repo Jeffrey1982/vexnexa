@@ -18,19 +18,23 @@ export interface PlanPrice {
   };
 }
 
-/* ─── Base monthly prices (EUR) ─── */
+/* ─── VAT configuration ─── */
+export const VAT_RATE = 0.21;
+export const VAT_RATE_PERCENT = 21;
+
+/* ─── Base monthly prices (EUR, incl. 21% VAT) ─── */
 export const BASE_PRICES: Record<PlanKey, number> = {
-  STARTER: 24.99,
-  PRO: 59.99,
-  BUSINESS: 129.00,
+  STARTER: 14.99,
+  PRO: 34.99,
+  BUSINESS: 99.99,
   ENTERPRISE: 299.00,
 } as const;
 
-/* ─── Fixed annual prices ─── */
+/* ─── Fixed annual prices (EUR, incl. 21% VAT) ─── */
 export const ANNUAL_PRICES: Record<PlanKey, number> = {
-  STARTER: 249.00,   // ~17% discount
-  PRO: 599.00,       // ~17% discount
-  BUSINESS: 1299.00, // ~16% discount
+  STARTER: 149.99,   // ~17% discount
+  PRO: 349.99,       // ~17% discount
+  BUSINESS: 999.99,  // ~17% discount
   ENTERPRISE: 0,     // Custom billing
 } as const;
 
@@ -211,9 +215,9 @@ export function calculateTotalMonthly(opts: {
  * Legacy compatibility — keep old PRICES export for existing code
  */
 export const PRICES = {
-  STARTER: { amount: "24.99", currency: "EUR", interval: "1 month" },
-  PRO: { amount: "59.99", currency: "EUR", interval: "1 month" },
-  BUSINESS: { amount: "129.00", currency: "EUR", interval: "1 month" },
+  STARTER: { amount: "14.99", currency: "EUR", interval: "1 month" },
+  PRO: { amount: "34.99", currency: "EUR", interval: "1 month" },
+  BUSINESS: { amount: "99.99", currency: "EUR", interval: "1 month" },
   ENTERPRISE: { amount: "299.00", currency: "EUR", interval: "1 month" },
 } as const;
 

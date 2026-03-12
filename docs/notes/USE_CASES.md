@@ -136,7 +136,7 @@ When client sites exceed plan limits:
 
 ## Pricing for Agencies
 
-### Recommended: Pro Plan - €49.99/month
+### Recommended: Pro Plan - €34.99/month
 **Ideal for agencies with 1-3 regular clients:**
 - 3 sites (one per active client)
 - 5,000 pages/month
@@ -145,7 +145,7 @@ When client sites exceed plan limits:
 - Scheduled scans (coming soon)
 - Priority support
 
-### For Growing Agencies: Business Plan - €99.99/month
+### For Growing Agencies: Business Plan - €99,99/month
 **Best for agencies with 4-10 clients:**
 - 10 sites
 - 25,000 pages/month
@@ -200,7 +200,7 @@ Mid-sized digital agency with 5 clients, 8 active websites, team of 4 developers
 - **Time saved**: ~20 hours/month
 - **Client satisfaction**: Visible accessibility scores in retainer reports
 - **New revenue**: Accessibility audit package for existing clients
-- **Cost**: €49.99/month (less than 1 billable hour)
+- **Cost**: €34.99/month (less than 1 billable hour)
 
 ---
 
@@ -394,7 +394,7 @@ Every violation includes:
 
 ## Pricing for SaaS Teams
 
-### Recommended: Pro Plan - €49.99/month
+### Recommended: Pro Plan - €34.99/month
 **Ideal for startups and small SaaS teams:**
 - 3 sites (production, staging, dev)
 - 5,000 pages/month (enough for most SaaS apps)
@@ -402,7 +402,7 @@ Every violation includes:
 - Scheduled scans (coming soon)
 - API access (coming soon)
 
-### For Larger Teams: Business Plan - €99.99/month
+### For Larger Teams: Business Plan - €99,99/month
 **Best for scaling SaaS companies:**
 - 10 sites (multiple products, environments, locales)
 - 25,000 pages/month
@@ -415,7 +415,7 @@ Transparent costs for high-traffic products:
 - Extra pages: €0.002/page
 - Extra environments: €2.00/site/month
 
-**Example:** Large SaaS with 30,000 pages/month on Business plan? Pay €10/month for 5,000 extra pages. Still €59.99 total. Compare to enterprise tools at €500-2000/month.
+**Example:** Large SaaS with 30,000 pages/month on Business plan? Pay €10/month for 5,000 extra pages. Compare to enterprise tools at €500-2000/month.
 
 ---
 
@@ -482,7 +482,7 @@ B2B SaaS product with 500 pages, 8-person engineering team, weekly releases.
 - **Violations reduced**: 45 → 12 over 3 months
 - **User complaints**: Down 70%
 - **Confidence**: Ship faster knowing accessibility is tracked
-- **Cost**: €49.99/month vs €0 budget for accessibility before
+- **Cost**: €34.99/month vs €0 budget for accessibility before
 
 ---
 
@@ -635,13 +635,13 @@ You're building sites for small businesses, startups, and individuals. They ask:
 - Learning WCAG
 
 ### Affordable Paid Plans
-**Starter: €19.99/month**
+**Starter: €14,99/month**
 - 1 active client site
 - 500 pages/month
 - PDF reports for client deliverables
 - Professional credibility
 
-**Pro: €49.99/month** (if managing multiple clients)
+**Pro: €34,99/month** (if managing multiple clients)
 - 3 sites
 - 5,000 pages/month
 - PDF & Word export
@@ -698,12 +698,12 @@ You're building sites for small businesses, startups, and individuals. They ask:
 [Start Free →](/scan)
 
 ### Upgrade When You Need It
-**Starter Plan: €19.99/month**
+**Starter Plan: €14,99/month**
 - When you have a client who needs regular scans
 - When you need PDF reports
 - When free tier limits are too small
 
-**Pro Plan: €49.99/month**
+**Pro Plan: €34,99/month**
 - When you're managing 2-3 active clients
 - When clients want scheduled monitoring
 - When you need team collaboration (bring in designers/partners)

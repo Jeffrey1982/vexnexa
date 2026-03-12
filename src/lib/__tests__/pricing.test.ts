@@ -11,16 +11,16 @@ import {
 describe('pricing', () => {
   describe('calculatePrice', () => {
     it('returns monthly base price for monthly cycle', () => {
-      expect(calculatePrice('STARTER', 'monthly')).toBe(24.99)
-      expect(calculatePrice('PRO', 'monthly')).toBe(59.99)
-      expect(calculatePrice('BUSINESS', 'monthly')).toBe(129.00)
+      expect(calculatePrice('STARTER', 'monthly')).toBe(14.99)
+      expect(calculatePrice('PRO', 'monthly')).toBe(34.99)
+      expect(calculatePrice('BUSINESS', 'monthly')).toBe(99.99)
       expect(calculatePrice('ENTERPRISE', 'monthly')).toBe(299.00)
     })
 
     it('returns annual price for yearly cycle', () => {
-      expect(calculatePrice('STARTER', 'yearly')).toBe(249.00)
-      expect(calculatePrice('PRO', 'yearly')).toBe(599.00)
-      expect(calculatePrice('BUSINESS', 'yearly')).toBe(1299.00)
+      expect(calculatePrice('STARTER', 'yearly')).toBe(149.99)
+      expect(calculatePrice('PRO', 'yearly')).toBe(349.99)
+      expect(calculatePrice('BUSINESS', 'yearly')).toBe(999.99)
       expect(calculatePrice('ENTERPRISE', 'yearly')).toBe(0) // custom
     })
   })
@@ -55,9 +55,9 @@ describe('pricing', () => {
   describe('getPlanPricing', () => {
     it('returns complete pricing object for Starter', () => {
       const pricing = getPlanPricing('STARTER')
-      expect(pricing.monthly).toBe(24.99)
-      expect(pricing.yearly.total).toBe(249.00)
-      expect(pricing.yearly.perMonth).toBeCloseTo(249 / 12, 2)
+      expect(pricing.monthly).toBe(14.99)
+      expect(pricing.yearly.total).toBe(149.99)
+      expect(pricing.yearly.perMonth).toBeCloseTo(149.99 / 12, 2)
       expect(pricing.yearly.discount).toBeGreaterThan(0)
     })
 
@@ -77,8 +77,8 @@ describe('pricing', () => {
     })
 
     it('formats decimal amounts', () => {
-      const result = formatEuro(24.99)
-      expect(result).toContain('24,99') // nl-NL locale uses comma
+      const result = formatEuro(14.99)
+      expect(result).toContain('14,99') // nl-NL locale uses comma
     })
 
     it('formats zero', () => {

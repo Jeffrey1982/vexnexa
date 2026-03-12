@@ -25,24 +25,24 @@ describe("grossToNet()", () => {
     expect(grossToNet(9.99, 0.21)).toBe(8.26);
   });
 
-  it("€24.99 incl 21% → €20.65 excl", () => {
-    expect(grossToNet(24.99, 0.21)).toBe(20.65);
+  it("€14.99 incl 21% → €12.39 excl", () => {
+    expect(grossToNet(14.99, 0.21)).toBe(12.39);
   });
 
-  it("€59.99 incl 21% → €49.58 excl", () => {
-    expect(grossToNet(59.99, 0.21)).toBe(49.58);
+  it("€34.99 incl 21% → €28.92 excl", () => {
+    expect(grossToNet(34.99, 0.21)).toBe(28.92);
   });
 
-  it("€129.00 incl 21% → €106.61 excl", () => {
-    expect(grossToNet(129.0, 0.21)).toBe(106.61);
+  it("€99.99 incl 21% → €82.64 excl", () => {
+    expect(grossToNet(99.99, 0.21)).toBe(82.64);
   });
 
-  it("€249.00 incl 21% → €205.79 excl", () => {
-    expect(grossToNet(249.0, 0.21)).toBe(205.79);
+  it("€149.99 incl 21% → €123.96 excl", () => {
+    expect(grossToNet(149.99, 0.21)).toBe(123.96);
   });
 
-  it("€599.00 incl 21% → €495.04 excl", () => {
-    expect(grossToNet(599.0, 0.21)).toBe(495.04);
+  it("€349.99 incl 21% → €289.25 excl", () => {
+    expect(grossToNet(349.99, 0.21)).toBe(289.25);
   });
 
   it("€0 → €0", () => {
@@ -111,8 +111,8 @@ describe("vatFromGross()", () => {
     expect(vatFromGross(121, 0.21)).toBe(21);
   });
 
-  it("€24.99 at 21% → €4.34 VAT", () => {
-    expect(vatFromGross(24.99, 0.21)).toBe(4.34);
+  it("€14.99 at 21% → €2.60 VAT", () => {
+    expect(vatFromGross(14.99, 0.21)).toBe(2.60);
   });
 
   it("€100 at 0% → €0 VAT", () => {
@@ -124,8 +124,8 @@ describe("vatFromGross()", () => {
 
 describe("formatMoney()", () => {
   it("formats EUR with 2 decimals", () => {
-    const result = formatMoney(24.99);
-    expect(result).toContain("24,99");
+    const result = formatMoney(14.99);
+    expect(result).toContain("14,99");
     expect(result).toContain("€");
   });
 
@@ -327,7 +327,7 @@ describe("Pricing pages include PriceModeToggle", () => {
 // ── 11. Roundtrip: grossToNet → netToGross ──
 
 describe("Roundtrip: grossToNet → netToGross", () => {
-  const testPrices = [9.99, 24.99, 59.99, 129.0, 249.0, 599.0, 1299.0];
+  const testPrices = [9.99, 14.99, 34.99, 99.99, 149.99, 349.99, 999.99];
 
   testPrices.forEach((gross) => {
     it(`roundtrip €${gross} at 21%: gross→net→gross ≈ original`, () => {
