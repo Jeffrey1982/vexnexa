@@ -37,6 +37,31 @@ const nextConfig = {
     return config;
   },
   // CSP headers are set in middleware.ts to avoid duplicate/conflicting policies
+  async redirects() {
+    return [
+      // Common variants → canonical SEO landing page slugs
+      {
+        source: '/white-label-accessibility-report',
+        destination: '/white-label-accessibility-reports',
+        permanent: true,
+      },
+      {
+        source: '/accessibility-monitoring-for-agencies',
+        destination: '/accessibility-monitoring-agencies',
+        permanent: true,
+      },
+      {
+        source: '/wcag-compliance-reports',
+        destination: '/wcag-compliance-report',
+        permanent: true,
+      },
+      {
+        source: '/accessibility-checker',
+        destination: '/website-accessibility-checker',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 module.exports = withNextIntl(nextConfig);

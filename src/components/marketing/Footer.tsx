@@ -162,7 +162,7 @@ export function Footer({ className }: FooterProps) {
 
           {/* Navigation Links - Better organized */}
           <div className="lg:col-span-2">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {/* Product */}
               <div className="space-y-4">
                 <h3 className="font-semibold text-lg">{t('product.title')}</h3>
@@ -178,6 +178,28 @@ export function Footer({ className }: FooterProps) {
                   </Link>
                   <Link href="/changelog" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('product.changelog')}
+                  </Link>
+                </div>
+              </div>
+
+              {/* Solutions */}
+              <div className="space-y-4">
+                <h3 className="font-semibold text-lg">Solutions</h3>
+                <div className="flex flex-col space-y-3 text-sm">
+                  <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
+                    WCAG Scanner
+                  </Link>
+                  <Link href="/website-accessibility-checker" className="text-muted-foreground hover:text-primary transition-colors">
+                    Accessibility Checker
+                  </Link>
+                  <Link href="/wcag-compliance-report" className="text-muted-foreground hover:text-primary transition-colors">
+                    Compliance Reports
+                  </Link>
+                  <Link href="/white-label-accessibility-reports" className="text-muted-foreground hover:text-primary transition-colors">
+                    White-Label Reports
+                  </Link>
+                  <Link href="/accessibility-monitoring-agencies" className="text-muted-foreground hover:text-primary transition-colors">
+                    Agency Monitoring
                   </Link>
                 </div>
               </div>

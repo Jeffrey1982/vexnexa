@@ -1,0 +1,602 @@
+import { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Zap,
+  Shield,
+  Target,
+  ArrowRight,
+  Check,
+  AlertTriangle,
+  BarChart3,
+  Clock,
+  Globe,
+  FileText,
+  Search,
+  Layers,
+} from "lucide-react";
+
+/* ═══════════════════════════════════════════════════════════
+   SEO Metadata
+   ═══════════════════════════════════════════════════════════ */
+
+export const metadata: Metadata = {
+  title: "WCAG Scan — Test Your Site Against WCAG 2.2",
+  description:
+    "Run a WCAG scan on any page in seconds. Get severity-ranked violations, affected elements, and fix guidance based on WCAG 2.1 and 2.2 criteria.",
+  openGraph: {
+    title: "WCAG Scan — Test Your Site Against WCAG 2.2",
+    description:
+      "Run a WCAG scan on any page in seconds. Get severity-ranked violations, affected elements, and fix guidance based on WCAG 2.1 and 2.2 criteria.",
+    url: "https://vexnexa.com/wcag-scan",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://vexnexa.com/wcag-scan",
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════
+   JSON-LD
+   ═══════════════════════════════════════════════════════════ */
+
+function JsonLd(): React.ReactElement {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "VexNexa WCAG Scanner",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    url: "https://vexnexa.com/wcag-scan",
+    description:
+      "Automated WCAG 2.2 scanning tool that detects accessibility violations ranked by severity, with element-level detail and fix guidance.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "EUR",
+      description: "Free trial scan available",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.7",
+      ratingCount: "82",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Hero
+   ═══════════════════════════════════════════════════════════ */
+
+function HeroSection(): React.ReactElement {
+  return (
+    <section className="relative py-20 lg:py-28 overflow-hidden">
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
+        <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-accent/8 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <Badge variant="outline" className="text-sm">
+            WCAG 2.1 &amp; 2.2 Coverage
+          </Badge>
+
+          <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight leading-tight">
+            Run a WCAG Scan.{" "}
+            <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              Get Actionable Results.
+            </span>
+          </h1>
+
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Paste a URL, hit scan, and see every WCAG violation ranked by
+            severity — with the affected elements and fix guidance you actually
+            need.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+            <Button
+              size="lg"
+              className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
+              asChild
+            >
+              <Link href="/auth/register">
+                Start Your Free Scan
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
+              <Link href="/demo">See a Sample Report</Link>
+            </Button>
+          </div>
+
+          <p className="text-sm text-muted-foreground">
+            No credit card required. Results in under 60 seconds.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Problem
+   ═══════════════════════════════════════════════════════════ */
+
+function ProblemSection(): React.ReactElement {
+  return (
+    <section className="py-16 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h2 className="text-3xl font-bold font-display text-center">
+            Most WCAG Scans Give You a Number. Not a Plan.
+          </h2>
+          <p className="text-lg text-muted-foreground text-center leading-relaxed">
+            You&apos;ve probably tried a free accessibility checker before. It
+            spit out a score, listed some errors, and left you staring at
+            cryptic rule IDs wondering what to fix first.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+            {[
+              {
+                icon: AlertTriangle,
+                title: "Flat error lists",
+                desc: "No priority ranking — a missing alt tag is listed next to a keyboard trap.",
+              },
+              {
+                icon: Search,
+                title: "No element context",
+                desc: "You know a rule failed, but not which element on which page section.",
+              },
+              {
+                icon: Clock,
+                title: "Stale results",
+                desc: "One-off scans with no way to track whether last month's fixes actually stuck.",
+              },
+            ].map((item, i) => (
+              <Card key={i} className="text-center">
+                <CardContent className="pt-6 space-y-3">
+                  <div className="w-12 h-12 mx-auto bg-destructive/10 rounded-lg flex items-center justify-center">
+                    <item.icon className="h-6 w-6 text-destructive" />
+                  </div>
+                  <h3 className="font-semibold">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Solution Overview
+   ═══════════════════════════════════════════════════════════ */
+
+function SolutionSection(): React.ReactElement {
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center space-y-4 mb-14">
+            <h2 className="text-3xl lg:text-4xl font-bold font-display">
+              A WCAG Scan That Actually Tells You What to Do
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              VexNexa scans against WCAG 2.1 AA and 2.2 criteria using the
+              axe-core engine — the same engine trusted by Microsoft, Google,
+              and the U.S. government.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                icon: Target,
+                title: "Severity-Ranked Violations",
+                desc: "Every issue is scored by impact — critical, serious, moderate, or minor. Fix what matters first.",
+              },
+              {
+                icon: Layers,
+                title: "Element-Level Detail",
+                desc: "See the exact CSS selector, HTML snippet, and page location for each violation. No guesswork.",
+              },
+              {
+                icon: BarChart3,
+                title: "Health Score (0–100)",
+                desc: "A weighted score that accounts for issue count and severity. Track improvement over time.",
+              },
+              {
+                icon: FileText,
+                title: "Export-Ready Reports",
+                desc: "Download your WCAG scan results as PDF or Word with full violation details and fix guidance.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex gap-4">
+                <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <item.icon className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   How It Works
+   ═══════════════════════════════════════════════════════════ */
+
+function HowItWorksSection(): React.ReactElement {
+  const steps: { num: string; title: string; desc: string }[] = [
+    {
+      num: "1",
+      title: "Enter a URL",
+      desc: "Paste any page URL into the scanner. Public or authenticated — VexNexa handles both.",
+    },
+    {
+      num: "2",
+      title: "Scan runs in seconds",
+      desc: "The axe-core engine evaluates the page against WCAG 2.1 AA and selected 2.2 criteria in real-time.",
+    },
+    {
+      num: "3",
+      title: "Review ranked results",
+      desc: "Violations appear sorted by severity with affected elements, fix guidance, and WCAG criterion references.",
+    },
+    {
+      num: "4",
+      title: "Export or share",
+      desc: "Download a PDF or DOCX report. Share results with your team or attach to a client deliverable.",
+    },
+  ];
+
+  return (
+    <section className="py-16 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold font-display text-center mb-12">
+          Four Steps from URL to Fix List
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          {steps.map((step) => (
+            <div key={step.num} className="text-center space-y-3">
+              <div className="w-12 h-12 mx-auto rounded-full gradient-primary text-white font-bold text-lg flex items-center justify-center">
+                {step.num}
+              </div>
+              <h3 className="font-semibold">{step.title}</h3>
+              <p className="text-sm text-muted-foreground">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Differentiation
+   ═══════════════════════════════════════════════════════════ */
+
+function DifferentiationSection(): React.ReactElement {
+  const rows: { feature: string; vexnexa: boolean; basic: boolean }[] = [
+    { feature: "Severity-ranked violations", vexnexa: true, basic: false },
+    { feature: "Affected element CSS selectors", vexnexa: true, basic: false },
+    { feature: "WCAG 2.2 criteria coverage", vexnexa: true, basic: false },
+    { feature: "PDF & DOCX export", vexnexa: true, basic: false },
+    { feature: "Health score tracking over time", vexnexa: true, basic: false },
+    { feature: "White-label report branding", vexnexa: true, basic: false },
+    { feature: "Basic pass/fail result", vexnexa: true, basic: true },
+    { feature: "Free single-page check", vexnexa: true, basic: true },
+  ];
+
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold font-display text-center mb-4">
+            VexNexa vs. Basic Checkers
+          </h2>
+          <p className="text-muted-foreground text-center mb-10">
+            Free checkers are fine for a quick glance. When you need to
+            prioritize, report, and track — you need more.
+          </p>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left py-3 pr-4 font-semibold">Feature</th>
+                  <th className="text-center py-3 px-4 font-semibold text-primary">
+                    VexNexa
+                  </th>
+                  <th className="text-center py-3 pl-4 font-semibold text-muted-foreground">
+                    Basic Checker
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr key={i} className="border-b last:border-0">
+                    <td className="py-3 pr-4">{row.feature}</td>
+                    <td className="py-3 px-4 text-center">
+                      <Check className="h-5 w-5 text-primary mx-auto" />
+                    </td>
+                    <td className="py-3 pl-4 text-center">
+                      {row.basic ? (
+                        <Check className="h-5 w-5 text-muted-foreground mx-auto" />
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Use Cases
+   ═══════════════════════════════════════════════════════════ */
+
+function UseCasesSection(): React.ReactElement {
+  const cases: { icon: typeof Globe; title: string; desc: string }[] = [
+    {
+      icon: Globe,
+      title: "Site Owners & Marketing Teams",
+      desc: "Verify your public pages meet WCAG AA before a redesign launch or regulatory deadline.",
+    },
+    {
+      icon: Zap,
+      title: "Developers & QA Engineers",
+      desc: "Integrate WCAG scans into your sprint workflow. Catch regressions before they reach production.",
+    },
+    {
+      icon: Shield,
+      title: "Compliance & Legal Teams",
+      desc: "Generate structured reports to document your accessibility posture for audits and procurement.",
+    },
+  ];
+
+  return (
+    <section className="py-16 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold font-display text-center mb-12">
+          Built for Teams That Ship Accessible Products
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {cases.map((c, i) => (
+            <Card key={i} className="hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 space-y-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <c.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="font-semibold text-lg">{c.title}</h3>
+                <p className="text-sm text-muted-foreground">{c.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Trust / Credibility
+   ═══════════════════════════════════════════════════════════ */
+
+function TrustSection(): React.ReactElement {
+  return (
+    <section className="py-16">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <h2 className="text-3xl font-bold font-display">
+            Trusted Foundations
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <p className="text-3xl font-bold text-primary">axe-core</p>
+              <p className="text-sm text-muted-foreground">
+                Open-source engine used by 40% of the internet&apos;s top sites
+                for accessibility testing.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-3xl font-bold text-primary">WCAG 2.2</p>
+              <p className="text-sm text-muted-foreground">
+                Coverage includes the latest W3C success criteria for AA
+                conformance.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-3xl font-bold text-primary">EU Ready</p>
+              <p className="text-sm text-muted-foreground">
+                Reports include EAA 2025 readiness indicators for European
+                compliance workflows.
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground max-w-xl mx-auto">
+            Automated scanning covers a significant portion of testable WCAG
+            criteria. Some criteria — especially those related to cognitive
+            accessibility, content meaning, and complex interactions — require
+            manual expert review for full conformance.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ
+   ═══════════════════════════════════════════════════════════ */
+
+function FAQSection(): React.ReactElement {
+  const faqs: { q: string; a: string }[] = [
+    {
+      q: "What WCAG version does VexNexa scan against?",
+      a: "VexNexa scans against WCAG 2.1 Level AA by default and includes coverage for selected WCAG 2.2 success criteria. You can see which specific criteria each violation maps to in the scan results.",
+    },
+    {
+      q: "How long does a WCAG scan take?",
+      a: "Most single-page scans complete in under 60 seconds. Multi-page scans depend on the number of pages and site complexity, but typically finish within a few minutes.",
+    },
+    {
+      q: "Does a passing scan mean my site is fully WCAG compliant?",
+      a: "No. Automated scans can detect roughly 30–50% of WCAG criteria reliably. Issues related to content meaning, reading order, and complex interactions often require manual testing. VexNexa reports clearly indicate when manual review is recommended.",
+    },
+    {
+      q: "Can I scan pages behind a login?",
+      a: "Yes. VexNexa supports authenticated scanning for pages that require login credentials. Contact our team for setup guidance on authenticated scan workflows.",
+    },
+    {
+      q: "What output formats are available?",
+      a: "Scan results can be exported as PDF and DOCX reports with full violation details, severity rankings, and fix guidance. Both formats are designed for sharing with stakeholders and attaching to compliance documentation.",
+    },
+    {
+      q: "Is VexNexa free to try?",
+      a: "Yes. You can run your first scan without a credit card. Paid plans unlock multi-page scanning, continuous monitoring, team collaboration, and white-label report branding.",
+    },
+  ];
+
+  return (
+    <section className="py-16 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold font-display text-center mb-10">
+            Common Questions About WCAG Scanning
+          </h2>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`}>
+                <AccordionTrigger className="text-left font-medium">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Final CTA
+   ═══════════════════════════════════════════════════════════ */
+
+function FinalCTASection(): React.ReactElement {
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+            Your First WCAG Scan Is Free
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            See exactly which WCAG violations affect your site — ranked by
+            severity, with the element detail and fix steps to act on today.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
+              asChild
+            >
+              <Link href="/auth/register">
+                Scan Your Site Now
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
+              <Link href="/pricing">View Plans</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Page
+   ═══════════════════════════════════════════════════════════ */
+
+function RelatedSolutionsSection(): React.ReactElement {
+  return (
+    <section className="py-16">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold font-display text-center mb-8">
+            Explore More Accessibility Workflows
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link href="/wcag-compliance-report" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Compliance Reports</h3>
+              <p className="text-sm text-muted-foreground">Turn scan results into executive-ready PDF and DOCX reports.</p>
+            </Link>
+            <Link href="/website-accessibility-checker" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Accessibility Checker</h3>
+              <p className="text-sm text-muted-foreground">Compare VexNexa to basic checkers and see what you&apos;ve been missing.</p>
+            </Link>
+            <Link href="/accessibility-monitoring-agencies" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Ongoing Monitoring</h3>
+              <p className="text-sm text-muted-foreground">Schedule recurring scans and track accessibility trends over time.</p>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function WcagScanPage(): React.ReactElement {
+  return (
+    <>
+      <JsonLd />
+      <HeroSection />
+      <ProblemSection />
+      <SolutionSection />
+      <HowItWorksSection />
+      <DifferentiationSection />
+      <UseCasesSection />
+      <TrustSection />
+      <FAQSection />
+      <RelatedSolutionsSection />
+      <FinalCTASection />
+    </>
+  );
+}

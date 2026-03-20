@@ -37,6 +37,11 @@ export default function robots(): MetadataRoute.Robots {
           '/blog/*',
           '/changelog',
           '/legal/*',
+          '/wcag-scan',
+          '/website-accessibility-checker',
+          '/white-label-accessibility-reports',
+          '/accessibility-monitoring-agencies',
+          '/wcag-compliance-report',
         ],
       },
       {

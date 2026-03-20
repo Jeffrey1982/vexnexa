@@ -284,6 +284,76 @@ function CTABand() {
   );
 }
 
+// Solutions Section — links to SEO landing pages
+function SolutionsSection() {
+  const solutions: { href: string; title: string; desc: string; icon: typeof Target }[] = [
+    {
+      href: "/wcag-scan",
+      title: "WCAG Scanner",
+      desc: "Scan any page against WCAG 2.1 and 2.2 criteria. Severity-ranked violations with element-level detail.",
+      icon: Target,
+    },
+    {
+      href: "/website-accessibility-checker",
+      title: "Accessibility Checker",
+      desc: "Go beyond pass/fail. See exactly which issues are critical and which elements are affected.",
+      icon: Eye,
+    },
+    {
+      href: "/wcag-compliance-report",
+      title: "Compliance Reports",
+      desc: "Executive-ready PDF and DOCX reports with health scores, WCAG matrices, and fix priorities.",
+      icon: FileText,
+    },
+    {
+      href: "/white-label-accessibility-reports",
+      title: "White-Label Reports",
+      desc: "Deliver branded accessibility reports under your own logo. Built for agencies and consultants.",
+      icon: Gauge,
+    },
+    {
+      href: "/accessibility-monitoring-agencies",
+      title: "Agency Monitoring",
+      desc: "Track WCAG compliance across client sites continuously. Catch regressions before your clients do.",
+      icon: Bell,
+    },
+  ];
+
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+            Accessibility Tools for Every Workflow
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Whether you need a quick scan, ongoing monitoring, or client-ready reports — VexNexa has you covered.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {solutions.map((sol) => (
+            <Link key={sol.href} href={sol.href} className="group">
+              <Card className="h-full interactive-hover border-0 shadow-elegant bg-card/80 backdrop-blur-sm">
+                <CardContent className="p-6 space-y-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all">
+                    <sol.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold font-display group-hover:text-primary transition-colors">
+                    {sol.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {sol.desc}
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // Final CTA Section
 function FinalCTASection() {
   const t = useTranslations('home.finalCta');
@@ -390,6 +460,7 @@ export default function HomePage() {
       <ValuePillarsSection />
       <FeaturesSection />
       <CTABand />
+      <SolutionsSection />
       <FAQ items={faqItems} />
       <FinalCTASection />
     </>

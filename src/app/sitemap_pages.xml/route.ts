@@ -14,6 +14,11 @@ export async function GET() {
     { url: `${baseUrl}/contact`, priority: 0.7, changefreq: 'monthly' },
     { url: `${baseUrl}/blog`, priority: 0.8, changefreq: 'weekly' },
     { url: `${baseUrl}/changelog`, priority: 0.6, changefreq: 'weekly' },
+    { url: `${baseUrl}/wcag-scan`, priority: 0.8, changefreq: 'weekly' },
+    { url: `${baseUrl}/website-accessibility-checker`, priority: 0.8, changefreq: 'weekly' },
+    { url: `${baseUrl}/white-label-accessibility-reports`, priority: 0.8, changefreq: 'weekly' },
+    { url: `${baseUrl}/accessibility-monitoring-agencies`, priority: 0.8, changefreq: 'weekly' },
+    { url: `${baseUrl}/wcag-compliance-report`, priority: 0.8, changefreq: 'weekly' },
     { url: `${baseUrl}/legal/privacy`, priority: 0.3, changefreq: 'monthly' },
     { url: `${baseUrl}/legal/terms`, priority: 0.3, changefreq: 'monthly' },
   ]
