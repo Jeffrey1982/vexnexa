@@ -547,6 +547,193 @@ export async function reactivateUser(userId: string, reason?: string) {
   }
 }
 
+// ============================================
+// ADMIN: Update user settings (subscription, assurance, reporting)
+// ============================================
+
+export interface UpdateUserSettingsInput {
+  // Subscription
+  plan?: Plan;
+  subscriptionStatus?: string;
+  billingInterval?: string;
+  trialEndsAt?: string | null;
+
+  // Assurance
+  hasAssurance?: boolean;
+  assuranceTier?: 'BASIC' | 'PRO' | 'PUBLIC_SECTOR';
+
+  // Reporting
+  reportEmailEnabled?: boolean;
+  reportEmailFrequency?: string;
+  reportRecipientEmail?: string | null;
+  reportFormat?: string;
+  nextReportAt?: string | null;
+}
+
+const VALID_FREQUENCIES = ['weekly', 'biweekly', 'monthly'] as const;
+const VALID_FORMATS = ['pdf', 'docx', 'both'] as const;
+const VALID_STATUSES = ['active', 'canceled', 'past_due', 'inactive', 'trialing', 'suspended'] as const;
+const VALID_INTERVALS = ['monthly', 'yearly'] as const;
+const VALID_ASSURANCE_TIERS = ['BASIC', 'PRO', 'PUBLIC_SECTOR'] as const;
+
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+export async function updateUserSettings(userId: string, input: UpdateUserSettingsInput) {
+  const admin = await requireAdmin();
+
+  // ── Validation ──────────────────────────────────────
+  if (input.subscriptionStatus && !(VALID_STATUSES as readonly string[]).includes(input.subscriptionStatus)) {
+    throw new Error(`Invalid subscription status: ${input.subscriptionStatus}`);
+  }
+  if (input.billingInterval && !(VALID_INTERVALS as readonly string[]).includes(input.billingInterval)) {
+    throw new Error(`Invalid billing interval: ${input.billingInterval}`);
+  }
+  if (input.reportEmailFrequency && !(VALID_FREQUENCIES as readonly string[]).includes(input.reportEmailFrequency)) {
+    throw new Error(`Invalid report frequency: ${input.reportEmailFrequency}`);
+  }
+  if (input.reportFormat && !(VALID_FORMATS as readonly string[]).includes(input.reportFormat)) {
+    throw new Error(`Invalid report format: ${input.reportFormat}`);
+  }
+  if (input.reportRecipientEmail && !isValidEmail(input.reportRecipientEmail)) {
+    throw new Error('Invalid report recipient email address');
+  }
+  if (input.assuranceTier && !(VALID_ASSURANCE_TIERS as readonly string[]).includes(input.assuranceTier)) {
+    throw new Error(`Invalid assurance tier: ${input.assuranceTier}`);
+  }
+
+  // If report email is enabled, ensure there is a valid destination
+  if (input.reportEmailEnabled) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, reportRecipientEmail: true } });
+    if (!user) throw new Error('User not found');
+    const recipientEmail = input.reportRecipientEmail !== undefined ? input.reportRecipientEmail : user.reportRecipientEmail;
+    if (!recipientEmail && !user.email) {
+      throw new Error('Cannot enable report emails: no recipient email and no account email');
+    }
+  }
+
+  // ── Fetch current state for audit log ──────────────
+  const currentUser = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      plan: true,
+      subscriptionStatus: true,
+      billingInterval: true,
+      trialEndsAt: true,
+      hasAssurance: true,
+      reportEmailEnabled: true,
+      reportEmailFrequency: true,
+      reportRecipientEmail: true,
+      reportFormat: true,
+      nextReportAt: true,
+    },
+  });
+
+  if (!currentUser) throw new Error('User not found');
+
+  // ── Build update payload ───────────────────────────
+  const data: Record<string, unknown> = {};
+  const changes: Record<string, { old: unknown; new: unknown }> = {};
+
+  if (input.plan !== undefined && input.plan !== currentUser.plan) {
+    data.plan = input.plan;
+    changes.plan = { old: currentUser.plan, new: input.plan };
+    // Auto-set subscription status for TRIAL
+    if (input.plan === 'TRIAL' && !input.subscriptionStatus) {
+      data.subscriptionStatus = 'trialing';
+    }
+  }
+  if (input.subscriptionStatus !== undefined && input.subscriptionStatus !== currentUser.subscriptionStatus) {
+    data.subscriptionStatus = input.subscriptionStatus;
+    changes.subscriptionStatus = { old: currentUser.subscriptionStatus, new: input.subscriptionStatus };
+  }
+  if (input.billingInterval !== undefined && input.billingInterval !== currentUser.billingInterval) {
+    data.billingInterval = input.billingInterval;
+    changes.billingInterval = { old: currentUser.billingInterval, new: input.billingInterval };
+  }
+  if (input.trialEndsAt !== undefined) {
+    const newVal = input.trialEndsAt ? new Date(input.trialEndsAt) : null;
+    data.trialEndsAt = newVal;
+    changes.trialEndsAt = { old: currentUser.trialEndsAt, new: newVal };
+  }
+
+  // Assurance
+  if (input.hasAssurance !== undefined && input.hasAssurance !== currentUser.hasAssurance) {
+    data.hasAssurance = input.hasAssurance;
+    changes.hasAssurance = { old: currentUser.hasAssurance, new: input.hasAssurance };
+  }
+
+  // Reporting
+  if (input.reportEmailEnabled !== undefined && input.reportEmailEnabled !== currentUser.reportEmailEnabled) {
+    data.reportEmailEnabled = input.reportEmailEnabled;
+    changes.reportEmailEnabled = { old: currentUser.reportEmailEnabled, new: input.reportEmailEnabled };
+  }
+  if (input.reportEmailFrequency !== undefined && input.reportEmailFrequency !== currentUser.reportEmailFrequency) {
+    data.reportEmailFrequency = input.reportEmailFrequency;
+    changes.reportEmailFrequency = { old: currentUser.reportEmailFrequency, new: input.reportEmailFrequency };
+  }
+  if (input.reportRecipientEmail !== undefined) {
+    const newEmail = input.reportRecipientEmail || null;
+    if (newEmail !== currentUser.reportRecipientEmail) {
+      data.reportRecipientEmail = newEmail;
+      changes.reportRecipientEmail = { old: currentUser.reportRecipientEmail, new: newEmail };
+    }
+  }
+  if (input.reportFormat !== undefined && input.reportFormat !== currentUser.reportFormat) {
+    data.reportFormat = input.reportFormat;
+    changes.reportFormat = { old: currentUser.reportFormat, new: input.reportFormat };
+  }
+  if (input.nextReportAt !== undefined) {
+    const newVal = input.nextReportAt ? new Date(input.nextReportAt) : null;
+    data.nextReportAt = newVal;
+    changes.nextReportAt = { old: currentUser.nextReportAt, new: newVal };
+  }
+
+  // Nothing changed
+  if (Object.keys(data).length === 0) {
+    return { success: true, changed: false };
+  }
+
+  // ── Persist ────────────────────────────────────────
+  await prisma.user.update({ where: { id: userId }, data });
+
+  // Handle assurance subscription if tier changed
+  if (input.assuranceTier && input.hasAssurance) {
+    const existingSub = await prisma.assuranceSubscription.findFirst({
+      where: { userId, status: 'active' },
+    });
+
+    if (existingSub) {
+      await prisma.assuranceSubscription.update({
+        where: { id: existingSub.id },
+        data: { tier: input.assuranceTier },
+      });
+      changes.assuranceTier = { old: existingSub.tier, new: input.assuranceTier };
+    }
+    // If no existing subscription and assurance was just enabled, we note it
+    // but don't auto-create a paid subscription (that requires Mollie checkout)
+  }
+
+  // ── Audit log ──────────────────────────────────────
+  const changeDesc = Object.entries(changes)
+    .map(([k, v]) => `${k}: ${String(v.old)} → ${String(v.new)}`)
+    .join(', ');
+
+  await prisma.userAdminEvent.create({
+    data: {
+      userId,
+      adminId: admin.id,
+      eventType: 'STATUS_CHANGE',
+      description: `Admin updated user settings: ${changeDesc}`,
+      metadata: JSON.parse(JSON.stringify({ changes })),
+    },
+  });
+
+  revalidatePath(`/admin/users/${userId}`);
+  return { success: true, changed: true, changes };
+}
+
 // Delete user account with cascade
 export async function deleteUser(userId: string, reason: string) {
   const admin = await requireAdmin();

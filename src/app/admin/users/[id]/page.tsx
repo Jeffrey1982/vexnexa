@@ -14,6 +14,7 @@ import { AdminNotesViewer } from "@/components/admin/AdminNotesViewer";
 import { UserUsageAnalytics } from "@/components/admin/UserUsageAnalytics";
 import { UserScanHistory } from "@/components/admin/UserScanHistory";
 import { OverageBillingManager } from "@/components/admin/OverageBillingManager";
+import { AdminUserSettingsEditor } from "@/components/admin/AdminUserSettingsEditor";
 import { ENTITLEMENTS } from "@/lib/billing/plans";
 
 export const dynamic = 'force-dynamic';
@@ -40,6 +41,11 @@ async function getUserDetails(userId: string) {
               }
             }
           }
+        },
+        assuranceSubscriptions: {
+          where: { status: 'active' },
+          select: { id: true, tier: true, status: true },
+          take: 1
         }
       }
     }),
@@ -202,8 +208,9 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
           />
 
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
               <TabsTrigger value="usage">Usage & Analytics</TabsTrigger>
               <TabsTrigger value="scans">Scan History</TabsTrigger>
               <TabsTrigger value="billing">Overage Billing</TabsTrigger>
@@ -224,6 +231,28 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
                   <UserActivityTimeline events={adminEvents} user={user} />
                 </div>
               </div>
+            </TabsContent>
+
+            <TabsContent value="settings" className="space-y-6 mt-6">
+              <AdminUserSettingsEditor
+                user={{
+                  id: user.id,
+                  email: user.email,
+                  plan: user.plan,
+                  subscriptionStatus: user.subscriptionStatus,
+                  billingInterval: user.billingInterval,
+                  trialEndsAt: user.trialEndsAt,
+                  trialStartsAt: user.trialStartsAt,
+                  hasAssurance: user.hasAssurance,
+                  reportEmailEnabled: user.reportEmailEnabled,
+                  reportEmailFrequency: user.reportEmailFrequency,
+                  reportRecipientEmail: user.reportRecipientEmail,
+                  reportFormat: user.reportFormat,
+                  nextReportAt: user.nextReportAt,
+                  lastReportSentAt: user.lastReportSentAt,
+                  assuranceSubscriptions: user.assuranceSubscriptions,
+                }}
+              />
             </TabsContent>
 
             <TabsContent value="usage" className="space-y-6 mt-6">

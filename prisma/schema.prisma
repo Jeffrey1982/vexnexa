@@ -29,6 +29,14 @@ model User {
   scanNotifications Boolean @default(true)
   weeklyReports     Boolean @default(false)
 
+  // Automated report delivery (admin-managed)
+  reportEmailEnabled   Boolean   @default(false)
+  reportEmailFrequency String    @default("monthly") // weekly, biweekly, monthly
+  reportRecipientEmail String?   // custom email; falls back to account email
+  reportFormat         String    @default("pdf")     // pdf, docx, both
+  nextReportAt         DateTime?
+  lastReportSentAt     DateTime?
+
   // Profile completion
   profileCompleted Boolean @default(false)
 
