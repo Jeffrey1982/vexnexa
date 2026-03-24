@@ -569,6 +569,130 @@ export async function processWebhookPayment(paymentId: string) {
   }
 }
 
+// ── Subscription Webhook Handler ───────────────────────────────
+
+import { generateAndSendInvoice } from './invoice-service';
+
+export async function processSubscriptionWebhook(subscriptionId: string) {
+  try {
+    // Fetch subscription details from Mollie (never trust webhook data directly)
+    // First get the subscription to find the customer, then fetch full details
+    const subscription = await (mollie.customerSubscriptions as any).get(subscriptionId)
+    const customer = await mollie.customers.get(subscription.customerId)
+    const fullSubscription = await (mollie.customerSubscriptions as any).get(subscriptionId, { customerId: customer.id })
+
+    console.log('[Subscription Webhook] Processing subscription:', {
+      id: fullSubscription.id,
+      status: fullSubscription.status,
+      customerId: fullSubscription.customerId,
+      metadata: fullSubscription.metadata,
+    })
+
+    // Only process active subscriptions
+    if (subscription.status !== 'active') {
+      console.log('[Subscription Webhook] Subscription not active, skipping')
+      return
+    }
+
+    const metadata = subscription.metadata as any
+    if (!metadata?.userId || !metadata?.addOnType) {
+      console.log('[Subscription Webhook] Not an add-on subscription, skipping')
+      return
+    }
+
+    const userId = metadata.userId
+    const addOnType = metadata.addOnType
+    const addOnId = metadata.addOnId
+
+    // Verify this add-on exists and belongs to the user
+    const addOn = await prisma.addOn.findFirst({
+      where: {
+        id: addOnId,
+        userId,
+        type: addOnType,
+      },
+    })
+
+    if (!addOn) {
+      console.error('[Subscription Webhook] Add-on not found:', { addOnId, userId, addOnType })
+      return
+    }
+
+    // Check if we already have a CheckoutQuote for this subscription
+    const existingQuote = await prisma.checkoutQuote.findFirst({
+      where: { molliePaymentId: subscriptionId },
+    })
+
+    if (existingQuote && existingQuote.invoiceSentAt) {
+      console.log('[Subscription Webhook] Invoice already sent, skipping')
+      return
+    }
+
+    // Create CheckoutQuote for invoice tracking if it doesn't exist
+    if (!existingQuote) {
+      try {
+        // Fetch billing profile for tax computation
+        const billingProfile = await prisma.billingProfile.findUnique({
+          where: { userId },
+          select: {
+            countryCode: true,
+            billingType: true,
+            vatValid: true,
+            vatId: true,
+            companyName: true,
+          },
+        })
+
+        // Use the stored tax data from subscription metadata
+        const taxRegime = metadata.taxRegime || 'NL_VAT'
+        const vatRate = parseFloat(metadata.vatRate || '0.21')
+        const netAmount = parseFloat(metadata.netAmount || '0')
+        const vatAmount = parseFloat(metadata.vatAmount || '0')
+        const totalAmount = parseFloat(subscription.amount.value)
+
+        await prisma.checkoutQuote.create({
+          data: {
+            userId,
+            product: 'addon',
+            plan: addOnType,
+            billingCycle: 'monthly', // Add-ons are monthly
+            baseAmount: netAmount,
+            vatAmount: vatAmount,
+            totalAmount: totalAmount,
+            currency: 'EUR',
+            taxRatePercent: vatRate,
+            taxMode: taxRegime === 'EU_REVERSE_CHARGE' ? 'reverse_charge' : 
+                     taxRegime === 'NON_EU_NO_VAT' ? 'no_tax' : 'vat_standard',
+            taxNotes: null, // Could add a note if needed
+            customerType: billingProfile?.billingType ?? 'individual',
+            customerCountry: billingProfile?.countryCode ?? 'NL',
+            companyName: billingProfile?.companyName,
+            vatId: billingProfile?.vatId,
+            vatIdValid: billingProfile?.vatValid ?? false,
+            molliePaymentId: subscriptionId,
+          },
+        })
+        console.log('[Subscription Webhook] Created CheckoutQuote for add-on:', subscriptionId)
+      } catch (quoteError) {
+        console.error('[Subscription Webhook] Failed to create CheckoutQuote:', quoteError)
+        // Continue anyway to try sending invoice
+      }
+    }
+
+    // Send invoice email (idempotent)
+    try {
+      // Use a special invoice number format for subscriptions
+      const result = await generateAndSendInvoice(existingQuote?.id || subscriptionId, { force: false })
+      console.log('[Subscription Webhook] Invoice sent:', result)
+    } catch (invoiceError) {
+      console.error('[Subscription Webhook] Failed to send invoice:', invoiceError)
+      // Don't fail the webhook for invoice errors
+    }
+  } catch (error) {
+    console.error('[Subscription Webhook] Error processing subscription:', error)
+  }
+}
+
 export async function createPaymentMethodResetPayment(userId: string, email: string) {
   const user = await prisma.user.findUnique({
     where: { id: userId },

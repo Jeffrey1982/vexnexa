@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { processWebhookPayment } from "@/lib/billing/mollie-flows"
+import { processWebhookPayment, processSubscriptionWebhook } from "@/lib/billing/mollie-flows"
+import { sendInvoiceForPayment } from "@/lib/billing/invoice-service"
 import crypto from "crypto"
 
 export const dynamic = 'force-dynamic'
@@ -42,19 +43,30 @@ export async function POST(request: NextRequest) {
 
     // Parse form-encoded body (Mollie sends application/x-www-form-urlencoded)
     const formData = new URLSearchParams(body)
-    const paymentId = formData.get("id")
+    const id = formData.get("id")
+    const type = formData.get("type")
 
-    console.log('Payment ID from webhook:', paymentId)
+    console.log('Mollie webhook:', { type, id })
 
-    if (!paymentId || typeof paymentId !== "string") {
-      console.error('Missing or invalid payment ID')
-      return NextResponse.json({ error: "Missing payment ID" }, { status: 400 })
+    if (!id || typeof id !== "string") {
+      console.error('Missing or invalid ID')
+      return NextResponse.json({ error: "Missing ID" }, { status: 400 })
     }
 
-    // Process the payment (this will validate by fetching from Mollie)
-    console.log('Processing webhook payment:', paymentId)
-    await processWebhookPayment(paymentId)
-    console.log('Webhook processing completed successfully')
+    // Handle different webhook types
+    if (type === "payment") {
+      // Payment webhook - existing logic
+      console.log('Processing payment webhook:', id)
+      await processWebhookPayment(id)
+      console.log('Payment webhook processing completed successfully')
+    } else if (type === "subscription") {
+      // Subscription webhook - handle add-on subscriptions
+      console.log('Processing subscription webhook:', id)
+      await processSubscriptionWebhook(id)
+      console.log('Subscription webhook processing completed successfully')
+    } else {
+      console.warn('Unknown webhook type:', type)
+    }
 
     // Always return 200 OK for webhooks (idempotent)
     return NextResponse.json({ success: true })
