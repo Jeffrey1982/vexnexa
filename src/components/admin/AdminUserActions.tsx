@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { TrendingUp, FileText, MessageSquare, Mail, Settings, Ban, UserX, PlayCircle, Trash2 } from "lucide-react";
+import { TrendingUp, FileText, MessageSquare, Mail, Settings, Ban, UserX, PlayCircle, Trash2, Receipt } from "lucide-react";
 import { changeUserStatus, addAdminNote, createTicketForUser, sendEmailToUser, suspendUser, reactivateUser, deleteUser } from "@/app/actions/admin-user";
 import { useRouter } from "next/navigation";
 import { useToast } from '@/hooks/use-toast';
@@ -29,6 +29,7 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
   const [addNoteOpen, setAddNoteOpen] = useState(false);
   const [createTicketOpen, setCreateTicketOpen] = useState(false);
   const [sendEmailOpen, setSendEmailOpen] = useState(false);
+  const [sendInvoiceOpen, setSendInvoiceOpen] = useState(false);
   const [suspendOpen, setSuspendOpen] = useState(false);
   const [reactivateOpen, setReactivateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -118,6 +119,41 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
       router.refresh();
     } catch (error) {
       alert('Failed to send email');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSendInvoice = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/admin/resend-invoice', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-secret': process.env.NEXT_PUBLIC_ADMIN_SECRET || '',
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send invoice');
+      }
+
+      toast({
+        title: 'Invoice sent',
+        description: result.message || 'Invoice has been sent to the user',
+      });
+      setSendInvoiceOpen(false);
+    } catch (error) {
+      console.error('Failed to send invoice:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to send invoice',
+      });
     } finally {
       setLoading(false);
     }
@@ -388,6 +424,36 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
                 <Button variant="outline" onClick={() => setSendEmailOpen(false)}>Cancel</Button>
                 <Button onClick={handleSendEmail} disabled={loading || !emailSubject.trim() || !emailMessage.trim()}>
                   {loading ? 'Sending...' : 'Send Email'}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* Send Invoice */}
+          <Dialog open={sendInvoiceOpen} onOpenChange={setSendInvoiceOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <Receipt className="w-4 h-4" />
+                Resend Invoice
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Resend Invoice</DialogTitle>
+                <DialogDescription>
+                  Send or resend the latest invoice to this user.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  This will send the most recent invoice for this user's latest payment.
+                  If no invoice exists, this action will fail.
+                </p>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setSendInvoiceOpen(false)}>Cancel</Button>
+                <Button onClick={handleSendInvoice} disabled={loading}>
+                  {loading ? 'Sending...' : 'Send Invoice'}
                 </Button>
               </DialogFooter>
             </DialogContent>

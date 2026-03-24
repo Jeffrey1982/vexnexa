@@ -1,12 +1,59 @@
 import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "../mollie"
 import { prisma } from "../prisma"
-import { PRICES, planKeyFromString } from "./plans"
-import { calculatePrice, type BillingCycle, type PlanKey } from "../pricing"
-import { computeTaxDecision, calculateTaxBreakdown, toBillingCustomerType, type TaxDecision, type CustomerType } from "../tax/rules"
+import { planKeyFromString, PRICES } from "./plans"
+import { 
+  computeTaxDecision, 
+  calculateTaxBreakdown, 
+  formatTaxLineLabel,
+  toBillingCustomerType 
+} from "../tax/rules"
 import { grossToNet, BASE_VAT_RATE } from "../pricing/vat-math"
-import type { Plan } from "@prisma/client"
+import { calculatePrice, type PlanKey, type BillingCycle } from "../pricing"
+import { sendInvoiceForPayment } from "./invoice-service"
 import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
+import type { Plan } from "@prisma/client"
+
+/** Map billing country to Mollie locale hint (best-effort, not forced) */
+function countryToMollieLocale(country: string): string | undefined {
+  const map: Record<string, string> = {
+    NL: "nl_NL",
+    BE: "nl_BE",
+    DE: "de_DE",
+    AT: "de_AT",
+    FR: "fr_FR",
+    ES: "es_ES",
+    IT: "it_IT",
+    PT: "pt_PT",
+    GB: "en_GB",
+    US: "en_US",
+    CA: "en_CA",
+    AU: "en_AU",
+    CH: "de_CH",
+    DK: "da_DK",
+    NO: "no_NO",
+    SE: "sv_SE",
+    FI: "fi_FI",
+    PL: "pl_PL",
+    CZ: "cs_CZ",
+    SK: "sk_SK",
+    HU: "hu_HU",
+    RO: "ro_RO",
+    BG: "bg_BG",
+    HR: "hr_HR",
+    SI: "sl_SI",
+    EE: "et_EE",
+    LV: "lv_LV",
+    LT: "lt_LT",
+    GR: "el_GR",
+    CY: "cy_CY",
+    MT: "mt_MT",
+    IS: "is_IS",
+    LI: "de_LI",
+    LU: "fr_LU",
+  }
+  return map[country.toUpperCase()]
+}
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
   console.log('Looking for user with ID:', userId, 'and email:', email)
@@ -511,6 +558,14 @@ export async function processWebhookPayment(paymentId: string) {
       userId,
       billingCycle
     })
+  }
+
+  // Send invoice email (idempotent)
+  try {
+    await sendInvoiceForPayment(paymentId)
+  } catch (invoiceError) {
+    console.error('[Webhook] Failed to send invoice:', invoiceError)
+    // Don't fail the webhook for invoice errors
   }
 }
 

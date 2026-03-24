@@ -17,6 +17,7 @@ import { grossToNet, BASE_VAT_RATE } from '../pricing/vat-math';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
 import { SequenceType } from '@mollie/api-client';
+import { sendInvoiceForPayment } from '@/lib/billing/invoice-service';
 
 /**
  * Create Mollie checkout payment for Assurance subscription
@@ -99,6 +100,34 @@ export async function createAssuranceCheckoutPayment(opts: {
     }
 
     const payment = await mollie.payments.create(paymentData);
+
+    // Persist checkout quote snapshot for invoice/audit trail
+    try {
+      await prisma.checkoutQuote.create({
+        data: {
+          userId,
+          product: 'assurance',
+          plan: tier,
+          billingCycle,
+          baseAmount: breakdown.net,
+          vatAmount: breakdown.vat,
+          totalAmount: breakdown.gross,
+          currency: 'EUR',
+          taxRatePercent: tax.vatRate,
+          taxMode: tax.regime === 'EU_REVERSE_CHARGE' ? 'reverse_charge' : tax.regime === 'NON_EU_NO_VAT' ? 'no_tax' : 'vat_standard',
+          taxNotes: tax.invoiceNote,
+          customerType: 'company', // Assurance is B2B only for now
+          customerCountry: countryCode || 'NL',
+          companyName: null, // Could be fetched from billingProfile if needed
+          vatId: vatId || null,
+          vatIdValid: !!vatId, // Simplified
+          molliePaymentId: payment.id,
+        },
+      });
+    } catch (quoteError) {
+      // Non-fatal: don't block payment if quote persistence fails
+      console.error('[Assurance] Failed to persist checkout quote:', quoteError);
+    }
 
     console.log('[Assurance] Payment created:', {
       id: payment.id,
@@ -434,6 +463,14 @@ export async function processAssuranceWebhookPayment(paymentId: string) {
     });
 
     console.log('[Assurance] Subscription created from webhook:', subscription.id);
+
+    // Send invoice email (idempotent)
+    try {
+      await sendInvoiceForPayment(paymentId)
+    } catch (invoiceError) {
+      console.error('[Assurance] Failed to send invoice:', invoiceError)
+      // Don't fail the webhook for invoice errors
+    }
 
     return subscription;
   } catch (error) {

@@ -1336,6 +1336,10 @@ model CheckoutQuote {
   // Mollie reference
   molliePaymentId String?
 
+  // Invoice tracking
+  invoiceNumber String?   @unique
+  invoiceSentAt DateTime?
+
   createdAt DateTime @default(now())
 
   @@index([userId])
