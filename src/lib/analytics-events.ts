@@ -7,6 +7,7 @@ export type FunnelEvent =
   | 'homepage_cta_primary_click'
   | 'homepage_cta_sample_report_click'
   | 'sample_report_view'
+  | 'sample_report_cta_click'
   | 'free_scan_started'
   | 'signup_started'
   | 'signup_completed'
@@ -15,6 +16,9 @@ export type FunnelEvent =
   | 'eaa_page_cta_click'
   | 'white_label_page_cta_click'
   | 'contact_cta_click'
+  | 'features_cta_click'
+  | 'wcag_scan_cta_click'
+  | 'compliance_report_cta_click'
   | 'cta_click';
 
 interface TrackOptions {

@@ -23,6 +23,7 @@ import {
   ClipboardCheck,
   Briefcase,
 } from "lucide-react";
+import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 
 /* ═══════════════════════════════════════════════════════════
    SEO Metadata
@@ -109,19 +110,26 @@ function HeroSection(): React.ReactElement {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <Button
+            <TrackedCTA
+              href="/auth/register"
+              event="compliance_report_cta_click"
+              eventProps={{ location: "hero" }}
               size="lg"
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
-              asChild
             >
-              <Link href="/auth/register">
-                Generate Your First Report
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/sample-report">Preview a Sample Report</Link>
-            </Button>
+              Generate Your First Report
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </TrackedCTA>
+            <TrackedCTA
+              href="/sample-report"
+              event="compliance_report_cta_click"
+              eventProps={{ location: "hero_secondary" }}
+              size="lg"
+              variant="outline"
+              className="px-8 py-6 text-base"
+            >
+              Preview a Sample Report
+            </TrackedCTA>
           </div>
 
           <p className="text-sm text-muted-foreground">

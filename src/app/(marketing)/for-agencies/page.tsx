@@ -15,6 +15,7 @@ import {
   Shield,
   Globe,
 } from "lucide-react";
+import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 
 export const metadata: Metadata = {
   title: "WCAG Accessibility Reporting for Agencies",
@@ -101,15 +102,25 @@ export default function ForAgenciesPage() {
               Scan client sites for WCAG 2.2 issues, export branded reports, set up continuous monitoring, and manage accessibility across your entire portfolio — all from one platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" className="gradient-primary text-white" asChild>
-                <Link href="/auth/register">
-                  Start your free scan
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/sample-report">View sample report</Link>
-              </Button>
+              <TrackedCTA
+                href="/auth/register"
+                event="agencies_page_cta_click"
+                eventProps={{ location: "hero" }}
+                size="lg"
+                className="gradient-primary text-white"
+              >
+                Start your free scan
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </TrackedCTA>
+              <TrackedCTA
+                href="/sample-report"
+                event="agencies_page_cta_click"
+                eventProps={{ location: "hero_secondary" }}
+                size="lg"
+                variant="outline"
+              >
+                View sample report
+              </TrackedCTA>
             </div>
             <p className="text-sm text-muted-foreground">
               Free account required. No credit card needed.
@@ -214,24 +225,36 @@ export default function ForAgenciesPage() {
               Create a free account, scan your first client site, and see how VexNexa fits your workflow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
+              <TrackedCTA
+                href="/auth/register"
+                event="agencies_page_cta_click"
+                eventProps={{ location: "footer" }}
                 size="lg"
                 variant="secondary"
                 className="bg-white text-primary hover:bg-white/90"
-                asChild
               >
-                <Link href="/auth/register">
-                  Start your free scan <Zap className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
+                Start your free scan <Zap className="ml-2 h-5 w-5" />
+              </TrackedCTA>
+              <TrackedCTA
+                href="/sample-report"
+                event="agencies_page_cta_click"
+                eventProps={{ location: "footer_secondary" }}
                 size="lg"
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-                asChild
               >
-                <Link href="/sample-report">View sample report</Link>
-              </Button>
+                View sample report
+              </TrackedCTA>
+              <TrackedCTA
+                href="/contact"
+                event="contact_cta_click"
+                eventProps={{ location: "agencies_footer" }}
+                size="lg"
+                variant="outline"
+                className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              >
+                Contact us
+              </TrackedCTA>
             </div>
           </div>
         </div>

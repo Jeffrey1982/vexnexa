@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 import {
   Accordion,
   AccordionContent,
@@ -104,19 +105,26 @@ function HeroSection(): React.ReactElement {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <Button
+            <TrackedCTA
+              href="/auth/register"
+              event="white_label_page_cta_click"
+              eventProps={{ location: "hero" }}
               size="lg"
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
-              asChild
             >
-              <Link href="/auth/register">
-                Try White-Label Reports Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/sample-report">See a Sample Report</Link>
-            </Button>
+              Try White-Label Reports Free
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </TrackedCTA>
+            <TrackedCTA
+              href="/sample-report"
+              event="white_label_page_cta_click"
+              eventProps={{ location: "hero_secondary" }}
+              size="lg"
+              variant="outline"
+              className="px-8 py-6 text-base"
+            >
+              See a Sample Report
+            </TrackedCTA>
           </div>
 
           <p className="text-sm text-muted-foreground">
@@ -446,19 +454,26 @@ function FinalCTASection(): React.ReactElement {
             expertise — not someone else&apos;s marketing.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
+            <TrackedCTA
+              href="/auth/register"
+              event="white_label_page_cta_click"
+              eventProps={{ location: "footer" }}
               size="lg"
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
-              asChild
             >
-              <Link href="/auth/register">
-                Start Free Trial
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/pricing">Compare Plans</Link>
-            </Button>
+              Start Free Trial
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </TrackedCTA>
+            <TrackedCTA
+              href="/pricing"
+              event="white_label_page_cta_click"
+              eventProps={{ location: "footer_secondary" }}
+              size="lg"
+              variant="outline"
+              className="px-8 py-6 text-base"
+            >
+              Compare Plans
+            </TrackedCTA>
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ import {
   Search,
   Layers,
 } from "lucide-react";
+import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 
 /* ═══════════════════════════════════════════════════════════
    SEO Metadata
@@ -111,23 +112,30 @@ function HeroSection(): React.ReactElement {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <Button
+            <TrackedCTA
+              href="/auth/register"
+              event="wcag_scan_cta_click"
+              eventProps={{ location: "hero" }}
               size="lg"
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
-              asChild
             >
-              <Link href="/auth/register">
-                Start Your Free Scan
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/sample-report">See a Sample Report</Link>
-            </Button>
+              Start Your Free Scan
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </TrackedCTA>
+            <TrackedCTA
+              href="/sample-report"
+              event="wcag_scan_cta_click"
+              eventProps={{ location: "hero_secondary" }}
+              size="lg"
+              variant="outline"
+              className="px-8 py-6 text-base"
+            >
+              See a Sample Report
+            </TrackedCTA>
           </div>
 
           <p className="text-sm text-muted-foreground">
-            No credit card required. Results in under 60 seconds.
+            No credit card required. Most single-page scans complete in under a minute.
           </p>
         </div>
       </div>

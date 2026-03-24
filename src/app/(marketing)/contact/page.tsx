@@ -17,33 +17,29 @@ import {
   CheckCircle,
   Globe,
   ArrowRight,
+  FileText,
+  Building2,
+  CreditCard,
 } from "lucide-react";
+import { trackEvent } from "@/lib/analytics-events";
 
-// NOTE: In Next.js, metadata for a client component can't use `export const metadata`.
-// Keep this object here or move it to a server component/layout.
-const metadata = {
-  title: "Contact - VexNexa WCAG Scanner",
-  description:
-    "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
-  keywords: "contact, support, accessibility help, WCAG questions, enterprise",
-  openGraph: {
-    title: "Contact - VexNexa WCAG Scanner",
-    description:
-      "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
-    url: "https://vexnexa.com/contact",
-    siteName: "VexNexa",
-    type: "website",
+const quickReasons = [
+  {
+    icon: FileText,
+    title: "Request a sample report walkthrough",
+    description: "See exactly what your clients or stakeholders will receive.",
   },
-  twitter: {
-    card: "summary",
-    title: "Contact - VexNexa WCAG Scanner",
-    description:
-      "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
+  {
+    icon: Building2,
+    title: "Ask about agency workflows",
+    description: "White-label reports, multi-site management, team seats.",
   },
-  alternates: {
-    canonical: "https://vexnexa.com/contact",
+  {
+    icon: CreditCard,
+    title: "Get help choosing the right plan",
+    description: "We'll recommend the setup that fits your team and volume.",
   },
-};
+];
 
 type Method = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -138,13 +134,7 @@ export default function ContactPage() {
         setFormData({ name: "", email: "", message: "", company: "" });
         setConsent(false);
 
-        // analytics (Vercel Analytics custom)
-        if (typeof window !== "undefined" && (window as any).va?.track) {
-          (window as any).va.track("contact_form_submit", {
-            email: emailForTrack,
-            message_length: len,
-          });
-        }
+        trackEvent("contact_cta_click", { location: "form_submit", message_length: len });
       } else {
         throw new Error("Failed to send message");
       }
@@ -183,12 +173,31 @@ export default function ContactPage() {
           <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative max-w-4xl mx-auto text-center space-y-4 p-8 sm:p-12">
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-              {t('hero.title')} <span className="text-primary">{t('hero.titleHighlight')}</span>
+              Talk to us about reports, monitoring, or{" "}
+              <span className="text-primary">agency use</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('hero.subtitle')}
+              Questions about plans, white-label reporting, or how VexNexa fits
+              your workflow? We&apos;ll help you get to the right setup quickly.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Quick reason cards */}
+      <section className="container mx-auto px-4 pb-8">
+        <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
+          {quickReasons.map((r, i) => (
+            <Card key={i} className="border-0 shadow-elegant bg-card/80">
+              <CardContent className="p-6 space-y-2">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-2">
+                  <r.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <h3 className="font-semibold font-display text-sm">{r.title}</h3>
+                <p className="text-sm text-muted-foreground">{r.description}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 
@@ -459,20 +468,38 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="container mx-auto px-4 py-20 sm:py-24 text-center">
-        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-          <h2 className="font-display text-3xl md:text-4xl font-bold">{t('cta.title')}</h2>
-          <p className="text-xl text-muted-foreground">
-            {t('cta.subtitle')}
-          </p>
-
-          <Button size="lg" asChild>
-            <Link href="/auth/register">
-              {t('cta.button')}
-              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Button>
+      {/* CTA strip */}
+      <section className="container mx-auto px-4 py-16 sm:py-20">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <h2 className="font-display text-2xl md:text-3xl font-bold">
+            Prefer to explore on your own first?
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="gradient-primary text-white" asChild>
+              <Link
+                href="/sample-report"
+                onClick={() => trackEvent("contact_cta_click", { location: "cta_strip_report" })}
+              >
+                View sample report
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link
+                href="/pricing"
+                onClick={() => trackEvent("contact_cta_click", { location: "cta_strip_pricing" })}
+              >
+                Compare plans
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link
+                href="/for-agencies"
+                onClick={() => trackEvent("contact_cta_click", { location: "cta_strip_agencies" })}
+              >
+                Agency solutions
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>

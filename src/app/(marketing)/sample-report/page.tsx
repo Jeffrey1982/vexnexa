@@ -154,13 +154,19 @@ export default function SampleReportPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <Button size="lg" className="gradient-primary text-white" asChild>
-                <Link href="/auth/register">
+                <Link
+                  href="/auth/register"
+                  onClick={() => trackEvent("sample_report_cta_click", { location: "hero" })}
+                >
                   Scan your own site
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/white-label-accessibility-reports">
+                <Link
+                  href="/white-label-accessibility-reports"
+                  onClick={() => trackEvent("sample_report_cta_click", { location: "hero_secondary" })}
+                >
                   Learn about white-label
                 </Link>
               </Button>
@@ -336,7 +342,10 @@ export default function SampleReportPage() {
                 className="bg-white text-primary hover:bg-white/90"
                 asChild
               >
-                <Link href="/auth/register">
+                <Link
+                  href="/auth/register"
+                  onClick={() => trackEvent("sample_report_cta_click", { location: "footer" })}
+                >
                   Start your free scan <Zap className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -346,7 +355,12 @@ export default function SampleReportPage() {
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                 asChild
               >
-                <Link href="/pricing">View pricing</Link>
+                <Link
+                  href="/pricing"
+                  onClick={() => trackEvent("pricing_cta_click", { location: "sample_report" })}
+                >
+                  View pricing
+                </Link>
               </Button>
             </div>
           </div>

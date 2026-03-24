@@ -27,6 +27,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics-events";
 import { ENTITLEMENTS, PLAN_NAMES, OVERFLOW_PRICING } from "@/lib/billing/plans";
 import {
   BillingCycle,
@@ -735,7 +736,10 @@ function CTASection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/auth/register">
+              <Link
+                href="/auth/register"
+                onClick={() => trackEvent("pricing_cta_click", { location: "footer" })}
+              >
                 {t('startTrial')}
                 <Zap className="ml-2 h-4 w-4" />
               </Link>
