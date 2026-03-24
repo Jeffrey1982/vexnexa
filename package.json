@@ -13,11 +13,11 @@
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:validate": "prisma validate",
     "prisma:push": "prisma db push",
-    "prisma:reset": "prisma migrate reset",
+    "prisma:reset": "echo '🚨 Use npx tsx scripts/safe-migrate.ts instead'",
     "prisma:studio": "prisma studio",
     "playwright:install": "playwright install chromium",
     "db:seed": "prisma db seed",
-    "db:reset": "prisma migrate reset --force",
+    "db:reset": "npx tsx scripts/safe-migrate.ts",
     "db:migrate": "prisma migrate dev -n site-wide-crawl",
     "worker:crawl": "tsx scripts/run-crawl.ts",
     "postinstall": "prisma generate"

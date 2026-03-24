@@ -4,155 +4,102 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL") // runtime (can be Supabase pooler 6543)
-  directUrl = env("DIRECT_URL") // migrations (direct 5432)
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id    String @id @default(cuid())
-  email String @unique
-  sites Site[]
-
-  // Personal information
-  firstName   String?
-  lastName    String?
-  company     String?
-  jobTitle    String?
-  phoneNumber String?
-  website     String?
-  country     String?
-
-  // Marketing preferences
-  marketingEmails   Boolean @default(false)
-  productUpdates    Boolean @default(true)
-  teamInvitations   Boolean @default(true)
-  scanNotifications Boolean @default(true)
-  weeklyReports     Boolean @default(false)
-
-  // Automated report delivery (admin-managed)
-  reportEmailEnabled   Boolean   @default(false)
-  reportEmailFrequency String    @default("monthly") // weekly, biweekly, monthly
-  reportRecipientEmail String?   // custom email; falls back to account email
-  reportFormat         String    @default("pdf")     // pdf, docx, both
-  nextReportAt         DateTime?
-  lastReportSentAt     DateTime?
-
-  // Profile completion
-  profileCompleted Boolean @default(false)
-
-  // Billing fields
-  plan               Plan      @default(TRIAL) // TRIAL, STARTER, PRO, BUSINESS
-  subscriptionStatus String    @default("trialing") // active, canceled, past_due, inactive
-  trialEndsAt        DateTime?
-  trialStartsAt      DateTime?
-  trialOrigin        String? // "self-signup", "partner", "referral", "ad-campaign", etc.
-
-  // Mollie koppelingen
-  mollieCustomerId     String? @unique
-  mollieSubscriptionId String? // actuele sub (1 actief tegelijk)
-
-  // Billing details
-  billingInterval String  @default("monthly") // monthly, yearly
-  hasAssurance    Boolean @default(false) // Assurance add-on active
-  extraWebsiteCount Int   @default(0) // Extra websites purchased via packs
-
-  // Add-ons (extra seats, scan packages, website packs)
-  extraSeats Int     @default(0) // Additional team seats purchased
-  addOns     AddOn[] // Scan packages, seat subscriptions, website packs
-
-  usages     Usage[]
-  whiteLabel WhiteLabel?
-  portfolios Portfolio[]
-
-  // Team collaboration
-  ownedTeams      Team[]       @relation("TeamOwner")
-  teamMemberships TeamMember[]
-  sentInvites     TeamInvite[] @relation("InvitedBy")
-  invitedBy       TeamMember[] @relation("InvitedByUser")
-
-  // Issue tracking
-  createdIssues    Issue[]         @relation("CreatedBy")
-  assignedIssues   Issue[]         @relation("AssignedTo")
-  assignedByIssues Issue[]         @relation("AssignedBy")
-  resolvedIssues   Issue[]         @relation("ResolvedBy")
-  issueComments    IssueComment[]
-  issueActivities  IssueActivity[]
-
-  // Manual audit tracking
-  createdAudits    ManualAudit[]     @relation("AuditCreator")
-  assignedAudits   ManualAudit[]     @relation("AuditAssignee")
-  reviewedAudits   ManualAudit[]     @relation("AuditReviewer")
-  auditTemplates   AuditTemplate[]
-  testedAuditItems AuditItem[]
-  auditAttachments AuditAttachment[]
-
-  // Blog
-  blogPosts BlogPost[]
-
-  // Support tickets
-  supportTickets        SupportTicket[]
-  supportTicketMessages SupportTicketMessage[]
-
-  // Admin role
-  isAdmin    Boolean         @default(false)
-  adminNotes AdminUserNote[] @relation("AdminNotes")
-
-  // Notifications & Webhooks
-  notifications    Notification[]
-  webhookEndpoints WebhookEndpoint[]
-
-  // Scheduled scans
-  scheduledScans ScheduledScan[]
-  scanSchedules  ScanSchedule[]  @relation("UserScanSchedules")
-
-  // Accessibility Assurance subscriptions
+  id                     String                  @id @default(cuid())
+  email                  String                  @unique
+  firstName              String?
+  lastName               String?
+  company                String?
+  jobTitle               String?
+  phoneNumber            String?
+  website                String?
+  country                String?
+  marketingEmails        Boolean                 @default(false)
+  productUpdates         Boolean                 @default(true)
+  teamInvitations        Boolean                 @default(true)
+  scanNotifications      Boolean                 @default(true)
+  weeklyReports          Boolean                 @default(false)
+  reportEmailEnabled     Boolean                 @default(false)
+  reportEmailFrequency   String                  @default("monthly")
+  reportRecipientEmail   String?
+  reportFormat           String                  @default("pdf")
+  nextReportAt           DateTime?
+  lastReportSentAt       DateTime?
+  profileCompleted       Boolean                 @default(false)
+  plan                   Plan                    @default(TRIAL)
+  subscriptionStatus     String                  @default("trialing")
+  trialEndsAt            DateTime?
+  trialStartsAt          DateTime?
+  trialOrigin            String?
+  mollieCustomerId       String?                 @unique
+  mollieSubscriptionId   String?
+  billingInterval        String                  @default("monthly")
+  hasAssurance           Boolean                 @default(false)
+  extraWebsiteCount      Int                     @default(0)
+  extraSeats             Int                     @default(0)
+  isAdmin                Boolean                 @default(false)
+  deletedAt              DateTime?
+  deletedBy              String?
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  addOns                 AddOn[]
+  adminNotes             AdminUserNote[]         @relation("AdminNotes")
   assuranceSubscriptions AssuranceSubscription[] @relation("AssuranceSubscriptions")
-
-  // Billing profile
-  billingProfile BillingProfile?
-
-  // Checkout quotes (tax snapshots)
-  checkoutQuotes CheckoutQuote[]
-
-  // Soft delete
-  deletedAt DateTime?
-  deletedBy String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  auditAttachments       AuditAttachment[]
+  testedAuditItems       AuditItem[]
+  auditTemplates         AuditTemplate[]
+  billingProfile         BillingProfile?
+  blogPosts              BlogPost[]
+  checkoutQuotes         CheckoutQuote[]
+  assignedByIssues       Issue[]                 @relation("AssignedBy")
+  assignedIssues         Issue[]                 @relation("AssignedTo")
+  createdIssues          Issue[]                 @relation("CreatedBy")
+  resolvedIssues         Issue[]                 @relation("ResolvedBy")
+  issueActivities        IssueActivity[]
+  issueComments          IssueComment[]
+  assignedAudits         ManualAudit[]           @relation("AuditAssignee")
+  createdAudits          ManualAudit[]           @relation("AuditCreator")
+  reviewedAudits         ManualAudit[]           @relation("AuditReviewer")
+  notifications          Notification[]
+  portfolios             Portfolio[]
+  scanSchedules          ScanSchedule[]          @relation("UserScanSchedules")
+  scheduledScans         ScheduledScan[]
+  sites                  Site[]
+  supportTickets         SupportTicket[]
+  supportTicketMessages  SupportTicketMessage[]
+  ownedTeams             Team[]                  @relation("TeamOwner")
+  sentInvites            TeamInvite[]            @relation("InvitedBy")
+  invitedBy              TeamMember[]            @relation("InvitedByUser")
+  teamMemberships        TeamMember[]
+  usages                 Usage[]
+  webhookEndpoints       WebhookEndpoint[]
+  whiteLabel             WhiteLabel?
 
   @@index([deletedAt])
 }
 
 model Site {
-  id     String  @id @default(cuid())
-  userId String
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  url    String
-  pages  Page[]
-  scans  Scan[]
-  crawls Crawl[]
-
-  // Portfolio association
-  portfolioId String?
-  portfolio   Portfolio? @relation(fields: [portfolioId], references: [id], onDelete: SetNull)
-
-  // Team collaboration
-  teams Team[] @relation("TeamSites")
-
-  // Manual audits
-  manualAudits ManualAudit[]
-
-  // Scheduled scans
-  scheduledScans ScheduledScan[]
+  id             String          @id @default(cuid())
+  userId         String
+  url            String
+  portfolioId    String?
+  deletedAt      DateTime?
+  createdAt      DateTime        @default(now())
+  crawls         Crawl[]
+  manualAudits   ManualAudit[]
+  pages          Page[]
+  scans          Scan[]
   scanSchedules  ScanSchedule[]  @relation("SiteScanSchedules")
+  scheduledScans ScheduledScan[]
+  portfolio      Portfolio?      @relation(fields: [portfolioId], references: [id])
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teams          Team[]          @relation("TeamSites")
 
-  // Soft delete
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, url]) // enables where: { userId_url: { ... } }
+  @@unique([userId, url])
   @@index([userId])
   @@index([portfolioId])
   @@index([deletedAt])
@@ -161,102 +108,986 @@ model Site {
 model Page {
   id           String   @id @default(cuid())
   siteId       String
-  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
   url          String
   title        String?
   latestScanId String?
-  scans        Scan[]
   createdAt    DateTime @default(now())
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  scans        Scan[]
 
-  @@unique([siteId, url]) // enables where: { siteId_url: { ... } }
+  @@unique([siteId, url])
   @@index([siteId])
 }
 
 model Scan {
-  id     String @id @default(cuid())
-  siteId String
-  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
-
-  // NEW: optional link to Page
-  pageId String?
-  page   Page?   @relation(fields: [pageId], references: [id], onDelete: SetNull)
-
-  status    String
-  score     Int?
-  issues    Int?
-  reportUrl String?
-
-  // Issue tracking
-  scanIssues Issue[]
-
-  // Impact counts
-  impactCritical Int @default(0)
-  impactSerious  Int @default(0)
-  impactModerate Int @default(0)
-  impactMinor    Int @default(0)
-
-  // Enhanced analytics fields
-  previousScanId String? // Link to previous scan for comparison
-  previousScan   Scan?   @relation("ScanHistory", fields: [previousScanId], references: [id])
-  nextScans      Scan[]  @relation("ScanHistory")
-
-  scoreImprovement Int? // Change from previous scan
-  issuesFixed      Int  @default(0) // Issues resolved since last scan
-  newIssues        Int  @default(0) // New issues found since last scan
-
-  // WCAG compliance tracking
-  wcagAACompliance  Float? // Percentage of AA compliance (0-100)
-  wcagAAACompliance Float? // Percentage of AAA compliance (0-100)
-
-  // Violation categorization for trending
-  violationsByRule Json? // { "rule_id": count, ... } for trending analysis
-
-  // Performance & SEO Integration
-  performanceScore       Float? // Google PageSpeed Insights score (0-100)
-  firstContentfulPaint   Float? // FCP in milliseconds
-  largestContentfulPaint Float? // LCP in milliseconds
-  cumulativeLayoutShift  Float? // CLS score
-  firstInputDelay        Float? // FID in milliseconds
-  totalBlockingTime      Float? // TBT in milliseconds
-
-  // SEO correlation data
-  seoScore          Float? // Overall SEO health score (0-100)
-  metaDescription   String? // Meta description present/quality
-  headingStructure  Json? // H1-H6 structure analysis
-  altTextCoverage   Float? // Percentage of images with alt text
-  linkAccessibility Float? // Percentage of accessible links
-
-  // Legal compliance risk assessment
-  adaRiskLevel String? // LOW, MEDIUM, HIGH, CRITICAL
-
-  // Manual audits linked to this scan
-  manualAudits     ManualAudit[]
-  wcag21Compliance Float? // WCAG 2.1 compliance percentage
-  wcag22Compliance Float? // WCAG 2.2 compliance percentage
-  complianceGaps   Json? // Specific compliance issues
-  legalRiskScore   Float? // Calculated legal risk (0-100)
-
-  // Performance metrics
-  scanDuration    Int? // Scan duration in milliseconds
-  pageLoadTime    Int? // Page load time in milliseconds
-  elementsScanned Int? // Number of elements analyzed
-
-  // Raw scan data
-  raw Json?
-
-  // Accessibility Assurance scans
-  assuranceScans AssuranceScan[]
-
-  // Soft delete
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
+  id                     String          @id @default(cuid())
+  siteId                 String
+  pageId                 String?
+  status                 String
+  score                  Int?
+  issues                 Int?
+  reportUrl              String?
+  impactCritical         Int             @default(0)
+  impactSerious          Int             @default(0)
+  impactModerate         Int             @default(0)
+  impactMinor            Int             @default(0)
+  previousScanId         String?
+  scoreImprovement       Int?
+  issuesFixed            Int             @default(0)
+  newIssues              Int             @default(0)
+  wcagAACompliance       Float?
+  wcagAAACompliance      Float?
+  violationsByRule       Json?
+  performanceScore       Float?
+  firstContentfulPaint   Float?
+  largestContentfulPaint Float?
+  cumulativeLayoutShift  Float?
+  firstInputDelay        Float?
+  totalBlockingTime      Float?
+  seoScore               Float?
+  metaDescription        String?
+  headingStructure       Json?
+  altTextCoverage        Float?
+  linkAccessibility      Float?
+  adaRiskLevel           String?
+  wcag21Compliance       Float?
+  wcag22Compliance       Float?
+  complianceGaps         Json?
+  legalRiskScore         Float?
+  scanDuration           Int?
+  pageLoadTime           Int?
+  elementsScanned        Int?
+  raw                    Json?
+  deletedAt              DateTime?
+  createdAt              DateTime        @default(now())
+  assuranceScans         AssuranceScan[]
+  scanIssues             Issue[]
+  manualAudits           ManualAudit[]
+  page                   Page?           @relation(fields: [pageId], references: [id])
+  previousScan           Scan?           @relation("ScanHistory", fields: [previousScanId], references: [id])
+  nextScans              Scan[]          @relation("ScanHistory")
+  site                   Site            @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@index([siteId])
   @@index([pageId])
-  @@index([createdAt]) // For historical queries
-  @@index([siteId, createdAt]) // For site-specific historical queries
+  @@index([createdAt])
+  @@index([siteId, createdAt])
   @@index([deletedAt])
+}
+
+model Usage {
+  id        String   @id @default(cuid())
+  userId    String
+  period    String
+  pages     Int      @default(0)
+  sites     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, period])
+}
+
+model Crawl {
+  id          String     @id @default(cuid())
+  siteId      String
+  status      String     @default("queued")
+  maxPages    Int        @default(50)
+  maxDepth    Int        @default(3)
+  pagesQueued Int        @default(0)
+  pagesDone   Int        @default(0)
+  pagesError  Int        @default(0)
+  startedAt   DateTime   @default(now())
+  finishedAt  DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  site        Site       @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  crawlUrls   CrawlUrl[]
+
+  @@index([siteId])
+  @@index([status])
+}
+
+model CrawlUrl {
+  id          String    @id @default(cuid())
+  crawlId     String
+  url         String
+  depth       Int       @default(0)
+  status      String    @default("queued")
+  reason      String?
+  createdAt   DateTime  @default(now())
+  processedAt DateTime?
+  crawl       Crawl     @relation(fields: [crawlId], references: [id], onDelete: Cascade)
+
+  @@unique([crawlId, url])
+  @@index([crawlId, status])
+}
+
+model Benchmark {
+  id          String   @id @default(cuid())
+  industry    String
+  category    String?
+  avgScore    Float
+  avgCritical Float
+  avgSerious  Float
+  avgModerate Float
+  avgMinor    Float
+  avgWcagAA   Float
+  avgWcagAAA  Float
+  sampleSize  Int
+  lastUpdated DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([industry, category])
+  @@index([industry])
+}
+
+model WhiteLabel {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  companyName    String?
+  logoUrl        String?
+  faviconUrl     String?
+  primaryColor   String   @default("#3B82F6")
+  secondaryColor String   @default("#1F2937")
+  accentColor    String   @default("#10B981")
+  supportEmail   String?
+  website        String?
+  phone          String?
+  footerText     String?
+  showPoweredBy  Boolean  @default(true)
+  customDomain   String?
+  subdomain      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Portfolio {
+  id                     String   @id @default(cuid())
+  userId                 String
+  name                   String
+  description            String?
+  totalSites             Int      @default(0)
+  avgScore               Float?
+  totalIssues            Int      @default(0)
+  riskScore              Float?
+  avgPerformance         Float?
+  performanceCorrelation Float?
+  priorityMatrix         Json?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sites                  Site[]
+
+  @@index([userId])
+}
+
+model Team {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  ownerId     String
+  deletedAt   DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  owner       User         @relation("TeamOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  invites     TeamInvite[]
+  members     TeamMember[]
+  sites       Site[]       @relation("TeamSites")
+
+  @@index([ownerId])
+  @@index([deletedAt])
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  teamId    String
+  userId    String
+  role      TeamRole @default(VIEWER)
+  invitedBy String?
+  joinedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+  inviter   User?    @relation("InvitedByUser", fields: [invitedBy], references: [id])
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+}
+
+model TeamInvite {
+  id         String    @id @default(cuid())
+  teamId     String
+  email      String
+  role       TeamRole  @default(VIEWER)
+  invitedBy  String
+  token      String    @unique
+  expiresAt  DateTime
+  acceptedAt DateTime?
+  createdAt  DateTime  @default(now())
+  inviter    User      @relation("InvitedBy", fields: [invitedBy], references: [id], onDelete: Cascade)
+  team       Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+  @@index([email])
+}
+
+model Issue {
+  id             String          @id @default(cuid())
+  scanId         String
+  violationId    String
+  title          String
+  description    String?
+  status         IssueStatus     @default(OPEN)
+  priority       IssuePriority   @default(MEDIUM)
+  assignedToId   String?
+  assignedById   String?
+  createdById    String
+  resolvedAt     DateTime?
+  resolvedById   String?
+  dueDate        DateTime?
+  estimatedHours Int?
+  actualHours    Int?
+  tags           String[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  assignedBy     User?           @relation("AssignedBy", fields: [assignedById], references: [id])
+  assignedTo     User?           @relation("AssignedTo", fields: [assignedToId], references: [id])
+  createdBy      User            @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
+  resolvedBy     User?           @relation("ResolvedBy", fields: [resolvedById], references: [id])
+  scan           Scan            @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  activities     IssueActivity[]
+  comments       IssueComment[]
+
+  @@unique([scanId, violationId])
+  @@index([scanId])
+  @@index([assignedToId])
+  @@index([createdById])
+  @@index([status])
+  @@index([priority])
+}
+
+model IssueComment {
+  id        String   @id @default(cuid())
+  issueId   String
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+  @@index([userId])
+}
+
+model IssueActivity {
+  id        String   @id @default(cuid())
+  issueId   String
+  userId    String
+  action    String
+  oldValue  String?
+  newValue  String?
+  createdAt DateTime @default(now())
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+  @@index([userId])
+}
+
+model ManualAudit {
+  id                String            @id @default(cuid())
+  siteId            String
+  scanId            String?
+  name              String
+  description       String?
+  templateId        String?
+  status            String            @default("draft")
+  createdById       String
+  assignedToId      String?
+  reviewedById      String?
+  totalCriteria     Int               @default(0)
+  completedCriteria Int               @default(0)
+  passedCriteria    Int               @default(0)
+  failedCriteria    Int               @default(0)
+  overallScore      Float?
+  wcagLevel         String?
+  compliant         Boolean           @default(false)
+  dueDate           DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  reviewedAt        DateTime?
+  deletedAt         DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  attachments       AuditAttachment[]
+  items             AuditItem[]
+  assignedTo        User?             @relation("AuditAssignee", fields: [assignedToId], references: [id])
+  createdBy         User              @relation("AuditCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  reviewedBy        User?             @relation("AuditReviewer", fields: [reviewedById], references: [id])
+  scan              Scan?             @relation(fields: [scanId], references: [id])
+  site              Site              @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  template          AuditTemplate?    @relation(fields: [templateId], references: [id])
+
+  @@index([siteId])
+  @@index([scanId])
+  @@index([createdById])
+  @@index([assignedToId])
+  @@index([status])
+  @@index([deletedAt])
+}
+
+model AuditTemplate {
+  id          String           @id @default(cuid())
+  name        String
+  description String?
+  category    String
+  wcagLevel   String?
+  isPublic    Boolean          @default(true)
+  isDefault   Boolean          @default(false)
+  createdById String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  criteria    AuditCriterion[]
+  createdBy   User?            @relation(fields: [createdById], references: [id])
+  audits      ManualAudit[]
+
+  @@index([category])
+  @@index([createdById])
+}
+
+model AuditCriterion {
+  id            String        @id @default(cuid())
+  templateId    String
+  category      String
+  subcategory   String?
+  title         String
+  description   String?
+  howToTest     String?
+  wcagCriterion String?
+  wcagLevel     String?
+  wcagUrl       String?
+  priority      String        @default("medium")
+  required      Boolean       @default(true)
+  order         Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  template      AuditTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId])
+  @@index([category])
+}
+
+model AuditItem {
+  id               String      @id @default(cuid())
+  auditId          String
+  criterionId      String?
+  category         String
+  subcategory      String?
+  title            String
+  description      String?
+  howToTest        String?
+  wcagCriterion    String?
+  wcagLevel        String?
+  wcagUrl          String?
+  status           String      @default("pending")
+  result           String?
+  notes            String?
+  screenshotUrls   String[]
+  elementSelector  String?
+  pageUrl          String?
+  testedById       String?
+  testedAt         DateTime?
+  remediationNotes String?
+  priority         String      @default("medium")
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  audit            ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  testedBy         User?       @relation(fields: [testedById], references: [id])
+
+  @@index([auditId])
+  @@index([testedById])
+  @@index([status])
+  @@index([category])
+}
+
+model AuditAttachment {
+  id           String      @id @default(cuid())
+  auditId      String
+  fileName     String
+  fileUrl      String
+  fileType     String
+  fileSize     Int?
+  description  String?
+  uploadedById String
+  createdAt    DateTime    @default(now())
+  audit        ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  uploadedBy   User        @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+
+  @@index([auditId])
+  @@index([uploadedById])
+}
+
+model BlogPost {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String
+  content         String
+  excerpt         String?
+  coverImage      String?
+  locale          String    @default("en")
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String[]
+  category        String
+  tags            String[]
+  status          String    @default("draft")
+  publishedAt     DateTime?
+  authorId        String
+  authorName      String?
+  views           Int       @default(0)
+  deletedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  author          User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@unique([slug, locale])
+  @@index([authorId])
+  @@index([slug])
+  @@index([deletedAt])
+  @@index([status])
+  @@index([category])
+  @@index([publishedAt])
+  @@index([locale])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  reason    String?
+  source    String?
+  status    String   @default("new")
+  replied   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model SupportTicket {
+  id        String                 @id @default(cuid())
+  userId    String
+  subject   String
+  category  TicketCategory         @default(GENERAL)
+  priority  TicketPriority         @default(MEDIUM)
+  status    TicketStatus           @default(OPEN)
+  deletedAt DateTime?
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  SupportTicketMessage[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+  @@index([category])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([deletedAt])
+}
+
+model SupportTicketMessage {
+  id           String            @id @default(cuid())
+  ticketId     String
+  senderType   MessageSenderType
+  senderUserId String?
+  message      String
+  createdAt    DateTime          @default(now())
+  senderUser   User?             @relation(fields: [senderUserId], references: [id])
+  ticket       SupportTicket     @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId])
+  @@index([senderUserId])
+  @@index([createdAt])
+}
+
+model AdminUserNote {
+  id        String   @id @default(cuid())
+  userId    String
+  adminId   String
+  note      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  admin     User     @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([adminId])
+  @@index([createdAt])
+}
+
+model UserAdminEvent {
+  id          String         @id @default(cuid())
+  userId      String
+  adminId     String?
+  eventType   AdminEventType
+  metadata    Json?
+  description String?
+  createdAt   DateTime       @default(now())
+
+  @@index([userId])
+  @@index([adminId])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  link      String?
+  read      Boolean          @default(false)
+  readAt    DateTime?
+  metadata  Json?
+  createdAt DateTime         @default(now())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, read])
+  @@index([createdAt])
+}
+
+model WebhookEndpoint {
+  id            String         @id @default(cuid())
+  userId        String
+  name          String
+  url           String
+  secret        String
+  events        WebhookEvent[]
+  active        Boolean        @default(true)
+  lastTriggered DateTime?
+  successCount  Int            @default(0)
+  failureCount  Int            @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([active])
+}
+
+model ErrorLog {
+  id         String    @id @default(cuid())
+  message    String
+  stack      String?
+  level      String    @default("error")
+  source     String?
+  statusCode Int?
+  userId     String?
+  userEmail  String?
+  url        String?
+  method     String?
+  userAgent  String?
+  ip         String?
+  metadata   Json?
+  resolved   Boolean   @default(false)
+  resolvedBy String?
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([createdAt])
+  @@index([level])
+  @@index([resolved])
+  @@index([userId])
+}
+
+model ApiLog {
+  id           String   @id @default(cuid())
+  method       String
+  path         String
+  statusCode   Int
+  duration     Int
+  userId       String?
+  userEmail    String?
+  ip           String?
+  userAgent    String?
+  requestBody  Json?
+  responseBody Json?
+  errorMessage String?
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([path])
+  @@index([statusCode])
+  @@index([userId])
+  @@index([method])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  action      String
+  entity      String
+  entityId    String?
+  description String
+  actorId     String?
+  actorEmail  String?
+  actorType   String   @default("user")
+  ip          String?
+  userAgent   String?
+  metadata    Json?
+  oldValues   Json?
+  newValues   Json?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action])
+  @@index([actorId])
+  @@index([entity])
+  @@index([entityId])
+}
+
+model ScheduledScan {
+  id              String    @id @default(cuid())
+  userId          String
+  siteId          String
+  frequency       String
+  dayOfWeek       Int?
+  dayOfMonth      Int?
+  timeOfDay       String    @default("00:00")
+  active          Boolean   @default(true)
+  lastRunAt       DateTime?
+  nextRunAt       DateTime?
+  emailOnComplete Boolean   @default(true)
+  emailOnIssues   Boolean   @default(true)
+  webhookUrl      String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  site            Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([siteId])
+  @@index([active, nextRunAt])
+  @@index([nextRunAt])
+}
+
+model AddOn {
+  id                   String    @id @default(cuid())
+  userId               String
+  type                 AddOnType
+  mollieSubscriptionId String?   @unique
+  status               String    @default("active")
+  quantity             Int       @default(1)
+  pricePerUnit         Decimal   @db.Decimal(10, 2)
+  totalPrice           Decimal   @db.Decimal(10, 2)
+  activatedAt          DateTime  @default(now())
+  canceledAt           DateTime?
+  expiresAt            DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([type])
+  @@index([status])
+}
+
+model MollieProduct {
+  id              String   @id @default(cuid())
+  productType     String
+  productKey      String
+  interval        String
+  mollieProductId String?
+  molliePriceId   String?
+  amount          Decimal  @db.Decimal(10, 2)
+  currency        String   @default("EUR")
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([productKey, interval])
+  @@index([productType])
+  @@index([active])
+  @@index([productKey, interval, active])
+}
+
+model BillingProfile {
+  id                 String    @id @default(cuid())
+  userId             String    @unique
+  billingType        String    @default("individual")
+  fullName           String?
+  companyName        String?
+  countryCode        String    @default("NL")
+  vatId              String?
+  vatValid           Boolean   @default(false)
+  vatCheckedAt       DateTime?
+  kvkNumber          String?
+  registrationNumber String?
+  taxId              String?
+  addressLine1       String?
+  addressCity        String?
+  addressPostal      String?
+  addressRegion      String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([vatId])
+  @@index([countryCode])
+}
+
+model CheckoutQuote {
+  id              String    @id @default(cuid())
+  userId          String
+  product         String
+  plan            String?
+  billingCycle    String?
+  baseAmount      Decimal   @db.Decimal(10, 2)
+  vatAmount       Decimal   @db.Decimal(10, 2)
+  totalAmount     Decimal   @db.Decimal(10, 2)
+  currency        String    @default("EUR")
+  taxRatePercent  Decimal   @db.Decimal(5, 2)
+  taxMode         String
+  taxNotes        String?
+  customerType    String
+  customerCountry String
+  companyName     String?
+  vatId           String?
+  vatIdValid      Boolean   @default(false)
+  molliePaymentId String?
+  invoiceNumber   String?   @unique
+  invoiceSentAt   DateTime?
+  createdAt       DateTime  @default(now())
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([molliePaymentId])
+  @@index([createdAt])
+}
+
+model AssuranceSubscription {
+  id                   String            @id @default(cuid())
+  userId               String
+  tier                 AssuranceTier     @default(BASIC)
+  status               String            @default("active")
+  mollieSubscriptionId String?           @unique
+  billingCycle         String            @default("monthly")
+  pricePerMonth        Decimal           @db.Decimal(10, 2)
+  totalPrice           Decimal           @db.Decimal(10, 2)
+  vatRate              Decimal?          @db.Decimal(5, 4)
+  taxRegime            String?
+  countryCode          String?
+  vatId                String?
+  activatedAt          DateTime          @default(now())
+  canceledAt           DateTime?
+  expiresAt            DateTime?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  domains              AssuranceDomain[]
+  user                 User              @relation("AssuranceSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([tier])
+}
+
+model AssuranceDomain {
+  id              String                @id @default(cuid())
+  subscriptionId  String
+  domain          String
+  label           String?
+  scanFrequency   AssuranceFrequency    @default(WEEKLY)
+  scoreThreshold  Int                   @default(90)
+  active          Boolean               @default(true)
+  language        String                @default("en")
+  emailRecipients String[]
+  dayOfWeek       Int                   @default(1)
+  timeOfDay       String                @default("09:00")
+  lastRunAt       DateTime?
+  nextRunAt       DateTime?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  alerts          AssuranceAlert[]
+  subscription    AssuranceSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  reports         AssuranceReport[]
+  scans           AssuranceScan[]
+
+  @@unique([subscriptionId, domain])
+  @@index([subscriptionId])
+  @@index([active, nextRunAt])
+  @@index([nextRunAt])
+}
+
+model AssuranceScan {
+  id                String          @id @default(cuid())
+  domainId          String
+  scanId            String
+  score             Int
+  wcagAACompliance  Float?
+  wcagAAACompliance Float?
+  issuesCount       Int
+  impactCritical    Int
+  impactSerious     Int
+  impactModerate    Int
+  impactMinor       Int
+  previousScanId    String?
+  scoreChange       Int?            @default(0)
+  isRegression      Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  domain            AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  previousScan      AssuranceScan?  @relation("ScanHistory", fields: [previousScanId], references: [id])
+  nextScans         AssuranceScan[] @relation("ScanHistory")
+  scan              Scan            @relation(fields: [scanId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
+  @@index([domainId, createdAt])
+  @@index([scanId])
+  @@index([isRegression])
+}
+
+model AssuranceReport {
+  id                String          @id @default(cuid())
+  domainId          String
+  scanId            String
+  pdfUrl            String
+  language          String
+  score             Int
+  threshold         Int
+  trendData         Json
+  wcagAACompliance  Float?
+  wcagAAACompliance Float?
+  emailSentTo       String[]
+  sentAt            DateTime?
+  createdAt         DateTime        @default(now())
+  domain            AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
+  @@index([domainId, createdAt])
+  @@index([scanId])
+}
+
+model AssuranceAlert {
+  id            String                 @id @default(cuid())
+  domainId      String
+  type          AssuranceAlertType
+  severity      AssuranceAlertSeverity @default(MEDIUM)
+  title         String
+  message       String
+  currentScore  Int
+  threshold     Int?
+  previousScore Int?
+  scanId        String?
+  emailSentTo   String[]
+  sentAt        DateTime?
+  resolved      Boolean                @default(false)
+  resolvedAt    DateTime?
+  resolvedBy    String?
+  createdAt     DateTime               @default(now())
+  domain        AssuranceDomain        @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@index([domainId])
+  @@index([domainId, createdAt])
+  @@index([resolved])
+  @@index([type])
+}
+
+model Coupon {
+  id             String             @id @default(cuid())
+  code           String             @unique
+  name           String?
+  description    String?
+  grantType      CouponGrantType
+  grantValue     String
+  maxRedemptions Int?
+  redeemedCount  Int                @default(0)
+  perUserLimit   Int                @default(1)
+  startsAt       DateTime?
+  expiresAt      DateTime?
+  isActive       Boolean            @default(true)
+  createdBy      String
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  redemptions    CouponRedemption[]
+
+  @@index([code])
+  @@index([isActive])
+  @@index([createdBy])
+  @@index([expiresAt])
+}
+
+model CouponRedemption {
+  id         String   @id @default(cuid())
+  couponId   String
+  userId     String
+  metadata   Json?
+  redeemedAt DateTime @default(now())
+  coupon     Coupon   @relation(fields: [couponId], references: [id], onDelete: Cascade)
+
+  @@unique([couponId, userId])
+  @@index([couponId])
+  @@index([userId])
+  @@index([redeemedAt])
+}
+
+model ScanSchedule {
+  id                          String            @id @default(cuid())
+  userId                      String
+  siteId                      String
+  isEnabled                   Boolean           @default(true)
+  timezone                    String            @default("Europe/Amsterdam")
+  frequency                   ScheduleFrequency @default(WEEKLY)
+  daysOfWeek                  Int[]
+  dayOfMonth                  Int?
+  timeOfDay                   String            @default("09:00")
+  startsAt                    DateTime          @default(now())
+  endsAt                      DateTime?
+  lastRunAt                   DateTime?
+  nextRunAt                   DateTime
+  recipients                  String[]
+  deliverFormat               DeliverFormat     @default(PDF)
+  includeExecutiveSummaryOnly Boolean           @default(false)
+  consecutiveFailures         Int               @default(0)
+  createdAt                   DateTime          @default(now())
+  updatedAt                   DateTime          @updatedAt
+  site                        Site              @relation("SiteScanSchedules", fields: [siteId], references: [id], onDelete: Cascade)
+  user                        User              @relation("UserScanSchedules", fields: [userId], references: [id], onDelete: Cascade)
+  runs                        ScheduleRun[]
+
+  @@index([userId])
+  @@index([siteId])
+  @@index([isEnabled, nextRunAt])
+  @@index([nextRunAt])
+}
+
+model ScheduleRun {
+  id          String       @id @default(cuid())
+  scheduleId  String
+  windowKey   String
+  status      String
+  error       String?
+  scanScore   Int?
+  emailSentAt DateTime?
+  emailId     String?
+  startedAt   DateTime     @default(now())
+  completedAt DateTime?
+  schedule    ScanSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@unique([scheduleId, windowKey])
+  @@index([scheduleId])
+  @@index([status])
 }
 
 enum Plan {
@@ -265,154 +1096,6 @@ enum Plan {
   PRO
   BUSINESS
   ENTERPRISE
-}
-
-model Usage {
-  id        String   @id @default(cuid())
-  userId    String
-  period    String // "2025-09"
-  pages     Int      @default(0)
-  sites     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, period])
-}
-
-model Crawl {
-  id     String @id @default(cuid())
-  siteId String
-  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
-
-  status   String @default("queued") // queued, running, done, error
-  maxPages Int    @default(50)
-  maxDepth Int    @default(3)
-
-  pagesQueued Int @default(0)
-  pagesDone   Int @default(0)
-  pagesError  Int @default(0)
-
-  startedAt  DateTime  @default(now())
-  finishedAt DateTime?
-
-  crawlUrls CrawlUrl[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
-  @@index([siteId])
-  @@index([status])
-}
-
-model CrawlUrl {
-  id      String @id @default(cuid())
-  crawlId String
-  crawl   Crawl  @relation(fields: [crawlId], references: [id], onDelete: Cascade)
-
-  url    String
-  depth  Int     @default(0)
-  status String  @default("queued") // queued, running, done, error, skipped
-  reason String? // Error reason or skip reason
-
-  createdAt   DateTime  @default(now())
-  processedAt DateTime?
-
-  @@unique([crawlId, url]) // Prevent duplicate URLs in same crawl
-  @@index([crawlId, status])
-}
-
-model Benchmark {
-  id String @id @default(cuid())
-
-  // Industry/category benchmarks
-  industry String // e.g., "ecommerce", "healthcare", "education", "government"
-  category String? // sub-category if applicable
-
-  // Benchmark scores
-  avgScore    Float // Average accessibility score
-  avgCritical Float // Average critical issues per page
-  avgSerious  Float // Average serious issues per page
-  avgModerate Float // Average moderate issues per page
-  avgMinor    Float // Average minor issues per page
-
-  // WCAG compliance averages
-  avgWcagAA  Float // Average AA compliance percentage
-  avgWcagAAA Float // Average AAA compliance percentage
-
-  // Sample size and metadata
-  sampleSize  Int // Number of sites/pages in benchmark
-  lastUpdated DateTime @default(now())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([industry, category])
-  @@index([industry])
-}
-
-model WhiteLabel {
-  id     String @id @default(cuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // Branding
-  companyName String?
-  logoUrl     String?
-  faviconUrl  String?
-
-  // Colors
-  primaryColor   String @default("#3B82F6") // Blue-500
-  secondaryColor String @default("#1F2937") // Gray-800
-  accentColor    String @default("#10B981") // Green-500
-
-  // Contact Information
-  supportEmail String?
-  website      String?
-  phone        String?
-
-  // Footer Customization
-  footerText    String?
-  showPoweredBy Boolean @default(true)
-
-  // Domain Settings
-  customDomain String?
-  subdomain    String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-}
-
-model Portfolio {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  name        String // Portfolio name (e.g., "Main Sites", "Client Portfolio")
-  description String?
-
-  // Portfolio-wide metrics
-  totalSites  Int    @default(0)
-  avgScore    Float? // Average accessibility score across all sites
-  totalIssues Int    @default(0)
-  riskScore   Float? // Combined legal/compliance risk
-
-  // Performance correlation
-  avgPerformance         Float? // Average performance score
-  performanceCorrelation Float? // Correlation between accessibility and performance
-
-  // Portfolio prioritization
-  priorityMatrix Json? // Impact/effort matrix data
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Portfolio can contain multiple sites
-  sites Site[]
-
-  @@index([userId])
 }
 
 enum TeamRole {
@@ -435,392 +1118,6 @@ enum IssuePriority {
   CRITICAL
 }
 
-model Team {
-  id          String  @id @default(cuid())
-  name        String
-  description String?
-  ownerId     String
-  owner       User    @relation("TeamOwner", fields: [ownerId], references: [id], onDelete: Cascade)
-
-  members TeamMember[]
-  invites TeamInvite[]
-  sites   Site[]       @relation("TeamSites")
-
-  // Soft delete
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([ownerId])
-  @@index([deletedAt])
-}
-
-model TeamMember {
-  id        String   @id @default(cuid())
-  teamId    String
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role      TeamRole @default(VIEWER)
-  invitedBy String?
-  inviter   User?    @relation("InvitedByUser", fields: [invitedBy], references: [id], onDelete: SetNull)
-  joinedAt  DateTime @default(now())
-  createdAt DateTime @default(now())
-
-  @@unique([teamId, userId])
-  @@index([teamId])
-  @@index([userId])
-}
-
-model TeamInvite {
-  id         String    @id @default(cuid())
-  teamId     String
-  team       Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  email      String
-  role       TeamRole  @default(VIEWER)
-  invitedBy  String
-  inviter    User      @relation("InvitedBy", fields: [invitedBy], references: [id], onDelete: Cascade)
-  token      String    @unique
-  expiresAt  DateTime
-  acceptedAt DateTime?
-  createdAt  DateTime  @default(now())
-
-  @@index([teamId])
-  @@index([email])
-}
-
-model Issue {
-  id          String        @id @default(cuid())
-  scanId      String
-  scan        Scan          @relation(fields: [scanId], references: [id], onDelete: Cascade)
-  violationId String // Reference to specific violation in scan.raw
-  title       String
-  description String?
-  status      IssueStatus   @default(OPEN)
-  priority    IssuePriority @default(MEDIUM)
-
-  assignedToId String?
-  assignedTo   User?   @relation("AssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
-  assignedById String?
-  assignedBy   User?   @relation("AssignedBy", fields: [assignedById], references: [id], onDelete: SetNull)
-  createdById  String
-  createdBy    User    @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
-
-  resolvedAt   DateTime?
-  resolvedById String?
-  resolvedBy   User?     @relation("ResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
-
-  dueDate        DateTime?
-  estimatedHours Int?
-  actualHours    Int?
-  tags           String[]
-
-  comments   IssueComment[]
-  activities IssueActivity[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([scanId, violationId])
-  @@index([scanId])
-  @@index([assignedToId])
-  @@index([createdById])
-  @@index([status])
-  @@index([priority])
-}
-
-model IssueComment {
-  id        String   @id @default(cuid())
-  issueId   String
-  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([issueId])
-  @@index([userId])
-}
-
-model IssueActivity {
-  id        String   @id @default(cuid())
-  issueId   String
-  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  action    String // "created", "assigned", "status_changed", "priority_changed", etc.
-  oldValue  String?
-  newValue  String?
-  createdAt DateTime @default(now())
-
-  @@index([issueId])
-  @@index([userId])
-}
-
-// ============================================
-// MANUAL ACCESSIBILITY AUDIT SYSTEM
-// ============================================
-
-model ManualAudit {
-  id     String @id @default(cuid())
-  siteId String
-  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
-
-  // Optional link to automated scan for comparison
-  scanId String?
-  scan   Scan?   @relation(fields: [scanId], references: [id], onDelete: SetNull)
-
-  // Audit metadata
-  name        String // e.g., "WCAG 2.1 AA Audit - Homepage"
-  description String?
-  templateId  String? // Link to audit template used
-  template    AuditTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
-
-  // Audit status
-  status String @default("draft") // draft, in_progress, under_review, completed
-
-  // Assignment
-  createdById  String
-  createdBy    User    @relation("AuditCreator", fields: [createdById], references: [id], onDelete: Cascade)
-  assignedToId String?
-  assignedTo   User?   @relation("AuditAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
-  reviewedById String?
-  reviewedBy   User?   @relation("AuditReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
-
-  // Progress tracking
-  totalCriteria     Int @default(0)
-  completedCriteria Int @default(0)
-  passedCriteria    Int @default(0)
-  failedCriteria    Int @default(0)
-
-  // Overall results
-  overallScore Float? // 0-100 percentage
-  wcagLevel    String? // "A", "AA", "AAA"
-  compliant    Boolean @default(false)
-
-  // Timing
-  dueDate     DateTime?
-  startedAt   DateTime?
-  completedAt DateTime?
-  reviewedAt  DateTime?
-
-  // Audit items (checklist)
-  items       AuditItem[]
-  attachments AuditAttachment[]
-
-  // Soft delete
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([siteId])
-  @@index([scanId])
-  @@index([createdById])
-  @@index([assignedToId])
-  @@index([status])
-  @@index([deletedAt])
-}
-
-model AuditTemplate {
-  id          String  @id @default(cuid())
-  name        String // e.g., "WCAG 2.1 AA Checklist"
-  description String?
-  category    String // "wcag", "section508", "custom", "industry"
-  wcagLevel   String? // "A", "AA", "AAA"
-
-  // Template metadata
-  isPublic    Boolean @default(true)
-  isDefault   Boolean @default(false)
-  createdById String?
-  createdBy   User?   @relation(fields: [createdById], references: [id], onDelete: SetNull)
-
-  // Template criteria
-  criteria AuditCriterion[]
-  audits   ManualAudit[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([category])
-  @@index([createdById])
-}
-
-model AuditCriterion {
-  id         String        @id @default(cuid())
-  templateId String
-  template   AuditTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-
-  // Criterion details
-  category    String // "keyboard", "screen_reader", "color", "forms", etc.
-  subcategory String? // More specific grouping
-  title       String // e.g., "All interactive elements are keyboard accessible"
-  description String?
-  howToTest   String? // Testing instructions
-
-  // WCAG mapping
-  wcagCriterion String? // e.g., "1.1.1", "2.1.1"
-  wcagLevel     String? // "A", "AA", "AAA"
-  wcagUrl       String? // Link to WCAG documentation
-
-  // Importance
-  priority String  @default("medium") // critical, high, medium, low
-  required Boolean @default(true)
-
-  // Display order
-  order Int @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([templateId])
-  @@index([category])
-}
-
-model AuditItem {
-  id      String      @id @default(cuid())
-  auditId String
-  audit   ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
-
-  // Link to template criterion or custom
-  criterionId String? // If based on template
-
-  // Item details
-  category    String
-  subcategory String?
-  title       String
-  description String?
-  howToTest   String?
-
-  // WCAG mapping
-  wcagCriterion String?
-  wcagLevel     String?
-  wcagUrl       String?
-
-  // Test results
-  status String  @default("pending") // pending, pass, fail, not_applicable, needs_review
-  result String? // Detailed result notes
-
-  // Evidence
-  notes           String?
-  screenshotUrls  String[] // Array of uploaded screenshots
-  elementSelector String? // CSS selector or XPath
-  pageUrl         String? // Specific page tested
-
-  // Testing details
-  testedById String?
-  testedBy   User?     @relation(fields: [testedById], references: [id], onDelete: SetNull)
-  testedAt   DateTime?
-
-  // Remediation
-  remediationNotes String?
-  priority         String  @default("medium")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([auditId])
-  @@index([testedById])
-  @@index([status])
-  @@index([category])
-}
-
-model AuditAttachment {
-  id      String      @id @default(cuid())
-  auditId String
-  audit   ManualAudit @relation(fields: [auditId], references: [id], onDelete: Cascade)
-
-  fileName    String
-  fileUrl     String
-  fileType    String // "screenshot", "document", "video", "other"
-  fileSize    Int? // in bytes
-  description String?
-
-  uploadedById String
-  uploadedBy   User   @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-
-  @@index([auditId])
-  @@index([uploadedById])
-}
-
-// Blog system
-model BlogPost {
-  id         String  @id @default(cuid())
-  title      String
-  slug       String
-  content    String  @db.Text
-  excerpt    String? @db.Text
-  coverImage String?
-
-  // Internationalization
-  locale String @default("en") // en, nl, fr, es, pt
-
-  // SEO
-  metaTitle       String?
-  metaDescription String?
-  metaKeywords    String[]
-
-  // Organization
-  category String
-  tags     String[]
-
-  // Publishing
-  status      String    @default("draft") // draft, published, archived
-  publishedAt DateTime?
-
-  // Author
-  authorId   String
-  author     User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorName String? // Optional custom author name (overrides User.firstName + User.lastName)
-
-  // Analytics
-  views Int @default(0)
-
-  // Soft delete
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([slug, locale]) // Slug must be unique per locale
-  @@index([authorId])
-  @@index([slug])
-  @@index([deletedAt])
-  @@index([status])
-  @@index([category])
-  @@index([publishedAt])
-  @@index([locale])
-}
-
-// Contact form submissions
-model ContactMessage {
-  id      String @id @default(cuid())
-  name    String
-  email   String
-  message String @db.Text
-  reason  String? // agency_use, white_label_reports, monitoring_multiple_sites, pricing_plans, sample_report, other
-  source  String? // page that generated the lead: homepage, for-agencies, pricing, sample-report, etc.
-
-  // Metadata
-  status  String  @default("new") // new, read, replied, archived
-  replied Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([email])
-  @@index([status])
-  @@index([createdAt])
-}
-
-// ============================================
-// SUPPORT TICKET SYSTEM
-// ============================================
-
 enum TicketStatus {
   OPEN
   IN_PROGRESS
@@ -842,73 +1139,9 @@ enum TicketCategory {
   BUG_REPORT
 }
 
-model SupportTicket {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  subject  String
-  category TicketCategory @default(GENERAL)
-  priority TicketPriority @default(MEDIUM)
-  status   TicketStatus   @default(OPEN)
-
-  messages SupportTicketMessage[]
-
-  // Soft delete
-  deletedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([status])
-  @@index([priority])
-  @@index([category])
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@index([deletedAt])
-}
-
 enum MessageSenderType {
   USER
   ADMIN
-}
-
-model SupportTicketMessage {
-  id       String        @id @default(cuid())
-  ticketId String
-  ticket   SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
-
-  senderType   MessageSenderType
-  senderUserId String?
-  senderUser   User?             @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
-
-  message String @db.Text
-
-  createdAt DateTime @default(now())
-
-  @@index([ticketId])
-  @@index([senderUserId])
-  @@index([createdAt])
-}
-
-// ============================================
-// ADMIN USER MANAGEMENT
-// ============================================
-
-model AdminUserNote {
-  id      String @id @default(cuid())
-  userId  String
-  adminId String
-  admin   User?  @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
-  note    String @db.Text
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([adminId])
-  @@index([createdAt])
 }
 
 enum AdminEventType {
@@ -924,26 +1157,6 @@ enum AdminEventType {
   EMAIL_SENT
 }
 
-model UserAdminEvent {
-  id          String         @id @default(cuid())
-  userId      String
-  adminId     String?
-  eventType   AdminEventType
-  metadata    Json?
-  description String?
-
-  createdAt DateTime @default(now())
-
-  @@index([userId])
-  @@index([adminId])
-  @@index([eventType])
-  @@index([createdAt])
-}
-
-// ============================================
-// NOTIFICATIONS SYSTEM
-// ============================================
-
 enum NotificationType {
   SCAN_COMPLETE
   ISSUE_ASSIGNED
@@ -958,32 +1171,6 @@ enum NotificationType {
   SYSTEM_ANNOUNCEMENT
 }
 
-model Notification {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  type    NotificationType
-  title   String
-  message String           @db.Text
-  link    String? // Optional link to related resource
-
-  read   Boolean   @default(false)
-  readAt DateTime?
-
-  metadata Json? // Additional data (scanId, issueId, etc.)
-
-  createdAt DateTime @default(now())
-
-  @@index([userId])
-  @@index([userId, read])
-  @@index([createdAt])
-}
-
-// ============================================
-// WEBHOOKS SYSTEM
-// ============================================
-
 enum WebhookEvent {
   SCAN_COMPLETED
   SCAN_FAILED
@@ -994,265 +1181,36 @@ enum WebhookEvent {
   REGRESSION_DETECTED
 }
 
-model WebhookEndpoint {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  name   String // User-friendly name
-  url    String // Webhook endpoint URL
-  secret String // Secret for HMAC signature
-
-  events WebhookEvent[] // Events to trigger webhook
-  active Boolean        @default(true)
-
-  // Statistics
-  lastTriggered DateTime?
-  successCount  Int       @default(0)
-  failureCount  Int       @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([active])
-}
-
-// ============================================
-// SYSTEM LOGGING & MONITORING
-// ============================================
-
-model ErrorLog {
-  id String @id @default(cuid())
-
-  // Error details
-  message    String
-  stack      String? @db.Text
-  level      String  @default("error") // error, warning, critical
-  source     String? // API route, component, function name
-  statusCode Int?
-
-  // Context
-  userId    String?
-  userEmail String?
-  url       String?
-  method    String? // GET, POST, etc
-  userAgent String?
-  ip        String?
-
-  // Additional data
-  metadata Json? // Any additional context as JSON
-
-  resolved   Boolean   @default(false)
-  resolvedBy String?
-  resolvedAt DateTime?
-
-  createdAt DateTime @default(now())
-
-  @@index([createdAt])
-  @@index([level])
-  @@index([resolved])
-  @@index([userId])
-}
-
-model ApiLog {
-  id String @id @default(cuid())
-
-  // Request details
-  method     String // GET, POST, PUT, DELETE, etc
-  path       String // API endpoint path
-  statusCode Int
-  duration   Int // Response time in ms
-
-  // User context
-  userId    String?
-  userEmail String?
-  ip        String?
-  userAgent String?
-
-  // Request/Response data (optional, for debugging)
-  requestBody  Json? // Sanitized request body
-  responseBody Json? // Sanitized response body
-  errorMessage String?
-
-  createdAt DateTime @default(now())
-
-  @@index([createdAt])
-  @@index([path])
-  @@index([statusCode])
-  @@index([userId])
-  @@index([method])
-}
-
-model AuditLog {
-  id String @id @default(cuid())
-
-  // Action details
-  action      String // e.g., "user.created", "subscription.upgraded", "scan.deleted"
-  entity      String // User, Site, Scan, etc.
-  entityId    String? // ID of the affected entity
-  description String // Human-readable description
-
-  // Actor (who performed the action)
-  actorId    String?
-  actorEmail String?
-  actorType  String  @default("user") // user, system, admin, api
-
-  // Context
-  ip        String?
-  userAgent String?
-  metadata  Json? // Additional context data
-
-  // Changes (for update actions)
-  oldValues Json? // Previous values
-  newValues Json? // New values
-
-  createdAt DateTime @default(now())
-
-  @@index([createdAt])
-  @@index([action])
-  @@index([actorId])
-  @@index([entity])
-  @@index([entityId])
-}
-
-model ScheduledScan {
-  id String @id @default(cuid())
-
-  // Ownership
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  siteId String
-  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
-
-  // Schedule configuration
-  frequency  String // daily, weekly, monthly
-  dayOfWeek  Int? // 0-6 for weekly (0 = Sunday)
-  dayOfMonth Int? // 1-31 for monthly
-  timeOfDay  String @default("00:00") // HH:MM format
-
-  // Status
-  active    Boolean   @default(true)
-  lastRunAt DateTime?
-  nextRunAt DateTime?
-
-  // Notifications
-  emailOnComplete Boolean @default(true)
-  emailOnIssues   Boolean @default(true)
-  webhookUrl      String?
-
-  // Metadata
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([siteId])
-  @@index([active, nextRunAt])
-  @@index([nextRunAt])
-}
-
-// ============================================
-// ADD-ONS SYSTEM (Extra Seats & Scan Packages)
-// ============================================
-
 enum AddOnType {
-  EXTRA_SEAT // €15/month per seat
-  SCAN_PACK_100 // legacy — do not use for new subscriptions
-  SCAN_PACK_500 // legacy — do not use for new subscriptions
-  SCAN_PACK_1500 // legacy — do not use for new subscriptions
-  EXTRA_WEBSITE_1 // +1 website, €15/month
-  EXTRA_WEBSITE_5 // +5 websites, €59/month
-  EXTRA_WEBSITE_10 // +10 websites, €99/month
-  ASSURANCE // Continuous monitoring add-on (tier-dependent pricing)
-  PAGE_PACK_25K // +25,000 pages/month, €29/month
-  PAGE_PACK_100K // +100,000 pages/month, €79/month
-  PAGE_PACK_250K // +250,000 pages/month, €149/month
+  EXTRA_SEAT
+  SCAN_PACK_100
+  SCAN_PACK_500
+  SCAN_PACK_1500
+  EXTRA_WEBSITE_1
+  EXTRA_WEBSITE_5
+  EXTRA_WEBSITE_10
+  ASSURANCE
+  PAGE_PACK_25K
+  PAGE_PACK_100K
+  PAGE_PACK_250K
 }
-
-model AddOn {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  type AddOnType
-
-  // Mollie integration
-  mollieSubscriptionId String? @unique // Each add-on has its own Mollie subscription
-  status               String  @default("active") // active, canceled, past_due, inactive
-
-  // Quantity (for seats: number of extra seats, for scans: always 1 package)
-  quantity Int @default(1)
-
-  // Billing
-  pricePerUnit Decimal @db.Decimal(10, 2) // Price per unit in EUR
-  totalPrice   Decimal @db.Decimal(10, 2) // Total monthly price (quantity * pricePerUnit)
-
-  // Lifecycle
-  activatedAt DateTime  @default(now())
-  canceledAt  DateTime? // When user requested cancellation
-  expiresAt   DateTime? // When it actually expires (end of billing period)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([userId, status])
-  @@index([type])
-  @@index([status])
-}
-
-// ============================================
-// MOLLIE PRODUCT SYNC
-// ============================================
-
-model MollieProduct {
-  id String @id @default(cuid())
-
-  // What this product represents
-  productType String // "tier" | "addon"
-  productKey  String // e.g. "STARTER", "PRO", "EXTRA_WEBSITE_1", "ASSURANCE_STARTER"
-  interval    String // "monthly" | "yearly"
-
-  // Mollie IDs (never edit existing prices — create new ones)
-  mollieProductId String? // Mollie product ID
-  molliePriceId   String? // Mollie price ID (for recurring)
-
-  // Pricing snapshot
-  amount   Decimal @db.Decimal(10, 2)
-  currency String  @default("EUR")
-
-  // Status
-  active Boolean @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([productKey, interval])
-  @@index([productType])
-  @@index([active])
-  @@index([productKey, interval, active])
-}
-
-// ============================================
-// ACCESSIBILITY ASSURANCE SYSTEM
-// ============================================
 
 enum AssuranceTier {
-  BASIC         // €9.99/mo - 1 domain
-  PRO           // €24.99/mo - 5 domains
-  PUBLIC_SECTOR // €49.99/mo - 20 domains
+  BASIC
+  PRO
+  PUBLIC_SECTOR
 }
 
 enum AssuranceFrequency {
-  WEEKLY   // Every 7 days
-  BIWEEKLY // Every 14 days
+  WEEKLY
+  BIWEEKLY
 }
 
 enum AssuranceAlertType {
-  REGRESSION      // Score dropped below threshold
-  SCORE_DROP      // Significant score decrease (even if above threshold)
-  CRITICAL_ISSUES // New critical accessibility issues detected
-  SCAN_FAILED     // Scheduled scan failed to execute
+  REGRESSION
+  SCORE_DROP
+  CRITICAL_ISSUES
+  SCAN_FAILED
 }
 
 enum AssuranceAlertSeverity {
@@ -1262,277 +1220,6 @@ enum AssuranceAlertSeverity {
   CRITICAL
 }
 
-// Billing Profile (VAT / tax identity)
-model BillingProfile {
-  id     String @id @default(cuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  billingType String @default("individual") // individual | business
-
-  // Personal / business identity
-  fullName    String?
-  companyName String?
-  countryCode String @default("NL") // ISO 3166-1 alpha-2
-
-  // VAT
-  vatId       String?
-  vatValid    Boolean   @default(false)
-  vatCheckedAt DateTime?
-
-  // NL-specific
-  kvkNumber String? // KvK (Chamber of Commerce)
-
-  // Generic registration number (Chamber of Commerce for non-NL EU countries)
-  registrationNumber String?
-
-  // Non-EU tax ID
-  taxId String?
-
-  // Billing address (optional)
-  addressLine1 String?
-  addressCity  String?
-  addressPostal String?
-  addressRegion String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([vatId])
-  @@index([countryCode])
-}
-
-// Checkout Quote — tax snapshot persisted at checkout time for invoice/audit trail.
-// Each payment attempt creates one quote so the tax details at time of purchase are immutable.
-model CheckoutQuote {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // What was purchased
-  product       String // 'subscription' | 'assurance' | 'addon'
-  plan          String? // STARTER, PRO, BUSINESS, ENTERPRISE
-  billingCycle  String? // monthly, yearly
-
-  // Price breakdown (all in EUR)
-  baseAmount    Decimal  @db.Decimal(10, 2) // Net price ex-VAT
-  vatAmount     Decimal  @db.Decimal(10, 2) // VAT amount
-  totalAmount   Decimal  @db.Decimal(10, 2) // Gross price inc-VAT
-  currency      String   @default("EUR")
-
-  // Tax decision snapshot
-  taxRatePercent  Decimal @db.Decimal(5, 2) // e.g. 21.00
-  taxMode         String  // vat_standard | reverse_charge | no_tax
-  taxNotes        String? // Human-readable tax note
-
-  // Customer snapshot at time of purchase
-  customerType    String  // individual | company
-  customerCountry String  // ISO alpha-2
-  companyName     String?
-  vatId           String?
-  vatIdValid      Boolean @default(false)
-
-  // Mollie reference
-  molliePaymentId String?
-
-  // Invoice tracking
-  invoiceNumber String?   @unique
-  invoiceSentAt DateTime?
-
-  createdAt DateTime @default(now())
-
-  @@index([userId])
-  @@index([molliePaymentId])
-  @@index([createdAt])
-}
-
-// Accessibility Assurance Subscription
-model AssuranceSubscription {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation("AssuranceSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
-
-  // Subscription tier
-  tier   AssuranceTier @default(BASIC)
-  status String        @default("active") // active, canceled, past_due, inactive
-
-  // Mollie integration (separate from main VexNexa subscription)
-  mollieSubscriptionId String? @unique
-  billingCycle         String  @default("monthly") // monthly, semiannual, annual
-
-  // Pricing
-  pricePerMonth Decimal @db.Decimal(10, 2)
-  totalPrice    Decimal @db.Decimal(10, 2)
-
-  // Tax / VAT audit trail
-  vatRate     Decimal? @db.Decimal(5, 4) // e.g. 0.2100
-  taxRegime   String?  // NL_VAT | EU_REVERSE_CHARGE | NON_EU_NO_VAT
-  countryCode String?  // ISO alpha-2 at time of purchase
-  vatId       String?  // VAT ID at time of purchase (if any)
-
-  // Lifecycle
-  activatedAt DateTime  @default(now())
-  canceledAt  DateTime?
-  expiresAt   DateTime?
-
-  // Relations
-  domains AssuranceDomain[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([userId, status])
-  @@index([tier])
-}
-
-// Monitored Domain Configuration
-model AssuranceDomain {
-  id             String                @id @default(cuid())
-  subscriptionId String
-  subscription   AssuranceSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-
-  // Domain details
-  domain String // e.g., "example.com" or "example.com/specific-page"
-  label  String? // User-friendly name (optional)
-
-  // Monitoring configuration
-  scanFrequency  AssuranceFrequency @default(WEEKLY)
-  scoreThreshold Int                @default(90) // Alert if score drops below this
-  active         Boolean            @default(true)
-  language       String             @default("en") // Report language: en/nl/fr/es/pt
-
-  // Email configuration (up to 5 recipients)
-  emailRecipients String[] // Array of email addresses
-
-  // Scheduling
-  dayOfWeek Int    @default(1) // 0-6 for weekly (1 = Monday default)
-  timeOfDay String @default("09:00") // HH:MM format
-
-  lastRunAt DateTime?
-  nextRunAt DateTime?
-
-  // Relations
-  scans   AssuranceScan[]
-  reports AssuranceReport[]
-  alerts  AssuranceAlert[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([subscriptionId, domain]) // One entry per domain per subscription
-  @@index([subscriptionId])
-  @@index([active, nextRunAt])
-  @@index([nextRunAt])
-}
-
-// Assurance Scan Results (linked to regular Scan table)
-model AssuranceScan {
-  id       String          @id @default(cuid())
-  domainId String
-  domain   AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
-
-  // Link to actual scan in main Scan table
-  scanId String
-  scan   Scan   @relation(fields: [scanId], references: [id], onDelete: Cascade)
-
-  // Snapshot metrics (denormalized for fast querying)
-  score             Int
-  wcagAACompliance  Float?
-  wcagAAACompliance Float?
-  issuesCount       Int
-  impactCritical    Int
-  impactSerious     Int
-  impactModerate    Int
-  impactMinor       Int
-
-  // Regression detection
-  previousScanId String?
-  previousScan   AssuranceScan?  @relation("ScanHistory", fields: [previousScanId], references: [id])
-  nextScans      AssuranceScan[] @relation("ScanHistory")
-
-  scoreChange  Int?     @default(0) // Difference from previous scan
-  isRegression Boolean  @default(false) // True if score dropped below threshold
-
-  createdAt DateTime @default(now())
-
-  @@index([domainId])
-  @@index([domainId, createdAt])
-  @@index([scanId])
-  @@index([isRegression])
-}
-
-// PDF Report Generation History
-model AssuranceReport {
-  id       String          @id @default(cuid())
-  domainId String
-  domain   AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
-
-  // Report metadata
-  scanId   String
-  pdfUrl   String // Stored in cloud storage (Vercel Blob)
-  language String // en/nl/fr/es/pt
-
-  // Content snapshot
-  score             Int
-  threshold         Int
-  trendData         Json // Last 4-8 scans for chart
-  wcagAACompliance  Float?
-  wcagAAACompliance Float?
-
-  // Delivery tracking
-  emailSentTo String[] // Recipients who received this report
-  sentAt      DateTime?
-
-  createdAt DateTime @default(now())
-
-  @@index([domainId])
-  @@index([domainId, createdAt])
-  @@index([scanId])
-}
-
-// Alert History (regressions, threshold violations)
-model AssuranceAlert {
-  id       String          @id @default(cuid())
-  domainId String
-  domain   AssuranceDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
-
-  // Alert type and severity
-  type     AssuranceAlertType
-  severity AssuranceAlertSeverity @default(MEDIUM)
-
-  // Alert details
-  title         String
-  message       String @db.Text
-  currentScore  Int
-  threshold     Int?
-  previousScore Int?
-
-  // Related scan
-  scanId String?
-
-  // Notification tracking
-  emailSentTo String[] // Recipients who were notified
-  sentAt      DateTime?
-
-  // Resolution
-  resolved   Boolean   @default(false)
-  resolvedAt DateTime?
-  resolvedBy String? // UserId who resolved it
-
-  createdAt DateTime @default(now())
-
-  @@index([domainId])
-  @@index([domainId, createdAt])
-  @@index([resolved])
-  @@index([type])
-}
-
-// ============================================
-// COUPON / PROMO CODE SYSTEM
-// ============================================
-
 enum CouponGrantType {
   PLAN_TRIAL
   PLAN_STARTER
@@ -1540,63 +1227,6 @@ enum CouponGrantType {
   PLAN_BUSINESS
   FREE_SCANS
 }
-
-model Coupon {
-  id          String          @id @default(cuid())
-  code        String          @unique // Uppercase promo code
-  name        String? // Human-friendly label
-  description String?
-
-  // What the coupon grants
-  grantType  CouponGrantType
-  grantValue String // e.g. "14" (trial days), "5" (scans), "PRO" (plan name)
-
-  // Limits
-  maxRedemptions Int? // null = unlimited
-  redeemedCount  Int  @default(0)
-  perUserLimit   Int  @default(1)
-
-  // Scheduling
-  startsAt  DateTime?
-  expiresAt DateTime?
-
-  // Status
-  isActive Boolean @default(true)
-
-  // Audit
-  createdBy String // Admin user ID
-
-  // Relations
-  redemptions CouponRedemption[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([code])
-  @@index([isActive])
-  @@index([createdBy])
-  @@index([expiresAt])
-}
-
-model CouponRedemption {
-  id       String @id @default(cuid())
-  couponId String
-  coupon   Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
-  userId   String
-
-  metadata Json? // Grant details snapshot
-
-  redeemedAt DateTime @default(now())
-
-  @@unique([couponId, userId]) // Enforces per-user limit of 1 (default); app logic handles > 1
-  @@index([couponId])
-  @@index([userId])
-  @@index([redeemedAt])
-}
-
-// ============================================
-// ASSURANCE SCHEDULING SYSTEM
-// ============================================
 
 enum ScheduleFrequency {
   DAILY
@@ -1608,75 +1238,4 @@ enum DeliverFormat {
   PDF
   PDF_AND_DOCX
   PDF_AND_HTML
-}
-
-model ScanSchedule {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation("UserScanSchedules", fields: [userId], references: [id], onDelete: Cascade)
-  siteId String
-  site   Site   @relation("SiteScanSchedules", fields: [siteId], references: [id], onDelete: Cascade)
-
-  // Toggle
-  isEnabled Boolean @default(true)
-
-  // Timezone (IANA)
-  timezone String @default("Europe/Amsterdam")
-
-  // Frequency
-  frequency  ScheduleFrequency @default(WEEKLY)
-  daysOfWeek Int[]             // 0-6 for weekly (0 = Sunday)
-  dayOfMonth Int?              // 1-31 for monthly
-  timeOfDay  String            @default("09:00") // HH:MM
-
-  // Date range
-  startsAt DateTime  @default(now())
-  endsAt   DateTime?
-
-  // Execution tracking
-  lastRunAt DateTime?
-  nextRunAt DateTime
-
-  // Delivery
-  recipients                 String[] // email addresses
-  deliverFormat              DeliverFormat @default(PDF)
-  includeExecutiveSummaryOnly Boolean      @default(false)
-
-  // Failure tracking (admin can disable after repeated failures)
-  consecutiveFailures Int @default(0)
-
-  // Relations
-  runs ScheduleRun[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([siteId])
-  @@index([isEnabled, nextRunAt])
-  @@index([nextRunAt])
-}
-
-model ScheduleRun {
-  id         String       @id @default(cuid())
-  scheduleId String
-  schedule   ScanSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
-
-  // Idempotency: the window this run covers (e.g. "2025-02-20T09:00:00Z")
-  windowKey String
-
-  status    String // pending | running | success | failed
-  error     String?
-  scanScore Int?
-
-  // Delivery tracking
-  emailSentAt DateTime?
-  emailId     String? // Resend message ID
-
-  startedAt   DateTime  @default(now())
-  completedAt DateTime?
-
-  @@unique([scheduleId, windowKey]) // Idempotency constraint
-  @@index([scheduleId])
-  @@index([status])
 }

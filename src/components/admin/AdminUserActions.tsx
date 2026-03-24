@@ -48,6 +48,7 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
   const [deleteReason, setDeleteReason] = useState('');
 
   const [loading, setLoading] = useState(false);
+  const [invoiceLoading, setInvoiceLoading] = useState(false);
 
   const isSuspended = currentStatus === 'suspended';
 
@@ -125,37 +126,41 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
   };
 
   const handleSendInvoice = async () => {
-    setLoading(true);
+    setInvoiceLoading(true);
     try {
       const response = await fetch('/api/admin/resend-invoice', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-admin-secret': process.env.NEXT_PUBLIC_ADMIN_SECRET || '',
         },
         body: JSON.stringify({ userId }),
       });
 
       const result = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || result.ok === false) {
         throw new Error(result.error || 'Failed to send invoice');
       }
 
+      // Show detailed success message
+      const successMsg = result.invoiceNumber && result.recipientEmail
+        ? `Invoice ${result.invoiceNumber} sent successfully to ${result.recipientEmail}`
+        : result.message || 'Invoice sent successfully';
+
       toast({
-        title: 'Invoice sent',
-        description: result.message || 'Invoice has been sent to the user',
+        title: '✅ Invoice Sent',
+        description: successMsg,
       });
       setSendInvoiceOpen(false);
     } catch (error) {
       console.error('Failed to send invoice:', error);
       toast({
         variant: 'destructive',
-        title: 'Error',
+        title: '❌ Failed to Send Invoice',
         description: error instanceof Error ? error.message : 'Failed to send invoice',
       });
     } finally {
-      setLoading(false);
+      setInvoiceLoading(false);
     }
   };
 
@@ -452,8 +457,15 @@ export function AdminUserActions({ userId, currentPlan, currentStatus }: AdminUs
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setSendInvoiceOpen(false)}>Cancel</Button>
-                <Button onClick={handleSendInvoice} disabled={loading}>
-                  {loading ? 'Sending...' : 'Send Invoice'}
+                <Button onClick={handleSendInvoice} disabled={invoiceLoading}>
+                  {invoiceLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Invoice'
+                  )}
                 </Button>
               </DialogFooter>
             </DialogContent>

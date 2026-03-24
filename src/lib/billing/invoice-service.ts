@@ -204,10 +204,15 @@ async function sendInvoiceEmail(opts: {
   invoiceData: InvoiceData;
   pdfBuffer: Buffer;
 }): Promise<{ data?: { id: string } } | null> {
+  console.log(`[Invoice] Preparing to send invoice ${opts.invoiceNumber} to ${opts.to}`);
+  
   if (!resend) {
-    console.warn('[Invoice] RESEND_API_KEY not configured, skipping email');
+    console.error('[Invoice] ❌ RESEND_API_KEY not configured - email will not be sent');
+    console.error('[Invoice] Check that RESEND_API_KEY environment variable is set');
     return null;
   }
+
+  console.log(`[Invoice] ✅ Resend client initialized, sending email...`);
 
   const { to, invoiceNumber, invoiceData, pdfBuffer } = opts;
 
@@ -220,6 +225,10 @@ async function sendInvoiceEmail(opts: {
 
   const billingCycleLabel =
     invoiceData.billingCycle === 'yearly' ? 'annual' : 'monthly';
+
+  console.log(`[Invoice] Sending email with from: VexNexa Billing <onboarding@resend.dev>`);
+  console.log(`[Invoice] Email subject: Your VexNexa Invoice — ${invoiceNumber}`);
+  console.log(`[Invoice] Attachment: invoice-${invoiceNumber}.pdf (${pdfBuffer.length} bytes)`);
 
   const result = await resend.emails.send({
     from: 'VexNexa Billing <onboarding@resend.dev>',
@@ -282,6 +291,13 @@ VexNexa B.V. · Netherlands · vexnexa.com
     ],
   });
 
+  if (result?.data?.id) {
+    console.log(`[Invoice] ✅ Email sent successfully! Provider ID: ${result.data.id}`);
+  } else {
+    console.error('[Invoice] ❌ Email send failed:', result);
+    console.error('[Invoice] Response:', JSON.stringify(result, null, 2));
+  }
+
   return result as { data?: { id: string } } | null;
 }
 
@@ -294,7 +310,9 @@ VexNexa B.V. · Netherlands · vexnexa.com
 export async function getLatestInvoiceQuoteForUser(
   userId: string
 ): Promise<{ id: string; invoiceNumber: string | null; invoiceSentAt: Date | null; product: string; plan: string | null; molliePaymentId: string | null; createdAt: Date } | null> {
-  return prisma.checkoutQuote.findFirst({
+  console.log(`[Invoice] Finding latest quote for user ${userId}`);
+  
+  const quote = await prisma.checkoutQuote.findFirst({
     where: { userId },
     orderBy: { createdAt: 'desc' },
     select: {
@@ -307,4 +325,12 @@ export async function getLatestInvoiceQuoteForUser(
       createdAt: true,
     },
   });
+
+  if (quote) {
+    console.log(`[Invoice] Found quote: ${quote.id}, product: ${quote.product}, plan: ${quote.plan}, invoiceNumber: ${quote.invoiceNumber}`);
+  } else {
+    console.log(`[Invoice] No quote found for user ${userId}`);
+  }
+
+  return quote;
 }
