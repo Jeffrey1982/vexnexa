@@ -85,7 +85,15 @@ function computeClientPrices(
   purchaseAs: PurchaseAs,
   vatStatus: VatStatus,
   billingCountry: string
-): { subtotal: number; vatRate: number; vatAmount: number; total: number; isReverseCharge: boolean } {
+): {
+  subtotal: number;
+  vatRate: number;
+  vatAmount: number;
+  total: number;
+  isReverseCharge: boolean;
+  publicGross: number;
+  vatRemoved: number;
+} {
   const gross =
     billingCycle === "yearly"
       ? (ANNUAL_PRICES[planKey] ?? 0)
@@ -95,7 +103,7 @@ function computeClientPrices(
   if (purchaseAs === "individual") {
     // Always NL 21% VAT
     const vatAmount = Math.round((gross - net) * 100) / 100;
-    return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false };
+    return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
   }
 
   // Company
@@ -105,23 +113,24 @@ function computeClientPrices(
 
   // Case: valid VAT + EU + not NL → reverse charge
   if (vatStatus === "valid" && isEU && !isNL) {
-    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: true };
+    const vatRemoved = Math.round((gross - net) * 100) / 100;
+    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: true, publicGross: gross, vatRemoved };
   }
 
   // Case: NL company, or EU company without valid VAT → 21% VAT
   if (isNL || (isEU && vatStatus !== "valid")) {
     const vatAmount = Math.round((gross - net) * 100) / 100;
-    return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false };
+    return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
   }
 
   // Case: non-EU company → 0% VAT
   if (!isEU && country.length === 2) {
-    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: false };
+    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
   }
 
   // Default: full VAT
   const vatAmount = Math.round((gross - net) * 100) / 100;
-  return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false };
+  return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
 }
 
 export function CheckoutDialog({
@@ -650,33 +659,44 @@ export function CheckoutDialog({
           {/* ── Price Summary ── */}
           {prices && (
             <div className="rounded-lg border border-border bg-muted/20 p-4 space-y-2.5">
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Subtotal (ex. VAT)</span>
-                <span className="font-medium">{formatEuro(prices.subtotal)}</span>
-              </div>
-
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">
-                  {prices.isReverseCharge
-                    ? "VAT (0%) – Reverse charge"
-                    : prices.vatRate > 0
-                      ? `VAT (${prices.vatRate}%)`
-                      : "No VAT"}
-                </span>
-                <span className="font-medium">
-                  {prices.vatAmount === 0 ? "\u2014" : formatEuro(prices.vatAmount)}
-                </span>
-              </div>
-
-              {prices.isReverseCharge && (
-                <p className="text-xs text-green-600 dark:text-green-400 italic flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3 shrink-0" />
-                  VAT reverse charge applies — you account for VAT
-                </p>
+              {prices.isReverseCharge ? (
+                <>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">Listed price (incl. VAT)</span>
+                    <span className="font-medium">{formatEuro(prices.publicGross)}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-green-600 dark:text-green-400">VAT removed (reverse charge)</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">
+                      -{formatEuro(prices.vatRemoved)}
+                    </span>
+                  </div>
+                  <p className="text-xs text-green-600 dark:text-green-400 italic flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 shrink-0" />
+                    Valid VAT number — VAT reverse charge applies
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">Subtotal (ex. VAT)</span>
+                    <span className="font-medium">{formatEuro(prices.subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">
+                      {prices.vatRate > 0
+                        ? `VAT (${prices.vatRate}%)`
+                        : "No VAT"}
+                    </span>
+                    <span className="font-medium">
+                      {prices.vatAmount === 0 ? "\u2014" : formatEuro(prices.vatAmount)}
+                    </span>
+                  </div>
+                </>
               )}
 
               <div className="border-t border-border pt-2.5 flex justify-between items-center">
-                <span className="text-sm font-semibold">Total</span>
+                <span className="text-sm font-semibold">Total to pay</span>
                 <span className="text-xl font-bold">{formatEuro(prices.total)}</span>
               </div>
 

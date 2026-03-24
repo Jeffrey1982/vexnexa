@@ -7,7 +7,7 @@ import {
   computeTaxDecision,
   calculateTaxBreakdown,
   formatTaxLineLabel,
-  type CustomerType,
+  toBillingCustomerType,
 } from "@/lib/tax/rules";
 import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
 
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Compute tax decision server-side
     const taxDecision = computeTaxDecision({
       customerCountry: billingProfile?.countryCode ?? "NL",
-      customerType: (billingProfile?.billingType ?? "individual") as CustomerType,
+      customerType: toBillingCustomerType(billingProfile?.billingType ?? "individual"),
       vatId: billingProfile?.vatId,
       vatIdValid: billingProfile?.vatValid,
       productType: "saas_subscription",

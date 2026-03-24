@@ -2,7 +2,7 @@ import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "../mollie"
 import { prisma } from "../prisma"
 import { PRICES, planKeyFromString } from "./plans"
 import { calculatePrice, type BillingCycle, type PlanKey } from "../pricing"
-import { computeTaxDecision, calculateTaxBreakdown, type TaxDecision, type CustomerType } from "../tax/rules"
+import { computeTaxDecision, calculateTaxBreakdown, toBillingCustomerType, type TaxDecision, type CustomerType } from "../tax/rules"
 import { grossToNet, BASE_VAT_RATE } from "../pricing/vat-math"
 import type { Plan } from "@prisma/client"
 import type { PaymentCreateParams } from "@mollie/api-client"
@@ -181,7 +181,7 @@ export async function createUpgradePayment(opts: {
     // Compute tax decision server-side
     const taxDecision = computeTaxDecision({
       customerCountry: billingProfile?.countryCode ?? 'NL',
-      customerType: (billingProfile?.billingType ?? 'individual') as CustomerType,
+      customerType: toBillingCustomerType(billingProfile?.billingType ?? 'individual'),
       vatId: billingProfile?.vatId,
       vatIdValid: billingProfile?.vatValid,
       productType: 'saas_subscription',
@@ -352,7 +352,7 @@ export async function createSubscription(opts: {
 
   const taxDecision = computeTaxDecision({
     customerCountry: billingProfile?.countryCode ?? 'NL',
-    customerType: (billingProfile?.billingType ?? 'individual') as CustomerType,
+    customerType: toBillingCustomerType(billingProfile?.billingType ?? 'individual'),
     vatId: billingProfile?.vatId,
     vatIdValid: billingProfile?.vatValid,
     productType: 'saas_subscription',

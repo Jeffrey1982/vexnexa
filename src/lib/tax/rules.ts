@@ -23,6 +23,18 @@ import { getVatRate, getVatRateLabel, MERCHANT_COUNTRY } from "./vat-rates";
 
 export type CustomerType = "individual" | "company";
 
+/**
+ * Map a billing profile's `billingType` ("business" | "individual") to the
+ * `CustomerType` expected by `computeTaxDecision` ("company" | "individual").
+ *
+ * The BillingProfile stores "business" for companies, but the tax engine
+ * checks for "company". This helper centralises the mapping so callers
+ * don't need an unsafe `as CustomerType` cast.
+ */
+export function toBillingCustomerType(billingType: string): CustomerType {
+  return billingType === "business" ? "company" : "individual";
+}
+
 export type TaxMode = "vat_standard" | "reverse_charge" | "no_tax";
 
 export interface TaxDecision {

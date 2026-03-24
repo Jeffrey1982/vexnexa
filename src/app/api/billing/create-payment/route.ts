@@ -9,7 +9,7 @@ import {
   computeTaxDecision,
   calculateTaxBreakdown,
   formatTaxLineLabel,
-  type CustomerType,
+  toBillingCustomerType,
 } from "@/lib/tax/rules";
 import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
 import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "@/lib/mollie";
@@ -105,8 +105,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         fieldErrors.companyName = "Company name is required";
       if (!billingCountry?.trim() || billingCountry.length !== 2)
         fieldErrors.billingCountry = "Billing country is required (ISO2)";
-      if (!registrationNumber?.trim())
-        fieldErrors.registrationNumber = "Registration number is required";
       if (!vatId?.trim()) fieldErrors.vatId = "VAT / Tax number is required";
 
       if (Object.keys(fieldErrors).length > 0) {
@@ -147,7 +145,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const taxDecision = computeTaxDecision({
       customerCountry: billingProfile.countryCode,
-      customerType: billingProfile.billingType as CustomerType,
+      customerType: toBillingCustomerType(billingProfile.billingType),
       vatId: billingProfile.vatId ?? undefined,
       vatIdValid: billingProfile.vatValid,
       productType: "saas_subscription",
