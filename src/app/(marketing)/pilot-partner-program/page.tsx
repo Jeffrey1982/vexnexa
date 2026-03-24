@@ -121,7 +121,7 @@ const expectations: { title: string; description: string }[] = [
 ];
 
 const agencyBenefits: string[] = [
-  "Scan any client URL and get a structured WCAG 2.2 report in minutes",
+  "Run scans on client websites and get a structured WCAG 2.2 report in minutes",
   "Export branded PDF and DOCX reports with your agency logo and colours",
   "Prioritise issues by severity so clients know where to start",
   "Schedule recurring scans to monitor accessibility over time",
@@ -146,7 +146,7 @@ const processSteps: { step: string; title: string; description: string }[] = [
     step: "3",
     title: "Get access and onboarding",
     description:
-      "Once accepted, we help you set up your first scan, configure monitoring, and get comfortable with reporting.",
+      "Once accepted, you'll scan a live site, review your first report, and configure monitoring — with hands-on support.",
   },
   {
     step: "4",
@@ -194,7 +194,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 size="lg"
                 className="gradient-primary text-white"
               >
-                Apply for the pilot program
+                Apply for pilot access
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </TrackedCTA>
               <TrackedCTA
@@ -210,7 +210,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
 
             <p className="text-sm text-muted-foreground pt-2">
               Limited pilot spots. Best fit for agencies, institutions, and
-              teams managing live websites.
+              teams managing live websites. Start with one site — no long-term commitment.
             </p>
           </div>
         </div>
@@ -255,8 +255,8 @@ export default function PilotPartnerProgramPage(): JSX.Element {
               What pilot partners get
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to evaluate VexNexa for your team — with
-              direct support to help you get started.
+              Start with one live site, run your first scan, and see the
+              full reporting workflow — with direct support from the VexNexa team.
             </p>
           </div>
 
@@ -437,7 +437,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
             </h2>
             <p className="text-lg opacity-90 max-w-2xl mx-auto">
               Tell us about your team and what you're looking for. We review
-              every application and respond within a few working days.
+              every application and aim to respond within 1 business day.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
@@ -448,7 +448,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 size="lg"
                 className="bg-white text-primary hover:bg-white/90"
               >
-                Apply for the pilot program
+                Apply for pilot access
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </TrackedCTA>
               <TrackedCTA
@@ -469,7 +469,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 variant="outline"
                 className="border-white/30 text-white hover:bg-white/10"
               >
-                Contact us
+                Ask a question
               </TrackedCTA>
             </div>
           </div>
