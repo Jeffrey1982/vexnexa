@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import AuthButton from "@/components/auth/AuthButton";
 import { createClient } from "@/lib/supabase/client-new";
 import { User } from "@supabase/supabase-js";
+import { trackEvent } from "@/lib/analytics-events";
 import {
   Sheet,
   SheetContent,
@@ -65,9 +66,7 @@ export function Navbar({ className }: NavbarProps) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCtaClick = (location: string) => {
-    if (typeof window !== 'undefined' && window.va) {
-      window.va.track("cta_click", { location });
-    }
+    trackEvent("cta_click", { location });
   };
 
   return (

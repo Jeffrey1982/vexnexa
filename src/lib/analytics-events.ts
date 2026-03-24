@@ -34,9 +34,12 @@ interface TrackOptions {
  * Safe to call server-side (no-ops gracefully).
  */
 export function trackEvent(event: FunnelEvent, options?: TrackOptions): void {
-  if (typeof window === 'undefined') return;
-  // Vercel Analytics
-  if (window.va && typeof window.va.track === 'function') {
-    window.va.track(event, options ?? {});
+  try {
+    if (typeof window === 'undefined') return;
+    if (window.va && typeof window.va.track === 'function') {
+      window.va.track(event, options ?? {});
+    }
+  } catch {
+    // Analytics must never crash the UI
   }
 }
