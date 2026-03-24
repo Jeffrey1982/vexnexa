@@ -1,6 +1,6 @@
 import { AddOnType } from "@prisma/client"
 
-// Add-on pricing configuration
+// Add-on pricing configuration (EUR, incl. NL 21% VAT — same as plan prices)
 export const ADDON_PRICING: Record<AddOnType, {
   pricePerUnit: number;
   currency: string;
