@@ -4,24 +4,22 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Check,
   ArrowRight,
   Zap,
-  Target,
   Shield,
   Users,
-  TrendingUp,
   FileText,
   Bell,
-  Code,
   Eye,
-  Gauge,
+  RefreshCw,
+  Building2,
+  Globe,
+  BarChart3,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { FAQ } from "@/components/marketing/FAQ";
-import { useTranslations } from "next-intl";
+import { trackEvent } from "@/lib/analytics-events";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -29,7 +27,7 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "VexNexa",
-    description: "Advanced web accessibility and compliance scanner with coverage beyond traditional WCAG checks",
+    description: "White-label WCAG monitoring for agencies and EU-facing teams. Scan websites, catch regressions, deliver branded reports.",
     url: "https://vexnexa.com",
     logo: "https://vexnexa.com/brand/vexnexa-logo.png",
     sameAs: [
@@ -52,18 +50,10 @@ function JsonLd() {
   );
 }
 
-// Hero Section
+// 1. Hero Section — outcome-led
 function HeroSection() {
-  const t = useTranslations('home.hero');
-  const handleCtaClick = (location: string) => {
-    if (typeof window !== 'undefined' && window.va) {
-      window.va.track("cta_click", { location });
-    }
-  };
-
   return (
     <section className="relative py-20 lg:py-32 overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -71,17 +61,16 @@ function HeroSection() {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left column - Text content */}
           <div className="text-center lg:text-left space-y-8">
             <h1 className="animate-slide-up text-4xl lg:text-5xl xl:text-6xl font-bold font-display tracking-tight leading-tight">
-              {t('title')}{" "}
+              White-label WCAG monitoring for{" "}
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                {t('titleHighlight')}
+                agencies and EU-facing teams
               </span>
             </h1>
 
             <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              {t('subtitle')}
+              Scan websites, catch accessibility regressions after every release, and deliver branded reports that support WCAG 2.2 and EAA readiness.
             </p>
 
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
@@ -92,10 +81,10 @@ function HeroSection() {
               >
                 <Link
                   href="/auth/register"
-                  onClick={() => handleCtaClick("hero_primary")}
+                  onClick={() => trackEvent("homepage_cta_primary_click", { location: "hero" })}
                 >
                   <span className="relative z-10 flex items-center">
-                    {t('ctaPrimary')}
+                    Start your free scan
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
@@ -108,24 +97,26 @@ function HeroSection() {
                 className="button-hover border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 px-8 py-6 text-base"
                 asChild
               >
-                <Link href="/pricing">
-                  {t('ctaSecondary')}
+                <Link
+                  href="/sample-report"
+                  onClick={() => trackEvent("homepage_cta_sample_report_click")}
+                >
+                  View sample report
                 </Link>
               </Button>
             </div>
 
             <p className="animate-fade-in text-sm text-muted-foreground pt-4">
-              {t('noCreditCard')}
+              Free account required. No credit card needed.
             </p>
           </div>
 
-          {/* Right column - Dashboard screenshot */}
           <div className="relative animate-fade-in">
             <div className="relative z-10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/heroImage.webp"
-                alt={t('imageAlt')}
+                alt="VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
                 className="aspect-square lg:aspect-[4/3] rounded-3xl border border-primary/20 w-full h-full object-cover"
                 style={{
                   boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 12px 24px -8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -141,52 +132,75 @@ function HeroSection() {
   );
 }
 
-// Value Pillars Section
-function ValuePillarsSection() {
-  const t = useTranslations('home.valuePillars');
-  const pillars = [
+// 2. Trust / value strip
+function TrustStrip() {
+  const items = [
+    { icon: Zap, text: "Automated checks in minutes" },
+    { icon: FileText, text: "Branded reports for clients and stakeholders" },
+    { icon: Bell, text: "Continuous monitoring for live websites" },
+  ];
+
+  return (
+    <section className="py-10 bg-muted/30 border-y">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {items.map((item, i) => (
+            <div key={i} className="flex items-center justify-center gap-3 text-center md:text-left">
+              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <item.icon className="h-5 w-5 text-primary" />
+              </div>
+              <span className="text-sm font-medium">{item.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 3. Why teams choose VexNexa — outcome-focused cards
+function WhyTeamsSection() {
+  const outcomes = [
     {
       icon: Eye,
-      title: t('deeper.title'),
-      description: t('deeper.description'),
+      title: "Catch issues before clients do",
+      description: "Run scans against WCAG 2.2 criteria and see prioritized issues with element-level detail. Fix what matters most first.",
     },
     {
       icon: FileText,
-      title: t('actionable.title'),
-      description: t('actionable.description'),
+      title: "Turn scans into white-label reports",
+      description: "Export branded PDF and DOCX reports under your own logo. Share professional accessibility reports with clients and stakeholders.",
     },
     {
-      icon: Bell,
-      title: t('monitoring.title'),
-      description: t('monitoring.description'),
-    },
-    {
-      icon: Users,
-      title: t('teamReady.title'),
-      description: t('teamReady.description'),
+      icon: RefreshCw,
+      title: "Monitor accessibility after every release",
+      description: "Schedule recurring scans. Get alerted when scores drop or new critical issues appear. Prevent regressions from reaching production.",
     },
   ];
 
   return (
-    <section className="py-20 bg-gradient-subtle">
+    <section className="py-20">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {pillars.map((pillar, index) => (
-            <Card
-              key={index}
-              className="text-center interactive-hover border-0 shadow-elegant bg-card/80 backdrop-blur-sm group"
-            >
-              <CardContent className="p-8 h-full flex flex-col">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:scale-110">
-                    <pillar.icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
-                  </div>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+            Why teams choose VexNexa
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Operational accessibility tooling that fits into how you already work.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {outcomes.map((outcome, i) => (
+            <Card key={i} className="interactive-hover border-0 shadow-elegant bg-card/80 backdrop-blur-sm group">
+              <CardContent className="p-8 space-y-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                  <outcome.icon className="h-7 w-7 text-primary" />
                 </div>
-                <h2 className="text-xl font-semibold font-display mb-4 group-hover:text-primary transition-colors">
-                  {pillar.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed flex-1">
-                  {pillar.description}
+                <h3 className="text-xl font-semibold font-display group-hover:text-primary transition-colors">
+                  {outcome.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {outcome.description}
                 </p>
               </CardContent>
             </Card>
@@ -197,18 +211,70 @@ function ValuePillarsSection() {
   );
 }
 
-// Feature Details Section
-function FeaturesSection() {
-  const t = useTranslations('home.featuresSection');
-  const features = [
-    t('features.category1'),
-    t('features.category2'),
-    t('features.category3'),
-    t('features.category4'),
-    t('features.category5'),
-    t('features.category6'),
-    t('features.category7'),
-    t('features.category8'),
+// 4. Built for agencies and EU-facing teams
+function BuiltForSection() {
+  const audiences = [
+    {
+      icon: Building2,
+      title: "Agencies and web studios",
+      description: "Scan client sites, export branded reports, and deliver ongoing monitoring as a service. Manage multiple client projects from one dashboard.",
+    },
+    {
+      icon: Shield,
+      title: "In-house compliance teams",
+      description: "Track accessibility across your organisation. Schedule scans after every deployment. Build evidence of ongoing accessibility oversight for EAA readiness.",
+    },
+    {
+      icon: Globe,
+      title: "Partners managing multiple sites",
+      description: "Monitor accessibility across a portfolio of websites. Catch regressions early. Deliver clear, prioritized reports to stakeholders.",
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gradient-subtle">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+            Built for agencies and EU-facing teams
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Whether you manage one site or fifty, VexNexa gives you the workflow tools to deliver accessible websites.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {audiences.map((audience, i) => (
+            <Card key={i} className="border-0 shadow-elegant bg-card/80 backdrop-blur-sm group interactive-hover">
+              <CardContent className="p-8 space-y-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                  <audience.icon className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold font-display group-hover:text-primary transition-colors">
+                  {audience.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {audience.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 5. What you get — workflow outcomes
+function WhatYouGetSection() {
+  const capabilities = [
+    "WCAG 2.2 AA scanning with axe-core engine",
+    "Severity-ranked issues: Critical, Serious, Moderate, Minor",
+    "PDF and DOCX export with white-label branding",
+    "Continuous monitoring with scheduled scans",
+    "Score regression alerts via email",
+    "Multi-site management from one dashboard",
+    "Team collaboration with role-based access",
+    "EU-hosted, GDPR compliant infrastructure",
   ];
 
   return (
@@ -217,25 +283,25 @@ function FeaturesSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              {t('title')}{" "}
-              <span className="text-primary">{t('titleHighlight')}</span>
+              What you get with{" "}
+              <span className="text-primary">VexNexa</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              {t('subtitle')}
+              Everything you need to scan, report, and monitor — without the noise.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start space-x-3">
+              {capabilities.map((cap, i) => (
+                <div key={i} className="flex items-start space-x-3">
                   <Check className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{feature}</span>
+                  <span className="text-sm">{cap}</span>
                 </div>
               ))}
             </div>
 
             <Button asChild className="mt-6 gradient-primary text-white hover:opacity-90" size="lg">
               <Link href="/auth/register">
-                {t('cta')}
+                Start your free scan
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -250,7 +316,7 @@ function FeaturesSection() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/Screenshot1.png"
-                alt={t('imageAlt')}
+                alt="VexNexa scan results showing prioritized accessibility issues with remediation tips"
                 className="w-full h-80 lg:h-96 rounded-xl object-cover"
                 style={{
                   boxShadow: '0 10px 20px -6px rgba(0, 0, 0, 0.2)'
@@ -264,58 +330,60 @@ function FeaturesSection() {
   );
 }
 
-// CTA Band
-function CTABand() {
-  const t = useTranslations('home.ctaBand');
+// 6. See what a report looks like
+function SampleReportSection() {
   return (
-    <section className="py-12 bg-muted/30 border-y">
+    <section className="py-20 bg-muted/30 border-y">
       <div className="container mx-auto px-4 text-center">
-        <h3 className="text-2xl font-bold font-display mb-4">
-          {t('title')}
-        </h3>
-        <Button size="lg" asChild className="gradient-primary">
-          <Link href="/auth/register">
-            {t('cta')}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </Button>
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+            See what a report looks like
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Professional, structured, and ready to share with clients or stakeholders. Browse a real sample report with accessibility scores, prioritized issues, and remediation guidance.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Button size="lg" asChild className="gradient-primary text-white">
+              <Link
+                href="/sample-report"
+                onClick={() => trackEvent("homepage_cta_sample_report_click", { location: "section" })}
+              >
+                View sample report
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/white-label-accessibility-reports">
+                Learn about white-label reports
+              </Link>
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-// Solutions Section — links to SEO landing pages
-function SolutionsSection() {
-  const solutions: { href: string; title: string; desc: string; icon: typeof Target }[] = [
+// 7. How VexNexa fits your workflow
+function WorkflowSection() {
+  const steps = [
     {
-      href: "/wcag-scan",
-      title: "WCAG Scanner",
-      desc: "Scan any page against WCAG 2.1 and 2.2 criteria. Severity-ranked violations with element-level detail.",
-      icon: Target,
+      step: "1",
+      icon: BarChart3,
+      title: "Scan a site",
+      description: "Enter a URL. Get a full WCAG 2.2 audit in minutes with severity-ranked issues and element-level context.",
     },
     {
-      href: "/website-accessibility-checker",
-      title: "Accessibility Checker",
-      desc: "Go beyond pass/fail. See exactly which issues are critical and which elements are affected.",
+      step: "2",
       icon: Eye,
+      title: "Review prioritized issues",
+      description: "See exactly what is wrong, why it matters, and how to fix it. Filter by severity, WCAG criterion, or page element.",
     },
     {
-      href: "/wcag-compliance-report",
-      title: "Compliance Reports",
-      desc: "Executive-ready PDF and DOCX reports with health scores, WCAG matrices, and fix priorities.",
+      step: "3",
       icon: FileText,
-    },
-    {
-      href: "/white-label-accessibility-reports",
-      title: "White-Label Reports",
-      desc: "Deliver branded accessibility reports under your own logo. Built for agencies and consultants.",
-      icon: Gauge,
-    },
-    {
-      href: "/accessibility-monitoring-agencies",
-      title: "Agency Monitoring",
-      desc: "Track WCAG compliance across client sites continuously. Catch regressions before your clients do.",
-      icon: Bell,
+      title: "Share reports and monitor over time",
+      description: "Export branded reports. Schedule recurring scans. Get notified when scores change. Build a continuous improvement loop.",
     },
   ];
 
@@ -324,29 +392,22 @@ function SolutionsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            Accessibility Tools for Every Workflow
+            How VexNexa fits your workflow
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Whether you need a quick scan, ongoing monitoring, or client-ready reports — VexNexa has you covered.
+            Scan, review, report. Repeat as your sites evolve.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {solutions.map((sol) => (
-            <Link key={sol.href} href={sol.href} className="group">
-              <Card className="h-full interactive-hover border-0 shadow-elegant bg-card/80 backdrop-blur-sm">
-                <CardContent className="p-6 space-y-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all">
-                    <sol.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold font-display group-hover:text-primary transition-colors">
-                    {sol.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {sol.desc}
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {steps.map((s, i) => (
+            <div key={i} className="text-center space-y-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto shadow-soft">
+                <s.icon className="h-8 w-8 text-white" />
+              </div>
+              <div className="text-sm font-medium text-primary">Step {s.step}</div>
+              <h3 className="text-xl font-semibold font-display">{s.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{s.description}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -354,9 +415,8 @@ function SolutionsSection() {
   );
 }
 
-// Final CTA Section
+// 9. Final CTA Section
 function FinalCTASection() {
-  const t = useTranslations('home.finalCta');
   return (
     <section className="py-20 gradient-primary text-primary-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-10" aria-hidden="true">
@@ -367,22 +427,25 @@ function FinalCTASection() {
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display animate-slide-up">
-            {t('title')}
+          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+            Start monitoring accessibility today
           </h2>
-          <p className="text-xl animate-slide-up leading-relaxed">
-            {t('subtitle')}
+          <p className="text-xl leading-relaxed">
+            Create your free account. Run your first scan. See results in minutes. Upgrade when you need monitoring, reports, and multi-site management.
           </p>
 
-          <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button
               size="lg"
               variant="secondary"
               className="button-hover bg-white text-primary hover:bg-white/90 shadow-soft px-8 py-6 text-base"
               asChild
             >
-              <Link href="/auth/register">
-                {t('ctaPrimary')}
+              <Link
+                href="/auth/register"
+                onClick={() => trackEvent("homepage_cta_primary_click", { location: "final" })}
+              >
+                Start your free scan
                 <Zap className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -393,8 +456,8 @@ function FinalCTASection() {
               className="button-hover bg-transparent border-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:border-primary-foreground px-8 py-6 text-base"
               asChild
             >
-              <Link href="/contact">
-                {t('ctaSecondary')}
+              <Link href="/pricing">
+                View pricing
               </Link>
             </Button>
           </div>
@@ -406,8 +469,6 @@ function FinalCTASection() {
 
 // Main Page Component
 export default function HomePage() {
-  const tFaq = useTranslations('home.faq');
-
   useEffect((): void => {
     if (typeof window === 'undefined') return;
 
@@ -423,33 +484,30 @@ export default function HomePage() {
     }
   }, []);
 
-  // REMOVED: Fake client logos and testimonials per brand guidelines
-  // VexNexa is pre-launch and cannot make false claims about enterprise clients
-
   const faqItems = [
     {
-      question: tFaq('q1.question'),
-      answer: tFaq('q1.answer'),
+      question: "Can VexNexa guarantee legal compliance?",
+      answer: "No tool can guarantee 100% legal compliance. VexNexa detects and reports accessibility issues, helps prioritize fixes, and supports WCAG and EAA readiness. For legal risk assessment, consider combining automated scanning with expert review.",
     },
     {
-      question: tFaq('q2.question'),
-      answer: tFaq('q2.answer'),
+      question: "Do I need an account to scan?",
+      answer: "Yes, a free account is required. This lets us save your results, provide exports, and track improvements over time. No credit card needed to get started.",
     },
     {
-      question: tFaq('q3.question'),
-      answer: tFaq('q3.answer'),
+      question: "Can I export branded reports for clients?",
+      answer: "Yes. PDF and DOCX exports are available on paid plans. Business and Enterprise plans include white-label reports with your own logo, colours, and contact details.",
     },
     {
-      question: tFaq('q4.question'),
-      answer: tFaq('q4.answer'),
+      question: "How does continuous monitoring work?",
+      answer: "Schedule automatic scans daily, weekly, or monthly. VexNexa alerts you via email when scores drop or new critical issues appear. Track trends over time from your dashboard.",
     },
     {
-      question: tFaq('q5.question'),
-      answer: tFaq('q5.answer'),
+      question: "Is VexNexa an accessibility overlay?",
+      answer: "No. We scan your code structure and report real WCAG violations. We never inject widgets or scripts into your site. Our reports help developers fix issues at the source.",
     },
     {
-      question: tFaq('q6.question'),
-      answer: tFaq('q6.answer'),
+      question: "What support is available?",
+      answer: "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times.",
     },
   ];
 
@@ -457,10 +515,12 @@ export default function HomePage() {
     <>
       <JsonLd />
       <HeroSection />
-      <ValuePillarsSection />
-      <FeaturesSection />
-      <CTABand />
-      <SolutionsSection />
+      <TrustStrip />
+      <WhyTeamsSection />
+      <BuiltForSection />
+      <WhatYouGetSection />
+      <SampleReportSection />
+      <WorkflowSection />
       <FAQ items={faqItems} />
       <FinalCTASection />
     </>

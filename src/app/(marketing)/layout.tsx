@@ -7,15 +7,15 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
-    default: 'VexNexa - The secure gateway to web accessibility',
+    default: 'VexNexa — White-Label WCAG Monitoring for Agencies & EU-Facing Teams',
     template: '%s | VexNexa'
   },
-  description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring. Start your free scan today.',
-  keywords: 'WCAG, accessibility, web accessibility, axe-core, accessibility testing, compliance, WCAG 2.1, accessibility scanner, a11y',
-  authors: [{ name: 'Vexnexa' }],
+  description: 'Scan websites for WCAG 2.2 issues, catch accessibility regressions, and deliver branded reports. Continuous monitoring for agencies, compliance teams, and EU-facing businesses.',
+  keywords: 'WCAG monitoring, accessibility scanner, white-label accessibility reports, EAA compliance, WCAG 2.2, agency accessibility tool, continuous monitoring, accessibility audit',
+  authors: [{ name: 'VexNexa' }],
   openGraph: {
-    title: 'VexNexa - The secure gateway to web accessibility',
-    description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring.',
+    title: 'VexNexa — White-Label WCAG Monitoring for Agencies & EU-Facing Teams',
+    description: 'Scan websites for WCAG 2.2 issues, catch regressions, and deliver branded reports. Built for agencies and EU-facing teams.',
     url: 'https://vexnexa.com',
     siteName: 'VexNexa',
     type: 'website',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VexNexa - The secure gateway to web accessibility',
-    description: 'Automated scanning + 8 extra categories beyond traditional WCAG checks. Clear reports, quick fixes, continuous monitoring.',
+    title: 'VexNexa — White-Label WCAG Monitoring for Agencies & EU-Facing Teams',
+    description: 'Scan websites for WCAG 2.2 issues, catch regressions, and deliver branded reports. Built for agencies and EU-facing teams.',
     creator: '@vexnexa',
   },
   alternates: {

@@ -186,17 +186,20 @@ export function Footer({ className }: FooterProps) {
               <div className="space-y-4">
                 <h3 className="font-semibold text-lg">Solutions</h3>
                 <div className="flex flex-col space-y-3 text-sm">
-                  <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
-                    WCAG Scanner
+                  <Link href="/for-agencies" className="text-muted-foreground hover:text-primary transition-colors">
+                    For Agencies
                   </Link>
-                  <Link href="/website-accessibility-checker" className="text-muted-foreground hover:text-primary transition-colors">
-                    Accessibility Checker
-                  </Link>
-                  <Link href="/wcag-compliance-report" className="text-muted-foreground hover:text-primary transition-colors">
-                    Compliance Reports
+                  <Link href="/eaa-compliance-monitoring" className="text-muted-foreground hover:text-primary transition-colors">
+                    EAA Monitoring
                   </Link>
                   <Link href="/white-label-accessibility-reports" className="text-muted-foreground hover:text-primary transition-colors">
                     White-Label Reports
+                  </Link>
+                  <Link href="/sample-report" className="text-muted-foreground hover:text-primary transition-colors">
+                    Sample Report
+                  </Link>
+                  <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
+                    WCAG Scanner
                   </Link>
                   <Link href="/accessibility-monitoring-agencies" className="text-muted-foreground hover:text-primary transition-colors">
                     Agency Monitoring

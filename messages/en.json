@@ -55,10 +55,10 @@
     "hero": {
       "title": "Instant accessibility audits.",
       "titleHighlight": "No overlays. No sales calls.",
-      "subtitle": "Fast WCAG scanning for developers and agencies who need real data, not widget band-aids.",
+      "subtitle": "Scan websites, catch accessibility regressions after every release, and deliver branded reports that support WCAG 2.2 and EAA readiness.",
       "ctaPrimary": "Start free scan",
       "ctaSecondary": "See pricing",
-      "noCreditCard": "Instant scan. Free account required.",
+      "noCreditCard": "Free account required. No credit card needed.",
       "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
     },
     "valuePillars": {
@@ -418,7 +418,7 @@
     },
     "cta": {
       "title": "Start scanning today",
-      "subtitle": "Start with a free trial and upgrade when you need more functionality. No setup fees, no surprises.",
+      "subtitle": "Start with a free trial. Upgrade when you need continuous monitoring, branded reports, or multi-site management.",
       "startTrial": "Start free scan",
       "needMore": "Need higher limits?",
       "contactUs": "Contact us"
@@ -440,13 +440,13 @@
       "email": {
         "title": "E-mail Support",
         "description": "For general questions and support",
-        "detail": "Response time: 24–72 hours",
+        "detail": "We aim to respond within 1 business day",
         "actionLabel": "info@vexnexa.com"
       },
       "sales": {
         "title": "Enterprise & Higher Limits",
         "description": "For larger teams or custom requirements",
-        "detail": "Response within 1-2 business days",
+        "detail": "We aim to respond within 1 business day",
         "actionLabel": "Request information"
       },
       "location": {
@@ -507,15 +507,15 @@
       "subtitle": "Quick answers to the most common questions",
       "q1": {
         "question": "How quickly will I get a response?",
-        "answer": "We respond within 24 hours on business days. For Team demos and sales we try to respond within 4 hours."
+        "answer": "We aim to respond within 1 business day. For enterprise or sales inquiries we prioritise faster turnaround."
       },
       "q2": {
         "question": "Can you give a custom demo?",
         "answer": "Certainly. We'd be happy to give a personal demo using your own website as an example. Schedule a 30-minute call via the form or the 'Schedule a call' button."
       },
       "q3": {
-        "question": "Do you offer training and consultancy?",
-        "answer": "We respond within 24-48 hours on business days for enterprise inquiries. For general support, use our in-app help or email support."
+        "question": "Do you offer training or consultancy?",
+        "answer": "We can provide guided onboarding and platform walkthroughs. For ongoing consultancy or custom accessibility audits, contact us to discuss your needs."
       },
       "q4": {
         "question": "How does enterprise support work?",
@@ -560,7 +560,7 @@
       "features": {
         "secure": "Secure authentication",
         "fast": "Lightning fast scans",
-        "support": "24/7 support available"
+        "support": "Email support included"
       }
     },
     "register": {
@@ -713,8 +713,8 @@
     "monitoring": {
       "title": "Continuous Monitoring",
       "description": "Track accessibility changes and get notified of regressions",
-      "comingSoon": "Monitoring Coming Soon",
-      "comingSoonDescription": "Automated monitoring will track your websites and alert you when accessibility scores drop or new issues are detected.",
+      "comingSoon": "Monitoring Available",
+      "comingSoonDescription": "Automated monitoring tracks your websites and alerts you when accessibility scores drop or new issues are detected.",
       "configureNotifications": "Configure Notifications",
       "upgradePlan": "Upgrade Plan",
       "scheduledScans": {
@@ -958,7 +958,7 @@
         },
         "q6": {
           "question": "Can I try VexNexa for free?",
-          "answer": "Yes. You get one free scan weekly. Registration required; no credit card needed."
+          "answer": "Yes. Create a free account to run your first scan. No credit card needed. Upgrade to a paid plan for continuous monitoring and advanced features."
         }
       }
     },
@@ -1001,12 +1001,12 @@
     "upcoming": {
       "crawling": {
         "title": "Site-wide Crawling",
-        "badge": "Coming Soon",
+        "badge": "Beta",
         "description": "Scan complete websites at once. Get an overview of accessibility issues across your entire site and prioritize fixes based on impact."
       },
       "teamFeatures": {
         "title": "Team Features",
-        "badge": "In Development",
+        "badge": "Live",
         "features": [
           "Team accounts with multiple users",
           "Shared scans and reports",
@@ -1113,7 +1113,7 @@
       "badge": "✨ All features",
       "title": "Everything you need for",
       "titleHighlight": "WCAG compliance",
-      "subtitle": "From quick scans to complete site analyses. Dashboard, exports, priorities and soon team collaboration.",
+      "subtitle": "Dashboard, branded exports, team collaboration, continuous monitoring, and actionable WCAG reports.",
       "cta": "Start free scan"
     },
     "priorities": {
@@ -1181,8 +1181,8 @@
       }
     },
     "upcoming": {
-      "title": "Coming Soon",
-      "subtitle": "We're working hard on new features to make your workflow even better",
+      "title": "Platform Roadmap",
+      "subtitle": "New capabilities we are actively building and shipping",
       "crawling": {
         "title": "Site-wide Crawling",
         "status": "Beta",
@@ -1190,17 +1190,17 @@
       },
       "monitoring": {
         "title": "Alerts & Monitoring",
-        "status": "Q1 2024",
+        "status": "Live",
         "description": "Automatic notifications for new issues or score changes."
       },
       "integrations": {
         "title": "Jira & Linear Integrations",
-        "status": "Q2 2024",
+        "status": "Beta",
         "description": "Export issues directly to your project management tools."
       },
       "team": {
         "title": "Team Collaboration",
-        "status": "Q2 2024",
+        "status": "Live",
         "description": "Invite team members and share scans within your organization."
       },
       "noMissUpdates": "Don't miss updates of new features",
@@ -1227,18 +1227,18 @@
       },
       "account": {
         "question": "Do I need an account or can I create teams?",
-        "answer": "For basic use, no account is needed - you can scan directly. For advanced features like saved scans, exports and team collaboration, you can create a free account."
+        "answer": "A free account is required to run scans. This lets us save your results, provide exports, and track improvements over time. No credit card needed to get started."
       },
       "support": {
         "question": "What kind of support do I get?",
-        "answer": "All users get email support. Free plan: 72 hour response time. Pro plan: 24 hours. Team plan: priority support within 4 hours. Plus extensive documentation and video tutorials."
+        "answer": "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times."
       },
       "moreQuestions": "Have other questions?",
       "contactUs": "Contact us"
     },
     "cta": {
       "title": "Ready to get started?",
-      "subtitle": "Start improving your website's accessibility today. Free for 1 scan per week (registration required).",
+      "subtitle": "Start scanning your site today. Free account required, no credit card needed.",
       "startScan": "Start free scan",
       "viewPricing": "View pricing"
     }
@@ -1591,7 +1591,7 @@
       },
       "benefits": {
         "title": "What you get",
-        "freeScan": "1 free scan per week",
+        "freeScan": "Free trial scan included",
         "reports": "Detailed accessibility reports",
         "tracking": "Track improvements over time",
         "support": "Email support"

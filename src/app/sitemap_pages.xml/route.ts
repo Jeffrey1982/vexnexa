@@ -19,6 +19,9 @@ export async function GET() {
     { url: `${baseUrl}/white-label-accessibility-reports`, priority: 0.8, changefreq: 'weekly' },
     { url: `${baseUrl}/accessibility-monitoring-agencies`, priority: 0.8, changefreq: 'weekly' },
     { url: `${baseUrl}/wcag-compliance-report`, priority: 0.8, changefreq: 'weekly' },
+    { url: `${baseUrl}/for-agencies`, priority: 0.9, changefreq: 'weekly' },
+    { url: `${baseUrl}/eaa-compliance-monitoring`, priority: 0.9, changefreq: 'weekly' },
+    { url: `${baseUrl}/sample-report`, priority: 0.8, changefreq: 'monthly' },
     { url: `${baseUrl}/legal/privacy`, priority: 0.3, changefreq: 'monthly' },
     { url: `${baseUrl}/legal/terms`, priority: 0.3, changefreq: 'monthly' },
   ]

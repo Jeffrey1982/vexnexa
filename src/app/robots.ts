@@ -42,6 +42,9 @@ export default function robots(): MetadataRoute.Robots {
           '/white-label-accessibility-reports',
           '/accessibility-monitoring-agencies',
           '/wcag-compliance-report',
+          '/for-agencies',
+          '/eaa-compliance-monitoring',
+          '/sample-report',
         ],
       },
       {

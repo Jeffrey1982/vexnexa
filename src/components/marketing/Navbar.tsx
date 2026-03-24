@@ -35,9 +35,10 @@ export function Navbar({ className }: NavbarProps) {
   const supabase = createClient();
 
   const navigationItems = [
+    { name: "For Agencies", href: "/for-agencies" },
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
-    { name: t('blog'), href: "/blog" },
+    { name: "Sample Report", href: "/sample-report" },
     { name: t('contact'), href: "/contact" },
   ];
 

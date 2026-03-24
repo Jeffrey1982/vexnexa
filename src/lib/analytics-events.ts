@@ -1,0 +1,35 @@
+/**
+ * Centralized analytics event tracking for the marketing funnel.
+ * Wraps Vercel Analytics (window.va) with typed event names.
+ */
+
+export type FunnelEvent =
+  | 'homepage_cta_primary_click'
+  | 'homepage_cta_sample_report_click'
+  | 'sample_report_view'
+  | 'free_scan_started'
+  | 'signup_started'
+  | 'signup_completed'
+  | 'pricing_cta_click'
+  | 'agencies_page_cta_click'
+  | 'eaa_page_cta_click'
+  | 'white_label_page_cta_click'
+  | 'contact_cta_click'
+  | 'cta_click';
+
+interface TrackOptions {
+  location?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
+/**
+ * Fire a funnel analytics event via Vercel Analytics.
+ * Safe to call server-side (no-ops gracefully).
+ */
+export function trackEvent(event: FunnelEvent, options?: TrackOptions): void {
+  if (typeof window === 'undefined') return;
+  // Vercel Analytics
+  if (window.va && typeof window.va.track === 'function') {
+    window.va.track(event, options ?? {});
+  }
+}

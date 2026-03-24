@@ -56,8 +56,8 @@ function PricingJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: "VexNexa Accessibility Scanner",
-    description: "Web accessibility scanning with deeper coverage beyond WCAG",
+    name: "VexNexa WCAG Monitoring",
+    description: "White-label WCAG monitoring for agencies and EU-facing teams. Scan, report, and monitor accessibility.",
     brand: {
       "@type": "Brand",
       name: "VexNexa",
@@ -66,23 +66,23 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Starter Plan",
-        price: "14.99",
+        price: "24.99",
         priceCurrency: "EUR",
-        priceSpecification: { "@type": "UnitPriceSpecification", price: "14.99", priceCurrency: "EUR", unitText: "MONTH" },
+        priceSpecification: { "@type": "UnitPriceSpecification", price: "24.99", priceCurrency: "EUR", unitText: "MONTH" },
       },
       {
         "@type": "Offer",
         name: "Pro Plan",
-        price: "34.99",
+        price: "59.99",
         priceCurrency: "EUR",
-        priceSpecification: { "@type": "UnitPriceSpecification", price: "34.99", priceCurrency: "EUR", unitText: "MONTH" },
+        priceSpecification: { "@type": "UnitPriceSpecification", price: "59.99", priceCurrency: "EUR", unitText: "MONTH" },
       },
       {
         "@type": "Offer",
         name: "Business Plan",
-        price: "99.99",
+        price: "129.00",
         priceCurrency: "EUR",
-        priceSpecification: { "@type": "UnitPriceSpecification", price: "99.99", priceCurrency: "EUR", unitText: "MONTH" },
+        priceSpecification: { "@type": "UnitPriceSpecification", price: "129.00", priceCurrency: "EUR", unitText: "MONTH" },
       },
       {
         "@type": "Offer",
