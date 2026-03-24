@@ -18,7 +18,7 @@ import type { InvoiceData } from './invoice-template';
 
 // ── Styles ─────────────────────────────────────────────
 
-const TEAL = '#0F5C5C';
+const ORANGE = '#FF6B35'; // Aurora Orange - VexNexa primary brand color
 const DARK = '#1E1E1E';
 const MUTED = '#5A5A5A';
 const LIGHT_BG = '#F8F9FA';
@@ -39,13 +39,13 @@ const s = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 24,
     borderBottomWidth: 2,
-    borderBottomColor: TEAL,
+    borderBottomColor: ORANGE,
     paddingBottom: 16,
   },
   brand: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: TEAL,
+    color: ORANGE,
   },
   headerRight: {
     alignItems: 'flex-end',
@@ -130,7 +130,7 @@ const s = StyleSheet.create({
   totalValue: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: DARK,
+    color: ORANGE,
     textAlign: 'right',
   },
 
@@ -138,7 +138,7 @@ const s = StyleSheet.create({
   noteBox: {
     backgroundColor: LIGHT_BG,
     borderLeftWidth: 3,
-    borderLeftColor: TEAL,
+    borderLeftColor: ORANGE,
     padding: 10,
     marginTop: 12,
     borderRadius: 4,
@@ -205,8 +205,9 @@ function taxLineLabel(data: InvoiceData): string {
 const MERCHANT = {
   name: 'VexNexa B.V.',
   address: 'Netherlands',
-  vatId: '',
-  kvk: '',
+  vatId: 'NL005113493B92',
+  kvk: '94848262',
+  email: 'support@vexnexa.com',
 };
 
 // ── Document Component ──────────────────────────────────
@@ -246,6 +247,7 @@ function InvoicePdfDocument({ data }: InvoicePdfProps): React.ReactElement {
           <View style={s.addressCol}>
             <Text style={s.addressLabel}>From</Text>
             <Text style={s.addressBold}>{data.merchantName ?? MERCHANT.name}</Text>
+            <Text style={s.addressText}>{MERCHANT.email}</Text>
             <Text style={s.addressText}>{data.merchantAddress ?? MERCHANT.address}</Text>
             {(data.merchantVatId ?? MERCHANT.vatId) ? (
               <Text style={s.addressText}>VAT: {data.merchantVatId ?? MERCHANT.vatId}</Text>
@@ -272,7 +274,7 @@ function InvoicePdfDocument({ data }: InvoicePdfProps): React.ReactElement {
               </Text>
             ) : null}
             {data.registrationNumber ? (
-              <Text style={s.addressText}>Reg: {data.registrationNumber}</Text>
+              <Text style={s.addressText}>KvK: {data.registrationNumber}</Text>
             ) : null}
           </View>
         </View>

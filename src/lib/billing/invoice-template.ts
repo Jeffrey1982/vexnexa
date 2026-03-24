@@ -61,8 +61,9 @@ export interface InvoiceData {
 const MERCHANT_DEFAULTS = {
   name: "VexNexa B.V.",
   address: "Netherlands",
-  vatId: "", // Fill in when registered
-  kvk: "", // Fill in when registered
+  vatId: "NL005113493B92",
+  kvk: "94848262",
+  email: "support@vexnexa.com",
 };
 
 /**
@@ -181,7 +182,7 @@ export function generateInvoiceHtml(data: InvoiceData): string {
             ${escHtml(data.customerEmail)}
             ${customerAddress ? `<br>${customerAddress}` : ""}
             ${data.vatId ? `<br>VAT ID: ${escHtml(data.vatId)}${data.vatIdValid ? " ✓" : ""}` : ""}
-            ${data.registrationNumber ? `<br>Reg: ${escHtml(data.registrationNumber)}` : ""}
+            ${data.registrationNumber ? `<br>KvK: ${escHtml(data.registrationNumber)}` : ""}
           </div>
         </div>
       </div>
@@ -251,7 +252,7 @@ export function generateInvoicePlainText(data: InvoiceData): string {
   ];
 
   if (data.vatId) lines.push(`VAT ID: ${data.vatId}${data.vatIdValid ? " (validated)" : ""}`);
-  if (data.registrationNumber) lines.push(`Registration: ${data.registrationNumber}`);
+  if (data.registrationNumber) lines.push(`KvK: ${data.registrationNumber}`);
 
   lines.push(
     "",
