@@ -172,7 +172,7 @@ export function Navbar({ className }: NavbarProps) {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[320px] sm:w-[400px] glass">
+            <SheetContent side="right" className="w-[320px] sm:w-[400px] overflow-y-auto">
               <SheetHeader className="border-b border-border/20 pb-6">
                 <SheetTitle>
                   <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
@@ -195,6 +195,61 @@ export function Navbar({ className }: NavbarProps) {
                     {item.name}
                   </Link>
                 ))}
+
+                {/* Auth CTAs — above fold for mobile users */}
+                <div className="pt-4 pb-2 border-t border-border/20 space-y-3">
+                  {isLoading ? (
+                    <div className="space-y-3">
+                      <div className="w-full h-12 bg-muted rounded animate-pulse"></div>
+                      <div className="w-full h-12 bg-muted rounded animate-pulse"></div>
+                    </div>
+                  ) : user ? (
+                    <>
+                      <Button
+                        className="w-full h-12 bg-primary hover:bg-primary/90 shadow-elegant font-medium text-base"
+                        onClick={() => {
+                          setIsOpen(false);
+                          router.push('/dashboard');
+                        }}
+                      >
+                        {t('dashboard')}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full h-12 font-medium text-base"
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                      >
+                        {t('signOut')}
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="gradient"
+                        className="w-full h-12 font-medium text-base relative overflow-hidden"
+                        onClick={() => {
+                          handleCtaClick("mobile_primary");
+                          setIsOpen(false);
+                          router.push('/auth/register');
+                        }}
+                      >
+                        Start free scan
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        className="w-full h-12 font-medium text-base"
+                        onClick={() => {
+                          setIsOpen(false);
+                          router.push('/auth/login');
+                        }}
+                      >
+                        {t('login')}
+                      </Button>
+                    </>
+                  )}
+                </div>
 
                 {/* Language Selector - Mobile */}
                 <div className="pt-4 pb-2 border-b border-border/20">
@@ -231,59 +286,6 @@ export function Navbar({ className }: NavbarProps) {
                       <Twitter className="w-5 h-5" aria-hidden="true" />
                     </a>
                   </div>
-                </div>
-
-                <div className="pt-6 space-y-3">
-                  {isLoading ? (
-                    <div className="space-y-3">
-                      <div className="w-full h-10 bg-muted rounded animate-pulse"></div>
-                      <div className="w-full h-10 bg-muted rounded animate-pulse"></div>
-                    </div>
-                  ) : user ? (
-                    <>
-                      <Button
-                        onClick={() => {
-                          setIsOpen(false);
-                          router.push('/dashboard');
-                        }}
-                        className="w-full justify-start bg-primary hover:bg-primary/90 shadow-elegant font-medium"
-                      >
-                        {t('dashboard')}
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setIsOpen(false);
-                          // Add sign out functionality here if needed
-                        }}
-                        variant="outline"
-                        className="w-full justify-start"
-                      >
-                        {t('signOut')}
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        asChild
-                        variant="secondary"
-                        className="w-full justify-start font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <Link href="/auth/login">{t('login')}</Link>
-                      </Button>
-                      <Button
-                        asChild
-                        variant="gradient"
-                        className="w-full justify-start font-medium"
-                        onClick={() => {
-                          setIsOpen(false);
-                          handleCtaClick("mobile_primary");
-                        }}
-                      >
-                        <Link href="/auth/register">{t('signup')}</Link>
-                      </Button>
-                    </>
-                  )}
                 </div>
               </div>
             </SheetContent>
