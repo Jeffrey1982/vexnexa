@@ -217,6 +217,31 @@ export default function ForAgenciesPage() {
 
       <AgencyCTAStrip location="for-agencies" />
 
+      {/* Pilot Partner callout */}
+      <section className="py-12 bg-muted/30 border-y">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+              <h3 className="font-display font-semibold text-lg mb-1">
+                Want to explore VexNexa as a pilot partner?
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Limited spots for agencies looking to test accessibility workflows with direct support.
+              </p>
+            </div>
+            <TrackedCTA
+              href="/pilot-partner-program"
+              event="agencies_page_cta_click"
+              eventProps={{ location: "pilot_callout" }}
+              variant="outline"
+              className="whitespace-nowrap"
+            >
+              Learn about the pilot program <ArrowRight className="ml-2 h-4 w-4" />
+            </TrackedCTA>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 gradient-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">

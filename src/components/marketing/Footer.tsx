@@ -201,6 +201,9 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
                     WCAG Scanner
                   </Link>
+                  <Link href="/pilot-partner-program" className="text-muted-foreground hover:text-primary transition-colors">
+                    Pilot Partner Program
+                  </Link>
                   <Link href="/accessibility-monitoring-agencies" className="text-muted-foreground hover:text-primary transition-colors">
                     Agency Monitoring
                   </Link>

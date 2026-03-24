@@ -22,6 +22,9 @@ export type FunnelEvent =
   | 'agency_offer_cta_click'
   | 'agency_contact_cta_click'
   | 'contact_reason_selected'
+  | 'pilot_partner_apply_click'
+  | 'pilot_partner_sample_report_click'
+  | 'pilot_partner_contact_click'
   | 'cta_click';
 
 interface TrackOptions {
