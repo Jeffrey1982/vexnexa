@@ -301,7 +301,7 @@
           "whiteLabel": "White label reports",
           "advancedScheduling": "Advanced scheduling",
           "allIntegrations": "All integrations",
-          "prioritySupport": "Priority support (4h response)"
+          "prioritySupport": "Priority support"
         }
       },
       "enterprise": {
@@ -318,7 +318,7 @@
           "sso": "SSO/SAML",
           "dedicatedSupport": "Dedicated support",
           "sla": "SLA guarantee",
-          "onPremise": "On-premise option"
+          "onPremise": "Custom deployment options"
         },
         "note": "Perfect for large organizations. Contact us for custom pricing."
       }
@@ -460,7 +460,7 @@
       "title": "Send us a message",
       "subtitle": "Fill in the form and we will contact you as soon as possible. For urgent questions you can also email directly.",
       "benefits": [
-        "Response within 24 hours on business days",
+        "We aim to respond within 1 business day",
         "Free demos and consultations",
         "Support in Dutch",
         "Privacy-first: your data is stored securely"
@@ -497,7 +497,7 @@
       },
       "toast": {
         "successTitle": "Message sent!",
-        "successDescription": "We will contact you within 24 hours.",
+        "successDescription": "We aim to respond within 1 business day.",
         "errorTitle": "Something went wrong",
         "errorDescription": "Try again later or send an email to info@vexnexa.com"
       }
@@ -519,7 +519,7 @@
       },
       "q4": {
         "question": "How does enterprise support work?",
-        "answer": "Enterprise gets dedicated support, SSO, custom branding and optional on-premise deployment. Contact us for details."
+        "answer": "Enterprise gets dedicated support, SSO, and custom branding. Contact us for details."
       },
       "q5": {
         "question": "Do I need to book a demo?",
@@ -1107,7 +1107,7 @@
   "features": {
     "metadata": {
       "title": "Features - VexNexa",
-      "description": "Discover all features of VexNexa: Dashboard, scan details, PDF export, priorities and upcoming integrations."
+      "description": "WCAG 2.2 scanning, white-label PDF/DOCX reports, continuous monitoring, team collaboration, and multi-site management. Built for agencies and compliance teams."
     },
     "hero": {
       "badge": "✨ All features",
@@ -1278,7 +1278,7 @@
       "scheduleDemo": "Schedule a demo",
       "startFreeScan": "Start free scan"
     },
-    "additionalInfo": "No obligations • Demo lasts ~15 minutes • Response within 24 hours"
+    "additionalInfo": "No obligations • Demo lasts ~15 minutes • We aim to respond within 1 business day"
   },
   "legal": {
     "common": {
@@ -1509,22 +1509,6 @@
         "storageDesc": "Encrypted databases with restricted access controls",
         "incident": "Incident Response",
         "incidentDesc": "Notification within 72 hours for security incidents"
-      }
-    },
-    "sla": {
-      "title": "SLA & Support",
-      "description": "Our service level agreement and support information for all VexNexa users.",
-      "lastUpdated": "December 8, 2024",
-      "version": "v1.0",
-      "keyPoints": {
-        "title": "Key Points",
-        "description": "Our commitments to you",
-        "uptime": "Uptime",
-        "uptimeDesc": "99.9% uptime guarantee on all paid plans",
-        "support": "Support",
-        "supportDesc": "Response within 4 hours for Business plan users",
-        "monitoring": "24/7 Monitoring",
-        "monitoringDesc": "Continuous monitoring with immediate incident response"
       }
     }
   },

@@ -120,7 +120,7 @@ function HeroSection(): React.ReactElement {
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/demo">Preview a Sample Report</Link>
+              <Link href="/sample-report">Preview a Sample Report</Link>
             </Button>
           </div>
 
