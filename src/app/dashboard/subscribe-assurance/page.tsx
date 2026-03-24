@@ -24,7 +24,7 @@ import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
 import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
-import { grossToNet } from "@/lib/pricing/vat-math";
+import { grossToNet, BASE_VAT_RATE } from '@/lib/pricing/vat-math';
 
 type BillingCycle = "monthly" | "semiannual" | "annual";
 type AssuranceTier = "BASIC" | "PRO" | "PUBLIC_SECTOR";
@@ -222,16 +222,18 @@ export default function SubscribeAssurancePage(): JSX.Element {
       if (!quoteRes.ok) return;
       const quoteData = await quoteRes.json();
 
-      // We only need the tax rate info, we'll apply it to the assurance price
+      // Assurance prices are GROSS (incl. NL 21% VAT).
+      // Strip base NL VAT to get true net, then re-apply customer's tax.
       if (selectedPlan) {
         const plan = PLANS.find((p) => p.tier === selectedPlan);
         if (!plan) return;
-        const basePrice = getPrice(plan, billingCycle);
-        const vatAmount = Math.round(basePrice * (quoteData.tax.ratePercent / 100) * 100) / 100;
+        const planGross = getPrice(plan, billingCycle);
+        const netBase = grossToNet(planGross, BASE_VAT_RATE);
+        const vatAmount = Math.round(netBase * (quoteData.tax.ratePercent / 100) * 100) / 100;
         setTaxQuote({
-          baseAmount: basePrice,
+          baseAmount: netBase,
           vatAmount,
-          totalAmount: Math.round((basePrice + vatAmount) * 100) / 100,
+          totalAmount: Math.round((netBase + vatAmount) * 100) / 100,
           tax: quoteData.tax,
         });
       }
@@ -605,33 +607,40 @@ export default function SubscribeAssurancePage(): JSX.Element {
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="text-sm text-muted-foreground">Subtotal (ex. VAT)</span>
+                      <span className="text-sm text-muted-foreground">Listed price (incl. VAT)</span>
                       <span className="font-medium text-foreground">
                         {formatEuro(getPrice(activePlan, billingCycle))}
                       </span>
                     </div>
-                    {taxQuote && (
+                    {taxQuote?.tax.mode === 'reverse_charge' ? (
+                      <>
+                        <div className="flex justify-between items-center py-2 border-b border-border">
+                          <span className="text-sm text-green-600 dark:text-green-400">VAT removed (reverse charge)</span>
+                          <span className="font-medium text-green-600 dark:text-green-400">
+                            -{formatEuro(Math.round((getPrice(activePlan, billingCycle) - taxQuote.totalAmount) * 100) / 100)}
+                          </span>
+                        </div>
+                        <div className="text-xs text-green-600 dark:text-green-400 italic py-1">
+                          Valid VAT number — VAT reverse charge applies
+                        </div>
+                      </>
+                    ) : (
                       <div className="flex justify-between items-center py-2 border-b border-border">
-                        <span className="text-sm text-muted-foreground">{taxQuote.tax.label}</span>
+                        <span className="text-sm text-muted-foreground">VAT included</span>
                         <span className="font-medium text-foreground">
-                          {taxQuote.vatAmount === 0 ? '—' : formatEuro(taxQuote.vatAmount)}
+                          {taxQuote ? formatEuro(taxQuote.vatAmount) : formatEuro(Math.round((getPrice(activePlan, billingCycle) - grossToNet(getPrice(activePlan, billingCycle), BASE_VAT_RATE)) * 100) / 100)}
                         </span>
-                      </div>
-                    )}
-                    {taxQuote?.tax.mode === 'reverse_charge' && (
-                      <div className="text-xs text-muted-foreground italic py-1">
-                        VAT reverse charge applies — you account for VAT
                       </div>
                     )}
                     <div className="flex justify-between items-center py-2">
                       <span className="text-sm font-medium text-foreground">Total</span>
                       <div className="text-right">
                         <span className="text-xl font-bold text-foreground">
-                          {formatEuro(taxQuote ? taxQuote.totalAmount : getPrice(activePlan, billingCycle))}
+                          {formatEuro(taxQuote?.tax.mode === 'reverse_charge' ? taxQuote.totalAmount : getPrice(activePlan, billingCycle))}
                         </span>
                         {billingCycle !== "monthly" && (
                           <div className="text-xs text-muted-foreground">
-                            ({formatEuro(taxQuote ? taxQuote.totalAmount / (billingCycle === 'semiannual' ? 6 : 12) : getPerMonth(activePlan, billingCycle))}/month)
+                            ({formatEuro(taxQuote?.tax.mode === 'reverse_charge' ? taxQuote.totalAmount / (billingCycle === 'semiannual' ? 6 : 12) : getPerMonth(activePlan, billingCycle))}/month)
                           </div>
                         )}
                       </div>
@@ -748,7 +757,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                 ) : (
                   <>
                     <Lock className="w-4 h-4 mr-2" />
-                    Proceed to Payment — {formatEuro(getPrice(activePlan, billingCycle))}
+                    Proceed to Payment — {formatEuro(taxQuote?.tax.mode === 'reverse_charge' ? taxQuote.totalAmount : getPrice(activePlan, billingCycle))}
                   </>
                 )}
               </Button>

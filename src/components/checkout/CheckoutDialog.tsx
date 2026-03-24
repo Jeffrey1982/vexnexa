@@ -679,13 +679,13 @@ export function CheckoutDialog({
               ) : (
                 <>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Subtotal (ex. VAT)</span>
-                    <span className="font-medium">{formatEuro(prices.subtotal)}</span>
+                    <span className="text-muted-foreground">Listed price (incl. VAT)</span>
+                    <span className="font-medium">{formatEuro(prices.publicGross)}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-muted-foreground">
                       {prices.vatRate > 0
-                        ? `VAT (${prices.vatRate}%)`
+                        ? `VAT included (${prices.vatRate}%)`
                         : "No VAT"}
                     </span>
                     <span className="font-medium">
@@ -729,7 +729,7 @@ export function CheckoutDialog({
                 </>
               ) : (
                 <>
-                  Continue to payment
+                  Continue to payment{prices ? ` — ${formatEuro(prices.total)}` : ""}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </>
               )}

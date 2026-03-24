@@ -13,6 +13,7 @@ import {
   ASSURANCE_BASE_PRICES,
 } from './pricing';
 import { determineTax, calculateAmountBreakdown, type TaxDecision, type TaxRegime } from '../billing/tax';
+import { grossToNet, BASE_VAT_RATE } from '../pricing/vat-math';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
 import { SequenceType } from '@mollie/api-client';
@@ -41,10 +42,12 @@ export async function createAssuranceCheckoutPayment(opts: {
       taxRegime: taxDecision?.regime,
     });
 
-    // Calculate price for tier and cycle
-    const netAmount = calculateAssurancePrice(tier, billingCycle);
+    // Assurance prices are stored GROSS (incl. NL 21% VAT).
+    // Approach B: strip base NL VAT to get true net, then re-apply customer's tax.
+    const planGross = calculateAssurancePrice(tier, billingCycle);
+    const netBase = grossToNet(planGross, BASE_VAT_RATE);
     const tax = taxDecision ?? { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' };
-    const breakdown = calculateAmountBreakdown(netAmount, tax);
+    const breakdown = calculateAmountBreakdown(netBase, tax);
     const amount = breakdown.gross;
 
     // Create or get Mollie customer
@@ -133,9 +136,25 @@ export async function createAssuranceSubscription(opts: {
       billingCycle,
     });
 
-    // Calculate price
+    // Assurance prices are stored GROSS (incl. NL 21% VAT).
+    // Strip base NL VAT to get true net, then re-apply customer's tax.
     const monthlyPrice = ASSURANCE_BASE_PRICES[tier];
-    const totalPrice = calculateAssurancePrice(tier, billingCycle);
+    const planGross = calculateAssurancePrice(tier, billingCycle);
+    const netBase = grossToNet(planGross, BASE_VAT_RATE);
+
+    // Fetch billing profile to determine customer's tax for recurring amount
+    const billingProfile = await prisma.billingProfile.findUnique({
+      where: { userId },
+      select: { countryCode: true, billingType: true, vatValid: true, vatId: true },
+    });
+    const subTax = billingProfile
+      ? determineTax({
+          countryCode: billingProfile.countryCode,
+          billingType: billingProfile.billingType as 'individual' | 'business',
+          vatValid: billingProfile.vatValid,
+        })
+      : { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' };
+    const subBreakdown = calculateAmountBreakdown(netBase, subTax);
 
     // Determine interval for Mollie
     let interval = '1 month';
@@ -177,11 +196,11 @@ export async function createAssuranceSubscription(opts: {
       });
     }
 
-    // Create Mollie subscription
+    // Create Mollie subscription with tax-aware amount
     const subscription = await (mollie.customerSubscriptions as any).create({
       customerId: mollieCustomerId,
       amount: {
-        value: formatMollieAmount(totalPrice),
+        value: formatMollieAmount(subBreakdown.gross),
         currency: 'EUR',
       },
       interval,
@@ -214,7 +233,7 @@ export async function createAssuranceSubscription(opts: {
         mollieSubscriptionId: subscription.id,
         billingCycle,
         pricePerMonth: monthlyPrice,
-        totalPrice,
+        totalPrice: subBreakdown.gross,
         vatRate: vatRate ?? 0.21,
         taxRegime: taxRegime ?? 'NL_VAT',
         countryCode: countryCode ?? 'NL',
@@ -227,7 +246,7 @@ export async function createAssuranceSubscription(opts: {
         mollieSubscriptionId: subscription.id,
         billingCycle,
         pricePerMonth: monthlyPrice,
-        totalPrice,
+        totalPrice: subBreakdown.gross,
         vatRate: vatRate ?? 0.21,
         taxRegime: taxRegime ?? 'NL_VAT',
         countryCode: countryCode ?? 'NL',
