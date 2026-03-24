@@ -20,6 +20,8 @@ export interface ContactEmailData {
   name: string
   email: string
   message: string
+  reason?: string
+  source?: string
 }
 
 export async function sendContactNotification(data: ContactEmailData) {
@@ -29,7 +31,7 @@ export async function sendContactNotification(data: ContactEmailData) {
   }
 
   try {
-    const { name, email, message } = data
+    const { name, email, message, reason, source } = data
 
     // Send notification to your team
     const teamNotification = await resend.emails.send({
@@ -44,6 +46,8 @@ export async function sendContactNotification(data: ContactEmailData) {
             <h3 style="margin-top: 0;">Contact details</h3>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
+            ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ''}
+            ${source ? `<p><strong>Source page:</strong> ${source}</p>` : ''}
           </div>
 
           <div style="background: #ffffff; padding: 20px; border: 1px solid #C0C3C7; border-radius: 8px;">
@@ -61,7 +65,7 @@ New contact message from ${name}
 
 Name: ${name}
 Email: ${email}
-
+${reason ? `Reason: ${reason}\n` : ''}${source ? `Source page: ${source}\n` : ''}
 Message:
 ${message}
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import {
   Mail,
@@ -22,6 +30,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics-events";
+import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 
 const quickReasons = [
   {
@@ -61,9 +70,27 @@ export default function ContactPage() {
     name: "",
     email: "",
     message: "",
+    reason: "",
     // honeypot
     company: "",
   });
+
+  // Capture source page from ?from= URL param
+  const searchParams = useSearchParams();
+  const [source, setSource] = useState("");
+  useEffect(() => {
+    const from = searchParams.get("from");
+    if (from) setSource(from);
+  }, [searchParams]);
+
+  const contactReasons: { value: string; label: string }[] = [
+    { value: "agency_use", label: "Agency use" },
+    { value: "white_label_reports", label: "White-label reports" },
+    { value: "monitoring_multiple_sites", label: "Monitoring multiple sites" },
+    { value: "pricing_plans", label: "Pricing / plans" },
+    { value: "sample_report", label: "Sample report" },
+    { value: "other", label: "Other" },
+  ];
 
   const contactMethods: Method[] = [
     {
@@ -100,6 +127,7 @@ export default function ContactPage() {
     const e: Record<string, string> = {};
     if (!formData.name.trim()) e.name = t('form.errors.name');
     if (!formData.email.trim() || !isValidEmail(formData.email)) e.email = t('form.errors.email');
+    if (!formData.reason) e.reason = "Please select a reason for contacting us";
     if (!formData.message.trim() || formData.message.trim().length < 10) e.message = t('form.errors.message');
     if (!consent) e.consent = t('form.errors.consent');
     // honeypot
@@ -121,6 +149,8 @@ export default function ContactPage() {
           name: formData.name.trim(),
           email: formData.email.trim(),
           message: formData.message.trim(),
+          reason: formData.reason,
+          source: source || undefined,
         }),
       });
 
@@ -131,7 +161,7 @@ export default function ContactPage() {
         });
         const emailForTrack = formData.email;
         const len = formData.message.length;
-        setFormData({ name: "", email: "", message: "", company: "" });
+        setFormData({ name: "", email: "", message: "", reason: "", company: "" });
         setConsent(false);
 
         trackEvent("contact_cta_click", { location: "form_submit", message_length: len });
@@ -344,6 +374,39 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
+                    <Label htmlFor="reason">What are you contacting us about? *</Label>
+                    <Select
+                      value={formData.reason}
+                      onValueChange={(value: string) => {
+                        setFormData((p) => ({ ...p, reason: value }));
+                        if (errors.reason) setErrors((prev) => ({ ...prev, reason: "" }));
+                        trackEvent("contact_reason_selected", { reason: value });
+                      }}
+                      disabled={isSubmitting}
+                    >
+                      <SelectTrigger
+                        id="reason"
+                        aria-invalid={!!errors.reason}
+                        aria-describedby={errors.reason ? "reason-error" : undefined}
+                      >
+                        <SelectValue placeholder="Select a topic" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {contactReasons.map((r) => (
+                          <SelectItem key={r.value} value={r.value}>
+                            {r.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.reason && (
+                      <p id="reason-error" className="text-sm text-destructive" role="alert">
+                        {errors.reason}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
                     <Label htmlFor="message">{t('form.labels.message')}</Label>
                     <Textarea
                       id="message"
@@ -411,6 +474,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <AgencyCTAStrip location="contact" />
 
       {/* FAQ */}
       <section className="container mx-auto px-4 py-12 sm:py-16">

@@ -8,6 +8,8 @@ const ContactSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
   email: z.string().email('Invalid email format'),
   message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message too long'),
+  reason: z.string().max(100).optional(),
+  source: z.string().max(100).optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -43,7 +45,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { name, email, message } = validation.data
+    const { name, email, message, reason, source } = validation.data
 
     // Basic spam detection
     const spamKeywords = ['crypto', 'bitcoin', 'loan', 'casino', 'viagra', 'cialis']
@@ -64,6 +66,8 @@ export async function POST(request: NextRequest) {
         name,
         email,
         message,
+        reason: reason || null,
+        source: source || null,
         status: 'new',
         replied: false
       }
@@ -71,7 +75,7 @@ export async function POST(request: NextRequest) {
 
     // Send notification and confirmation emails
     try {
-      await sendContactNotification({ name, email, message })
+      await sendContactNotification({ name, email, message, reason, source })
     } catch (emailError) {
       console.error('Failed to send contact emails:', emailError)
       // Continue even if email fails - the message is saved in database

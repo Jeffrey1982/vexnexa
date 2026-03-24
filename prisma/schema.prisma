@@ -802,6 +802,8 @@ model ContactMessage {
   name    String
   email   String
   message String @db.Text
+  reason  String? // agency_use, white_label_reports, monitoring_multiple_sites, pricing_plans, sample_report, other
+  source  String? // page that generated the lead: homepage, for-agencies, pricing, sample-report, etc.
 
   // Metadata
   status  String  @default("new") // new, read, replied, archived

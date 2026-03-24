@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics-events";
+import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 import { ENTITLEMENTS, PLAN_NAMES, OVERFLOW_PRICING } from "@/lib/billing/plans";
 import {
   BillingCycle,
@@ -771,6 +772,7 @@ export default function PricingPage() {
       <AddOnsSection />
       <ComplianceDisclaimerSection />
       <ToolComparisonSection />
+      <AgencyCTAStrip location="pricing" />
       <CTASection />
     </>
   );

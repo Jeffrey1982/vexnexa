@@ -18,6 +18,7 @@ import {
   Code,
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics-events";
+import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 
 // Sample data — realistic but not from any real site
 const SAMPLE_SCORE = 72;
@@ -324,6 +325,8 @@ export default function SampleReportPage() {
           </div>
         </div>
       </section>
+
+      <AgencyCTAStrip location="sample-report" />
 
       {/* CTA */}
       <section className="py-16 gradient-primary text-primary-foreground">

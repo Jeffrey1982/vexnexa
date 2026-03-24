@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { FAQ } from "@/components/marketing/FAQ";
 import { trackEvent } from "@/lib/analytics-events";
+import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -364,7 +365,60 @@ function SampleReportSection() {
   );
 }
 
-// 7. How VexNexa fits your workflow
+// 7. Agency offer — direct conversion layer
+function AgencyOfferSection() {
+  return (
+    <section className="py-20 bg-gradient-subtle">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="flex items-center justify-center gap-2 text-primary">
+            <Building2 className="h-5 w-5" />
+            <span className="text-sm font-semibold uppercase tracking-wider">
+              Agency offer
+            </span>
+          </div>
+          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+            Get a branded accessibility report for one site
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            See how VexNexa can fit your agency workflow with a sample report
+            and a practical setup path for ongoing monitoring.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+            <Button
+              size="lg"
+              className="button-hover gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
+              asChild
+            >
+              <Link
+                href="/sample-report"
+                onClick={() => trackEvent("agency_offer_cta_click", { location: "homepage" })}
+              >
+                View sample report
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="button-hover border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 px-8 py-6 text-base"
+              asChild
+            >
+              <Link
+                href="/contact?from=homepage"
+                onClick={() => trackEvent("agency_contact_cta_click", { location: "homepage" })}
+              >
+                Contact us about agency use
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 8. How VexNexa fits your workflow
 function WorkflowSection() {
   const steps = [
     {
@@ -520,6 +574,7 @@ export default function HomePage() {
       <BuiltForSection />
       <WhatYouGetSection />
       <SampleReportSection />
+      <AgencyOfferSection />
       <WorkflowSection />
       <FAQ items={faqItems} />
       <FinalCTASection />

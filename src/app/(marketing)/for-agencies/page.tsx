@@ -16,6 +16,7 @@ import {
   Globe,
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
+import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 
 export const metadata: Metadata = {
   title: "WCAG Accessibility Reporting for Agencies",
@@ -213,6 +214,8 @@ export default function ForAgenciesPage() {
           </div>
         </div>
       </section>
+
+      <AgencyCTAStrip location="for-agencies" />
 
       {/* CTA */}
       <section className="py-20 gradient-primary text-primary-foreground">

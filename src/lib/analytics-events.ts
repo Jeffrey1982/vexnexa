@@ -19,6 +19,9 @@ export type FunnelEvent =
   | 'features_cta_click'
   | 'wcag_scan_cta_click'
   | 'compliance_report_cta_click'
+  | 'agency_offer_cta_click'
+  | 'agency_contact_cta_click'
+  | 'contact_reason_selected'
   | 'cta_click';
 
 interface TrackOptions {
