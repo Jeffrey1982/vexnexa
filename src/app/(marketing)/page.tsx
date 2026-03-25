@@ -80,7 +80,7 @@ function HeroSection() {
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
               <Button
                 size="lg"
-                className="button-hover gradient-primary text-white border-0 shadow-soft relative overflow-hidden group px-8 py-6 text-base"
+                className="button-hover gradient-primary border-0 shadow-soft relative overflow-hidden group px-8 py-6 text-base"
                 asChild
               >
                 <Link
@@ -329,7 +329,7 @@ function WhatYouGetSection() {
               ))}
             </div>
 
-            <Button asChild className="mt-6 gradient-primary text-white hover:opacity-90" size="lg">
+            <Button asChild className="mt-6 gradient-primary hover:opacity-90" size="lg">
               <Link href="/auth/register">
                 {t('cta')}
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -415,7 +415,7 @@ function SampleReportSection() {
             {t('subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" asChild className="gradient-primary text-white">
+            <Button size="lg" asChild className="gradient-primary">
               <Link
                 href="/sample-report"
                 onClick={() => trackEvent("homepage_cta_sample_report_click", { location: "section" })}
@@ -458,7 +458,7 @@ function AgencyOfferSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button
               size="lg"
-              className="button-hover gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
+              className="button-hover gradient-primary border-0 shadow-soft px-8 py-6 text-base"
               asChild
             >
               <Link
@@ -544,7 +544,7 @@ function PilotPartnerBanner() {
             {t('subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <Button size="lg" asChild className="gradient-primary text-white">
+            <Button size="lg" asChild className="gradient-primary">
               <Link
                 href="/pilot-partner-program"
                 onClick={() => trackEvent("pilot_banner_click", { location: "homepage" })}

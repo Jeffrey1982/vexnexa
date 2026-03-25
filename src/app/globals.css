@@ -507,6 +507,7 @@
 
   .gradient-primary {
     background: var(--gradient-primary);
+    color: #1E1E1E; /* Midnight Graphite for better contrast on orange gradient */
   }
   
   .gradient-subtle {

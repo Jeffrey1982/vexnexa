@@ -974,7 +974,7 @@ function PilotOfferBanner() {
           <p className="text-muted-foreground max-w-xl mx-auto">
             {tPage('pilotBanner.subtitle')}
           </p>
-          <Button asChild className="gradient-primary text-white">
+          <Button asChild className="gradient-primary">
             <Link href="/contact?from=pilot-pricing">
               {tPage('pilotBanner.cta')} <ArrowRight className="ml-2 h-4 w-4" />
             </Link>

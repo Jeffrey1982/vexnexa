@@ -50,7 +50,7 @@ export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
               event="agency_offer_cta_click"
               eventProps={{ location }}
               size="lg"
-              className="gradient-primary text-white"
+              className="gradient-primary"
             >
               Start your free scan
             </TrackedCTA>

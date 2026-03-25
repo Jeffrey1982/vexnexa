@@ -157,7 +157,7 @@ export default function SampleReportPage() {
               {t('subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-              <Button size="lg" className="gradient-primary text-white" asChild>
+              <Button size="lg" className="gradient-primary" asChild>
                 <Link
                   href="/auth/register"
                   onClick={() => trackEvent("sample_report_cta_click", { location: "hero" })}
@@ -219,7 +219,7 @@ export default function SampleReportPage() {
           <div className="max-w-4xl mx-auto">
             {/* Report header */}
             <Card className="mb-8 overflow-hidden">
-              <div className="gradient-primary p-8 text-white">
+              <div className="gradient-primary p-8">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                   <div>
                     <p className="text-sm opacity-80 mb-1">Accessibility Report</p>
