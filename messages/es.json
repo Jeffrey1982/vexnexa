@@ -422,6 +422,195 @@
       "startTrial": "Comenzar escaneo gratis",
       "needMore": "¿Necesitas límites más altos?",
       "contactUs": "Contáctanos"
+    },
+    "page": {
+      "billing": {
+        "monthly": "Mensual",
+        "yearly": "Anual",
+        "save15": "Ahorra 15%"
+      },
+      "mostPopular": "Más popular",
+      "needCustom": "¿Necesitas una solución personalizada?",
+      "contactSales": "Contacta a nuestro equipo de ventas",
+      "vatExcl": "sin IVA · {country} {vatPercent}%",
+      "vatIncl": "incl. {vatPercent}% IVA ({country})",
+      "pricesExcl": "Precios sin IVA. El IVA se calcula al pagar.",
+      "pricesIncl": "Precios incl. {vatPercent}% IVA ({country})",
+      "starter": {
+        "name": "Starter",
+        "description": "Para individuos y sitios pequeños",
+        "features": {
+          "site": "{count} sitio web",
+          "pages": "{count} páginas/mes",
+          "user": "{count} usuario",
+          "pdf": "Exportación PDF",
+          "history": "{count} meses de historial",
+          "support": "Soporte por email"
+        },
+        "limitations": {
+          "noWord": "Sin exportación Word",
+          "noScheduling": "Sin programación",
+          "noIntegrations": "Sin integraciones"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Para equipos y empresas en crecimiento",
+        "features": {
+          "sites": "{count} sitios web",
+          "pages": "{count} páginas/mes",
+          "users": "{count} usuarios",
+          "exports": "Exportación PDF + Word",
+          "whiteLabel": "Informes de marca blanca",
+          "history": "{count} meses de historial",
+          "integrations": "Integraciones Slack y Jira",
+          "support": "Soporte prioritario"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "Para agencias y empresas",
+        "features": {
+          "sites": "{count} sitios web",
+          "pages": "{count} páginas/mes",
+          "users": "{count} usuarios",
+          "whiteLabel": "Informes de marca blanca",
+          "integrations": "Todas las integraciones",
+          "history": "{count} meses de historial",
+          "assurance": "Assurance incluido",
+          "auditDiscount": "20% descuento en auditorías",
+          "support": "Soporte prioritario 4h"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Soluciones personalizadas a gran escala",
+        "features": {
+          "sites": "{count} sitios web",
+          "unlimitedUsers": "Usuarios ilimitados",
+          "allFeatures": "Todas las funciones incluidas",
+          "assurance": "Assurance incluido",
+          "auditDiscount": "30% descuento en auditorías",
+          "sla": "Garantía SLA",
+          "accountManager": "Gestor de cuenta dedicado",
+          "history": "{count} meses de historial",
+          "customBilling": "Facturación personalizada"
+        }
+      },
+      "addons": {
+        "badge": "Complementos flexibles",
+        "title": "Escala mientras",
+        "titleHighlight": "creces",
+        "subtitle": "Añade sitios web adicionales, capacidad de escaneo o monitoreo continuo a cualquier plan",
+        "websites": {
+          "title": "Sitios web adicionales",
+          "description": "¿Necesitas más sitios web? Añádelos a cualquier plan.",
+          "site1": "+1 sitio web",
+          "sites5": "+5 sitios web",
+          "sites10": "+10 sitios web"
+        },
+        "pages": {
+          "title": "Paquetes de volumen de páginas",
+          "description": "Aumenta la capacidad de escaneo mensual con paquetes de volumen.",
+          "25k": "+25.000 páginas/mes",
+          "100k": "+100.000 páginas/mes",
+          "250k": "+250.000 páginas/mes",
+          "businessNote": "Business incluye 25.000 páginas/mes",
+          "enterpriseNote": "Enterprise incluye 100.000 páginas/mes",
+          "contactSales": "Contactar ventas"
+        },
+        "assurance": {
+          "title": "Assurance",
+          "badge": "Monitoreo",
+          "description": "Monitoreo automatizado de cumplimiento y alertas",
+          "features": {
+            "scans": "Escaneos automatizados semanales",
+            "alerts": "Alertas de caída de puntuación",
+            "audit": "Archivo de registros de auditoría",
+            "eaa": "Seguimiento de preparación EAA",
+            "graph": "Gráfico histórico de cumplimiento"
+          },
+          "included": "Incluido",
+          "businessEnterprise": "Business y Enterprise"
+        },
+        "perMonth": "/mes",
+        "exclVat": "sin IVA",
+        "inclVat": "incl. IVA",
+        "perPage": "≈ €{price}/página",
+        "needHigher": "¿Necesitas más capacidad?",
+        "contactEnterprise": "para volumen empresarial."
+      },
+      "audits": {
+        "badge": "Servicios de auditoría EAA",
+        "title": "Auditorías de",
+        "titleHighlight": "accesibilidad manuales",
+        "subtitle": "Haz que tu sitio web sea auditado profesionalmente por nuestros expertos",
+        "oneTime": "único pago",
+        "cta": "Solicitar auditoría",
+        "quick": {
+          "description": "Escaneo rápido de las páginas más importantes",
+          "features": {
+            "pages": "Top 10 páginas",
+            "wcag": "Verificación WCAG 2.2",
+            "report": "Informe en 48h"
+          }
+        },
+        "full": {
+          "description": "Auditoría completa del sitio con análisis profundo",
+          "features": {
+            "pages": "Todas las páginas",
+            "wcag": "WCAG 2.2 + EAA",
+            "code": "Revisión de código",
+            "report": "Informe + hoja de ruta"
+          }
+        },
+        "enterprise": {
+          "description": "Auditoría empresarial con asesoría de cumplimiento",
+          "features": {
+            "pages": "Sitio completo",
+            "wcag": "WCAG 2.2 + EAA + VPAT",
+            "legal": "Revisión legal",
+            "implementation": "Guía de implementación"
+          }
+        }
+      },
+      "auditBundles": {
+        "badge": "Paquetes de auditoría + monitoreo",
+        "title": "Paquetes de",
+        "titleHighlight": "auditoría continua",
+        "subtitle": "Combina monitoreo automatizado con auditorías manuales",
+        "cta": "Elegir paquete",
+        "starter": {
+          "features": {
+            "audits": "1 escaneo rápido/trimestre",
+            "report": "Informe básico",
+            "support": "Soporte por email"
+          }
+        },
+        "pro": {
+          "features": {
+            "audits": "1 auditoría completa/trimestre",
+            "report": "Informe detallado + hoja de ruta",
+            "support": "Soporte prioritario"
+          }
+        },
+        "business": {
+          "features": {
+            "audits": "2 auditorías completas/trimestre",
+            "code": "Revisión de código",
+            "implementation": "Guía de implementación",
+            "contact": "Contacto dedicado"
+          }
+        },
+        "enterprise": {
+          "features": {
+            "audits": "Auditorías ilimitadas",
+            "vpat": "VPAT + documentos de cumplimiento",
+            "legal": "Soporte legal",
+            "manager": "Gestor de cuenta"
+          }
+        }
+      }
     }
   },
   "contact": {

@@ -420,6 +420,195 @@
       "startTrial": "Commencer le scan gratuit",
       "needMore": "Besoin de limites plus élevées?",
       "contactUs": "Contactez-nous"
+    },
+    "page": {
+      "billing": {
+        "monthly": "Mensuel",
+        "yearly": "Annuel",
+        "save15": "Économisez 15%"
+      },
+      "mostPopular": "Le plus populaire",
+      "needCustom": "Besoin d'une solution sur mesure ?",
+      "contactSales": "Contactez notre équipe commerciale",
+      "vatExcl": "HT · {country} {vatPercent}%",
+      "vatIncl": "TTC {vatPercent}% TVA ({country})",
+      "pricesExcl": "Prix HT. La TVA est calculée au paiement.",
+      "pricesIncl": "Prix TTC {vatPercent}% TVA ({country})",
+      "starter": {
+        "name": "Starter",
+        "description": "Pour les particuliers et petits sites",
+        "features": {
+          "site": "{count} site web",
+          "pages": "{count} pages/mois",
+          "user": "{count} utilisateur",
+          "pdf": "Export PDF",
+          "history": "{count} mois d'historique",
+          "support": "Support par email"
+        },
+        "limitations": {
+          "noWord": "Pas d'export Word",
+          "noScheduling": "Pas de planification",
+          "noIntegrations": "Pas d'intégrations"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Pour les équipes et entreprises en croissance",
+        "features": {
+          "sites": "{count} sites web",
+          "pages": "{count} pages/mois",
+          "users": "{count} utilisateurs",
+          "exports": "Export PDF + Word",
+          "whiteLabel": "Rapports en marque blanche",
+          "history": "{count} mois d'historique",
+          "integrations": "Intégrations Slack et Jira",
+          "support": "Support prioritaire"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "Pour les agences et entreprises",
+        "features": {
+          "sites": "{count} sites web",
+          "pages": "{count} pages/mois",
+          "users": "{count} utilisateurs",
+          "whiteLabel": "Rapports en marque blanche",
+          "integrations": "Toutes les intégrations",
+          "history": "{count} mois d'historique",
+          "assurance": "Assurance incluse",
+          "auditDiscount": "20% de réduction sur les audits",
+          "support": "Support prioritaire 4h"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Solutions sur mesure à grande échelle",
+        "features": {
+          "sites": "{count} sites web",
+          "unlimitedUsers": "Utilisateurs illimités",
+          "allFeatures": "Toutes les fonctionnalités incluses",
+          "assurance": "Assurance incluse",
+          "auditDiscount": "30% de réduction sur les audits",
+          "sla": "Garantie SLA",
+          "accountManager": "Responsable de compte dédié",
+          "history": "{count} mois d'historique",
+          "customBilling": "Facturation personnalisée"
+        }
+      },
+      "addons": {
+        "badge": "Modules complémentaires",
+        "title": "Évoluez en",
+        "titleHighlight": "grandissant",
+        "subtitle": "Ajoutez des sites web, de la capacité de scan ou un suivi continu à n'importe quel plan",
+        "websites": {
+          "title": "Sites web supplémentaires",
+          "description": "Besoin de plus de sites ? Ajoutez-les à n'importe quel plan.",
+          "site1": "+1 site web",
+          "sites5": "+5 sites web",
+          "sites10": "+10 sites web"
+        },
+        "pages": {
+          "title": "Packs de volume de pages",
+          "description": "Augmentez la capacité de scan mensuelle avec des packs de volume.",
+          "25k": "+25 000 pages/mois",
+          "100k": "+100 000 pages/mois",
+          "250k": "+250 000 pages/mois",
+          "businessNote": "Business inclut 25 000 pages/mois",
+          "enterpriseNote": "Enterprise inclut 100 000 pages/mois",
+          "contactSales": "Contacter les ventes"
+        },
+        "assurance": {
+          "title": "Assurance",
+          "badge": "Surveillance",
+          "description": "Surveillance automatisée de la conformité et alertes",
+          "features": {
+            "scans": "Scans automatisés hebdomadaires",
+            "alerts": "Alertes de baisse de score",
+            "audit": "Archive des journaux d'audit",
+            "eaa": "Suivi de préparation EAA",
+            "graph": "Graphique historique de conformité"
+          },
+          "included": "Inclus",
+          "businessEnterprise": "Business et Enterprise"
+        },
+        "perMonth": "/mois",
+        "exclVat": "HT",
+        "inclVat": "TTC",
+        "perPage": "≈ €{price}/page",
+        "needHigher": "Besoin de plus de capacité ?",
+        "contactEnterprise": "pour un volume entreprise."
+      },
+      "audits": {
+        "badge": "Services d'audit EAA",
+        "title": "Audits d'accessibilité",
+        "titleHighlight": "manuels",
+        "subtitle": "Faites auditer votre site web par nos experts",
+        "oneTime": "unique",
+        "cta": "Demander un audit",
+        "quick": {
+          "description": "Scan rapide des pages les plus importantes",
+          "features": {
+            "pages": "Top 10 pages",
+            "wcag": "Vérification WCAG 2.2",
+            "report": "Rapport sous 48h"
+          }
+        },
+        "full": {
+          "description": "Audit complet du site avec analyse approfondie",
+          "features": {
+            "pages": "Toutes les pages",
+            "wcag": "WCAG 2.2 + EAA",
+            "code": "Revue de code",
+            "report": "Rapport + feuille de route"
+          }
+        },
+        "enterprise": {
+          "description": "Audit entreprise avec conseil en conformité",
+          "features": {
+            "pages": "Site complet",
+            "wcag": "WCAG 2.2 + EAA + VPAT",
+            "legal": "Revue juridique",
+            "implementation": "Accompagnement à l'implémentation"
+          }
+        }
+      },
+      "auditBundles": {
+        "badge": "Forfaits audit + surveillance",
+        "title": "Forfaits d'audit",
+        "titleHighlight": "continus",
+        "subtitle": "Combinez la surveillance automatisée avec des audits manuels",
+        "cta": "Choisir un forfait",
+        "starter": {
+          "features": {
+            "audits": "1 scan rapide/trimestre",
+            "report": "Rapport basique",
+            "support": "Support par email"
+          }
+        },
+        "pro": {
+          "features": {
+            "audits": "1 audit complet/trimestre",
+            "report": "Rapport détaillé + feuille de route",
+            "support": "Support prioritaire"
+          }
+        },
+        "business": {
+          "features": {
+            "audits": "2 audits complets/trimestre",
+            "code": "Revue de code",
+            "implementation": "Accompagnement à l'implémentation",
+            "contact": "Contact dédié"
+          }
+        },
+        "enterprise": {
+          "features": {
+            "audits": "Audits illimités",
+            "vpat": "VPAT + documents de conformité",
+            "legal": "Support juridique",
+            "manager": "Responsable de compte"
+          }
+        }
+      }
     }
   },
   "contact": {

@@ -435,6 +435,195 @@
       "startTrial": "Start gratis scan",
       "needMore": "Hogere limieten nodig?",
       "contactUs": "Neem contact op"
+    },
+    "page": {
+      "billing": {
+        "monthly": "Maandelijks",
+        "yearly": "Jaarlijks",
+        "save15": "Bespaar 15%"
+      },
+      "mostPopular": "Meest populair",
+      "needCustom": "Een oplossing op maat nodig?",
+      "contactSales": "Neem contact op met ons salesteam",
+      "vatExcl": "excl. BTW · {country} {vatPercent}%",
+      "vatIncl": "incl. {vatPercent}% BTW ({country})",
+      "pricesExcl": "Prijzen excl. BTW. BTW wordt berekend bij checkout.",
+      "pricesIncl": "Prijzen incl. {vatPercent}% BTW ({country})",
+      "starter": {
+        "name": "Starter",
+        "description": "Voor individuen en kleine sites",
+        "features": {
+          "site": "{count} website",
+          "pages": "{count} pagina's/maand",
+          "user": "{count} gebruiker",
+          "pdf": "PDF-export",
+          "history": "{count} maanden geschiedenis",
+          "support": "E-mail support"
+        },
+        "limitations": {
+          "noWord": "Geen Word-export",
+          "noScheduling": "Geen planning",
+          "noIntegrations": "Geen integraties"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Voor teams en groeiende bedrijven",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pagina's/maand",
+          "users": "{count} gebruikers",
+          "exports": "PDF + Word export",
+          "whiteLabel": "White-label rapporten",
+          "history": "{count} maanden geschiedenis",
+          "integrations": "Slack & Jira integraties",
+          "support": "Prioriteit support"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "Voor bureaus en ondernemingen",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pagina's/maand",
+          "users": "{count} gebruikers",
+          "whiteLabel": "White-label rapporten",
+          "integrations": "Alle integraties",
+          "history": "{count} maanden geschiedenis",
+          "assurance": "Assurance inbegrepen",
+          "auditDiscount": "20% korting op losse audits",
+          "support": "4u prioriteit support"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Maatwerkoplossingen op schaal",
+        "features": {
+          "sites": "{count} websites",
+          "unlimitedUsers": "Onbeperkt gebruikers",
+          "allFeatures": "Alle functies inbegrepen",
+          "assurance": "Assurance inbegrepen",
+          "auditDiscount": "30% korting op losse audits",
+          "sla": "SLA-garantie",
+          "accountManager": "Dedicated accountmanager",
+          "history": "{count} maanden geschiedenis",
+          "customBilling": "Aangepaste facturatie"
+        }
+      },
+      "addons": {
+        "badge": "Flexibele add-ons",
+        "title": "Schaal mee terwijl je",
+        "titleHighlight": "groeit",
+        "subtitle": "Voeg extra websites, scancapaciteit of continue monitoring toe aan elk plan",
+        "websites": {
+          "title": "Extra websites",
+          "description": "Meer websites nodig? Voeg ze toe aan elk plan.",
+          "site1": "+1 website",
+          "sites5": "+5 websites",
+          "sites10": "+10 websites"
+        },
+        "pages": {
+          "title": "Paginavolume packs",
+          "description": "Verhoog de maandelijkse scancapaciteit met volumepakketten.",
+          "25k": "+25.000 pagina's/maand",
+          "100k": "+100.000 pagina's/maand",
+          "250k": "+250.000 pagina's/maand",
+          "businessNote": "Business bevat 25.000 pagina's/maand",
+          "enterpriseNote": "Enterprise bevat 100.000 pagina's/maand",
+          "contactSales": "Neem contact op met sales"
+        },
+        "assurance": {
+          "title": "Assurance",
+          "badge": "Monitoring",
+          "description": "Geautomatiseerde compliance-monitoring en alerts",
+          "features": {
+            "scans": "Wekelijkse geautomatiseerde scans",
+            "alerts": "Score-daling alerts",
+            "audit": "Audit log archief",
+            "eaa": "EAA-gereedheid tracking",
+            "graph": "Historische compliance grafiek"
+          },
+          "included": "Inbegrepen",
+          "businessEnterprise": "Business & Enterprise"
+        },
+        "perMonth": "/mo",
+        "exclVat": "excl. BTW",
+        "inclVat": "incl. BTW",
+        "perPage": "≈ €{price}/pagina",
+        "needHigher": "Meer capaciteit nodig?",
+        "contactEnterprise": "voor enterprise volume."
+      },
+      "audits": {
+        "badge": "EAA Audit Diensten",
+        "title": "Handmatige",
+        "titleHighlight": "Accessibility Audits",
+        "subtitle": "Laat je website professioneel auditen door onze experts",
+        "oneTime": "eenmalig",
+        "cta": "Audit aanvragen",
+        "quick": {
+          "description": "Snelle scan van de belangrijkste pagina's",
+          "features": {
+            "pages": "Top 10 pagina's",
+            "wcag": "WCAG 2.2 check",
+            "report": "Rapport binnen 48u"
+          }
+        },
+        "full": {
+          "description": "Volledige site audit met diepgaande analyse",
+          "features": {
+            "pages": "Alle pagina's",
+            "wcag": "WCAG 2.2 + EAA",
+            "code": "Code review",
+            "report": "Rapport + roadmap"
+          }
+        },
+        "enterprise": {
+          "description": "Enterprise-grade audit met compliance advies",
+          "features": {
+            "pages": "Volledige site",
+            "wcag": "WCAG 2.2 + EAA + VPAT",
+            "legal": "Legal review",
+            "implementation": "Implementatiebegeleiding"
+          }
+        }
+      },
+      "auditBundles": {
+        "badge": "Audit + Monitoring Bundels",
+        "title": "Doorlopende",
+        "titleHighlight": "audit bundels",
+        "subtitle": "Combineer geautomatiseerde monitoring met handmatige audits",
+        "cta": "Bundel kiezen",
+        "starter": {
+          "features": {
+            "audits": "1 quickscan/kwartaal",
+            "report": "Basis rapport",
+            "support": "E-mail support"
+          }
+        },
+        "pro": {
+          "features": {
+            "audits": "1 volledige audit/kwartaal",
+            "report": "Uitgebreid rapport + roadmap",
+            "support": "Prioriteit support"
+          }
+        },
+        "business": {
+          "features": {
+            "audits": "2 volledige audits/kwartaal",
+            "code": "Code review",
+            "implementation": "Implementatiebegeleiding",
+            "contact": "Dedicated contact"
+          }
+        },
+        "enterprise": {
+          "features": {
+            "audits": "Onbeperkt audits",
+            "vpat": "VPAT + compliance docs",
+            "legal": "Legal support",
+            "manager": "Accountmanager"
+          }
+        }
+      }
     }
   },
   "contact": {

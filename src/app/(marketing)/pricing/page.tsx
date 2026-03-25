@@ -155,6 +155,7 @@ function HeroSection() {
 
 function PricingCards() {
   const t = useTranslations('pricing');
+  const tp = useTranslations('pricing.page');
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
@@ -201,76 +202,76 @@ function PricingCards() {
   }> = [
     {
       key: "STARTER",
-      name: "Starter",
-      description: "For individuals & small sites",
+      name: tp('starter.name'),
+      description: tp('starter.description'),
       highlighted: false,
       features: [
-        `${ENTITLEMENTS.STARTER.sites} website`,
-        `${ENTITLEMENTS.STARTER.pagesPerMonth.toLocaleString()} pages/month`,
-        `${ENTITLEMENTS.STARTER.users} user`,
-        "PDF export",
-        `${ENTITLEMENTS.STARTER.historyMonths}-month history`,
-        "Email support",
+        tp('starter.features.site', { count: ENTITLEMENTS.STARTER.sites }),
+        tp('starter.features.pages', { count: ENTITLEMENTS.STARTER.pagesPerMonth.toLocaleString() }),
+        tp('starter.features.user', { count: ENTITLEMENTS.STARTER.users }),
+        tp('starter.features.pdf'),
+        tp('starter.features.history', { count: ENTITLEMENTS.STARTER.historyMonths }),
+        tp('starter.features.support'),
       ],
       limitations: [
-        "No Word export",
-        "No scheduling",
-        "No integrations",
+        tp('starter.limitations.noWord'),
+        tp('starter.limitations.noScheduling'),
+        tp('starter.limitations.noIntegrations'),
       ],
       ctaVariant: "outline",
     },
     {
       key: "PRO",
-      name: "Pro",
-      description: "For teams & growing businesses",
+      name: tp('pro.name'),
+      description: tp('pro.description'),
       highlighted: true,
       features: [
-        `${ENTITLEMENTS.PRO.sites} websites`,
-        `${ENTITLEMENTS.PRO.pagesPerMonth.toLocaleString()} pages/month`,
-        `${ENTITLEMENTS.PRO.users} users`,
-        "PDF + Word export",
-        "White-label rapporten",
-        `${ENTITLEMENTS.PRO.historyMonths}-month history`,
-        "Slack & Jira integrations",
-        "Priority support",
+        tp('pro.features.sites', { count: ENTITLEMENTS.PRO.sites }),
+        tp('pro.features.pages', { count: ENTITLEMENTS.PRO.pagesPerMonth.toLocaleString() }),
+        tp('pro.features.users', { count: ENTITLEMENTS.PRO.users }),
+        tp('pro.features.exports'),
+        tp('pro.features.whiteLabel'),
+        tp('pro.features.history', { count: ENTITLEMENTS.PRO.historyMonths }),
+        tp('pro.features.integrations'),
+        tp('pro.features.support'),
       ],
       limitations: [],
       ctaVariant: "default",
     },
     {
       key: "BUSINESS",
-      name: "Business",
-      description: "For agencies & enterprises",
+      name: tp('business.name'),
+      description: tp('business.description'),
       highlighted: false,
       features: [
-        `${ENTITLEMENTS.BUSINESS.sites} websites`,
-        `${ENTITLEMENTS.BUSINESS.pagesPerMonth.toLocaleString()} pages/month`,
-        `${ENTITLEMENTS.BUSINESS.users} users`,
-        "White-label reports",
-        "All integrations",
-        `${ENTITLEMENTS.BUSINESS.historyMonths}-month history`,
-        "Assurance included",
-        "20% korting op losse audits",
-        "4h priority support",
+        tp('business.features.sites', { count: ENTITLEMENTS.BUSINESS.sites }),
+        tp('business.features.pages', { count: ENTITLEMENTS.BUSINESS.pagesPerMonth.toLocaleString() }),
+        tp('business.features.users', { count: ENTITLEMENTS.BUSINESS.users }),
+        tp('business.features.whiteLabel'),
+        tp('business.features.integrations'),
+        tp('business.features.history', { count: ENTITLEMENTS.BUSINESS.historyMonths }),
+        tp('business.features.assurance'),
+        tp('business.features.auditDiscount'),
+        tp('business.features.support'),
       ],
       limitations: [],
       ctaVariant: "default",
     },
     {
       key: "ENTERPRISE",
-      name: "Enterprise",
-      description: "Custom solutions at scale",
+      name: tp('enterprise.name'),
+      description: tp('enterprise.description'),
       highlighted: false,
       features: [
-        `${ENTITLEMENTS.ENTERPRISE.sites} websites`,
-        "Unlimited users",
-        "All features included",
-        "Assurance included",
-        "30% korting op losse audits",
-        "SLA guarantee",
-        "Dedicated account manager",
-        `${ENTITLEMENTS.ENTERPRISE.historyMonths}-month history`,
-        "Custom billing",
+        tp('enterprise.features.sites', { count: ENTITLEMENTS.ENTERPRISE.sites }),
+        tp('enterprise.features.unlimitedUsers'),
+        tp('enterprise.features.allFeatures'),
+        tp('enterprise.features.assurance'),
+        tp('enterprise.features.auditDiscount'),
+        tp('enterprise.features.sla'),
+        tp('enterprise.features.accountManager'),
+        tp('enterprise.features.history', { count: ENTITLEMENTS.ENTERPRISE.historyMonths }),
+        tp('enterprise.features.customBilling'),
       ],
       limitations: [],
       ctaVariant: "default",
@@ -309,7 +310,7 @@ function PricingCards() {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                Monthly
+                {tp('billing.monthly')}
               </button>
               <button
                 onClick={() => setBillingCycle('yearly')}
@@ -320,9 +321,9 @@ function PricingCards() {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                Yearly
+                {tp('billing.yearly')}
                 <Badge className="ml-2 bg-primary text-xs">
-                  Save 15%
+                  {tp('billing.save15')}
                 </Badge>
               </button>
             </div>
@@ -348,7 +349,7 @@ function PricingCards() {
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-[#FF7A00] text-white hover:bg-[#FF7A00]/90">
                       <Star className="w-3 h-3 mr-1" />
-                      Most Popular
+                      {tp('mostPopular')}
                     </Badge>
                   </div>
                 )}
@@ -373,8 +374,8 @@ function PricingCards() {
                     )}
                     <p className="text-[10px] text-muted-foreground mt-0.5">
                       {displayMode === 'excl'
-                        ? `excl. BTW · ${countryOption?.label ?? 'NL'} ${vatPercent}%`
-                        : `incl. ${vatPercent}% BTW (${countryOption?.label ?? 'NL'})`}
+                        ? tp('vatExcl', { country: countryOption?.label ?? 'NL', vatPercent })
+                        : tp('vatIncl', { country: countryOption?.label ?? 'NL', vatPercent })}
                     </p>
                   </div>
                   <p className="text-muted-foreground mt-2 text-xs">{plan.description}</p>
@@ -407,7 +408,7 @@ function PricingCards() {
                     disabled={loading === plan.key}
                   >
                     {loading === plan.key ? (
-                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Loading...</>
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" />{t('loading')}</>
                     ) : (
                       <>{ctaText}<ArrowRight className="ml-2 h-4 w-4" /></>
                     )}
@@ -420,9 +421,9 @@ function PricingCards() {
 
         <div className="text-center mt-12">
           <p className="text-muted-foreground">
-            Need a custom solution?{" "}
+            {tp('needCustom')}{" "}
             <Link href="/contact" className="text-primary hover:underline ml-1">
-              Contact our sales team
+              {tp('contactSales')}
             </Link>
           </p>
         </div>
@@ -440,6 +441,7 @@ function PricingCards() {
 }
 
 function AuditServicesSection() {
+  const tp = useTranslations('pricing.page');
   const [displayMode] = usePriceDisplayMode();
   const [country] = usePricingCountry();
   const dp = (net: number): number =>
@@ -452,18 +454,32 @@ function AuditServicesSection() {
   const audits = [
     {
       ...AUDIT_PRICES.QUICK,
-      description: "Snelle scan van de belangrijkste pagina's",
-      features: ["Top 10 pagina's", "WCAG 2.2 check", "Rapport binnen 48u"],
+      description: tp('audits.quick.description'),
+      features: [
+        tp('audits.quick.features.pages'),
+        tp('audits.quick.features.wcag'),
+        tp('audits.quick.features.report'),
+      ],
     },
     {
       ...AUDIT_PRICES.FULL,
-      description: "Volledige site audit met diepgaande analyse",
-      features: ["Alle pagina's", "WCAG 2.2 + EAA", "Code review", "Rapport + roadmap"],
+      description: tp('audits.full.description'),
+      features: [
+        tp('audits.full.features.pages'),
+        tp('audits.full.features.wcag'),
+        tp('audits.full.features.code'),
+        tp('audits.full.features.report'),
+      ],
     },
     {
       ...AUDIT_PRICES.ENTERPRISE,
-      description: "Enterprise-grade audit met compliance advies",
-      features: ["Volledige site", "WCAG 2.2 + EAA + VPAT", "Legal review", "Implementatiebegeleiding"],
+      description: tp('audits.enterprise.description'),
+      features: [
+        tp('audits.enterprise.features.pages'),
+        tp('audits.enterprise.features.wcag'),
+        tp('audits.enterprise.features.legal'),
+        tp('audits.enterprise.features.implementation'),
+      ],
     },
   ];
 
@@ -473,13 +489,13 @@ function AuditServicesSection() {
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 bg-white dark:bg-slate-900">
             <FileSearch className="w-3 h-3 mr-1" />
-            EAA Audit Diensten
+            {tp('audits.badge')}
           </Badge>
           <h2 className="text-3xl lg:text-5xl font-bold font-display mb-4">
-            Handmatige <span className="text-primary">Accessibility Audits</span>
+            {tp('audits.title')} <span className="text-primary">{tp('audits.titleHighlight')}</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Laat je website professioneel auditen door onze experts
+            {tp('audits.subtitle')}
           </p>
         </div>
 
@@ -493,11 +509,11 @@ function AuditServicesSection() {
               <CardContent className="flex-1 flex flex-col">
                 <div className="mb-4">
                   <span className="text-3xl font-bold font-display">{formatEuro(dp(audit.price))}</span>
-                  <span className="text-muted-foreground text-sm ml-1">eenmalig</span>
+                  <span className="text-muted-foreground text-sm ml-1">{tp('audits.oneTime')}</span>
                   <p className="text-[10px] text-muted-foreground mt-0.5">
                     {displayMode === 'excl'
-                      ? `excl. BTW · ${countryOption?.label ?? 'NL'} ${vatPercent}%`
-                      : `incl. ${vatPercent}% BTW`}
+                      ? tp('vatExcl', { country: countryOption?.label ?? 'NL', vatPercent })
+                      : tp('vatIncl', { country: countryOption?.label ?? 'NL', vatPercent })}
                   </p>
                 </div>
                 <div className="space-y-2 flex-1">
@@ -510,7 +526,7 @@ function AuditServicesSection() {
                 </div>
                 <Button className="w-full mt-4" variant="outline" asChild>
                   <Link href={`/contact?subject=audit&product=${audit.productId}`}>
-                    Audit aanvragen <ArrowRight className="ml-2 h-4 w-4" />
+                    {tp('audits.cta')} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </CardContent>
@@ -523,6 +539,7 @@ function AuditServicesSection() {
 }
 
 function AuditBundlesSection() {
+  const tp = useTranslations('pricing.page');
   const [displayMode] = usePriceDisplayMode();
   const [country] = usePricingCountry();
   const dp = (net: number): number =>
@@ -535,19 +552,37 @@ function AuditBundlesSection() {
   const bundles = [
     {
       ...AUDIT_BUNDLE_PRICES.STARTER,
-      features: ["1 quickscan/kwartaal", "Basis rapport", "Email support"],
+      features: [
+        tp('auditBundles.starter.features.audits'),
+        tp('auditBundles.starter.features.report'),
+        tp('auditBundles.starter.features.support'),
+      ],
     },
     {
       ...AUDIT_BUNDLE_PRICES.PRO,
-      features: ["1 full audit/kwartaal", "Uitgebreid rapport + roadmap", "Priority support"],
+      features: [
+        tp('auditBundles.pro.features.audits'),
+        tp('auditBundles.pro.features.report'),
+        tp('auditBundles.pro.features.support'),
+      ],
     },
     {
       ...AUDIT_BUNDLE_PRICES.BUSINESS,
-      features: ["2 full audits/kwartaal", "Code review", "Implementatiebegeleiding", "Dedicated contact"],
+      features: [
+        tp('auditBundles.business.features.audits'),
+        tp('auditBundles.business.features.code'),
+        tp('auditBundles.business.features.implementation'),
+        tp('auditBundles.business.features.contact'),
+      ],
     },
     {
       ...AUDIT_BUNDLE_PRICES.ENTERPRISE,
-      features: ["Onbeperkt audits", "VPAT + compliance docs", "Legal support", "Account manager"],
+      features: [
+        tp('auditBundles.enterprise.features.audits'),
+        tp('auditBundles.enterprise.features.vpat'),
+        tp('auditBundles.enterprise.features.legal'),
+        tp('auditBundles.enterprise.features.manager'),
+      ],
     },
   ];
 
@@ -557,13 +592,13 @@ function AuditBundlesSection() {
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4">
             <ShieldCheck className="w-3 h-3 mr-1" />
-            Audit + Monitoring Bundels
+            {tp('auditBundles.badge')}
           </Badge>
           <h2 className="text-3xl lg:text-5xl font-bold font-display mb-4">
-            Doorlopende <span className="text-primary">audit bundels</span>
+            {tp('auditBundles.title')} <span className="text-primary">{tp('auditBundles.titleHighlight')}</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Combineer geautomatiseerde monitoring met handmatige audits
+            {tp('auditBundles.subtitle')}
           </p>
         </div>
 
@@ -576,11 +611,11 @@ function AuditBundlesSection() {
               <CardContent className="flex-1 flex flex-col">
                 <div className="mb-4">
                   <span className="text-2xl font-bold font-display">{formatEuro(dp(bundle.price))}</span>
-                  <span className="text-muted-foreground text-sm">/mo</span>
+                  <span className="text-muted-foreground text-sm">{tp('addons.perMonth')}</span>
                   <p className="text-[10px] text-muted-foreground mt-0.5">
                     {displayMode === 'excl'
-                      ? `excl. BTW · ${countryOption?.label ?? 'NL'} ${vatPercent}%`
-                      : `incl. ${vatPercent}% BTW`}
+                      ? tp('vatExcl', { country: countryOption?.label ?? 'NL', vatPercent })
+                      : tp('vatIncl', { country: countryOption?.label ?? 'NL', vatPercent })}
                   </p>
                 </div>
                 <div className="space-y-2 flex-1">
@@ -593,7 +628,7 @@ function AuditBundlesSection() {
                 </div>
                 <Button className="w-full mt-4" variant="outline" asChild>
                   <Link href={`/contact?subject=audit-bundle&product=${bundle.productId}`}>
-                    Bundel kiezen <ArrowRight className="ml-2 h-4 w-4" />
+                    {tp('auditBundles.cta')} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </CardContent>
@@ -606,6 +641,7 @@ function AuditBundlesSection() {
 }
 
 function AddOnsSection() {
+  const tp = useTranslations('pricing.page');
   const [displayMode] = usePriceDisplayMode();
   const [country] = usePricingCountry();
   const dp = (net: number): number =>
@@ -616,37 +652,39 @@ function AddOnsSection() {
   const countryOption = PRICING_COUNTRY_OPTIONS.find((o) => o.code === country);
 
   const websitePacks = [
-    { label: "+1 website", price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1 },
-    { label: "+5 websites", price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5 },
-    { label: "+10 websites", price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10 },
+    { label: tp('addons.websites.site1'), price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1 },
+    { label: tp('addons.websites.sites5'), price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5 },
+    { label: tp('addons.websites.sites10'), price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10 },
   ];
 
   const volumePacks = [
-    { label: "+25,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_25K, pages: 25000 },
-    { label: "+100,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_100K, pages: 100000 },
-    { label: "+250,000 pages/month", price: PAGE_PACK_PRICES.PAGE_PACK_250K, pages: 250000 },
+    { label: tp('addons.pages.25k'), price: PAGE_PACK_PRICES.PAGE_PACK_25K, pages: 25000 },
+    { label: tp('addons.pages.100k'), price: PAGE_PACK_PRICES.PAGE_PACK_100K, pages: 100000 },
+    { label: tp('addons.pages.250k'), price: PAGE_PACK_PRICES.PAGE_PACK_250K, pages: 250000 },
   ];
 
   const assuranceFeatures = [
-    "Weekly automated scans",
-    "Score drop alerts",
-    "Audit log archive",
-    "EAA readiness tracking",
-    "Historical compliance graph",
+    tp('addons.assurance.features.scans'),
+    tp('addons.assurance.features.alerts'),
+    tp('addons.assurance.features.audit'),
+    tp('addons.assurance.features.eaa'),
+    tp('addons.assurance.features.graph'),
   ];
+
+  const vatLabel = displayMode === 'excl' ? tp('addons.exclVat') : tp('addons.inclVat');
 
   return (
     <section className="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 bg-white dark:bg-slate-900">
-            Flexible Add-Ons
+            {tp('addons.badge')}
           </Badge>
           <h2 className="text-3xl lg:text-5xl font-bold font-display mb-4">
-            Scale as you <span className="text-primary">grow</span>
+            {tp('addons.title')} <span className="text-primary">{tp('addons.titleHighlight')}</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Add extra websites, scanning capacity, or continuous monitoring to any plan
+            {tp('addons.subtitle')}
           </p>
         </div>
 
@@ -654,8 +692,8 @@ function AddOnsSection() {
           {/* Extra Website Packs */}
           <Card className="bg-white dark:bg-slate-900">
             <CardHeader>
-              <CardTitle className="font-display text-xl">Extra Websites</CardTitle>
-              <p className="text-muted-foreground text-sm">Need more websites? Add them to any plan.</p>
+              <CardTitle className="font-display text-xl">{tp('addons.websites.title')}</CardTitle>
+              <p className="text-muted-foreground text-sm">{tp('addons.websites.description')}</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -663,10 +701,8 @@ function AddOnsSection() {
                   <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
                     <span className="font-medium text-sm">{pack.label}</span>
                     <div className="text-right">
-                      <span className="font-bold">{formatEuro(dp(pack.price))}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
-                      <p className="text-[10px] text-muted-foreground">
-                        {displayMode === 'excl' ? `excl. BTW` : `incl. BTW`}
-                      </p>
+                      <span className="font-bold">{formatEuro(dp(pack.price))}<span className="text-xs text-muted-foreground font-normal">{tp('addons.perMonth')}</span></span>
+                      <p className="text-[10px] text-muted-foreground">{vatLabel}</p>
                     </div>
                   </div>
                 ))}
@@ -677,8 +713,8 @@ function AddOnsSection() {
           {/* Page Volume Packs */}
           <Card className="bg-white dark:bg-slate-900">
             <CardHeader>
-              <CardTitle className="font-display text-xl">Page Volume Packs</CardTitle>
-              <p className="text-muted-foreground text-sm">Increase monthly scanning capacity with volume packs.</p>
+              <CardTitle className="font-display text-xl">{tp('addons.pages.title')}</CardTitle>
+              <p className="text-muted-foreground text-sm">{tp('addons.pages.description')}</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -689,13 +725,11 @@ function AddOnsSection() {
                     <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
                       <div>
                         <span className="font-medium text-sm">{pack.label}</span>
-                        <span className="block text-[10px] text-muted-foreground">≈ €{perPage}/page</span>
+                        <span className="block text-[10px] text-muted-foreground">{tp('addons.perPage', { price: perPage })}</span>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold">{formatEuro(displayPrice)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
-                        <p className="text-[10px] text-muted-foreground">
-                          {displayMode === 'excl' ? `excl. BTW` : `incl. BTW`}
-                        </p>
+                        <span className="font-bold">{formatEuro(displayPrice)}<span className="text-xs text-muted-foreground font-normal">{tp('addons.perMonth')}</span></span>
+                        <p className="text-[10px] text-muted-foreground">{vatLabel}</p>
                       </div>
                     </div>
                   );
@@ -704,11 +738,11 @@ function AddOnsSection() {
               <div className="mt-4 space-y-3">
                 <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
                   <p className="text-xs text-green-700 dark:text-green-300">
-                    <strong>Business</strong> includes 25,000 pages/month &middot; <strong>Enterprise</strong> includes 100,000 pages/month
+                    <strong>Business</strong> {tp('addons.pages.businessNote')} &middot; <strong>Enterprise</strong> {tp('addons.pages.enterpriseNote')}
                   </p>
                 </div>
                 <p className="text-xs text-muted-foreground text-center">
-                  Need higher capacity? <Link href="/contact?subject=enterprise-volume" className="text-primary hover:underline font-medium">Contact sales</Link> for enterprise volume.
+                  {tp('addons.needHigher')} <Link href="/contact?subject=enterprise-volume" className="text-primary hover:underline font-medium">{tp('addons.pages.contactSales')}</Link> {tp('addons.contactEnterprise')}
                 </p>
               </div>
             </CardContent>
@@ -718,10 +752,10 @@ function AddOnsSection() {
           <Card className="bg-white dark:bg-slate-900">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="font-display text-xl">Assurance</CardTitle>
-                <Badge className="bg-green-500 text-white text-xs">Monitoring</Badge>
+                <CardTitle className="font-display text-xl">{tp('addons.assurance.title')}</CardTitle>
+                <Badge className="bg-green-500 text-white text-xs">{tp('addons.assurance.badge')}</Badge>
               </div>
-              <p className="text-muted-foreground text-sm">Automated compliance monitoring & alerts</p>
+              <p className="text-muted-foreground text-sm">{tp('addons.assurance.description')}</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 mb-4">
@@ -736,20 +770,20 @@ function AddOnsSection() {
                 <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <span className="text-sm">Starter</span>
                   <div className="text-right">
-                    <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.STARTER ?? 0))}/mo</span>
-                    <p className="text-[10px] text-muted-foreground">{displayMode === 'excl' ? 'excl. BTW' : 'incl. BTW'}</p>
+                    <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.STARTER ?? 0))}{tp('addons.perMonth')}</span>
+                    <p className="text-[10px] text-muted-foreground">{vatLabel}</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <span className="text-sm">Pro</span>
                   <div className="text-right">
-                    <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.PRO ?? 0))}/mo</span>
-                    <p className="text-[10px] text-muted-foreground">{displayMode === 'excl' ? 'excl. BTW' : 'incl. BTW'}</p>
+                    <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.PRO ?? 0))}{tp('addons.perMonth')}</span>
+                    <p className="text-[10px] text-muted-foreground">{vatLabel}</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
-                  <span className="text-sm">Business & Enterprise</span>
-                  <Badge variant="secondary" className="bg-green-500 text-white text-xs">Included</Badge>
+                  <span className="text-sm">{tp('addons.assurance.businessEnterprise')}</span>
+                  <Badge variant="secondary" className="bg-green-500 text-white text-xs">{tp('addons.assurance.included')}</Badge>
                 </div>
               </div>
             </CardContent>
@@ -858,56 +892,14 @@ function ComplianceDisclaimerSection() {
 function ToolComparisonSection() {
   const t = useTranslations('pricing.comparison');
 
-  const comparisonData = [
-    {
-      feature: "Coverage Depth",
-      vexnexa: "WCAG + 8 extra categories",
-      overlay: "Superficial fixes only",
-      generic: "Basic WCAG checks",
-    },
-    {
-      feature: "Actionability",
-      vexnexa: "Code snippets + remediation tips",
-      overlay: "No developer guidance",
-      generic: "Generic error messages",
-    },
-    {
-      feature: "Team Features",
-      vexnexa: true,
-      overlay: false,
-      generic: false,
-    },
-    {
-      feature: "Continuous Monitoring",
-      vexnexa: true,
-      overlay: false,
-      generic: false,
-    },
-    {
-      feature: "API Access",
-      vexnexa: true,
-      overlay: false,
-      generic: "Limited",
-    },
-    {
-      feature: "False Positives",
-      vexnexa: "Low",
-      overlay: "N/A",
-      generic: "High",
-    },
-    {
-      feature: "Legal Stance",
-      vexnexa: "Tool assists compliance",
-      overlay: "Claims to fix issues",
-      generic: "No legal claims",
-    },
-    {
-      feature: "Cost Scaling",
-      vexnexa: "Transparent overflow pricing",
-      overlay: "Per-page fees",
-      generic: "Fixed tiers only",
-    },
-  ];
+  const featureKeys = ['coverage', 'actionability', 'team', 'monitoring', 'api', 'falsePositives', 'legal', 'cost'] as const;
+
+  const comparisonData = featureKeys.map((key) => ({
+    feature: t(`features.${key}.name`),
+    vexnexa: t.raw(`features.${key}.vexnexa`),
+    overlay: t.raw(`features.${key}.overlay`),
+    generic: t.raw(`features.${key}.generic`),
+  }));
 
   return (
     <ComparisonTable

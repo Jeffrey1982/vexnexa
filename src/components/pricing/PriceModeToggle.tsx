@@ -11,18 +11,20 @@ import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
 import { usePricingCountry } from "@/lib/pricing/use-price-display-mode";
 import type { PriceDisplayMode } from "@/lib/pricing/display-mode";
 import { PRICING_COUNTRY_OPTIONS } from "@/lib/pricing/vat-math";
+import { useTranslations } from "next-intl";
 
 interface PriceModeToggleProps {
   className?: string;
 }
 
 export function PriceModeToggle({ className }: PriceModeToggleProps): JSX.Element {
+  const tp = useTranslations('pricing.page');
   const [mode, setMode] = usePriceDisplayMode();
   const [country, setCountry] = usePricingCountry();
 
   const options: { value: PriceDisplayMode; label: string }[] = [
-    { value: "excl", label: "Excl. BTW" },
-    { value: "incl", label: "Incl. BTW" },
+    { value: "excl", label: tp('addons.exclVat') },
+    { value: "incl", label: tp('addons.inclVat') },
   ];
 
   const currentOption = PRICING_COUNTRY_OPTIONS.find((o) => o.code === country);
@@ -70,8 +72,8 @@ export function PriceModeToggle({ className }: PriceModeToggleProps): JSX.Elemen
       </div>
       <span className="text-[10px] text-muted-foreground leading-tight">
         {mode === "incl"
-          ? `Prijzen incl. ${currentOption?.vatPercent ?? 21}% BTW (${currentOption?.label ?? "Nederland"})`
-          : "Prijzen excl. BTW · BTW wordt berekend bij checkout"}
+          ? tp('pricesIncl', { vatPercent: currentOption?.vatPercent ?? 21, country: currentOption?.label ?? "Nederland" })
+          : tp('pricesExcl')}
       </span>
     </div>
   );

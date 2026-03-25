@@ -422,6 +422,195 @@
       "startTrial": "Start free scan",
       "needMore": "Need higher limits?",
       "contactUs": "Contact us"
+    },
+    "page": {
+      "billing": {
+        "monthly": "Monthly",
+        "yearly": "Yearly",
+        "save15": "Save 15%"
+      },
+      "mostPopular": "Most Popular",
+      "needCustom": "Need a custom solution?",
+      "contactSales": "Contact our sales team",
+      "vatExcl": "excl. VAT · {country} {vatPercent}%",
+      "vatIncl": "incl. {vatPercent}% VAT ({country})",
+      "pricesExcl": "Prices shown excl. VAT. VAT calculated at checkout.",
+      "pricesIncl": "Prices incl. {vatPercent}% VAT ({country})",
+      "starter": {
+        "name": "Starter",
+        "description": "For individuals & small sites",
+        "features": {
+          "site": "{count} website",
+          "pages": "{count} pages/month",
+          "user": "{count} user",
+          "pdf": "PDF export",
+          "history": "{count}-month history",
+          "support": "Email support"
+        },
+        "limitations": {
+          "noWord": "No Word export",
+          "noScheduling": "No scheduling",
+          "noIntegrations": "No integrations"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "For teams & growing businesses",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pages/month",
+          "users": "{count} users",
+          "exports": "PDF + Word export",
+          "whiteLabel": "White-label reports",
+          "history": "{count}-month history",
+          "integrations": "Slack & Jira integrations",
+          "support": "Priority support"
+        }
+      },
+      "business": {
+        "name": "Business",
+        "description": "For agencies & enterprises",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pages/month",
+          "users": "{count} users",
+          "whiteLabel": "White-label reports",
+          "integrations": "All integrations",
+          "history": "{count}-month history",
+          "assurance": "Assurance included",
+          "auditDiscount": "20% discount on audits",
+          "support": "4h priority support"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Custom solutions at scale",
+        "features": {
+          "sites": "{count} websites",
+          "unlimitedUsers": "Unlimited users",
+          "allFeatures": "All features included",
+          "assurance": "Assurance included",
+          "auditDiscount": "30% discount on audits",
+          "sla": "SLA guarantee",
+          "accountManager": "Dedicated account manager",
+          "history": "{count}-month history",
+          "customBilling": "Custom billing"
+        }
+      },
+      "addons": {
+        "badge": "Flexible Add-Ons",
+        "title": "Scale as you",
+        "titleHighlight": "grow",
+        "subtitle": "Add extra websites, scanning capacity, or continuous monitoring to any plan",
+        "websites": {
+          "title": "Extra Websites",
+          "description": "Need more websites? Add them to any plan.",
+          "site1": "+1 website",
+          "sites5": "+5 websites",
+          "sites10": "+10 websites"
+        },
+        "pages": {
+          "title": "Page Volume Packs",
+          "description": "Increase monthly scanning capacity with volume packs.",
+          "25k": "+25,000 pages/month",
+          "100k": "+100,000 pages/month",
+          "250k": "+250,000 pages/month",
+          "businessNote": "Business includes 25,000 pages/month",
+          "enterpriseNote": "Enterprise includes 100,000 pages/month",
+          "contactSales": "Contact sales"
+        },
+        "assurance": {
+          "title": "Assurance",
+          "badge": "Monitoring",
+          "description": "Automated compliance monitoring & alerts",
+          "features": {
+            "scans": "Weekly automated scans",
+            "alerts": "Score drop alerts",
+            "audit": "Audit log archive",
+            "eaa": "EAA readiness tracking",
+            "graph": "Historical compliance graph"
+          },
+          "included": "Included",
+          "businessEnterprise": "Business & Enterprise"
+        },
+        "perMonth": "/mo",
+        "exclVat": "excl. VAT",
+        "inclVat": "incl. VAT",
+        "perPage": "≈ €{price}/page",
+        "needHigher": "Need higher capacity?",
+        "contactEnterprise": "for enterprise volume."
+      },
+      "audits": {
+        "badge": "EAA Audit Services",
+        "title": "Manual",
+        "titleHighlight": "Accessibility Audits",
+        "subtitle": "Have your website professionally audited by our experts",
+        "oneTime": "one-time",
+        "cta": "Request audit",
+        "quick": {
+          "description": "Quick scan of the most important pages",
+          "features": {
+            "pages": "Top 10 pages",
+            "wcag": "WCAG 2.2 check",
+            "report": "Report within 48h"
+          }
+        },
+        "full": {
+          "description": "Complete site audit with in-depth analysis",
+          "features": {
+            "pages": "All pages",
+            "wcag": "WCAG 2.2 + EAA",
+            "code": "Code review",
+            "report": "Report + roadmap"
+          }
+        },
+        "enterprise": {
+          "description": "Enterprise-grade audit with compliance advice",
+          "features": {
+            "pages": "Full site",
+            "wcag": "WCAG 2.2 + EAA + VPAT",
+            "legal": "Legal review",
+            "implementation": "Implementation guidance"
+          }
+        }
+      },
+      "auditBundles": {
+        "badge": "Audit + Monitoring Bundles",
+        "title": "Continuous",
+        "titleHighlight": "audit bundles",
+        "subtitle": "Combine automated monitoring with manual audits",
+        "cta": "Choose bundle",
+        "starter": {
+          "features": {
+            "audits": "1 quickscan/quarter",
+            "report": "Basic report",
+            "support": "Email support"
+          }
+        },
+        "pro": {
+          "features": {
+            "audits": "1 full audit/quarter",
+            "report": "Detailed report + roadmap",
+            "support": "Priority support"
+          }
+        },
+        "business": {
+          "features": {
+            "audits": "2 full audits/quarter",
+            "code": "Code review",
+            "implementation": "Implementation guidance",
+            "contact": "Dedicated contact"
+          }
+        },
+        "enterprise": {
+          "features": {
+            "audits": "Unlimited audits",
+            "vpat": "VPAT + compliance docs",
+            "legal": "Legal support",
+            "manager": "Account manager"
+          }
+        }
+      }
     }
   },
   "contact": {
