@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
+import { useTranslations } from "next-intl";
 
 // Sample data — realistic but not from any real site
 const SAMPLE_SCORE = 72;
@@ -133,6 +134,8 @@ function ScoreRing({ score }: { score: number }) {
 }
 
 export default function SampleReportPage() {
+  const t = useTranslations('sampleReport');
+  
   useEffect(() => {
     trackEvent("sample_report_view");
   }, []);
@@ -144,14 +147,14 @@ export default function SampleReportPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <Badge variant="outline" className="text-sm">
-              Sample Report
+              {t('badge')}
             </Badge>
             <h1 className="text-4xl lg:text-5xl font-bold font-display tracking-tight">
-              What a VexNexa accessibility report{" "}
-              <span className="text-primary">looks like</span>
+              {t('title')}{" "}
+              <span className="text-primary">{t('titleHighlight')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              This is a sample report based on realistic scan data. Business and Enterprise plans can white-label this with your own logo, colours, and company name.
+              {t('subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <Button size="lg" className="gradient-primary text-white" asChild>
@@ -159,7 +162,7 @@ export default function SampleReportPage() {
                   href="/auth/register"
                   onClick={() => trackEvent("sample_report_cta_click", { location: "hero" })}
                 >
-                  Scan your own site
+                  {t('ctaPrimary')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -168,7 +171,7 @@ export default function SampleReportPage() {
                   href="/white-label-accessibility-reports"
                   onClick={() => trackEvent("sample_report_cta_click", { location: "hero_secondary" })}
                 >
-                  Learn about white-label
+                  {t('ctaSecondary')}
                 </Link>
               </Button>
             </div>
@@ -183,21 +186,21 @@ export default function SampleReportPage() {
             <Card className="border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
               <CardContent className="p-8 text-center space-y-4">
                 <Download className="h-10 w-10 text-primary mx-auto" />
-                <h3 className="text-xl font-bold font-display">Download the full sample report</h3>
+                <h3 className="text-xl font-bold font-display">{t('downloadTitle')}</h3>
                 <p className="text-muted-foreground max-w-lg mx-auto text-sm">
-                  See exactly what your clients will receive — branded, structured, and ready to share.
+                  {t('downloadSubtitle')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
                   <Button variant="outline" asChild>
                     <Link href="/contact?from=sample-pdf&type=branded">
                       <Download className="mr-2 h-4 w-4" />
-                      Request PDF sample
+                      {t('downloadBranded')}
                     </Link>
                   </Button>
                   <Button variant="outline" asChild>
                     <Link href="/contact?from=sample-pdf&type=whitelabel">
                       <Download className="mr-2 h-4 w-4" />
-                      Request white-label example
+                      {t('downloadWhiteLabel')}
                     </Link>
                   </Button>
                 </div>
@@ -342,15 +345,15 @@ export default function SampleReportPage() {
               <CardContent className="p-6">
                 <h3 className="font-semibold font-display mb-2 flex items-center gap-2">
                   <Download className="h-5 w-5 text-primary" />
-                  Export as PDF or DOCX — with your branding
+                  {t('exportTitle')}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Business and Enterprise plans include white-label exports. Replace the VexNexa brand with your own logo, company name, colours, and footer text. Reports export as ready-to-share PDF or editable DOCX.
+                  {t('exportSubtitle')}
                 </p>
                 <div className="mt-4">
                   <Button size="sm" variant="outline" asChild>
                     <Link href="/white-label-accessibility-reports">
-                      Learn about white-label reports
+                      {t('exportLearnMore')}
                     </Link>
                   </Button>
                 </div>

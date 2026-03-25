@@ -22,6 +22,7 @@ import { FAQ } from "@/components/marketing/FAQ";
 import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 import { Quote, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -52,11 +53,12 @@ function JsonLd() {
   );
 }
 
-// 1. Hero Section — outcome-led
+// 1. Hero Section
 function HeroSection() {
+  const t = useTranslations('home.hero');
   return (
     <section className="relative py-20 lg:py-32 overflow-hidden">
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
@@ -65,14 +67,14 @@ function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left space-y-8">
             <h1 className="animate-slide-up text-4xl lg:text-5xl xl:text-6xl font-bold font-display tracking-tight leading-tight">
-              White-label WCAG monitoring for{" "}
+              {t('title')}{" "}
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                agencies and EU-facing teams
+                {t('titleHighlight')}
               </span>
             </h1>
 
             <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              Scan websites, catch accessibility regressions after every release, and deliver branded reports that support WCAG 2.2 and EAA readiness.
+              {t('subtitle')}
             </p>
 
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
@@ -86,7 +88,7 @@ function HeroSection() {
                   onClick={() => trackEvent("homepage_cta_primary_click", { location: "hero" })}
                 >
                   <span className="relative z-10 flex items-center">
-                    Start your free scan
+                    {t('ctaPrimary')}
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
@@ -103,13 +105,13 @@ function HeroSection() {
                   href="/sample-report"
                   onClick={() => trackEvent("homepage_cta_sample_report_click")}
                 >
-                  View sample report
+                  {t('ctaSecondary')}
                 </Link>
               </Button>
             </div>
 
             <p className="animate-fade-in text-sm text-muted-foreground pt-4">
-              Free account required. No credit card needed.
+              {t('noCreditCard')}
             </p>
           </div>
 
@@ -118,7 +120,7 @@ function HeroSection() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/heroImage.webp"
-                alt="VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
+                alt={t('imageAlt')}
                 className="aspect-square lg:aspect-[4/3] rounded-3xl border border-primary/20 w-full h-full object-cover"
                 style={{
                   boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 12px 24px -8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -136,18 +138,14 @@ function HeroSection() {
 
 // 1B. Social proof — trusted by agencies
 function SocialProofStrip() {
-  const logos = [
-    "Agency Partner",
-    "Digital Studio",
-    "Web Team",
-    "Compliance Co.",
-  ];
+  const t = useTranslations('home.socialProof');
+  const logos = [t('logo1'), t('logo2'), t('logo3'), t('logo4')];
 
   return (
     <section className="py-10 border-b">
       <div className="container mx-auto px-4">
         <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6">
-          Trusted by agencies across Europe
+          {t('title')}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 max-w-3xl mx-auto">
           {logos.map((name, i) => (
@@ -168,10 +166,11 @@ function SocialProofStrip() {
 
 // 2. Trust / value strip
 function TrustStrip() {
+  const t = useTranslations('home.trustStrip');
   const items = [
-    { icon: Zap, text: "Automated checks in minutes" },
-    { icon: FileText, text: "Branded reports for clients and stakeholders" },
-    { icon: Bell, text: "Continuous monitoring for live websites" },
+    { icon: Zap, text: t('automated') },
+    { icon: FileText, text: t('branded') },
+    { icon: Bell, text: t('continuous') },
   ];
 
   return (
@@ -194,21 +193,22 @@ function TrustStrip() {
 
 // 3. Why teams choose VexNexa — outcome-focused cards
 function WhyTeamsSection() {
+  const t = useTranslations('home.whyTeams');
   const outcomes = [
     {
       icon: Eye,
-      title: "Catch issues before clients do",
-      description: "Run scans against WCAG 2.2 criteria and see prioritized issues with element-level detail. Fix what matters most first.",
+      title: t('catchIssues.title'),
+      description: t('catchIssues.description'),
     },
     {
       icon: FileText,
-      title: "Turn scans into white-label reports",
-      description: "Export branded PDF and DOCX reports under your own logo. Share professional accessibility reports with clients and stakeholders.",
+      title: t('whiteLabel.title'),
+      description: t('whiteLabel.description'),
     },
     {
       icon: RefreshCw,
-      title: "Monitor accessibility after every release",
-      description: "Schedule recurring scans. Get alerted when scores drop or new critical issues appear. Prevent regressions from reaching production.",
+      title: t('monitor.title'),
+      description: t('monitor.description'),
     },
   ];
 
@@ -217,10 +217,10 @@ function WhyTeamsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            Why teams choose VexNexa
+            {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Operational accessibility tooling that fits into how you already work.
+            {t('subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -247,21 +247,22 @@ function WhyTeamsSection() {
 
 // 4. Built for agencies and EU-facing teams
 function BuiltForSection() {
+  const t = useTranslations('home.builtFor');
   const audiences = [
     {
       icon: Building2,
-      title: "Agencies and web studios",
-      description: "Scan client sites, export branded reports, and deliver ongoing monitoring as a service. Manage multiple client projects from one dashboard.",
+      title: t('agencies.title'),
+      description: t('agencies.description'),
     },
     {
       icon: Shield,
-      title: "In-house compliance teams",
-      description: "Track accessibility across your organisation. Schedule scans after every deployment. Build evidence of ongoing accessibility oversight for EAA readiness.",
+      title: t('compliance.title'),
+      description: t('compliance.description'),
     },
     {
       icon: Globe,
-      title: "Partners managing multiple sites",
-      description: "Monitor accessibility across a portfolio of websites. Catch regressions early. Deliver clear, prioritized reports to stakeholders.",
+      title: t('partners.title'),
+      description: t('partners.description'),
     },
   ];
 
@@ -270,10 +271,10 @@ function BuiltForSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            Built for agencies and EU-facing teams
+            {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Whether you manage one site or fifty, VexNexa gives you the workflow tools to deliver accessible websites.
+            {t('subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -300,15 +301,10 @@ function BuiltForSection() {
 
 // 5. What you get — workflow outcomes
 function WhatYouGetSection() {
+  const t = useTranslations('home.whatYouGet');
   const capabilities = [
-    "WCAG 2.2 AA scanning with axe-core® engine",
-    "Severity-ranked issues: Critical, Serious, Moderate, Minor",
-    "PDF and DOCX export with white-label branding",
-    "Continuous monitoring with scheduled scans",
-    "Score regression alerts via email",
-    "Multi-site management from one dashboard",
-    "Team collaboration with role-based access",
-    "EU-hosted, GDPR compliant infrastructure",
+    t('c1'), t('c2'), t('c3'), t('c4'),
+    t('c5'), t('c6'), t('c7'), t('c8'),
   ];
 
   return (
@@ -317,11 +313,11 @@ function WhatYouGetSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              What you get with{" "}
-              <span className="text-primary">VexNexa</span>
+              {t('title')}{" "}
+              <span className="text-primary">{t('titleHighlight')}</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              Everything you need to scan, report, and monitor — without the noise.
+              {t('subtitle')}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -335,14 +331,14 @@ function WhatYouGetSection() {
 
             <Button asChild className="mt-6 gradient-primary text-white hover:opacity-90" size="lg">
               <Link href="/auth/register">
-                Start your free scan
+                {t('cta')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
 
             <p className="mt-4 text-xs text-muted-foreground flex items-center gap-2">
               <Shield className="h-4 w-4 text-primary/60" />
-              Powered by axe-core® — the world&apos;s most trusted accessibility testing engine
+              {t('axeCoreBadge')}
             </p>
           </div>
 
@@ -371,19 +367,11 @@ function WhatYouGetSection() {
 
 // 5B. Testimonials — what pilot partners say
 function TestimonialsSection() {
+  const t = useTranslations('home.testimonials');
   const testimonials = [
-    {
-      quote: "VexNexa saved us hours per client. The white-label reports look like we built them ourselves.",
-      attribution: "Pilot partner — Digital agency, Netherlands",
-    },
-    {
-      quote: "We finally have a repeatable accessibility workflow. Scan, report, monitor — done.",
-      attribution: "Pilot partner — Web studio, Germany",
-    },
-    {
-      quote: "The prioritization is what sold us. We know exactly what to fix first for each client.",
-      attribution: "Pilot partner — Compliance team, Belgium",
-    },
+    { quote: t('t1.quote'), attribution: t('t1.attribution') },
+    { quote: t('t2.quote'), attribution: t('t2.attribution') },
+    { quote: t('t3.quote'), attribution: t('t3.attribution') },
   ];
 
   return (
@@ -391,10 +379,10 @@ function TestimonialsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            What pilot partners say
+            {t('title')}
           </h2>
           <p className="text-lg text-muted-foreground">
-            Early feedback from agencies testing VexNexa in their workflows.
+            {t('subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -415,15 +403,16 @@ function TestimonialsSection() {
 
 // 6. See what a report looks like
 function SampleReportSection() {
+  const t = useTranslations('home.sampleReport');
   return (
     <section className="py-20 bg-muted/30 border-y">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            See what a report looks like
+            {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground">
-            Professional, structured, and ready to share with clients or stakeholders. Browse a real sample report with accessibility scores, prioritized issues, and remediation guidance.
+            {t('subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button size="lg" asChild className="gradient-primary text-white">
@@ -431,13 +420,13 @@ function SampleReportSection() {
                 href="/sample-report"
                 onClick={() => trackEvent("homepage_cta_sample_report_click", { location: "section" })}
               >
-                View sample report
+                {t('ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href="/white-label-accessibility-reports">
-                Learn about white-label reports
+                {t('ctaSecondary')}
               </Link>
             </Button>
           </div>
@@ -449,6 +438,7 @@ function SampleReportSection() {
 
 // 7. Agency offer — direct conversion layer
 function AgencyOfferSection() {
+  const t = useTranslations('home.agencyOffer');
   return (
     <section className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
@@ -456,15 +446,14 @@ function AgencyOfferSection() {
           <div className="flex items-center justify-center gap-2 text-primary">
             <Building2 className="h-5 w-5" />
             <span className="text-sm font-semibold uppercase tracking-wider">
-              Agency offer
+              {t('badge')}
             </span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            Get a branded accessibility report for one site
+            {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            See how VexNexa can fit your agency workflow with a sample report
-            and a practical setup path for ongoing monitoring.
+            {t('subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button
@@ -476,7 +465,7 @@ function AgencyOfferSection() {
                 href="/sample-report"
                 onClick={() => trackEvent("agency_offer_cta_click", { location: "homepage" })}
               >
-                View sample report
+                {t('ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -490,7 +479,7 @@ function AgencyOfferSection() {
                 href="/contact?from=homepage"
                 onClick={() => trackEvent("agency_contact_cta_click", { location: "homepage" })}
               >
-                Contact us about agency use
+                {t('ctaSecondary')}
               </Link>
             </Button>
           </div>
@@ -502,25 +491,11 @@ function AgencyOfferSection() {
 
 // 8. How VexNexa fits your workflow
 function WorkflowSection() {
+  const t = useTranslations('home.workflow');
   const steps = [
-    {
-      step: "1",
-      icon: BarChart3,
-      title: "Scan a site",
-      description: "Enter a URL. Get a full WCAG 2.2 audit in minutes with severity-ranked issues and element-level context.",
-    },
-    {
-      step: "2",
-      icon: Eye,
-      title: "Review prioritized issues",
-      description: "See exactly what is wrong, why it matters, and how to fix it. Filter by severity, WCAG criterion, or page element.",
-    },
-    {
-      step: "3",
-      icon: FileText,
-      title: "Share reports and monitor over time",
-      description: "Export branded reports. Schedule recurring scans. Get notified when scores change. Build a continuous improvement loop.",
-    },
+    { step: "1", icon: BarChart3, title: t('s1.title'), description: t('s1.description') },
+    { step: "2", icon: Eye, title: t('s2.title'), description: t('s2.description') },
+    { step: "3", icon: FileText, title: t('s3.title'), description: t('s3.description') },
   ];
 
   return (
@@ -528,10 +503,10 @@ function WorkflowSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            How VexNexa fits your workflow
+            {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Scan, review, report. Repeat as your sites evolve.
+            {t('subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -540,7 +515,7 @@ function WorkflowSection() {
               <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto shadow-soft">
                 <s.icon className="h-8 w-8 text-white" />
               </div>
-              <div className="text-sm font-medium text-primary">Step {s.step}</div>
+              <div className="text-sm font-medium text-primary">{t('stepLabel')} {s.step}</div>
               <h3 className="text-xl font-semibold font-display">{s.title}</h3>
               <p className="text-muted-foreground leading-relaxed">{s.description}</p>
             </div>
@@ -553,19 +528,20 @@ function WorkflowSection() {
 
 // 8B. Pilot Partner Program banner
 function PilotPartnerBanner() {
+  const t = useTranslations('home.pilotBanner');
   return (
     <section className="py-16 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-y">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-semibold">
             <Sparkles className="h-4 w-4" />
-            Limited spots
+            {t('badge')}
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            Join the Pilot Partner Program
+            {t('title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.
+            {t('subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button size="lg" asChild className="gradient-primary text-white">
@@ -573,13 +549,13 @@ function PilotPartnerBanner() {
                 href="/pilot-partner-program"
                 onClick={() => trackEvent("pilot_banner_click", { location: "homepage" })}
               >
-                Learn more
+                {t('ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href="/contact?from=pilot-homepage">
-                Apply now
+                {t('ctaSecondary')}
               </Link>
             </Button>
           </div>
@@ -591,6 +567,7 @@ function PilotPartnerBanner() {
 
 // 9. Final CTA Section
 function FinalCTASection() {
+  const t = useTranslations('home.finalCta');
   return (
     <section className="py-20 gradient-primary text-primary-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-10" aria-hidden="true">
@@ -602,10 +579,10 @@ function FinalCTASection() {
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            Start monitoring accessibility today
+            {t('title')}
           </h2>
           <p className="text-xl leading-relaxed">
-            Create your free account. Run your first scan. See results in minutes. Upgrade when you need monitoring, reports, and multi-site management.
+            {t('subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -619,7 +596,7 @@ function FinalCTASection() {
                 href="/auth/register"
                 onClick={() => trackEvent("homepage_cta_primary_click", { location: "final" })}
               >
-                Start your free scan
+                {t('ctaPrimary')}
                 <Zap className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -631,7 +608,7 @@ function FinalCTASection() {
               asChild
             >
               <Link href="/pricing">
-                View pricing
+                {t('ctaSecondary')}
               </Link>
             </Button>
           </div>
@@ -658,31 +635,14 @@ export default function HomePage() {
     }
   }, []);
 
+  const t = useTranslations('home.faqSection');
   const faqItems = [
-    {
-      question: "Can VexNexa guarantee legal compliance?",
-      answer: "No tool can guarantee 100% legal compliance. VexNexa detects and reports accessibility issues, helps prioritize fixes, and supports WCAG and EAA readiness. For legal risk assessment, consider combining automated scanning with expert review.",
-    },
-    {
-      question: "Do I need an account to scan?",
-      answer: "Yes, a free account is required. This lets us save your results, provide exports, and track improvements over time. No credit card needed to get started.",
-    },
-    {
-      question: "Can I export branded reports for clients?",
-      answer: "Yes. PDF and DOCX exports are available on paid plans. Business and Enterprise plans include white-label reports with your own logo, colours, and contact details.",
-    },
-    {
-      question: "How does continuous monitoring work?",
-      answer: "Schedule automatic scans daily, weekly, or monthly. VexNexa alerts you via email when scores drop or new critical issues appear. Track trends over time from your dashboard.",
-    },
-    {
-      question: "Is VexNexa an accessibility overlay?",
-      answer: "No. We scan your code structure and report real WCAG violations. We never inject widgets or scripts into your site. Our reports help developers fix issues at the source.",
-    },
-    {
-      question: "What support is available?",
-      answer: "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times.",
-    },
+    { question: t('q1.question'), answer: t('q1.answer') },
+    { question: t('q2.question'), answer: t('q2.answer') },
+    { question: t('q3.question'), answer: t('q3.answer') },
+    { question: t('q4.question'), answer: t('q4.answer') },
+    { question: t('q5.question'), answer: t('q5.answer') },
+    { question: t('q6.question'), answer: t('q6.answer') },
   ];
 
   return (

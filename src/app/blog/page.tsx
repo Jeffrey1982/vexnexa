@@ -7,25 +7,32 @@ import { PrismaClient } from '@prisma/client'
 import { SafeImage } from '@/components/SafeImage'
 import { cookies } from 'next/headers'
 import type { Locale } from '@/i18n'
+import { getTranslations } from 'next-intl/server'
 
 const prisma = new PrismaClient()
 
-export const metadata: Metadata = {
-  title: 'Blog - VexNexa',
-  description: 'Latest news, tips, and insights on web accessibility and WCAG compliance.',
-  openGraph: {
-    title: 'Blog - VexNexa',
-    description: 'Latest news, tips, and insights on web accessibility and WCAG compliance.',
-    url: 'https://vexnexa.com/blog',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'Blog - VexNexa',
-    description: 'Latest news, tips, and insights on web accessibility and WCAG compliance.',
-  },
-  alternates: {
-    canonical: 'https://vexnexa.com/blog',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+  const t = await getTranslations('blog');
+  
+  return {
+    title: t('metadata.title'),
+    description: t('metadata.description'),
+    openGraph: {
+      title: t('metadata.title'),
+      description: t('metadata.description'),
+      url: 'https://vexnexa.com/blog',
+    },
+    twitter: {
+      card: 'summary',
+      title: t('metadata.title'),
+      description: t('metadata.description'),
+    },
+    alternates: {
+      canonical: 'https://vexnexa.com/blog',
+    },
+  }
 }
 
 export const revalidate = 3600; // Revalidate every hour
@@ -35,6 +42,7 @@ export default async function BlogPage() {
   // Get user's locale from cookie
   const cookieStore = await cookies();
   const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+  const t = await getTranslations('blog');
 
   // Try to get posts with locale first
   let posts = await prisma.blogPost.findMany({
@@ -81,10 +89,10 @@ export default async function BlogPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h1 className="font-display text-5xl lg:text-6xl font-bold tracking-tight">
-              Insights & Updates
+              {t('title')}
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              Latest developments in web accessibility and WCAG compliance
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -96,7 +104,7 @@ export default async function BlogPage() {
           {posts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-lg text-muted-foreground">
-                No blog posts found. Check back later for new content!
+                {t('empty')}
               </p>
             </div>
           ) : (
@@ -142,7 +150,7 @@ export default async function BlogPage() {
 
                           <div className="flex items-center justify-between pt-4">
                             <span className="text-sm text-muted-foreground">
-                              Written by: {featuredPost.authorName || `${featuredPost.author.firstName} ${featuredPost.author.lastName}`}
+                              {t('writtenBy')} {featuredPost.authorName || `${featuredPost.author.firstName} ${featuredPost.author.lastName}`}
                             </span>
                             <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
                           </div>
@@ -192,7 +200,7 @@ export default async function BlogPage() {
                           )}
 
                           <p className="text-sm text-muted-foreground pt-2">
-                            Written by: {post.authorName || `${post.author.firstName} ${post.author.lastName}`}
+                            {t('writtenBy')} {post.authorName || `${post.author.firstName} ${post.author.lastName}`}
                           </p>
                         </div>
                       </article>

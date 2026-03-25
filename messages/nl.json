@@ -53,13 +53,13 @@
   },
   "home": {
     "hero": {
-      "title": "Directe toegankelijkheidsaudits.",
-      "titleHighlight": "Geen overlays. Geen verkoopgesprekken.",
-      "subtitle": "Snelle WCAG-scanning voor ontwikkelaars en agencies die echte data nodig hebben, geen widget-pleisters.",
-      "ctaPrimary": "Gratis scan starten",
-      "ctaSecondary": "Bekijk prijzen",
-      "noCreditCard": "Directe scan. Gratis account vereist.",
-      "imageAlt": "VexNexa toegankelijkheidsscan dashboard met gedetailleerde WCAG-rapporten en issue prioritering"
+      "title": "White-label WCAG-monitoring voor",
+      "titleHighlight": "agencies en EU-gerichte teams",
+      "subtitle": "Scan websites, detecteer toegankelijkheidsproblemen na elke release en lever rapporten op maat die WCAG 2.2- en EAA-gereedheid ondersteunen.",
+      "ctaPrimary": "Start je gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport",
+      "noCreditCard": "Gratis account vereist. Geen creditcard nodig.",
+      "imageAlt": "VexNexa dashboard voor toegankelijkheidsscans met gedetailleerde WCAG-rapporten en prioritering van problemen"
     },
     "valuePillars": {
       "deeper": {
@@ -101,30 +101,25 @@
       "cta": "Gratis scan starten"
     },
     "finalCta": {
-      "title": "Start uw gratis scan",
-      "subtitle": "Begin met scannen in enkele minuten. Volledig zelfbediening. Geen vergaderingen vereist.",
-      "ctaPrimary": "Gratis scan starten",
-      "ctaSecondary": "Bekijk prijzen"
+      "title": "Begin vandaag met toegankelijkheidsmonitoring",
+      "subtitle": "Maak je gratis account aan. Voer je eerste scan uit. Zie resultaten in minuten. Upgrade wanneer je monitoring, rapporten en multi-site beheer nodig hebt.",
+      "ctaPrimary": "Start je gratis scan",
+      "ctaSecondary": "Bekijk tarieven"
     },
     "testimonials": {
-      "title": "Vertrouwd door toegankelijkheidsprofessionals",
-      "testimonial1": {
-        "quote": "VexNexa vond toegankelijkheidsproblemen die onze eerdere tools volledig misten. De rapporten zijn uitvoerbaar en helpen ons effectief te prioriteren.",
-        "author": "Sarah Johnson",
-        "role": "Lead Developer",
-        "company": "TechCorp"
+      "title": "Wat pilotpartners zeggen",
+      "subtitle": "Vroege feedback van agencies die VexNexa testen in hun workflows.",
+      "t1": {
+        "quote": "VexNexa bespaarde ons uren per klant. De white-label rapporten zien eruit alsof we ze zelf hebben gebouwd.",
+        "attribution": "Pilotpartner — Digitaal bureau, Nederland"
       },
-      "testimonial2": {
-        "quote": "De continue monitoring helpt ons regressies te vangen voordat ze in productie komen. Het is een essentieel onderdeel van onze CI/CD-pipeline geworden.",
-        "author": "Michael Chen",
-        "role": "Engineering Manager",
-        "company": "StartupXYZ"
+      "t2": {
+        "quote": "We hebben eindelijk een herhaalbare toegankelijkheidsworkflow. Scannen, rapporteren, monitoren — klaar.",
+        "attribution": "Pilotpartner — Webstudio, Duitsland"
       },
-      "testimonial3": {
-        "quote": "Eindelijk een toegankelijkheidsscanner die verder gaat dan de basis. De toetsenbordnavigatie en schermlezer testen bespaarden ons weken handmatige QA.",
-        "author": "Emma Williams",
-        "role": "QA Lead",
-        "company": "Enterprise Inc"
+      "t3": {
+        "quote": "De prioritering overtuigde ons. We weten precies wat we eerst moeten oplossen voor elke klant.",
+        "attribution": "Pilotpartner — Complianceteam, België"
       }
     },
     "faq": {
@@ -239,6 +234,128 @@
       "subtitle": "Sluit u aan bij teams die VexNexa al gebruiken voor WCAG-compliance",
       "button": "Gratis beginnen",
       "noCard": "Geen creditcard vereist"
+    },
+    "socialProof": {
+      "title": "Vertrouwd door agencies in heel Europa",
+      "logo1": "Agency Partner",
+      "logo2": "Digital Studio",
+      "logo3": "Web Team",
+      "logo4": "Compliance Co."
+    },
+    "trustStrip": {
+      "automated": "Geautomatiseerde controles in minuten",
+      "branded": "Rapporten op maat voor klanten en stakeholders",
+      "continuous": "Continue monitoring voor live websites"
+    },
+    "whyTeams": {
+      "title": "Waarom teams kiezen voor VexNexa",
+      "subtitle": "Operationele toegankelijkheidstools die passen in je bestaande werkwijze.",
+      "catchIssues": {
+        "title": "Ontdek problemen vóór je klanten",
+        "description": "Voer scans uit op basis van WCAG 2.2-criteria en bekijk geprioriteerde problemen met details op elementniveau. Los eerst op wat het belangrijkst is."
+      },
+      "whiteLabel": {
+        "title": "Maak van scans white-label rapporten",
+        "description": "Exporteer PDF- en DOCX-rapporten onder je eigen logo. Deel professionele toegankelijkheidsrapporten met klanten en stakeholders."
+      },
+      "monitor": {
+        "title": "Monitor toegankelijkheid na elke release",
+        "description": "Plan terugkerende scans. Ontvang waarschuwingen wanneer scores dalen of nieuwe kritieke problemen verschijnen. Voorkom regressies in productie."
+      }
+    },
+    "builtFor": {
+      "title": "Gebouwd voor agencies en EU-gerichte teams",
+      "subtitle": "Of je nu één site of vijftig beheert, VexNexa biedt de workflowtools om toegankelijke websites te leveren.",
+      "agencies": {
+        "title": "Agencies en webstudio's",
+        "description": "Scan klantsites, exporteer rapporten op maat en lever doorlopende monitoring als dienst. Beheer meerdere klantprojecten vanuit één dashboard."
+      },
+      "compliance": {
+        "title": "Interne complianceteams",
+        "description": "Volg toegankelijkheid binnen je organisatie. Plan scans na elke deployment. Bouw bewijs op van doorlopend toegankelijkheidstoezicht voor EAA-gereedheid."
+      },
+      "partners": {
+        "title": "Partners die meerdere sites beheren",
+        "description": "Monitor toegankelijkheid over een portfolio van websites. Detecteer regressies vroegtijdig. Lever duidelijke, geprioriteerde rapporten aan stakeholders."
+      }
+    },
+    "whatYouGet": {
+      "title": "Wat je krijgt met",
+      "titleHighlight": "VexNexa",
+      "subtitle": "Alles wat je nodig hebt om te scannen, rapporteren en monitoren — zonder ruis.",
+      "c1": "WCAG 2.2 AA-scanning met axe-core®-engine",
+      "c2": "Op ernst gerangschikte problemen: Kritiek, Ernstig, Matig, Klein",
+      "c3": "PDF- en DOCX-export met white-label branding",
+      "c4": "Continue monitoring met geplande scans",
+      "c5": "Waarschuwingen bij scoredaling via e-mail",
+      "c6": "Multi-site beheer vanuit één dashboard",
+      "c7": "Teamsamenwerking met rolgebaseerde toegang",
+      "c8": "EU-gehost, AVG-conforme infrastructuur",
+      "cta": "Start je gratis scan",
+      "axeCoreBadge": "Aangedreven door axe-core® — de meest vertrouwde toegankelijkheidstest-engine ter wereld"
+    },
+    "sampleReport": {
+      "title": "Bekijk hoe een rapport eruitziet",
+      "subtitle": "Professioneel, gestructureerd en klaar om te delen met klanten of stakeholders. Bekijk een echt voorbeeldrapport met toegankelijkheidsscores, geprioriteerde problemen en hersteladvies.",
+      "ctaPrimary": "Bekijk voorbeeldrapport",
+      "ctaSecondary": "Meer over white-label rapporten"
+    },
+    "agencyOffer": {
+      "badge": "Agencyaanbod",
+      "title": "Ontvang een toegankelijkheidsrapport op maat voor één site",
+      "subtitle": "Ontdek hoe VexNexa past in je agencyworkflow met een voorbeeldrapport en een praktisch pad voor doorlopende monitoring.",
+      "ctaPrimary": "Bekijk voorbeeldrapport",
+      "ctaSecondary": "Neem contact op over agencygebruik"
+    },
+    "workflow": {
+      "title": "Hoe VexNexa in je workflow past",
+      "subtitle": "Scan, beoordeel, rapporteer. Herhaal naarmate je sites evolueren.",
+      "stepLabel": "Stap",
+      "s1": {
+        "title": "Scan een site",
+        "description": "Voer een URL in. Ontvang een volledige WCAG 2.2-audit in minuten met op ernst gerangschikte problemen en context op elementniveau."
+      },
+      "s2": {
+        "title": "Beoordeel geprioriteerde problemen",
+        "description": "Zie precies wat er mis is, waarom het ertoe doet en hoe je het oplost. Filter op ernst, WCAG-criterium of pagina-element."
+      },
+      "s3": {
+        "title": "Deel rapporten en monitor in de tijd",
+        "description": "Exporteer rapporten op maat. Plan terugkerende scans. Ontvang meldingen bij scorewijzigingen. Bouw een continu verbeterproces."
+      }
+    },
+    "pilotBanner": {
+      "badge": "Beperkt aantal plekken",
+      "title": "Word pilotpartner",
+      "subtitle": "Krijg toegang op Business-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
+      "ctaPrimary": "Meer informatie",
+      "ctaSecondary": "Nu aanmelden"
+    },
+    "faqSection": {
+      "q1": {
+        "question": "Kan VexNexa wettelijke naleving garanderen?",
+        "answer": "Geen enkel hulpmiddel kan 100% wettelijke naleving garanderen. VexNexa detecteert en rapporteert toegankelijkheidsproblemen, helpt bij het prioriteren van oplossingen en ondersteunt WCAG- en EAA-gereedheid. Overweeg voor juridische risicobeoordeling geautomatiseerd scannen te combineren met deskundige review."
+      },
+      "q2": {
+        "question": "Heb ik een account nodig om te scannen?",
+        "answer": "Ja, een gratis account is vereist. Hiermee kunnen we je resultaten opslaan, exports aanbieden en verbeteringen bijhouden. Geen creditcard nodig om te beginnen."
+      },
+      "q3": {
+        "question": "Kan ik rapporten op maat exporteren voor klanten?",
+        "answer": "Ja. PDF- en DOCX-exports zijn beschikbaar bij betaalde abonnementen. Business- en Enterprise-abonnementen bevatten white-label rapporten met je eigen logo, kleuren en contactgegevens."
+      },
+      "q4": {
+        "question": "Hoe werkt continue monitoring?",
+        "answer": "Plan automatische scans dagelijks, wekelijks of maandelijks. VexNexa waarschuwt je per e-mail wanneer scores dalen of nieuwe kritieke problemen verschijnen. Volg trends in de tijd vanuit je dashboard."
+      },
+      "q5": {
+        "question": "Is VexNexa een toegankelijkheidsoverlay?",
+        "answer": "Nee. We scannen je codestructuur en rapporteren echte WCAG-schendingen. We injecteren nooit widgets of scripts in je site. Onze rapporten helpen ontwikkelaars problemen bij de bron op te lossen."
+      },
+      "q6": {
+        "question": "Welke ondersteuning is beschikbaar?",
+        "answer": "Alle gebruikers krijgen e-mailondersteuning. We streven ernaar binnen 1 werkdag te reageren. Business- en Enterprise-abonnementen bevatten prioriteitsondersteuning met snellere reactietijden."
+      }
     }
   },
   "pricing": {
@@ -623,7 +740,14 @@
             "manager": "Accountmanager"
           }
         }
-      }
+      },
+      "pilotBanner": {
+        "badge": "Agency Pilot",
+        "title": "Eerste maand Business-abonnement voor Pro-prijs",
+        "subtitle": "Nieuw bij VexNexa? Start met alle Business-functies — white-label rapporten, 10 websites en prioriteitsondersteuning — voor slechts €59,99 in je eerste maand. Geen verplichtingen. Altijd opzegbaar.",
+        "cta": "Claim je pilotplek"
+      },
+      "noCreditCard": "Geen creditcard vereist · Altijd opzegbaar"
     }
   },
   "contact": {
@@ -2119,5 +2243,137 @@
       "subscriptionCanceled": "Subscription canceled",
       "alertResolved": "Alert marked as resolved"
     }
+  },
+  "forAgencies": {
+    "hero": {
+      "title": "Toegankelijkheidsrapportage die je agency daadwerkelijk kan",
+      "titleHighlight": "leveren",
+      "subtitle": "Scan klantsites op WCAG 2.2-problemen, exporteer rapporten op maat, stel continue monitoring in en beheer toegankelijkheid over je hele portfolio — alles vanuit één platform.",
+      "ctaPrimary": "Start je gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport",
+      "noCreditCard": "Gratis account vereist. Geen creditcard nodig."
+    },
+    "painPoints": {
+      "title": "Veelvoorkomende uitdagingen voor agencies",
+      "subtitle": "Toegankelijkheid wordt een klantverwachting, geen nice-to-have.",
+      "p1": {
+        "title": "Klanten vragen naar toegankelijkheid maar je mist een herhaalbaar proces",
+        "description": "Zonder een gestandaardiseerde workflow duurt elke toegankelijkheidsreview langer dan nodig. VexNexa biedt je een scanbaar, rapporteerbaar en monitorbaar proces vanaf dag één."
+      },
+      "p2": {
+        "title": "Je kunt handmatige audits niet schalen over 10+ klantsites",
+        "description": "Handmatig testen is belangrijk maar duur. Geautomatiseerde scans geven basisdekking over je hele portfolio zodat je handmatige inspanning kunt richten waar het telt."
+      },
+      "p3": {
+        "title": "Rapporten zien er inconsistent of onprofessioneel uit",
+        "description": "Generieke scanuitvoer maakt geen indruk op klanten. VexNexa exporteert rapporten op maat onder je eigen logo met duidelijke probleemprioritering."
+      }
+    },
+    "workflows": {
+      "title": "Waarom VexNexa past bij agencyworkflows",
+      "subtitle": "Praktische tools die aansluiten bij hoe agencies al met klanten werken.",
+      "w1": {
+        "title": "Scan elke klantsite in minuten",
+        "description": "Voer een URL in, ontvang een volledige WCAG 2.2-audit met op ernst gerangschikte problemen. Geen setup per klant nodig."
+      },
+      "w2": {
+        "title": "Exporteer white-label rapporten",
+        "description": "Genereer rapporten met je logo, kleuren en contactgegevens in PDF en DOCX. Klaar om te delen met klanten."
+      },
+      "w3": {
+        "title": "Plan terugkerende scans",
+        "description": "Stel wekelijkse of maandelijkse monitoring in. Ontvang waarschuwingen bij scoredaling of nieuwe kritieke problemen."
+      },
+      "w4": {
+        "title": "Beheer meerdere klanten vanuit één dashboard",
+        "description": "Organiseer sites per klant. Volg scores, trends en openstaande problemen over je hele portfolio."
+      },
+      "w5": {
+        "title": "Ontdek regressies vóór je klanten",
+        "description": "Na een herontwerp, migratie of nieuwe release — VexNexa detecteert toegankelijkheidsregressies automatisch."
+      },
+      "w6": {
+        "title": "Ondersteun EAA-gereedheid voor EU-klanten",
+        "description": "Help klanten hun doorlopend toegankelijkheidstoezicht te versterken met continue monitoring en bewijs van verbetering."
+      }
+    },
+    "included": {
+      "title": "Inbegrepen bij Business- en Enterprise-abonnementen",
+      "i1": "White-label PDF- en DOCX-rapporten",
+      "i2": "Eigen logo, kleuren en voettekst",
+      "i3": "Multi-site dashboard",
+      "i4": "Geplande scans met e-mailwaarschuwingen",
+      "i5": "Rolgebaseerde teamtoegang",
+      "i6": "WCAG 2.2 AA-dekking met axe-core",
+      "i7": "Op ernst gerangschikte probleemprioritering",
+      "i8": "EU-gehost, AVG-conform"
+    },
+    "agencyWorkflow": {
+      "title": "Hoe agencies VexNexa gebruiken",
+      "subtitle": "Een omzetpositieve toegankelijkheidsworkflow in vier stappen.",
+      "stepLabel": "Stap",
+      "s1": {
+        "title": "Klant onboarding",
+        "description": "Scan hun site op dag één — directe baseline-audit."
+      },
+      "s2": {
+        "title": "Lever rapport op maat",
+        "description": "White-label PDF binnen 24 uur, klaar om te delen."
+      },
+      "s3": {
+        "title": "Herstel & monitor",
+        "description": "Plan terugkerende scans, volg verbeteringen in de tijd."
+      },
+      "s4": {
+        "title": "Behoud & upsell",
+        "description": "Doorlopende monitoring als maandelijkse dienst voor je klanten."
+      }
+    },
+    "pilotBanner": {
+      "badge": "Beperkt aantal plekken",
+      "title": "Word pilotpartner",
+      "subtitle": "Krijg toegang op Business-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
+      "ctaPrimary": "Meer informatie",
+      "ctaSecondary": "Nu aanmelden"
+    },
+    "finalCta": {
+      "title": "Begin met het leveren van toegankelijkheid aan je klanten",
+      "subtitle": "Maak een gratis account aan, scan je eerste klantsite en ontdek hoe VexNexa in je workflow past.",
+      "ctaPrimary": "Start je gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport",
+      "ctaTertiary": "Neem contact op"
+    }
+  },
+  "blog": {
+    "title": "Inzichten & Updates",
+    "subtitle": "De laatste ontwikkelingen in webtoegankelijkheid en WCAG-naleving",
+    "empty": "Geen blogposts gevonden. Kom later terug voor nieuwe content!",
+    "writtenBy": "Geschreven door:",
+    "metadata": {
+      "title": "Blog - VexNexa",
+      "description": "Laatste nieuws, tips en inzichten over webtoegankelijkheid en WCAG-naleving."
+    }
+  },
+  "sampleReport": {
+    "badge": "Voorbeeldrapport",
+    "title": "Hoe een VexNexa toegankelijkheidsrapport eruitziet",
+    "titleHighlight": "eruitziet",
+    "subtitle": "Dit is een voorbeeldrapport gebaseerd op realistische scandata. Business- en Enterprise-abonnementen kunnen dit white-labelen met je eigen logo, kleuren en bedrijfsnaam.",
+    "ctaPrimary": "Scan je eigen site",
+    "ctaSecondary": "Meer over white-label",
+    "executiveSummary": "Samenvatting",
+    "scoreTitle": "Toegankelijkheidsscore",
+    "severityCritical": "Kritiek",
+    "severitySerious": "Ernstig",
+    "severityModerate": "Matig",
+    "severityMinor": "Klein",
+    "downloadTitle": "Download het volledige voorbeeldrapport",
+    "downloadSubtitle": "Zie precies wat je klanten ontvangen — op maat, gestructureerd en klaar om te delen.",
+    "downloadBranded": "Vraag PDF-voorbeeld aan",
+    "downloadWhiteLabel": "Vraag white-label voorbeeld aan",
+    "downloadNote": "We sturen je binnen 1 werkdag een persoonlijk voorbeeldrapport.",
+    "exportTitle": "Exporteer als PDF of DOCX — met je branding",
+    "exportSubtitle": "Business- en Enterprise-abonnementen bevatten white-label exports. Vervang het VexNexa-merk door je eigen logo, bedrijfsnaam, kleuren en voettekst. Rapporten exporteren als deelbare PDF of bewerkbaar DOCX.",
+    "exportLearnMore": "Meer over white-label rapporten"
   }
 }

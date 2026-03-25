@@ -53,13 +53,13 @@
   },
   "home": {
     "hero": {
-      "title": "La passerelle sécurisée vers",
-      "titleHighlight": "l'accessibilité web",
-      "subtitle": "Exécutez votre scan d'accessibilité en quelques minutes. Pas d'appels. Pas de vendeurs. Juste scanner.",
-      "ctaPrimary": "Commencer l'analyse gratuite",
-      "ctaSecondary": "Voir les tarifs",
-      "noCreditCard": "Scan instantané. Compte gratuit requis.",
-      "imageAlt": "Tableau de bord de scan d'accessibilité VexNexa montrant des rapports détaillés et la priorisation des problèmes"
+      "title": "Surveillance WCAG en marque blanche pour",
+      "titleHighlight": "les agences et équipes européennes",
+      "subtitle": "Analysez des sites web, détectez les régressions d'accessibilité après chaque mise en production et livrez des rapports personnalisés compatibles WCAG 2.2 et EAA.",
+      "ctaPrimary": "Lancer une analyse gratuite",
+      "ctaSecondary": "Voir un exemple de rapport",
+      "noCreditCard": "Compte gratuit requis. Aucune carte de crédit nécessaire.",
+      "imageAlt": "Tableau de bord VexNexa pour les analyses d'accessibilité avec rapports WCAG détaillés et priorisation des problèmes"
     },
     "valuePillars": {
       "deeper": {
@@ -101,30 +101,25 @@
       "cta": "Commencer l'analyse gratuite"
     },
     "finalCta": {
-      "title": "Commencez votre analyse gratuite",
-      "subtitle": "Commencez à scanner en quelques minutes. Entièrement en libre-service. Aucune réunion requise.",
-      "ctaPrimary": "Commencer l'analyse gratuite",
+      "title": "Commencez la surveillance de l'accessibilité aujourd'hui",
+      "subtitle": "Créez votre compte gratuit. Lancez votre première analyse. Voyez les résultats en quelques minutes. Passez à un plan supérieur quand vous avez besoin de surveillance, rapports et gestion multi-sites.",
+      "ctaPrimary": "Lancer une analyse gratuite",
       "ctaSecondary": "Voir les tarifs"
     },
     "testimonials": {
-      "title": "Approuvé par les professionnels de l'accessibilité",
-      "testimonial1": {
-        "quote": "VexNexa a trouvé des problèmes d'accessibilité que nos outils précédents avaient complètement manqués. Les rapports sont exploitables et nous aident à prioriser les corrections efficacement.",
-        "author": "Sarah Johnson",
-        "role": "Lead Developer",
-        "company": "TechCorp"
+      "title": "Ce que disent nos partenaires pilotes",
+      "subtitle": "Retours d'agences qui testent VexNexa dans leurs workflows.",
+      "t1": {
+        "quote": "VexNexa nous a fait gagner des heures par client. Les rapports en marque blanche semblent avoir été créés par nous.",
+        "attribution": "Partenaire pilote — Agence digitale, Pays-Bas"
       },
-      "testimonial2": {
-        "quote": "La fonction de surveillance continue nous aide à détecter les régressions avant qu'elles n'atteignent la production. C'est devenu une partie essentielle de notre pipeline CI/CD.",
-        "author": "Michael Chen",
-        "role": "Engineering Manager",
-        "company": "StartupXYZ"
+      "t2": {
+        "quote": "Nous avons enfin un workflow d'accessibilité reproductible. Analyser, rapporter, surveiller — c'est fait.",
+        "attribution": "Partenaire pilote — Studio web, Allemagne"
       },
-      "testimonial3": {
-        "quote": "Enfin, un scanner d'accessibilité qui va au-delà des bases. Les tests de navigation au clavier et de lecteur d'écran nous ont fait gagner des semaines de QA manuelle.",
-        "author": "Emma Williams",
-        "role": "QA Lead",
-        "company": "Enterprise Inc"
+      "t3": {
+        "quote": "La priorisation nous a convaincus. Nous savons exactement quoi corriger en premier pour chaque client.",
+        "attribution": "Partenaire pilote — Équipe conformité, Belgique"
       }
     },
     "faq": {
@@ -239,6 +234,128 @@
       "subtitle": "Rejoignez les équipes qui utilisent déjà VexNexa pour la conformité WCAG",
       "button": "Commencer gratuitement",
       "noCard": "Aucune carte de crédit requise"
+    },
+    "socialProof": {
+      "title": "Des agences dans toute l'Europe nous font confiance",
+      "logo1": "Agency Partner",
+      "logo2": "Digital Studio",
+      "logo3": "Web Team",
+      "logo4": "Compliance Co."
+    },
+    "trustStrip": {
+      "automated": "Vérifications automatisées en quelques minutes",
+      "branded": "Rapports personnalisés pour vos clients et parties prenantes",
+      "continuous": "Surveillance continue pour les sites en production"
+    },
+    "whyTeams": {
+      "title": "Pourquoi les équipes choisissent VexNexa",
+      "subtitle": "Des outils d'accessibilité opérationnels qui s'intègrent à votre façon de travailler.",
+      "catchIssues": {
+        "title": "Détectez les problèmes avant vos clients",
+        "description": "Lancez des analyses selon les critères WCAG 2.2 et consultez les problèmes priorisés avec des détails au niveau des éléments. Corrigez d'abord ce qui compte le plus."
+      },
+      "whiteLabel": {
+        "title": "Transformez les analyses en rapports en marque blanche",
+        "description": "Exportez des rapports PDF et DOCX sous votre propre logo. Partagez des rapports d'accessibilité professionnels avec vos clients et parties prenantes."
+      },
+      "monitor": {
+        "title": "Surveillez l'accessibilité après chaque mise en production",
+        "description": "Planifiez des analyses récurrentes. Recevez des alertes lorsque les scores baissent ou que de nouveaux problèmes critiques apparaissent. Prévenez les régressions en production."
+      }
+    },
+    "builtFor": {
+      "title": "Conçu pour les agences et équipes européennes",
+      "subtitle": "Que vous gériez un site ou cinquante, VexNexa vous offre les outils pour livrer des sites web accessibles.",
+      "agencies": {
+        "title": "Agences et studios web",
+        "description": "Analysez les sites clients, exportez des rapports personnalisés et proposez une surveillance continue en tant que service. Gérez plusieurs projets clients depuis un seul tableau de bord."
+      },
+      "compliance": {
+        "title": "Équipes de conformité internes",
+        "description": "Suivez l'accessibilité au sein de votre organisation. Planifiez des analyses après chaque déploiement. Constituez des preuves de surveillance continue pour la conformité EAA."
+      },
+      "partners": {
+        "title": "Partenaires gérant plusieurs sites",
+        "description": "Surveillez l'accessibilité sur un portefeuille de sites web. Détectez les régressions tôt. Livrez des rapports clairs et priorisés aux parties prenantes."
+      }
+    },
+    "whatYouGet": {
+      "title": "Ce que vous obtenez avec",
+      "titleHighlight": "VexNexa",
+      "subtitle": "Tout ce dont vous avez besoin pour analyser, rapporter et surveiller — sans le bruit.",
+      "c1": "Analyse WCAG 2.2 AA avec le moteur axe-core®",
+      "c2": "Problèmes classés par gravité : Critique, Sérieux, Modéré, Mineur",
+      "c3": "Export PDF et DOCX avec branding en marque blanche",
+      "c4": "Surveillance continue avec analyses planifiées",
+      "c5": "Alertes de régression de score par e-mail",
+      "c6": "Gestion multi-sites depuis un seul tableau de bord",
+      "c7": "Collaboration d'équipe avec accès par rôle",
+      "c8": "Hébergé en UE, infrastructure conforme au RGPD",
+      "cta": "Lancer une analyse gratuite",
+      "axeCoreBadge": "Propulsé par axe-core® — le moteur de test d'accessibilité le plus fiable au monde"
+    },
+    "sampleReport": {
+      "title": "Découvrez à quoi ressemble un rapport",
+      "subtitle": "Professionnel, structuré et prêt à partager avec vos clients ou parties prenantes. Consultez un vrai exemple de rapport avec des scores d'accessibilité, des problèmes priorisés et des conseils de correction.",
+      "ctaPrimary": "Voir un exemple de rapport",
+      "ctaSecondary": "En savoir plus sur les rapports en marque blanche"
+    },
+    "agencyOffer": {
+      "badge": "Offre agence",
+      "title": "Obtenez un rapport d'accessibilité personnalisé pour un site",
+      "subtitle": "Découvrez comment VexNexa s'intègre à votre workflow d'agence avec un exemple de rapport et un parcours pratique pour une surveillance continue.",
+      "ctaPrimary": "Voir un exemple de rapport",
+      "ctaSecondary": "Contactez-nous pour l'utilisation en agence"
+    },
+    "workflow": {
+      "title": "Comment VexNexa s'intègre à votre workflow",
+      "subtitle": "Analysez, examinez, rapportez. Répétez au fil de l'évolution de vos sites.",
+      "stepLabel": "Étape",
+      "s1": {
+        "title": "Analyser un site",
+        "description": "Entrez une URL. Obtenez un audit WCAG 2.2 complet en quelques minutes avec des problèmes classés par gravité et un contexte au niveau des éléments."
+      },
+      "s2": {
+        "title": "Examiner les problèmes priorisés",
+        "description": "Voyez exactement ce qui ne va pas, pourquoi c'est important et comment le corriger. Filtrez par gravité, critère WCAG ou élément de page."
+      },
+      "s3": {
+        "title": "Partager les rapports et surveiller dans le temps",
+        "description": "Exportez des rapports personnalisés. Planifiez des analyses récurrentes. Recevez des notifications lors de changements de score. Construisez un processus d'amélioration continue."
+      }
+    },
+    "pilotBanner": {
+      "badge": "Places limitées",
+      "title": "Rejoignez le programme de partenariat pilote",
+      "subtitle": "Obtenez un accès niveau Business, un support direct et contribuez à façonner VexNexa — tout en offrant l'accessibilité à vos clients dès le premier jour.",
+      "ctaPrimary": "En savoir plus",
+      "ctaSecondary": "Postuler maintenant"
+    },
+    "faqSection": {
+      "q1": {
+        "question": "VexNexa peut-il garantir la conformité légale ?",
+        "answer": "Aucun outil ne peut garantir une conformité légale à 100 %. VexNexa détecte et signale les problèmes d'accessibilité, aide à prioriser les corrections et soutient la préparation aux normes WCAG et EAA. Pour une évaluation des risques juridiques, nous recommandons de combiner l'analyse automatisée avec un examen par un expert."
+      },
+      "q2": {
+        "question": "Ai-je besoin d'un compte pour analyser ?",
+        "answer": "Oui, un compte gratuit est requis. Cela nous permet de sauvegarder vos résultats, de fournir des exports et de suivre les améliorations au fil du temps. Aucune carte de crédit nécessaire pour commencer."
+      },
+      "q3": {
+        "question": "Puis-je exporter des rapports personnalisés pour mes clients ?",
+        "answer": "Oui. Les exports PDF et DOCX sont disponibles sur les plans payants. Les plans Business et Enterprise incluent des rapports en marque blanche avec votre propre logo, couleurs et coordonnées."
+      },
+      "q4": {
+        "question": "Comment fonctionne la surveillance continue ?",
+        "answer": "Planifiez des analyses automatiques quotidiennes, hebdomadaires ou mensuelles. VexNexa vous alerte par e-mail lorsque les scores baissent ou que de nouveaux problèmes critiques apparaissent. Suivez les tendances depuis votre tableau de bord."
+      },
+      "q5": {
+        "question": "VexNexa est-il un overlay d'accessibilité ?",
+        "answer": "Non. Nous analysons la structure de votre code et signalons les vraies violations WCAG. Nous n'injectons jamais de widgets ou de scripts dans votre site. Nos rapports aident les développeurs à corriger les problèmes à la source."
+      },
+      "q6": {
+        "question": "Quel support est disponible ?",
+        "answer": "Tous les utilisateurs bénéficient du support par e-mail. Nous visons à répondre sous 1 jour ouvré. Les plans Business et Enterprise incluent un support prioritaire avec des délais de réponse plus courts."
+      }
     }
   },
   "pricing": {
@@ -608,7 +725,14 @@
             "manager": "Responsable de compte"
           }
         }
-      }
+      },
+      "pilotBanner": {
+        "badge": "Pilote Agence",
+        "title": "Premier mois du plan Business au prix Pro",
+        "subtitle": "Nouveau sur VexNexa ? Commencez avec toutes les fonctionnalités Business — rapports en marque blanche, 10 sites web et support prioritaire — pour seulement 59,99 € le premier mois. Sans engagement. Résiliable à tout moment.",
+        "cta": "Réserver votre place pilote"
+      },
+      "noCreditCard": "Aucune carte de crédit requise · Résiliable à tout moment"
     }
   },
   "contact": {
@@ -2104,5 +2228,137 @@
       "subscriptionCanceled": "Subscription canceled",
       "alertResolved": "Alert marked as resolved"
     }
+  },
+  "forAgencies": {
+    "hero": {
+      "title": "Des rapports d'accessibilité que votre agence peut",
+      "titleHighlight": "réellement livrer",
+      "subtitle": "Analysez les sites clients pour les problèmes WCAG 2.2, exportez des rapports personnalisés, configurez la surveillance continue et gérez l'accessibilité de tout votre portefeuille — depuis une seule plateforme.",
+      "ctaPrimary": "Lancer une analyse gratuite",
+      "ctaSecondary": "Voir un exemple de rapport",
+      "noCreditCard": "Compte gratuit requis. Aucune carte de crédit nécessaire."
+    },
+    "painPoints": {
+      "title": "Défis courants des agences",
+      "subtitle": "L'accessibilité devient une attente client, pas un simple bonus.",
+      "p1": {
+        "title": "Les clients posent des questions sur l'accessibilité mais vous manquez d'un processus reproductible",
+        "description": "Sans un workflow standardisé, chaque audit d'accessibilité prend plus de temps que nécessaire. VexNexa vous donne un processus analysable, rapportable et surveillable dès le premier jour."
+      },
+      "p2": {
+        "title": "Vous ne pouvez pas mettre à l'échelle les audits manuels sur plus de 10 sites clients",
+        "description": "Les tests manuels sont importants mais coûteux. Les analyses automatisées fournissent une couverture de base sur l'ensemble de votre portefeuille pour concentrer l'effort manuel là où ça compte."
+      },
+      "p3": {
+        "title": "Les rapports semblent incohérents ou peu professionnels",
+        "description": "Les résultats de scan génériques n'impressionnent pas les clients. VexNexa exporte des rapports PDF et DOCX personnalisés sous votre propre logo avec une priorisation claire des problèmes."
+      }
+    },
+    "workflows": {
+      "title": "Pourquoi VexNexa convient aux workflows d'agence",
+      "subtitle": "Des outils pratiques alignés sur la façon dont les agences travaillent déjà avec leurs clients.",
+      "w1": {
+        "title": "Analyser n'importe quel site client en minutes",
+        "description": "Entrez une URL, obtenez un audit WCAG 2.2 complet avec des problèmes classés par gravité. Aucune configuration requise par client."
+      },
+      "w2": {
+        "title": "Exporter des rapports en marque blanche",
+        "description": "Générez des rapports PDF et DOCX personnalisés avec votre logo, vos couleurs et vos coordonnées. Prêts à partager avec les clients."
+      },
+      "w3": {
+        "title": "Planifier des analyses récurrentes",
+        "description": "Configurez une surveillance hebdomadaire ou mensuelle. Recevez des alertes en cas de baisse des scores ou de nouveaux problèmes critiques."
+      },
+      "w4": {
+        "title": "Gérer plusieurs clients depuis un seul tableau de bord",
+        "description": "Organisez les sites par client. Suivez les scores, tendances et problèmes ouverts sur l'ensemble de votre portefeuille."
+      },
+      "w5": {
+        "title": "Détecter les régressions avant vos clients",
+        "description": "Après une refonte, une migration ou une nouvelle version — VexNexa détecte automatiquement les régressions d'accessibilité."
+      },
+      "w6": {
+        "title": "Soutenir la conformité EAA pour les clients européens",
+        "description": "Aidez vos clients à renforcer leur surveillance continue de l'accessibilité avec un monitoring permanent et des preuves d'amélioration."
+      }
+    },
+    "included": {
+      "title": "Inclus dans les plans Business et Enterprise",
+      "i1": "Rapports PDF et DOCX en marque blanche",
+      "i2": "Logo, couleurs et texte de pied de page personnalisés",
+      "i3": "Tableau de bord multi-sites",
+      "i4": "Analyses planifiées avec alertes par e-mail",
+      "i5": "Accès équipe basé sur les rôles",
+      "i6": "Couverture WCAG 2.2 AA avec axe-core",
+      "i7": "Priorisation des problèmes par gravité",
+      "i8": "Hébergé en UE, conforme au RGPD"
+    },
+    "agencyWorkflow": {
+      "title": "Comment les agences utilisent VexNexa",
+      "subtitle": "Un workflow d'accessibilité rentable en quatre étapes.",
+      "stepLabel": "Étape",
+      "s1": {
+        "title": "Intégration client",
+        "description": "Analysez leur site dès le premier jour — audit de référence instantané."
+      },
+      "s2": {
+        "title": "Livrer un rapport personnalisé",
+        "description": "PDF en marque blanche sous 24 heures, prêt à partager."
+      },
+      "s3": {
+        "title": "Corriger & surveiller",
+        "description": "Planifiez des analyses récurrentes, suivez les améliorations dans le temps."
+      },
+      "s4": {
+        "title": "Fidéliser & vendre plus",
+        "description": "Surveillance continue comme service mensuel pour vos clients."
+      }
+    },
+    "pilotBanner": {
+      "badge": "Places limitées",
+      "title": "Rejoignez le programme de partenariat pilote",
+      "subtitle": "Obtenez un accès niveau Business, un support direct et contribuez à façonner VexNexa — tout en offrant l'accessibilité à vos clients dès le premier jour.",
+      "ctaPrimary": "En savoir plus",
+      "ctaSecondary": "Postuler maintenant"
+    },
+    "finalCta": {
+      "title": "Commencez à offrir l'accessibilité à vos clients",
+      "subtitle": "Créez un compte gratuit, analysez votre premier site client et découvrez comment VexNexa s'intègre à votre workflow.",
+      "ctaPrimary": "Lancer une analyse gratuite",
+      "ctaSecondary": "Voir un exemple de rapport",
+      "ctaTertiary": "Nous contacter"
+    }
+  },
+  "blog": {
+    "title": "Perspectives & Actualités",
+    "subtitle": "Les dernières évolutions en accessibilité web et conformité WCAG",
+    "empty": "Aucun article trouvé. Revenez plus tard pour du nouveau contenu !",
+    "writtenBy": "Rédigé par :",
+    "metadata": {
+      "title": "Blog - VexNexa",
+      "description": "Dernières nouvelles, conseils et perspectives sur l'accessibilité web et la conformité WCAG."
+    }
+  },
+  "sampleReport": {
+    "badge": "Exemple de rapport",
+    "title": "À quoi ressemble un rapport d'accessibilité VexNexa",
+    "titleHighlight": "ressemble",
+    "subtitle": "Ceci est un exemple de rapport basé sur des données d'analyse réalistes. Les plans Business et Enterprise peuvent le mettre en marque blanche avec votre propre logo, couleurs et nom d'entreprise.",
+    "ctaPrimary": "Analyser votre propre site",
+    "ctaSecondary": "En savoir plus sur la marque blanche",
+    "executiveSummary": "Résumé",
+    "scoreTitle": "Score d'accessibilité",
+    "severityCritical": "Critique",
+    "severitySerious": "Sérieux",
+    "severityModerate": "Modéré",
+    "severityMinor": "Mineur",
+    "downloadTitle": "Télécharger l'exemple de rapport complet",
+    "downloadSubtitle": "Voyez exactement ce que vos clients recevront — personnalisé, structuré et prêt à partager.",
+    "downloadBranded": "Demander un exemple PDF",
+    "downloadWhiteLabel": "Demander un exemple en marque blanche",
+    "downloadNote": "Nous vous enverrons un rapport d'exemple personnalisé sous 1 jour ouvré.",
+    "exportTitle": "Exporter en PDF ou DOCX — avec votre branding",
+    "exportSubtitle": "Les plans Business et Enterprise incluent les exports en marque blanche. Remplacez la marque VexNexa par votre propre logo, nom d'entreprise, couleurs et texte de pied de page. Les rapports s'exportent en PDF partageable ou DOCX modifiable.",
+    "exportLearnMore": "En savoir plus sur les rapports en marque blanche"
   }
 }

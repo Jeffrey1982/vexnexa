@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,76 +18,26 @@ import {
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
+import { useTranslations } from "next-intl";
 
-export const metadata: Metadata = {
-  title: "WCAG Accessibility Reporting for Agencies",
-  description:
-    "Scan client websites for WCAG 2.2 issues, deliver branded accessibility reports, and monitor compliance across your portfolio. Built for agencies and web studios.",
-  openGraph: {
-    title: "WCAG Accessibility Reporting for Agencies — VexNexa",
-    description:
-      "Scan client sites, deliver white-label reports, and monitor accessibility across your portfolio.",
-    url: "https://vexnexa.com/for-agencies",
-  },
-  alternates: { canonical: "https://vexnexa.com/for-agencies" },
-};
+// Dynamic metadata will be handled by the layout or generateMetadata function
 
 export default function ForAgenciesPage() {
-  const painPoints: { title: string; description: string }[] = [
-    {
-      title: "Clients ask about accessibility but you lack a repeatable process",
-      description:
-        "Without a standardised workflow, every accessibility review takes longer than it should. VexNexa gives you a scannable, reportable, monitorable process from day one.",
-    },
-    {
-      title: "You cannot scale manual audits across 10+ client sites",
-      description:
-        "Manual testing is important but expensive. Automated scans give you baseline coverage across your entire portfolio so you can focus manual effort where it counts.",
-    },
-    {
-      title: "Reports look inconsistent or unprofessional",
-      description:
-        "Generic scan output does not impress clients. VexNexa exports branded PDF and DOCX reports under your own logo with clear issue prioritisation.",
-    },
+  const t = useTranslations('forAgencies');
+  
+  const painPoints = [
+    { title: t('painPoints.p1.title'), description: t('painPoints.p1.description') },
+    { title: t('painPoints.p2.title'), description: t('painPoints.p2.description') },
+    { title: t('painPoints.p3.title'), description: t('painPoints.p3.description') },
   ];
 
   const workflows: { icon: typeof FileText; title: string; description: string }[] = [
-    {
-      icon: Eye,
-      title: "Scan any client site in minutes",
-      description:
-        "Enter a URL, get a full WCAG 2.2 audit with severity-ranked issues. No setup needed per client.",
-    },
-    {
-      icon: FileText,
-      title: "Export white-label reports",
-      description:
-        "Generate branded PDF and DOCX reports with your logo, colours, and contact info. Ready to share with clients.",
-    },
-    {
-      icon: RefreshCw,
-      title: "Schedule recurring scans",
-      description:
-        "Set up weekly or monthly monitoring. Get alerted when scores drop or new critical issues appear on any client site.",
-    },
-    {
-      icon: Users,
-      title: "Manage multiple clients from one dashboard",
-      description:
-        "Organise sites by client. Track scores, trends, and open issues across your entire portfolio.",
-    },
-    {
-      icon: Bell,
-      title: "Catch regressions before clients do",
-      description:
-        "After a redesign, migration, or new release — VexNexa catches accessibility regressions automatically.",
-    },
-    {
-      icon: Shield,
-      title: "Support EAA readiness for EU clients",
-      description:
-        "Help clients strengthen their ongoing accessibility oversight with continuous monitoring and evidence of improvement.",
-    },
+    { icon: Eye, title: t('workflows.w1.title'), description: t('workflows.w1.description') },
+    { icon: FileText, title: t('workflows.w2.title'), description: t('workflows.w2.description') },
+    { icon: RefreshCw, title: t('workflows.w3.title'), description: t('workflows.w3.description') },
+    { icon: Users, title: t('workflows.w4.title'), description: t('workflows.w4.description') },
+    { icon: Bell, title: t('workflows.w5.title'), description: t('workflows.w5.description') },
+    { icon: Shield, title: t('workflows.w6.title'), description: t('workflows.w6.description') },
   ];
 
   return (
@@ -96,11 +47,11 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
-              Accessibility reporting your agency can{" "}
-              <span className="text-primary">actually deliver</span>
+              {t('hero.title')}{" "}
+              <span className="text-primary">{t('hero.titleHighlight')}</span>
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              Scan client sites for WCAG 2.2 issues, export branded reports, set up continuous monitoring, and manage accessibility across your entire portfolio — all from one platform.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <TrackedCTA
@@ -110,7 +61,7 @@ export default function ForAgenciesPage() {
                 size="lg"
                 className="gradient-primary text-white"
               >
-                Start your free scan
+                {t('hero.ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
@@ -120,11 +71,11 @@ export default function ForAgenciesPage() {
                 size="lg"
                 variant="outline"
               >
-                View sample report
+                {t('hero.ctaSecondary')}
               </TrackedCTA>
             </div>
             <p className="text-sm text-muted-foreground">
-              Free account required. No credit card needed.
+              {t('hero.noCreditCard')}
             </p>
           </div>
         </div>
@@ -135,10 +86,10 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Common challenges agencies face
+              {t('painPoints.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Accessibility is becoming a client expectation, not a nice-to-have.
+              {t('painPoints.subtitle')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -161,10 +112,10 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Why VexNexa fits agency workflows
+              {t('workflows.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Practical tooling that maps to how agencies already work with clients.
+              {t('workflows.subtitle')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -192,18 +143,12 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold font-display mb-8 text-center">
-              Included on Business and Enterprise plans
+              {t('included.title')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                "White-label PDF and DOCX reports",
-                "Custom logo, colours, and footer text",
-                "Multi-site dashboard",
-                "Scheduled scans with email alerts",
-                "Role-based team access",
-                "WCAG 2.2 AA coverage with axe-core",
-                "Severity-ranked issue prioritisation",
-                "EU-hosted, GDPR compliant",
+                t('included.i1'), t('included.i2'), t('included.i3'), t('included.i4'),
+                t('included.i5'), t('included.i6'), t('included.i7'), t('included.i8'),
               ].map((item, i) => (
                 <div key={i} className="flex items-start space-x-3">
                   <Check className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
@@ -220,24 +165,24 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              How agencies use VexNexa
+              {t('agencyWorkflow.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A revenue-positive accessibility workflow in four steps.
+              {t('agencyWorkflow.subtitle')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { step: "1", icon: Globe, title: "Client onboarding", description: "Scan their site on day one — instant baseline audit." },
-              { step: "2", icon: FileText, title: "Deliver branded report", description: "White-label PDF within 24 hours, ready to share." },
-              { step: "3", icon: RefreshCw, title: "Fix & monitor", description: "Schedule recurring scans, track improvements over time." },
-              { step: "4", icon: Bell, title: "Retain & upsell", description: "Ongoing monitoring as a monthly service for your clients." },
+              { step: "1", icon: Globe, title: t('agencyWorkflow.s1.title'), description: t('agencyWorkflow.s1.description') },
+              { step: "2", icon: FileText, title: t('agencyWorkflow.s2.title'), description: t('agencyWorkflow.s2.description') },
+              { step: "3", icon: RefreshCw, title: t('agencyWorkflow.s3.title'), description: t('agencyWorkflow.s3.description') },
+              { step: "4", icon: Bell, title: t('agencyWorkflow.s4.title'), description: t('agencyWorkflow.s4.description') },
             ].map((s, i) => (
               <div key={i} className="relative text-center space-y-3">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto shadow-soft">
                   <s.icon className="h-7 w-7 text-white" />
                 </div>
-                <div className="text-xs font-semibold text-primary uppercase tracking-wider">Step {s.step}</div>
+                <div className="text-xs font-semibold text-primary uppercase tracking-wider">{t('agencyWorkflow.stepLabel')} {s.step}</div>
                 <h3 className="text-lg font-semibold font-display">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
                 {i < 3 && (
@@ -258,13 +203,13 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-5">
             <span className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-semibold">
-              Limited spots
+              {t('pilotBanner.badge')}
             </span>
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              Join the Pilot Partner Program
+              {t('pilotBanner.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.
+              {t('pilotBanner.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
@@ -274,7 +219,7 @@ export default function ForAgenciesPage() {
                 size="lg"
                 className="gradient-primary text-white"
               >
-                Learn more <ArrowRight className="ml-2 h-5 w-5" />
+                {t('pilotBanner.ctaPrimary')} <ArrowRight className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
                 href="/contact?from=pilot-agencies"
@@ -283,7 +228,7 @@ export default function ForAgenciesPage() {
                 size="lg"
                 variant="outline"
               >
-                Apply now
+                {t('pilotBanner.ctaSecondary')}
               </TrackedCTA>
             </div>
           </div>
@@ -295,10 +240,10 @@ export default function ForAgenciesPage() {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              Start delivering accessibility to your clients
+              {t('finalCta.title')}
             </h2>
             <p className="text-xl leading-relaxed">
-              Create a free account, scan your first client site, and see how VexNexa fits your workflow.
+              {t('finalCta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <TrackedCTA
@@ -309,7 +254,7 @@ export default function ForAgenciesPage() {
                 variant="secondary"
                 className="bg-white text-primary hover:bg-white/90"
               >
-                Start your free scan <Zap className="ml-2 h-5 w-5" />
+                {t('finalCta.ctaPrimary')} <Zap className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
                 href="/sample-report"
@@ -319,7 +264,7 @@ export default function ForAgenciesPage() {
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                View sample report
+                {t('finalCta.ctaSecondary')}
               </TrackedCTA>
               <TrackedCTA
                 href="/contact"
@@ -329,7 +274,7 @@ export default function ForAgenciesPage() {
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                Contact us
+                {t('finalCta.ctaTertiary')}
               </TrackedCTA>
             </div>
           </div>

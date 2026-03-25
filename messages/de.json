@@ -53,13 +53,13 @@
   },
   "home": {
     "hero": {
-      "title": "White-label WCAG monitoring for",
-      "titleHighlight": "agencies and EU-facing teams",
-      "subtitle": "Scan websites, catch accessibility regressions after every release, and deliver branded reports that support WCAG 2.2 and EAA readiness.",
-      "ctaPrimary": "Start your free scan",
-      "ctaSecondary": "View sample report",
-      "noCreditCard": "Free account required. No credit card needed.",
-      "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
+      "title": "White-Label-WCAG-Monitoring für",
+      "titleHighlight": "Agenturen und EU-orientierte Teams",
+      "subtitle": "Scannen Sie Websites, erkennen Sie Barrierefreiheitsprobleme nach jedem Release und liefern Sie markenspezifische Berichte, die WCAG 2.2 und EAA-Bereitschaft unterstützen.",
+      "ctaPrimary": "Kostenlos scannen",
+      "ctaSecondary": "Beispielbericht ansehen",
+      "noCreditCard": "Kostenloses Konto erforderlich. Keine Kreditkarte nötig.",
+      "imageAlt": "VexNexa Dashboard für Barrierefreiheitsscans mit detaillierten WCAG-Berichten und Problempriorisierung"
     },
     "valuePillars": {
       "deeper": {
@@ -101,10 +101,10 @@
       "cta": "Start free scan"
     },
     "finalCta": {
-      "title": "Start monitoring accessibility today",
-      "subtitle": "Create your free account. Run your first scan. See results in minutes. Upgrade when you need monitoring, reports, and multi-site management.",
-      "ctaPrimary": "Start your free scan",
-      "ctaSecondary": "View pricing"
+      "title": "Beginnen Sie heute mit der Barrierefreiheitsüberwachung",
+      "subtitle": "Erstellen Sie Ihr kostenloses Konto. Führen Sie Ihren ersten Scan durch. Sehen Sie Ergebnisse in Minuten. Upgraden Sie, wenn Sie Monitoring, Berichte und Multi-Site-Verwaltung benötigen.",
+      "ctaPrimary": "Kostenlos scannen",
+      "ctaSecondary": "Preise ansehen"
     },
     "faq": {
       "q1": {
@@ -228,141 +228,141 @@
       "noCard": "No credit card required"
     },
     "socialProof": {
-      "title": "Trusted by agencies across Europe",
+      "title": "Vertraut von Agenturen in ganz Europa",
       "logo1": "Agency Partner",
       "logo2": "Digital Studio",
       "logo3": "Web Team",
       "logo4": "Compliance Co."
     },
     "trustStrip": {
-      "automated": "Automated checks in minutes",
-      "branded": "Branded reports for clients and stakeholders",
-      "continuous": "Continuous monitoring for live websites"
+      "automated": "Automatisierte Prüfungen in Minuten",
+      "branded": "Markenspezifische Berichte für Kunden und Stakeholder",
+      "continuous": "Kontinuierliches Monitoring für Live-Websites"
     },
     "whyTeams": {
-      "title": "Why teams choose VexNexa",
-      "subtitle": "Operational accessibility tooling that fits into how you already work.",
+      "title": "Warum Teams VexNexa wählen",
+      "subtitle": "Operative Barrierefreiheits-Tools, die in Ihren bestehenden Workflow passen.",
       "catchIssues": {
-        "title": "Catch issues before clients do",
-        "description": "Run scans against WCAG 2.2 criteria and see prioritized issues with element-level detail. Fix what matters most first."
+        "title": "Probleme entdecken, bevor Kunden es tun",
+        "description": "Führen Sie Scans nach WCAG 2.2-Kriterien durch und sehen Sie priorisierte Probleme mit Details auf Elementebene. Beheben Sie zuerst, was am wichtigsten ist."
       },
       "whiteLabel": {
-        "title": "Turn scans into white-label reports",
-        "description": "Export branded PDF and DOCX reports under your own logo. Share professional accessibility reports with clients and stakeholders."
+        "title": "Scans in White-Label-Berichte umwandeln",
+        "description": "Exportieren Sie PDF- und DOCX-Berichte unter Ihrem eigenen Logo. Teilen Sie professionelle Barrierefreiheitsberichte mit Kunden und Stakeholdern."
       },
       "monitor": {
-        "title": "Monitor accessibility after every release",
-        "description": "Schedule recurring scans. Get alerted when scores drop or new critical issues appear. Prevent regressions from reaching production."
+        "title": "Barrierefreiheit nach jedem Release überwachen",
+        "description": "Planen Sie wiederkehrende Scans. Erhalten Sie Benachrichtigungen, wenn Scores sinken oder neue kritische Probleme auftreten. Verhindern Sie Regressionen in der Produktion."
       }
     },
     "builtFor": {
-      "title": "Built for agencies and EU-facing teams",
-      "subtitle": "Whether you manage one site or fifty, VexNexa gives you the workflow tools to deliver accessible websites.",
+      "title": "Entwickelt für Agenturen und EU-orientierte Teams",
+      "subtitle": "Ob Sie eine Website oder fünfzig verwalten — VexNexa bietet Ihnen die Workflow-Tools für barrierefreie Websites.",
       "agencies": {
-        "title": "Agencies and web studios",
-        "description": "Scan client sites, export branded reports, and deliver ongoing monitoring as a service. Manage multiple client projects from one dashboard."
+        "title": "Agenturen und Webstudios",
+        "description": "Scannen Sie Kundenwebsites, exportieren Sie markenspezifische Berichte und bieten Sie laufendes Monitoring als Service an. Verwalten Sie mehrere Kundenprojekte über ein Dashboard."
       },
       "compliance": {
-        "title": "In-house compliance teams",
-        "description": "Track accessibility across your organisation. Schedule scans after every deployment. Build evidence of ongoing accessibility oversight for EAA readiness."
+        "title": "Interne Compliance-Teams",
+        "description": "Verfolgen Sie Barrierefreiheit in Ihrer Organisation. Planen Sie Scans nach jedem Deployment. Dokumentieren Sie laufende Barrierefreiheitsüberwachung für die EAA-Bereitschaft."
       },
       "partners": {
-        "title": "Partners managing multiple sites",
-        "description": "Monitor accessibility across a portfolio of websites. Catch regressions early. Deliver clear, prioritized reports to stakeholders."
+        "title": "Partner mit mehreren Websites",
+        "description": "Überwachen Sie Barrierefreiheit über ein Portfolio von Websites. Erkennen Sie Regressionen frühzeitig. Liefern Sie klare, priorisierte Berichte an Stakeholder."
       }
     },
     "whatYouGet": {
-      "title": "What you get with",
+      "title": "Was Sie mit",
       "titleHighlight": "VexNexa",
-      "subtitle": "Everything you need to scan, report, and monitor — without the noise.",
-      "c1": "WCAG 2.2 AA scanning with axe-core® engine",
-      "c2": "Severity-ranked issues: Critical, Serious, Moderate, Minor",
-      "c3": "PDF and DOCX export with white-label branding",
-      "c4": "Continuous monitoring with scheduled scans",
-      "c5": "Score regression alerts via email",
-      "c6": "Multi-site management from one dashboard",
-      "c7": "Team collaboration with role-based access",
-      "c8": "EU-hosted, GDPR compliant infrastructure",
-      "cta": "Start your free scan",
-      "axeCoreBadge": "Powered by axe-core® — the world's most trusted accessibility testing engine"
+      "subtitle": "Alles, was Sie zum Scannen, Berichten und Überwachen brauchen — ohne Rauschen.",
+      "c1": "WCAG 2.2 AA-Scanning mit axe-core®-Engine",
+      "c2": "Nach Schweregrad sortierte Probleme: Kritisch, Schwerwiegend, Mäßig, Gering",
+      "c3": "PDF- und DOCX-Export mit White-Label-Branding",
+      "c4": "Kontinuierliches Monitoring mit geplanten Scans",
+      "c5": "Score-Regressionswarnungen per E-Mail",
+      "c6": "Multi-Site-Verwaltung über ein Dashboard",
+      "c7": "Teamzusammenarbeit mit rollenbasiertem Zugang",
+      "c8": "EU-gehostet, DSGVO-konforme Infrastruktur",
+      "cta": "Kostenlos scannen",
+      "axeCoreBadge": "Powered by axe-core® — der weltweit vertrauenswürdigsten Engine für Barrierefreiheitstests"
     },
     "testimonials": {
-      "title": "What pilot partners say",
-      "subtitle": "Early feedback from agencies testing VexNexa in their workflows.",
+      "title": "Was Pilotpartner sagen",
+      "subtitle": "Frühes Feedback von Agenturen, die VexNexa in ihren Workflows testen.",
       "t1": {
-        "quote": "VexNexa saved us hours per client. The white-label reports look like we built them ourselves.",
-        "attribution": "Pilot partner — Digital agency, Netherlands"
+        "quote": "VexNexa hat uns Stunden pro Kunde gespart. Die White-Label-Berichte sehen aus, als hätten wir sie selbst erstellt.",
+        "attribution": "Pilotpartner — Digitalagentur, Niederlande"
       },
       "t2": {
-        "quote": "We finally have a repeatable accessibility workflow. Scan, report, monitor — done.",
-        "attribution": "Pilot partner — Web studio, Germany"
+        "quote": "Wir haben endlich einen wiederholbaren Barrierefreiheits-Workflow. Scannen, berichten, überwachen — erledigt.",
+        "attribution": "Pilotpartner — Webstudio, Deutschland"
       },
       "t3": {
-        "quote": "The prioritization is what sold us. We know exactly what to fix first for each client.",
-        "attribution": "Pilot partner — Compliance team, Belgium"
+        "quote": "Die Priorisierung hat uns überzeugt. Wir wissen genau, was wir für jeden Kunden zuerst beheben müssen.",
+        "attribution": "Pilotpartner — Compliance-Team, Belgien"
       }
     },
     "sampleReport": {
-      "title": "See what a report looks like",
-      "subtitle": "Professional, structured, and ready to share with clients or stakeholders. Browse a real sample report with accessibility scores, prioritized issues, and remediation guidance.",
-      "ctaPrimary": "View sample report",
-      "ctaSecondary": "Learn about white-label reports"
+      "title": "Sehen Sie, wie ein Bericht aussieht",
+      "subtitle": "Professionell, strukturiert und bereit zum Teilen mit Kunden oder Stakeholdern. Durchsuchen Sie einen echten Beispielbericht mit Barrierefreiheits-Scores, priorisierten Problemen und Behebungshinweisen.",
+      "ctaPrimary": "Beispielbericht ansehen",
+      "ctaSecondary": "Mehr über White-Label-Berichte"
     },
     "agencyOffer": {
-      "badge": "Agency offer",
-      "title": "Get a branded accessibility report for one site",
-      "subtitle": "See how VexNexa can fit your agency workflow with a sample report and a practical setup path for ongoing monitoring.",
-      "ctaPrimary": "View sample report",
-      "ctaSecondary": "Contact us about agency use"
+      "badge": "Agenturangebot",
+      "title": "Erhalten Sie einen markenspezifischen Barrierefreiheitsbericht für eine Website",
+      "subtitle": "Sehen Sie, wie VexNexa in Ihren Agentur-Workflow passt — mit einem Beispielbericht und einem praktischen Einrichtungspfad für laufendes Monitoring.",
+      "ctaPrimary": "Beispielbericht ansehen",
+      "ctaSecondary": "Kontaktieren Sie uns zur Agenturnutzung"
     },
     "workflow": {
-      "title": "How VexNexa fits your workflow",
-      "subtitle": "Scan, review, report. Repeat as your sites evolve.",
-      "stepLabel": "Step",
+      "title": "Wie VexNexa in Ihren Workflow passt",
+      "subtitle": "Scannen, prüfen, berichten. Wiederholen, während sich Ihre Websites weiterentwickeln.",
+      "stepLabel": "Schritt",
       "s1": {
-        "title": "Scan a site",
-        "description": "Enter a URL. Get a full WCAG 2.2 audit in minutes with severity-ranked issues and element-level context."
+        "title": "Website scannen",
+        "description": "Geben Sie eine URL ein. Erhalten Sie ein vollständiges WCAG 2.2-Audit in Minuten mit nach Schweregrad sortierten Problemen und Kontext auf Elementebene."
       },
       "s2": {
-        "title": "Review prioritized issues",
-        "description": "See exactly what is wrong, why it matters, and how to fix it. Filter by severity, WCAG criterion, or page element."
+        "title": "Priorisierte Probleme prüfen",
+        "description": "Sehen Sie genau, was falsch ist, warum es wichtig ist und wie Sie es beheben. Filtern Sie nach Schweregrad, WCAG-Kriterium oder Seitenelement."
       },
       "s3": {
-        "title": "Share reports and monitor over time",
-        "description": "Export branded reports. Schedule recurring scans. Get notified when scores change. Build a continuous improvement loop."
+        "title": "Berichte teilen und langfristig überwachen",
+        "description": "Exportieren Sie markenspezifische Berichte. Planen Sie wiederkehrende Scans. Erhalten Sie Benachrichtigungen bei Score-Änderungen. Bauen Sie einen kontinuierlichen Verbesserungsprozess auf."
       }
     },
     "pilotBanner": {
-      "badge": "Limited spots",
-      "title": "Join the Pilot Partner Program",
-      "subtitle": "Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
-      "ctaPrimary": "Learn more",
-      "ctaSecondary": "Apply now"
+      "badge": "Begrenzte Plätze",
+      "title": "Werden Sie Pilotpartner",
+      "subtitle": "Erhalten Sie Business-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
+      "ctaPrimary": "Mehr erfahren",
+      "ctaSecondary": "Jetzt bewerben"
     },
     "faqSection": {
       "q1": {
-        "question": "Can VexNexa guarantee legal compliance?",
-        "answer": "No tool can guarantee 100% legal compliance. VexNexa detects and reports accessibility issues, helps prioritize fixes, and supports WCAG and EAA readiness. For legal risk assessment, consider combining automated scanning with expert review."
+        "question": "Kann VexNexa die gesetzliche Konformität garantieren?",
+        "answer": "Kein Tool kann 100% gesetzliche Konformität garantieren. VexNexa erkennt und meldet Barrierefreiheitsprobleme, hilft bei der Priorisierung von Korrekturen und unterstützt die WCAG- und EAA-Bereitschaft. Für eine rechtliche Risikobewertung empfehlen wir, automatisiertes Scanning mit Expertenprüfung zu kombinieren."
       },
       "q2": {
-        "question": "Do I need an account to scan?",
-        "answer": "Yes, a free account is required. This lets us save your results, provide exports, and track improvements over time. No credit card needed to get started."
+        "question": "Benötige ich ein Konto zum Scannen?",
+        "answer": "Ja, ein kostenloses Konto ist erforderlich. So können wir Ihre Ergebnisse speichern, Exporte bereitstellen und Verbesserungen im Zeitverlauf verfolgen. Keine Kreditkarte erforderlich."
       },
       "q3": {
-        "question": "Can I export branded reports for clients?",
-        "answer": "Yes. PDF and DOCX exports are available on paid plans. Business and Enterprise plans include white-label reports with your own logo, colours, and contact details."
+        "question": "Kann ich markenspezifische Berichte für Kunden exportieren?",
+        "answer": "Ja. PDF- und DOCX-Exporte sind in kostenpflichtigen Plänen verfügbar. Business- und Enterprise-Pläne enthalten White-Label-Berichte mit Ihrem eigenen Logo, Farben und Kontaktdaten."
       },
       "q4": {
-        "question": "How does continuous monitoring work?",
-        "answer": "Schedule automatic scans daily, weekly, or monthly. VexNexa alerts you via email when scores drop or new critical issues appear. Track trends over time from your dashboard."
+        "question": "Wie funktioniert das kontinuierliche Monitoring?",
+        "answer": "Planen Sie automatische Scans täglich, wöchentlich oder monatlich. VexNexa benachrichtigt Sie per E-Mail, wenn Scores sinken oder neue kritische Probleme auftreten. Verfolgen Sie Trends über Ihr Dashboard."
       },
       "q5": {
-        "question": "Is VexNexa an accessibility overlay?",
-        "answer": "No. We scan your code structure and report real WCAG violations. We never inject widgets or scripts into your site. Our reports help developers fix issues at the source."
+        "question": "Ist VexNexa ein Barrierefreiheits-Overlay?",
+        "answer": "Nein. Wir scannen Ihre Codestruktur und melden echte WCAG-Verstöße. Wir injizieren niemals Widgets oder Skripte in Ihre Website. Unsere Berichte helfen Entwicklern, Probleme an der Quelle zu beheben."
       },
       "q6": {
-        "question": "What support is available?",
-        "answer": "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times."
+        "question": "Welcher Support ist verfügbar?",
+        "answer": "Alle Nutzer erhalten E-Mail-Support. Wir antworten in der Regel innerhalb eines Werktages. Business- und Enterprise-Pläne beinhalten Prioritäts-Support mit kürzeren Reaktionszeiten."
       }
     }
   },
@@ -750,12 +750,12 @@
         }
       },
       "pilotBanner": {
-        "badge": "Agency Pilot",
-        "title": "First month Business plan at Pro price",
-        "subtitle": "New to VexNexa? Start with full Business features — white-label reports, 10 websites, and priority support — for just €59.99 your first month. No lock-in. Cancel anytime.",
-        "cta": "Claim your pilot spot"
+        "badge": "Agentur-Pilot",
+        "title": "Erster Monat Business-Plan zum Pro-Preis",
+        "subtitle": "Neu bei VexNexa? Starten Sie mit allen Business-Funktionen — White-Label-Berichte, 10 Websites und Prioritäts-Support — für nur 59,99 € im ersten Monat. Keine Bindung. Jederzeit kündbar.",
+        "cta": "Pilotplatz sichern"
       },
-      "noCreditCard": "No credit card required · Cancel anytime"
+      "noCreditCard": "Keine Kreditkarte erforderlich · Jederzeit kündbar"
     }
   },
   "contact": {
@@ -2244,134 +2244,134 @@
   },
   "forAgencies": {
     "hero": {
-      "title": "Accessibility reporting your agency can",
-      "titleHighlight": "actually deliver",
-      "subtitle": "Scan client sites for WCAG 2.2 issues, export branded reports, set up continuous monitoring, and manage accessibility across your entire portfolio — all from one platform.",
-      "ctaPrimary": "Start your free scan",
-      "ctaSecondary": "View sample report",
-      "noCreditCard": "Free account required. No credit card needed."
+      "title": "Barrierefreiheitsberichte, die Ihre Agentur",
+      "titleHighlight": "tatsächlich liefern kann",
+      "subtitle": "Scannen Sie Kundenwebsites auf WCAG 2.2-Probleme, exportieren Sie markenspezifische Berichte, richten Sie kontinuierliches Monitoring ein und verwalten Sie Barrierefreiheit über Ihr gesamtes Portfolio — alles über eine Plattform.",
+      "ctaPrimary": "Kostenlos scannen",
+      "ctaSecondary": "Beispielbericht ansehen",
+      "noCreditCard": "Kostenloses Konto erforderlich. Keine Kreditkarte nötig."
     },
     "painPoints": {
-      "title": "Common challenges agencies face",
-      "subtitle": "Accessibility is becoming a client expectation, not a nice-to-have.",
+      "title": "Häufige Herausforderungen für Agenturen",
+      "subtitle": "Barrierefreiheit wird zur Kundenerwartung, nicht zum Nice-to-have.",
       "p1": {
-        "title": "Clients ask about accessibility but you lack a repeatable process",
-        "description": "Without a standardised workflow, every accessibility review takes longer than it should. VexNexa gives you a scannable, reportable, monitorable process from day one."
+        "title": "Kunden fragen nach Barrierefreiheit, aber Ihnen fehlt ein wiederholbarer Prozess",
+        "description": "Ohne einen standardisierten Workflow dauert jede Barrierefreiheitsprüfung länger als nötig. VexNexa bietet Ihnen einen scan-, berichts- und überwachbaren Prozess ab Tag eins."
       },
       "p2": {
-        "title": "You cannot scale manual audits across 10+ client sites",
-        "description": "Manual testing is important but expensive. Automated scans give you baseline coverage across your entire portfolio so you can focus manual effort where it counts."
+        "title": "Manuelle Audits lassen sich nicht über 10+ Kundenwebsites skalieren",
+        "description": "Manuelles Testen ist wichtig, aber teuer. Automatisierte Scans bieten Basisdabdeckung über Ihr gesamtes Portfolio, damit Sie manuelle Prüfungen gezielt einsetzen können."
       },
       "p3": {
-        "title": "Reports look inconsistent or unprofessional",
-        "description": "Generic scan output does not impress clients. VexNexa exports branded PDF and DOCX reports under your own logo with clear issue prioritisation."
+        "title": "Berichte wirken inkonsistent oder unprofessionell",
+        "description": "Generische Scan-Ausgaben beeindrucken Kunden nicht. VexNexa exportiert markenspezifische PDF- und DOCX-Berichte unter Ihrem eigenen Logo mit klarer Problempriorisierung."
       }
     },
     "workflows": {
-      "title": "Why VexNexa fits agency workflows",
-      "subtitle": "Practical tooling that maps to how agencies already work with clients.",
+      "title": "Warum VexNexa zu Agentur-Workflows passt",
+      "subtitle": "Praktische Tools, die darauf abgestimmt sind, wie Agenturen bereits mit Kunden arbeiten.",
       "w1": {
-        "title": "Scan any client site in minutes",
-        "description": "Enter a URL, get a full WCAG 2.2 audit with severity-ranked issues. No setup needed per client."
+        "title": "Jede Kundenwebsite in Minuten scannen",
+        "description": "Geben Sie eine URL ein und erhalten Sie ein vollständiges WCAG 2.2-Audit mit nach Schweregrad sortierten Problemen. Kein Setup pro Kunde nötig."
       },
       "w2": {
-        "title": "Export white-label reports",
-        "description": "Generate branded PDF and DOCX reports with your logo, colours, and contact info. Ready to share with clients."
+        "title": "White-Label-Berichte exportieren",
+        "description": "Erstellen Sie markenspezifische PDF- und DOCX-Berichte mit Ihrem Logo, Ihren Farben und Kontaktdaten. Sofort teilbar mit Kunden."
       },
       "w3": {
-        "title": "Schedule recurring scans",
-        "description": "Set up weekly or monthly monitoring. Get alerted when scores drop or new critical issues appear on any client site."
+        "title": "Wiederkehrende Scans planen",
+        "description": "Richten Sie wöchentliches oder monatliches Monitoring ein. Erhalten Sie Benachrichtigungen bei sinkenden Scores oder neuen kritischen Problemen."
       },
       "w4": {
-        "title": "Manage multiple clients from one dashboard",
-        "description": "Organise sites by client. Track scores, trends, and open issues across your entire portfolio."
+        "title": "Mehrere Kunden über ein Dashboard verwalten",
+        "description": "Organisieren Sie Websites nach Kunde. Verfolgen Sie Scores, Trends und offene Probleme über Ihr gesamtes Portfolio."
       },
       "w5": {
-        "title": "Catch regressions before clients do",
-        "description": "After a redesign, migration, or new release — VexNexa catches accessibility regressions automatically."
+        "title": "Regressionen erkennen, bevor Kunden es tun",
+        "description": "Nach einem Redesign, einer Migration oder einem neuen Release — VexNexa erkennt Barrierefreiheitsregressionen automatisch."
       },
       "w6": {
-        "title": "Support EAA readiness for EU clients",
-        "description": "Help clients strengthen their ongoing accessibility oversight with continuous monitoring and evidence of improvement."
+        "title": "EAA-Bereitschaft für EU-Kunden unterstützen",
+        "description": "Unterstützen Sie Kunden dabei, ihre laufende Barrierefreiheitsüberwachung mit kontinuierlichem Monitoring und Verbesserungsnachweisen zu stärken."
       }
     },
     "included": {
-      "title": "Included on Business and Enterprise plans",
-      "i1": "White-label PDF and DOCX reports",
-      "i2": "Custom logo, colours, and footer text",
-      "i3": "Multi-site dashboard",
-      "i4": "Scheduled scans with email alerts",
-      "i5": "Role-based team access",
-      "i6": "WCAG 2.2 AA coverage with axe-core",
-      "i7": "Severity-ranked issue prioritisation",
-      "i8": "EU-hosted, GDPR compliant"
+      "title": "Im Business- und Enterprise-Plan enthalten",
+      "i1": "White-Label-PDF- und DOCX-Berichte",
+      "i2": "Eigenes Logo, Farben und Fußzeilentext",
+      "i3": "Multi-Site-Dashboard",
+      "i4": "Geplante Scans mit E-Mail-Benachrichtigungen",
+      "i5": "Rollenbasierter Teamzugang",
+      "i6": "WCAG 2.2 AA-Abdeckung mit axe-core",
+      "i7": "Nach Schweregrad sortierte Problempriorisierung",
+      "i8": "EU-gehostet, DSGVO-konform"
     },
     "agencyWorkflow": {
-      "title": "How agencies use VexNexa",
-      "subtitle": "A revenue-positive accessibility workflow in four steps.",
-      "stepLabel": "Step",
+      "title": "Wie Agenturen VexNexa nutzen",
+      "subtitle": "Ein umsatzpositiver Barrierefreiheits-Workflow in vier Schritten.",
+      "stepLabel": "Schritt",
       "s1": {
-        "title": "Client onboarding",
-        "description": "Scan their site on day one — instant baseline audit."
+        "title": "Kunden-Onboarding",
+        "description": "Scannen Sie deren Website am ersten Tag — sofortiges Baseline-Audit."
       },
       "s2": {
-        "title": "Deliver branded report",
-        "description": "White-label PDF within 24 hours, ready to share."
+        "title": "Markenspezifischen Bericht liefern",
+        "description": "White-Label-PDF innerhalb von 24 Stunden, bereit zum Teilen."
       },
       "s3": {
-        "title": "Fix & monitor",
-        "description": "Schedule recurring scans, track improvements over time."
+        "title": "Beheben & überwachen",
+        "description": "Planen Sie wiederkehrende Scans, verfolgen Sie Verbesserungen im Zeitverlauf."
       },
       "s4": {
-        "title": "Retain & upsell",
-        "description": "Ongoing monitoring as a monthly service for your clients."
+        "title": "Binden & Upselling",
+        "description": "Laufendes Monitoring als monatlicher Service für Ihre Kunden."
       }
     },
     "pilotBanner": {
-      "badge": "Limited spots",
-      "title": "Join the Pilot Partner Program",
-      "subtitle": "Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
-      "ctaPrimary": "Learn more",
-      "ctaSecondary": "Apply now"
+      "badge": "Begrenzte Plätze",
+      "title": "Werden Sie Pilotpartner",
+      "subtitle": "Erhalten Sie Business-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
+      "ctaPrimary": "Mehr erfahren",
+      "ctaSecondary": "Jetzt bewerben"
     },
     "finalCta": {
-      "title": "Start delivering accessibility to your clients",
-      "subtitle": "Create a free account, scan your first client site, and see how VexNexa fits your workflow.",
-      "ctaPrimary": "Start your free scan",
-      "ctaSecondary": "View sample report",
-      "ctaTertiary": "Contact us"
+      "title": "Beginnen Sie, Ihren Kunden Barrierefreiheit zu liefern",
+      "subtitle": "Erstellen Sie ein kostenloses Konto, scannen Sie Ihre erste Kundenwebsite und sehen Sie, wie VexNexa in Ihren Workflow passt.",
+      "ctaPrimary": "Kostenlos scannen",
+      "ctaSecondary": "Beispielbericht ansehen",
+      "ctaTertiary": "Kontakt aufnehmen"
     }
   },
   "blog": {
-    "title": "Insights & Updates",
-    "subtitle": "Latest developments in web accessibility and WCAG compliance",
-    "empty": "No blog posts found. Check back later for new content!",
-    "writtenBy": "Written by:",
+    "title": "Einblicke & Neuigkeiten",
+    "subtitle": "Aktuelle Entwicklungen in Web-Barrierefreiheit und WCAG-Konformität",
+    "empty": "Keine Blogbeiträge gefunden. Schauen Sie später wieder vorbei!",
+    "writtenBy": "Geschrieben von:",
     "metadata": {
       "title": "Blog - VexNexa",
-      "description": "Latest news, tips, and insights on web accessibility and WCAG compliance."
+      "description": "Aktuelle Nachrichten, Tipps und Einblicke zu Web-Barrierefreiheit und WCAG-Konformität."
     }
   },
   "sampleReport": {
-    "badge": "Sample Report",
-    "title": "What a VexNexa accessibility report looks like",
-    "titleHighlight": "looks like",
-    "subtitle": "This is a sample report based on realistic scan data. Business and Enterprise plans can white-label this with your own logo, colours, and company name.",
-    "ctaPrimary": "Scan your own site",
-    "ctaSecondary": "Learn about white-label",
-    "executiveSummary": "Executive Summary",
-    "scoreTitle": "Accessibility Score",
-    "severityCritical": "Critical",
-    "severitySerious": "Serious",
-    "severityModerate": "Moderate",
-    "severityMinor": "Minor",
-    "downloadTitle": "Download the full sample report",
-    "downloadSubtitle": "See exactly what your clients will receive — branded, structured, and ready to share.",
-    "downloadBranded": "Request PDF sample",
-    "downloadWhiteLabel": "Request white-label example",
-    "downloadNote": "We'll send you a personalized sample report within 1 business day.",
-    "exportTitle": "Export as PDF or DOCX — with your branding",
-    "exportSubtitle": "Business and Enterprise plans include white-label exports. Replace the VexNexa brand with your own logo, company name, colours, and footer text. Reports export as ready-to-share PDF or editable DOCX.",
-    "exportLearnMore": "Learn about white-label reports"
+    "badge": "Beispielbericht",
+    "title": "Wie ein VexNexa-Barrierefreiheitsbericht aussieht",
+    "titleHighlight": "aussieht",
+    "subtitle": "Dies ist ein Beispielbericht basierend auf realistischen Scandaten. Business- und Enterprise-Pläne können dies mit Ihrem eigenen Logo, Farben und Firmennamen als White-Label versehen.",
+    "ctaPrimary": "Eigene Website scannen",
+    "ctaSecondary": "Mehr über White-Label",
+    "executiveSummary": "Zusammenfassung",
+    "scoreTitle": "Barrierefreiheits-Score",
+    "severityCritical": "Kritisch",
+    "severitySerious": "Schwerwiegend",
+    "severityModerate": "Mäßig",
+    "severityMinor": "Gering",
+    "downloadTitle": "Vollständigen Beispielbericht herunterladen",
+    "downloadSubtitle": "Sehen Sie genau, was Ihre Kunden erhalten — markenspezifisch, strukturiert und bereit zum Teilen.",
+    "downloadBranded": "PDF-Beispiel anfordern",
+    "downloadWhiteLabel": "White-Label-Beispiel anfordern",
+    "downloadNote": "Wir senden Ihnen innerhalb von 1 Werktag einen personalisierten Beispielbericht.",
+    "exportTitle": "Als PDF oder DOCX exportieren — mit Ihrer Branding",
+    "exportSubtitle": "Business- und Enterprise-Pläne enthalten White-Label-Exports. Ersetzen Sie die VexNexa-Marke durch Ihr eigenes Logo, Firmennamen, Farben und Fußzeilentext. Berichte exportieren als teilbare PDF oder bearbeitbare DOCX.",
+    "exportLearnMore": "Mehr über White-Label-Berichte"
   }
 }
