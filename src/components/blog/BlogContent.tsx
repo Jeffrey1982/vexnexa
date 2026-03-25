@@ -5,6 +5,12 @@ import DOMPurify from 'dompurify';
 import hljs from 'highlight.js';
 import { Copy, Check } from 'lucide-react';
 import { useState } from 'react';
+import { EaaHeroImage } from './EaaHeroImage';
+import { EaaScopeGrid } from './EaaScopeGrid';
+import { EaaTimeline } from './EaaTimeline';
+import { PainPointCards } from './PainPointCards';
+import { ActionSteps } from './ActionSteps';
+import { CtaBanner } from './CtaBanner';
 
 interface BlogContentProps {
   content: string;
@@ -53,38 +59,65 @@ export function BlogContent({ content }: BlogContentProps) {
     });
   }, [content]);
 
-  // Sanitize HTML content (guard for SSR where DOMPurify needs a DOM)
-  const sanitizedContent = typeof window !== 'undefined' ? DOMPurify.sanitize(content, {
-    ALLOWED_TAGS: [
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'p', 'br', 'strong', 'em', 'u', 'strike',
-      'ul', 'ol', 'li',
-      'a', 'img',
-      'blockquote',
-      'pre', 'code',
-      'table', 'thead', 'tbody', 'tr', 'td', 'th',
-      'hr', 'div', 'span'
-    ],
-    ALLOWED_ATTR: [
-      'href', 'src', 'alt', 'title', 'class',
-      'data-language', 'style', 'target', 'rel'
-    ],
-  }) : content;
+  // Process content to split into sections and replace custom divs
+  const processContent = (html: string) => {
+    const sections = html.split(/(<div class="[^"]*"[^>]*><\/div>)/);
+    
+    return sections.map((section, index) => {
+      if (section.includes('eaa-hero-image')) {
+        return <EaaHeroImage key={`hero-${index}`} />;
+      } else if (section.includes('eaa-scope-grid')) {
+        return <EaaScopeGrid key={`scope-${index}`} />;
+      } else if (section.includes('eaa-timeline')) {
+        return <EaaTimeline key={`timeline-${index}`} />;
+      } else if (section.includes('pain-point-cards')) {
+        return <PainPointCards key={`pain-${index}`} />;
+      } else if (section.includes('action-steps')) {
+        return <ActionSteps key={`action-${index}`} />;
+      } else if (section.includes('cta-banner')) {
+        return <CtaBanner key={`cta-${index}`} />;
+      } else if (section.trim()) {
+        // Sanitize regular HTML content
+        const sanitizedContent = typeof window !== 'undefined' ? DOMPurify.sanitize(section, {
+          ALLOWED_TAGS: [
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'p', 'br', 'strong', 'em', 'u', 'strike',
+            'ul', 'ol', 'li',
+            'a', 'img',
+            'blockquote',
+            'pre', 'code',
+            'table', 'thead', 'tbody', 'tr', 'td', 'th',
+            'hr', 'div', 'span'
+          ],
+          ALLOWED_ATTR: [
+            'href', 'src', 'alt', 'title', 'class',
+            'data-language', 'style', 'target', 'rel'
+          ],
+        }) : section;
+        
+        return (
+          <div
+            key={`content-${index}`}
+            className="blog-content prose prose-lg dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+            style={{
+              '--tw-prose-body': 'hsl(var(--foreground))',
+              '--tw-prose-headings': 'hsl(var(--foreground))',
+              '--tw-prose-links': 'hsl(var(--primary))',
+              '--tw-prose-bold': 'hsl(var(--foreground))',
+              '--tw-prose-code': 'hsl(var(--foreground))',
+              '--tw-prose-pre-bg': 'hsl(var(--muted))',
+            } as React.CSSProperties}
+          />
+        );
+      }
+      return null;
+    });
+  };
 
   return (
-    <div
-      ref={contentRef}
-      className="blog-content prose prose-lg dark:prose-invert max-w-none"
-      dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      style={{
-        // Custom styling for Tiptap-generated content
-        '--tw-prose-body': 'hsl(var(--foreground))',
-        '--tw-prose-headings': 'hsl(var(--foreground))',
-        '--tw-prose-links': 'hsl(var(--primary))',
-        '--tw-prose-bold': 'hsl(var(--foreground))',
-        '--tw-prose-code': 'hsl(var(--foreground))',
-        '--tw-prose-pre-bg': 'hsl(var(--muted))',
-      } as React.CSSProperties}
-    />
+    <div ref={contentRef}>
+      {processContent(content)}
+    </div>
   );
 }

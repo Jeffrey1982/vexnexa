@@ -46,6 +46,8 @@ const TAGS = [
 const CATEGORY = 'Guide';
 
 const CONTENT = `
+<div class="eaa-hero-image"></div>
+
 <p>A client calls you. They received a complaint about the accessibility of their webshop. They want to know: are we compliant? You don't actually know. You built their site, you maintain it, but you've never done a structured accessibility check. You're not even sure what the legal requirements are.</p>
 
 <p>This is the reality for most web agencies in Europe right now. And it's about to get uncomfortable.</p>
@@ -73,6 +75,8 @@ const CONTENT = `
 
 <p>There is one exemption: micro-enterprises with fewer than 10 employees and under €2 million annual turnover are not required to comply. But most agency clients are well above that threshold.</p>
 
+<div class="eaa-scope-grid"></div>
+
 <h3>What does "accessible" actually mean under the EAA?</h3>
 
 <p>The EAA requires products and services to be Perceivable, Operable, Understandable, and Robust — the four POUR principles that underpin WCAG. In practice, this means:</p>
@@ -88,6 +92,8 @@ const CONTENT = `
 </ul>
 
 <p>The EAA does not prescribe a specific WCAG version or conformance level in the directive text itself. Instead, each member state references the harmonised European standard EN 301 549, which currently maps to WCAG 2.1 AA. Some member states may go further.</p>
+
+<div class="eaa-timeline"></div>
 
 <h2>Why this matters for agencies specifically</h2>
 
@@ -117,59 +123,9 @@ const CONTENT = `
 
 <p>For agencies, this means accessibility can be a monthly retainer service: regular scans, branded reports, and periodic remediation. It's a revenue stream that aligns with something you should be doing anyway.</p>
 
-<h2>The four pain points agencies face right now</h2>
+<div class="pain-point-cards"></div>
 
-<h3>1. "My client asks about accessibility and I have no answer"</h3>
-
-<p>You don't have a repeatable process. Every accessibility question turns into an ad-hoc scramble. You google WCAG, run a free Lighthouse check, and deliver a vague summary. It doesn't inspire confidence — and it certainly doesn't meet the EAA's expectation of structured oversight.</p>
-
-<p><strong>What you need:</strong> A tool that scans any client site against WCAG 2.2, produces a severity-ranked report, and gives you clear remediation guidance. Something you can run in 5 minutes and present to a client within the hour.</p>
-
-<h3>2. "A one-time audit is outdated as soon as we deploy"</h3>
-
-<p>You spent two weeks fixing 30 issues. A month later, a CMS update, a new marketing page, or a redesigned checkout flow reintroduced 12 of them. Without monitoring, nobody notices until the next complaint.</p>
-
-<p><strong>What you need:</strong> Scheduled recurring scans — weekly or monthly — that alert you when scores drop or new critical issues appear. Continuous monitoring turns accessibility from a project into a process.</p>
-
-<h3>3. "I want to offer accessibility as a service but the tools are too expensive or complex"</h3>
-
-<p>Enterprise accessibility platforms cost thousands per month. They're built for internal compliance teams at Fortune 500 companies, not for a 15-person agency managing 20 client sites. And free tools don't give you multi-site management, branded reports, or monitoring.</p>
-
-<p><strong>What you need:</strong> A tool built for agency workflows: <a href="/features">multi-site dashboard</a>, <a href="/white-label-accessibility-reports">white-label reports with your logo</a>, scheduled scans, and <a href="/pricing">pricing that doesn't require enterprise budget</a>. Something you can resell as a service to your clients.</p>
-
-<h3>4. "An overlay widget will fix it, right?"</h3>
-
-<p>No. Accessibility overlay widgets inject JavaScript that modifies the visual presentation of your site — larger text, higher contrast, different fonts. While these features can help some users, they do not fix the underlying code issues. Missing alt text stays missing. Unlabelled forms stay unlabelled. Keyboard traps stay trapped.</p>
-
-<p>Overlays do not meet the EAA's requirements. The law expects the product itself to be accessible, not a bolt-on layer that covers up problems. Multiple lawsuits in the US have explicitly named overlay users as defendants.</p>
-
-<h2>What agencies should do now</h2>
-
-<h3>Step 1: Scan your own website</h3>
-
-<p>Before you advise clients, check your own house. <a href="/auth/register">Run a WCAG scan</a> on your agency's site. It's a sobering exercise — and it gives you first-hand experience with the process you'll recommend to clients.</p>
-
-<h3>Step 2: Scan your top 3 clients</h3>
-
-<p>Pick the three client sites most likely to be in EAA scope — e-commerce, financial services, or any site that serves EU consumers. Run a scan. You'll have a concrete conversation starter: "We found 14 accessibility issues on your site, 3 of them critical. Here's what they mean and how to fix them."</p>
-
-<h3>Step 3: Build a repeatable workflow</h3>
-
-<p>Accessibility isn't a one-time deliverable. Build a workflow you can repeat:</p>
-
-<ol>
-  <li><strong>Scan</strong> a client site and generate a severity-ranked report</li>
-  <li><strong>Prioritise</strong> — fix critical and serious issues first</li>
-  <li><strong>Report</strong> — deliver a branded PDF or DOCX to the client</li>
-  <li><strong>Monitor</strong> — schedule recurring scans to catch regressions</li>
-  <li><strong>Repeat</strong> — deliver monthly progress reports</li>
-</ol>
-
-<p>This is a service. You can charge for it. Your clients need it. And the EAA makes it non-optional.</p>
-
-<h3>Step 4: Educate your clients</h3>
-
-<p>Don't wait for clients to ask. Send them a short email explaining what the EAA means for their website. Attach the scan results. Position yourself as the agency that's ahead of the curve — not the one scrambling to react after a complaint.</p>
+<div class="action-steps"></div>
 
 <h2>Penalties and enforcement: what happens if you ignore the EAA?</h2>
 
@@ -208,6 +164,8 @@ const CONTENT = `
 <hr />
 
 <h2>Take the Next Step</h2>
+
+<div class="cta-banner"></div>
 
 <p><em>VexNexa is a white-label WCAG monitoring tool built specifically for agencies and EU-facing teams. Scan any client site, generate branded reports, and set up continuous monitoring — from one dashboard.</em></p>
 
