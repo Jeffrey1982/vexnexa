@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail, Linkedin, Twitter, Github, Facebook } from "lucide-react";
+import { Heart, Mail, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import VexnexaLogo from "@/components/brand/VexnexaLogo";
@@ -121,15 +121,6 @@ export function Footer({ className }: FooterProps) {
               <h3 className="font-semibold text-lg">{t('brand.followUs')}</h3>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://linkedin.com/company/vexnexa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="Visit VexNexa on LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5" aria-hidden="true" />
-                </a>
-                <a
                   href="https://twitter.com/vexnexa"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -137,24 +128,6 @@ export function Footer({ className }: FooterProps) {
                   aria-label="Visit VexNexa on Twitter"
                 >
                   <Twitter className="w-5 h-5" aria-hidden="true" />
-                </a>
-                <a
-                  href="https://github.com/vexnexa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="Visit VexNexa on GitHub"
-                >
-                  <Github className="w-5 h-5" aria-hidden="true" />
-                </a>
-                <a
-                  href="https://facebook.com/vexnexa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="Visit VexNexa on Facebook"
-                >
-                  <Facebook className="w-5 h-5" aria-hidden="true" />
                 </a>
               </div>
             </div>

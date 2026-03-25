@@ -34,9 +34,7 @@ function JsonLd() {
     url: "https://vexnexa.com",
     logo: "https://vexnexa.com/brand/vexnexa-logo.png",
     sameAs: [
-      "https://linkedin.com/company/vexnexa",
       "https://twitter.com/vexnexa",
-      "https://github.com/vexnexa",
     ],
     contactPoint: {
       "@type": "ContactPoint",

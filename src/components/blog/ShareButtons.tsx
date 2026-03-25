@@ -24,19 +24,6 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
       >
         Twitter
       </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-sm h-8"
-        onClick={() => {
-          window.open(
-            `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-            '_blank'
-          );
-        }}
-      >
-        LinkedIn
-      </Button>
     </div>
   );
 }

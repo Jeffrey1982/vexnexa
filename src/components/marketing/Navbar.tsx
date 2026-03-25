@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X, Linkedin, Twitter } from "lucide-react";
+import { Menu, X, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -95,15 +95,6 @@ export function Navbar({ className }: NavbarProps) {
           <div className="hidden md:flex items-center gap-6">
             {/* Social Icons */}
             <div className="flex items-center gap-2">
-              <a
-                href="https://linkedin.com/company/vexnexa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-9 w-9 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary flex items-center justify-center transition-all duration-200"
-                aria-label="Visit VexNexa on LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" aria-hidden="true" />
-              </a>
               <a
                 href="https://twitter.com/vexnexa"
                 target="_blank"
@@ -267,15 +258,6 @@ export function Navbar({ className }: NavbarProps) {
                 <div className="pt-4 pb-2">
                   <p className="text-sm font-medium text-muted-foreground mb-3">{t('followUs')}</p>
                   <div className="flex items-center gap-3">
-                    <a
-                      href="https://linkedin.com/company/vexnexa"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
-                      aria-label="Visit VexNexa on LinkedIn"
-                    >
-                      <Linkedin className="w-5 h-5" aria-hidden="true" />
-                    </a>
                     <a
                       href="https://twitter.com/vexnexa"
                       target="_blank"
