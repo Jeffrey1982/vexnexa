@@ -342,7 +342,7 @@
     "faqSection": {
       "q1": {
         "question": "Can VexNexa guarantee legal compliance?",
-        "answer": "No tool can guarantee 100% legal compliance. VexNexa detects and reports accessibility issues, helps prioritize fixes, and supports WCAG and EAA readiness. For legal risk assessment, consider combining automated scanning with expert review."
+        "answer": "No tool can guarantee 100% legal compliance. VexNexa detects and reports accessibility issues, helps prioritize fixes, and supports WCAG and EAA readiness. Learn more about the [European Accessibility Act and what it means for agencies](/blog/what-is-the-european-accessibility-act). For legal risk assessment, consider combining automated scanning with expert review."
       },
       "q2": {
         "question": "Do I need an account to scan?",
@@ -2256,7 +2256,7 @@
       "subtitle": "Accessibility is becoming a client expectation, not a nice-to-have.",
       "p1": {
         "title": "Clients ask about accessibility but you lack a repeatable process",
-        "description": "Without a standardised workflow, every accessibility review takes longer than it should. VexNexa gives you a scannable, reportable, monitorable process from day one."
+        "description": "Without a standardised workflow, every accessibility review takes longer than it should. VexNexa gives you a scannable, reportable, monitorable process from day one. Read more: [What the EAA means for your agency](/blog/what-is-the-european-accessibility-act)."
       },
       "p2": {
         "title": "You cannot scale manual audits across 10+ client sites",

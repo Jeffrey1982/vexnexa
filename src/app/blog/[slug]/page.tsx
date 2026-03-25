@@ -56,10 +56,15 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const canonicalUrl = `https://vexnexa.com/blog/${post.slug}`;
+  
   return {
     title: post.metaTitle || post.title,
     description: post.metaDescription || post.excerpt || undefined,
     keywords: post.metaKeywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: post.metaTitle || post.title,
       description: post.metaDescription || post.excerpt || undefined,
@@ -67,12 +72,22 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publishedTime: post.publishedAt?.toISOString(),
       authors: ['Vexnexa Team'],
       images: post.coverImage ? [post.coverImage] : [],
+      url: canonicalUrl,
+      locale: locale === 'en' ? 'en_US' : locale,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.metaTitle || post.title,
       description: post.metaDescription || post.excerpt || undefined,
       images: post.coverImage ? [post.coverImage] : [],
+    },
+    robots: 'index, follow',
+    other: {
+      // Hreflang tags for multilingual SEO
+      'article:published_time': post.publishedAt?.toISOString() || '',
+      'article:author': post.authorName || 'Vexnexa Team',
+      'article:section': post.category || '',
+      'article:tag': (post.tags || []).join(',') || '',
     },
   };
 }
@@ -264,6 +279,39 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </div>
       </section>
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": post.metaTitle || post.title,
+            "description": post.metaDescription || post.excerpt || "",
+            "author": {
+              "@type": "Person",
+              "name": post.authorName || "Vexnexa Team",
+              "jobTitle": "Founder",
+              "url": "https://vexnexa.com/about"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "VexNexa",
+              "url": "https://vexnexa.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://vexnexa.com/brand/vexnexa-logo.svg"
+              }
+            },
+            "datePublished": post.publishedAt?.toISOString() || "",
+            "dateModified": post.updatedAt?.toISOString() || post.publishedAt?.toISOString() || "",
+            "mainEntityOfPage": `https://vexnexa.com/blog/${post.slug}`,
+            "keywords": (post.tags || []).join(", "),
+            "articleSection": post.category || ""
+          })
+        }}
+      />
     </div>
   )
 }
