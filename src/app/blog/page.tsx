@@ -12,16 +12,16 @@ const prisma = new PrismaClient()
 
 export const metadata: Metadata = {
   title: 'Blog - VexNexa',
-  description: 'Laatste nieuws, tips en inzichten over web accessibility en WCAG compliance.',
+  description: 'Latest news, tips, and insights on web accessibility and WCAG compliance.',
   openGraph: {
     title: 'Blog - VexNexa',
-    description: 'Laatste nieuws, tips en inzichten over web accessibility en WCAG compliance.',
+    description: 'Latest news, tips, and insights on web accessibility and WCAG compliance.',
     url: 'https://vexnexa.com/blog',
   },
   twitter: {
     card: 'summary',
     title: 'Blog - VexNexa',
-    description: 'Laatste nieuws, tips en inzichten over web accessibility en WCAG compliance.',
+    description: 'Latest news, tips, and insights on web accessibility and WCAG compliance.',
   },
   alternates: {
     canonical: 'https://vexnexa.com/blog',
@@ -81,10 +81,10 @@ export default async function BlogPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h1 className="font-display text-5xl lg:text-6xl font-bold tracking-tight">
-              Inzichten & Updates
+              Insights & Updates
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              Ontdek de laatste ontwikkelingen in web accessibility en WCAG compliance
+              Latest developments in web accessibility and WCAG compliance
             </p>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default async function BlogPage() {
           {posts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-lg text-muted-foreground">
-                Geen blog posts gevonden. Check later terug voor nieuwe content!
+                No blog posts found. Check back later for new content!
               </p>
             </div>
           ) : (

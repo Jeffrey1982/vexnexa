@@ -354,6 +354,21 @@ export default async function AboutPage() {
                   ))}
                 </div>
 
+                {/* Founder section */}
+                <div className="mt-12 pt-10 border-t border-muted">
+                  <h3 className="font-display text-2xl font-bold text-foreground mb-6">{t('valuesTeam.founder.heading')}</h3>
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-left max-w-xl mx-auto sm:mx-0">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-white text-xl font-bold shadow-soft">
+                      JK
+                    </div>
+                    <div>
+                      <p className="text-lg font-semibold text-foreground">{t('valuesTeam.founder.name')}</p>
+                      <p className="text-sm text-primary font-medium">{t('valuesTeam.founder.role')}</p>
+                      <p className="mt-2 text-muted-foreground leading-relaxed">{t('valuesTeam.founder.bio')}</p>
+                    </div>
+                  </div>
+                </div>
+
                 <blockquote className="mt-10 max-w-3xl mx-auto text-left border-l-4 border-primary pl-6">
                   <p className="text-2xl font-medium text-foreground italic">
                     &ldquo;{t('valuesTeam.quote')}&rdquo;

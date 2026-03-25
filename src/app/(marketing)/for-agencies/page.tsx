@@ -215,29 +215,77 @@ export default function ForAgenciesPage() {
         </div>
       </section>
 
+      {/* How agencies use VexNexa — workflow visual */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+              How agencies use VexNexa
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              A revenue-positive accessibility workflow in four steps.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {[
+              { step: "1", icon: Globe, title: "Client onboarding", description: "Scan their site on day one — instant baseline audit." },
+              { step: "2", icon: FileText, title: "Deliver branded report", description: "White-label PDF within 24 hours, ready to share." },
+              { step: "3", icon: RefreshCw, title: "Fix & monitor", description: "Schedule recurring scans, track improvements over time." },
+              { step: "4", icon: Bell, title: "Retain & upsell", description: "Ongoing monitoring as a monthly service for your clients." },
+            ].map((s, i) => (
+              <div key={i} className="relative text-center space-y-3">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto shadow-soft">
+                  <s.icon className="h-7 w-7 text-white" />
+                </div>
+                <div className="text-xs font-semibold text-primary uppercase tracking-wider">Step {s.step}</div>
+                <h3 className="text-lg font-semibold font-display">{s.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-7 -right-3 text-muted-foreground/30">
+                    <ArrowRight className="h-6 w-6" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <AgencyCTAStrip location="for-agencies" />
 
-      {/* Pilot Partner callout */}
-      <section className="py-12 bg-muted/30 border-y">
+      {/* Pilot Partner Program — prominent */}
+      <section className="py-16 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-y">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-            <div>
-              <h3 className="font-display font-semibold text-lg mb-1">
-                Want to explore VexNexa as a pilot partner?
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Limited spots for agencies looking to test accessibility workflows with direct support.
-              </p>
+          <div className="max-w-3xl mx-auto text-center space-y-5">
+            <span className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-semibold">
+              Limited spots
+            </span>
+            <h2 className="text-3xl lg:text-4xl font-bold font-display">
+              Join the Pilot Partner Program
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+              <TrackedCTA
+                href="/pilot-partner-program"
+                event="agencies_page_cta_click"
+                eventProps={{ location: "pilot_banner" }}
+                size="lg"
+                className="gradient-primary text-white"
+              >
+                Learn more <ArrowRight className="ml-2 h-5 w-5" />
+              </TrackedCTA>
+              <TrackedCTA
+                href="/contact?from=pilot-agencies"
+                event="agencies_page_cta_click"
+                eventProps={{ location: "pilot_apply" }}
+                size="lg"
+                variant="outline"
+              >
+                Apply now
+              </TrackedCTA>
             </div>
-            <TrackedCTA
-              href="/pilot-partner-program"
-              event="agencies_page_cta_click"
-              eventProps={{ location: "pilot_callout" }}
-              variant="outline"
-              className="whitespace-nowrap"
-            >
-              Learn about the pilot program <ArrowRight className="ml-2 h-4 w-4" />
-            </TrackedCTA>
           </div>
         </div>
       </section>

@@ -1120,7 +1120,13 @@
           "description": "Accessibility is everyone's task"
         }
       },
-      "quote": "Accessibility is not a checkbox — it's product craftsmanship. It's about respect for all people who want to use your product."
+      "quote": "Accessibility is not a checkbox — it's product craftsmanship. It's about respect for all people who want to use your product.",
+      "founder": {
+        "heading": "Who's behind VexNexa",
+        "name": "Jeffrey",
+        "role": "Founder & Developer",
+        "bio": "Building practical accessibility tooling for teams that want results, not noise. Based in the Netherlands."
+      }
     },
     "faq": {
       "title": "Frequently asked questions",
@@ -1143,7 +1149,7 @@
         },
         "q5": {
           "question": "Why does VexNexa invoice?",
-          "answer": "VexNexa is a product of VexNexa. Contracts, invoicing, and support run through VexNexa for clear responsibilities."
+          "answer": "VexNexa is an independent SaaS product built and operated from the Netherlands. All contracts, invoicing, and support are handled directly by VexNexa B.V."
         },
         "q6": {
           "question": "Can I try VexNexa for free?",
@@ -1162,7 +1168,7 @@
       }
     },
     "footerDisclaimer": {
-      "billing": "Invoicing is done through VexNexa. VexNexa is a product of VexNexa.",
+      "billing": "VexNexa is an independent SaaS product built and operated from the Netherlands. All invoicing and support are handled by VexNexa B.V.",
       "questions": "Questions? Email",
       "email": "info@vexnexa.com"
     }

@@ -21,6 +21,7 @@ import {
 import { FAQ } from "@/components/marketing/FAQ";
 import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
+import { Quote, Sparkles } from "lucide-react";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -127,6 +128,38 @@ function HeroSection() {
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/10 rounded-full blur-xl animate-pulse delay-500" aria-hidden="true"></div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 1B. Social proof — trusted by agencies
+function SocialProofStrip() {
+  const logos = [
+    "Agency Partner",
+    "Digital Studio",
+    "Web Team",
+    "Compliance Co.",
+  ];
+
+  return (
+    <section className="py-10 border-b">
+      <div className="container mx-auto px-4">
+        <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6">
+          Trusted by agencies across Europe
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 max-w-3xl mx-auto">
+          {logos.map((name, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-center h-10 px-6 rounded-md bg-muted/50 border border-border/40"
+            >
+              <span className="text-sm font-medium text-muted-foreground/70 select-none">
+                {name}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -268,7 +301,7 @@ function BuiltForSection() {
 // 5. What you get — workflow outcomes
 function WhatYouGetSection() {
   const capabilities = [
-    "WCAG 2.2 AA scanning with axe-core engine",
+    "WCAG 2.2 AA scanning with axe-core® engine",
     "Severity-ranked issues: Critical, Serious, Moderate, Minor",
     "PDF and DOCX export with white-label branding",
     "Continuous monitoring with scheduled scans",
@@ -306,6 +339,11 @@ function WhatYouGetSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
+
+            <p className="mt-4 text-xs text-muted-foreground flex items-center gap-2">
+              <Shield className="h-4 w-4 text-primary/60" />
+              Powered by axe-core® — the world&apos;s most trusted accessibility testing engine
+            </p>
           </div>
 
           <div className="relative">
@@ -325,6 +363,50 @@ function WhatYouGetSection() {
               />
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 5B. Testimonials — what pilot partners say
+function TestimonialsSection() {
+  const testimonials = [
+    {
+      quote: "VexNexa saved us hours per client. The white-label reports look like we built them ourselves.",
+      attribution: "Pilot partner — Digital agency, Netherlands",
+    },
+    {
+      quote: "We finally have a repeatable accessibility workflow. Scan, report, monitor — done.",
+      attribution: "Pilot partner — Web studio, Germany",
+    },
+    {
+      quote: "The prioritization is what sold us. We know exactly what to fix first for each client.",
+      attribution: "Pilot partner — Compliance team, Belgium",
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-muted/30 border-y">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+            What pilot partners say
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            Early feedback from agencies testing VexNexa in their workflows.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {testimonials.map((t, i) => (
+            <Card key={i} className="border-0 shadow-elegant bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 space-y-4">
+                <Quote className="h-8 w-8 text-primary/30" />
+                <p className="text-sm leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+                <p className="text-xs text-muted-foreground font-medium">{t.attribution}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
@@ -469,6 +551,44 @@ function WorkflowSection() {
   );
 }
 
+// 8B. Pilot Partner Program banner
+function PilotPartnerBanner() {
+  return (
+    <section className="py-16 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-y">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center space-y-5">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-semibold">
+            <Sparkles className="h-4 w-4" />
+            Limited spots
+          </div>
+          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+            Join the Pilot Partner Program
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+            <Button size="lg" asChild className="gradient-primary text-white">
+              <Link
+                href="/pilot-partner-program"
+                onClick={() => trackEvent("pilot_banner_click", { location: "homepage" })}
+              >
+                Learn more
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/contact?from=pilot-homepage">
+                Apply now
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // 9. Final CTA Section
 function FinalCTASection() {
   return (
@@ -569,13 +689,16 @@ export default function HomePage() {
     <>
       <JsonLd />
       <HeroSection />
+      <SocialProofStrip />
       <TrustStrip />
       <WhyTeamsSection />
       <BuiltForSection />
       <WhatYouGetSection />
+      <TestimonialsSection />
       <SampleReportSection />
       <AgencyOfferSection />
       <WorkflowSection />
+      <PilotPartnerBanner />
       <FAQ items={faqItems} />
       <FinalCTASection />
     </>

@@ -176,6 +176,40 @@ export default function SampleReportPage() {
         </div>
       </section>
 
+      {/* Download CTA */}
+      <section className="pb-8">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
+              <CardContent className="p-8 text-center space-y-4">
+                <Download className="h-10 w-10 text-primary mx-auto" />
+                <h3 className="text-xl font-bold font-display">Download the full sample report</h3>
+                <p className="text-muted-foreground max-w-lg mx-auto text-sm">
+                  See exactly what your clients will receive — branded, structured, and ready to share.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+                  <Button variant="outline" asChild>
+                    <Link href="/contact?from=sample-pdf&type=branded">
+                      <Download className="mr-2 h-4 w-4" />
+                      Request PDF sample
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="/contact?from=sample-pdf&type=whitelabel">
+                      <Download className="mr-2 h-4 w-4" />
+                      Request white-label example
+                    </Link>
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  We&apos;ll send you a personalized sample report within 1 business day.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Report content */}
       <section className="pb-20">
         <div className="container mx-auto px-4">

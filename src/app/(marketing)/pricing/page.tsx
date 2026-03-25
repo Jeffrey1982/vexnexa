@@ -27,6 +27,7 @@ import {
   HelpCircle,
   FileSearch,
   ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics-events";
@@ -413,6 +414,9 @@ function PricingCards() {
                       <>{ctaText}<ArrowRight className="ml-2 h-4 w-4" /></>
                     )}
                   </Button>
+                  <p className="text-[10px] text-center text-muted-foreground mt-2">
+                    No credit card required · Cancel anytime
+                  </p>
                 </CardContent>
               </Card>
             );
@@ -953,11 +957,39 @@ function CTASection() {
   );
 }
 
+function PilotOfferBanner() {
+  const t = useTranslations('pricing');
+  return (
+    <section className="py-8">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 p-8 text-center space-y-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-semibold">
+            <Sparkles className="h-4 w-4" />
+            Agency Pilot
+          </div>
+          <h3 className="text-2xl font-bold font-display">
+            First month Business plan at Pro price
+          </h3>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            New to VexNexa? Start with full Business features — white-label reports, 10 websites, and priority support — for just €59.99 your first month. No lock-in. Cancel anytime.
+          </p>
+          <Button asChild className="gradient-primary text-white">
+            <Link href="/contact?from=pilot-pricing">
+              Claim your pilot spot <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function PricingPage() {
   return (
     <>
       <PricingJsonLd />
       <HeroSection />
+      <PilotOfferBanner />
       <PricingCards />
       <AddOnsSection />
       <AuditServicesSection />
