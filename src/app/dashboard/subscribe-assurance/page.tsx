@@ -24,7 +24,7 @@ import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
 import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
-import { grossToNet, BASE_VAT_RATE } from '@/lib/pricing/vat-math';
+import { netToGross, BASE_VAT_RATE } from '@/lib/pricing/vat-math';
 
 type BillingCycle = "monthly" | "semiannual" | "annual";
 type AssuranceTier = "BASIC" | "PRO" | "PUBLIC_SECTOR";
@@ -172,9 +172,9 @@ export default function SubscribeAssurancePage(): JSX.Element {
   const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
   const [displayMode] = usePriceDisplayMode();
 
-  /** Convert a gross price for display based on current mode */
-  const dp = (gross: number): number =>
-    displayMode === 'excl' ? grossToNet(gross) : gross;
+  /** Convert a net price for display based on current mode */
+  const dp = (net: number): number =>
+    displayMode === 'incl' ? netToGross(net) : net;
 
   // Hydration-safe mount gating
   useEffect(() => {
@@ -227,8 +227,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
       if (selectedPlan) {
         const plan = PLANS.find((p) => p.tier === selectedPlan);
         if (!plan) return;
-        const planGross = getPrice(plan, billingCycle);
-        const netBase = grossToNet(planGross, BASE_VAT_RATE);
+        const netBase = getPrice(plan, billingCycle);
         const vatAmount = Math.round(netBase * (quoteData.tax.ratePercent / 100) * 100) / 100;
         setTaxQuote({
           baseAmount: netBase,
@@ -628,7 +627,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                       <div className="flex justify-between items-center py-2 border-b border-border">
                         <span className="text-sm text-muted-foreground">VAT included</span>
                         <span className="font-medium text-foreground">
-                          {taxQuote ? formatEuro(taxQuote.vatAmount) : formatEuro(Math.round((getPrice(activePlan, billingCycle) - grossToNet(getPrice(activePlan, billingCycle), BASE_VAT_RATE)) * 100) / 100)}
+                          {taxQuote ? formatEuro(taxQuote.vatAmount) : formatEuro(Math.round(getPrice(activePlan, billingCycle) * BASE_VAT_RATE * 100) / 100)}
                         </span>
                       </div>
                     )}

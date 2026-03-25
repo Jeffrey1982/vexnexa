@@ -40,7 +40,7 @@ import {
   BASE_PRICES,
   ANNUAL_PRICES,
 } from "@/lib/pricing";
-import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
+import { netToGross, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
 import { COUNTRIES, isEuCountry, isNlCountry } from "@/lib/billing/countries";
 
 // ── Types ──
@@ -94,14 +94,15 @@ function computeClientPrices(
   publicGross: number;
   vatRemoved: number;
 } {
-  const gross =
+  // Prices are stored NET (excl. VAT)
+  const net =
     billingCycle === "yearly"
       ? (ANNUAL_PRICES[planKey] ?? 0)
       : (BASE_PRICES[planKey] ?? 0);
-  const net = grossToNet(gross, BASE_VAT_RATE);
 
   if (purchaseAs === "individual") {
-    // Always NL 21% VAT
+    // Always NL 21% VAT for individuals
+    const gross = netToGross(net, BASE_VAT_RATE);
     const vatAmount = Math.round((gross - net) * 100) / 100;
     return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
   }
@@ -111,24 +112,25 @@ function computeClientPrices(
   const isNL = isNlCountry(country);
   const isEU = isEuCountry(country);
 
-  // Case: valid VAT + EU + not NL → reverse charge
+  // Case: valid VAT + EU + not NL → reverse charge (0%)
   if (vatStatus === "valid" && isEU && !isNL) {
-    const vatRemoved = Math.round((gross - net) * 100) / 100;
-    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: true, publicGross: gross, vatRemoved };
+    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: true, publicGross: netToGross(net, BASE_VAT_RATE), vatRemoved: 0 };
   }
 
   // Case: NL company, or EU company without valid VAT → 21% VAT
   if (isNL || (isEU && vatStatus !== "valid")) {
+    const gross = netToGross(net, BASE_VAT_RATE);
     const vatAmount = Math.round((gross - net) * 100) / 100;
     return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
   }
 
   // Case: non-EU company → 0% VAT
   if (!isEU && country.length === 2) {
-    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
+    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: false, publicGross: netToGross(net, BASE_VAT_RATE), vatRemoved: 0 };
   }
 
-  // Default: full VAT
+  // Default: full NL VAT
+  const gross = netToGross(net, BASE_VAT_RATE);
   const vatAmount = Math.round((gross - net) * 100) / 100;
   return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
 }

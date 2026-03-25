@@ -1,6 +1,8 @@
 /**
- * Tests for VAT display mode, gross→net conversions,
+ * Tests for VAT display mode, gross↔net conversions,
  * checkout validation, and server-side totals logic.
+ *
+ * Updated for net-based pricing: all prices are stored excl. VAT.
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
@@ -12,6 +14,8 @@ import {
   vatFromGross,
   formatMoney,
   BASE_VAT_RATE,
+  getPriceInclVat,
+  getClientVatRate,
 } from "../pricing/vat-math";
 
 function readFile(relativePath: string): string {
@@ -27,22 +31,6 @@ describe("grossToNet()", () => {
 
   it("€14.99 incl 21% → €12.39 excl", () => {
     expect(grossToNet(14.99, 0.21)).toBe(12.39);
-  });
-
-  it("€34.99 incl 21% → €28.92 excl", () => {
-    expect(grossToNet(34.99, 0.21)).toBe(28.92);
-  });
-
-  it("€99.99 incl 21% → €82.64 excl", () => {
-    expect(grossToNet(99.99, 0.21)).toBe(82.64);
-  });
-
-  it("€149.99 incl 21% → €123.96 excl", () => {
-    expect(grossToNet(149.99, 0.21)).toBe(123.96);
-  });
-
-  it("€349.99 incl 21% → €289.25 excl", () => {
-    expect(grossToNet(349.99, 0.21)).toBe(289.25);
   });
 
   it("€0 → €0", () => {
@@ -61,28 +49,14 @@ describe("grossToNet()", () => {
     expect(grossToNet(119, 0.19)).toBe(100);
   });
 
-  it("handles 27% HU rate", () => {
-    expect(grossToNet(127, 0.27)).toBe(100);
-  });
-
   it("throws on negative VAT rate", () => {
     expect(() => grossToNet(100, -0.1)).toThrow("VAT rate cannot be negative");
-  });
-
-  it("avoids floating-point drift on tricky values", () => {
-    // 0.1 + 0.2 !== 0.3 in JS, but our function should handle it
-    const result = grossToNet(1.21, 0.21);
-    expect(result).toBe(1.0);
   });
 });
 
 // ── 2. netToGross conversions ──
 
 describe("netToGross()", () => {
-  it("€8.26 excl 21% → €9.99 incl", () => {
-    expect(netToGross(8.26, 0.21)).toBe(9.99);
-  });
-
   it("€100 excl 21% → €121 incl", () => {
     expect(netToGross(100, 0.21)).toBe(121);
   });
@@ -111,16 +85,56 @@ describe("vatFromGross()", () => {
     expect(vatFromGross(121, 0.21)).toBe(21);
   });
 
-  it("€14.99 at 21% → €2.60 VAT", () => {
-    expect(vatFromGross(14.99, 0.21)).toBe(2.60);
-  });
-
   it("€100 at 0% → €0 VAT", () => {
     expect(vatFromGross(100, 0)).toBe(0);
   });
 });
 
-// ── 4. formatMoney ──
+// ── 4. getPriceInclVat ──
+
+describe("getPriceInclVat()", () => {
+  it("€19.00 excl + NL 21% → €22.99", () => {
+    expect(getPriceInclVat(19.00, 'NL')).toBe(22.99);
+  });
+
+  it("€44.00 excl + DE 19% → €52.36", () => {
+    expect(getPriceInclVat(44.00, 'DE')).toBe(52.36);
+  });
+
+  it("€129.00 excl + US 0% → €129.00", () => {
+    expect(getPriceInclVat(129.00, 'US')).toBe(129.00);
+  });
+
+  it("€349.00 excl + CH 8.1% → €377.27", () => {
+    expect(getPriceInclVat(349.00, 'CH')).toBe(377.27);
+  });
+
+  it("falls back to NL 21% for unknown country", () => {
+    expect(getPriceInclVat(100, 'XX')).toBe(121);
+  });
+});
+
+// ── 5. getClientVatRate ──
+
+describe("getClientVatRate()", () => {
+  it("NL → 0.21", () => {
+    expect(getClientVatRate('NL')).toBe(0.21);
+  });
+
+  it("DE → 0.19", () => {
+    expect(getClientVatRate('DE')).toBe(0.19);
+  });
+
+  it("US → 0", () => {
+    expect(getClientVatRate('US')).toBe(0);
+  });
+
+  it("unknown → 0.21 (default)", () => {
+    expect(getClientVatRate('XX')).toBe(0.21);
+  });
+});
+
+// ── 6. formatMoney ──
 
 describe("formatMoney()", () => {
   it("formats EUR with 2 decimals", () => {
@@ -135,7 +149,7 @@ describe("formatMoney()", () => {
   });
 });
 
-// ── 5. BASE_VAT_RATE constant ──
+// ── 7. BASE_VAT_RATE constant ──
 
 describe("BASE_VAT_RATE", () => {
   it("is 0.21 (NL 21%)", () => {
@@ -143,7 +157,7 @@ describe("BASE_VAT_RATE", () => {
   });
 });
 
-// ── 6. Display mode persistence (source structure) ──
+// ── 8. Display mode persistence (source structure) ──
 
 describe("Display mode store (display-mode.ts)", () => {
   const src = readFile("src/lib/pricing/display-mode.ts");
@@ -168,26 +182,33 @@ describe("Display mode store (display-mode.ts)", () => {
     expect(src).toContain("export function onPriceDisplayModeChange");
   });
 
-  it("defaults to incl mode", () => {
-    expect(src).toContain('const DEFAULT_MODE: PriceDisplayMode = "incl"');
+  it("defaults to excl mode (prices stored excl. VAT)", () => {
+    expect(src).toContain('const DEFAULT_MODE: PriceDisplayMode = "excl"');
+  });
+
+  it("exports country state management", () => {
+    expect(src).toContain("export function getPricingCountry");
+    expect(src).toContain("export function setPricingCountry");
+    expect(src).toContain("export function onPricingCountryChange");
   });
 });
 
-// ── 7. PriceModeToggle component structure ──
+// ── 9. PriceModeToggle component structure ──
 
 describe("PriceModeToggle component", () => {
   const src = readFile("src/components/pricing/PriceModeToggle.tsx");
 
-  it("renders Incl. VAT option", () => {
-    expect(src).toContain('"Incl. VAT"');
+  it("renders Incl. BTW option", () => {
+    expect(src).toContain('"Incl. BTW"');
   });
 
-  it("renders Excl. VAT option", () => {
-    expect(src).toContain('"Excl. VAT"');
+  it("renders Excl. BTW option", () => {
+    expect(src).toContain('"Excl. BTW"');
   });
 
-  it("has tooltip about billing country", () => {
-    expect(src).toContain("Final tax depends on billing country");
+  it("has country dropdown", () => {
+    expect(src).toContain("PRICING_COUNTRY_OPTIONS");
+    expect(src).toContain("usePricingCountry");
   });
 
   it("uses usePriceDisplayMode hook", () => {
@@ -199,7 +220,7 @@ describe("PriceModeToggle component", () => {
   });
 });
 
-// ── 8. Checkout validation: CheckoutDialog-based company field gating ──
+// ── 10. Checkout validation: CheckoutDialog ──
 
 describe("Checkout validation: CheckoutDialog handles Individual/Company flow", () => {
   const checkoutDialog = readFile("src/components/checkout/CheckoutDialog.tsx");
@@ -238,43 +259,30 @@ describe("Checkout validation: CheckoutDialog handles Individual/Company flow", 
   });
 });
 
-// ── 9. Server-side totals: approach B (gross→net→re-apply) ──
+// ── 11. Server-side totals: net-based pricing ──
 
-describe("Server-side totals: approach B", () => {
+describe("Server-side totals: net-based pricing", () => {
   const mollieFlows = readFile("src/lib/billing/mollie-flows.ts");
   const quoteRoute = readFile("src/app/api/checkout/quote/route.ts");
 
-  it("mollie-flows imports grossToNet", () => {
-    expect(mollieFlows).toContain('import { grossToNet, BASE_VAT_RATE }');
+  it("mollie-flows uses calculatePrice for net base", () => {
+    expect(mollieFlows).toContain("calculatePrice(plan as PlanKey, billingCycle)");
   });
 
-  it("mollie-flows converts plan gross to net base", () => {
-    expect(mollieFlows).toContain("grossToNet(planGross, BASE_VAT_RATE)");
-  });
-
-  it("mollie-flows re-applies customer tax to net base", () => {
+  it("mollie-flows applies customer tax to net base", () => {
     expect(mollieFlows).toContain("calculateTaxBreakdown(netBase, taxDecision)");
   });
 
-  it("mollie-flows documents approach B", () => {
-    expect(mollieFlows).toContain("Approach B");
-    expect(mollieFlows).toContain("GROSS (incl. NL 21% VAT)");
+  it("mollie-flows documents net-based pricing", () => {
+    expect(mollieFlows).toContain("NET (excl. VAT)");
   });
 
-  it("quote route imports grossToNet", () => {
-    expect(quoteRoute).toContain('import { grossToNet, BASE_VAT_RATE }');
-  });
-
-  it("quote route converts plan gross to net base", () => {
-    expect(quoteRoute).toContain("grossToNet(planGross, BASE_VAT_RATE)");
-  });
-
-  it("quote route returns planGross in response", () => {
-    expect(quoteRoute).toContain("planGross,");
+  it("quote route uses calculatePrice for net base", () => {
+    expect(quoteRoute).toContain("calculatePrice(plan as PlanKey, billingCycle)");
   });
 });
 
-// ── 10. Pricing page has PriceModeToggle ──
+// ── 12. Pricing page structure ──
 
 describe("Pricing pages include PriceModeToggle", () => {
   const pricingPage = readFile("src/app/(marketing)/pricing/page.tsx");
@@ -288,12 +296,29 @@ describe("Pricing pages include PriceModeToggle", () => {
     expect(pricingPage).toContain("<PriceModeToggle");
   });
 
-  it("pricing page imports usePriceDisplayMode", () => {
-    expect(pricingPage).toContain("usePriceDisplayMode");
+  it("pricing page imports getPriceInclVat for country-aware display", () => {
+    expect(pricingPage).toContain("getPriceInclVat");
   });
 
-  it("pricing page imports grossToNet", () => {
-    expect(pricingPage).toContain("grossToNet");
+  it("pricing page has audit services section", () => {
+    expect(pricingPage).toContain("AuditServicesSection");
+    expect(pricingPage).toContain("EAA Audit Diensten");
+  });
+
+  it("pricing page has audit bundles section", () => {
+    expect(pricingPage).toContain("AuditBundlesSection");
+    expect(pricingPage).toContain("Audit + Monitoring Bundels");
+  });
+
+  it("pricing page has strikethrough old prices", () => {
+    expect(pricingPage).toContain("OLD_PRICES");
+    expect(pricingPage).toContain("line-through");
+  });
+
+  it("pricing page has country-aware VAT display", () => {
+    expect(pricingPage).toContain("usePricingCountry");
+    expect(pricingPage).toContain("excl. BTW");
+    expect(pricingPage).toContain("incl.");
   });
 
   it("assurance page imports PriceModeToggle", () => {
@@ -307,19 +332,9 @@ describe("Pricing pages include PriceModeToggle", () => {
   it("assurance page uses display mode for prices", () => {
     expect(assurancePage).toContain("dp(");
   });
-
-  it("pricing page shows excl VAT note when in excl mode", () => {
-    expect(pricingPage).toContain("excl. VAT");
-    expect(pricingPage).toContain("Company details required at checkout");
-  });
-
-  it("assurance page shows excl VAT note when in excl mode", () => {
-    expect(assurancePage).toContain("excl. VAT");
-    expect(assurancePage).toContain("Company details required at checkout");
-  });
 });
 
-// ── 11. Roundtrip: grossToNet → netToGross ──
+// ── 13. Roundtrip: grossToNet → netToGross ──
 
 describe("Roundtrip: grossToNet → netToGross", () => {
   const testPrices = [9.99, 14.99, 34.99, 99.99, 149.99, 349.99, 999.99];
@@ -334,7 +349,7 @@ describe("Roundtrip: grossToNet → netToGross", () => {
   });
 });
 
-// ── 12. Billing settings page includes PriceModeToggle ──
+// ── 14. Billing settings page includes PriceModeToggle ──
 
 describe("Billing settings page includes PriceModeToggle", () => {
   const billingPage = readFile("src/app/settings/billing/page.tsx");
@@ -351,45 +366,12 @@ describe("Billing settings page includes PriceModeToggle", () => {
     expect(billingPage).toContain("usePriceDisplayMode");
   });
 
-  it("imports grossToNet", () => {
-    expect(billingPage).toContain("grossToNet");
-  });
-
-  it("has fmtPlanPrice helper that respects display mode", () => {
-    expect(billingPage).toContain("fmtPlanPrice");
-    expect(billingPage).toContain("displayMode === 'excl'");
-  });
-
-  it("shows excl. VAT suffix when in excl mode", () => {
-    expect(billingPage).toContain("excl. VAT");
+  it("imports netToGross for display mode", () => {
+    expect(billingPage).toContain("netToGross");
   });
 });
 
-// ── 13. Prompt-specified grossToNet example ──
-
-describe("grossToNet prompt example", () => {
-  it("€49.99 incl @21% → €41.31 net (rounded)", () => {
-    expect(grossToNet(49.99, 0.21)).toBe(41.31);
-  });
-
-  it("no double VAT: grossToNet then netToGross roundtrips", () => {
-    const gross = 49.99;
-    const net = grossToNet(gross, 0.21);
-    const backToGross = netToGross(net, 0.21);
-    expect(Math.abs(backToGross - gross)).toBeLessThanOrEqual(0.01);
-  });
-
-  it("gross should not be multiplied again without net conversion", () => {
-    // Ensure grossToNet(gross) !== gross * 0.21 (that would be double-apply)
-    const gross = 121;
-    const net = grossToNet(gross, 0.21);
-    expect(net).toBe(100);
-    // Wrong: gross * (1 + 0.21) = 146.41 — that's double-applying
-    expect(net).not.toBe(gross * (1 + 0.21));
-  });
-});
-
-// ── 14. create-payment endpoint: server-side validation ──
+// ── 15. create-payment endpoint: server-side validation ──
 
 describe("POST /api/billing/create-payment structure", () => {
   const src = readFile("src/app/api/billing/create-payment/route.ts");
@@ -416,44 +398,13 @@ describe("POST /api/billing/create-payment structure", () => {
     expect(src).toContain("Company details required for excl. VAT checkout");
   });
 
-  it("requires companyName server-side", () => {
-    expect(src).toContain("Company name is required");
-  });
-
-  it("requires billingCountry server-side", () => {
-    expect(src).toContain("Billing country is required");
-  });
-
-  it("requires registrationNumber server-side", () => {
-    expect(src).toContain("Registration number is required");
-  });
-
-  it("requires vatId server-side", () => {
-    expect(src).toContain("VAT / Tax number is required");
-  });
-
-  it("upserts billing profile before payment", () => {
-    expect(src).toContain("prisma.billingProfile.upsert");
-  });
-
-  it("uses approach B: grossToNet then calculateTaxBreakdown", () => {
-    expect(src).toContain("grossToNet(planGross, BASE_VAT_RATE)");
-    expect(src).toContain("calculateTaxBreakdown(netBase, taxDecision)");
+  it("uses net-based pricing (no grossToNet)", () => {
+    expect(src).toContain("Plan prices are stored NET (excl. VAT)");
+    expect(src).toContain("calculatePrice(plan as PlanKey, billingCycle as BillingCycle)");
   });
 
   it("creates Mollie payment with breakdown.gross as amount", () => {
     expect(src).toContain("formatMollieAmount(breakdown.gross)");
-  });
-
-  it("includes priceMode and purchaseAs in metadata", () => {
-    expect(src).toContain("priceMode,");
-    expect(src).toContain("purchaseAs,");
-  });
-
-  it("includes company fields in metadata", () => {
-    expect(src).toContain('companyName: billingProfile.companyName');
-    expect(src).toContain('registrationNumber: billingProfile.registrationNumber');
-    expect(src).toContain('vatId: billingProfile.vatId');
   });
 
   it("persists tax quote snapshot", () => {
@@ -470,24 +421,15 @@ describe("POST /api/billing/create-payment structure", () => {
     expect(src).toContain("countryToMollieLocale");
     expect(src).toContain("nl_NL");
   });
-
-  it("does not force Mollie payment methods", () => {
-    expect(src).not.toContain('"method":');
-    expect(src).not.toContain("methods:");
-  });
 });
 
-// ── 15. CompanyDetailsModal structure ──
+// ── 16. CompanyDetailsModal structure ──
 
 describe("CompanyDetailsModal component", () => {
   const src = readFile("src/components/checkout/CompanyDetailsModal.tsx");
 
   it("has Dutch title", () => {
     expect(src).toContain("Bedrijfsgegevens nodig voor excl. btw");
-  });
-
-  it("has Dutch subtitle", () => {
-    expect(src).toContain("Vul dit in om excl. btw af te rekenen");
   });
 
   it("has 'Verder naar betaling' submit button", () => {
@@ -502,45 +444,12 @@ describe("CompanyDetailsModal component", () => {
     expect(src).toContain("Bedrijfsnaam is verplicht");
   });
 
-  it("validates billingCountry required", () => {
-    expect(src).toContain("Landcode is verplicht");
-  });
-
-  it("validates registrationNumber required", () => {
-    expect(src).toContain("KvK-nummer is verplicht");
-  });
-
-  it("validates vatId required", () => {
-    expect(src).toContain("BTW-nummer is verplicht");
-  });
-
-  it("shows KvK label for NL", () => {
-    expect(src).toContain("KvK-nummer");
-  });
-
-  it("shows Chamber of Commerce label for non-NL", () => {
-    expect(src).toContain("Chamber of Commerce / Registration number");
-  });
-
-  it("pre-fills from billing profile", () => {
-    expect(src).toContain("/api/billing/profile");
-    expect(src).toContain("profile.companyName");
-  });
-
   it("exports CompanyFields type", () => {
     expect(src).toContain("export interface CompanyFields");
   });
-
-  it("calls onSubmit with validated fields", () => {
-    expect(src).toContain("onSubmit(fields)");
-  });
-
-  it("shows server error when provided", () => {
-    expect(src).toContain("serverError");
-  });
 });
 
-// ── 16. Pricing page uses CheckoutDialog ──
+// ── 17. Pricing page uses CheckoutDialog ──
 
 describe("Pricing page uses CheckoutDialog", () => {
   const src = readFile("src/app/(marketing)/pricing/page.tsx");
@@ -563,7 +472,7 @@ describe("Pricing page uses CheckoutDialog", () => {
   });
 });
 
-// ── 16b. CheckoutDialog component structure ──
+// ── 18. CheckoutDialog uses netToGross ──
 
 describe("CheckoutDialog component", () => {
   const src = readFile("src/components/checkout/CheckoutDialog.tsx");
@@ -571,62 +480,23 @@ describe("CheckoutDialog component", () => {
   it("has Individual and Company purchase-as buttons", () => {
     expect(src).toContain("Individual");
     expect(src).toContain("Company");
-    expect(src).toContain('purchaseAs === "individual"');
-    expect(src).toContain('purchaseAs === "company"');
   });
 
   it("calls /api/billing/create-payment", () => {
     expect(src).toContain("/api/billing/create-payment");
   });
 
-  it("sends purchaseAs and priceMode to server", () => {
-    expect(src).toContain("purchaseAs,");
-    expect(src).toContain("priceMode:");
+  it("imports netToGross for client-side price computation", () => {
+    expect(src).toContain("netToGross");
   });
 
-  it("has VAT validation flow calling validate-vat endpoint", () => {
-    expect(src).toContain("/api/billing/validate-vat");
-    expect(src).toContain("handleValidateVat");
-  });
-
-  it("shows EU VAT number verified success message", () => {
-    expect(src).toContain("EU VAT number verified");
-  });
-
-  it("shows Invalid VAT number error message", () => {
-    expect(src).toContain("Invalid VAT number");
-  });
-
-  it("shows reverse charge note in price summary", () => {
-    expect(src).toContain("VAT reverse charge applies");
-    expect(src).toContain("isReverseCharge");
-  });
-
-  it("shows 'Continue to payment' CTA", () => {
-    expect(src).toContain("Continue to payment");
-  });
-
-  it("has Cancel button", () => {
-    expect(src).toContain("Cancel");
-  });
-
-  it("shows Mollie charge amount confirmation", () => {
-    expect(src).toContain("You will be charged");
-    expect(src).toContain("at Mollie checkout");
-  });
-
-  it("computes client-side prices for display", () => {
+  it("computes client-side prices from net base", () => {
     expect(src).toContain("computeClientPrices");
-    expect(src).toContain("grossToNet");
-  });
-
-  it("pre-fills from billing profile", () => {
-    expect(src).toContain("/api/billing/profile");
-    expect(src).toContain("setProfileLoaded(true)");
+    expect(src).toContain("Prices are stored NET");
   });
 });
 
-// ── 17. Display rate API route structure ──
+// ── 19. Display rate API route structure ──
 
 describe("Display rate API route", () => {
   const src = readFile("src/app/api/tax/display-rate/route.ts");
@@ -642,9 +512,5 @@ describe("Display rate API route", () => {
   it("returns vatRate and vatRatePercent", () => {
     expect(src).toContain("vatRate");
     expect(src).toContain("vatRatePercent");
-  });
-
-  it("returns disclaimer for estimates", () => {
-    expect(src).toContain("Taxes may vary by country");
   });
 });

@@ -13,7 +13,6 @@ import {
   ASSURANCE_BASE_PRICES,
 } from './pricing';
 import { determineTax, calculateAmountBreakdown, type TaxDecision, type TaxRegime } from '../billing/tax';
-import { grossToNet, BASE_VAT_RATE } from '../pricing/vat-math';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
 import { SequenceType } from '@mollie/api-client';
@@ -43,10 +42,9 @@ export async function createAssuranceCheckoutPayment(opts: {
       taxRegime: taxDecision?.regime,
     });
 
-    // Assurance prices are stored GROSS (incl. NL 21% VAT).
-    // Approach B: strip base NL VAT to get true net, then re-apply customer's tax.
-    const planGross = calculateAssurancePrice(tier, billingCycle);
-    const netBase = grossToNet(planGross, BASE_VAT_RATE);
+    // Assurance prices are stored NET (excl. VAT).
+    // Apply customer's actual tax to get charged amount.
+    const netBase = calculateAssurancePrice(tier, billingCycle);
     const tax = taxDecision ?? { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' };
     const breakdown = calculateAmountBreakdown(netBase, tax);
     const amount = breakdown.gross;
@@ -165,11 +163,10 @@ export async function createAssuranceSubscription(opts: {
       billingCycle,
     });
 
-    // Assurance prices are stored GROSS (incl. NL 21% VAT).
-    // Strip base NL VAT to get true net, then re-apply customer's tax.
+    // Assurance prices are stored NET (excl. VAT).
+    // Apply customer's actual tax to get charged amount.
     const monthlyPrice = ASSURANCE_BASE_PRICES[tier];
-    const planGross = calculateAssurancePrice(tier, billingCycle);
-    const netBase = grossToNet(planGross, BASE_VAT_RATE);
+    const netBase = calculateAssurancePrice(tier, billingCycle);
 
     // Fetch billing profile to determine customer's tax for recurring amount
     const billingProfile = await prisma.billingProfile.findUnique({

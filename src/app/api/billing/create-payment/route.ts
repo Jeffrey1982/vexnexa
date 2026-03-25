@@ -11,7 +11,6 @@ import {
   formatTaxLineLabel,
   toBillingCustomerType,
 } from "@/lib/tax/rules";
-import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
 import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "@/lib/mollie";
 import type { PaymentCreateParams } from "@mollie/api-client";
 import { SequenceType } from "@mollie/api-client";
@@ -139,9 +138,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       update: profileData,
     });
 
-    // ── Approach B: gross → net → re-apply country tax ──
-    const planGross = calculatePrice(plan as PlanKey, billingCycle as BillingCycle);
-    const netBase = grossToNet(planGross, BASE_VAT_RATE);
+    // Plan prices are stored NET (excl. VAT). Apply customer's country tax.
+    const netBase = calculatePrice(plan as PlanKey, billingCycle as BillingCycle);
 
     const taxDecision = computeTaxDecision({
       customerCountry: billingProfile.countryCode,
@@ -245,7 +243,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       checkoutUrl,
       paymentId: payment.id,
       breakdown: {
-        planGross,
+        planNet: netBase,
         netBase: breakdown.net,
         vatAmount: breakdown.vat,
         totalToCharge: breakdown.gross,

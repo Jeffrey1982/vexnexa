@@ -1,8 +1,9 @@
+// All prices are EXCLUSIVE of VAT (net)
 export const PRICES = {
-  STARTER:    { amount: "14.99",  currency: "EUR", interval: "1 month" },
-  PRO:        { amount: "34.99",  currency: "EUR", interval: "1 month" },
-  BUSINESS:   { amount: "99.99",  currency: "EUR", interval: "1 month" },
-  ENTERPRISE: { amount: "299.00", currency: "EUR", interval: "1 month" },
+  STARTER:    { amount: "19.00",  currency: "EUR", interval: "1 month" },
+  PRO:        { amount: "44.00",  currency: "EUR", interval: "1 month" },
+  BUSINESS:   { amount: "129.00", currency: "EUR", interval: "1 month" },
+  ENTERPRISE: { amount: "349.00", currency: "EUR", interval: "1 month" },
 } as const
 
 // Overflow pricing - charges when plan limits are exceeded

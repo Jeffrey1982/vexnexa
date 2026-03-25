@@ -1,13 +1,12 @@
 import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "../mollie"
 import { prisma } from "../prisma"
 import { planKeyFromString, PRICES } from "./plans"
-import { 
-  computeTaxDecision, 
-  calculateTaxBreakdown, 
+import {
+  computeTaxDecision,
+  calculateTaxBreakdown,
   formatTaxLineLabel,
-  toBillingCustomerType 
+  toBillingCustomerType
 } from "../tax/rules"
-import { grossToNet, BASE_VAT_RATE } from "../pricing/vat-math"
 import { calculatePrice, type PlanKey, type BillingCycle } from "../pricing"
 import { sendInvoiceForPayment } from "./invoice-service"
 import type { PaymentCreateParams } from "@mollie/api-client"
@@ -206,11 +205,9 @@ export async function createUpgradePayment(opts: {
       throw new Error(`Invalid plan: ${plan}`)
     }
 
-    // Plan prices are stored GROSS (incl. NL 21% VAT).
-    // Approach B: convert gross→net using base NL rate, then re-apply
-    // the customer's actual country tax to get the final charged amount.
-    const planGross = calculatePrice(plan as PlanKey, billingCycle)
-    const netBase = grossToNet(planGross, BASE_VAT_RATE)
+    // Plan prices are stored NET (excl. VAT).
+    // Apply the customer's actual country tax to get the final charged amount.
+    const netBase = calculatePrice(plan as PlanKey, billingCycle)
     const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Annual'
 
     // Fetch billing profile for tax computation (server-side)
@@ -379,11 +376,9 @@ export async function createSubscription(opts: {
     }
   }
 
-  // Calculate tax-aware price for the subscription
-  // Plan prices are stored GROSS (incl. NL 21% VAT).
-  // Convert gross→net, then re-apply customer's actual tax rate.
-  const planGross = calculatePrice(plan as PlanKey, billingCycle)
-  const netBase = grossToNet(planGross, BASE_VAT_RATE)
+  // Plan prices are stored NET (excl. VAT).
+  // Apply customer's actual country tax to get charged amount.
+  const netBase = calculatePrice(plan as PlanKey, billingCycle)
 
   // Fetch billing profile for tax computation
   const billingProfile = await prisma.billingProfile.findUnique({

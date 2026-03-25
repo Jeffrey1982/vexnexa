@@ -3,7 +3,6 @@ import { prisma } from "../prisma"
 import { AddOnType } from "@prisma/client"
 import { getAddOnPricing, ADDON_NAMES } from "./addons"
 import { determineTax, calculateAmountBreakdown, type TaxRegime } from "./tax"
-import { grossToNet, BASE_VAT_RATE } from "../pricing/vat-math"
 
 /**
  * Purchase an add-on (extra seat or scan package)
@@ -70,13 +69,10 @@ export async function purchaseAddOn(opts: {
     throw error
   }
 
-  // Get pricing — add-on prices are stored GROSS (incl. NL 21% VAT),
-  // same as all other public prices in the system.
+  // Add-on prices are stored NET (excl. VAT).
+  // Apply customer's actual country tax to get charged amount.
   const pricing = getAddOnPricing(type)
-  const listingTotal = pricing.pricePerUnit * quantity
-
-  // Strip base NL VAT to get true net, then re-apply customer's actual tax
-  const netBase = grossToNet(listingTotal, BASE_VAT_RATE)
+  const netBase = pricing.pricePerUnit * quantity
   const billingProfile = await prisma.billingProfile.findUnique({
     where: { userId },
     select: { countryCode: true, billingType: true, vatValid: true },
@@ -222,11 +218,10 @@ export async function updateAddOnQuantity(opts: {
   }
 
   const pricing = getAddOnPricing(addOn.type)
-  const listingTotal = pricing.pricePerUnit * newQuantity
   const quantityDiff = newQuantity - addOn.quantity
 
-  // Same tax pipeline as purchaseAddOn: gross → net → re-apply customer tax
-  const netBase = grossToNet(listingTotal, BASE_VAT_RATE)
+  // Add-on prices are NET — apply customer's actual tax
+  const netBase = pricing.pricePerUnit * newQuantity
   const billingProfile = await prisma.billingProfile.findUnique({
     where: { userId: addOn.userId },
     select: { countryCode: true, billingType: true, vatValid: true },

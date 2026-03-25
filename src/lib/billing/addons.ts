@@ -1,6 +1,6 @@
 import { AddOnType } from "@prisma/client"
 
-// Add-on pricing configuration (EUR, incl. NL 21% VAT — same as plan prices)
+// Add-on pricing configuration (EUR, excl. VAT — same as plan prices)
 export const ADDON_PRICING: Record<AddOnType, {
   pricePerUnit: number;
   currency: string;
@@ -42,9 +42,9 @@ export const ADDON_PRICING: Record<AddOnType, {
     scans: 1500,
     websites: 0,
   },
-  // New website packs
+  // New website packs (excl. VAT)
   EXTRA_WEBSITE_1: {
-    pricePerUnit: 15.00,
+    pricePerUnit: 18.00,
     currency: "EUR",
     interval: "1 month",
     description: "+1 extra website",
@@ -52,7 +52,7 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 1,
   },
   EXTRA_WEBSITE_5: {
-    pricePerUnit: 59.00,
+    pricePerUnit: 72.00,
     currency: "EUR",
     interval: "1 month",
     description: "+5 extra websites",
@@ -60,25 +60,25 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 5,
   },
   EXTRA_WEBSITE_10: {
-    pricePerUnit: 99.00,
+    pricePerUnit: 120.00,
     currency: "EUR",
     interval: "1 month",
     description: "+10 extra websites",
     scans: 0,
     websites: 10,
   },
-  // Assurance add-on (price varies by tier, pricePerUnit is base)
+  // Assurance add-on (price varies by tier, pricePerUnit is base — excl. VAT)
   ASSURANCE: {
-    pricePerUnit: 9.00,
+    pricePerUnit: 12.00,
     currency: "EUR",
     interval: "1 month",
     description: "Continuous monitoring & alerts",
     scans: 0,
     websites: 0,
   },
-  // New page volume packs (replaces legacy scan packs for new customers)
+  // New page volume packs (excl. VAT)
   PAGE_PACK_25K: {
-    pricePerUnit: 19.00,
+    pricePerUnit: 22.00,
     currency: "EUR",
     interval: "1 month",
     description: "+25,000 pages/month",
@@ -86,7 +86,7 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 0,
   },
   PAGE_PACK_100K: {
-    pricePerUnit: 79.00,
+    pricePerUnit: 89.00,
     currency: "EUR",
     interval: "1 month",
     description: "+100,000 pages/month",
@@ -94,7 +94,7 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 0,
   },
   PAGE_PACK_250K: {
-    pricePerUnit: 179.00,
+    pricePerUnit: 199.00,
     currency: "EUR",
     interval: "1 month",
     description: "+250,000 pages/month",

@@ -32,7 +32,7 @@ import { PLAN_NAMES, formatPrice, ENTITLEMENTS, PRICES } from "@/lib/billing/pla
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
 import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
 import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
-import { grossToNet } from "@/lib/pricing/vat-math";
+import { netToGross } from "@/lib/pricing/vat-math";
 
 import { AddOnType } from "@prisma/client";
 
@@ -150,7 +150,7 @@ export default function BillingPage() {
   const fmtPlanPrice = (plan: keyof typeof PRICES): string => {
     const price = PRICES[plan];
     const amount = parseFloat(price.amount);
-    const displayed = displayMode === 'excl' ? grossToNet(amount) : amount;
+    const displayed = displayMode === 'incl' ? netToGross(amount) : amount;
     const suffix = displayMode === 'excl' ? ' excl. VAT' : '';
     return `€${displayed.toFixed(2)}/${price.interval.split(' ')[1]}${suffix}`;
   };

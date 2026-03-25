@@ -25,6 +25,8 @@ import {
   AlertTriangle,
   Info,
   HelpCircle,
+  FileSearch,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics-events";
@@ -33,24 +35,25 @@ import { ENTITLEMENTS, PLAN_NAMES, OVERFLOW_PRICING } from "@/lib/billing/plans"
 import {
   BillingCycle,
   PlanKey,
-  formatPriceDisplay,
   formatEuro,
   getDiscountBadge,
   getCTAText,
   planIncludesAssurance,
-  getAssurancePrice,
   WEBSITE_PACK_PRICES,
   PAGE_PACK_PRICES,
   ASSURANCE_ADDON_PRICES,
-  calculateTotalMonthly,
   BASE_PRICES,
   ANNUAL_PRICES,
+  OLD_PRICES,
+  AUDIT_PRICES,
+  AUDIT_BUNDLE_PRICES,
+  EXTRA_SERVICES_PRICES,
 } from "@/lib/pricing";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 import { useTranslations } from 'next-intl';
 import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
-import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
-import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
+import { usePriceDisplayMode, usePricingCountry } from "@/lib/pricing/use-price-display-mode";
+import { getPriceInclVat, getClientVatRate, PRICING_COUNTRY_OPTIONS } from "@/lib/pricing/vat-math";
 import { CheckoutDialog } from "@/components/checkout/CheckoutDialog";
 
 // JSON-LD for pricing
@@ -68,16 +71,16 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Starter Plan",
-        price: "24.99",
+        price: "19.00",
         priceCurrency: "EUR",
-        priceSpecification: { "@type": "UnitPriceSpecification", price: "24.99", priceCurrency: "EUR", unitText: "MONTH" },
+        priceSpecification: { "@type": "UnitPriceSpecification", price: "19.00", priceCurrency: "EUR", unitText: "MONTH" },
       },
       {
         "@type": "Offer",
         name: "Pro Plan",
-        price: "59.99",
+        price: "44.00",
         priceCurrency: "EUR",
-        priceSpecification: { "@type": "UnitPriceSpecification", price: "59.99", priceCurrency: "EUR", unitText: "MONTH" },
+        priceSpecification: { "@type": "UnitPriceSpecification", price: "44.00", priceCurrency: "EUR", unitText: "MONTH" },
       },
       {
         "@type": "Offer",
@@ -89,9 +92,9 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Enterprise Plan",
-        price: "299.00",
+        price: "349.00",
         priceCurrency: "EUR",
-        priceSpecification: { "@type": "UnitPriceSpecification", price: "299.00", priceCurrency: "EUR", unitText: "MONTH" },
+        priceSpecification: { "@type": "UnitPriceSpecification", price: "349.00", priceCurrency: "EUR", unitText: "MONTH" },
       },
     ],
   };
@@ -158,18 +161,27 @@ function PricingCards() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [checkoutPlan, setCheckoutPlan] = useState<PlanKey | null>(null);
   const [displayMode] = usePriceDisplayMode();
+  const [country] = usePricingCountry();
 
-  /** Convert a gross price for display based on current mode */
-  const dp = (gross: number): number =>
-    displayMode === 'excl' ? grossToNet(gross) : gross;
+  /** Convert a net (excl. VAT) price for display based on current mode + country */
+  const dp = (net: number): number =>
+    displayMode === 'incl' ? getPriceInclVat(net, country) : net;
+
+  const vatRate = getClientVatRate(country);
+  const vatPercent = Math.round(vatRate * 1000) / 10;
+  const countryOption = PRICING_COUNTRY_OPTIONS.find((o) => o.code === country);
 
   /** Format price display with VAT mode awareness */
   const fmtPrice = (planKey: PlanKey, cycle: BillingCycle): {
     mainPrice: string; period: string; subtext?: string;
   } => {
     if (planKey === 'ENTERPRISE') {
-      if (cycle === 'yearly') return { mainPrice: 'Custom', period: '', subtext: 'Contact us for a tailored quote' };
-      return { mainPrice: formatEuro(dp(BASE_PRICES.ENTERPRISE)), period: '/month', subtext: 'Custom billing available' };
+      if (cycle === 'yearly') {
+        const total = dp(ANNUAL_PRICES.ENTERPRISE);
+        const perMonth = total / 12;
+        return { mainPrice: formatEuro(total), period: '/year', subtext: `${formatEuro(perMonth)}/month` };
+      }
+      return { mainPrice: formatEuro(dp(BASE_PRICES.ENTERPRISE)), period: '/month' };
     }
     if (cycle === 'yearly') {
       const total = dp(ANNUAL_PRICES[planKey]);
@@ -218,6 +230,7 @@ function PricingCards() {
         `${ENTITLEMENTS.PRO.pagesPerMonth.toLocaleString()} pages/month`,
         `${ENTITLEMENTS.PRO.users} users`,
         "PDF + Word export",
+        "White-label rapporten",
         `${ENTITLEMENTS.PRO.historyMonths}-month history`,
         "Slack & Jira integrations",
         "Priority support",
@@ -238,6 +251,7 @@ function PricingCards() {
         "All integrations",
         `${ENTITLEMENTS.BUSINESS.historyMonths}-month history`,
         "Assurance included",
+        "20% korting op losse audits",
         "4h priority support",
       ],
       limitations: [],
@@ -253,6 +267,7 @@ function PricingCards() {
         "Unlimited users",
         "All features included",
         "Assurance included",
+        "30% korting op losse audits",
         "SLA guarantee",
         "Dedicated account manager",
         `${ENTITLEMENTS.ENTERPRISE.historyMonths}-month history`,
@@ -282,7 +297,7 @@ function PricingCards() {
           </Alert>
         )}
 
-        {/* Billing Cycle Toggle + VAT Mode Toggle */}
+        {/* Billing Cycle Toggle + VAT Mode Toggle + Country */}
         <div className="flex flex-col items-center mb-12 space-y-4">
           <div className="flex flex-wrap items-center justify-center gap-4">
             <div className="inline-flex items-center rounded-lg bg-muted p-1 shadow-sm">
@@ -308,17 +323,12 @@ function PricingCards() {
               >
                 Yearly
                 <Badge className="ml-2 bg-primary text-xs">
-                  Save up to 17%
+                  Save 15%
                 </Badge>
               </button>
             </div>
             <PriceModeToggle />
           </div>
-          <p className="text-sm text-muted-foreground text-center">
-            {displayMode === 'excl'
-              ? 'Prices shown excl. VAT. Company details required at checkout.'
-              : 'Save more with annual billing. All prices incl. VAT.'}
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
@@ -326,6 +336,8 @@ function PricingCards() {
             const priceDisplay = fmtPrice(plan.key, billingCycle);
             const discountBadge = getDiscountBadge(billingCycle, plan.key);
             const ctaText = getCTAText(billingCycle, plan.key);
+            const oldPrice = OLD_PRICES[plan.key];
+            const newPrice = BASE_PRICES[plan.key];
 
             return (
               <Card
@@ -355,6 +367,12 @@ function PricingCards() {
                 <CardHeader className="text-center pb-6">
                   <CardTitle className="font-display text-xl">{plan.name}</CardTitle>
                   <div className="mt-3">
+                    {/* Strikethrough old price */}
+                    {billingCycle === 'monthly' && oldPrice !== newPrice && (
+                      <span className="text-sm text-muted-foreground line-through mr-2">
+                        {formatEuro(dp(oldPrice))}
+                      </span>
+                    )}
                     <span className="text-3xl font-bold font-display">{priceDisplay.mainPrice}</span>
                     <span className="text-muted-foreground text-sm">{priceDisplay.period}</span>
                     {priceDisplay.subtext && (
@@ -362,9 +380,11 @@ function PricingCards() {
                         (≈ {priceDisplay.subtext})
                       </p>
                     )}
-                    {displayMode === 'excl' && plan.key !== 'ENTERPRISE' && (
-                      <p className="text-[10px] text-muted-foreground mt-0.5">excl. VAT</p>
-                    )}
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      {displayMode === 'excl'
+                        ? `excl. BTW · ${countryOption?.label ?? 'NL'} ${vatPercent}%`
+                        : `incl. ${vatPercent}% BTW (${countryOption?.label ?? 'NL'})`}
+                    </p>
                   </div>
                   <p className="text-muted-foreground mt-2 text-xs">{plan.description}</p>
                 </CardHeader>
@@ -428,10 +448,181 @@ function PricingCards() {
   );
 }
 
+function AuditServicesSection() {
+  const [displayMode] = usePriceDisplayMode();
+  const [country] = usePricingCountry();
+  const dp = (net: number): number =>
+    displayMode === 'incl' ? getPriceInclVat(net, country) : net;
+
+  const vatRate = getClientVatRate(country);
+  const vatPercent = Math.round(vatRate * 1000) / 10;
+  const countryOption = PRICING_COUNTRY_OPTIONS.find((o) => o.code === country);
+
+  const audits = [
+    {
+      ...AUDIT_PRICES.QUICK,
+      description: "Snelle scan van de belangrijkste pagina's",
+      features: ["Top 10 pagina's", "WCAG 2.2 check", "Rapport binnen 48u"],
+    },
+    {
+      ...AUDIT_PRICES.FULL,
+      description: "Volledige site audit met diepgaande analyse",
+      features: ["Alle pagina's", "WCAG 2.2 + EAA", "Code review", "Rapport + roadmap"],
+    },
+    {
+      ...AUDIT_PRICES.ENTERPRISE,
+      description: "Enterprise-grade audit met compliance advies",
+      features: ["Volledige site", "WCAG 2.2 + EAA + VPAT", "Legal review", "Implementatiebegeleiding"],
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-950/20 dark:via-amber-950/20 dark:to-yellow-950/20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <Badge variant="outline" className="mb-4 bg-white dark:bg-slate-900">
+            <FileSearch className="w-3 h-3 mr-1" />
+            EAA Audit Diensten
+          </Badge>
+          <h2 className="text-3xl lg:text-5xl font-bold font-display mb-4">
+            Handmatige <span className="text-primary">Accessibility Audits</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Laat je website professioneel auditen door onze experts
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {audits.map((audit) => (
+            <Card key={audit.productId} className="bg-white dark:bg-slate-900 flex flex-col">
+              <CardHeader>
+                <CardTitle className="font-display text-xl">{audit.label}</CardTitle>
+                <p className="text-muted-foreground text-sm">{audit.description}</p>
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col">
+                <div className="mb-4">
+                  <span className="text-3xl font-bold font-display">{formatEuro(dp(audit.price))}</span>
+                  <span className="text-muted-foreground text-sm ml-1">eenmalig</span>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                    {displayMode === 'excl'
+                      ? `excl. BTW · ${countryOption?.label ?? 'NL'} ${vatPercent}%`
+                      : `incl. ${vatPercent}% BTW`}
+                  </p>
+                </div>
+                <div className="space-y-2 flex-1">
+                  {audit.features.map((feature, i) => (
+                    <div key={i} className="flex items-start space-x-2">
+                      <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <Button className="w-full mt-4" variant="outline" asChild>
+                  <Link href={`/contact?subject=audit&product=${audit.productId}`}>
+                    Audit aanvragen <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AuditBundlesSection() {
+  const [displayMode] = usePriceDisplayMode();
+  const [country] = usePricingCountry();
+  const dp = (net: number): number =>
+    displayMode === 'incl' ? getPriceInclVat(net, country) : net;
+
+  const vatRate = getClientVatRate(country);
+  const vatPercent = Math.round(vatRate * 1000) / 10;
+  const countryOption = PRICING_COUNTRY_OPTIONS.find((o) => o.code === country);
+
+  const bundles = [
+    {
+      ...AUDIT_BUNDLE_PRICES.STARTER,
+      features: ["1 quickscan/kwartaal", "Basis rapport", "Email support"],
+    },
+    {
+      ...AUDIT_BUNDLE_PRICES.PRO,
+      features: ["1 full audit/kwartaal", "Uitgebreid rapport + roadmap", "Priority support"],
+    },
+    {
+      ...AUDIT_BUNDLE_PRICES.BUSINESS,
+      features: ["2 full audits/kwartaal", "Code review", "Implementatiebegeleiding", "Dedicated contact"],
+    },
+    {
+      ...AUDIT_BUNDLE_PRICES.ENTERPRISE,
+      features: ["Onbeperkt audits", "VPAT + compliance docs", "Legal support", "Account manager"],
+    },
+  ];
+
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <Badge variant="outline" className="mb-4">
+            <ShieldCheck className="w-3 h-3 mr-1" />
+            Audit + Monitoring Bundels
+          </Badge>
+          <h2 className="text-3xl lg:text-5xl font-bold font-display mb-4">
+            Doorlopende <span className="text-primary">audit bundels</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Combineer geautomatiseerde monitoring met handmatige audits
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {bundles.map((bundle) => (
+            <Card key={bundle.productId} className="bg-white dark:bg-slate-900 flex flex-col">
+              <CardHeader>
+                <CardTitle className="font-display text-lg">{bundle.label}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col">
+                <div className="mb-4">
+                  <span className="text-2xl font-bold font-display">{formatEuro(dp(bundle.price))}</span>
+                  <span className="text-muted-foreground text-sm">/mo</span>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                    {displayMode === 'excl'
+                      ? `excl. BTW · ${countryOption?.label ?? 'NL'} ${vatPercent}%`
+                      : `incl. ${vatPercent}% BTW`}
+                  </p>
+                </div>
+                <div className="space-y-2 flex-1">
+                  {bundle.features.map((feature, i) => (
+                    <div key={i} className="flex items-start space-x-2">
+                      <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <Button className="w-full mt-4" variant="outline" asChild>
+                  <Link href={`/contact?subject=audit-bundle&product=${bundle.productId}`}>
+                    Bundel kiezen <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AddOnsSection() {
   const [displayMode] = usePriceDisplayMode();
-  const dp = (gross: number): number =>
-    displayMode === 'excl' ? grossToNet(gross) : gross;
+  const [country] = usePricingCountry();
+  const dp = (net: number): number =>
+    displayMode === 'incl' ? getPriceInclVat(net, country) : net;
+
+  const vatRate = getClientVatRate(country);
+  const vatPercent = Math.round(vatRate * 1000) / 10;
+  const countryOption = PRICING_COUNTRY_OPTIONS.find((o) => o.code === country);
 
   const websitePacks = [
     { label: "+1 website", price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1 },
@@ -480,7 +671,12 @@ function AddOnsSection() {
                 {websitePacks.map((pack, i) => (
                   <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
                     <span className="font-medium text-sm">{pack.label}</span>
-                    <span className="font-bold">{formatEuro(dp(pack.price))}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                    <div className="text-right">
+                      <span className="font-bold">{formatEuro(dp(pack.price))}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                      <p className="text-[10px] text-muted-foreground">
+                        {displayMode === 'excl' ? `excl. BTW` : `incl. BTW`}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -504,7 +700,12 @@ function AddOnsSection() {
                         <span className="font-medium text-sm">{pack.label}</span>
                         <span className="block text-[10px] text-muted-foreground">≈ €{perPage}/page</span>
                       </div>
-                      <span className="font-bold">{formatEuro(displayPrice)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                      <div className="text-right">
+                        <span className="font-bold">{formatEuro(displayPrice)}<span className="text-xs text-muted-foreground font-normal">/mo</span></span>
+                        <p className="text-[10px] text-muted-foreground">
+                          {displayMode === 'excl' ? `excl. BTW` : `incl. BTW`}
+                        </p>
+                      </div>
                     </div>
                   );
                 })}
@@ -543,11 +744,17 @@ function AddOnsSection() {
               <div className="space-y-2 border-t pt-3">
                 <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <span className="text-sm">Starter</span>
-                  <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.STARTER ?? 0))}/mo</span>
+                  <div className="text-right">
+                    <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.STARTER ?? 0))}/mo</span>
+                    <p className="text-[10px] text-muted-foreground">{displayMode === 'excl' ? 'excl. BTW' : 'incl. BTW'}</p>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <span className="text-sm">Pro</span>
-                  <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.PRO ?? 0))}/mo</span>
+                  <div className="text-right">
+                    <span className="font-bold text-sm">+{formatEuro(dp(ASSURANCE_ADDON_PRICES.PRO ?? 0))}/mo</span>
+                    <p className="text-[10px] text-muted-foreground">{displayMode === 'excl' ? 'excl. BTW' : 'incl. BTW'}</p>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
                   <span className="text-sm">Business & Enterprise</span>
@@ -770,6 +977,9 @@ export default function PricingPage() {
       <HeroSection />
       <PricingCards />
       <AddOnsSection />
+      <AuditServicesSection />
+      <AuditBundlesSection />
+      <OverflowPricingSection />
       <ComplianceDisclaimerSection />
       <ToolComparisonSection />
       <AgencyCTAStrip location="pricing" />

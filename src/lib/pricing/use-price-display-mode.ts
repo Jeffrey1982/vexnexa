@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * React hook for the global price display mode.
- * Subscribes to changes and triggers re-renders.
+ * React hooks for the global price display mode and country.
+ * Subscribe to changes and trigger re-renders.
  */
 
 import { useState, useEffect, useCallback } from "react";
@@ -11,6 +11,9 @@ import {
   setPriceDisplayMode,
   onPriceDisplayModeChange,
   syncDisplayModeToProfile,
+  getPricingCountry,
+  setPricingCountry,
+  onPricingCountryChange,
   type PriceDisplayMode,
 } from "./display-mode";
 
@@ -22,10 +25,7 @@ export function usePriceDisplayMode(): [PriceDisplayMode, (mode: PriceDisplayMod
   const [mode, setMode] = useState<PriceDisplayMode>(getPriceDisplayMode);
 
   useEffect(() => {
-    // Sync from localStorage on mount (handles SSR hydration)
     setMode(getPriceDisplayMode());
-
-    // Subscribe to changes from other components
     const unsub = onPriceDisplayModeChange((newMode) => {
       setMode(newMode);
     });
@@ -34,9 +34,30 @@ export function usePriceDisplayMode(): [PriceDisplayMode, (mode: PriceDisplayMod
 
   const updateMode = useCallback((newMode: PriceDisplayMode) => {
     setPriceDisplayMode(newMode);
-    // Fire-and-forget profile sync
     syncDisplayModeToProfile(newMode);
   }, []);
 
   return [mode, updateMode];
+}
+
+/**
+ * Hook that returns the current pricing country and a setter.
+ * Automatically re-renders when the country changes.
+ */
+export function usePricingCountry(): [string, (country: string) => void] {
+  const [country, setCountry] = useState<string>(getPricingCountry);
+
+  useEffect(() => {
+    setCountry(getPricingCountry());
+    const unsub = onPricingCountryChange((newCountry) => {
+      setCountry(newCountry);
+    });
+    return unsub;
+  }, []);
+
+  const updateCountry = useCallback((newCountry: string) => {
+    setPricingCountry(newCountry);
+  }, []);
+
+  return [country, updateCountry];
 }

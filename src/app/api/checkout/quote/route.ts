@@ -9,8 +9,6 @@ import {
   formatTaxLineLabel,
   toBillingCustomerType,
 } from "@/lib/tax/rules";
-import { grossToNet, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
-
 export const dynamic = "force-dynamic";
 
 const QuoteSchema = z.object({
@@ -23,10 +21,6 @@ const QuoteSchema = z.object({
  *
  * Computes a server-side tax quote for a plan + billing cycle.
  * Uses the authenticated user's billing profile to determine tax.
- *
- * IMPORTANT: Tax logic depends on jurisdiction and product classification.
- * This implementation is a configurable baseline and should be reviewed
- * with an accountant/legal advisor before relying on it for compliance.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -44,11 +38,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const { plan, billingCycle } = validation.data;
 
-    // Plan prices are stored GROSS (incl. NL 21% VAT).
-    // Approach B: convert gross→net using base NL rate, then re-apply
-    // the customer's actual country tax to get the final total.
-    const planGross = calculatePrice(plan as PlanKey, billingCycle);
-    const netBase = grossToNet(planGross, BASE_VAT_RATE);
+    // Plan prices are stored NET (excl. VAT).
+    // Apply customer's actual country tax to get the final total.
+    const netBase = calculatePrice(plan as PlanKey, billingCycle);
 
     // Fetch billing profile for tax computation
     const billingProfile = await prisma.billingProfile.findUnique({
@@ -78,7 +70,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       plan,
       billingCycle,
       currency: "EUR",
-      planGross,
+      planNet: netBase,
       baseAmount: breakdown.net,
       vatAmount: breakdown.vat,
       totalAmount: breakdown.gross,
