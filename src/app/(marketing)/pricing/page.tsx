@@ -44,7 +44,6 @@ import {
   ASSURANCE_ADDON_PRICES,
   BASE_PRICES,
   ANNUAL_PRICES,
-  OLD_PRICES,
   AUDIT_PRICES,
   AUDIT_BUNDLE_PRICES,
   EXTRA_SERVICES_PRICES,
@@ -336,8 +335,6 @@ function PricingCards() {
             const priceDisplay = fmtPrice(plan.key, billingCycle);
             const discountBadge = getDiscountBadge(billingCycle, plan.key);
             const ctaText = getCTAText(billingCycle, plan.key);
-            const oldPrice = OLD_PRICES[plan.key];
-            const newPrice = BASE_PRICES[plan.key];
 
             return (
               <Card
@@ -367,12 +364,6 @@ function PricingCards() {
                 <CardHeader className="text-center pb-6">
                   <CardTitle className="font-display text-xl">{plan.name}</CardTitle>
                   <div className="mt-3">
-                    {/* Strikethrough old price */}
-                    {billingCycle === 'monthly' && oldPrice !== newPrice && (
-                      <span className="text-sm text-muted-foreground line-through mr-2">
-                        {formatEuro(dp(oldPrice))}
-                      </span>
-                    )}
                     <span className="text-3xl font-bold font-display">{priceDisplay.mainPrice}</span>
                     <span className="text-muted-foreground text-sm">{priceDisplay.period}</span>
                     {priceDisplay.subtext && (

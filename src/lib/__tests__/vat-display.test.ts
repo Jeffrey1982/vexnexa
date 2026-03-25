@@ -310,11 +310,6 @@ describe("Pricing pages include PriceModeToggle", () => {
     expect(pricingPage).toContain("Audit + Monitoring Bundels");
   });
 
-  it("pricing page has strikethrough old prices", () => {
-    expect(pricingPage).toContain("OLD_PRICES");
-    expect(pricingPage).toContain("line-through");
-  });
-
   it("pricing page has country-aware VAT display", () => {
     expect(pricingPage).toContain("usePricingCountry");
     expect(pricingPage).toContain("excl. BTW");

@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest'
 import {
   BASE_PRICES,
   ANNUAL_PRICES,
-  OLD_PRICES,
   getDiscountPercentage,
   calculatePrice,
   getPlanPricing,
@@ -26,22 +25,6 @@ describe('pricing', () => {
       expect(calculatePrice('PRO', 'yearly')).toBe(448.80)
       expect(calculatePrice('BUSINESS', 'yearly')).toBe(1315.80)
       expect(calculatePrice('ENTERPRISE', 'yearly')).toBe(3559.80)
-    })
-  })
-
-  describe('OLD_PRICES for strikethrough display', () => {
-    it('contains old prices', () => {
-      expect(OLD_PRICES.STARTER).toBe(14.99)
-      expect(OLD_PRICES.PRO).toBe(34.99)
-      expect(OLD_PRICES.BUSINESS).toBe(99.99)
-      expect(OLD_PRICES.ENTERPRISE).toBe(299.00)
-    })
-
-    it('new prices are higher than old prices', () => {
-      expect(BASE_PRICES.STARTER).toBeGreaterThan(OLD_PRICES.STARTER)
-      expect(BASE_PRICES.PRO).toBeGreaterThan(OLD_PRICES.PRO)
-      expect(BASE_PRICES.BUSINESS).toBeGreaterThan(OLD_PRICES.BUSINESS)
-      expect(BASE_PRICES.ENTERPRISE).toBeGreaterThan(OLD_PRICES.ENTERPRISE)
     })
   })
 
