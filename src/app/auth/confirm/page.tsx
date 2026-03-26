@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
-import { ensureUserInDatabase } from '@/lib/user-sync'
 import { CheckCircle, AlertTriangle, Loader2 } from 'lucide-react'
 
 type PageState = 'loading' | 'success' | 'error'
@@ -28,7 +27,6 @@ function normalizeOtpType(type: string | null): string | null {
 function ConfirmClient() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const supabase = createClient()
   const attempted = useRef(false)
 
   const [pageState, setPageState] = useState<PageState>('loading')
@@ -38,22 +36,34 @@ function ConfirmClient() {
     if (attempted.current) return
     attempted.current = true
 
-    const tokenHash = searchParams.get('token_hash')
-    const rawType = searchParams.get('type')
-    const otpType = normalizeOtpType(rawType)
+    let tokenHash: string | null = null
+    let rawType: string | null = null
+    let otpType: string | null = null
 
-    console.log('[Auth:Confirm] init', {
+    try {
+      tokenHash = searchParams.get('token_hash')
+      rawType = searchParams.get('type')
+      otpType = normalizeOtpType(rawType)
+    } catch (paramErr) {
+      console.error('[Auth:Confirm] Failed to read search params:', paramErr)
+      setErrorMessage('Could not read verification parameters. Please try the link again.')
+      setPageState('error')
+      return
+    }
+
+    console.log('[Auth:Confirm] route hit', {
       hasTokenHash: !!tokenHash,
       tokenHashLen: tokenHash?.length ?? 0,
       rawType,
       normalizedType: otpType,
+      hostname: window.location.hostname,
       pathname: window.location.pathname,
       hasSearchParams: window.location.search.length > 1,
       userAgent: navigator.userAgent.substring(0, 80),
     })
 
     if (!tokenHash || !otpType) {
-      console.warn('[Confirm] Missing or invalid params', { tokenHash: !!tokenHash, rawType })
+      console.warn('[Auth:Confirm] Missing or invalid params', { hasTokenHash: !!tokenHash, rawType })
       setErrorMessage(
         !tokenHash
           ? 'This verification link is missing a required token. It may have been truncated — try copying the full link from your email.'
@@ -64,6 +74,19 @@ function ConfirmClient() {
     }
 
     const verify = async () => {
+      let supabase: ReturnType<typeof createClient>
+
+      try {
+        supabase = createClient()
+      } catch (clientErr) {
+        console.error('[Auth:Confirm] Supabase client creation failed:', clientErr)
+        setErrorMessage('Configuration error. Please try again or contact support.')
+        setPageState('error')
+        return
+      }
+
+      console.log('[Auth:Confirm] verifyOtp started', { type: otpType })
+
       try {
         const { error } = await supabase.auth.verifyOtp({
           type: otpType as any,
@@ -90,31 +113,37 @@ function ConfirmClient() {
           return
         }
 
-        // Clean sensitive params from URL
+        console.log('[Auth:Confirm] verifyOtp success', { type: otpType })
+
+        // Clean sensitive params from URL (non-critical)
         try {
           window.history.replaceState(null, '', window.location.pathname)
         } catch {
-          // Non-critical
+          // Non-critical — Safari Private Browsing may restrict this
         }
 
-        // Sync user to database (non-fatal)
+        // Sync user to database via server API (non-fatal).
+        // NOTE: Do NOT import @/lib/user-sync here — it depends on Prisma which
+        // cannot be loaded in a client component. Use the API endpoint instead.
         try {
-          const { data: { user } } = await supabase.auth.getUser()
-          if (user) {
-            await ensureUserInDatabase(user)
-          }
+          await fetch('/api/sync-user', { method: 'POST', credentials: 'include' })
+          console.log('[Auth:Confirm] DB sync request sent')
         } catch (syncErr) {
-          console.warn('[Confirm] DB sync failed (non-fatal):', syncErr)
+          console.warn('[Auth:Confirm] DB sync request failed (non-fatal):', syncErr)
         }
 
         setPageState('success')
+        console.log('[Auth:Confirm] redirect target chosen: /auth/verified')
 
         // Redirect to verified page
         setTimeout(() => {
           router.replace('/auth/verified')
         }, 1500)
       } catch (err: any) {
-        console.error('[Confirm] Unexpected error:', err)
+        console.error('[Auth:Confirm] Unexpected error in verify flow:', {
+          message: err?.message,
+          name: err?.name,
+        })
         setErrorMessage(err?.message || 'An unexpected error occurred during verification.')
         setPageState('error')
       }
