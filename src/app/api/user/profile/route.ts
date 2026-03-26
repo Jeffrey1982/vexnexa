@@ -52,7 +52,6 @@ export async function GET(request: NextRequest) {
         profileCompleted: true,
         plan: true,
         subscriptionStatus: true,
-        trialEndsAt: true,
         createdAt: true,
         updatedAt: true,
       },

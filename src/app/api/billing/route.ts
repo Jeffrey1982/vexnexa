@@ -40,7 +40,6 @@ export async function GET() {
         email: user.email,
         plan: user.plan,
         subscriptionStatus: user.subscriptionStatus,
-        trialEndsAt: user.trialEndsAt,
       },
       usage,
       entitlements,

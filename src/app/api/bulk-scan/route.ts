@@ -57,7 +57,7 @@ export async function POST(req: Request) {
       });
 
       const { ENTITLEMENTS } = await import("@/lib/billing/plans");
-      const plan = (userWithPlan?.plan || "TRIAL") as keyof typeof ENTITLEMENTS;
+      const plan = (userWithPlan?.plan || "FREE") as keyof typeof ENTITLEMENTS;
       const siteLimit = ENTITLEMENTS[plan].sites;
 
       if (currentSiteCount >= siteLimit) {
