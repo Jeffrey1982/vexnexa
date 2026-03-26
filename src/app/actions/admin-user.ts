@@ -38,8 +38,8 @@ export async function changeUserPlan(userId: string, newPlan: Plan) {
     where: { id: userId },
     data: {
       plan: newPlan,
-      subscriptionStatus: newPlan === 'TRIAL' ? 'trialing' : 'active',
-      trialEndsAt: newPlan === 'TRIAL' ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) : null
+      subscriptionStatus: 'active',
+      trialEndsAt: null
     }
   });
 
