@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
-import { getSiteUrl } from '@/lib/urls'
+import { buildAuthUrl } from '@/lib/urls'
 import { useTranslations } from 'next-intl'
 
 interface AuthFormProps {
@@ -37,7 +37,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           email,
           password,
           options: {
-            emailRedirectTo: `${getSiteUrl()}/auth/callback?flow=signup`,
+            emailRedirectTo: buildAuthUrl('/auth/callback?flow=signup'),
           },
         })
 
