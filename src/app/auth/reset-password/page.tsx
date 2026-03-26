@@ -80,16 +80,10 @@ function ResetPasswordForm() {
       return
     }
 
-    // ── Let Supabase's auto-initialization handle PKCE code exchange ──
-    // The @supabase/supabase-js client auto-detects ?code= in the URL and
-    // exchanges it during initialization. We listen for the resulting auth
-    // event instead of manually calling exchangeCodeForSession (which would
-    // race with the auto-exchange and fail with "code already used").
     let settled = false
     const settle = (state: PageState, err?: string) => {
       if (settled) return
       settled = true
-      // Clean URL to remove tokens/codes
       if (window.location.search.length > 1 || window.location.hash.length > 1) {
         window.history.replaceState(null, '', window.location.pathname)
       }
@@ -97,15 +91,47 @@ function ResetPasswordForm() {
       setPageState(state)
     }
 
-    const hasAuthParams: boolean = !!(
-      searchParams.get('code') ||
-      searchParams.get('token_hash') ||
-      rawHash.length > 0
-    )
+    const tokenHash: string | null = searchParams.get('token_hash')
+    const otpType: string | null = searchParams.get('type')
+    const code: string | null = searchParams.get('code')
+    const hasAuthParams: boolean = !!(code || tokenHash || rawHash.length > 0)
 
-    console.log('[ResetPassword] waiting for auth resolution', { hasAuthParams })
+    console.log('[ResetPassword] init', { hasCode: !!code, hasTokenHash: !!tokenHash, otpType })
 
-    // Listen for auth state changes from Supabase's auto-exchange
+    // ── (1) token_hash flow (from updated email template) ──
+    // Handled manually because Supabase's client does NOT auto-process token_hash.
+    // This is the preferred flow: email links go directly to our page with token_hash,
+    // and verification happens client-side (immune to email scanner pre-fetching).
+    if (tokenHash && otpType === 'recovery') {
+      const verifyToken = async () => {
+        try {
+          const { error } = await supabase.auth.verifyOtp({
+            type: 'recovery',
+            token_hash: tokenHash,
+          })
+          if (error) {
+            console.error('[ResetPassword] verifyOtp error:', error.message)
+            const isExpired = error.message?.toLowerCase().includes('expired') ||
+              error.message?.toLowerCase().includes('invalid') ||
+              error.message?.toLowerCase().includes('already used')
+            settle('invalid_link', isExpired
+              ? 'This reset link has expired. Please request a new one.'
+              : error.message)
+          } else {
+            settle('ready')
+          }
+        } catch (err: any) {
+          settle('error', err?.message || 'An unexpected error occurred')
+        }
+      }
+      verifyToken()
+      return
+    }
+
+    // ── (2) PKCE code flow (legacy — auto-exchanged by Supabase client) ──
+    // The @supabase/supabase-js client auto-detects ?code= in the URL and
+    // exchanges it during initialization. We listen for the auth event
+    // instead of manually calling exchangeCodeForSession.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         console.log('[ResetPassword] auth event:', event, !!session)
@@ -114,18 +140,14 @@ function ResetPasswordForm() {
         } else if (event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY') {
           settle('ready')
         } else if (event === 'INITIAL_SESSION' && !session && !hasAuthParams) {
-          // No session and no auth params — nothing to exchange
           settle('invalid_link', 'This link is missing required parameters. Please request a new reset email.')
         }
-        // If INITIAL_SESSION fires with no session but auth params exist,
-        // the auto-exchange may still be in progress — wait for SIGNED_IN.
       }
     )
 
-    // Fallback timeout: if auto-exchange doesn't resolve within 8 seconds
+    // Fallback timeout
     const fallbackTimer = window.setTimeout(async () => {
       if (settled) return
-      // One final session check
       try {
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {

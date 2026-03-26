@@ -38,7 +38,7 @@
 
                 <!-- CTA Button -->
                 <div style="margin: 32px 0;">
-                    <a href="{{ .ConfirmationURL }}"
+                    <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change"
                        style="display: inline-block; background: linear-gradient(135deg, #0F5C5C 0%, #0A4040 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(15, 92, 92, 0.4); transition: all 0.2s ease;">
                         Email wijziging bevestigen
                     </a>
@@ -47,7 +47,7 @@
                 <!-- Alternative Link -->
                 <p style="color: #6B7280; font-size: 14px; line-height: 1.5; margin: 24px 0;">
                     Werkt de knop niet? Kopieer deze link:<br>
-                    <a href="{{ .ConfirmationURL }}" style="color: #0F5C5C; word-break: break-all;">{{ .ConfirmationURL }}</a>
+                    <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change" style="color: #0F5C5C; word-break: break-all;">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email_change</a>
                 </p>
 
                 <!-- Double Confirmation Info -->

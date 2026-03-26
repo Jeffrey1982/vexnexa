@@ -207,7 +207,7 @@ const MERCHANT = {
   address: 'Netherlands',
   vatId: 'NL005113493B92',
   kvk: '94848262',
-  email: 'support@vexnexa.com',
+  email: 'info@vexnexa.com',
 };
 
 // ── Document Component ──────────────────────────────────
