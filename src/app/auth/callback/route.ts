@@ -217,7 +217,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             await sendWelcomeEmail({
               email: data.user.email!,
               firstName: dbUser.firstName,
-              trialEndsAt: dbUser.trialEndsAt || undefined,
             })
             console.log('Welcome email sent to:', data.user.email)
           } catch (emailError) {
@@ -237,7 +236,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               country: dbUser.country || undefined,
               marketingEmails: dbUser.marketingEmails,
               productUpdates: dbUser.productUpdates,
-              trialEndsAt: dbUser.trialEndsAt || undefined,
             })
             console.log('Admin notification sent for new user:', data.user.email)
           } catch (adminEmailError) {
