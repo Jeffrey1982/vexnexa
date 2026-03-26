@@ -36,7 +36,6 @@ export async function GET(request: NextRequest): Promise<Response> {
         plan: true,
         subscriptionStatus: true,
         createdAt: true,
-        trialEndsAt: true,
         isAdmin: true,
         sites: {
           select: {

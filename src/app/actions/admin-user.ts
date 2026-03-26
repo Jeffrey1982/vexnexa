@@ -37,9 +37,8 @@ export async function changeUserPlan(userId: string, newPlan: Plan) {
   await prisma.user.update({
     where: { id: userId },
     data: {
-      plan: newPlan,
+      plan: newPlan as any,
       subscriptionStatus: 'active',
-      trialEndsAt: null
     }
   });
 

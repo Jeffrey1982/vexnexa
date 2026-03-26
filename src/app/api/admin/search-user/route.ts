@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
         plan: true,
         subscriptionStatus: true,
         createdAt: true,
-        trialEndsAt: true,
         _count: {
           select: {
             sites: true
