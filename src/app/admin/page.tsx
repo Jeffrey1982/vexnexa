@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
 async function getAdminStats() {
   const [
     totalUsers,
-    trialUsers,
+    freeUsers,
     starterUsers,
     proUsers,
     businessUsers,
@@ -28,7 +28,7 @@ async function getAdminStats() {
     recentTickets
   ] = await Promise.all([
     prisma.user.count(),
-    prisma.user.count({ where: { plan: 'TRIAL' } }),
+    prisma.user.count({ where: { plan: 'FREE' as any } }),
     prisma.user.count({ where: { plan: 'STARTER' } }),
     prisma.user.count({ where: { plan: 'PRO' } }),
     prisma.user.count({ where: { plan: 'BUSINESS' } }),
@@ -78,7 +78,7 @@ async function getAdminStats() {
   return {
     totalUsers,
     planBreakdown: {
-      TRIAL: trialUsers,
+      FREE: freeUsers,
       STARTER: starterUsers,
       PRO: proUsers,
       BUSINESS: businessUsers
@@ -160,14 +160,14 @@ export default async function AdminDashboard() {
           <Card>
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Trial Users</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Free Users</CardTitle>
                 <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-orange-50 dark:bg-orange-400/10">
                   <AlertCircle className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-orange-600 dark:text-orange-400">{stats.planBreakdown.TRIAL}</div>
+              <div className="text-3xl lg:text-4xl font-extrabold tracking-tight text-blue-600 dark:text-blue-400">{stats.planBreakdown.FREE}</div>
             </CardContent>
           </Card>
         </div>
