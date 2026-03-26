@@ -213,7 +213,7 @@ export function AdminUserSettingsEditor({ user }: AdminUserSettingsEditorProps) 
             <CreditCard className="h-5 w-5" />
             Subscription
           </CardTitle>
-          <CardDescription>Plan, billing status, and trial configuration</CardDescription>
+          <CardDescription>Plan and billing status configuration</CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -267,6 +267,7 @@ export function AdminUserSettingsEditor({ user }: AdminUserSettingsEditorProps) 
                 </SelectContent>
               </Select>
             </div>
+          </div>
         </CardContent>
       </Card>
 
