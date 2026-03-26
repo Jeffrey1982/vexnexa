@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdminAPI } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-const VALID_PLANS = ['TRIAL', 'STARTER', 'PRO', 'BUSINESS'] as const;
+const VALID_PLANS = ['FREE', 'STARTER', 'PRO', 'BUSINESS'] as const;
 type ValidPlan = (typeof VALID_PLANS)[number];
 
 export async function POST(
@@ -22,7 +22,7 @@ export async function POST(
 
     if (!plan || !VALID_PLANS.includes(plan as ValidPlan)) {
       return NextResponse.json(
-        { success: false, error: 'Invalid plan. Must be TRIAL, STARTER, PRO, or BUSINESS.' },
+        { success: false, error: 'Invalid plan. Must be FREE, STARTER, PRO, or BUSINESS.' },
         { status: 400 }
       );
     }
@@ -52,19 +52,15 @@ export async function POST(
       await prisma.user.update({
         where: { id: userId },
         data: {
-          plan: plan as ValidPlan,
-          subscriptionStatus: plan === 'TRIAL' ? 'trialing' : 'active',
-          trialEndsAt:
-            plan === 'TRIAL'
-              ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
-              : null,
+          plan: plan as any,
+          subscriptionStatus: plan === 'FREE' ? 'active' : 'active',
         },
       });
     } else {
       await prisma.user.update({
         where: { id: userId },
         data: {
-          plan: plan as ValidPlan,
+          plan: plan as any,
         },
       });
     }
@@ -92,11 +88,9 @@ export async function POST(
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        plan: plan,
+        plan: plan as ValidPlan as any,
         subscriptionStatus: applyImmediately
-          ? plan === 'TRIAL'
-            ? 'trialing'
-            : 'active'
+          ? 'active'
           : user.subscriptionStatus,
       },
       oldPlan,

@@ -477,8 +477,7 @@ export default function BillingPage() {
             usedSeats={actualUsage.teamMembers}
             addOns={addOns}
             onRefresh={loadUserData}
-            isTrial={user.plan === "FREE"}
-          />
+                      />
         )}
 
         {/* Actions */}

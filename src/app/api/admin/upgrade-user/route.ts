@@ -41,12 +41,8 @@ export async function POST(req: NextRequest) {
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
-        plan: newPlan,
+        plan: newPlan as any,
         subscriptionStatus: 'active', // Set to active for manual upgrades
-        // Extend trial if upgrading to trial
-        trialEndsAt: newPlan === 'TRIAL' ?
-          new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) : // 30 days from now
-          existingUser.trialEndsAt
       },
       select: {
         id: true,
@@ -56,8 +52,7 @@ export async function POST(req: NextRequest) {
         company: true,
         plan: true,
         subscriptionStatus: true,
-        createdAt: true,
-        trialEndsAt: true
+        createdAt: true
       }
     });
 

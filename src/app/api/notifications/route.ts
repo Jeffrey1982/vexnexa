@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
         'PAYMENT_SUCCESS',
         'PAYMENT_FAILED',
         'SUBSCRIPTION_EXPIRING',
-        'TRIAL_EXPIRING',
         'REGRESSION_DETECTED',
         'ALERT_TRIGGERED',
         'SYSTEM_ANNOUNCEMENT',
