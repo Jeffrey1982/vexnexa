@@ -56,7 +56,7 @@ interface AdminUserSettingsEditorProps {
 
 // ── Constants ─────────────────────────────────────────
 const PLANS: { value: Plan; label: string }[] = [
-  { value: 'TRIAL', label: 'Trial' },
+  { value: 'FREE' as any, label: 'Free' },
   { value: 'STARTER', label: 'Starter' },
   { value: 'PRO', label: 'Pro' },
   { value: 'BUSINESS', label: 'Business' },
@@ -65,7 +65,6 @@ const PLANS: { value: Plan; label: string }[] = [
 
 const STATUSES = [
   { value: 'active', label: 'Active' },
-  { value: 'trialing', label: 'Trialing' },
   { value: 'canceled', label: 'Canceled' },
   { value: 'past_due', label: 'Past Due' },
   { value: 'inactive', label: 'Inactive' },
