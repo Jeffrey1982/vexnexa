@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
-import { buildAuthUrl } from '@/lib/urls'
+import { getSiteUrl } from '@/lib/urls'
 import { useAuthCooldown, isRateLimitError } from '@/hooks/use-auth-cooldown'
 import { useTranslations } from 'next-intl'
 import {
@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: buildAuthUrl('/auth/reset-password'),
+        redirectTo: `${getSiteUrl()}/auth/reset-password`,
       })
 
       if (error) {

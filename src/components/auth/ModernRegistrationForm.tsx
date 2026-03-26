@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CountrySelect } from '@/components/ui/country-select'
 import { createClient } from '@/lib/supabase/client-new'
-import { getSiteUrl, buildAuthUrl } from '@/lib/urls'
+import { getSiteUrl } from '@/lib/urls'
 import { useAuthCooldown, isRateLimitError } from '@/hooks/use-auth-cooldown'
 import { 
   User, 
@@ -257,7 +257,7 @@ export default function ModernRegistrationForm() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: buildAuthUrl('/auth/callback?flow=signup'),
+          emailRedirectTo: `${getSiteUrl()}/auth/callback?flow=signup`,
           data: {
             first_name: formData.firstName,
             last_name: formData.lastName,
