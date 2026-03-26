@@ -113,9 +113,8 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
         data: {
           id: userId,
           email: email,
-          plan: 'TRIAL',
+          plan: 'FREE' as any,
           subscriptionStatus: 'inactive',
-          trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
         },
         select: {
           id: true,
@@ -193,7 +192,7 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
 export async function createUpgradePayment(opts: {
   userId: string
   email: string
-  plan: Exclude<Plan, "TRIAL">
+  plan: Exclude<Plan, "FREE">
   billingCycle?: BillingCycle
 }) {
   try {
@@ -346,7 +345,7 @@ export async function createUpgradePayment(opts: {
 
 export async function createSubscription(opts: {
   customerId: string
-  plan: Exclude<Plan, "TRIAL">
+  plan: Exclude<Plan, "FREE">
   userId: string
   billingCycle?: BillingCycle
 }) {
@@ -514,7 +513,7 @@ export async function changePlan(opts: {
   // Can create subscription directly
   await createSubscription({
     customerId: user.mollieCustomerId,
-    plan: newPlan,
+    plan: newPlan as any,
     userId
   })
 

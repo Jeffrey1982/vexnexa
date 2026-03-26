@@ -234,7 +234,7 @@ export async function sendPasswordResetEmail(data: PasswordResetData) {
   }
 }
 
-export async function sendWelcomeEmail(data: { email: string; firstName: string; trialEndsAt?: Date }) {
+export async function sendWelcomeEmail(data: { email: string; firstName: string }) {
   console.log('[EMAIL] sendWelcomeEmail called for:', data.email)
 
   if (!resend) {
@@ -244,13 +244,13 @@ export async function sendWelcomeEmail(data: { email: string; firstName: string;
 
   try {
     console.log('[EMAIL] Attempting to send welcome email to:', data.email)
-    const { email, firstName, trialEndsAt } = data
+    const { email, firstName } = data
     const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard`
 
     const html = getWelcomeTemplate(email, dashboardUrl, true)
     const text = getPlainTextVersion({
       headline: `Welcome, ${firstName}!`,
-      bodyText: 'Your VexNexa account is now active. You have full access to all accessibility monitoring features during your trial period.',
+      bodyText: 'Your VexNexa account is now active. You have full access to all accessibility monitoring features on your free plan.',
       actionUrl: dashboardUrl,
       listItems: [
         'Run your first accessibility scan',
@@ -465,7 +465,6 @@ export interface NewUserNotificationData {
   country?: string
   marketingEmails: boolean
   productUpdates: boolean
-  trialEndsAt?: Date
 }
 
 export async function sendNewUserNotification(data: NewUserNotificationData) {
@@ -488,15 +487,10 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
       website,
       country,
       marketingEmails,
-      productUpdates,
-      trialEndsAt
+      productUpdates
     } = data
 
-    const trialEndDate = trialEndsAt
-      ? new Intl.DateTimeFormat('en-US', {
-          day: 'numeric', month: 'long', year: 'numeric'
-        }).format(trialEndsAt)
-      : 'Not set'
+    const planEndDate = 'Never'
 
     const result = await resend.emails.send({
       from: 'VexNexa Notifications <onboarding@resend.dev>',
@@ -563,12 +557,9 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
             </div>
 
             <div style="background: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #0F5C5C;">
-              <h4 style="color: #1E1E1E; margin: 0 0 8px 0; font-size: 16px;">Trial Information</h4>
+              <h4 style="color: #1E1E1E; margin: 0 0 8px 0; font-size: 16px;">Plan Information</h4>
               <p style="margin: 4px 0; color: #1E1E1E;">
-                <strong>Trial Ends:</strong> ${trialEndDate}
-              </p>
-              <p style="margin: 4px 0; color: #1E1E1E;">
-                <strong>Plan:</strong> 14-day Trial
+                <strong>Plan:</strong> Free Forever
               </p>
             </div>
 
@@ -605,9 +596,8 @@ Communication Preferences:
 - Marketing Emails: ${marketingEmails ? '✅ Opted In' : '❌ Opted Out'}
 - Product Updates: ${productUpdates ? '✅ Opted In' : '❌ Opted Out'}
 
-Trial Information:
-- Trial Ends: ${trialEndDate}
-- Plan: 14-day Trial
+Plan: Free Forever
+Plan End Date: Never
 
 Timestamp: ${new Date().toLocaleString('en-US')}
 

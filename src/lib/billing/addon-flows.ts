@@ -41,14 +41,7 @@ export async function purchaseAddOn(opts: {
     throw new Error("User not found")
   }
 
-  // User must have an active subscription (not TRIAL)
-  if (user.plan === "TRIAL") {
-    const error: any = new Error("TRIAL_USER")
-    error.code = "TRIAL_USER"
-    error.redirectUrl = "/pricing"
-    throw error
-  }
-
+  
   // Check if user has Mollie customer (should exist after upgrade)
   if (!user.mollieCustomerId) {
     const error: any = new Error("NO_PAYMENT_METHOD")

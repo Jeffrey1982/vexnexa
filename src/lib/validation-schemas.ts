@@ -126,7 +126,7 @@ export const BulkEmailSchema = BulkActionSchema.extend({
 
 export const BulkPlanChangeSchema = BulkActionSchema.extend({
   action: z.literal('change_plan'),
-  newPlan: z.enum(['TRIAL', 'STARTER', 'PRO', 'BUSINESS']),
+  newPlan: z.enum(['FREE', 'STARTER', 'PRO', 'BUSINESS']),
 })
 
 export const BulkCreditSchema = BulkActionSchema.extend({

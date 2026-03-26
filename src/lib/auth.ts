@@ -26,7 +26,6 @@ export async function getCurrentUser(): Promise<any> {
         company: true,
         plan: true,
         subscriptionStatus: true,
-        trialEndsAt: true,
         profileCompleted: true,
         marketingEmails: true,
         productUpdates: true,
