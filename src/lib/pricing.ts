@@ -11,7 +11,7 @@
  */
 
 export type BillingCycle = 'monthly' | 'yearly';
-export type PlanKey = 'STARTER' | 'PRO' | 'BUSINESS' | 'ENTERPRISE';
+export type PlanKey = 'FREE' | 'STARTER' | 'PRO' | 'BUSINESS' | 'ENTERPRISE';
 
 export interface PlanPrice {
   monthly: number;
@@ -28,6 +28,7 @@ export const VAT_RATE_PERCENT = 21;
 
 /* ─── Base monthly prices (EUR, excl. VAT) ─── */
 export const BASE_PRICES: Record<PlanKey, number> = {
+  FREE: 0,
   STARTER: 19.00,
   PRO: 44.00,
   BUSINESS: 129.00,
@@ -36,6 +37,7 @@ export const BASE_PRICES: Record<PlanKey, number> = {
 
 /* ─── Old prices for strikethrough display (EUR, excl. VAT equivalent) ─── */
 export const OLD_PRICES: Record<PlanKey, number> = {
+  FREE: 0,
   STARTER: 14.99,
   PRO: 34.99,
   BUSINESS: 99.99,
@@ -44,6 +46,7 @@ export const OLD_PRICES: Record<PlanKey, number> = {
 
 /* ─── Fixed annual prices (EUR, excl. VAT — 15% discount on monthly) ─── */
 export const ANNUAL_PRICES: Record<PlanKey, number> = {
+  FREE: 0,
   STARTER: 193.80,    // €16.15/mo — 15% discount
   PRO: 448.80,        // €37.40/mo — 15% discount
   BUSINESS: 1315.80,  // €109.65/mo — 15% discount
@@ -96,6 +99,7 @@ export const EXTRA_SERVICES_PRICES = {
 
 /* ─── Mollie Product IDs for subscriptions ─── */
 export const PLAN_PRODUCT_IDS: Record<PlanKey, { monthly: string; yearly: string }> = {
+  FREE: { monthly: 'free', yearly: 'free' },
   STARTER: { monthly: 'vexnexa-starter-monthly', yearly: 'vexnexa-starter-yearly' },
   PRO: { monthly: 'vexnexa-pro-monthly', yearly: 'vexnexa-pro-yearly' },
   BUSINESS: { monthly: 'vexnexa-business-monthly', yearly: 'vexnexa-business-yearly' },
@@ -121,6 +125,7 @@ export const PAGE_PACK_PRODUCT_IDS = {
 
 /* ─── History retention per tier (months) ─── */
 export const HISTORY_MONTHS: Record<PlanKey, number> = {
+  FREE: 1,
   STARTER: 6,
   PRO: 12,
   BUSINESS: 24,
@@ -224,6 +229,7 @@ export function getDiscountBadge(cycle: BillingCycle, planKey?: PlanKey): string
  * Get CTA button text based on billing cycle and plan
  */
 export function getCTAText(cycle: BillingCycle, planKey?: PlanKey): string {
+  if (planKey === 'FREE') return 'Start Free';
   if (planKey === 'STARTER') return 'Get Started';
   if (planKey === 'PRO') return 'Upgrade Now';
   if (planKey === 'BUSINESS') return 'Scale Your Agency';

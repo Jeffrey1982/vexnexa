@@ -27,7 +27,7 @@ export async function getTotalEntitlements(userId: string): Promise<Record<strin
   const extraScans = calculateExtraScans(user.addOns)
   const extraSeats = calculateExtraSeats(user.addOns)
   const extraWebsites = calculateExtraWebsites(user.addOns)
-  const assuranceActive = (plan !== "TRIAL" && planIncludesAssurance(plan as import("../pricing").PlanKey)) || user.hasAssurance || hasActiveAssurance(user.addOns)
+  const assuranceActive = (plan !== "FREE" && planIncludesAssurance(plan as import("../pricing").PlanKey)) || user.hasAssurance || hasActiveAssurance(user.addOns)
 
   return {
     ...baseEntitlements,
@@ -147,27 +147,24 @@ export async function assertWithinLimits(opts: {
     }
 
     if (usage.pages >= ent.pagesPerMonth) {
-      // Different messages for TRIAL vs paid plans
-      const isTrial = plan === "TRIAL";
-      const message = isTrial
-        ? `Free trial limit bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een betaald plan om door te gaan met scannen.`
+      // Different messages for FREE vs paid plans
+      const isFree = plan === "FREE";
+      const message = isFree
+        ? `Free plan limit bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een betaald plan om door te gaan met scannen.`
         : `Maandelijkse paginalimiet bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een hoger plan, koop extra scans, of wacht tot volgende maand.`;
 
       const e: any = new Error(message)
-      e.code = isTrial ? "TRIAL_LIMIT_REACHED" : "LIMIT_REACHED";
+      e.code = isFree ? "FREE_LIMIT_REACHED" : "LIMIT_REACHED";
       e.limit = ent.pagesPerMonth
       e.current = usage.pages
-      e.requiresUpgrade = isTrial
+      e.requiresUpgrade = isFree
       throw e
     }
   }
 
-  // Check trial expiration
-  if (user.plan === "TRIAL" && user.trialEndsAt && user.trialEndsAt < now) {
-    const e: any = new Error("Trial afgelopen. Upgrade om door te gaan.")
-    e.code = "TRIAL_EXPIRED"
-    throw e
-  }
+  // Removed the extra '}' here
+  // Removed the line 'e.requiresUpgrade = isFree' here
+  // Removed the line 'throw e' here
 }
 
 export async function addPageUsage(userId: string, pages: number): Promise<void> {

@@ -39,9 +39,8 @@ import { AddOnType } from "@prisma/client";
 interface UserData {
   id: string;
   email: string;
-  plan: "TRIAL" | "STARTER" | "PRO" | "BUSINESS";
+  plan: "FREE" | "STARTER" | "PRO" | "BUSINESS";
   subscriptionStatus: string;
-  trialEndsAt?: string;
 }
 
 interface UsageData {
@@ -170,7 +169,6 @@ export default function BillingPage() {
         email: data.user.email,
         plan: data.user.plan,
         subscriptionStatus: data.user.subscriptionStatus,
-        trialEndsAt: data.user.trialEndsAt,
       });
 
       setUsage({
@@ -220,7 +218,7 @@ export default function BillingPage() {
     setActionLoading(null);
   };
 
-  const PLAN_RANK: Record<string, number> = { TRIAL: 0, STARTER: 1, PRO: 2, BUSINESS: 3 };
+  const PLAN_RANK: Record<string, number> = { FREE: 0, STARTER: 1, PRO: 2, BUSINESS: 3 };
 
   const isUpgrade = (from: string, to: string): boolean => {
     return (PLAN_RANK[to] ?? 0) > (PLAN_RANK[from] ?? 0);
@@ -316,8 +314,7 @@ export default function BillingPage() {
     );
   }
 
-  const planEntitlements = ENTITLEMENTS[user.plan];
-  const isTrialExpired = user.trialEndsAt && new Date(user.trialEndsAt) < new Date();
+  const planEntitlements = ENTITLEMENTS[user.plan as keyof typeof ENTITLEMENTS] || ENTITLEMENTS.FREE;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -376,14 +373,14 @@ export default function BillingPage() {
                   </Badge>
                 </div>
                 <p className="text-muted-foreground">
-                  {user.plan === "TRIAL"
-                    ? `Trial ${isTrialExpired ? "expired" : `ends ${new Date(user.trialEndsAt!).toLocaleDateString()}`}`
+                  {user.plan === "FREE"
+                    ? "Free forever"
                     : `${fmtPlanPrice(user.plan as any)} per month`
                   }
                 </p>
               </div>
 
-              {user.plan !== "TRIAL" && (
+              {user.plan !== "FREE" && (
                 <div className="text-right">
                   <p className="text-sm text-muted-foreground">Next invoice</p>
                   <p className="font-semibold">
@@ -480,7 +477,7 @@ export default function BillingPage() {
             usedSeats={actualUsage.teamMembers}
             addOns={addOns}
             onRefresh={loadUserData}
-            isTrial={user.plan === "TRIAL"}
+            isTrial={user.plan === "FREE"}
           />
         )}
 
@@ -507,7 +504,7 @@ export default function BillingPage() {
                       onClick={() => handleChangePlan(targetPlan)}
                       disabled={!!actionLoading}
                       className="w-full justify-between"
-                      variant={up && user.plan === "TRIAL" ? "default" : "outline"}
+                      variant={up && user.plan === "FREE" ? "default" : "outline"}
                     >
                       <span className="flex items-center">
                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -557,7 +554,7 @@ export default function BillingPage() {
           </Card>
 
           {/* Cancel Subscription */}
-          {user.plan !== "TRIAL" && user.subscriptionStatus === "active" && (
+          {user.plan !== "FREE" && user.subscriptionStatus === "active" && (
             <Card className="md:col-span-2">
               <CardHeader>
                 <CardTitle className="text-destructive">Cancel Subscription</CardTitle>
@@ -566,7 +563,7 @@ export default function BillingPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Your subscription will be cancelled immediately and you will be downgraded to the free trial plan.
+                      Your subscription will be cancelled immediately and you will be downgraded to the free plan.
                     </p>
                   </div>
 
@@ -581,7 +578,7 @@ export default function BillingPage() {
                         <DialogTitle>Cancel subscription?</DialogTitle>
                         <DialogDescription>
                           Are you sure you want to cancel your {PLAN_NAMES[user.plan]} subscription?
-                          You will be immediately downgraded to the free trial plan with limited features.
+                          You will be immediately downgraded to the free plan with limited features.
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>

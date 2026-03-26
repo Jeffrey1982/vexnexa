@@ -85,9 +85,8 @@ export async function POST(req: Request) {
       } catch (limitError: any) {
         const errorCode: string | undefined = (limitError as any)?.code;
         const isQuotaError: boolean =
-          errorCode === "TRIAL_LIMIT_REACHED" ||
-          errorCode === "LIMIT_REACHED" ||
-          errorCode === "TRIAL_EXPIRED";
+          errorCode === "FREE_LIMIT_REACHED" ||
+          errorCode === "LIMIT_REACHED";
 
         if (!isQuotaError) {
           throw limitError;
@@ -173,7 +172,7 @@ export async function POST(req: Request) {
       });
 
       const { ENTITLEMENTS } = await import("@/lib/billing/plans");
-      const plan = (userWithPlan?.plan || "TRIAL") as keyof typeof ENTITLEMENTS;
+      const plan = (userWithPlan?.plan || "FREE") as keyof typeof ENTITLEMENTS;
       const siteLimit = ENTITLEMENTS[plan].sites;
 
       if (currentSiteCount >= siteLimit && !useWeeklyFreeScan) {
@@ -482,13 +481,7 @@ export async function POST(req: Request) {
           { status: 402 }
         );
       }
-      if ((e as any).code === "TRIAL_EXPIRED") {
-        return NextResponse.json(
-          { ok: false, error: e.message, code: "TRIAL_EXPIRED" },
-          { status: 402 }
-        );
-      }
-    }
+          }
 
     return NextResponse.json(
       { ok: false, error: e?.message ?? "Scan failed" },

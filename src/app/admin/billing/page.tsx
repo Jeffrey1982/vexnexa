@@ -37,7 +37,7 @@ async function getBillingData() {
   // Calculate overages and billing for each user
   const usersWithBilling = usersWithUsage.map(user => {
     const plan = user.plan as keyof typeof ENTITLEMENTS;
-    const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.TRIAL;
+    const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.FREE;
 
     const sitesCount = user.sites.length;
     const pagesThisMonth = user.sites.reduce(

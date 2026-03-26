@@ -35,9 +35,6 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
           if (data.code === "UPGRADE_REQUIRED") {
             throw new Error(`Upgrade Required: ${data.error}`);
           }
-          if (data.code === "TRIAL_EXPIRED") {
-            throw new Error(`Trial Expired: ${data.error}`);
-          }
         }
         if (response.status === 429 && data.code === "LIMIT_REACHED") {
           throw new Error(`Limit Reached: ${data.error}`);

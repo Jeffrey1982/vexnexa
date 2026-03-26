@@ -18,7 +18,7 @@ import { Crown, Zap, AlertTriangle, TrendingUp } from "lucide-react";
 interface UpgradeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  reason: "UPGRADE_REQUIRED" | "LIMIT_REACHED" | "TRIAL_EXPIRED";
+  reason: "UPGRADE_REQUIRED" | "LIMIT_REACHED";
   feature?: string;
   limit?: number;
   current?: number;
@@ -40,8 +40,6 @@ export function UpgradeModal({
         return t("upgradeRequired.title");
       case "LIMIT_REACHED":
         return t("limitReached.title");
-      case "TRIAL_EXPIRED":
-        return t("trialExpired.title");
       default:
         return "Upgrade Required";
     }
@@ -53,8 +51,6 @@ export function UpgradeModal({
         return t("upgradeRequired.description");
       case "LIMIT_REACHED":
         return t("limitReached.description");
-      case "TRIAL_EXPIRED":
-        return t("trialExpired.description");
       default:
         return t("upgradeRequired.description");
     }
@@ -66,8 +62,6 @@ export function UpgradeModal({
         return <Crown className="h-6 w-6 text-primary" />;
       case "LIMIT_REACHED":
         return <TrendingUp className="h-6 w-6 text-orange-500" />;
-      case "TRIAL_EXPIRED":
-        return <AlertTriangle className="h-6 w-6 text-red-500" />;
       default:
         return <Crown className="h-6 w-6 text-primary" />;
     }

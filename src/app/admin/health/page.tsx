@@ -75,7 +75,7 @@ async function getHealthData() {
   // Calculate health metrics for each user
   const usersWithHealth = allUsers.map(user => {
     const plan = user.plan as keyof typeof ENTITLEMENTS;
-    const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.TRIAL;
+    const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.FREE;
 
     // Calculate days since last scan
     const allScans = user.sites.flatMap(site => site.scans);
@@ -84,10 +84,9 @@ async function getHealthData() {
       ? Math.floor((now.getTime() - new Date(lastScan.createdAt).getTime()) / (24 * 60 * 60 * 1000))
       : 999;
 
-    // Check if trial is ending soon
-    const isTrial = user.plan === 'TRIAL';
+    // Check if user is on free plan
+    const isFree = user.plan.toString() === 'FREE';
     const accountAge = Math.floor((now.getTime() - new Date(user.createdAt).getTime()) / (24 * 60 * 60 * 1000));
-    const trialEndingSoon = isTrial && accountAge > 10 && accountAge < 14;
 
     // Calculate usage for current month
     const currentMonthScans = user.sites.flatMap(site =>
@@ -119,9 +118,9 @@ async function getHealthData() {
       riskFactors.push('No activity for 2+ weeks');
     }
 
-    if (trialEndingSoon) {
-      riskScore += 30;
-      riskFactors.push('Trial ending soon');
+    if (isFree && accountAge < 30) {
+      riskScore += 10;
+      riskFactors.push('New free account');
     }
 
     if (isNearLimit) {
@@ -147,7 +146,7 @@ async function getHealthData() {
         : user.email,
       plan,
       daysSinceLastScan,
-      trialEndingSoon,
+      isFree,
       isNearLimit,
       highErrorRate,
       paymentIssue,
@@ -166,7 +165,7 @@ async function getHealthData() {
   const stats = {
     totalAtRisk: atRiskUsers.length,
     inactive30Days: usersWithHealth.filter(u => u.daysSinceLastScan > 30).length,
-    trialsEnding: usersWithHealth.filter(u => u.trialEndingSoon).length,
+    freeAccounts: usersWithHealth.filter(u => u.isFree).length,
     paymentIssues: usersWithHealth.filter(u => u.paymentIssue).length,
     highErrorRates: usersWithHealth.filter(u => u.highErrorRate).length
   };
@@ -222,13 +221,13 @@ export default async function AdminHealthPage() {
           </Card>
 
           <Card>
-            <CardHeader className="pb-3">
-              <CardDescription>Trials Ending</CardDescription>
+            <CardHeader>
+              <CardTitle className="text-blue-600">Free Accounts</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <TrendingDown className="w-5 h-5 text-yellow-600" />
-                <div className="text-3xl font-bold text-yellow-600">{stats.trialsEnding}</div>
+                <Zap className="w-5 h-5 text-blue-600" />
+                <div className="text-3xl font-bold text-blue-600">{stats.freeAccounts}</div>
               </div>
             </CardContent>
           </Card>

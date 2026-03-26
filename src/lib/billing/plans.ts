@@ -1,5 +1,6 @@
 // All prices are EXCLUSIVE of VAT (net)
 export const PRICES = {
+  FREE:       { amount: "0.00",   currency: "EUR", interval: "1 month" },
   STARTER:    { amount: "19.00",  currency: "EUR", interval: "1 month" },
   PRO:        { amount: "44.00",  currency: "EUR", interval: "1 month" },
   BUSINESS:   { amount: "129.00", currency: "EUR", interval: "1 month" },
@@ -29,8 +30,8 @@ export type Entitlements = {
   accountManager?: boolean;
 }
 
-export const ENTITLEMENTS: Record<"TRIAL"|"STARTER"|"PRO"|"BUSINESS"|"ENTERPRISE", Entitlements> = {
-  TRIAL:      { sites: 1,  pagesPerMonth: 100,    users: 1,  pdf: true,  word: false, schedule: false, crawl: false, integrations: [],                          historyMonths: 1 },
+export const ENTITLEMENTS: Record<"FREE"|"STARTER"|"PRO"|"BUSINESS"|"ENTERPRISE", Entitlements> = {
+  FREE:       { sites: 1,  pagesPerMonth: 100,    users: 1,  pdf: true,  word: false, schedule: false, crawl: false, integrations: [],                          historyMonths: 1 },
   STARTER:    { sites: 1,  pagesPerMonth: 500,    users: 1,  pdf: true,  word: false, schedule: false, crawl: true,  integrations: [],                          historyMonths: 6 },
   PRO:        { sites: 3,  pagesPerMonth: 5000,   users: 5,  pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira"],             historyMonths: 12, prioritySupport: true },
   BUSINESS:   { sites: 10, pagesPerMonth: 25000,  users: 15, pdf: true,  word: true,  schedule: true,  crawl: true,  integrations: ["slack","jira","teams"],     historyMonths: 24, whiteLabel: true, prioritySupport: true },
@@ -38,7 +39,7 @@ export const ENTITLEMENTS: Record<"TRIAL"|"STARTER"|"PRO"|"BUSINESS"|"ENTERPRISE
 }
 
 export function planKeyFromString(p: string) {
-  return (["TRIAL","STARTER","PRO","BUSINESS","ENTERPRISE"] as const).includes(p as any) ? p as any : "TRIAL"
+  return (["FREE","STARTER","PRO","BUSINESS","ENTERPRISE"] as const).includes(p as any) ? p as any : "FREE"
 }
 
 export function formatPrice(plan: keyof typeof PRICES) {
@@ -47,9 +48,11 @@ export function formatPrice(plan: keyof typeof PRICES) {
 }
 
 export const PLAN_NAMES = {
-  TRIAL: 'Trial',
+  FREE: 'Free',
   STARTER: 'Starter',
   PRO: 'Pro', 
   BUSINESS: 'Business',
   ENTERPRISE: 'Enterprise',
 } as const
+
+export type Plan = "FREE" | "STARTER" | "PRO" | "BUSINESS" | "ENTERPRISE"

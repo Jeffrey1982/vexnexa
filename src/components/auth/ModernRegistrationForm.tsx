@@ -568,7 +568,7 @@ export default function ModernRegistrationForm() {
             </h3>
           </div>
           <p className="text-sm text-blue-700 dark:text-blue-300">
-            You&apos;ll get a 14-day free trial with full access to all features. No credit card required!
+            Free forever for 1 website and up to 100 pages. No credit card required!
           </p>
         </div>
       </div>

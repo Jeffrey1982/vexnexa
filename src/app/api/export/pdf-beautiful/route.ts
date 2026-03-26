@@ -759,16 +759,6 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("PDF export error:", error);
 
-    if (error.code === "TRIAL_EXPIRED") {
-      return NextResponse.json(
-        {
-          error: error.message,
-          code: "TRIAL_EXPIRED"
-        },
-        { status: 402 }
-      );
-    }
-
     return NextResponse.json(
       { error: "Failed to generate PDF" },
       { status: 500 }

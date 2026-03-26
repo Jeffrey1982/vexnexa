@@ -47,7 +47,12 @@
       "Bash(node check-blog-posts.mjs:*)",
       "Bash(npx prisma migrate dev:*)",
       "Bash(npx next build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(wc -l /d/Vexnexa-clean/messages/*.json)",
+      "Bash(ls /d/Vexnexa-clean/src/app/\\\\\\(marketing\\\\\\)/)",
+      "Bash(cd /d/Vexnexa-clean && git revert HEAD --no-edit)",
+      "Bash(cd /d/Vexnexa-clean && gh api repos/Jeffrey1982/vexnexa/deployments --jq '.[0:3] | .[] | {sha: .sha[0:12], env: .environment, created: .created_at, state: .statuses_url}' 2>&1)",
+      "Bash(cd /d/Vexnexa-clean && rm src/components/pwa/InstallPrompt.tsx)"
     ],
     "deny": [],
     "ask": []

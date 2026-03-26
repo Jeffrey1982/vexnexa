@@ -93,7 +93,7 @@ export async function POST(
     }
 
     // Check team member limit for the team owner's plan
-    const ownerPlan = team.owner.plan as "TRIAL" | "STARTER" | "PRO" | "BUSINESS";
+    const ownerPlan = team.owner.plan as "FREE" | "STARTER" | "PRO" | "BUSINESS";
     const { ENTITLEMENTS } = await import("@/lib/billing/plans");
     const userLimit = ENTITLEMENTS[ownerPlan].users;
 

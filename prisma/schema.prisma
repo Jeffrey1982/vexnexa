@@ -30,8 +30,8 @@ model User {
   nextReportAt           DateTime?
   lastReportSentAt       DateTime?
   profileCompleted       Boolean                 @default(false)
-  plan                   Plan                    @default(TRIAL)
-  subscriptionStatus     String                  @default("trialing")
+  plan                   Plan                    @default(FREE)
+  subscriptionStatus     String                  @default("active")
   trialEndsAt            DateTime?
   trialStartsAt          DateTime?
   trialOrigin            String?
@@ -1091,7 +1091,7 @@ model ScheduleRun {
 }
 
 enum Plan {
-  TRIAL
+  FREE
   STARTER
   PRO
   BUSINESS

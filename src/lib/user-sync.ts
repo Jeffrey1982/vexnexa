@@ -1,19 +1,16 @@
 import { prisma } from '@/lib/prisma'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
+import type { Plan as PrismaPlan } from '@prisma/client'
 
 export async function ensureUserInDatabase(supabaseUser: SupabaseUser): Promise<any> {
   try {
     const now: Date = new Date()
-    const trialStart: Date = now
-    const trialEnd: Date = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000) // 14 days
-    const trialOrigin: string = 'self-signup'
-
     const email: string = supabaseUser.email!
 
     const dbUser = await prisma.user.upsert({
       where: { email },
       update: {
-        email,
+        id: supabaseUser.id,
         firstName: supabaseUser.user_metadata?.first_name || null,
         lastName: supabaseUser.user_metadata?.last_name || null,
         company: supabaseUser.user_metadata?.company || null,
@@ -28,11 +25,13 @@ export async function ensureUserInDatabase(supabaseUser: SupabaseUser): Promise<
           supabaseUser.user_metadata?.first_name &&
           supabaseUser.user_metadata?.last_name
         ),
+        plan: 'FREE' as PrismaPlan,
+        subscriptionStatus: 'active',
         updatedAt: now
       },
       create: {
         id: supabaseUser.id,
-        email,
+        email: email,
         firstName: supabaseUser.user_metadata?.first_name || null,
         lastName: supabaseUser.user_metadata?.last_name || null,
         company: supabaseUser.user_metadata?.company || null,
@@ -47,48 +46,34 @@ export async function ensureUserInDatabase(supabaseUser: SupabaseUser): Promise<
           supabaseUser.user_metadata?.first_name &&
           supabaseUser.user_metadata?.last_name
         ),
-        plan: 'TRIAL',
-        subscriptionStatus: 'trialing',
-        trialStartsAt: trialStart,
-        trialEndsAt: trialEnd,
-        trialOrigin,
+        plan: 'FREE' as PrismaPlan,
+        subscriptionStatus: 'active',
         createdAt: new Date(supabaseUser.created_at),
         updatedAt: now
       }
     })
 
-    console.log('User synced to database:', dbUser.id)
     return dbUser
-
   } catch (error) {
-    console.error('Error ensuring user in database:', error)
-
+    console.error('[USER_SYNC] Error ensuring user in database:', error)
+    
     // Return fallback user object if database fails
     const now: Date = new Date()
-    const trialEnd: Date = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000)
 
     return {
       id: supabaseUser.id,
-      email: supabaseUser.email!,
+      email: supabaseUser.email,
       firstName: supabaseUser.user_metadata?.first_name || null,
       lastName: supabaseUser.user_metadata?.last_name || null,
-      company: supabaseUser.user_metadata?.company || null,
-      jobTitle: supabaseUser.user_metadata?.job_title || null,
       phoneNumber: supabaseUser.user_metadata?.phone_number || null,
       website: supabaseUser.user_metadata?.website || null,
       country: supabaseUser.user_metadata?.country || null,
-      plan: 'TRIAL' as const,
-      subscriptionStatus: 'trialing',
-      trialStartsAt: now,
-      trialEndsAt: trialEnd,
-      trialOrigin: 'self-signup',
+      plan: 'FREE' as const,
+      subscriptionStatus: 'active',
       profileCompleted: !!(
         supabaseUser.user_metadata?.first_name &&
         supabaseUser.user_metadata?.last_name
       ),
-      // GDPR: Marketing opt-in must be explicitly true
-      marketingEmails: supabaseUser.user_metadata?.marketing_emails === true,
-      productUpdates: supabaseUser.user_metadata?.product_updates !== false,
       createdAt: new Date(supabaseUser.created_at),
       updatedAt: now
     }

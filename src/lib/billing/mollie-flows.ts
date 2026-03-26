@@ -11,7 +11,8 @@ import { calculatePrice, type PlanKey, type BillingCycle } from "../pricing"
 import { sendInvoiceForPayment } from "./invoice-service"
 import type { PaymentCreateParams } from "@mollie/api-client"
 import { SequenceType } from "@mollie/api-client"
-import type { Plan } from "@prisma/client"
+import type { Plan as PrismaPlan } from "@prisma/client"
+import type { Plan } from "./plans"
 
 /** Map billing country to Mollie locale hint (best-effort, not forced) */
 function countryToMollieLocale(country: string): string | undefined {
@@ -436,7 +437,7 @@ export async function createSubscription(opts: {
   await prisma.user.update({
     where: { id: userId },
     data: {
-      plan,
+      plan: plan as PrismaPlan,
       billingInterval: billingCycle,
       subscriptionStatus: "active",
       mollieSubscriptionId: subscription.id,
@@ -474,9 +475,9 @@ export async function cancelSubscription(userId: string) {
     where: { id: userId },
     data: {
       subscriptionStatus: "canceled",
-      plan: "TRIAL", // Downgrade to trial
+      plan: "FREE" as PrismaPlan, // Downgrade to free
       mollieSubscriptionId: null,
-      trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days grace period
+      trialEndsAt: null
     }
   })
 }
@@ -523,6 +524,7 @@ export async function changePlan(opts: {
 export async function processWebhookPayment(paymentId: string) {
   // Fetch payment details from Mollie (never trust webhook data directly)
   const payment = await mollie.payments.get(paymentId)
+  // ... (rest of the code remains the same)
 
   // Check if this is an add-on related payment
   const metadata = payment.metadata as any
@@ -546,10 +548,10 @@ export async function processWebhookPayment(paymentId: string) {
   }
 
   // Payment is successful, create subscription
-  if (payment.customerId && plan !== "TRIAL") {
+  if (payment.customerId && plan !== "FREE") {
     await createSubscription({
       customerId: payment.customerId,
-      plan: plan as Exclude<Plan, "TRIAL">,
+      plan: plan as Exclude<Plan, "FREE">,
       userId,
       billingCycle
     })

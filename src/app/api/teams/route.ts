@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
       select: { plan: true }
     });
 
-    const ownerPlan = (userWithPlan?.plan || "TRIAL") as "TRIAL" | "STARTER" | "PRO" | "BUSINESS";
+    const ownerPlan = (userWithPlan?.plan || "FREE") as "FREE" | "STARTER" | "PRO" | "BUSINESS";
     const { ENTITLEMENTS } = await import("@/lib/billing/plans");
     const userLimit = ENTITLEMENTS[ownerPlan].users;
 

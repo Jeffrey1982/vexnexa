@@ -53,12 +53,12 @@
   },
   "home": {
     "hero": {
-      "title": "White-label WCAG monitoring for",
-      "titleHighlight": "agencies and EU-facing teams",
-      "subtitle": "Scan websites, catch accessibility regressions after every release, and deliver branded reports that support WCAG 2.2 and EAA readiness.",
-      "ctaPrimary": "Start your free scan",
+      "title": "Free forever for 1 website,",
+      "titleHighlight": "up to 100 pages",
+      "subtitle": "Scan your website for WCAG 2.2 compliance issues. No credit card required. Upgrade when you need more websites, pages, or advanced features.",
+      "ctaPrimary": "Start free scan",
       "ctaSecondary": "View sample report",
-      "noCreditCard": "Free account required. No credit card needed.",
+      "noCreditCard": "Free forever. No credit card required.",
       "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
     },
     "valuePillars": {
@@ -101,9 +101,9 @@
       "cta": "Start free scan"
     },
     "finalCta": {
-      "title": "Start monitoring accessibility today",
-      "subtitle": "Create your free account. Run your first scan. See results in minutes. Upgrade when you need monitoring, reports, and multi-site management.",
-      "ctaPrimary": "Start your free scan",
+      "title": "Start scanning your website for free",
+      "subtitle": "Free forever for 1 website and up to 100 pages. No credit card required. Get your WCAG 2.2 report in minutes. Upgrade when you need more websites, pages, or advanced features.",
+      "ctaPrimary": "Start free scan",
       "ctaSecondary": "View pricing"
     },
     "faq": {
@@ -117,7 +117,7 @@
       },
       "q3": {
         "question": "What if I exceed my plan?",
-        "answer": "Free Trial: Service is blocked at limit. Upgrade to a paid plan to continue scanning. Paid plans: Service continues but you'll receive notifications to upgrade if you consistently exceed your limits."
+        "answer": "Free Plan: Service is blocked at limit. Upgrade to a paid plan to continue scanning. Paid plans: Service continues but you'll receive notifications to upgrade if you consistently exceed your limits."
       },
       "q4": {
         "question": "Do you support teams/SSO?",
@@ -142,6 +142,10 @@
       "q9": {
         "question": "Can VexNexa automatically fix issues?",
         "answer": "No. Real accessibility requires proper code changes. We show you exactly what's wrong and how to fix it, but you need to make the changes yourself. Automated 'fixes' don't address root causes."
+      },
+      "q10": {
+        "question": "Is there really a free plan?",
+        "answer": "Yes! Our free plan is forever free for 1 website and up to 100 pages per month. No credit card required. You get full WCAG 2.2 scanning, PDF reports, and 1 month of scan history. Upgrade only when you need more websites, pages, or advanced features like monitoring and Word exports."
       }
     },
     "pillars": {
@@ -556,7 +560,7 @@
     },
     "cta": {
       "title": "Start scanning today",
-      "subtitle": "Start with a free trial. Upgrade when you need continuous monitoring, branded reports, or multi-site management.",
+      "subtitle": "Start with a free plan. Upgrade when you need continuous monitoring, branded reports, or multi-site management.",
       "startTrial": "Start free scan",
       "needMore": "Need higher limits?",
       "contactUs": "Contact us"
@@ -1877,12 +1881,6 @@
       "description": "This feature requires a paid plan. Upgrade to unlock advanced scanning capabilities.",
       "upgradeButton": "View Plans",
       "cancelButton": "Cancel"
-    },
-    "trialExpired": {
-      "title": "Trial Period Ended",
-      "description": "Your free trial has ended. Upgrade to a paid plan to continue using VexNexa.",
-      "upgradeButton": "Choose a Plan",
-      "cancelButton": "Sign Out"
     }
   },
   "modernAuth": {
@@ -1915,7 +1913,7 @@
       },
       "benefits": {
         "title": "What you get",
-        "freeScan": "Free trial scan included",
+        "freeScan": "Free scan included",
         "reports": "Detailed accessibility reports",
         "tracking": "Track improvements over time",
         "support": "Email support"
@@ -2019,7 +2017,7 @@
       "alreadyActive": "You already have this scan package active. Choose another package or cancel the existing one first."
     },
     "errors": {
-      "trialUser": "Upgrade to a paid plan to purchase add-ons.",
+      "freePlanUser": "Upgrade to a paid plan to purchase add-ons.",
       "noPaymentMethod": "No payment method found. Please set up your payment method first.",
       "paymentExpired": "Your payment method has expired. Click 'Set up payment method' to update it.",
       "setupPayment": "Set up payment method",

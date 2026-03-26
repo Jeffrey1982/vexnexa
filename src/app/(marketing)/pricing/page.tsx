@@ -176,20 +176,15 @@ function PricingCards() {
   const fmtPrice = (planKey: PlanKey, cycle: BillingCycle): {
     mainPrice: string; period: string; subtext?: string;
   } => {
-    if (planKey === 'ENTERPRISE') {
-      if (cycle === 'yearly') {
-        const total = dp(ANNUAL_PRICES.ENTERPRISE);
-        const perMonth = total / 12;
-        return { mainPrice: formatEuro(total), period: '/year', subtext: `${formatEuro(perMonth)}/month` };
-      }
-      return { mainPrice: formatEuro(dp(BASE_PRICES.ENTERPRISE)), period: '/month' };
+    if (planKey === 'FREE') {
+      return { mainPrice: 'Free', period: 'forever', subtext: '' };
     }
     if (cycle === 'yearly') {
-      const total = dp(ANNUAL_PRICES[planKey]);
+      const total = ANNUAL_PRICES[planKey];
       const perMonth = total / 12;
       return { mainPrice: formatEuro(total), period: '/year', subtext: `${formatEuro(perMonth)}/month` };
     }
-    return { mainPrice: formatEuro(dp(BASE_PRICES[planKey])), period: '/month' };
+    return { mainPrice: formatEuro(BASE_PRICES[planKey]), period: '/month' };
   };
 
   const plans: Array<{
@@ -202,7 +197,29 @@ function PricingCards() {
     ctaVariant: "outline" | "default";
   }> = [
     {
-      key: "STARTER",
+      key: "FREE" as PlanKey,
+      name: "Free Forever",
+      description: "Perfect for trying out VexNexa with one website",
+      highlighted: false,
+      features: [
+        `${ENTITLEMENTS.FREE.sites} website`,
+        `${ENTITLEMENTS.FREE.pagesPerMonth.toLocaleString()} pages per month`,
+        `${ENTITLEMENTS.FREE.users} user`,
+        "PDF reports",
+        "1 month history",
+        "Email support",
+      ],
+      limitations: [
+        "No Word exports",
+        "No scheduling",
+        "No crawling",
+        "No integrations",
+        "No white-label reports",
+      ],
+      ctaVariant: "outline",
+    },
+    {
+      key: "STARTER" as PlanKey,
       name: tp('starter.name'),
       description: tp('starter.description'),
       highlighted: false,
@@ -222,7 +239,7 @@ function PricingCards() {
       ctaVariant: "outline",
     },
     {
-      key: "PRO",
+      key: "PRO" as PlanKey,
       name: tp('pro.name'),
       description: tp('pro.description'),
       highlighted: true,
@@ -240,7 +257,7 @@ function PricingCards() {
       ctaVariant: "default",
     },
     {
-      key: "BUSINESS",
+      key: "BUSINESS" as PlanKey,
       name: tp('business.name'),
       description: tp('business.description'),
       highlighted: false,
@@ -259,7 +276,7 @@ function PricingCards() {
       ctaVariant: "default",
     },
     {
-      key: "ENTERPRISE",
+      key: "ENTERPRISE" as PlanKey,
       name: tp('enterprise.name'),
       description: tp('enterprise.description'),
       highlighted: false,
@@ -279,12 +296,16 @@ function PricingCards() {
     },
   ];
 
-  const handleUpgrade = (planKey: string) => {
+  const handleUpgrade = (planKey: PlanKey) => {
+    if (planKey === "FREE") {
+      window.location.href = "/auth/register";
+      return;
+    }
     if (planKey === "ENTERPRISE") {
       window.location.href = "/contact?subject=enterprise";
       return;
     }
-    setCheckoutPlan(planKey as PlanKey);
+    setCheckoutPlan(planKey);
     setError(null);
   };
 

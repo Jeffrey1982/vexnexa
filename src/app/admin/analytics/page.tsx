@@ -44,7 +44,7 @@ async function getAnalyticsData() {
   // Calculate usage for each user
   const usersWithMetrics = usersWithUsage.map(user => {
     const plan = user.plan as keyof typeof ENTITLEMENTS;
-    const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.TRIAL;
+    const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.FREE;
 
     const sitesCount = user.sites.length;
     const scansThisMonth = user.sites.reduce(

@@ -96,16 +96,6 @@ export async function POST(request: NextRequest) {
           { status: 429 }
         );
       }
-      
-      if ((error as any).code === "TRIAL_EXPIRED") {
-        return NextResponse.json(
-          { 
-            error: error.message,
-            code: "TRIAL_EXPIRED"
-          },
-          { status: 402 }
-        );
-      }
     }
     
     return NextResponse.json(

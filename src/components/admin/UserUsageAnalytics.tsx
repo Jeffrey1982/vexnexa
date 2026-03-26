@@ -40,7 +40,7 @@ export function UserUsageAnalytics({
   teamMembersCount
 }: UserUsageAnalyticsProps) {
   const plan = user.plan as keyof typeof ENTITLEMENTS;
-  const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.TRIAL;
+  const entitlements = ENTITLEMENTS[plan] || ENTITLEMENTS.FREE;
 
   // Calculate usage percentages
   const sitesUsage = sites.length;

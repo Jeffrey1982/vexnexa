@@ -675,16 +675,16 @@ export default function OnboardingPage() {
                 )}
               </div>
 
-              {/* Trial Info */}
+              {/* Free Plan Info */}
               <div className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 dark:from-blue-950 dark:to-purple-950 dark:border-blue-800">
                 <div className="flex items-center gap-3 mb-2">
                   <Zap className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <h3 className="font-semibold text-blue-900 dark:text-blue-100">
-                    Your 14-Day Free Trial Starts Now!
+                    Your Free Plan is Ready!
                   </h3>
                 </div>
                 <p className="text-sm text-blue-700 dark:text-blue-300">
-                  Full access to all features. No credit card required.
+                  Scan 1 website with up to 100 pages. No credit card required.
                 </p>
               </div>
 
