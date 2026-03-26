@@ -109,10 +109,10 @@ export function UserListClient({ users: initialUsers }: UserListClientProps) {
   // Calculate stats from filtered users
   const stats = useMemo(() => ({
     total: filteredUsers.length,
-    trial: filteredUsers.filter(u => u.plan === 'TRIAL').length,
-    starter: filteredUsers.filter(u => u.plan === 'STARTER').length,
-    pro: filteredUsers.filter(u => u.plan === 'PRO').length,
-    business: filteredUsers.filter(u => u.plan === 'BUSINESS').length,
+    free: filteredUsers.filter(u => (u.plan as string) === 'FREE').length,
+    starter: filteredUsers.filter(u => (u.plan as string) === 'STARTER').length,
+    pro: filteredUsers.filter(u => (u.plan as string) === 'PRO').length,
+    business: filteredUsers.filter(u => (u.plan as string) === 'BUSINESS').length,
     active: filteredUsers.filter(u => u.subscriptionStatus === 'active').length,
   }), [filteredUsers]);
 
@@ -200,10 +200,10 @@ export function UserListClient({ users: initialUsers }: UserListClientProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Trial</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Free</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600">{stats.trial}</div>
+            <div className="text-2xl font-bold text-blue-600">{stats.free}</div>
           </CardContent>
         </Card>
 
