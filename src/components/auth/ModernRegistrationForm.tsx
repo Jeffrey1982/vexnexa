@@ -593,6 +593,9 @@ export default function ModernRegistrationForm() {
       const { error: resendError } = await supabase.auth.resend({
         type: 'signup',
         email: signupEmail,
+        options: {
+          emailRedirectTo: buildAuthUrl('/auth/confirm'),
+        },
       })
       if (resendError) {
         if (isRateLimitError(resendError)) {
