@@ -178,7 +178,7 @@ export async function convertContactToTicket(contactId: string) {
         email: contact.email,
         firstName: contact.name.split(' ')[0],
         lastName: contact.name.split(' ').slice(1).join(' ') || undefined,
-        plan: 'TRIAL',
+        plan: 'FREE' as any,
         subscriptionStatus: 'inactive'
       }
     });
