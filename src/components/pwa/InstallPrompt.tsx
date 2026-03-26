@@ -21,26 +21,49 @@ export function InstallPrompt() {
   const [isVisible, setIsVisible] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [dismissed, setDismissed] = useState(true); // default hidden until checked
 
   useEffect(() => {
+    // Check if recently dismissed (safe localStorage access inside useEffect)
+    try {
+      const dismissedAt = localStorage.getItem('pwa-install-dismissed');
+      if (dismissedAt) {
+        const dayInMs = 24 * 60 * 60 * 1000;
+        if (Date.now() - parseInt(dismissedAt) < dayInMs * 7) {
+          setDismissed(true);
+          return;
+        }
+      }
+      setDismissed(false);
+    } catch {
+      // localStorage unavailable (Safari Private Browsing) — stay hidden
+      return;
+    }
+
     // Check if app is already installed
     const checkIfInstalled = () => {
-      if (window.matchMedia('(display-mode: standalone)').matches) {
-        setIsInstalled(true);
-        return;
-      }
-
-      // Check for iOS PWA
-      if ((window.navigator as any).standalone) {
-        setIsInstalled(true);
-        return;
+      try {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+          setIsInstalled(true);
+          return;
+        }
+        if ((window.navigator as any).standalone) {
+          setIsInstalled(true);
+          return;
+        }
+      } catch {
+        // matchMedia not available
       }
     };
 
     // Check if iOS device
     const checkIfIOS = () => {
-      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-      setIsIOS(isIOSDevice);
+      try {
+        const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+        setIsIOS(isIOSDevice);
+      } catch {
+        // navigator not available
+      }
     };
 
     // Listen for beforeinstallprompt event
@@ -56,7 +79,6 @@ export function InstallPrompt() {
 
     // Listen for app installation
     const handleAppInstalled = () => {
-      console.log('PWA was installed');
       setIsInstalled(true);
       setIsVisible(false);
       setDeferredPrompt(null);
@@ -96,21 +118,14 @@ export function InstallPrompt() {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    // Store dismissal in localStorage to avoid showing again too soon
-    localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+    try {
+      localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+    } catch {
+      // localStorage unavailable — ignore
+    }
   };
 
-  // Don't show if already installed or recently dismissed
-  const recentlyDismissed = () => {
-    const dismissed = localStorage.getItem('pwa-install-dismissed');
-    if (!dismissed) return false;
-
-    const dismissedTime = parseInt(dismissed);
-    const dayInMs = 24 * 60 * 60 * 1000;
-    return Date.now() - dismissedTime < dayInMs * 7; // Don't show for 7 days
-  };
-
-  if (isInstalled || !isVisible || recentlyDismissed()) {
+  if (isInstalled || !isVisible || dismissed) {
     return null;
   }
 

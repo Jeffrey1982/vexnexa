@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v12-api-bypass';
+const CACHE_NAME = 'vexnexa-v13-safari-fix';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',

@@ -16,20 +16,23 @@ export function CookieBanner({ className }: CookieBannerProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if consent has already been given
-    const consent = localStorage.getItem("cookie_consent");
-    if (!consent) {
-      setIsVisible(true);
+    try {
+      const consent = localStorage.getItem("cookie_consent");
+      if (!consent) {
+        setIsVisible(true);
+      }
+    } catch {
+      // localStorage unavailable (Safari Private Browsing)
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("cookie_consent", "1");
+    try { localStorage.setItem("cookie_consent", "1"); } catch {}
     setIsVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem("cookie_consent", "0");
+    try { localStorage.setItem("cookie_consent", "0"); } catch {}
     setIsVisible(false);
   };
 
