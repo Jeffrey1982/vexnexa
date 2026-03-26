@@ -78,7 +78,6 @@ export async function getCurrentUser(): Promise<any> {
       company: dbUser.company,
       plan: dbUser.plan,
       subscriptionStatus: dbUser.subscriptionStatus,
-      trialEndsAt: dbUser.trialEndsAt,
       profileCompleted: dbUser.profileCompleted,
       marketingEmails: dbUser.marketingEmails,
       productUpdates: dbUser.productUpdates,
