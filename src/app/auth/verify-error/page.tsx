@@ -58,8 +58,8 @@ export default function VerifyErrorPage(props: VerifyErrorPageProps): JSX.Elemen
 
           <p className="mt-6 text-xs text-muted-foreground dark:text-gray-400 text-center">
             Need help? Email{' '}
-            <a className="underline" href="mailto:support@vexnexa.com">
-              support@vexnexa.com
+            <a className="underline" href="mailto:info@vexnexa.com">
+              info@vexnexa.com
             </a>
             .
           </p>
