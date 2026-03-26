@@ -556,7 +556,6 @@ export interface UpdateUserSettingsInput {
   plan?: Plan;
   subscriptionStatus?: string;
   billingInterval?: string;
-  trialEndsAt?: string | null;
 
   // Assurance
   hasAssurance?: boolean;
@@ -572,7 +571,7 @@ export interface UpdateUserSettingsInput {
 
 const VALID_FREQUENCIES = ['weekly', 'biweekly', 'monthly'] as const;
 const VALID_FORMATS = ['pdf', 'docx', 'both'] as const;
-const VALID_STATUSES = ['active', 'canceled', 'past_due', 'inactive', 'trialing', 'suspended'] as const;
+const VALID_STATUSES = ['active', 'canceled', 'past_due', 'inactive', 'suspended'] as const;
 const VALID_INTERVALS = ['monthly', 'yearly'] as const;
 const VALID_ASSURANCE_TIERS = ['BASIC', 'PRO', 'PUBLIC_SECTOR'] as const;
 
@@ -620,7 +619,6 @@ export async function updateUserSettings(userId: string, input: UpdateUserSettin
       plan: true,
       subscriptionStatus: true,
       billingInterval: true,
-      trialEndsAt: true,
       hasAssurance: true,
       reportEmailEnabled: true,
       reportEmailFrequency: true,
@@ -639,10 +637,6 @@ export async function updateUserSettings(userId: string, input: UpdateUserSettin
   if (input.plan !== undefined && input.plan !== currentUser.plan) {
     data.plan = input.plan;
     changes.plan = { old: currentUser.plan, new: input.plan };
-    // Auto-set subscription status for TRIAL
-    if (input.plan === 'TRIAL' && !input.subscriptionStatus) {
-      data.subscriptionStatus = 'trialing';
-    }
   }
   if (input.subscriptionStatus !== undefined && input.subscriptionStatus !== currentUser.subscriptionStatus) {
     data.subscriptionStatus = input.subscriptionStatus;
@@ -651,11 +645,6 @@ export async function updateUserSettings(userId: string, input: UpdateUserSettin
   if (input.billingInterval !== undefined && input.billingInterval !== currentUser.billingInterval) {
     data.billingInterval = input.billingInterval;
     changes.billingInterval = { old: currentUser.billingInterval, new: input.billingInterval };
-  }
-  if (input.trialEndsAt !== undefined) {
-    const newVal = input.trialEndsAt ? new Date(input.trialEndsAt) : null;
-    data.trialEndsAt = newVal;
-    changes.trialEndsAt = { old: currentUser.trialEndsAt, new: newVal };
   }
 
   // Assurance
