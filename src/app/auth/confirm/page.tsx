@@ -11,6 +11,20 @@ import { CheckCircle, AlertTriangle, Loader2 } from 'lucide-react'
 
 type PageState = 'loading' | 'success' | 'error'
 
+/**
+ * Map the `type` param from the email template to a valid Supabase OTP type.
+ * Supabase accepts: 'signup', 'invite', 'email_change', 'recovery', 'magiclink', 'email'.
+ * Our email templates send: 'signup', 'invite', 'email_change'.
+ * Handle edge cases: 'email' → 'signup', 'confirmation' → 'signup'.
+ */
+function normalizeOtpType(type: string | null): string | null {
+  if (!type) return null
+  const t = type.toLowerCase().trim()
+  if (t === 'email' || t === 'confirmation') return 'signup'
+  if (['signup', 'invite', 'email_change', 'magiclink', 'recovery'].includes(t)) return t
+  return null
+}
+
 function ConfirmClient() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -25,56 +39,75 @@ function ConfirmClient() {
     attempted.current = true
 
     const tokenHash = searchParams.get('token_hash')
-    const type = searchParams.get('type') as 'signup' | 'invite' | 'email_change' | 'email' | null
+    const rawType = searchParams.get('type')
+    const otpType = normalizeOtpType(rawType)
 
-    if (!tokenHash || !type) {
-      setErrorMessage('This verification link is invalid or incomplete.')
+    console.log('[Confirm] init', {
+      hasTokenHash: !!tokenHash,
+      rawType,
+      normalizedType: otpType,
+    })
+
+    if (!tokenHash || !otpType) {
+      console.warn('[Confirm] Missing or invalid params', { tokenHash: !!tokenHash, rawType })
+      setErrorMessage(
+        !tokenHash
+          ? 'This verification link is missing a required token. It may have been truncated — try copying the full link from your email.'
+          : `Unknown verification type "${rawType}". Please contact support if this persists.`
+      )
       setPageState('error')
       return
     }
 
     const verify = async () => {
       try {
-        // Map 'email' type to 'signup' for Supabase verifyOtp
-        const otpType = type === 'email' ? 'signup' : type
         const { error } = await supabase.auth.verifyOtp({
           type: otpType as any,
           token_hash: tokenHash,
         })
 
         if (error) {
-          console.error('[Confirm] verifyOtp error:', error.message)
+          console.error('[Confirm] verifyOtp error:', error.message, error.status)
+          const isExpiredOrUsed =
+            error.message?.includes('expired') ||
+            error.message?.includes('invalid') ||
+            error.message?.includes('already') ||
+            error.status === 403
           setErrorMessage(
-            error.message.includes('expired') || error.message.includes('invalid')
+            isExpiredOrUsed
               ? 'This verification link has expired or has already been used. Please request a new one.'
-              : error.message
+              : `Verification failed: ${error.message}`
           )
           setPageState('error')
           return
         }
 
-        // Clean URL
-        window.history.replaceState(null, '', window.location.pathname)
+        // Clean sensitive params from URL
+        try {
+          window.history.replaceState(null, '', window.location.pathname)
+        } catch {
+          // Non-critical
+        }
 
-        // Sync user to database
+        // Sync user to database (non-fatal)
         try {
           const { data: { user } } = await supabase.auth.getUser()
           if (user) {
             await ensureUserInDatabase(user)
           }
-        } catch {
-          // Non-fatal
+        } catch (syncErr) {
+          console.warn('[Confirm] DB sync failed (non-fatal):', syncErr)
         }
 
         setPageState('success')
 
-        // Redirect to verified page after a brief moment
+        // Redirect to verified page
         setTimeout(() => {
           router.replace('/auth/verified')
         }, 1500)
       } catch (err: any) {
         console.error('[Confirm] Unexpected error:', err)
-        setErrorMessage(err?.message || 'An unexpected error occurred.')
+        setErrorMessage(err?.message || 'An unexpected error occurred during verification.')
         setPageState('error')
       }
     }
@@ -129,9 +162,12 @@ function ConfirmClient() {
                 </Alert>
                 <div className="mt-6 flex flex-col gap-3 w-full">
                   <Button asChild className="w-full gradient-primary text-white">
-                    <Link href="/auth/login">Go to login</Link>
+                    <Link href="/auth/register">Sign up again</Link>
                   </Button>
                   <Button asChild variant="outline" className="w-full">
+                    <Link href="/auth/login">Go to login</Link>
+                  </Button>
+                  <Button asChild variant="ghost" className="w-full">
                     <Link href="/">Back to home</Link>
                   </Button>
                 </div>

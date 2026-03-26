@@ -122,6 +122,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               pathname: '/auth/verify-error',
               searchParams: {
                 reason: error.message,
+                ...(type ? { flow: type } : {}),
               },
             })
           )

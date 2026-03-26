@@ -49,31 +49,42 @@ function ResetPasswordForm() {
     sessionAttempted.current = true
 
     // ── PWA standalone detection ──
-    const isStandalone: boolean =
-      window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone === true ||
-      document.referrer.includes('android-app://')
+    try {
+      const isStandalone: boolean =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true ||
+        document.referrer.includes('android-app://')
 
-    if (isStandalone) {
-      console.log('[ResetPassword] PWA standalone mode detected — showing browser redirect prompt')
-      setPageState('pwa_standalone')
-      return
+      if (isStandalone) {
+        console.log('[ResetPassword] PWA standalone mode detected — showing browser redirect prompt')
+        setPageState('pwa_standalone')
+        return
+      }
+    } catch (pwaErr) {
+      console.warn('[ResetPassword] PWA detection failed (non-fatal):', pwaErr)
+      // Continue to normal flow — better to show the form than crash
     }
 
     // ── Check for error params in hash or query ──
-    const rawHash: string = window.location.hash.substring(1)
-    const hashParams = new URLSearchParams(rawHash)
-    const hashError: string | null = hashParams.get('error')
-    const hashErrorDesc: string | null = hashParams.get('error_description')
+    let rawHash: string = ''
+    try {
+      rawHash = window.location.hash.substring(1)
+      const hashParams = new URLSearchParams(rawHash)
+      const hashError: string | null = hashParams.get('error')
+      const hashErrorDesc: string | null = hashParams.get('error_description')
+
+      if (hashError) {
+        window.history.replaceState(null, '', window.location.pathname)
+        setPageError(hashErrorDesc || hashError)
+        setPageState('invalid_link')
+        return
+      }
+    } catch (hashErr) {
+      console.warn('[ResetPassword] Hash parsing failed (non-fatal):', hashErr)
+    }
+
     const urlError: string | null = searchParams.get('error')
     const urlErrorDesc: string | null = searchParams.get('error_description')
-
-    if (hashError) {
-      window.history.replaceState(null, '', window.location.pathname)
-      setPageError(hashErrorDesc || hashError)
-      setPageState('invalid_link')
-      return
-    }
     if (urlError) {
       setPageError(urlErrorDesc || urlError)
       setPageState('invalid_link')
@@ -84,8 +95,12 @@ function ResetPasswordForm() {
     const settle = (state: PageState, err?: string) => {
       if (settled) return
       settled = true
-      if (window.location.search.length > 1 || window.location.hash.length > 1) {
-        window.history.replaceState(null, '', window.location.pathname)
+      try {
+        if (window.location.search.length > 1 || window.location.hash.length > 1) {
+          window.history.replaceState(null, '', window.location.pathname)
+        }
+      } catch {
+        // Non-critical — URL cleanup only
       }
       if (err) setPageError(err)
       setPageState(state)
