@@ -241,8 +241,6 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
                   plan: user.plan,
                   subscriptionStatus: user.subscriptionStatus,
                   billingInterval: user.billingInterval,
-                  trialEndsAt: user.trialEndsAt,
-                  trialStartsAt: user.trialStartsAt,
                   hasAssurance: user.hasAssurance,
                   reportEmailEnabled: user.reportEmailEnabled,
                   reportEmailFrequency: user.reportEmailFrequency,
