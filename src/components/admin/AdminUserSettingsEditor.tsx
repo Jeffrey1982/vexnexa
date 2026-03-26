@@ -36,9 +36,7 @@ interface UserSettingsData {
   plan: Plan;
   subscriptionStatus: string;
   billingInterval: string;
-  trialEndsAt: Date | null;
-  trialStartsAt: Date | null;
-  hasAssurance: boolean;
+    hasAssurance: boolean;
   reportEmailEnabled: boolean;
   reportEmailFrequency: string;
   reportRecipientEmail: string | null;
@@ -117,7 +115,6 @@ export function AdminUserSettingsEditor({ user }: AdminUserSettingsEditorProps) 
   const [plan, setPlan] = useState<Plan>(user.plan);
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>(user.subscriptionStatus);
   const [billingInterval, setBillingInterval] = useState<string>(user.billingInterval);
-  const [trialEndsAt, setTrialEndsAt] = useState<string>(formatDateForInput(user.trialEndsAt));
 
   const [hasAssurance, setHasAssurance] = useState<boolean>(user.hasAssurance);
   const activeAssurance = user.assuranceSubscriptions?.find((s) => s.status === 'active');
@@ -153,7 +150,6 @@ export function AdminUserSettingsEditor({ user }: AdminUserSettingsEditorProps) 
     plan !== user.plan ||
     subscriptionStatus !== user.subscriptionStatus ||
     billingInterval !== user.billingInterval ||
-    trialEndsAt !== formatDateForInput(user.trialEndsAt) ||
     hasAssurance !== user.hasAssurance ||
     assuranceTier !== (activeAssurance?.tier ?? 'BASIC') ||
     reportEmailEnabled !== user.reportEmailEnabled ||
@@ -174,8 +170,6 @@ export function AdminUserSettingsEditor({ user }: AdminUserSettingsEditorProps) 
       if (subscriptionStatus !== user.subscriptionStatus)
         input.subscriptionStatus = subscriptionStatus;
       if (billingInterval !== user.billingInterval) input.billingInterval = billingInterval;
-      if (trialEndsAt !== formatDateForInput(user.trialEndsAt))
-        input.trialEndsAt = trialEndsAt || null;
 
       if (hasAssurance !== user.hasAssurance) input.hasAssurance = hasAssurance;
       if (hasAssurance && assuranceTier !== (activeAssurance?.tier ?? 'BASIC'))
@@ -273,37 +267,6 @@ export function AdminUserSettingsEditor({ user }: AdminUserSettingsEditorProps) 
                 </SelectContent>
               </Select>
             </div>
-
-            {/* Trial Ends At */}
-            <div className="space-y-2">
-              <Label htmlFor="settings-trial-ends">Trial Ends At</Label>
-              <div className="flex items-center gap-2">
-                <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="settings-trial-ends"
-                  type="datetime-local"
-                  value={trialEndsAt}
-                  onChange={(e) => setTrialEndsAt(e.target.value)}
-                  className="flex-1"
-                />
-                {trialEndsAt && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setTrialEndsAt('')}
-                    className="text-xs"
-                  >
-                    Clear
-                  </Button>
-                )}
-              </div>
-              {user.trialStartsAt && (
-                <p className="text-xs text-muted-foreground">
-                  Trial started: {new Date(user.trialStartsAt).toLocaleDateString()}
-                </p>
-              )}
-            </div>
-          </div>
         </CardContent>
       </Card>
 
