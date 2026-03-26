@@ -111,7 +111,16 @@ function ResetPasswordForm() {
     const code: string | null = searchParams.get('code')
     const hasAuthParams: boolean = !!(code || tokenHash || rawHash.length > 0)
 
-    console.log('[ResetPassword] init', { hasCode: !!code, hasTokenHash: !!tokenHash, otpType })
+    console.log('[Auth:ResetPassword] init', {
+      flow: tokenHash ? 'token_hash' : code ? 'pkce_code' : rawHash ? 'hash_fragment' : 'none',
+      hasTokenHash: !!tokenHash,
+      tokenHashLen: tokenHash?.length ?? 0,
+      otpType,
+      hasCode: !!code,
+      hasHashFragment: rawHash.length > 0,
+      pathname: window.location.pathname,
+      userAgent: navigator.userAgent.substring(0, 80),
+    })
 
     // ── (1) token_hash flow (from updated email template) ──
     // Handled manually because Supabase's client does NOT auto-process token_hash.

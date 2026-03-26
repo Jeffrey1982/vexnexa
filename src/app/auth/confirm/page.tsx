@@ -42,10 +42,14 @@ function ConfirmClient() {
     const rawType = searchParams.get('type')
     const otpType = normalizeOtpType(rawType)
 
-    console.log('[Confirm] init', {
+    console.log('[Auth:Confirm] init', {
       hasTokenHash: !!tokenHash,
+      tokenHashLen: tokenHash?.length ?? 0,
       rawType,
       normalizedType: otpType,
+      pathname: window.location.pathname,
+      hasSearchParams: window.location.search.length > 1,
+      userAgent: navigator.userAgent.substring(0, 80),
     })
 
     if (!tokenHash || !otpType) {
@@ -67,7 +71,11 @@ function ConfirmClient() {
         })
 
         if (error) {
-          console.error('[Confirm] verifyOtp error:', error.message, error.status)
+          console.error('[Auth:Confirm] verifyOtp FAILED', {
+            message: error.message,
+            status: error.status,
+            type: otpType,
+          })
           const isExpiredOrUsed =
             error.message?.includes('expired') ||
             error.message?.includes('invalid') ||

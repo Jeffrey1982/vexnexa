@@ -77,7 +77,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const isVerificationHint: boolean =
     type === 'signup' || type === 'email_change' || flow === 'verify' || flow === 'signup'
 
-  console.log('[Callback] Request params:', { code: code?.substring(0, 10), error, type, flow, next })
+  console.log('[Auth:Callback] Request received', {
+    hasCode: !!code,
+    codePrefix: code?.substring(0, 8),
+    error: error || undefined,
+    type: type || undefined,
+    flow: flow || undefined,
+    next: next || undefined,
+    isVerificationHint,
+    host: requestUrl.hostname,
+    pathname: requestUrl.pathname,
+    userAgent: request.headers.get('user-agent')?.substring(0, 80),
+  })
 
   // Handle OAuth error
   if (error) {
@@ -105,7 +116,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
       if (error) {
-        console.error('[Callback] Session exchange error:', error)
+        console.error('[Auth:Callback] Session exchange FAILED', {
+          message: error.message,
+          status: (error as any).status,
+          type,
+          flow,
+          isVerificationHint,
+        })
 
         // Detect verification-related errors even without type= param
         const isVerificationError: boolean =
