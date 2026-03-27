@@ -42,7 +42,7 @@ function JsonLd() {
         '@id': 'https://vexnexa.com/#organization',
         name: 'VexNexa',
         url: 'https://vexnexa.com',
-        logo: 'https://vexnexa.com/brand/vexnexa-logo.png',
+        logo: 'https://vexnexa.com/brand/vexnexa-logo-lockup-light.png',
         contactPoint: {
           '@type': 'ContactPoint',
           email: 'info@vexnexa.com',
