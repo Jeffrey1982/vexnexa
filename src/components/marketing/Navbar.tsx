@@ -147,7 +147,7 @@ export function Navbar({ className }: NavbarProps) {
                 >
                   <Link href="/auth/register">
                     <span className="relative z-10">{t('signup')}</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-background/25 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                   </Link>
                 </Button>
               </>

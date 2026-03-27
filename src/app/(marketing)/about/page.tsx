@@ -391,7 +391,7 @@ export default async function AboutPage() {
 
                 <div className="mt-8 space-y-6">
                   {['q1', 'q2', 'q3', 'q4', 'q5', 'q6'].map((q, i) => (
-                    <div key={i} className="rounded-2xl bg-muted/30 p-6">
+                    <div key={i} className="rounded-2xl border border-border/40 bg-card p-6">
                       <h3 className="font-display text-xl font-semibold text-foreground mb-2">{t(`faq.questions.${q}.question`)}</h3>
                       <p className="text-muted-foreground">{t(`faq.questions.${q}.answer`)}</p>
                     </div>
@@ -439,7 +439,7 @@ export default async function AboutPage() {
           </section>
 
           {/* Footer disclaimer */}
-          <section className="py-8 bg-muted/30">
+          <section className="border-y border-border/40 bg-muted py-8">
             <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
               <p className="text-sm text-muted-foreground">
                 {t('footerDisclaimer.billing')}

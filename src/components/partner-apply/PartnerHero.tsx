@@ -15,15 +15,7 @@ export function PartnerHero({ remaining }: { remaining: number }) {
   }
 
   return (
-    <section className="relative overflow-hidden border-b border-border/50 bg-gradient-to-b from-primary/[0.07] via-background to-background py-14 md:py-20 dark:from-primary/10">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35] dark:opacity-25"
-        aria-hidden
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--primary) / 0.25), transparent)",
-        }}
-      />
+    <section className="relative overflow-hidden border-b border-border/40 bg-background py-14 md:py-20">
       <div className="container relative mx-auto max-w-4xl px-4 text-center">
         <p className="mb-4 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary dark:bg-primary/10">
           Members-only pilot

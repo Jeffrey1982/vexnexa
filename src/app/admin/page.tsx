@@ -109,7 +109,7 @@ export default async function AdminDashboard() {
   const stats = await getAdminStats();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[var(--surface-0)]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
@@ -204,7 +204,7 @@ export default async function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white dark:bg-[var(--surface-2)] rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
+              <div className="bg-card rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">Total Tickets</p>
@@ -215,7 +215,7 @@ export default async function AdminDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-[var(--surface-2)] rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
+              <div className="bg-card rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">Open Tickets</p>
@@ -226,7 +226,7 @@ export default async function AdminDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-[var(--surface-2)] rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
+              <div className="bg-card rounded-xl p-4 shadow-sm dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/[0.04]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">In Progress</p>
@@ -248,7 +248,7 @@ export default async function AdminDashboard() {
                     const userName = `${ticket.user.firstName || ''} ${ticket.user.lastName || ''}`.trim() || ticket.user.email;
                     return (
                       <Link key={ticket.id} href={`/admin/support/tickets/${ticket.id}`}>
-                        <div className="bg-white dark:bg-[var(--surface-2)] p-3 rounded-lg border border-gray-200 dark:border-white/[0.06] hover:border-orange-300 dark:hover:border-orange-400/30 hover:shadow-sm dark:hover:bg-[var(--surface-3)] transition-all cursor-pointer">
+                        <div className="bg-card p-3 rounded-lg border border-border/60 dark:border-white/[0.06] hover:border-orange-300 dark:hover:border-orange-400/30 hover:shadow-sm dark:hover:bg-[var(--surface-3)] transition-all cursor-pointer">
                           <div className="flex items-center justify-between">
                             <div className="flex-1 min-w-0">
                               <p className="font-medium text-gray-900 dark:text-foreground truncate">{ticket.subject}</p>

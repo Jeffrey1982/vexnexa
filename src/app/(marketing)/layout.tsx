@@ -49,7 +49,7 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <SkipLink />
       <Navbar />
       <main id="main-content" className="flex-1" tabIndex={-1}>

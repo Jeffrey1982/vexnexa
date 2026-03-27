@@ -143,7 +143,7 @@ function HeroSection(): React.ReactElement {
 
 function AgencyProblemSection(): React.ReactElement {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl font-bold font-display text-center">
@@ -254,7 +254,7 @@ function ReportContentsSection(): React.ReactElement {
   ];
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-4">
@@ -357,7 +357,7 @@ function AudienceSection(): React.ReactElement {
   ];
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold font-display text-center mb-12">
           Built for Teams That Serve Clients
@@ -443,7 +443,7 @@ function FAQSection(): React.ReactElement {
 
 function FinalCTASection(): React.ReactElement {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-6">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">

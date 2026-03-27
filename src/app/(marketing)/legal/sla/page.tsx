@@ -230,7 +230,7 @@ export default async function SLAPage() {
           {/* Contact Support */}
           <section id="contact">
             <h2>Contact Support</h2>
-            <div className="not-prose rounded-lg border bg-muted/40 p-4 space-y-2">
+            <div className="not-prose rounded-lg border bg-muted p-4 space-y-2">
               <p className="font-medium">Support Contact</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
@@ -240,7 +240,7 @@ export default async function SLAPage() {
                 Or via the contact form in your dashboard
               </p>
             </div>
-            <div className="not-prose mt-4 rounded-lg border bg-muted/40 p-4 space-y-2">
+            <div className="not-prose mt-4 rounded-lg border bg-muted p-4 space-y-2">
               <p className="font-medium">Business Information</p>
               <p className="text-sm text-muted-foreground">
                 <strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands <br />

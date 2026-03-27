@@ -17,7 +17,7 @@ export default function AdminError({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[var(--surface-0)] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <Card className="max-w-lg w-full">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">

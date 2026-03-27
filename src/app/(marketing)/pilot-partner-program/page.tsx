@@ -217,7 +217,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
       </section>
 
       {/* Who this is for */}
-      <section className="py-16 lg:py-24 bg-muted/30">
+      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -279,7 +279,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
       </section>
 
       {/* What we ask in return */}
-      <section className="py-16 lg:py-24 bg-muted/30">
+      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -356,7 +356,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
               {agencyBenefits.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-muted/40"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-muted"
                 >
                   <Check className="h-5 w-5 text-success mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <span className="text-sm leading-relaxed">{item}</span>
@@ -368,7 +368,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
       </section>
 
       {/* What to expect from the pilot */}
-      <section className="py-16 lg:py-24 bg-muted/30">
+      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -446,7 +446,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 event="pilot_partner_apply_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
-                className="bg-white text-primary hover:bg-white/90"
+                className="bg-background text-primary hover:bg-muted"
               >
                 Apply for pilot access
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />

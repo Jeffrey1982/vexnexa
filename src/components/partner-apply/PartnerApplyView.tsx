@@ -52,7 +52,7 @@ function PartnerApplySuccess() {
 
 function PartnerApplyWaitlist() {
   return (
-    <div className="mx-auto max-w-lg rounded-2xl border border-border/60 bg-muted/20 px-6 py-10 text-center">
+        <div className="mx-auto max-w-lg rounded-2xl border border-border/60 bg-card px-6 py-10 text-center shadow-sm">
       <h2 className="font-display text-xl font-bold md:text-2xl">Program is full</h2>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
         Pilot partner seats are allocated. Join the waitlist and we will contact you if a spot becomes available.
@@ -82,7 +82,7 @@ export function PartnerApplyView({ remaining }: { remaining: number }) {
     <>
       <PartnerHero remaining={remaining} />
 
-      <section className="border-b border-border/40 bg-muted/20 py-12 md:py-16" aria-labelledby="partner-value-heading">
+      <section className="border-b border-border/40 bg-muted py-12 md:py-16" aria-labelledby="partner-value-heading">
         <div className="container mx-auto px-4">
           <h2 id="partner-value-heading" className="sr-only">
             Pilot partner benefits

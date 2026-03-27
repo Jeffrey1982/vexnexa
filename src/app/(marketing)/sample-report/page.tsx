@@ -341,7 +341,7 @@ export default function SampleReportPage() {
             </Card>
 
             {/* White-label note */}
-            <Card className="mb-8 bg-muted/30">
+            <Card className="mb-8 border-border/50 bg-card">
               <CardContent className="p-6">
                 <h3 className="font-semibold font-display mb-2 flex items-center gap-2">
                   <Download className="h-5 w-5 text-primary" />
@@ -379,7 +379,7 @@ export default function SampleReportPage() {
               <Button
                 size="lg"
                 variant="secondary"
-                className="bg-white text-primary hover:bg-white/90"
+                className="bg-background text-primary hover:bg-muted"
                 asChild
               >
                 <Link

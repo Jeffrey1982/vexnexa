@@ -144,7 +144,7 @@ export function StandardsTrustBar({
   return (
     <section
       className={cn(
-        "bg-muted/25",
+        "bg-muted",
         inset
           ? "rounded-2xl border border-border/50 py-5 md:py-6"
           : "border-y border-border/40",

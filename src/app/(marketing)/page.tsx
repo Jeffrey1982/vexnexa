@@ -95,7 +95,7 @@ function HeroSection() {
                     {t('ctaPrimary')}
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-background/25 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                 </Link>
               </Button>
 
@@ -184,7 +184,7 @@ function TrustStrip() {
   ];
 
   return (
-    <section className="py-10 bg-muted/30 border-y">
+    <section className="border-y border-border/40 bg-muted py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {items.map((item, i) => (
@@ -277,7 +277,7 @@ function BuiltForSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-subtle">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -353,7 +353,7 @@ function WhatYouGetSection() {
           </div>
 
           <div className="relative">
-            <div className="bg-white rounded-2xl p-4"
+            <div className="rounded-2xl border border-border/50 bg-card p-4 shadow-sm"
               style={{
                 boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
@@ -385,7 +385,7 @@ function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-20 bg-muted/30 border-y">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -415,7 +415,7 @@ function TestimonialsSection() {
 function SampleReportSection() {
   const t = useTranslations('home.sampleReport');
   return (
-    <section className="py-20 bg-muted/30 border-y">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
@@ -450,7 +450,7 @@ function SampleReportSection() {
 function AgencyOfferSection() {
   const t = useTranslations('home.agencyOffer');
   return (
-    <section className="py-20 bg-gradient-subtle">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <div className="flex items-center justify-center gap-2 text-primary">
@@ -603,7 +603,7 @@ function FinalCTASection() {
             <Button
               size="lg"
               variant="secondary"
-              className="button-hover bg-white text-primary hover:bg-white/90 shadow-soft px-8 py-6 text-base"
+              className="button-hover bg-background text-primary shadow-soft hover:bg-muted px-8 py-6 text-base"
               asChild
             >
               <Link

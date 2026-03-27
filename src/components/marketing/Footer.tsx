@@ -78,7 +78,7 @@ export function Footer({ className }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={cn("border-t border-border/40 bg-muted/30", className)}>
+    <footer className={cn("border-t border-border/40 bg-muted", className)}>
       <div className="container mx-auto px-4 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">

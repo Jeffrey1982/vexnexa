@@ -151,7 +151,7 @@ export default async function PrivacyPage() {
             <p>
               {t('section1.content')}
             </p>
-            <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
+            <div className="not-prose mt-5 rounded-lg border bg-muted p-4">
               <p className="font-medium">{t('section1.contactTitle')}</p>
               <p className="text-sm text-muted-foreground">
                 <strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands <br />
@@ -386,7 +386,7 @@ export default async function PrivacyPage() {
           {/* 14 */}
           <section id="contact-klachten">
             <h2>{t('section14.title')}</h2>
-            <div className="not-prose rounded-lg border bg-muted/40 p-4 space-y-2">
+            <div className="not-prose rounded-lg border bg-muted p-4 space-y-2">
               <p className="font-medium">{t('section14.getInTouch')}</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />

@@ -5,9 +5,9 @@
 
 :root {
   /* ===== Base & Neutral Colors ===== */
-  --color-bg: #F8F9FA; /* Cloud White */
+  --color-bg: #FFFFFF;
   --color-bg-subtle: #F8F9FA;
-  --color-bg-muted: #E8E9EA;
+  --color-bg-muted: #F8F9FA;
   --color-text: #1E1E1E; /* Midnight Graphite */
   --color-text-muted: #C0C3C7; /* Ash Gray */
   --color-text-subtle: #A8AAAD;

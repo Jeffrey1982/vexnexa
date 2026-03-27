@@ -222,7 +222,7 @@ export default async function SecurityPage() {
               <li><strong>Supabase:</strong> Database and authentication (ISO 27001 certified)</li>
               <li><strong>Mollie:</strong> Payment processing (PCI DSS compliant)</li>
             </ul>
-            <div className="not-prose mt-5 rounded-lg border bg-muted/40 p-4">
+            <div className="not-prose mt-5 rounded-lg border bg-muted p-4">
               <p className="text-sm font-medium">GDPR Compliance</p>
               <p className="text-sm text-muted-foreground mt-2">
                 All our third-party processors are GDPR compliant and have Data Processing Agreements in place.
@@ -268,7 +268,7 @@ export default async function SecurityPage() {
           {/* Contact */}
           <section id="contact">
             <h2>Contact</h2>
-            <div className="not-prose rounded-lg border bg-muted/40 p-4 space-y-2">
+            <div className="not-prose rounded-lg border bg-muted p-4 space-y-2">
               <p className="font-medium">Security Inquiries</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
@@ -278,7 +278,7 @@ export default async function SecurityPage() {
                 For security vulnerabilities or privacy concerns, please contact us at the email above.
               </p>
             </div>
-            <div className="not-prose mt-4 rounded-lg border bg-muted/40 p-4 space-y-2">
+            <div className="not-prose mt-4 rounded-lg border bg-muted p-4 space-y-2">
               <p className="font-medium">Business Information</p>
               <p className="text-sm text-muted-foreground">
                 <strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands <br />

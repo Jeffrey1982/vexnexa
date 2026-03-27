@@ -147,7 +147,7 @@ function HeroSection(): React.ReactElement {
 
 function ReportingGapSection(): React.ReactElement {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl font-bold font-display text-center">
@@ -250,7 +250,7 @@ function ReportStructureSection(): React.ReactElement {
 
 function ExportFormatsSection(): React.ReactElement {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-10">
@@ -388,7 +388,7 @@ function AudienceSection(): React.ReactElement {
 
 function ScopeSection(): React.ReactElement {
   return (
-    <section className="py-12 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-4">
           <h2 className="text-2xl font-bold font-display">
@@ -474,7 +474,7 @@ function FAQSection(): React.ReactElement {
 
 function FinalCTASection(): React.ReactElement {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-6">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">

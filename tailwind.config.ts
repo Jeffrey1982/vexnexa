@@ -9,6 +9,7 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		/* Semantic surfaces: background / muted / card — driven by globals.css :root & .dark */
   		fontFamily: {
   			sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
   			display: ['var(--font-spacegrotesk)', 'Space Grotesk', 'sans-serif'],

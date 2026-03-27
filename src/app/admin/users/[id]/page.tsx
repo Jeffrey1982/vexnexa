@@ -171,7 +171,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
+      <div className="min-h-screen bg-background">
         <div className="max-w-7xl mx-auto p-6">
           <Card>
             <CardContent className="p-12 text-center">
@@ -188,7 +188,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
+    <div className="min-h-screen bg-background">
 
       <div className="max-w-7xl mx-auto p-6">
         <Link href="/admin/users">

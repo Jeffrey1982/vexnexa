@@ -181,7 +181,7 @@ export default function GetStartedPage() {
           </Card>
 
           {/* What Happens Next */}
-          <Card className="bg-muted/30">
+          <Card className="border-border/50 bg-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary" />

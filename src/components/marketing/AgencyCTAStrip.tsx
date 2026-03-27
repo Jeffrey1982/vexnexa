@@ -17,7 +17,7 @@ interface AgencyCTAStripProps {
 
 export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
   return (
-    <section className="py-14 bg-muted/40 border-y">
+    <section className="border-y border-border/40 bg-muted py-14">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <div className="flex items-center justify-center gap-2 text-primary">

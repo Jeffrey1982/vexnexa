@@ -43,15 +43,14 @@
        - Never use Solar Gold (#FFD166) for body text (insufficient contrast)
        ======================================== */
 
-    /* VexNexa Colors - Aurora Orange & Midnight Graphite Theme */
-    --background: 210 17% 98%; /* Cloud White */
-    --foreground: 0 0% 8%; /* Darker text for better readability */
+    /* Surfaces — calm 2-layer light system (#FFFFFF base, #F8F9FA muted) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
-    /* Cards & Surfaces - Cloud White backgrounds */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%; /* Darker text */
+    --card-foreground: 0 0% 8%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%; /* Darker text */
+    --popover-foreground: 0 0% 8%;
 
     /* Primary - Aurora Orange (Energie, innovatie, kracht) */
     --primary: 25 100% 42%;
@@ -72,9 +71,9 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* UI Elements - Ash Gray borders */
-    --border: 214 6% 77%;
-    --input: 214 6% 77%;
+    /* UI — subtle separation without heavy gray */
+    --border: 214 14% 90%;
+    --input: 214 14% 90%;
     --ring: 25 100% 42%;
 
     /* Status Colors - VexNexa palette */
@@ -105,12 +104,12 @@
     /* VexNexa gradient variables */
     --gradient-primary: linear-gradient(135deg, #D45A00 0%, #FF8A5B 100%);
     --gradient-subtle: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
-    --shadow-elegant: 0 2px 8px rgba(212, 90, 0, 0.12);
-    --shadow-soft: 0 4px 16px rgba(212, 90, 0, 0.15);
+    --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+    --shadow-soft: 0 4px 14px -2px rgb(0 0 0 / 0.08);
 
     /* VexNexa Brand Tokens - Aurora Edition */
-    --vn-bg: #1E1E1E; /* Midnight Graphite */
-    --vn-surface: #F8F9FA; /* Cloud White */
+    --vn-bg: #1E1E1E;
+    --vn-surface: #FFFFFF;
     --vn-muted: #F8F9FA;
     --vn-border: #C0C3C7; /* Ash Gray */
     --vn-text: #141414; /* Darker for better readability */
@@ -135,7 +134,7 @@
        Selected bg stays tinted, text stays dark.
        Contrast: --foreground on --selected-bg ≥ 10:1
        ═══════════════════════════════════════════ */
-    --selected-bg: 25 100% 97%;          /* very subtle orange tint — #FFF8F5 */
+    --selected-bg: 210 25% 97%;
     --selected-border: 25 100% 42%;      /* Aurora Orange — matches --primary */
     --selected-ring: 25 100% 42% / 0.35; /* primary at 35% opacity for ring */
     --selected-text: 0 0% 8%;            /* same as --foreground */
@@ -143,32 +142,23 @@
   }
   
   .dark {
-    /* ═══════════════════════════════════════════
-       DARK SURFACE LAYER SYSTEM (Vercel/Stripe)
-       ═══════════════════════════════════════════
-       Layer 0 (base):    #0A0A0B — deepest page bg
-       Layer 1 (surface):  #111113 — sidebar, nav
-       Layer 2 (card):     #18181B — cards, panels
-       Layer 3 (elevated): #1F1F23 — popovers, dropdowns
-       Layer 4 (hover):    #27272A — hover states
-       ═══════════════════════════════════════════ */
-    --background: 240 6% 4%;       /* #0A0A0B — deepest base */
-    --foreground: 0 0% 96%;        /* #F5F5F5 — crisp white text */
+    /* Calm 3-layer dark: #121212 page, #1A1A1A muted, #1F1F1F cards */
+    --background: 0 0% 7.1%;       /* #121212 */
+    --foreground: 0 0% 96%;
 
-    --card: 240 4% 9.5%;           /* #18181B — card surface */
+    --card: 0 0% 12.2%;            /* #1F1F1F */
     --card-foreground: 0 0% 96%;
-    --popover: 240 4% 12%;         /* #1F1F23 — elevated panel */
+    --popover: 0 0% 14%;
     --popover-foreground: 0 0% 96%;
 
-    /* Aurora Orange for dark mode — darkened for WCAG AA */
     --primary: 25 100% 42%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 4% 16%;       /* subtle secondary bg */
+    --secondary: 0 0% 12.2%;
     --secondary-foreground: 0 0% 96%;
 
-    --muted: 240 4% 14%;           /* muted bg for inputs, zebra */
-    --muted-foreground: 240 5% 65%; /* #A0A0AB — WCAG AA on #18181B = 5.2:1 */
+    --muted: 0 0% 10.2%;           /* #1A1A1A */
+    --muted-foreground: 0 0% 65%;
 
     --accent: 42 100% 70%; /* Solar Gold */
     --accent-foreground: 0 0% 8%;
@@ -176,8 +166,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 4% 18%;          /* #2C2C31 — subtle, not muddy */
-    --input: 240 4% 18%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
     --ring: 25 100% 42%;
 
     --success: 160 84% 39%;        /* brighter teal for dark bg */
@@ -201,18 +191,16 @@
     --chart-4: 0 0% 96%;     /* White */
     --chart-5: 240 5% 65%;   /* Muted */
 
-    /* Dark surface layer tokens for direct use */
-    --surface-0: #0A0A0B;
-    --surface-1: #111113;
-    --surface-2: #18181B;
-    --surface-3: #1F1F23;
-    --surface-4: #27272A;
+    --surface-0: #121212;
+    --surface-1: #1A1A1A;
+    --surface-2: #1F1F1F;
+    --surface-3: #262626;
+    --surface-4: #2e2e2e;
 
-    /* Dark mode VexNexa brand tokens */
-    --vn-bg: #0A0A0B;
-    --vn-surface: #18181B;
-    --vn-muted: #27272A;
-    --vn-border: #2C2C31;
+    --vn-bg: #121212;
+    --vn-surface: #1F1F1F;
+    --vn-muted: #1A1A1A;
+    --vn-border: #2e2e2e;
     --vn-text: #F5F5F5;
     --vn-text-muted: #A0A0AB; /* 5.2:1 on card bg — WCAG AA */
     --vn-primary: #D45A00; /* Aurora Orange — WCAG AA compliant */
@@ -231,7 +219,7 @@
 
     /* Dark mode VexNexa gradients */
     --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);
-    --gradient-subtle: linear-gradient(135deg, #111113 0%, #18181B 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(var(--background)) 100%);
 
     /* Dark mode shadows — tinted for depth without glow */
     --shadow-elegant: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -244,7 +232,7 @@
        Accent ring/border for emphasis, NOT light fill.
        Contrast: --foreground (#F5F5F5) on --selected-bg (#1F1F23) = 14.5:1 ✓
        ═══════════════════════════════════════════ */
-    --selected-bg: 240 4% 12%;            /* #1F1F23 — surface-3, one step above card */
+    --selected-bg: 0 0% 14%;
     --selected-border: 25 100% 42%;       /* Aurora Orange — matches --primary */
     --selected-ring: 25 100% 50% / 0.35;  /* primary at 35% opacity for ring */
     --selected-text: 0 0% 96%;            /* same as --foreground */
@@ -261,24 +249,15 @@
   
   html {
     scroll-behavior: smooth;
+    @apply bg-background;
   }
-  
+
   body {
     @apply bg-background text-foreground font-sans;
-    background-image:
-      linear-gradient(to right, rgba(255, 107, 53, 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 107, 53, 0.06) 1px, transparent 1px);
-    background-size: 32px 32px;
-    background-attachment: fixed;
     font-feature-settings: "rlig" 1, "calt" 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Remove grid pattern in dark mode — clean, calm base */
-  .dark body {
-    background-image: none;
   }
   
   /* Enhanced typography scale - Space Grotesk for headings */
@@ -465,17 +444,17 @@
 /* Modern component utilities */
 @layer utilities {
   .glass {
-    background: rgba(248, 249, 250, 0.8);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid rgba(255, 107, 53, 0.15);
-    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.12);
+    background: hsl(var(--background) / 0.88);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid hsl(var(--border) / 0.6);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.04);
   }
 
   .dark .glass {
-    background: rgba(17, 17, 19, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: hsl(var(--background) / 0.92);
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.2);
   }
   
   /* ═══════════════════════════════════════════

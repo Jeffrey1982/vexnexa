@@ -531,7 +531,7 @@ function AuditServicesSection() {
         <div className="text-center mb-12">
           <Badge
             variant="outline"
-            className="mb-4 bg-white dark:bg-slate-900"
+            className="mb-4 bg-card"
           >
             <FileSearch className="w-3 h-3 mr-1" />
             {tp("audits.badge")}
@@ -549,7 +549,7 @@ function AuditServicesSection() {
           {audits.map((audit) => (
             <Card
               key={audit.productId}
-              className="bg-white dark:bg-slate-900 flex flex-col"
+              className="bg-card flex flex-col"
             >
               <CardHeader>
                 <CardTitle className="font-display text-xl">
@@ -659,7 +659,7 @@ function AuditBundlesSection() {
           {bundles.map((bundle) => (
             <Card
               key={bundle.productId}
-              className="bg-white dark:bg-slate-900 flex flex-col"
+              className="bg-card flex flex-col"
             >
               <CardHeader>
                 <CardTitle className="font-display text-lg">
@@ -753,7 +753,7 @@ function AddOnsSection() {
         <div className="text-center mb-12">
           <Badge
             variant="outline"
-            className="mb-4 bg-white dark:bg-slate-900"
+            className="mb-4 bg-card"
           >
             {tp("addons.badge")}
           </Badge>
@@ -770,7 +770,7 @@ function AddOnsSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Extra Website Packs */}
-          <Card className="bg-white dark:bg-slate-900">
+          <Card className="bg-card">
             <CardHeader>
               <CardTitle className="font-display text-xl">
                 {tp("addons.websites.title")}
@@ -784,7 +784,7 @@ function AddOnsSection() {
                 {websitePacks.map((pack, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between p-3 rounded-lg border bg-muted/30"
+                    className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-muted"
                   >
                     <span className="font-medium text-sm">{pack.label}</span>
                     <div className="text-right">
@@ -805,7 +805,7 @@ function AddOnsSection() {
           </Card>
 
           {/* Page Volume Packs */}
-          <Card className="bg-white dark:bg-slate-900">
+          <Card className="bg-card">
             <CardHeader>
               <CardTitle className="font-display text-xl">
                 {tp("addons.pages.title")}
@@ -821,7 +821,7 @@ function AddOnsSection() {
                   return (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-3 rounded-lg border bg-muted/30"
+                      className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-muted"
                     >
                       <div>
                         <span className="font-medium text-sm">
@@ -870,7 +870,7 @@ function AddOnsSection() {
           </Card>
 
           {/* Assurance Add-on */}
-          <Card className="bg-white dark:bg-slate-900">
+          <Card className="bg-card">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="font-display text-xl">
@@ -894,7 +894,7 @@ function AddOnsSection() {
                 ))}
               </div>
               <div className="space-y-2 border-t pt-3">
-                <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
+                <div className="flex items-center justify-between p-2 rounded-lg border border-border/50 bg-muted">
                   <span className="text-sm">Starter</span>
                   <div className="text-right">
                     <span className="font-bold text-sm">
@@ -906,7 +906,7 @@ function AddOnsSection() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
+                <div className="flex items-center justify-between p-2 rounded-lg border border-border/50 bg-muted">
                   <span className="text-sm">Pro</span>
                   <div className="text-right">
                     <span className="font-bold text-sm">
@@ -942,7 +942,7 @@ function OverflowPricingSection() {
   const t = useTranslations("pricing.overflow");
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">

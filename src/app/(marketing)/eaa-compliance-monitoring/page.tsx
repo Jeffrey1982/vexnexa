@@ -166,7 +166,7 @@ export default function EaaComplianceMonitoringPage() {
       </section>
 
       {/* What you can track */}
-      <section className="py-20 bg-muted/30">
+      <section className="border-y border-border/40 bg-muted py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold font-display mb-4 text-center">
@@ -228,7 +228,7 @@ export default function EaaComplianceMonitoringPage() {
                 eventProps={{ location: "footer" }}
                 size="lg"
                 variant="secondary"
-                className="bg-white text-primary hover:bg-white/90"
+                className="bg-background text-primary hover:bg-muted"
               >
                 Start your free scan <Zap className="ml-2 h-5 w-5" />
               </TrackedCTA>

@@ -211,7 +211,7 @@ export function PartnerApplicationForm({
       </div>
 
       <div className="space-y-3 pt-2">
-        <p className="flex items-start gap-2 rounded-lg border border-border/60 bg-muted/30 px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+        <p className="flex items-start gap-2 rounded-lg border border-border/60 bg-muted px-4 py-3 text-sm leading-relaxed text-muted-foreground">
           <span className="select-none text-base leading-none" aria-hidden="true">
             ✅
           </span>

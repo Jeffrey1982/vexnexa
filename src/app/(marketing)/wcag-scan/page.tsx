@@ -149,7 +149,7 @@ function HeroSection(): React.ReactElement {
 
 function ProblemSection(): React.ReactElement {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl font-bold font-display text-center">
@@ -284,7 +284,7 @@ function HowItWorksSection(): React.ReactElement {
   ];
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold font-display text-center mb-12">
           Four Steps from URL to Fix List
@@ -395,7 +395,7 @@ function UseCasesSection(): React.ReactElement {
   ];
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold font-display text-center mb-12">
           Built for Teams That Ship Accessible Products
@@ -498,7 +498,7 @@ function FAQSection(): React.ReactElement {
   ];
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-10">

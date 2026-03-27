@@ -112,7 +112,7 @@ export default async function AdminAnalyticsPage() {
   } catch (error) {
     console.error('[Analytics] Error loading data:', error);
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
+      <div className="min-h-screen bg-background">
         <div className="max-w-7xl mx-auto p-6">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">Usage Analytics</h1>
@@ -134,7 +134,7 @@ export default async function AdminAnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-white/[0.03]">
+    <div className="min-h-screen bg-background">
 
       <div className="max-w-7xl mx-auto p-6">
         <div className="mb-8">
