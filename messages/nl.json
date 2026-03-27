@@ -53,12 +53,15 @@
   },
   "home": {
     "hero": {
-      "title": "White-label WCAG-monitoring voor",
-      "titleHighlight": "agencies en EU-gerichte teams",
-      "subtitle": "Scan websites, detecteer toegankelijkheidsproblemen na elke release en lever rapporten op maat die WCAG 2.2- en EAA-gereedheid ondersteunen.",
-      "ctaPrimary": "Start je gratis scan",
+      "title": "WCAG-monitoring waar",
+      "titleHighlight": "agencies op vertrouwen",
+      "subtitle": "Scan websites op WCAG 2.2-problemen, detecteer regressies na elke release en lever branded compliancerapporten waar je klanten op vertrouwen.",
+      "freeTier": "Start gratis met 1 website en tot 100 pagina's — geen creditcard nodig. Upgrade wanneer je meer websites, continue monitoring of white-label rapporten nodig hebt.",
+      "ctaPrimary": "Gratis beginnen",
       "ctaSecondary": "Bekijk voorbeeldrapport",
-      "noCreditCard": "Gratis account vereist. Geen creditcard nodig.",
+      "trust1": "WCAG 2.2 & EAA-dekking",
+      "trust2": "White-label PDF- & DOCX-rapporten",
+      "trust3": "EU-gehost, AVG-conform",
       "imageAlt": "VexNexa dashboard voor toegankelijkheidsscans met gedetailleerde WCAG-rapporten en prioritering van problemen"
     },
     "valuePillars": {

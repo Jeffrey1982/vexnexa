@@ -53,12 +53,15 @@
   },
   "home": {
     "hero": {
-      "title": "Free forever for 1 website,",
-      "titleHighlight": "up to 100 pages",
-      "subtitle": "Scan your website for WCAG 2.2 compliance issues. No credit card required. Upgrade when you need more websites, pages, or advanced features.",
-      "ctaPrimary": "Start free scan",
+      "title": "WCAG monitoring that",
+      "titleHighlight": "agencies rely on",
+      "subtitle": "Scan websites for WCAG 2.2 issues, catch regressions after every release, and deliver branded compliance reports your clients trust.",
+      "freeTier": "Start free with 1 website and up to 100 pages — no credit card required. Upgrade when you need more websites, continuous monitoring, or white-label reports.",
+      "ctaPrimary": "Get started free",
       "ctaSecondary": "View sample report",
-      "noCreditCard": "Free forever. No credit card required.",
+      "trust1": "WCAG 2.2 & EAA coverage",
+      "trust2": "White-label PDF & DOCX reports",
+      "trust3": "EU-hosted, GDPR compliant",
       "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
     },
     "valuePillars": {

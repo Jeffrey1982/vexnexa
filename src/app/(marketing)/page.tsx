@@ -75,6 +75,10 @@ function HeroSection() {
               {t('subtitle')}
             </p>
 
+            <p className="animate-slide-up text-sm text-muted-foreground leading-relaxed">
+              {t('freeTier')}
+            </p>
+
             <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
               <Button
                 size="lg"
@@ -108,9 +112,15 @@ function HeroSection() {
               </Button>
             </div>
 
-            <p className="animate-fade-in text-sm text-muted-foreground pt-4">
-              {t('noCreditCard')}
-            </p>
+            {/* Trust bullets */}
+            <div className="animate-fade-in flex flex-col sm:flex-row gap-x-6 gap-y-2 justify-center lg:justify-start pt-2">
+              {([t('trust1'), t('trust2'), t('trust3')] as string[]).map((item) => (
+                <span key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Check className="h-4 w-4 text-primary shrink-0" />
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="relative animate-fade-in">
