@@ -4,6 +4,7 @@ import { ScoreRing } from './ScoreRing';
 import { ImpactBar } from './ImpactBar';
 import { ViolationCard } from './ViolationCard';
 import { ReportCTA } from './ReportCTA';
+import { EAAReadinessSection } from './EAAReadinessSection';
 import { TrendMini } from './TrendMini';
 
 interface PublicReportContentProps {
@@ -184,6 +185,18 @@ export function PublicReportContent({ report, history, normalizedDomain, isCanon
           )}
         </section>
       )}
+
+      <EAAReadinessSection
+        score={score}
+        scannedDomain={normalizedDomain}
+        issueCounts={{
+          critical: report.impact_critical,
+          serious: report.impact_serious,
+          moderate: report.impact_moderate,
+          minor: report.impact_minor,
+          total: totalIssues,
+        }}
+      />
 
       {/* Score Trend (if history available) */}
       {history.length > 1 && isCanonical && (

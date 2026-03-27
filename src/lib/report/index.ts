@@ -33,3 +33,4 @@ export type {
   AffectedElementDetail,
 } from "./types";
 export { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";
+export * from "./eaa-readiness-copy";

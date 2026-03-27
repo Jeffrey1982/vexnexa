@@ -11,6 +11,20 @@ import {
 } from "@/lib/report";
 import type { ReportData, ReportIssue, Severity, WcagMatrixRow, TopPriorityFix } from "@/lib/report/types";
 import {
+  EAA_IMPORTANT_NOTE_BODY,
+  EAA_IMPORTANT_NOTE_TITLE,
+  EAA_LEARN_MORE_LABEL,
+  EAA_LEARN_MORE_URL,
+  EAA_LEGAL_NOTICE_SHORT,
+  EAA_READINESS_INTRO,
+  EAA_RECOMMENDATION_CLOSING,
+  EAA_SCAN_COVERS_BODY,
+  EAA_SCAN_COVERS_HEADING,
+  EAA_STANDARDS_BODY,
+  EAA_STANDARDS_HEADING,
+  formatEaaContextLine,
+} from "@/lib/report/eaa-readiness-copy";
+import {
   Document,
   Packer,
   Paragraph,
@@ -426,7 +440,51 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     });
   }
 
-  children.push(new Paragraph({ children: [], pageBreakBefore: true }));
+  // ── EAA Readiness (after findings, before scan configuration) ──
+  const eaaCtx = formatEaaContextLine({
+    domain: data.domain,
+    score: data.score,
+    totalIssues: data.issueBreakdown.total,
+  });
+  children.push(
+    heading("EAA Readiness"),
+    ...(eaaCtx
+      ? [para(eaaCtx)]
+      : [
+          new Paragraph({
+            spacing: { after: 80 },
+            children: [
+              new TextRun({ text: "Automated scan — ", bold: true, size: 20, color: "6B7280" }),
+              new TextRun({
+                text: "Indicators only; not a conformity assessment.",
+                size: 20,
+                color: "6B7280",
+                italics: true,
+              }),
+            ],
+          }),
+        ]),
+    para(EAA_READINESS_INTRO),
+    spacer(),
+    subheading(EAA_STANDARDS_HEADING),
+    para(EAA_STANDARDS_BODY),
+    spacer(),
+    subheading(EAA_SCAN_COVERS_HEADING),
+    para(EAA_SCAN_COVERS_BODY),
+    spacer(),
+    subheading(EAA_IMPORTANT_NOTE_TITLE),
+    para(EAA_IMPORTANT_NOTE_BODY),
+    spacer(),
+    para(EAA_RECOMMENDATION_CLOSING),
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [
+        new TextRun({ text: `${EAA_LEARN_MORE_LABEL}: `, size: 20, color: "374151" }),
+        new TextRun({ text: EAA_LEARN_MORE_URL, size: 20, color: "2563EB" }),
+      ],
+    }),
+    new Paragraph({ children: [], pageBreakBefore: true })
+  );
 
   // ── Scan Configuration (Task 3) ──
   if (data.scanConfig) {
@@ -454,9 +512,11 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   // ── Compliance & Legal ──
   children.push(
     heading("Compliance & Legal"),
-    subheading("European Accessibility Act (EAA) 2025"),
-    para("The European Accessibility Act requires digital products and services to be accessible by June 28, 2025. Non-compliance may result in fines, market restrictions, and reputational damage across EU member states."),
-    para(`Your status: ${data.eaaReady ? "Your site meets the baseline requirements for EAA compliance." : "Your site requires remediation to meet EAA requirements."}`),
+    subheading("Legal notice"),
+    para(EAA_LEGAL_NOTICE_SHORT),
+    para(
+      "For how automated scanning relates to the European Accessibility Act (EAA), EN 301 549, and WCAG, see the EAA Readiness section above. Automated indicators (including internal readiness labels) are not legal compliance certification."
+    ),
     spacer(),
     subheading("Continuous Monitoring Recommendation"),
     para("Accessibility is not a one-time fix. We recommend automated weekly scans, quarterly manual audits, developer training on WCAG fundamentals, and accessibility testing as part of CI/CD pipeline."),

@@ -18,6 +18,111 @@ import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types"
 import { formatDate } from "@/lib/format";
 import { requireAuth } from "@/lib/auth";
 import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
+import {
+  EAA_IMPORTANT_NOTE_BODY,
+  EAA_IMPORTANT_NOTE_TITLE,
+  EAA_LEARN_MORE_LABEL,
+  EAA_LEARN_MORE_URL,
+  EAA_READINESS_INTRO,
+  EAA_RECOMMENDATION_CLOSING,
+  EAA_SCAN_COVERS_BODY,
+  EAA_SCAN_COVERS_HEADING,
+  EAA_STANDARDS_BODY,
+  EAA_STANDARDS_HEADING,
+  formatEaaContextLine,
+} from "@/lib/report/eaa-readiness-copy";
+
+function buildEaaReadinessParagraphsForExport(
+  siteUrl: string,
+  score: number | null | undefined,
+  totalIssues: number
+): Paragraph[] {
+  let hostname = siteUrl;
+  try {
+    hostname = new URL(siteUrl).hostname;
+  } catch {
+    /* keep raw */
+  }
+  const ctx = formatEaaContextLine({
+    domain: hostname,
+    score: score ?? undefined,
+    totalIssues,
+  });
+  const intro: Paragraph[] = ctx
+    ? [
+        new Paragraph({
+          spacing: { after: 120 },
+          children: [new TextRun({ text: ctx, size: 20, color: "6B7280" })],
+        }),
+      ]
+    : [
+        new Paragraph({
+          spacing: { after: 80 },
+          children: [
+            new TextRun({ text: "Automated scan — ", bold: true, size: 20, color: "6B7280" }),
+            new TextRun({
+              text: "Indicators only; not a conformity assessment.",
+              size: 20,
+              color: "6B7280",
+              italics: true,
+            }),
+          ],
+        }),
+      ];
+  return [
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "EAA Readiness",
+          size: 28,
+          bold: true,
+        }),
+      ],
+      heading: HeadingLevel.HEADING_1,
+      spacing: { before: 400, after: 200 },
+    }),
+    ...intro,
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [new TextRun({ text: EAA_READINESS_INTRO, size: 22 })],
+    }),
+    new Paragraph({
+      spacing: { before: 120, after: 80 },
+      children: [new TextRun({ text: EAA_STANDARDS_HEADING, bold: true, size: 24 })],
+    }),
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [new TextRun({ text: EAA_STANDARDS_BODY, size: 22 })],
+    }),
+    new Paragraph({
+      spacing: { before: 120, after: 80 },
+      children: [new TextRun({ text: EAA_SCAN_COVERS_HEADING, bold: true, size: 24 })],
+    }),
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [new TextRun({ text: EAA_SCAN_COVERS_BODY, size: 22 })],
+    }),
+    new Paragraph({
+      spacing: { before: 120, after: 80 },
+      children: [new TextRun({ text: EAA_IMPORTANT_NOTE_TITLE, bold: true, size: 24 })],
+    }),
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [new TextRun({ text: EAA_IMPORTANT_NOTE_BODY, size: 22 })],
+    }),
+    new Paragraph({
+      spacing: { after: 120 },
+      children: [new TextRun({ text: EAA_RECOMMENDATION_CLOSING, size: 22 })],
+    }),
+    new Paragraph({
+      spacing: { after: 200 },
+      children: [
+        new TextRun({ text: `${EAA_LEARN_MORE_LABEL}: `, size: 20, color: "374151" }),
+        new TextRun({ text: EAA_LEARN_MORE_URL, size: 20, color: "2563EB" }),
+      ],
+    }),
+  ];
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -304,6 +409,8 @@ export async function POST(req: NextRequest) {
                 }),
               ],
             }),
+
+            ...buildEaaReadinessParagraphsForExport(siteUrl, scan.score ?? null, stats.total),
 
             // Top Violations
             ...(topViolations.length > 0 ? [

@@ -1,4 +1,18 @@
 import type { ReportData, ReportIssue, Severity, ReportStyle, WcagMatrixRow, TopPriorityFix } from "./types";
+import {
+  EAA_IMPORTANT_NOTE_BODY,
+  EAA_IMPORTANT_NOTE_TITLE,
+  EAA_LEARN_MORE_LABEL,
+  EAA_LEARN_MORE_URL,
+  EAA_LEGAL_NOTICE_SHORT,
+  EAA_READINESS_INTRO,
+  EAA_RECOMMENDATION_CLOSING,
+  EAA_SCAN_COVERS_BODY,
+  EAA_SCAN_COVERS_HEADING,
+  EAA_STANDARDS_BODY,
+  EAA_STANDARDS_HEADING,
+  formatEaaContextLine,
+} from "./eaa-readiness-copy";
 
 /* ═══════════════════════════════════════════════════════════
    Public API
@@ -33,6 +47,7 @@ ${renderExecutiveSummary(data, primary, s)}
 ${renderVisualBreakdown(data, primary, s)}
 ${renderWcagMatrix(data, primary, s)}
 ${renderPriorityIssues(data, primary, s)}
+${renderEAAReadinessSection(data, primary, s)}
 ${renderScanConfiguration(data, primary, s)}
 ${renderComplianceLegal(data, primary, s)}
 ${renderCTA(data, primary, s)}
@@ -105,6 +120,7 @@ function renderTOC(d: ReportData, primary: string, s: ReportStyle): string {
   d.priorityIssues.forEach((iss, i) => {
     entries.push({ label: `#${i + 1} ${iss.title}`, anchor: `finding-${iss.id}`, level: 3 });
   });
+  entries.push({ label: "EAA Readiness", anchor: "eaa-readiness", level: 2 });
   entries.push({ label: "Scan Configuration", anchor: "scan-config", level: 2 });
   entries.push({ label: "Compliance &amp; Legal", anchor: "appendix", level: 2 });
 
@@ -611,6 +627,34 @@ function renderPriorityIssues(d: ReportData, primary: string, s: ReportStyle): s
 </section>`).join("");
 }
 
+function renderEAAReadinessSection(d: ReportData, primary: string, s: ReportStyle): string {
+  const ctx = formatEaaContextLine({
+    domain: d.domain,
+    score: d.score,
+    totalIssues: d.issueBreakdown.total,
+  });
+  const body = `
+  ${ctx ? `<p class="eaa-context">${esc(ctx)}</p>` : `<p class="eaa-badge-hint"><span class="eaa-badge">Automated scan</span> Results are indicators only and do not constitute a conformity assessment.</p>`}
+  <p>${esc(EAA_READINESS_INTRO)}</p>
+  <div class="eaa-two-col">
+    <div class="legal-card">
+      <h3>${esc(EAA_STANDARDS_HEADING)}</h3>
+      <p>${esc(EAA_STANDARDS_BODY)}</p>
+    </div>
+    <div class="legal-card">
+      <h3>${esc(EAA_SCAN_COVERS_HEADING)}</h3>
+      <p>${esc(EAA_SCAN_COVERS_BODY)}</p>
+    </div>
+  </div>
+  <div class="eaa-note" style="border-left:4px solid ${primary}">
+    <p><strong>${esc(EAA_IMPORTANT_NOTE_TITLE)}</strong></p>
+    <p>${esc(EAA_IMPORTANT_NOTE_BODY)}</p>
+  </div>
+  <p>${esc(EAA_RECOMMENDATION_CLOSING)}</p>
+  <p class="eaa-learn-more"><a href="${esc(EAA_LEARN_MORE_URL)}" style="color:${primary}">${esc(EAA_LEARN_MORE_LABEL)}</a></p>`;
+  return pageSection("EAA Readiness", primary, s, body, "eaa-readiness");
+}
+
 function renderAuditCard(iss: ReportIssue, num: number, primary: string, domain: string): string {
   const details = iss.affectedElementDetails ?? [];
   return `<div class="audit-card" id="finding-${esc(iss.id)}">
@@ -700,13 +744,9 @@ function renderComplianceLegal(d: ReportData, primary: string, s: ReportStyle): 
   return pageSection("Compliance &amp; Legal", primary, s, `
   <div class="legal-grid">
     <div class="legal-card">
-      <h3>European Accessibility Act (EAA) 2025</h3>
-      <p>The European Accessibility Act requires digital products and services to be accessible by June 28, 2025.
-      Non-compliance may result in fines, market restrictions, and reputational damage across EU member states.</p>
-      <p><strong>Your status:</strong>
-        <span style="color:${d.eaaReady ? "#16A34A" : "#D97706"};font-weight:600">
-          ${d.eaaReady ? "Your site meets the baseline requirements for EAA compliance." : "Your site requires remediation to meet EAA requirements."}
-        </span></p>
+      <h3>Legal notice</h3>
+      <p>${esc(EAA_LEGAL_NOTICE_SHORT)}</p>
+      <p>For how automated scanning relates to the European Accessibility Act (EAA), harmonised standards such as EN 301 549, and WCAG, see the <strong>EAA Readiness</strong> section in this report. Automated indicators and internal readiness labels are not legal compliance certification.</p>
     </div>
     <div class="legal-card">
       <h3>Continuous Monitoring Recommendation</h3>
@@ -1177,6 +1217,16 @@ body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 .legal-card p{font-size:13px;color:#4B5563;margin-bottom:var(--space-sm);line-height:1.6}
 .legal-card ul{margin:var(--space-sm) 0 0 var(--space-lg);font-size:13px;color:#4B5563}
 .legal-card li{margin-bottom:var(--space-xs)}
+.eaa-context{font-size:12px;color:#6B7280;margin-bottom:var(--space-md);line-height:1.55}
+.eaa-badge-hint{font-size:12px;color:#6B7280;margin-bottom:var(--space-md);line-height:1.55}
+.eaa-badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #E5E7EB;font-size:11px;font-weight:600;margin-right:8px;vertical-align:middle}
+.eaa-two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin:var(--space-md) 0}
+@media print{.eaa-two-col{grid-template-columns:1fr 1fr}}
+.eaa-note{background:rgba(0,0,0,.025);padding:var(--space-md);border-radius:var(--r-sm);margin:var(--space-md) 0}
+.eaa-note p{font-size:13px;margin-bottom:var(--space-xs)}
+.eaa-note p:last-child{margin-bottom:0}
+.eaa-learn-more{font-size:12px;margin-top:var(--space-md)}
+.eaa-learn-more a{text-decoration:underline}
 .audit-table{width:100%;border-collapse:collapse}
 .audit-table td{padding:var(--space-sm) var(--space-md);border-bottom:1px solid #E5E7EB;font-size:13px}
 .audit-table td:first-child{font-weight:600;color:#374151;width:140px}

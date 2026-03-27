@@ -356,6 +356,14 @@ describe("HTML export — golden-file regression", () => {
     expect(html).toContain("Outside scan scope");
   });
 
+  it("includes EAA Readiness section with harmonised standard and no EAA compliance certification claims", () => {
+    const html = getHTML();
+    expect(html).toContain('id="eaa-readiness"');
+    expect(html).toContain("EN 301 549");
+    expect(html).toContain("EAA Readiness");
+    expect(html).not.toContain("baseline requirements for EAA compliance");
+  });
+
   it("Page / URL column present in evidence tables", () => {
     const html = getHTML();
     expect(html).toContain("Page / URL");
