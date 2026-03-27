@@ -61,6 +61,37 @@ async function main() {
   fs.renameSync(target + '.tmp', target)
   console.log('Wrote transparent', target)
 
+  // Tight crop to opaque pixels (keeps UI aspect ratio accurate). Sync BRAND_MARK_ASPECT in brand.ts if this changes.
+  const buf2 = fs.readFileSync(target)
+  const { data: d2, info: i2 } = await sharp(buf2).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+  const w2 = i2.width
+  const h2 = i2.height
+  let minX = w2
+  let minY = h2
+  let maxX = 0
+  let maxY = 0
+  for (let y = 0; y < h2; y++) {
+    for (let x = 0; x < w2; x++) {
+      if (d2[(y * w2 + x) * 4 + 3] > 20) {
+        minX = Math.min(minX, x)
+        minY = Math.min(minY, y)
+        maxX = Math.max(maxX, x)
+        maxY = Math.max(maxY, y)
+      }
+    }
+  }
+  if (maxX >= minX && maxY >= minY) {
+    const pad = 8
+    const left = Math.max(0, minX - pad)
+    const top = Math.max(0, minY - pad)
+    const width = Math.min(w2 - left, maxX - minX + 1 + 2 * pad)
+    const height = Math.min(h2 - top, maxY - minY + 1 + 2 * pad)
+    await sharp(target).extract({ left, top, width, height }).png().toFile(target + '.tmp')
+    fs.renameSync(target + '.tmp', target)
+    const meta = await sharp(target).metadata()
+    console.log('Cropped to', meta.width, 'x', meta.height, '— set BRAND_MARK_ASPECT =', meta.width, '/', meta.height)
+  }
+
   // Refresh favicons derived from V mark
   const sizes = [
     [32, 'vexnexa-favicon-32.png'],

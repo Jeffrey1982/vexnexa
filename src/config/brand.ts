@@ -3,8 +3,8 @@
  * Change these values to rebrand the entire application.
  */
 
-/** Width ÷ height of `vexnexa-v-mark.png` (update if source asset changes). */
-export const BRAND_MARK_ASPECT = 682 / 1024
+/** Width ÷ height of `vexnexa-v-mark.png` (tight-cropped to the glyph; update if asset changes). */
+export const BRAND_MARK_ASPECT = 497 / 383
 
 export const BRAND = {
   name: "VexNexa",
