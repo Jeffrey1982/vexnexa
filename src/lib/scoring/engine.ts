@@ -77,7 +77,11 @@ export interface ScoreBreakdown {
  * Calculate P1: Index & Crawl Health (0-250 points)
  */
 export async function calculateP1(date: string): Promise<ScoreBreakdown['p1IndexCrawlHealth']> {
-  const siteUrl = process.env.GSC_SITE_URL!;
+  const siteUrl = process.env.GSC_SITE_URL;
+
+  if (!siteUrl) {
+    return { score: 0, maxScore: 250, components: { impressionsTrend: 0, indexCoverage: 0, crawlErrors: 0 } };
+  }
 
   // Get current day metrics
   const current = await prisma.$queryRaw<any[]>`
@@ -126,7 +130,11 @@ export async function calculateP1(date: string): Promise<ScoreBreakdown['p1Index
  * Calculate P2: Search Visibility (0-250 points)
  */
 export async function calculateP2(date: string): Promise<ScoreBreakdown['p2SearchVisibility']> {
-  const siteUrl = process.env.GSC_SITE_URL!;
+  const siteUrl = process.env.GSC_SITE_URL;
+
+  if (!siteUrl) {
+    return { score: 0, maxScore: 250, components: { clicksTrend: 0, topQueriesPerformance: 0, avgPosition: 0 } };
+  }
 
   // Get current day metrics
   const current = await prisma.$queryRaw<any[]>`
@@ -184,8 +192,12 @@ export async function calculateP2(date: string): Promise<ScoreBreakdown['p2Searc
  * Calculate P3: Engagement & Intent (0-200 points)
  */
 export async function calculateP3(date: string): Promise<ScoreBreakdown['p3EngagementIntent']> {
-  const siteUrl = process.env.GSC_SITE_URL!;
-  const propertyId = process.env.GA4_PROPERTY_ID!;
+  const siteUrl = process.env.GSC_SITE_URL;
+  const propertyId = process.env.GA4_PROPERTY_ID;
+
+  if (!siteUrl || !propertyId) {
+    return { score: 0, maxScore: 200, components: { ctrQuality: 0, engagementRate: 0, returningUsers: 0 } };
+  }
 
   // Get CTR from GSC
   const gscMetrics = await prisma.$queryRaw<any[]>`
@@ -236,8 +248,12 @@ export async function calculateP3(date: string): Promise<ScoreBreakdown['p3Engag
  * Calculate P4: Content Performance (0-200 points)
  */
 export async function calculateP4(date: string): Promise<ScoreBreakdown['p4ContentPerformance']> {
-  const siteUrl = process.env.GSC_SITE_URL!;
-  const propertyId = process.env.GA4_PROPERTY_ID!;
+  const siteUrl = process.env.GSC_SITE_URL;
+  const propertyId = process.env.GA4_PROPERTY_ID;
+
+  if (!siteUrl || !propertyId) {
+    return { score: 0, maxScore: 200, components: { topPagesGrowth: 0, contentDepth: 0, conversionQuality: 0 } };
+  }
 
   // Top pages growth
   const current = await prisma.$queryRaw<any[]>`

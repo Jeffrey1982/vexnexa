@@ -21,10 +21,12 @@ async function handler(request: NextRequest) {
     const siteUrl = process.env.GSC_SITE_URL;
 
     if (!siteUrl) {
-      return NextResponse.json(
-        { error: 'GSC_SITE_URL not configured' },
-        { status: 500 }
-      );
+      console.log('[GSC Ingest] Skipped - GSC_SITE_URL not configured');
+      return NextResponse.json({
+        success: true,
+        skipped: true,
+        reason: 'GSC_SITE_URL not configured',
+      });
     }
 
     // Get yesterday's date (GSC has ~2-3 day lag, but we'll fetch yesterday and it will be empty if not ready)

@@ -8,13 +8,24 @@ import { prisma } from '@/lib/prisma';
 export async function runAlerts(date: string): Promise<void> {
   console.log(`[Alert Engine] Running alerts for ${date}`);
 
-  const siteUrl = process.env.GSC_SITE_URL!;
-  const propertyId = process.env.GA4_PROPERTY_ID!;
+  const siteUrl = process.env.GSC_SITE_URL || '';
+  const propertyId = process.env.GA4_PROPERTY_ID || '';
+
+  if (!siteUrl && !propertyId) {
+    console.log('[Alert Engine] Skipped - neither GSC_SITE_URL nor GA4_PROPERTY_ID configured');
+    return;
+  }
 
   // Get active alert rules
-  const rules = await prisma.$queryRaw<any[]>`
-    SELECT * FROM alert_rules WHERE enabled = true
-  `;
+  let rules: any[] = [];
+  try {
+    rules = await prisma.$queryRaw<any[]>`
+      SELECT * FROM alert_rules WHERE enabled = true
+    `;
+  } catch (error) {
+    console.error('[Alert Engine] Failed to fetch alert rules (table may not exist):', error instanceof Error ? error.message : error);
+    return;
+  }
 
   for (const rule of rules) {
     try {
