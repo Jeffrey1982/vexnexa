@@ -9,6 +9,7 @@
  * - EU flag: stylized representation for context; not an official EU emblem download.
  */
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -45,8 +46,73 @@ function EuFlagIcon({ className }: { className?: string }) {
   );
 }
 
-const linkClass =
-  "group flex min-w-[10rem] max-w-[14rem] flex-col items-center gap-2 rounded-xl border border-transparent px-3 py-3 text-center transition-colors hover:border-border/60 hover:bg-background/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:min-w-0 md:max-w-none md:flex-1";
+const trustLinkClass =
+  "group flex min-w-[11rem] max-w-[15rem] flex-col items-center rounded-xl border border-transparent px-2 py-3 text-center transition-colors hover:border-border/60 hover:bg-background/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:min-w-0 md:max-w-none md:flex-1";
+
+/** Top row: keeps “Powered by” aligned; other columns leave empty for same band height. */
+function TrustLabelRow({ children }: { children?: ReactNode }) {
+  return (
+    <div className="flex h-5 w-full items-center justify-center text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+      {children}
+    </div>
+  );
+}
+
+/** Fixed-height band so all marks sit on one visual line. */
+function TrustLogoRow({
+  isFull,
+  children,
+}: {
+  isFull: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex w-full max-w-[11rem] items-center justify-center md:max-w-[12rem]",
+        isFull ? "h-12 md:h-[3.25rem]" : "h-10 md:h-11"
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+function TrustCaption({
+  isFull,
+  children,
+}: {
+  isFull: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <span
+      className={cn(
+        "mt-3 block max-w-[13rem] text-pretty text-muted-foreground",
+        isFull ? "min-h-[2.5rem] text-xs leading-snug" : "min-h-[2.25rem] text-[11px] leading-snug"
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+/** Inline lockup — avoids img+SVG text rendering failures; ® retained. */
+function AxeCoreLockup({ isFull }: { isFull: boolean }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-baseline font-bold tracking-tight text-[#0867C1] dark:text-sky-400",
+        isFull ? "text-xl md:text-2xl" : "text-lg md:text-xl"
+      )}
+    >
+      axe-core
+      <sup className="ml-0.5 translate-y-px text-[0.5em] font-semibold text-muted-foreground dark:text-sky-200/85">
+        ®
+      </sup>
+    </span>
+  );
+}
 
 export type StandardsTrustBarProps = {
   variant?: "full" | "compact";
@@ -64,8 +130,8 @@ export function StandardsTrustBar({
   inset = false,
 }: StandardsTrustBarProps) {
   const isFull = variant === "full";
-  const wcagW = isFull ? 132 : 96;
-  const wcagH = isFull ? 47 : 34;
+  /** Official WCAG logo intrinsic ratio 88×31; we cap height to match other marks. */
+  const wcagMaxH = isFull ? 40 : 32;
 
   return (
     <section
@@ -104,33 +170,17 @@ export function StandardsTrustBar({
               href={AXE_CORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={linkClass}
+              className={trustLinkClass}
               aria-label="axe-core by Deque — open-source accessibility testing engine (opens in new tab)"
               title="Learn about axe-core on deque.com"
             >
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Powered by
-              </span>
-              <span className="relative block h-9 w-[200px] max-w-full md:h-10">
-                {/* eslint-disable-next-line @next/next/no-img-element -- local SVG lockup; next/image skips SVG optimization */}
-                <img
-                  src="/trust/axe-core-lockup.svg"
-                  alt="axe-core®"
-                  width={220}
-                  height={40}
-                  className="mx-auto h-full w-auto max-w-full object-contain object-center opacity-90 grayscale transition-[filter,opacity] group-hover:opacity-100 group-hover:grayscale-0"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </span>
-              <span
-                className={cn(
-                  "text-muted-foreground",
-                  isFull ? "text-xs leading-snug" : "text-[11px] leading-snug"
-                )}
-              >
+              <TrustLabelRow>Powered by</TrustLabelRow>
+              <TrustLogoRow isFull={isFull}>
+                <AxeCoreLockup isFull={isFull} />
+              </TrustLogoRow>
+              <TrustCaption isFull={isFull}>
                 The global standard in automated accessibility testing
-              </span>
+              </TrustCaption>
             </Link>
           </div>
 
@@ -140,28 +190,22 @@ export function StandardsTrustBar({
               href={WCAG_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={linkClass}
+              className={trustLinkClass}
               aria-label="W3C Web Content Accessibility Guidelines — WCAG overview (opens in new tab)"
               title="W3C WAI — Web Content Accessibility Guidelines"
             >
-              <span className="relative flex min-h-[2.5rem] items-center justify-center">
+              <TrustLabelRow />
+              <TrustLogoRow isFull={isFull}>
                 <Image
                   src={WCAG_22_AA_BLUE}
                   alt="Level AA conformance, W3C Web Content Accessibility Guidelines 2.2"
-                  width={wcagW}
-                  height={wcagH}
-                  className="h-auto w-[88px] object-contain opacity-95 transition-opacity group-hover:opacity-100 md:w-auto"
-                  style={{ maxWidth: isFull ? 132 : 96 }}
+                  width={88}
+                  height={31}
+                  className="w-auto object-contain opacity-95 transition-opacity group-hover:opacity-100"
+                  style={{ maxHeight: wcagMaxH, height: "auto" }}
                 />
-              </span>
-              <span
-                className={cn(
-                  "text-muted-foreground",
-                  isFull ? "text-xs leading-snug" : "text-[11px] leading-snug"
-                )}
-              >
-                Conformance testing engine
-              </span>
+              </TrustLogoRow>
+              <TrustCaption isFull={isFull}>Conformance testing engine</TrustCaption>
             </Link>
           </div>
 
@@ -171,26 +215,22 @@ export function StandardsTrustBar({
               href={EN_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={linkClass}
+              className={trustLinkClass}
               aria-label="European accessibility framework — EN 301 549 and EU web accessibility policy (opens in new tab)"
               title="European Commission — web accessibility"
             >
-              <span
-                className={cn(
-                  "inline-flex items-center rounded-md border border-border/60 bg-background/90 px-3 font-semibold tracking-wide text-foreground shadow-sm",
-                  isFull ? "py-2 text-sm" : "py-1.5 text-xs"
-                )}
-              >
-                EN 301 549
-              </span>
-              <span
-                className={cn(
-                  "text-muted-foreground",
-                  isFull ? "text-xs leading-snug" : "text-[11px] leading-snug"
-                )}
-              >
-                European accessibility framework
-              </span>
+              <TrustLabelRow />
+              <TrustLogoRow isFull={isFull}>
+                <span
+                  className={cn(
+                    "inline-flex items-center rounded-md border border-border/70 bg-background/95 font-semibold tracking-wide text-foreground shadow-sm",
+                    isFull ? "px-3.5 py-2 text-sm md:px-4 md:text-[0.9375rem]" : "px-3 py-1.5 text-xs"
+                  )}
+                >
+                  EN 301 549
+                </span>
+              </TrustLogoRow>
+              <TrustCaption isFull={isFull}>European accessibility framework</TrustCaption>
             </Link>
           </div>
 
@@ -200,29 +240,25 @@ export function StandardsTrustBar({
               href={GDPR_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={linkClass}
+              className={trustLinkClass}
               aria-label="General Data Protection Regulation — European Commission overview (opens in new tab)"
               title="European Commission — GDPR"
             >
-              <span className="flex items-center gap-2">
-                <EuFlagIcon className="h-4 w-6 shrink-0 rounded-sm shadow-sm" />
-                <span
-                  className={cn(
-                    "font-semibold text-muted-foreground",
-                    isFull ? "text-xs" : "text-[11px]"
-                  )}
-                >
-                  GDPR compliant
+              <TrustLabelRow />
+              <TrustLogoRow isFull={isFull}>
+                <span className="flex items-center justify-center gap-2 whitespace-nowrap">
+                  <EuFlagIcon className="h-[1.15rem] w-[1.7rem] shrink-0 rounded-sm shadow-sm md:h-5 md:w-[1.85rem]" />
+                  <span
+                    className={cn(
+                      "font-semibold text-foreground/90",
+                      isFull ? "text-sm" : "text-xs"
+                    )}
+                  >
+                    GDPR compliant
+                  </span>
                 </span>
-              </span>
-              <span
-                className={cn(
-                  "text-muted-foreground",
-                  isFull ? "text-xs leading-snug" : "text-[11px] leading-snug"
-                )}
-              >
-                Data protection by design
-              </span>
+              </TrustLogoRow>
+              <TrustCaption isFull={isFull}>Data protection by design</TrustCaption>
             </Link>
           </div>
         </div>
