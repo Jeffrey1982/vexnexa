@@ -3,22 +3,24 @@
  * Change these values to rebrand the entire application.
  */
 
-/** Width÷height of `vexnexa-logo-lockup-*.png` (update if you regenerate lockups). */
-export const BRAND_LOGO_LOCKUP_ASPECT = 7131 / 1743
+/** Width ÷ height of `vexnexa-v-mark.png` (update if source asset changes). */
+export const BRAND_MARK_ASPECT = 682 / 1024
 
 export const BRAND = {
   name: "VexNexa",
   tagline: "Developer-friendly WCAG scanning",
-  /** @deprecated Prefer logoLockupLight/Dark — kept for older links */
-  logo: "/brand/vexnexa-logo-lockup-light.png",
+  /** Horizontal split: V mark + “exNexa” is composed in `VexnexaLogo` */
+  logo: "/brand/vexnexa-v-mark.png",
+  logoMark: "/brand/vexnexa-v-mark.png",
+  /** @deprecated Full lockup PNGs — prefer split logo in UI */
   logoLockupLight: "/brand/vexnexa-logo-lockup-light.png",
   logoLockupDark: "/brand/vexnexa-logo-lockup-dark.png",
-  icon: "/brand/vexnexa-icon.svg",
-  logoPng: "/brand/vexnexa-logo-lockup-light.png",
-  iconPng192: "/brand/vexnexa-icon-192.png",
-  iconPng512: "/brand/vexnexa-icon-512.png",
-  /** Absolute URL for emails & light-background contexts */
-  logoAbsolute: "https://vexnexa.com/brand/vexnexa-logo-lockup-light.png",
+  icon: "/brand/vexnexa-favicon-32.png",
+  logoPng: "/brand/vexnexa-v-mark.png",
+  iconPng192: "/brand/vexnexa-favicon-192.png",
+  iconPng512: "/brand/vexnexa-favicon-512.png",
+  /** Absolute URL for emails & JSON-LD (V mark; wordmark added in HTML where needed) */
+  logoAbsolute: "https://vexnexa.com/brand/vexnexa-v-mark.png",
   primaryColor: "#14B8A6",
   themeColor: "#14B8A6",
 } as const;

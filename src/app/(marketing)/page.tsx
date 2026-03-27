@@ -34,7 +34,7 @@ function JsonLd() {
     name: "VexNexa",
     description: "White-label WCAG monitoring for agencies and EU-facing teams. Scan websites, catch regressions, deliver branded reports.",
     url: "https://vexnexa.com",
-    logo: "https://vexnexa.com/brand/vexnexa-logo-lockup-light.png",
+    logo: "https://vexnexa.com/brand/vexnexa-v-mark.png",
     sameAs: [
       "https://twitter.com/vexnexa",
     ],

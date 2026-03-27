@@ -2,38 +2,42 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { BRAND, BRAND_LOGO_LOCKUP_ASPECT } from "@/config/brand";
+import { BRAND, BRAND_MARK_ASPECT } from "@/config/brand";
 
 interface VexnexaLogoProps {
-  /** Height in pixels — width auto-scales to aspect ratio */
+  /** Height of the V mark in px — word scales to match visually */
   size?: number;
   className?: string;
 }
 
 export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) {
-  const width = Math.round(size * BRAND_LOGO_LOCKUP_ASPECT);
+  const markWidth = Math.round(size * BRAND_MARK_ASPECT);
+  const gap = Math.round(markWidth * 0.22);
+  /** Body of the wordmark after the V mark (reads as VexNexa) */
+  const wordSize = Math.round(size * 0.62);
 
   return (
     <span
-      className={cn("relative inline-block shrink-0", className)}
-      style={{ width, height: size }}
+      role="img"
+      aria-label={BRAND.name}
+      className={cn("inline-flex shrink-0 items-center", className)}
+      style={{ gap }}
     >
       <Image
-        src={BRAND.logoLockupLight}
-        alt={BRAND.name}
-        width={width}
-        height={size}
-        className="absolute inset-0 h-full w-full object-contain object-left dark:hidden"
-        priority
-      />
-      <Image
-        src={BRAND.logoLockupDark}
+        src={BRAND.logoMark}
         alt=""
-        width={width}
+        width={markWidth}
         height={size}
-        className="absolute inset-0 hidden h-full w-full object-contain object-left dark:block"
+        className="object-contain object-left"
         priority
       />
+      <span
+        aria-hidden
+        className="font-display font-semibold tracking-tight text-[#0A2540] dark:text-white"
+        style={{ fontSize: wordSize, lineHeight: 1, letterSpacing: "-0.02em" }}
+      >
+        exNexa
+      </span>
     </span>
   );
 }

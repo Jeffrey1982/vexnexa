@@ -18,12 +18,21 @@ export async function getPilotPartnerRemaining(): Promise<{
   approvedCount: number;
 }> {
   const maxSpots = getMaxPilotSpots();
-  const approvedCount = await prisma.partnerApplication.count({
-    where: { status: 'APPROVED' },
-  });
-  return {
-    maxSpots,
-    approvedCount,
-    remaining: Math.max(0, maxSpots - approvedCount),
-  };
+  try {
+    const approvedCount = await prisma.partnerApplication.count({
+      where: { status: 'APPROVED' },
+    });
+    return {
+      maxSpots,
+      approvedCount,
+      remaining: Math.max(0, maxSpots - approvedCount),
+    };
+  } catch (e) {
+    console.error('[pilot-partner] partnerApplication count failed (migrations or DB?)', e);
+    return {
+      maxSpots,
+      approvedCount: 0,
+      remaining: maxSpots,
+    };
+  }
 }

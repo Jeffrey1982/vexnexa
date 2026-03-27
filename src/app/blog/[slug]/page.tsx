@@ -301,7 +301,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               "url": "https://vexnexa.com",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://vexnexa.com/brand/vexnexa-logo-lockup-light.png"
+                "url": "https://vexnexa.com/brand/vexnexa-v-mark.png"
               }
             },
             "datePublished": post.publishedAt?.toISOString() || "",

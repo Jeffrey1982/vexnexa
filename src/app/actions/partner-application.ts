@@ -129,9 +129,14 @@ export async function submitPartnerApplication(
   const phoneVal = d.phone?.trim() ? d.phone.trim() : null;
 
   const maxSpots = getMaxPilotSpots();
-  const approvedCount = await prisma.partnerApplication.count({
-    where: { status: 'APPROVED' },
-  });
+  let approvedCount = 0;
+  try {
+    approvedCount = await prisma.partnerApplication.count({
+      where: { status: 'APPROVED' },
+    });
+  } catch (e) {
+    console.error('Partner application capacity check failed:', e);
+  }
   if (approvedCount >= maxSpots) {
     return {
       ok: false,

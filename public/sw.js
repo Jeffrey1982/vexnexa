@@ -290,8 +290,8 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: event.data ? event.data.text() : 'New accessibility scan completed!',
-    icon: '/brand/vexnexa-icon.svg',
-    badge: '/brand/vexnexa-icon.svg',
+    icon: '/brand/vexnexa-favicon-192.png',
+    badge: '/brand/vexnexa-favicon-192.png',
     vibrate: [200, 100, 200],
     data: {
       dateOfArrival: Date.now(),
