@@ -53,16 +53,18 @@
   },
   "home": {
     "hero": {
-      "title": "WCAG-monitoring waar",
-      "titleHighlight": "agencies op vertrouwen",
-      "subtitle": "Scan websites op WCAG 2.2-problemen, detecteer regressies na elke release en lever branded compliancerapporten waar je klanten op vertrouwen.",
-      "freeTier": "Start gratis met 1 website en tot 100 pagina's — geen creditcard nodig. Upgrade wanneer je meer websites, continue monitoring of white-label rapporten nodig hebt.",
+      "eyebrow": "WCAG 2.2 · White-label · EU",
+      "title": "Toon toegankelijkheid",
+      "titleHighlight": "bij elke oplevering.",
+      "subtitle": "White-label WCAG-monitoring voor agencies—regressies signaleren, klantklare rapporten exporteren en meetbare vooruitgang onder jouw merk tonen.",
+      "freeTier": "Start gratis: 1 site, 100 pagina's/maand. Geen kaart. Upgrade voor monitoring, Word-export en volledig white-label.",
       "ctaPrimary": "Gratis beginnen",
       "ctaSecondary": "Bekijk voorbeeldrapport",
       "trust1": "WCAG 2.2 & EAA-dekking",
       "trust2": "White-label PDF- & DOCX-rapporten",
       "trust3": "EU-gehost, AVG-conform",
-      "imageAlt": "VexNexa dashboard voor toegankelijkheidsscans met gedetailleerde WCAG-rapporten en prioritering van problemen"
+      "imageAlt": "VexNexa dashboard voor toegankelijkheidsscans met gedetailleerde WCAG-rapporten en prioritering van problemen",
+      "mockupAria": "Gestileerde preview van het VexNexa scan-dashboard met een white-label rapportsamenvatting."
     },
     "valuePillars": {
       "deeper": {
@@ -340,6 +342,14 @@
       "standardsFootnote": "Alleen ter referentie. VexNexa wordt niet onderschreven door W3C of Deque.",
       "ctaPrimary": "Meer informatie",
       "ctaSecondary": "Nu aanmelden"
+    },
+    "pricingTeaser": {
+      "eyebrow": "Transparante prijzen",
+      "title": "Plannen die meegroeien met je portfolio",
+      "subtitle": "Van een ruim gratis niveau tot Business met white-label exports en prioriteit support—upgrade alleen wanneer je workflow het vraagt.",
+      "hint": "Alle getoonde prijzen incl. BTW · Altijd opzegbaar",
+      "ctaPrimary": "Bekijk prijzen",
+      "ctaSecondary": "Neem contact op"
     },
     "faqSection": {
       "q1": {

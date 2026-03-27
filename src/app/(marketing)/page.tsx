@@ -25,6 +25,9 @@ import { Quote, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
 import { PartnerStandardsBar } from "@/components/marketing/PartnerStandardsBar";
+import { HomeHeroPremium } from "@/components/marketing/home/HomeHeroPremium";
+import { HomeFeaturesPremium } from "@/components/marketing/home/HomeFeaturesPremium";
+import { PricingTeaserSection } from "@/components/marketing/home/PricingTeaserSection";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -50,99 +53,6 @@ function JsonLd() {
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
-  );
-}
-
-// 1. Hero Section
-function HeroSection() {
-  const t = useTranslations('home.hero');
-  return (
-    <section className="relative py-20 lg:py-32 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="text-center lg:text-left space-y-8">
-            <h1 className="animate-slide-up text-4xl lg:text-5xl xl:text-6xl font-bold font-display tracking-tight leading-tight">
-              {t('title')}{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                {t('titleHighlight')}
-              </span>
-            </h1>
-
-            <p className="animate-slide-up text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-              {t('subtitle')}
-            </p>
-
-            <p className="animate-slide-up text-sm text-muted-foreground leading-relaxed">
-              {t('freeTier')}
-            </p>
-
-            <div className="animate-scale-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-4">
-              <Button
-                size="lg"
-                className="button-hover gradient-primary border-0 shadow-soft relative overflow-hidden group px-8 py-6 text-base"
-                asChild
-              >
-                <Link
-                  href="/auth/register"
-                  onClick={() => trackEvent("homepage_cta_primary_click", { location: "hero" })}
-                >
-                  <span className="relative z-10 flex items-center">
-                    {t('ctaPrimary')}
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-background/25 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-                </Link>
-              </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="button-hover border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 px-8 py-6 text-base"
-                asChild
-              >
-                <Link
-                  href="/sample-report"
-                  onClick={() => trackEvent("homepage_cta_sample_report_click")}
-                >
-                  {t('ctaSecondary')}
-                </Link>
-              </Button>
-            </div>
-
-            {/* Trust bullets */}
-            <div className="animate-fade-in flex flex-col sm:flex-row gap-x-6 gap-y-2 justify-center lg:justify-start pt-2">
-              {([t('trust1'), t('trust2'), t('trust3')] as string[]).map((item) => (
-                <span key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Check className="h-4 w-4 text-primary shrink-0" />
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative animate-fade-in">
-            <div className="relative z-10">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/heroImage.webp"
-                alt={t('imageAlt')}
-                className="aspect-square lg:aspect-[4/3] rounded-3xl border border-primary/20 w-full h-full object-cover"
-                style={{
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 12px 24px -8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-                }}
-              />
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-pulse" aria-hidden="true"></div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/10 rounded-full blur-xl animate-pulse delay-500" aria-hidden="true"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -662,17 +572,19 @@ export default function HomePage() {
   return (
     <>
       <JsonLd />
-      <HeroSection />
+      <HomeHeroPremium />
       <SocialProofStrip />
       <TrustStrip />
+      <WorkflowSection />
+      <WhatYouGetSection />
+      <HomeFeaturesPremium />
       <WhyTeamsSection />
       <BuiltForSection />
-      <WhatYouGetSection />
       <StandardsTrustBar variant="compact" showHeading={false} />
       <TestimonialsSection />
+      <PricingTeaserSection />
       <SampleReportSection />
       <AgencyOfferSection />
-      <WorkflowSection />
       <PilotPartnerBanner />
       <FAQ items={faqItems} />
       <FinalCTASection />

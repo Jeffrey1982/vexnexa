@@ -147,8 +147,9 @@ export function AdminNav({ user }: AdminNavProps) {
                 <VexnexaLogo size={36} />
               </div>
               <div className="hidden sm:block">
-                <div className="text-white font-bold text-xl tracking-tight">VexNexa</div>
-                <div className="-mt-1 text-xs text-white/80">Admin Panel</div>
+                <div className="text-sm font-semibold tracking-tight text-white">
+                  Admin Panel
+                </div>
               </div>
             </Link>
 

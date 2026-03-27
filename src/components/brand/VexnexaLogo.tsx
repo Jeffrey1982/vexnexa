@@ -12,10 +12,10 @@ interface VexnexaLogoProps {
 
 export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) {
   const markWidth = Math.round(size * BRAND_MARK_ASPECT);
-  /** Letter-spacing inside a single word (~1/4 of a typical stem gap) */
+  /** Space between V mark and wordmark */
   const gap = Math.max(2, Math.round(size * 0.07));
-  /** exNexa — cap height ≈ 0.72×em; tuned with tight V crop so V reads as the leading letter */
-  const wordSize = Math.round(size * 0.78);
+  /** Full “VexNexa” — scale so cap height aligns with V glyph (tight-cropped mark) */
+  const wordSize = Math.round(size * 0.58);
 
   return (
     <span
@@ -41,7 +41,7 @@ export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) 
           letterSpacing: "-0.03em",
         }}
       >
-        exNexa
+        VexNexa
       </span>
     </span>
   );

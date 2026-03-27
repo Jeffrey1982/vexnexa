@@ -53,13 +53,19 @@
   },
   "home": {
     "hero": {
-      "title": "White-Label-WCAG-Monitoring für",
-      "titleHighlight": "Agenturen und EU-orientierte Teams",
-      "subtitle": "Scannen Sie Websites, erkennen Sie Barrierefreiheitsprobleme nach jedem Release und liefern Sie markenspezifische Berichte, die WCAG 2.2 und EAA-Bereitschaft unterstützen.",
+      "eyebrow": "WCAG 2.2 · White-Label · EU",
+      "title": "Barrierefreiheit belegen",
+      "titleHighlight": "bei jeder Auslieferung.",
+      "subtitle": "White-Label-WCAG-Monitoring für Agenturen—Regressionen erkennen, kundenfertige Berichte exportieren und messbare Fortschritte unter Ihrer Marke zeigen.",
+      "freeTier": "Kostenlos starten: 1 Website, 100 Seiten/Monat. Keine Karte. Upgrade für Monitoring, Word-Export und vollständiges White-Label.",
       "ctaPrimary": "Kostenlos scannen",
       "ctaSecondary": "Beispielbericht ansehen",
-      "noCreditCard": "Kostenloses Konto erforderlich. Keine Kreditkarte nötig.",
-      "imageAlt": "VexNexa Dashboard für Barrierefreiheitsscans mit detaillierten WCAG-Berichten und Problempriorisierung"
+      "trust1": "WCAG 2.2 & EAA-Abdeckung",
+      "trust2": "White-Label-PDF- & DOCX-Berichte",
+      "trust3": "EU-gehostet, DSGVO-konform",
+      "imageAlt": "VexNexa Dashboard für Barrierefreiheitsscans mit detaillierten WCAG-Berichten und Problempriorisierung",
+      "mockupAria": "Stilisierte Vorschau des VexNexa-Scan-Dashboards mit White-Label-Berichtskarte.",
+      "noCreditCard": "Kostenloses Konto erforderlich. Keine Kreditkarte nötig."
     },
     "valuePillars": {
       "deeper": {
@@ -345,6 +351,14 @@
       "standardsFootnote": "Nur zur Information. VexNexa wird von W3C oder Deque nicht unterstützt.",
       "ctaPrimary": "Mehr erfahren",
       "ctaSecondary": "Jetzt bewerben"
+    },
+    "pricingTeaser": {
+      "eyebrow": "Transparente Preise",
+      "title": "Pläne, die mit Ihrem Portfolio wachsen",
+      "subtitle": "Von einem großzügigen Free-Tier bis Business mit White-Label-Exporten und Priority-Support—upgraden Sie nur, wenn Ihr Workflow es braucht.",
+      "hint": "Alle Preise inkl. MwSt. · Jederzeit kündbar",
+      "ctaPrimary": "Preise ansehen",
+      "ctaSecondary": "Vertrieb kontaktieren"
     },
     "faqSection": {
       "q1": {

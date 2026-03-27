@@ -53,13 +53,19 @@
   },
   "home": {
     "hero": {
-      "title": "Surveillance WCAG en marque blanche pour",
-      "titleHighlight": "les agences et équipes européennes",
-      "subtitle": "Analysez des sites web, détectez les régressions d'accessibilité après chaque mise en production et livrez des rapports personnalisés compatibles WCAG 2.2 et EAA.",
+      "eyebrow": "WCAG 2.2 · Marque blanche · UE",
+      "title": "Prouvez l'accessibilité",
+      "titleHighlight": "à chaque livraison.",
+      "subtitle": "Surveillance WCAG en marque blanche pour les agences—détectez les régressions, exportez des rapports prêts clients et montrez des progrès mesurables sous votre marque.",
+      "freeTier": "Gratuit : 1 site, 100 pages/mois. Sans carte. Passez au supérieur pour la surveillance, l'export Word et le white-label complet.",
       "ctaPrimary": "Lancer une analyse gratuite",
       "ctaSecondary": "Voir un exemple de rapport",
-      "noCreditCard": "Compte gratuit requis. Aucune carte de crédit nécessaire.",
-      "imageAlt": "Tableau de bord VexNexa pour les analyses d'accessibilité avec rapports WCAG détaillés et priorisation des problèmes"
+      "trust1": "Couverture WCAG 2.2 & EAA",
+      "trust2": "Rapports PDF & DOCX en marque blanche",
+      "trust3": "Hébergé UE, conforme RGPD",
+      "imageAlt": "Tableau de bord VexNexa pour les analyses d'accessibilité avec rapports WCAG détaillés et priorisation des problèmes",
+      "mockupAria": "Aperçu stylisé du tableau de bord de scan VexNexa avec une carte de rapport en marque blanche.",
+      "noCreditCard": "Compte gratuit requis. Aucune carte de crédit nécessaire."
     },
     "valuePillars": {
       "deeper": {
@@ -337,6 +343,14 @@
       "standardsFootnote": "À titre indicatif uniquement. VexNexa n'est pas approuvé par le W3C ou Deque.",
       "ctaPrimary": "En savoir plus",
       "ctaSecondary": "Postuler maintenant"
+    },
+    "pricingTeaser": {
+      "eyebrow": "Tarification transparente",
+      "title": "Des offres qui évoluent avec votre portefeuille",
+      "subtitle": "Du niveau gratuit généreux au plan Business avec exports white-label et support prioritaire—passez au supérieur seulement quand votre flux l'exige.",
+      "hint": "Prix TTC indiqués · Résiliation à tout moment",
+      "ctaPrimary": "Voir les tarifs",
+      "ctaSecondary": "Contacter les ventes"
     },
     "faqSection": {
       "q1": {

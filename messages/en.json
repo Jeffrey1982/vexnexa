@@ -53,16 +53,18 @@
   },
   "home": {
     "hero": {
-      "title": "WCAG monitoring that",
-      "titleHighlight": "agencies rely on",
-      "subtitle": "Scan websites for WCAG 2.2 issues, catch regressions after every release, and deliver branded compliance reports your clients trust.",
-      "freeTier": "Start free with 1 website and up to 100 pages — no credit card required. Upgrade when you need more websites, continuous monitoring, or white-label reports.",
+      "eyebrow": "WCAG 2.2 · White-label · EU-ready",
+      "title": "Prove accessibility",
+      "titleHighlight": "on every delivery.",
+      "subtitle": "White-label WCAG monitoring for agencies—catch regressions, export client-ready reports, and show measurable progress under your brand.",
+      "freeTier": "Start free: 1 site, 100 pages/month. No card. Upgrade for monitoring, Word exports, and full white-label.",
       "ctaPrimary": "Get started free",
       "ctaSecondary": "View sample report",
       "trust1": "WCAG 2.2 & EAA coverage",
       "trust2": "White-label PDF & DOCX reports",
       "trust3": "EU-hosted, GDPR compliant",
-      "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization"
+      "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization",
+      "mockupAria": "Stylized preview of the VexNexa scan dashboard with a white-label report summary card."
     },
     "valuePillars": {
       "deeper": {
@@ -352,6 +354,14 @@
       "standardsFootnote": "For reference only. VexNexa is not endorsed by W3C or Deque.",
       "ctaPrimary": "Learn more",
       "ctaSecondary": "Apply now"
+    },
+    "pricingTeaser": {
+      "eyebrow": "Transparent pricing",
+      "title": "Plans that scale with your portfolio",
+      "subtitle": "From a generous free tier to Business with white-label exports and priority support—upgrade only when your workflow needs it.",
+      "hint": "All listed prices include VAT · Cancel anytime",
+      "ctaPrimary": "View pricing",
+      "ctaSecondary": "Talk to sales"
     },
     "faqSection": {
       "q1": {

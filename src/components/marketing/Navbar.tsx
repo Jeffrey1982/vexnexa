@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import AuthButton from "@/components/auth/AuthButton";
 import { createClient } from "@/lib/supabase/client-new";
@@ -29,11 +29,23 @@ interface NavbarProps {
 
 export function Navbar({ className }: NavbarProps) {
   const t = useTranslations('nav');
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const supabase = createClient();
+
+  const onScroll = useCallback(() => {
+    setScrolled(window.scrollY > 6);
+  }, []);
+
+  useEffect(() => {
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [onScroll]);
 
   const navigationItems = [
     { name: "For Agencies", href: "/for-agencies" },
@@ -70,25 +82,47 @@ export function Navbar({ className }: NavbarProps) {
   };
 
   return (
-    <nav className={cn("border-b border-border/50 glass shadow-elegant sticky top-0 z-50 transition-all duration-200", className)} aria-label="Main navigation">
-      <div className="container mx-auto px-6">
-        <div className="flex h-20 items-center justify-between">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 border-b border-border/40 bg-background/75 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,background-color] duration-300",
+        scrolled && "shadow-[0_8px_30px_-12px_rgba(10,37,64,0.18)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.45)]",
+        className
+      )}
+      aria-label="Main navigation"
+    >
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex h-[4.25rem] items-center justify-between md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
-            <VexnexaLogo size={48} className="group-hover:opacity-90 transition-opacity duration-200" />
+          <Link
+            href="/"
+            className="flex items-center rounded-lg outline-none ring-offset-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[#0A2540] focus-visible:ring-offset-2 dark:focus-visible:ring-primary"
+          >
+            <VexnexaLogo size={46} />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-10">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-all duration-200 font-medium text-sm relative py-2 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 hover:after:w-full after:rounded-full"
-              >
-                {item.name}
-              </Link>
-            ))}
+          <div className="hidden items-center space-x-8 md:flex lg:space-x-10">
+            {navigationItems.map((item) => {
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-[#00C4A0] after:to-[#0A2540] after:transition-all after:duration-200 dark:after:from-primary dark:after:to-primary/80",
+                    active
+                      ? "text-[#0A2540] after:w-full dark:text-foreground"
+                      : "text-muted-foreground after:w-0 hover:text-foreground hover:after:w-full"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Desktop Right Section: Social + Language + Auth */}

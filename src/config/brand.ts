@@ -9,7 +9,7 @@ export const BRAND_MARK_ASPECT = 497 / 383
 export const BRAND = {
   name: "VexNexa",
   tagline: "Developer-friendly WCAG scanning",
-  /** Horizontal split: V mark + “exNexa” is composed in `VexnexaLogo` */
+  /** Horizontal split: V mark + “VexNexa” wordmark in `VexnexaLogo` */
   logo: "/brand/vexnexa-v-mark.png",
   logoMark: "/brand/vexnexa-v-mark.png",
   /** @deprecated Full lockup PNGs — prefer split logo in UI */

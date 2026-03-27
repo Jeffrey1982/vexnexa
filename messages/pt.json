@@ -53,13 +53,38 @@
   },
   "home": {
     "hero": {
-      "title": "Monitoramento de acessibilidade de marca branca para",
-      "titleHighlight": "agências e equipes voltadas para a UE",
-      "subtitle": "Analise sites, detecte regressões de acessibilidade após cada lançamento e entregue relatórios personalizados que suportam conformidade WCAG 2.2 e prontidão EAA.",
+      "eyebrow": "WCAG 2.2 · Marca branca · UE",
+      "title": "Comprove a acessibilidade",
+      "titleHighlight": "em cada entrega.",
+      "subtitle": "Monitorização WCAG em marca branca para agências—detete regressões, exporte relatórios prontos para o cliente e mostre progresso mensurável com a sua marca.",
+      "freeTier": "Grátis: 1 site, 100 páginas/mês. Sem cartão. Faça upgrade para monitorização, exportação Word e white-label completo.",
       "ctaPrimary": "Inicie sua análise gratuita",
       "ctaSecondary": "Ver relatório de exemplo",
-      "noCreditCard": "Conta gratuita necessária. Nenhum cartão de crédito necessário.",
-      "imageAlt": "Painel de análise de acessibilidade VexNexa mostrando relatórios WCAG detalhados e priorização de problemas"
+      "trust1": "Cobertura WCAG 2.2 e EAA",
+      "trust2": "Relatórios PDF e DOCX em marca branca",
+      "trust3": "Alojado na UE, conforme RGPD",
+      "imageAlt": "Painel de análise de acessibilidade VexNexa mostrando relatórios WCAG detalhados e priorização de problemas",
+      "mockupAria": "Pré-visualização estilizada do painel de análise VexNexa com um cartão de relatório em marca branca.",
+      "noCreditCard": "Conta gratuita necessária. Nenhum cartão de crédito necessário."
+    },
+    "features": {
+      "title": "Tudo o que precisa para conformidade de acessibilidade",
+      "automation": {
+        "title": "Testes automatizados",
+        "description": "Agende análises regulares e receba alertas quando novos problemas forem detetados"
+      },
+      "reports": {
+        "title": "Relatórios detalhados",
+        "description": "Exporte relatórios PDF/DOCX profissionais com a sua marca"
+      },
+      "monitoring": {
+        "title": "Monitorização contínua",
+        "description": "Acompanhe alterações ao longo do tempo e evite regressões de acessibilidade"
+      },
+      "team": {
+        "title": "Colaboração em equipa",
+        "description": "Partilhe análises, atribua tarefas e acompanhe o progresso de correção"
+      }
     },
     "socialProof": {
       "title": "Confiado por agências em toda a Europa",
@@ -179,6 +204,14 @@
       "standardsFootnote": "Apenas para referência. VexNexa não é endossado pela W3C ou pela Deque.",
       "ctaPrimary": "Saiba mais",
       "ctaSecondary": "Inscreva-se agora"
+    },
+    "pricingTeaser": {
+      "eyebrow": "Preços transparentes",
+      "title": "Planos que acompanham o seu portefólio",
+      "subtitle": "Desde um nível gratuito generoso até Business com exportações white-label e suporte prioritário—faça upgrade apenas quando o fluxo o exigir.",
+      "hint": "Preços com IVA incluído · Cancele quando quiser",
+      "ctaPrimary": "Ver preços",
+      "ctaSecondary": "Falar com vendas"
     },
     "faqSection": {
       "q1": {
