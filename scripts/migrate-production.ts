@@ -157,6 +157,86 @@ async function main() {
     console.error('⚠ Plan enum migration error (non-fatal):', error.message)
     // Don't fail the build — the app should still work with TRIAL in the enum
   }
+
+  // Public scan reports tables
+  console.log('\nChecking for public_scan_sites table...')
+  try {
+    await prisma.$queryRaw`SELECT 1 FROM "public_scan_sites" LIMIT 1`
+    console.log('✅ public_scan_sites table exists')
+  } catch (error: any) {
+    if (error.code === 'P2010' || error.message?.includes('does not exist')) {
+      console.log('Creating public scan report tables...')
+
+      await prisma.$executeRaw`
+        CREATE TABLE IF NOT EXISTS "public_scan_sites" (
+          "id" TEXT NOT NULL PRIMARY KEY DEFAULT gen_random_uuid()::text,
+          "normalized_domain" TEXT NOT NULL UNIQUE,
+          "display_domain" TEXT NOT NULL,
+          "first_scanned_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "last_scanned_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "latest_public_report_id" TEXT,
+          "public_page_enabled" BOOLEAN NOT NULL DEFAULT true,
+          "total_scans" INTEGER NOT NULL DEFAULT 0,
+          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+      `
+
+      await prisma.$executeRaw`
+        CREATE INDEX IF NOT EXISTS "idx_pss_normalized_domain" ON "public_scan_sites"("normalized_domain")
+      `
+      await prisma.$executeRaw`
+        CREATE INDEX IF NOT EXISTS "idx_pss_public_enabled" ON "public_scan_sites"("public_page_enabled", "last_scanned_at" DESC)
+      `
+
+      await prisma.$executeRaw`
+        CREATE TABLE IF NOT EXISTS "public_scan_reports" (
+          "id" TEXT NOT NULL PRIMARY KEY DEFAULT gen_random_uuid()::text,
+          "site_id" TEXT NOT NULL REFERENCES "public_scan_sites"("id") ON DELETE CASCADE,
+          "scan_id" TEXT,
+          "normalized_domain" TEXT NOT NULL,
+          "display_domain" TEXT NOT NULL,
+          "score" INTEGER,
+          "issues_total" INTEGER NOT NULL DEFAULT 0,
+          "impact_critical" INTEGER NOT NULL DEFAULT 0,
+          "impact_serious" INTEGER NOT NULL DEFAULT 0,
+          "impact_moderate" INTEGER NOT NULL DEFAULT 0,
+          "impact_minor" INTEGER NOT NULL DEFAULT 0,
+          "pages_scanned" INTEGER NOT NULL DEFAULT 1,
+          "scan_type" TEXT NOT NULL DEFAULT 'single_page',
+          "summary" JSONB DEFAULT '{}',
+          "top_violations" JSONB DEFAULT '[]',
+          "wcag_aa_compliance" FLOAT,
+          "wcag_aaa_compliance" FLOAT,
+          "performance_score" FLOAT,
+          "seo_score" FLOAT,
+          "scanned_url" TEXT,
+          "is_public" BOOLEAN NOT NULL DEFAULT true,
+          "allow_indexing" BOOLEAN NOT NULL DEFAULT true,
+          "published_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+      `
+
+      await prisma.$executeRaw`
+        CREATE INDEX IF NOT EXISTS "idx_psr_site_id" ON "public_scan_reports"("site_id")
+      `
+      await prisma.$executeRaw`
+        CREATE INDEX IF NOT EXISTS "idx_psr_normalized_domain" ON "public_scan_reports"("normalized_domain", "published_at" DESC)
+      `
+      await prisma.$executeRaw`
+        CREATE INDEX IF NOT EXISTS "idx_psr_scan_id" ON "public_scan_reports"("scan_id")
+      `
+      await prisma.$executeRaw`
+        CREATE INDEX IF NOT EXISTS "idx_psr_public" ON "public_scan_reports"("is_public", "allow_indexing", "published_at" DESC)
+      `
+
+      console.log('✅ Public scan report tables created successfully')
+    } else {
+      console.error('⚠ Public scan tables check error (non-fatal):', error.message)
+    }
+  }
 }
 
 main()

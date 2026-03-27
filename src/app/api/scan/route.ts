@@ -12,6 +12,7 @@ import {
   analyzeSEOMetrics,
   calculateComplianceRisk,
 } from "@/lib/performance-analytics";
+import { publishScanReport } from "@/lib/public-reports";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -425,6 +426,30 @@ export async function POST(req: Request) {
       } else {
         await addPageUsage(user.id, 1);
       }
+    }
+
+    // Publish to public report system (non-blocking, never fails the scan)
+    try {
+      await publishScanReport({
+        id: completedScan.id,
+        score: completedScan.score,
+        issues: completedScan.issues,
+        impactCritical: completedScan.impactCritical,
+        impactSerious: completedScan.impactSerious,
+        impactModerate: completedScan.impactModerate,
+        impactMinor: completedScan.impactMinor,
+        wcagAACompliance: completedScan.wcagAACompliance,
+        wcagAAACompliance: completedScan.wcagAAACompliance,
+        performanceScore: completedScan.performanceScore,
+        seoScore: completedScan.seoScore,
+        raw: completedScan.raw,
+        status: completedScan.status,
+        site: { url: completedScan.site?.url || siteUrl },
+        page: completedScan.page ? { url: completedScan.page.url } : null,
+        createdAt: completedScan.createdAt,
+      });
+    } catch (pubErr) {
+      console.error('[scan] Public report publish failed (non-blocking):', pubErr instanceof Error ? pubErr.message : pubErr);
     }
 
     return NextResponse.json({

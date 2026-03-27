@@ -45,6 +45,7 @@ export default function robots(): MetadataRoute.Robots {
           '/for-agencies',
           '/eaa-compliance-monitoring',
           '/sample-report',
+          '/report/*',
         ],
       },
       {
