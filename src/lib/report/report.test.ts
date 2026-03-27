@@ -1238,14 +1238,14 @@ describe("Print & PDF hardening", () => {
 });
 
 describe("Executive summary hero polish", () => {
-  it("health score badge has larger font size (48px)", () => {
+  it("premium executive uses large mega score display", () => {
     const html = renderReportHTML(getReport());
-    expect(html).toMatch(/\.ehb-score\{[^}]*font-size:\s*48px/);
+    expect(html).toMatch(/\.exec-mega-score\{[^}]*font-size:\s*88px/);
   });
 
-  it("health score badge uses token-based padding", () => {
+  it("executive hero panel uses generous token padding", () => {
     const html = renderReportHTML(getReport());
-    expect(html).toMatch(/\.exec-health-badge\{[^}]*padding:\s*var\(--space-md\)\s+var\(--space-lg\)/);
+    expect(html).toMatch(/\.exec-hero-panel\{[^}]*padding:\s*var\(--space-2xl\)/);
   });
 
   it("metric values use tabular-nums for alignment", () => {
