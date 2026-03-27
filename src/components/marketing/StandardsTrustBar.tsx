@@ -13,17 +13,13 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-/** Official W3C WCAG 2.2 Level AA logo (blue variant). */
-const WCAG_22_AA_BLUE =
-  "https://www.w3.org/WAI/WCAG22/wcag2.2AA-blue.png";
-
-const AXE_CORE_URL = "https://www.deque.com/axe/axe-core/";
-const WCAG_URL = "https://www.w3.org/WAI/standards-guidelines/wcag/";
-const EN_URL =
-  "https://digital-strategy.ec.europa.eu/en/policies/web-accessibility";
-const GDPR_URL =
-  "https://commission.europa.eu/law/law-topic/data-protection/reform/what-general-data-protection-regulation-gdpr_en";
+import {
+  AXE_CORE_URL,
+  EN_URL,
+  GDPR_URL,
+  WCAG_22_AA_BLUE,
+  WCAG_URL,
+} from "@/components/marketing/standards-trust-links";
 
 function EuFlagIcon({ className }: { className?: string }) {
   return (

@@ -328,6 +328,13 @@
       "badge": "Places limitées",
       "title": "Rejoignez le programme de partenariat pilote",
       "subtitle": "Obtenez un accès niveau Business, un support direct et contribuez à façonner VexNexa — tout en offrant l'accessibilité à vos clients dès le premier jour.",
+      "standardsIntro": "Livrez des rapports en marque blanche fondés sur les mêmes référentiels que ceux des équipes d'accessibilité les plus exigeantes.",
+      "standardsAria": "Références aux normes d'accessibilité",
+      "standardsPoweredBy": "Powered by",
+      "standardsAxeCaption": "Moteur de tests",
+      "standardsWcagCaption": "WCAG 2.2 AA",
+      "standardsEnCaption": "Cadre UE",
+      "standardsFootnote": "À titre indicatif uniquement. VexNexa n'est pas approuvé par le W3C ou Deque.",
       "ctaPrimary": "En savoir plus",
       "ctaSecondary": "Postuler maintenant"
     },

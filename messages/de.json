@@ -336,6 +336,13 @@
       "badge": "Begrenzte Plätze",
       "title": "Werden Sie Pilotpartner",
       "subtitle": "Erhalten Sie Business-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
+      "standardsIntro": "Liefern Sie White-Label-Berichte auf Basis derselben Standards, die führende Barrierefreiheitsteams weltweit nutzen.",
+      "standardsAria": "Hinweise zu Barrierefreiheitsstandards",
+      "standardsPoweredBy": "Powered by",
+      "standardsAxeCaption": "Test-Engine",
+      "standardsWcagCaption": "WCAG 2.2 AA",
+      "standardsEnCaption": "EU-Rahmen",
+      "standardsFootnote": "Nur zur Information. VexNexa wird von W3C oder Deque nicht unterstützt.",
       "ctaPrimary": "Mehr erfahren",
       "ctaSecondary": "Jetzt bewerben"
     },

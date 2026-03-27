@@ -24,6 +24,7 @@ import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 import { Quote, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
+import { PartnerStandardsBar } from "@/components/marketing/PartnerStandardsBar";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -552,6 +553,7 @@ function PilotPartnerBanner() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {t('subtitle')}
           </p>
+          <PartnerStandardsBar />
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button size="lg" asChild className="gradient-primary">
               <Link

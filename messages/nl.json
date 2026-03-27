@@ -331,6 +331,13 @@
       "badge": "Beperkt aantal plekken",
       "title": "Word pilotpartner",
       "subtitle": "Krijg toegang op Business-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
+      "standardsIntro": "Lever whitelabelrapporten aangedreven door dezelfde normen die toonaangevende toegankelijkheidsteams wereldwijd gebruiken.",
+      "standardsAria": "Referenties naar toegankelijkheidsnormen",
+      "standardsPoweredBy": "Powered by",
+      "standardsAxeCaption": "Testengine",
+      "standardsWcagCaption": "WCAG 2.2 AA",
+      "standardsEnCaption": "EU-kader",
+      "standardsFootnote": "Alleen ter referentie. VexNexa wordt niet onderschreven door W3C of Deque.",
       "ctaPrimary": "Meer informatie",
       "ctaSecondary": "Nu aanmelden"
     },

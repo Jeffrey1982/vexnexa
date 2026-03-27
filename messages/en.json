@@ -343,6 +343,13 @@
       "badge": "Limited spots",
       "title": "Join the Pilot Partner Program",
       "subtitle": "Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
+      "standardsIntro": "Deliver white-label reports powered by the same standards used by leading accessibility teams worldwide.",
+      "standardsAria": "Accessibility standards references",
+      "standardsPoweredBy": "Powered by",
+      "standardsAxeCaption": "Industry test engine",
+      "standardsWcagCaption": "WCAG 2.2 AA",
+      "standardsEnCaption": "EU framework",
+      "standardsFootnote": "For reference only. VexNexa is not endorsed by W3C or Deque.",
       "ctaPrimary": "Learn more",
       "ctaSecondary": "Apply now"
     },
