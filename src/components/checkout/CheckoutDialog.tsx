@@ -4,12 +4,12 @@
  * CheckoutDialog — unified checkout popup for plan selection.
  *
  * Shows a fixed VAT-inclusive price. Company details are collected
- * for invoicing and data quality — they never change the price.
+ * for invoicing only — they never change the price.
  *
  * "All prices include VAT" is shown clearly throughout.
  */
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -26,7 +26,6 @@ import {
   CreditCard,
   User,
   Building2,
-  CheckCircle2,
   XCircle,
   AlertTriangle,
   Info,
@@ -39,23 +38,15 @@ import {
   type PlanKey,
   type BillingInterval,
 } from "@/lib/billing/pricing-config";
-import {
-  validateVatFormat,
-  validateKvkFormat,
-  validateCompanyName,
-} from "@/lib/billing/validation";
-import { COUNTRIES, isNlCountry } from "@/lib/billing/countries";
+import { validateCompanyName } from "@/lib/billing/validation";
 
 // ── Types ──
 
 type PurchaseAs = "individual" | "company";
-type VatStatus = "idle" | "validating" | "valid" | "invalid" | "error";
 
 interface CompanyFields {
   companyName: string;
-  billingCountry: string;
   vatId: string;
-  kvkNumber: string;
 }
 
 interface CheckoutDialogProps {
@@ -75,20 +66,12 @@ export function CheckoutDialog({
   const [purchaseAs, setPurchaseAs] = useState<PurchaseAs>("individual");
   const [companyFields, setCompanyFields] = useState<CompanyFields>({
     companyName: "",
-    billingCountry: "NL",
     vatId: "",
-    kvkNumber: "",
   });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [vatStatus, setVatStatus] = useState<VatStatus>("idle");
-  const [vatMessage, setVatMessage] = useState<string>("");
-  const [kvkLoading, setKvkLoading] = useState(false);
-  const [kvkMessage, setKvkMessage] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
-
-  const vatAbortRef = useRef<AbortController | null>(null);
 
   // ── Fixed price — never changes ──
   const price = planKey ? PLAN_PRICES[planKey][billingCycle] : 0;
@@ -110,14 +93,8 @@ export function CheckoutDialog({
         setCompanyFields((prev) => ({
           ...prev,
           companyName: profile.companyName || prev.companyName,
-          billingCountry: profile.countryCode || prev.billingCountry,
           vatId: profile.vatId || prev.vatId,
-          kvkNumber: profile.kvkNumber || prev.kvkNumber,
         }));
-        if (profile.vatValid === true && profile.vatId) {
-          setVatStatus("valid");
-          setVatMessage("VAT number verified");
-        }
         setProfileLoaded(true);
       } catch {
         // Non-fatal
@@ -134,9 +111,6 @@ export function CheckoutDialog({
       setFieldErrors({});
       setServerError(null);
       setProfileLoaded(false);
-      setVatStatus("idle");
-      setVatMessage("");
-      setKvkMessage("");
       setSubmitting(false);
     }
   }, [open]);
@@ -151,128 +125,15 @@ export function CheckoutDialog({
         delete next[key];
         return next;
       });
-      if (key === "vatId" || key === "billingCountry") {
-        setVatStatus("idle");
-        setVatMessage("");
-      }
-      if (key === "kvkNumber") {
-        setKvkMessage("");
-      }
     },
     []
   );
-
-  // ── VAT Validation (server-side, for autofill only — does NOT change price) ──
-  const handleValidateVat = useCallback(async () => {
-    const country = companyFields.billingCountry.toUpperCase();
-    const vatId = companyFields.vatId.trim();
-
-    if (!country || !vatId) return;
-
-    // Client-side format check first
-    const formatCheck = validateVatFormat(vatId);
-    if (!formatCheck.valid) {
-      setVatStatus("invalid");
-      setVatMessage(formatCheck.error ?? "Invalid format");
-      return;
-    }
-
-    // Abort previous request
-    vatAbortRef.current?.abort();
-    const controller = new AbortController();
-    vatAbortRef.current = controller;
-
-    setVatStatus("validating");
-    setVatMessage("");
-
-    try {
-      const res = await fetch("/api/billing/validate-vat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ countryCode: country, vatId }),
-        signal: controller.signal,
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setVatStatus("error");
-        setVatMessage(data.error || "Validation failed. You can still proceed.");
-        return;
-      }
-
-      if (data.valid) {
-        setVatStatus("valid");
-        setVatMessage("VAT number verified");
-        // Auto-fill company name from VIES if empty
-        if (data.companyName && !companyFields.companyName) {
-          setCompanyFields((prev) => ({
-            ...prev,
-            companyName: prev.companyName || data.companyName,
-          }));
-        }
-      } else {
-        setVatStatus("invalid");
-        setVatMessage(
-          data.warning
-            ? "VIES service unavailable. You can still proceed."
-            : "VAT number could not be verified. You can still proceed."
-        );
-      }
-    } catch (err) {
-      if ((err as Error).name === "AbortError") return;
-      setVatStatus("error");
-      setVatMessage("Could not reach validation service. You can still proceed.");
-    }
-  }, [companyFields.billingCountry, companyFields.vatId, companyFields.companyName]);
-
-  // ── KVK Lookup (for autofill only — does NOT change price) ──
-  const handleKvkLookup = useCallback(async () => {
-    const kvk = companyFields.kvkNumber.trim();
-    if (!kvk) return;
-
-    const formatCheck = validateKvkFormat(kvk);
-    if (!formatCheck.valid) {
-      setKvkMessage(formatCheck.error ?? "Invalid format");
-      return;
-    }
-
-    setKvkLoading(true);
-    setKvkMessage("");
-
-    try {
-      const res = await fetch("/api/billing/kvk-lookup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kvkNumber: formatCheck.normalized }),
-      });
-
-      const data = await res.json();
-
-      if (data.found) {
-        setKvkMessage("Company found");
-        // Auto-fill company name and address
-        if (data.companyName && !companyFields.companyName) {
-          setCompanyFields((prev) => ({
-            ...prev,
-            companyName: prev.companyName || data.companyName,
-          }));
-        }
-      } else {
-        setKvkMessage("KVK number not found. You can still proceed.");
-      }
-    } catch {
-      setKvkMessage("Lookup unavailable. You can still proceed.");
-    } finally {
-      setKvkLoading(false);
-    }
-  }, [companyFields.kvkNumber, companyFields.companyName]);
 
   // ── Submit to Mollie ──
   const handleSubmit = useCallback(async () => {
     if (!planKey) return;
 
-    // Light validation for company fields (never blocks checkout for valid required fields)
+    // Only company name is required for company purchases
     if (purchaseAs === "company") {
       const errors: Record<string, string> = {};
       const nameCheck = validateCompanyName(companyFields.companyName);
@@ -296,9 +157,7 @@ export function CheckoutDialog({
 
       if (purchaseAs === "company") {
         body.companyName = companyFields.companyName;
-        body.billingCountry = companyFields.billingCountry;
         body.vatId = companyFields.vatId || undefined;
-        body.kvkNumber = companyFields.kvkNumber || undefined;
       }
 
       const res = await fetch("/api/billing/create-payment", {
@@ -322,7 +181,6 @@ export function CheckoutDialog({
     }
   }, [planKey, billingCycle, purchaseAs, companyFields]);
 
-  const isNL = isNlCountry(companyFields.billingCountry);
   const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Annual";
   const nextBillingLabel = billingCycle === "monthly" ? "/month" : "/year";
 
@@ -456,7 +314,7 @@ export function CheckoutDialog({
             <div className="space-y-4 rounded-lg border border-border p-4 bg-background">
               <p className="text-xs text-muted-foreground flex items-start gap-1.5">
                 <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                Company details appear on your invoice. The total price does not change.
+                These details appear on your invoice. You can also add or update billing details later.
               </p>
 
               {/* Company name */}
@@ -468,7 +326,7 @@ export function CheckoutDialog({
                   id="co-name"
                   value={companyFields.companyName}
                   onChange={(e) => updateCompanyField("companyName", e.target.value)}
-                  placeholder="Acme B.V."
+                  placeholder="Acme Inc."
                   className={cn(
                     "h-10",
                     fieldErrors.companyName && "border-destructive focus-visible:ring-destructive"
@@ -483,138 +341,22 @@ export function CheckoutDialog({
                 )}
               </div>
 
-              {/* Billing country */}
-              <div className="space-y-1.5">
-                <Label htmlFor="co-country" className="text-sm">
-                  Billing country
-                </Label>
-                <select
-                  id="co-country"
-                  value={companyFields.billingCountry}
-                  onChange={(e) => updateCompanyField("billingCountry", e.target.value)}
-                  className={cn(
-                    "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                    "disabled:cursor-not-allowed disabled:opacity-50"
-                  )}
-                  disabled={submitting}
-                >
-                  {COUNTRIES.map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.name} ({c.code})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* KVK Number (Dutch companies) */}
-              {isNL && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="co-kvk" className="text-sm">
-                    KVK number
-                  </Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="co-kvk"
-                      value={companyFields.kvkNumber}
-                      onChange={(e) => updateCompanyField("kvkNumber", e.target.value)}
-                      placeholder="12345678"
-                      className="h-10 flex-1"
-                      disabled={submitting}
-                      maxLength={8}
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="default"
-                      disabled={
-                        !companyFields.kvkNumber.trim() || kvkLoading || submitting
-                      }
-                      onClick={handleKvkLookup}
-                      className="h-10 px-4 shrink-0"
-                    >
-                      {kvkLoading ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        "Look up"
-                      )}
-                    </Button>
-                  </div>
-                  {kvkMessage && (
-                    <p
-                      className={cn(
-                        "text-xs flex items-center gap-1",
-                        kvkMessage === "Company found"
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-muted-foreground"
-                      )}
-                    >
-                      {kvkMessage === "Company found" ? (
-                        <CheckCircle2 className="w-3 h-3" />
-                      ) : (
-                        <Info className="w-3 h-3" />
-                      )}
-                      {kvkMessage}
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {/* VAT Number */}
+              {/* VAT Number (optional) */}
               <div className="space-y-1.5">
                 <Label htmlFor="co-vat" className="text-sm">
-                  VAT number
+                  VAT number (optional)
                 </Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="co-vat"
-                    value={companyFields.vatId}
-                    onChange={(e) => updateCompanyField("vatId", e.target.value)}
-                    placeholder={isNL ? "NL123456789B01" : "EU VAT number"}
-                    className={cn(
-                      "h-10 flex-1",
-                      vatStatus === "invalid" && "border-destructive focus-visible:ring-destructive",
-                      vatStatus === "valid" && "border-green-500 focus-visible:ring-green-500"
-                    )}
-                    disabled={submitting}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="default"
-                    disabled={
-                      !companyFields.vatId.trim() || vatStatus === "validating" || submitting
-                    }
-                    onClick={handleValidateVat}
-                    className="h-10 px-4 shrink-0"
-                  >
-                    {vatStatus === "validating" ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      "Verify"
-                    )}
-                  </Button>
-                </div>
-
-                {/* VAT status messages */}
-                {vatStatus === "valid" && (
-                  <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" />
-                    {vatMessage}
-                  </p>
-                )}
-                {vatStatus === "invalid" && (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                    <AlertTriangle className="w-3 h-3" />
-                    {vatMessage}
-                  </p>
-                )}
-                {vatStatus === "error" && (
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Info className="w-3 h-3" />
-                    {vatMessage}
-                  </p>
-                )}
+                <Input
+                  id="co-vat"
+                  value={companyFields.vatId}
+                  onChange={(e) => updateCompanyField("vatId", e.target.value)}
+                  placeholder="e.g. NL123456789B01, DE123456789"
+                  className="h-10"
+                  disabled={submitting}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Enter a VAT number if your company has one. We&apos;ll include it on the invoice.
+                </p>
               </div>
             </div>
           )}

@@ -171,12 +171,24 @@ describe("Checkout validation: CheckoutDialog handles Individual/Company flow", 
 
   it("sends company fields to server when company selected", () => {
     expect(checkoutDialog).toContain("companyFields.companyName");
-    expect(checkoutDialog).toContain("companyFields.billingCountry");
     expect(checkoutDialog).toContain("companyFields.vatId");
   });
 
-  it("company details don't change price", () => {
-    expect(checkoutDialog).toContain("The total price does not change");
+  it("does not have KVK lookup or VAT verify buttons", () => {
+    expect(checkoutDialog).not.toContain("handleKvkLookup");
+    expect(checkoutDialog).not.toContain("handleValidateVat");
+    expect(checkoutDialog).not.toContain("kvkNumber");
+    expect(checkoutDialog).not.toContain("Look up");
+    expect(checkoutDialog).not.toContain('"Verify"');
+  });
+
+  it("VAT number is optional with helpful copy", () => {
+    expect(checkoutDialog).toContain("VAT number (optional)");
+    expect(checkoutDialog).toContain("include it on the invoice");
+  });
+
+  it("mentions billing details can be updated later", () => {
+    expect(checkoutDialog).toContain("add or update billing details later");
   });
 
   it("pricing page delegates to CheckoutDialog", () => {
@@ -364,6 +376,12 @@ describe("CheckoutDialog component", () => {
 
   it("does NOT import netToGross (prices are fixed VAT-inclusive)", () => {
     expect(src).not.toContain("netToGross");
+  });
+
+  it("does NOT have KVK or VAT verification actions", () => {
+    expect(src).not.toContain("kvkNumber");
+    expect(src).not.toContain("handleValidateVat");
+    expect(src).not.toContain("handleKvkLookup");
   });
 
   it("uses PLAN_PRICES for fixed price display", () => {
