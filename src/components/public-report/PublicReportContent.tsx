@@ -5,6 +5,7 @@ import { ImpactBar } from './ImpactBar';
 import { ViolationCard } from './ViolationCard';
 import { ReportCTA } from './ReportCTA';
 import { EAAReadinessSection } from './EAAReadinessSection';
+import { StandardsTrustBar } from '@/components/marketing/StandardsTrustBar';
 import { TrendMini } from './TrendMini';
 
 interface PublicReportContentProps {
@@ -197,6 +198,15 @@ export function PublicReportContent({ report, history, normalizedDomain, isCanon
           total: totalIssues,
         }}
       />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+        <StandardsTrustBar
+          variant="compact"
+          showHeading={false}
+          inset
+          className="bg-white/70 dark:bg-[var(--surface-1)]/90 border-gray-200 dark:border-white/[0.08]"
+        />
+      </div>
 
       {/* Score Trend (if history available) */}
       {history.length > 1 && isCanonical && (

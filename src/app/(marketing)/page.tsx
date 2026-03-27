@@ -23,6 +23,7 @@ import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 import { Quote, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -662,6 +663,7 @@ export default function HomePage() {
       <WhyTeamsSection />
       <BuiltForSection />
       <WhatYouGetSection />
+      <StandardsTrustBar variant="compact" showHeading={false} />
       <TestimonialsSection />
       <SampleReportSection />
       <AgencyOfferSection />

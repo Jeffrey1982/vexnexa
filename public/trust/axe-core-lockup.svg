@@ -1,0 +1,5 @@
+<!-- Typographic reference to axe-core® (Deque Systems, Inc.). Not the official Deque artwork; replace with approved logo per https://www.deque.com/ if provided. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" fill="none" role="img" aria-labelledby="axe-lockup-title">
+  <title id="axe-lockup-title">axe-core registered trademark</title>
+  <text x="0" y="30" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" font-weight="700" fill="#0867C1">axe-core®</text>
+</svg>

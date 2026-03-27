@@ -24,6 +24,12 @@ const nextConfig = {
         port: '',
         pathname: '/faviconV2/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.w3.org',
+        port: '',
+        pathname: '/WAI/**',
+      },
     ],
   },
   webpack: (config, { isServer }) => {
