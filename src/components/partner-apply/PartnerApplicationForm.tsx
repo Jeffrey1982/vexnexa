@@ -201,15 +201,24 @@ export function PartnerApplicationForm({
       </div>
 
       <div className="space-y-3 pt-2">
+        <p className="flex items-start gap-2 rounded-lg border border-border/60 bg-muted/30 px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+          <span className="select-none text-base leading-none" aria-hidden="true">
+            ✅
+          </span>
+          <span>
+            Your application will be reviewed within{" "}
+            <strong className="font-medium text-foreground">24 hours</strong>. We respect your inbox.
+          </span>
+        </p>
         <Button
           type="submit"
           size="lg"
-          className="h-12 w-full text-base font-semibold gradient-primary"
+          className="h-14 w-full text-base font-semibold gradient-primary md:text-lg"
           disabled={pending}
         >
           {pending
             ? "Sending…"
-            : `Apply for Pilot Partner Program – Only ${spotsLeft} Spot${spotsLeft === 1 ? "" : "s"} Left`}
+            : `Claim My Spot Now – Only ${spotsLeft} Spot${spotsLeft === 1 ? "" : "s"} Left`}
         </Button>
         <p className="text-center text-xs text-muted-foreground">
           Your data is safe. We hate spam as much as you do.

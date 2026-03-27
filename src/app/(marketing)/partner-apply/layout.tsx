@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pilot Partner Application",
+  title: "Exclusive Pilot Partner Application",
   description:
-    "Apply for the exclusive VexNexa Pilot Partner Program: Business Plan access, white-label reports, priority support, and roadmap influence. Limited spots.",
+    "Apply for the VexNexa Pilot Partner Program: full Business access, white-label reports, priority support, and roadmap influence. Limited spots; applications reviewed within 24 hours.",
   openGraph: {
-    title: "Pilot Partner Application — VexNexa",
+    title: "Exclusive Pilot Partner Application — VexNexa",
     description:
-      "Secure your spot in the VexNexa Pilot Partner Program. Business Plan access, white-label reports, and direct product input.",
+      "Claim your spot: Business-level access, white-label client reports, and direct product input. Manually reviewed within 24 hours.",
     url: "https://vexnexa.com/partner-apply",
   },
   alternates: { canonical: "https://vexnexa.com/partner-apply" },

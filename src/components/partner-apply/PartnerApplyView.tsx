@@ -12,10 +12,10 @@ import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
 const initialState: PartnerApplyState = { ok: false };
 
 const VALUE_POINTS = [
-  "Full Business Plan ($129/mo value) during the entire pilot",
   "White-label reports under your own brand",
+  "Full Business Plan included during the pilot (€129/mo value)",
   "Priority support + dedicated success manager",
-  "Early access to new features & direct input on the product roadmap",
+  "Early access to new features + direct roadmap input",
   "30% discount on all future audits and services",
 ] as const;
 
@@ -28,24 +28,21 @@ function PartnerApplySuccess() {
             <CheckCircle2 className="h-14 w-14" aria-hidden />
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-4">
           <h1 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Application received – thank you!
+            Thank you! Your Pilot Partner application has been received.
           </h1>
-          <p className="text-lg text-muted-foreground">
-            We will contact you within <strong className="text-foreground">1 business day</strong>.
-          </p>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            While you wait, explore the white-label report examples to preview what you can deliver under your
-            brand.
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            We will contact you within <strong className="text-foreground">24 hours</strong> to discuss the next
+            steps.
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Button size="lg" className="gradient-primary" asChild>
-            <Link href="/sample-report">Explore sample report</Link>
+            <Link href="/sample-report">View sample white-label report</Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
-            <Link href="/white-label-accessibility-reports">White-label reporting</Link>
+            <Link href="/white-label-accessibility-reports">Explore white-label possibilities</Link>
           </Button>
         </div>
       </div>
@@ -80,7 +77,7 @@ export function PartnerApplyView({ spotsLeft }: { spotsLeft: number }) {
             ))}
           </ul>
           <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-muted-foreground">
-            Applications are reviewed within <strong className="text-foreground">1 business day</strong>.
+            All applications are manually reviewed within <strong className="text-foreground">24 hours</strong>.
           </p>
         </div>
       </section>
@@ -89,7 +86,8 @@ export function PartnerApplyView({ spotsLeft }: { spotsLeft: number }) {
         variant="full"
         showHeading
         omitGdpr
-        headingOverride="You will deliver reports built on the exact same industry standards used by the world's most respected accessibility teams"
+        headingOverride="Built on Industry-Leading Standards"
+        subheadingOverride="As a Pilot Partner, your clients will receive reports powered by the same technology trusted by leading accessibility teams worldwide."
       />
 
       <section
@@ -100,7 +98,7 @@ export function PartnerApplyView({ spotsLeft }: { spotsLeft: number }) {
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-10 max-w-xl text-center">
             <h2 id="partner-form-heading" className="font-display text-2xl font-bold md:text-3xl">
-              Secure your spot in the Pilot Partner Program
+              Secure Your Spot – Only {spotsLeft} Remaining
             </h2>
             <p className="mt-2 text-sm text-muted-foreground md:text-base">
               Short qualifying form — we read every application personally.

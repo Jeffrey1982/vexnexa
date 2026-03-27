@@ -116,6 +116,8 @@ export type StandardsTrustBarProps = {
   showHeading?: boolean;
   /** Replaces the default heading line when `showHeading` is true. */
   headingOverride?: string;
+  /** Optional second line below the heading (e.g. personal framing for partners). */
+  subheadingOverride?: string;
   /** Hide the GDPR column (e.g. pilot partner funnel focused on testing standards). */
   omitGdpr?: boolean;
   /** Replaces the small-print disclaimer under the logos. */
@@ -129,6 +131,7 @@ export function StandardsTrustBar({
   variant = "full",
   showHeading = true,
   headingOverride,
+  subheadingOverride,
   omitGdpr = false,
   disclaimerOverride,
   className,
@@ -152,15 +155,39 @@ export function StandardsTrustBar({
     >
       <div className="container mx-auto px-4">
         {showHeading ? (
-          <p
-            className={cn(
-              "mx-auto max-w-3xl text-center font-medium text-muted-foreground",
-              isFull ? "mb-8 text-sm md:text-base" : "mb-5 text-xs md:text-sm"
-            )}
-          >
-            {headingOverride ??
-              "Built on the world's most trusted accessibility standards"}
-          </p>
+          subheadingOverride != null && subheadingOverride.length > 0 ? (
+            <div
+              className={cn("mx-auto max-w-3xl text-center", isFull ? "mb-8" : "mb-5")}
+            >
+              <p
+                className={cn(
+                  "font-semibold tracking-tight text-foreground",
+                  isFull ? "text-base md:text-lg" : "text-sm md:text-base"
+                )}
+              >
+                {headingOverride ??
+                  "Built on the world's most trusted accessibility standards"}
+              </p>
+              <p
+                className={cn(
+                  "mt-3 font-normal text-muted-foreground",
+                  isFull ? "text-sm leading-relaxed md:text-base" : "text-xs leading-relaxed md:text-sm"
+                )}
+              >
+                {subheadingOverride}
+              </p>
+            </div>
+          ) : (
+            <p
+              className={cn(
+                "mx-auto max-w-3xl text-center font-medium text-muted-foreground",
+                isFull ? "mb-8 text-sm md:text-base" : "mb-5 text-xs md:text-sm"
+              )}
+            >
+              {headingOverride ??
+                "Built on the world's most trusted accessibility standards"}
+            </p>
+          )
         ) : null}
 
         <div
