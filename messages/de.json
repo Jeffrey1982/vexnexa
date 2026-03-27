@@ -575,6 +575,7 @@
         "save15": "Save 15%"
       },
       "mostPopular": "Most Popular",
+      "freeForeverPrice": "Für immer kostenlos",
       "needCustom": "Need a custom solution?",
       "contactSales": "Contact our sales team",
       "vatExcl": "excl. VAT · {country} {vatPercent}%",

@@ -326,13 +326,13 @@ function PricingCards() {
                 className={cn(
                   "relative flex flex-col transition-all duration-300",
                   plan.highlighted &&
-                    "border-[#FF7A00] shadow-xl ring-2 ring-[#FF7A00]/20"
+                    "border-primary shadow-xl ring-2 ring-primary/25"
                 )}
               >
                 {plan.highlighted && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-[#FF7A00] text-white hover:bg-[#FF7A00]/90">
-                      <Star className="w-3 h-3 mr-1" />
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
+                    <Badge className="border-0 bg-primary text-primary-foreground shadow-sm hover:bg-primary/90">
+                      <Star className="mr-1 h-3 w-3" />
                       {tp("mostPopular")}
                     </Badge>
                   </div>
@@ -354,21 +354,27 @@ function PricingCards() {
                     {plan.name}
                   </CardTitle>
                   <div className="mt-3">
-                    <span className="text-3xl font-bold font-display">
-                      {priceDisplay.mainPrice}
-                    </span>
-                    <span className="text-muted-foreground text-sm">
-                      {priceDisplay.period}
-                    </span>
-                    {priceDisplay.subtext && (
-                      <p className="text-xs text-muted-foreground mt-1">
-                        ({priceDisplay.subtext})
+                    {plan.key === "FREE" ? (
+                      <p className="font-display text-3xl font-bold tracking-tight text-foreground">
+                        {tp("freeForeverPrice")}
                       </p>
-                    )}
-                    {plan.key !== "FREE" && (
-                      <p className="text-[10px] text-muted-foreground mt-0.5">
-                        incl. VAT
-                      </p>
+                    ) : (
+                      <>
+                        <span className="font-display text-3xl font-bold">
+                          {priceDisplay.mainPrice}
+                        </span>
+                        <span className="ml-1 align-baseline text-lg font-medium text-muted-foreground">
+                          {priceDisplay.period}
+                        </span>
+                        {priceDisplay.subtext && (
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            ({priceDisplay.subtext})
+                          </p>
+                        )}
+                        <p className="mt-0.5 text-[10px] text-muted-foreground">
+                          incl. VAT
+                        </p>
+                      </>
                     )}
                   </div>
                   <p className="text-muted-foreground mt-2 text-xs">
@@ -398,10 +404,7 @@ function PricingCards() {
                   </div>
 
                   <Button
-                    className={cn(
-                      "w-full mt-auto transition-all duration-200",
-                      plan.highlighted && "bg-[#FF7A00] hover:bg-[#FF7A00]/90"
-                    )}
+                    className="mt-auto w-full transition-all duration-200"
                     variant={plan.ctaVariant}
                     size="lg"
                     onClick={() => handleUpgrade(plan.key)}

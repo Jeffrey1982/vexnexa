@@ -552,6 +552,7 @@
         "save15": "Économisez 15%"
       },
       "mostPopular": "Le plus populaire",
+      "freeForeverPrice": "Gratuit pour toujours",
       "needCustom": "Besoin d'une solution sur mesure ?",
       "contactSales": "Contactez notre équipe commerciale",
       "vatExcl": "HT · {country} {vatPercent}%",
