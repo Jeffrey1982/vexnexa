@@ -584,9 +584,15 @@ model ContactMessage {
   @@index([createdAt])
 }
 
+enum PartnerApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 /// Pilot Partner Program applications (marketing funnel; stored via server action).
 model PartnerApplication {
-  id          String   @id @default(cuid())
+  id          String                   @id @default(cuid())
   fullName    String
   companyName String
   email       String
@@ -595,10 +601,11 @@ model PartnerApplication {
   clientSites String
   services    Json
   motivation  String
-  status      String   @default("new")
-  createdAt   DateTime @default(now())
+  status      PartnerApplicationStatus @default(PENDING)
+  createdAt   DateTime                 @default(now())
 
   @@index([email])
+  @@index([status])
   @@index([createdAt])
   @@map("partner_applications")
 }

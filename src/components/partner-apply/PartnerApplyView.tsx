@@ -50,8 +50,29 @@ function PartnerApplySuccess() {
   );
 }
 
-export function PartnerApplyView({ spotsLeft }: { spotsLeft: number }) {
+function PartnerApplyWaitlist() {
+  return (
+    <div className="mx-auto max-w-lg rounded-2xl border border-border/60 bg-muted/20 px-6 py-10 text-center">
+      <h2 className="font-display text-xl font-bold md:text-2xl">Program is full</h2>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+        Pilot partner seats are allocated. Join the waitlist and we will contact you if a spot becomes available.
+      </p>
+      <Button className="mt-6 gradient-primary" size="lg" asChild>
+        <Link href="/contact?from=pilot-waitlist">Join the waitlist</Link>
+      </Button>
+      <p className="mt-4 text-xs text-muted-foreground">
+        Or email{" "}
+        <a href="mailto:info@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
+          info@vexnexa.com
+        </a>
+      </p>
+    </div>
+  );
+}
+
+export function PartnerApplyView({ remaining }: { remaining: number }) {
   const [state, formAction, pending] = useActionState(submitPartnerApplication, initialState);
+  const isFull = remaining <= 0;
 
   if (state.ok) {
     return <PartnerApplySuccess />;
@@ -59,7 +80,7 @@ export function PartnerApplyView({ spotsLeft }: { spotsLeft: number }) {
 
   return (
     <>
-      <PartnerHero spotsLeft={spotsLeft} />
+      <PartnerHero remaining={remaining} />
 
       <section className="border-b border-border/40 bg-muted/20 py-12 md:py-16" aria-labelledby="partner-value-heading">
         <div className="container mx-auto px-4">
@@ -98,18 +119,24 @@ export function PartnerApplyView({ spotsLeft }: { spotsLeft: number }) {
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-10 max-w-xl text-center">
             <h2 id="partner-form-heading" className="font-display text-2xl font-bold md:text-3xl">
-              Secure Your Spot – Only {spotsLeft} Remaining
+              {isFull ? "Pilot program at capacity" : `Secure Your Spot – Only ${remaining} Remaining`}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground md:text-base">
-              Short qualifying form — we read every application personally.
+              {isFull
+                ? "We are not accepting new applications right now."
+                : "Short qualifying form — we read every application personally."}
             </p>
           </div>
-          <PartnerApplicationForm
-            formAction={formAction}
-            state={state}
-            pending={pending}
-            spotsLeft={spotsLeft}
-          />
+          {isFull ? (
+            <PartnerApplyWaitlist />
+          ) : (
+            <PartnerApplicationForm
+              formAction={formAction}
+              state={state}
+              pending={pending}
+              remaining={remaining}
+            />
+          )}
         </div>
       </section>
     </>

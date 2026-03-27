@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,14 +29,14 @@ type PartnerApplicationFormProps = {
   formAction: (payload: FormData) => void;
   state: PartnerApplyState;
   pending: boolean;
-  spotsLeft?: number;
+  remaining: number;
 };
 
 export function PartnerApplicationForm({
   formAction,
   state,
   pending,
-  spotsLeft = 9,
+  remaining,
 }: PartnerApplicationFormProps) {
   const fe = state.ok ? undefined : state.fieldErrors;
 
@@ -56,12 +57,21 @@ export function PartnerApplicationForm({
       </div>
 
       {!state.ok && state.error ? (
-        <p
-          className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+        <div
+          className={
+            state.programFull
+              ? "rounded-lg border border-orange-500/30 bg-orange-500/5 px-4 py-3 text-sm text-orange-800 dark:text-orange-200"
+              : "rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+          }
           role="alert"
         >
-          {state.error}
-        </p>
+          <p>{state.error}</p>
+          {state.programFull ? (
+            <Button variant="outline" size="sm" className="mt-3" asChild>
+              <Link href="/contact?from=pilot-waitlist">Join the waitlist</Link>
+            </Button>
+          ) : null}
+        </div>
       ) : null}
 
       <div className="space-y-2">
@@ -218,7 +228,7 @@ export function PartnerApplicationForm({
         >
           {pending
             ? "Sending…"
-            : `Claim My Spot Now – Only ${spotsLeft} Spot${spotsLeft === 1 ? "" : "s"} Left`}
+            : `Claim My Spot Now – Only ${remaining} Spot${remaining === 1 ? "" : "s"} Left`}
         </Button>
         <p className="text-center text-xs text-muted-foreground">
           Your data is safe. We hate spam as much as you do.

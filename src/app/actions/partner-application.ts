@@ -1,10 +1,12 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { checkKeyedRateLimit } from '@/lib/rate-limit';
 import { sendPilotPartnerApplicationEmail } from '@/lib/email';
+import { getMaxPilotSpots } from '@/lib/pilot-partner';
 import type { Prisma } from '@prisma/client';
 
 const SERVICE_VALUES = [
@@ -68,6 +70,8 @@ export type PartnerApplyState =
       ok: false;
       error?: string;
       fieldErrors?: Record<string, string>;
+      /** True when capacity (approved partners) has been reached */
+      programFull?: boolean;
     };
 
 export async function submitPartnerApplication(
@@ -124,6 +128,19 @@ export async function submitPartnerApplication(
   const d = parsed.data;
   const phoneVal = d.phone?.trim() ? d.phone.trim() : null;
 
+  const maxSpots = getMaxPilotSpots();
+  const approvedCount = await prisma.partnerApplication.count({
+    where: { status: 'APPROVED' },
+  });
+  if (approvedCount >= maxSpots) {
+    return {
+      ok: false,
+      error:
+        'The Pilot Partner program is currently full. Join the waitlist and we will reach out if a spot opens.',
+      programFull: true,
+    };
+  }
+
   try {
     await prisma.partnerApplication.create({
       data: {
@@ -135,8 +152,8 @@ export async function submitPartnerApplication(
         clientSites: d.clientSites,
         services: d.services as unknown as Prisma.InputJsonValue,
         motivation: d.motivation,
-        status: 'new'
-      }
+        status: 'PENDING',
+      },
     });
   } catch (e) {
     console.error('Partner application DB error:', e);
@@ -161,5 +178,6 @@ export async function submitPartnerApplication(
     console.error('Partner application email error:', e);
   }
 
+  revalidatePath('/partner-apply');
   return { ok: true };
 }
