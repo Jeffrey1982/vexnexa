@@ -137,7 +137,7 @@ export function AdminNav({ user }: AdminNavProps) {
     : user?.email;
 
   return (
-    <nav className="border-b bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary to-blue-600 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -148,7 +148,7 @@ export function AdminNav({ user }: AdminNavProps) {
               </div>
               <div className="hidden sm:block">
                 <div className="text-white font-bold text-xl tracking-tight">VexNexa</div>
-                <div className="text-orange-100 text-xs -mt-1">Admin Panel</div>
+                <div className="-mt-1 text-xs text-white/80">Admin Panel</div>
               </div>
             </Link>
 
@@ -166,7 +166,7 @@ export function AdminNav({ user }: AdminNavProps) {
                       'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all',
                       active
                         ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
-                        : 'text-orange-100 hover:bg-white/10 hover:text-white'
+                        : 'text-white/80 hover:bg-white/10 hover:text-white'
                     )}
                   >
                     <Icon className="w-4 h-4" />
@@ -194,7 +194,7 @@ export function AdminNav({ user }: AdminNavProps) {
                         'inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all',
                         active
                           ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
-                          : 'text-orange-100 hover:bg-white/10 hover:text-white'
+                          : 'text-white/80 hover:bg-white/10 hover:text-white'
                       )}
                     >
                       <Icon className="w-4 h-4" />
@@ -222,7 +222,7 @@ export function AdminNav({ user }: AdminNavProps) {
                               className={cn(
                                 'flex items-center gap-3 px-4 py-3 text-sm transition-colors',
                                 itemActive
-                                  ? 'bg-orange-50 dark:bg-orange-950/30 text-orange-600 font-medium'
+                                  ? 'bg-primary/10 font-medium text-primary dark:bg-primary/20'
                                   : 'text-gray-700 dark:text-muted-foreground hover:bg-gray-50'
                               )}
                               onClick={() => setOpenDropdown(null)}
@@ -285,7 +285,7 @@ export function AdminNav({ user }: AdminNavProps) {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/20 bg-gradient-to-b from-orange-500 to-orange-600">
+        <div className="border-t border-white/20 bg-gradient-to-b from-primary to-blue-600 lg:hidden">
           <div className="px-4 py-3 space-y-1">
             {/* Primary Items */}
             {primaryNavItems.map((item) => {
@@ -300,7 +300,7 @@ export function AdminNav({ user }: AdminNavProps) {
                     'flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all',
                     active
                       ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
-                      : 'text-orange-100 hover:bg-white/10 hover:text-white'
+                      : 'text-white/80 hover:bg-white/10 hover:text-white'
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -317,7 +317,7 @@ export function AdminNav({ user }: AdminNavProps) {
                 <div key={group.label} className="space-y-1">
                   <div className={cn(
                     'flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider',
-                    'text-orange-200 mt-3'
+                    'mt-3 text-white/70'
                   )}>
                     <Icon className="w-3 h-3" />
                     {group.label}
@@ -334,7 +334,7 @@ export function AdminNav({ user }: AdminNavProps) {
                           'flex items-center gap-3 px-6 py-2 text-sm font-medium rounded-lg transition-all',
                           itemActive
                             ? 'bg-white/20 text-white shadow-sm backdrop-blur-sm'
-                            : 'text-orange-100 hover:bg-white/10 hover:text-white'
+                            : 'text-white/80 hover:bg-white/10 hover:text-white'
                         )}
                       >
                         <ItemIcon className="w-4 h-4" />

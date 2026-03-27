@@ -249,7 +249,7 @@ export default async function SecurityPage() {
               <li><strong>Remediation:</strong> Fix vulnerabilities and restore service</li>
               <li><strong>Post-mortem:</strong> Document learnings and improve processes</li>
             </ol>
-            <div className="not-prose mt-5 rounded-lg border border-orange-300 bg-orange-50 p-4">
+            <div className="not-prose mt-5 rounded-lg border border-border bg-muted p-4">
               <p className="text-sm font-medium flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 Report a Vulnerability

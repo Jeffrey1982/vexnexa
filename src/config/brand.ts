@@ -12,6 +12,6 @@ export const BRAND = {
   iconPng512: "/brand/vexnexa-icon-512.png",
   /** Absolute URL for use in emails */
   logoAbsolute: "https://vexnexa.com/brand/vexnexa-logo.png",
-  primaryColor: "#D45A00",
-  themeColor: "#D45A00",
+  primaryColor: "#14B8A6",
+  themeColor: "#14B8A6",
 } as const;

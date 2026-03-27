@@ -197,7 +197,7 @@ export default function ModernLoginForm() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-[#FF6B35]/30 border-t-[#FF6B35] rounded-full animate-spin mx-auto"></div>
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-primary/25 border-t-primary"></div>
           <p className="text-sm text-[#5A5A5A] dark:text-[#C0C3C7]">Redirecting to password reset...</p>
         </div>
       </div>
@@ -205,16 +205,15 @@ export default function ModernLoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">
-      <div className="w-full max-w-md">
-        {/* Floating elements for visual interest - VexNexa colors */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-4 -left-4 w-72 h-72 bg-[#D45A00] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
-          <div className="absolute -top-4 -right-4 w-72 h-72 bg-[#FFD166] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#0F5C5C] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+    <div className="relative flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="relative w-full max-w-md">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-4 -top-4 h-72 w-72 animate-blob rounded-full bg-primary/10 mix-blend-multiply opacity-60 blur-xl filter"></div>
+          <div className="animation-delay-2000 absolute -right-4 -top-4 h-72 w-72 animate-blob rounded-full bg-blue-500/10 mix-blend-multiply opacity-50 blur-xl filter"></div>
+          <div className="animation-delay-4000 absolute -bottom-8 left-20 h-72 w-72 animate-blob rounded-full bg-primary/5 mix-blend-multiply opacity-70 blur-xl filter"></div>
         </div>
 
-        <Card className="backdrop-blur-sm bg-white/90 dark:bg-[#1E1E1E]/90 shadow-2xl border border-[#C0C3C7]/20">
+        <Card className="border-border bg-card/95 shadow-2xl backdrop-blur-sm">
           <CardHeader className="text-center pb-2">
             <div className="mx-auto mb-4">
               <VexnexaLogo size={56} />
@@ -314,7 +313,7 @@ export default function ModernLoginForm() {
               <div className="text-sm">
                 <a
                   href="/auth/forgot-password"
-                  className="text-[#0F5C5C] hover:text-[#D45A00] transition-colors font-medium"
+                  className="font-medium text-primary transition-colors hover:text-primary/80"
                 >
                   Forgot password?
                 </a>
@@ -337,7 +336,7 @@ export default function ModernLoginForm() {
                 variant="outline"
                 disabled={loading}
                 onClick={handleOAuthLogin}
-                className="w-full h-12 border-2 border-[#C0C3C7] hover:bg-[#F8F9FA] hover:border-[#D45A00] dark:hover:bg-[#2A2A2A] dark:border-[#444] transition-all duration-200 gap-2"
+                className="h-12 w-full gap-2 border-2 border-border transition-all duration-200 hover:border-primary hover:bg-muted dark:hover:bg-muted/50"
                 aria-label="Sign in with Google"
               >
                 <GoogleIcon />
@@ -358,7 +357,7 @@ export default function ModernLoginForm() {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full h-12 border-2 border-[#0F5C5C] hover:bg-[#0F5C5C] hover:text-white dark:border-[#0F5C5C] dark:hover:bg-[#0F5C5C] transition-all duration-200"
+                className="h-12 w-full border-2 border-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground"
                 onClick={() => router.push('/auth/register')}
               >
                 <div className="flex items-center gap-2">
@@ -372,7 +371,7 @@ export default function ModernLoginForm() {
             <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
               <div className="flex items-center justify-center gap-6 text-xs text-[#5A5A5A] dark:text-[#C0C3C7]">
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3 h-3 text-[#0F5C5C]" aria-hidden="true" />
+                  <Shield className="h-3 w-3 text-primary" aria-hidden="true" />
                   <span>Secure</span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -380,7 +379,7 @@ export default function ModernLoginForm() {
                   <span>Free plan</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-[#D45A00]" aria-hidden="true" />
+                  <Sparkles className="h-3 w-3 text-primary" aria-hidden="true" />
                   <span>No credit card</span>
                 </div>
               </div>

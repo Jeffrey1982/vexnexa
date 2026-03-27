@@ -28,7 +28,7 @@ export default function ResetPasswordRedirect(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">
       <div className="text-center space-y-4">
-        <div className="w-12 h-12 border-4 border-[#FF6B35]/30 border-t-[#FF6B35] rounded-full animate-spin mx-auto" />
+        <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-primary/25 border-t-primary" />
         <p className="text-sm text-[#5A5A5A] dark:text-[#C0C3C7]">
           Redirecting to password reset...
         </p>

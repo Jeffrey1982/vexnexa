@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { inter, spaceGrotesk } from './fonts'
+import { lexend } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#D45A00',
+  themeColor: '#14B8A6',
 }
 
 export default async function RootLayout({
@@ -56,8 +56,13 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+    <html lang="en" className={lexend.variable} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,1&display=swap"
+          rel="stylesheet"
+        />
         {/* Browser color-scheme hint — ensures form controls, scrollbars render in correct mode */}
         <meta name="color-scheme" content="light dark" />
 
@@ -83,12 +88,12 @@ export default async function RootLayout({
         <meta name="application-name" content="VexNexa" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#D45A00" />
+        <meta name="msapplication-TileColor" content="#14B8A6" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#D45A00" />
-        <meta name="msapplication-navbutton-color" content="#D45A00" />
+        <meta name="theme-color" content="#14B8A6" />
+        <meta name="msapplication-navbutton-color" content="#14B8A6" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         {/* Preload Service Worker */}

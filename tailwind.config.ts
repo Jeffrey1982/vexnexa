@@ -11,17 +11,18 @@ const config: Config = {
   	extend: {
   		/* Semantic surfaces: background / muted / card — driven by globals.css :root & .dark */
   		fontFamily: {
-  			sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
-  			display: ['var(--font-spacegrotesk)', 'Space Grotesk', 'sans-serif'],
-  			inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
-  			body: ['var(--font-inter)', 'Inter', 'sans-serif'],
-  			jakarta: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'sans-serif'],
-  			dmsans: ['var(--font-dmsans)', 'DM Sans', 'sans-serif'],
-  			spacegrotesk: ['var(--font-spacegrotesk)', 'Space Grotesk', 'sans-serif'],
-  			urbanist: ['var(--font-urbanist)', 'Urbanist', 'sans-serif']
+  			sans: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			display: ['"Satoshi Variable"', 'Satoshi', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			inter: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			body: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			jakarta: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			dmsans: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			spacegrotesk: ['"Satoshi Variable"', 'Satoshi', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
+  			urbanist: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif']
   		},
   		colors: {
   			background: 'hsl(var(--background))',
+  			surface: 'hsl(var(--surface))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
@@ -34,16 +35,16 @@ const config: Config = {
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))',
-  				50: '#FFF5ED',
-  				100: '#FFE7D6',
-  				200: '#FFC4A8',
-  				300: '#FFA376',
-  				400: '#FF8A5B',
-  				500: '#FF6B35', // Aurora Orange
-  				600: '#E6602F',
-  				700: '#B34C25',
-  				800: '#80361A',
-  				900: '#4D2010'
+  				50: '#f0fdfa',
+  				100: '#ccfbf1',
+  				200: '#99f6e4',
+  				300: '#5eead4',
+  				400: '#2dd4bf',
+  				500: '#14b8a6',
+  				600: '#0d9488',
+  				700: '#0f766e',
+  				800: '#115e59',
+  				900: '#134e4a'
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -99,17 +100,21 @@ const config: Config = {
   				900: '#996700'
   			},
   			blue: {
-  				DEFAULT: '#0F5C5C',
-  				50: '#E8F4F4',
-  				100: '#D4EBEB',
-  				200: '#A9D7D7',
-  				300: '#7EC3C3',
-  				400: '#53AFAF',
-  				500: '#0F5C5C', // Teal Blue
-  				600: '#0C4A4A',
-  				700: '#093838',
-  				800: '#062626',
-  				900: '#031414'
+  				DEFAULT: '#3b82f6',
+  				50: '#eff6ff',
+  				100: '#dbeafe',
+  				200: '#bfdbfe',
+  				300: '#93c5fd',
+  				400: '#60a5fa',
+  				500: '#3b82f6',
+  				600: '#2563eb',
+  				700: '#1d4ed8',
+  				800: '#1e40af',
+  				900: '#1e3a8a'
+  			},
+  			brand: {
+  				teal: '#14b8a6',
+  				blue: '#3b82f6'
   			},
   			graphite: {
   				DEFAULT: '#1E1E1E',
@@ -155,11 +160,11 @@ const config: Config = {
   			'soft-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
   			'soft-md': '0 4px 16px rgba(0, 0, 0, 0.12)',
   			'soft-lg': '0 8px 24px rgba(0, 0, 0, 0.15)',
-  			'glow-orange': '0 0 30px rgba(255, 107, 53, 0.5)',
-  			'glow-gold': '0 0 30px rgba(255, 209, 102, 0.5)',
-  			'glow-teal': '0 0 30px rgba(15, 92, 92, 0.5)',
-  			'glass': '0 8px 32px 0 rgba(255, 107, 53, 0.12)',
-  			'neon': '0 0 5px rgba(255, 107, 53, 0.6), 0 0 20px rgba(255, 107, 53, 0.4)'
+  			'glow-orange': '0 0 30px rgba(20, 184, 166, 0.35)',
+  			'glow-gold': '0 0 30px rgba(59, 130, 246, 0.35)',
+  			'glow-teal': '0 0 30px rgba(20, 184, 166, 0.45)',
+  			'glass': '0 8px 32px 0 rgba(15, 23, 42, 0.08)',
+  			'neon': '0 0 5px rgba(20, 184, 166, 0.45), 0 0 20px rgba(20, 184, 166, 0.25)'
   		},
   		spacing: {
   			'18': '4.5rem',

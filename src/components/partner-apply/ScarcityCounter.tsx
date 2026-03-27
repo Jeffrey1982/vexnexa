@@ -23,9 +23,7 @@ export function ScarcityCounter({ remaining }: { remaining: number }) {
     <p
       className={cn(
         "text-lg font-semibold md:text-xl",
-        urgent
-          ? "text-orange-600 dark:text-orange-400"
-          : "text-primary"
+        urgent ? "font-bold text-primary" : "text-primary"
       )}
       aria-live="polite"
     >

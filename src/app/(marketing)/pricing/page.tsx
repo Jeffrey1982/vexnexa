@@ -526,7 +526,7 @@ function AuditServicesSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-950/20 dark:via-amber-950/20 dark:to-yellow-950/20">
+    <section className="border-y border-border/60 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge
@@ -1018,11 +1018,11 @@ function ComplianceDisclaimerSection() {
   const t = useTranslations("pricing.compliance");
 
   return (
-    <section className="py-12 border-y bg-amber-50 dark:bg-amber-950/20">
+    <section className="border-y border-border/60 bg-muted py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-500 flex-shrink-0 mt-1" />
+            <AlertTriangle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-semibold text-lg mb-2">{t("title")}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">

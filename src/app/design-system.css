@@ -6,25 +6,25 @@
 :root {
   /* ===== Base & Neutral Colors ===== */
   --color-bg: #FFFFFF;
-  --color-bg-subtle: #F8F9FA;
-  --color-bg-muted: #F8F9FA;
+  --color-bg-subtle: #F8FAFC;
+  --color-bg-muted: #F8FAFC;
   --color-text: #1E1E1E; /* Midnight Graphite */
   --color-text-muted: #C0C3C7; /* Ash Gray */
   --color-text-subtle: #A8AAAD;
-  --color-border: #C0C3C7; /* Ash Gray */
-  --color-border-strong: #A0A3A7;
+  --color-border: #E2E8F0;
+  --color-border-strong: #CBD5E1;
 
-  /* ===== Colors - Primary (Aurora Orange) ===== */
-  --color-primary: #D45A00; /* Aurora Orange - WCAG AA compliant with white text (4.56:1) */
-  --color-primary-hover: #B84E00;
-  --color-primary-active: #A04300;
+  /* ===== Colors - Primary (Teal) ===== */
+  --color-primary: #14B8A6;
+  --color-primary-hover: #0D9488;
+  --color-primary-active: #0F766E;
   --color-primary-foreground: #FFFFFF;
   --color-primary-50: #FFF5ED;
   --color-primary-100: #FFE7D6;
   --color-primary-200: #FFC4A8;
   --color-primary-300: #FFA376;
   --color-primary-400: #E8751A;
-  --color-primary-500: #D45A00;
+  --color-primary-500: #14B8A6;
   --color-primary-600: #B84E00;
   --color-primary-700: #B35400;
   --color-primary-800: #803C00;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-primary-glow: 0 0 0 3px rgba(212, 90, 0, 0.2);
-  --shadow-secondary-glow: 0 0 0 3px rgba(255, 209, 102, 0.2);
+  --shadow-primary-glow: 0 0 0 3px rgba(20, 184, 166, 0.25);
+  --shadow-secondary-glow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);
-  --gradient-warm: linear-gradient(135deg, #FFD166 0%, #D45A00 100%);
-  --gradient-hero: linear-gradient(135deg, #D45A00 0%, #0F5C5C 100%);
-  --gradient-subtle: linear-gradient(to bottom, #F8F9FA 0%, #FFFFFF 100%);
-  --gradient-mesh: linear-gradient(135deg, #D45A00 0%, #FFD166 50%, #0F5C5C 100%);
+  --gradient-primary: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+  --gradient-warm: linear-gradient(135deg, #5EEAD4 0%, #14B8A6 100%);
+  --gradient-hero: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);
+  --gradient-subtle: linear-gradient(to bottom, #F8FAFC 0%, #FFFFFF 100%);
+  --gradient-mesh: linear-gradient(135deg, #14B8A6 0%, #3B82F6 50%, #0D9488 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;

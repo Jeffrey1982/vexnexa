@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] shadow-elev2 hover:bg-[var(--vn-primary-aaa-btn-hover)] hover:shadow-elev3 hover:-translate-y-px",
+          "bg-primary text-primary-foreground shadow-elev2 hover:bg-primary/90 hover:shadow-elev3 hover:-translate-y-px",
         destructive:
           "bg-destructive text-destructive-foreground shadow-elev2 hover:bg-destructive/90 hover:shadow-elev3 hover:-translate-y-px",
         outline:
@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-[var(--vn-muted)] text-foreground hover:text-[var(--vn-primary)]",
         link: "text-[var(--vn-primary)] underline-offset-4 hover:underline",
         gradient:
-          "bg-gradient-to-r from-[var(--vn-primary-aaa-btn)] to-[var(--vn-accent)] text-[var(--vn-on-primary-aaa-btn)] shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-[var(--vn-primary-aaa-btn-hover)] hover:to-[var(--vn-accent)]",
+          "bg-gradient-to-r from-primary to-[#3B82F6] text-primary-foreground shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-primary/90 hover:to-[#3B82F6]/90",
       },
       size: {
         default: "h-10 px-4 py-2",

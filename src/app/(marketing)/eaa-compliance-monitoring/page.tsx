@@ -123,10 +123,10 @@ export default function EaaComplianceMonitoringPage() {
       </section>
 
       {/* Compliance disclaimer */}
-      <section className="py-6 bg-amber-50 dark:bg-amber-950/20 border-y">
+      <section className="border-y border-border/60 bg-muted py-6">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto flex items-start gap-4">
-            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               <strong>Important:</strong> No automated tool can guarantee full legal compliance with the European Accessibility Act. VexNexa helps you monitor WCAG conformance, catch regressions, and build evidence of ongoing improvement — but it is not a substitute for legal advice or manual accessibility testing. <strong>New to the EAA?</strong> Read our guide: <Link href="/blog/what-is-the-european-accessibility-act" className="underline hover:text-primary">What Is the European Accessibility Act?</Link>
             </p>

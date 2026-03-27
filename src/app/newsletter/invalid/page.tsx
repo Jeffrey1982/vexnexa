@@ -42,13 +42,13 @@ function NewsletterInvalidContent() {
   const content = getContent();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-2xl border-border/60 bg-card">
         <CardHeader className="text-center">
-          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AlertTriangle className="w-8 h-8 text-orange-600" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <AlertTriangle className="h-8 w-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl text-orange-800">{content.title}</CardTitle>
+          <CardTitle className="text-2xl text-foreground">{content.title}</CardTitle>
           <CardDescription className="text-lg">
             {content.description}
           </CardDescription>
@@ -107,13 +107,13 @@ export default function NewsletterInvalidPage() {
 
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center p-4">
-        <Card className="w-full max-w-2xl">
+      <div className="flex min-h-screen items-center justify-center bg-background p-4">
+        <Card className="w-full max-w-2xl border-border/60 bg-card">
           <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <AlertTriangle className="w-8 h-8 text-orange-600" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+              <AlertTriangle className="h-8 w-8 text-primary" />
             </div>
-            <CardTitle className="text-2xl text-orange-800">{t("loading")}</CardTitle>
+            <CardTitle className="text-2xl text-foreground">{t("loading")}</CardTitle>
           </CardHeader>
         </Card>
       </div>

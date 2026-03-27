@@ -236,7 +236,7 @@ function ResetPasswordForm() {
       <div className="w-full max-w-md">
         {/* Floating elements for visual interest */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-4 -left-4 w-72 h-72 bg-[#D45A00] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+          <div className="absolute -left-4 -top-4 h-72 w-72 animate-blob rounded-full bg-primary/10 mix-blend-multiply opacity-60 blur-xl filter"></div>
           <div className="absolute -top-4 -right-4 w-72 h-72 bg-[#FFD166] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#0F5C5C] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
         </div>
@@ -328,7 +328,7 @@ function ResetPasswordForm() {
                 </Link>
                 <Link
                   href="/auth/login"
-                  className="text-sm text-[#5A5A5A] hover:text-[#FF6B35] transition-colors flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to login

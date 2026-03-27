@@ -458,7 +458,7 @@ export default function ModernRegistrationForm() {
   const renderStep3 = () => (
     <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
-        <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full mx-auto flex items-center justify-center mb-4">
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-blue-500">
           <Phone className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold">Contact Information</h2>

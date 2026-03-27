@@ -18,7 +18,7 @@ import type { InvoiceData } from './invoice-template';
 
 // ── Styles ─────────────────────────────────────────────
 
-const ORANGE = '#FF6B35'; // Aurora Orange - VexNexa primary brand color
+const BRAND_TEAL = '#14B8A6'; // VexNexa primary brand color
 const DARK = '#1E1E1E';
 const MUTED = '#5A5A5A';
 const LIGHT_BG = '#F8F9FA';
@@ -39,13 +39,13 @@ const s = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 24,
     borderBottomWidth: 2,
-    borderBottomColor: ORANGE,
+    borderBottomColor: BRAND_TEAL,
     paddingBottom: 16,
   },
   brand: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: ORANGE,
+    color: BRAND_TEAL,
   },
   headerRight: {
     alignItems: 'flex-end',
@@ -130,7 +130,7 @@ const s = StyleSheet.create({
   totalValue: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: ORANGE,
+    color: BRAND_TEAL,
     textAlign: 'right',
   },
 
@@ -138,7 +138,7 @@ const s = StyleSheet.create({
   noteBox: {
     backgroundColor: LIGHT_BG,
     borderLeftWidth: 3,
-    borderLeftColor: ORANGE,
+    borderLeftColor: BRAND_TEAL,
     padding: 10,
     marginTop: 12,
     borderRadius: 4,

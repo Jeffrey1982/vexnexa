@@ -1,5 +1,5 @@
 <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 512 512'>
-  <rect width='512' height='512' rx='96' fill='#FF6B35'/>
+  <rect width='512' height='512' rx='96' fill='#14B8A6'/>
   <g transform='translate(256,256)' fill='none' stroke='white' stroke-width='18'>
     <circle cx='0' cy='0' r='200'/>
     <circle cx='0' cy='0' r='136'/>

@@ -165,7 +165,7 @@ export interface ReportData {
 
 /** Default theme */
 export const DEFAULT_THEME: ReportThemeConfig = {
-  primaryColor: "#D45A00",
+  primaryColor: "#14B8A6",
   secondaryColor: "#0F5C5C",
   accentColor: "#FFD166",
   backgroundColor: "#F8F9FA",
@@ -183,7 +183,7 @@ export const DEFAULT_CTA: CTAConfig = {
 export const DEFAULT_WHITE_LABEL: WhiteLabelConfig = {
   showVexNexaBranding: false,
   logoUrl: "",
-  primaryColor: "#D45A00",
+  primaryColor: "#14B8A6",
   footerText: "",
   companyNameOverride: "",
 };

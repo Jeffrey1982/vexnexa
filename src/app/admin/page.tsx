@@ -184,18 +184,18 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Support Tickets Overview */}
-        <Card className="mb-8 border-2 border-orange-200 dark:border-orange-400/20 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-500/[0.07] dark:to-yellow-500/[0.03]">
+        <Card className="mb-8 border border-border/80 bg-muted/50">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2 text-xl">
-                  <Ticket className="text-orange-600" />
+                  <Ticket className="text-primary" />
                   Support Tickets Overview
                 </CardTitle>
                 <CardDescription>Manage and respond to customer support requests</CardDescription>
               </div>
               <Link href="/admin/support/tickets">
-                <Button className="bg-orange-600 hover:bg-orange-700">
+                <Button>
                   <MessageCircle className="w-4 h-4 mr-2" />
                   View All Tickets
                 </Button>

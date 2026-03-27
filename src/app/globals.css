@@ -15,228 +15,185 @@
 
 @layer base {
   :root {
-    /* Typography - Professional SaaS Design System */
-    --font-sans: var(--font-inter);
-    --font-display: var(--font-spacegrotesk);
+    /* Typography — Lexend (body) + Satoshi (headings via Fontshare) */
+    --font-sans: var(--font-lexend), "Lexend Variable", system-ui, sans-serif;
+    --font-display: "Satoshi Variable", "Satoshi", system-ui, sans-serif;
 
-    /* ========================================
-       WCAG 2.1/2.2 AAA COLOR CONTRAST GUIDE
-       ========================================
+    /* Brand accents (HSL components for hsl() / opacity) */
+    --brand-teal: 173 80% 40%;
+    --brand-blue: 217 91% 60%;
 
-       AAA Requirements:
-       - Normal text (< 18px): 7:1 contrast ratio
-       - Large text (≥ 18px or ≥ 14px bold): 4.5:1 contrast ratio
-       - UI components & focus indicators: 3:1 minimum
-
-       Color Palette Contrast Ratios:
-       - Aurora Orange (#FF6B35) on Cloud White (#F8F9FA): 3.8:1 (AA for large text only)
-       - Aurora Orange (#FF6B35) on Midnight Graphite (#1E1E1E): 4.1:1 (AA for large text)
-       - Teal Blue (#0F5C5C) on Cloud White (#F8F9FA): 7.9:1 (AAA for all text)
-       - Midnight Graphite (#1E1E1E) on Cloud White (#F8F9FA): 16.8:1 (AAA for all text)
-       - White (#FFFFFF) on Aurora Orange (#FF6B35): 3.1:1 (AA for large text)
-       - White (#FFFFFF) on Teal Blue (#0F5C5C): 6.3:1 (AAA for large text, AA for normal)
-
-       Usage Guidelines:
-       - Use Teal Blue (#0F5C5C) for text on light backgrounds (AAA compliant)
-       - Use Aurora Orange (#FF6B35) for large headings and CTAs only
-       - Use white text on Midnight Graphite for high contrast
-       - Never use Solar Gold (#FFD166) for body text (insufficient contrast)
-       ======================================== */
-
-    /* Surfaces — calm 2-layer light system (#FFFFFF base, #F8F9FA muted) */
+    /* Surfaces — light: #FFFFFF base & surface, #F8FAFC muted, #E2E8F0 border */
     --background: 0 0% 100%;
-    --foreground: 0 0% 8%;
+    --surface: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Primary - Aurora Orange (Energie, innovatie, kracht) */
-    --primary: 25 100% 42%;
+    /* Primary — teal CTA (#14B8A6) */
+    --primary: 173 80% 40%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Midnight Graphite (Premium tech-gevoel) */
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary — neutral UI surfaces (shadcn) */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 17% 98%;
-    --muted-foreground: 0 0% 35%; /* Much darker muted text */
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 35%;
 
-    /* Accent - Solar Gold */
-    --accent: 42 100% 70%; /* Solar Gold - Vertrouwen */
-    --accent-foreground: 0 0% 8%; /* Darker text */
+    /* Accent — subtle blue tint for chips / highlights */
+    --accent: 214 95% 93%;
+    --accent-foreground: 217 91% 40%;
 
-    /* Error states */
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* UI — subtle separation without heavy gray */
-    --border: 214 14% 90%;
-    --input: 214 14% 90%;
-    --ring: 25 100% 42%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 173 80% 40%;
 
-    /* Status Colors - VexNexa palette */
-    --success: 180 73% 22%; /* Teal Blue */
+    --success: 173 58% 28%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 42 100% 70%; /* Solar Gold */
-    --warning-foreground: 0 0% 8%; /* Darker text */
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 47% 11%;
 
-    --critical: 25 100% 42%; /* Aurora Orange */
+    --critical: 0 72% 51%;
     --critical-foreground: 0 0% 100%;
-    --serious: 42 100% 70%;
-    --serious-foreground: 0 0% 8%; /* Darker text */
-    --moderate: 180 73% 22%; /* Teal Blue */
+    --serious: 25 95% 53%;
+    --serious-foreground: 0 0% 100%;
+    --moderate: 173 58% 28%;
     --moderate-foreground: 0 0% 100%;
-    --minor: 214 6% 77%;
-    --minor-foreground: 0 0% 8%; /* Darker text */
+    --minor: 214 20% 82%;
+    --minor-foreground: 222 47% 11%;
 
-    /* Charts - VexNexa harmonious palette */
-    --chart-1: 25 100% 42%; /* Aurora Orange */
-    --chart-2: 180 73% 22%; /* Teal Blue */
-    --chart-3: 42 100% 70%; /* Solar Gold */
-    --chart-4: 0 0% 12%; /* Midnight Graphite */
-    --chart-5: 214 6% 77%; /* Ash Gray */
+    --chart-1: 173 80% 40%;
+    --chart-2: 217 91% 60%;
+    --chart-3: 215 20% 65%;
+    --chart-4: 222 47% 11%;
+    --chart-5: 214 32% 91%;
 
     --radius: 0.5rem;
 
-    /* VexNexa gradient variables */
-    --gradient-primary: linear-gradient(135deg, #D45A00 0%, #FF8A5B 100%);
-    --gradient-subtle: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+    --gradient-primary: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    --gradient-subtle: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
     --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
     --shadow-soft: 0 4px 14px -2px rgb(0 0 0 / 0.08);
 
-    /* VexNexa Brand Tokens - Aurora Edition */
-    --vn-bg: #1E1E1E;
-    --vn-surface: #FFFFFF;
-    --vn-muted: #F8F9FA;
-    --vn-border: #C0C3C7; /* Ash Gray */
-    --vn-text: #141414; /* Darker for better readability */
-    --vn-text-muted: #5A5A5A; /* Darker muted text */
-    --vn-primary: #D45A00; /* Aurora Orange — WCAG AA compliant with white text (4.56:1) */
-    --vn-primary-hover: #B84E00;
-    --vn-accent: #FFD166; /* Solar Gold */
-    --vn-teal: #0F5C5C; /* Teal Blue - intelligent tech accent */
+    --vn-bg: #0a0a0a;
+    --vn-surface: #ffffff;
+    --vn-muted: #f8fafc;
+    --vn-border: #e2e8f0;
+    --vn-text: #0f172a;
+    --vn-text-muted: #64748b;
+    --vn-primary: #14b8a6;
+    --vn-primary-hover: #0d9488;
+    --vn-accent: #3b82f6;
+    --vn-teal: #14b8a6;
 
-    /* WCAG AAA Button Tokens — 7:1 contrast with white text */
-    --vn-primary-aaa-btn: #8C3B1D; /* Dark burnt orange — 7.28:1 with #FFF */
-    --vn-primary-aaa-btn-hover: #7A3318; /* Darker hover — 8.5:1 with #FFF */
-    --vn-on-primary-aaa-btn: #FFFFFF;
+    --vn-primary-aaa-btn: #0f766e;
+    --vn-primary-aaa-btn-hover: #115e59;
+    --vn-on-primary-aaa-btn: #ffffff;
 
-    /* Disabled state tokens — no opacity, explicit colors */
-    --vn-disabled-bg: #D1D5DB; /* gray-300 */
-    --vn-disabled-fg: #6B7280; /* gray-500 — 4.64:1 on gray-300, 5.03:1 on white */
+    --vn-disabled-bg: #e2e8f0;
+    --vn-disabled-fg: #64748b;
 
-    /* ═══════════════════════════════════════════
-       SELECTION STATE TOKENS (Light)
-       ═══════════════════════════════════════════
-       Selected bg stays tinted, text stays dark.
-       Contrast: --foreground on --selected-bg ≥ 10:1
-       ═══════════════════════════════════════════ */
-    --selected-bg: 210 25% 97%;
-    --selected-border: 25 100% 42%;      /* Aurora Orange — matches --primary */
-    --selected-ring: 25 100% 42% / 0.35; /* primary at 35% opacity for ring */
-    --selected-text: 0 0% 8%;            /* same as --foreground */
-    --selected-text-muted: 0 0% 35%;     /* same as --muted-foreground */
+    --selected-bg: 167 64% 95%;
+    --selected-border: 173 80% 40%;
+    --selected-ring: 173 80% 40% / 0.35;
+    --selected-text: 222 47% 11%;
+    --selected-text-muted: 215 16% 35%;
   }
   
   .dark {
-    /* Calm 3-layer dark: #121212 page, #1A1A1A muted, #1F1F1F cards */
-    --background: 0 0% 7.1%;       /* #121212 */
-    --foreground: 0 0% 96%;
+    /* Dark: #0A0A0A background, #121212 surface, #1A1A1A muted, #27272A border */
+    --background: 0 0% 3.9%;
+    --surface: 0 0% 7.1%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 12.2%;            /* #1F1F1F */
-    --card-foreground: 0 0% 96%;
-    --popover: 0 0% 14%;
-    --popover-foreground: 0 0% 96%;
+    --card: 0 0% 7.1%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 7.1%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 25 100% 42%;
+    --primary: 173 72% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12.2%;
-    --secondary-foreground: 0 0% 96%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 10.2%;           /* #1A1A1A */
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 10.2%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 42 100% 70%; /* Solar Gold */
-    --accent-foreground: 0 0% 8%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 213 97% 87%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 25 100% 42%;
+    --border: 240 6% 16%;
+    --input: 240 6% 16%;
+    --ring: 173 72% 45%;
 
-    --success: 160 84% 39%;        /* brighter teal for dark bg */
+    --success: 173 58% 42%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 42 100% 70%; /* Solar Gold */
+    --warning: 38 92% 50%;
     --warning-foreground: 0 0% 8%;
 
-    --critical: 25 100% 50%;       /* slightly brighter orange on dark */
+    --critical: 0 62% 50%;
     --critical-foreground: 0 0% 100%;
-    --serious: 42 100% 70%;
-    --serious-foreground: 0 0% 8%;
-    --moderate: 160 84% 39%;
+    --serious: 25 95% 55%;
+    --serious-foreground: 0 0% 100%;
+    --moderate: 173 58% 42%;
     --moderate-foreground: 0 0% 100%;
-    --minor: 240 5% 65%;
-    --minor-foreground: 0 0% 8%;
+    --minor: 240 5% 40%;
+    --minor-foreground: 0 0% 98%;
 
-    --chart-1: 25 100% 50%;  /* Aurora Orange (brighter) */
-    --chart-2: 160 84% 39%;  /* Teal (brighter) */
-    --chart-3: 42 100% 70%;  /* Solar Gold */
-    --chart-4: 0 0% 96%;     /* White */
-    --chart-5: 240 5% 65%;   /* Muted */
+    --chart-1: 173 72% 45%;
+    --chart-2: 217 91% 60%;
+    --chart-3: 240 5% 65%;
+    --chart-4: 0 0% 98%;
+    --chart-5: 240 6% 16%;
 
-    --surface-0: #121212;
-    --surface-1: #1A1A1A;
-    --surface-2: #1F1F1F;
-    --surface-3: #262626;
-    --surface-4: #2e2e2e;
+    --surface-0: #0a0a0a;
+    --surface-1: #1a1a1a;
+    --surface-2: #121212;
+    --surface-3: #1a1a1a;
+    --surface-4: #27272a;
 
-    --vn-bg: #121212;
-    --vn-surface: #1F1F1F;
-    --vn-muted: #1A1A1A;
-    --vn-border: #2e2e2e;
-    --vn-text: #F5F5F5;
-    --vn-text-muted: #A0A0AB; /* 5.2:1 on card bg — WCAG AA */
-    --vn-primary: #D45A00; /* Aurora Orange — WCAG AA compliant */
-    --vn-primary-hover: #E8651A;
-    --vn-accent: #FFD166; /* Solar Gold */
-    --vn-teal: #14B8A6; /* Brighter teal for dark mode visibility */
+    --vn-bg: #0a0a0a;
+    --vn-surface: #121212;
+    --vn-muted: #1a1a1a;
+    --vn-border: #27272a;
+    --vn-text: #fafafa;
+    --vn-text-muted: #a1a1aa;
+    --vn-primary: #14b8a6;
+    --vn-primary-hover: #2dd4bf;
+    --vn-accent: #3b82f6;
+    --vn-teal: #14b8a6;
 
-    /* WCAG AAA Button Tokens — 7:1 contrast with white text */
-    --vn-primary-aaa-btn: #8C3B1D;
-    --vn-primary-aaa-btn-hover: #A04422;
-    --vn-on-primary-aaa-btn: #FFFFFF;
+    --vn-primary-aaa-btn: #0f766e;
+    --vn-primary-aaa-btn-hover: #115e59;
+    --vn-on-primary-aaa-btn: #ffffff;
 
-    /* Disabled state tokens — no opacity, explicit colors */
-    --vn-disabled-bg: #27272A;
-    --vn-disabled-fg: #71717A; /* zinc-500 — 4.5:1 on #27272A */
+    --vn-disabled-bg: #27272a;
+    --vn-disabled-fg: #71717a;
 
-    /* Dark mode VexNexa gradients */
-    --gradient-primary: linear-gradient(135deg, #D45A00 0%, #E8751A 100%);
+    --gradient-primary: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(var(--background)) 100%);
 
-    /* Dark mode shadows — tinted for depth without glow */
     --shadow-elegant: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
 
-    /* ═══════════════════════════════════════════
-       SELECTION STATE TOKENS (Dark)
-       ═══════════════════════════════════════════
-       Selected bg stays DARK — slightly lighter than card.
-       Accent ring/border for emphasis, NOT light fill.
-       Contrast: --foreground (#F5F5F5) on --selected-bg (#1F1F23) = 14.5:1 ✓
-       ═══════════════════════════════════════════ */
-    --selected-bg: 0 0% 14%;
-    --selected-border: 25 100% 42%;       /* Aurora Orange — matches --primary */
-    --selected-ring: 25 100% 50% / 0.35;  /* primary at 35% opacity for ring */
-    --selected-text: 0 0% 96%;            /* same as --foreground */
-    --selected-text-muted: 240 5% 65%;    /* same as --muted-foreground */
+    --selected-bg: 173 25% 14%;
+    --selected-border: 173 72% 45%;
+    --selected-ring: 173 72% 45% / 0.35;
+    --selected-text: 0 0% 98%;
+    --selected-text-muted: 240 5% 65%;
   }
 }
 
@@ -250,102 +207,90 @@
   html {
     scroll-behavior: smooth;
     @apply bg-background;
+    font-family: "Lexend Variable", var(--font-lexend), system-ui, sans-serif;
   }
 
   body {
     @apply bg-background text-foreground font-sans;
+    font-size: 1.125rem;
+    line-height: 1.7;
     font-feature-settings: "rlig" 1, "calt" 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Enhanced typography scale - Space Grotesk for headings */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
-    letter-spacing: -0.025em;
+    font-family: "Satoshi Variable", "Satoshi", system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   h1 {
-    font-size: 2.5rem; /* 40px */
+    font-size: 2.5rem;
     line-height: 1.15;
-    font-weight: 700;
   }
 
   @media (min-width: 1024px) {
     h1 {
-      font-size: 3rem; /* 48px */
+      font-size: 3rem;
     }
   }
 
   h2 {
-    font-size: 2rem; /* 32px */
+    font-size: 2rem;
     line-height: 1.2;
-    font-weight: 600;
   }
 
   @media (min-width: 1024px) {
     h2 {
-      font-size: 2.25rem; /* 36px */
+      font-size: 2.25rem;
     }
   }
 
   h3 {
-    font-size: 1.5rem; /* 24px */
+    font-size: 1.5rem;
     line-height: 1.25;
-    font-weight: 500;
   }
 
   @media (min-width: 1024px) {
     h3 {
-      font-size: 1.75rem; /* 28px */
+      font-size: 1.75rem;
     }
   }
 
   h4 {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
     line-height: 1.3;
-    font-weight: 500;
   }
 
   @media (min-width: 1024px) {
     h4 {
-      font-size: 1.375rem; /* 22px */
+      font-size: 1.375rem;
     }
   }
 
   h5 {
-    font-size: 1.125rem; /* 18px */
+    font-size: 1.125rem;
     line-height: 1.4;
-    font-weight: 500;
   }
 
   h6 {
-    font-size: 1rem; /* 16px */
+    font-size: 1rem;
     line-height: 1.5;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
-  /* Body text - Inter font */
   p {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-family: "Lexend Variable", var(--font-lexend), system-ui, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
   }
 
-  @media (min-width: 1024px) {
-    p {
-      font-size: 1.125rem; /* 18px on desktop */
-      line-height: 1.65;
-    }
-  }
-  
-  /* AAA-level focus styles - Teal Blue for high contrast */
   :root {
-    --focus-color: #0F5C5C; /* Teal Blue - AAA contrast on light backgrounds */
-    --focus-color-light: #FFFFFF; /* White - for dark backgrounds */
+    --focus-color: #14b8a6;
+    --focus-color-light: #ffffff;
   }
 
   /* Global focus-visible indicator */
@@ -389,7 +334,7 @@
     top: 0.5rem;
     left: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: #0F5C5C; /* Teal Blue */
+    background: #0f766e;
     color: #FFFFFF;
     text-decoration: none;
     font-weight: 600;
@@ -414,10 +359,9 @@
     }
   }
 
-  /* Improved selection */
   ::selection {
     background: hsl(var(--primary) / 0.2);
-    color: hsl(var(--primary-foreground));
+    color: hsl(var(--foreground));
   }
   
   /* Enhanced scrollbar */
@@ -486,7 +430,7 @@
 
   .gradient-primary {
     background: var(--gradient-primary);
-    color: #1E1E1E; /* Midnight Graphite for better contrast on orange gradient */
+    color: #ffffff;
   }
   
   .gradient-subtle {

@@ -2,7 +2,7 @@
 
 export function EaaHeroImage() {
   return (
-    <div className="w-full aspect-video bg-gradient-to-br from-orange-100 via-amber-50 to-blue-100 dark:from-orange-950/30 dark:via-amber-950/20 dark:to-blue-950/30 rounded-xl overflow-hidden relative">
+    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border bg-gradient-to-br from-muted via-background to-primary/5">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@ export function EaaHeroImage() {
           {/* EU stars icon */}
           <div className="flex justify-center">
             <div className="relative">
-              <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-500">
                 <svg className="w-16 h-16 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
                   <circle cx="12" cy="6" r="1" />
                   <circle cx="16" cy="8" r="1" />
@@ -33,7 +33,7 @@ export function EaaHeroImage() {
                 </svg>
               </div>
               {/* Accessibility icon overlay */}
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white dark:border-gray-800">
+              <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full border-4 border-background bg-primary">
                 <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="8" r="3" />
                   <path d="M3 21h18M12 21v-9m0 0l-3 3m3-3l3 3" />
@@ -53,7 +53,7 @@ export function EaaHeroImage() {
           </div>
 
           {/* Decorative elements */}
-          <div className="flex justify-center gap-8 text-sm text-gray-500 dark:text-gray-500">
+          <div className="flex justify-center gap-8 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
