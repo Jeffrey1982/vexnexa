@@ -1,18 +1,21 @@
-import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "../mollie"
-import { prisma } from "../prisma"
-import { planKeyFromString, PRICES } from "./plans"
+import { mollie, appUrl, isMollieTestMode } from "../mollie";
+import { prisma } from "../prisma";
+import { planKeyFromString } from "./plans";
 import {
-  computeTaxDecision,
-  calculateTaxBreakdown,
-  formatTaxLineLabel,
-  toBillingCustomerType
-} from "../tax/rules"
-import { calculatePrice, type PlanKey, type BillingCycle } from "../pricing"
-import { sendInvoiceForPayment } from "./invoice-service"
-import type { PaymentCreateParams } from "@mollie/api-client"
-import { SequenceType } from "@mollie/api-client"
-import type { Plan as PrismaPlan } from "@prisma/client"
-import type { Plan } from "./plans"
+  getMollieAmount,
+  toMollieAmountString,
+  buildPaymentMetadata,
+  deriveVatBreakdown,
+  PLAN_DISPLAY_NAMES,
+  getMollieInterval,
+  type PlanKey,
+  type BillingInterval,
+} from "./pricing-config";
+import { sendInvoiceForPayment } from "./invoice-service";
+import type { PaymentCreateParams } from "@mollie/api-client";
+import { SequenceType } from "@mollie/api-client";
+import type { Plan as PrismaPlan } from "@prisma/client";
+import type { Plan } from "./plans";
 
 /** Map billing country to Mollie locale hint (best-effort, not forced) */
 function countryToMollieLocale(country: string): string | undefined {
@@ -51,12 +54,12 @@ function countryToMollieLocale(country: string): string | undefined {
     IS: "is_IS",
     LI: "de_LI",
     LU: "fr_LU",
-  }
-  return map[country.toUpperCase()]
+  };
+  return map[country.toUpperCase()];
 }
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
-  console.log('Looking for user with ID:', userId, 'and email:', email)
+  console.log("Looking for user with ID:", userId, "and email:", email);
 
   // First try to find existing user by ID
   let user = await prisma.user.findUnique({
@@ -67,13 +70,13 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
       mollieCustomerId: true,
       mollieSubscriptionId: true,
       plan: true,
-      subscriptionStatus: true
-    }
-  })
+      subscriptionStatus: true,
+    },
+  });
 
-  // If user doesn't exist by ID, try to find by email (might be an existing user with different ID)
+  // If user doesn't exist by ID, try to find by email
   if (!user) {
-    console.log('User not found by ID, checking by email...')
+    console.log("User not found by ID, checking by email...");
     user = await prisma.user.findUnique({
       where: { email: email },
       select: {
@@ -82,13 +85,12 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
         mollieCustomerId: true,
         mollieSubscriptionId: true,
         plan: true,
-        subscriptionStatus: true
-      }
-    })
+        subscriptionStatus: true,
+      },
+    });
 
     if (user) {
-      console.log('Found existing user by email with different ID:', user.id, 'vs expected:', userId)
-      // Update the user's ID to match Supabase
+      console.log("Found existing user by email with different ID:", user.id, "vs expected:", userId);
       user = await prisma.user.update({
         where: { email: email },
         data: { id: userId },
@@ -98,23 +100,23 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
           mollieCustomerId: true,
           mollieSubscriptionId: true,
           plan: true,
-          subscriptionStatus: true
-        }
-      })
-      console.log('Updated user ID to match Supabase:', user.id)
+          subscriptionStatus: true,
+        },
+      });
+      console.log("Updated user ID to match Supabase:", user.id);
     }
   }
 
   // If user still doesn't exist, create them
   if (!user) {
-    console.log('User not found in database, creating new user:', { userId, email })
+    console.log("User not found in database, creating new user:", { userId, email });
     try {
       user = await prisma.user.create({
         data: {
           id: userId,
           email: email,
-          plan: 'FREE' as any,
-          subscriptionStatus: 'inactive',
+          plan: "FREE" as any,
+          subscriptionStatus: "inactive",
         },
         select: {
           id: true,
@@ -122,13 +124,12 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
           mollieCustomerId: true,
           mollieSubscriptionId: true,
           plan: true,
-          subscriptionStatus: true
-        }
-      })
-      console.log('User created successfully:', user.id)
+          subscriptionStatus: true,
+        },
+      });
+      console.log("User created successfully:", user.id);
     } catch (error) {
-      console.error('Failed to create user, trying to find existing user again:', error)
-      // Last resort: try to find the user again (might have been created by another request)
+      console.error("Failed to create user, trying to find existing user again:", error);
       user = await prisma.user.findUnique({
         where: { email: email },
         select: {
@@ -137,80 +138,76 @@ export async function createOrGetMollieCustomer(userId: string, email: string) {
           mollieCustomerId: true,
           mollieSubscriptionId: true,
           plan: true,
-          subscriptionStatus: true
-        }
-      })
+          subscriptionStatus: true,
+        },
+      });
       if (!user) {
-        throw new Error('Unable to create or find user')
+        throw new Error("Unable to create or find user");
       }
     }
   }
-  
+
   // If user already has a Mollie customer ID, return it
   if (user.mollieCustomerId) {
     try {
-      const customer = await mollie.customers.get(user.mollieCustomerId)
-      return customer
+      const customer = await mollie.customers.get(user.mollieCustomerId);
+      return customer;
     } catch (error) {
       // Customer doesn't exist anymore, create a new one
     }
   }
-  
+
   // Create new Mollie customer
-  console.log('Creating new Mollie customer with data:', {
+  console.log("Creating new Mollie customer with data:", {
     email: email,
-    name: email.split('@')[0],
-    metadata: { userId: userId }
-  })
+    name: email.split("@")[0],
+    metadata: { userId: userId },
+  });
 
   const customer = await mollie.customers.create({
     email: email,
-    name: email.split('@')[0], // Use email prefix as name
+    name: email.split("@")[0],
     metadata: {
-      userId: userId
-    }
-  })
+      userId: userId,
+    },
+  });
 
-  console.log('Mollie customer created:', {
+  console.log("Mollie customer created:", {
     id: customer.id,
     email: customer.email,
     name: customer.name,
-    mode: customer.mode
-  })
+    mode: customer.mode,
+  });
 
   // Save customer ID to database
   await prisma.user.update({
     where: { id: userId },
-    data: { mollieCustomerId: customer.id }
-  })
+    data: { mollieCustomerId: customer.id },
+  });
 
-  console.log('Customer ID saved to database')
+  console.log("Customer ID saved to database");
 
-  return customer
+  return customer;
 }
 
 export async function createUpgradePayment(opts: {
-  userId: string
-  email: string
-  plan: Exclude<Plan, "FREE">
-  billingCycle?: BillingCycle
+  userId: string;
+  email: string;
+  plan: Exclude<Plan, "FREE">;
+  billingCycle?: BillingInterval;
 }) {
   try {
-    const { userId, email, plan, billingCycle = 'monthly' } = opts
+    const { userId, email, plan, billingCycle = "monthly" } = opts;
 
-    console.log('=== Creating Upgrade Payment ===')
-    console.log('Input:', { userId, email, plan, billingCycle })
+    console.log("=== Creating Upgrade Payment ===");
+    console.log("Input:", { userId, email, plan, billingCycle });
 
-    if (!PRICES[plan]) {
-      throw new Error(`Invalid plan: ${plan}`)
-    }
+    // Get the fixed VAT-inclusive amount from the single source of truth
+    const chargedAmount = getMollieAmount(plan as PlanKey, billingCycle);
+    const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Annual";
+    const planDisplayName = PLAN_DISPLAY_NAMES[plan as PlanKey] ?? plan;
 
-    // Plan prices are stored NET (excl. VAT).
-    // Apply the customer's actual country tax to get the final charged amount.
-    const netBase = calculatePrice(plan as PlanKey, billingCycle)
-    const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Annual'
-
-    // Fetch billing profile for tax computation (server-side)
+    // Fetch billing profile for metadata (NOT for price calculation)
     const billingProfile = await prisma.billingProfile.findUnique({
       where: { userId },
       select: {
@@ -219,218 +216,185 @@ export async function createUpgradePayment(opts: {
         vatId: true,
         vatValid: true,
         companyName: true,
+        kvkNumber: true,
       },
-    })
+    });
 
-    // Compute tax decision server-side
-    const taxDecision = computeTaxDecision({
-      customerCountry: billingProfile?.countryCode ?? 'NL',
-      customerType: toBillingCustomerType(billingProfile?.billingType ?? 'individual'),
-      vatId: billingProfile?.vatId,
-      vatIdValid: billingProfile?.vatValid,
-      productType: 'saas_subscription',
-    })
-
-    // Re-apply customer's country tax to the net base price
-    const breakdown = calculateTaxBreakdown(netBase, taxDecision)
-
-    // Build description with tax info
-    const taxLabel = taxDecision.taxMode === 'reverse_charge'
-      ? ' (Reverse charge)'
-      : taxDecision.taxMode === 'vat_standard'
-        ? ' (VAT included)'
-        : ''
-    const description = `VexNexa ${plan} Plan (${billingCycleLabel})${taxLabel}`
+    const description = `VexNexa ${planDisplayName} Plan (${billingCycleLabel}) — All prices include VAT`;
 
     // Get or create Mollie customer
-    console.log('Getting or creating Mollie customer...')
-    const customer = await createOrGetMollieCustomer(userId, email)
-    console.log('Customer details:', {
+    console.log("Getting or creating Mollie customer...");
+    const customer = await createOrGetMollieCustomer(userId, email);
+    console.log("Customer details:", {
       id: customer.id,
       email: customer.email,
       name: customer.name,
-      mode: customer.mode
-    })
+      mode: customer.mode,
+    });
 
-    // Create payment for the selected plan
-    // NOTE: We intentionally omit `method` / `methods` so Mollie's hosted
-    // checkout shows ALL eligible payment methods automatically.
-    // sequenceType: 'first' is required to create a mandate for recurring billing.
+    const locale = countryToMollieLocale(billingProfile?.countryCode ?? "NL");
+
+    // Build metadata for audit trail
+    const metadata = buildPaymentMetadata({
+      userId,
+      planKey: plan as PlanKey,
+      billingInterval: billingCycle,
+      customerType: billingProfile?.billingType === "business" ? "company" : "individual",
+      companyName: billingProfile?.companyName ?? undefined,
+      vatNumber: billingProfile?.vatId ?? undefined,
+      kvkNumber: billingProfile?.kvkNumber ?? undefined,
+      chargedAmount,
+      billingCountry: billingProfile?.countryCode ?? "NL",
+    });
+
+    // Create payment with the EXACT fixed amount — no dynamic VAT computation
     const paymentData: PaymentCreateParams = {
       amount: {
-        currency: 'EUR',
-        value: formatMollieAmount(breakdown.gross)
+        currency: "EUR",
+        value: toMollieAmountString(chargedAmount),
       },
       description,
       redirectUrl: appUrl("/dashboard?checkout=success"),
       webhookUrl: appUrl("/api/mollie/webhook"),
       customerId: customer.id,
       sequenceType: SequenceType.first,
-      metadata: {
-        userId,
+      ...(locale ? { locale: locale as PaymentCreateParams["locale"] } : {}),
+      metadata,
+    };
+
+    if (process.env.NODE_ENV === "development" || isMollieTestMode()) {
+      console.log("[Mollie] Payment payload:", {
+        amount: paymentData.amount,
+        currency: "EUR",
+        sequenceType: "first",
+        forcedMethods: "none (automatic)",
+        mode: isMollieTestMode() ? "TEST (limited methods expected)" : "LIVE",
+        chargedAmount,
         plan,
         billingCycle,
-        type: "upgrade",
-        // Tax snapshot for audit trail
-        taxRatePercent: String(taxDecision.taxRatePercent),
-        taxMode: taxDecision.taxMode,
-        customerCountry: taxDecision.countryCode,
-        customerType: billingProfile?.billingType ?? 'individual',
-        vatId: billingProfile?.vatId ?? '',
-        vatIdValid: String(billingProfile?.vatValid ?? false),
-        netAmount: String(breakdown.net),
-        vatAmount: String(breakdown.vat),
-      }
+      });
     }
 
-    if (process.env.NODE_ENV === 'development' || isMollieTestMode()) {
-      console.log('[Mollie] Payment payload:', {
-        amount: paymentData.amount,
-        currency: 'EUR',
-        sequenceType: 'first',
-        forcedMethods: 'none (automatic)',
-        mode: isMollieTestMode() ? 'TEST (limited methods expected)' : 'LIVE',
-        tax: { taxDecision, breakdown },
-      })
-    }
-
-    const payment = await mollie.payments.create(paymentData)
-    console.log('Payment created successfully:', {
+    const payment = await mollie.payments.create(paymentData);
+    console.log("Payment created successfully:", {
       id: payment.id,
       status: payment.status,
       sequenceType: payment.sequenceType,
-      checkoutUrl: payment.getCheckoutUrl()
-    })
+      checkoutUrl: payment.getCheckoutUrl(),
+    });
 
     // Persist checkout quote snapshot for invoice/audit trail
+    // Derive internal VAT breakdown for accounting (21% NL VAT as default)
+    const vatBreakdown = deriveVatBreakdown(chargedAmount, 0.21);
+
     try {
       await prisma.checkoutQuote.create({
         data: {
           userId,
-          product: 'subscription',
+          product: "subscription",
           plan,
           billingCycle,
-          baseAmount: breakdown.net,
-          vatAmount: breakdown.vat,
-          totalAmount: breakdown.gross,
-          currency: 'EUR',
-          taxRatePercent: taxDecision.taxRatePercent,
-          taxMode: taxDecision.taxMode,
-          taxNotes: taxDecision.notes,
-          customerType: billingProfile?.billingType ?? 'individual',
-          customerCountry: taxDecision.countryCode,
+          baseAmount: vatBreakdown.net,
+          vatAmount: vatBreakdown.vat,
+          totalAmount: chargedAmount,
+          currency: "EUR",
+          taxRatePercent: 21,
+          taxMode: "vat_standard",
+          taxNotes: "All prices include VAT",
+          customerType: billingProfile?.billingType ?? "individual",
+          customerCountry: billingProfile?.countryCode ?? "NL",
           companyName: billingProfile?.companyName,
           vatId: billingProfile?.vatId,
           vatIdValid: billingProfile?.vatValid ?? false,
           molliePaymentId: payment.id,
         },
-      })
+      });
     } catch (quoteError) {
       // Non-fatal: don't block payment if quote persistence fails
-      console.error('[Mollie] Failed to persist checkout quote:', quoteError)
+      console.error("[Mollie] Failed to persist checkout quote:", quoteError);
     }
 
-    return payment
+    return payment;
   } catch (error) {
-    console.error('=== Error in createUpgradePayment ===')
-    console.error('Error type:', error instanceof Error ? error.constructor.name : 'Unknown')
-    console.error('Error message:', error instanceof Error ? error.message : String(error))
-    console.error('Error details:', error)
-    if (error && typeof error === 'object' && 'field' in error) console.error('Error field:', (error as any).field)
-    if (error && typeof error === 'object' && 'statusCode' in error) console.error('Status code:', (error as any).statusCode)
-    if (error && typeof error === 'object' && 'title' in error) console.error('Error title:', (error as any).title)
-    throw error
+    console.error("=== Error in createUpgradePayment ===");
+    console.error("Error type:", error instanceof Error ? error.constructor.name : "Unknown");
+    console.error("Error message:", error instanceof Error ? error.message : String(error));
+    console.error("Error details:", error);
+    if (error && typeof error === "object" && "field" in error) console.error("Error field:", (error as any).field);
+    if (error && typeof error === "object" && "statusCode" in error) console.error("Status code:", (error as any).statusCode);
+    if (error && typeof error === "object" && "title" in error) console.error("Error title:", (error as any).title);
+    throw error;
   }
 }
 
 export async function createSubscription(opts: {
-  customerId: string
-  plan: Exclude<Plan, "FREE">
-  userId: string
-  billingCycle?: BillingCycle
+  customerId: string;
+  plan: Exclude<Plan, "FREE">;
+  userId: string;
+  billingCycle?: BillingInterval;
 }) {
-  const { customerId, plan, userId, billingCycle = 'monthly' } = opts
+  const { customerId, plan, userId, billingCycle = "monthly" } = opts;
 
-  if (!PRICES[plan]) {
-    throw new Error(`Invalid plan: ${plan}`)
-  }
+  // Get the fixed VAT-inclusive amount
+  const chargedAmount = getMollieAmount(plan as PlanKey, billingCycle);
+  const planDisplayName = PLAN_DISPLAY_NAMES[plan as PlanKey] ?? plan;
+  const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Yearly";
 
   // Check if customer has valid mandates
-  const mandates = await mollie.customerMandates.page({ customerId })
-  const validMandate = mandates.find((m: any) => m.status === "valid")
+  const mandates = await mollie.customerMandates.page({ customerId });
+  const validMandate = mandates.find((m: any) => m.status === "valid");
 
   if (!validMandate) {
-    throw new Error("No valid mandate found for customer")
+    throw new Error("No valid mandate found for customer");
   }
 
   // Cancel existing subscription if any
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { mollieSubscriptionId: true }
-  })
+    select: { mollieSubscriptionId: true },
+  });
   if (user?.mollieSubscriptionId) {
     try {
-      await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, { customerId })
+      await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, { customerId });
     } catch (error) {
       // Failed to cancel existing subscription
     }
   }
 
-  // Plan prices are stored NET (excl. VAT).
-  // Apply customer's actual country tax to get charged amount.
-  const netBase = calculatePrice(plan as PlanKey, billingCycle)
-
-  // Fetch billing profile for tax computation
+  // Fetch billing profile for metadata only
   const billingProfile = await prisma.billingProfile.findUnique({
     where: { userId },
     select: {
       billingType: true,
       countryCode: true,
       vatId: true,
-      vatValid: true,
       companyName: true,
+      kvkNumber: true,
     },
-  })
+  });
 
-  const taxDecision = computeTaxDecision({
-    customerCountry: billingProfile?.countryCode ?? 'NL',
-    customerType: toBillingCustomerType(billingProfile?.billingType ?? 'individual'),
-    vatId: billingProfile?.vatId,
-    vatIdValid: billingProfile?.vatValid,
-    productType: 'saas_subscription',
-  })
-
-  const breakdown = calculateTaxBreakdown(netBase, taxDecision)
-
-  const interval = billingCycle === 'monthly' ? '1 month' : '12 months'
-  const billingCycleLabel = billingCycle === 'monthly' ? 'Monthly' : 'Yearly'
-  const taxLabel = taxDecision.taxMode === 'reverse_charge'
-    ? ' (Reverse charge)'
-    : taxDecision.taxMode === 'vat_standard'
-      ? ' (VAT included)'
-      : ''
-
-  // Create new subscription with tax-aware amount
+  // Create new subscription with the EXACT fixed amount
   const subscription = await (mollie.customerSubscriptions as any).create({
     customerId,
     amount: {
-      currency: 'EUR',
-      value: formatMollieAmount(breakdown.gross)
+      currency: "EUR",
+      value: toMollieAmountString(chargedAmount),
     },
-    interval,
-    description: `VexNexa ${plan} Plan (${billingCycleLabel})${taxLabel}`,
-    startDate: new Date().toISOString().split('T')[0], // Start today
-    metadata: {
+    interval: getMollieInterval(billingCycle),
+    description: `VexNexa ${planDisplayName} Plan (${billingCycleLabel}) — All prices include VAT`,
+    startDate: new Date().toISOString().split("T")[0],
+    metadata: buildPaymentMetadata({
       userId,
-      plan,
-      billingCycle,
-      taxRatePercent: String(taxDecision.taxRatePercent),
-      taxMode: taxDecision.taxMode,
-      customerCountry: taxDecision.countryCode,
-      netAmount: String(breakdown.net),
-      vatAmount: String(breakdown.vat),
-    }
-  })
+      planKey: plan as PlanKey,
+      billingInterval: billingCycle,
+      customerType: billingProfile?.billingType === "business" ? "company" : "individual",
+      companyName: billingProfile?.companyName ?? undefined,
+      vatNumber: billingProfile?.vatId ?? undefined,
+      kvkNumber: billingProfile?.kvkNumber ?? undefined,
+      chargedAmount,
+      billingCountry: billingProfile?.countryCode ?? "NL",
+    }),
+  });
 
   // Update user in database
   await prisma.user.update({
@@ -440,11 +404,11 @@ export async function createSubscription(opts: {
       billingInterval: billingCycle,
       subscriptionStatus: "active",
       mollieSubscriptionId: subscription.id,
-      trialEndsAt: null
-    }
-  })
+      trialEndsAt: null,
+    },
+  });
 
-  return subscription
+  return subscription;
 }
 
 export async function cancelSubscription(userId: string) {
@@ -453,97 +417,97 @@ export async function cancelSubscription(userId: string) {
     select: {
       id: true,
       mollieCustomerId: true,
-      mollieSubscriptionId: true
-    }
-  })
-  
-  if (!user) throw new Error("User not found")
-  
+      mollieSubscriptionId: true,
+    },
+  });
+
+  if (!user) throw new Error("User not found");
+
   if (!user.mollieCustomerId || !user.mollieSubscriptionId) {
-    throw new Error("No active subscription found")
+    throw new Error("No active subscription found");
   }
-  
+
   // Cancel subscription at Mollie
-  await mollie.customerSubscriptions.cancel(
-    user.mollieSubscriptionId,
-    { customerId: user.mollieCustomerId }
-  )
-  
+  await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, {
+    customerId: user.mollieCustomerId,
+  });
+
   // Update user status
   await prisma.user.update({
     where: { id: userId },
     data: {
       subscriptionStatus: "canceled",
-      plan: "FREE" as PrismaPlan, // Downgrade to free
+      plan: "FREE" as PrismaPlan,
       mollieSubscriptionId: null,
-      trialEndsAt: null
-    }
-  })
+      trialEndsAt: null,
+    },
+  });
 }
 
-export async function changePlan(opts: {
-  userId: string
-  newPlan: Exclude<Plan, "TRIAL">
-}) {
-  const { userId, newPlan } = opts
-  
+export async function changePlan(opts: { userId: string; newPlan: Exclude<Plan, "TRIAL"> }) {
+  const { userId, newPlan } = opts;
+
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: {
       id: true,
-      mollieCustomerId: true
-    }
-  })
-  
-  if (!user) throw new Error("User not found")
-  
+      mollieCustomerId: true,
+    },
+  });
+
+  if (!user) throw new Error("User not found");
+
   if (!user.mollieCustomerId) {
-    throw new Error("User has no Mollie customer ID")
+    throw new Error("User has no Mollie customer ID");
   }
-  
+
   // Check if user has valid mandate
-  const mandates = await mollie.customerMandates.page({ customerId: user.mollieCustomerId })
-  const validMandate = mandates.find((m: any) => m.status === "valid")
+  const mandates = await mollie.customerMandates.page({ customerId: user.mollieCustomerId });
+  const validMandate = mandates.find((m: any) => m.status === "valid");
 
   if (!validMandate) {
     // Need new checkout flow for mandate
-    return { needCheckout: true }
+    return { needCheckout: true };
   }
 
   // Can create subscription directly
   await createSubscription({
     customerId: user.mollieCustomerId,
     plan: newPlan as any,
-    userId
-  })
+    userId,
+  });
 
-  return { success: true }
+  return { success: true };
 }
 
 export async function processWebhookPayment(paymentId: string) {
   // Fetch payment details from Mollie (never trust webhook data directly)
-  const payment = await mollie.payments.get(paymentId)
-  // ... (rest of the code remains the same)
+  const payment = await mollie.payments.get(paymentId);
 
   // Check if this is an add-on related payment
-  const metadata = payment.metadata as any
+  const metadata = payment.metadata as any;
   if (metadata?.type === "addon_subscription") {
-    // This will be handled by subscription webhooks, not payment webhooks
-    return
+    return;
   }
 
-  if (!metadata?.userId || !metadata?.plan) {
-    console.error("Payment missing required metadata:", payment.id)
-    return
+  if (metadata?.type === "payment_method_reset") {
+    return;
   }
 
-  const userId = metadata.userId
-  const plan = planKeyFromString(metadata.plan)
-  const billingCycle = metadata?.billingCycle || 'monthly'
+  if (!metadata?.userId || !metadata?.planKey) {
+    // Fall back to legacy metadata format
+    if (!metadata?.userId || !metadata?.plan) {
+      console.error("Payment missing required metadata:", payment.id);
+      return;
+    }
+  }
+
+  const userId = metadata.userId;
+  const plan = planKeyFromString(metadata.planKey ?? metadata.plan);
+  const billingCycle = (metadata?.billingInterval ?? metadata?.billingCycle ?? "monthly") as BillingInterval;
 
   if (payment.status !== "paid") {
-    // Payment not paid yet
-    return
+    return;
   }
 
   // Payment is successful, create subscription
@@ -552,82 +516,76 @@ export async function processWebhookPayment(paymentId: string) {
       customerId: payment.customerId,
       plan: plan as Exclude<Plan, "FREE">,
       userId,
-      billingCycle
-    })
+      billingCycle,
+    });
   }
 
   // Send invoice email (idempotent)
   try {
-    await sendInvoiceForPayment(paymentId)
+    await sendInvoiceForPayment(paymentId);
   } catch (invoiceError) {
-    console.error('[Webhook] Failed to send invoice:', invoiceError)
-    // Don't fail the webhook for invoice errors
+    console.error("[Webhook] Failed to send invoice:", invoiceError);
   }
 }
 
 // ── Subscription Webhook Handler ───────────────────────────────
 
-import { generateAndSendInvoice } from './invoice-service';
+import { generateAndSendInvoice } from "./invoice-service";
 
 export async function processSubscriptionWebhook(subscriptionId: string) {
   try {
-    // Fetch subscription details from Mollie (never trust webhook data directly)
-    // First get the subscription to find the customer, then fetch full details
-    const subscription = await (mollie.customerSubscriptions as any).get(subscriptionId)
-    const customer = await mollie.customers.get(subscription.customerId)
-    const fullSubscription = await (mollie.customerSubscriptions as any).get(subscriptionId, { customerId: customer.id })
+    const subscription = await (mollie.customerSubscriptions as any).get(subscriptionId);
+    const customer = await mollie.customers.get(subscription.customerId);
+    const fullSubscription = await (mollie.customerSubscriptions as any).get(subscriptionId, {
+      customerId: customer.id,
+    });
 
-    console.log('[Subscription Webhook] Processing subscription:', {
+    console.log("[Subscription Webhook] Processing subscription:", {
       id: fullSubscription.id,
       status: fullSubscription.status,
       customerId: fullSubscription.customerId,
       metadata: fullSubscription.metadata,
-    })
+    });
 
-    // Only process active subscriptions
-    if (subscription.status !== 'active') {
-      console.log('[Subscription Webhook] Subscription not active, skipping')
-      return
+    if (subscription.status !== "active") {
+      console.log("[Subscription Webhook] Subscription not active, skipping");
+      return;
     }
 
-    const metadata = subscription.metadata as any
+    const metadata = subscription.metadata as any;
     if (!metadata?.userId || !metadata?.addOnType) {
-      console.log('[Subscription Webhook] Not an add-on subscription, skipping')
-      return
+      console.log("[Subscription Webhook] Not an add-on subscription, skipping");
+      return;
     }
 
-    const userId = metadata.userId
-    const addOnType = metadata.addOnType
-    const addOnId = metadata.addOnId
+    const userId = metadata.userId;
+    const addOnType = metadata.addOnType;
+    const addOnId = metadata.addOnId;
 
-    // Verify this add-on exists and belongs to the user
     const addOn = await prisma.addOn.findFirst({
       where: {
         id: addOnId,
         userId,
         type: addOnType,
       },
-    })
+    });
 
     if (!addOn) {
-      console.error('[Subscription Webhook] Add-on not found:', { addOnId, userId, addOnType })
-      return
+      console.error("[Subscription Webhook] Add-on not found:", { addOnId, userId, addOnType });
+      return;
     }
 
-    // Check if we already have a CheckoutQuote for this subscription
     const existingQuote = await prisma.checkoutQuote.findFirst({
       where: { molliePaymentId: subscriptionId },
-    })
+    });
 
     if (existingQuote && existingQuote.invoiceSentAt) {
-      console.log('[Subscription Webhook] Invoice already sent, skipping')
-      return
+      console.log("[Subscription Webhook] Invoice already sent, skipping");
+      return;
     }
 
-    // Create CheckoutQuote for invoice tracking if it doesn't exist
     if (!existingQuote) {
       try {
-        // Fetch billing profile for tax computation
         const billingProfile = await prisma.billingProfile.findUnique({
           where: { userId },
           select: {
@@ -637,76 +595,62 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
             vatId: true,
             companyName: true,
           },
-        })
+        });
 
-        // Use the stored tax data from subscription metadata
-        const taxRegime = metadata.taxRegime || 'NL_VAT'
-        const vatRate = parseFloat(metadata.vatRate || '0.21')
-        const netAmount = parseFloat(metadata.netAmount || '0')
-        const vatAmount = parseFloat(metadata.vatAmount || '0')
-        const totalAmount = parseFloat(subscription.amount.value)
+        const totalAmount = parseFloat(subscription.amount.value);
+        const vatBreakdown = deriveVatBreakdown(totalAmount, 0.21);
 
         await prisma.checkoutQuote.create({
           data: {
             userId,
-            product: 'addon',
+            product: "addon",
             plan: addOnType,
-            billingCycle: 'monthly', // Add-ons are monthly
-            baseAmount: netAmount,
-            vatAmount: vatAmount,
+            billingCycle: "monthly",
+            baseAmount: vatBreakdown.net,
+            vatAmount: vatBreakdown.vat,
             totalAmount: totalAmount,
-            currency: 'EUR',
-            taxRatePercent: vatRate,
-            taxMode: taxRegime === 'EU_REVERSE_CHARGE' ? 'reverse_charge' : 
-                     taxRegime === 'NON_EU_NO_VAT' ? 'no_tax' : 'vat_standard',
-            taxNotes: null, // Could add a note if needed
-            customerType: billingProfile?.billingType ?? 'individual',
-            customerCountry: billingProfile?.countryCode ?? 'NL',
+            currency: "EUR",
+            taxRatePercent: 21,
+            taxMode: "vat_standard",
+            taxNotes: "All prices include VAT",
+            customerType: billingProfile?.billingType ?? "individual",
+            customerCountry: billingProfile?.countryCode ?? "NL",
             companyName: billingProfile?.companyName,
             vatId: billingProfile?.vatId,
             vatIdValid: billingProfile?.vatValid ?? false,
             molliePaymentId: subscriptionId,
           },
-        })
-        console.log('[Subscription Webhook] Created CheckoutQuote for add-on:', subscriptionId)
+        });
+        console.log("[Subscription Webhook] Created CheckoutQuote for add-on:", subscriptionId);
       } catch (quoteError) {
-        console.error('[Subscription Webhook] Failed to create CheckoutQuote:', quoteError)
-        // Continue anyway to try sending invoice
+        console.error("[Subscription Webhook] Failed to create CheckoutQuote:", quoteError);
       }
     }
 
-    // Send invoice email (idempotent)
     try {
-      // Use a special invoice number format for subscriptions
-      const result = await generateAndSendInvoice(existingQuote?.id || subscriptionId, { force: false })
-      console.log('[Subscription Webhook] Invoice sent:', result)
+      const result = await generateAndSendInvoice(existingQuote?.id || subscriptionId, { force: false });
+      console.log("[Subscription Webhook] Invoice sent:", result);
     } catch (invoiceError) {
-      console.error('[Subscription Webhook] Failed to send invoice:', invoiceError)
-      // Don't fail the webhook for invoice errors
+      console.error("[Subscription Webhook] Failed to send invoice:", invoiceError);
     }
   } catch (error) {
-    console.error('[Subscription Webhook] Error processing subscription:', error)
+    console.error("[Subscription Webhook] Error processing subscription:", error);
   }
 }
 
 export async function createPaymentMethodResetPayment(userId: string, email: string) {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { id: true }
-  })
-  if (!user) throw new Error("User not found")
-  
-  // Get or create customer
-  const customer = await createOrGetMollieCustomer(userId, email)
-  
-  // Create a small first payment to establish new mandate.
-  // NOTE: €0.01 is below the minimum for some methods (e.g. Bancontact requires €0.02).
-  // This is acceptable because this is a mandate-setup payment, not a real charge.
-  // Mollie will only show methods that support this amount.
+    select: { id: true },
+  });
+  if (!user) throw new Error("User not found");
+
+  const customer = await createOrGetMollieCustomer(userId, email);
+
   const paymentData: PaymentCreateParams = {
     amount: {
       currency: "EUR",
-      value: formatMollieAmount(0.01)
+      value: toMollieAmountString(0.01),
     },
     description: "VexNexa - Payment Method Setup",
     customerId: customer.id,
@@ -715,18 +659,18 @@ export async function createPaymentMethodResetPayment(userId: string, email: str
     webhookUrl: appUrl("/api/mollie/webhook"),
     metadata: {
       userId,
-      type: "payment_method_reset"
-    }
-  }
+      type: "payment_method_reset",
+    },
+  };
 
-  if (process.env.NODE_ENV === 'development' || isMollieTestMode()) {
-    console.log('[Mollie] Payment method reset payload:', {
+  if (process.env.NODE_ENV === "development" || isMollieTestMode()) {
+    console.log("[Mollie] Payment method reset payload:", {
       amount: paymentData.amount,
-      mode: isMollieTestMode() ? 'TEST' : 'LIVE',
-    })
+      mode: isMollieTestMode() ? "TEST" : "LIVE",
+    });
   }
 
-  const payment = await mollie.payments.create(paymentData)
-  
-  return payment
+  const payment = await mollie.payments.create(paymentData);
+
+  return payment;
 }

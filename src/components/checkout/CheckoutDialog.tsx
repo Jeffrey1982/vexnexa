@@ -3,11 +3,10 @@
 /**
  * CheckoutDialog — unified checkout popup for plan selection.
  *
- * Combines plan summary, Individual/Company toggle, company billing fields,
- * inline VAT validation, live price recalculation, and
- * Mollie payment creation into a single, polished dialog.
+ * Shows a fixed VAT-inclusive price. Company details are collected
+ * for invoicing and data quality — they never change the price.
  *
- * Replaces the old two-dialog flow (checkout confirmation + CompanyDetailsModal).
+ * "All prices include VAT" is shown clearly throughout.
  */
 
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -34,105 +33,36 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
-  type BillingCycle,
+  PLAN_PRICES,
+  PLAN_DISPLAY_NAMES,
+  formatEurPrice,
   type PlanKey,
-  formatEuro,
-  BASE_PRICES,
-  ANNUAL_PRICES,
-} from "@/lib/pricing";
-import { netToGross, BASE_VAT_RATE } from "@/lib/pricing/vat-math";
-import { COUNTRIES, isEuCountry, isNlCountry } from "@/lib/billing/countries";
+  type BillingInterval,
+} from "@/lib/billing/pricing-config";
+import {
+  validateVatFormat,
+  validateKvkFormat,
+  validateCompanyName,
+} from "@/lib/billing/validation";
+import { COUNTRIES, isNlCountry } from "@/lib/billing/countries";
 
 // ── Types ──
 
 type PurchaseAs = "individual" | "company";
 type VatStatus = "idle" | "validating" | "valid" | "invalid" | "error";
+
 interface CompanyFields {
   companyName: string;
   billingCountry: string;
   vatId: string;
-}
-
-interface TaxQuote {
-  baseAmount: number;
-  vatAmount: number;
-  totalAmount: number;
-  tax: {
-    ratePercent: number;
-    mode: string;
-    label: string;
-    notes: string | null;
-  };
-  customer: {
-    type: string;
-    country: string;
-    companyName: string | null;
-    hasValidVat: boolean;
-  };
+  kvkNumber: string;
 }
 
 interface CheckoutDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   planKey: PlanKey | null;
-  billingCycle: BillingCycle;
-}
-
-/** Client-side price computation for display (server is source of truth) */
-function computeClientPrices(
-  planKey: PlanKey,
-  billingCycle: BillingCycle,
-  purchaseAs: PurchaseAs,
-  vatStatus: VatStatus,
-  billingCountry: string
-): {
-  subtotal: number;
-  vatRate: number;
-  vatAmount: number;
-  total: number;
-  isReverseCharge: boolean;
-  publicGross: number;
-  vatRemoved: number;
-} {
-  // Prices are stored NET (excl. VAT)
-  const net =
-    billingCycle === "yearly"
-      ? (ANNUAL_PRICES[planKey] ?? 0)
-      : (BASE_PRICES[planKey] ?? 0);
-
-  if (purchaseAs === "individual") {
-    // Always NL 21% VAT for individuals
-    const gross = netToGross(net, BASE_VAT_RATE);
-    const vatAmount = Math.round((gross - net) * 100) / 100;
-    return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
-  }
-
-  // Company
-  const country = billingCountry.toUpperCase();
-  const isNL = isNlCountry(country);
-  const isEU = isEuCountry(country);
-
-  // Case: valid VAT + EU + not NL → reverse charge (0%)
-  if (vatStatus === "valid" && isEU && !isNL) {
-    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: true, publicGross: netToGross(net, BASE_VAT_RATE), vatRemoved: 0 };
-  }
-
-  // Case: NL company, or EU company without valid VAT → 21% VAT
-  if (isNL || (isEU && vatStatus !== "valid")) {
-    const gross = netToGross(net, BASE_VAT_RATE);
-    const vatAmount = Math.round((gross - net) * 100) / 100;
-    return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
-  }
-
-  // Case: non-EU company → 0% VAT
-  if (!isEU && country.length === 2) {
-    return { subtotal: net, vatRate: 0, vatAmount: 0, total: net, isReverseCharge: false, publicGross: netToGross(net, BASE_VAT_RATE), vatRemoved: 0 };
-  }
-
-  // Default: full NL VAT
-  const gross = netToGross(net, BASE_VAT_RATE);
-  const vatAmount = Math.round((gross - net) * 100) / 100;
-  return { subtotal: net, vatRate: 21, vatAmount, total: gross, isReverseCharge: false, publicGross: gross, vatRemoved: 0 };
+  billingCycle: BillingInterval;
 }
 
 export function CheckoutDialog({
@@ -147,15 +77,22 @@ export function CheckoutDialog({
     companyName: "",
     billingCountry: "NL",
     vatId: "",
+    kvkNumber: "",
   });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [vatStatus, setVatStatus] = useState<VatStatus>("idle");
   const [vatMessage, setVatMessage] = useState<string>("");
+  const [kvkLoading, setKvkLoading] = useState(false);
+  const [kvkMessage, setKvkMessage] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
 
   const vatAbortRef = useRef<AbortController | null>(null);
+
+  // ── Fixed price — never changes ──
+  const price = planKey ? PLAN_PRICES[planKey][billingCycle] : 0;
+  const planDisplayName = planKey ? PLAN_DISPLAY_NAMES[planKey] : "";
 
   // ── Pre-fill from billing profile ──
   useEffect(() => {
@@ -175,17 +112,20 @@ export function CheckoutDialog({
           companyName: profile.companyName || prev.companyName,
           billingCountry: profile.countryCode || prev.billingCountry,
           vatId: profile.vatId || prev.vatId,
+          kvkNumber: profile.kvkNumber || prev.kvkNumber,
         }));
         if (profile.vatValid === true && profile.vatId) {
           setVatStatus("valid");
-          setVatMessage("EU VAT number verified");
+          setVatMessage("VAT number verified");
         }
         setProfileLoaded(true);
       } catch {
         // Non-fatal
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [open, profileLoaded]);
 
   // ── Reset on close ──
@@ -196,11 +136,12 @@ export function CheckoutDialog({
       setProfileLoaded(false);
       setVatStatus("idle");
       setVatMessage("");
+      setKvkMessage("");
       setSubmitting(false);
     }
   }, [open]);
 
-  // ── Reset VAT status when country or vatId changes ──
+  // ── Field update with error clearing ──
   const updateCompanyField = useCallback(
     (key: keyof CompanyFields, value: string) => {
       setCompanyFields((prev) => ({ ...prev, [key]: value }));
@@ -214,16 +155,27 @@ export function CheckoutDialog({
         setVatStatus("idle");
         setVatMessage("");
       }
+      if (key === "kvkNumber") {
+        setKvkMessage("");
+      }
     },
     []
   );
 
-  // ── VAT Validation ──
+  // ── VAT Validation (server-side, for autofill only — does NOT change price) ──
   const handleValidateVat = useCallback(async () => {
     const country = companyFields.billingCountry.toUpperCase();
     const vatId = companyFields.vatId.trim();
 
     if (!country || !vatId) return;
+
+    // Client-side format check first
+    const formatCheck = validateVatFormat(vatId);
+    if (!formatCheck.valid) {
+      setVatStatus("invalid");
+      setVatMessage(formatCheck.error ?? "Invalid format");
+      return;
+    }
 
     // Abort previous request
     vatAbortRef.current?.abort();
@@ -245,13 +197,13 @@ export function CheckoutDialog({
 
       if (!res.ok) {
         setVatStatus("error");
-        setVatMessage(data.error || "Validation failed. Please try again.");
+        setVatMessage(data.error || "Validation failed. You can still proceed.");
         return;
       }
 
       if (data.valid) {
         setVatStatus("valid");
-        setVatMessage("EU VAT number verified");
+        setVatMessage("VAT number verified");
         // Auto-fill company name from VIES if empty
         if (data.companyName && !companyFields.companyName) {
           setCompanyFields((prev) => ({
@@ -263,33 +215,68 @@ export function CheckoutDialog({
         setVatStatus("invalid");
         setVatMessage(
           data.warning
-            ? "VIES service unavailable. Please try again later."
-            : "Invalid VAT number. Please check the country code and VAT number."
+            ? "VIES service unavailable. You can still proceed."
+            : "VAT number could not be verified. You can still proceed."
         );
       }
     } catch (err) {
       if ((err as Error).name === "AbortError") return;
       setVatStatus("error");
-      setVatMessage("Could not reach validation service. Please try again.");
+      setVatMessage("Could not reach validation service. You can still proceed.");
     }
   }, [companyFields.billingCountry, companyFields.vatId, companyFields.companyName]);
+
+  // ── KVK Lookup (for autofill only — does NOT change price) ──
+  const handleKvkLookup = useCallback(async () => {
+    const kvk = companyFields.kvkNumber.trim();
+    if (!kvk) return;
+
+    const formatCheck = validateKvkFormat(kvk);
+    if (!formatCheck.valid) {
+      setKvkMessage(formatCheck.error ?? "Invalid format");
+      return;
+    }
+
+    setKvkLoading(true);
+    setKvkMessage("");
+
+    try {
+      const res = await fetch("/api/billing/kvk-lookup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kvkNumber: formatCheck.normalized }),
+      });
+
+      const data = await res.json();
+
+      if (data.found) {
+        setKvkMessage("Company found");
+        // Auto-fill company name and address
+        if (data.companyName && !companyFields.companyName) {
+          setCompanyFields((prev) => ({
+            ...prev,
+            companyName: prev.companyName || data.companyName,
+          }));
+        }
+      } else {
+        setKvkMessage("KVK number not found. You can still proceed.");
+      }
+    } catch {
+      setKvkMessage("Lookup unavailable. You can still proceed.");
+    } finally {
+      setKvkLoading(false);
+    }
+  }, [companyFields.kvkNumber, companyFields.companyName]);
 
   // ── Submit to Mollie ──
   const handleSubmit = useCallback(async () => {
     if (!planKey) return;
 
-    // Validate company fields if company
+    // Light validation for company fields (never blocks checkout for valid required fields)
     if (purchaseAs === "company") {
       const errors: Record<string, string> = {};
-      if (!companyFields.companyName.trim())
-        errors.companyName = "Company name is required";
-      if (
-        !companyFields.billingCountry.trim() ||
-        companyFields.billingCountry.length !== 2
-      )
-        errors.billingCountry = "Country is required (2-letter code)";
-      if (!companyFields.vatId.trim())
-        errors.vatId = "VAT number is required";
+      const nameCheck = validateCompanyName(companyFields.companyName);
+      if (!nameCheck.valid) errors.companyName = nameCheck.error!;
 
       if (Object.keys(errors).length > 0) {
         setFieldErrors(errors);
@@ -305,13 +292,13 @@ export function CheckoutDialog({
         plan: planKey,
         billingCycle,
         purchaseAs,
-        priceMode: purchaseAs === "company" ? "excl" : "incl",
       };
 
       if (purchaseAs === "company") {
         body.companyName = companyFields.companyName;
         body.billingCountry = companyFields.billingCountry;
-        body.vatId = companyFields.vatId;
+        body.vatId = companyFields.vatId || undefined;
+        body.kvkNumber = companyFields.kvkNumber || undefined;
       }
 
       const res = await fetch("/api/billing/create-payment", {
@@ -335,26 +322,9 @@ export function CheckoutDialog({
     }
   }, [planKey, billingCycle, purchaseAs, companyFields]);
 
-  // ── Computed prices ──
-  const prices = planKey
-    ? computeClientPrices(
-        planKey,
-        billingCycle,
-        purchaseAs,
-        vatStatus,
-        companyFields.billingCountry
-      )
-    : null;
-
   const isNL = isNlCountry(companyFields.billingCountry);
-  const isEU = isEuCountry(companyFields.billingCountry);
   const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Annual";
-  const planLabel = planKey ? `VexNexa ${planKey}` : "";
-
-  // Country name lookup
-  const countryObj = COUNTRIES.find(
-    (c) => c.code === companyFields.billingCountry.toUpperCase()
-  );
+  const nextBillingLabel = billingCycle === "monthly" ? "/month" : "/year";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -372,12 +342,25 @@ export function CheckoutDialog({
           <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-sm text-muted-foreground">Plan</span>
-              <span className="font-semibold text-sm">{planLabel}</span>
+              <span className="font-semibold text-sm">VexNexa {planDisplayName}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Billing cycle</span>
+              <span className="text-sm text-muted-foreground">Billing</span>
               <span className="font-semibold text-sm">{billingCycleLabel}</span>
             </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-muted-foreground">Total due now</span>
+              <span className="text-xl font-bold">{formatEurPrice(price)}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-muted-foreground">Next billing</span>
+              <span className="font-semibold text-sm">
+                {formatEurPrice(price)} {nextBillingLabel}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground text-center pt-1 border-t border-border mt-2">
+              All prices include VAT
+            </p>
           </div>
 
           {/* ── Purchase As selector ── */}
@@ -416,9 +399,7 @@ export function CheckoutDialog({
                   <p
                     className={cn(
                       "text-sm font-semibold",
-                      purchaseAs === "individual"
-                        ? "text-foreground"
-                        : "text-muted-foreground"
+                      purchaseAs === "individual" ? "text-foreground" : "text-muted-foreground"
                     )}
                   >
                     Individual
@@ -459,9 +440,7 @@ export function CheckoutDialog({
                   <p
                     className={cn(
                       "text-sm font-semibold",
-                      purchaseAs === "company"
-                        ? "text-foreground"
-                        : "text-muted-foreground"
+                      purchaseAs === "company" ? "text-foreground" : "text-muted-foreground"
                     )}
                   >
                     Company
@@ -477,7 +456,7 @@ export function CheckoutDialog({
             <div className="space-y-4 rounded-lg border border-border p-4 bg-background">
               <p className="text-xs text-muted-foreground flex items-start gap-1.5">
                 <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                Enter a valid EU VAT number to calculate VAT correctly. VAT may be removed for eligible EU businesses.
+                Company details appear on your invoice. The total price does not change.
               </p>
 
               {/* Company name */}
@@ -490,7 +469,10 @@ export function CheckoutDialog({
                   value={companyFields.companyName}
                   onChange={(e) => updateCompanyField("companyName", e.target.value)}
                   placeholder="Acme B.V."
-                  className={cn("h-10", fieldErrors.companyName && "border-destructive focus-visible:ring-destructive")}
+                  className={cn(
+                    "h-10",
+                    fieldErrors.companyName && "border-destructive focus-visible:ring-destructive"
+                  )}
                   disabled={submitting}
                 />
                 {fieldErrors.companyName && (
@@ -504,149 +486,136 @@ export function CheckoutDialog({
               {/* Billing country */}
               <div className="space-y-1.5">
                 <Label htmlFor="co-country" className="text-sm">
-                  Billing country <span className="text-destructive">*</span>
+                  Billing country
                 </Label>
-                <div className="flex gap-2 items-center">
-                  <select
-                    id="co-country"
-                    value={companyFields.billingCountry}
-                    onChange={(e) => updateCompanyField("billingCountry", e.target.value)}
-                    className={cn(
-                      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      "disabled:cursor-not-allowed disabled:opacity-50",
-                      fieldErrors.billingCountry && "border-destructive focus-visible:ring-destructive"
-                    )}
-                    disabled={submitting}
-                  >
-                    {COUNTRIES.map((c) => (
-                      <option key={c.code} value={c.code}>
-                        {c.name} ({c.code})
-                        {c.eu ? " – EU" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {fieldErrors.billingCountry && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
-                    <XCircle className="w-3 h-3" />
-                    {fieldErrors.billingCountry}
-                  </p>
-                )}
+                <select
+                  id="co-country"
+                  value={companyFields.billingCountry}
+                  onChange={(e) => updateCompanyField("billingCountry", e.target.value)}
+                  className={cn(
+                    "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                    "disabled:cursor-not-allowed disabled:opacity-50"
+                  )}
+                  disabled={submitting}
+                >
+                  {COUNTRIES.map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name} ({c.code})
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              {/* VAT Number */}
-              {isEU && (
+              {/* KVK Number (Dutch companies) */}
+              {isNL && (
                 <div className="space-y-1.5">
-                  <Label htmlFor="co-vat" className="text-sm">
-                    EU VAT number <span className="text-destructive">*</span>
+                  <Label htmlFor="co-kvk" className="text-sm">
+                    KVK number
                   </Label>
                   <div className="flex gap-2">
                     <Input
-                      id="co-vat"
-                      value={companyFields.vatId}
-                      onChange={(e) => updateCompanyField("vatId", e.target.value)}
-                      placeholder={
-                        isNL ? "NL123456789B01" : `${companyFields.billingCountry}...`
-                      }
-                      className={cn(
-                        "h-10 flex-1",
-                        vatStatus === "invalid" && "border-destructive focus-visible:ring-destructive",
-                        vatStatus === "valid" && "border-green-500 focus-visible:ring-green-500"
-                      )}
+                      id="co-kvk"
+                      value={companyFields.kvkNumber}
+                      onChange={(e) => updateCompanyField("kvkNumber", e.target.value)}
+                      placeholder="12345678"
+                      className="h-10 flex-1"
                       disabled={submitting}
+                      maxLength={8}
                     />
                     <Button
                       type="button"
                       variant="outline"
                       size="default"
                       disabled={
-                        !companyFields.vatId.trim() ||
-                        vatStatus === "validating" ||
-                        submitting
+                        !companyFields.kvkNumber.trim() || kvkLoading || submitting
                       }
-                      onClick={handleValidateVat}
+                      onClick={handleKvkLookup}
                       className="h-10 px-4 shrink-0"
                     >
-                      {vatStatus === "validating" ? (
+                      {kvkLoading ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
-                        "Verify"
+                        "Look up"
                       )}
                     </Button>
                   </div>
-
-                  {/* VAT status messages */}
-                  {vatStatus === "valid" && (
-                    <div className="rounded-md bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3">
-                      <p className="text-sm text-green-700 dark:text-green-400 flex items-center gap-1.5 font-medium">
-                        <CheckCircle2 className="w-4 h-4 shrink-0" />
-                        EU VAT number verified
-                      </p>
-                      {!isNL && (
-                        <p className="text-xs text-green-600 dark:text-green-500 mt-1 ml-5.5">
-                          VAT will be removed from the invoice
-                        </p>
+                  {kvkMessage && (
+                    <p
+                      className={cn(
+                        "text-xs flex items-center gap-1",
+                        kvkMessage === "Company found"
+                          ? "text-green-600 dark:text-green-400"
+                          : "text-muted-foreground"
                       )}
-                      {isNL && (
-                        <p className="text-xs text-green-600 dark:text-green-500 mt-1 ml-5.5">
-                          Dutch VAT (21%) still applies for NL companies
-                        </p>
+                    >
+                      {kvkMessage === "Company found" ? (
+                        <CheckCircle2 className="w-3 h-3" />
+                      ) : (
+                        <Info className="w-3 h-3" />
                       )}
-                    </div>
-                  )}
-                  {vatStatus === "invalid" && (
-                    <div className="rounded-md bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3">
-                      <p className="text-sm text-red-700 dark:text-red-400 flex items-center gap-1.5 font-medium">
-                        <XCircle className="w-4 h-4 shrink-0" />
-                        Invalid VAT number
-                      </p>
-                      <p className="text-xs text-red-600 dark:text-red-500 mt-1 ml-5.5">
-                        {vatMessage || "Please check the country code and VAT number."}
-                      </p>
-                    </div>
-                  )}
-                  {vatStatus === "error" && (
-                    <div className="rounded-md bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-3">
-                      <p className="text-sm text-amber-700 dark:text-amber-400 flex items-center gap-1.5 font-medium">
-                        <AlertTriangle className="w-4 h-4 shrink-0" />
-                        Validation error
-                      </p>
-                      <p className="text-xs text-amber-600 dark:text-amber-500 mt-1 ml-5.5">
-                        {vatMessage || "VIES service unavailable. You can still proceed with VAT included."}
-                      </p>
-                    </div>
-                  )}
-
-                  {fieldErrors.vatId && vatStatus === "idle" && (
-                    <p className="text-xs text-destructive flex items-center gap-1">
-                      <XCircle className="w-3 h-3" />
-                      {fieldErrors.vatId}
+                      {kvkMessage}
                     </p>
                   )}
                 </div>
               )}
 
-              {/* Non-EU: Tax ID (optional) */}
-              {!isEU && companyFields.billingCountry.length === 2 && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="co-taxid" className="text-sm">
-                    Tax ID (optional)
-                  </Label>
+              {/* VAT Number */}
+              <div className="space-y-1.5">
+                <Label htmlFor="co-vat" className="text-sm">
+                  VAT number
+                </Label>
+                <div className="flex gap-2">
                   <Input
-                    id="co-taxid"
+                    id="co-vat"
                     value={companyFields.vatId}
                     onChange={(e) => updateCompanyField("vatId", e.target.value)}
-                    placeholder="Tax identification number"
-                    className="h-10"
+                    placeholder={isNL ? "NL123456789B01" : "EU VAT number"}
+                    className={cn(
+                      "h-10 flex-1",
+                      vatStatus === "invalid" && "border-destructive focus-visible:ring-destructive",
+                      vatStatus === "valid" && "border-green-500 focus-visible:ring-green-500"
+                    )}
                     disabled={submitting}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    No VAT applies for non-EU customers
-                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="default"
+                    disabled={
+                      !companyFields.vatId.trim() || vatStatus === "validating" || submitting
+                    }
+                    onClick={handleValidateVat}
+                    className="h-10 px-4 shrink-0"
+                  >
+                    {vatStatus === "validating" ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      "Verify"
+                    )}
+                  </Button>
                 </div>
-              )}
 
+                {/* VAT status messages */}
+                {vatStatus === "valid" && (
+                  <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" />
+                    {vatMessage}
+                  </p>
+                )}
+                {vatStatus === "invalid" && (
+                  <p className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3" />
+                    {vatMessage}
+                  </p>
+                )}
+                {vatStatus === "error" && (
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Info className="w-3 h-3" />
+                    {vatMessage}
+                  </p>
+                )}
+              </div>
             </div>
           )}
 
@@ -656,57 +625,6 @@ export function CheckoutDialog({
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>{serverError}</AlertDescription>
             </Alert>
-          )}
-
-          {/* ── Price Summary ── */}
-          {prices && (
-            <div className="rounded-lg border border-border bg-muted/20 p-4 space-y-2.5">
-              {prices.isReverseCharge ? (
-                <>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Listed price (incl. VAT)</span>
-                    <span className="font-medium">{formatEuro(prices.publicGross)}</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-green-600 dark:text-green-400">VAT removed (reverse charge)</span>
-                    <span className="font-medium text-green-600 dark:text-green-400">
-                      -{formatEuro(prices.vatRemoved)}
-                    </span>
-                  </div>
-                  <p className="text-xs text-green-600 dark:text-green-400 italic flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3 shrink-0" />
-                    Valid VAT number — VAT reverse charge applies
-                  </p>
-                </>
-              ) : (
-                <>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Listed price (incl. VAT)</span>
-                    <span className="font-medium">{formatEuro(prices.publicGross)}</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">
-                      {prices.vatRate > 0
-                        ? `VAT included (${prices.vatRate}%)`
-                        : "No VAT"}
-                    </span>
-                    <span className="font-medium">
-                      {prices.vatAmount === 0 ? "\u2014" : formatEuro(prices.vatAmount)}
-                    </span>
-                  </div>
-                </>
-              )}
-
-              <div className="border-t border-border pt-2.5 flex justify-between items-center">
-                <span className="text-sm font-semibold">Total to pay</span>
-                <span className="text-xl font-bold">{formatEuro(prices.total)}</span>
-              </div>
-
-              <p className="text-[10px] text-muted-foreground text-center">
-                You will be charged {formatEuro(prices.total)}
-                {billingCycle === "monthly" ? "/month" : "/year"} at Mollie checkout
-              </p>
-            </div>
           )}
 
           {/* ── CTA ── */}
@@ -731,7 +649,7 @@ export function CheckoutDialog({
                 </>
               ) : (
                 <>
-                  Continue to payment{prices ? ` — ${formatEuro(prices.total)}` : ""}
+                  Continue to payment — {formatEurPrice(price)}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </>
               )}
@@ -740,8 +658,8 @@ export function CheckoutDialog({
 
           <p className="text-[10px] text-muted-foreground text-center">
             {purchaseAs === "company"
-              ? "Company details will be saved to your billing profile for future invoices."
-              : "You can add company details later in your billing settings."}
+              ? "Company details will appear on your invoice."
+              : "You can add company details later in billing settings."}
           </p>
         </div>
       </DialogContent>

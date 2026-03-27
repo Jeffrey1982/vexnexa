@@ -2,22 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { calculatePrice, type PlanKey, type BillingCycle } from "@/lib/pricing";
-import { PRICES } from "@/lib/billing/plans";
-import { createOrGetMollieCustomer } from "@/lib/billing/mollie-flows";
 import {
-  computeTaxDecision,
-  calculateTaxBreakdown,
-  formatTaxLineLabel,
-  toBillingCustomerType,
-} from "@/lib/tax/rules";
-import { mollie, appUrl, formatMollieAmount, isMollieTestMode } from "@/lib/mollie";
+  getMollieAmount,
+  toMollieAmountString,
+  buildPaymentMetadata,
+  deriveVatBreakdown,
+  PLAN_DISPLAY_NAMES,
+  isSelfServePlan,
+  type PlanKey,
+  type BillingInterval,
+} from "@/lib/billing/pricing-config";
+import { createOrGetMollieCustomer } from "@/lib/billing/mollie-flows";
+import { mollie, appUrl, isMollieTestMode } from "@/lib/mollie";
 import type { PaymentCreateParams } from "@mollie/api-client";
 import { SequenceType } from "@mollie/api-client";
 
 export const dynamic = "force-dynamic";
 
-/** Map billing country to Mollie locale hint (best-effort, not forced) */
+/** Map billing country to Mollie locale hint */
 function countryToMollieLocale(country: string): string | undefined {
   const map: Record<string, string> = {
     NL: "nl_NL",
@@ -43,26 +45,22 @@ function countryToMollieLocale(country: string): string | undefined {
 const CreatePaymentSchema = z.object({
   plan: z.enum(["STARTER", "PRO", "BUSINESS", "ENTERPRISE"]),
   billingCycle: z.enum(["monthly", "yearly"]).default("monthly"),
-  priceMode: z.enum(["incl", "excl"]).default("incl"),
   purchaseAs: z.enum(["individual", "company"]).default("individual"),
-  // Company fields — conditionally required server-side
+  // Company fields — optional, for invoice/data quality only
   companyName: z.string().max(200).optional(),
   billingCountry: z.string().length(2).optional(),
   registrationNumber: z.string().max(50).optional(),
   vatId: z.string().max(50).optional(),
+  kvkNumber: z.string().max(20).optional(),
 });
 
 /**
  * POST /api/billing/create-payment
  *
- * Unified payment creation endpoint. Single source of truth for:
- * 1. Server-side company field validation (when excl/company mode)
- * 2. Billing profile upsert
- * 3. Tax computation (approach B: gross→net→re-apply country tax)
- * 4. Mollie payment creation
- * 5. Tax quote snapshot persistence
+ * Creates a Mollie payment with a FIXED VAT-inclusive amount.
+ * Company details are stored for invoicing — they never change the price.
  *
- * Returns: { checkoutUrl, paymentId, breakdown }
+ * Returns: { checkoutUrl, paymentId, amount }
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -81,43 +79,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const {
       plan,
       billingCycle,
-      priceMode,
       purchaseAs,
       companyName,
       billingCountry,
       registrationNumber,
       vatId,
+      kvkNumber,
     } = validation.data;
 
-    // Validate plan exists
-    if (!PRICES[plan]) {
-      return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
+    // Validate plan supports self-serve checkout
+    if (!isSelfServePlan(plan as PlanKey)) {
+      return NextResponse.json(
+        { error: "This plan does not support self-serve checkout" },
+        { status: 400 }
+      );
     }
 
-    // ── Server-side company field validation ──
-    const requiresCompanyDetails =
-      priceMode === "excl" || purchaseAs === "company";
+    // Get the FIXED amount from the single source of truth
+    const chargedAmount = getMollieAmount(plan as PlanKey, billingCycle as BillingInterval);
 
-    if (requiresCompanyDetails) {
-      const fieldErrors: Record<string, string> = {};
-      if (!companyName?.trim())
-        fieldErrors.companyName = "Company name is required";
-      if (!billingCountry?.trim() || billingCountry.length !== 2)
-        fieldErrors.billingCountry = "Billing country is required (ISO2)";
-      if (!vatId?.trim()) fieldErrors.vatId = "VAT / Tax number is required";
-
-      if (Object.keys(fieldErrors).length > 0) {
-        return NextResponse.json(
-          {
-            error: "Company details required for excl. VAT checkout",
-            fieldErrors,
-          },
-          { status: 400 }
-        );
-      }
-    }
-
-    // ── Upsert billing profile with company fields ──
+    // Upsert billing profile with company fields (for invoicing, not pricing)
     const billingType = purchaseAs === "company" ? "business" : "individual";
     const countryCode = billingCountry?.toUpperCase() || "NL";
 
@@ -127,7 +108,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       ...(companyName ? { companyName } : {}),
       ...(vatId ? { vatId } : {}),
       ...(registrationNumber ? { registrationNumber } : {}),
-      ...(registrationNumber && countryCode === "NL"
+      ...(kvkNumber ? { kvkNumber } : {}),
+      ...(registrationNumber && countryCode === "NL" && !kvkNumber
         ? { kvkNumber: registrationNumber }
         : {}),
     };
@@ -138,38 +120,34 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       update: profileData,
     });
 
-    // Plan prices are stored NET (excl. VAT). Apply customer's country tax.
-    const netBase = calculatePrice(plan as PlanKey, billingCycle as BillingCycle);
+    // Build payment description
+    const planDisplayName = PLAN_DISPLAY_NAMES[plan as PlanKey] ?? plan;
+    const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Annual";
+    const description = `VexNexa ${planDisplayName} Plan (${billingCycleLabel}) — All prices include VAT`;
 
-    const taxDecision = computeTaxDecision({
-      customerCountry: billingProfile.countryCode,
-      customerType: toBillingCustomerType(billingProfile.billingType),
-      vatId: billingProfile.vatId ?? undefined,
-      vatIdValid: billingProfile.vatValid,
-      productType: "saas_subscription",
-    });
-
-    const breakdown = calculateTaxBreakdown(netBase, taxDecision);
-
-    // ── Create Mollie payment ──
-    const billingCycleLabel =
-      billingCycle === "monthly" ? "Monthly" : "Annual";
-    const taxLabel =
-      taxDecision.taxMode === "reverse_charge"
-        ? " (Reverse charge)"
-        : taxDecision.taxMode === "vat_standard"
-          ? " (incl. VAT)"
-          : "";
-    const description = `VexNexa ${plan} Plan (${billingCycleLabel})${taxLabel}`;
-
+    // Create Mollie customer
     const customer = await createOrGetMollieCustomer(user.id, user.email);
 
     const locale = countryToMollieLocale(billingProfile.countryCode);
 
+    // Build metadata
+    const metadata = buildPaymentMetadata({
+      userId: user.id,
+      planKey: plan as PlanKey,
+      billingInterval: billingCycle as BillingInterval,
+      customerType: purchaseAs === "company" ? "company" : "individual",
+      companyName: billingProfile.companyName ?? undefined,
+      vatNumber: billingProfile.vatId ?? undefined,
+      kvkNumber: billingProfile.kvkNumber ?? undefined,
+      chargedAmount,
+      billingCountry: billingProfile.countryCode,
+    });
+
+    // Create Mollie payment with EXACT fixed amount
     const paymentData: PaymentCreateParams = {
       amount: {
         currency: "EUR",
-        value: formatMollieAmount(breakdown.gross),
+        value: toMollieAmountString(chargedAmount),
       },
       description,
       redirectUrl: appUrl("/dashboard?checkout=success"),
@@ -177,31 +155,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       customerId: customer.id,
       sequenceType: SequenceType.first,
       ...(locale ? { locale: locale as PaymentCreateParams["locale"] } : {}),
-      metadata: {
-        userId: user.id,
-        plan,
-        billingCycle,
-        type: "upgrade",
-        priceMode,
-        purchaseAs,
-        taxRatePercent: String(taxDecision.taxRatePercent),
-        taxMode: taxDecision.taxMode,
-        customerCountry: billingProfile.countryCode,
-        customerType: billingProfile.billingType,
-        companyName: billingProfile.companyName ?? "",
-        registrationNumber: billingProfile.registrationNumber ?? "",
-        vatId: billingProfile.vatId ?? "",
-        vatIdValid: String(billingProfile.vatValid),
-        netAmount: String(breakdown.net),
-        vatAmount: String(breakdown.vat),
-      },
+      metadata,
     };
 
     if (process.env.NODE_ENV === "development" || isMollieTestMode()) {
       console.log("[create-payment] Payload:", {
         amount: paymentData.amount,
         locale,
-        tax: { taxDecision, breakdown },
+        plan,
+        billingCycle,
+        chargedAmount,
       });
     }
 
@@ -212,7 +175,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       throw new Error("Mollie returned payment but no checkout URL");
     }
 
-    // ── Persist tax quote snapshot ──
+    // Persist checkout quote snapshot for invoice/audit trail
+    const vatBreakdown = deriveVatBreakdown(chargedAmount, 0.21);
+
     try {
       await prisma.checkoutQuote.create({
         data: {
@@ -220,13 +185,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
           product: "subscription",
           plan,
           billingCycle,
-          baseAmount: breakdown.net,
-          vatAmount: breakdown.vat,
-          totalAmount: breakdown.gross,
+          baseAmount: vatBreakdown.net,
+          vatAmount: vatBreakdown.vat,
+          totalAmount: chargedAmount,
           currency: "EUR",
-          taxRatePercent: taxDecision.taxRatePercent,
-          taxMode: taxDecision.taxMode,
-          taxNotes: taxDecision.notes,
+          taxRatePercent: 21,
+          taxMode: "vat_standard",
+          taxNotes: "All prices include VAT",
           customerType: billingProfile.billingType,
           customerCountry: billingProfile.countryCode,
           companyName: billingProfile.companyName,
@@ -242,15 +207,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
       checkoutUrl,
       paymentId: payment.id,
-      breakdown: {
-        planNet: netBase,
-        netBase: breakdown.net,
-        vatAmount: breakdown.vat,
-        totalToCharge: breakdown.gross,
-        taxLabel: formatTaxLineLabel(taxDecision),
-        taxMode: taxDecision.taxMode,
-        taxRatePercent: taxDecision.taxRatePercent,
-      },
+      amount: chargedAmount,
+      currency: "EUR",
+      plan: planDisplayName,
+      billingCycle,
     });
   } catch (error) {
     if (

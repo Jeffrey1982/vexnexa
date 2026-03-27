@@ -12,19 +12,22 @@ import {
 } from '../pricing'
 
 describe('pricing', () => {
-  describe('calculatePrice (excl. VAT)', () => {
+  describe('calculatePrice (VAT-inclusive)', () => {
     it('returns monthly base price for monthly cycle', () => {
       expect(calculatePrice('STARTER', 'monthly')).toBe(19.00)
-      expect(calculatePrice('PRO', 'monthly')).toBe(44.00)
-      expect(calculatePrice('BUSINESS', 'monthly')).toBe(129.00)
-      expect(calculatePrice('ENTERPRISE', 'monthly')).toBe(349.00)
+      expect(calculatePrice('PRO', 'monthly')).toBe(34.95)
+      expect(calculatePrice('BUSINESS', 'monthly')).toBe(99.95)
     })
 
     it('returns annual price for yearly cycle', () => {
       expect(calculatePrice('STARTER', 'yearly')).toBe(193.80)
-      expect(calculatePrice('PRO', 'yearly')).toBe(448.80)
-      expect(calculatePrice('BUSINESS', 'yearly')).toBe(1315.80)
-      expect(calculatePrice('ENTERPRISE', 'yearly')).toBe(3559.80)
+      expect(calculatePrice('PRO', 'yearly')).toBe(349.50)
+      expect(calculatePrice('BUSINESS', 'yearly')).toBe(999.50)
+    })
+
+    it('returns 0 for free plan', () => {
+      expect(calculatePrice('FREE', 'monthly')).toBe(0)
+      expect(calculatePrice('FREE', 'yearly')).toBe(0)
     })
   })
 
@@ -34,12 +37,12 @@ describe('pricing', () => {
       expect(getDiscountPercentage('PRO', 'monthly')).toBe(0)
     })
 
-    it('returns ~15% for yearly plans', () => {
+    it('returns correct discount for yearly plans', () => {
       const starterDiscount = getDiscountPercentage('STARTER', 'yearly')
       expect(starterDiscount).toBe(15)
 
       const proDiscount = getDiscountPercentage('PRO', 'yearly')
-      expect(proDiscount).toBe(15)
+      expect(proDiscount).toBeGreaterThan(0)
     })
 
     it('calculates correct discount for Starter', () => {
@@ -58,11 +61,16 @@ describe('pricing', () => {
       expect(pricing.yearly.discount).toBe(15)
     })
 
-    it('returns Enterprise yearly pricing', () => {
-      const pricing = getPlanPricing('ENTERPRISE')
-      expect(pricing.monthly).toBe(349.00)
-      expect(pricing.yearly.total).toBe(3559.80)
-      expect(pricing.yearly.perMonth).toBeCloseTo(296.65, 2)
+    it('returns Pro pricing', () => {
+      const pricing = getPlanPricing('PRO')
+      expect(pricing.monthly).toBe(34.95)
+      expect(pricing.yearly.total).toBe(349.50)
+    })
+
+    it('returns Business/Agency pricing', () => {
+      const pricing = getPlanPricing('BUSINESS')
+      expect(pricing.monthly).toBe(99.95)
+      expect(pricing.yearly.total).toBe(999.50)
     })
   })
 

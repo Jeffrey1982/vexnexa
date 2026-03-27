@@ -2,13 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { calculatePrice, type PlanKey } from "@/lib/pricing";
 import {
-  computeTaxDecision,
-  calculateTaxBreakdown,
-  formatTaxLineLabel,
-  toBillingCustomerType,
-} from "@/lib/tax/rules";
+  getMollieAmount,
+  PLAN_DISPLAY_NAMES,
+  deriveVatBreakdown,
+  isSelfServePlan,
+  type PlanKey,
+  type BillingInterval,
+} from "@/lib/billing/pricing-config";
+
 export const dynamic = "force-dynamic";
 
 const QuoteSchema = z.object({
@@ -19,8 +21,8 @@ const QuoteSchema = z.object({
 /**
  * POST /api/checkout/quote
  *
- * Computes a server-side tax quote for a plan + billing cycle.
- * Uses the authenticated user's billing profile to determine tax.
+ * Returns the fixed VAT-inclusive price for a plan + billing cycle.
+ * No dynamic tax computation — the price is the price.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -38,48 +40,43 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const { plan, billingCycle } = validation.data;
 
-    // Plan prices are stored NET (excl. VAT).
-    // Apply customer's actual country tax to get the final total.
-    const netBase = calculatePrice(plan as PlanKey, billingCycle);
+    if (!isSelfServePlan(plan as PlanKey)) {
+      return NextResponse.json(
+        { error: "This plan does not support self-serve checkout" },
+        { status: 400 }
+      );
+    }
 
-    // Fetch billing profile for tax computation
+    // Get the fixed amount
+    const totalAmount = getMollieAmount(plan as PlanKey, billingCycle as BillingInterval);
+
+    // Internal VAT breakdown for display purposes
+    const vatBreakdown = deriveVatBreakdown(totalAmount, 0.21);
+
+    // Fetch billing profile for customer info
     const billingProfile = await prisma.billingProfile.findUnique({
       where: { userId: user.id },
       select: {
         billingType: true,
         countryCode: true,
-        vatId: true,
-        vatValid: true,
         companyName: true,
+        vatValid: true,
       },
     });
 
-    // Compute tax decision server-side
-    const taxDecision = computeTaxDecision({
-      customerCountry: billingProfile?.countryCode ?? "NL",
-      customerType: toBillingCustomerType(billingProfile?.billingType ?? "individual"),
-      vatId: billingProfile?.vatId,
-      vatIdValid: billingProfile?.vatValid,
-      productType: "saas_subscription",
-    });
-
-    // Re-apply customer's country tax to the net base price
-    const breakdown = calculateTaxBreakdown(netBase, taxDecision);
-
     return NextResponse.json({
       plan,
+      planDisplayName: PLAN_DISPLAY_NAMES[plan as PlanKey],
       billingCycle,
       currency: "EUR",
-      planNet: netBase,
-      baseAmount: breakdown.net,
-      vatAmount: breakdown.vat,
-      totalAmount: breakdown.gross,
-      tax: {
-        ratePercent: taxDecision.taxRatePercent,
-        mode: taxDecision.taxMode,
-        label: formatTaxLineLabel(taxDecision),
-        notes: taxDecision.notes,
-        country: taxDecision.countryCode,
+      totalAmount,
+      vatNote: "All prices include VAT",
+      // Internal breakdown for reference
+      breakdown: {
+        net: vatBreakdown.net,
+        vat: vatBreakdown.vat,
+        gross: vatBreakdown.gross,
+        vatRatePercent: 21,
       },
       customer: {
         type: billingProfile?.billingType ?? "individual",

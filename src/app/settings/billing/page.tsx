@@ -30,9 +30,7 @@ import {
 } from "lucide-react";
 import { PLAN_NAMES, formatPrice, ENTITLEMENTS, PRICES } from "@/lib/billing/plans";
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
-import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
-import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
-import { netToGross } from "@/lib/pricing/vat-math";
+import { PLAN_PRICES, formatEurPrice, type BillingInterval } from "@/lib/billing/pricing-config";
 
 import { AddOnType } from "@prisma/client";
 
@@ -143,15 +141,10 @@ export default function BillingPage() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [displayMode] = usePriceDisplayMode();
-
-  /** Format plan price respecting display mode */
+  /** Format plan price — all prices include VAT */
   const fmtPlanPrice = (plan: keyof typeof PRICES): string => {
     const price = PRICES[plan];
-    const amount = parseFloat(price.amount);
-    const displayed = displayMode === 'incl' ? netToGross(amount) : amount;
-    const suffix = displayMode === 'excl' ? ' excl. VAT' : '';
-    return `€${displayed.toFixed(2)}/${price.interval.split(' ')[1]}${suffix}`;
+    return `€${price.amount}/month (incl. VAT)`;
   };
 
   // Load real billing and usage data from API
@@ -328,7 +321,7 @@ export default function BillingPage() {
             <h1 className="text-3xl font-bold">Billing & Subscription</h1>
             <p className="text-muted-foreground">Manage your subscription and payments</p>
           </div>
-          <PriceModeToggle />
+          <Badge variant="secondary" className="text-xs">All prices include VAT</Badge>
         </div>
 
         {/* Alerts */}

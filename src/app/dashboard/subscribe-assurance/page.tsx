@@ -22,9 +22,6 @@ import {
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
-import { PriceModeToggle } from "@/components/pricing/PriceModeToggle";
-import { usePriceDisplayMode } from "@/lib/pricing/use-price-display-mode";
-import { netToGross, BASE_VAT_RATE } from '@/lib/pricing/vat-math';
 
 type BillingCycle = "monthly" | "semiannual" | "annual";
 type AssuranceTier = "BASIC" | "PRO" | "PUBLIC_SECTOR";
@@ -54,17 +51,6 @@ interface PaymentMethod {
   imageSvg: string;
 }
 
-interface TaxQuote {
-  baseAmount: number;
-  vatAmount: number;
-  totalAmount: number;
-  tax: {
-    ratePercent: number;
-    mode: string;
-    label: string;
-    notes: string | null;
-  };
-}
 
 const PLANS: PlanConfig[] = [
   {
@@ -169,12 +155,8 @@ export default function SubscribeAssurancePage(): JSX.Element {
   const [selectedPlan, setSelectedPlan] = useState<AssuranceTier | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [methodsLoading, setMethodsLoading] = useState(false);
-  const [taxQuote, setTaxQuote] = useState<TaxQuote | null>(null);
-  const [displayMode] = usePriceDisplayMode();
-
-  /** Convert a net price for display based on current mode */
-  const dp = (net: number): number =>
-    displayMode === 'incl' ? netToGross(net) : net;
+  /** All prices are displayed as-is (incl. VAT) */
+  const dp = (price: number): number => price;
 
   // Hydration-safe mount gating
   useEffect(() => {
@@ -204,48 +186,11 @@ export default function SubscribeAssurancePage(): JSX.Element {
     }
   }, []);
 
-  // Fetch tax quote from server when plan/cycle changes
-  const fetchTaxQuote = useCallback(async (): Promise<void> => {
-    try {
-      const res = await fetch('/api/billing/profile');
-      if (!res.ok) return;
-      const { profile } = await res.json();
-      if (!profile) return;
-
-      // Use the billing profile to compute tax via the quote endpoint
-      // For assurance, we pass the plan as the tier
-      const quoteRes = await fetch('/api/checkout/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'STARTER', billingCycle: 'monthly' }),
-      });
-      if (!quoteRes.ok) return;
-      const quoteData = await quoteRes.json();
-
-      // Assurance prices are GROSS (incl. NL 21% VAT).
-      // Strip base NL VAT to get true net, then re-apply customer's tax.
-      if (selectedPlan) {
-        const plan = PLANS.find((p) => p.tier === selectedPlan);
-        if (!plan) return;
-        const netBase = getPrice(plan, billingCycle);
-        const vatAmount = Math.round(netBase * (quoteData.tax.ratePercent / 100) * 100) / 100;
-        setTaxQuote({
-          baseAmount: netBase,
-          vatAmount,
-          totalAmount: Math.round((netBase + vatAmount) * 100) / 100,
-          tax: quoteData.tax,
-        });
-      }
-    } catch {
-      // Non-fatal: tax quote just won't show
-    }
-  }, [selectedPlan, billingCycle]);
 
   useEffect(() => {
     if (!mounted || !selectedPlan) return;
     fetchMethods(selectedPlan, billingCycle);
-    fetchTaxQuote();
-  }, [mounted, selectedPlan, billingCycle, fetchMethods, fetchTaxQuote]);
+  }, [mounted, selectedPlan, billingCycle, fetchMethods]);
 
   const handleSelectPlan = (tier: AssuranceTier): void => {
     setSelectedPlan(tier);
@@ -434,11 +379,8 @@ export default function SubscribeAssurancePage(): JSX.Element {
                 </button>
               ))}
             </div>
-            <PriceModeToggle />
+            <Badge variant="secondary" className="text-xs">All prices include VAT</Badge>
             </div>
-            {displayMode === 'excl' && (
-              <p className="text-xs text-muted-foreground">Prices shown excl. VAT. Company details required at checkout.</p>
-            )}
           </div>
 
           {/* Error Banner */}
@@ -517,9 +459,6 @@ export default function SubscribeAssurancePage(): JSX.Element {
                             ? "every 6 months"
                             : "annually"}
                         </p>
-                      )}
-                      {displayMode === 'excl' && (
-                        <p className="text-[10px] text-muted-foreground mt-0.5">excl. VAT</p>
                       )}
                     </div>
 
@@ -606,44 +545,25 @@ export default function SubscribeAssurancePage(): JSX.Element {
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="text-sm text-muted-foreground">Listed price (incl. VAT)</span>
+                      <span className="text-sm text-muted-foreground">Price (incl. VAT)</span>
                       <span className="font-medium text-foreground">
                         {formatEuro(getPrice(activePlan, billingCycle))}
                       </span>
                     </div>
-                    {taxQuote?.tax.mode === 'reverse_charge' ? (
-                      <>
-                        <div className="flex justify-between items-center py-2 border-b border-border">
-                          <span className="text-sm text-green-600 dark:text-green-400">VAT removed (reverse charge)</span>
-                          <span className="font-medium text-green-600 dark:text-green-400">
-                            -{formatEuro(Math.round((getPrice(activePlan, billingCycle) - taxQuote.totalAmount) * 100) / 100)}
-                          </span>
-                        </div>
-                        <div className="text-xs text-green-600 dark:text-green-400 italic py-1">
-                          Valid VAT number — VAT reverse charge applies
-                        </div>
-                      </>
-                    ) : (
-                      <div className="flex justify-between items-center py-2 border-b border-border">
-                        <span className="text-sm text-muted-foreground">VAT included</span>
-                        <span className="font-medium text-foreground">
-                          {taxQuote ? formatEuro(taxQuote.vatAmount) : formatEuro(Math.round(getPrice(activePlan, billingCycle) * BASE_VAT_RATE * 100) / 100)}
-                        </span>
-                      </div>
-                    )}
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-sm font-medium text-foreground">Total</span>
+                      <span className="text-sm font-medium text-foreground">Total due now</span>
                       <div className="text-right">
                         <span className="text-xl font-bold text-foreground">
-                          {formatEuro(taxQuote?.tax.mode === 'reverse_charge' ? taxQuote.totalAmount : getPrice(activePlan, billingCycle))}
+                          {formatEuro(getPrice(activePlan, billingCycle))}
                         </span>
                         {billingCycle !== "monthly" && (
                           <div className="text-xs text-muted-foreground">
-                            ({formatEuro(taxQuote?.tax.mode === 'reverse_charge' ? taxQuote.totalAmount / (billingCycle === 'semiannual' ? 6 : 12) : getPerMonth(activePlan, billingCycle))}/month)
+                            ({formatEuro(getPerMonth(activePlan, billingCycle))}/month)
                           </div>
                         )}
                       </div>
                     </div>
+                    <p className="text-xs text-muted-foreground mt-1">All prices include VAT</p>
                   </div>
 
                   {/* What's included */}
@@ -756,7 +676,7 @@ export default function SubscribeAssurancePage(): JSX.Element {
                 ) : (
                   <>
                     <Lock className="w-4 h-4 mr-2" />
-                    Proceed to Payment — {formatEuro(taxQuote?.tax.mode === 'reverse_charge' ? taxQuote.totalAmount : getPrice(activePlan, billingCycle))}
+                    Proceed to Payment — {formatEuro(getPrice(activePlan, billingCycle))}
                   </>
                 )}
               </Button>
