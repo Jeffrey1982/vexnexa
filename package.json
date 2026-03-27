@@ -17,6 +17,7 @@
     "prisma:studio": "prisma studio",
     "playwright:install": "playwright install chromium",
     "brand:lockups": "node scripts/generate-logo-lockups.mjs",
+    "brand:fix-v-mark": "node scripts/fix-v-mark-transparency.mjs",
     "db:seed": "prisma db seed",
     "db:reset": "npx tsx scripts/safe-migrate.ts",
     "db:migrate": "prisma migrate dev -n site-wide-crawl",
