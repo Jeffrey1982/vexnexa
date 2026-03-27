@@ -52,7 +52,10 @@
       "Bash(ls /d/Vexnexa-clean/src/app/\\\\\\(marketing\\\\\\)/)",
       "Bash(cd /d/Vexnexa-clean && git revert HEAD --no-edit)",
       "Bash(cd /d/Vexnexa-clean && gh api repos/Jeffrey1982/vexnexa/deployments --jq '.[0:3] | .[] | {sha: .sha[0:12], env: .environment, created: .created_at, state: .statuses_url}' 2>&1)",
-      "Bash(cd /d/Vexnexa-clean && rm src/components/pwa/InstallPrompt.tsx)"
+      "Bash(cd /d/Vexnexa-clean && rm src/components/pwa/InstallPrompt.tsx)",
+      "Bash(find /d/Vexnexa-clean/src/app -type f \\\\\\(-name page.tsx -o -name page.ts -o -name *.tsx -o -name *.ts \\\\\\))",
+      "Bash(test -f \"/d/Vexnexa-clean/src/app/\\(marketing\\)/pricing/page.tsx\")",
+      "Bash(npx vitest:*)"
     ],
     "deny": [],
     "ask": []

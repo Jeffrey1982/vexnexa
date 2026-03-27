@@ -1,6 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,85 +11,98 @@ import { Users, Crown, TrendingUp, FileText, Ticket, MessageCircle, AlertCircle 
 export const dynamic = 'force-dynamic';
 
 async function getAdminStats() {
-  const [
-    totalUsers,
-    freeUsers,
-    starterUsers,
-    proUsers,
-    businessUsers,
-    activeSubscriptions,
-    recentUsers,
-    // Support tickets stats
-    totalTickets,
-    openTickets,
-    inProgressTickets,
-    recentTickets
-  ] = await Promise.all([
-    prisma.user.count(),
-    prisma.user.count({ where: { plan: 'FREE' as any } }),
-    prisma.user.count({ where: { plan: 'STARTER' } }),
-    prisma.user.count({ where: { plan: 'PRO' } }),
-    prisma.user.count({ where: { plan: 'BUSINESS' } }),
-    prisma.user.count({ where: { subscriptionStatus: 'active' } }),
-    prisma.user.findMany({
-      take: 20,
-      orderBy: { createdAt: 'desc' },
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        company: true,
-        plan: true,
-        subscriptionStatus: true,
-        createdAt: true,
-        trialEndsAt: true,
-        _count: {
-          select: {
-            sites: true
-          }
-        }
-      }
-    }),
-    // Ticket counts
-    prisma.supportTicket.count().catch(() => 0),
-    prisma.supportTicket.count({ where: { status: 'OPEN' } }).catch(() => 0),
-    prisma.supportTicket.count({ where: { status: 'IN_PROGRESS' } }).catch(() => 0),
-    prisma.supportTicket.findMany({
-      take: 5,
-      orderBy: { updatedAt: 'desc' },
-      include: {
-        user: {
-          select: {
-            email: true,
-            firstName: true,
-            lastName: true,
-          }
-        },
-        _count: {
-          select: { messages: true }
-        }
-      }
-    }).catch(() => [])
-  ]);
+  try {
+    console.log('[Admin] Loading admin stats...');
 
-  return {
-    totalUsers,
-    planBreakdown: {
-      FREE: freeUsers,
-      STARTER: starterUsers,
-      PRO: proUsers,
-      BUSINESS: businessUsers
-    },
-    activeSubscriptions,
-    recentUsers,
-    tickets: {
-      total: totalTickets,
-      open: openTickets,
-      inProgress: inProgressTickets,
-      recent: recentTickets
-    }
-  };
+    const [
+      totalUsers,
+      freeUsers,
+      starterUsers,
+      proUsers,
+      businessUsers,
+      activeSubscriptions,
+      recentUsers,
+      totalTickets,
+      openTickets,
+      inProgressTickets,
+      recentTickets
+    ] = await Promise.all([
+      prisma.user.count().catch((e) => { console.error('[Admin] user.count failed:', e.message); return 0; }),
+      prisma.user.count({ where: { plan: 'FREE' as any } }).catch((e) => { console.error('[Admin] FREE count failed:', e.message); return 0; }),
+      prisma.user.count({ where: { plan: 'STARTER' } }).catch((e) => { console.error('[Admin] STARTER count failed:', e.message); return 0; }),
+      prisma.user.count({ where: { plan: 'PRO' } }).catch((e) => { console.error('[Admin] PRO count failed:', e.message); return 0; }),
+      prisma.user.count({ where: { plan: 'BUSINESS' } }).catch((e) => { console.error('[Admin] BUSINESS count failed:', e.message); return 0; }),
+      prisma.user.count({ where: { subscriptionStatus: 'active' } }).catch((e) => { console.error('[Admin] active count failed:', e.message); return 0; }),
+      prisma.user.findMany({
+        take: 20,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          lastName: true,
+          company: true,
+          plan: true,
+          subscriptionStatus: true,
+          createdAt: true,
+          _count: {
+            select: {
+              sites: true
+            }
+          }
+        }
+      }).catch((e) => { console.error('[Admin] recentUsers failed:', e.message); return []; }),
+      prisma.supportTicket.count().catch(() => 0),
+      prisma.supportTicket.count({ where: { status: 'OPEN' } }).catch(() => 0),
+      prisma.supportTicket.count({ where: { status: 'IN_PROGRESS' } }).catch(() => 0),
+      prisma.supportTicket.findMany({
+        take: 5,
+        orderBy: { updatedAt: 'desc' },
+        include: {
+          user: {
+            select: {
+              email: true,
+              firstName: true,
+              lastName: true,
+            }
+          },
+          _count: {
+            select: { messages: true }
+          }
+        }
+      }).catch(() => [])
+    ]);
+
+    console.log('[Admin] Stats loaded successfully');
+
+    return {
+      totalUsers,
+      planBreakdown: {
+        FREE: freeUsers,
+        STARTER: starterUsers,
+        PRO: proUsers,
+        BUSINESS: businessUsers
+      },
+      activeSubscriptions,
+      recentUsers,
+      tickets: {
+        total: totalTickets,
+        open: openTickets,
+        inProgress: inProgressTickets,
+        recent: recentTickets
+      }
+    };
+  } catch (error) {
+    console.error('[Admin] getAdminStats FATAL error:', error instanceof Error ? error.message : error);
+    // Return safe defaults so the page still renders
+    return {
+      totalUsers: 0,
+      planBreakdown: { FREE: 0, STARTER: 0, PRO: 0, BUSINESS: 0 },
+      activeSubscriptions: 0,
+      recentUsers: [],
+      tickets: { total: 0, open: 0, inProgress: 0, recent: [] as any[] }
+    };
+  }
 }
 
 export default async function AdminDashboard() {

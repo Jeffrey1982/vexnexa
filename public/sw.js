@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v13-safari-fix';
+const CACHE_NAME = 'vexnexa-v14-admin-fix';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -143,9 +143,12 @@ async function networkFirstStrategy(request) {
     console.log('🌐 Network failed, trying cache for:', request.url);
   }
 
-  // Don't serve cached responses for protected routes - let them redirect properly
+  // Don't serve cached responses for protected routes - let the browser handle the error
   if (isProtectedRoute) {
-    throw new Error('Protected route requires authentication');
+    return new Response('Network error on protected route', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 
   // Fallback to cache for public routes only

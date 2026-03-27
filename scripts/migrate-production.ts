@@ -101,6 +101,62 @@ async function main() {
     console.error('⚠ BlogPost locale migration error (non-fatal):', error.message)
     // Don't fail the build if this migration has issues
   }
+
+  // Plan enum migration: TRIAL → FREE
+  console.log('\nChecking Plan enum for FREE value...')
+  try {
+    // Check if FREE already exists in the Plan enum
+    const enumValues = await prisma.$queryRaw<any[]>`
+      SELECT enumlabel FROM pg_enum
+      WHERE enumtypid = (SELECT oid FROM pg_type WHERE typname = 'Plan')
+      ORDER BY enumsortorder;
+    `
+    const labels = enumValues.map((r: any) => r.enumlabel)
+    console.log('Current Plan enum values:', labels.join(', '))
+
+    if (!labels.includes('FREE')) {
+      console.log('Adding FREE to Plan enum...')
+      await prisma.$executeRawUnsafe(`ALTER TYPE "Plan" ADD VALUE IF NOT EXISTS 'FREE' BEFORE 'STARTER'`)
+      console.log('✓ FREE added to Plan enum')
+    } else {
+      console.log('✅ Plan enum already includes FREE')
+    }
+
+    // Migrate any remaining TRIAL users to FREE
+    if (labels.includes('TRIAL')) {
+      const trialCount = await prisma.$queryRaw<any[]>`
+        SELECT COUNT(*)::int as count FROM "User" WHERE plan = 'TRIAL'
+      `
+      const count = trialCount[0]?.count ?? 0
+      if (count > 0) {
+        console.log(`Migrating ${count} TRIAL users to FREE...`)
+        await prisma.$executeRaw`
+          UPDATE "User" SET plan = 'FREE', "subscriptionStatus" = 'active'
+          WHERE plan = 'TRIAL'
+        `
+        console.log(`✓ ${count} users migrated from TRIAL to FREE`)
+      } else {
+        console.log('✅ No TRIAL users to migrate')
+      }
+
+      // Update trialing subscription statuses
+      const trialingCount = await prisma.$queryRaw<any[]>`
+        SELECT COUNT(*)::int as count FROM "User" WHERE "subscriptionStatus" = 'trialing'
+      `
+      const tCount = trialingCount[0]?.count ?? 0
+      if (tCount > 0) {
+        console.log(`Migrating ${tCount} trialing statuses to active...`)
+        await prisma.$executeRaw`
+          UPDATE "User" SET "subscriptionStatus" = 'active'
+          WHERE "subscriptionStatus" = 'trialing'
+        `
+        console.log(`✓ ${tCount} subscription statuses updated`)
+      }
+    }
+  } catch (error: any) {
+    console.error('⚠ Plan enum migration error (non-fatal):', error.message)
+    // Don't fail the build — the app should still work with TRIAL in the enum
+  }
 }
 
 main()

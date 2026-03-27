@@ -53,7 +53,6 @@ export async function getCurrentUser(): Promise<any> {
             company: true,
             plan: true,
             subscriptionStatus: true,
-            trialEndsAt: true,
             profileCompleted: true,
             marketingEmails: true,
             productUpdates: true,
@@ -141,7 +140,7 @@ export async function requireAdmin() {
   try {
     user = await requireAuth();
   } catch (error) {
-    // Not authenticated - redirect to login
+    console.warn('[requireAdmin] Auth failed, redirecting to login:', error instanceof Error ? error.message : 'unknown');
     redirect('/auth/login?redirect=/admin');
   }
 
@@ -154,10 +153,11 @@ export async function requireAdmin() {
   const isAdmin = user.isAdmin || adminEmails.includes(user.email);
 
   if (!isAdmin) {
-    console.warn(`Unauthorized admin access attempt by user: ${user.email}`);
+    console.warn(`[requireAdmin] Unauthorized admin access attempt by user: ${user.email}`);
     redirect('/unauthorized');
   }
 
+  console.log(`[requireAdmin] Admin access granted for: ${user.email}`);
   return user;
 }
 
