@@ -114,6 +114,12 @@ export type StandardsTrustBarProps = {
   variant?: "full" | "compact";
   /** When true, shows the optional section heading (recommended above the fold). */
   showHeading?: boolean;
+  /** Replaces the default heading line when `showHeading` is true. */
+  headingOverride?: string;
+  /** Hide the GDPR column (e.g. pilot partner funnel focused on testing standards). */
+  omitGdpr?: boolean;
+  /** Replaces the small-print disclaimer under the logos. */
+  disclaimerOverride?: string;
   className?: string;
   /** Rounded card inside a column (e.g. public report) instead of full-bleed horizontal rules. */
   inset?: boolean;
@@ -122,6 +128,9 @@ export type StandardsTrustBarProps = {
 export function StandardsTrustBar({
   variant = "full",
   showHeading = true,
+  headingOverride,
+  omitGdpr = false,
+  disclaimerOverride,
   className,
   inset = false,
 }: StandardsTrustBarProps) {
@@ -149,7 +158,8 @@ export function StandardsTrustBar({
               isFull ? "mb-8 text-sm md:text-base" : "mb-5 text-xs md:text-sm"
             )}
           >
-            Built on the world&apos;s most trusted accessibility standards
+            {headingOverride ??
+              "Built on the world's most trusted accessibility standards"}
           </p>
         ) : null}
 
@@ -231,32 +241,34 @@ export function StandardsTrustBar({
           </div>
 
           {/* 4. GDPR + EU flag */}
-          <div className="snap-center shrink-0" role="listitem">
-            <Link
-              href={GDPR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={trustLinkClass}
-              aria-label="General Data Protection Regulation — European Commission overview (opens in new tab)"
-              title="European Commission — GDPR"
-            >
-              <TrustLabelRow />
-              <TrustLogoRow isFull={isFull}>
-                <span className="flex items-center justify-center gap-2 whitespace-nowrap">
-                  <EuFlagIcon className="h-[1.15rem] w-[1.7rem] shrink-0 rounded-sm shadow-sm md:h-5 md:w-[1.85rem]" />
-                  <span
-                    className={cn(
-                      "font-semibold text-foreground/90",
-                      isFull ? "text-sm" : "text-xs"
-                    )}
-                  >
-                    GDPR compliant
+          {!omitGdpr ? (
+            <div className="snap-center shrink-0" role="listitem">
+              <Link
+                href={GDPR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={trustLinkClass}
+                aria-label="General Data Protection Regulation — European Commission overview (opens in new tab)"
+                title="European Commission — GDPR"
+              >
+                <TrustLabelRow />
+                <TrustLogoRow isFull={isFull}>
+                  <span className="flex items-center justify-center gap-2 whitespace-nowrap">
+                    <EuFlagIcon className="h-[1.15rem] w-[1.7rem] shrink-0 rounded-sm shadow-sm md:h-5 md:w-[1.85rem]" />
+                    <span
+                      className={cn(
+                        "font-semibold text-foreground/90",
+                        isFull ? "text-sm" : "text-xs"
+                      )}
+                    >
+                      GDPR compliant
+                    </span>
                   </span>
-                </span>
-              </TrustLogoRow>
-              <TrustCaption isFull={isFull}>Data protection by design</TrustCaption>
-            </Link>
-          </div>
+                </TrustLogoRow>
+                <TrustCaption isFull={isFull}>Data protection by design</TrustCaption>
+              </Link>
+            </div>
+          ) : null}
         </div>
 
         <p
@@ -265,8 +277,8 @@ export function StandardsTrustBar({
             isFull ? "text-[11px] leading-relaxed" : "text-[10px] leading-relaxed"
           )}
         >
-          Logos and names are shown for factual reference only. VexNexa is not endorsed by W3C, Deque, or the
-          European Union.
+          {disclaimerOverride ??
+            "Logos and names are shown for factual reference only. VexNexa is not endorsed by W3C, Deque, or the European Union."}
         </p>
       </div>
     </section>

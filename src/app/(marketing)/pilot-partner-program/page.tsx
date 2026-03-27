@@ -188,7 +188,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <TrackedCTA
-                href="/contact?from=pilot-partner-program"
+                href="/partner-apply"
                 event="pilot_partner_apply_click"
                 eventProps={{ location: "hero" }}
                 size="lg"
@@ -333,7 +333,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <TrackedCTA
-                  href="/contact?from=pilot-partner-program"
+                  href="/partner-apply"
                   event="pilot_partner_apply_click"
                   eventProps={{ location: "agency_section" }}
                   className="gradient-primary text-white"
@@ -442,7 +442,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
-                href="/contact?from=pilot-partner-program"
+                href="/partner-apply"
                 event="pilot_partner_apply_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
@@ -462,7 +462,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 View sample report
               </TrackedCTA>
               <TrackedCTA
-                href="/contact?from=pilot-partner-program"
+                href="/partner-apply"
                 event="pilot_partner_contact_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"

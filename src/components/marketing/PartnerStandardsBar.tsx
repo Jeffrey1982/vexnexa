@@ -33,9 +33,17 @@ function AxeCoreLockupPartner() {
 
 export type PartnerStandardsBarProps = {
   className?: string;
+  /** When set, replaces the translated intro (e.g. partner apply hero). */
+  introOverride?: string;
+  /** When set, replaces the translated footnote. */
+  footnoteOverride?: string;
 };
 
-export function PartnerStandardsBar({ className }: PartnerStandardsBarProps) {
+export function PartnerStandardsBar({
+  className,
+  introOverride,
+  footnoteOverride,
+}: PartnerStandardsBarProps) {
   const t = useTranslations("home.pilotBanner");
   /** ~65% of compact bar WCAG cap (32px → ~21px). */
   const wcagMaxH = 21;
@@ -48,7 +56,7 @@ export function PartnerStandardsBar({ className }: PartnerStandardsBarProps) {
       )}
     >
       <p className="text-center text-sm leading-relaxed text-muted-foreground md:text-[0.9375rem]">
-        {t("standardsIntro")}
+        {introOverride ?? t("standardsIntro")}
       </p>
 
       <ul
@@ -128,7 +136,7 @@ export function PartnerStandardsBar({ className }: PartnerStandardsBarProps) {
       </ul>
 
       <p className="mt-4 text-center text-[10px] leading-snug text-muted-foreground/80">
-        {t("standardsFootnote")}
+        {footnoteOverride ?? t("standardsFootnote")}
       </p>
     </div>
   );

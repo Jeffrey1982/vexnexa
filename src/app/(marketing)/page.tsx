@@ -565,7 +565,10 @@ function PilotPartnerBanner() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/contact?from=pilot-homepage">
+              <Link
+                href="/partner-apply"
+                onClick={() => trackEvent("pilot_banner_click", { location: "homepage_apply" })}
+              >
                 {t('ctaSecondary')}
               </Link>
             </Button>

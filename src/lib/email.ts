@@ -16,6 +16,14 @@ import {
 // Initialize Resend only if API key is available
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
+function escapeHtmlForEmail(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export interface ContactEmailData {
   name: string
   email: string
@@ -154,6 +162,101 @@ Privacy-first WCAG scanning • Made in the Netherlands
     console.error('❌ Failed to send contact emails:', error)
     throw error
   }
+}
+
+export interface PilotPartnerApplicationEmailData {
+  fullName: string
+  companyName: string
+  email: string
+  phone?: string | null
+  website: string
+  clientSites: string
+  services: string[]
+  motivation: string
+}
+
+const PILOT_SERVICE_LABELS: Record<string, string> = {
+  web_development: 'Web Development',
+  digital_marketing: 'Digital Marketing',
+  seo: 'SEO',
+  accessibility_consulting: 'Accessibility Consulting',
+  other: 'Other'
+}
+
+export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplicationEmailData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping pilot partner application email')
+    return null
+  }
+
+  const {
+    fullName,
+    companyName,
+    email,
+    phone,
+    website,
+    clientSites,
+    services,
+    motivation
+  } = data
+
+  const servicesLine = services
+    .map((s) => PILOT_SERVICE_LABELS[s] ?? s)
+    .join(', ')
+
+  const safeCompany = companyName.replace(/[\r\n]/g, ' ').trim().slice(0, 120) || 'Unknown company'
+  const subject = `🚀 New Pilot Partner Application – ${safeCompany}`
+
+  const e = (s: string) => escapeHtmlForEmail(s)
+
+  const html = `
+        <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto;">
+          <h2 style="color: #D45A00; margin-bottom: 8px;">New Pilot Partner application</h2>
+          <p style="color: #4B5563; font-size: 14px; margin-top: 0;">Submitted via vexnexa.com/partner-apply</p>
+
+          <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #1F2937;">Applicant</h3>
+            <p><strong>Name:</strong> ${e(fullName)}</p>
+            <p><strong>Agency / company:</strong> ${e(companyName)}</p>
+            <p><strong>Work email:</strong> ${e(email)}</p>
+            ${phone ? `<p><strong>Phone:</strong> ${e(phone)}</p>` : ''}
+            <p><strong>Agency website:</strong> <a href="${e(website)}" style="color: #0F5C5C;">${e(website)}</a></p>
+            <p><strong>Client websites managed:</strong> ${e(clientSites)}</p>
+            <p><strong>Services offered:</strong> ${e(servicesLine)}</p>
+          </div>
+
+          <div style="background: #ffffff; padding: 20px; border: 1px solid #C0C3C7; border-radius: 8px;">
+            <h3 style="margin-top: 0; color: #1F2937;">Why join the pilot?</h3>
+            <p style="white-space: pre-wrap; color: #374151; line-height: 1.6;">${e(motivation)}</p>
+          </div>
+
+          <p style="margin-top: 24px; color: #6B7280; font-size: 13px;">
+            Reply from <strong>info@vexnexa.com</strong> within 1 business day.
+          </p>
+        </div>
+      `
+
+  const text = `
+New Pilot Partner application (vexnexa.com/partner-apply)
+
+Name: ${fullName}
+Agency / company: ${companyName}
+Work email: ${email}
+${phone ? `Phone: ${phone}\n` : ''}Agency website: ${website}
+Client websites managed: ${clientSites}
+Services offered: ${servicesLine}
+
+Why join the pilot?
+${motivation}
+`.trim()
+
+  return resend.emails.send({
+    from: 'VexNexa Partners <onboarding@resend.dev>',
+    to: ['info@vexnexa.com'],
+    subject,
+    html,
+    text
+  })
 }
 
 export interface TeamInvitationData {

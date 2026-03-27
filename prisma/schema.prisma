@@ -584,6 +584,25 @@ model ContactMessage {
   @@index([createdAt])
 }
 
+/// Pilot Partner Program applications (marketing funnel; stored via server action).
+model PartnerApplication {
+  id          String   @id @default(cuid())
+  fullName    String
+  companyName String
+  email       String
+  phone       String?
+  website     String
+  clientSites String
+  services    Json
+  motivation  String
+  status      String   @default("new")
+  createdAt   DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+  @@map("partner_applications")
+}
+
 model SupportTicket {
   id        String                 @id @default(cuid())
   userId    String

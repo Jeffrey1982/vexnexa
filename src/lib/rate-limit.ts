@@ -112,3 +112,48 @@ export const authLimiter = rateLimit({
   maxRequests: 10, // 10 auth attempts per 15 minutes
   windowMs: 15 * 60 * 1000 // 15 minutes
 })
+
+/**
+ * Keyed rate limit for server actions / non-Request contexts (same store as HTTP limiters).
+ */
+export function checkKeyedRateLimit(
+  key: string,
+  maxRequests: number,
+  windowMs: number
+): RateLimitResult {
+  const storeKey = `keyed:${key}`
+  const now = Date.now()
+  const resetTime = now + windowMs
+
+  let entry = rateLimitStore.get(storeKey)
+
+  if (!entry || entry.resetTime < now) {
+    entry = { count: 1, resetTime }
+    rateLimitStore.set(storeKey, entry)
+    return {
+      success: true,
+      remaining: maxRequests - 1,
+      resetTime,
+      limit: maxRequests
+    }
+  }
+
+  if (entry.count >= maxRequests) {
+    return {
+      success: false,
+      remaining: 0,
+      resetTime: entry.resetTime,
+      limit: maxRequests
+    }
+  }
+
+  entry.count++
+  rateLimitStore.set(storeKey, entry)
+
+  return {
+    success: true,
+    remaining: maxRequests - entry.count,
+    resetTime: entry.resetTime,
+    limit: maxRequests
+  }
+}
