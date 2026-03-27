@@ -72,7 +72,7 @@ export async function addMessageToTicket(ticketId: string, message: string, send
   });
 
   revalidatePath(`/dashboard/support/${ticketId}`);
-  revalidatePath('/admin-interface');
+  revalidatePath('/admin/support/tickets');
   return { success: true, message: newMessage };
 }
 
@@ -92,7 +92,7 @@ export async function updateTicketStatus(ticketId: string, status: TicketStatus)
   });
 
   revalidatePath(`/dashboard/support/${ticketId}`);
-  revalidatePath('/admin-interface');
+  revalidatePath('/admin/support/tickets');
   return { success: true };
 }
 
@@ -112,6 +112,6 @@ export async function updateTicketPriority(ticketId: string, priority: TicketPri
   });
 
   revalidatePath(`/dashboard/support/${ticketId}`);
-  revalidatePath('/admin-interface');
+  revalidatePath('/admin/support/tickets');
   return { success: true };
 }

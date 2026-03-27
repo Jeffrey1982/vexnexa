@@ -73,7 +73,7 @@ export function UserTicketsList({ tickets, userId }: UserTicketsListProps) {
                   <TableCell className="text-center">{ticket._count.messages}</TableCell>
                   <TableCell className="text-sm">{formatDate(ticket.updatedAt)}</TableCell>
                   <TableCell>
-                    <Link href={`/admin-interface/tickets/${ticket.id}`}>
+                    <Link href={`/admin/support/tickets/${ticket.id}`}>
                       <Button size="sm" variant="ghost">
                         <ExternalLink className="w-4 h-4" />
                       </Button>

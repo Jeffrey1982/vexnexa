@@ -169,7 +169,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                     className={cn(
                       'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
                       'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
-                      isActive('/admin') && !isActive('/admin-interface')
+                      isActive('/admin') && !isActive('/admin/support/tickets')
                         ? 'text-primary after:w-full'
                         : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
                     )}
@@ -178,11 +178,11 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                     Admin
                   </Link>
                   <Link
-                    href="/admin-interface"
+                    href="/admin/support/tickets"
                     className={cn(
                       'inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 relative py-2',
                       'after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-primary/80 after:transition-all after:duration-200 after:rounded-full',
-                      isActive('/admin-interface')
+                      isActive('/admin/support/tickets')
                         ? 'text-primary after:w-full'
                         : 'text-muted-foreground hover:text-foreground after:w-0 hover:after:w-full'
                     )}
@@ -295,7 +295,7 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     'flex items-center px-3 py-2 text-base font-medium rounded-md',
-                    isActive('/admin') && !isActive('/admin-interface')
+                    isActive('/admin') && !isActive('/admin/support/tickets')
                       ? 'bg-primary/10 text-primary'
                       : 'text-foreground/80 hover:bg-gray-100 dark:hover:bg-gray-800'
                   )}
@@ -304,11 +304,11 @@ export default function DashboardNav({ user }: DashboardNavProps) {
                   Admin Dashboard
                 </Link>
                 <Link
-                  href="/admin-interface"
+                  href="/admin/support/tickets"
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     'flex items-center px-3 py-2 text-base font-medium rounded-md',
-                    isActive('/admin-interface')
+                    isActive('/admin/support/tickets')
                       ? 'bg-primary/10 text-primary'
                       : 'text-foreground/80 hover:bg-gray-100 dark:hover:bg-gray-800'
                   )}

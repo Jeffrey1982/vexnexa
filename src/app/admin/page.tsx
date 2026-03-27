@@ -194,7 +194,7 @@ export default async function AdminDashboard() {
                 </CardTitle>
                 <CardDescription>Manage and respond to customer support requests</CardDescription>
               </div>
-              <Link href="/admin-interface">
+              <Link href="/admin/support/tickets">
                 <Button className="bg-orange-600 hover:bg-orange-700">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   View All Tickets
@@ -247,7 +247,7 @@ export default async function AdminDashboard() {
                   {stats.tickets.recent.map((ticket) => {
                     const userName = `${ticket.user.firstName || ''} ${ticket.user.lastName || ''}`.trim() || ticket.user.email;
                     return (
-                      <Link key={ticket.id} href={`/admin-interface/tickets/${ticket.id}`}>
+                      <Link key={ticket.id} href={`/admin/support/tickets/${ticket.id}`}>
                         <div className="bg-white dark:bg-[var(--surface-2)] p-3 rounded-lg border border-gray-200 dark:border-white/[0.06] hover:border-orange-300 dark:hover:border-orange-400/30 hover:shadow-sm dark:hover:bg-[var(--surface-3)] transition-all cursor-pointer">
                           <div className="flex items-center justify-between">
                             <div className="flex-1 min-w-0">
@@ -332,7 +332,7 @@ export default async function AdminDashboard() {
                     Manual User Upgrade
                   </Button>
                 </Link>
-                <Link href="/admin-interface" className="w-full">
+                <Link href="/admin/support/tickets" className="w-full">
                   <Button variant="outline" className="w-full justify-start border-orange-300 dark:border-orange-500/50 text-orange-700 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-500/10">
                     <Ticket className="w-4 h-4 mr-2" />
                     Support Tickets
