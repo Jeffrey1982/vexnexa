@@ -1006,11 +1006,12 @@ describe("Enterprise header & footer", () => {
     expect(html).toContain("rf-right");
   });
 
-  it("running header/footer hidden on screen, visible in print CSS", () => {
+  it("running header/footer hidden on screen; print uses footer strip + per-page page numbers", () => {
     const html = renderReportHTML(getReport());
     expect(html).toMatch(/\.running-header,\.running-footer\{display:\s*none\}/);
-    expect(html).toMatch(/\.running-header\{display:\s*flex/);
+    expect(html).toMatch(/\.running-header\{display:\s*none!important\}/);
     expect(html).toMatch(/\.running-footer\{display:\s*flex/);
+    expect(html).toMatch(/counter\(report-page\)/);
   });
 
   it("default brand name is VexNexa when no override", () => {
