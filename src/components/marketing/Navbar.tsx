@@ -174,15 +174,12 @@ export function Navbar({ className }: NavbarProps) {
                 </Button>
                 <Button
                   asChild
-                  variant="gradient"
+                  variant="default"
                   size="sm"
-                  className="font-medium text-sm relative overflow-hidden group"
+                  className="font-medium text-sm"
                   onClick={() => handleCtaClick("navbar_primary")}
                 >
-                  <Link href="/auth/register">
-                    <span className="relative z-10">{t('signup')}</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-background/25 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-                  </Link>
+                  <Link href="/auth/register">{t('signup')}</Link>
                 </Button>
               </>
             )}
@@ -231,7 +228,8 @@ export function Navbar({ className }: NavbarProps) {
                   ) : user ? (
                     <>
                       <Button
-                        className="w-full h-12 bg-primary hover:bg-primary/90 shadow-elegant font-medium text-base"
+                        variant="default"
+                        className="w-full h-12 font-medium text-base"
                         onClick={() => {
                           setIsOpen(false);
                           router.push('/dashboard');
@@ -252,8 +250,8 @@ export function Navbar({ className }: NavbarProps) {
                   ) : (
                     <>
                       <Button
-                        variant="gradient"
-                        className="w-full h-12 font-medium text-base relative overflow-hidden"
+                        variant="default"
+                        className="w-full h-12 font-medium text-base"
                         onClick={() => {
                           handleCtaClick("mobile_primary");
                           setIsOpen(false);
