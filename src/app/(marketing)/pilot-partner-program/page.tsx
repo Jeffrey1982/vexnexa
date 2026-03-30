@@ -456,7 +456,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 event="pilot_partner_sample_report_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
-                className="bg-primary-800 text-white border border-white/20 hover:bg-primary-900"
+                className="bg-gradient-to-r from-[#0A2540] to-[#00C4A0] text-white border border-white/10 hover:opacity-90"
               >
                 View sample report
               </TrackedCTA>
@@ -465,7 +465,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 event="pilot_partner_contact_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
-                className="bg-primary-800 text-white border border-white/20 hover:bg-primary-900"
+                className="bg-gradient-to-r from-[#0A2540] to-[#00C4A0] text-white border border-white/10 hover:opacity-90"
               >
                 Ask a question
               </TrackedCTA>
