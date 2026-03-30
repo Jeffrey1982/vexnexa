@@ -18,7 +18,7 @@ export function ReportCTA({ normalizedDomain }: ReportCTAProps) {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/wcag-scan"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             Rescan {normalizedDomain}
           </Link>
