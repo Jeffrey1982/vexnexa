@@ -10,17 +10,16 @@ import { trackEvent } from "@/lib/analytics-events";
  * ── Performance notes ──
  * • Zero Framer Motion — saves ~40 kB gzipped from the critical bundle.
  * • All visual animations are CSS-only using transform / opacity (GPU-composited).
- * • Progress bar uses scaleX(0→1) instead of width animation — avoids layout thrash.
+ * • Progress bar uses scaleX(0→1) instead of width — avoids layout thrash.
  * • Score counter: single rAF loop mutating textContent directly — no React re-renders.
  * • SVG ring stroke-dashoffset driven by the same rAF loop.
  * • Issue cards + report: pure CSS delayed opacity+translateY, no JS timers.
  * • prefers-reduced-motion: CSS disables all animations; JS skips counter.
  * • Mobile: fully static — no animations, no JS overhead.
- * • will-change applied only to actively animated elements, removed after completion.
- * • Single <style> block, no styled-jsx runtime needed.
+ * • will-change only on actively animating elements.
  * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
- *   Only non-LCP elements (trust line, buttons, mockup) use entrance animations.
  * • Background blur hidden on mobile to reduce GPU compositing cost.
+ * • Accent palette: blue-500 (#3b82f6) + slate-700 base.
  */
 
 /* ── Circumference constant for score ring (r=34) ── */
@@ -77,63 +76,57 @@ function DashboardMockup() {
 
   return (
     <div
-      className="hero-mockup relative rounded-3xl border border-zinc-700/60 bg-zinc-900/80 p-5 shadow-xl"
+      className="hero-mockup relative rounded-3xl border border-slate-700/60 bg-zinc-900/80 p-5 shadow-xl"
       role="img"
-      aria-label="Geanimeerde preview van het VexNexa scan dashboard"
+      aria-label="Animated preview of the VexNexa scan dashboard"
     >
-      {/* Dashboard header */}
-      <div className="mb-4 flex items-center justify-between border-b border-zinc-700/50 pb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/20">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 12l2 2 4-4" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#34d399" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </div>
-          <span className="text-sm font-semibold text-zinc-200">VexNexa</span>
-        </div>
+      {/* Dashboard header — typographic logo, no SVG icon */}
+      <div className="mb-4 flex items-center justify-between border-b border-slate-700/50 pb-3">
+        <span className="text-[15px] font-bold tracking-wide text-white">
+          Vex<span className="text-blue-500">Nexa</span>
+        </span>
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
-            <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
           </span>
-          <span className="text-[11px] font-medium uppercase tracking-wider text-emerald-400">Live Scan</span>
+          <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">Live Scan</span>
         </div>
       </div>
 
       {/* Target URL */}
-      <div className="mb-4 rounded-xl bg-zinc-800/70 px-4 py-2.5 border border-zinc-700/40">
-        <p className="text-[11px] text-zinc-500 mb-0.5">Doel</p>
-        <p className="text-sm font-medium text-zinc-200 tracking-tight">jouwklant.nl</p>
+      <div className="mb-4 rounded-xl bg-zinc-800/70 px-4 py-2.5 border border-slate-700/40">
+        <p className="text-[11px] text-zinc-500 mb-0.5">Target</p>
+        <p className="text-sm font-medium text-zinc-200 tracking-tight">yourclient.com</p>
       </div>
 
       {/* Progress bar — scaleX animation (GPU, no layout) */}
       <div className="mb-5">
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[11px] font-medium text-zinc-400">Scan voortgang</span>
-          <span ref={pctRef} className="text-[11px] font-semibold text-emerald-400">...%</span>
+          <span className="text-[11px] font-medium text-zinc-400">Scan progress</span>
+          <span ref={pctRef} className="text-[11px] font-semibold text-blue-400">...%</span>
         </div>
         <div className="h-2 w-full rounded-full bg-zinc-800 overflow-hidden">
-          <div className="hero-bar h-2 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 origin-left" />
+          <div className="hero-bar h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 origin-left" />
         </div>
       </div>
 
       {/* Score display */}
-      <div className="mb-5 flex items-center gap-4 rounded-2xl bg-zinc-800/50 border border-zinc-700/30 p-4">
+      <div className="mb-5 flex items-center gap-4 rounded-2xl bg-zinc-800/50 border border-slate-700/30 p-4">
         <div className="relative flex h-20 w-20 shrink-0 items-center justify-center">
           <svg className="h-20 w-20 -rotate-90" viewBox="0 0 80 80" aria-hidden="true">
             <circle cx="40" cy="40" r="34" fill="none" stroke="#27272a" strokeWidth="6" />
             <circle
               ref={ringRef}
               cx="40" cy="40" r="34" fill="none"
-              stroke="#34d399"
+              stroke="#3b82f6"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={RING_C}
               strokeDashoffset={RING_C * (1 - SCORE_START / 100)}
             />
           </svg>
-          <span ref={scoreRef} className="absolute text-2xl font-bold tabular-nums text-emerald-400">
+          <span ref={scoreRef} className="absolute text-2xl font-bold tabular-nums text-blue-400">
             {SCORE_START}
           </span>
         </div>
@@ -150,8 +143,8 @@ function DashboardMockup() {
             <span className="text-[10px] font-bold text-red-400">!</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] font-semibold text-red-300 truncate">Afbeeldingen missen alt-tekst</p>
-            <p className="text-[10px] text-red-400/70">Critical &middot; 4 elementen</p>
+            <p className="text-[12px] font-semibold text-red-300 truncate">Images missing alt text</p>
+            <p className="text-[10px] text-red-400/70">Critical &middot; 4 elements</p>
           </div>
         </div>
         <div className="flex items-center gap-3 rounded-xl bg-amber-500/10 border border-amber-500/20 px-3.5 py-2.5">
@@ -159,31 +152,31 @@ function DashboardMockup() {
             <span className="text-[10px] font-bold text-amber-400">~</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] font-semibold text-amber-300 truncate">Kleurcontrast onvoldoende</p>
-            <p className="text-[10px] text-amber-400/70">Moderate &middot; 2 elementen</p>
+            <p className="text-[12px] font-semibold text-amber-300 truncate">Insufficient colour contrast</p>
+            <p className="text-[10px] text-amber-400/70">Moderate &middot; 2 elements</p>
           </div>
         </div>
       </div>
 
       {/* White-label report — CSS-only delayed scale+fade */}
-      <div className="hero-report rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-zinc-800/80 to-zinc-800/40 p-4">
+      <div className="hero-report rounded-2xl border border-blue-500/20 bg-gradient-to-br from-zinc-800/80 to-zinc-800/40 p-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded bg-zinc-600" />
-            <span className="text-[11px] font-semibold text-zinc-300">Jouw Digitaal Bureau</span>
+            <div className="h-5 w-5 rounded bg-slate-600" />
+            <span className="text-[11px] font-semibold text-zinc-300">Your Digital Agency</span>
           </div>
-          <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-400">
+          <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-400">
             White-label
           </span>
         </div>
         <div className="space-y-1.5">
           <div className="h-1.5 w-[80%] rounded-full bg-zinc-700" />
           <div className="h-1.5 w-[60%] rounded-full bg-zinc-700" />
-          <div className="h-1.5 w-[70%] rounded-full bg-emerald-500/20" />
+          <div className="h-1.5 w-[70%] rounded-full bg-blue-500/20" />
         </div>
         <div className="mt-3 flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">PDF &amp; Word export gereed</span>
+          <div className="h-1 w-1 rounded-full bg-blue-500" />
+          <span className="text-[10px] text-zinc-500">PDF &amp; Word export ready</span>
         </div>
       </div>
     </div>
@@ -251,7 +244,7 @@ export function HomeHeroPremium() {
       >
         {/* Background glow — hidden on mobile to reduce GPU cost */}
         <div className="pointer-events-none absolute inset-0 hidden md:block" aria-hidden="true">
-          <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/[0.06] blur-[100px]" />
+          <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.05] blur-[100px]" />
         </div>
 
         <div className="container relative z-10 mx-auto px-4 py-16 sm:py-20 lg:py-24">
@@ -264,55 +257,55 @@ export function HomeHeroPremium() {
                 id="home-hero-heading"
                 className="font-display text-4xl font-bold tracking-tighter text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]"
               >
-                WCAG 2.2 zonder ruis.
+                WCAG 2.2 without the noise.
                 <br />
-                <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
-                  White-label rapporten die je &eacute;cht verkoopt.
+                <span className="bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">
+                  White-label reports that actually sell.
                 </span>
               </h1>
 
               {/* LCP-critical: subheadline also renders immediately */}
               <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-zinc-400 lg:mx-0">
-                Betrouwbare automatische scans met axe-core. Minder false positives,
-                concrete fix-adviezen en volledig branded PDF &amp; Word-rapporten.
-                Gemaakt voor bureaus en EU-teams die de EAA serieus nemen.
+                Reliable automated scans powered by axe-core. Fewer false positives,
+                actionable fix advice, and fully branded PDF &amp; Word reports.
+                Built for agencies and EU teams that take the EAA seriously.
               </p>
 
               {/* Trust element */}
               <p className="hero-fadeup-3 mx-auto mt-5 flex flex-wrap items-center justify-center gap-x-2 text-sm text-zinc-500 lg:mx-0 lg:justify-start">
-                <span>Alleen EU-hosted</span>
+                <span>EU-hosted only</span>
                 <span className="text-zinc-700" aria-hidden="true">&bull;</span>
-                <span>GDPR-proof</span>
+                <span>GDPR compliant</span>
                 <span className="text-zinc-700" aria-hidden="true">&bull;</span>
-                <span>Geen creditcard nodig</span>
+                <span>No credit card required</span>
               </p>
 
               {/* Buttons */}
               <div className="hero-fadeup-4 mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start">
                 <Button
                   size="lg"
-                  className="group h-13 rounded-xl bg-emerald-500 px-8 text-base font-semibold text-zinc-950 shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-emerald-500/30 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                  className="group h-13 rounded-xl bg-blue-500 px-8 text-base font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:bg-blue-400 hover:shadow-blue-500/30 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
                   asChild
                 >
                   <Link
                     href="/auth/register"
                     onClick={() => trackEvent("homepage_cta_primary_click", { location: "hero" })}
                   >
-                    Gratis scan starten
+                    Start free scan
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </Link>
                 </Button>
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-13 rounded-xl border-zinc-700 bg-transparent px-8 text-base font-medium text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-zinc-500 hover:bg-zinc-800/60 hover:text-white focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                  className="h-13 rounded-xl border-slate-700 bg-transparent px-8 text-base font-medium text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-slate-500 hover:bg-zinc-800/60 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
                   asChild
                 >
                   <Link
                     href="#demo"
                     onClick={() => trackEvent("homepage_cta_demo_click", { location: "hero" })}
                   >
-                    Bekijk live demo
+                    Watch live demo
                   </Link>
                 </Button>
               </div>
@@ -325,18 +318,18 @@ export function HomeHeroPremium() {
 
             {/* ── Mobile fallback: static card, zero JS ── */}
             <div className="hero-fadeup-5 mx-auto w-full max-w-sm lg:hidden">
-              <div className="rounded-2xl border border-zinc-700/50 bg-zinc-900/80 p-5 text-center">
+              <div className="rounded-2xl border border-slate-700/50 bg-zinc-900/80 p-5 text-center">
                 <div className="mb-2 flex items-center justify-center gap-2">
                   <span className="relative flex h-2 w-2">
-                    <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
                   </span>
-                  <span className="text-[11px] font-medium uppercase tracking-wider text-emerald-400">Live Scan</span>
+                  <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">Live Scan</span>
                 </div>
-                <p className="text-5xl font-bold tabular-nums text-emerald-400">94</p>
+                <p className="text-5xl font-bold tabular-nums text-blue-400">94</p>
                 <p className="mt-1 text-sm text-zinc-400">Compliance Score &middot; WCAG 2.2 AA</p>
                 <div className="mt-3 h-2 w-full rounded-full bg-zinc-800">
-                  <div className="h-2 w-[94%] rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" />
+                  <div className="h-2 w-[94%] rounded-full bg-gradient-to-r from-blue-600 to-blue-400" />
                 </div>
               </div>
             </div>
