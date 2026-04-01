@@ -95,7 +95,7 @@ export function Navbar({ className }: NavbarProps) {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center rounded-lg outline-none ring-offset-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[#0A2540] focus-visible:ring-offset-2 dark:focus-visible:ring-primary"
+            className="flex items-center rounded-lg outline-none ring-offset-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <VexnexaLogo size={46} />
           </Link>
@@ -113,9 +113,9 @@ export function Navbar({ className }: NavbarProps) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-[#00C4A0] after:to-[#0A2540] after:transition-all after:duration-200 dark:after:from-primary dark:after:to-primary/80",
+                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-primary after:transition-all after:duration-200",
                     active
-                      ? "text-[#0A2540] after:w-full dark:text-foreground"
+                      ? "text-foreground after:w-full"
                       : "text-muted-foreground after:w-0 hover:text-foreground hover:after:w-full"
                   )}
                 >
