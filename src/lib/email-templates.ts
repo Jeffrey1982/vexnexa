@@ -70,7 +70,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                                         <td style="padding: 0 10px 0 0; vertical-align: middle;">
                                             <img src="https://vexnexa.com/brand/vexnexa-v-mark.png" alt="" width="52" height="40" style="display: block; height: 40px; width: auto;" />
                                         </td>
-                                        <td style="vertical-align: middle; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 26px; font-weight: 600; color: #0A2540; letter-spacing: -0.02em; line-height: 1;">
+                                        <td style="vertical-align: middle; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 26px; font-weight: 600; color: #1e3a8a; letter-spacing: -0.02em; line-height: 1;">
                                             exNexa
                                         </td>
                                     </tr>
@@ -102,7 +102,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                         </tr>
                         <tr>
                             <td style="padding: 18px 32px 0 32px;">
-                                <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; color: #5A5A5A; line-height: 1.5; text-align: center;">If the button does not work, copy this link:<br><a href="${actionUrl}" style="color: #0F5C5C; text-decoration: none; word-break: break-all;">${actionUrl}</a></p>
+                                <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; color: #5A5A5A; line-height: 1.5; text-align: center;">If the button does not work, copy this link:<br><a href="${actionUrl}" style="color: #3b82f6; text-decoration: none; word-break: break-all;">${actionUrl}</a></p>
                             </td>
                         </tr>
                         ` : ''}
@@ -114,7 +114,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                                     ${listItems.map(item => `
                                     <tr>
                                         <td style="padding: 0 0 10px 0;">
-                                            <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; color: #1E1E1E; line-height: 1.5;"><span style="color: #0F5C5C; font-weight: 500;">•</span> ${item}</p>
+                                            <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; color: #1E1E1E; line-height: 1.5;"><span style="color: #3b82f6; font-weight: 500;">•</span> ${item}</p>
                                         </td>
                                     </tr>
                                     `).join('')}

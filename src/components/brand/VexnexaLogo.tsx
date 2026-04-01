@@ -34,7 +34,7 @@ export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) 
       />
       <span
         aria-hidden
-        className="font-display font-semibold tracking-tight text-[#0A2540] dark:text-white"
+        className="font-display font-semibold tracking-tight text-foreground"
         style={{
           fontSize: wordSize,
           lineHeight: 1,

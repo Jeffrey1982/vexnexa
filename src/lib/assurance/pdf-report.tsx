@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 30,
-    borderBottom: '2pt solid #0F5C5C',
+    borderBottom: '2pt solid #3b82f6',
     paddingBottom: 15,
   },
   brandName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#0F5C5C',
+    color: '#3b82f6',
     marginBottom: 5,
   },
   subtitle: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#0F5C5C',
+    color: '#3b82f6',
     marginBottom: 10,
     borderBottom: '1pt solid #CCCCCC',
     paddingBottom: 5,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#0F5C5C',
+    backgroundColor: '#3b82f6',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   complianceValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#0F5C5C',
+    color: '#3b82f6',
   },
   disclaimer: {
     marginTop: 30,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   trendScore: {
     fontSize: 10,
     fontWeight: 'bold',
-    color: '#0F5C5C',
+    color: '#3b82f6',
   },
 });
 
