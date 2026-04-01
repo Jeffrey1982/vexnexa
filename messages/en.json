@@ -828,5 +828,400 @@
     "title": "Accessibility Assurance",
     "subtitle": "Continuous monitoring and compliance",
     "description": "Stay compliant with automated monitoring and alerts"
+  },
+  "wcagScan": {
+    "hero": {
+      "badge": "WCAG 2.1 & 2.2 Coverage",
+      "title": "Run a WCAG Scan.",
+      "titleHighlight": "Get Actionable Results.",
+      "subtitle": "Paste a URL, hit scan, and see every WCAG violation ranked by severity — with the affected elements and fix guidance you actually need.",
+      "ctaPrimary": "Start Your Free Scan",
+      "ctaSecondary": "See a Sample Report",
+      "note": "No credit card required. Most single-page scans complete in under a minute."
+    },
+    "problem": {
+      "title": "Most WCAG Scans Give You a Number. Not a Plan.",
+      "subtitle": "You've probably tried a free accessibility checker before. It spit out a score, listed some errors, and left you staring at cryptic rule IDs wondering what to fix first.",
+      "issues": {
+        "flatErrors": {
+          "title": "Flat error lists",
+          "description": "No priority ranking — a missing alt tag is listed next to a keyboard trap."
+        },
+        "noElementContext": {
+          "title": "No element context",
+          "description": "You know a rule failed, but not which element on which page section."
+        },
+        "staleResults": {
+          "title": "Stale results",
+          "description": "One-off scans with no way to track whether last month's fixes actually stuck."
+        }
+      }
+    },
+    "solution": {
+      "title": "A WCAG Scan That Actually Tells You What to Do",
+      "subtitle": "VexNexa scans against WCAG 2.1 AA and 2.2 criteria using the axe-core engine — the same engine trusted by Microsoft, Google, and the U.S. government.",
+      "features": {
+        "severityRanked": {
+          "title": "Severity-Ranked Violations",
+          "description": "Every issue is scored by impact — critical, serious, moderate, or minor. Fix what matters first."
+        },
+        "elementDetail": {
+          "title": "Element-Level Detail",
+          "description": "See the exact CSS selector, HTML snippet, and page location for each violation. No guesswork."
+        },
+        "healthScore": {
+          "title": "Health Score (0–100)",
+          "description": "A weighted score that accounts for issue count and severity. Track improvement over time."
+        },
+        "exportReports": {
+          "title": "Export-Ready Reports",
+          "description": "Download your WCAG scan results as PDF or Word with full violation details and fix guidance."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "Four Steps from URL to Fix List",
+      "steps": {
+        "enterUrl": {
+          "title": "Enter a URL",
+          "description": "Paste any page URL into the scanner. Public or authenticated — VexNexa handles both."
+        },
+        "scanRuns": {
+          "title": "Scan runs in seconds",
+          "description": "The axe-core engine evaluates the page against WCAG 2.1 AA and selected 2.2 criteria in real-time."
+        },
+        "reviewResults": {
+          "title": "Review ranked results",
+          "description": "Violations appear sorted by severity with affected elements, fix guidance, and WCAG criterion references."
+        },
+        "exportShare": {
+          "title": "Export or share",
+          "description": "Download a PDF or DOCX report. Share results with your team or attach to a client deliverable."
+        }
+      }
+    },
+    "comparison": {
+      "title": "VexNexa vs. Basic Checkers",
+      "subtitle": "Free checkers are fine for a quick glance. When you need to prioritize, report, and track — you need more.",
+      "features": {
+        "severityRanked": "Severity-ranked violations",
+        "elementSelectors": "Affected element CSS selectors",
+        "wcag22Coverage": "WCAG 2.2 criteria coverage",
+        "pdfDocxExport": "PDF & DOCX export",
+        "healthTracking": "Health score tracking over time",
+        "whiteLabel": "White-label report branding",
+        "basicPassFail": "Basic pass/fail result",
+        "freeSinglePage": "Free single-page check"
+      },
+      "table": {
+        "feature": "Feature",
+        "vexnexa": "VexNexa",
+        "basicChecker": "Basic Checker"
+      }
+    },
+    "useCases": {
+      "title": "Built for Teams That Ship Accessible Products",
+      "siteOwners": {
+        "title": "Site Owners & Marketing Teams",
+        "description": "Verify your public pages meet WCAG AA before a redesign launch or regulatory deadline."
+      },
+      "developers": {
+        "title": "Developers & QA Engineers",
+        "description": "Integrate WCAG scans into your sprint workflow. Catch regressions before they reach production."
+      },
+      "compliance": {
+        "title": "Compliance & Legal Teams",
+        "description": "Generate structured reports to document your accessibility posture for audits and procurement."
+      }
+    },
+    "finalCTA": {
+      "title": "Ready to Scan Your Site?",
+      "subtitle": "Get actionable WCAG violation reports in minutes. No credit card required for your first scan.",
+      "ctaPrimary": "Start Your Free Scan",
+      "ctaSecondary": "View Sample Report"
+    },
+    "relatedSolutions": {
+      "title": "Explore More Accessibility Workflows",
+      "complianceReports": {
+        "title": "Compliance Reports",
+        "description": "Turn scan results into executive-ready PDF and DOCX reports."
+      },
+      "accessibilityChecker": {
+        "title": "Accessibility Checker",
+        "description": "Compare VexNexa to basic checkers and see what you've been missing."
+      },
+      "ongoingMonitoring": {
+        "title": "Ongoing Monitoring",
+        "description": "Schedule recurring scans and track accessibility trends over time."
+      }
+    }
+  },
+  "wcagComplianceReport": {
+    "hero": {
+      "badge": "PDF & DOCX Export",
+      "title": "WCAG Compliance Reports",
+      "titleHighlight": "Stakeholders Actually Read",
+      "subtitle": "Raw scan data doesn't get budget approved. VexNexa generates structured compliance reports with executive summaries, severity breakdowns, and prioritized fix lists — ready to attach to audits, tenders, and board presentations.",
+      "ctaPrimary": "Generate Your First Report",
+      "ctaSecondary": "Preview a Sample Report",
+      "note": "Free trial. No credit card required. First report in minutes."
+    },
+    "reportingGap": {
+      "title": "Scan Results Alone Don't Convince Decision-Makers",
+      "subtitle": "You know the site has accessibility issues. The scanner confirmed it. But forwarding a screenshot of a tool's output to your compliance officer, procurement lead, or executive sponsor rarely moves the needle.",
+      "context": "Decision-makers need context: how bad is it, what should be fixed first, what does remediation look like, and how does the current state map to WCAG criteria. That requires a report — not a dashboard."
+    },
+    "reportStructure": {
+      "title": "Inside a VexNexa Compliance Report",
+      "subtitle": "Every section is structured for a specific reader — from executives who need the one-page summary to developers who need the element selectors.",
+      "executiveSummary": {
+        "title": "Executive Summary",
+        "description": "Health score, grade (A through F), risk level, and a plain-language overview. Designed for non-technical readers who need the headline, not the code."
+      },
+      "severityBreakdown": {
+        "title": "Severity Breakdown",
+        "description": "Issue counts by severity tier — critical, serious, moderate, minor. Visual donut chart and progress bars make the distribution immediately clear."
+      },
+      "wcagMatrix": {
+        "title": "WCAG Compliance Matrix",
+        "description": "A criterion-by-criterion table showing pass, fail, needs manual review, or not tested for each relevant WCAG success criterion."
+      },
+      "topPriority": {
+        "title": "Top Priority Fixes",
+        "description": "The highest-impact issues ranked by weighted severity. Each entry includes the affected element count and an impact score so teams know where to start."
+      },
+      "detailedList": {
+        "title": "Detailed Issue List",
+        "description": "Every violation with its WCAG criterion, severity, affected CSS selectors, HTML snippets, and a link to the relevant WCAG understanding document."
+      },
+      "eaaReadiness": {
+        "title": "EAA Readiness Indicator",
+        "description": "For European compliance workflows: an EAA 2025 readiness badge and notes on how the site maps to European Accessibility Act requirements."
+      }
+    },
+    "exportFormats": {
+      "title": "Two Formats, One Consistent Report",
+      "pdf": {
+        "title": "PDF Report",
+        "description": "Print-optimized layout with visual charts, branded cover page, and professional typography. Ideal for sharing with stakeholders, attaching to RFP responses, or printing for in-person meetings.",
+        "features": {
+          "paginated": "Paginated with running headers and footers",
+          "charts": "Donut charts, progress bars, and score cards",
+          "branding": "Optional white-label branding",
+          "print": "Direct browser print — no conversion needed"
+        }
+      },
+      "docx": {
+        "title": "DOCX Report",
+        "description": "Editable Word document with the same content structure. Add your own commentary, customize for specific clients, or paste into existing proposal templates.",
+        "features": {
+          "editable": "Fully editable in Microsoft Word or Google Docs",
+          "headings": "Structured headings for easy navigation",
+          "formatting": "Tables, styled text, and severity indicators",
+          "branding": "White-label branding with embedded logo"
+        }
+      }
+    },
+    "audience": {
+      "title": "Reports Designed for the People Who Make Decisions",
+      "compliance": {
+        "title": "Compliance Officers",
+        "useCase": "Attach WCAG compliance documentation to internal audits and regulatory filings. The WCAG matrix provides criterion-level evidence."
+      },
+      "agency": {
+        "title": "Agency Teams",
+        "useCase": "Deliver professional reports to clients under your own branding. Show progress over time and justify accessibility budgets."
+      },
+      "procurement": {
+        "title": "Procurement & Legal",
+        "useCase": "Evaluate vendor accessibility claims with structured evidence. Use reports as part of tender requirements and contract compliance."
+      }
+    },
+    "scope": {
+      "title": "A Compliance Report, Not a Compliance Guarantee",
+      "description": "VexNexa reports document what automated testing detects. They cover a meaningful range of WCAG success criteria, but full conformance requires both automated and manual assessment. The report clearly marks which criteria were tested, which passed, and which need manual review.",
+      "disclaimer": "Use VexNexa reports as part of a broader compliance process — not as a standalone legal certification."
+    },
+    "faq": {
+      "title": "Compliance Reports — FAQ",
+      "q1": {
+        "question": "What WCAG criteria does the compliance report cover?",
+        "answer": "The report covers testable WCAG 2.1 Level AA criteria and selected WCAG 2.2 criteria. The WCAG compliance matrix explicitly shows each criterion's status — pass, fail, needs manual review, or not tested — so there's no ambiguity about coverage."
+      },
+      "q2": {
+        "question": "Can I customize the report before sharing it?",
+        "answer": "Yes. The DOCX export is fully editable — you can add commentary, remove sections, or paste content into your own templates. The PDF format is finalized for direct sharing or printing."
+      },
+      "q3": {
+        "question": "Does the report include remediation guidance?",
+        "answer": "Each violation includes a description of the issue, why it matters, and a link to the relevant WCAG understanding document. The top priority fixes section ranks issues by impact to help teams plan their remediation sprints."
+      },
+      "q4": {
+        "question": "How is this different from a basic accessibility checker output?",
+        "answer": "Basic checkers give you raw data — a list of violations and maybe a score. VexNexa compliance reports structure that data for decision-makers: executive summaries, severity breakdowns, WCAG matrices, and prioritized action lists. The report is designed to move projects forward, not just identify problems."
+      },
+      "q5": {
+        "question": "Can I use these reports for legal compliance?",
+        "answer": "VexNexa reports provide strong evidence of accessibility testing and remediation planning. However, they should be used as part of a broader compliance strategy that includes manual testing and expert review. The reports clearly indicate which criteria were tested automatically versus which require manual assessment."
+      },
+      "q6": {
+        "question": "Do reports include white-label branding?",
+        "answer": "Yes. Business and Enterprise plans include full white-label branding with your company logo, colors, and contact information. The reports appear as if generated by your own team, with no VexNexa branding visible."
+      }
+    },
+    "finalCTA": {
+      "title": "Generate a Report That Gets Read",
+      "subtitle": "Scan a URL, review the findings, and download a structured WCAG compliance report — all in under five minutes.",
+      "ctaPrimary": "Create Your First Report",
+      "ctaSecondary": "View Plans & Pricing"
+    }
+  },
+  "websiteAccessibilityChecker": {
+    "hero": {
+      "badge": "Smarter Accessibility Checking",
+      "title": "An Accessibility Checker That",
+      "titleHighlight": "Ranks What Matters",
+      "subtitle": "Stop scrolling through unsorted error dumps. VexNexa checks your site for WCAG violations and shows you exactly which issues are critical, which are minor, and where each one lives in your HTML.",
+      "ctaPrimary": "Check Your Site Free",
+      "ctaSecondary": "Explore All Features",
+      "note": "Free check. No credit card. Results in seconds."
+    },
+    "passFailProblem": {
+      "title": "Why \"78% Accessible\" Tells You Almost Nothing",
+      "subtitle": "A single percentage hides more than it reveals. Two sites can both score 78% — one has three critical keyboard traps, the other has forty missing alt texts on decorative images. The first is unusable. The second is mostly fine.",
+      "solution": "Basic accessibility checkers treat every failed rule equally. VexNexa doesn't. Every violation is weighted by real-world impact so you can separate the urgent from the cosmetic."
+    },
+    "whatYouGet": {
+      "title": "What a Real Accessibility Check Looks Like",
+      "subtitle": "VexNexa goes beyond simple pass/fail testing. Get actionable insights that help you prioritize fixes and track improvement over time.",
+      "weightedScore": {
+        "title": "Weighted Health Score",
+        "description": "Not a simple ratio. Critical issues weigh more than minor ones, giving you a score that reflects actual user impact."
+      },
+      "severityTiers": {
+        "title": "Severity Tiers",
+        "description": "Four tiers — Critical, Serious, Moderate, Minor — so your team can triage without guessing. Critical issues always appear first."
+      },
+      "elementDetail": {
+        "title": "Element-Level Detail",
+        "description": "See the exact CSS selector and HTML snippet for each violation. No hunting through your code to find the problem."
+      },
+      "wcagReferences": {
+        "title": "WCAG Criterion References",
+        "description": "Every violation links to the specific WCAG success criterion, with plain-language explanations of why it matters."
+      },
+      "riskAssessment": {
+        "title": "Risk Assessment",
+        "description": "Understand which issues block users completely versus which are minor inconveniences. Prioritize fixes that actually improve accessibility."
+      },
+      "trendTracking": {
+        "title": "Trend Tracking",
+        "description": "Monitor how your score changes over time. See if new features improve accessibility or if regressions are creeping in."
+      }
+    },
+    "comparison": {
+      "title": "How VexNexa Compares to Free Checkers",
+      "subtitle": "Free accessibility checkers are useful for a quick glance. But when you need to prioritize fixes, document compliance, or track improvement, you need more than a simple pass/fail result.",
+      "items": {
+        "resultFormat": {
+          "label": "Result format",
+          "basic": "Single score or badge",
+          "vexnexa": "Severity-ranked violation list"
+        },
+        "issueContext": {
+          "label": "Issue context",
+          "basic": "Rule ID only",
+          "vexnexa": "CSS selector + HTML snippet + WCAG ref"
+        },
+        "prioritization": {
+          "label": "Prioritization",
+          "basic": "None — flat list",
+          "vexnexa": "4-tier severity + weighted impact score"
+        },
+        "reporting": {
+          "label": "Reporting",
+          "basic": "Screenshot or copy/paste",
+          "vexnexa": "PDF and DOCX with full detail"
+        },
+        "rechecking": {
+          "label": "Re-checking",
+          "basic": "Manual re-run, no history",
+          "vexnexa": "Score history + regression tracking"
+        },
+        "branding": {
+          "label": "Branding",
+          "basic": "Third-party logo on output",
+          "vexnexa": "White-label with your brand"
+        }
+      },
+      "table": {
+        "capability": "Capability",
+        "freeChecker": "Free Checker",
+        "vexnexa": "VexNexa"
+      }
+    },
+    "audience": {
+      "title": "Designed for People Who Need More Than a Badge",
+      "marketing": {
+        "title": "Marketing & Content Teams",
+        "description": "Check landing pages before campaigns go live. Avoid publishing inaccessible content that excludes visitors or triggers complaints."
+      },
+      "procurement": {
+        "title": "Procurement & Compliance",
+        "description": "Attach accessibility reports to vendor assessments, RFP responses, and internal audits. Structured evidence, not just a screenshot."
+      },
+      "freelancers": {
+        "title": "Freelancers & Consultants",
+        "description": "Add accessibility checking to your deliverables. Export branded reports that demonstrate the value you bring to every project."
+      }
+    },
+    "limitations": {
+      "title": "What Automated Checking Can't Do",
+      "description": "No tool catches everything. Automated accessibility checkers reliably detect issues like missing alt text, color contrast failures, and missing form labels. But criteria that depend on content meaning, logical reading order, or complex keyboard interactions still need a human reviewer.",
+      "solution": "VexNexa flags where manual review is recommended and helps you prioritize what automated testing does find — so your team spends expert time where it counts."
+    },
+    "faq": {
+      "title": "Accessibility Checker — FAQ",
+      "q1": {
+        "question": "How is VexNexa different from WAVE or Lighthouse?",
+        "answer": "WAVE and Lighthouse are excellent free tools for quick spot-checks. VexNexa adds severity ranking, element-level CSS selectors, exportable PDF/DOCX reports, score tracking over time, and white-label branding — features designed for teams that need to act on results, not just view them."
+      },
+      "q2": {
+        "question": "Can I check more than one page at a time?",
+        "answer": "Yes. Paid plans support multi-page scans across your site. Each page produces its own severity-ranked violation list and contributes to an overall site health score."
+      },
+      "q3": {
+        "question": "What accessibility standards does VexNexa check against?",
+        "answer": "VexNexa checks against WCAG 2.1 Level AA and selected WCAG 2.2 criteria using the axe-core engine. Each reported violation references the specific success criterion it relates to."
+      },
+      "q4": {
+        "question": "Do I need to create an account?",
+        "answer": "You can run a single-page scan without an account to see the results. For ongoing monitoring, multiple-page scans, or to export reports, you'll need to create a free account."
+      },
+      "q5": {
+        "question": "How accurate are the results?",
+        "answer": "VexNexa uses the axe-core engine — the same trusted engine used by Microsoft, Google, and the U.S. government. It reliably detects testable issues with high precision. However, automated testing can't catch everything — that's why VexNexa flags where manual review is recommended."
+      }
+    },
+    "finalCTA": {
+      "title": "See What a Real Accessibility Check Reveals",
+      "subtitle": "Run your first check free — no credit card, no commitment. If the results are useful, your team will know what to do next.",
+      "ctaPrimary": "Start Your Free Check"
+    },
+    "relatedSolutions": {
+      "title": "Related Accessibility Tools",
+      "wcagScan": {
+        "title": "Run a WCAG Scan",
+        "description": "Paste a URL and get severity-ranked violations in seconds."
+      },
+      "complianceReport": {
+        "title": "Export Compliance Reports",
+        "description": "Download structured PDF and DOCX reports for stakeholders and audits."
+      },
+      "whiteLabel": {
+        "title": "Brand Your Reports",
+        "description": "Deliver reports under your own logo with white-label branding."
+      }
+    }
   }
 }

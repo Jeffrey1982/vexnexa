@@ -24,6 +24,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
+import { useTranslations } from "next-intl";
 
 /* ═══════════════════════════════════════════════════════════
    SEO Metadata
@@ -82,6 +83,8 @@ function JsonLd(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function HeroSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden">
       <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -92,21 +95,18 @@ function HeroSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <Badge variant="outline" className="text-sm">
-            PDF &amp; DOCX Export
+            {t('hero.badge')}
           </Badge>
 
           <h1 className="text-4xl lg:text-5xl font-bold font-display tracking-tight leading-tight">
-            WCAG Compliance Reports{" "}
+            {t('hero.title')}{" "}
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              Stakeholders Actually Read
+              {t('hero.titleHighlight')}
             </span>
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Raw scan data doesn&apos;t get budget approved. VexNexa generates
-            structured compliance reports with executive summaries, severity
-            breakdowns, and prioritized fix lists — ready to attach to audits,
-            tenders, and board presentations.
+            {t('hero.subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
@@ -117,7 +117,7 @@ function HeroSection(): React.ReactElement {
               size="lg"
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
             >
-              Generate Your First Report
+              {t('hero.ctaPrimary')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </TrackedCTA>
             <TrackedCTA
@@ -146,24 +146,20 @@ function HeroSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function ReportingGapSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl font-bold font-display text-center">
-            Scan Results Alone Don&apos;t Convince Decision-Makers
+            {t('reportingGap.title')}
           </h2>
           <p className="text-lg text-muted-foreground text-center leading-relaxed">
-            You know the site has accessibility issues. The scanner confirmed
-            it. But forwarding a screenshot of a tool&apos;s output to your
-            compliance officer, procurement lead, or executive sponsor rarely
-            moves the needle.
+            {t('reportingGap.subtitle')}
           </p>
           <p className="text-lg text-muted-foreground text-center leading-relaxed">
-            Decision-makers need context: how bad is it, what should be fixed
-            first, what does remediation look like, and how does the current
-            state map to WCAG criteria. That requires a report — not a
-            dashboard.
+            {t('reportingGap.context')}
           </p>
         </div>
       </div>
@@ -176,6 +172,8 @@ function ReportingGapSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function ReportStructureSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   const sections: {
     icon: typeof FileText;
     title: string;
@@ -183,33 +181,33 @@ function ReportStructureSection(): React.ReactElement {
   }[] = [
     {
       icon: BarChart3,
-      title: "Executive Summary",
-      desc: "Health score, grade (A through F), risk level, and a plain-language overview. Designed for non-technical readers who need the headline, not the code.",
+      title: t('reportStructure.executiveSummary.title'),
+      desc: t('reportStructure.executiveSummary.description'),
     },
     {
       icon: ListChecks,
-      title: "Severity Breakdown",
-      desc: "Issue counts by severity tier — critical, serious, moderate, minor. Visual donut chart and progress bars make the distribution immediately clear.",
+      title: t('reportStructure.severityBreakdown.title'),
+      desc: t('reportStructure.severityBreakdown.description'),
     },
     {
       icon: ClipboardCheck,
-      title: "WCAG Compliance Matrix",
-      desc: "A criterion-by-criterion table showing pass, fail, needs manual review, or not tested for each relevant WCAG success criterion.",
+      title: t('reportStructure.wcagMatrix.title'),
+      desc: t('reportStructure.wcagMatrix.description'),
     },
     {
       icon: Scale,
-      title: "Top Priority Fixes",
-      desc: "The highest-impact issues ranked by weighted severity. Each entry includes the affected element count and an impact score so teams know where to start.",
+      title: t('reportStructure.topPriority.title'),
+      desc: t('reportStructure.topPriority.description'),
     },
     {
       icon: BookOpen,
-      title: "Detailed Issue List",
-      desc: "Every violation with its WCAG criterion, severity, affected CSS selectors, HTML snippets, and a link to the relevant WCAG understanding document.",
+      title: t('reportStructure.detailedList.title'),
+      desc: t('reportStructure.detailedList.description'),
     },
     {
       icon: ShieldCheck,
-      title: "EAA Readiness Indicator",
-      desc: "For European compliance workflows: an EAA 2025 readiness badge and notes on how the site maps to European Accessibility Act requirements.",
+      title: t('reportStructure.eaaReadiness.title'),
+      desc: t('reportStructure.eaaReadiness.description'),
     },
   ];
 
@@ -218,12 +216,10 @@ function ReportStructureSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="text-center mb-14">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            Inside a VexNexa Compliance Report
+            {t('reportStructure.title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every section is structured for a specific reader — from executives
-            who need the one-page summary to developers who need the element
-            selectors.
+            {t('reportStructure.subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -249,12 +245,14 @@ function ReportStructureSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function ExportFormatsSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-10">
-            Two Formats, One Consistent Report
+            {t('exportFormats.title')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="hover:shadow-lg transition-shadow">
@@ -263,20 +261,17 @@ function ExportFormatsSection(): React.ReactElement {
                   <div className="w-10 h-10 bg-red-50 dark:bg-red-950/30 rounded-lg flex items-center justify-center">
                     <Download className="h-5 w-5 text-red-600" />
                   </div>
-                  <h3 className="font-semibold text-lg">PDF Report</h3>
+                  <h3 className="font-semibold text-lg">{t('exportFormats.pdf.title')}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Print-optimized layout with visual charts, branded cover page,
-                  and professional typography. Ideal for sharing with
-                  stakeholders, attaching to RFP responses, or printing for
-                  in-person meetings.
+                  {t('exportFormats.pdf.description')}
                 </p>
                 <ul className="space-y-2">
                   {[
-                    "Paginated with running headers and footers",
-                    "Donut charts, progress bars, and score cards",
-                    "Optional white-label branding",
-                    "Direct browser print — no conversion needed",
+                    t('exportFormats.pdf.features.paginated'),
+                    t('exportFormats.pdf.features.charts'),
+                    t('exportFormats.pdf.features.branding'),
+                    t('exportFormats.pdf.features.print')
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm">
                       <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -293,19 +288,17 @@ function ExportFormatsSection(): React.ReactElement {
                   <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-lg flex items-center justify-center">
                     <FileText className="h-5 w-5 text-blue-600" />
                   </div>
-                  <h3 className="font-semibold text-lg">DOCX Report</h3>
+                  <h3 className="font-semibold text-lg">{t('exportFormats.docx.title')}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Editable Word document with the same content structure. Add
-                  your own commentary, customize for specific clients, or paste
-                  into existing proposal templates.
+                  {t('exportFormats.docx.description')}
                 </p>
                 <ul className="space-y-2">
                   {[
-                    "Fully editable in Microsoft Word or Google Docs",
-                    "Structured headings for easy navigation",
-                    "Tables, styled text, and severity indicators",
-                    "White-label branding with embedded logo",
+                    t('exportFormats.docx.features.editable'),
+                    t('exportFormats.docx.features.headings'),
+                    t('exportFormats.docx.features.formatting'),
+                    t('exportFormats.docx.features.branding')
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm">
                       <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -327,6 +320,8 @@ function ExportFormatsSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function AudienceSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   const audiences: {
     icon: typeof Briefcase;
     title: string;
@@ -334,27 +329,18 @@ function AudienceSection(): React.ReactElement {
   }[] = [
     {
       icon: Scale,
-      title: "Compliance Officers",
-      useCase:
-        "Attach WCAG compliance documentation to internal audits and regulatory filings. The WCAG matrix provides criterion-level evidence.",
-    },
-    {
-      icon: Briefcase,
-      title: "Procurement & Legal Teams",
-      useCase:
-        "Include accessibility reports in vendor assessments, RFP responses, and contract documentation. Structured PDF format meets formal requirements.",
+      title: t('audience.compliance.title'),
+      useCase: t('audience.compliance.useCase'),
     },
     {
       icon: Users,
-      title: "Project Managers & Dev Leads",
-      useCase:
-        "Use the priority fix list to plan remediation sprints. Share the executive summary with leadership to secure budget for accessibility work.",
+      title: t('audience.agency.title'),
+      useCase: t('audience.agency.useCase'),
     },
     {
-      icon: ShieldCheck,
-      title: "Accessibility Consultants",
-      useCase:
-        "Deliver branded compliance reports as your primary deliverable. Add your analysis to the DOCX version and present findings in context.",
+      icon: Briefcase,
+      title: t('audience.procurement.title'),
+      useCase: t('audience.procurement.useCase'),
     },
   ];
 
@@ -362,7 +348,7 @@ function AudienceSection(): React.ReactElement {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold font-display text-center mb-12">
-          Reports Designed for the People Who Make Decisions
+          {t('audience.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {audiences.map((a, i) => (
@@ -387,23 +373,20 @@ function AudienceSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function ScopeSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-4">
           <h2 className="text-2xl font-bold font-display">
-            A Compliance Report, Not a Compliance Guarantee
+            {t('scope.title')}
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            VexNexa reports document what automated testing detects. They cover
-            a meaningful range of WCAG success criteria, but full conformance
-            requires both automated and manual assessment. The report clearly
-            marks which criteria were tested, which passed, and which need
-            manual review.
+            {t('scope.description')}
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Use VexNexa reports as part of a broader compliance process — not
-            as a standalone legal certification.
+            {t('scope.disclaimer')}
           </p>
         </div>
       </div>
@@ -416,30 +399,32 @@ function ScopeSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function FAQSection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   const faqs: { q: string; a: string }[] = [
     {
-      q: "What WCAG criteria does the compliance report cover?",
-      a: "The report covers testable WCAG 2.1 Level AA criteria and selected WCAG 2.2 criteria. The WCAG compliance matrix explicitly shows each criterion's status — pass, fail, needs manual review, or not tested — so there's no ambiguity about coverage.",
+      q: t('faq.q1.question'),
+      a: t('faq.q1.answer'),
     },
     {
-      q: "Can I customize the report before sharing it?",
-      a: "Yes. The DOCX export is fully editable — you can add commentary, remove sections, or paste content into your own templates. The PDF format is finalized for direct sharing or printing.",
+      q: t('faq.q2.question'),
+      a: t('faq.q2.answer'),
     },
     {
-      q: "Does the report include remediation guidance?",
-      a: "Each violation includes a description of the issue, why it matters, and a link to the relevant WCAG understanding document. The top priority fixes section ranks issues by impact to help teams plan their remediation sprints.",
+      q: t('faq.q3.question'),
+      a: t('faq.q3.answer'),
     },
     {
-      q: "Can I add my own branding to the report?",
-      a: "Yes. Business and Enterprise plans include white-label branding — your logo, colors, company name, and custom footer text on every export. See our white-label reporting page for details.",
+      q: t('faq.q4.question'),
+      a: t('faq.q4.answer'),
     },
     {
-      q: "How quickly can I generate a report?",
-      a: "After a scan completes (typically under 60 seconds), the report is available for instant download in both PDF and DOCX formats. No manual formatting or assembly required.",
+      q: t('faq.q5.question'),
+      a: t('faq.q5.answer'),
     },
     {
-      q: "Is this report suitable for regulatory submissions?",
-      a: "VexNexa reports are structured to support regulatory and procurement processes, but they document automated testing results only. For formal regulatory submissions, we recommend combining VexNexa reports with manual expert review documentation.",
+      q: t('faq.q6.question'),
+      a: t('faq.q6.answer'),
     },
   ];
 
@@ -448,7 +433,7 @@ function FAQSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-10">
-            Compliance Reports — FAQ
+            {t('faq.title')}
           </h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, i) => (
@@ -473,16 +458,17 @@ function FAQSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function FinalCTASection(): React.ReactElement {
+  const t = useTranslations('wcagComplianceReport');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-6">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            Generate a Report That Gets Read
+            {t('finalCTA.title')}
           </h2>
           <p className="text-lg text-muted-foreground">
-            Scan a URL, review the findings, and download a structured WCAG
-            compliance report — all in under five minutes.
+            {t('finalCTA.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -491,12 +477,12 @@ function FinalCTASection(): React.ReactElement {
               asChild
             >
               <Link href="/auth/register">
-                Create Your First Report
+                {t('finalCTA.ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/pricing">View Plans &amp; Pricing</Link>
+              <Link href="/pricing">{t('finalCTA.ctaSecondary')}</Link>
             </Button>
           </div>
         </div>

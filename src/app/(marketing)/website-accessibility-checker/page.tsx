@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 import {
   Accordion,
   AccordionContent,
@@ -78,6 +79,8 @@ function JsonLd(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function HeroSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden">
       <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -88,20 +91,18 @@ function HeroSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <Badge variant="outline" className="text-sm">
-            Smarter Accessibility Checking
+            {t('hero.badge')}
           </Badge>
 
           <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight leading-tight">
-            An Accessibility Checker That{" "}
+            {t('hero.title')}{" "}
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              Ranks What Matters
+              {t('hero.titleHighlight')}
             </span>
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Stop scrolling through unsorted error dumps. VexNexa checks your
-            site for WCAG violations and shows you exactly which issues are
-            critical, which are minor, and where each one lives in your HTML.
+            {t('hero.subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
@@ -111,17 +112,17 @@ function HeroSection(): React.ReactElement {
               asChild
             >
               <Link href="/auth/register">
-                Check Your Site Free
+                {t('hero.ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="px-8 py-6 text-base" asChild>
-              <Link href="/features">Explore All Features</Link>
+              <Link href="/features">{t('hero.ctaSecondary')}</Link>
             </Button>
           </div>
 
           <p className="text-sm text-muted-foreground">
-            Free check. No credit card. Results in seconds.
+            {t('hero.note')}
           </p>
         </div>
       </div>
@@ -134,23 +135,20 @@ function HeroSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function PassFailProblemSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-3xl font-bold font-display text-center">
-            Why &ldquo;78% Accessible&rdquo; Tells You Almost Nothing
+            {t('passFailProblem.title')}
           </h2>
           <p className="text-lg text-muted-foreground text-center leading-relaxed">
-            A single percentage hides more than it reveals. Two sites can both
-            score 78% — one has three critical keyboard traps, the other has
-            forty missing alt texts on decorative images. The first is unusable.
-            The second is mostly fine.
+            {t('passFailProblem.subtitle')}
           </p>
           <p className="text-lg text-muted-foreground text-center leading-relaxed">
-            Basic accessibility checkers treat every failed rule equally.
-            VexNexa doesn&apos;t. Every violation is weighted by real-world
-            impact so you can separate the urgent from the cosmetic.
+            {t('passFailProblem.solution')}
           </p>
         </div>
       </div>
@@ -163,36 +161,38 @@ function PassFailProblemSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function WhatYouGetSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   const features: { icon: typeof Eye; title: string; desc: string }[] = [
     {
       icon: Gauge,
-      title: "Weighted Health Score",
-      desc: "Not a simple ratio. Critical issues weigh more than minor ones, giving you a score that reflects actual user impact.",
+      title: t('whatYouGet.weightedScore.title'),
+      desc: t('whatYouGet.weightedScore.description'),
     },
     {
       icon: ListChecks,
-      title: "Severity Tiers",
-      desc: "Four tiers — Critical, Serious, Moderate, Minor — so your team can triage without guessing. Critical issues always appear first.",
+      title: t('whatYouGet.severityTiers.title'),
+      desc: t('whatYouGet.severityTiers.description'),
     },
     {
       icon: Eye,
-      title: "Element-Level Context",
-      desc: "Each issue shows the CSS selector, HTML snippet, and WCAG success criterion. Click through to understand exactly what failed and why.",
-    },
-    {
-      icon: Lightbulb,
-      title: "Fix Guidance per Issue",
-      desc: "Every violation includes a plain-language explanation of the problem and a direct link to the relevant WCAG understanding document.",
-    },
-    {
-      icon: TrendingUp,
-      title: "Historical Tracking",
-      desc: "Re-check the same page over time and compare scores. See whether your fixes actually improved the accessibility posture.",
+      title: t('whatYouGet.elementDetail.title'),
+      desc: t('whatYouGet.elementDetail.description'),
     },
     {
       icon: FileText,
-      title: "Shareable Reports",
-      desc: "Export results as a branded PDF or editable DOCX. Attach to stakeholder updates, procurement responses, or audit documentation.",
+      title: t('whatYouGet.wcagReferences.title'),
+      desc: t('whatYouGet.wcagReferences.description'),
+    },
+    {
+      icon: ShieldCheck,
+      title: t('whatYouGet.riskAssessment.title'),
+      desc: t('whatYouGet.riskAssessment.description'),
+    },
+    {
+      icon: TrendingUp,
+      title: t('whatYouGet.trendTracking.title'),
+      desc: t('whatYouGet.trendTracking.description'),
     },
   ];
 
@@ -201,11 +201,10 @@ function WhatYouGetSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="text-center mb-14">
           <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-            What a Real Accessibility Check Looks Like
+            {t('whatYouGet.title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every check produces structured, actionable output — not just a
-            color-coded badge.
+            {t('whatYouGet.subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -231,36 +230,38 @@ function WhatYouGetSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function ComparisonSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   const items: { label: string; basic: string; vexnexa: string }[] = [
     {
-      label: "Result format",
-      basic: "Single score or badge",
-      vexnexa: "Severity-ranked violation list",
+      label: t('comparison.items.resultFormat.label'),
+      basic: t('comparison.items.resultFormat.basic'),
+      vexnexa: t('comparison.items.resultFormat.vexnexa'),
     },
     {
-      label: "Issue context",
-      basic: "Rule ID only",
-      vexnexa: "CSS selector + HTML snippet + WCAG ref",
+      label: t('comparison.items.issueContext.label'),
+      basic: t('comparison.items.issueContext.basic'),
+      vexnexa: t('comparison.items.issueContext.vexnexa'),
     },
     {
-      label: "Prioritization",
-      basic: "None — flat list",
-      vexnexa: "4-tier severity + weighted impact score",
+      label: t('comparison.items.prioritization.label'),
+      basic: t('comparison.items.prioritization.basic'),
+      vexnexa: t('comparison.items.prioritization.vexnexa'),
     },
     {
-      label: "Reporting",
-      basic: "Screenshot or copy/paste",
-      vexnexa: "PDF and DOCX with full detail",
+      label: t('comparison.items.reporting.label'),
+      basic: t('comparison.items.reporting.basic'),
+      vexnexa: t('comparison.items.reporting.vexnexa'),
     },
     {
-      label: "Re-checking",
-      basic: "Manual re-run, no history",
-      vexnexa: "Score history + regression tracking",
+      label: t('comparison.items.rechecking.label'),
+      basic: t('comparison.items.rechecking.basic'),
+      vexnexa: t('comparison.items.rechecking.vexnexa'),
     },
     {
-      label: "Branding",
-      basic: "Third-party logo on output",
-      vexnexa: "White-label with your brand",
+      label: t('comparison.items.branding.label'),
+      basic: t('comparison.items.branding.basic'),
+      vexnexa: t('comparison.items.branding.vexnexa'),
     },
   ];
 
@@ -269,20 +270,23 @@ function ComparisonSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-10">
-            How VexNexa Compares to Free Checkers
+            {t('comparison.title')}
           </h2>
+          <p className="text-lg text-muted-foreground text-center mb-12">
+            {t('comparison.subtitle')}
+          </p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
                   <th className="text-left py-3 pr-4 font-semibold w-1/3">
-                    Capability
+                    {t('comparison.table.capability')}
                   </th>
                   <th className="text-left py-3 px-4 font-semibold text-muted-foreground w-1/3">
-                    Free Checker
+                    {t('comparison.table.freeChecker')}
                   </th>
                   <th className="text-left py-3 pl-4 font-semibold text-primary w-1/3">
-                    VexNexa
+                    {t('comparison.table.vexnexa')}
                   </th>
                 </tr>
               </thead>
@@ -310,21 +314,23 @@ function ComparisonSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function AudienceSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   const audiences: { icon: typeof Users; title: string; desc: string }[] = [
     {
       icon: Users,
-      title: "Marketing & Content Teams",
-      desc: "Check landing pages before campaigns go live. Avoid publishing inaccessible content that excludes visitors or triggers complaints.",
+      title: t('audience.marketing.title'),
+      desc: t('audience.marketing.description'),
     },
     {
       icon: ShieldCheck,
-      title: "Procurement & Compliance",
-      desc: "Attach accessibility reports to vendor assessments, RFP responses, and internal audits. Structured evidence, not just a screenshot.",
+      title: t('audience.procurement.title'),
+      desc: t('audience.procurement.description'),
     },
     {
       icon: Lightbulb,
-      title: "Freelancers & Consultants",
-      desc: "Add accessibility checking to your deliverables. Export branded reports that demonstrate the value you bring to every project.",
+      title: t('audience.freelancers.title'),
+      desc: t('audience.freelancers.description'),
     },
   ];
 
@@ -332,7 +338,7 @@ function AudienceSection(): React.ReactElement {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold font-display text-center mb-12">
-          Designed for People Who Need More Than a Badge
+          {t('audience.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {audiences.map((a, i) => (
@@ -355,24 +361,20 @@ function AudienceSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function LimitationsSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-4">
           <h2 className="text-2xl font-bold font-display">
-            What Automated Checking Can&apos;t Do
+            {t('limitations.title')}
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            No tool catches everything. Automated accessibility checkers
-            reliably detect issues like missing alt text, color contrast
-            failures, and missing form labels. But criteria that depend on
-            content meaning, logical reading order, or complex keyboard
-            interactions still need a human reviewer.
+            {t('limitations.description')}
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            VexNexa flags where manual review is recommended and helps you
-            prioritize what automated testing does find — so your team spends
-            expert time where it counts.
+            {t('limitations.solution')}
           </p>
         </div>
       </div>
@@ -385,26 +387,28 @@ function LimitationsSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function FAQSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   const faqs: { q: string; a: string }[] = [
     {
-      q: "How is VexNexa different from WAVE or Lighthouse?",
-      a: "WAVE and Lighthouse are excellent free tools for quick spot-checks. VexNexa adds severity ranking, element-level CSS selectors, exportable PDF/DOCX reports, score tracking over time, and white-label branding — features designed for teams that need to act on results, not just view them.",
+      q: t('faq.q1.question'),
+      a: t('faq.q1.answer'),
     },
     {
-      q: "Can I check more than one page at a time?",
-      a: "Yes. Paid plans support multi-page scans across your site. Each page produces its own severity-ranked violation list and contributes to an overall site health score.",
+      q: t('faq.q2.question'),
+      a: t('faq.q2.answer'),
     },
     {
-      q: "What accessibility standards does VexNexa check against?",
-      a: "VexNexa checks against WCAG 2.1 Level AA and selected WCAG 2.2 criteria using the axe-core engine. Each reported violation references the specific success criterion it relates to.",
+      q: t('faq.q3.question'),
+      a: t('faq.q3.answer'),
     },
     {
-      q: "Will VexNexa tell me my site is 'compliant'?",
-      a: "No — and any tool that does should be treated with caution. VexNexa reports what it detects and indicates where manual review is needed. Full WCAG conformance requires both automated and manual assessment.",
+      q: t('faq.q4.question'),
+      a: t('faq.q4.answer'),
     },
     {
-      q: "Can I share results with non-technical stakeholders?",
-      a: "Absolutely. PDF and DOCX exports include an executive summary with a health score, grade, and issue breakdown — designed to be readable without technical knowledge.",
+      q: t('faq.q5.question'),
+      a: t('faq.q5.answer'),
     },
   ];
 
@@ -413,7 +417,7 @@ function FAQSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-10">
-            Accessibility Checker — FAQ
+            {t('faq.title')}
           </h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, i) => (
@@ -438,16 +442,17 @@ function FAQSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function FinalCTASection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-6">
           <h2 className="text-3xl lg:text-4xl font-bold font-display">
-            See What a Real Accessibility Check Reveals
+            {t('finalCTA.title')}
           </h2>
           <p className="text-lg text-muted-foreground">
-            Run your first check free — no credit card, no commitment. If the
-            results are useful, your team will know what to do next.
+            {t('finalCTA.subtitle')}
           </p>
           <Button
             size="lg"
@@ -455,7 +460,7 @@ function FinalCTASection(): React.ReactElement {
             asChild
           >
             <Link href="/auth/register">
-              Start Your Free Check
+              {t('finalCTA.ctaPrimary')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -470,25 +475,27 @@ function FinalCTASection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function RelatedSolutionsSection(): React.ReactElement {
+  const t = useTranslations('websiteAccessibilityChecker');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold font-display text-center mb-8">
-            Related Accessibility Tools
+            {t('relatedSolutions.title')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link href="/wcag-scan" className="group block p-5 rounded-xl border bg-background hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Run a WCAG Scan</h3>
-              <p className="text-sm text-muted-foreground">Paste a URL and get severity-ranked violations in seconds.</p>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.wcagScan.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('relatedSolutions.wcagScan.description')}</p>
             </Link>
             <Link href="/wcag-compliance-report" className="group block p-5 rounded-xl border bg-background hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Export Compliance Reports</h3>
-              <p className="text-sm text-muted-foreground">Download structured PDF and DOCX reports for stakeholders and audits.</p>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.complianceReport.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('relatedSolutions.complianceReport.description')}</p>
             </Link>
             <Link href="/white-label-accessibility-reports" className="group block p-5 rounded-xl border bg-background hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Brand Your Reports</h3>
-              <p className="text-sm text-muted-foreground">Deliver reports under your own logo with white-label branding.</p>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.whiteLabel.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('relatedSolutions.whiteLabel.description')}</p>
             </Link>
           </div>
         </div>

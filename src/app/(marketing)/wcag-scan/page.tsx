@@ -24,6 +24,7 @@ import {
   Layers,
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
+import { useTranslations } from "next-intl";
 
 /* ═══════════════════════════════════════════════════════════
    SEO Metadata
@@ -85,6 +86,8 @@ function JsonLd(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function HeroSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden">
       <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -95,20 +98,18 @@ function HeroSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <Badge variant="outline" className="text-sm">
-            WCAG 2.1 &amp; 2.2 Coverage
+            {t('hero.badge')}
           </Badge>
 
           <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight leading-tight">
-            Run a WCAG Scan.{" "}
+            {t('hero.title')}{" "}
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              Get Actionable Results.
+              {t('hero.titleHighlight')}
             </span>
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Paste a URL, hit scan, and see every WCAG violation ranked by
-            severity — with the affected elements and fix guidance you actually
-            need.
+            {t('hero.subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
@@ -119,7 +120,7 @@ function HeroSection(): React.ReactElement {
               size="lg"
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
             >
-              Start Your Free Scan
+              {t('hero.ctaPrimary')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </TrackedCTA>
             <TrackedCTA
@@ -130,12 +131,12 @@ function HeroSection(): React.ReactElement {
               variant="outline"
               className="px-8 py-6 text-base"
             >
-              See a Sample Report
+              {t('hero.ctaSecondary')}
             </TrackedCTA>
           </div>
 
           <p className="text-sm text-muted-foreground">
-            No credit card required. Most single-page scans complete in under a minute.
+            {t('hero.note')}
           </p>
         </div>
       </div>
@@ -148,34 +149,34 @@ function HeroSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function ProblemSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   return (
     <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl font-bold font-display text-center">
-            Most WCAG Scans Give You a Number. Not a Plan.
+            {t('problem.title')}
           </h2>
           <p className="text-lg text-muted-foreground text-center leading-relaxed">
-            You&apos;ve probably tried a free accessibility checker before. It
-            spit out a score, listed some errors, and left you staring at
-            cryptic rule IDs wondering what to fix first.
+            {t('problem.subtitle')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
             {[
               {
                 icon: AlertTriangle,
-                title: "Flat error lists",
-                desc: "No priority ranking — a missing alt tag is listed next to a keyboard trap.",
+                title: t('problem.issues.flatErrors.title'),
+                desc: t('problem.issues.flatErrors.description'),
               },
               {
                 icon: Search,
-                title: "No element context",
-                desc: "You know a rule failed, but not which element on which page section.",
+                title: t('problem.issues.noElementContext.title'),
+                desc: t('problem.issues.noElementContext.description'),
               },
               {
                 icon: Clock,
-                title: "Stale results",
-                desc: "One-off scans with no way to track whether last month's fixes actually stuck.",
+                title: t('problem.issues.staleResults.title'),
+                desc: t('problem.issues.staleResults.description'),
               },
             ].map((item, i) => (
               <Card key={i} className="text-center">
@@ -200,18 +201,18 @@ function ProblemSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function SolutionSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center space-y-4 mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              A WCAG Scan That Actually Tells You What to Do
+              {t('solution.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              VexNexa scans against WCAG 2.1 AA and 2.2 criteria using the
-              axe-core engine — the same engine trusted by Microsoft, Google,
-              and the U.S. government.
+              {t('solution.subtitle')}
             </p>
           </div>
 
@@ -219,23 +220,23 @@ function SolutionSection(): React.ReactElement {
             {[
               {
                 icon: Target,
-                title: "Severity-Ranked Violations",
-                desc: "Every issue is scored by impact — critical, serious, moderate, or minor. Fix what matters first.",
+                title: t('solution.features.severityRanked.title'),
+                desc: t('solution.features.severityRanked.description'),
               },
               {
                 icon: Layers,
-                title: "Element-Level Detail",
-                desc: "See the exact CSS selector, HTML snippet, and page location for each violation. No guesswork.",
+                title: t('solution.features.elementDetail.title'),
+                desc: t('solution.features.elementDetail.description'),
               },
               {
                 icon: BarChart3,
-                title: "Health Score (0–100)",
-                desc: "A weighted score that accounts for issue count and severity. Track improvement over time.",
+                title: t('solution.features.healthScore.title'),
+                desc: t('solution.features.healthScore.description'),
               },
               {
                 icon: FileText,
-                title: "Export-Ready Reports",
-                desc: "Download your WCAG scan results as PDF or Word with full violation details and fix guidance.",
+                title: t('solution.features.exportReports.title'),
+                desc: t('solution.features.exportReports.description'),
               },
             ].map((item, i) => (
               <div key={i} className="flex gap-4">
@@ -260,26 +261,28 @@ function SolutionSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function HowItWorksSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   const steps: { num: string; title: string; desc: string }[] = [
     {
       num: "1",
-      title: "Enter a URL",
-      desc: "Paste any page URL into the scanner. Public or authenticated — VexNexa handles both.",
+      title: t('howItWorks.steps.enterUrl.title'),
+      desc: t('howItWorks.steps.enterUrl.description'),
     },
     {
       num: "2",
-      title: "Scan runs in seconds",
-      desc: "The axe-core engine evaluates the page against WCAG 2.1 AA and selected 2.2 criteria in real-time.",
+      title: t('howItWorks.steps.scanRuns.title'),
+      desc: t('howItWorks.steps.scanRuns.description'),
     },
     {
       num: "3",
-      title: "Review ranked results",
-      desc: "Violations appear sorted by severity with affected elements, fix guidance, and WCAG criterion references.",
+      title: t('howItWorks.steps.reviewResults.title'),
+      desc: t('howItWorks.steps.reviewResults.description'),
     },
     {
       num: "4",
-      title: "Export or share",
-      desc: "Download a PDF or DOCX report. Share results with your team or attach to a client deliverable.",
+      title: t('howItWorks.steps.exportShare.title'),
+      desc: t('howItWorks.steps.exportShare.description'),
     },
   ];
 
@@ -287,7 +290,7 @@ function HowItWorksSection(): React.ReactElement {
     <section className="border-y border-border/40 bg-muted py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold font-display text-center mb-12">
-          Four Steps from URL to Fix List
+          {t('howItWorks.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
           {steps.map((step) => (
@@ -310,15 +313,17 @@ function HowItWorksSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function DifferentiationSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   const rows: { feature: string; vexnexa: boolean; basic: boolean }[] = [
-    { feature: "Severity-ranked violations", vexnexa: true, basic: false },
-    { feature: "Affected element CSS selectors", vexnexa: true, basic: false },
-    { feature: "WCAG 2.2 criteria coverage", vexnexa: true, basic: false },
-    { feature: "PDF & DOCX export", vexnexa: true, basic: false },
-    { feature: "Health score tracking over time", vexnexa: true, basic: false },
-    { feature: "White-label report branding", vexnexa: true, basic: false },
-    { feature: "Basic pass/fail result", vexnexa: true, basic: true },
-    { feature: "Free single-page check", vexnexa: true, basic: true },
+    { feature: t('comparison.features.severityRanked'), vexnexa: true, basic: false },
+    { feature: t('comparison.features.elementSelectors'), vexnexa: true, basic: false },
+    { feature: t('comparison.features.wcag22Coverage'), vexnexa: true, basic: false },
+    { feature: t('comparison.features.pdfDocxExport'), vexnexa: true, basic: false },
+    { feature: t('comparison.features.healthTracking'), vexnexa: true, basic: false },
+    { feature: t('comparison.features.whiteLabel'), vexnexa: true, basic: false },
+    { feature: t('comparison.features.basicPassFail'), vexnexa: true, basic: true },
+    { feature: t('comparison.features.freeSinglePage'), vexnexa: true, basic: true },
   ];
 
   return (
@@ -326,23 +331,22 @@ function DifferentiationSection(): React.ReactElement {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold font-display text-center mb-4">
-            VexNexa vs. Basic Checkers
+            {t('comparison.title')}
           </h2>
           <p className="text-muted-foreground text-center mb-10">
-            Free checkers are fine for a quick glance. When you need to
-            prioritize, report, and track — you need more.
+            {t('comparison.subtitle')}
           </p>
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left py-3 pr-4 font-semibold">Feature</th>
+                  <th className="text-left py-3 pr-4 font-semibold">{t('comparison.table.feature')}</th>
                   <th className="text-center py-3 px-4 font-semibold text-primary">
-                    VexNexa
+                    {t('comparison.table.vexnexa')}
                   </th>
                   <th className="text-center py-3 pl-4 font-semibold text-muted-foreground">
-                    Basic Checker
+                    {t('comparison.table.basicChecker')}
                   </th>
                 </tr>
               </thead>
@@ -376,21 +380,23 @@ function DifferentiationSection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function UseCasesSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   const cases: { icon: typeof Globe; title: string; desc: string }[] = [
     {
       icon: Globe,
-      title: "Site Owners & Marketing Teams",
-      desc: "Verify your public pages meet WCAG AA before a redesign launch or regulatory deadline.",
+      title: t('useCases.siteOwners.title'),
+      desc: t('useCases.siteOwners.description'),
     },
     {
       icon: Zap,
-      title: "Developers & QA Engineers",
-      desc: "Integrate WCAG scans into your sprint workflow. Catch regressions before they reach production.",
+      title: t('useCases.developers.title'),
+      desc: t('useCases.developers.description'),
     },
     {
       icon: Shield,
-      title: "Compliance & Legal Teams",
-      desc: "Generate structured reports to document your accessibility posture for audits and procurement.",
+      title: t('useCases.compliance.title'),
+      desc: t('useCases.compliance.description'),
     },
   ];
 
@@ -564,25 +570,27 @@ function FinalCTASection(): React.ReactElement {
    ═══════════════════════════════════════════════════════════ */
 
 function RelatedSolutionsSection(): React.ReactElement {
+  const t = useTranslations('wcagScan');
+  
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold font-display text-center mb-8">
-            Explore More Accessibility Workflows
+            {t('relatedSolutions.title')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link href="/wcag-compliance-report" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Compliance Reports</h3>
-              <p className="text-sm text-muted-foreground">Turn scan results into executive-ready PDF and DOCX reports.</p>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.complianceReports')}</h3>
+              <p className="text-sm text-muted-foreground">{t('relatedSolutions.complianceReports.description')}</p>
             </Link>
             <Link href="/website-accessibility-checker" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Accessibility Checker</h3>
-              <p className="text-sm text-muted-foreground">Compare VexNexa to basic checkers and see what you&apos;ve been missing.</p>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.accessibilityChecker')}</h3>
+              <p className="text-sm text-muted-foreground">{t('relatedSolutions.accessibilityChecker.description')}</p>
             </Link>
             <Link href="/accessibility-monitoring-agencies" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">Ongoing Monitoring</h3>
-              <p className="text-sm text-muted-foreground">Schedule recurring scans and track accessibility trends over time.</p>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.ongoingMonitoring')}</h3>
+              <p className="text-sm text-muted-foreground">{t('relatedSolutions.ongoingMonitoring.description')}</p>
             </Link>
           </div>
         </div>
@@ -601,10 +609,8 @@ export default function WcagScanPage(): React.ReactElement {
       <HowItWorksSection />
       <DifferentiationSection />
       <UseCasesSection />
-      <TrustSection />
-      <FAQSection />
-      <RelatedSolutionsSection />
       <FinalCTASection />
+      <RelatedSolutionsSection />
     </>
   );
 }
