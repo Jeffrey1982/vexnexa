@@ -12,12 +12,15 @@ import { trackEvent } from "@/lib/analytics-events";
  * • All visual animations are CSS-only using transform / opacity (GPU-composited).
  * • Progress bar uses scaleX(0→1) instead of width animation — avoids layout thrash.
  * • Score counter: single rAF loop mutating textContent directly — no React re-renders.
- * • SVG ring: CSS transition on stroke-dashoffset, triggered by a class toggle.
+ * • SVG ring stroke-dashoffset driven by the same rAF loop.
  * • Issue cards + report: pure CSS delayed opacity+translateY, no JS timers.
  * • prefers-reduced-motion: CSS disables all animations; JS skips counter.
  * • Mobile: fully static — no animations, no JS overhead.
  * • will-change applied only to actively animated elements, removed after completion.
  * • Single <style> block, no styled-jsx runtime needed.
+ * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
+ *   Only non-LCP elements (trust line, buttons, mockup) use entrance animations.
+ * • Background blur hidden on mobile to reduce GPU compositing cost.
  */
 
 /* ── Circumference constant for score ring (r=34) ── */
@@ -74,7 +77,7 @@ function DashboardMockup() {
 
   return (
     <div
-      className="hero-mockup relative rounded-3xl border border-zinc-700/60 bg-zinc-900/80 p-5 shadow-2xl"
+      className="hero-mockup relative rounded-3xl border border-zinc-700/60 bg-zinc-900/80 p-5 shadow-xl"
       role="img"
       aria-label="Geanimeerde preview van het VexNexa scan dashboard"
     >
@@ -193,8 +196,8 @@ function DashboardMockup() {
 const heroStyles = `
 /* ── Scan bar: scaleX instead of width (no layout thrash) ── */
 @keyframes heroBar { from { transform: scaleX(0); } to { transform: scaleX(0.94); } }
-/* ── Fade-up for text elements ── */
-@keyframes heroFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+/* ── Fade-up for non-LCP elements (trust, buttons, mobile card) ── */
+@keyframes heroFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 /* ── Mockup entrance ── */
 @keyframes heroMockupIn { from { opacity: 0; transform: scale(0.96) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 /* ── Issue cards delayed fade ── */
@@ -211,11 +214,10 @@ const heroStyles = `
 .hero-report     { animation: heroScaleIn 0.5s cubic-bezier(0.22,1,0.36,1) 2.8s both; }
 .hero-ping       { animation: heroPing 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
 
-.hero-fadeup-1   { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
-.hero-fadeup-2   { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.12s both; }
-.hero-fadeup-3   { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.16s both; }
-.hero-fadeup-4   { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
-.hero-fadeup-5   { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+/* LCP-critical: H1 + subheadline have NO fade animation — always visible at paint */
+.hero-fadeup-3   { animation: heroFadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+.hero-fadeup-4   { animation: heroFadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+.hero-fadeup-5   { animation: heroFadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
 
 /* ── Respect prefers-reduced-motion ── */
 @media (prefers-reduced-motion: reduce) {
@@ -224,8 +226,6 @@ const heroStyles = `
   .hero-issues,
   .hero-report,
   .hero-ping,
-  .hero-fadeup-1,
-  .hero-fadeup-2,
   .hero-fadeup-3,
   .hero-fadeup-4,
   .hero-fadeup-5 {
@@ -249,8 +249,8 @@ export function HomeHeroPremium() {
         className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-zinc-950 to-zinc-900"
         aria-labelledby="home-hero-heading"
       >
-        {/* Background glow — single layer, lighter than before */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        {/* Background glow — hidden on mobile to reduce GPU cost */}
+        <div className="pointer-events-none absolute inset-0 hidden md:block" aria-hidden="true">
           <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/[0.06] blur-[100px]" />
         </div>
 
@@ -259,9 +259,10 @@ export function HomeHeroPremium() {
 
             {/* ── Left: Copy ── */}
             <div className="text-center lg:text-left">
+              {/* LCP-critical: H1 renders immediately, no opacity:0 start */}
               <h1
                 id="home-hero-heading"
-                className="hero-fadeup-1 font-display text-4xl font-bold tracking-tighter text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]"
+                className="font-display text-4xl font-bold tracking-tighter text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]"
               >
                 WCAG 2.2 zonder ruis.
                 <br />
@@ -270,9 +271,10 @@ export function HomeHeroPremium() {
                 </span>
               </h1>
 
-              <p className="hero-fadeup-2 mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-zinc-400 lg:mx-0">
+              {/* LCP-critical: subheadline also renders immediately */}
+              <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-zinc-400 lg:mx-0">
                 Betrouwbare automatische scans met axe-core. Minder false positives,
-                concrete fix-adviezen en volledig branded PDF &amp; Word rapporten.
+                concrete fix-adviezen en volledig branded PDF &amp; Word-rapporten.
                 Gemaakt voor bureaus en EU-teams die de EAA serieus nemen.
               </p>
 
