@@ -221,7 +221,7 @@ export function HomeHeroMultilingual() {
                 asChild
                 size="lg"
                 className="bg-blue-500 hover:bg-blue-600 text-white rounded-2xl px-8 py-4 text-base font-medium transition-all duration-200 hover:scale-105 focus:ring-4 focus:ring-blue-500/20"
-                onClick={() => trackEvent('hero_primary_cta_clicked')}
+                onClick={() => trackEvent('hero_primary_cta_clicked' as any)}
               >
                 <Link href="/get-started">
                   {t('primary_cta')}
@@ -234,7 +234,7 @@ export function HomeHeroMultilingual() {
                 variant="outline"
                 size="lg"
                 className="border-slate-600 text-slate-100 hover:bg-slate-800 hover:text-slate-100 rounded-2xl px-8 py-4 text-base font-medium transition-all duration-200"
-                onClick={() => trackEvent('hero_secondary_cta_clicked')}
+                onClick={() => trackEvent('hero_secondary_cta_clicked' as any)}
               >
                 <Link href="/demo">
                   <Play className="mr-2 h-4 w-4" />
