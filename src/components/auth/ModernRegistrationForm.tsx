@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -32,6 +33,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import VexnexaLogo from '@/components/brand/VexnexaLogo'
+import { useTranslations } from 'next-intl'
 
 // OAuth provider icons as SVG components
 const GoogleIcon = () => (
@@ -42,7 +44,6 @@ const GoogleIcon = () => (
     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
   </svg>
 )
-
 
 interface RegistrationData {
   // Step 1: Account
@@ -66,34 +67,36 @@ interface RegistrationData {
   productUpdates: boolean
 }
 
-const steps = [
-  { 
-    id: 1, 
-    title: 'Account', 
-    description: 'Create your secure account',
-    icon: Shield
-  },
-  { 
-    id: 2, 
-    title: 'Personal', 
-    description: 'Tell us about yourself',
-    icon: User
-  },
-  { 
-    id: 3, 
-    title: 'Contact', 
-    description: 'How can we reach you?',
-    icon: Phone
-  },
-  { 
-    id: 4, 
-    title: 'Preferences', 
-    description: 'Customize your experience',
-    icon: Sparkles
-  }
-]
-
 export default function ModernRegistrationForm() {
+  const t = useTranslations('auth.register')
+  
+  const steps = [
+    { 
+      id: 1, 
+      title: t('steps.account.title'), 
+      description: t('steps.account.description'),
+      icon: Shield
+    },
+    { 
+      id: 2, 
+      title: t('steps.personal.title'), 
+      description: t('steps.personal.description'),
+      icon: User
+    },
+    { 
+      id: 3, 
+      title: t('steps.contact.title'), 
+      description: t('steps.contact.description'),
+      icon: Phone
+    },
+    { 
+      id: 4, 
+      title: t('steps.preferences.title'), 
+      description: t('steps.preferences.description'),
+      icon: Sparkles
+    }
+  ]
+
   const [currentStep, setCurrentStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -162,46 +165,46 @@ export default function ModernRegistrationForm() {
     switch (step) {
       case 1:
         if (!formData.email || !formData.password || !formData.confirmPassword) {
-          setError('Please fill in all required fields')
+          setError(t('validation.requiredFields'))
           return false
         }
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(formData.email)) {
-          setError('Please enter a valid email address')
+          setError(t('validation.validEmail'))
           return false
         }
         if (formData.password !== formData.confirmPassword) {
-          setError('Passwords do not match')
+          setError(t('validation.passwordsMatch'))
           return false
         }
         // Enhanced password validation
         if (formData.password.length < 8) {
-          setError('Password must be at least 8 characters')
+          setError(t('validation.passwordLength'))
           return false
         }
         if (!/[A-Z]/.test(formData.password)) {
-          setError('Password must contain at least one uppercase letter')
+          setError(t('validation.passwordUppercase'))
           return false
         }
         if (!/[a-z]/.test(formData.password)) {
-          setError('Password must contain at least one lowercase letter')
+          setError(t('validation.passwordLowercase'))
           return false
         }
         if (!/[0-9]/.test(formData.password)) {
-          setError('Password must contain at least one number')
+          setError(t('validation.passwordNumber'))
           return false
         }
         break
       case 2:
         if (!formData.firstName || !formData.lastName) {
-          setError('First name and last name are required')
+          setError(t('validation.namesRequired'))
           return false
         }
         // Name validation - no numbers or special chars
         const nameRegex = /^[a-zA-Z\s'-]+$/
         if (!nameRegex.test(formData.firstName) || !nameRegex.test(formData.lastName)) {
-          setError('Names should only contain letters, spaces, hyphens, and apostrophes')
+          setError(t('validation.validName'))
           return false
         }
         break
@@ -210,7 +213,7 @@ export default function ModernRegistrationForm() {
         if (formData.phoneNumber) {
           const phoneRegex = /^[\d\s\+\-\(\)]+$/
           if (!phoneRegex.test(formData.phoneNumber)) {
-            setError('Please enter a valid phone number')
+            setError(t('validation.validPhone'))
             return false
           }
         }
@@ -219,7 +222,7 @@ export default function ModernRegistrationForm() {
           try {
             new URL(formData.website)
           } catch {
-            setError('Please enter a valid website URL (including http:// or https://)')
+            setError(t('validation.validWebsite'))
             return false
           }
         }
@@ -277,7 +280,7 @@ export default function ModernRegistrationForm() {
       if (error) {
         if (isRateLimitError(error)) {
           console.warn('[Signup] auth_signup_rate_limited')
-          setError('Too many requests. Please wait a few minutes before trying again.')
+          setError(t('errors.tooManyRequests'))
           return
         }
         throw error
@@ -285,11 +288,11 @@ export default function ModernRegistrationForm() {
 
       setSignupEmail(formData.email)
       startResendCooldown()
-      setMessage('Account created! Please check your email to confirm your account.')
+      setMessage(t('success.accountCreated'))
       console.log('[Signup] Account created for:', formData.email, '— awaiting email confirmation')
     } catch (error: any) {
       if (error.message?.includes('timeout')) {
-        setError('Registration is taking too long. This is likely due to email configuration. Please contact support or try again later.')
+        setError(t('errors.timeout'))
       } else {
         console.error('[Signup] failure_reason=', error.message)
         setError(error.message)
@@ -512,64 +515,36 @@ export default function ModernRegistrationForm() {
   const renderStep4 = () => (
     <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
-        <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full mx-auto flex items-center justify-center mb-4">
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
           <Sparkles className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold">Preferences</h2>
-        <p className="text-muted-foreground">Customize your experience with us</p>
+        <p className="text-muted-foreground">Customize your experience (optional)</p>
       </div>
       
-      <div className="space-y-6">
+      <div className="space-y-4">
         <div className="space-y-4">
-          <div className="flex items-start space-x-3 p-4 rounded-lg border bg-card">
+          <div className="flex items-center space-x-2">
             <Checkbox
               id="marketingEmails"
               checked={formData.marketingEmails}
               onCheckedChange={(checked) => updateFormData('marketingEmails', checked)}
             />
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="marketingEmails"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--vn-disabled-fg)] peer-disabled:opacity-100"
-              >
-                Marketing Emails
-              </label>
-              <p className="text-xs text-muted-foreground">
-                Receive updates about new features, tips, and special offers
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-start space-x-3 p-4 rounded-lg border bg-card">
-            <Checkbox
-              id="productUpdates"
-              checked={formData.productUpdates}
-              onCheckedChange={(checked) => updateFormData('productUpdates', checked)}
-            />
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="productUpdates"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--vn-disabled-fg)] peer-disabled:opacity-100"
-              >
-                Product Updates
-              </label>
-              <p className="text-xs text-muted-foreground">
-                Get notified about important product updates and accessibility insights
-              </p>
-            </div>
+            <Label htmlFor="marketingEmails" className="text-sm font-medium">
+              I'd like to receive marketing emails about new features and updates
+            </Label>
           </div>
         </div>
         
-        <div className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 dark:from-blue-950 dark:to-purple-950 dark:border-blue-800">
-          <div className="flex items-center gap-3 mb-2">
-            <Zap className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="font-semibold text-blue-900 dark:text-blue-100">
-              Ready to get started?
-            </h3>
-          </div>
-          <p className="text-sm text-blue-700 dark:text-blue-300">
-            Free forever for 1 website and up to 100 pages. No credit card required!
-          </p>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="productUpdates"
+            checked={formData.productUpdates}
+            onCheckedChange={(checked) => updateFormData('productUpdates', checked)}
+          />
+          <Label htmlFor="productUpdates" className="text-sm font-medium">
+            I'd like to receive product updates and security notifications
+          </Label>
         </div>
       </div>
     </div>
@@ -577,216 +552,109 @@ export default function ModernRegistrationForm() {
 
   const renderCurrentStep = () => {
     switch (currentStep) {
-      case 1: return renderStep1()
-      case 2: return renderStep2()
-      case 3: return renderStep3()
-      case 4: return renderStep4()
-      default: return renderStep1()
+      case 1:
+        return renderStep1()
+      case 2:
+        return renderStep2()
+      case 3:
+        return renderStep3()
+      case 4:
+        return renderStep4()
+      default:
+        return null
     }
   }
 
-  const handleResendConfirmation = async (): Promise<void> => {
-    if (!signupEmail || isResendCooling) return
-    setResendLoading(true)
-    setResendMessage('')
-    try {
-      const { error: resendError } = await supabase.auth.resend({
-        type: 'signup',
-        email: signupEmail,
-        options: {
-          emailRedirectTo: buildAuthUrl('/auth/confirm'),
-        },
-      })
-      if (resendError) {
-        if (isRateLimitError(resendError)) {
-          console.warn('[Signup] auth_resend_rate_limited')
-          startResendCooldown()
-          setResendMessage('Too many requests. Please wait a few minutes before trying again.')
-          return
-        }
-        throw resendError
-      }
-      startResendCooldown()
-      setResendMessage('Confirmation email resent! Please check your inbox (and spam folder).')
-      console.log('[Signup] Resend confirmation email triggered for:', signupEmail)
-    } catch (err: any) {
-      console.error('[Signup] Resend failed:', err.message)
-      setResendMessage(`Failed to resend: ${err.message}`)
-    } finally {
-      setResendLoading(false)
-    }
-  }
+  const renderStepButtons = () => (
+    <div className="flex justify-between">
+      {currentStep > 1 && (
+        <Button
+          variant="outline"
+          onClick={prevStep}
+          disabled={loading}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </Button>
+      )}
+      
+      <Button
+        onClick={currentStep === 4 ? handleSubmit : nextStep}
+        disabled={loading}
+        className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl px-8 py-3 font-medium transition-all duration-200 hover:scale-105 focus:ring-4 focus:ring-blue-500/20"
+      >
+        {loading ? (
+          <>
+            <div className="w-4 h-4 border-2 border-white/30 border-t-transparent rounded-full animate-spin" />
+            <span className="ml-2">
+              {currentStep === 4 ? 'Creating...' : 'Next'}
+            </span>
+          </>
+        ) : (
+          <>
+            {currentStep === 4 ? 'Create Account' : 'Next'}
+            {currentStep < 4 && <ArrowRight className="ml-2 h-4 w-4" />}
+          </>
+        )}
+      </Button>
+    </div>
+  )
 
-  if (message) {
-    return (
-      <Card className="mx-auto max-w-md">
-        <CardContent className="pt-6">
-          <div className="text-center space-y-4">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full mx-auto flex items-center justify-center">
-              <Mail className="w-8 h-8 text-green-600 dark:text-green-400" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Check your email</h3>
-              <p className="text-muted-foreground mt-2">
-                We sent a confirmation link to <strong className="text-foreground">{signupEmail}</strong>.
-                Click the link to activate your account.
-              </p>
-            </div>
-
-            <div className="text-xs text-muted-foreground bg-muted/50 rounded-lg p-3 text-left space-y-1">
-              <p className="font-medium">Didn&apos;t receive it?</p>
-              <ul className="list-disc list-inside space-y-0.5 ml-1">
-                <li>Check your <strong>spam/promotions</strong> folder</li>
-                <li>Make sure <strong>{signupEmail}</strong> is correct</li>
-                <li>Wait a few minutes — emails can be delayed</li>
-              </ul>
-            </div>
-
-            {resendMessage && (
-              <Alert className={resendMessage.startsWith('Failed') ? 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20' : 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'}>
-                <AlertDescription className={resendMessage.startsWith('Failed') ? 'text-red-800 dark:text-red-300' : 'text-green-800 dark:text-green-300'}>
-                  {resendMessage}
-                </AlertDescription>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
+      <div className="container flex flex-col items-center justify-center max-w-4xl mx-auto">
+        <Card className="w-full max-w-2xl">
+          <CardHeader className="text-center pb-6">
+            <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
+            <CardDescription>
+              Join VexNexa and start improving accessibility today
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {renderStepIndicator()}
+            {renderCurrentStep()}
+            {renderStepButtons()}
+            
+            {error && (
+              <Alert variant="destructive" className="mt-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            
+            {message && (
+              <Alert className="mt-4">
+                <AlertDescription>{message}</AlertDescription>
               </Alert>
             )}
 
-            <Button
-              onClick={handleResendConfirmation}
-              disabled={resendLoading || isResendCooling}
-              variant="outline"
-              className="w-full disabled:opacity-60"
-            >
-              {resendLoading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-muted-foreground/20 border-t-muted-foreground rounded-full animate-spin" />
-                  Resending...
-                </div>
-              ) : isResendCooling ? (
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  Resend available in {resendCountdown}
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  Resend confirmation email
-                </div>
-              )}
-            </Button>
-
-            <Button
-              onClick={() => router.push('/auth/login')}
-              className="w-full"
-            >
-              Go to Login
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
-
-  return (
-    <Card className="mx-auto max-w-2xl">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-center text-2xl">Create Your Account</CardTitle>
-        <CardDescription className="text-center">
-          Join VexNexa and make the web more accessible
-        </CardDescription>
-
-        {/* OAuth Sign Up Options */}
-        <div className="pt-6 space-y-4">
-          <Button
-            type="button"
-            variant="outline"
-            disabled={loading}
-            onClick={handleOAuthSignUp}
-            className="w-full h-12 border-2 gap-2"
-          >
-            <GoogleIcon />
-            <span className="text-sm font-medium">Continue with Google</span>
-          </Button>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
+            {/* OAuth Sign Up */}
+            <div className="mt-6 text-center">
+              <div className="relative">
+                <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+              <div className="relative border border-gray-200 rounded-lg p-0">
+                <Button
+                  onClick={handleOAuthSignUp}
+                  disabled={loading}
+                  className="w-full h-12 bg-white hover:bg-gray-50 text-gray-900 rounded-lg font-medium transition-colors duration-200"
+                >
+                  <GoogleIcon />
+                  <span className="ml-2">Sign up with Google</span>
+                </Button>
+              </div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or continue with email
-              </span>
             </div>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between mb-4 pt-4">
-          <Badge variant="outline" className="text-xs">
-            Step {currentStep} of {steps.length}
-          </Badge>
-          <div className="text-xs text-muted-foreground">
-            {steps.find(s => s.id === currentStep)?.description}
-          </div>
-        </div>
-        {renderStepIndicator()}
-      </CardHeader>
-      
-      <CardContent className="space-y-6">
-        {renderCurrentStep()}
-        
-        <div aria-live="assertive" aria-atomic="true">
-          {error && (
-            <Alert variant="destructive" id="register-error">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-        </div>
-
-        <div className="flex justify-between gap-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={prevStep}
-            disabled={currentStep === 1}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Previous
-          </Button>
-          
-          {currentStep < 4 ? (
-            <Button
-              type="button"
-              onClick={nextStep}
-              className="flex items-center gap-2"
-            >
-              Next
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              onClick={handleSubmit}
-              disabled={loading}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            >
-              {loading ? 'Creating Account...' : 'Create Account'}
-              <Sparkles className="w-4 h-4" />
-            </Button>
-          )}
-        </div>
-        
-        <div className="text-center text-sm">
-          Already have an account?{' '}
-          <Button
-            type="button"
-            variant="link"
-            className="p-0 h-auto font-semibold"
-            onClick={() => router.push('/auth/login')}
-          >
-            Sign in
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+            
+            <div className="mt-4 text-center text-sm text-muted-foreground">
+              Already have an account?{' '}
+              <Link href="/auth/login" className="text-primary hover:underline">
+                Sign in
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   )
 }
+    

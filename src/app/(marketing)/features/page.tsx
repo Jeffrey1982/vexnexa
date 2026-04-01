@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 import {
   Shield,
   Target,
@@ -108,20 +109,21 @@ const builtForItems: {
   },
 ];
 
-const specifics: string[] = [
-  "WCAG 2.1 and 2.2 AA coverage via axe-core engine",
-  "PDF and DOCX report export with branded covers",
-  "White-label: your logo, colours, company name, footer text",
-  "Scheduled scans — daily, weekly, or monthly",
-  "Regression alerts via email when scores drop",
-  "Team seats with role-based access",
-  "Multi-site dashboard with score comparisons",
-  "Severity-ranked issues with element-level detail",
-  "Remediation guidance with code examples",
-  "Slack and Jira integration (Pro plans and above)",
-];
-
 export default function FeaturesPage(): React.ReactElement {
+  const t = useTranslations('features');
+  
+  const specifics: string[] = [
+    t('specifics.wcagCoverage'),
+    t('specifics.reportExport'),
+    t('specifics.whiteLabel'),
+    t('specifics.scheduledScans'),
+    t('specifics.regressionAlerts'),
+    t('specifics.teamSeats'),
+    t('specifics.multiSiteDashboard'),
+    t('specifics.severityRanked'),
+    t('specifics.remediationGuidance'),
+    t('specifics.slackJiraIntegration'),
+  ];
   return (
     <>
       {/* Hero */}
@@ -129,16 +131,14 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <Badge variant="outline" className="text-sm">
-              Platform overview
+              {t('hero.badge')}
             </Badge>
             <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
-              Accessibility monitoring and reporting that fits{" "}
-              <span className="text-primary">real workflows</span>
+              {t('hero.title')}{" "}
+              <span className="text-primary">{t('hero.titleHighlight')}</span>
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              Move from one-off scans to repeatable monitoring, branded
-              reporting, and clearer accessibility follow-up for client and
-              internal teams.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
@@ -148,7 +148,7 @@ export default function FeaturesPage(): React.ReactElement {
                 size="lg"
                 className="gradient-primary text-white"
               >
-                Start your free scan
+                {t('hero.ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
@@ -158,7 +158,7 @@ export default function FeaturesPage(): React.ReactElement {
                 size="lg"
                 variant="outline"
               >
-                View sample report
+                {t('hero.ctaSecondary')}
               </TrackedCTA>
             </div>
           </div>
@@ -201,10 +201,10 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              How it works
+              {t('workflow.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              From first scan to ongoing monitoring in three steps.
+              {t('workflow.subtitle')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -242,7 +242,7 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Built for teams that take accessibility seriously
+              {t('builtFor.title')}
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -289,11 +289,10 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              Ready to try it?
+              {t('finalCTA.title')}
             </h2>
             <p className="text-xl leading-relaxed">
-              Create a free account, scan your first site, and see the results
-              for yourself. No credit card required.
+              {t('finalCTA.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <TrackedCTA
@@ -304,7 +303,7 @@ export default function FeaturesPage(): React.ReactElement {
                 variant="secondary"
                 className="bg-background text-primary hover:bg-muted"
               >
-                Start your free scan
+                {t('finalCTA.ctaPrimary')}
                 <Zap className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
@@ -315,7 +314,7 @@ export default function FeaturesPage(): React.ReactElement {
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                View sample report
+                {t('finalCTA.ctaSecondary')}
               </TrackedCTA>
               <TrackedCTA
                 href="/contact"
@@ -325,7 +324,7 @@ export default function FeaturesPage(): React.ReactElement {
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                Contact us
+                {t('finalCTA.ctaContact')}
               </TrackedCTA>
             </div>
           </div>
