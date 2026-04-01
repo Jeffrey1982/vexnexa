@@ -1,9 +1,9 @@
 export function normalizeUrl(u: string): string {
   try {
     const url = new URL(u);
-    // Alleen http/https
+    // Only http/https
     if (!/^https?:$/.test(url.protocol)) throw new Error("Unsupported protocol");
-    // Normaliseer: zonder hash, sorteer zoekparams, lowercase host
+    // Normalize: without hash, sort search params, lowercase host
     url.hash = "";
     url.host = url.host.toLowerCase();
     url.searchParams.sort();

@@ -110,7 +110,7 @@ export async function scanUrl(url: string): Promise<ScanResult> {
       // @ts-ignore
       return await (window as any).axe.run(document, {
         resultTypes: ["violations"],
-        // Minder zware rules optioneel hier tunen
+        // Less heavy rules can be tuned here optionally
       });
     });
 

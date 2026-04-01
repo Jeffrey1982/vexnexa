@@ -740,7 +740,7 @@ export async function sendAssuranceWelcome(data: AssuranceWelcomeData) {
     const { email, tier, language } = data
     const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard/assurance`
 
-    const html = getAssuranceWelcomeTemplate(email, tier, language, dashboardUrl)
+    const html = getAssuranceWelcomeTemplate(email, tier, dashboardUrl)
     const text = getPlainTextVersion({
       headline: 'Welcome to VexNexa Accessibility Assurance',
       bodyText: `Thank you for subscribing to VexNexa Accessibility Assurance (${tier} tier). Your automated monitoring service is now active.`,
@@ -792,7 +792,7 @@ export async function sendAssuranceReport(data: AssuranceReportData) {
     const { recipients, domain, score, threshold, language, pdfBuffer, pdfUrl } = data
     const reportUrl = pdfUrl || `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard/assurance/reports`
 
-    const html = getAssuranceReportEmailTemplate(recipients[0], domain, score, threshold, language, reportUrl)
+    const html = getAssuranceReportEmailTemplate(recipients[0], domain, score, threshold, reportUrl)
     const text = getPlainTextVersion({
       headline: `Accessibility Report: ${domain}`,
       bodyText: `Your scheduled accessibility scan for ${domain} is complete. Current score: ${score}/100 (Threshold: ${threshold}).`,
@@ -855,7 +855,7 @@ export async function sendAssuranceAlert(data: AssuranceAlertData) {
 
   try {
     console.log('[ASSURANCE EMAIL] Attempting to send Assurance alert to:', data.recipients)
-    const { recipients, domain, currentScore, previousScore, threshold, alertType, language } = data
+    const { recipients, domain, currentScore, previousScore, threshold, alertType } = data
     const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/dashboard/assurance/alerts`
 
     const html = getAssuranceAlertEmailTemplate(
@@ -865,7 +865,6 @@ export async function sendAssuranceAlert(data: AssuranceAlertData) {
       previousScore,
       threshold,
       alertType,
-      language,
       dashboardUrl
     )
 

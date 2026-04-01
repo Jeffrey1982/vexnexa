@@ -110,27 +110,27 @@ export async function assertWithinLimits(opts: {
 
   // Feature gates
   if (opts.action === "export_word" && !ent.word) {
-    const e: any = new Error("Upgrade required: Word export is niet beschikbaar op jouw plan.")
+    const e: any = new Error("Upgrade required: Word export is not available on your plan.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "word"
     throw e
   }
   if (opts.action === "schedule" && !ent.schedule) {
-    const e: any = new Error("Upgrade required: Schedulen is niet beschikbaar op jouw plan.")
+    const e: any = new Error("Upgrade required: Scheduling is not available on your plan.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "schedule"
     throw e
   }
   if (opts.action === "crawl" && !ent.crawl) {
-    const e: any = new Error("Upgrade required: Site crawling is alleen beschikbaar voor betaalde plannen.")
+    const e: any = new Error("Upgrade required: Site crawling is only available on paid plans.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "crawl"
     throw e
   }
   if (opts.action === "bulk_scan" && !ent.crawl) {
-    const e: any = new Error("Upgrade required: Bulk scanning is alleen beschikbaar voor betaalde plannen.")
+    const e: any = new Error("Upgrade required: Bulk scanning is only available on paid plans.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "bulk_scan"
     throw e
   }
   if (opts.action === "white_label" && !ent.whiteLabel) {
-    const e: any = new Error("Upgrade required: White labeling is alleen beschikbaar voor Business plannen.")
+    const e: any = new Error("Upgrade required: White labelling is only available on Business plans.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "whiteLabel"
     throw e
   }
@@ -150,8 +150,8 @@ export async function assertWithinLimits(opts: {
       // Different messages for FREE vs paid plans
       const isFree = plan === "FREE";
       const message = isFree
-        ? `Free plan limit bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een betaald plan om door te gaan met scannen.`
-        : `Maandelijkse paginalimiet bereikt (${ent.pagesPerMonth} pages/maand). Upgrade naar een hoger plan, koop extra scans, of wacht tot volgende maand.`;
+        ? `Free plan limit reached (${ent.pagesPerMonth} pages/month). Upgrade to a paid plan to continue scanning.`
+        : `Monthly page limit reached (${ent.pagesPerMonth} pages/month). Upgrade to a higher plan, purchase extra scans, or wait until next month.`;
 
       const e: any = new Error(message)
       e.code = isFree ? "FREE_LIMIT_REACHED" : "LIMIT_REACHED";

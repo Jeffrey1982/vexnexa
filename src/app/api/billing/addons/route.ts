@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       addOn: 'addOn' in result ? result.addOn : result,
-      message: "Add-on geactiveerd! De betaling wordt automatisch maandelijks verwerkt."
+      message: "Add-on activated! Payment will be processed automatically each month."
     })
   } catch (error: any) {
     console.error("Purchase add-on error:", error)

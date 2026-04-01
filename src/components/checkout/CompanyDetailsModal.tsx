@@ -3,7 +3,7 @@
 /**
  * CompanyDetailsModal — collects company billing fields before Mollie redirect.
  *
- * Opens when user clicks "Verder naar betaling" in excl-VAT or company-purchase mode.
+ * Opens when user clicks "Proceed to payment" in excl-VAT or company-purchase mode.
  * Fields are required and validated before allowing submission.
  * Pre-fills from existing billing profile when available.
  */
@@ -45,15 +45,15 @@ interface CompanyDetailsModalProps {
 /** Validate fields, return error map (empty = valid) */
 function validateFields(fields: CompanyFields): Record<string, string> {
   const errors: Record<string, string> = {};
-  if (!fields.companyName.trim()) errors.companyName = "Bedrijfsnaam is verplicht";
+  if (!fields.companyName.trim()) errors.companyName = "Company name is required";
   if (!fields.billingCountry.trim() || fields.billingCountry.length !== 2)
-    errors.billingCountry = "Landcode is verplicht (bijv. NL)";
+    errors.billingCountry = "Country code is required (e.g. NL)";
   if (!fields.registrationNumber.trim())
     errors.registrationNumber =
       fields.billingCountry === "NL"
-        ? "KvK-nummer is verplicht"
-        : "Registratienummer is verplicht";
-  if (!fields.vatId.trim()) errors.vatId = "BTW-nummer is verplicht";
+        ? "Chamber of Commerce number is required"
+        : "Registration number is required";
+  if (!fields.vatId.trim()) errors.vatId = "VAT number is required";
   return errors;
 }
 
@@ -138,10 +138,10 @@ export function CompanyDetailsModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Building2 className="w-5 h-5 text-primary" />
-            Bedrijfsgegevens nodig voor excl. btw
+            Company details required for excl. VAT billing
           </DialogTitle>
           <DialogDescription>
-            Vul dit in om excl. btw af te rekenen en correcte facturatie te krijgen.
+            Please provide your company details for VAT-exclusive billing and correct invoicing.
           </DialogDescription>
         </DialogHeader>
 
@@ -156,7 +156,7 @@ export function CompanyDetailsModal({
           {/* Company name */}
           <div className="space-y-1.5">
             <Label htmlFor="cdm-company" className="text-sm">
-              Bedrijfsnaam *
+              Company name *
             </Label>
             <Input
               id="cdm-company"
@@ -174,7 +174,7 @@ export function CompanyDetailsModal({
           {/* Billing country */}
           <div className="space-y-1.5">
             <Label htmlFor="cdm-country" className="text-sm">
-              Land (ISO2) *
+              Country (ISO2) *
             </Label>
             <Input
               id="cdm-country"
@@ -198,7 +198,7 @@ export function CompanyDetailsModal({
           {/* Registration number */}
           <div className="space-y-1.5">
             <Label htmlFor="cdm-reg" className="text-sm">
-              {isNL ? "KvK-nummer" : "Chamber of Commerce / Registration number"} *
+              {isNL ? "Chamber of Commerce number" : "Registration number"} *
             </Label>
             <Input
               id="cdm-reg"
@@ -221,7 +221,7 @@ export function CompanyDetailsModal({
           {/* VAT number */}
           <div className="space-y-1.5">
             <Label htmlFor="cdm-vat" className="text-sm">
-              BTW-nummer *
+              VAT number *
             </Label>
             <Input
               id="cdm-vat"
@@ -238,7 +238,7 @@ export function CompanyDetailsModal({
         </div>
 
         <p className="text-[10px] text-muted-foreground">
-          Gegevens worden opgeslagen in je factuurprofiel voor toekomstige facturen.
+          Details will be saved to your billing profile for future invoices.
         </p>
 
         <DialogFooter className="flex gap-2 sm:gap-0 pt-2">
@@ -247,7 +247,7 @@ export function CompanyDetailsModal({
             onClick={() => onOpenChange(false)}
             disabled={submitting}
           >
-            Annuleren
+            Cancel
           </Button>
           <Button
             onClick={handleSubmit}
@@ -257,11 +257,11 @@ export function CompanyDetailsModal({
             {submitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Bezig...
+                Processing...
               </>
             ) : (
               <>
-                Verder naar betaling
+                Proceed to payment
                 <ArrowRight className="ml-2 h-4 w-4" />
               </>
             )}

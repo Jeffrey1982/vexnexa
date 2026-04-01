@@ -17,7 +17,7 @@ import { publishScanReport } from "@/lib/public-reports";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
-// (optioneel, helpt cold starts wennen in EU)
+// (optional, helps with cold starts in EU)
 // export const preferredRegion = ["fra1"];
 
 // === Service bypass headers ===
@@ -33,13 +33,13 @@ export async function POST(req: Request) {
       incomingSvcToken && svcToken && incomingSvcToken === svcToken
     );
 
-    // Bepaal "user" context
+    // Determine "user" context
     let user: { id: string; supabaseUser?: SupabaseUser };
     let useWeeklyFreeScan: boolean = false;
 
     if (isServiceCall) {
-      // In automation-mode mag je (optioneel) de user-id meegeven in header,
-      // of zet SCAN_SERVICE_USER_ID in env.
+      // In automation mode you can (optionally) pass the user ID in a header,
+      // or set SCAN_SERVICE_USER_ID in env.
       const forcedUserId =
         req.headers.get(SERVICE_USER_HEADER) || process.env.SCAN_SERVICE_USER_ID || "";
 
@@ -48,27 +48,27 @@ export async function POST(req: Request) {
           {
             ok: false,
             error:
-              "Service scan vereist een user-id. Stuur header 'x-scan-user-id' of zet SCAN_SERVICE_USER_ID.",
+              "Service scan requires a user ID. Send header 'x-scan-user-id' or set SCAN_SERVICE_USER_ID.",
           },
           { status: 400 }
         );
       }
 
-      // Veiligheid: controleer dat de user bestaat
+      // Safety: verify that the user exists
       const userExists = await prisma.user.findUnique({
         where: { id: forcedUserId },
         select: { id: true },
       });
       if (!userExists) {
         return NextResponse.json(
-          { ok: false, error: `Onbekende user-id: ${forcedUserId}` },
+          { ok: false, error: `Unknown user ID: ${forcedUserId}` },
           { status: 400 }
         );
       }
 
       user = { id: forcedUserId };
     } else {
-      // Normale app: ingelogde gebruiker via NextAuth
+      // Normal app: logged-in user via NextAuth
       const authUser: Awaited<ReturnType<typeof requireAuth>> = await requireAuth();
       user = { id: authUser.id, supabaseUser: authUser.supabaseUser };
 
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         await ensureUserInDatabase(user.supabaseUser);
       }
 
-      // Limits alleen toepassen op normale user-scans
+      // Only apply limits to normal user scans
       try {
         await assertWithinLimits({
           userId: user.id,
@@ -419,7 +419,7 @@ export async function POST(req: Request) {
       },
     });
 
-    // Alleen normale user-scans tellen we mee in billing/usage
+    // Only count normal user scans for billing/usage
     if (!isServiceCall) {
       if (useWeeklyFreeScan) {
         await consumeWeeklyFreeScan(user.id);

@@ -75,7 +75,7 @@ export function ScanPackagesCard({
       })
 
       const data = await response.json()
-      if (!response.ok) throw new Error(data.error || "Aankoop mislukt")
+      if (!response.ok) throw new Error(data.error || "Purchase failed")
       setSuccess(data.message)
 
       setTimeout(() => {
@@ -83,7 +83,7 @@ export function ScanPackagesCard({
         setSuccess(null)
       }, 2000)
     } catch (err: any) {
-      setError(err?.message || "Aankoop mislukt")
+      setError(err?.message || "Purchase failed")
 
       if (err?.redirectUrl) {
         setTimeout(() => window.location.href = err.redirectUrl, 2000)
@@ -276,14 +276,14 @@ export function ScanPackagesCard({
           <Alert variant="destructive">
             <AlertDescription>
               {error}
-              {error.includes("betaalmethode") && (
+              {error.includes("payment method") && (
                 <Button
                   variant="outline"
                   size="sm"
                   className="ml-4"
                   onClick={() => window.location.href = "/settings/billing"}
                 >
-                  Betaalmethode instellen
+                  Set up payment method
                 </Button>
               )}
             </AlertDescription>
