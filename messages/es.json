@@ -12,7 +12,10 @@
     "getStarted": "Comenzar",
     "changelog": "Registro de cambios",
     "language": "Idioma",
-    "followUs": "Síguenos"
+    "followUs": "Síguenos",
+    "forAgencies": "Para Agencias",
+    "sampleReport": "Informe de Muestra",
+    "eaaMonitoring": "Monitoreo EAA"
   },
   "footer": {
     "brand": {
