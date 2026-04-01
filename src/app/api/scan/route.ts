@@ -1,5 +1,8 @@
 // src/app/api/scan/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { assertAdmin } from "@/lib/adminAuth";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { getRequestConfig } from 'next-intl/server';
 import { prisma } from "@/lib/prisma";
 import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";

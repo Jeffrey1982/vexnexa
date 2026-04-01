@@ -1223,5 +1223,64 @@
         "description": "Deliver reports under your own logo with white-label branding."
       }
     }
+  },
+  "getStarted": {
+    "header": {
+      "badge": "Quick start",
+      "title": "Get started with your first scan",
+      "subtitle": "Enter your website URL and we'll run a comprehensive accessibility scan"
+    },
+    "form": {
+      "title": "Start your first scan",
+      "description": "We'll analyze your website for accessibility issues and provide actionable recommendations",
+      "url": {
+        "label": "Website URL",
+        "placeholder": "https://example.com",
+        "help": "Enter the full URL of the page you want to scan"
+      },
+      "frequency": {
+        "label": "Scan frequency",
+        "once": "One-time scan",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "help": {
+          "once": "Run a single scan now",
+          "recurring": "Automatically scan your site {frequency}"
+        }
+      },
+      "notify": {
+        "label": "Email me when the scan is complete",
+        "help": "You'll receive a notification with a link to view your results"
+      },
+      "submit": {
+        "text": "Start accessibility scan",
+        "loading": "Starting scan..."
+      }
+    },
+    "errors": {
+      "urlRequired": "Please enter a URL",
+      "urlInvalid": "Please enter a valid URL"
+    },
+    "nextSteps": {
+      "title": "What happens next?",
+      "step1": {
+        "title": "Scan runs automatically",
+        "description": "Our scanner analyzes your page for WCAG compliance + 8 additional accessibility categories"
+      },
+      "step2": {
+        "title": "View your detailed report",
+        "description": "See prioritized issues with code snippets, screenshots, and clear remediation steps"
+      },
+      "step3": {
+        "title": "Fix top issues → re-scan → improve",
+        "description": "Work through issues by priority, re-scan to track progress, and share reports with your team"
+      }
+    },
+    "footer": {
+      "notReady": "Not ready to scan yet?",
+      "learnMore": "Learn more about our features",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    }
   }
 }
