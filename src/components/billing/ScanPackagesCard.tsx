@@ -94,7 +94,7 @@ export function ScanPackagesCard({
   }
 
   const handleCancel = async (addonId: string) => {
-    const confirmed = confirm("Wil je dit volume pakket annuleren? Toegang blijft tot einde van de huidige betaalperiode.")
+    const confirmed = confirm("Do you want to cancel this volume pack? Access remains until the end of the current billing period.")
     if (!confirmed) return
 
     setLoading(addonId)
@@ -107,7 +107,7 @@ export function ScanPackagesCard({
       })
 
       const data = await response.json()
-      if (!response.ok) throw new Error(data.error || "Annulering mislukt")
+      if (!response.ok) throw new Error(data.error || "Cancellation failed")
       setSuccess(data.message)
 
       setTimeout(() => {
@@ -115,7 +115,7 @@ export function ScanPackagesCard({
         setSuccess(null)
       }, 2000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Annulering mislukt")
+      setError(err instanceof Error ? err.message : "Cancellation failed")
     } finally {
       setLoading(null)
     }
@@ -126,17 +126,17 @@ export function ScanPackagesCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Zap className="h-5 w-5" />
-          Pages per maand
+          Pages per month
         </CardTitle>
         <CardDescription>
-          Verhoog je maandelijkse scan capaciteit met volume pakketten
+          Increase your monthly scan capacity with volume packs
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Current usage */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">Gebruik ({currentPeriod})</span>
+            <span className="text-sm text-muted-foreground">Usage ({currentPeriod})</span>
             <span className="text-sm font-medium">
               {usedScans.toLocaleString()} / {totalPages.toLocaleString()} pages
             </span>
@@ -157,7 +157,7 @@ export function ScanPackagesCard({
               <span className="font-medium">{baseScans.toLocaleString()}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Extra pakketten:</span>
+              <span className="text-muted-foreground">Extra packs:</span>
               <span className="font-medium text-primary">+{extraScans.toLocaleString()}</span>
             </div>
           </div>
@@ -168,7 +168,7 @@ export function ScanPackagesCard({
           <Alert>
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              Je hebt al {usagePercentage.toFixed(0)}% van je paginalimiet gebruikt. Overweeg een volume pakket.
+              You have already used {usagePercentage.toFixed(0)}% of your page limit. Consider adding a volume pack.
             </AlertDescription>
           </Alert>
         )}
@@ -177,7 +177,7 @@ export function ScanPackagesCard({
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              Je hebt bijna je paginalimiet bereikt ({usagePercentage.toFixed(0)}%)! Koop extra capaciteit om door te kunnen scannen.
+              You have almost reached your page limit ({usagePercentage.toFixed(0)}%)! Purchase extra capacity to continue scanning.
             </AlertDescription>
           </Alert>
         )}
@@ -185,7 +185,7 @@ export function ScanPackagesCard({
         {/* Active packages (legacy + new) */}
         {activePagePacks.length > 0 && (
           <div className="space-y-2">
-            <h4 className="text-sm font-medium">Actieve pakketten</h4>
+            <h4 className="text-sm font-medium">Active packs</h4>
             {activePagePacks.map(addon => (
               <div key={addon.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                 <div className="flex items-center gap-2">
@@ -193,7 +193,7 @@ export function ScanPackagesCard({
                   <div>
                     <p className="font-medium text-sm">{ADDON_NAMES[addon.type]}</p>
                     <p className="text-xs text-muted-foreground">
-                      €{Number(addon.totalPrice).toFixed(2)}/maand
+                      €{Number(addon.totalPrice).toFixed(2)}/month
                     </p>
                   </div>
                 </div>
@@ -216,14 +216,14 @@ export function ScanPackagesCard({
 
         {/* Available volume packs */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Beschikbare volume pakketten</h4>
+          <h4 className="text-sm font-medium">Available volume packs</h4>
           {isTrial ? (
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                Upgrade naar een betaald plan om volume pakketten te kunnen kopen.
+                Upgrade to a paid plan to purchase volume packs.
                 <a href="/pricing" className="ml-2 underline font-medium">
-                  Bekijk plannen →
+                  View plans →
                 </a>
               </AlertDescription>
             </Alert>
@@ -241,15 +241,15 @@ export function ScanPackagesCard({
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <p className="font-medium">+{pkg.pages.toLocaleString()} pages/maand</p>
-                        {isActive && <Badge variant="secondary">Actief</Badge>}
+                        <p className="font-medium">+{pkg.pages.toLocaleString()} pages/month</p>
+                        {isActive && <Badge variant="secondary">Active</Badge>}
                       </div>
                       <p className="text-sm text-muted-foreground">{ADDON_PRICING[pkg.type].description}</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-right">
                         <p className="font-bold">€{pkg.price}</p>
-                        <p className="text-xs text-muted-foreground">/maand</p>
+                        <p className="text-xs text-muted-foreground">/month</p>
                       </div>
                       <Button
                         size="sm"

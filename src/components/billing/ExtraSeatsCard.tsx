@@ -157,14 +157,14 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
           Team & Seats
         </CardTitle>
         <CardDescription>
-          Beheer team seats voor samenwerking
+          Manage team seats for collaboration
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Current usage */}
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Basis seats</p>
+            <p className="text-sm text-muted-foreground">Base seats</p>
             <p className="text-2xl font-bold">{baseSeats}</p>
           </div>
           <div className="space-y-1">
@@ -172,7 +172,7 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
             <p className="text-2xl font-bold text-primary">{extraSeats}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Totaal</p>
+            <p className="text-sm text-muted-foreground">Total</p>
             <p className="text-2xl font-bold">{totalSeats}</p>
           </div>
         </div>
@@ -180,7 +180,7 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         {/* Usage bar */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">In gebruik</span>
+            <span className="text-sm text-muted-foreground">In use</span>
             <span className="text-sm font-medium">
               {usedSeats} / {totalSeats} seats
             </span>
@@ -199,8 +199,8 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         <div className="bg-muted p-3 rounded-lg flex items-start gap-2">
           <Info className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
           <p className="text-sm text-muted-foreground">
-            Extra seats kosten <span className="font-semibold">€{pricePerSeat.toFixed(2)} per seat per maand</span>.
-            Je kunt seats toevoegen en verwijderen wanneer je wilt.
+            Extra seats cost <span className="font-semibold">€{pricePerSeat.toFixed(2)} per seat per month</span>.
+            You can add and remove seats at any time.
           </p>
         </div>
 
@@ -209,9 +209,9 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
           <Alert>
             <Info className="h-4 w-4" />
             <AlertDescription>
-              Upgrade naar een betaald plan om extra seats te kunnen kopen.
+              Upgrade to a paid plan to purchase extra seats.
               <a href="/pricing" className="ml-2 underline font-medium">
-                Bekijk plannen →
+                View plans →
               </a>
             </AlertDescription>
           </Alert>
@@ -227,7 +227,7 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
               ) : (
                 <Plus className="mr-2 h-4 w-4" />
               )}
-              Seat toevoegen
+              Add seat
             </Button>
 
             {extraSeats > 0 && (
@@ -242,7 +242,7 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
                 ) : (
                   <Minus className="mr-2 h-4 w-4" />
                 )}
-                Seat verwijderen
+                Remove seat
               </Button>
             )}
           </div>
@@ -252,9 +252,9 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         {seatAddOn && (
           <div className="pt-3 border-t">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Maandelijkse kosten:</span>
+              <span className="text-muted-foreground">Monthly cost:</span>
               <div className="flex items-center gap-2">
-                <span className="font-semibold">€{Number(seatAddOn.totalPrice).toFixed(2)}/maand</span>
+                <span className="font-semibold">€{Number(seatAddOn.totalPrice).toFixed(2)}/month</span>
                 <Badge variant={seatAddOn.status === "active" ? "default" : "secondary"}>
                   {seatAddOn.status}
                 </Badge>
@@ -268,14 +268,14 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
           <Alert variant="destructive">
             <AlertDescription>
               {error}
-              {error.includes("betaalmethode") && (
+              {error.includes("payment method") && (
                 <Button
                   variant="outline"
                   size="sm"
                   className="ml-4"
                   onClick={() => window.location.href = "/settings/billing"}
                 >
-                  Betaalmethode instellen
+                  Set up payment method
                 </Button>
               )}
             </AlertDescription>

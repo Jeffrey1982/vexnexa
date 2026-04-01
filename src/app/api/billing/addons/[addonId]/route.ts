@@ -45,7 +45,7 @@ export async function PATCH(
     return NextResponse.json({
       success: true,
       addOn: updated,
-      message: "Aantal seats bijgewerkt"
+      message: "Seat count updated"
     })
   } catch (error) {
     console.error("Update add-on error:", error)
@@ -86,7 +86,7 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: "Add-on geannuleerd. Toegang blijft tot einde van de betaalperiode."
+      message: "Add-on cancelled. Access remains until the end of the billing period."
     })
   } catch (error) {
     console.error("Cancel add-on error:", error)

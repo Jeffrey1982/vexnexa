@@ -161,7 +161,7 @@ export default function ForgotPasswordPage() {
                     className="flex items-center justify-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     <ArrowLeft className="w-4 h-4" />
-                    Terug naar inloggen
+                    Back to login
                   </Link>
                 </div>
               </>
@@ -170,7 +170,7 @@ export default function ForgotPasswordPage() {
             {/* Info text */}
             <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
               <p className="text-xs text-[#5A5A5A] dark:text-[#C0C3C7] text-center">
-                Als je een account hebt, ontvang je binnen enkele minuten een email met instructies.
+                If you have an account, you will receive an email with instructions within a few minutes.
               </p>
             </div>
           </CardContent>

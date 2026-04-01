@@ -84,8 +84,8 @@ export default function NotificationSettingsPage() {
 
       if (response.ok) {
         toast({
-          title: "Instellingen opgeslagen",
-          description: "Je notificatie voorkeuren zijn bijgewerkt.",
+          title: "Settings saved",
+          description: "Your notification preferences have been updated.",
         })
       } else {
         throw new Error('Failed to save settings')
@@ -133,9 +133,9 @@ export default function NotificationSettingsPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-2xl mx-auto">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold tracking-tight">Notificatie instellingen</h1>
+              <h1 className="text-3xl font-bold tracking-tight">Notification settings</h1>
               <p className="text-muted-foreground mt-2">
-                Beheer welke emails je wilt ontvangen van VexNexa
+                Manage which emails you receive from VexNexa
               </p>
             </div>
 
@@ -148,7 +148,7 @@ export default function NotificationSettingsPage() {
                     Marketing & Product Updates
                   </CardTitle>
                   <CardDescription>
-                    Informatie over nieuwe features, tips en bedrijfsupdates
+                    Information about new features, tips and product updates
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -156,7 +156,7 @@ export default function NotificationSettingsPage() {
                     <div className="space-y-0.5">
                       <Label htmlFor="marketingEmails">Marketing emails</Label>
                       <p className="text-sm text-muted-foreground">
-                        Ontvang updates over nieuwe features en tips voor betere accessibility
+                        Receive updates about new features and tips for better accessibility
                       </p>
                     </div>
                     <Switch
@@ -170,7 +170,7 @@ export default function NotificationSettingsPage() {
                     <div className="space-y-0.5">
                       <Label htmlFor="productUpdates">Product updates</Label>
                       <p className="text-sm text-muted-foreground">
-                        Belangrijke updates over het VexNexa platform
+                        Important updates about the VexNexa platform
                       </p>
                     </div>
                     <Switch
@@ -187,18 +187,18 @@ export default function NotificationSettingsPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="w-5 h-5" />
-                    Beveiliging & Account
+                    Security & Account
                   </CardTitle>
                   <CardDescription>
-                    Belangrijke beveiligingsmeldingen en account wijzigingen
+                    Important security notifications and account changes
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="securityAlerts">Beveiligingsalerts</Label>
+                      <Label htmlFor="securityAlerts">Security alerts</Label>
                       <p className="text-sm text-muted-foreground">
-                        Meldingen over inlogpogingen en beveiligingswijzigingen
+                        Notifications about login attempts and security changes
                       </p>
                     </div>
                     <Switch
@@ -211,7 +211,7 @@ export default function NotificationSettingsPage() {
                   <Alert>
                     <Shield className="w-4 h-4" />
                     <AlertDescription>
-                      Beveiligingsalerts kunnen niet worden uitgeschakeld voor je veiligheid.
+                      Security alerts cannot be disabled for your safety.
                     </AlertDescription>
                   </Alert>
                 </CardContent>
@@ -222,18 +222,18 @@ export default function NotificationSettingsPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Bell className="w-5 h-5" />
-                    Platform activiteit
+                    Platform activity
                   </CardTitle>
                   <CardDescription>
-                    Meldingen over scans, teams en rapporten
+                    Notifications about scans, teams and reports
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="teamInvitations">Team uitnodigingen</Label>
+                      <Label htmlFor="teamInvitations">Team invitations</Label>
                       <p className="text-sm text-muted-foreground">
-                        Ontvang meldingen wanneer je wordt uitgenodigd voor teams
+                        Receive notifications when you are invited to teams
                       </p>
                     </div>
                     <Switch
@@ -245,9 +245,9 @@ export default function NotificationSettingsPage() {
 
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="scanNotifications">Scan notificaties</Label>
+                      <Label htmlFor="scanNotifications">Scan notifications</Label>
                       <p className="text-sm text-muted-foreground">
-                        Meldingen wanneer scans zijn voltooid of gefaald
+                        Notifications when scans have completed or failed
                       </p>
                     </div>
                     <Switch
@@ -259,9 +259,9 @@ export default function NotificationSettingsPage() {
 
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="weeklyReports">Wekelijkse rapporten</Label>
+                      <Label htmlFor="weeklyReports">Weekly reports</Label>
                       <p className="text-sm text-muted-foreground">
-                        Ontvang een samenvatting van je accessibility voortgang
+                        Receive a summary of your accessibility progress
                       </p>
                     </div>
                     <Switch
@@ -283,12 +283,12 @@ export default function NotificationSettingsPage() {
                   {saving ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                      Opslaan...
+                      Saving...
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      Opslaan
+                      Save
                     </div>
                   )}
                 </Button>
@@ -298,8 +298,8 @@ export default function NotificationSettingsPage() {
               <Card className="border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30">
                 <CardContent className="pt-6">
                   <p className="text-sm text-amber-800 dark:text-amber-200">
-                    <strong>Let op:</strong> Je kunt je ook uitschrijven via de link onderaan elke email die we versturen.
-                    Sommige emails (zoals beveiligingsalerts) kunnen niet worden uitgeschakeld voor je veiligheid.
+                    <strong>Please note:</strong> You can also unsubscribe via the link at the bottom of every email we send.
+                    Some emails (such as security alerts) cannot be disabled for your safety.
                   </p>
                 </CardContent>
               </Card>

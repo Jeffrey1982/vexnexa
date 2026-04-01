@@ -262,17 +262,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="font-display text-2xl font-bold">
-              Klaar om je website toegankelijk te maken?
+              Ready to make your website accessible?
             </h2>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild>
                 <Link href="/auth/register">
-                  Start Gratis Scan
+                  Start free scan
                 </Link>
               </Button>
               <Button variant="outline" asChild>
                 <Link href="/features">
-                  Bekijk Features
+                  View features
                 </Link>
               </Button>
             </div>
