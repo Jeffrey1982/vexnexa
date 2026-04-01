@@ -16,6 +16,7 @@ import {
   RefreshCw,
   Building2,
   Globe,
+  TrendingUp,
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 
@@ -32,82 +33,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://vexnexa.com/features" },
 };
 
-const outcomeCards: {
-  icon: typeof Shield;
-  title: string;
-  description: string;
-}[] = [
-  {
-    icon: Target,
-    title: "Catch issues before they stack up",
-    description:
-      "Scan any page against WCAG 2.2 and get severity-ranked violations with the affected elements, code context, and fix guidance your team actually needs.",
-  },
-  {
-    icon: FileText,
-    title: "Turn findings into client-ready reports",
-    description:
-      "Export PDF or DOCX reports with executive summaries, WCAG compliance matrices, and branded covers. White-label available on Business plans and above.",
-  },
-  {
-    icon: Bell,
-    title: "Monitor changes after releases",
-    description:
-      "Set up scheduled scans to catch regressions automatically. Get notified when scores drop or new critical issues appear — before your clients do.",
-  },
-  {
-    icon: BarChart3,
-    title: "Prioritise what to fix next",
-    description:
-      "Issues are ranked by severity and WCAG impact. Focus on the violations that block the most users first, and track score improvement over time.",
-  },
-];
 
-const workflowSteps: { step: string; title: string; description: string }[] = [
-  {
-    step: "1",
-    title: "Scan a site",
-    description:
-      "Paste a URL and run a scan. Results come back in seconds with every WCAG violation mapped to the affected element.",
-  },
-  {
-    step: "2",
-    title: "Review prioritised findings",
-    description:
-      "Issues are grouped by severity — critical, serious, moderate, minor. Each one shows the element, the WCAG criterion, and how to fix it.",
-  },
-  {
-    step: "3",
-    title: "Share reports and monitor over time",
-    description:
-      "Export branded reports for stakeholders. Schedule recurring scans to track improvement and catch new issues after every deployment.",
-  },
-];
-
-const builtForItems: {
-  icon: typeof Building2;
-  title: string;
-  description: string;
-}[] = [
-  {
-    icon: Building2,
-    title: "Agencies",
-    description:
-      "White-label reports, multi-site management, and team seats let you deliver accessibility as a service under your own brand.",
-  },
-  {
-    icon: Users,
-    title: "Internal product and compliance teams",
-    description:
-      "Dashboard overview, scheduled monitoring, and exportable evidence for audits, tenders, and internal governance.",
-  },
-  {
-    icon: Globe,
-    title: "Multi-site operators",
-    description:
-      "Manage dozens of sites from one account. Compare scores, spot regressions across properties, and report to stakeholders in one place.",
-  },
-];
 
 export default function FeaturesPage(): React.ReactElement {
   const t = useTranslations('features');
@@ -124,6 +50,74 @@ export default function FeaturesPage(): React.ReactElement {
     t('specifics.remediationGuidance'),
     t('specifics.slackJiraIntegration'),
   ];
+
+  const outcomeCards: {
+    icon: typeof Shield;
+    title: string;
+    description: string;
+  }[] = [
+    {
+      icon: Target,
+      title: t('outcomes.catchIssues.title'),
+      description: t('outcomes.catchIssues.description'),
+    },
+    {
+      icon: FileText,
+      title: t('outcomes.clientReports.title'),
+      description: t('outcomes.clientReports.description'),
+    },
+    {
+      icon: TrendingUp,
+      title: t('outcomes.monitorChanges.title'),
+      description: t('outcomes.monitorChanges.description'),
+    },
+    {
+      icon: BarChart3,
+      title: t('outcomes.prioritise.title'),
+      description: t('outcomes.prioritise.description'),
+    },
+  ];
+
+  const workflowSteps: { step: string; title: string; description: string }[] = [
+    {
+      step: "1",
+      title: t('workflow.step1.title'),
+      description: t('workflow.step1.description'),
+    },
+    {
+      step: "2",
+      title: t('workflow.step2.title'),
+      description: t('workflow.step2.description'),
+    },
+    {
+      step: "3",
+      title: t('workflow.step3.title'),
+      description: t('workflow.step3.description'),
+    },
+  ];
+
+  const builtForItems: {
+    icon: typeof Building2;
+    title: string;
+    description: string;
+  }[] = [
+    {
+      icon: Building2,
+      title: t('builtFor.agencies.title'),
+      description: t('builtFor.agencies.description'),
+    },
+    {
+      icon: Users,
+      title: t('builtFor.internal.title'),
+      description: t('builtFor.internal.description'),
+    },
+    {
+      icon: Globe,
+      title: t('builtFor.multiSite.title'),
+      description: t('builtFor.multiSite.description'),
+    },
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -170,10 +164,10 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              What VexNexa helps you do
+              {t('outcomes.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Every feature is built around a practical outcome — not a checkbox.
+              {t('outcomes.subtitle')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
