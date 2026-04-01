@@ -5,6 +5,7 @@
 
 export type FunnelEvent =
   | 'homepage_cta_primary_click'
+  | 'homepage_cta_demo_click'
   | 'homepage_cta_sample_report_click'
   | 'sample_report_view'
   | 'sample_report_cta_click'
