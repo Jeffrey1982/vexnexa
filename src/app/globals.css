@@ -15,9 +15,9 @@
 
 @layer base {
   :root {
-    /* Typography — Lexend (body) + Satoshi (headings via Fontshare) */
-    --font-sans: var(--font-lexend), "Lexend Variable", system-ui, sans-serif;
-    --font-display: "Satoshi Variable", "Satoshi", system-ui, sans-serif;
+    /* Typography — Inter for body + headings */
+    --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+    --font-display: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
 
     /* Brand accents (HSL components for hsl() / opacity) */
     --brand-blue: 217 91% 60%;
@@ -91,7 +91,6 @@
     --vn-primary: #3b82f6;
     --vn-primary-hover: #2563eb;
     --vn-accent: #3b82f6;
-    --vn-teal: #3b82f6;
 
     --vn-primary-aaa-btn: #1e40af;
     --vn-primary-aaa-btn-hover: #1e3a8a;
@@ -195,50 +194,52 @@
   html {
     scroll-behavior: smooth;
     @apply bg-background;
-    font-family: "Lexend Variable", var(--font-lexend), system-ui, sans-serif;
+    font-family: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   }
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-size: 1.125rem;
+    font-size: 18px;
     line-height: 1.7;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Satoshi Variable", "Satoshi", system-ui, sans-serif;
+    font-family: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   h1 {
-    font-size: 2.5rem;
-    line-height: 1.15;
+    font-size: 2.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
   }
 
   @media (min-width: 1024px) {
     h1 {
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
   }
 
   h2 {
     font-size: 2rem;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
   }
 
   @media (min-width: 1024px) {
     h2 {
-      font-size: 2.25rem;
+      font-size: 2.5rem;
     }
   }
 
   h3 {
     font-size: 1.5rem;
-    line-height: 1.25;
+    line-height: 1.2;
   }
 
   @media (min-width: 1024px) {
@@ -271,8 +272,8 @@
   }
 
   p {
-    font-family: "Lexend Variable", var(--font-lexend), system-ui, sans-serif;
-    font-size: 1.125rem;
+    font-family: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+    font-size: 18px;
     line-height: 1.7;
   }
 

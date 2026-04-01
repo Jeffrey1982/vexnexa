@@ -14,21 +14,21 @@
   --color-border: #E2E8F0;
   --color-border-strong: #CBD5E1;
 
-  /* ===== Colors - Primary (Teal) ===== */
-  --color-primary: #14B8A6;
-  --color-primary-hover: #0D9488;
-  --color-primary-active: #0F766E;
+  /* ===== Colors - Primary (Blue) ===== */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-active: #1d4ed8;
   --color-primary-foreground: #FFFFFF;
-  --color-primary-50: #FFF5ED;
-  --color-primary-100: #FFE7D6;
-  --color-primary-200: #FFC4A8;
-  --color-primary-300: #FFA376;
-  --color-primary-400: #E8751A;
-  --color-primary-500: #14B8A6;
-  --color-primary-600: #B84E00;
-  --color-primary-700: #B35400;
-  --color-primary-800: #803C00;
-  --color-primary-900: #4D2400;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
 
   /* ===== Colors - Secondary (Solar Gold) ===== */
   --color-secondary: #FFD166; /* Solar Gold - Vertrouwen */
@@ -46,21 +46,21 @@
   --color-secondary-800: #CC8A00;
   --color-secondary-900: #996700;
 
-  /* ===== Colors - Success (Teal Blue) ===== */
-  --color-success: #0F5C5C; /* Teal Blue - Kalmte, intelligentie */
-  --color-success-hover: #0C4A4A;
-  --color-success-bg: #D4EBEB;
+  /* ===== Colors - Success (Emerald) ===== */
+  --color-success: #059669;
+  --color-success-hover: #047857;
+  --color-success-bg: #d1fae5;
   --color-success-foreground: #FFFFFF;
-  --color-success-50: #E8F4F4;
-  --color-success-100: #D4EBEB;
-  --color-success-200: #A9D7D7;
-  --color-success-300: #7EC3C3;
-  --color-success-400: #53AFAF;
-  --color-success-500: #0F5C5C;
-  --color-success-600: #0C4A4A;
-  --color-success-700: #093838;
-  --color-success-800: #062626;
-  --color-success-900: #031414;
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-success-800: #065f46;
+  --color-success-900: #064e3b;
 
   /* ===== Colors - Warning (Solar Gold) ===== */
   --color-warning: #FFD166;
@@ -95,8 +95,8 @@
   --color-destructive-900: #7F1D1D;
 
   /* ===== Typography ===== */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 
   --font-size-display-xl: 4.5rem;
   --font-size-display-lg: 3.75rem;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-primary-glow: 0 0 0 3px rgba(20, 184, 166, 0.25);
+  --shadow-primary-glow: 0 0 0 3px rgba(59, 130, 246, 0.25);
   --shadow-secondary-glow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
-  --gradient-warm: linear-gradient(135deg, #5EEAD4 0%, #14B8A6 100%);
-  --gradient-hero: linear-gradient(135deg, #14B8A6 0%, #3B82F6 100%);
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --gradient-warm: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
+  --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   --gradient-subtle: linear-gradient(to bottom, #F8FAFC 0%, #FFFFFF 100%);
-  --gradient-mesh: linear-gradient(135deg, #14B8A6 0%, #3B82F6 50%, #0D9488 100%);
+  --gradient-mesh: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;
@@ -304,8 +304,8 @@
 
 .bg-grid-subtle {
   background-image:
-    linear-gradient(to right, rgba(255, 107, 53, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 107, 53, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 

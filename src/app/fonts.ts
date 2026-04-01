@@ -1,14 +1,14 @@
-import { Lexend } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
-/** Body / UI — Lexend (variable) for exceptional readability */
-export const lexend = Lexend({
+/** Body + headings — Inter (variable) for clean, modern readability */
+export const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-lexend',
+  variable: '--font-inter',
   display: 'swap',
 })
 
-/** @deprecated Use `lexend` — same instance for layout compatibility */
-export const inter = lexend
+/** @deprecated Use `inter` — kept for layout compatibility */
+export const lexend = inter
 
-/** @deprecated Headings use Satoshi via Fontshare in layout */
-export const spaceGrotesk = lexend
+/** @deprecated Use `inter` — kept for layout compatibility */
+export const spaceGrotesk = inter

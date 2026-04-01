@@ -136,7 +136,7 @@ function WhyTeamsSection() {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight mb-4">
             {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -150,7 +150,7 @@ function WhyTeamsSection() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
                   <outcome.icon className="h-7 w-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold font-display group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
                   {outcome.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -190,7 +190,7 @@ function BuiltForSection() {
     <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight mb-4">
             {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -204,7 +204,7 @@ function BuiltForSection() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
                   <audience.icon className="h-7 w-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold font-display group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
                   {audience.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -232,7 +232,7 @@ function WhatYouGetSection() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl lg:text-4xl font-bold font-display">
+            <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
               {t('title')}{" "}
               <span className="text-primary">{t('titleHighlight')}</span>
             </h2>
@@ -249,7 +249,7 @@ function WhatYouGetSection() {
               ))}
             </div>
 
-            <Button asChild className="mt-6 gradient-primary hover:opacity-90" size="lg">
+            <Button asChild className="mt-6 rounded-2xl gradient-primary hover:opacity-90 py-4 px-8" size="lg">
               <Link href="/auth/register">
                 {t('cta')}
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -298,7 +298,7 @@ function TestimonialsSection() {
     <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight mb-4">
             {t('title')}
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -328,14 +328,14 @@ function SampleReportSection() {
     <section className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
             {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground">
             {t('subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" asChild className="gradient-primary">
+            <Button size="lg" asChild className="rounded-2xl gradient-primary py-4 px-8">
               <Link
                 href="/sample-report"
                 onClick={() => trackEvent("homepage_cta_sample_report_click", { location: "section" })}
@@ -344,7 +344,7 @@ function SampleReportSection() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" variant="outline" asChild className="rounded-2xl py-4 px-8">
               <Link href="/white-label-accessibility-reports">
                 {t('ctaSecondary')}
               </Link>
@@ -369,7 +369,7 @@ function AgencyOfferSection() {
               {t('badge')}
             </span>
           </div>
-          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
             {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -378,7 +378,7 @@ function AgencyOfferSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button
               size="lg"
-              className="button-hover gradient-primary border-0 shadow-soft px-8 py-6 text-base"
+              className="rounded-2xl gradient-primary border-0 shadow-soft py-4 px-8 text-base transition-all hover:-translate-y-0.5"
               asChild
             >
               <Link
@@ -392,7 +392,7 @@ function AgencyOfferSection() {
             <Button
               size="lg"
               variant="outline"
-              className="button-hover border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 px-8 py-6 text-base"
+              className="rounded-2xl border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 py-4 px-8 text-base transition-all hover:-translate-y-0.5"
               asChild
             >
               <Link
@@ -422,7 +422,7 @@ function WorkflowSection() {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight mb-4">
             {t('title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -436,7 +436,7 @@ function WorkflowSection() {
                 <s.icon className="h-8 w-8 text-white" />
               </div>
               <div className="text-sm font-medium text-primary">{t('stepLabel')} {s.step}</div>
-              <h3 className="text-xl font-semibold font-display">{s.title}</h3>
+              <h3 className="text-xl font-semibold">{s.title}</h3>
               <p className="text-muted-foreground leading-relaxed">{s.description}</p>
             </div>
           ))}
@@ -457,7 +457,7 @@ function PilotPartnerBanner() {
             <Sparkles className="h-4 w-4" />
             {t('badge')}
           </div>
-          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
             {t('title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -465,7 +465,7 @@ function PilotPartnerBanner() {
           </p>
           <PartnerStandardsBar />
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <Button size="lg" asChild className="gradient-primary">
+            <Button size="lg" asChild className="rounded-2xl gradient-primary py-4 px-8">
               <Link
                 href="/pilot-partner-program"
                 onClick={() => trackEvent("pilot_banner_click", { location: "homepage" })}
@@ -474,7 +474,7 @@ function PilotPartnerBanner() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" variant="outline" asChild className="rounded-2xl py-4 px-8">
               <Link
                 href="/partner-apply"
                 onClick={() => trackEvent("pilot_banner_click", { location: "homepage_apply" })}
@@ -502,7 +502,7 @@ function FinalCTASection() {
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display">
+          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
             {t('title')}
           </h2>
           <p className="text-xl leading-relaxed">
@@ -513,7 +513,7 @@ function FinalCTASection() {
             <Button
               size="lg"
               variant="secondary"
-              className="button-hover bg-background text-primary shadow-soft hover:bg-muted px-8 py-6 text-base"
+              className="rounded-2xl bg-background text-primary shadow-soft hover:bg-muted py-4 px-8 text-base transition-all hover:-translate-y-0.5"
               asChild
             >
               <Link
@@ -528,7 +528,7 @@ function FinalCTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="button-hover bg-transparent border-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:border-primary-foreground px-8 py-6 text-base"
+              className="rounded-2xl bg-transparent border-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:border-primary-foreground py-4 px-8 text-base transition-all hover:-translate-y-0.5"
               asChild
             >
               <Link href="/pricing">

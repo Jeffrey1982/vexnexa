@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { lexend } from './fonts'
+import { inter } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
@@ -56,13 +56,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={lexend.variable} suppressHydrationWarning>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,1&display=swap"
-          rel="stylesheet"
-        />
         {/* Browser color-scheme hint — ensures form controls, scrollbars render in correct mode */}
         <meta name="color-scheme" content="light dark" />
 

@@ -255,7 +255,7 @@ export function HomeHeroPremium() {
               {/* LCP-critical: H1 renders immediately, no opacity:0 start */}
               <h1
                 id="home-hero-heading"
-                className="font-display text-4xl font-bold tracking-tighter text-white sm:text-5xl lg:text-[3.5rem] lg:leading-[1.08]"
+                className="text-4xl font-semibold tracking-tighter text-white sm:text-5xl lg:text-[3.75rem] lg:leading-[1.08]"
               >
                 WCAG 2.2 without the noise.
                 <br />
@@ -284,7 +284,7 @@ export function HomeHeroPremium() {
               <div className="hero-fadeup-4 mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start">
                 <Button
                   size="lg"
-                  className="group h-13 rounded-xl bg-blue-500 px-8 text-base font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:bg-blue-400 hover:shadow-blue-500/30 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                  className="group h-auto rounded-2xl bg-blue-500 py-4 px-8 text-base font-medium text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:bg-blue-600 hover:shadow-blue-500/30 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
                   asChild
                 >
                   <Link
@@ -298,7 +298,7 @@ export function HomeHeroPremium() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-13 rounded-xl border-slate-700 bg-transparent px-8 text-base font-medium text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-slate-500 hover:bg-zinc-800/60 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                  className="h-auto rounded-2xl border-slate-600 bg-transparent py-4 px-8 text-base font-medium text-slate-200 transition-all hover:-translate-y-0.5 hover:border-slate-400 hover:bg-zinc-800/60 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
                   asChild
                 >
                   <Link
