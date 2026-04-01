@@ -226,7 +226,12 @@
       "multiSiteDashboard": "Multi-site dashboard with score comparisons",
       "severityRanked": "Severity-ranked issues with element-level detail",
       "remediationGuidance": "Remediation guidance with code examples",
-      "slackJira": "Slack and Jira integration (Pro plans and above)"
+      "slackJira": "Slack and Jira integration (Pro plans and above)",
+    "teamSeatsRoleBased": "Team seats with role-based access",
+    "multiSiteScoreComparisons": "Multi-site dashboard with score comparisons",
+    "severityElementDetail": "Severity-ranked issues with element-level detail",
+    "remediationCodeExamples": "Remediation guidance with code examples",
+    "slackJiraProPlans": "Slack and Jira integration (Pro plans and above)"
     },
     "finalCTA": {
       "title": "Ready to try it?",

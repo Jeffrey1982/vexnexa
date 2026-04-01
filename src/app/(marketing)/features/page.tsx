@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useTranslations } from "next-intl";
 import {
   Shield,
   Target,
@@ -32,79 +31,89 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://vexnexa.com/features" },
 };
 
-function FeaturesPage() {
-  const t = useTranslations('features');
-
-  const outcomeCards = [
-    {
-      icon: Target,
-      title: t('outcomeCards.catchIssues.title'),
-      description: t('outcomeCards.catchIssues.description'),
-    },
-    {
-      icon: FileText,
-      title: t('outcomeCards.clientReports.title'),
-      description: t('outcomeCards.clientReports.description'),
-    },
-    {
-      icon: Bell,
-      title: t('outcomeCards.monitorChanges.title'),
-      description: t('outcomeCards.monitorChanges.description'),
-    },
-    {
-      icon: BarChart3,
-      title: t('outcomeCards.prioritise.title'),
-      description: t('outcomeCards.prioritise.description'),
-    },
-  ];
-
-const workflowSteps = [
+const outcomeCards: {
+  icon: typeof Shield;
+  title: string;
+  description: string;
+}[] = [
   {
-    step: "1",
-    title: t('workflowSteps.scan.title'),
-    description: t('workflowSteps.scan.description'),
+    icon: Target,
+    title: "Catch issues before they stack up",
+    description:
+      "Scan any page against WCAG 2.2 and get severity-ranked violations with the affected elements, code context, and fix guidance your team actually needs.",
   },
   {
-    step: "2",
-    title: t('workflowSteps.review.title'),
-    description: t('workflowSteps.review.description'),
+    icon: FileText,
+    title: "Turn findings into client-ready reports",
+    description:
+      "Export PDF or DOCX reports with executive summaries, WCAG compliance matrices, and branded covers. White-label available on Business plans and above.",
   },
   {
-    step: "3",
-    title: t('workflowSteps.share.title'),
-    description: t('workflowSteps.share.description'),
+    icon: Bell,
+    title: "Monitor changes after releases",
+    description:
+      "Set up scheduled scans to catch regressions automatically. Get notified when scores drop or new critical issues appear — before your clients do.",
+  },
+  {
+    icon: BarChart3,
+    title: "Prioritise what to fix next",
+    description:
+      "Issues are ranked by severity and WCAG impact. Focus on the violations that block the most users first, and track score improvement over time.",
   },
 ];
 
-const builtForItems = [
+const workflowSteps: { step: string; title: string; description: string }[] = [
+  {
+    step: "1",
+    title: "Scan a site",
+    description:
+      "Paste a URL and run a scan. Results come back in seconds with every WCAG violation mapped to the affected element.",
+  },
+  {
+    step: "2",
+    title: "Review prioritised findings",
+    description:
+      "Issues are grouped by severity — critical, serious, moderate, minor. Each one shows the element, the WCAG criterion, and how to fix it.",
+  },
+  {
+    step: "3",
+    title: "Share reports and monitor over time",
+    description:
+      "Export branded reports for stakeholders. Schedule recurring scans to track improvement and catch new issues after every deployment.",
+  },
+];
+
+const builtForItems: {
+  icon: typeof Building2;
+  title: string;
+  description: string;
+}[] = [
   {
     icon: Building2,
-    title: t('builtFor.agencies.title'),
-    description: t('builtFor.agencies.description'),
+    title: "Agencies",
+    description:
+      "White-label reports, multi-site management, and team seats let you deliver accessibility as a service under your own brand.",
   },
   {
     icon: Users,
-    title: t('builtFor.internalTeams.title'),
-    description: t('builtFor.internalTeams.description'),
+    title: "Internal product and compliance teams",
+    description:
+      "Dashboard overview, scheduled monitoring, and exportable evidence for audits, tenders, and internal governance.",
   },
   {
     icon: Globe,
-    title: t('builtFor.multiSite.title'),
-    description: t('builtFor.multiSite.description'),
+    title: "Multi-site operators",
+    description:
+      "Manage dozens of sites from one account. Compare scores, spot regressions across properties, and report to stakeholders in one place.",
   },
 ];
 
 const specifics: string[] = [
-  t('specifics.wcagCoverage'),
-  t('specifics.reportExport'),
-  t('specifics.whiteLabel'),
-  t('specifics.scheduledScans'),
-  t('specifics.regressionAlerts'),
-  t('specifics.teamSeats'),
-  t('specifics.multiSiteDashboard'),
-  t('specifics.severityRankedIssues'),
-  t('specifics.remediationGuidance'),
-  t('specifics.slackJiraIntegration'),
+  "WCAG 2.1 and 2.2 AA coverage via axe-core engine",
+  "PDF and DOCX report export with branded covers",
+  "White-label: your logo, colours, company name, footer text",
+  "Scheduled scans — daily, weekly, or monthly",
+  "Regression alerts via email when scores drop",
   "Team seats with role-based access",
   "Multi-site dashboard with score comparisons",
   "Severity-ranked issues with element-level detail",
@@ -120,14 +129,16 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <Badge variant="outline" className="text-sm">
-              {t('hero.badge')}
+              Platform overview
             </Badge>
             <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
-              {t('hero.title')}
-              <span className="text-primary">{t('hero.titleHighlight')}</span>
+              Accessibility monitoring and reporting that fits{" "}
+              <span className="text-primary">real workflows</span>
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              {t('hero.subtitle')}
+              Move from one-off scans to repeatable monitoring, branded
+              reporting, and clearer accessibility follow-up for client and
+              internal teams.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
@@ -137,7 +148,7 @@ export default function FeaturesPage(): React.ReactElement {
                 size="lg"
                 className="gradient-primary text-white"
               >
-                {t('hero.ctaPrimary')}
+                Start your free scan
                 <ArrowRight className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
@@ -147,7 +158,7 @@ export default function FeaturesPage(): React.ReactElement {
                 size="lg"
                 variant="outline"
               >
-                {t('hero.ctaSecondary')}
+                View sample report
               </TrackedCTA>
             </div>
           </div>
@@ -159,10 +170,10 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              {t('outcomes.title')}
+              What VexNexa helps you do
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('outcomes.subtitle')}
+              Every feature is built around a practical outcome — not a checkbox.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -190,10 +201,10 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              {t('workflow.title')}
+              How it works
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t('workflow.subtitle')}
+              From first scan to ongoing monitoring in three steps.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -231,7 +242,7 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              {t('builtFor.title')}
+              Built for teams that take accessibility seriously
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -259,7 +270,7 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold font-display text-center mb-10">
-              {t('specifics.title')}
+              What&apos;s included
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
               {specifics.map((item, i) => (
@@ -278,10 +289,11 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              {t('finalCTA.title')}
+              Ready to try it?
             </h2>
             <p className="text-xl leading-relaxed">
-              {t('finalCTA.subtitle')}
+              Create a free account, scan your first site, and see the results
+              for yourself. No credit card required.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <TrackedCTA
@@ -292,7 +304,7 @@ export default function FeaturesPage(): React.ReactElement {
                 variant="secondary"
                 className="bg-background text-primary hover:bg-muted"
               >
-                {t('finalCTA.ctaPrimary')}
+                Start your free scan
                 <Zap className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
@@ -303,7 +315,7 @@ export default function FeaturesPage(): React.ReactElement {
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                {t('finalCTA.ctaSecondary')}
+                View sample report
               </TrackedCTA>
               <TrackedCTA
                 href="/contact"
@@ -313,7 +325,7 @@ export default function FeaturesPage(): React.ReactElement {
                 variant="outline"
                 className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                {t('finalCTA.ctaContact')}
+                Contact us
               </TrackedCTA>
             </div>
           </div>
