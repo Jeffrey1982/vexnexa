@@ -51,6 +51,28 @@
     },
     "copyright": "Alle rechten voorbehouden."
   },
+  "hero": {
+    "headline": "WCAG 2.2 zonder de ruis.",
+    "headline_accent": "White-label rapporten die echt verkopen.",
+    "subheadline": "Betrouwbare geautomatiseerde scans powered by axe-core. Minder false positives, actiebare fix-adviezen, en volledig branded PDF & Word rapporten. Gebouwd voor bureaus en EU-teams die de EAA serieus nemen.",
+    "primary_cta": "Start gratis scan",
+    "secondary_cta": "Bekijk live demo",
+    "trust_eu_hosted": "Alleen EU-gehost",
+    "trust_gdpr": "GDPR compliant",
+    "trust_no_card": "Geen creditcard vereist",
+    "eyebrow": "WCAG 2.2 · White-label · EU-ready",
+    "title": "Bewijs toegankelijkheid",
+    "titleHighlight": "bij elke levering.",
+    "subtitle": "White-label WCAG monitoring voor bureaus—vang regressies op, exporteer klantgerichte rapporten, en toon meetbare vooruitgang onder uw merk.",
+    "freeTier": "Start gratis: 1 site, 100 pagina's/maand. Geen kaart. Upgrade voor monitoring, Word exports, en volledige white-label.",
+    "ctaPrimary": "Start gratis",
+    "ctaSecondary": "Bekijk voorbeeldrapport",
+    "trust1": "WCAG 2.2 & EAA dekking",
+    "trust2": "White-label PDF & DOCX rapporten",
+    "trust3": "EU-gehost, GDPR compliant",
+    "imageAlt": "VexNexa toegankelijkheid scanning dashboard met gedetailleerde WCAG rapporten en issue prioritering",
+    "mockupAria": "Gestileerde voorbeeld van het VexNexa scan dashboard met een white-label rapport samenvatting kaart."
+  },
   "home": {
     "hero": {
       "eyebrow": "WCAG 2.2 · White-label · EU",

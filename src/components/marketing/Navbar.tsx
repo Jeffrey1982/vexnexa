@@ -48,10 +48,10 @@ export function Navbar({ className }: NavbarProps) {
   }, [onScroll]);
 
   const navigationItems = [
-    { name: "For Agencies", href: "/for-agencies" },
+    { name: t('forAgencies'), href: "/for-agencies" },
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
-    { name: "Sample Report", href: "/sample-report" },
+    { name: t('sampleReport'), href: "/sample-report" },
     { name: t('contact'), href: "/contact" },
   ];
 
@@ -258,7 +258,7 @@ export function Navbar({ className }: NavbarProps) {
                           router.push('/auth/register');
                         }}
                       >
-                        Start free scan
+                        {t('signup')}
                       </Button>
                       <Button
                         variant="secondary"

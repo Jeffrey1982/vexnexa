@@ -51,6 +51,28 @@
     },
     "copyright": "Todos os direitos reservados."
   },
+  "hero": {
+    "headline": "WCAG 2.2 sem o ruído.",
+    "headline_accent": "Relatórios de marca branca que realmente vendem.",
+    "subheadline": "Scans automatizados confiáveis powered by axe-core. Menos falsos positivos, conselhos de reparação acionáveis, e relatórios PDF & Word completamente com marca. Construído para agências e equipas da UE que levam a EAA a sério.",
+    "primary_cta": "Começar scan gratuito",
+    "secondary_cta": "Ver demo ao vivo",
+    "trust_eu_hosted": "Apenas alojado na UE",
+    "trust_gdpr": "Conforme com GDPR",
+    "trust_no_card": "Não é necessário cartão de crédito",
+    "eyebrow": "WCAG 2.2 · Marca branca · UE-ready",
+    "title": "Comprove a acessibilidade",
+    "titleHighlight": "em cada entrega.",
+    "subtitle": "Monitorização WCAG em marca branca para agências—detete regressões, exporte relatórios prontos para o cliente e mostre progresso mensurável com a sua marca.",
+    "freeTier": "Grátis: 1 site, 100 páginas/mês. Sem cartão. Faça upgrade para monitorização, exportação Word e white-label completo.",
+    "ctaPrimary": "Começar grátis",
+    "ctaSecondary": "Ver relatório de exemplo",
+    "trust1": "Cobertura WCAG 2.2 & EAA",
+    "trust2": "Relatórios PDF & DOCX de marca branca",
+    "trust3": "Alojado na UE, conforme com GDPR",
+    "imageAlt": "Dashboard de scan de acessibilidade VexNexa mostrando relatórios WCAG detalhados e priorização de problemas",
+    "mockupAria": "Vista estilizada do dashboard de scan VexNexa com um cartão de resumo de relatório de marca branca."
+  },
   "home": {
     "hero": {
       "eyebrow": "WCAG 2.2 · Marca branca · UE",

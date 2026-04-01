@@ -32,24 +32,6 @@ import {
 import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 
-const quickReasons = [
-  {
-    icon: FileText,
-    title: "Request a sample report walkthrough",
-    description: "See exactly what your clients or stakeholders will receive.",
-  },
-  {
-    icon: Building2,
-    title: "Ask about agency workflows",
-    description: "White-label reports, multi-site management, team seats.",
-  },
-  {
-    icon: CreditCard,
-    title: "Get help choosing the right plan",
-    description: "We'll recommend the setup that fits your team and volume.",
-  },
-];
-
 type Method = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
@@ -62,6 +44,24 @@ type Method = {
 function ContactPageContent() {
   const t = useTranslations('contact');
   const { toast } = useToast();
+
+  const quickReasons = [
+    {
+      icon: FileText,
+      title: t('quickReasons.sampleReport.title'),
+      description: t('quickReasons.sampleReport.description'),
+    },
+    {
+      icon: Building2,
+      title: t('quickReasons.agencyWorkflows.title'),
+      description: t('quickReasons.agencyWorkflows.description'),
+    },
+    {
+      icon: CreditCard,
+      title: t('quickReasons.choosePlan.title'),
+      description: t('quickReasons.choosePlan.description'),
+    },
+  ];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [consent, setConsent] = useState(false);

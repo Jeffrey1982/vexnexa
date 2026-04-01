@@ -49,7 +49,29 @@
       "security": "Security",
       "sla": "SLA & Support"
     },
-    "copyright": "All rights reserved."
+    "copyright": "Alle Rechte vorbehalten."
+  },
+  "hero": {
+    "headline": "WCAG 2.2 ohne den Lärm.",
+    "headline_accent": "White-Label-Berichte, die tatsächlich verkaufen.",
+    "subheadline": "Zuverlässige automatisierte Scans powered by axe-core. Weniger False Positives, umsetzbare Fix-Ratschläge und vollbranded PDF & Word-Berichte. Gebaut für Agenturen und EU-Teams, die die EAA ernst nehmen.",
+    "primary_cta": "Kostenlosen Scan starten",
+    "secondary_cta": "Live-Demo ansehen",
+    "trust_eu_hosted": "Nur EU-gehosted",
+    "trust_gdpr": "DSGVO-konform",
+    "trust_no_card": "Keine Kreditkarte erforderlich",
+    "eyebrow": "WCAG 2.2 · White-Label · EU-ready",
+    "title": "Barrierefreiheit belegen",
+    "titleHighlight": "bei jeder Auslieferung.",
+    "subtitle": "White-Label-WCAG-Monitoring für Agenturen—Regressionen erkennen, kundenfertige Berichte exportieren und messbare Fortschritte unter Ihrer Marke zeigen.",
+    "freeTier": "Kostenlos starten: 1 Website, 100 Seiten/Monat. Keine Karte. Upgrade für Monitoring, Word-Export und vollständiges White-Label.",
+    "ctaPrimary": "Kostenlos starten",
+    "ctaSecondary": "Beispielbericht ansehen",
+    "trust1": "WCAG 2.2 & EAA Abdeckung",
+    "trust2": "White-Label PDF & DOCX Berichte",
+    "trust3": "EU-gehosted, DSGVO-konform",
+    "imageAlt": "VexNexa Barrierefreiheit-Scanning-Dashboard mit detaillierten WCAG-Berichten und Issue-Priorisierung",
+    "mockupAria": "Stilisierte Vorschau des VexNexa Scan-Dashboards mit einer White-Label-Bericht-Zusammenfassungs-Karte."
   },
   "home": {
     "hero": {
