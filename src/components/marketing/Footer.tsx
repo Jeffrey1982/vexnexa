@@ -42,33 +42,33 @@ export function Footer({ className }: FooterProps) {
       if (response.ok) {
         if (result.requiresConfirmation) {
           toast({
-            title: "Confirmation email sent! 📧",
-            description: "Check your inbox and click the link to complete your subscription.",
+            title: t('brand.newsletter.confirmTitle'),
+            description: t('brand.newsletter.confirmDescription'),
           });
         } else {
           toast({
-            title: "Thanks for subscribing!",
-            description: "We'll keep you updated with new features and tips.",
+            title: t('brand.newsletter.successTitle'),
+            description: t('brand.newsletter.successDescription'),
           });
         }
         setEmail("");
       } else if (response.status === 409) {
         toast({
-          title: "This email address is already subscribed",
-          description: "Thanks for your interest!",
+          title: t('brand.newsletter.alreadyTitle'),
+          description: t('brand.newsletter.alreadyDescription'),
         });
       } else {
         toast({
           variant: "destructive",
-          title: "Something went wrong",
-          description: result.error || "Please try again later.",
+          title: t('brand.newsletter.errorTitle'),
+          description: result.error || t('brand.newsletter.errorDescription'),
         });
       }
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Something went wrong",
-        description: "Please try again later.",
+        title: t('brand.newsletter.errorTitle'),
+        description: t('brand.newsletter.errorDescription'),
       });
     } finally {
       setIsSubmitting(false);
@@ -125,7 +125,7 @@ export function Footer({ className }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2 hover:-translate-y-px"
-                  aria-label="Visit VexNexa on Twitter"
+                  aria-label={t('brand.twitter')}
                 >
                   <Twitter className="w-5 h-5" aria-hidden="true" />
                 </a>
@@ -147,7 +147,7 @@ export function Footer({ className }: FooterProps) {
                     {t('product.pricing')}
                   </Link>
                   <Link href="/dashboard" className="text-muted-foreground hover:text-primary transition-colors">
-                    Dashboard
+                    {t('product.dashboard')}
                   </Link>
                   <Link href="/changelog" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('product.changelog')}
@@ -157,28 +157,28 @@ export function Footer({ className }: FooterProps) {
 
               {/* Solutions */}
               <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Solutions</h3>
+                <h3 className="font-semibold text-lg">{t('solutions.title')}</h3>
                 <div className="flex flex-col space-y-3 text-sm">
                   <Link href="/for-agencies" className="text-muted-foreground hover:text-primary transition-colors">
-                    For Agencies
+                    {t('solutions.forAgencies')}
                   </Link>
                   <Link href="/eaa-compliance-monitoring" className="text-muted-foreground hover:text-primary transition-colors">
-                    EAA Monitoring
+                    {t('solutions.eaaMonitoring')}
                   </Link>
                   <Link href="/white-label-accessibility-reports" className="text-muted-foreground hover:text-primary transition-colors">
-                    White-Label Reports
+                    {t('solutions.whiteLabelReports')}
                   </Link>
                   <Link href="/sample-report" className="text-muted-foreground hover:text-primary transition-colors">
-                    Sample Report
+                    {t('solutions.sampleReport')}
                   </Link>
                   <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
-                    WCAG Scanner
+                    {t('solutions.wcagScanner')}
                   </Link>
                   <Link href="/pilot-partner-program" className="text-muted-foreground hover:text-primary transition-colors">
-                    Pilot Partner Program
+                    {t('solutions.pilotPartner')}
                   </Link>
                   <Link href="/accessibility-monitoring-agencies" className="text-muted-foreground hover:text-primary transition-colors">
-                    Agency Monitoring
+                    {t('solutions.agencyMonitoring')}
                   </Link>
                 </div>
               </div>
@@ -191,10 +191,10 @@ export function Footer({ className }: FooterProps) {
                     {t('support.contact')}
                   </Link>
                   <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">
-                    About
+                    {t('support.about')}
                   </Link>
                   <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                    Blog
+                    {t('support.blog')}
                   </Link>
                 </div>
               </div>
@@ -228,8 +228,22 @@ export function Footer({ className }: FooterProps) {
               <span>Vexnexa © {currentYear} • {t('copyright')}</span>
             </div>
 
+            <a
+              href="https://saasbrowser.com/en/saas/1465297/vexnexa"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://static-files.saasbrowser.com/saas-browser-badge-14.svg"
+                alt="VexNexa - SaaS database"
+                width={200}
+                height={40}
+              />
+            </a>
+
             <div className="text-xs text-muted-foreground text-center md:text-right max-w-md">
-              Public content scanning • No storage of personal data
+              {t('disclaimer')}
             </div>
           </div>
         </div>

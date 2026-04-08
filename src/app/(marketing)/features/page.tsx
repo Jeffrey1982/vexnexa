@@ -224,7 +224,7 @@ export default function FeaturesPage(): React.ReactElement {
               size="lg"
               className="gradient-primary text-white"
             >
-              Try it now — free scan
+              {t('workflow.cta')}
               <Zap className="ml-2 h-5 w-5" />
             </TrackedCTA>
           </div>
@@ -264,7 +264,7 @@ export default function FeaturesPage(): React.ReactElement {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold font-display text-center mb-10">
-              What&apos;s included
+              {t('specifics.title')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
               {specifics.map((item, i) => (

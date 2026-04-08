@@ -2,13 +2,7 @@
 
 import { Building2, Check } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
-
-const trustItems: string[] = [
-  "White-label report workflows",
-  "Ongoing monitoring support",
-  "Clear issue prioritisation",
-  "Built for agencies and EU-facing teams",
-];
+import { useTranslations } from "next-intl";
 
 interface AgencyCTAStripProps {
   /** Analytics location identifier, e.g. "homepage", "pricing" */
@@ -16,6 +10,14 @@ interface AgencyCTAStripProps {
 }
 
 export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
+  const t = useTranslations('agencyCTAStrip');
+  const trustItems: string[] = [
+    t('trust1'),
+    t('trust2'),
+    t('trust3'),
+    t('trust4'),
+  ];
+
   return (
     <section className="border-y border-border/40 bg-muted py-14">
       <div className="container mx-auto px-4">
@@ -23,15 +25,14 @@ export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
           <div className="flex items-center justify-center gap-2 text-primary">
             <Building2 className="h-5 w-5" />
             <span className="text-sm font-semibold uppercase tracking-wider">
-              For agencies
+              {t('badge')}
             </span>
           </div>
           <h2 className="text-2xl lg:text-3xl font-bold font-display">
-            Managing multiple client sites?
+            {t('title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Use VexNexa for repeatable scans, branded reports, and ongoing
-            accessibility monitoring.
+            {t('subtitle')}
           </p>
 
           {/* Trust proof */}
@@ -52,7 +53,7 @@ export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
               size="lg"
               className="gradient-primary"
             >
-              Start your free scan
+              {t('ctaPrimary')}
             </TrackedCTA>
             <TrackedCTA
               href={`/contact?from=${location}`}
@@ -61,7 +62,7 @@ export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
               size="lg"
               variant="outline"
             >
-              Contact us about agency use
+              {t('ctaSecondary')}
             </TrackedCTA>
           </div>
         </div>

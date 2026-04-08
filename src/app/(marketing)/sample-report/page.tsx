@@ -205,7 +205,7 @@ export default function SampleReportPage() {
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  We&apos;ll send you a personalized sample report within 1 business day.
+                  {t('downloadNote')}
                 </p>
               </CardContent>
             </Card>
@@ -222,10 +222,10 @@ export default function SampleReportPage() {
               <div className="gradient-primary p-8">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                   <div>
-                    <p className="text-sm opacity-80 mb-1">Accessibility Report</p>
+                    <p className="text-sm opacity-80 mb-1">{t('reportLabel')}</p>
                     <h2 className="text-2xl font-bold font-display">{SAMPLE_DOMAIN}</h2>
                     <p className="text-sm opacity-80 mt-2">
-                      Scanned: March 24, 2025 &middot; WCAG 2.2 AA &middot; axe-core engine
+                      {t('scannedInfo')}
                     </p>
                   </div>
                   <ScoreRing score={SAMPLE_SCORE} />
@@ -237,10 +237,10 @@ export default function SampleReportPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {(
                 [
-                  { label: "Critical", count: severityCounts.critical, color: "text-red-600" },
-                  { label: "Serious", count: severityCounts.serious, color: "text-orange-600" },
-                  { label: "Moderate", count: severityCounts.moderate, color: "text-yellow-600" },
-                  { label: "Minor", count: severityCounts.minor, color: "text-blue-600" },
+                  { label: t('severity.critical'), count: severityCounts.critical, color: "text-red-600" },
+                  { label: t('severity.serious'), count: severityCounts.serious, color: "text-orange-600" },
+                  { label: t('severity.moderate'), count: severityCounts.moderate, color: "text-yellow-600" },
+                  { label: t('severity.minor'), count: severityCounts.minor, color: "text-blue-600" },
                 ] as const
               ).map((s) => (
                 <Card key={s.label}>
@@ -257,7 +257,7 @@ export default function SampleReportPage() {
               <CardHeader>
                 <CardTitle className="font-display flex items-center gap-2">
                   <Shield className="h-5 w-5 text-primary" />
-                  Executive Summary
+                  {t('executiveSummary')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -270,15 +270,15 @@ export default function SampleReportPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="h-4 w-4 text-success" />
-                    <span>Heading hierarchy correct</span>
+                    <span>{t('checkHeading')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="h-4 w-4 text-success" />
-                    <span>ARIA landmarks present</span>
+                    <span>{t('checkAria')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <X className="h-4 w-4 text-destructive" />
-                    <span>Keyboard navigation incomplete</span>
+                    <span>{t('checkKeyboard')}</span>
                   </div>
                 </div>
               </CardContent>
@@ -289,7 +289,7 @@ export default function SampleReportPage() {
               <CardHeader>
                 <CardTitle className="font-display flex items-center gap-2">
                   <Eye className="h-5 w-5 text-primary" />
-                  Top Priority Issues
+                  {t('topPriority')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -320,16 +320,16 @@ export default function SampleReportPage() {
               <CardContent className="p-6">
                 <h3 className="font-semibold font-display mb-3 flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
-                  Full reports also include
+                  {t('fullReportTitle')}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
-                    "WCAG compliance matrix (pass/fail per criterion)",
-                    "Severity breakdown charts",
-                    "Complete issue list with all affected elements",
-                    "Remediation guidance with code examples",
-                    "Scan configuration and methodology",
-                    "EAA 2025 readiness indicator",
+                    t('fullReportItems.matrix'),
+                    t('fullReportItems.charts'),
+                    t('fullReportItems.complete'),
+                    t('fullReportItems.guidance'),
+                    t('fullReportItems.config'),
+                    t('fullReportItems.eaa'),
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm">
                       <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
@@ -370,10 +370,10 @@ export default function SampleReportPage() {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-6">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              See your own site&apos;s report
+              {t('ctaTitle')}
             </h2>
             <p className="text-xl leading-relaxed">
-              Create a free account and scan your website. Get your own accessibility report in minutes.
+              {t('ctaSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -386,7 +386,7 @@ export default function SampleReportPage() {
                   href="/auth/register"
                   onClick={() => trackEvent("sample_report_cta_click", { location: "footer" })}
                 >
-                  Start your free scan <Zap className="ml-2 h-5 w-5" />
+                  {t('ctaButton')} <Zap className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button
@@ -399,7 +399,7 @@ export default function SampleReportPage() {
                   href="/pricing"
                   onClick={() => trackEvent("pricing_cta_click", { location: "sample_report" })}
                 >
-                  View pricing
+                  {t('ctaPricing')}
                 </Link>
               </Button>
             </div>
