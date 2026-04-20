@@ -298,7 +298,43 @@
     "title": "See what a report looks like",
     "subtitle": "Professional, structured, and ready to share with clients or stakeholders. Browse a real sample report with accessibility scores, prioritized issues, and remediation guidance.",
     "ctaPrimary": "View sample report",
-    "ctaSecondary": "Learn about white-label reports"
+    "ctaSecondary": "Learn about white-label reports",
+    "badge": "Sample report",
+    "titleHighlight": "Report",
+    "downloadTitle": "Download Sample Reports",
+    "downloadSubtitle": "Get the same quality reports you'll receive with VexNexa, completely free.",
+    "downloadBranded": "Request branded PDF sample",
+    "downloadWhiteLabel": "Request white-label PDF sample",
+    "downloadNote": "We'll send you a personalized sample report within 1 business day.",
+    "reportLabel": "Accessibility Report",
+    "scannedInfo": "Scanned: March 24, 2025 · WCAG 2.2 AA · axe-core engine",
+    "severity": {
+      "critical": "Critical",
+      "serious": "Serious",
+      "moderate": "Moderate",
+      "minor": "Minor"
+    },
+    "executiveSummary": "Executive Summary",
+    "checkHeading": "Heading hierarchy correct",
+    "checkAria": "ARIA landmarks present",
+    "checkKeyboard": "Keyboard navigation incomplete",
+    "topPriority": "Top Priority Issues",
+    "fullReportTitle": "Full reports also include",
+    "fullReportItems": {
+      "matrix": "WCAG compliance matrix (pass/fail per criterion)",
+      "charts": "Severity breakdown charts",
+      "complete": "Complete issue list with all affected elements",
+      "guidance": "Remediation guidance with code examples",
+      "config": "Scan configuration and methodology",
+      "eaa": "EAA 2025 readiness indicator"
+    },
+    "exportTitle": "Export with your own branding",
+    "exportSubtitle": "Business and Enterprise plans include white-label PDF and Word reports. Add your logo, brand colours, and company details to every export.",
+    "exportLearnMore": "Learn about white-label reports",
+    "ctaTitle": "See your own site's report",
+    "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
+    "ctaButton": "Start your free scan",
+    "ctaPricing": "View pricing"
   },
   "agencyCTAStrip": {
     "badge": "For agencies",
@@ -594,6 +630,10 @@
       "q5": {
         "question": "Is VexNexa an accessibility overlay?",
         "answer": "No. We scan your code structure and report real WCAG violations. We never inject widgets or scripts into your site. Our reports help developers fix issues at the source."
+      },
+      "q6": {
+        "question": "What support is available?",
+        "answer": "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times."
       }
     },
     "finalCta": {

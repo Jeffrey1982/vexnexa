@@ -27,15 +27,25 @@
         "description": "Abonnez-vous à notre newsletter pour recevoir des mises à jour et des conseils d'accessibilité.",
         "placeholder": "Entrez votre email",
         "subscribe": "S'abonner",
-        "success": "Merci de votre inscription!"
-      }
+        "success": "Merci de votre inscription!",
+        "confirmTitle": "Confirmation email sent!",
+        "confirmDescription": "Check your inbox and click the link to complete your subscription.",
+        "successTitle": "Thanks for subscribing!",
+        "successDescription": "We'll keep you updated with new features and tips.",
+        "alreadyTitle": "This email address is already subscribed",
+        "alreadyDescription": "Thanks for your interest!",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "Please try again later."
+      },
+      "twitter": "Visit VexNexa on Twitter"
     },
     "product": {
       "title": "Produit",
       "features": "Fonctionnalités",
       "pricing": "Tarifs",
       "changelog": "Journal des Modifications",
-      "documentation": "Documentation"
+      "documentation": "Documentation",
+      "dashboard": "Dashboard"
     },
     "support": {
       "title": "Support",
@@ -43,7 +53,9 @@
       "help": "Centre d'Aide",
       "faq": "FAQ",
       "api": "Documentation API",
-      "status": "État du Système"
+      "status": "État du Système",
+      "about": "About",
+      "blog": "Blog"
     },
     "legal": {
       "title": "Légal",
@@ -52,7 +64,18 @@
       "security": "Sécurité",
       "sla": "SLA & Support"
     },
-    "copyright": "Tous droits réservés."
+    "copyright": "Tous droits réservés.",
+    "solutions": {
+      "title": "Solutions",
+      "forAgencies": "For Agencies",
+      "eaaMonitoring": "EAA Monitoring",
+      "whiteLabelReports": "White-Label Reports",
+      "sampleReport": "Sample Report",
+      "wcagScanner": "WCAG Scanner",
+      "pilotPartner": "Pilot Partner Program",
+      "agencyMonitoring": "Agency Monitoring"
+    },
+    "disclaimer": "Public content scanning • No storage of personal data"
   },
   "home": {
     "hero": {
@@ -1577,6 +1600,9 @@
       "subtitle": "Commencez à améliorer l'accessibilité de votre site web aujourd'hui. Gratuit pour 1 scan par semaine (inscription requise).",
       "startScan": "Commencer l'analyse gratuite",
       "viewPricing": "Voir les tarifs"
+    },
+    "finalCTA": {
+      "ctaContact": "Contact us"
     }
   },
   "demo": {
@@ -2384,6 +2410,42 @@
     "downloadNote": "Nous vous enverrons un rapport d'exemple personnalisé sous 1 jour ouvré.",
     "exportTitle": "Exporter en PDF ou DOCX — avec votre branding",
     "exportSubtitle": "Les plans Business et Enterprise incluent les exports en marque blanche. Remplacez la marque VexNexa par votre propre logo, nom d'entreprise, couleurs et texte de pied de page. Les rapports s'exportent en PDF partageable ou DOCX modifiable.",
-    "exportLearnMore": "En savoir plus sur les rapports en marque blanche"
+    "exportLearnMore": "En savoir plus sur les rapports en marque blanche",
+    "reportLabel": "Accessibility Report",
+    "scannedInfo": "Scanned: March 24, 2025 · WCAG 2.2 AA · axe-core engine",
+    "severity": {
+      "critical": "Critical",
+      "serious": "Serious",
+      "moderate": "Moderate",
+      "minor": "Minor"
+    },
+    "checkHeading": "Heading hierarchy correct",
+    "checkAria": "ARIA landmarks present",
+    "checkKeyboard": "Keyboard navigation incomplete",
+    "topPriority": "Top Priority Issues",
+    "fullReportTitle": "Full reports also include",
+    "fullReportItems": {
+      "matrix": "WCAG compliance matrix (pass/fail per criterion)",
+      "charts": "Severity breakdown charts",
+      "complete": "Complete issue list with all affected elements",
+      "guidance": "Remediation guidance with code examples",
+      "config": "Scan configuration and methodology",
+      "eaa": "EAA 2025 readiness indicator"
+    },
+    "ctaTitle": "See your own site's report",
+    "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
+    "ctaButton": "Start your free scan",
+    "ctaPricing": "View pricing"
+  },
+  "agencyCTAStrip": {
+    "badge": "For agencies",
+    "title": "Managing multiple client sites?",
+    "subtitle": "Use VexNexa for repeatable scans, branded reports, and ongoing accessibility monitoring.",
+    "trust1": "White-label report workflows",
+    "trust2": "Ongoing monitoring support",
+    "trust3": "Clear issue prioritisation",
+    "trust4": "Built for agencies and EU-facing teams",
+    "ctaPrimary": "Start your free scan",
+    "ctaSecondary": "Contact us about agency use"
   }
 }
