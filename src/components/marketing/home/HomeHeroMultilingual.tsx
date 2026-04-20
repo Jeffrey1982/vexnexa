@@ -193,7 +193,7 @@ function DashboardMockup() {
    Main Hero Component with i18n
    ──────────────────────────────────────────── */
 export function HomeHeroMultilingual() {
-  const t = useTranslations('hero');
+  const t = useTranslations('home');
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-zinc-950 to-zinc-900" aria-labelledby="home-hero-heading">

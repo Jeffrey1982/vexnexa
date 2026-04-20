@@ -21,3 +21,9 @@ pnpm-lock.yaml
 
 .vercel
 tsconfig.tsbuildinfo
+
+# Test artifacts
+playwright-report/
+test-results/
+coverage/
+.playwright/

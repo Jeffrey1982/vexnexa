@@ -157,84 +157,24 @@
     }
   },
   "features": {
-    "hero": {
-      "badge": "Platform overview",
-      "title": "Accessibility monitoring and reporting that fits",
-      "titleHighlight": "real workflows",
-      "subtitle": "Move from one-off scans to repeatable monitoring, branded reporting, and clearer accessibility follow-up for client and internal teams.",
-      "ctaPrimary": "Start your free scan",
-      "ctaSecondary": "View sample report"
+    "title": "Everything you need for accessibility compliance",
+    "automation": {
+      "title": "Automated Testing",
+      "description": "Schedule regular scans and get alerts when new issues are detected"
     },
-    "outcomes": {
-      "title": "What VexNexa helps you do",
-      "subtitle": "Every feature is built around a practical outcome — not a checkbox.",
-      "catchIssues": {
-        "title": "Catch issues before they stack up",
-        "description": "Scan any page against WCAG 2.2 and get severity-ranked violations with the affected elements, code context, and fix guidance your team actually needs."
-      },
-      "clientReports": {
-        "title": "Turn findings into client-ready reports",
-        "description": "Export PDF or DOCX reports with executive summaries, WCAG compliance matrices, and branded covers. White-label available on Business plans and above."
-      },
-      "monitorChanges": {
-        "title": "Monitor changes after releases",
-        "description": "Set up scheduled scans to catch regressions automatically. Get notified when scores drop or new critical issues appear — before your clients do."
-      },
-      "prioritise": {
-        "title": "Prioritise what to fix next",
-        "description": "Issues are ranked by severity and WCAG impact. Focus on the violations that block the most users first, and track score improvement over time."
-      }
+    "reports": {
+      "title": "Detailed Reports",
+      "description": "Export professional PDF/DOCX reports with your branding"
     },
-    "workflow": {
-      "title": "How it works",
-      "subtitle": "From first scan to ongoing monitoring in three steps.",
-      "cta": "Try it now — free scan",
-      "step1": {
-        "title": "Scan a site",
-        "description": "Paste a URL and run a scan. Results come back in seconds with every WCAG violation mapped to the affected element."
-      },
-      "step2": {
-        "title": "Review prioritised findings",
-        "description": "Issues are grouped by severity — critical, serious, moderate, minor. Each one shows the element, the WCAG criterion, and how to fix it."
-      },
-      "step3": {
-        "title": "Share reports and monitor over time",
-        "description": "Export branded reports for stakeholders. Schedule recurring scans to track improvement and catch new issues after every deployment."
-      }
+    "monitoring": {
+      "title": "Continuous Monitoring",
+      "description": "Track changes over time and prevent accessibility regressions"
     },
-    "builtFor": {
-      "title": "Built for teams that take accessibility seriously",
-      "agencies": {
-        "title": "Agencies",
-        "description": "White-label reports, multi-site management, and team seats let you deliver accessibility as a service under your own brand."
-      },
-      "internal": {
-        "title": "Internal product and compliance teams",
-        "description": "Dashboard overview, scheduled monitoring, and exportable evidence for audits, tenders, and internal governance."
-      },
-      "multiSite": {
-        "title": "Multi-site operators",
-        "description": "Manage dozens of sites from one account. Compare scores, spot regressions across properties, and report to stakeholders in one place."
-      }
-    },
-    "specifics": {
-      "title": "What's included",
-      "wcagCoverage": "WCAG 2.2 coverage with 8 additional categories",
-      "reportExport": "PDF and DOCX report export",
-      "whiteLabel": "White-label reports (Business plans and above)",
-      "scheduledScans": "Scheduled automated scans",
-      "regressionAlerts": "Regression alerts via email",
-      "teamSeats": "Team seats with role-based access",
-      "multiSiteDashboard": "Multi-site dashboard with score comparisons",
-      "severityRanked": "Severity-ranked issues with element-level detail",
-      "remediationGuidance": "Remediation guidance with code examples",
-      "slackJiraIntegration": "Slack and Jira integration (Pro plans and above)"
+    "team": {
+      "title": "Team Collaboration",
+      "description": "Share scans, assign tasks, and track remediation progress"
     },
     "finalCTA": {
-      "title": "Ready to try it?",
-      "subtitle": "Create a free account, scan your first site, and see the results for yourself. No credit card required.",
-      "ctaPrimary": "Start your free scan",
-      "ctaSecondary": "View sample report",
       "ctaContact": "Contact us"
     }
   },
@@ -355,48 +295,10 @@
     }
   },
   "sampleReport": {
-    "badge": "Sample report",
-    "title": "Sample Accessibility",
-    "titleHighlight": "Report",
-    "subtitle": "See what a comprehensive WCAG 2.2 accessibility report looks like. Download the PDF or view the online demo.",
-    "ctaPrimary": "Start your free scan",
-    "ctaSecondary": "Learn about white-label reports",
-    "downloadTitle": "Download Sample Reports",
-    "downloadSubtitle": "Get the same quality reports you'll receive with VexNexa, completely free.",
-    "downloadBranded": "Request branded PDF sample",
-    "downloadWhiteLabel": "Request white-label PDF sample",
-    "downloadNote": "We'll send you a personalized sample report within 1 business day.",
-    "reportLabel": "Accessibility Report",
-    "scannedInfo": "Scanned: March 24, 2025 · WCAG 2.2 AA · axe-core engine",
-    "severity": {
-      "critical": "Critical",
-      "serious": "Serious",
-      "moderate": "Moderate",
-      "minor": "Minor"
-    },
-    "executiveSummary": "Executive Summary",
-    "summaryP1": "The site has <strong>31 accessibility issues</strong> across 4 severity levels. The overall accessibility score is <strong>{score}/100</strong>, indicating room for improvement in key areas including image alternative text, form labelling, and colour contrast.",
-    "summaryP2": "<strong>3 critical issues</strong> are blocking access for assistive technology users and should be addressed immediately. Fixing the top 5 issues by severity would improve the score by an estimated 15–20 points.",
-    "checkHeading": "Heading hierarchy correct",
-    "checkAria": "ARIA landmarks present",
-    "checkKeyboard": "Keyboard navigation incomplete",
-    "topPriority": "Top Priority Issues",
-    "fullReportTitle": "Full reports also include",
-    "fullReportItems": {
-      "matrix": "WCAG compliance matrix (pass/fail per criterion)",
-      "charts": "Severity breakdown charts",
-      "complete": "Complete issue list with all affected elements",
-      "guidance": "Remediation guidance with code examples",
-      "config": "Scan configuration and methodology",
-      "eaa": "EAA 2025 readiness indicator"
-    },
-    "exportTitle": "Export with your own branding",
-    "exportSubtitle": "Business and Enterprise plans include white-label PDF and Word reports. Add your logo, brand colours, and company details to every export.",
-    "exportLearnMore": "Learn about white-label reports",
-    "ctaTitle": "See your own site's report",
-    "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
-    "ctaButton": "Start your free scan",
-    "ctaPricing": "View pricing"
+    "title": "See what a report looks like",
+    "subtitle": "Professional, structured, and ready to share with clients or stakeholders. Browse a real sample report with accessibility scores, prioritized issues, and remediation guidance.",
+    "ctaPrimary": "View sample report",
+    "ctaSecondary": "Learn about white-label reports"
   },
   "agencyCTAStrip": {
     "badge": "For agencies",
@@ -530,198 +432,27 @@
     "copyright": "All rights reserved.",
     "disclaimer": "Public content scanning • No storage of personal data"
   },
-  "hero": {
-      "headline": "WCAG 2.2 without the noise.",
-      "headline_accent": "White-label reports that actually sell.",
-      "subheadline": "Reliable automated scans powered by axe-core. Fewer false positives, actionable fix advice, and fully branded PDF & Word reports. Built for agencies and EU teams that take the EAA seriously.",
-      "primary_cta": "Start free scan",
-      "secondary_cta": "Watch live demo",
-      "trust_eu_hosted": "EU-hosted only",
-      "trust_gdpr": "GDPR compliant",
-      "trust_no_card": "No credit card required",
-      "eyebrow": "WCAG 2.2 · White-label · EU-ready",
-      "title": "Prove accessibility",
-      "titleHighlight": "on every delivery.",
-      "subtitle": "White-label WCAG monitoring for agencies—catch regressions, export client-ready reports, and show measurable progress under your brand.",
-      "freeTier": "Start free: 1 site, 100 pages/month. No card. Upgrade for monitoring, Word exports, and full white-label.",
-      "ctaPrimary": "Get started free",
-      "ctaSecondary": "View sample report",
-      "trust1": "WCAG 2.2 & EAA coverage",
-      "trust2": "White-label PDF & DOCX reports",
-      "trust3": "EU-hosted, GDPR compliant",
-      "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization",
-      "mockupAria": "Stylized preview of the VexNexa scan dashboard with a white-label report summary card."
-    },
-    "valuePillars": {
-      "deeper": {
-        "title": "Deeper coverage",
-        "description": "Keyboard, cognitive, structure, contrast, forms, landmarks, multimedia, ARIA semantics."
-      },
-      "actionable": {
-        "title": "Actionable reports",
-        "description": "Prioritized issues, code snippets, and remediation tips."
-      },
-      "monitoring": {
-        "title": "Continuous monitoring",
-        "description": "Schedule scans, track regressions, alert your team."
-      },
-      "teamReady": {
-        "title": "Team-ready",
-        "description": "Projects, roles, Slack/Jira integration, API."
-      }
-    },
-    "featuresSection": {
-      "title": "From scan to action in",
-      "titleHighlight": "minutes",
-      "subtitle": "No technical skills needed. Our reports are simple and clear so your team can start fixing issues right away.",
-      "cta": "Start free scan",
-      "imageAlt": "VexNexa scan detail report showing accessibility issues with prioritization and remediation tips",
-      "features": {
-        "category1": "8 additional scanning categories beyond WCAG",
-        "category2": "Keyboard navigation testing",
-        "category3": "Screen reader compatibility checks",
-        "category4": "Mobile accessibility analysis",
-        "category5": "Cognitive accessibility assessment",
-        "category6": "Motion & animation safety",
-        "category7": "Advanced color vision testing",
-        "category8": "Performance impact analysis"
-      }
-    },
-    "ctaBand": {
-      "title": "Check your site now",
-      "cta": "Start free scan"
-    },
-    "finalCta": {
-      "title": "Start scanning your website for free",
-      "subtitle": "Free forever for 1 website and up to 100 pages. No credit card required. Get your WCAG 2.2 report in minutes. Upgrade when you need more websites, pages, or advanced features.",
-      "ctaPrimary": "Start free scan",
-      "ctaSecondary": "View pricing"
-    },
-    "faq": {
-      "q1": {
-        "question": "Can you guarantee legal compliance?",
-        "answer": "No tool can guarantee 100% legal compliance in all contexts. VexNexa detects and reports issues, assists remediation, and helps you adhere to WCAG and related standards. For legal risk assessment, consider an expert audit and ongoing governance process."
-      },
-      "q2": {
-        "question": "How do page limits work?",
-        "answer": "Each plan includes a monthly page scan limit. A 'page' is one URL scanned. If you scan the same page multiple times in a month, each scan counts toward your limit. When you approach your limit, you'll receive a notification."
-      },
-      "q3": {
-        "question": "What if I exceed my plan?",
-        "answer": "Free Plan: Service is blocked at limit. Upgrade to a paid plan to continue scanning. Paid plans: Service continues but you'll receive notifications to upgrade if you consistently exceed your limits."
-      },
-      "q4": {
-        "question": "Do you support teams/SSO?",
-        "answer": "Pro plans support up to 5 team members. Business plans support up to 15 members with role-based access. SSO is available on Business and Enterprise plans. Contact us for Enterprise features."
-      },
-      "q5": {
-        "question": "Can I export reports?",
-        "answer": "PDF export is available on all paid plans. Word export is available on Pro and Business plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
-      },
-      "q6": {
-        "question": "What's monitored continuously?",
-        "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans."
-      },
-      "q7": {
-        "question": "Do I need to schedule a demo?",
-        "answer": "No! VexNexa is 100% self-serve. Sign up, enter your URL, and get your accessibility report in minutes. We don't offer demos or sales calls."
-      },
-      "q8": {
-        "question": "Is VexNexa an accessibility overlay?",
-        "answer": "No. We scan your code structure and give you WCAG violations to fix properly. We never inject widgets or scripts into your site. Overlays are controversial in the accessibility community—we analyze your actual code instead."
-      },
-      "q9": {
-        "question": "Can VexNexa automatically fix issues?",
-        "answer": "No. Real accessibility requires proper code changes. We show you exactly what's wrong and how to fix it, but you need to make the changes yourself. Automated 'fixes' don't address root causes."
-      },
-      "q10": {
-        "question": "Is there really a free plan?",
-        "answer": "Yes! Our free plan is forever free for 1 website and up to 100 pages per month. No credit card required. You get full WCAG 2.2 scanning, PDF reports, and 1 month of scan history. Upgrade only when you need more websites, pages, or advanced features like monitoring and Word exports."
-      }
-    },
-    "pillars": {
-      "title": "Why VexNexa?",
-      "subtitle": "Built for developers, agencies, and teams who ship code",
-      "deeper": {
-        "title": "No overlay widgets",
-        "description": "We scan your code structure. We don't inject controversial overlay scripts that the accessibility community warns against."
-      },
-      "actionable": {
-        "title": "Developer-friendly reports",
-        "description": "Technical language developers understand. Code-level insights. WCAG references. No vague 'compliance scores' without context."
-      },
-      "continuous": {
-        "title": "Instant & self-service",
-        "description": "Other tools make you sit through demos. We give you instant results and transparent pricing. Upgrade with a click."
-      },
-      "compliant": {
-        "title": "Multilingual platform",
-        "description": "Full platform in English, Dutch, and French. Not just translated help docs—the entire interface."
-      }
-    },
-    "benefits": {
-      "title": "Comprehensive accessibility testing",
-      "subtitle": "Go beyond basic WCAG checks with 8 additional test categories",
-      "categories": {
-        "keyboard": {
-          "title": "Keyboard Navigation",
-          "description": "Full keyboard accessibility testing including focus management and tab order"
-        },
-        "cognitive": {
-          "title": "Cognitive Load",
-          "description": "Measure content complexity, readability, and cognitive accessibility"
-        },
-        "structure": {
-          "title": "Document Structure",
-          "description": "Semantic HTML validation and proper heading hierarchy"
-        },
-        "contrast": {
-          "title": "Advanced Contrast",
-          "description": "WCAG AAA contrast checking with visual simulations"
-        },
-        "forms": {
-          "title": "Form Accessibility",
-          "description": "Complete form validation including labels, instructions, and error handling"
-        },
-        "landmarks": {
-          "title": "ARIA Landmarks",
-          "description": "Proper landmark structure for screen reader navigation"
-        },
-        "multimedia": {
-          "title": "Multimedia",
-          "description": "Video, audio accessibility with caption and transcript checking"
-        },
-        "aria": {
-          "title": "ARIA Semantics",
-          "description": "Advanced ARIA pattern validation and role verification"
-        }
-      }
-    },
-    "features": {
-      "title": "Everything you need for accessibility compliance",
-      "automation": {
-        "title": "Automated Testing",
-        "description": "Schedule regular scans and get alerts when new issues are detected"
-      },
-      "reports": {
-        "title": "Detailed Reports",
-        "description": "Export professional PDF/DOCX reports with your branding"
-      },
-      "monitoring": {
-        "title": "Continuous Monitoring",
-        "description": "Track changes over time and prevent accessibility regressions"
-      },
-      "team": {
-        "title": "Team Collaboration",
-        "description": "Share scans, assign tasks, and track remediation progress"
-      }
-    },
-    "cta": {
-      "title": "Start improving accessibility today",
-      "subtitle": "Join teams already using VexNexa for WCAG compliance",
-      "button": "Get started for free",
-      "noCard": "No credit card required"
-    },
+  "home": {
+    "headline": "WCAG 2.2 without the noise.",
+    "headline_accent": "White-label reports that actually sell.",
+    "subheadline": "Reliable automated scans powered by axe-core. Fewer false positives, actionable fix advice, and fully branded PDF & Word reports. Built for agencies and EU teams that take the EAA seriously.",
+    "primary_cta": "Start free scan",
+    "secondary_cta": "Watch live demo",
+    "trust_eu_hosted": "EU-hosted only",
+    "trust_gdpr": "GDPR compliant",
+    "trust_no_card": "No credit card required",
+    "eyebrow": "WCAG 2.2 · White-label · EU-ready",
+    "title": "Prove accessibility",
+    "titleHighlight": "on every delivery.",
+    "subtitle": "White-label WCAG monitoring for agencies—catch regressions, export client-ready reports, and show measurable progress under your brand.",
+    "freeTier": "Start free: 1 site, 100 pages/month. No card. Upgrade for monitoring, Word exports, and full white-label.",
+    "ctaPrimary": "Get started free",
+    "ctaSecondary": "View sample report",
+    "trust1": "WCAG 2.2 & EAA coverage",
+    "trust2": "White-label PDF & DOCX reports",
+    "trust3": "EU-hosted, GDPR compliant",
+    "imageAlt": "VexNexa accessibility scanning dashboard showing detailed WCAG reports and issue prioritization",
+    "mockupAria": "Stylized preview of the VexNexa scan dashboard with a white-label report summary card.",
     "socialProof": {
       "title": "Trusted by agencies across Europe",
       "logo1": "Agency Partner",
@@ -797,12 +528,6 @@
         "attribution": "Pilot partner — Compliance team, Belgium"
       }
     },
-    "sampleReport": {
-      "title": "See what a report looks like",
-      "subtitle": "Professional, structured, and ready to share with clients or stakeholders. Browse a real sample report with accessibility scores, prioritized issues, and remediation guidance.",
-      "ctaPrimary": "View sample report",
-      "ctaSecondary": "Learn about white-label reports"
-    },
     "agencyOffer": {
       "badge": "Agency offer",
       "title": "Get a branded accessibility report for one site",
@@ -869,7 +594,184 @@
       "q5": {
         "question": "Is VexNexa an accessibility overlay?",
         "answer": "No. We scan your code structure and report real WCAG violations. We never inject widgets or scripts into your site. Our reports help developers fix issues at the source."
+      }
+    },
+    "finalCta": {
+      "title": "Start scanning your website for free",
+      "subtitle": "Free forever for 1 website and up to 100 pages. No credit card required. Get your WCAG 2.2 report in minutes. Upgrade when you need more websites, pages, or advanced features.",
+      "ctaPrimary": "Start free scan",
+      "ctaSecondary": "View pricing"
+    },
+    "features": {
+      "title": "Everything you need for WCAG compliance",
+      "automation": {
+        "title": "Automated scanning",
+        "description": "Schedule recurring scans and get alerts when new issues are detected."
+      },
+      "reports": {
+        "title": "Client-ready reports",
+        "description": "Export branded PDF and DOCX reports for stakeholders in seconds."
+      },
+      "monitoring": {
+        "title": "Continuous monitoring",
+        "description": "Track accessibility over time and catch regressions after every deploy."
+      },
+      "team": {
+        "title": "Team collaboration",
+        "description": "Role-based access, shared sites, and assignable issues for your whole team."
+      }
+    },
+    "sampleReport": {
+      "title": "See what a report looks like",
+      "subtitle": "Professional, structured, and ready to share with clients or stakeholders.",
+      "ctaPrimary": "View sample report",
+      "ctaSecondary": "Learn about white-label reports"
     }
+  },
+  "valuePillars": {
+    "deeper": {
+      "title": "Deeper coverage",
+      "description": "Keyboard, cognitive, structure, contrast, forms, landmarks, multimedia, ARIA semantics."
+    },
+    "actionable": {
+      "title": "Actionable reports",
+      "description": "Prioritized issues, code snippets, and remediation tips."
+    },
+    "monitoring": {
+      "title": "Continuous monitoring",
+      "description": "Schedule scans, track regressions, alert your team."
+    },
+    "teamReady": {
+      "title": "Team-ready",
+      "description": "Projects, roles, Slack/Jira integration, API."
+    }
+  },
+  "featuresSection": {
+    "title": "From scan to action in",
+    "titleHighlight": "minutes",
+    "subtitle": "No technical skills needed. Our reports are simple and clear so your team can start fixing issues right away.",
+    "cta": "Start free scan",
+    "imageAlt": "VexNexa scan detail report showing accessibility issues with prioritization and remediation tips",
+    "features": {
+      "category1": "8 additional scanning categories beyond WCAG",
+      "category2": "Keyboard navigation testing",
+      "category3": "Screen reader compatibility checks",
+      "category4": "Mobile accessibility analysis",
+      "category5": "Cognitive accessibility assessment",
+      "category6": "Motion & animation safety",
+      "category7": "Advanced color vision testing",
+      "category8": "Performance impact analysis"
+    }
+  },
+  "ctaBand": {
+    "title": "Check your site now",
+    "cta": "Start free scan"
+  },
+  "faq": {
+    "q1": {
+      "question": "Can you guarantee legal compliance?",
+      "answer": "No tool can guarantee 100% legal compliance in all contexts. VexNexa detects and reports issues, assists remediation, and helps you adhere to WCAG and related standards. For legal risk assessment, consider an expert audit and ongoing governance process."
+    },
+    "q2": {
+      "question": "How do page limits work?",
+      "answer": "Each plan includes a monthly page scan limit. A 'page' is one URL scanned. If you scan the same page multiple times in a month, each scan counts toward your limit. When you approach your limit, you'll receive a notification."
+    },
+    "q3": {
+      "question": "What if I exceed my plan?",
+      "answer": "Free Plan: Service is blocked at limit. Upgrade to a paid plan to continue scanning. Paid plans: Service continues but you'll receive notifications to upgrade if you consistently exceed your limits."
+    },
+    "q4": {
+      "question": "Do you support teams/SSO?",
+      "answer": "Pro plans support up to 5 team members. Business plans support up to 15 members with role-based access. SSO is available on Business and Enterprise plans. Contact us for Enterprise features."
+    },
+    "q5": {
+      "question": "Can I export reports?",
+      "answer": "PDF export is available on all paid plans. Word export is available on Pro and Business plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
+    },
+    "q6": {
+      "question": "What's monitored continuously?",
+      "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans."
+    },
+    "q7": {
+      "question": "Do I need to schedule a demo?",
+      "answer": "No! VexNexa is 100% self-serve. Sign up, enter your URL, and get your accessibility report in minutes. We don't offer demos or sales calls."
+    },
+    "q8": {
+      "question": "Is VexNexa an accessibility overlay?",
+      "answer": "No. We scan your code structure and give you WCAG violations to fix properly. We never inject widgets or scripts into your site. Overlays are controversial in the accessibility community—we analyze your actual code instead."
+    },
+    "q9": {
+      "question": "Can VexNexa automatically fix issues?",
+      "answer": "No. Real accessibility requires proper code changes. We show you exactly what's wrong and how to fix it, but you need to make the changes yourself. Automated 'fixes' don't address root causes."
+    },
+    "q10": {
+      "question": "Is there really a free plan?",
+      "answer": "Yes! Our free plan is forever free for 1 website and up to 100 pages per month. No credit card required. You get full WCAG 2.2 scanning, PDF reports, and 1 month of scan history. Upgrade only when you need more websites, pages, or advanced features like monitoring and Word exports."
+    }
+  },
+  "pillars": {
+    "title": "Why VexNexa?",
+    "subtitle": "Built for developers, agencies, and teams who ship code",
+    "deeper": {
+      "title": "No overlay widgets",
+      "description": "We scan your code structure. We don't inject controversial overlay scripts that the accessibility community warns against."
+    },
+    "actionable": {
+      "title": "Developer-friendly reports",
+      "description": "Technical language developers understand. Code-level insights. WCAG references. No vague 'compliance scores' without context."
+    },
+    "continuous": {
+      "title": "Instant & self-service",
+      "description": "Other tools make you sit through demos. We give you instant results and transparent pricing. Upgrade with a click."
+    },
+    "compliant": {
+      "title": "Multilingual platform",
+      "description": "Full platform in English, Dutch, and French. Not just translated help docs—the entire interface."
+    }
+  },
+  "benefits": {
+    "title": "Comprehensive accessibility testing",
+    "subtitle": "Go beyond basic WCAG checks with 8 additional test categories",
+    "categories": {
+      "keyboard": {
+        "title": "Keyboard Navigation",
+        "description": "Full keyboard accessibility testing including focus management and tab order"
+      },
+      "cognitive": {
+        "title": "Cognitive Load",
+        "description": "Measure content complexity, readability, and cognitive accessibility"
+      },
+      "structure": {
+        "title": "Document Structure",
+        "description": "Semantic HTML validation and proper heading hierarchy"
+      },
+      "contrast": {
+        "title": "Advanced Contrast",
+        "description": "WCAG AAA contrast checking with visual simulations"
+      },
+      "forms": {
+        "title": "Form Accessibility",
+        "description": "Complete form validation including labels, instructions, and error handling"
+      },
+      "landmarks": {
+        "title": "ARIA Landmarks",
+        "description": "Proper landmark structure for screen reader navigation"
+      },
+      "multimedia": {
+        "title": "Multimedia",
+        "description": "Video, audio accessibility with caption and transcript checking"
+      },
+      "aria": {
+        "title": "ARIA Semantics",
+        "description": "Advanced ARIA pattern validation and role verification"
+      }
+    }
+  },
+  "cta": {
+    "title": "Start improving accessibility today",
+    "subtitle": "Join teams already using VexNexa for WCAG compliance",
+    "button": "Get started for free",
+    "noCard": "No credit card required"
   },
   "assurance": {
     "title": "Accessibility Assurance",

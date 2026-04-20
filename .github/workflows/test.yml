@@ -1,0 +1,105 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Keep Playwright from downloading browsers during `npm install` — we
+  # install only what the job needs in the Playwright step.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+  # Dummy env so modules that read env at import time don't crash.
+  DATABASE_URL: postgresql://test:test@localhost:5432/test
+  NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
+  SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
+  MOLLIE_API_KEY: test_ci_key
+  ADMIN_DASH_SECRET: ci-admin-secret
+  NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+jobs:
+  unit:
+    name: Unit tests + coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 14
+
+      - name: Comment coverage summary on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: coverage/coverage-summary.json
+          working-directory: .
+
+  e2e:
+    name: Playwright E2E (local)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Run E2E only on PRs and pushes to main; skip on draft PRs to save minutes.
+    if: github.event.pull_request.draft != true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Run Playwright E2E
+        run: npm run test:e2e:local
+        env:
+          # Start with production build rather than dev server for speed.
+          TEST_ENV: local
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14

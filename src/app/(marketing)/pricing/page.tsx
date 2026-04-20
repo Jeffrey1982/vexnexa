@@ -323,6 +323,8 @@ function PricingCards() {
             return (
               <Card
                 key={plan.key}
+                data-testid="plan-card"
+                data-plan={plan.key}
                 className={cn(
                   "relative flex flex-col transition-all duration-300",
                   plan.highlighted &&
