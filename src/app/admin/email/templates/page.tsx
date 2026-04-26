@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { requireAuth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import TemplatesClient from "./TemplatesClient";
 
@@ -19,7 +19,7 @@ interface EmailTemplate {
 const PAGE_SIZE = 25;
 
 export default async function TemplatesPage() {
-  try { await requireAuth(); } catch { redirect("/auth/login?redirect=/admin/email/templates"); }
+  try { await requireAdmin(); } catch { redirect("/auth/login?redirect=/admin/email/templates"); }
 
   let templates: EmailTemplate[] = [];
   let total = 0;

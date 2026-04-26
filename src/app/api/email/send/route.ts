@@ -19,7 +19,7 @@ interface SendRequestBody {
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: NO_STORE });
   }
@@ -31,7 +31,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: NO_STORE });
   }

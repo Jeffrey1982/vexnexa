@@ -1,9 +1,9 @@
-/**
- * Server-side helper for fetching admin API routes with ADMIN_DASH_SECRET.
- * Only used in Server Components — never imported on the client.
- */
+import { cookies } from "next/headers";
 
-const ADMIN_SECRET: string = process.env.ADMIN_DASH_SECRET ?? "";
+/**
+ * Server-side helper for fetching admin API routes with the current session.
+ * Only used in Server Components - never imported on the client.
+ */
 
 function getBaseUrl(): string {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
@@ -16,10 +16,12 @@ export async function adminFetch<T = unknown>(
   init?: RequestInit
 ): Promise<T> {
   const base = getBaseUrl();
+  const cookieHeader = (await cookies()).toString();
+
   const res = await fetch(`${base}${path}`, {
     ...init,
     headers: {
-      "x-admin-secret": ADMIN_SECRET,
+      Cookie: cookieHeader,
       "Content-Type": "application/json",
       ...(init?.headers ?? {}),
     },
@@ -33,8 +35,4 @@ export async function adminFetch<T = unknown>(
   }
 
   return res.json() as Promise<T>;
-}
-
-export function hasAdminSecret(): boolean {
-  return !!process.env.ADMIN_DASH_SECRET;
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { requireDevelopment } from '@/lib/dev-only'
 
 /**
  * GET /api/auth/diagnose
@@ -8,6 +9,9 @@ import { NextResponse } from 'next/server'
  * Does NOT expose secrets, tokens, or full URLs.
  */
 export async function GET() {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '(not set)'
   const authSiteUrl = process.env.NEXT_PUBLIC_AUTH_SITE_URL || '(not set)'
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || '(not set)'

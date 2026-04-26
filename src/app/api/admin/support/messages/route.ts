@@ -8,7 +8,7 @@ const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const url = new URL(req.url);
     const ticketId: string | null = url.searchParams.get("ticket_id");
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const body = await req.json();
     const { ticket_id, from_email, body: msgBody } = body as {

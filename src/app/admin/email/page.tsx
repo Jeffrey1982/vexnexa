@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { requireAuth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth";
+import { adminFetch } from "@/lib/adminFetch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -15,18 +16,6 @@ import {
 
 export const dynamic = "force-dynamic";
 
-const ADMIN_SECRET: string | undefined = process.env.ADMIN_DASH_SECRET;
-
-/**
- * Resolve the internal base URL for server-side fetch.
- * Uses VERCEL_URL (set automatically by Vercel) or falls back to APP_URL.
- */
-function getBaseUrl(): string {
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
-  return "http://localhost:3000";
-}
-
 interface HealthMetrics {
   total_sent: number;
   delivered: number;
@@ -38,18 +27,7 @@ interface HealthMetrics {
 }
 
 async function getHealthMetrics(range: string): Promise<HealthMetrics> {
-  const base = getBaseUrl();
-  const res = await fetch(`${base}/api/admin/email/health?range=${range}`, {
-    headers: { "x-admin-secret": ADMIN_SECRET ?? "" },
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    console.error("[admin/email] health fetch failed:", res.status, await res.text());
-    return { total_sent: 0, delivered: 0, failed: 0, opened: 0, clicked: 0, unsubscribed: 0, complained: 0 };
-  }
-
-  const data = await res.json();
+  const data = await adminFetch<Record<string, number>>(`/api/admin/email/health?range=${range}`)
   return {
     total_sent: data.total_sent ?? 0,
     delivered: data.delivered ?? 0,
@@ -81,7 +59,6 @@ async function getRecentLogs(
   limit: number = 50,
   offset: number = 0
 ): Promise<{ logs: EmailLog[]; total: number }> {
-  const base = getBaseUrl();
   const params = new URLSearchParams();
   params.set("limit", String(limit));
   params.set("offset", String(offset));
@@ -89,17 +66,7 @@ async function getRecentLogs(
   if (tag) params.set("tag", tag);
   if (status) params.set("status", status);
 
-  const res = await fetch(`${base}/api/admin/email/logs?${params.toString()}`, {
-    headers: { "x-admin-secret": ADMIN_SECRET ?? "" },
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    console.error("[admin/email] logs fetch failed:", res.status, await res.text());
-    return { logs: [], total: 0 };
-  }
-
-  const data = await res.json();
+  const data = await adminFetch<{ logs?: EmailLog[]; total?: number }>(`/api/admin/email/logs?${params.toString()}`)
   return { logs: (data.logs as EmailLog[]) ?? [], total: data.total ?? 0 };
 }
 
@@ -129,25 +96,9 @@ export default async function AdminEmailPage({ searchParams }: PageProps) {
   // Auth guard
   let user;
   try {
-    user = await requireAuth();
+    user = await requireAdmin();
   } catch {
     redirect("/auth/login?redirect=/admin/email");
-  }
-
-  if (!ADMIN_SECRET) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Card className="rounded-2xl max-w-md">
-          <CardContent className="pt-6 pb-6 px-6 text-center">
-            <AlertTriangle className="h-10 w-10 text-orange-500 mx-auto mb-3" />
-            <h2 className="text-lg font-bold mb-2">Configuration Error</h2>
-            <p className="text-muted-foreground text-sm">
-              ADMIN_DASH_SECRET is not configured in production.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    );
   }
 
   const params = await searchParams;

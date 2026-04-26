@@ -63,6 +63,9 @@ export async function POST() {
 }
 
 export async function GET() {
+  const devCheck = requireDevelopment()
+  if (devCheck) return devCheck
+
   return NextResponse.json({
     message: 'Email test endpoint ready. Send POST request to test all email functionality.',
     availableTests: [

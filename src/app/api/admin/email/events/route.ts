@@ -8,7 +8,7 @@ const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const url = new URL(req.url);
     const limit: number = Math.min(Number(url.searchParams.get("limit") || "50"), 200);

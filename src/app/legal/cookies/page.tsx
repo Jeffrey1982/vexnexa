@@ -1,6 +1,6 @@
 "use client"
 
-import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export default function CookiesPage() {
   return (
@@ -191,24 +191,24 @@ export default function CookiesPage() {
 
             <div className="mt-12 pt-8 border-t border-gray-200">
               <div className="flex flex-col md:flex-row gap-4">
-                <a
+                <Link
                   href="/legal/privacy"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
                   ← Back to Privacy Policy
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/legal/terms"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
                   Terms and Conditions
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
                   Back to Homepage
-                </a>
+                </Link>
               </div>
             </div>
           </div>

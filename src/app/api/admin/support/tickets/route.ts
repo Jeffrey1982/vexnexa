@@ -8,7 +8,7 @@ const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const url = new URL(req.url);
     const limit: number = Math.min(Number(url.searchParams.get("limit") || "50"), 200);
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const body = await req.json();
     const { email, subject, user_id, priority } = body as {
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
 export async function PATCH(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const body = await req.json();
     const { id, status, priority } = body as { id?: string; status?: string; priority?: string };

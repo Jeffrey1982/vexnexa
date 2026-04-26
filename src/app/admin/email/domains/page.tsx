@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
-import { requireAuth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ServerCog, CheckCircle2, AlertTriangle, ExternalLink } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 export default async function DomainsPage() {
-  try { await requireAuth(); } catch { redirect("/auth/login?redirect=/admin/email/domains"); }
+  try { await requireAdmin(); } catch { redirect("/auth/login?redirect=/admin/email/domains"); }
 
   const domain: string = process.env.MAILGUN_DOMAIN ?? "(not set)";
   const webhookUrl = "https://vexnexa.com/api/email/webhook";

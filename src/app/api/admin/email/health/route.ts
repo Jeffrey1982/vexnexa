@@ -12,7 +12,7 @@ const RANGE_HOURS: Record<Range, number> = {
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const url = new URL(req.url);
     const rangeParam: string = url.searchParams.get("range") ?? "24h";

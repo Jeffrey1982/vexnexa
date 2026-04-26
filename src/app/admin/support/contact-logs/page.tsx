@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { requireAuth } from "@/lib/auth";
-import { adminFetch, hasAdminSecret } from "@/lib/adminFetch";
+import { requireAdmin } from "@/lib/auth";
+import { adminFetch } from "@/lib/adminFetch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ClipboardList, AlertTriangle } from "lucide-react";
 
@@ -25,20 +25,7 @@ interface PageProps {
 }
 
 export default async function ContactLogsPage({ searchParams }: PageProps) {
-  try { await requireAuth(); } catch { redirect("/auth/login?redirect=/admin/support/contact-logs"); }
-
-  if (!hasAdminSecret()) {
-    return (
-      <div className="p-8 flex justify-center">
-        <Card className="rounded-2xl max-w-md">
-          <CardContent className="pt-6 pb-6 px-6 text-center">
-            <AlertTriangle className="h-10 w-10 text-orange-500 mx-auto mb-3" />
-            <p className="text-muted-foreground text-sm">ADMIN_DASH_SECRET is not configured.</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  try { await requireAdmin(); } catch { redirect("/auth/login?redirect=/admin/support/contact-logs"); }
 
   const params = await searchParams;
   const currentPage: number = Math.max(1, Number(params.page ?? "1"));

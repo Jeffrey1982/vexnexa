@@ -7,9 +7,19 @@ import { prisma } from './prisma'
 export async function isUserAdmin(userId: string): Promise<boolean> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { isAdmin: true }
+    select: { email: true, isAdmin: true }
   })
-  return user?.isAdmin || false
+
+  if (!user) return false
+
+  const adminEmails = (process.env.ADMIN_EMAILS || '')
+    .split(',')
+    .map(email => email.trim())
+    .filter(Boolean)
+
+  adminEmails.push('jeffrey.aay@gmail.com')
+
+  return user.isAdmin || adminEmails.includes(user.email)
 }
 
 export async function grantAdminRole(userId: string, grantedBy: string): Promise<void> {

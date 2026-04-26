@@ -8,7 +8,7 @@ const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    assertAdmin(req);
+    await assertAdmin();
 
     const contentType = req.headers.get("content-type") ?? "";
     let to: string;

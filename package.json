@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "node -e \"try{require('child_process').execSync('npx tsx scripts/migrate-production.ts',{stdio:'inherit'})}catch(e){}\" && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src next.config.js playwright.config.ts vitest.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
