@@ -38,7 +38,7 @@ playwright.config.ts     # Playwright config (local + staging projects)
 
 ## Current state
 
-- **14 test files, 359 passing, 12 skipped, 0 failing.**
+- **14 test files, 357 passing, 12 skipped, 0 failing.**
 - Coverage is collected for `src/lib/**`, `src/app/api/**`, and
   `src/middleware.ts`. Thresholds are intentionally conservative
   (25% lines / 55% branches) so CI goes green today; ratchet up as
