@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -27,6 +28,7 @@ const languages: Language[] = [
 ];
 
 export function LanguageSelector() {
+  const t = useTranslations("nav");
   const [currentLanguage, setCurrentLanguage] = React.useState<Language>(languages[0]); // English is first
 
   const handleLanguageChange = (language: Language) => {
@@ -62,7 +64,7 @@ export function LanguageSelector() {
           variant="ghost"
           size="sm"
           className="text-2xl px-2"
-          aria-label="Select language"
+          aria-label={t("language")}
           title={currentLanguage.nativeName}
         >
           {currentLanguage.flag}

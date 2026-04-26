@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics-events";
 
@@ -31,6 +32,7 @@ const SCORE_END = 94;
    Dashboard Mockup — CSS-animated, minimal JS
    ──────────────────────────────────────────── */
 function DashboardMockup() {
+  const t = useTranslations("home.heroMockup");
   const scoreRef = useRef<HTMLSpanElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
   const pctRef = useRef<HTMLSpanElement>(null);
@@ -78,7 +80,7 @@ function DashboardMockup() {
     <div
       className="hero-mockup relative rounded-3xl border border-slate-700/60 bg-zinc-900/80 p-5 shadow-xl"
       role="img"
-      aria-label="Animated preview of the VexNexa scan dashboard"
+      aria-label={t("ariaLabel")}
     >
       {/* Dashboard header — typographic logo, no SVG icon */}
       <div className="mb-4 flex items-center justify-between border-b border-slate-700/50 pb-3">
@@ -90,20 +92,20 @@ function DashboardMockup() {
             <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
           </span>
-          <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">Live Scan</span>
+          <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">{t("liveScan")}</span>
         </div>
       </div>
 
       {/* Target URL */}
       <div className="mb-4 rounded-xl bg-zinc-800/70 px-4 py-2.5 border border-slate-700/40">
-        <p className="text-[11px] text-zinc-500 mb-0.5">Target</p>
+        <p className="text-[11px] text-zinc-500 mb-0.5">{t("target")}</p>
         <p className="text-sm font-medium text-zinc-200 tracking-tight">yourclient.com</p>
       </div>
 
       {/* Progress bar — scaleX animation (GPU, no layout) */}
       <div className="mb-5">
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[11px] font-medium text-zinc-400">Scan progress</span>
+          <span className="text-[11px] font-medium text-zinc-400">{t("scanProgress")}</span>
           <span ref={pctRef} className="text-[11px] font-semibold text-blue-400">...%</span>
         </div>
         <div className="h-2 w-full rounded-full bg-zinc-800 overflow-hidden">
@@ -131,7 +133,7 @@ function DashboardMockup() {
           </span>
         </div>
         <div>
-          <p className="text-lg font-bold text-zinc-100">Compliance Score</p>
+          <p className="text-lg font-bold text-zinc-100">{t("complianceScore")}</p>
           <p className="text-[13px] text-zinc-400">WCAG 2.2 Level AA</p>
         </div>
       </div>
@@ -143,8 +145,8 @@ function DashboardMockup() {
             <span className="text-[10px] font-bold text-red-400">!</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] font-semibold text-red-300 truncate">Images missing alt text</p>
-            <p className="text-[10px] text-red-400/70">Critical &middot; 4 elements</p>
+            <p className="text-[12px] font-semibold text-red-300 truncate">{t("missingAlt")}</p>
+            <p className="text-[10px] text-red-400/70">{t("criticalElements")}</p>
           </div>
         </div>
         <div className="flex items-center gap-3 rounded-xl bg-amber-500/10 border border-amber-500/20 px-3.5 py-2.5">
@@ -152,8 +154,8 @@ function DashboardMockup() {
             <span className="text-[10px] font-bold text-amber-400">~</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] font-semibold text-amber-300 truncate">Insufficient colour contrast</p>
-            <p className="text-[10px] text-amber-400/70">Moderate &middot; 2 elements</p>
+            <p className="text-[12px] font-semibold text-amber-300 truncate">{t("lowContrast")}</p>
+            <p className="text-[10px] text-amber-400/70">{t("moderateElements")}</p>
           </div>
         </div>
       </div>
@@ -166,7 +168,7 @@ function DashboardMockup() {
             <span className="text-[11px] font-semibold text-zinc-300">Your Digital Agency</span>
           </div>
           <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-400">
-            White-label
+            {t("whiteLabel")}
           </span>
         </div>
         <div className="space-y-1.5">
@@ -176,7 +178,7 @@ function DashboardMockup() {
         </div>
         <div className="mt-3 flex items-center gap-2">
           <div className="h-1 w-1 rounded-full bg-blue-500" />
-          <span className="text-[10px] text-zinc-500">PDF &amp; Word export ready</span>
+          <span className="text-[10px] text-zinc-500">{t("exportReady")}</span>
         </div>
       </div>
     </div>
@@ -234,6 +236,8 @@ const heroStyles = `
    Main Hero Section
    ──────────────────────────────────────────── */
 export function HomeHeroPremium() {
+  const t = useTranslations("home");
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: heroStyles }} />
@@ -257,27 +261,25 @@ export function HomeHeroPremium() {
                 id="home-hero-heading"
                 className="text-4xl font-semibold tracking-tighter text-white sm:text-5xl lg:text-[3.75rem] lg:leading-[1.08]"
               >
-                WCAG 2.2 without the noise.
+                {t("headline")}
                 <br />
                 <span className="bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">
-                  White-label reports that actually sell.
+                  {t("headline_accent")}
                 </span>
               </h1>
 
               {/* LCP-critical: subheadline also renders immediately */}
               <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-zinc-400 lg:mx-0">
-                Reliable automated scans powered by axe-core. Fewer false positives,
-                actionable fix advice, and fully branded PDF &amp; Word reports.
-                Built for agencies and EU teams that take the EAA seriously.
+                {t("subheadline")}
               </p>
 
               {/* Trust element */}
               <p className="hero-fadeup-3 mx-auto mt-5 flex flex-wrap items-center justify-center gap-x-2 text-sm text-zinc-500 lg:mx-0 lg:justify-start">
-                <span>EU-hosted only</span>
+                <span>{t("trust_eu_hosted")}</span>
                 <span className="text-zinc-700" aria-hidden="true">&bull;</span>
-                <span>GDPR compliant</span>
+                <span>{t("trust_gdpr")}</span>
                 <span className="text-zinc-700" aria-hidden="true">&bull;</span>
-                <span>No credit card required</span>
+                <span>{t("trust_no_card")}</span>
               </p>
 
               {/* Buttons */}
@@ -291,7 +293,7 @@ export function HomeHeroPremium() {
                     href="/auth/register"
                     onClick={() => trackEvent("homepage_cta_primary_click", { location: "hero" })}
                   >
-                    Start free scan
+                    {t("primary_cta")}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </Link>
                 </Button>
@@ -305,7 +307,7 @@ export function HomeHeroPremium() {
                     href="#demo"
                     onClick={() => trackEvent("homepage_cta_demo_click", { location: "hero" })}
                   >
-                    Watch live demo
+                    {t("secondary_cta")}
                   </Link>
                 </Button>
               </div>
@@ -324,10 +326,10 @@ export function HomeHeroPremium() {
                     <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
                   </span>
-                  <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">Live Scan</span>
+                  <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">{t("heroMockup.liveScan")}</span>
                 </div>
                 <p className="text-5xl font-bold tabular-nums text-blue-400">94</p>
-                <p className="mt-1 text-sm text-zinc-400">Compliance Score &middot; WCAG 2.2 AA</p>
+                <p className="mt-1 text-sm text-zinc-400">{t("heroMockup.complianceScore")} &middot; WCAG 2.2 AA</p>
                 <div className="mt-3 h-2 w-full rounded-full bg-zinc-800">
                   <div className="h-2 w-[94%] rounded-full bg-gradient-to-r from-blue-600 to-blue-400" />
                 </div>

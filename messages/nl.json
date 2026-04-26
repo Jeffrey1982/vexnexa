@@ -424,6 +424,39 @@
         "question": "Welke ondersteuning is beschikbaar?",
         "answer": "Alle gebruikers krijgen e-mailondersteuning. We streven ernaar binnen 1 werkdag te reageren. Business- en Enterprise-abonnementen bevatten prioriteitsondersteuning met snellere reactietijden."
       }
+    },
+    "headline": "WCAG 2.2 zonder de ruis.",
+    "headline_accent": "White-label rapporten die echt verkopen.",
+    "subheadline": "Betrouwbare geautomatiseerde scans powered by axe-core. Minder false positives, actiebare fix-adviezen, en volledig branded PDF & Word rapporten. Gebouwd voor bureaus en EU-teams die de EAA serieus nemen.",
+    "primary_cta": "Start gratis scan",
+    "secondary_cta": "Bekijk live demo",
+    "trust_eu_hosted": "Alleen EU-gehost",
+    "trust_gdpr": "GDPR compliant",
+    "trust_no_card": "Geen creditcard vereist",
+    "eyebrow": "WCAG 2.2 · White-label · EU-ready",
+    "title": "Bewijs toegankelijkheid",
+    "titleHighlight": "bij elke levering.",
+    "subtitle": "White-label WCAG monitoring voor bureaus—vang regressies op, exporteer klantgerichte rapporten, en toon meetbare vooruitgang onder uw merk.",
+    "freeTier": "Start gratis: 1 site, 100 pagina's/maand. Geen kaart. Upgrade voor monitoring, Word exports, en volledige white-label.",
+    "ctaPrimary": "Start gratis",
+    "ctaSecondary": "Bekijk voorbeeldrapport",
+    "trust1": "WCAG 2.2 & EAA dekking",
+    "trust2": "White-label PDF & DOCX rapporten",
+    "trust3": "EU-gehost, GDPR compliant",
+    "imageAlt": "VexNexa toegankelijkheid scanning dashboard met gedetailleerde WCAG rapporten en issue prioritering",
+    "mockupAria": "Gestileerde voorbeeld van het VexNexa scan dashboard met een white-label rapport samenvatting kaart.",
+    "heroMockup": {
+      "ariaLabel": "Geanimeerde preview van het VexNexa scan-dashboard",
+      "liveScan": "Live scan",
+      "target": "Doel",
+      "scanProgress": "Scanvoortgang",
+      "complianceScore": "Compliance-score",
+      "missingAlt": "Afbeeldingen missen alt-tekst",
+      "criticalElements": "Kritiek ? 4 elementen",
+      "lowContrast": "Onvoldoende kleurcontrast",
+      "moderateElements": "Matig ? 2 elementen",
+      "whiteLabel": "White-label",
+      "exportReady": "PDF- en Word-export klaar"
     }
   },
   "pricing": {
@@ -459,11 +492,13 @@
         "cta": "Start met Starter",
         "features": {
           "sites": "{count} website",
-          "pages": "{count} pagina's/maand",
+          "pages": "pagina?s/maand",
           "users": "{count} gebruiker",
           "pdfExport": "PDF export",
           "basicReports": "Basis rapporten",
-          "emailSupport": "E-mail support"
+          "emailSupport": "E-mail support",
+          "site": "website",
+          "user": "gebruiker"
         },
         "limitations": {
           "noWord": "Geen Word export",
@@ -925,6 +960,11 @@
       "title": "Liever eerst proberen?",
       "subtitle": "Start direct met een gratis scan van je website. Registratie verplicht, resultaten binnen seconden.",
       "button": "Start gratis scan"
+    },
+    "pageHero": {
+      "title": "Praat met ons over rapporten, monitoring of",
+      "titleHighlight": "agencygebruik",
+      "subtitle": "Vragen over plannen, white-label rapportage of hoe VexNexa in je workflow past? We helpen je snel de juiste setup te vinden."
     }
   },
   "auth": {
@@ -1505,11 +1545,13 @@
       "description": "Ontdek alle features van VexNexa: Dashboard, scan details, PDF export, prioriteiten en komende integraties."
     },
     "hero": {
-      "badge": "✨ Alle features",
+      "badge": "Alle functies",
       "title": "Alles wat je nodig hebt voor",
       "titleHighlight": "WCAG-compliance",
-      "subtitle": "Van snelle scans tot complete site-analyses. Dashboard, exports, prioriteiten en binnenkort team-collaboration.",
-      "cta": "Start gratis scan"
+      "subtitle": "Dashboard, exports met branding, teamsamenwerking, continue monitoring en bruikbare WCAG-rapporten.",
+      "cta": "Start gratis scan",
+      "ctaPrimary": "Start gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport"
     },
     "priorities": {
       "title": "Issue Prioriteiten",
@@ -1638,7 +1680,76 @@
       "viewPricing": "Bekijk prijzen"
     },
     "finalCTA": {
-      "ctaContact": "Contact us"
+      "ctaContact": "Neem contact op",
+      "title": "Klaar om toegankelijkheid herhaalbaar te maken?",
+      "subtitle": "Start met een gratis scan en upgrade wanneer je rapporten met branding, monitoring en teamworkflows nodig hebt.",
+      "ctaPrimary": "Start gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport"
+    },
+    "outcomes": {
+      "title": "Maak van toegankelijkheidschecks een herhaalbaar proces",
+      "subtitle": "VexNexa helpt teams problemen te vinden, prioriteiten uit te leggen en verbetering aan te tonen.",
+      "catchIssues": {
+        "title": "Vind problemen v??r livegang",
+        "description": "Scan pagina?s op WCAG 2.2 en bekijk geprioriteerde bevindingen met details per element."
+      },
+      "clientReports": {
+        "title": "Maak klantklare rapporten",
+        "description": "Exporteer duidelijke PDF- en DOCX-rapporten met samenvattingen, ernstverdeling en hersteladvies."
+      },
+      "monitorChanges": {
+        "title": "Monitor wijzigingen in de tijd",
+        "description": "Plan terugkerende scans en ontvang waarschuwingen wanneer scores dalen of nieuwe problemen verschijnen."
+      },
+      "prioritise": {
+        "title": "Prioriteer wat telt",
+        "description": "Resultaten op ernst helpen developers en stakeholders eerst de grootste impact aan te pakken."
+      }
+    },
+    "workflow": {
+      "title": "Een eenvoudige workflow van scan naar bewijs",
+      "subtitle": "Scan, beoordeel, exporteer een rapport en blijf monitoren terwijl de site verandert.",
+      "step1": {
+        "title": "Scan een URL",
+        "description": "Voer een pagina of site in en krijg binnen minuten automatische toegankelijkheidsbevindingen."
+      },
+      "step2": {
+        "title": "Beoordeel prioriteiten",
+        "description": "Bekijk ernst, WCAG-referenties, getroffen elementen en praktisch hersteladvies."
+      },
+      "step3": {
+        "title": "Rapporteer en monitor",
+        "description": "Deel rapporten met branding en plan vervolgscans om voortgang te volgen."
+      },
+      "cta": "Start je eerste scan"
+    },
+    "builtFor": {
+      "title": "Gebouwd voor teams die toegankelijke sites opleveren",
+      "agencies": {
+        "title": "Agencies en studio?s",
+        "description": "Lever toegankelijkheidsrapporten en monitoring voor meerdere klantsites."
+      },
+      "internal": {
+        "title": "Interne productteams",
+        "description": "Volg toegankelijkheid v??r releases en documenteer voortdurende verbetering."
+      },
+      "multiSite": {
+        "title": "Portfolio?s met meerdere sites",
+        "description": "Beheer scans, trends en rapporten over een groeiend portfolio."
+      }
+    },
+    "specifics": {
+      "title": "Wat is inbegrepen",
+      "wcagCoverage": "WCAG 2.2 AA-scans met axe-core",
+      "reportExport": "PDF- en DOCX-rapportexport",
+      "whiteLabel": "White-label branding voor klantrapporten",
+      "scheduledScans": "Geplande terugkerende scans",
+      "regressionAlerts": "Waarschuwingen bij scoredaling en regressies",
+      "teamSeats": "Teamleden en rolgebaseerde toegang",
+      "multiSiteDashboard": "Multi-site dashboard",
+      "severityRanked": "Probleemlijsten op ernst gesorteerd",
+      "remediationGuidance": "Duidelijk hersteladvies",
+      "slackJiraIntegration": "Ondersteuning voor Slack- en Jira-workflows"
     }
   },
   "demo": {
@@ -2428,7 +2539,7 @@
   },
   "sampleReport": {
     "badge": "Voorbeeldrapport",
-    "title": "Hoe een VexNexa toegankelijkheidsrapport eruitziet",
+    "title": "Hoe een VexNexa toegankelijkheidsrapport",
     "titleHighlight": "eruitziet",
     "subtitle": "Dit is een voorbeeldrapport gebaseerd op realistische scandata. Business- en Enterprise-abonnementen kunnen dit white-labelen met je eigen logo, kleuren en bedrijfsnaam.",
     "ctaPrimary": "Scan je eigen site",
@@ -2483,5 +2594,45 @@
     "trust4": "Built for agencies and EU-facing teams",
     "ctaPrimary": "Start your free scan",
     "ctaSecondary": "Contact us about agency use"
+  },
+  "getStarted": {
+    "header": {
+      "badge": "Snelle start",
+      "title": "Start met je eerste scan",
+      "subtitle": "Vul je website-URL in en wij voeren een uitgebreide toegankelijkheidsscan uit"
+    }
+  },
+  "websiteAccessibilityChecker": {
+    "hero": {
+      "badge": "Slimmere toegankelijkheidscheck",
+      "title": "Een toegankelijkheidschecker die",
+      "titleHighlight": "prioriteert wat telt",
+      "subtitle": "Stop met zoeken in ongesorteerde foutlijsten. VexNexa controleert je site op WCAG-overtredingen en toont welke problemen kritiek, klein of daartussenin zijn, plus waar ze in je HTML staan.",
+      "ctaPrimary": "Check je site gratis",
+      "ctaSecondary": "Bekijk alle functies",
+      "note": "Gratis check. Geen creditcard. Resultaten in seconden."
+    }
+  },
+  "wcagComplianceReport": {
+    "hero": {
+      "badge": "PDF- en DOCX-export",
+      "title": "WCAG-compliancerapporten",
+      "titleHighlight": "die stakeholders echt lezen",
+      "subtitle": "Ruwe scandata krijgt zelden budget goedgekeurd. VexNexa maakt gestructureerde rapporten met managementsamenvattingen, ernstverdeling en geprioriteerde actielijsten.",
+      "ctaPrimary": "Genereer je eerste rapport",
+      "ctaSecondary": "Bekijk een voorbeeldrapport",
+      "note": "Gratis proefperiode. Geen creditcard vereist. Eerste rapport in minuten."
+    }
+  },
+  "wcagScan": {
+    "hero": {
+      "badge": "WCAG 2.1 & 2.2-dekking",
+      "title": "Voer een WCAG-scan uit.",
+      "titleHighlight": "Krijg bruikbare resultaten.",
+      "subtitle": "Plak een URL, start de scan en zie elke WCAG-overtreding op ernst gerangschikt, met getroffen elementen en hersteladvies.",
+      "ctaPrimary": "Start je gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport",
+      "note": "Geen creditcard vereist. De meeste scans van ??n pagina zijn binnen een minuut klaar."
+    }
   }
 }

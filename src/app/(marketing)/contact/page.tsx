@@ -203,12 +203,11 @@ function ContactPageContent() {
           <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative max-w-4xl mx-auto text-center space-y-4 p-8 sm:p-12">
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-              Talk to us about reports, monitoring, or{" "}
-              <span className="text-primary">agency use</span>
+              {t('pageHero.title')}{" "}
+              <span className="text-primary">{t('pageHero.titleHighlight')}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Questions about plans, white-label reporting, or how VexNexa fits
-              your workflow? We&apos;ll help you get to the right setup quickly.
+              {t('pageHero.subtitle')}
             </p>
           </div>
         </div>

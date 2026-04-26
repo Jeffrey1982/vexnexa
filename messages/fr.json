@@ -403,7 +403,40 @@
         "question": "Quel support est disponible ?",
         "answer": "Tous les utilisateurs bénéficient du support par e-mail. Nous visons à répondre sous 1 jour ouvré. Les plans Business et Enterprise incluent un support prioritaire avec des délais de réponse plus courts."
       }
-    }
+    },
+    "heroMockup": {
+      "ariaLabel": "Aper?u anim? du tableau de bord de scan VexNexa",
+      "liveScan": "Scan en direct",
+      "target": "Cible",
+      "scanProgress": "Progression du scan",
+      "complianceScore": "Score de conformit?",
+      "missingAlt": "Images sans texte alternatif",
+      "criticalElements": "Critique ? 4 ?l?ments",
+      "lowContrast": "Contraste de couleur insuffisant",
+      "moderateElements": "Mod?r? ? 2 ?l?ments",
+      "whiteLabel": "Marque blanche",
+      "exportReady": "Export PDF et Word pr?t"
+    },
+    "headline": "Prouvez l'accessibilité",
+    "headline_accent": "à chaque livraison.",
+    "subheadline": "Surveillance WCAG en marque blanche pour les agences—détectez les régressions, exportez des rapports prêts clients et montrez des progrès mesurables sous votre marque.",
+    "primary_cta": "Lancer une analyse gratuite",
+    "secondary_cta": "Voir un exemple de rapport",
+    "trust_eu_hosted": "H?berg? dans l?UE",
+    "trust_gdpr": "Conforme RGPD",
+    "trust_no_card": "Compte gratuit requis. Aucune carte de crédit nécessaire.",
+    "eyebrow": "WCAG 2.2 · Marque blanche · UE",
+    "title": "Prouvez l'accessibilité",
+    "titleHighlight": "à chaque livraison.",
+    "subtitle": "Surveillance WCAG en marque blanche pour les agences—détectez les régressions, exportez des rapports prêts clients et montrez des progrès mesurables sous votre marque.",
+    "freeTier": "Gratuit : 1 site, 100 pages/mois. Sans carte. Passez au supérieur pour la surveillance, l'export Word et le white-label complet.",
+    "ctaPrimary": "Lancer une analyse gratuite",
+    "ctaSecondary": "Voir un exemple de rapport",
+    "trust1": "Couverture WCAG 2.2 & EAA",
+    "trust2": "Rapports PDF & DOCX en marque blanche",
+    "trust3": "Hébergé UE, conforme RGPD",
+    "imageAlt": "Tableau de bord VexNexa pour les analyses d'accessibilité avec rapports WCAG détaillés et priorisation des problèmes",
+    "mockupAria": "Aperçu stylisé du tableau de bord de scan VexNexa avec une carte de rapport en marque blanche."
   },
   "pricing": {
     "hero": {
@@ -424,11 +457,13 @@
         "cta": "Commencer avec Starter",
         "features": {
           "sites": "{count} site web",
-          "pages": "{count} pages/mois",
+          "pages": "pages/mois",
           "users": "{count} utilisateur",
           "pdfExport": "Export PDF",
           "basicReports": "Rapports de base",
-          "emailSupport": "Support par e-mail"
+          "emailSupport": "Support par e-mail",
+          "site": "site web",
+          "user": "utilisateur"
         },
         "limitations": {
           "noWord": "Pas d'export Word",
@@ -889,6 +924,11 @@
       "title": "Vous préférez l'essayer d'abord ?",
       "subtitle": "Commencez directement avec un scan gratuit de votre site web. Inscription requise, résultats en quelques secondes.",
       "button": "Commencer le scan gratuit"
+    },
+    "pageHero": {
+      "title": "Parlez-nous de rapports, de monitoring ou",
+      "titleHighlight": "d?usage agence",
+      "subtitle": "Questions sur les offres, les rapports en marque blanche ou l?int?gration de VexNexa ? votre workflow ? Nous vous aidons ? trouver rapidement la bonne configuration."
     }
   },
   "auth": {
@@ -1469,11 +1509,13 @@
       "description": "Découvrez toutes les fonctionnalités de VexNexa : Tableau de bord, détails des scans, export PDF, priorités et intégrations à venir."
     },
     "hero": {
-      "badge": "✨ Toutes les fonctionnalités",
-      "title": "Tout ce dont vous avez besoin pour",
-      "titleHighlight": "la conformité WCAG",
-      "subtitle": "Des scans rapides aux analyses de site complètes. Tableau de bord, exports, priorités et bientôt collaboration d'équipe.",
-      "cta": "Commencer l'analyse gratuite"
+      "badge": "Toutes les fonctionnalit?s",
+      "title": "Tout ce qu?il faut pour",
+      "titleHighlight": "la conformit? WCAG",
+      "subtitle": "Tableau de bord, exports personnalis?s, collaboration d??quipe, monitoring continu et rapports WCAG exploitables.",
+      "cta": "Commencer l'analyse gratuite",
+      "ctaPrimary": "Lancer une analyse gratuite",
+      "ctaSecondary": "Voir un exemple de rapport"
     },
     "priorities": {
       "title": "Priorités des Problèmes",
@@ -1602,7 +1644,76 @@
       "viewPricing": "Voir les tarifs"
     },
     "finalCTA": {
-      "ctaContact": "Contact us"
+      "ctaContact": "Nous contacter",
+      "title": "Pr?t ? rendre l?accessibilit? r?p?table ?",
+      "subtitle": "Commencez par une analyse gratuite et passez au niveau sup?rieur pour les rapports personnalis?s, le monitoring et les workflows d??quipe.",
+      "ctaPrimary": "Lancer une analyse gratuite",
+      "ctaSecondary": "Voir un exemple de rapport"
+    },
+    "outcomes": {
+      "title": "Transformez les contr?les d?accessibilit? en processus r?p?table",
+      "subtitle": "VexNexa aide les ?quipes ? trouver les probl?mes, expliquer les priorit?s et prouver les progr?s.",
+      "catchIssues": {
+        "title": "D?tecter les probl?mes avant mise en ligne",
+        "description": "Analysez vos pages selon WCAG 2.2 et consultez des r?sultats prioris?s avec d?tails par ?l?ment."
+      },
+      "clientReports": {
+        "title": "Cr?er des rapports pr?ts pour les clients",
+        "description": "Exportez des rapports PDF et DOCX clairs avec synth?se, niveaux de gravit? et conseils de correction."
+      },
+      "monitorChanges": {
+        "title": "Suivre les changements dans le temps",
+        "description": "Planifiez des analyses r?currentes et recevez des alertes quand les scores baissent ou que de nouveaux probl?mes apparaissent."
+      },
+      "prioritise": {
+        "title": "Prioriser ce qui compte",
+        "description": "Les r?sultats class?s par gravit? aident ? traiter d?abord les corrections les plus importantes."
+      }
+    },
+    "workflow": {
+      "title": "Un flux simple, de l?analyse ? la preuve",
+      "subtitle": "Analysez, v?rifiez, exportez un rapport et continuez ? surveiller lorsque le site ?volue.",
+      "step1": {
+        "title": "Analyser une URL",
+        "description": "Saisissez une page ou un site et obtenez des constats automatis?s en quelques minutes."
+      },
+      "step2": {
+        "title": "Examiner les priorit?s",
+        "description": "Consultez gravit?, r?f?rences WCAG, ?l?ments concern?s et conseils pratiques de correction."
+      },
+      "step3": {
+        "title": "Rapporter et surveiller",
+        "description": "Partagez des rapports personnalis?s et planifiez des analyses de suivi."
+      },
+      "cta": "Lancer votre premi?re analyse"
+    },
+    "builtFor": {
+      "title": "Con?u pour les ?quipes qui livrent des sites accessibles",
+      "agencies": {
+        "title": "Agences et studios",
+        "description": "Livrez des rapports d?accessibilit? et du monitoring pour plusieurs sites clients."
+      },
+      "internal": {
+        "title": "?quipes produit internes",
+        "description": "Suivez l?accessibilit? avant les releases et documentez l?am?lioration continue."
+      },
+      "multiSite": {
+        "title": "Portefeuilles multi-sites",
+        "description": "G?rez analyses, tendances et rapports sur un portefeuille en croissance."
+      }
+    },
+    "specifics": {
+      "title": "Ce qui est inclus",
+      "wcagCoverage": "Analyse WCAG 2.2 AA avec axe-core",
+      "reportExport": "Export de rapports PDF et DOCX",
+      "whiteLabel": "Marque blanche pour rapports clients",
+      "scheduledScans": "Analyses r?currentes planifi?es",
+      "regressionAlerts": "Alertes de baisse de score et r?gressions",
+      "teamSeats": "Utilisateurs d??quipe et acc?s par r?le",
+      "multiSiteDashboard": "Tableau de bord multi-sites",
+      "severityRanked": "Listes de probl?mes class?es par gravit?",
+      "remediationGuidance": "Conseils de correction clairs",
+      "slackJiraIntegration": "Support des workflows Slack et Jira"
     }
   },
   "demo": {
@@ -2392,8 +2503,8 @@
   },
   "sampleReport": {
     "badge": "Exemple de rapport",
-    "title": "À quoi ressemble un rapport d'accessibilité VexNexa",
-    "titleHighlight": "ressemble",
+    "title": "Un rapport d?accessibilit? VexNexa",
+    "titleHighlight": "clair et exploitable",
     "subtitle": "Ceci est un exemple de rapport basé sur des données d'analyse réalistes. Les plans Business et Enterprise peuvent le mettre en marque blanche avec votre propre logo, couleurs et nom d'entreprise.",
     "ctaPrimary": "Analyser votre propre site",
     "ctaSecondary": "En savoir plus sur la marque blanche",
@@ -2447,5 +2558,45 @@
     "trust4": "Built for agencies and EU-facing teams",
     "ctaPrimary": "Start your free scan",
     "ctaSecondary": "Contact us about agency use"
+  },
+  "getStarted": {
+    "header": {
+      "badge": "D?marrage rapide",
+      "title": "Commencez avec votre premi?re analyse",
+      "subtitle": "Saisissez l?URL de votre site et nous lancerons une analyse d?accessibilit? compl?te"
+    }
+  },
+  "websiteAccessibilityChecker": {
+    "hero": {
+      "badge": "Contr?le d?accessibilit? plus intelligent",
+      "title": "Un v?rificateur d?accessibilit? qui",
+      "titleHighlight": "classe ce qui compte",
+      "subtitle": "Arr?tez de parcourir des listes d?erreurs non tri?es. VexNexa v?rifie votre site selon WCAG et montre quels probl?mes sont critiques, mineurs, et o? ils se trouvent dans votre HTML.",
+      "ctaPrimary": "V?rifier votre site gratuitement",
+      "ctaSecondary": "Explorer les fonctionnalit?s",
+      "note": "V?rification gratuite. Sans carte bancaire. R?sultats en quelques secondes."
+    }
+  },
+  "wcagComplianceReport": {
+    "hero": {
+      "badge": "Export PDF & DOCX",
+      "title": "Rapports de conformit? WCAG",
+      "titleHighlight": "que les parties prenantes lisent vraiment",
+      "subtitle": "Les donn?es brutes de scan ne d?bloquent pas les budgets. VexNexa g?n?re des rapports structur?s avec synth?se, gravit? et priorit?s de correction.",
+      "ctaPrimary": "G?n?rer votre premier rapport",
+      "ctaSecondary": "Voir un exemple de rapport",
+      "note": "Essai gratuit. Aucune carte requise. Premier rapport en quelques minutes."
+    }
+  },
+  "wcagScan": {
+    "hero": {
+      "badge": "Couverture WCAG 2.1 & 2.2",
+      "title": "Lancez une analyse WCAG.",
+      "titleHighlight": "Obtenez des r?sultats exploitables.",
+      "subtitle": "Collez une URL, lancez l?analyse et voyez chaque violation WCAG class?e par gravit?, avec les ?l?ments concern?s et des conseils de correction.",
+      "ctaPrimary": "Lancer une analyse gratuite",
+      "ctaSecondary": "Voir un exemple de rapport",
+      "note": "Aucune carte requise. La plupart des analyses d?une page se terminent en moins d?une minute."
+    }
   }
 }

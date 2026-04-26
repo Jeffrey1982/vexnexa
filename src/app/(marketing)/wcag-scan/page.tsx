@@ -581,15 +581,15 @@ function RelatedSolutionsSection(): React.ReactElement {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link href="/wcag-compliance-report" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.complianceReports')}</h3>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.complianceReports.title')}</h3>
               <p className="text-sm text-muted-foreground">{t('relatedSolutions.complianceReports.description')}</p>
             </Link>
             <Link href="/website-accessibility-checker" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.accessibilityChecker')}</h3>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.accessibilityChecker.title')}</h3>
               <p className="text-sm text-muted-foreground">{t('relatedSolutions.accessibilityChecker.description')}</p>
             </Link>
             <Link href="/accessibility-monitoring-agencies" className="group block p-5 rounded-xl border hover:border-primary/40 hover:shadow-md transition-all">
-              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.ongoingMonitoring')}</h3>
+              <h3 className="font-semibold group-hover:text-primary transition-colors mb-2">{t('relatedSolutions.ongoingMonitoring.title')}</h3>
               <p className="text-sm text-muted-foreground">{t('relatedSolutions.ongoingMonitoring.description')}</p>
             </Link>
           </div>

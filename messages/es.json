@@ -433,6 +433,39 @@
         "question": "¿Qué soporte está disponible?",
         "answer": "Todos los usuarios reciben soporte por correo electrónico. Respondemos en un plazo de 1 día hábil. Los planes Business y Enterprise incluyen soporte prioritario con tiempos de respuesta más rápidos."
       }
+    },
+    "headline": "WCAG 2.2 sin el ruido.",
+    "headline_accent": "Informes de marca blanca que realmente venden.",
+    "subheadline": "Escaneos automatizados confiables powered by axe-core. Menos falsos positivos, consejos de reparación accionables, e informes PDF & Word completamente con marca. Construido para agencias y equipos de la UE que toman la EAA en serio.",
+    "primary_cta": "Comenzar escaneo gratuito",
+    "secondary_cta": "Ver demo en vivo",
+    "trust_eu_hosted": "Solo alojado en UE",
+    "trust_gdpr": "Cumple con GDPR",
+    "trust_no_card": "No se requiere tarjeta de crédito",
+    "eyebrow": "WCAG 2.2 · Marca blanca · UE-ready",
+    "title": "Demuestre la accesibilidad",
+    "titleHighlight": "en cada entrega.",
+    "subtitle": "Monitorización WCAG en marca blanca para agencias—detecte regresiones, exporte informes listos para el cliente y muestre avances medibles bajo su marca.",
+    "freeTier": "Gratis: 1 sitio, 100 páginas/mes. Sin tarjeta. Mejore el plan para monitorización, exportación Word y white-label completo.",
+    "ctaPrimary": "Comenzar gratis",
+    "ctaSecondary": "Ver informe de muestra",
+    "trust1": "Cobertura WCAG 2.2 & EAA",
+    "trust2": "Informes PDF & DOCX de marca blanca",
+    "trust3": "Alojado en UE, cumple con GDPR",
+    "imageAlt": "Dashboard de escaneo de accesibilidad VexNexa mostrando informes WCAG detallados y priorización de problemas",
+    "mockupAria": "Vista estilizada del dashboard de escaneo VexNexa con una tarjeta de resumen de informe de marca blanca.",
+    "heroMockup": {
+      "ariaLabel": "Vista previa animada del panel de escaneo de VexNexa",
+      "liveScan": "Escaneo en vivo",
+      "target": "Objetivo",
+      "scanProgress": "Progreso del escaneo",
+      "complianceScore": "Puntuaci?n de cumplimiento",
+      "missingAlt": "Im?genes sin texto alternativo",
+      "criticalElements": "Cr?tico ? 4 elementos",
+      "lowContrast": "Contraste de color insuficiente",
+      "moderateElements": "Moderado ? 2 elementos",
+      "whiteLabel": "Marca blanca",
+      "exportReady": "Exportaci?n PDF y Word lista"
     }
   },
   "pricing": {
@@ -468,11 +501,13 @@
         "cta": "Comenzar con Starter",
         "features": {
           "sites": "{count} sitio web",
-          "pages": "{count} páginas/mes",
+          "pages": "p?ginas/mes",
           "users": "{count} usuario",
           "pdfExport": "Exportación a PDF",
           "basicReports": "Informes básicos",
-          "emailSupport": "Soporte por correo electrónico"
+          "emailSupport": "Soporte por correo electrónico",
+          "site": "sitio web",
+          "user": "usuario"
         },
         "limitations": {
           "noWord": "Sin exportación a Word",
@@ -934,6 +969,11 @@
       "title": "¿Prefieres probarlo primero?",
       "subtitle": "Comienza directamente con un escaneo gratuito de tu sitio web. Se requiere registro, resultados en segundos.",
       "button": "Comenzar escaneo gratis"
+    },
+    "pageHero": {
+      "title": "Hable con nosotros sobre informes, monitorizaci?n o",
+      "titleHighlight": "uso para agencias",
+      "subtitle": "?Preguntas sobre planes, informes de marca blanca o c?mo encaja VexNexa en su flujo de trabajo? Le ayudaremos a encontrar la configuraci?n adecuada r?pidamente."
     }
   },
   "auth": {
@@ -1514,11 +1554,13 @@
       "description": "Descubre todas las características de VexNexa: Panel, detalles de escaneo, exportación PDF, prioridades e integraciones próximas."
     },
     "hero": {
-      "badge": "✨ Todas las características",
+      "badge": "Todas las funciones",
       "title": "Todo lo que necesitas para",
-      "titleHighlight": "cumplimiento de WCAG",
-      "subtitle": "Desde escaneos rápidos hasta análisis completos de sitios. Panel, exportaciones, prioridades y pronto colaboración en equipo.",
-      "cta": "Comenzar escaneo gratis"
+      "titleHighlight": "cumplimiento WCAG",
+      "subtitle": "Panel, exportaciones con marca, colaboraci?n de equipo, monitorizaci?n continua e informes WCAG accionables.",
+      "cta": "Comenzar escaneo gratis",
+      "ctaPrimary": "Iniciar escaneo gratuito",
+      "ctaSecondary": "Ver informe de ejemplo"
     },
     "priorities": {
       "title": "Prioridades de problemas",
@@ -1647,7 +1689,76 @@
       "viewPricing": "Ver precios"
     },
     "finalCTA": {
-      "ctaContact": "Contact us"
+      "ctaContact": "Contactar",
+      "title": "?Listo para hacer repetible la accesibilidad?",
+      "subtitle": "Empieza con un escaneo gratuito y mejora cuando necesites informes con marca, monitorizaci?n y flujos de equipo.",
+      "ctaPrimary": "Iniciar escaneo gratuito",
+      "ctaSecondary": "Ver informe de ejemplo"
+    },
+    "outcomes": {
+      "title": "Convierte las revisiones de accesibilidad en un proceso repetible",
+      "subtitle": "VexNexa ayuda a encontrar problemas, explicar prioridades y demostrar mejoras.",
+      "catchIssues": {
+        "title": "Detecta problemas antes del lanzamiento",
+        "description": "Escanea p?ginas seg?n WCAG 2.2 y revisa hallazgos priorizados con detalles por elemento."
+      },
+      "clientReports": {
+        "title": "Crea informes listos para clientes",
+        "description": "Exporta informes PDF y DOCX claros con resumen, gravedad y recomendaciones."
+      },
+      "monitorChanges": {
+        "title": "Monitoriza cambios en el tiempo",
+        "description": "Programa escaneos recurrentes y recibe alertas cuando bajen las puntuaciones o aparezcan nuevos problemas."
+      },
+      "prioritise": {
+        "title": "Prioriza lo importante",
+        "description": "Los resultados ordenados por gravedad ayudan a abordar primero las correcciones de mayor impacto."
+      }
+    },
+    "workflow": {
+      "title": "Un flujo sencillo del escaneo a la evidencia",
+      "subtitle": "Escanea, revisa, exporta un informe y sigue monitorizando mientras el sitio cambia.",
+      "step1": {
+        "title": "Escanea una URL",
+        "description": "Introduce una p?gina o sitio y obt?n hallazgos autom?ticos en minutos."
+      },
+      "step2": {
+        "title": "Revisa problemas priorizados",
+        "description": "Consulta gravedad, referencias WCAG, elementos afectados y consejos pr?cticos."
+      },
+      "step3": {
+        "title": "Informa y monitoriza",
+        "description": "Comparte informes con marca y programa escaneos de seguimiento."
+      },
+      "cta": "Iniciar primer escaneo"
+    },
+    "builtFor": {
+      "title": "Creado para equipos que entregan sitios accesibles",
+      "agencies": {
+        "title": "Agencias y estudios",
+        "description": "Entrega informes de accesibilidad y monitorizaci?n para varios sitios de clientes."
+      },
+      "internal": {
+        "title": "Equipos internos de producto",
+        "description": "Controla la accesibilidad antes de lanzamientos y documenta la mejora continua."
+      },
+      "multiSite": {
+        "title": "Portafolios multi-sitio",
+        "description": "Gestiona escaneos, tendencias e informes en un portafolio creciente."
+      }
+    },
+    "specifics": {
+      "title": "Qu? incluye",
+      "wcagCoverage": "Escaneo WCAG 2.2 AA con axe-core",
+      "reportExport": "Exportaci?n de informes PDF y DOCX",
+      "whiteLabel": "Marca blanca para informes de clientes",
+      "scheduledScans": "Escaneos recurrentes programados",
+      "regressionAlerts": "Alertas de bajada de puntuaci?n y regresiones",
+      "teamSeats": "Usuarios de equipo y acceso por roles",
+      "multiSiteDashboard": "Panel multi-sitio",
+      "severityRanked": "Listas de problemas ordenadas por gravedad",
+      "remediationGuidance": "Gu?a clara de correcci?n",
+      "slackJiraIntegration": "Soporte para flujos de Slack y Jira"
     }
   },
   "demo": {
@@ -2437,8 +2548,8 @@
   },
   "sampleReport": {
     "badge": "Informe de ejemplo",
-    "title": "Cómo se ve un informe de accesibilidad de VexNexa",
-    "titleHighlight": "se ve",
+    "title": "C?mo es un informe de accesibilidad de VexNexa",
+    "titleHighlight": "en la pr?ctica",
     "subtitle": "Este es un informe de ejemplo basado en datos de análisis realistas. Los planes Business y Enterprise pueden ponerlo en marca blanca con su propio logo, colores y nombre de empresa.",
     "ctaPrimary": "Analizar su propio sitio",
     "ctaSecondary": "Más sobre marca blanca",
@@ -2492,5 +2603,45 @@
     "trust4": "Built for agencies and EU-facing teams",
     "ctaPrimary": "Start your free scan",
     "ctaSecondary": "Contact us about agency use"
+  },
+  "getStarted": {
+    "header": {
+      "badge": "Inicio r?pido",
+      "title": "Comienza con tu primer escaneo",
+      "subtitle": "Introduce la URL de tu sitio y ejecutaremos un escaneo completo de accesibilidad"
+    }
+  },
+  "websiteAccessibilityChecker": {
+    "hero": {
+      "badge": "Comprobaci?n de accesibilidad m?s inteligente",
+      "title": "Un verificador de accesibilidad que",
+      "titleHighlight": "prioriza lo importante",
+      "subtitle": "Deja de revisar listas de errores sin ordenar. VexNexa comprueba tu sitio seg?n WCAG y muestra qu? problemas son cr?ticos, cu?les son menores y d?nde est?n en tu HTML.",
+      "ctaPrimary": "Comprobar sitio gratis",
+      "ctaSecondary": "Explorar funciones",
+      "note": "Comprobaci?n gratuita. Sin tarjeta. Resultados en segundos."
+    }
+  },
+  "wcagComplianceReport": {
+    "hero": {
+      "badge": "Exportaci?n PDF y DOCX",
+      "title": "Informes de cumplimiento WCAG",
+      "titleHighlight": "que los interesados s? leen",
+      "subtitle": "Los datos brutos de un escaneo rara vez consiguen presupuesto. VexNexa genera informes estructurados con resumen ejecutivo, gravedad y prioridades de correcci?n.",
+      "ctaPrimary": "Generar primer informe",
+      "ctaSecondary": "Ver informe de ejemplo",
+      "note": "Prueba gratuita. Sin tarjeta. Primer informe en minutos."
+    }
+  },
+  "wcagScan": {
+    "hero": {
+      "badge": "Cobertura WCAG 2.1 y 2.2",
+      "title": "Ejecuta un escaneo WCAG.",
+      "titleHighlight": "Obt?n resultados accionables.",
+      "subtitle": "Pega una URL, inicia el escaneo y ve cada infracci?n WCAG ordenada por gravedad, con elementos afectados y gu?a de correcci?n.",
+      "ctaPrimary": "Iniciar escaneo gratuito",
+      "ctaSecondary": "Ver informe de ejemplo",
+      "note": "No se requiere tarjeta. La mayor?a de escaneos de una p?gina terminan en menos de un minuto."
+    }
   }
 }

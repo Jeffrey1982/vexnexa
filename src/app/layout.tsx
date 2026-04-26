@@ -4,10 +4,45 @@ import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { cookies } from 'next/headers'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import './design-system.css'
 import './globals.css'
+
+const locales = ['en', 'nl', 'de', 'fr', 'es', 'pt'] as const
+type Locale = (typeof locales)[number]
+
+function isLocale(value: string | undefined): value is Locale {
+  return locales.includes(value as Locale)
+}
+
+function mergeMessages(
+  fallback: Record<string, unknown>,
+  overrides: Record<string, unknown>
+): Record<string, unknown> {
+  const merged: Record<string, unknown> = { ...fallback }
+
+  for (const [key, value] of Object.entries(overrides)) {
+    const fallbackValue = fallback[key]
+    if (
+      value &&
+      fallbackValue &&
+      typeof value === 'object' &&
+      typeof fallbackValue === 'object' &&
+      !Array.isArray(value) &&
+      !Array.isArray(fallbackValue)
+    ) {
+      merged[key] = mergeMessages(
+        fallbackValue as Record<string, unknown>,
+        value as Record<string, unknown>
+      )
+    } else {
+      merged[key] = value
+    }
+  }
+
+  return merged
+}
 
 export const metadata: Metadata = {
   title: 'VexNexa - Accessibility Testing Platform',
@@ -53,10 +88,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const messages = await getMessages();
+  const cookieStore = await cookies()
+  const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value
+  const locale: Locale = isLocale(cookieLocale) ? cookieLocale : 'en'
+  const fallbackMessages = (await import('../../messages/en.json')).default
+  const localeMessages = (await import(`../../messages/${locale}.json`)).default
+  const messages = mergeMessages(fallbackMessages, localeMessages)
 
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <head>
         {/* Browser color-scheme hint — ensures form controls, scrollbars render in correct mode */}
         <meta name="color-scheme" content="light dark" />
@@ -96,7 +136,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen font-sans antialiased bg-background text-foreground" suppressHydrationWarning>
         <GoogleAnalytics />
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

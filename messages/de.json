@@ -433,21 +433,54 @@
         "question": "Welcher Support ist verfügbar?",
         "answer": "Alle Nutzer erhalten E-Mail-Support. Wir antworten in der Regel innerhalb eines Werktages. Business- und Enterprise-Pläne beinhalten Prioritäts-Support mit kürzeren Reaktionszeiten."
       }
+    },
+    "headline": "WCAG 2.2 ohne den Lärm.",
+    "headline_accent": "White-Label-Berichte, die tatsächlich verkaufen.",
+    "subheadline": "Zuverlässige automatisierte Scans powered by axe-core. Weniger False Positives, umsetzbare Fix-Ratschläge und vollbranded PDF & Word-Berichte. Gebaut für Agenturen und EU-Teams, die die EAA ernst nehmen.",
+    "primary_cta": "Kostenlosen Scan starten",
+    "secondary_cta": "Live-Demo ansehen",
+    "trust_eu_hosted": "Nur EU-gehosted",
+    "trust_gdpr": "DSGVO-konform",
+    "trust_no_card": "Keine Kreditkarte erforderlich",
+    "eyebrow": "WCAG 2.2 · White-Label · EU-ready",
+    "title": "Barrierefreiheit belegen",
+    "titleHighlight": "bei jeder Auslieferung.",
+    "subtitle": "White-Label-WCAG-Monitoring für Agenturen—Regressionen erkennen, kundenfertige Berichte exportieren und messbare Fortschritte unter Ihrer Marke zeigen.",
+    "freeTier": "Kostenlos starten: 1 Website, 100 Seiten/Monat. Keine Karte. Upgrade für Monitoring, Word-Export und vollständiges White-Label.",
+    "ctaPrimary": "Kostenlos starten",
+    "ctaSecondary": "Beispielbericht ansehen",
+    "trust1": "WCAG 2.2 & EAA Abdeckung",
+    "trust2": "White-Label PDF & DOCX Berichte",
+    "trust3": "EU-gehosted, DSGVO-konform",
+    "imageAlt": "VexNexa Barrierefreiheit-Scanning-Dashboard mit detaillierten WCAG-Berichten und Issue-Priorisierung",
+    "mockupAria": "Stilisierte Vorschau des VexNexa Scan-Dashboards mit einer White-Label-Bericht-Zusammenfassungs-Karte.",
+    "heroMockup": {
+      "ariaLabel": "Animierte Vorschau des VexNexa Scan-Dashboards",
+      "liveScan": "Live-Scan",
+      "target": "Ziel",
+      "scanProgress": "Scanfortschritt",
+      "complianceScore": "Compliance-Score",
+      "missingAlt": "Bilder ohne Alt-Text",
+      "criticalElements": "Kritisch ? 4 Elemente",
+      "lowContrast": "Unzureichender Farbkontrast",
+      "moderateElements": "Mittel ? 2 Elemente",
+      "whiteLabel": "White-Label",
+      "exportReady": "PDF- und Word-Export bereit"
     }
   },
   "pricing": {
     "hero": {
-      "badge": "💰 Simple pricing",
-      "title": "Simple, Flexible Pricing —",
-      "titleHighlight": "Built for Growth",
-      "subtitle": "Fully automated SaaS with transparent pricing.",
-      "billingSubtitle": "Save up to 10% with long-term billing.",
-      "needMore": "Questions about pricing?",
-      "contactUs": "Contact us",
+      "badge": "Einfache Preise",
+      "title": "Einfache, flexible Preise ?",
+      "titleHighlight": "f?r Wachstum gemacht",
+      "subtitle": "Vollautomatisiertes SaaS mit transparenter Preisgestaltung.",
+      "billingSubtitle": "Sparen Sie bis zu 10% mit langfristiger Abrechnung.",
+      "needMore": "Fragen zu Preisen?",
+      "contactUs": "Kontakt aufnehmen",
       "badges": {
-        "vat": "All prices include VAT",
-        "noSetup": "No setup fees",
-        "cancelAnytime": "Cancel anytime"
+        "vat": "Alle Preise inkl. MwSt.",
+        "noSetup": "Keine Einrichtungsgeb?hren",
+        "cancelAnytime": "Jederzeit k?ndbar"
       }
     },
     "billing": {
@@ -468,11 +501,13 @@
         "cta": "Start with Starter",
         "features": {
           "sites": "{count} website",
-          "pages": "{count} pages/month",
+          "pages": "Seiten/Monat",
           "users": "{count} user",
           "pdfExport": "PDF export",
           "basicReports": "Basic reports",
-          "emailSupport": "Email support"
+          "emailSupport": "Email support",
+          "site": "Website",
+          "user": "Benutzer"
         },
         "limitations": {
           "noWord": "No Word export",
@@ -836,9 +871,9 @@
     },
     "skipLink": "Skip to main content",
     "hero": {
-      "title": "Let's",
-      "titleHighlight": "talk",
-      "subtitle": "Questions about VexNexa or need higher limits? We'd love to hear from you. Most users can start right away."
+      "title": "Lassen Sie uns",
+      "titleHighlight": "sprechen",
+      "subtitle": "Fragen zu VexNexa oder h?heren Limits? Wir h?ren gern von Ihnen. Die meisten Nutzer k?nnen sofort starten."
     },
     "methods": {
       "email": {
@@ -934,6 +969,11 @@
       "title": "Prefer to try it first?",
       "subtitle": "Start directly with a free scan of your website. Registration required, results within seconds.",
       "button": "Start free scan"
+    },
+    "pageHero": {
+      "title": "Sprechen Sie mit uns ?ber Berichte, Monitoring oder",
+      "titleHighlight": "Agenturnutzung",
+      "subtitle": "Fragen zu Pl?nen, White-Label-Berichten oder wie VexNexa in Ihren Workflow passt? Wir helfen Ihnen schnell zur passenden Einrichtung."
     }
   },
   "auth": {
@@ -1520,11 +1560,13 @@
       "description": "WCAG 2.2 scanning, white-label PDF/DOCX reports, continuous monitoring, team collaboration, and multi-site management. Built for agencies and compliance teams."
     },
     "hero": {
-      "badge": "✨ All features",
-      "title": "Everything you need for",
-      "titleHighlight": "WCAG compliance",
-      "subtitle": "Dashboard, branded exports, team collaboration, continuous monitoring, and actionable WCAG reports.",
-      "cta": "Start free scan"
+      "badge": "Alle Funktionen",
+      "title": "Alles, was Sie f?r",
+      "titleHighlight": "WCAG-Konformit?t brauchen",
+      "subtitle": "Dashboard, gebrandete Exporte, Teamarbeit, kontinuierliches Monitoring und umsetzbare WCAG-Berichte.",
+      "cta": "Start free scan",
+      "ctaPrimary": "Kostenlosen Scan starten",
+      "ctaSecondary": "Beispielbericht ansehen"
     },
     "priorities": {
       "title": "Issue Priorities",
@@ -1653,7 +1695,76 @@
       "viewPricing": "View pricing"
     },
     "finalCTA": {
-      "ctaContact": "Contact us"
+      "ctaContact": "Kontakt aufnehmen",
+      "title": "Bereit, Barrierefreiheit wiederholbar zu machen?",
+      "subtitle": "Starten Sie mit einem kostenlosen Scan und upgraden Sie, wenn Sie gebrandete Berichte, Monitoring und Teamworkflows ben?tigen.",
+      "ctaPrimary": "Kostenlosen Scan starten",
+      "ctaSecondary": "Beispielbericht ansehen"
+    },
+    "outcomes": {
+      "title": "Machen Sie Barrierefreiheitspr?fungen wiederholbar",
+      "subtitle": "VexNexa hilft Teams, Probleme zu finden, Priorit?ten zu erkl?ren und Fortschritt nachzuweisen.",
+      "catchIssues": {
+        "title": "Probleme vor dem Launch finden",
+        "description": "Scannen Sie Seiten nach WCAG 2.2 und sehen Sie priorisierte Befunde mit Details pro Element."
+      },
+      "clientReports": {
+        "title": "Kundenfertige Berichte erstellen",
+        "description": "Exportieren Sie klare PDF- und DOCX-Berichte mit Zusammenfassungen, Schweregrad und Handlungsempfehlungen."
+      },
+      "monitorChanges": {
+        "title": "?nderungen langfristig ?berwachen",
+        "description": "Planen Sie wiederkehrende Scans und erhalten Sie Warnungen bei Score-Abf?llen oder neuen Problemen."
+      },
+      "prioritise": {
+        "title": "Priorisieren, was z?hlt",
+        "description": "Nach Schweregrad sortierte Ergebnisse helfen, die wirksamsten Korrekturen zuerst anzugehen."
+      }
+    },
+    "workflow": {
+      "title": "Ein einfacher Workflow vom Scan zum Nachweis",
+      "subtitle": "Scannen, pr?fen, Bericht exportieren und weiter ?berwachen, w?hrend sich die Website ver?ndert.",
+      "step1": {
+        "title": "URL scannen",
+        "description": "Geben Sie eine Seite oder Website ein und erhalten Sie automatisierte Befunde in Minuten."
+      },
+      "step2": {
+        "title": "Priorisierte Probleme pr?fen",
+        "description": "Sehen Sie Schweregrad, WCAG-Referenzen, betroffene Elemente und konkrete Hinweise zur Behebung."
+      },
+      "step3": {
+        "title": "Berichten und ?berwachen",
+        "description": "Teilen Sie gebrandete Berichte und planen Sie Folgescans, um Fortschritt zu verfolgen."
+      },
+      "cta": "Ersten Scan starten"
+    },
+    "builtFor": {
+      "title": "Entwickelt f?r Teams, die zug?ngliche Websites ausliefern",
+      "agencies": {
+        "title": "Agenturen und Studios",
+        "description": "Liefern Sie Barrierefreiheitsberichte und Monitoring f?r mehrere Kundenwebsites."
+      },
+      "internal": {
+        "title": "Interne Produktteams",
+        "description": "?berpr?fen Sie Barrierefreiheit vor Releases und dokumentieren Sie laufende Verbesserungen."
+      },
+      "multiSite": {
+        "title": "Multi-Site-Portfolios",
+        "description": "Verwalten Sie Scans, Trends und Berichte ?ber ein wachsendes Portfolio."
+      }
+    },
+    "specifics": {
+      "title": "Was enthalten ist",
+      "wcagCoverage": "WCAG 2.2 AA-Scans mit axe-core",
+      "reportExport": "PDF- und DOCX-Berichtexport",
+      "whiteLabel": "White-Label-Branding f?r Kundenberichte",
+      "scheduledScans": "Geplante wiederkehrende Scans",
+      "regressionAlerts": "Warnungen bei Score-Abfall und Regressionen",
+      "teamSeats": "Teampl?tze und rollenbasierter Zugriff",
+      "multiSiteDashboard": "Multi-Site-Dashboard",
+      "severityRanked": "Nach Schweregrad sortierte Problemlisten",
+      "remediationGuidance": "Klare Hinweise zur Behebung",
+      "slackJiraIntegration": "Unterst?tzung f?r Slack- und Jira-Workflows"
     }
   },
   "demo": {
@@ -2427,7 +2538,7 @@
   },
   "sampleReport": {
     "badge": "Beispielbericht",
-    "title": "Wie ein VexNexa-Barrierefreiheitsbericht aussieht",
+    "title": "Wie ein VexNexa-Barrierefreiheitsbericht",
     "titleHighlight": "aussieht",
     "subtitle": "Dies ist ein Beispielbericht basierend auf realistischen Scandaten. Business- und Enterprise-Pläne können dies mit Ihrem eigenen Logo, Farben und Firmennamen als White-Label versehen.",
     "ctaPrimary": "Eigene Website scannen",
@@ -2482,5 +2593,45 @@
     "trust4": "Built for agencies and EU-facing teams",
     "ctaPrimary": "Start your free scan",
     "ctaSecondary": "Contact us about agency use"
+  },
+  "getStarted": {
+    "header": {
+      "badge": "Schnellstart",
+      "title": "Starten Sie mit Ihrem ersten Scan",
+      "subtitle": "Geben Sie Ihre Website-URL ein und wir f?hren einen umfassenden Barrierefreiheits-Scan durch"
+    }
+  },
+  "websiteAccessibilityChecker": {
+    "hero": {
+      "badge": "Intelligentere Barrierefreiheitspr?fung",
+      "title": "Ein Accessibility Checker, der",
+      "titleHighlight": "priorisiert, was z?hlt",
+      "subtitle": "H?ren Sie auf, unsortierte Fehlerlisten zu durchsuchen. VexNexa pr?ft Ihre Website auf WCAG-Verst??e und zeigt, welche Probleme kritisch sind und wo sie im HTML auftreten.",
+      "ctaPrimary": "Website kostenlos pr?fen",
+      "ctaSecondary": "Alle Funktionen ansehen",
+      "note": "Kostenlose Pr?fung. Keine Kreditkarte. Ergebnisse in Sekunden."
+    }
+  },
+  "wcagComplianceReport": {
+    "hero": {
+      "badge": "PDF- & DOCX-Export",
+      "title": "WCAG-Compliance-Berichte",
+      "titleHighlight": "die Stakeholder wirklich lesen",
+      "subtitle": "Rohdaten aus Scans bringen selten Budgetfreigaben. VexNexa erstellt strukturierte Berichte mit Executive Summary, Schweregrad?bersicht und priorisierten Ma?nahmen.",
+      "ctaPrimary": "Ersten Bericht erstellen",
+      "ctaSecondary": "Beispielbericht ansehen",
+      "note": "Kostenlose Testphase. Keine Kreditkarte erforderlich. Erster Bericht in Minuten."
+    }
+  },
+  "wcagScan": {
+    "hero": {
+      "badge": "WCAG 2.1 & 2.2-Abdeckung",
+      "title": "F?hren Sie einen WCAG-Scan aus.",
+      "titleHighlight": "Erhalten Sie umsetzbare Ergebnisse.",
+      "subtitle": "URL einf?gen, Scan starten und alle WCAG-Verst??e nach Schweregrad sehen, inklusive betroffener Elemente und Behebungshinweise.",
+      "ctaPrimary": "Kostenlosen Scan starten",
+      "ctaSecondary": "Beispielbericht ansehen",
+      "note": "Keine Kreditkarte erforderlich. Die meisten Einzelseiten-Scans sind in unter einer Minute fertig."
+    }
   }
 }
