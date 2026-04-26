@@ -14,7 +14,7 @@ npx playwright install chromium
 # Unit tests
 npm test                 # run once
 npm run test:watch       # watch mode
-npm run test:coverage    # with v8 coverage → coverage/
+npm run test:coverage    # with v8 coverage -> coverage/
 
 # E2E
 npm run test:e2e         # local dev (auto-starts next dev)
@@ -27,7 +27,7 @@ npm run test:all
 
 ## Layout
 
-```
+```text
 src/lib/__tests__/       # unit tests (vitest)
 e2e/                     # Playwright specs + fixtures
 test/setup.ts            # vitest globals (env + mocks)
@@ -38,7 +38,7 @@ playwright.config.ts     # Playwright config (local + staging projects)
 
 ## Current state
 
-- **14 test files, 357 passing, 12 skipped, 0 failing.**
+- **14 test files, 369 passing, 0 skipped, 0 failing.**
 - Coverage is collected for `src/lib/**`, `src/app/api/**`, and
   `src/middleware.ts`. Thresholds are intentionally conservative
   (25% lines / 55% branches) so CI goes green today; ratchet up as
@@ -52,12 +52,12 @@ playwright.config.ts     # Playwright config (local + staging projects)
 | Plan entitlements matrix | `plans-entitlements.test.ts` |
 | VAT / tax rule engine | `tax-rules.test.ts` |
 | Mollie client helpers | `mollie-client.test.ts` |
-| Axe results → score | `scoring.test.ts` |
+| Axe results -> score | `scoring.test.ts` |
 | Google health score utilities | `score-engine.test.ts` |
 | URL normalisation (crawler) | `normalize-url.test.ts`, `url.test.ts` |
 | Rate limiter | `rate-limit.test.ts` |
 | Admin auth gate | `admin-auth.test.ts` |
-| Coupon system (behavioural parts) | `coupon-system.test.ts` |
+| Coupon system | `coupon-system.test.ts` |
 | Report / format helpers | `report.test.ts`, `format.test.ts` |
 
 ### What's quarantined
@@ -74,7 +74,7 @@ current codebase and are **not** behavioural. See
 3. External services (Prisma, Supabase, Mollie, `next/headers`) are
    globally mocked in `test/setup.ts`. Override per-test with `vi.mock`.
 4. For components, use `@testing-library/react` and name the file
-   `*.test.tsx` — it auto-switches to the jsdom environment.
+   `*.test.tsx`; it auto-switches to the jsdom environment.
 
 ## Writing new E2E tests
 
@@ -82,15 +82,18 @@ current codebase and are **not** behavioural. See
 2. Import `test, expect` from `./fixtures` (not `@playwright/test`
    directly) to get the `authedPage` fixture.
 3. Design tests to work against both local and staging by avoiding
-   hard-coded strings — prefer `getByRole`, `getByLabel`.
+   hard-coded strings. Prefer `getByRole`, `getByLabel`.
 
 ## CI
 
-`.github/workflows/test.yml` runs two parallel jobs on every PR:
+`.github/workflows/test.yml` runs a quality gate before the heavier suites:
 
-1. **unit** — `npm run test:coverage` + publishes the coverage report
-   as an artifact and a PR comment.
-2. **e2e** — builds the app and runs `npm run test:e2e:local` on
+1. **quality** - validates Prisma, applies migrations to a scratch
+   Postgres database, checks migration status, lints, type-checks, and
+   runs `npx next build`.
+2. **unit** - `npm run test:coverage` plus coverage artifact upload and
+   a PR coverage comment.
+3. **e2e** - builds the app and runs `npm run test:e2e:local` on a
    production build. Uploads the HTML report on failure.
 
 To tighten the gate, bump the `thresholds` block in `vitest.config.ts`
@@ -102,6 +105,6 @@ as coverage increases.
   The lib-layer they call is covered; next step is a tRPC-style
   integration harness that fetches routes in-process.
 - React component rendering tests are not yet wired (jsdom config is
-  ready — add `*.test.tsx` files under `src/components/__tests__/`).
+  ready; add `*.test.tsx` files under `src/components/__tests__/`).
 - Staging E2E needs `E2E_USER_EMAIL` / `E2E_USER_PASSWORD` and a
   stable test account with seed data.

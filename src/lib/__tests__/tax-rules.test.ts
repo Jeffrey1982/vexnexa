@@ -13,6 +13,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { Prisma } from "@prisma/client";
 import {
   computeTaxDecision,
   calculateTaxBreakdown,
@@ -22,6 +23,18 @@ import { getVatRate, EU_VAT_RATES, MERCHANT_COUNTRY } from "../tax/vat-rates";
 
 function readFile(relativePath: string): string {
   return readFileSync(join(process.cwd(), relativePath), "utf-8");
+}
+
+function model(name: string) {
+  const found = Prisma.dmmf.datamodel.models.find((m) => m.name === name);
+  expect(found, `Expected Prisma model ${name} to exist`).toBeDefined();
+  return found!;
+}
+
+function field(modelName: string, fieldName: string) {
+  const found = model(modelName).fields.find((f) => f.name === fieldName);
+  expect(found, `Expected ${modelName}.${fieldName} to exist`).toBeDefined();
+  return found!;
 }
 
 // ── 1. computeTaxDecision runtime tests ──
@@ -443,41 +456,39 @@ describe("Onboarding UI: registration number field", () => {
 
 // ── 8. CheckoutQuote model in Prisma schema ──
 
-describe.skip("Prisma schema: CheckoutQuote model", () => {
-  const schema = readFile("prisma/schema.prisma");
-
+describe("Prisma schema: CheckoutQuote model", () => {
   it("defines CheckoutQuote model", () => {
-    expect(schema).toContain("model CheckoutQuote {");
+    expect(model("CheckoutQuote").name).toBe("CheckoutQuote");
   });
 
   it("has tax decision fields", () => {
-    expect(schema).toContain("taxRatePercent");
-    expect(schema).toContain("taxMode");
-    expect(schema).toContain("taxNotes");
+    expect(field("CheckoutQuote", "taxRatePercent")).toMatchObject({ type: "Decimal", isRequired: true });
+    expect(field("CheckoutQuote", "taxMode")).toMatchObject({ type: "String", isRequired: true });
+    expect(field("CheckoutQuote", "taxNotes")).toMatchObject({ type: "String", isRequired: false });
   });
 
   it("has customer snapshot fields", () => {
-    expect(schema).toContain("customerType    String");
-    expect(schema).toContain("customerCountry String");
-    expect(schema).toContain("companyName     String?");
-    expect(schema).toContain("vatIdValid      Boolean");
+    expect(field("CheckoutQuote", "customerType")).toMatchObject({ type: "String", isRequired: true });
+    expect(field("CheckoutQuote", "customerCountry")).toMatchObject({ type: "String", isRequired: true });
+    expect(field("CheckoutQuote", "companyName")).toMatchObject({ type: "String", isRequired: false });
+    expect(field("CheckoutQuote", "vatIdValid")).toMatchObject({ type: "Boolean", isRequired: true });
   });
 
   it("has price breakdown fields", () => {
-    expect(schema).toContain("baseAmount");
-    expect(schema).toContain("vatAmount");
-    expect(schema).toContain("totalAmount");
+    expect(field("CheckoutQuote", "baseAmount")).toMatchObject({ type: "Decimal", isRequired: true });
+    expect(field("CheckoutQuote", "vatAmount")).toMatchObject({ type: "Decimal", isRequired: true });
+    expect(field("CheckoutQuote", "totalAmount")).toMatchObject({ type: "Decimal", isRequired: true });
   });
 
   it("has molliePaymentId reference", () => {
-    expect(schema).toContain("molliePaymentId String?");
+    expect(field("CheckoutQuote", "molliePaymentId")).toMatchObject({ type: "String", isRequired: false });
   });
 
   it("BillingProfile has registrationNumber field", () => {
-    expect(schema).toContain("registrationNumber String?");
+    expect(field("BillingProfile", "registrationNumber")).toMatchObject({ type: "String", isRequired: false });
   });
 
   it("User has checkoutQuotes relation", () => {
-    expect(schema).toContain("checkoutQuotes CheckoutQuote[]");
+    expect(field("User", "checkoutQuotes")).toMatchObject({ type: "CheckoutQuote", isList: true, kind: "object" });
   });
 });

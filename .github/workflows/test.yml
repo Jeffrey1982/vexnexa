@@ -16,6 +16,7 @@ env:
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
   # Dummy env so modules that read env at import time don't crash.
   DATABASE_URL: postgresql://test:test@localhost:5432/test
+  DIRECT_URL: postgresql://test:test@localhost:5432/test
   NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
   NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
   SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
@@ -24,9 +25,61 @@ env:
   NEXT_PUBLIC_APP_URL: http://localhost:3000
 
 jobs:
+  quality:
+    name: Quality gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Validate Prisma schema
+        run: npx prisma validate
+
+      - name: Apply migrations to scratch database
+        run: npx prisma migrate deploy
+
+      - name: Check migration status
+        run: npx prisma migrate status
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Build Next.js app
+        run: npx next build
+
   unit:
     name: Unit tests + coverage
     runs-on: ubuntu-latest
+    needs: quality
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -64,6 +117,7 @@ jobs:
   e2e:
     name: Playwright E2E (local)
     runs-on: ubuntu-latest
+    needs: quality
     timeout-minutes: 30
     # Run E2E only on PRs and pushes to main; skip on draft PRs to save minutes.
     if: github.event.pull_request.draft != true

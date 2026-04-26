@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import * as fs from 'fs'
 import * as path from 'path'
+import { Prisma } from '@prisma/client'
 
 /**
  * Regression tests for the Coupon / Promo Code system.
@@ -19,49 +20,60 @@ function readFile(relativePath: string): string {
   return fs.readFileSync(path.join(ROOT, relativePath), 'utf8')
 }
 
+function model(name: string) {
+  const found = Prisma.dmmf.datamodel.models.find((m) => m.name === name)
+  expect(found, `Expected Prisma model ${name} to exist`).toBeDefined()
+  return found!
+}
+
+function field(modelName: string, fieldName: string) {
+  const found = model(modelName).fields.find((f) => f.name === fieldName)
+  expect(found, `Expected ${modelName}.${fieldName} to exist`).toBeDefined()
+  return found!
+}
+
 // ── 1. Prisma Schema ──
 
-describe.skip('Prisma Schema: Coupon models', () => {
-  const schema = readFile('prisma/schema.prisma')
-
+describe('Prisma Schema: Coupon models', () => {
   it('defines CouponGrantType enum with all grant types', () => {
-    expect(schema).toContain('enum CouponGrantType')
-    expect(schema).toContain('PLAN_TRIAL')
-    expect(schema).toContain('PLAN_STARTER')
-    expect(schema).toContain('PLAN_PRO')
-    expect(schema).toContain('PLAN_BUSINESS')
-    expect(schema).toContain('FREE_SCANS')
+    const grantType = Prisma.dmmf.datamodel.enums.find((e) => e.name === 'CouponGrantType')
+    expect(grantType?.values.map((v) => v.name)).toEqual([
+      'PLAN_TRIAL',
+      'PLAN_STARTER',
+      'PLAN_PRO',
+      'PLAN_BUSINESS',
+      'FREE_SCANS',
+    ])
   })
 
   it('defines Coupon model with required fields', () => {
-    expect(schema).toContain('model Coupon')
-    expect(schema).toContain('code        String          @unique')
-    expect(schema).toContain('grantType  CouponGrantType')
-    expect(schema).toContain('grantValue String')
-    expect(schema).toContain('maxRedemptions Int?')
-    expect(schema).toContain('redeemedCount  Int  @default(0)')
-    expect(schema).toContain('perUserLimit   Int  @default(1)')
-    expect(schema).toContain('isActive Boolean @default(true)')
-    expect(schema).toContain('createdBy String')
+    expect(field('Coupon', 'code')).toMatchObject({ type: 'String', isRequired: true, isUnique: true })
+    expect(field('Coupon', 'grantType')).toMatchObject({ type: 'CouponGrantType', isRequired: true, kind: 'enum' })
+    expect(field('Coupon', 'grantValue')).toMatchObject({ type: 'String', isRequired: true })
+    expect(field('Coupon', 'maxRedemptions')).toMatchObject({ type: 'Int', isRequired: false })
+    expect(field('Coupon', 'redeemedCount')).toMatchObject({ type: 'Int', isRequired: true })
+    expect(field('Coupon', 'perUserLimit')).toMatchObject({ type: 'Int', isRequired: true })
+    expect(field('Coupon', 'isActive')).toMatchObject({ type: 'Boolean', isRequired: true })
+    expect(field('Coupon', 'createdBy')).toMatchObject({ type: 'String', isRequired: true })
   })
 
   it('defines CouponRedemption model with required fields', () => {
-    expect(schema).toContain('model CouponRedemption')
-    expect(schema).toContain('couponId String')
-    expect(schema).toContain('userId   String')
-    expect(schema).toContain('metadata Json?')
-    expect(schema).toContain('redeemedAt DateTime @default(now())')
+    expect(field('CouponRedemption', 'couponId')).toMatchObject({ type: 'String', isRequired: true })
+    expect(field('CouponRedemption', 'userId')).toMatchObject({ type: 'String', isRequired: true })
+    expect(field('CouponRedemption', 'metadata')).toMatchObject({ type: 'Json', isRequired: false })
+    expect(field('CouponRedemption', 'redeemedAt')).toMatchObject({ type: 'DateTime', isRequired: true })
   })
 
   it('has unique constraint on CouponRedemption(couponId, userId)', () => {
-    expect(schema).toContain('@@unique([couponId, userId])')
+    expect(model('CouponRedemption').uniqueFields).toContainEqual(['couponId', 'userId'])
   })
 
   it('has indexes on Coupon for code, isActive, createdBy, expiresAt', () => {
-    expect(schema).toContain('@@index([code])')
-    expect(schema).toContain('@@index([isActive])')
-    expect(schema).toContain('@@index([createdBy])')
-    expect(schema).toContain('@@index([expiresAt])')
+    const indexes = model('Coupon').fields
+    expect(indexes.find((f) => f.name === 'code')?.isUnique).toBe(true)
+    expect(readFile('prisma/schema.prisma')).toContain('@@index([isActive])')
+    expect(readFile('prisma/schema.prisma')).toContain('@@index([createdBy])')
+    expect(readFile('prisma/schema.prisma')).toContain('@@index([expiresAt])')
   })
 })
 
