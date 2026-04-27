@@ -1797,8 +1797,8 @@
       "title": "Politique de Confidentialité",
       "metaDescription": "Lisez notre politique de confidentialité: comment VexNexa gère vos données, cookies et vie privée. Conforme RGPD.",
       "description": "Comment VexNexa traite vos données personnelles et protège votre vie privée.",
-      "lastUpdated": "8 décembre 2024",
-      "version": "v1.2",
+      "lastUpdated": "27 avril 2026",
+      "version": "v1.3",
       "summary": {
         "title": "Confidentialité en un coup d'œil",
         "description": "Les points les plus importants en un seul aperçu.",
@@ -1824,7 +1824,7 @@
         "companyName": "Nom de l'entreprise",
         "companyValue": "VexNexa B.V. (VexNexa fait partie de VexNexa)",
         "address": "Adresse",
-        "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
+        "addressValue": "Provencialeweg 46B, 1506 MC Zaandam, Pays-Bas",
         "kvk": "Chambre de Commerce",
         "vat": "TVA",
         "email": "E-mail",
@@ -1853,6 +1853,22 @@
           "Nom et adresse e-mail",
           "Contenu du message",
           "Horodatage de soumission"
+        ],
+        "googleOauthTitle": "Connexion avec Google (OAuth)",
+        "googleOauthIntro": "Lorsque vous choisissez de vous connecter avec votre compte Google, nous recevons uniquement les informations suivantes de votre profil Google via l'intégration Google OAuth :",
+        "googleOauthItems": [
+          "Votre adresse e-mail (obligatoire pour l'identification du compte)",
+          "Votre nom complet tel qu'enregistré chez Google",
+          "Un identifiant unique de compte Google (sub) pour relier les connexions futures"
+        ],
+        "googleOauthExtra": "Nous ne demandons aucun accès à votre Gmail, vos contacts, votre calendrier ou Drive. Nous ne voyons jamais votre mot de passe Google ; l'authentification est entièrement gérée par Google.",
+        "paymentsTitle": "Données de paiement",
+        "paymentsImportant": "Important",
+        "paymentsNote": "VexNexa ne stocke pas elle-même les numéros de carte bancaire ou de compte. Toutes les données de paiement sont traitées exclusivement par notre prestataire de paiement Mollie B.V. dans leur environnement certifié PCI-DSS.",
+        "paymentsItems": [
+          "Nous recevons uniquement de Mollie une référence de paiement (payment ID), le statut (réussi/échoué), le montant et le type de moyen de paiement (par ex. iDEAL, SEPA, carte) — jamais le numéro de carte lui-même.",
+          "Pour la facturation légalement requise, nous conservons les détails de la facture (raison sociale, adresse, numéro de TVA, numéro de facture, montant).",
+          "Vous pouvez révoquer un moyen de paiement enregistré à tout moment en résiliant votre abonnement ou en contactant le support."
         ]
       },
       "section3": {
@@ -1897,7 +1913,19 @@
       },
       "section6": {
         "title": "6. Destinataires et sous-traitants",
-        "intro": "Nous ne partageons des données qu'avec des prestataires de services qui traitent en notre nom dans le cadre d'un accord de traitement des données."
+        "intro": "Nous ne partageons des données qu'avec des prestataires qui traitent pour notre compte dans le cadre d'un accord de traitement des données (DPA) conforme à l'art. 28 du RGPD. Par catégorie, les sous-traitants actuels sont :",
+        "processors": {
+          "hostingLabel": "Hébergement & edge",
+          "hostingValue": "Vercel Inc. — hébergement applicatif et routage edge. Les éventuels transferts vers les États-Unis sont couverts par les Clauses Contractuelles Types (CCT) de l'UE et des mesures techniques complémentaires.",
+          "databaseLabel": "Base de données & stockage",
+          "databaseValue": "Supabase (hébergé sur AWS en UE, région Francfort) — stockage principal des données de compte et de scan. Les données restent dans l'UE.",
+          "authLabel": "Authentification",
+          "authValue": "Supabase Auth pour la connexion par e-mail/mot de passe, et Google LLC pour l'intégration optionnelle Google OAuth. Avec Google OAuth, nous recevons uniquement votre adresse e-mail, votre nom complet et un identifiant de compte Google.",
+          "paymentsLabel": "Paiements",
+          "paymentsValue": "Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam) — traite tous les paiements et est indépendamment certifié PCI-DSS. VexNexa ne stocke aucune donnée de carte.",
+          "emailLabel": "E-mail (transactionnel)",
+          "emailValue": "Resend (Resend Inc.) — envoie les e-mails transactionnels (vérification, réinitialisation de mot de passe, notifications de facture/rapport). Les transferts de données sont couverts par les CCT."
+        }
       },
       "section7": {
         "title": "7. Transferts hors UE/EEE",
@@ -1923,9 +1951,10 @@
           "Données de scan: 1 an (Gratuit); plus longtemps pour les comptes payants (configurable dans votre compte)",
           "Données de compte: jusqu'à suppression du compte ou tant que légalement requis",
           "Messages de contact: jusqu'à 2 ans",
-          "Analytics: jusqu'à 24 mois (agrégées/anonymisées si possible)"
+          "Analytics: jusqu'à 24 mois (agrégées/anonymisées si possible)",
+          "Les données de facturation sont conservées pendant 7 ans conformément à l'obligation légale de conservation fiscale de l'administration fiscale néerlandaise (Belastingdienst)."
         ],
-        "retentionNote": "Nous supprimons ou anonymisons plus tôt lorsque les données ne sont plus nécessaires, sauf si la conservation est légalement requise."
+        "retentionNote": "Nous supprimons ou anonymisons plus tôt lorsque les données ne sont plus nécessaires, sauf si la conservation est légalement requise (comme l'obligation fiscale de conservation des données de facturation)."
       },
       "section9": {
         "title": "9. Vos droits (RGPD)",

@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-const lastUpdated = 'December 8, 2024' // Will use translation
-const policyVersion = 'v1.2' // Will use translation
+const lastUpdated = 'April 27, 2026' // Will use translation
+const policyVersion = 'v1.3' // Will use translation
 
 const sections = [
   { id: 'wie-we-zijn', label: '1. Who we are' },
@@ -142,9 +142,6 @@ export default async function PrivacyPage() {
             '[&_h2]:pb-2 [&&_h2]:border-b [&&_h2]:border-muted',
           ].join(' ')}
         >
-          {/* helper: secties scheiden met dunne lijn */}
-          const Divider = () =&gt; <div className="h-px bg-border my-10 not-prose" />
-
           {/* 1 */}
           <section id="wie-we-zijn">
             <h2>{t('section1.title')}</h2>
@@ -154,7 +151,7 @@ export default async function PrivacyPage() {
             <div className="not-prose mt-5 rounded-lg border bg-muted p-4">
               <p className="font-medium">{t('section1.contactTitle')}</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands <br />
+                <strong>Address:</strong> Provencialeweg 46B, 1506 MC Zaandam, Netherlands <br />
                 <strong>Chamber of Commerce:</strong> 94848262 &nbsp;|&nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
                 <strong>{t('section1.email')}:</strong>{' '}
                 <a href="mailto:info@vexnexa.com" className="text-primary underline-offset-4 hover:underline">
@@ -198,6 +195,25 @@ export default async function PrivacyPage() {
               <li>{t('section2.contactItems.0')}</li>
               <li>{t('section2.contactItems.1')}</li>
               <li>{t('section2.contactItems.2')}</li>
+            </ul>
+
+            <h3>{t('section2.googleOauthTitle')}</h3>
+            <p>{t('section2.googleOauthIntro')}</p>
+            <ul>
+              <li>{t('section2.googleOauthItems.0')}</li>
+              <li>{t('section2.googleOauthItems.1')}</li>
+              <li>{t('section2.googleOauthItems.2')}</li>
+            </ul>
+
+            <h3>{t('section2.paymentsTitle')}</h3>
+            <p>
+              <strong>{t('section2.paymentsImportant')}:</strong>{' '}
+              {t('section2.paymentsNote')}
+            </p>
+            <ul>
+              <li>{t('section2.paymentsItems.0')}</li>
+              <li>{t('section2.paymentsItems.1')}</li>
+              <li>{t('section2.paymentsItems.2')}</li>
             </ul>
           </section>
 
@@ -269,11 +285,26 @@ export default async function PrivacyPage() {
             <h2>{t('section6.title')}</h2>
             <p>{t('section6.intro')}</p>
             <ul>
-              <li>Hosting & edge: {/* Vercel (EU-regio) */}</li>
-              <li>Database & opslag: {/* Supabase (EU project/region) */}</li>
-              <li>Betalingen: {/* Mollie B.V. */}</li>
-              <li>E-mail/transactioneel: {/* Resend/Postmark/Sendgrid, etc. */}</li>
-              <li>Monitoring/logging: {/* partij of “n.v.t.” */}</li>
+              <li>
+                <strong>{t('section6.processors.hostingLabel')}:</strong>{' '}
+                {t('section6.processors.hostingValue')}
+              </li>
+              <li>
+                <strong>{t('section6.processors.databaseLabel')}:</strong>{' '}
+                {t('section6.processors.databaseValue')}
+              </li>
+              <li>
+                <strong>{t('section6.processors.authLabel')}:</strong>{' '}
+                {t('section6.processors.authValue')}
+              </li>
+              <li>
+                <strong>{t('section6.processors.paymentsLabel')}:</strong>{' '}
+                {t('section6.processors.paymentsValue')}
+              </li>
+              <li>
+                <strong>{t('section6.processors.emailLabel')}:</strong>{' '}
+                {t('section6.processors.emailValue')}
+              </li>
             </ul>
           </section>
 
@@ -314,6 +345,7 @@ export default async function PrivacyPage() {
               <li>{t('section8.retentionItems.1')}</li>
               <li>{t('section8.retentionItems.2')}</li>
               <li>{t('section8.retentionItems.3')}</li>
+              <li>{t('section8.retentionItems.4')}</li>
             </ul>
             <p>{t('section8.retentionNote')}</p>
           </section>

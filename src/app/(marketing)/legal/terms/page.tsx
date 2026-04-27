@@ -171,7 +171,7 @@ export default async function TermsPage() {
             <div className="not-prose mt-5 rounded-lg border bg-muted p-4">
               <p className="font-medium">Legal Information (Service Provider)</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Address:</strong> Provencialeweg 46B, 1562TB Krommenie, Netherlands <br />
+                <strong>Address:</strong> Provencialeweg 46B, 1506 MC Zaandam, Netherlands <br />
                 <strong>Chamber of Commerce:</strong> 94848262 &nbsp; <strong>Establishment Number:</strong> 000060294744 <br />
                 <strong>E-mail:</strong> <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
               </p>

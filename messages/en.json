@@ -2751,8 +2751,8 @@
       "title": "Privacy Policy",
       "metaDescription": "Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.",
       "description": "How VexNexa handles your personal data and protects your privacy.",
-      "lastUpdated": "December 8, 2024",
-      "version": "v1.2",
+      "lastUpdated": "April 27, 2026",
+      "version": "v1.3",
       "summary": {
         "title": "Privacy at a glance",
         "description": "The most important points in one overview.",
@@ -2778,7 +2778,7 @@
         "companyName": "Company name",
         "companyValue": "VexNexa B.V. (VexNexa is part of VexNexa)",
         "address": "Address",
-        "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
+        "addressValue": "Provencialeweg 46B, 1506 MC Zaandam, Netherlands",
         "kvk": "Chamber of Commerce",
         "vat": "VAT",
         "email": "Email",
@@ -2807,6 +2807,22 @@
           "Name and email address",
           "Message content",
           "Submission timestamp"
+        ],
+        "googleOauthTitle": "Sign in with Google (OAuth)",
+        "googleOauthIntro": "When you choose to sign in with your Google account, we receive only the following information from your Google profile via the Google OAuth integration:",
+        "googleOauthItems": [
+          "Your email address (required for account identification)",
+          "Your full name as registered with Google",
+          "A unique Google account ID (sub) to link future logins"
+        ],
+        "googleOauthExtra": "We do not request access to your Gmail, contacts, calendar or Drive. We never see your Google password; authentication is handled entirely by Google.",
+        "paymentsTitle": "Payment data",
+        "paymentsImportant": "Important",
+        "paymentsNote": "VexNexa does not store credit card or bank account numbers itself. All payment data is processed exclusively by our payment service provider Mollie B.V. within their PCI-DSS certified environment.",
+        "paymentsItems": [
+          "We receive only a payment reference (payment ID), the status (success/failure), the amount, and the payment-method type (e.g. iDEAL, SEPA, card) from Mollie — never the card number itself.",
+          "For legally required invoicing we retain invoice details (company name, address, VAT number, invoice number, amount).",
+          "You can revoke a stored payment method at any time by canceling your subscription or contacting support."
         ]
       },
       "section3": {
@@ -2851,7 +2867,19 @@
       },
       "section6": {
         "title": "6. Recipients and processors",
-        "intro": "We only share data with service providers who process on our behalf under a data processing agreement."
+        "intro": "We share data only with service providers that process it on our behalf under a Data Processing Agreement (DPA) compliant with Art. 28 GDPR. Per category, the current processors are:",
+        "processors": {
+          "hostingLabel": "Hosting & edge",
+          "hostingValue": "Vercel Inc. — application hosting and edge routing. Any data transfers to the United States are covered by EU Standard Contractual Clauses (SCCs) and supplementary technical measures.",
+          "databaseLabel": "Database & storage",
+          "databaseValue": "Supabase (hosted on AWS in the EU, Frankfurt region) — primary storage for account and scan data. Data remains within the EU.",
+          "authLabel": "Authentication",
+          "authValue": "Supabase Auth for email/password login, and Google LLC for the optional Google OAuth integration. With Google OAuth we receive only your email address, full name, and a Google account ID.",
+          "paymentsLabel": "Payments",
+          "paymentsValue": "Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam) — handles all payments and is independently PCI-DSS certified. VexNexa does not store any card data.",
+          "emailLabel": "Email (transactional)",
+          "emailValue": "Resend (Resend Inc.) — sends transactional email such as verification, password reset, and invoice/report notifications. Data transfers are covered by SCCs."
+        }
       },
       "section7": {
         "title": "7. Transfers outside EU/EEA",
@@ -2877,9 +2905,10 @@
           "Scan data: 1 year (Free); longer for paid accounts (configurable in your account)",
           "Account data: until account deletion or as long as legally required",
           "Contact messages: up to 2 years",
-          "Analytics: up to 24 months (aggregated/anonymized where possible)"
+          "Analytics: up to 24 months (aggregated/anonymized where possible)",
+          "Invoice data is retained for 7 years in accordance with the statutory tax retention obligation of the Dutch Tax Administration (Belastingdienst)."
         ],
-        "retentionNote": "We delete or anonymize earlier when data is no longer needed, unless retention is legally required."
+        "retentionNote": "We delete or anonymize earlier when data is no longer needed, unless retention is legally required (such as the fiscal retention obligation for invoice data)."
       },
       "section9": {
         "title": "9. Your rights (GDPR/AVG)",

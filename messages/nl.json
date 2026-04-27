@@ -1833,8 +1833,8 @@
       "title": "Privacybeleid",
       "metaDescription": "Lees ons privacybeleid: hoe VexNexa omgaat met je gegevens, cookies en privacy. GDPR-compliant.",
       "description": "Hoe VexNexa omgaat met je persoonsgegevens en je privacy beschermt.",
-      "lastUpdated": "8 december 2024",
-      "version": "v1.2",
+      "lastUpdated": "27 april 2026",
+      "version": "v1.3",
       "summary": {
         "title": "Privacy in een oogopslag",
         "description": "De belangrijkste punten in één overzicht.",
@@ -1860,7 +1860,7 @@
         "companyName": "Bedrijfsnaam",
         "companyValue": "VexNexa B.V. (VexNexa is onderdeel van VexNexa)",
         "address": "Adres",
-        "addressValue": "Hoofdstraat 123, 1234 AB Amsterdam",
+        "addressValue": "Provencialeweg 46B, 1506 MC Zaandam, Nederland",
         "kvk": "KvK-nummer",
         "vat": "BTW",
         "email": "E-mail",
@@ -1889,6 +1889,22 @@
           "Naam en e-mailadres",
           "Berichtinhoud",
           "Tijdstempel van verzending"
+        ],
+        "googleOauthTitle": "Inloggen met Google (OAuth)",
+        "googleOauthIntro": "Wanneer je kiest om in te loggen met je Google-account, ontvangen wij via de Google OAuth-koppeling uitsluitend de volgende gegevens uit jouw Google-profiel:",
+        "googleOauthItems": [
+          "Je e-mailadres (verplicht voor accountidentificatie)",
+          "Je volledige naam zoals deze bij Google bekend staat",
+          "Een unieke Google-account-ID (sub) voor het koppelen van toekomstige logins"
+        ],
+        "googleOauthExtra": "We vragen géén toegang tot je Gmail, contacten, agenda of Drive. Je Google-wachtwoord zien wij nooit; authenticatie verloopt volledig via Google.",
+        "paymentsTitle": "Betaalgegevens",
+        "paymentsImportant": "Belangrijk",
+        "paymentsNote": "VexNexa slaat zelf geen creditcard- of bankrekeningnummers op. Alle betaalgegevens worden uitsluitend verwerkt door onze betaaldienstverlener Mollie B.V. binnen hun PCI-DSS-gecertificeerde omgeving.",
+        "paymentsItems": [
+          "Wij ontvangen van Mollie alleen een betaalreferentie (payment ID), de status (geslaagd/mislukt), het bedrag en het gebruikte betaalmiddel-type (bijv. iDEAL, SEPA, kaart) — nooit het kaartnummer zelf.",
+          "Voor wettelijk verplichte facturatie bewaren we factuurgegevens (bedrijfsnaam, adres, BTW-nummer, factuurnummer, bedrag).",
+          "Je kunt je opgeslagen betaalmethode op elk moment intrekken door je abonnement op te zeggen of door contact op te nemen met support."
         ]
       },
       "section3": {
@@ -1933,7 +1949,19 @@
       },
       "section6": {
         "title": "6. Ontvangers en verwerkers",
-        "intro": "We delen gegevens alleen met dienstverleners die namens ons verwerken onder een verwerkersovereenkomst."
+        "intro": "We delen gegevens uitsluitend met dienstverleners die namens ons verwerken onder een verwerkersovereenkomst (DPA) conform Art. 28 AVG. Per categorie zetten we de huidige verwerkers hieronder op een rij:",
+        "processors": {
+          "hostingLabel": "Hosting & edge",
+          "hostingValue": "Vercel Inc. — applicatiehosting en edge-routing. Datatransfers naar de Verenigde Staten worden afgedekt met EU Standard Contractual Clauses (SCC's) en aanvullende technische maatregelen.",
+          "databaseLabel": "Database & opslag",
+          "databaseValue": "Supabase (gehost op AWS in de EU, regio Frankfurt) — primaire opslag van account- en scangegevens. Gegevens blijven binnen de EU.",
+          "authLabel": "Authenticatie",
+          "authValue": "Supabase Auth voor e-mail/wachtwoord-login, en Google LLC voor de optionele Google OAuth-koppeling. Bij Google OAuth ontvangen wij uitsluitend e-mailadres, volledige naam en een Google-account-ID.",
+          "paymentsLabel": "Betalingen",
+          "paymentsValue": "Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam) — verwerkt alle betalingen en is zelfstandig PCI-DSS gecertificeerd. VexNexa slaat geen kaartgegevens op.",
+          "emailLabel": "E-mail (transactioneel)",
+          "emailValue": "Resend (Resend Inc.) — verzending van transactionele e-mails zoals verificatie, wachtwoordherstel en factuur-/rapport-notificaties. Datatransfers worden afgedekt met SCC's."
+        }
       },
       "section7": {
         "title": "7. Doorgifte buiten EU/EEA",
@@ -1959,9 +1987,10 @@
           "Scangegevens: 1 jaar (Gratis); langer voor betaalde accounts (configureerbaar in je account)",
           "Accountgegevens: tot accountverwijdering of zolang wettelijk vereist",
           "Contactberichten: tot 2 jaar",
-          "Analytics: tot 24 maanden (geaggregeerd/geanonimiseerd waar mogelijk)"
+          "Analytics: tot 24 maanden (geaggregeerd/geanonimiseerd waar mogelijk)",
+          "Factuurgegevens worden conform de wettelijke fiscale bewaarplicht van de Belastingdienst gedurende 7 jaar bewaard."
         ],
-        "retentionNote": "We verwijderen of anonimiseren eerder wanneer gegevens niet meer nodig zijn, tenzij bewaring wettelijk verplicht is."
+        "retentionNote": "We verwijderen of anonimiseren eerder wanneer gegevens niet meer nodig zijn, tenzij bewaring wettelijk verplicht is (zoals de fiscale bewaarplicht voor factuurgegevens)."
       },
       "section9": {
         "title": "9. Jouw rechten (AVG/GDPR)",
