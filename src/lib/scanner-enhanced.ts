@@ -1,5 +1,6 @@
 import { ScanResult } from "./scanner";
 import { runRobustAccessibilityScan } from "./scanner-headless";
+import { extractImageDataFromPage, analyzeMultipleImages, type ImageAnalysisResult } from "./ai-image-analysis";
 
 // ===== Env & Production flags =====
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -43,6 +44,7 @@ export interface EnhancedScanResult extends ScanResult {
   advancedColorVision: ColorVisionResult;
   performanceImpact: PerformanceImpactResult;
   languageSupport: LanguageSupportResult;
+  aiContentChecks?: ImageAnalysisResult[];
   engineName?: string | null;
   axeVersion?: string | null;
   title?: string;
@@ -374,12 +376,40 @@ export class EnhancedAccessibilityScanner {
     const engineName = (axeResults as any)?.testEngine?.name ?? "axe-core";
     const axeVersion = (axeResults as any)?.testEngine?.version ?? null;
 
+    // AI Image Analysis (if enabled and within time limits)
+    let aiContentChecks: ImageAnalysisResult[] = [];
+    const aiEnabled = process.env.ENABLE_AI_IMAGE_ANALYSIS === "true";
+    
+    if (aiEnabled && process.env.GOOGLE_GEMINI_API_KEY) {
+      try {
+        console.log('[a11y] Starting AI image analysis...');
+        const startTime = Date.now();
+        
+        // Extract image data from page
+        const imageData = await extractImageDataFromPage(page, 20);
+        console.log(`[a11y] Extracted ${imageData.length} images for analysis`);
+        
+        // Analyze images with timeout handling
+        // Limit to 5 images and 20 seconds total to stay within Vercel function limits
+        aiContentChecks = await analyzeMultipleImages(imageData, 5, 20000);
+        
+        const elapsed = Date.now() - startTime;
+        console.log(`[a11y] AI image analysis completed in ${elapsed}ms (${aiContentChecks.length} images analyzed)`);
+      } catch (aiError: any) {
+        console.error('[a11y] AI image analysis failed (non-blocking):', aiError?.message);
+        // Don't fail the entire scan if AI analysis fails
+      }
+    } else {
+      console.log('[a11y] AI image analysis disabled or API key not set');
+    }
+
     console.log("[a11y] axe meta", {
       engine: engineName,
       version: axeVersion,
       violations: violations.length,
       passes: passes.length ?? 0,
       score: enhancedScore,
+      aiChecksPerformed: aiContentChecks.length,
     });
 
     return {
@@ -407,6 +437,7 @@ export class EnhancedAccessibilityScanner {
       advancedColorVision,
       performanceImpact,
       languageSupport,
+      aiContentChecks,
       engineName,
       axeVersion,
       __demo: false,
@@ -443,6 +474,7 @@ export class EnhancedAccessibilityScanner {
       advancedColorVision: { score: 88, issues: [], deuteranopia: true, protanopia: true, tritanopia: true, achromatopsia: true },
       performanceImpact: { score: 80, issues: [], loadTime: 2500, largeElements: 800, assistiveTechFriendly: true },
       languageSupport: { score: 90, issues: [], languageDetected: "en", directionality: true, multiLanguage: false },
+      aiContentChecks: [],
       engineName: "fallback-mock",
       axeVersion: null,
       __demo: true,
