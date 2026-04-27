@@ -12,7 +12,7 @@ import {
   type BillingInterval,
 } from "./pricing-config";
 import { sendInvoiceForPayment } from "./invoice-service";
-import type { PaymentCreateParams } from "@mollie/api-client";
+import type { Customer, Payment, PaymentCreateParams } from "@mollie/api-client";
 import { SequenceType } from "@mollie/api-client";
 import type { Plan as PrismaPlan } from "@prisma/client";
 import type { Plan } from "./plans";
@@ -510,7 +510,8 @@ export async function processWebhookPayment(paymentId: string) {
     return;
   }
 
-  // Payment is successful, create subscription
+  // Payment is successful — create subscription. createSubscription() is the
+  // canonical writer of `plan` and `subscriptionStatus="active"` on the User row.
   if (payment.customerId && plan !== "FREE") {
     await createSubscription({
       customerId: payment.customerId,
@@ -520,11 +521,172 @@ export async function processWebhookPayment(paymentId: string) {
     });
   }
 
+  // Backfill BillingProfile from Mollie customer + payment metadata so we have
+  // a complete invoice record for AVG/VAT compliance. Idempotent — uses upsert.
+  try {
+    await backfillBillingProfileFromPayment(userId, payment, metadata);
+  } catch (billingError) {
+    console.error("[Webhook] Failed to backfill BillingProfile:", billingError);
+  }
+
+  // Activate any AssuranceDomain rows tied to this user's active subscription so
+  // the Axe-core scanner treats the domain as authorised. Safe to run on every
+  // successful payment because we only flip `active=true` (no destructive ops).
+  try {
+    await activateAssuranceDomainsForUser(userId);
+  } catch (activationError) {
+    console.error("[Webhook] Failed to activate AssuranceDomains:", activationError);
+  }
+
   // Send invoice email (idempotent)
   try {
     await sendInvoiceForPayment(paymentId);
   } catch (invoiceError) {
     console.error("[Webhook] Failed to send invoice:", invoiceError);
+  }
+}
+
+/**
+ * Backfill the user's BillingProfile from Mollie customer + payment metadata.
+ *
+ * Uses upsert so it is safe on retries. We never overwrite a non-null DB value
+ * with a null/empty Mollie value — only fill in fields the customer hasn't
+ * explicitly set themselves.
+ */
+async function backfillBillingProfileFromPayment(
+  userId: string,
+  payment: Payment,
+  metadata: any
+): Promise<void> {
+  // Fetch the Mollie customer for name / email
+  let mollieCustomer: Customer | null = null;
+  if (payment.customerId) {
+    try {
+      mollieCustomer = await mollie.customers.get(payment.customerId);
+    } catch (err) {
+      console.warn("[Webhook] Could not fetch Mollie customer:", err);
+    }
+  }
+
+  const fullName: string | undefined =
+    metadata?.fullName || mollieCustomer?.name || undefined;
+
+  // Mollie's billingAddress is on the payment object when present
+  const billingAddress = (payment as any).billingAddress as
+    | {
+        streetAndNumber?: string;
+        city?: string;
+        postalCode?: string;
+        region?: string;
+        country?: string;
+      }
+    | undefined;
+
+  const countryCode: string =
+    metadata?.billingCountry ||
+    billingAddress?.country ||
+    "NL";
+
+  const profileData = {
+    billingType:
+      metadata?.customerType === "company" ? "business" : "individual",
+    fullName: fullName ?? null,
+    companyName: metadata?.companyName ?? null,
+    countryCode,
+    vatId: metadata?.vatNumber ?? metadata?.vatId ?? null,
+    vatValid: Boolean(metadata?.vatIdValid ?? metadata?.vatValid ?? false),
+    kvkNumber: metadata?.kvkNumber ?? null,
+    addressLine1: billingAddress?.streetAndNumber ?? null,
+    addressCity: billingAddress?.city ?? null,
+    addressPostal: billingAddress?.postalCode ?? null,
+    addressRegion: billingAddress?.region ?? null,
+  };
+
+  const existing = await prisma.billingProfile.findUnique({
+    where: { userId },
+  });
+
+  if (!existing) {
+    await prisma.billingProfile.create({
+      data: {
+        userId,
+        ...profileData,
+      },
+    });
+    console.log("[Webhook] Created BillingProfile for user:", userId);
+    return;
+  }
+
+  // Build a "fill-only-if-empty" patch so we never blow away user-edited fields
+  const patch: Record<string, unknown> = {};
+  const fillIfEmpty = <K extends keyof typeof profileData>(key: K) => {
+    const current = (existing as any)[key];
+    const incoming = profileData[key];
+    if ((current === null || current === undefined || current === "") && incoming) {
+      patch[key as string] = incoming;
+    }
+  };
+  fillIfEmpty("fullName");
+  fillIfEmpty("companyName");
+  fillIfEmpty("vatId");
+  fillIfEmpty("kvkNumber");
+  fillIfEmpty("addressLine1");
+  fillIfEmpty("addressCity");
+  fillIfEmpty("addressPostal");
+  fillIfEmpty("addressRegion");
+
+  // Country is special: we trust Mollie's value over a default "NL" only if
+  // the existing row is still on the default and we have a more specific signal.
+  if (
+    (existing.countryCode === "NL" || !existing.countryCode) &&
+    profileData.countryCode &&
+    profileData.countryCode !== existing.countryCode
+  ) {
+    patch.countryCode = profileData.countryCode;
+  }
+
+  // VAT validity should reflect the latest known truth from the payment metadata.
+  if (profileData.vatValid && !existing.vatValid) {
+    patch.vatValid = true;
+    patch.vatCheckedAt = new Date();
+  }
+
+  if (Object.keys(patch).length > 0) {
+    await prisma.billingProfile.update({
+      where: { userId },
+      data: patch,
+    });
+    console.log("[Webhook] Backfilled BillingProfile fields for user:", userId, Object.keys(patch));
+  }
+}
+
+/**
+ * Mark every AssuranceDomain belonging to this user's active AssuranceSubscription
+ * as `active=true` so the scanner treats the domain as authorised.
+ *
+ * Idempotent: re-running on already-active rows is a no-op (Prisma updateMany
+ * with the same value returns count=0 work but does not error).
+ */
+async function activateAssuranceDomainsForUser(userId: string): Promise<void> {
+  const activeSubs = await prisma.assuranceSubscription.findMany({
+    where: { userId, status: "active" },
+    select: { id: true },
+  });
+  if (activeSubs.length === 0) return;
+
+  const subscriptionIds = activeSubs.map((s) => s.id);
+  const result = await prisma.assuranceDomain.updateMany({
+    where: {
+      subscriptionId: { in: subscriptionIds },
+      active: false,
+    },
+    data: { active: true },
+  });
+  if (result.count > 0) {
+    console.log(
+      `[Webhook] Activated ${result.count} AssuranceDomain row(s) for user:`,
+      userId
+    );
   }
 }
 

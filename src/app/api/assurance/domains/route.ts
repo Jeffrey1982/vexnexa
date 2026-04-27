@@ -11,6 +11,7 @@ import {
   DEFAULT_SCAN_DAY,
 } from '@/lib/assurance/pricing';
 import { prisma } from '@/lib/prisma';
+import { assertPublicHttpUrl } from '@/lib/security/ssrf-guard';
 import type { AssuranceFrequency } from '@prisma/client';
 
 /**
@@ -138,6 +139,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // SSRF protection: reject localhost / private IPs / non-HTTP protocols /
+    // hostnames that DNS-resolve to a private IP. We persist the validator's
+    // canonical URL string (origin) so the scanner can't be tricked by query
+    // strings, fragments, or userinfo on subsequent runs.
+    const ssrfCheck = await assertPublicHttpUrl(domain);
+    if (!ssrfCheck.ok) {
+      return NextResponse.json(
+        { error: ssrfCheck.error },
+        { status: 400 }
+      );
+    }
+    const safeDomain: string = ssrfCheck.url.origin;
+
     // Get plan limits
     const limits = getAssurancePlanLimits(subscription.tier);
 
@@ -216,11 +230,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check for duplicate domain
+    // Check for duplicate domain (use the validated origin, not raw input)
     const existingDomain = await prisma.assuranceDomain.findFirst({
       where: {
         subscriptionId: subscription.id,
-        domain,
+        domain: safeDomain,
       },
     });
 
@@ -234,11 +248,12 @@ export async function POST(req: NextRequest) {
     // Calculate initial nextRunAt
     const nextRunAt = calculateNextRunTime(scanFrequency, dayOfWeek, timeOfDay);
 
-    // Create domain
+    // Create domain (store the validated origin so the scanner only ever
+    // sees a sanitised URL, never the raw user input)
     const newDomain = await prisma.assuranceDomain.create({
       data: {
         subscriptionId: subscription.id,
-        domain,
+        domain: safeDomain,
         label,
         scanFrequency,
         scoreThreshold: threshold,
