@@ -28,7 +28,7 @@ import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 
 interface ExportOptions {
-  format: 'pdf' | 'docx' | 'xlsx' | 'csv' | 'json' | 'html';
+  format: 'pdf' | 'xlsx' | 'csv' | 'json' | 'html';
   template: 'executive' | 'technical' | 'compliance' | 'custom';
   sections: string[];
   includeCharts: boolean;
@@ -76,7 +76,6 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
 
   const formatOptions = [
     { value: 'pdf', label: 'PDF Report', icon: <FileText className="h-4 w-4" />, description: 'Professional formatted document' },
-    { value: 'docx', label: 'Word Document', icon: <FileText className="h-4 w-4" />, description: 'Editable document format' },
     { value: 'xlsx', label: 'Excel Workbook', icon: <FileSpreadsheet className="h-4 w-4" />, description: 'Data analysis spreadsheet' },
     { value: 'csv', label: 'CSV Data', icon: <Table className="h-4 w-4" />, description: 'Raw data export' },
     { value: 'json', label: 'JSON Data', icon: <Table className="h-4 w-4" />, description: 'API-friendly format' },

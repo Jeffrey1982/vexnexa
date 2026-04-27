@@ -1,11 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { transformScanToReport, renderReportHTML } from "@/lib/report";
+import { transformScanToReport, renderReportHTML, resolveReportLabels } from "@/lib/report";
 import type { ReportStyle } from "@/lib/report";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Download, FileDown } from "lucide-react";
+import { FileText, Download } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -47,14 +47,15 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
       wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
       wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
       createdAt: scan.createdAt.toISOString(),
-      raw: scan.raw,
+      raw: scan.resultJson || scan.raw,
       site: { url: scan.site.url },
       page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
     },
     undefined,
     undefined,
     undefined,
-    styleParam
+    styleParam,
+    resolveReportLabels()
   );
 
   const reportHtml: string = renderReportHTML(reportData);
@@ -93,13 +94,6 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
                 >
                   <Download className="w-4 h-4" />
                   Download PDF
-                </a>
-                <a
-                  href={`/api/reports/${id}/docx${styleQs}`}
-                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-5 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
-                >
-                  <FileDown className="w-4 h-4" />
-                  Download DOCX
                 </a>
               </div>
             </div>

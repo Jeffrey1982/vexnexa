@@ -3681,6 +3681,21 @@
         "Authority": "Authority",
         "Apex": "Apex"
       }
+    },
+    "pdf": {
+      "vniIndex": "VexNexa Index",
+      "vniRank": "VNI Rank",
+      "outOf2500": "out of 2500",
+      "aiVisionAudit": "AI-Vision Audit",
+      "imageAltText": "Alt text",
+      "aiAssessment": "Gemini assessment",
+      "confidence": "Confidence",
+      "performanceParadox": "Performance Paradox",
+      "pageWeight": "Page Weight",
+      "visualLoadTime": "Visual Load Time",
+      "domComplexity": "DOM Complexity",
+      "realWorldQuality": "Real-World Quality",
+      "technicallyOptimizedHeavy": "Technically optimized, but physically heavy."
     }
   }
 }

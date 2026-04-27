@@ -20,6 +20,7 @@ export async function GET(
       extractQueryOverrides,
       fetchImageAsDataUrl,
       getStoredWhiteLabel,
+      resolveReportLabels,
     } = await import("@/lib/report");
 
     // Auth
@@ -46,6 +47,7 @@ export async function GET(
     const qp = extractQueryOverrides(url);
     const storedWL = await getStoredWhiteLabel(user.id);
     const resolved = resolveWhiteLabelConfig(qp, storedWL);
+    const labels = resolveReportLabels(req.headers.get("accept-language"));
 
     // Embed logo as data URL so it renders in print/PDF
     if (resolved.whiteLabelConfig.logoUrl) {
@@ -66,14 +68,15 @@ export async function GET(
         wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
         wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
         createdAt: scan.createdAt.toISOString(),
-        raw: scan.raw,
+        raw: scan.resultJson || scan.raw,
         site: { url: scan.site.url },
         page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
       },
       resolved.themeConfig,
       resolved.whiteLabelConfig,
       resolved.ctaConfig,
-      resolved.reportStyle
+      resolved.reportStyle,
+      labels
     );
 
     console.log("[reports/pdf] SCORE DEBUG:", {

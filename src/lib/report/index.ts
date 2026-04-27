@@ -14,6 +14,7 @@ export type {
 export { fetchImageAsDataUrl, fetchImageAsBuffer } from "./fetch-image";
 export { getStoredWhiteLabel } from "./get-stored-white-label";
 export { getImageDimensions, computeLogoDimensions } from "./image-dimensions";
+export { resolveReportLabels, DEFAULT_REPORT_LABELS } from "./labels";
 export type { ImageDimensions, LogoSize } from "./image-dimensions";
 export type {
   ReportData,
@@ -31,6 +32,10 @@ export type {
   ScanConfiguration,
   TopPriorityFix,
   AffectedElementDetail,
+  ReportLabels,
+  ReportVni,
+  ReportQualityMetrics,
+  ReportAiVisionItem,
 } from "./types";
 export { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";
 export * from "./eaa-readiness-copy";

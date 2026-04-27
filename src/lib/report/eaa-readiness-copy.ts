@@ -40,7 +40,7 @@ export function formatEaaContextLine(params: {
     parts.push(`Context for automated results for ${params.domain}.`);
   }
   if (params.score != null && Number.isFinite(params.score)) {
-    parts.push(`Latest reported score: ${params.score}/100 (informational only).`);
+    parts.push(`Latest reported VexNexa Index: ${params.score}${params.score > 100 ? "/2500" : "/100"} (informational only).`);
   }
   if (params.totalIssues != null && params.totalIssues > 0) {
     parts.push(

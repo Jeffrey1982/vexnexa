@@ -99,6 +99,52 @@ export interface TopPriorityFix {
   weightedImpact: number;
 }
 
+export interface ReportLabels {
+  vniIndex: string;
+  vniRank: string;
+  outOf2500: string;
+  aiVisionAudit: string;
+  imageAltText: string;
+  aiAssessment: string;
+  confidence: string;
+  performanceParadox: string;
+  pageWeight: string;
+  visualLoadTime: string;
+  domComplexity: string;
+  realWorldQuality: string;
+  technicallyOptimizedHeavy: string;
+}
+
+export interface ReportVni {
+  score: number;
+  tier: "Apex" | "Authority" | "Elite" | "Standard" | "Insolvent";
+  stars: number;
+  pillars?: Record<string, number>;
+  worstPage?: {
+    url?: string;
+    title?: string;
+    score?: number;
+    vniScore?: number;
+    issues?: number;
+  };
+}
+
+export interface ReportQualityMetrics {
+  totalPageWeightBytes: number;
+  largestContentfulPaintMs: number;
+  domNodeCount: number;
+  performanceParadox: boolean;
+}
+
+export interface ReportAiVisionItem {
+  imageUrl?: string;
+  altText?: string;
+  aiDescription?: string;
+  matchesAltText?: boolean;
+  confidence?: number;
+  recommendation?: string;
+}
+
 /** A single priority issue for the report */
 export interface ReportIssue {
   id: string;
@@ -155,6 +201,10 @@ export interface ReportData {
   wcagMatrix: WcagMatrixRow[];
   scanConfig: ScanConfiguration;
   topPriorityFixes: TopPriorityFix[];
+  labels: ReportLabels;
+  vni?: ReportVni;
+  qualityMetrics?: ReportQualityMetrics;
+  aiVisionAudit: ReportAiVisionItem[];
   /** Optional branding override — if absent, default VexNexa branding applies */
   reportBranding?: ReportBranding;
   /** Previous health score for trend comparison (future use) */

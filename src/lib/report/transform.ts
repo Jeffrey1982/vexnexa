@@ -13,8 +13,13 @@ import type {
   WcagMatrixRow,
   ScanConfiguration,
   TopPriorityFix,
+  ReportLabels,
+  ReportVni,
+  ReportQualityMetrics,
+  ReportAiVisionItem,
 } from "./types";
 import { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";
+import { DEFAULT_REPORT_LABELS } from "./labels";
 
 /** Human-readable explanations for common axe rule IDs */
 const RULE_EXPLANATIONS: Record<string, { title: string; explanation: string; impact: string; recommendation: string }> = {
@@ -245,6 +250,14 @@ function buildHealthScoreFromCanonical(
   return { value, grade, label, weightedPenalty, normalizedPenalty };
 }
 
+function vniStars(score: number): number {
+  if (score >= 2301) return 5;
+  if (score >= 1901) return 4;
+  if (score >= 1301) return 3;
+  if (score >= 701) return 2;
+  return 1;
+}
+
 /**
  * Known WCAG 2.2 success criteria mapped from axe-core tags.
  * Each entry: tag prefix → { criterion display name, level }
@@ -428,7 +441,8 @@ export function transformScanToReport(
   themeConfig?: Partial<ReportThemeConfig>,
   whiteLabelConfig?: Partial<WhiteLabelConfig>,
   ctaConfig?: Partial<CTAConfig>,
-  reportStyle?: ReportStyle
+  reportStyle?: ReportStyle,
+  labels?: Partial<ReportLabels>
 ): ReportData {
   const breakdown: IssueBreakdown = {
     total: scan.issues ?? 0,
@@ -440,7 +454,10 @@ export function transformScanToReport(
 
   // Canonical health score — use the DB-persisted score (from scoreFromAxe)
   // so dashboard and exports always display the same number.
-  const pagesScanned = 1;
+  const raw = scan.raw && typeof scan.raw === "object" ? (scan.raw as Record<string, any>) : {};
+  const deepScan = raw?.vni?.internal?.deepScan;
+  const pagesScanned = Number(deepScan?.scannedPages || raw?.discoveredInternalLinks?.length + 1 || 1);
+  const reportLabels: ReportLabels = { ...DEFAULT_REPORT_LABELS, ...labels };
   const healthScore: HealthScore = scan.score != null
     ? buildHealthScoreFromCanonical(scan.score, breakdown, pagesScanned)
     : computeHealthScore(breakdown, pagesScanned);
@@ -458,8 +475,8 @@ export function transformScanToReport(
     tags?: string[];
     nodes?: Array<{ target?: string[]; html?: string }>;
   }> = [];
-  if (scan.raw && typeof scan.raw === "object" && "violations" in (scan.raw as Record<string, unknown>)) {
-    rawViolations = ((scan.raw as Record<string, unknown>).violations as typeof rawViolations) ?? [];
+  if (raw && "violations" in raw) {
+    rawViolations = (raw.violations as typeof rawViolations) ?? [];
   }
 
   // Transform violations into executive-friendly issues
@@ -475,7 +492,7 @@ export function transformScanToReport(
       const elementCount: number = allNodes.length || 1;
       // Full element details for export-grade reports (safety cap: 5000)
       // pageUrl populated from scan context for evidence table Page/URL column
-      const pageUrl: string = scan.page?.url ?? scan.site.url;
+      const pageUrl: string = (v as any).pageUrl ?? scan.page?.url ?? scan.site.url;
       const elementDetails = allNodes.slice(0, 5000).map((n) => ({
         selector: (n.target ?? []).join(" > ") || "unknown",
         html: (n.html ?? "").slice(0, 1000),
@@ -514,6 +531,37 @@ export function transformScanToReport(
     ? scan.createdAt
     : scan.createdAt.toISOString();
 
+  const vni: ReportVni | undefined = raw?.vni?.score
+    ? {
+        score: Math.round(raw.vni.score),
+        tier: raw.vni.tier,
+        stars: vniStars(Number(raw.vni.score)),
+        pillars: raw.vni.pillars,
+        worstPage: deepScan?.worstPage,
+      }
+    : undefined;
+  const qualityMetrics: ReportQualityMetrics | undefined =
+    typeof raw?.totalPageWeightBytes === "number" ||
+    typeof raw?.largestContentfulPaintMs === "number" ||
+    typeof raw?.domNodeCount === "number"
+      ? {
+          totalPageWeightBytes: Number(raw?.totalPageWeightBytes || 0),
+          largestContentfulPaintMs: Number(raw?.largestContentfulPaintMs || 0),
+          domNodeCount: Number(raw?.domNodeCount || 0),
+          performanceParadox: Boolean((vni?.score || 0) > 1900 && (Number(raw?.largestContentfulPaintMs || 0) > 2500 || Number(raw?.totalPageWeightBytes || 0) > 2_500_000)),
+        }
+      : undefined;
+  const aiVisionAudit: ReportAiVisionItem[] = Array.isArray(raw?.aiContentChecks)
+    ? raw.aiContentChecks.slice(0, 12).map((item: any) => ({
+        imageUrl: item.imageUrl || item.src,
+        altText: item.altText || item.alt || "",
+        aiDescription: item.aiDescription || item.description || item.analysis || item.summary || "",
+        matchesAltText: typeof item.matchesAltText === "boolean" ? item.matchesAltText : item.isAccurate,
+        confidence: typeof item.confidence === "number" ? item.confidence : undefined,
+        recommendation: item.recommendation || item.suggestion,
+      }))
+    : [];
+
   const wcagMatrix = buildWcagMatrix(rawViolations);
   const scanConfig = buildScanConfig(scan, pagesScanned, "axe-core", "4.10");
   const topPriorityFixes = computeTopPriorityFixes(priorityIssues);
@@ -548,6 +596,10 @@ export function transformScanToReport(
     wcagMatrix,
     scanConfig,
     topPriorityFixes,
+    labels: reportLabels,
+    vni,
+    qualityMetrics,
+    aiVisionAudit,
     scanTimestamp: typeof scan.createdAt === "string" ? scan.createdAt : scan.createdAt.toISOString(),
   };
 }

@@ -3193,6 +3193,21 @@
         "Authority": "Authority",
         "Apex": "Apex"
       }
+    },
+    "pdf": {
+      "vniIndex": "VexNexa Index",
+      "vniRank": "VNI-Rang",
+      "outOf2500": "von 2500",
+      "aiVisionAudit": "AI-Vision-Audit",
+      "imageAltText": "Alt-Text",
+      "aiAssessment": "Gemini-Bewertung",
+      "confidence": "Konfidenz",
+      "performanceParadox": "Performance-Paradox",
+      "pageWeight": "Seitengewicht",
+      "visualLoadTime": "Visuelle Ladezeit",
+      "domComplexity": "DOM-Komplexitaet",
+      "realWorldQuality": "Real-World-Qualitaet",
+      "technicallyOptimizedHeavy": "Technisch optimiert, aber physisch schwer."
     }
   }
 }

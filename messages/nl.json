@@ -3178,6 +3178,21 @@
         "Authority": "Authority",
         "Apex": "Apex"
       }
+    },
+    "pdf": {
+      "vniIndex": "VexNexa Index",
+      "vniRank": "VNI-rang",
+      "outOf2500": "van 2500",
+      "aiVisionAudit": "AI-visie audit",
+      "imageAltText": "Alt-tekst",
+      "aiAssessment": "Gemini-beoordeling",
+      "confidence": "Zekerheid",
+      "performanceParadox": "Performance Paradox",
+      "pageWeight": "Paginagewicht",
+      "visualLoadTime": "Visuele laadtijd",
+      "domComplexity": "DOM-complexiteit",
+      "realWorldQuality": "Real-world kwaliteit",
+      "technicallyOptimizedHeavy": "Technisch geoptimaliseerd, maar fysiek te zwaar."
     }
   }
 }
