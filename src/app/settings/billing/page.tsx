@@ -27,6 +27,7 @@ import {
   Check,
   X,
   BarChart3,
+  Shield,
 } from "lucide-react";
 import { PLAN_NAMES, formatPrice, ENTITLEMENTS, PRICES } from "@/lib/billing/plans";
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
@@ -60,6 +61,32 @@ interface AddOnData {
   status: string;
   totalPrice: number;
 }
+
+interface AssuranceSubscriptionData {
+  hasSubscription: boolean;
+  subscription: {
+    id: string;
+    tier: "BASIC" | "PRO" | "PUBLIC_SECTOR";
+    status: string;
+    billingCycle: "monthly" | "semiannual" | "annual";
+    pricePerMonth: string;
+    totalPrice: string;
+    activatedAt: string | null;
+  } | null;
+  usage?: { domains: number; maxDomains: number };
+}
+
+const ASSURANCE_TIER_NAMES: Record<"BASIC" | "PRO" | "PUBLIC_SECTOR", string> = {
+  BASIC: "Basic",
+  PRO: "Pro",
+  PUBLIC_SECTOR: "Public Sector",
+};
+
+const ASSURANCE_CYCLE_LABELS: Record<"monthly" | "semiannual" | "annual", string> = {
+  monthly: "Monthly",
+  semiannual: "Every 6 months",
+  annual: "Annual",
+};
 
 interface EntitlementsData {
   pagesPerMonth: number;
@@ -137,6 +164,7 @@ export default function BillingPage() {
   const [actualUsage, setActualUsage] = useState<ActualUsageData | null>(null);
   const [entitlements, setEntitlements] = useState<EntitlementsData | null>(null);
   const [addOns, setAddOns] = useState<AddOnData[]>([]);
+  const [assurance, setAssurance] = useState<AssuranceSubscriptionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -173,6 +201,17 @@ export default function BillingPage() {
       setActualUsage(data.actualUsage);
       setEntitlements(data.entitlements);
       setAddOns(data.addOns || []);
+
+      // Load Assurance subscription separately (different table / product).
+      try {
+        const assuranceRes = await fetch("/api/assurance/subscription");
+        if (assuranceRes.ok) {
+          const assuranceData = (await assuranceRes.json()) as AssuranceSubscriptionData;
+          setAssurance(assuranceData);
+        }
+      } catch {
+        // Non-fatal: card will simply not render.
+      }
 
       setLoading(false);
     } catch (err) {
@@ -384,6 +423,53 @@ export default function BillingPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Assurance Subscription */}
+        {assurance?.hasSubscription && assurance.subscription && (
+          <Card className="border-blue-200 dark:border-blue-800/40 bg-blue-50/30 dark:bg-blue-900/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                Accessibility Assurance
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-bold">
+                      Assurance {ASSURANCE_TIER_NAMES[assurance.subscription.tier]}
+                    </h3>
+                    <Badge
+                      variant={assurance.subscription.status === "active" ? "default" : "secondary"}
+                      className="capitalize"
+                    >
+                      {assurance.subscription.status === "active" && <CheckCircle className="h-3 w-3 mr-1" />}
+                      {assurance.subscription.status === "canceled" && <XCircle className="h-3 w-3 mr-1" />}
+                      {assurance.subscription.status}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {ASSURANCE_CYCLE_LABELS[assurance.subscription.billingCycle]} · €{Number(assurance.subscription.totalPrice).toFixed(2)} (incl. VAT)
+                  </p>
+                </div>
+                {assurance.usage && (
+                  <div className="text-right">
+                    <p className="text-sm text-muted-foreground">Domains</p>
+                    <p className="font-semibold">
+                      {assurance.usage.domains} / {assurance.usage.maxDomains}
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="mt-4">
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/dashboard/assurance">Manage Assurance →</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Usage Overview */}
         {usage && entitlements && actualUsage && (

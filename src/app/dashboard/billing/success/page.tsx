@@ -49,6 +49,20 @@ export default function BillingSuccessPage(): JSX.Element {
     supabase.auth.getUser().then(({ data: { user } }) => setAuthUser(user));
   }, [mounted]);
 
+  // Self-heal: the Mollie webhook may not have arrived yet (or may have failed
+  // historically due to body-parsing bugs). Trigger reconcile on mount so the
+  // user's AssuranceSubscription is created/refreshed before they continue.
+  useEffect(() => {
+    if (!mounted) return;
+    void fetch("/api/assurance/reconcile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    }).catch(() => {
+      // Non-fatal: webhook will eventually deliver, or user can revisit.
+    });
+  }, [mounted]);
+
   if (!mounted) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
