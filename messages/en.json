@@ -1070,6 +1070,20 @@
       "allRightsReserved": "All rights reserved.",
       "madeWithLove": "Made with ❤️ for web accessibility"
     },
+    "brandedFooter": {
+      "description": "Accessibility testing and compliance platform",
+      "quickLinks": "Quick Links",
+      "dashboard": "Dashboard",
+      "pricing": "Pricing",
+      "features": "Features",
+      "legal": "Legal",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "contact": "Contact",
+      "visitWebsite": "Visit Website",
+      "poweredBy": "Powered by",
+      "allRightsReserved": "All rights reserved."
+    },
     "product": {
       "title": "Product",
       "features": "Features",

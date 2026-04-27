@@ -57,6 +57,20 @@
       "allRightsReserved": "Todos los derechos reservados.",
       "madeWithLove": "Hecho con ❤️ para accesibilidad web"
     },
+    "brandedFooter": {
+      "description": "Plataforma de pruebas de accesibilidad y cumplimiento",
+      "quickLinks": "Enlaces Rápidos",
+      "dashboard": "Dashboard",
+      "pricing": "Precios",
+      "features": "Características",
+      "legal": "Legal",
+      "privacyPolicy": "Política de Privacidad",
+      "termsOfService": "Términos de Servicio",
+      "contact": "Contacto",
+      "visitWebsite": "Visitar Sitio Web",
+      "poweredBy": "Desarrollado por",
+      "allRightsReserved": "Todos los derechos reservados."
+    },
     "product": {
       "title": "Producto",
       "features": "Características",

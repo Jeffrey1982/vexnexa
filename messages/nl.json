@@ -57,6 +57,20 @@
       "allRightsReserved": "Alle rechten voorbehouden.",
       "madeWithLove": "Gemaakt met ❤️ voor webtoegankelijkheid"
     },
+    "brandedFooter": {
+      "description": "Toegankelijkheidstests en compliance platform",
+      "quickLinks": "Snelle Links",
+      "dashboard": "Dashboard",
+      "pricing": "Prijzen",
+      "features": "Functies",
+      "legal": "Juridisch",
+      "privacyPolicy": "Privacybeleid",
+      "termsOfService": "Algemene Voorwaarden",
+      "contact": "Contact",
+      "visitWebsite": "Bezoek Website",
+      "poweredBy": "Aangedreven door",
+      "allRightsReserved": "Alle rechten voorbehouden."
+    },
     "product": {
       "title": "Product",
       "features": "Functies",

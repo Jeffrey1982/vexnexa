@@ -57,6 +57,20 @@
       "allRightsReserved": "Alle Rechte vorbehalten.",
       "madeWithLove": "Gemaakt mit ❤️ für Web-Barrierefreiheit"
     },
+    "brandedFooter": {
+      "description": "Barrierefreiheitstests und Compliance-Plattform",
+      "quickLinks": "Schnelle Links",
+      "dashboard": "Dashboard",
+      "pricing": "Preise",
+      "features": "Funktionen",
+      "legal": "Rechtliches",
+      "privacyPolicy": "Datenschutzerklärung",
+      "termsOfService": "Allgemeine Geschäftsbedingungen",
+      "contact": "Kontakt",
+      "visitWebsite": "Website besuchen",
+      "poweredBy": "Bereitgestellt von",
+      "allRightsReserved": "Alle Rechte vorbehalten."
+    },
     "product": {
       "title": "Product",
       "features": "Features",

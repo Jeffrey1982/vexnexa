@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useWhiteLabel } from '@/lib/white-label/context';
+import { useTranslations } from 'next-intl';
 
 interface BrandedFooterProps {
   className?: string;
@@ -19,9 +20,10 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
     settings = null;
   }
 
+  const t = useTranslations('footer.brandedFooter');
   const currentYear = new Date().getFullYear();
   const companyName = settings?.companyName || 'VexNexa';
-  const footerText = settings?.footerText || `Copyright © ${currentYear} ${companyName}. All rights reserved.`;
+  const footerText = settings?.footerText || `Copyright ${currentYear} ${companyName}. ${t('allRightsReserved')}`;
   const showPoweredBy = settings?.showPoweredBy !== false; // Default to true
   const supportEmail = settings?.supportEmail;
   const website = settings?.website;
@@ -72,7 +74,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                 color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
               }}
             >
-              Accessibility testing and compliance platform
+              {t('description')}
             </p>
           </div>
 
@@ -84,7 +86,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                 color: settings?.secondaryColor || '#1F2937'
               }}
             >
-              Quick Links
+              {t('quickLinks')}
             </h3>
             <div className="space-y-2">
               <Link
@@ -100,7 +102,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
                 }}
               >
-                Dashboard
+                {t('dashboard')}
               </Link>
               <Link
                 href="/pricing"
@@ -115,7 +117,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
                 }}
               >
-                Pricing
+                {t('pricing')}
               </Link>
               <Link
                 href="/features"
@@ -130,7 +132,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
                 }}
               >
-                Features
+                {t('features')}
               </Link>
             </div>
           </div>
@@ -143,7 +145,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                 color: settings?.secondaryColor || '#1F2937'
               }}
             >
-              Legal
+              {t('legal')}
             </h3>
             <div className="space-y-2">
               <Link
@@ -159,7 +161,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
                 }}
               >
-                Privacy Policy
+                {t('privacyPolicy')}
               </Link>
               <Link
                 href="/legal/terms"
@@ -174,7 +176,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
                 }}
               >
-                Terms of Service
+                {t('termsOfService')}
               </Link>
             </div>
           </div>
@@ -187,7 +189,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                 color: settings?.secondaryColor || '#1F2937'
               }}
             >
-              Contact
+              {t('contact')}
             </h3>
             <div className="space-y-2">
               {supportEmail && (
@@ -240,7 +242,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
                   }}
                 >
-                  Visit Website
+                  {t('visitWebsite')}
                 </a>
               )}
             </div>
@@ -267,7 +269,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                 >
-                  Powered by
+                  {t('poweredBy')}
                 </span>
                 <Link
                   href="https://vexnexa.com"

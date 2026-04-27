@@ -30,6 +30,12 @@ const nextConfig = {
         port: '',
         pathname: '/WAI/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (config, { isServer }) => {
