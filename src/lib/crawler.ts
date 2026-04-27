@@ -1,19 +1,84 @@
-import { PrismaClient } from "@prisma/client";
 import Bottleneck from "bottleneck";
 import * as cheerio from "cheerio";
+import { prisma } from "./prisma";
 import { normalizeUrl, sameOrigin } from "./normalizeUrl";
 import { isAllowedByRobots } from "./robots";
 import { runEnhancedAccessibilityScan } from "./scanner-enhanced";
 import { calculateWCAGCompliance } from "./analytics";
 import { getPerformanceMetrics, analyzeSEOMetrics, calculateComplianceRisk } from "./performance-analytics";
 
-const prisma = new PrismaClient();
-
 // Rate limiter: max 2 requests per second
 const limiter = new Bottleneck({
   minTime: 500, // 500ms between requests
   maxConcurrent: 2
 });
+
+const SKIPPED_LINK_EXTENSIONS = [
+  ".pdf",
+  ".doc",
+  ".docx",
+  ".xls",
+  ".xlsx",
+  ".ppt",
+  ".pptx",
+  ".zip",
+  ".rar",
+  ".7z",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".gif",
+  ".webp",
+  ".svg",
+  ".mp4",
+  ".mp3",
+  ".mov",
+  ".avi",
+];
+
+export function createDepthOneScanQueue(baseUrl: string, hrefs: string[], maxUrls = 10): string[] {
+  const base = new URL(baseUrl);
+  const seen = new Set<string>();
+  const queue: string[] = [];
+
+  for (const href of hrefs) {
+    if (!href || href.startsWith("#")) continue;
+
+    let candidate: URL;
+    try {
+      candidate = new URL(href, base);
+    } catch {
+      continue;
+    }
+
+    if (!["http:", "https:"].includes(candidate.protocol)) continue;
+    if (candidate.origin !== base.origin) continue;
+    if (candidate.hash) candidate.hash = "";
+
+    const pathname = candidate.pathname.toLowerCase();
+    if (SKIPPED_LINK_EXTENSIONS.some((extension) => pathname.endsWith(extension))) continue;
+
+    const normalized = candidate.toString();
+    if (normalized === base.toString() || seen.has(normalized)) continue;
+
+    seen.add(normalized);
+    queue.push(normalized);
+
+    if (queue.length >= maxUrls) break;
+  }
+
+  return queue;
+}
+
+export async function discoverInternalLinksFromPage(page: any, baseUrl: string, maxUrls = 10): Promise<string[]> {
+  const hrefs = await page.evaluate(() =>
+    Array.from(document.querySelectorAll("a[href]"))
+      .map((link) => link.getAttribute("href") || "")
+      .filter(Boolean)
+  );
+
+  return createDepthOneScanQueue(baseUrl, hrefs, maxUrls);
+}
 
 export async function startCrawl(siteId: string, maxPages = 50, maxDepth = 3, includeSitemap = true) {
   const site = await prisma.site.findUnique({

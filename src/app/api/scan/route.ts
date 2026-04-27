@@ -1,7 +1,8 @@
 // src/app/api/scan/route.ts
 import { after, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
+import { EnhancedAccessibilityScanner, type EnhancedScanResult } from "@/lib/scanner-enhanced";
+import { discoverInternalLinksFromPage } from "@/lib/crawler";
 import { requireAuth } from "@/lib/auth";
 import {
   addPageUsage,
@@ -16,17 +17,19 @@ import type { User as SupabaseUser } from "@supabase/supabase-js";
 import {
   analyzeSEOMetrics,
   calculateComplianceRisk,
-  getPerformanceMetrics,
 } from "@/lib/performance-analytics";
 import { publishScanReport } from "@/lib/public-reports";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const SERVICE_TOKEN_HEADER = "x-service-token";
 const SERVICE_USER_HEADER = "x-scan-user-id";
-const BACKGROUND_SCAN_TIMEOUT_MS = 120_000;
+const BACKGROUND_SCAN_TIMEOUT_MS = 90_000;
+const MAX_DEEP_SCAN_PAGES = 10;
+const MAX_AI_PAGES = 3;
+const PAGE_COOLDOWN_MS = 1_500;
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -45,6 +48,147 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
       }
     );
   });
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getVniTier(score: number): EnhancedScanResult["vni"]["tier"] {
+  if (score >= 2301) return "Apex";
+  if (score >= 1901) return "Authority";
+  if (score >= 1301) return "Elite";
+  if (score >= 701) return "Standard";
+  return "Insolvent";
+}
+
+async function updateScanProgress(
+  scanId: string,
+  progress: {
+    message: string;
+    currentPage: number;
+    totalPages: number;
+    currentUrl?: string;
+    scannedUrls?: string[];
+  }
+) {
+  await prisma.scan.update({
+    where: { id: scanId },
+    data: {
+      status: "PROCESSING",
+      resultJson: {
+        scanProgress: {
+          ...progress,
+          percent: progress.totalPages > 0 ? Math.round((progress.currentPage / progress.totalPages) * 100) : 0,
+          updatedAt: new Date().toISOString(),
+        },
+      },
+    },
+  });
+}
+
+async function scanWithDeadline(
+  scanner: EnhancedAccessibilityScanner,
+  url: string,
+  deadlineMs: number,
+  enableAiImageAnalysis: boolean
+) {
+  const remainingMs = Math.max(1, deadlineMs - Date.now());
+
+  return Promise.race([
+    scanner.scanUrl(url, { enableAiImageAnalysis }),
+    new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("Deep scan reached the 90s safety limit")), remainingMs)
+    ),
+  ]);
+}
+
+function aggregateDeepScanResults(
+  homepageUrl: string,
+  pages: Array<{ url: string; result: EnhancedScanResult; aiAnalyzed: boolean }>
+): EnhancedScanResult {
+  const first = pages[0].result;
+  const successfulResults = pages.map((page) => page.result);
+  const average = (values: number[]) =>
+    values.length ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length) : 0;
+  const averagePillar = (key: keyof EnhancedScanResult["vni"]["pillars"]) =>
+    average(successfulResults.map((result) => result.vni?.pillars?.[key] || 0));
+
+  const worstPage = pages.reduce((worst, page) => {
+    const worstScore = worst.result.vni?.score ?? worst.result.score ?? 0;
+    const pageScore = page.result.vni?.score ?? page.result.score ?? 0;
+    return pageScore < worstScore ? page : worst;
+  }, pages[0]);
+
+  const vniScore = average(successfulResults.map((result) => result.vni?.score || 0));
+  const violations = pages.flatMap((page) =>
+    (page.result.violations || []).map((violation: any) => ({
+      ...violation,
+      pageUrl: page.url,
+      pageTitle: page.result.title,
+    }))
+  );
+
+  return {
+    ...first,
+    score: average(successfulResults.map((result) => result.score || 0)),
+    issues: violations.length,
+    impactCritical: successfulResults.reduce((sum, result) => sum + (result.impactCritical || 0), 0),
+    impactSerious: successfulResults.reduce((sum, result) => sum + (result.impactSerious || 0), 0),
+    impactModerate: successfulResults.reduce((sum, result) => sum + (result.impactModerate || 0), 0),
+    impactMinor: successfulResults.reduce((sum, result) => sum + (result.impactMinor || 0), 0),
+    violations,
+    totalPageWeightBytes: average(successfulResults.map((result) => result.totalPageWeightBytes || 0)),
+    largestContentfulPaintMs: average(successfulResults.map((result) => result.largestContentfulPaintMs || 0)),
+    domNodeCount: average(successfulResults.map((result) => result.domNodeCount || 0)),
+    qualityWarnings: pages.flatMap((page) =>
+      (page.result.qualityWarnings || []).map((warning: any) => ({ ...warning, pageUrl: page.url }))
+    ),
+    vni: {
+      ...first.vni,
+      score: vniScore,
+      tier: getVniTier(vniScore),
+      pillars: {
+        wcagCompliance: averagePillar("wcagCompliance"),
+        aiContentIntegrity: averagePillar("aiContentIntegrity"),
+        performanceSpeed: averagePillar("performanceSpeed"),
+        colorBlindnessContrast: averagePillar("colorBlindnessContrast"),
+        designQualityUx: averagePillar("designQualityUx"),
+      },
+      internal: {
+        ...first.vni.internal,
+        deepScan: {
+          startUrl: homepageUrl,
+          scannedPages: pages.length,
+          aiAnalyzedPages: pages.filter((page) => page.aiAnalyzed).length,
+          worstPage: {
+            url: worstPage.url,
+            title: worstPage.result.title,
+            score: worstPage.result.score,
+            vniScore: worstPage.result.vni?.score,
+            issues: worstPage.result.violations?.length || 0,
+          },
+          pages: pages.map((page) => ({
+            url: page.url,
+            title: page.result.title,
+            score: page.result.score,
+            vniScore: page.result.vni?.score,
+            issues: page.result.violations?.length || 0,
+            lcp: page.result.largestContentfulPaintMs,
+            pageWeightBytes: page.result.totalPageWeightBytes,
+            domNodeCount: page.result.domNodeCount,
+            aiAnalyzed: page.aiAnalyzed,
+          })),
+        },
+      } as any,
+    },
+    performanceImpact: {
+      ...first.performanceImpact,
+      loadTime: average(successfulResults.map((result) => result.performanceImpact?.loadTime || 0)),
+      score: average(successfulResults.map((result) => result.performanceImpact?.score || 0)),
+    },
+    discoveredInternalLinks: pages.map((page) => page.url).filter((url) => url !== homepageUrl),
+  };
 }
 
 async function processScanInBackground({
@@ -66,32 +210,109 @@ async function processScanInBackground({
   isServiceCall: boolean;
   useWeeklyFreeScan: boolean;
 }) {
-  await prisma.scan.update({
-    where: { id: scanId },
-    data: { status: "PROCESSING" },
-  });
+  const startedAt = Date.now();
+  const deadlineMs = startedAt + BACKGROUND_SCAN_TIMEOUT_MS;
+  const scanner = new EnhancedAccessibilityScanner();
 
   try {
-    console.log("[scan] Starting enhanced accessibility scan:", fullPageUrl);
-    const result = await runEnhancedAccessibilityScan(fullPageUrl, BACKGROUND_SCAN_TIMEOUT_MS);
+    console.log("[scan] Starting depth-1 enhanced accessibility scan:", fullPageUrl);
+    await updateScanProgress(scanId, {
+      message: "Preparing deep scan...",
+      currentPage: 0,
+      totalPages: MAX_DEEP_SCAN_PAGES,
+      currentUrl: fullPageUrl,
+    });
 
-    const looksMock =
-      result?.__demo === true ||
-      result?.mock === true ||
-      result?.engineName === "fallback-mock" ||
-      !Array.isArray(result?.violations);
+    const scannedPages: Array<{ url: string; result: EnhancedScanResult; aiAnalyzed: boolean }> = [];
+    const attemptedUrls = new Set<string>();
+    const queue: string[] = [fullPageUrl];
+    let discovered = false;
 
-    if (looksMock) {
-      const error: any = new Error("Scanner temporarily unavailable. Browser initialization returned mock/demo data.");
-      error.code = "SCANNER_NO_BROWSER";
-      error.details = {
-        __demo: result?.__demo,
-        mock: result?.mock,
-        engineName: result?.engineName,
-        hasViolations: Array.isArray(result?.violations),
-      };
-      throw error;
+    for (let index = 0; index < queue.length && scannedPages.length < MAX_DEEP_SCAN_PAGES; index++) {
+      if (Date.now() >= deadlineMs - 2_500) {
+        console.warn("[scan] Deep scan safety window reached before next page; aggregating partial results.");
+        break;
+      }
+
+      const pageUrl = queue[index];
+      if (attemptedUrls.has(pageUrl)) continue;
+
+      attemptedUrls.add(pageUrl);
+      const currentPageNumber = scannedPages.length + 1;
+      const totalPages = Math.min(MAX_DEEP_SCAN_PAGES, Math.max(queue.length, currentPageNumber));
+      const aiAnalyzed = currentPageNumber <= MAX_AI_PAGES;
+
+      await updateScanProgress(scanId, {
+        message: `Analyzing page ${currentPageNumber} of ${totalPages}...`,
+        currentPage: currentPageNumber - 1,
+        totalPages,
+        currentUrl: pageUrl,
+        scannedUrls: scannedPages.map((page) => page.url),
+      });
+
+      let pageResult: EnhancedScanResult;
+      try {
+        pageResult = await scanWithDeadline(scanner, pageUrl, deadlineMs, aiAnalyzed);
+      } catch (pageError: any) {
+        if (scannedPages.length > 0 && pageError?.message?.includes("90s safety limit")) {
+          console.warn("[scan] Deep scan page stopped by safety limit; aggregating completed pages.");
+          break;
+        }
+        throw pageError;
+      }
+
+      const looksMock =
+        pageResult?.__demo === true ||
+        pageResult?.mock === true ||
+        pageResult?.engineName === "fallback-mock" ||
+        !Array.isArray(pageResult?.violations);
+
+      if (looksMock) {
+        const error: any = new Error("Scanner temporarily unavailable. Browser initialization returned mock/demo data.");
+        error.code = "SCANNER_NO_BROWSER";
+        error.details = {
+          __demo: pageResult?.__demo,
+          mock: pageResult?.mock,
+          engineName: pageResult?.engineName,
+          hasViolations: Array.isArray(pageResult?.violations),
+        };
+        throw error;
+      }
+
+      scannedPages.push({ url: pageUrl, result: pageResult, aiAnalyzed });
+
+      if (!discovered) {
+        discovered = true;
+        const page = scanner.getCurrentPage();
+        if (page) {
+          const internalLinks = await discoverInternalLinksFromPage(page, fullPageUrl, MAX_DEEP_SCAN_PAGES - 1);
+          for (const discoveredUrl of internalLinks) {
+            if (!attemptedUrls.has(discoveredUrl) && !queue.includes(discoveredUrl)) {
+              queue.push(discoveredUrl);
+            }
+            if (queue.length >= MAX_DEEP_SCAN_PAGES) break;
+          }
+        }
+      }
+
+      await updateScanProgress(scanId, {
+        message: `Analyzed page ${currentPageNumber} of ${Math.min(MAX_DEEP_SCAN_PAGES, queue.length)}.`,
+        currentPage: currentPageNumber,
+        totalPages: Math.min(MAX_DEEP_SCAN_PAGES, queue.length),
+        currentUrl: pageUrl,
+        scannedUrls: scannedPages.map((page) => page.url),
+      });
+
+      if (scannedPages.length < queue.length && scannedPages.length < MAX_DEEP_SCAN_PAGES) {
+        await sleep(PAGE_COOLDOWN_MS);
+      }
     }
+
+    if (scannedPages.length === 0) {
+      throw new Error("Deep scan finished without a scannable page.");
+    }
+
+    const result = aggregateDeepScanResults(fullPageUrl, scannedPages);
 
     const violations = result.violations || [];
     const impactCounts = {
@@ -135,7 +356,14 @@ async function processScanInBackground({
       ? Math.round(result.score) - (previousScan.score || 0)
       : null;
 
-    const performanceMetrics = await getPerformanceMetrics(fullPageUrl);
+    const performanceMetrics = {
+      performanceScore: result.performanceImpact?.score || 0,
+      firstContentfulPaint: 0,
+      largestContentfulPaint: result.largestContentfulPaintMs || 0,
+      cumulativeLayoutShift: result.vni?.internal?.designMetrics?.layoutStability?.cls || 0,
+      firstInputDelay: 0,
+      totalBlockingTime: 0,
+    };
     const seoMetrics = analyzeSEOMetrics(violations);
     const complianceRisk = calculateComplianceRisk(Math.round(result.score), violations);
     const serializedResult = JSON.parse(JSON.stringify(result));
@@ -237,6 +465,8 @@ async function processScanInBackground({
         },
       },
     });
+  } finally {
+    await scanner.close();
   }
 }
 
@@ -420,7 +650,7 @@ export async function POST(req: Request) {
           isServiceCall,
           useWeeklyFreeScan,
         }),
-        BACKGROUND_SCAN_TIMEOUT_MS
+        BACKGROUND_SCAN_TIMEOUT_MS + 15_000
       ).catch((scanError) => {
         console.error("[scan] Background scan timed out or crashed:", scanError);
         return prisma.scan.update({

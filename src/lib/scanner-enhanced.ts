@@ -56,6 +56,7 @@ export interface EnhancedScanResult extends ScanResult {
   qualityWarnings: QualityWarning[];
   vni: VniResult;
   aiContentChecks?: ImageAnalysisResult[];
+  discoveredInternalLinks?: string[];
   engineName?: string | null;
   axeVersion?: string | null;
   title?: string;
@@ -210,6 +211,10 @@ export class EnhancedAccessibilityScanner {
   private puppeteerAvailable = false;
 
   async initialize(): Promise<void> {
+    if (this.puppeteerAvailable && this.browser && this.page) {
+      return;
+    }
+
     console.log("[a11y] Scanner initialization", {
       NODE_ENV: process.env.NODE_ENV,
       IS_PROD: IS_PROD,
@@ -280,7 +285,11 @@ export class EnhancedAccessibilityScanner {
     }
   }
 
-  async scanUrl(url: string): Promise<EnhancedScanResult> {
+  getCurrentPage(): any | null {
+    return this.page;
+  }
+
+  async scanUrl(url: string, options: EnhancedScanOptions = {}): Promise<EnhancedScanResult> {
     await this.initialize();
     console.log("[a11y] mode", {
       puppeteerAvailable: this.puppeteerAvailable,
@@ -288,18 +297,18 @@ export class EnhancedAccessibilityScanner {
     });
 
     if (this.puppeteerAvailable && this.page) {
-      return this.scanUrlWithPuppeteer(url);
+      return this.scanUrlWithPuppeteer(url, options);
     }
     // No browser: enforce production policy
     return this.scanUrlWithFallback(url);
   }
 
-  private async scanUrlWithPuppeteer(url: string): Promise<EnhancedScanResult> {
+  private async scanUrlWithPuppeteer(url: string, options: EnhancedScanOptions): Promise<EnhancedScanResult> {
     const page = this.page!;
     const SCAN_TIMEOUT_MS = 55000; // 55 seconds to stay under Vercel's 60s limit
 
     // Wrap entire scan in timeout protection
-    const scanPromise = this.performScan(page, url);
+    const scanPromise = this.performScan(page, url, options);
     
     try {
       return await Promise.race([
@@ -316,7 +325,7 @@ export class EnhancedAccessibilityScanner {
     }
   }
 
-  private async performScan(page: any, url: string): Promise<EnhancedScanResult> {
+  private async performScan(page: any, url: string, options: EnhancedScanOptions): Promise<EnhancedScanResult> {
     const cdpSession = await page.target().createCDPSession().catch(() => null);
     let cdpTransferBytes = 0;
 
@@ -425,7 +434,7 @@ export class EnhancedAccessibilityScanner {
 
     // AI Image Analysis (if enabled and within time limits)
     let aiContentChecks: ImageAnalysisResult[] = [];
-    const aiEnabled = process.env.ENABLE_AI_IMAGE_ANALYSIS === "true";
+    const aiEnabled = options.enableAiImageAnalysis !== false && process.env.ENABLE_AI_IMAGE_ANALYSIS === "true";
     
     if (aiEnabled && process.env.GOOGLE_GEMINI_API_KEY) {
       try {
@@ -954,7 +963,15 @@ export class EnhancedAccessibilityScanner {
 }
 
 // ===== Public API =====
-export async function runEnhancedAccessibilityScan(url: string, timeoutMs = DEFAULT_TIMEOUT_MS): Promise<EnhancedScanResult> {
+export interface EnhancedScanOptions {
+  enableAiImageAnalysis?: boolean;
+}
+
+export async function runEnhancedAccessibilityScan(
+  url: string,
+  timeoutMs = DEFAULT_TIMEOUT_MS,
+  options: EnhancedScanOptions = {}
+): Promise<EnhancedScanResult> {
   const scanner = new EnhancedAccessibilityScanner();
   let timeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -967,7 +984,7 @@ export async function runEnhancedAccessibilityScan(url: string, timeoutMs = DEFA
       }, timeoutMs);
     });
 
-    return await Promise.race([scanner.scanUrl(url), timeoutPromise]);
+    return await Promise.race([scanner.scanUrl(url, options), timeoutPromise]);
   } finally {
     if (timeout) {
       clearTimeout(timeout);

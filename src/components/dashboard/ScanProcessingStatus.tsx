@@ -9,6 +9,15 @@ import { Progress } from "@/components/ui/progress";
 
 type ScanStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED" | "queued" | "running" | "done" | "failed";
 
+interface ScanProgress {
+  message?: string;
+  currentPage?: number;
+  totalPages?: number;
+  currentUrl?: string;
+  scannedUrls?: string[];
+  percent?: number;
+}
+
 interface ScanProcessingStatusProps {
   scanId: string;
   initialStatus: ScanStatus;
@@ -20,15 +29,19 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
   const [status, setStatus] = useState<ScanStatus>(initialStatus);
   const [error, setError] = useState<string | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [scanProgress, setScanProgress] = useState<ScanProgress | null>(null);
 
   const progress = useMemo(() => {
+    if (typeof scanProgress?.percent === "number") {
+      return Math.min(96, Math.max(8, scanProgress.percent));
+    }
     if (status === "PENDING" || status === "queued") return 12;
     if (status === "PROCESSING" || status === "running") {
       return Math.min(92, 24 + elapsedSeconds * 1.1);
     }
     if (status === "COMPLETED" || status === "done") return 100;
     return Math.min(100, 24 + elapsedSeconds);
-  }, [elapsedSeconds, status]);
+  }, [elapsedSeconds, scanProgress?.percent, status]);
 
   useEffect(() => {
     const tick = window.setInterval(() => {
@@ -52,10 +65,12 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
 
         const nextStatus = payload.data?.status as ScanStatus | undefined;
         const nextError = payload.data?.error as string | null | undefined;
+        const nextProgress = payload.data?.resultJson?.scanProgress as ScanProgress | undefined;
 
         if (cancelled || !nextStatus) return;
 
         setStatus(nextStatus);
+        setScanProgress(nextProgress || null);
 
         if (nextStatus === "COMPLETED" || nextStatus === "done") {
           router.refresh();
@@ -88,7 +103,7 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
           <div>
             <CardTitle>Processing heavy site...</CardTitle>
             <CardDescription className="mt-1">
-              This may take up to a minute while VexNexa runs axe-core, AI checks, and analytics in the background.
+              This may take up to 90 seconds while VexNexa scans internal pages, runs axe-core, AI checks, and analytics in the background.
             </CardDescription>
           </div>
         </div>
@@ -96,10 +111,13 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span className="truncate">{url}</span>
+            <span className="truncate">{scanProgress?.currentUrl || url}</span>
             <span>{Math.round(progress)}%</span>
           </div>
           <Progress value={progress} />
+          {scanProgress?.message && (
+            <p className="text-sm text-muted-foreground">{scanProgress.message}</p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
@@ -107,6 +125,14 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
             <div className="font-medium">Status</div>
             <div className="mt-1 text-muted-foreground">{status}</div>
           </div>
+          {scanProgress?.totalPages ? (
+            <div className="rounded-lg border border-border p-3">
+              <div className="font-medium">Pages</div>
+              <div className="mt-1 text-muted-foreground">
+                {scanProgress.currentPage || 0} / {scanProgress.totalPages}
+              </div>
+            </div>
+          ) : null}
           <div className="rounded-lg border border-border p-3">
             <div className="font-medium">Elapsed</div>
             <div className="mt-1 text-muted-foreground">{elapsedSeconds}s</div>
