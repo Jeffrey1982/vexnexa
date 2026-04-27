@@ -96,6 +96,31 @@ const REQUIRED_KEYS = {
   'footer.brand.newsletter.errorTitle': 'Something went wrong',
   'footer.brand.newsletter.errorDescription': 'Please try again later.',
 
+  // Registration wizard step titles + descriptions
+  'auth.register.steps.account.title': 'Account',
+  'auth.register.steps.account.description': 'Create your login credentials',
+  'auth.register.steps.personal.title': 'Personal',
+  'auth.register.steps.personal.description': 'Tell us a bit about yourself',
+  'auth.register.steps.contact.title': 'Contact',
+  'auth.register.steps.contact.description': 'How we can reach you',
+  'auth.register.steps.preferences.title': 'Preferences',
+  'auth.register.steps.preferences.description': 'Customize your experience',
+
+  // Registration success screen (shown after successful sign-up)
+  'auth.register.success.title': 'Account created successfully!',
+  'auth.register.success.accountCreated':
+    'Please check your email to verify your account.',
+  'auth.register.success.checkInbox': 'We sent a confirmation link to:',
+  'auth.register.success.spamHint':
+    "Don't see it? Check your spam folder, or resend the email below.",
+  'auth.register.success.resendEmail': 'Resend confirmation email',
+  'auth.register.success.resendCooldown': 'Resend available in {countdown}',
+  'auth.register.success.resendSent':
+    'Confirmation email sent. Please check your inbox.',
+  'auth.register.success.resendError':
+    "We couldn't resend the email right now. Please try again in a moment.",
+  'auth.register.success.backToLogin': 'Back to sign in',
+
   // AgencyCTAStrip
   'agencyCTAStrip.badge': 'For agencies',
   'agencyCTAStrip.title': 'Managing multiple client sites?',

@@ -1032,6 +1032,35 @@
         "invalidEmail": "Please enter a valid email address",
         "passwordLength": "Password must be at least 8 characters",
         "passwordsMatch": "Passwords must match"
+      },
+      "success": {
+        "title": "Account created successfully!",
+        "accountCreated": "Please check your email to verify your account.",
+        "checkInbox": "We sent a confirmation link to:",
+        "spamHint": "Don't see it? Check your spam folder, or resend the email below.",
+        "resendEmail": "Resend confirmation email",
+        "resendCooldown": "Resend available in {countdown}",
+        "resendSent": "Confirmation email sent. Please check your inbox.",
+        "resendError": "We couldn't resend the email right now. Please try again in a moment.",
+        "backToLogin": "Back to sign in"
+      },
+      "steps": {
+        "account": {
+          "title": "Account",
+          "description": "Create your login credentials"
+        },
+        "personal": {
+          "title": "Personal",
+          "description": "Tell us a bit about yourself"
+        },
+        "contact": {
+          "title": "Contact",
+          "description": "How we can reach you"
+        },
+        "preferences": {
+          "title": "Preferences",
+          "description": "Customize your experience"
+        }
       }
     },
     "forgotPassword": {

@@ -103,7 +103,9 @@ export default function ModernRegistrationForm() {
   const [message, setMessage] = useState('')
   const [resendLoading, setResendLoading] = useState(false)
   const [resendMessage, setResendMessage] = useState('')
+  const [resendError, setResendError] = useState('')
   const [signupEmail, setSignupEmail] = useState('')
+  const [signupSuccess, setSignupSuccess] = useState(false)
 
   const router = useRouter()
   const supabase = createClient()
@@ -243,6 +245,34 @@ export default function ModernRegistrationForm() {
     setCurrentStep(prev => Math.max(prev - 1, 1))
   }
 
+  const handleResendConfirmation = async () => {
+    if (!signupEmail || isResendCooling) return
+    setResendLoading(true)
+    setResendMessage('')
+    setResendError('')
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: signupEmail,
+        options: {
+          emailRedirectTo: buildAuthUrl('/auth/callback?flow=signup'),
+        },
+      })
+      if (error) throw error
+      startResendCooldown()
+      setResendMessage(t('success.resendSent'))
+    } catch (err: any) {
+      if (isRateLimitError(err)) {
+        setResendError(t('errors.tooManyRequests'))
+      } else {
+        console.error('[Signup] resend_failure_reason=', err?.message)
+        setResendError(t('success.resendError'))
+      }
+    } finally {
+      setResendLoading(false)
+    }
+  }
+
   const handleSubmit = async () => {
     if (!validateStep(currentStep)) return
 
@@ -288,7 +318,7 @@ export default function ModernRegistrationForm() {
 
       setSignupEmail(formData.email)
       startResendCooldown()
-      setMessage(t('success.accountCreated'))
+      setSignupSuccess(true)
       console.log('[Signup] Account created for:', formData.email, '— awaiting email confirmation')
     } catch (error: any) {
       if (error.message?.includes('timeout')) {
@@ -600,6 +630,85 @@ export default function ModernRegistrationForm() {
       </Button>
     </div>
   )
+
+  if (signupSuccess) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
+        <div className="container flex flex-col items-center justify-center max-w-4xl mx-auto">
+          <Card className="w-full max-w-xl">
+            <CardHeader className="text-center pb-2">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400" />
+              </div>
+              <CardTitle className="text-2xl font-bold">
+                {t('success.title')}
+              </CardTitle>
+              <CardDescription className="text-base pt-2">
+                {t('success.accountCreated')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pt-4">
+              <div className="rounded-lg border bg-muted/40 p-4 text-center">
+                <p className="text-sm text-muted-foreground">
+                  {t('success.checkInbox')}
+                </p>
+                <p className="mt-1 font-medium break-all">{signupEmail}</p>
+              </div>
+
+              <p className="text-sm text-muted-foreground text-center">
+                {t('success.spamHint')}
+              </p>
+
+              {resendMessage && (
+                <Alert>
+                  <AlertDescription>{resendMessage}</AlertDescription>
+                </Alert>
+              )}
+              {resendError && (
+                <Alert variant="destructive">
+                  <AlertDescription>{resendError}</AlertDescription>
+                </Alert>
+              )}
+
+              <Button
+                onClick={handleResendConfirmation}
+                disabled={resendLoading || isResendCooling}
+                variant="outline"
+                className="w-full h-12"
+              >
+                {resendLoading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-current/30 border-t-transparent rounded-full animate-spin" />
+                    <span className="ml-2">{t('success.resendEmail')}</span>
+                  </>
+                ) : isResendCooling ? (
+                  <span className="flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    {t('success.resendCooldown', { countdown: resendCountdown })}
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    {t('success.resendEmail')}
+                  </span>
+                )}
+              </Button>
+
+              <div className="text-center text-sm text-muted-foreground">
+                <Link
+                  href="/auth/login"
+                  className="text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  {t('success.backToLogin')}
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">

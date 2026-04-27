@@ -987,6 +987,35 @@
         "invalidEmail": "Veuillez entrer une adresse e-mail valide",
         "passwordLength": "Le mot de passe doit contenir au moins 8 caractères",
         "passwordsMatch": "Les mots de passe doivent correspondre"
+      },
+      "success": {
+        "title": "Account created successfully!",
+        "accountCreated": "Please check your email to verify your account.",
+        "checkInbox": "We sent a confirmation link to:",
+        "spamHint": "Don't see it? Check your spam folder, or resend the email below.",
+        "resendEmail": "Resend confirmation email",
+        "resendCooldown": "Resend available in {countdown}",
+        "resendSent": "Confirmation email sent. Please check your inbox.",
+        "resendError": "We couldn't resend the email right now. Please try again in a moment.",
+        "backToLogin": "Back to sign in"
+      },
+      "steps": {
+        "account": {
+          "title": "Account",
+          "description": "Create your login credentials"
+        },
+        "personal": {
+          "title": "Personal",
+          "description": "Tell us a bit about yourself"
+        },
+        "contact": {
+          "title": "Contact",
+          "description": "How we can reach you"
+        },
+        "preferences": {
+          "title": "Preferences",
+          "description": "Customize your experience"
+        }
       }
     },
     "forgotPassword": {
