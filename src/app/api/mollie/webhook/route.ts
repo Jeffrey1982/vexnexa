@@ -90,9 +90,19 @@ export async function POST(request: NextRequest) {
 
     console.log('[Mollie Webhook] Received:', { type, id, receivedAt })
 
-    if (!id || typeof id !== 'string') {
-      console.error('Missing or invalid ID')
-      return NextResponse.json({ error: 'Missing ID' }, { status: 400 })
+    // Handle Mollie dashboard "Test webhook" pings gracefully.
+    // Mollie's test-button sends either no id, an empty body, or a synthetic id
+    // like "hook.ping". Real webhooks always carry a prefixed id
+    // (tr_*, sub_*, chr_*, ord_*, mdt_*, cst_*). We short-circuit anything else
+    // with a 200 so the dashboard reports success and we don't pollute the
+    // ProcessedWebhook table or call Mollie with an invalid id.
+    const isRealMollieId =
+      typeof id === 'string' &&
+      /^(tr|sub|chr|ord|mdt|cst|pay)_[A-Za-z0-9]+$/.test(id)
+
+    if (!id || !isRealMollieId) {
+      console.log('[Mollie Webhook] Test/ping received, acknowledging:', { id, type })
+      return NextResponse.json({ success: true, ping: true })
     }
 
     // 4. Idempotency: check ProcessedWebhook before doing real work

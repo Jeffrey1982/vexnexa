@@ -8,6 +8,8 @@
  *
  * This file re-exports the real handler so both URLs stay functional.
  */
+export const dynamic = 'force-dynamic'
+
 export { POST } from '@/app/api/mollie/webhook/route'
 
 // Mollie occasionally hits the webhook with GET for reachability checks.
