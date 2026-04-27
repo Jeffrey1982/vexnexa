@@ -89,19 +89,16 @@ function getLcpMeter(ms: number) {
   return { labelKey: "lcpPoor", percent: 100, className: "bg-critical", textClassName: "text-critical" };
 }
 
-function getVniStars(tier?: string) {
-  switch (tier) {
-    case "Apex":
-      return 5;
-    case "Elite":
-      return 4;
-    case "Authority":
-      return 3;
-    case "Trusted":
-      return 2;
-    default:
-      return 1;
-  }
+function getVniTier(score: number) {
+  if (score >= 2301) return { key: "Apex", stars: 5 };
+  if (score >= 1901) return { key: "Authority", stars: 4 };
+  if (score >= 1301) return { key: "Elite", stars: 3 };
+  if (score >= 701) return { key: "Standard", stars: 2 };
+  return { key: "Insolvent", stars: 1 };
+}
+
+function getVniMotivationKey(tierKey: string) {
+  return tierKey === "Apex" ? "maintainingApex" : "targetElite";
 }
 
 async function getScanDetails(id: string) {
@@ -269,8 +266,8 @@ export default async function ScanDetailPage({ params }: PageProps) {
   const rawJson = scan.raw && typeof scan.raw === "object" ? scan.raw as any : null;
   const vni = resultJson?.vni || rawJson?.vni;
   const vniScore = typeof vni?.score === "number" ? vni.score : null;
-  const vniTier = typeof vni?.tier === "string" ? vni.tier : undefined;
-  const vniStars = getVniStars(vniTier);
+  const vniTier = vniScore !== null ? getVniTier(vniScore) : null;
+  const vniMotivationKey = vniTier ? getVniMotivationKey(vniTier.key) : null;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -304,23 +301,35 @@ export default async function ScanDetailPage({ params }: PageProps) {
                   {scan.score !== null && <ScoreBadge score={scan.score} size="lg" />}
                 </CardTitle>
                 {vniScore !== null && (
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    <Badge className="border-primary/30 bg-primary text-primary-foreground px-3 py-1.5 shadow-sm">
-                      <Gem className="mr-1.5 h-4 w-4" aria-hidden="true" />
-                      {tVni("label")}: {vniScore}/2500
-                    </Badge>
-                    <Badge variant="outline" className="border-amber-300/70 bg-amber-50 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200">
-                      {tVni(`tier.${vniTier || "Watchlist"}`)}
-                      <span className="ml-2 inline-flex gap-0.5" aria-label={tVni("ranking")}>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                          <Star
-                            key={index}
-                            className={cn("h-3.5 w-3.5", index < vniStars ? "fill-current" : "opacity-30")}
-                            aria-hidden="true"
-                          />
-                        ))}
-                      </span>
-                    </Badge>
+                  <div className="mt-3 inline-flex flex-col gap-1 rounded-lg border border-amber-300/60 bg-gradient-to-br from-amber-50 via-background to-amber-100/70 px-3 py-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] dark:border-amber-500/40 dark:from-amber-950/30 dark:via-background dark:to-amber-900/20">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <Gem className="h-5 w-5 text-amber-500" aria-hidden="true" />
+                        <span className="text-sm font-medium text-muted-foreground">{tVni("label")}</span>
+                        <span className="text-xl font-bold leading-none text-foreground">{vniScore}/2500</span>
+                      </div>
+                      {vniTier && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl font-bold leading-none bg-gradient-to-br from-amber-300 via-yellow-500 to-amber-600 bg-clip-text text-transparent">
+                            {tVni(`tier.${vniTier.key}`)}
+                          </span>
+                          <span className="inline-flex gap-0.5 text-amber-500" aria-label={tVni("ranking")}>
+                            {Array.from({ length: 5 }).map((_, index) => (
+                              <Star
+                                key={index}
+                                className={cn("h-4 w-4", index < vniTier.stars ? "fill-current drop-shadow-sm" : "opacity-25")}
+                                aria-hidden="true"
+                              />
+                            ))}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {vniMotivationKey && (
+                      <div className="pl-7 text-xs font-medium text-amber-700 dark:text-amber-300">
+                        {tVni(vniMotivationKey)}
+                      </div>
+                    )}
                   </div>
                 )}
                 <CardDescription className="flex items-center gap-2 mt-2 sm:mt-3 text-sm sm:text-base">

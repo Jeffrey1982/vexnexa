@@ -2064,12 +2064,30 @@
         "title": "1. Définitions & Applicabilité",
         "definitionsTitle": "Définitions",
         "definitions": [
-          { "term": "VexNexa", "desc": "le service de scan d'accessibilité sous vexnexa.com." },
-          { "term": "Nous", "desc": "le responsable du traitement et fournisseur de services (VexNexa B.V.)." },
-          { "term": "Utilisateur", "desc": "toute personne physique ou morale utilisant le service." },
-          { "term": "Compte", "desc": "votre accès personnel ou professionnel aux fonctionnalités et à l'historique." },
-          { "term": "Scan", "desc": "un test d'accessibilité automatisé d'une page web." },
-          { "term": "API", "desc": "interface de programmation pour l'accès automatisé au service." }
+          {
+            "term": "VexNexa",
+            "desc": "le service de scan d'accessibilité sous vexnexa.com."
+          },
+          {
+            "term": "Nous",
+            "desc": "le responsable du traitement et fournisseur de services (VexNexa B.V.)."
+          },
+          {
+            "term": "Utilisateur",
+            "desc": "toute personne physique ou morale utilisant le service."
+          },
+          {
+            "term": "Compte",
+            "desc": "votre accès personnel ou professionnel aux fonctionnalités et à l'historique."
+          },
+          {
+            "term": "Scan",
+            "desc": "un test d'accessibilité automatisé d'une page web."
+          },
+          {
+            "term": "API",
+            "desc": "interface de programmation pour l'accès automatisé au service."
+          }
         ],
         "applicabilityTitle": "Applicabilité",
         "applicability": "Ces conditions s'appliquent à toute utilisation de VexNexa, y compris les comptes gratuits et payants, l'API, les périodes d'essai et toutes les communications connexes. Les écarts ne sont valides que si convenus par écrit.",
@@ -3115,12 +3133,14 @@
     "vni": {
       "label": "Indice VexNexa",
       "ranking": "Classement VNI",
+      "targetElite": "Objectif : rang Elite",
+      "maintainingApex": "Maintien du statut Apex",
       "tier": {
-        "Apex": "Apex",
+        "Insolvent": "Insolvent",
+        "Standard": "Standard",
         "Elite": "Elite",
         "Authority": "Authority",
-        "Trusted": "Trusted",
-        "Watchlist": "Watchlist"
+        "Apex": "Apex"
       }
     }
   }

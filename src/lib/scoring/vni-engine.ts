@@ -37,7 +37,7 @@ export interface VniColorMetrics {
 
 export interface VniResult {
   score: number;
-  tier: "Apex" | "Elite" | "Authority" | "Trusted" | "Watchlist";
+  tier: "Apex" | "Authority" | "Elite" | "Standard" | "Insolvent";
   pillars: {
     wcagCompliance: number;
     aiContentIntegrity: number;
@@ -73,11 +73,11 @@ function toPillarScore(ratio: number) {
 }
 
 function getVniTier(score: number): VniResult["tier"] {
-  if (score >= 2250) return "Apex";
-  if (score >= 2000) return "Elite";
-  if (score >= 1700) return "Authority";
-  if (score >= 1300) return "Trusted";
-  return "Watchlist";
+  if (score >= 2301) return "Apex";
+  if (score >= 1901) return "Authority";
+  if (score >= 1301) return "Elite";
+  if (score >= 701) return "Standard";
+  return "Insolvent";
 }
 
 function contrastRatio(foreground: [number, number, number], background: [number, number, number]) {

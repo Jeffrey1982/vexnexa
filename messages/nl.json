@@ -2100,12 +2100,30 @@
         "title": "1. Definities & Toepasselijkheid",
         "definitionsTitle": "Definities",
         "definitions": [
-          { "term": "VexNexa", "desc": "de accessibility-scanningdienst onder vexnexa.com." },
-          { "term": "Wij/ons", "desc": "de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.)." },
-          { "term": "Gebruiker", "desc": "iedere natuurlijke of rechtspersoon die de dienst gebruikt." },
-          { "term": "Account", "desc": "jouw persoonlijke of zakelijke toegang tot functies en geschiedenis." },
-          { "term": "Scan", "desc": "een geautomatiseerde toegankelijkheidstest van een webpagina." },
-          { "term": "API", "desc": "programmeerinterface voor geautomatiseerde toegang tot de dienst." }
+          {
+            "term": "VexNexa",
+            "desc": "de accessibility-scanningdienst onder vexnexa.com."
+          },
+          {
+            "term": "Wij/ons",
+            "desc": "de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.)."
+          },
+          {
+            "term": "Gebruiker",
+            "desc": "iedere natuurlijke of rechtspersoon die de dienst gebruikt."
+          },
+          {
+            "term": "Account",
+            "desc": "jouw persoonlijke of zakelijke toegang tot functies en geschiedenis."
+          },
+          {
+            "term": "Scan",
+            "desc": "een geautomatiseerde toegankelijkheidstest van een webpagina."
+          },
+          {
+            "term": "API",
+            "desc": "programmeerinterface voor geautomatiseerde toegang tot de dienst."
+          }
         ],
         "applicabilityTitle": "Toepasselijkheid",
         "applicability": "Deze voorwaarden zijn van toepassing op elk gebruik van VexNexa, inclusief gratis en betaalde accounts, de API, proefperiodes en alle daaraan gerelateerde communicatie. Afwijkingen zijn alleen geldig indien schriftelijk overeengekomen.",
@@ -3151,12 +3169,14 @@
     "vni": {
       "label": "VexNexa Index",
       "ranking": "VNI-rangschikking",
+      "targetElite": "Doel: Elite-rang",
+      "maintainingApex": "Apex-status behouden",
       "tier": {
-        "Apex": "Apex",
+        "Insolvent": "Insolvent",
+        "Standard": "Standard",
         "Elite": "Elite",
         "Authority": "Authority",
-        "Trusted": "Trusted",
-        "Watchlist": "Watchlist"
+        "Apex": "Apex"
       }
     }
   }

@@ -3018,12 +3018,30 @@
         "title": "1. Definitions & Applicability",
         "definitionsTitle": "Definitions",
         "definitions": [
-          { "term": "VexNexa", "desc": "the accessibility-scanning service under vexnexa.com." },
-          { "term": "We/us", "desc": "the data controller and service provider (VexNexa B.V.)." },
-          { "term": "User", "desc": "any natural or legal person using the service." },
-          { "term": "Account", "desc": "your personal or business access to features and history." },
-          { "term": "Scan", "desc": "an automated accessibility test of a webpage." },
-          { "term": "API", "desc": "programming interface for automated access to the service." }
+          {
+            "term": "VexNexa",
+            "desc": "the accessibility-scanning service under vexnexa.com."
+          },
+          {
+            "term": "We/us",
+            "desc": "the data controller and service provider (VexNexa B.V.)."
+          },
+          {
+            "term": "User",
+            "desc": "any natural or legal person using the service."
+          },
+          {
+            "term": "Account",
+            "desc": "your personal or business access to features and history."
+          },
+          {
+            "term": "Scan",
+            "desc": "an automated accessibility test of a webpage."
+          },
+          {
+            "term": "API",
+            "desc": "programming interface for automated access to the service."
+          }
         ],
         "applicabilityTitle": "Applicability",
         "applicability": "These terms apply to any use of VexNexa, including free and paid accounts, the API, trial periods, and all related communications. Deviations are only valid if agreed in writing.",
@@ -3654,12 +3672,14 @@
     "vni": {
       "label": "VexNexa Index",
       "ranking": "VNI ranking",
+      "targetElite": "Target: Elite Rank",
+      "maintainingApex": "Maintaining Apex Status",
       "tier": {
-        "Apex": "Apex",
+        "Insolvent": "Insolvent",
+        "Standard": "Standard",
         "Elite": "Elite",
         "Authority": "Authority",
-        "Trusted": "Trusted",
-        "Watchlist": "Watchlist"
+        "Apex": "Apex"
       }
     }
   }

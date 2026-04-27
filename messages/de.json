@@ -2115,12 +2115,30 @@
         "title": "1. Definitionen & Geltungsbereich",
         "definitionsTitle": "Definitionen",
         "definitions": [
-          { "term": "VexNexa", "desc": "der Barrierefreiheits-Scanning-Dienst unter vexnexa.com." },
-          { "term": "Wir/uns", "desc": "der Verantwortliche und Diensteanbieter (VexNexa B.V.)." },
-          { "term": "Benutzer", "desc": "jede natürliche oder juristische Person, die den Dienst nutzt." },
-          { "term": "Konto", "desc": "Ihr persönlicher oder geschäftlicher Zugang zu Funktionen und Verlauf." },
-          { "term": "Scan", "desc": "ein automatisierter Barrierefreiheitstest einer Webseite." },
-          { "term": "API", "desc": "Programmierschnittstelle für automatisierten Zugang zum Dienst." }
+          {
+            "term": "VexNexa",
+            "desc": "der Barrierefreiheits-Scanning-Dienst unter vexnexa.com."
+          },
+          {
+            "term": "Wir/uns",
+            "desc": "der Verantwortliche und Diensteanbieter (VexNexa B.V.)."
+          },
+          {
+            "term": "Benutzer",
+            "desc": "jede natürliche oder juristische Person, die den Dienst nutzt."
+          },
+          {
+            "term": "Konto",
+            "desc": "Ihr persönlicher oder geschäftlicher Zugang zu Funktionen und Verlauf."
+          },
+          {
+            "term": "Scan",
+            "desc": "ein automatisierter Barrierefreiheitstest einer Webseite."
+          },
+          {
+            "term": "API",
+            "desc": "Programmierschnittstelle für automatisierten Zugang zum Dienst."
+          }
         ],
         "applicabilityTitle": "Geltungsbereich",
         "applicability": "Diese Bedingungen gelten für jede Nutzung von VexNexa, einschließlich kostenloser und kostenpflichtiger Konten, der API, Testzeiträume und aller damit verbundenen Kommunikation. Abweichungen sind nur schriftlich gültig.",
@@ -3166,12 +3184,14 @@
     "vni": {
       "label": "VexNexa Index",
       "ranking": "VNI-Ranking",
+      "targetElite": "Ziel: Elite-Rang",
+      "maintainingApex": "Apex-Status halten",
       "tier": {
-        "Apex": "Apex",
+        "Insolvent": "Insolvent",
+        "Standard": "Standard",
         "Elite": "Elite",
         "Authority": "Authority",
-        "Trusted": "Trusted",
-        "Watchlist": "Watchlist"
+        "Apex": "Apex"
       }
     }
   }

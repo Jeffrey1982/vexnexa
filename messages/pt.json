@@ -1968,12 +1968,30 @@
         "title": "1. Definições & Aplicabilidade",
         "definitionsTitle": "Definições",
         "definitions": [
-          { "term": "VexNexa", "desc": "o serviço de escaneamento de acessibilidade sob vexnexa.com." },
-          { "term": "Nós", "desc": "o responsável pelo tratamento e prestador de serviços (VexNexa B.V.)." },
-          { "term": "Utilizador", "desc": "qualquer pessoa singular ou coletiva que utiliza o serviço." },
-          { "term": "Conta", "desc": "o seu acesso pessoal ou empresarial a funcionalidades e histórico." },
-          { "term": "Scan", "desc": "um teste de acessibilidade automatizado de uma página web." },
-          { "term": "API", "desc": "interface de programação para acesso automatizado ao serviço." }
+          {
+            "term": "VexNexa",
+            "desc": "o serviço de escaneamento de acessibilidade sob vexnexa.com."
+          },
+          {
+            "term": "Nós",
+            "desc": "o responsável pelo tratamento e prestador de serviços (VexNexa B.V.)."
+          },
+          {
+            "term": "Utilizador",
+            "desc": "qualquer pessoa singular ou coletiva que utiliza o serviço."
+          },
+          {
+            "term": "Conta",
+            "desc": "o seu acesso pessoal ou empresarial a funcionalidades e histórico."
+          },
+          {
+            "term": "Scan",
+            "desc": "um teste de acessibilidade automatizado de uma página web."
+          },
+          {
+            "term": "API",
+            "desc": "interface de programação para acesso automatizado ao serviço."
+          }
         ],
         "applicabilityTitle": "Aplicabilidade",
         "applicability": "Estes termos aplicam-se a qualquer uso da VexNexa, incluindo contas gratuitas e pagas, a API, períodos de teste e toda a comunicação relacionada. Os desvios só são válidos se acordados por escrito.",
@@ -3017,14 +3035,16 @@
       }
     },
     "vni": {
-      "label": "Índice VexNexa",
-      "ranking": "Classificação VNI",
+      "label": "?ndice VexNexa",
+      "ranking": "Classifica??o VNI",
+      "targetElite": "Meta: n?vel Elite",
+      "maintainingApex": "Mantendo status Apex",
       "tier": {
-        "Apex": "Apex",
+        "Insolvent": "Insolvent",
+        "Standard": "Standard",
         "Elite": "Elite",
         "Authority": "Authority",
-        "Trusted": "Trusted",
-        "Watchlist": "Watchlist"
+        "Apex": "Apex"
       }
     }
   }
