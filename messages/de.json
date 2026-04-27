@@ -3132,5 +3132,36 @@
         "contactSupport": "Contact support"
       }
     }
+  },
+  "scanReport": {
+    "quality": {
+      "realWorldTitle": "Real-World Experience",
+      "realWorldDescription": "Technische Barrierefreiheit ist nur die halbe Geschichte. Diese Metriken zeigen, wie sich die Seite auf Mobilgeräten, älterer Hardware und langsameren Netzwerken anfühlt.",
+      "performanceScore": "Performance-Score",
+      "pageWeight": "Seitengewicht",
+      "visualLoadTime": "Visuelle Ladezeit",
+      "complexity": "Komplexität",
+      "domNodes": "DOM-Knoten",
+      "warningsTitle": "Qualitätswarnungen",
+      "threshold": "Schwellenwert",
+      "noWarnings": "Keine Real-World-Qualitätswarnungen erkannt.",
+      "paradoxBadge": "Performance-Paradox",
+      "paradoxDetected": "Performance-Paradox erkannt",
+      "paradoxExplanation": "Technisch ist der Code optimiert, aber die Seite ist physisch zu schwer für eine schnelle mobile Erfahrung.",
+      "payloadLight": "Leicht",
+      "payloadAverage": "Durchschnittlich",
+      "payloadHeavy": "Schwer",
+      "lcpFast": "Schnell",
+      "lcpModerate": "Moderat",
+      "lcpPoor": "Langsam",
+      "complexityNormal": "Normal",
+      "complexityHigh": "Hoch",
+      "complexityDescription": "Große DOM-Bäume erhöhen die Rendering-Kosten und können Hilfstechnologien auf älteren Geräten verlangsamen.",
+      "warning": {
+        "heavy-mobile": "Die Seite ist schwer für mobile Nutzer.",
+        "slow-lcp": "Langsame visuelle Ladezeit (LCP).",
+        "high-dom-complexity": "Hohe DOM-Komplexität kann ältere Geräte verlangsamen."
+      }
+    }
   }
 }

@@ -3117,5 +3117,36 @@
         "contactSupport": "Contact support"
       }
     }
+  },
+  "scanReport": {
+    "quality": {
+      "realWorldTitle": "Real-World Experience",
+      "realWorldDescription": "Technische toegankelijkheid is maar de helft van het verhaal. Deze metrics tonen hoe de pagina voelt op mobiele apparaten, oudere hardware en tragere netwerken.",
+      "performanceScore": "Prestatiescore",
+      "pageWeight": "Paginagewicht",
+      "visualLoadTime": "Visuele laadtijd",
+      "complexity": "Complexiteit",
+      "domNodes": "DOM-nodes",
+      "warningsTitle": "Kwaliteitswaarschuwingen",
+      "threshold": "Drempelwaarde",
+      "noWarnings": "Geen praktijkgerichte kwaliteitswaarschuwingen gevonden.",
+      "paradoxBadge": "Prestatieparadox",
+      "paradoxDetected": "Prestatieparadox gedetecteerd",
+      "paradoxExplanation": "Technisch is de code geoptimaliseerd, maar de site is fysiek te zwaar voor een snelle mobiele ervaring.",
+      "payloadLight": "Licht",
+      "payloadAverage": "Gemiddeld",
+      "payloadHeavy": "Zwaar",
+      "lcpFast": "Snel",
+      "lcpModerate": "Matig",
+      "lcpPoor": "Traag",
+      "complexityNormal": "Normaal",
+      "complexityHigh": "Hoog",
+      "complexityDescription": "Grote DOM-structuren verhogen de renderkosten en kunnen hulptechnologie op oudere apparaten vertragen.",
+      "warning": {
+        "heavy-mobile": "Site is zwaar voor mobiele gebruikers.",
+        "slow-lcp": "Langzame visuele laadtijd (LCP).",
+        "high-dom-complexity": "Hoge DOM-complexiteit kan oudere apparaten vertragen."
+      }
+    }
   }
 }

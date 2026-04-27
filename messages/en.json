@@ -3620,5 +3620,36 @@
         "contactSupport": "Contact support"
       }
     }
+  },
+  "scanReport": {
+    "quality": {
+      "realWorldTitle": "Real-World Experience",
+      "realWorldDescription": "Technical accessibility is only half the story. These metrics show how the page feels on mobile devices, older hardware, and slower networks.",
+      "performanceScore": "Performance score",
+      "pageWeight": "Page Weight",
+      "visualLoadTime": "Visual Load Time",
+      "complexity": "Complexity",
+      "domNodes": "DOM nodes",
+      "warningsTitle": "Quality warnings",
+      "threshold": "Threshold",
+      "noWarnings": "No real-world quality warnings detected.",
+      "paradoxBadge": "Performance Paradox",
+      "paradoxDetected": "Performance Paradox detected",
+      "paradoxExplanation": "Technically the code is optimized, but the site is physically too heavy for a fast mobile experience.",
+      "payloadLight": "Light",
+      "payloadAverage": "Average",
+      "payloadHeavy": "Heavy",
+      "lcpFast": "Fast",
+      "lcpModerate": "Moderate",
+      "lcpPoor": "Poor",
+      "complexityNormal": "Normal",
+      "complexityHigh": "High",
+      "complexityDescription": "Large DOM trees increase rendering cost and can slow down assistive technology on older devices.",
+      "warning": {
+        "heavy-mobile": "Site is heavy for mobile users.",
+        "slow-lcp": "Slow visual loading (LCP).",
+        "high-dom-complexity": "High DOM complexity might slow down older devices."
+      }
+    }
   }
 }

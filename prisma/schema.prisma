@@ -160,6 +160,9 @@ model Scan {
   scanDuration           Int?
   pageLoadTime           Int?
   elementsScanned        Int?
+  pageWeightBytes        Int?
+  domNodeCount           Int?
+  qualityWarnings        Json?
   resultJson             Json?
   raw                    Json?
   deletedAt              DateTime?

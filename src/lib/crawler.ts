@@ -260,10 +260,13 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
         // Performance metrics
         performanceScore: performanceMetrics.performanceScore,
         firstContentfulPaint: performanceMetrics.firstContentfulPaint,
-        largestContentfulPaint: performanceMetrics.largestContentfulPaint,
+        largestContentfulPaint: scanResult.largestContentfulPaintMs || performanceMetrics.largestContentfulPaint,
         cumulativeLayoutShift: performanceMetrics.cumulativeLayoutShift,
         firstInputDelay: performanceMetrics.firstInputDelay,
         totalBlockingTime: performanceMetrics.totalBlockingTime,
+        pageWeightBytes: scanResult.totalPageWeightBytes,
+        domNodeCount: scanResult.domNodeCount,
+        qualityWarnings: scanResult.qualityWarnings as any,
 
         // SEO metrics
         seoScore: seoMetrics.seoScore,
@@ -281,8 +284,9 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
 
         // Performance metrics
         scanDuration: null,
-        pageLoadTime: null,
-        elementsScanned: null,
+        pageLoadTime: scanResult.performanceImpact?.loadTime,
+        elementsScanned: scanResult.domNodeCount,
+        resultJson: JSON.parse(JSON.stringify(scanResult)),
 
         raw: JSON.parse(JSON.stringify(scanResult)) // Save the complete enhanced scan results
       }

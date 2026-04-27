@@ -44,6 +44,10 @@ export interface EnhancedScanResult extends ScanResult {
   advancedColorVision: ColorVisionResult;
   performanceImpact: PerformanceImpactResult;
   languageSupport: LanguageSupportResult;
+  totalPageWeightBytes: number;
+  largestContentfulPaintMs: number;
+  domNodeCount: number;
+  qualityWarnings: QualityWarning[];
   aiContentChecks?: ImageAnalysisResult[];
   engineName?: string | null;
   axeVersion?: string | null;
@@ -306,6 +310,16 @@ export class EnhancedAccessibilityScanner {
   }
 
   private async performScan(page: any, url: string): Promise<EnhancedScanResult> {
+    const cdpSession = await page.target().createCDPSession().catch(() => null);
+    let cdpTransferBytes = 0;
+
+    if (cdpSession) {
+      await cdpSession.send("Network.enable").catch(() => undefined);
+      cdpSession.on("Network.loadingFinished", (event: any) => {
+        cdpTransferBytes += Number(event?.encodedDataLength || 0);
+      });
+    }
+
     // Use domcontentloaded for faster page load (instead of networkidle2)
     // This starts the scan as soon as the DOM is ready, without waiting for all network requests
     try {
@@ -321,6 +335,8 @@ export class EnhancedAccessibilityScanner {
 
     // Small extra settle time for late JS redirects
     await new Promise(r => setTimeout(r, 500));
+    const realWorldMetrics = await this.collectRealWorldMetrics(page, cdpTransferBytes);
+    const qualityWarnings = this.buildQualityWarnings(realWorldMetrics);
 
     // Import axe source from bundled TypeScript module
     const { axeSource } = await import('./axe-source');
@@ -430,6 +446,10 @@ export class EnhancedAccessibilityScanner {
       passes: passes.length ?? 0,
       score: enhancedScore,
       aiChecksPerformed: aiContentChecks.length,
+      totalPageWeightBytes: realWorldMetrics.totalPageWeightBytes,
+      largestContentfulPaintMs: realWorldMetrics.largestContentfulPaintMs,
+      domNodeCount: realWorldMetrics.domNodeCount,
+      qualityWarnings: qualityWarnings.length,
     });
 
     return {
@@ -457,6 +477,10 @@ export class EnhancedAccessibilityScanner {
       advancedColorVision,
       performanceImpact,
       languageSupport,
+      totalPageWeightBytes: realWorldMetrics.totalPageWeightBytes,
+      largestContentfulPaintMs: realWorldMetrics.largestContentfulPaintMs,
+      domNodeCount: realWorldMetrics.domNodeCount,
+      qualityWarnings,
       aiContentChecks,
       engineName,
       axeVersion,
@@ -494,6 +518,10 @@ export class EnhancedAccessibilityScanner {
       advancedColorVision: { score: 88, issues: [], deuteranopia: true, protanopia: true, tritanopia: true, achromatopsia: true },
       performanceImpact: { score: 80, issues: [], loadTime: 2500, largeElements: 800, assistiveTechFriendly: true },
       languageSupport: { score: 90, issues: [], languageDetected: "en", directionality: true, multiLanguage: false },
+      totalPageWeightBytes: 0,
+      largestContentfulPaintMs: 0,
+      domNodeCount: 0,
+      qualityWarnings: [],
       aiContentChecks: [],
       engineName: "fallback-mock",
       axeVersion: null,
@@ -759,6 +787,72 @@ export class EnhancedAccessibilityScanner {
     };
   }
 
+  private async collectRealWorldMetrics(page: any, cdpTransferBytes: number): Promise<RealWorldMetrics> {
+    const browserMetrics = await safeEvaluate(page, () => {
+      const resourceEntries = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
+      const navigationEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+      const resourceTransferBytes = resourceEntries.reduce((sum, entry) => sum + (entry.transferSize || 0), 0);
+      const navigationTransferBytes = navigationEntries.reduce((sum, entry) => sum + (entry.transferSize || 0), 0);
+      const lcpEntries = performance.getEntriesByType("largest-contentful-paint");
+      const lastLcp = lcpEntries[lcpEntries.length - 1] as PerformanceEntry | undefined;
+
+      return {
+        transferBytes: resourceTransferBytes + navigationTransferBytes,
+        largestContentfulPaintMs: Math.round(lastLcp?.startTime || 0),
+        domNodeCount: document.getElementsByTagName("*").length,
+      };
+    }).catch(() => ({
+      transferBytes: 0,
+      largestContentfulPaintMs: 0,
+      domNodeCount: 0,
+    }));
+
+    return {
+      totalPageWeightBytes: Math.max(cdpTransferBytes, browserMetrics.transferBytes),
+      largestContentfulPaintMs: browserMetrics.largestContentfulPaintMs,
+      domNodeCount: browserMetrics.domNodeCount,
+    };
+  }
+
+  private buildQualityWarnings(metrics: RealWorldMetrics): QualityWarning[] {
+    const warnings: QualityWarning[] = [];
+
+    if (metrics.totalPageWeightBytes > 2.5 * 1024 * 1024) {
+      warnings.push({
+        id: "heavy-mobile",
+        priority: "high",
+        message: "Site is heavy for mobile users.",
+        metric: "totalPageWeightBytes",
+        value: metrics.totalPageWeightBytes,
+        threshold: 2.5 * 1024 * 1024,
+      });
+    }
+
+    if (metrics.largestContentfulPaintMs > 2500) {
+      warnings.push({
+        id: "slow-lcp",
+        priority: "high",
+        message: "Slow visual loading (LCP).",
+        metric: "largestContentfulPaintMs",
+        value: metrics.largestContentfulPaintMs,
+        threshold: 2500,
+      });
+    }
+
+    if (metrics.domNodeCount > 1500) {
+      warnings.push({
+        id: "high-dom-complexity",
+        priority: "high",
+        message: "High DOM complexity might slow down older devices.",
+        metric: "domNodeCount",
+        value: metrics.domNodeCount,
+        threshold: 1500,
+      });
+    }
+
+    return warnings;
+  }
+
   private async testLanguageSupport(page: any): Promise<LanguageSupportResult> {
     const languageDetected = await safeEvaluate(page, 
       () => document.documentElement.lang || document.querySelector("[lang]")?.getAttribute("lang") || null
@@ -833,4 +927,19 @@ export async function runEnhancedAccessibilityScan(url: string, timeoutMs = DEFA
     }
     await scanner.close();
   }
+}
+
+interface QualityWarning {
+  id: "heavy-mobile" | "slow-lcp" | "high-dom-complexity";
+  priority: "medium" | "high";
+  message: string;
+  metric: "totalPageWeightBytes" | "largestContentfulPaintMs" | "domNodeCount";
+  value: number;
+  threshold: number;
+}
+
+interface RealWorldMetrics {
+  totalPageWeightBytes: number;
+  largestContentfulPaintMs: number;
+  domNodeCount: number;
 }

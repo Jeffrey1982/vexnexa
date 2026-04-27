@@ -3126,5 +3126,36 @@
         "contactSupport": "Contact support"
       }
     }
+  },
+  "scanReport": {
+    "quality": {
+      "realWorldTitle": "Experiencia real",
+      "realWorldDescription": "La accesibilidad técnica es solo la mitad de la historia. Estas métricas muestran cómo se siente la página en móviles, hardware antiguo y redes lentas.",
+      "performanceScore": "Puntuación de rendimiento",
+      "pageWeight": "Peso de la página",
+      "visualLoadTime": "Tiempo de carga visual",
+      "complexity": "Complejidad",
+      "domNodes": "Nodos DOM",
+      "warningsTitle": "Advertencias de calidad",
+      "threshold": "Umbral",
+      "noWarnings": "No se detectaron advertencias de calidad en condiciones reales.",
+      "paradoxBadge": "Paradoja de rendimiento",
+      "paradoxDetected": "Paradoja de rendimiento detectada",
+      "paradoxExplanation": "Técnicamente el código está optimizado, pero el sitio es físicamente demasiado pesado para una experiencia móvil rápida.",
+      "payloadLight": "Ligero",
+      "payloadAverage": "Promedio",
+      "payloadHeavy": "Pesado",
+      "lcpFast": "Rápido",
+      "lcpModerate": "Moderado",
+      "lcpPoor": "Lento",
+      "complexityNormal": "Normal",
+      "complexityHigh": "Alta",
+      "complexityDescription": "Los árboles DOM grandes aumentan el coste de renderizado y pueden ralentizar tecnologías de asistencia en dispositivos antiguos.",
+      "warning": {
+        "heavy-mobile": "El sitio es pesado para usuarios móviles.",
+        "slow-lcp": "Carga visual lenta (LCP).",
+        "high-dom-complexity": "La alta complejidad del DOM puede ralentizar dispositivos antiguos."
+      }
+    }
   }
 }

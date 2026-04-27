@@ -16,7 +16,7 @@ import { CopyButton } from "@/components/CopyButton";
 import { KeyValue } from "@/components/KeyValue";
 import { formatDate, getFaviconFromUrl, calculateDuration } from "@/lib/format";
 import { computeIssueStats, Violation, getTopViolations } from "@/lib/axe-types";
-import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Zap } from "lucide-react";
+import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Zap, Weight, Layout } from "lucide-react";
 import { SiteImage } from "@/components/SiteImage";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,7 @@ import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { ScanProcessingStatus } from "@/components/dashboard/ScanProcessingStatus";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
 import { requireAuth } from "@/lib/auth";
+import { getTranslations } from "next-intl/server";
 import { EnhancedScanResults } from "@/components/EnhancedScanResults";
 import {
   getScanTrendData,
@@ -46,6 +47,46 @@ interface PageProps {
   params: Promise<{
     id: string;
   }>;
+}
+
+type QualityWarning = {
+  id: string;
+  priority: "medium" | "high";
+  message: string;
+  metric: string;
+  value: number;
+  threshold: number;
+};
+
+function formatBytes(bytes?: number | null) {
+  if (!bytes) return "0 KB";
+  if (bytes >= 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+  return `${Math.round(bytes / 1024)} KB`;
+}
+
+function formatMilliseconds(ms?: number | null) {
+  if (!ms) return "0 ms";
+  return ms >= 1000 ? `${(ms / 1000).toFixed(2)}s` : `${Math.round(ms)} ms`;
+}
+
+function getPayloadMeter(bytes: number) {
+  if (bytes < 1024 * 1024) {
+    return { labelKey: "payloadLight", percent: 28, className: "bg-success", textClassName: "text-success" };
+  }
+  if (bytes <= 2.5 * 1024 * 1024) {
+    return { labelKey: "payloadAverage", percent: 62, className: "bg-warning", textClassName: "text-warning" };
+  }
+  return { labelKey: "payloadHeavy", percent: 100, className: "bg-critical", textClassName: "text-critical" };
+}
+
+function getLcpMeter(ms: number) {
+  if (ms < 1200) {
+    return { labelKey: "lcpFast", percent: 28, className: "bg-success", textClassName: "text-success" };
+  }
+  if (ms <= 2500) {
+    return { labelKey: "lcpModerate", percent: 64, className: "bg-warning", textClassName: "text-warning" };
+  }
+  return { labelKey: "lcpPoor", percent: 100, className: "bg-critical", textClassName: "text-critical" };
 }
 
 async function getScanDetails(id: string) {
@@ -153,6 +194,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
   }
 
   const siteUrl = scan.page?.url || scan.site.url;
+  const tQuality = await getTranslations("scanReport.quality");
 
   if (scan.status === "PENDING" || scan.status === "PROCESSING") {
     return (
@@ -199,6 +241,14 @@ export default async function ScanDetailPage({ params }: PageProps) {
   // Calculate WCAG compliance
   const wcagAACompliance = (scan as any).wcagAACompliance || calculateWCAGCompliance(violations, "AA");
   const wcagAAACompliance = (scan as any).wcagAAACompliance || calculateWCAGCompliance(violations, "AAA");
+  const qualityWarnings = Array.isArray(scan.qualityWarnings) ? scan.qualityWarnings as QualityWarning[] : [];
+  const technicalScore = scan.score || 0;
+  const totalPageWeight = scan.pageWeightBytes || 0;
+  const lcp = scan.largestContentfulPaint || 0;
+  const domNodeCount = scan.domNodeCount || 0;
+  const payloadMeter = getPayloadMeter(totalPageWeight);
+  const lcpMeter = getLcpMeter(lcp);
+  const hasPerformanceParadox = technicalScore > 90 && (lcp > 2500 || totalPageWeight > 2.5 * 1024 * 1024);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -382,6 +432,113 @@ export default async function ScanDetailPage({ params }: PageProps) {
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-6 mt-6">
+              <Card className="overflow-hidden border-border/70 bg-background/85 shadow-sm backdrop-blur">
+                <CardHeader className="border-b border-border/60 bg-muted/25">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <CardTitle className="flex items-center gap-2 font-display">
+                        <Zap className="w-5 h-5 text-primary" aria-hidden="true" />
+                        {tQuality("realWorldTitle")}
+                      </CardTitle>
+                      <CardDescription className="mt-2">
+                        {tQuality("realWorldDescription")}
+                      </CardDescription>
+                    </div>
+                    {hasPerformanceParadox && (
+                      <Badge className="w-fit border-critical/40 bg-critical text-critical-foreground">
+                        <AlertTriangle className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
+                        {tQuality("paradoxDetected")}
+                      </Badge>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-6 p-4 sm:p-6">
+                  {hasPerformanceParadox && (
+                    <div className="rounded-lg border border-critical/30 bg-critical/5 p-4">
+                      <div className="font-semibold text-foreground">{tQuality("paradoxBadge")}</div>
+                      <p className="mt-1 text-sm text-muted-foreground">{tQuality("paradoxExplanation")}</p>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                    <div className="rounded-lg border border-border/70 bg-background p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                          <Zap className="h-4 w-4 text-primary" aria-hidden="true" />
+                          {tQuality("visualLoadTime")}
+                        </div>
+                        <span className={cn("text-sm font-semibold", lcpMeter.textClassName)}>
+                          {tQuality(lcpMeter.labelKey)}
+                        </span>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold">{formatMilliseconds(lcp)}</div>
+                      <div className="mt-4 h-2 overflow-hidden rounded-full bg-muted" aria-label={`${tQuality("visualLoadTime")}: ${tQuality(lcpMeter.labelKey)}`}>
+                        <div className={cn("h-full rounded-full transition-all duration-700", lcpMeter.className)} style={{ width: `${lcpMeter.percent}%` }} />
+                      </div>
+                      <div className="mt-2 flex justify-between text-xs text-muted-foreground">
+                        <span>{tQuality("lcpFast")}</span>
+                        <span>{tQuality("lcpPoor")}</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border border-border/70 bg-background p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                          <Weight className="h-4 w-4 text-primary" aria-hidden="true" />
+                          {tQuality("pageWeight")}
+                        </div>
+                        <span className={cn("text-sm font-semibold", payloadMeter.textClassName)}>
+                          {tQuality(payloadMeter.labelKey)}
+                        </span>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold">{formatBytes(totalPageWeight)}</div>
+                      <div className="mt-4 h-2 overflow-hidden rounded-full bg-muted" aria-label={`${tQuality("pageWeight")}: ${tQuality(payloadMeter.labelKey)}`}>
+                        <div className={cn("h-full rounded-full transition-all duration-700", payloadMeter.className)} style={{ width: `${payloadMeter.percent}%` }} />
+                      </div>
+                      <div className="mt-2 flex justify-between text-xs text-muted-foreground">
+                        <span>{tQuality("payloadLight")}</span>
+                        <span>{tQuality("payloadHeavy")}</span>
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border border-border/70 bg-background p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                          <Layout className="h-4 w-4 text-primary" aria-hidden="true" />
+                          {tQuality("complexity")}
+                        </div>
+                        <span className={cn("text-sm font-semibold", domNodeCount > 1500 ? "text-critical" : "text-success")}>
+                          {domNodeCount > 1500 ? tQuality("complexityHigh") : tQuality("complexityNormal")}
+                        </span>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold">{domNodeCount}</div>
+                      <p className="mt-4 text-xs leading-5 text-muted-foreground">{tQuality("complexityDescription")}</p>
+                    </div>
+                  </div>
+
+                  {qualityWarnings.length > 0 ? (
+                    <div className="space-y-2">
+                      <div className="text-sm font-semibold">{tQuality("warningsTitle")}</div>
+                      {qualityWarnings.map((warning) => (
+                        <div key={warning.id} className="flex items-start gap-3 rounded-lg border border-critical/30 bg-critical/5 p-3">
+                          <AlertTriangle className="mt-0.5 h-4 w-4 text-critical" aria-hidden="true" />
+                          <div>
+                            <div className="text-sm font-medium">{tQuality(`warning.${warning.id}`)}</div>
+                            <div className="text-xs text-muted-foreground">
+                              {tQuality("threshold")}: {warning.metric === "totalPageWeightBytes" ? formatBytes(warning.threshold) : warning.metric === "largestContentfulPaintMs" ? formatMilliseconds(warning.threshold) : warning.threshold}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-success/30 bg-success/5 p-3 text-sm text-muted-foreground">
+                      {tQuality("noWarnings")}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
               {/* WCAG Compliance */}
               <Card>
                 <CardHeader>

@@ -163,6 +163,13 @@ export async function executeAssuranceScan(domainId: string): Promise<AssuranceS
         impactMinor: scanResult.violations.filter((v) => v.impact === 'minor').length,
         wcagAACompliance: wcagCompliance.wcagAA,
         wcagAAACompliance: wcagCompliance.wcagAAA,
+        largestContentfulPaint: scanResult.largestContentfulPaintMs,
+        pageLoadTime: scanResult.performanceImpact?.loadTime,
+        elementsScanned: scanResult.domNodeCount,
+        pageWeightBytes: scanResult.totalPageWeightBytes,
+        domNodeCount: scanResult.domNodeCount,
+        qualityWarnings: scanResult.qualityWarnings as any,
+        resultJson: scanResult as any,
         raw: scanResult as any,
       },
     });
