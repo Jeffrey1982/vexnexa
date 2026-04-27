@@ -50,7 +50,29 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       count: available.length,
     });
   } catch (error) {
-    console.error('[Billing] Error fetching payment methods:', error);
+    const e = error as Record<string, unknown>;
+    const apiKey = process.env.MOLLIE_API_KEY ?? '';
+    const keyMode = apiKey.startsWith('live_')
+      ? 'live'
+      : apiKey.startsWith('test_')
+        ? 'test'
+        : 'missing/invalid';
+
+    // Surface ALL Mollie SDK error fields so we can see exactly why methods.list
+    // failed (e.g. "Invalid API key", "Inactive profile", "Unauthorized").
+    console.error('[Billing] Error fetching payment methods:', {
+      message: error instanceof Error ? error.message : String(error),
+      name: error instanceof Error ? error.name : undefined,
+      statusCode: e?.statusCode ?? e?.status,
+      title: e?.title,
+      detail: e?.detail,
+      field: e?.field,
+      links: e?.links,
+      cause: e?.cause,
+      keyMode,
+      keyPrefix: apiKey ? `${apiKey.slice(0, 8)}…` : '(empty)',
+      isMollieTestMode: isMollieTestMode(),
+    });
 
     // If Mollie is not configured, return a safe fallback
     if (!process.env.MOLLIE_API_KEY) {
@@ -61,10 +83,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       });
     }
 
-    return NextResponse.json(
-      { error: 'Failed to fetch payment methods' },
-      { status: 500 }
-    );
+    // For real Mollie errors, also return safe fallback methods so the UI
+    // doesn't break. The detailed error is in the logs.
+    return NextResponse.json({
+      methods: getFallbackMethods(),
+      count: getFallbackMethods().length,
+      fallback: true,
+      error: error instanceof Error ? error.message : 'Failed to fetch payment methods',
+    });
   }
 }
 
