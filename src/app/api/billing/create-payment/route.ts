@@ -150,7 +150,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         value: toMollieAmountString(chargedAmount),
       },
       description,
-      redirectUrl: appUrl("/dashboard?checkout=success"),
+      // Placeholder — patched with real paymentId via payments.update right
+      // after creation so the /checkout/return landing page can fetch status.
+      redirectUrl: appUrl("/checkout/return"),
       webhookUrl: appUrl("/api/mollie/webhook"),
       customerId: customer.id,
       sequenceType: SequenceType.first,
@@ -173,6 +175,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const checkoutUrl = payment.getCheckoutUrl();
     if (!checkoutUrl) {
       throw new Error("Mollie returned payment but no checkout URL");
+    }
+
+    // Patch redirectUrl with the real paymentId so /checkout/return can fetch
+    // the status. Non-fatal on failure.
+    try {
+      await mollie.payments.update(payment.id, {
+        redirectUrl: appUrl(`/checkout/return?paymentId=${payment.id}`),
+      } as Parameters<typeof mollie.payments.update>[1]);
+    } catch (updateError) {
+      console.warn("[create-payment] Failed to patch redirectUrl with paymentId:", updateError);
     }
 
     // Persist checkout quote snapshot for invoice/audit trail

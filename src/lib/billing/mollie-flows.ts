@@ -254,7 +254,9 @@ export async function createUpgradePayment(opts: {
         value: toMollieAmountString(chargedAmount),
       },
       description,
-      redirectUrl: appUrl("/dashboard?checkout=success"),
+      // Placeholder — patched with real paymentId via payments.update right
+      // after creation so the /checkout/return landing page can fetch status.
+      redirectUrl: appUrl("/checkout/return"),
       webhookUrl: appUrl("/api/mollie/webhook"),
       customerId: customer.id,
       sequenceType: SequenceType.first,
@@ -282,6 +284,17 @@ export async function createUpgradePayment(opts: {
       sequenceType: payment.sequenceType,
       checkoutUrl: payment.getCheckoutUrl(),
     });
+
+    // Patch the redirectUrl with the real paymentId so /checkout/return can
+    // fetch the status. Non-fatal if Mollie rejects the update — the user
+    // would just land on /checkout/return without a paymentId and see an error.
+    try {
+      await mollie.payments.update(payment.id, {
+        redirectUrl: appUrl(`/checkout/return?paymentId=${payment.id}`),
+      } as Parameters<typeof mollie.payments.update>[1]);
+    } catch (updateError) {
+      console.warn("[Mollie] Failed to patch redirectUrl with paymentId:", updateError);
+    }
 
     // Persist checkout quote snapshot for invoice/audit trail
     // Derive internal VAT breakdown for accounting (21% NL VAT as default)
@@ -506,7 +519,32 @@ export async function processWebhookPayment(paymentId: string) {
   const plan = planKeyFromString(metadata.planKey ?? metadata.plan);
   const billingCycle = (metadata?.billingInterval ?? metadata?.billingCycle ?? "monthly") as BillingInterval;
 
+  // Non-paid terminal statuses: record on the User row so the dashboard /
+  // pricing page can show a friendly message and so operators have visibility
+  // (without this, ProcessedWebhook silently records the event as "processed"
+  // and the user is left in the dark).
   if (payment.status !== "paid") {
+    const terminalFailureStatuses = ["canceled", "expired", "failed"] as const;
+    if ((terminalFailureStatuses as readonly string[]).includes(payment.status)) {
+      try {
+        await prisma.user.update({
+          where: { id: userId },
+          data: {
+            lastFailedPaymentAt: new Date(),
+            lastFailedPaymentReason: `mollie:${payment.status}`,
+          },
+        });
+        console.log(
+          `[Webhook] Recorded ${payment.status} payment for user:`,
+          userId,
+          payment.id
+        );
+      } catch (recordError) {
+        console.error("[Webhook] Failed to record failed-payment:", recordError);
+      }
+    }
+    // Open / pending / authorized statuses: do nothing — Mollie will send a
+    // follow-up webhook when the payment reaches a terminal state.
     return;
   }
 

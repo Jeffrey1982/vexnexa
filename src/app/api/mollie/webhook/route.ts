@@ -29,20 +29,26 @@ export async function POST(request: NextRequest) {
     // 1. Read raw body (needed for signature verification)
     const body = await request.text()
 
-    // 2. Verify HMAC signature
+    // 2. Verify HMAC signature (graceful)
+    //
+    // Mollie does NOT sign webhooks by default; their security model is "secret
+    // URL". Webhook signing is an opt-in feature that must be enabled in the
+    // Mollie dashboard / via support. We support three modes:
+    //
+    //   a. Header present + MOLLIE_WEBHOOK_SECRET set → verify strictly,
+    //      reject on mismatch (real attack signal).
+    //   b. Header missing + MOLLIE_WEBHOOK_REQUIRE_SIGNATURE=true → reject 401.
+    //   c. Header missing + flag false (default) → accept, log a warning so an
+    //      operator can detect signing-misconfiguration without breaking
+    //      production payments.
     const webhookSecret = process.env.MOLLIE_WEBHOOK_SECRET
-    if (!webhookSecret) {
-      if (process.env.NODE_ENV === 'production') {
-        console.error('MOLLIE_WEBHOOK_SECRET is not configured — rejecting webhook')
-        return NextResponse.json({ error: 'Webhook not configured' }, { status: 500 })
-      }
-      console.warn('MOLLIE_WEBHOOK_SECRET not set — skipping signature check in development')
-    } else {
-      const signature = request.headers.get('mollie-signature')
-      if (!signature) {
-        console.error('Missing Mollie signature header')
-        return NextResponse.json({ error: 'Missing signature' }, { status: 401 })
-      }
+    const requireSignature =
+      process.env.MOLLIE_WEBHOOK_REQUIRE_SIGNATURE === 'true'
+    const signature =
+      request.headers.get('mollie-signature') ??
+      request.headers.get('x-mollie-signature')
+
+    if (signature && webhookSecret) {
       const expectedSignature = crypto
         .createHmac('sha256', webhookSecret)
         .update(body)
@@ -51,13 +57,30 @@ export async function POST(request: NextRequest) {
       // Use timing-safe compare to avoid leaking the secret via timing oracles
       const sigBuf = Buffer.from(signature, 'hex')
       const expBuf = Buffer.from(expectedSignature, 'hex')
-      if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
-        console.error('Invalid webhook signature')
+      if (
+        sigBuf.length !== expBuf.length ||
+        !crypto.timingSafeEqual(sigBuf, expBuf)
+      ) {
+        console.error('[Mollie Webhook] Invalid signature — rejecting')
         return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
       }
       if (process.env.NODE_ENV === 'development') {
-        console.log('Webhook signature verified ✓')
+        console.log('[Mollie Webhook] Signature verified ✓')
       }
+    } else if (!signature && requireSignature) {
+      console.error(
+        '[Mollie Webhook] Missing signature header but MOLLIE_WEBHOOK_REQUIRE_SIGNATURE=true — rejecting'
+      )
+      return NextResponse.json({ error: 'Missing signature' }, { status: 401 })
+    } else if (!signature) {
+      // Default path: Mollie sent no signature. Accept but log so we know.
+      console.warn(
+        '[Mollie Webhook] No signature header (Mollie default behaviour). Accepting; relying on URL secrecy. Set MOLLIE_WEBHOOK_REQUIRE_SIGNATURE=true to enforce.'
+      )
+    } else if (signature && !webhookSecret) {
+      console.warn(
+        '[Mollie Webhook] Signature header present but MOLLIE_WEBHOOK_SECRET not configured — skipping verification.'
+      )
     }
 
     // 3. Parse Mollie's form-encoded body

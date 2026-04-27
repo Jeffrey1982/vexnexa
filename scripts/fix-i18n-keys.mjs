@@ -96,6 +96,29 @@ const REQUIRED_KEYS = {
   'footer.brand.newsletter.errorTitle': 'Something went wrong',
   'footer.brand.newsletter.errorDescription': 'Please try again later.',
 
+  // Checkout return page (post-Mollie redirect landing)
+  'checkout.return.processing.title': 'Processing your payment\u2026',
+  'checkout.return.processing.subtitle':
+    "This usually takes a few seconds. Please don't close this page.",
+  'checkout.return.success.title': 'Payment successful!',
+  'checkout.return.success.subtitle': 'Redirecting you to your dashboard\u2026',
+  'checkout.return.canceled.title': 'Payment canceled',
+  'checkout.return.canceled.subtitle':
+    'No charge was made. You can pick a plan whenever you are ready.',
+  'checkout.return.expired.title': 'Payment link expired',
+  'checkout.return.expired.subtitle':
+    'The checkout session timed out. Please start again.',
+  'checkout.return.failed.title': 'Payment could not be completed',
+  'checkout.return.failed.subtitle':
+    'Please try again or use a different payment method.',
+  'checkout.return.error.title': "We couldn't verify your payment",
+  'checkout.return.error.subtitle':
+    'If you were charged, contact support and include this payment id.',
+  'checkout.return.action.dashboard': 'Go to dashboard',
+  'checkout.return.action.pricing': 'Back to pricing',
+  'checkout.return.action.tryAgain': 'Try again',
+  'checkout.return.action.contactSupport': 'Contact support',
+
   // Registration wizard step titles + descriptions
   'auth.register.steps.account.title': 'Account',
   'auth.register.steps.account.description': 'Create your login credentials',

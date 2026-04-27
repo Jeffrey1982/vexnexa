@@ -2663,5 +2663,39 @@
       "ctaSecondary": "Bekijk voorbeeldrapport",
       "note": "Geen creditcard vereist. De meeste scans van ??n pagina zijn binnen een minuut klaar."
     }
+  },
+  "checkout": {
+    "return": {
+      "processing": {
+        "title": "Processing your payment…",
+        "subtitle": "This usually takes a few seconds. Please don't close this page."
+      },
+      "success": {
+        "title": "Payment successful!",
+        "subtitle": "Redirecting you to your dashboard…"
+      },
+      "canceled": {
+        "title": "Payment canceled",
+        "subtitle": "No charge was made. You can pick a plan whenever you are ready."
+      },
+      "expired": {
+        "title": "Payment link expired",
+        "subtitle": "The checkout session timed out. Please start again."
+      },
+      "failed": {
+        "title": "Payment could not be completed",
+        "subtitle": "Please try again or use a different payment method."
+      },
+      "error": {
+        "title": "We couldn't verify your payment",
+        "subtitle": "If you were charged, contact support and include this payment id."
+      },
+      "action": {
+        "dashboard": "Go to dashboard",
+        "pricing": "Back to pricing",
+        "tryAgain": "Try again",
+        "contactSupport": "Contact support"
+      }
+    }
   }
 }
