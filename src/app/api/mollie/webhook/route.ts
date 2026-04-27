@@ -26,10 +26,32 @@ export async function POST(request: NextRequest) {
       console.log('Mollie webhook received at', receivedAt)
     }
 
-    // 1. Read raw body (needed for signature verification)
+    // 1. Read raw body (needed for signature verification AND ping detection)
     const body = await request.text()
 
-    // 2. Verify HMAC signature (graceful)
+    // 2. Parse Mollie's form-encoded body FIRST so we can short-circuit pings
+    //    BEFORE running signature verification. Test pings from the Mollie
+    //    dashboard either have no body, an empty/synthetic id, or a different
+    //    signature scheme — we don't want to reject those with 401.
+    const formData = new URLSearchParams(body)
+    const id = formData.get('id')
+    const type = formData.get('type') ?? 'payment' // Mollie defaults to 'payment' if absent
+
+    console.log('[Mollie Webhook] Received:', { type, id, receivedAt })
+
+    // Real Mollie webhook ids always carry a known prefix
+    // (tr_*, sub_*, chr_*, ord_*, mdt_*, cst_*, pay_*). Anything else
+    // (missing id, "hook.ping", "test", etc.) is a dashboard test/ping.
+    const isRealMollieId =
+      typeof id === 'string' &&
+      /^(tr|sub|chr|ord|mdt|cst|pay)_[A-Za-z0-9]+$/.test(id)
+
+    if (!id || !isRealMollieId) {
+      console.log('[Mollie Webhook] Test/ping received, acknowledging:', { id, type })
+      return NextResponse.json({ success: true, ping: true })
+    }
+
+    // 3. Verify HMAC signature (graceful) — only for real payloads.
     //
     // Mollie does NOT sign webhooks by default; their security model is "secret
     // URL". Webhook signing is an opt-in feature that must be enabled in the
@@ -81,28 +103,6 @@ export async function POST(request: NextRequest) {
       console.warn(
         '[Mollie Webhook] Signature header present but MOLLIE_WEBHOOK_SECRET not configured — skipping verification.'
       )
-    }
-
-    // 3. Parse Mollie's form-encoded body
-    const formData = new URLSearchParams(body)
-    const id = formData.get('id')
-    const type = formData.get('type') ?? 'payment' // Mollie defaults to 'payment' if absent
-
-    console.log('[Mollie Webhook] Received:', { type, id, receivedAt })
-
-    // Handle Mollie dashboard "Test webhook" pings gracefully.
-    // Mollie's test-button sends either no id, an empty body, or a synthetic id
-    // like "hook.ping". Real webhooks always carry a prefixed id
-    // (tr_*, sub_*, chr_*, ord_*, mdt_*, cst_*). We short-circuit anything else
-    // with a 200 so the dashboard reports success and we don't pollute the
-    // ProcessedWebhook table or call Mollie with an invalid id.
-    const isRealMollieId =
-      typeof id === 'string' &&
-      /^(tr|sub|chr|ord|mdt|cst|pay)_[A-Za-z0-9]+$/.test(id)
-
-    if (!id || !isRealMollieId) {
-      console.log('[Mollie Webhook] Test/ping received, acknowledging:', { id, type })
-      return NextResponse.json({ success: true, ping: true })
     }
 
     // 4. Idempotency: check ProcessedWebhook before doing real work
