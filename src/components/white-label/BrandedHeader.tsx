@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useWhiteLabel } from '@/lib/white-label/context';
 import { createClient } from '@/lib/supabase/client-new';
+import { useTranslations } from 'next-intl';
 
 interface BrandedHeaderProps {
   showNavigation?: boolean;
@@ -24,6 +25,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
     isLoading = false;
   }
 
+  const t = useTranslations('footer.brandedFooter');
   const supabase = createClient();
 
   const companyName = settings?.companyName || 'VexNexa';
@@ -76,7 +78,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
                 }}
               >
-                Dashboard
+                {t('dashboard')}
               </Link>
               <Link
                 href="/pricing"
@@ -91,7 +93,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
                 }}
               >
-                Pricing
+                {t('pricing')}
               </Link>
               <Link
                 href="/settings/white-label"
@@ -106,7 +108,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
                 }}
               >
-                Settings
+                {t('settings')}
               </Link>
             </nav>
           )}
@@ -126,7 +128,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                 e.currentTarget.style.color = settings?.secondaryColor || '#374151';
               }}
             >
-              Account
+              {t('account')}
             </Link>
             
             <button
@@ -167,7 +169,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                 e.currentTarget.style.backgroundColor = settings?.primaryColor || '#3B82F6';
               }}
             >
-              Sign Out
+              {t('signOut')}
             </button>
           </div>
         </div>

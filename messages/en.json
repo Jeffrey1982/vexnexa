@@ -1082,7 +1082,10 @@
       "contact": "Contact",
       "visitWebsite": "Visit Website",
       "poweredBy": "Powered by",
-      "allRightsReserved": "All rights reserved."
+      "allRightsReserved": "All rights reserved.",
+      "settings": "Settings",
+      "account": "Account",
+      "signOut": "Sign Out"
     },
     "product": {
       "title": "Product",

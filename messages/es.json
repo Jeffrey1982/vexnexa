@@ -69,7 +69,10 @@
       "contact": "Contacto",
       "visitWebsite": "Visitar Sitio Web",
       "poweredBy": "Desarrollado por",
-      "allRightsReserved": "Todos los derechos reservados."
+      "allRightsReserved": "Todos los derechos reservados.",
+      "settings": "Configuración",
+      "account": "Cuenta",
+      "signOut": "Cerrar Sesión"
     },
     "product": {
       "title": "Producto",

@@ -69,7 +69,10 @@
       "contact": "Contact",
       "visitWebsite": "Bezoek Website",
       "poweredBy": "Aangedreven door",
-      "allRightsReserved": "Alle rechten voorbehouden."
+      "allRightsReserved": "Alle rechten voorbehouden.",
+      "settings": "Instellingen",
+      "account": "Account",
+      "signOut": "Uitloggen"
     },
     "product": {
       "title": "Product",
