@@ -43,18 +43,18 @@ export const metadata: Metadata = {
 const lastUpdated = 'December 8, 2024'
 const policyVersion = 'v1.0'
 
-const sections = [
-  { id: 'data-handling', label: 'Data Handling' },
-  { id: 'storage', label: 'Data Storage' },
-  { id: 'retention', label: 'Data Retention' },
-  { id: 'third-party', label: 'Third-Party Services' },
-  { id: 'incidents', label: 'Security Incidents' },
-  { id: 'contact', label: 'Contact' },
-]
-
 export default async function SecurityPage() {
   const t = await getTranslations('legal.security');
   const tc = await getTranslations('legal.common');
+
+  const sections = [
+    { id: 'data-handling', label: t('sections.dataHandling') },
+    { id: 'storage', label: t('sections.storage') },
+    { id: 'retention', label: t('sections.retention') },
+    { id: 'third-party', label: t('sections.thirdParty') },
+    { id: 'incidents', label: t('sections.incidents') },
+    { id: 'contact', label: t('sections.contact') },
+  ]
 
   return (
     <div className="container mx-auto px-4 py-12 sm:py-16">
@@ -76,7 +76,7 @@ export default async function SecurityPage() {
             className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            Back to homepage
+            {tc('backToHomepage')}
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -125,7 +125,7 @@ export default async function SecurityPage() {
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4" />
-                    Incident Response
+                    {t('guarantees.incident')}
                   </p>
                   <p className="leading-relaxed">
                     {t('guarantees.incidentDesc')}
@@ -151,19 +151,17 @@ export default async function SecurityPage() {
         >
           {/* Data Handling */}
           <section id="data-handling">
-            <h2>Data Handling</h2>
+            <h2>{t('dataHandling.title')}</h2>
             <p>
-              VexNexa scans publicly accessible web pages. We temporarily store scan results
-              and metadata to provide our service. We do not collect or store personal data from
-              the websites we scan.
+              {t('dataHandling.content')}
             </p>
             <div className="not-prose mt-5 rounded-lg border border-primary/30 bg-primary/10 p-4">
               <p className="text-sm font-medium flex items-center gap-2">
                 <Shield className="h-4 w-4" />
-                Privacy by Design
+                {t('dataHandling.privacyByDesign.title')}
               </p>
               <p className="text-sm text-muted-foreground mt-2">
-                We only scan publicly accessible content and do not attempt to access protected areas or extract personal information.
+                {t('dataHandling.privacyByDesign.content')}
               </p>
             </div>
           </section>
@@ -172,19 +170,17 @@ export default async function SecurityPage() {
 
           {/* Data Storage */}
           <section id="storage">
-            <h2>Data Storage</h2>
+            <h2>{t('dataStorage.title')}</h2>
             <p>
-              All scan data is stored securely in encrypted databases. Access is restricted to
-              authorized personnel only. We use industry-standard encryption for data at rest and
-              in transit.
+              {t('dataStorage.content')}
             </p>
-            <h3>Security Measures</h3>
+            <h3>{t('dataStorage.securityMeasures.title')}</h3>
             <ul>
-              <li><strong>Encryption at rest:</strong> AES-256 encryption for stored data</li>
-              <li><strong>Encryption in transit:</strong> TLS 1.3 for all connections</li>
-              <li><strong>Access control:</strong> Role-based access with multi-factor authentication</li>
-              <li><strong>Monitoring:</strong> 24/7 security monitoring and logging</li>
-              <li><strong>Regular audits:</strong> Quarterly security assessments and penetration testing</li>
+              <li><strong>{t('dataStorage.securityMeasures.encryptionAtRest')}</strong></li>
+              <li><strong>{t('dataStorage.securityMeasures.encryptionInTransit')}</strong></li>
+              <li><strong>{t('dataStorage.securityMeasures.accessControl')}</strong></li>
+              <li><strong>{t('dataStorage.securityMeasures.monitoring')}</strong></li>
+              <li><strong>{t('dataStorage.securityMeasures.audits')}</strong></li>
             </ul>
           </section>
 
@@ -192,18 +188,16 @@ export default async function SecurityPage() {
 
           {/* Data Retention */}
           <section id="retention">
-            <h2>Data Retention</h2>
+            <h2>{t('dataRetention.title')}</h2>
             <p>
-              Scan results are retained for the duration of your subscription plus 30 days. You
-              can request deletion of your data at any time through your account settings or by
-              contacting support.
+              {t('dataRetention.content')}
             </p>
-            <h3>Retention Periods</h3>
+            <h3>{t('dataRetention.retentionPeriods.title')}</h3>
             <ul>
-              <li><strong>Active users:</strong> Scan data retained for the duration of subscription</li>
-              <li><strong>After cancellation:</strong> Data retained for 30 days for reactivation</li>
-              <li><strong>Account deletion:</strong> All data permanently deleted within 7 days</li>
-              <li><strong>Audit logs:</strong> Retained for 1 year for compliance purposes</li>
+              <li><strong>{t('dataRetention.retentionPeriods.activeUsers')}</strong></li>
+              <li><strong>{t('dataRetention.retentionPeriods.afterCancellation')}</strong></li>
+              <li><strong>{t('dataRetention.retentionPeriods.accountDeletion')}</strong></li>
+              <li><strong>{t('dataRetention.retentionPeriods.auditLogs')}</strong></li>
             </ul>
           </section>
 
@@ -211,21 +205,20 @@ export default async function SecurityPage() {
 
           {/* Third-Party Services */}
           <section id="third-party">
-            <h2>Third-Party Services</h2>
+            <h2>{t('thirdParty.title')}</h2>
             <p>
-              We use select third-party services for hosting, analytics, and payment processing.
-              All third parties are vetted for security and privacy compliance.
+              {t('thirdParty.content')}
             </p>
-            <h3>Third-Party Processors</h3>
+            <h3>{t('thirdParty.processors.title')}</h3>
             <ul>
-              <li><strong>Vercel:</strong> Hosting and CDN (SOC 2 Type II certified)</li>
-              <li><strong>Supabase:</strong> Database and authentication (ISO 27001 certified)</li>
-              <li><strong>Mollie:</strong> Payment processing (PCI DSS compliant)</li>
+              <li><strong>{t('thirdParty.processors.vercel')}</strong></li>
+              <li><strong>{t('thirdParty.processors.supabase')}</strong></li>
+              <li><strong>{t('thirdParty.processors.mollie')}</strong></li>
             </ul>
             <div className="not-prose mt-5 rounded-lg border bg-muted p-4">
-              <p className="text-sm font-medium">GDPR Compliance</p>
+              <p className="text-sm font-medium">{t('thirdParty.gdprCompliance.title')}</p>
               <p className="text-sm text-muted-foreground mt-2">
-                All our third-party processors are GDPR compliant and have Data Processing Agreements in place.
+                {t('thirdParty.gdprCompliance.content')}
               </p>
             </div>
           </section>
@@ -234,30 +227,29 @@ export default async function SecurityPage() {
 
           {/* Security Incident Response */}
           <section id="incidents">
-            <h2>Security Incident Response</h2>
+            <h2>{t('incidentResponse.title')}</h2>
             <p>
-              In the event of a security incident, we will notify affected users within 72 hours
-              and provide details about the incident and remediation steps.
+              {t('incidentResponse.content')}
             </p>
-            <h3>Incident Response Process</h3>
+            <h3>{t('incidentResponse.process.title')}</h3>
             <ol>
-              <li><strong>Detection:</strong> Automated monitoring and alerting systems</li>
-              <li><strong>Assessment:</strong> Immediate evaluation of severity and impact</li>
-              <li><strong>Containment:</strong> Isolate affected systems to prevent spread</li>
-              <li><strong>Investigation:</strong> Root cause analysis and forensics</li>
-              <li><strong>Notification:</strong> Inform affected users within 72 hours</li>
-              <li><strong>Remediation:</strong> Fix vulnerabilities and restore service</li>
-              <li><strong>Post-mortem:</strong> Document learnings and improve processes</li>
+              <li><strong>{t('incidentResponse.process.detection')}</strong></li>
+              <li><strong>{t('incidentResponse.process.assessment')}</strong></li>
+              <li><strong>{t('incidentResponse.process.containment')}</strong></li>
+              <li><strong>{t('incidentResponse.process.investigation')}</strong></li>
+              <li><strong>{t('incidentResponse.process.notification')}</strong></li>
+              <li><strong>{t('incidentResponse.process.remediation')}</strong></li>
+              <li><strong>{t('incidentResponse.process.postmortem')}</strong></li>
             </ol>
             <div className="not-prose mt-5 rounded-lg border border-border bg-muted p-4">
               <p className="text-sm font-medium flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
-                Report a Vulnerability
+                {t('incidentResponse.reportVulnerability.title')}
               </p>
               <p className="text-sm text-muted-foreground mt-2">
-                If you discover a security vulnerability, please report it responsibly to{' '}
+                {t('incidentResponse.reportVulnerability.content')}{' '}
                 <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
-                  info@vexnexa.com
+                  {t('incidentResponse.reportVulnerability.email')}
                 </a>
               </p>
             </div>
@@ -267,23 +259,23 @@ export default async function SecurityPage() {
 
           {/* Contact */}
           <section id="contact">
-            <h2>Contact</h2>
+            <h2>{t('contact.title')}</h2>
             <div className="not-prose rounded-lg border bg-muted p-4 space-y-2">
-              <p className="font-medium">Security Inquiries</p>
+              <p className="font-medium">{t('contact.securityInquiries.title')}</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('contact.securityInquiries.email')}</a>
               </p>
               <p className="text-sm text-muted-foreground mt-2">
-                For security vulnerabilities or privacy concerns, please contact us at the email above.
+                {t('contact.securityInquiries.description')}
               </p>
             </div>
             <div className="not-prose mt-4 rounded-lg border bg-muted p-4 space-y-2">
-              <p className="font-medium">Business Information</p>
+              <p className="font-medium">{t('contact.businessInfo.title')}</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Address:</strong> Provencialeweg 46B, 1506 MC Zaandam, Netherlands <br />
-                <strong>Chamber of Commerce:</strong> 94848262 <br />
-                <strong>Establishment Number:</strong> 000060294744
+                <strong>Address:</strong> {t('contact.businessInfo.address')} <br />
+                <strong>Chamber of Commerce:</strong> {t('contact.businessInfo.kvk')} <br />
+                <strong>Establishment Number:</strong> {t('contact.businessInfo.establishment')}
               </p>
             </div>
           </section>
@@ -332,12 +324,12 @@ export default async function SecurityPage() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Security Vraag?</CardTitle>
-              <CardDescription>We nemen security serieus.</CardDescription>
+              <CardTitle className="text-base">{t('aside.securityQuestion')}</CardTitle>
+              <CardDescription>{t('aside.securityDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <a href="mailto:info@vexnexa.com">Contact Security</a>
+                <a href="mailto:info@vexnexa.com">{t('aside.contactSecurity')}</a>
               </Button>
             </CardContent>
           </Card>

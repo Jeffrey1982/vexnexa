@@ -43,16 +43,16 @@ export const metadata: Metadata = {
 const lastUpdated = '8 december 2024'
 const policyVersion = 'v1.0'
 
-const sections = [
-  { id: 'agreement', label: 'Service Level Agreement' },
-  { id: 'support', label: 'Support Levels' },
-  { id: 'incidents', label: 'Incident Response' },
-  { id: 'contact', label: 'Contact Support' },
-]
-
 export default async function SLAPage() {
   const t = await getTranslations('legal.sla');
   const tc = await getTranslations('legal.common');
+
+  const sections = [
+    { id: 'agreement', label: t('sections.agreement') },
+    { id: 'support', label: t('sections.support') },
+    { id: 'incidents', label: t('sections.incidents') },
+    { id: 'contact', label: t('sections.contact') },
+  ]
 
   return (
     <div className="container mx-auto px-4 py-12 sm:py-16">
@@ -74,7 +74,7 @@ export default async function SLAPage() {
             className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            Back to homepage
+            {tc('backToHomepage')}
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -114,7 +114,7 @@ export default async function SLAPage() {
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p className="font-medium text-foreground flex items-center gap-2">
                     <Clock className="h-4 w-4" />
-                    Support
+                    {t('keyPoints.support')}
                   </p>
                   <p className="leading-relaxed">
                     {t('keyPoints.supportDesc')}
@@ -149,22 +149,19 @@ export default async function SLAPage() {
         >
           {/* Service Level Agreement */}
           <section id="agreement">
-            <h2>Service Level Agreement</h2>
+            <h2>{t('agreement.title')}</h2>
             <p>
-              VexNexa commits to providing reliable service with the following availability
-              targets:
+              {t('agreement.content')}
             </p>
             <ul>
               <li>
-                <strong>Uptime:</strong> 99.9% uptime on all paid plans (excludes scheduled
-                maintenance)
+                <strong>{t('agreement.uptime')}</strong>
               </li>
               <li>
-                <strong>Scheduled Maintenance:</strong> Announced at least 48 hours in advance
+                <strong>{t('agreement.scheduledMaintenance')}</strong>
               </li>
               <li>
-                <strong>Scan Processing:</strong> Scans typically complete within 5-15 minutes for
-                standard pages
+                <strong>{t('agreement.scanProcessing')}</strong>
               </li>
             </ul>
           </section>
@@ -173,39 +170,39 @@ export default async function SLAPage() {
 
           {/* Support Levels */}
           <section id="support">
-            <h2>Support Levels</h2>
+            <h2>{t('supportLevels.title')}</h2>
 
-            <h3>Starter Plan</h3>
+            <h3>{t('supportLevels.starter.title')}</h3>
             <ul>
-              <li>Email support</li>
-              <li>Response time: Within 2 business days</li>
-              <li>Access to documentation and guides</li>
+              <li>{t('supportLevels.starter.email')}</li>
+              <li>{t('supportLevels.starter.responseTime')}</li>
+              <li>{t('supportLevels.starter.documentation')}</li>
             </ul>
 
-            <h3>Pro Plan</h3>
+            <h3>{t('supportLevels.pro.title')}</h3>
             <ul>
-              <li>Priority email support</li>
-              <li>Response time: Within 1 business day</li>
-              <li>Access to advanced documentation</li>
-              <li>Quarterly check-in calls (optional)</li>
+              <li>{t('supportLevels.pro.priorityEmail')}</li>
+              <li>{t('supportLevels.pro.responseTime')}</li>
+              <li>{t('supportLevels.pro.advancedDocumentation')}</li>
+              <li>{t('supportLevels.pro.checkInCalls')}</li>
             </ul>
 
-            <h3>Business Plan</h3>
+            <h3>{t('supportLevels.business.title')}</h3>
             <ul>
-              <li>Priority support via email and chat</li>
-              <li>Response time: Within 4 hours during business hours</li>
-              <li>Dedicated account manager</li>
-              <li>Monthly check-in calls</li>
-              <li>Priority feature requests</li>
+              <li>{t('supportLevels.business.prioritySupport')}</li>
+              <li>{t('supportLevels.business.responseTime')}</li>
+              <li>{t('supportLevels.business.accountManager')}</li>
+              <li>{t('supportLevels.business.monthlyCalls')}</li>
+              <li>{t('supportLevels.business.priorityFeatures')}</li>
             </ul>
 
-            <h3>Enterprise Plan</h3>
+            <h3>{t('supportLevels.enterprise.title')}</h3>
             <ul>
-              <li>24/7 support via phone, email, and chat</li>
-              <li>Response time: Within 1 hour for critical issues</li>
-              <li>Dedicated account team</li>
-              <li>Custom SLA available</li>
-              <li>On-call support for emergencies</li>
+              <li>{t('supportLevels.enterprise.support247')}</li>
+              <li>{t('supportLevels.enterprise.responseTime')}</li>
+              <li>{t('supportLevels.enterprise.accountTeam')}</li>
+              <li>{t('supportLevels.enterprise.customSla')}</li>
+              <li>{t('supportLevels.enterprise.onCallSupport')}</li>
             </ul>
           </section>
 
@@ -213,15 +210,15 @@ export default async function SLAPage() {
 
           {/* Incident Response */}
           <section id="incidents">
-            <h2>Incident Response</h2>
+            <h2>{t('incidentResponse.title')}</h2>
             <p>
-              We monitor our systems 24/7 and respond to incidents according to severity:
+              {t('incidentResponse.content')}
             </p>
             <ul>
-              <li><strong>Critical:</strong> Service down - Immediate response</li>
-              <li><strong>High:</strong> Major functionality impaired - Response within 2 hours</li>
-              <li><strong>Medium:</strong> Minor functionality impaired - Response within 1 business day</li>
-              <li><strong>Low:</strong> Cosmetic or minor issues - Response within 3 business days</li>
+              <li><strong>{t('incidentResponse.critical')}</strong></li>
+              <li><strong>{t('incidentResponse.high')}</strong></li>
+              <li><strong>{t('incidentResponse.medium')}</strong></li>
+              <li><strong>{t('incidentResponse.low')}</strong></li>
             </ul>
           </section>
 
@@ -229,23 +226,23 @@ export default async function SLAPage() {
 
           {/* Contact Support */}
           <section id="contact">
-            <h2>Contact Support</h2>
+            <h2>{t('contact.title')}</h2>
             <div className="not-prose rounded-lg border bg-muted p-4 space-y-2">
-              <p className="font-medium">Support Contact</p>
+              <p className="font-medium">{t('contact.supportContact.title')}</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
+                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('contact.supportContact.email')}</a>
               </p>
               <p className="text-sm text-muted-foreground">
-                Or via the contact form in your dashboard
+                {t('contact.supportContact.dashboardForm')}
               </p>
             </div>
             <div className="not-prose mt-4 rounded-lg border bg-muted p-4 space-y-2">
-              <p className="font-medium">Business Information</p>
+              <p className="font-medium">{t('contact.businessInfo.title')}</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Address:</strong> Provencialeweg 46B, 1506 MC Zaandam, Netherlands <br />
-                <strong>Chamber of Commerce:</strong> 94848262 <br />
-                <strong>Establishment Number:</strong> 000060294744
+                <strong>Address:</strong> {t('contact.businessInfo.address')} <br />
+                <strong>Chamber of Commerce:</strong> {t('contact.businessInfo.kvk')} <br />
+                <strong>Establishment Number:</strong> {t('contact.businessInfo.establishment')}
               </p>
             </div>
           </section>
@@ -294,12 +291,12 @@ export default async function SLAPage() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Need help?</CardTitle>
-              <CardDescription>We typically respond within 1 business day.</CardDescription>
+              <CardTitle className="text-base">{t('aside.needHelp')}</CardTitle>
+              <CardDescription>{t('aside.responseTime')}</CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
               <Button asChild className="w-full">
-                <Link href="/contact">Contact us</Link>
+                <Link href="/contact">{t('aside.contactUs')}</Link>
               </Button>
             </CardContent>
           </Card>
