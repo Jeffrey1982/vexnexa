@@ -52,9 +52,9 @@ ${data.faviconUrl ? `<link rel="icon" href="${esc(data.faviconUrl)}" />` : ""}
 ${renderCover(data, primary, s)}
 ${isLong ? renderTOC(data, primary, s) : ""}
 ${renderExecutiveSummary(data, primary, s)}
+${renderAiVisionAudit(data, primary, s)}
 ${renderVisualBreakdown(data, primary, s)}
 ${renderPerformanceParadox(data, primary, s)}
-${renderAiVisionAudit(data, primary, s)}
 ${renderWcagMatrix(data, primary, s)}
 ${renderPriorityIssues(data, primary, s)}
 ${renderEAAReadinessSection(data, primary, s)}
@@ -596,15 +596,18 @@ function renderPerformanceParadox(d: ReportData, primary: string, s: ReportStyle
 
 function renderAiVisionAudit(d: ReportData, primary: string, s: ReportStyle): string {
   if (!d.aiVisionAudit.length) return "";
-  return pageSection(d.labels.aiVisionAudit, primary, s, `
+  const pageTitle = d.pageTitle || d.domain;
+  return pageSection("AI-Powered Content Intelligence", primary, s, `
+  <p class="section-intro">AI-powered image analysis using Gemini 1.5 Flash validates alt-text accuracy against visual content. This table shows images analyzed during the scan with AI confidence scores and compliance assessments.</p>
   <table class="ai-table">
-    <thead><tr><th>Image</th><th>${esc(d.labels.imageAltText)}</th><th>${esc(d.labels.aiAssessment)}</th><th>${esc(d.labels.confidence)}</th></tr></thead>
+    <thead><tr><th>Page URL</th><th>Image</th><th>Detected by AI (Description)</th><th>Original Alt-Text</th><th>Compliance Match Score</th></tr></thead>
     <tbody>
-      ${d.aiVisionAudit.map((item) => `<tr>
-        <td>${item.imageUrl ? `<span class="ai-url">${esc(item.imageUrl).slice(0, 80)}</span>` : "Image"}</td>
+      ${d.aiVisionAudit.map((item) => `<tr class="${item.matchesAltText === false ? 'ai-row-mismatch' : ''}">
+        <td>${esc(pageTitle)}</td>
+        <td>${item.imageUrl ? `<span class="ai-url">${esc(item.imageUrl).slice(0, 60)}...</span>` : "Image"}</td>
+        <td>${esc(item.aiDescription || item.recommendation || "Gemini analysis completed.")}</td>
         <td>${esc(item.altText || "No alt text")}</td>
-        <td><strong>${item.matchesAltText === false ? "Mismatch" : "Aligned"}</strong><br/>${esc(item.aiDescription || item.recommendation || "Gemini analysis completed.")}</td>
-        <td>${typeof item.confidence === "number" ? `${Math.round(item.confidence)}%` : "n/a"}</td>
+        <td><strong class="${item.matchesAltText === false ? 'ai-score-mismatch' : 'ai-score-match'}">${typeof item.confidence === "number" ? `${Math.round(item.confidence)}%` : item.matchesAltText === false ? "0%" : "100%"}</strong></td>
       </tr>`).join("")}
     </tbody>
   </table>
@@ -1396,6 +1399,19 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .scan-config-table td{padding:10px var(--space-md);border-bottom:1px solid #E5E7EB;font-size:13px}
 .sct-label{font-weight:600;color:#374151;width:160px;background:#F9FAFB}
 .scan-config-table code{font-family:var(--mono);font-size:11px;background:#F3F4F6;padding:2px 6px;border-radius:var(--rs);line-height:1.5}
+
+/* ═══════════════════════════════════════════════════
+   AI VISION AUDIT TABLE
+   ═══════════════════════════════════════════════════ */
+.ai-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:var(--space-sm)}
+.ai-table th{background:#F3F4F6;padding:var(--space-sm) 10px;text-align:left;font-weight:700;border:1px solid #D1D5DB;font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
+.ai-table td{padding:var(--space-sm) 10px;border:1px solid #E5E7EB;vertical-align:top;font-size:11px}
+.ai-table tbody tr:nth-child(even){background:#FAFAFA}
+.ai-table tbody tr.ai-row-mismatch{background:#FEF2F2!important}
+.ai-url{font-family:var(--mono);font-size:9px;color:#6B7280;overflow-wrap:anywhere;word-break:break-all;line-height:1.5}
+.ai-score-match{color:#16A34A}
+.ai-score-mismatch{color:#DC2626}
+.section-intro{font-size:13px;color:#4B5563;line-height:1.6;margin-bottom:var(--space-md)}
 
 /* ═══════════════════════════════════════════════════
    TABLE OF CONTENTS
