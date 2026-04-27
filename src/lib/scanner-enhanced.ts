@@ -285,15 +285,35 @@ export class EnhancedAccessibilityScanner {
 
   private async scanUrlWithPuppeteer(url: string): Promise<EnhancedScanResult> {
     const page = this.page!;
+    const SCAN_TIMEOUT_MS = 55000; // 55 seconds to stay under Vercel's 60s limit
 
-    // Use networkidle2 so client-side redirects / SPA navigations settle
-    // before we start evaluating. Fall back to domcontentloaded on timeout.
+    // Wrap entire scan in timeout protection
+    const scanPromise = this.performScan(page, url);
+    
     try {
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: DEFAULT_TIMEOUT_MS });
+      return await Promise.race([
+        scanPromise,
+        new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error('SCAN_TIMEOUT')), SCAN_TIMEOUT_MS)
+        )
+      ]);
+    } catch (error: any) {
+      if (error.message === 'SCAN_TIMEOUT') {
+        throw new Error('Site is too heavy for a quick scan. Try scanning a lighter page or contact support for enterprise scanning options.');
+      }
+      throw error;
+    }
+  }
+
+  private async performScan(page: any, url: string): Promise<EnhancedScanResult> {
+    // Use domcontentloaded for faster page load (instead of networkidle2)
+    // This starts the scan as soon as the DOM is ready, without waiting for all network requests
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: DEFAULT_TIMEOUT_MS });
     } catch (navErr: any) {
       if (navErr?.message?.includes('timeout')) {
-        console.warn('[a11y] networkidle2 timed out, falling back to domcontentloaded');
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: DEFAULT_TIMEOUT_MS });
+        console.warn('[a11y] domcontentloaded timed out, trying networkidle2 as fallback');
+        await page.goto(url, { waitUntil: 'networkidle2', timeout: 15000 });
       } else {
         throw navErr;
       }
@@ -390,8 +410,8 @@ export class EnhancedAccessibilityScanner {
         console.log(`[a11y] Extracted ${imageData.length} images for analysis`);
         
         // Analyze images with timeout handling
-        // Limit to 5 images and 20 seconds total to stay within Vercel function limits
-        aiContentChecks = await analyzeMultipleImages(imageData, 5, 20000);
+        // Limit to 3 images and 15 seconds total to stay within Vercel function limits
+        aiContentChecks = await analyzeMultipleImages(imageData, 3, 15000);
         
         const elapsed = Date.now() - startTime;
         console.log(`[a11y] AI image analysis completed in ${elapsed}ms (${aiContentChecks.length} images analyzed)`);
@@ -780,9 +800,14 @@ export class EnhancedAccessibilityScanner {
 
   async close(): Promise<void> {
     if (this.browser) {
-      await this.browser.close().catch(() => void 0);
-      this.browser = null;
-      this.page = null;
+      try {
+        await this.browser.close();
+      } catch (closeError) {
+        console.error('[a11y] Error closing browser:', closeError);
+      } finally {
+        this.browser = null;
+        this.page = null;
+      }
     }
   }
 }
