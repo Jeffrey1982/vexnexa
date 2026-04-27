@@ -110,6 +110,7 @@ function fmtBytes(bytes: number): string {
   return `${mb >= 1 ? mb.toFixed(1) : (bytes / 1024).toFixed(0)} ${mb >= 1 ? "MB" : "KB"}`;
 }
 function fmtMs(ms: number): string {
+  if (!ms || ms === 0) return "Calculating...";
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${Math.round(ms)}ms`;
 }
 function vniBand(score: number): number {

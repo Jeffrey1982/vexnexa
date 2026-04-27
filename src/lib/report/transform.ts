@@ -546,9 +546,9 @@ export function transformScanToReport(
     typeof raw?.domNodeCount === "number"
       ? {
           totalPageWeightBytes: Number(raw?.totalPageWeightBytes || 0),
-          largestContentfulPaintMs: Number(raw?.largestContentfulPaintMs || 0),
+          largestContentfulPaintMs: Number(raw?.largestContentfulPaintMs || raw?.performanceMetrics?.largestContentfulPaint || raw?.lcp || 0),
           domNodeCount: Number(raw?.domNodeCount || 0),
-          performanceParadox: Boolean((vni?.score || 0) > 1900 && (Number(raw?.largestContentfulPaintMs || 0) > 2500 || Number(raw?.totalPageWeightBytes || 0) > 2_500_000)),
+          performanceParadox: Boolean((vni?.score || 0) > 1900 && (Number(raw?.largestContentfulPaintMs || raw?.performanceMetrics?.largestContentfulPaint || raw?.lcp || 0) > 2500 || Number(raw?.totalPageWeightBytes || 0) > 2_500_000)),
         }
       : undefined;
   const aiVisionAudit: ReportAiVisionItem[] = Array.isArray(raw?.aiContentChecks)
