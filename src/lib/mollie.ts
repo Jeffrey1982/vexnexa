@@ -28,17 +28,19 @@ let mollieClient: ReturnType<typeof createMollieClient> | null = null
  * Test mode shows limited payment methods — this is expected Mollie behavior.
  */
 export function isMollieTestMode(): boolean {
-  return process.env.MOLLIE_API_KEY?.startsWith('test_') ?? false
+  return process.env.MOLLIE_API_KEY?.trim().startsWith('test_') ?? false
 }
 
 export function getMollieClient() {
   if (!mollieClient) {
-    if (!process.env.MOLLIE_API_KEY) {
+    // Trim defensively: env vars added via shell pipes often pick up trailing
+    // whitespace or CRLF, which then gets baked into the `Authorization: Bearer`
+    // header and Mollie rejects every call with "is not a legal HTTP header value".
+    const apiKey = process.env.MOLLIE_API_KEY?.trim()
+    if (!apiKey) {
       throw new Error("MOLLIE_API_KEY environment variable is required")
     }
-    mollieClient = createMollieClient({ 
-      apiKey: process.env.MOLLIE_API_KEY 
-    })
+    mollieClient = createMollieClient({ apiKey })
   }
   return mollieClient
 }
