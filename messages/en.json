@@ -3650,6 +3650,17 @@
         "slow-lcp": "Slow visual loading (LCP).",
         "high-dom-complexity": "High DOM complexity might slow down older devices."
       }
+    },
+    "vni": {
+      "label": "VexNexa Index",
+      "ranking": "VNI ranking",
+      "tier": {
+        "Apex": "Apex",
+        "Elite": "Elite",
+        "Authority": "Authority",
+        "Trusted": "Trusted",
+        "Watchlist": "Watchlist"
+      }
     }
   }
 }

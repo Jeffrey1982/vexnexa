@@ -1,6 +1,12 @@
 import { ScanResult } from "./scanner";
 import { runRobustAccessibilityScan } from "./scanner-headless";
 import { extractImageDataFromPage, analyzeMultipleImages, type ImageAnalysisResult } from "./ai-image-analysis";
+import {
+  calculateVniScore,
+  collectVniColorMetrics,
+  collectVniDesignMetrics,
+  type VniResult,
+} from "./scoring/vni-engine";
 
 // ===== Env & Production flags =====
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -48,6 +54,7 @@ export interface EnhancedScanResult extends ScanResult {
   largestContentfulPaintMs: number;
   domNodeCount: number;
   qualityWarnings: QualityWarning[];
+  vni: VniResult;
   aiContentChecks?: ImageAnalysisResult[];
   engineName?: string | null;
   axeVersion?: string | null;
@@ -383,6 +390,8 @@ export class EnhancedAccessibilityScanner {
       advancedColorVision,
       performanceImpact,
       languageSupport,
+      vniColorMetrics,
+      vniDesignMetrics,
     ] = await Promise.all([
       this.testKeyboardNavigation(page),
       this.testScreenReaderCompatibility(page),
@@ -392,6 +401,8 @@ export class EnhancedAccessibilityScanner {
       this.testAdvancedColorVision(page),
       this.testPerformanceImpact(page),
       this.testLanguageSupport(page),
+      collectVniColorMetrics(page),
+      collectVniDesignMetrics(page),
     ]);
 
     const enhancedScore = Math.round(
@@ -439,6 +450,16 @@ export class EnhancedAccessibilityScanner {
       console.log('[a11y] AI image analysis disabled or API key not set');
     }
 
+    const vni = calculateVniScore({
+      axeScore: enhancedScore,
+      violations,
+      aiContentChecks,
+      totalPageWeightBytes: realWorldMetrics.totalPageWeightBytes,
+      largestContentfulPaintMs: realWorldMetrics.largestContentfulPaintMs,
+      colorMetrics: vniColorMetrics,
+      designMetrics: vniDesignMetrics,
+    });
+
     console.log("[a11y] axe meta", {
       engine: engineName,
       version: axeVersion,
@@ -450,6 +471,8 @@ export class EnhancedAccessibilityScanner {
       largestContentfulPaintMs: realWorldMetrics.largestContentfulPaintMs,
       domNodeCount: realWorldMetrics.domNodeCount,
       qualityWarnings: qualityWarnings.length,
+      vni: vni.score,
+      vniTier: vni.tier,
     });
 
     return {
@@ -481,6 +504,7 @@ export class EnhancedAccessibilityScanner {
       largestContentfulPaintMs: realWorldMetrics.largestContentfulPaintMs,
       domNodeCount: realWorldMetrics.domNodeCount,
       qualityWarnings,
+      vni,
       aiContentChecks,
       engineName,
       axeVersion,
@@ -522,6 +546,29 @@ export class EnhancedAccessibilityScanner {
       largestContentfulPaintMs: 0,
       domNodeCount: 0,
       qualityWarnings: [],
+      vni: calculateVniScore({
+        axeScore: basicResult.score,
+        violations: basicResult.violations || [],
+        aiContentChecks: [],
+        totalPageWeightBytes: 0,
+        largestContentfulPaintMs: 0,
+        colorMetrics: {
+          contrast: {
+            sampled: 0,
+            failingNormal: 0,
+            failingProtanopia: 0,
+            failingDeuteranopia: 0,
+            failingTritanopia: 0,
+            averageContrast: 0,
+          },
+          colorOnlySignals: { total: 0, risky: 0 },
+        },
+        designMetrics: {
+          tapTargets: { total: 0, failing: 0, minWidth: 0, minHeight: 0 },
+          fontReadability: { sampled: 0, failing: 0, averageFontSize: 0, averageLineHeightRatio: 0 },
+          layoutStability: { cls: 0 },
+        },
+      }),
       aiContentChecks: [],
       engineName: "fallback-mock",
       axeVersion: null,

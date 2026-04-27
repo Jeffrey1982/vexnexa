@@ -3111,6 +3111,17 @@
         "slow-lcp": "Chargement visuel lent (LCP).",
         "high-dom-complexity": "Une forte complexité DOM peut ralentir les appareils anciens."
       }
+    },
+    "vni": {
+      "label": "Indice VexNexa",
+      "ranking": "Classement VNI",
+      "tier": {
+        "Apex": "Apex",
+        "Elite": "Elite",
+        "Authority": "Authority",
+        "Trusted": "Trusted",
+        "Watchlist": "Watchlist"
+      }
     }
   }
 }

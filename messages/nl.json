@@ -3147,6 +3147,17 @@
         "slow-lcp": "Langzame visuele laadtijd (LCP).",
         "high-dom-complexity": "Hoge DOM-complexiteit kan oudere apparaten vertragen."
       }
+    },
+    "vni": {
+      "label": "VexNexa Index",
+      "ranking": "VNI-rangschikking",
+      "tier": {
+        "Apex": "Apex",
+        "Elite": "Elite",
+        "Authority": "Authority",
+        "Trusted": "Trusted",
+        "Watchlist": "Watchlist"
+      }
     }
   }
 }

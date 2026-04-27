@@ -16,7 +16,7 @@ import { CopyButton } from "@/components/CopyButton";
 import { KeyValue } from "@/components/KeyValue";
 import { formatDate, getFaviconFromUrl, calculateDuration } from "@/lib/format";
 import { computeIssueStats, Violation, getTopViolations } from "@/lib/axe-types";
-import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Zap, Weight, Layout } from "lucide-react";
+import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Zap, Weight, Layout, Gem, Star } from "lucide-react";
 import { SiteImage } from "@/components/SiteImage";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -87,6 +87,21 @@ function getLcpMeter(ms: number) {
     return { labelKey: "lcpModerate", percent: 64, className: "bg-warning", textClassName: "text-warning" };
   }
   return { labelKey: "lcpPoor", percent: 100, className: "bg-critical", textClassName: "text-critical" };
+}
+
+function getVniStars(tier?: string) {
+  switch (tier) {
+    case "Apex":
+      return 5;
+    case "Elite":
+      return 4;
+    case "Authority":
+      return 3;
+    case "Trusted":
+      return 2;
+    default:
+      return 1;
+  }
 }
 
 async function getScanDetails(id: string) {
@@ -195,6 +210,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
 
   const siteUrl = scan.page?.url || scan.site.url;
   const tQuality = await getTranslations("scanReport.quality");
+  const tVni = await getTranslations("scanReport.vni");
 
   if (scan.status === "PENDING" || scan.status === "PROCESSING") {
     return (
@@ -249,6 +265,12 @@ export default async function ScanDetailPage({ params }: PageProps) {
   const payloadMeter = getPayloadMeter(totalPageWeight);
   const lcpMeter = getLcpMeter(lcp);
   const hasPerformanceParadox = technicalScore > 90 && (lcp > 2500 || totalPageWeight > 2.5 * 1024 * 1024);
+  const resultJson = scan.resultJson && typeof scan.resultJson === "object" ? scan.resultJson as any : null;
+  const rawJson = scan.raw && typeof scan.raw === "object" ? scan.raw as any : null;
+  const vni = resultJson?.vni || rawJson?.vni;
+  const vniScore = typeof vni?.score === "number" ? vni.score : null;
+  const vniTier = typeof vni?.tier === "string" ? vni.tier : undefined;
+  const vniStars = getVniStars(vniTier);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -281,6 +303,26 @@ export default async function ScanDetailPage({ params }: PageProps) {
                   <span className="truncate">{new URL(siteUrl).hostname}</span>
                   {scan.score !== null && <ScoreBadge score={scan.score} size="lg" />}
                 </CardTitle>
+                {vniScore !== null && (
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <Badge className="border-primary/30 bg-primary text-primary-foreground px-3 py-1.5 shadow-sm">
+                      <Gem className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                      {tVni("label")}: {vniScore}/2500
+                    </Badge>
+                    <Badge variant="outline" className="border-amber-300/70 bg-amber-50 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200">
+                      {tVni(`tier.${vniTier || "Watchlist"}`)}
+                      <span className="ml-2 inline-flex gap-0.5" aria-label={tVni("ranking")}>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <Star
+                            key={index}
+                            className={cn("h-3.5 w-3.5", index < vniStars ? "fill-current" : "opacity-30")}
+                            aria-hidden="true"
+                          />
+                        ))}
+                      </span>
+                    </Badge>
+                  </div>
+                )}
                 <CardDescription className="flex items-center gap-2 mt-2 sm:mt-3 text-sm sm:text-base">
                   <Globe className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                   <a

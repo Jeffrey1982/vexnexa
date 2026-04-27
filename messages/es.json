@@ -3156,6 +3156,17 @@
         "slow-lcp": "Carga visual lenta (LCP).",
         "high-dom-complexity": "La alta complejidad del DOM puede ralentizar dispositivos antiguos."
       }
+    },
+    "vni": {
+      "label": "Índice VexNexa",
+      "ranking": "Ranking VNI",
+      "tier": {
+        "Apex": "Apex",
+        "Elite": "Elite",
+        "Authority": "Authority",
+        "Trusted": "Trusted",
+        "Watchlist": "Watchlist"
+      }
     }
   }
 }
