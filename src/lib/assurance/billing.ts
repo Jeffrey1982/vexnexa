@@ -12,7 +12,8 @@ import {
   type BillingCycle,
   ASSURANCE_BASE_PRICES,
 } from './pricing';
-import { determineTax, calculateAmountBreakdown, type TaxDecision, type TaxRegime } from '../billing/tax';
+import { determineTax, type TaxDecision, type TaxRegime } from '../billing/tax';
+import { deriveVatBreakdown } from '../billing/pricing-config';
 import type { AssuranceTier } from '@prisma/client';
 import type { PaymentCreateParams } from '@mollie/api-client';
 import { SequenceType } from '@mollie/api-client';
@@ -42,12 +43,13 @@ export async function createAssuranceCheckoutPayment(opts: {
       taxRegime: taxDecision?.regime,
     });
 
-    // Assurance prices are stored NET (excl. VAT).
-    // Apply customer's actual tax to get charged amount.
-    const netBase = calculateAssurancePrice(tier, billingCycle);
+    // Assurance prices are stored INCL. VAT (gross).
+    // The displayed price IS the price charged — never multiply by 1+vatRate here.
+    // VAT is only derived afterwards for the invoice / accounting breakdown.
     const tax = taxDecision ?? { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' };
-    const breakdown = calculateAmountBreakdown(netBase, tax);
-    const amount = breakdown.gross;
+    const grossAmount = calculateAssurancePrice(tier, billingCycle);
+    const breakdown = deriveVatBreakdown(grossAmount, tax.vatRate);
+    const amount = grossAmount;
 
     // Create or get Mollie customer
     const { createOrGetMollieCustomer } = await import('../billing/mollie-flows');
@@ -69,7 +71,7 @@ export async function createAssuranceCheckoutPayment(opts: {
         value: formatMollieAmount(amount),
         currency: 'EUR',
       },
-      description: `VexNexa Assurance ${tier} - ${billingCycle}${tax.regime === 'EU_REVERSE_CHARGE' ? ' (reverse charge)' : ''}`,
+      description: `VexNexa Assurance ${tier} - ${billingCycle} (incl. ${Math.round(tax.vatRate * 100)}% BTW)${tax.regime === 'EU_REVERSE_CHARGE' ? ' [reverse charge]' : ''}`,
       redirectUrl: appUrl(`/dashboard/billing/success?session=${sessionToken}&tier=${tier}&cycle=${billingCycle}`),
       webhookUrl: appUrl('/api/assurance/webhook'),
       customerId: customer.id,
@@ -163,10 +165,10 @@ export async function createAssuranceSubscription(opts: {
       billingCycle,
     });
 
-    // Assurance prices are stored NET (excl. VAT).
-    // Apply customer's actual tax to get charged amount.
+    // Assurance prices are stored INCL. VAT (gross). The displayed price
+    // IS what's charged — VAT is only derived afterwards for the invoice.
     const monthlyPrice = ASSURANCE_BASE_PRICES[tier];
-    const netBase = calculateAssurancePrice(tier, billingCycle);
+    const grossBase = calculateAssurancePrice(tier, billingCycle);
 
     // Fetch billing profile to determine customer's tax for recurring amount
     const billingProfile = await prisma.billingProfile.findUnique({
@@ -180,7 +182,10 @@ export async function createAssuranceSubscription(opts: {
           vatValid: billingProfile.vatValid,
         })
       : { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' };
-    const subBreakdown = calculateAmountBreakdown(netBase, subTax);
+    // Breakdown is computed for invoice/audit purposes only - the charged amount
+    // is always the gross config price.
+    void deriveVatBreakdown(grossBase, subTax.vatRate);
+    const subGross = grossBase;
 
     // Determine interval for Mollie
     let interval = '1 month';
@@ -226,11 +231,11 @@ export async function createAssuranceSubscription(opts: {
     const subscription = await (mollie.customerSubscriptions as any).create({
       customerId: mollieCustomerId,
       amount: {
-        value: formatMollieAmount(subBreakdown.gross),
+        value: formatMollieAmount(subGross),
         currency: 'EUR',
       },
       interval,
-      description: `VexNexa Assurance ${tier}`,
+      description: `VexNexa Assurance ${tier} (incl. ${Math.round(subTax.vatRate * 100)}% BTW)`,
       webhookUrl: appUrl('/api/assurance/webhook'),
       metadata: {
         userId,
@@ -259,7 +264,7 @@ export async function createAssuranceSubscription(opts: {
         mollieSubscriptionId: subscription.id,
         billingCycle,
         pricePerMonth: monthlyPrice,
-        totalPrice: subBreakdown.gross,
+        totalPrice: subGross,
         vatRate: subTax.vatRate,
         taxRegime: subTax.regime,
         countryCode: billingProfile?.countryCode ?? countryCode ?? 'NL',
@@ -272,7 +277,7 @@ export async function createAssuranceSubscription(opts: {
         mollieSubscriptionId: subscription.id,
         billingCycle,
         pricePerMonth: monthlyPrice,
-        totalPrice: subBreakdown.gross,
+        totalPrice: subGross,
         vatRate: subTax.vatRate,
         taxRegime: subTax.regime,
         countryCode: billingProfile?.countryCode ?? countryCode ?? 'NL',

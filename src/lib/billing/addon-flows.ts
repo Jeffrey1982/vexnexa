@@ -2,7 +2,8 @@ import { mollie, appUrl, formatMollieAmount } from "../mollie"
 import { prisma } from "../prisma"
 import { AddOnType } from "@prisma/client"
 import { getAddOnPricing, ADDON_NAMES } from "./addons"
-import { determineTax, calculateAmountBreakdown, type TaxRegime } from "./tax"
+import { determineTax, type TaxRegime } from "./tax"
+import { deriveVatBreakdown } from "./pricing-config"
 
 /**
  * Purchase an add-on (extra seat or scan package)
@@ -62,10 +63,11 @@ export async function purchaseAddOn(opts: {
     throw error
   }
 
-  // Add-on prices are stored NET (excl. VAT).
-  // Apply customer's actual country tax to get charged amount.
+  // Add-on prices are stored INCL. VAT (gross).
+  // The displayed price IS what's charged — VAT is only derived afterwards
+  // for the invoice / accounting breakdown.
   const pricing = getAddOnPricing(type)
-  const netBase = pricing.pricePerUnit * quantity
+  const grossBase = pricing.pricePerUnit * quantity
   const billingProfile = await prisma.billingProfile.findUnique({
     where: { userId },
     select: { countryCode: true, billingType: true, vatValid: true },
@@ -77,8 +79,8 @@ export async function purchaseAddOn(opts: {
         vatValid: billingProfile.vatValid,
       })
     : { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' }
-  const breakdown = calculateAmountBreakdown(netBase, tax)
-  const totalPrice = breakdown.gross
+  const breakdown = deriveVatBreakdown(grossBase, tax.vatRate)
+  const totalPrice = grossBase
 
   // Check if user already has this add-on type active
   // For seats, we can have one add-on with adjustable quantity
@@ -137,7 +139,7 @@ export async function purchaseAddOn(opts: {
       value: formatMollieAmount(totalPrice)
     },
     interval: "1 month",
-    description: `VexNexa - ${ADDON_NAMES[type]}${quantity > 1 ? ` x${quantity}` : ""}`,
+    description: `VexNexa - ${ADDON_NAMES[type]}${quantity > 1 ? ` x${quantity}` : ""} (incl. ${Math.round(tax.vatRate * 100)}% BTW)`,
     startDate: new Date().toISOString().split('T')[0],
     metadata: {
       userId,
@@ -213,8 +215,8 @@ export async function updateAddOnQuantity(opts: {
   const pricing = getAddOnPricing(addOn.type)
   const quantityDiff = newQuantity - addOn.quantity
 
-  // Add-on prices are NET — apply customer's actual tax
-  const netBase = pricing.pricePerUnit * newQuantity
+  // Add-on prices are GROSS (incl. VAT) — charge config price as-is.
+  const grossBase = pricing.pricePerUnit * newQuantity
   const billingProfile = await prisma.billingProfile.findUnique({
     where: { userId: addOn.userId },
     select: { countryCode: true, billingType: true, vatValid: true },
@@ -226,8 +228,9 @@ export async function updateAddOnQuantity(opts: {
         vatValid: billingProfile.vatValid,
       })
     : { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' }
-  const breakdown = calculateAmountBreakdown(netBase, tax)
-  const newTotalPrice = breakdown.gross
+  // Breakdown derived from gross for invoice purposes only.
+  void deriveVatBreakdown(grossBase, tax.vatRate)
+  const newTotalPrice = grossBase
 
   // Update Mollie subscription
   await (mollie.customerSubscriptions as any).update(
@@ -238,7 +241,7 @@ export async function updateAddOnQuantity(opts: {
         currency: "EUR",
         value: formatMollieAmount(newTotalPrice)
       },
-      description: `VexNexa - ${ADDON_NAMES[addOn.type]} x${newQuantity}`
+      description: `VexNexa - ${ADDON_NAMES[addOn.type]} x${newQuantity} (incl. ${Math.round(tax.vatRate * 100)}% BTW)`
     }
   )
 
