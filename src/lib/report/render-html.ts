@@ -119,9 +119,7 @@ function vniBadge(d: ReportData): string {
   if (!d.vni) return "";
   const stars = "★★★★★".slice(0, d.vni.stars);
   return `<div class="vni-badge">
-    <div class="vni-score">${d.vni.score}</div>
     <div class="vni-copy">
-      <div class="vni-label">${esc(d.labels.vniIndex)} <span>${esc(d.labels.outOf2500)}</span></div>
       <div class="vni-tier">${esc(d.vni.tier)} <span class="vni-stars">${stars}</span></div>
     </div>
   </div>`;
@@ -424,7 +422,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   const hs = d.healthScore;
   const hsColor = hs.value >= 80 ? "#16A34A" : hs.value >= 60 ? "#D97706" : "#DC2626";
   const primaryScoreLabel = d.vni ? d.labels.vniIndex : "Health Score";
-  const primaryScoreValue = d.vni ? `${d.vni.score}/2500` : `${hs.value}/100`;
+  const primaryScoreValue = d.vni ? `${d.vni.tier}` : `${hs.value}/100`;
   const primaryScoreColor = d.vni ? GOLD : hsColor;
   const metrics: { label: string; value: string | number; color: string }[] = [
     { label: primaryScoreLabel, value: primaryScoreValue, color: primaryScoreColor },
@@ -442,11 +440,10 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   if (corp(s)) {
     return pageSection("Executive Summary", primary, s, `
     <div class="exec-health-badge" style="border-color:${primaryScoreColor}">
-      <div class="ehb-score" style="color:${primaryScoreColor}">${d.vni?.score ?? hs.value}</div>
-      <div class="ehb-meta"><span class="ehb-grade">${d.vni ? `${d.vni.tier} ${"★★★★★".slice(0, d.vni.stars)}` : `Grade ${hs.grade}`}</span><span class="ehb-label">${d.vni ? d.labels.outOf2500 : hs.label}</span></div>
+      <div class="ehb-meta"><span class="ehb-grade">${d.vni ? `${d.vni.tier} ${"★★★★★".slice(0, d.vni.stars)}` : `Grade ${hs.grade}`}</span><span class="ehb-label">${d.vni ? "" : hs.label}</span></div>
     </div>
     <table class="corp-summary-table">
-      <tr><td class="cst-label">Domain</td><td>${esc(d.domain)}</td><td class="cst-label">${esc(primaryScoreLabel)}</td><td><strong style="color:${primaryScoreColor}">${esc(primaryScoreValue)}</strong>${d.vni ? ` (${esc(d.vni.tier)})` : ` (Grade ${hs.grade})`}</td></tr>
+      <tr><td class="cst-label">Domain</td><td>${esc(d.domain)}</td><td class="cst-label">${esc(primaryScoreLabel)}</td><td><strong style="color:${primaryScoreColor}">${esc(primaryScoreValue)}</strong>${d.vni ? ` (${"★★★★★".slice(0, d.vni.stars)})` : ` (Grade ${hs.grade})`}</td></tr>
       <tr><td class="cst-label">Risk Level</td><td style="color:${riskClr(d.riskLevel)};font-weight:600">${d.riskLevel}</td><td class="cst-label">WCAG Checks Passed</td><td>${d.compliancePercentage}%</td></tr>
       <tr><td class="cst-label">Total Issues</td><td>${d.issueBreakdown.total}</td><td class="cst-label">Est. Fix Time</td><td>${esc(d.estimatedFixTime)}</td></tr>
       <tr><td class="cst-label">Critical</td><td style="color:#DC2626">${d.issueBreakdown.critical}</td><td class="cst-label">Serious</td><td style="color:#EA580C">${d.issueBreakdown.serious}</td></tr>
@@ -470,13 +467,13 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   </header>
   <div class="exec-hero-panel">
     <div class="exec-hero-scorecol">
-      <div class="exec-mega-score" style="color:${primaryScoreColor}">${d.vni?.score ?? hs.value}</div>
-      <div class="exec-mega-sub"><span class="exec-mega-of">${d.vni ? "/2500" : "/100"}</span> <span class="exec-grade-pill" style="border-color:${primaryScoreColor};color:${esc(ink)}">${d.vni ? `${d.vni.tier} ${"★★★★★".slice(0, d.vni.stars)}` : `Grade ${hs.grade}`}</span></div>
+      <div class="exec-mega-score" style="color:${primaryScoreColor}">${d.vni ? `${d.vni.tier}` : hs.value}</div>
+      <div class="exec-mega-sub"><span class="exec-mega-of">${d.vni ? "" : "/100"}</span> <span class="exec-grade-pill" style="border-color:${primaryScoreColor};color:${esc(ink)}">${d.vni ? `${"★★★★★".slice(0, d.vni.stars)}` : `Grade ${hs.grade}`}</span></div>
       <p class="exec-mega-label">${d.vni ? d.labels.vniIndex : hs.label}</p>
       <div class="exec-mega-bar"><div class="exec-mega-bar-fill" style="width:${d.vni ? vniBand(d.vni.score) : Math.min(100, hs.value)}%;background:linear-gradient(90deg,#FDE68A 0%,${GOLD} 100%)"></div></div>
     </div>
     <div class="exec-hero-copy">
-      <p class="exec-lead">The <strong>${esc(primaryScoreLabel)}</strong> is VexNexa's 0-2500 quality index across accessibility, AI content integrity, performance, color/contrast, and UX signals. Higher ranks indicate stronger site-wide user experience and lower remediation risk.</p>
+      <p class="exec-lead">The <strong>${esc(primaryScoreLabel)}</strong> is VexNexa's quality index across accessibility, AI content integrity, performance, color/contrast, and UX signals. Higher ranks indicate stronger site-wide user experience and lower remediation risk.</p>
       <ul class="exec-lead-bullets">
         <li><strong style="color:${esc(primary)}">${d.compliancePercentage}%</strong> automated WCAG checks passed</li>
         <li><strong>${d.issueBreakdown.total}</strong> open findings · <strong style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</strong> risk</li>
@@ -487,7 +484,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   <div class="exec-cards exec-cards-premium">
     <div class="exec-card exec-card-premium">
       <h3>Site status</h3>
-      <p><strong>${esc(d.domain)}</strong> — ${esc(primaryScoreLabel)} <strong style="color:${primaryScoreColor}">${esc(primaryScoreValue)}</strong>${d.vni ? ` (${esc(d.vni.tier)})` : ` (grade ${hs.grade})`}.
+      <p><strong>${esc(d.domain)}</strong> — ${esc(primaryScoreLabel)} <strong style="color:${primaryScoreColor}">${esc(primaryScoreValue)}</strong>${d.vni ? ` (${"★★★★★".slice(0, d.vni.stars)})` : ` (grade ${hs.grade})`}.
       ${d.issueBreakdown.critical > 0
         ? ` <span class="exec-alert-inline">${d.issueBreakdown.critical} critical issue${d.issueBreakdown.critical !== 1 ? "s" : ""} need immediate attention.</span>`
         : " No critical issues were detected in this scan."}</p>
@@ -590,7 +587,7 @@ function renderPerformanceParadox(d: ReportData, primary: string, s: ReportStyle
       <div class="quality-meter"><span style="width:${Math.min(100, (q.domNodeCount / 1500) * 100)}%;background:${q.domNodeCount > 1500 ? "#DC2626" : q.domNodeCount > 800 ? "#D97706" : "#16A34A"}"></span></div>
     </div>
   </div>
-  ${d.vni?.worstPage?.url ? `<div class="worst-page-card"><strong>Lowest VNI page</strong><span>${esc(d.vni.worstPage.url)}</span><em>${d.vni.worstPage.vniScore ?? d.vni.worstPage.score ?? "-"} points</em></div>` : ""}
+  ${d.vni?.worstPage?.url ? `<div class="worst-page-card"><strong>Lowest VNI page</strong><span>${esc(d.vni.worstPage.url)}</span></div>` : ""}
   `, "performance-paradox");
 }
 
