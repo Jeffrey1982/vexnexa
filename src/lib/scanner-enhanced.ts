@@ -813,14 +813,24 @@ export class EnhancedAccessibilityScanner {
 }
 
 // ===== Public API =====
-export async function runEnhancedAccessibilityScan(url: string): Promise<EnhancedScanResult> {
+export async function runEnhancedAccessibilityScan(url: string, timeoutMs = DEFAULT_TIMEOUT_MS): Promise<EnhancedScanResult> {
   const scanner = new EnhancedAccessibilityScanner();
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+
   try {
-    const result = await scanner.scanUrl(url);
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timeout = setTimeout(() => {
+        scanner.close()
+          .catch((closeError) => console.error("[a11y] Error closing browser after timeout:", closeError))
+          .finally(() => reject(new Error(`Accessibility scan exceeded ${Math.round(timeoutMs / 1000)}s timeout`)));
+      }, timeoutMs);
+    });
+
+    return await Promise.race([scanner.scanUrl(url), timeoutPromise]);
+  } finally {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
     await scanner.close();
-    return result;
-  } catch (error) {
-    await scanner.close();
-    throw error;
   }
 }

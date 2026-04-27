@@ -76,7 +76,7 @@ async function getDashboardStats(userId: string) {
   try {
     const lastTenScans = await prisma.scan.findMany({
       where: {
-        status: "done",
+        status: "COMPLETED",
         score: { not: null },
         site: {
           userId: userId,

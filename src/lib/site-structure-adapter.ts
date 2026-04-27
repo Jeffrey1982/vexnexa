@@ -42,7 +42,7 @@ export async function getSiteStructureData(siteId: string): Promise<PageNode | n
       pages: {
         include: {
           scans: {
-            where: { status: 'done' },
+            where: { status: 'COMPLETED' },
             orderBy: { createdAt: 'desc' },
             take: 1,
             select: {
@@ -281,7 +281,7 @@ export async function getPortfolioStructureData(userId: string): Promise<PageNod
       pages: {
         include: {
           scans: {
-            where: { status: 'done' },
+            where: { status: 'COMPLETED' },
             orderBy: { createdAt: 'desc' },
             take: 1,
             select: {

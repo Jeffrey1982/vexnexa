@@ -25,7 +25,7 @@ export default async function AdvancedAnalyticsPage() {
     where: { userId: user.id },
     include: {
       scans: {
-        where: { status: "done" },
+        where: { status: "COMPLETED" },
         orderBy: { createdAt: "desc" },
         take: 10, // Get more scans for trend analysis
         select: {

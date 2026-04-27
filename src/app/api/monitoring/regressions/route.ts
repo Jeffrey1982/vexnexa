@@ -64,7 +64,7 @@ export async function GET(req: NextRequest) {
       const recentScans = await prisma.scan.findMany({
         where: {
           siteId: site.id,
-          status: 'done',
+          status: 'COMPLETED',
           score: { not: null }
         },
         orderBy: { createdAt: 'desc' },

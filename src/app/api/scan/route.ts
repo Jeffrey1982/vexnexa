@@ -1,288 +1,80 @@
 // src/app/api/scan/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { assertAdmin } from "@/lib/adminAuth";
-import { supabaseAdmin } from "@/lib/supabaseAdmin";
-import { getRequestConfig } from 'next-intl/server';
+import { after, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { runEnhancedAccessibilityScan } from "@/lib/scanner-enhanced";
 import { requireAuth } from "@/lib/auth";
-import { assertWithinLimits, addPageUsage, addSiteUsage, consumeWeeklyFreeScan, hasWeeklyFreeScanAvailable } from "@/lib/billing/entitlements";
+import {
+  addPageUsage,
+  addSiteUsage,
+  assertWithinLimits,
+  consumeWeeklyFreeScan,
+  hasWeeklyFreeScanAvailable,
+} from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
 import { ensureUserInDatabase } from "@/lib/user-sync";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import {
-  getPerformanceMetrics,
   analyzeSEOMetrics,
   calculateComplianceRisk,
+  getPerformanceMetrics,
 } from "@/lib/performance-analytics";
 import { publishScanReport } from "@/lib/public-reports";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
-// (optional, helps with cold starts in EU)
-// export const preferredRegion = ["fra1"];
 
-// === Service bypass headers ===
 const SERVICE_TOKEN_HEADER = "x-service-token";
 const SERVICE_USER_HEADER = "x-scan-user-id";
+const BACKGROUND_SCAN_TIMEOUT_MS = 120_000;
 
-export async function POST(req: Request) {
-  try {
-    // ----- 0) Auth: user of service-token -----
-    const incomingSvcToken = req.headers.get(SERVICE_TOKEN_HEADER);
-    const svcToken = process.env.SCAN_SERVICE_TOKEN;
-    const isServiceCall = Boolean(
-      incomingSvcToken && svcToken && incomingSvcToken === svcToken
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error(`Background scan exceeded ${Math.round(timeoutMs / 1000)}s timeout`));
+    }, timeoutMs);
+
+    promise.then(
+      (value) => {
+        clearTimeout(timeout);
+        resolve(value);
+      },
+      (error) => {
+        clearTimeout(timeout);
+        reject(error);
+      }
     );
+  });
+}
 
-    // Determine "user" context
-    let user: { id: string; supabaseUser?: SupabaseUser };
-    let useWeeklyFreeScan: boolean = false;
+async function processScanInBackground({
+  scanId,
+  siteId,
+  pageId,
+  siteUrl,
+  fullPageUrl,
+  userId,
+  isServiceCall,
+  useWeeklyFreeScan,
+}: {
+  scanId: string;
+  siteId: string;
+  pageId: string;
+  siteUrl: string;
+  fullPageUrl: string;
+  userId: string;
+  isServiceCall: boolean;
+  useWeeklyFreeScan: boolean;
+}) {
+  await prisma.scan.update({
+    where: { id: scanId },
+    data: { status: "PROCESSING" },
+  });
 
-    if (isServiceCall) {
-      // In automation mode you can (optionally) pass the user ID in a header,
-      // or set SCAN_SERVICE_USER_ID in env.
-      const forcedUserId =
-        req.headers.get(SERVICE_USER_HEADER) || process.env.SCAN_SERVICE_USER_ID || "";
+  try {
+    console.log("[scan] Starting enhanced accessibility scan:", fullPageUrl);
+    const result = await runEnhancedAccessibilityScan(fullPageUrl, BACKGROUND_SCAN_TIMEOUT_MS);
 
-      if (!forcedUserId) {
-        return NextResponse.json(
-          {
-            ok: false,
-            error:
-              "Service scan requires a user ID. Send header 'x-scan-user-id' or set SCAN_SERVICE_USER_ID.",
-          },
-          { status: 400 }
-        );
-      }
-
-      // Safety: verify that the user exists
-      const userExists = await prisma.user.findUnique({
-        where: { id: forcedUserId },
-        select: { id: true },
-      });
-      if (!userExists) {
-        return NextResponse.json(
-          { ok: false, error: `Unknown user ID: ${forcedUserId}` },
-          { status: 400 }
-        );
-      }
-
-      user = { id: forcedUserId };
-    } else {
-      // Normal app: logged-in user via NextAuth
-      const authUser: Awaited<ReturnType<typeof requireAuth>> = await requireAuth();
-      user = { id: authUser.id, supabaseUser: authUser.supabaseUser };
-
-      if (user.supabaseUser) {
-        await ensureUserInDatabase(user.supabaseUser);
-      }
-
-      // Only apply limits to normal user scans
-      try {
-        await assertWithinLimits({
-          userId: user.id,
-          action: "scan",
-          pages: 1,
-        });
-      } catch (limitError: any) {
-        const errorCode: string | undefined = (limitError as any)?.code;
-        const isQuotaError: boolean =
-          errorCode === "FREE_LIMIT_REACHED" ||
-          errorCode === "LIMIT_REACHED";
-
-        if (!isQuotaError) {
-          throw limitError;
-        }
-
-        const hasWeekly: boolean = await hasWeeklyFreeScanAvailable(user.id);
-        if (!hasWeekly) {
-          throw limitError;
-        }
-
-        useWeeklyFreeScan = true;
-      }
-    }
-
-    // ----- 1) Body & URL validatie -----
-    const { url } = await req.json();
-    if (!url) {
-      return NextResponse.json(
-        { ok: false, error: "URL is required" },
-        { status: 400 }
-      );
-    }
-
-    let siteUrl: string;
-    let fullPageUrl: string;
-    try {
-      const urlObj = new URL(url);
-
-      // SSRF protection: only allow http/https protocols
-      if (!["http:", "https:"].includes(urlObj.protocol)) {
-        return NextResponse.json(
-          { ok: false, error: "Only http and https URLs are allowed" },
-          { status: 400 }
-        );
-      }
-
-      // SSRF protection: block internal/private network addresses
-      const hostname = urlObj.hostname.toLowerCase();
-      const isBlocked =
-        hostname === "localhost" ||
-        hostname === "127.0.0.1" ||
-        hostname === "0.0.0.0" ||
-        hostname === "[::1]" ||
-        hostname.endsWith(".local") ||
-        hostname.endsWith(".internal") ||
-        /^10\./.test(hostname) ||
-        /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
-        /^192\.168\./.test(hostname) ||
-        /^169\.254\./.test(hostname);
-
-      if (isBlocked) {
-        return NextResponse.json(
-          { ok: false, error: "Scanning internal or private network addresses is not allowed" },
-          { status: 400 }
-        );
-      }
-
-      siteUrl = urlObj.origin;
-      fullPageUrl = url;
-    } catch {
-      return NextResponse.json(
-        { ok: false, error: "Invalid URL" },
-        { status: 400 }
-      );
-    }
-
-    // ----- 2) Site/Page op user vastleggen -----
-    let site = await prisma.site.findUnique({
-      where: {
-        userId_url: { userId: user.id, url: siteUrl },
-      },
-    });
-
-    if (!site) {
-      // Check site limit before creating new site
-      const userWithPlan = await prisma.user.findUnique({
-        where: { id: user.id },
-        select: { plan: true }
-      });
-
-      const currentSiteCount = await prisma.site.count({
-        where: { userId: user.id }
-      });
-
-      const { ENTITLEMENTS } = await import("@/lib/billing/plans");
-      const plan = (userWithPlan?.plan || "FREE") as keyof typeof ENTITLEMENTS;
-      const siteLimit = ENTITLEMENTS[plan].sites;
-
-      if (currentSiteCount >= siteLimit && !useWeeklyFreeScan) {
-        const hasWeekly: boolean = await hasWeeklyFreeScanAvailable(user.id);
-        if (hasWeekly) {
-          useWeeklyFreeScan = true;
-        }
-      }
-
-      const maxSitesAllowed: number = useWeeklyFreeScan ? siteLimit + 1 : siteLimit;
-
-      if (currentSiteCount >= maxSitesAllowed) {
-        const e: any = new Error(
-          `Site limit reached for ${plan} plan (${siteLimit} sites). Upgrade to add more websites.`
-        );
-        e.code = "SITE_LIMIT_REACHED";
-        e.limit = siteLimit;
-        e.current = currentSiteCount;
-        throw e;
-      }
-
-      site = await prisma.site.create({
-        data: { userId: user.id, url: siteUrl },
-      });
-
-      // Track site creation in usage (only for normal user scans, not service calls)
-      if (!isServiceCall) {
-        if (!useWeeklyFreeScan) {
-          await addSiteUsage(user.id);
-        }
-      }
-    }
-
-    let page = await prisma.page.findUnique({
-      where: { siteId_url: { siteId: site.id, url: fullPageUrl } },
-    });
-
-    if (!page) {
-      page = await prisma.page.create({
-        data: { siteId: site.id, url: fullPageUrl },
-      });
-    }
-
-    // ----- 3) Scan record 'running' -----
-    const runningScan = await prisma.scan.create({
-      data: {
-        siteId: site.id,
-        pageId: page.id,
-        status: "running",
-        score: 0,
-        issues: 0,
-      },
-    });
-
-    // ----- 4) Uitvoeren scan -----
-    let result: any;
-    try {
-      console.log("[scan] ========================================");
-      console.log("[scan] Starting enhanced accessibility scan");
-      console.log("[scan] URL:", fullPageUrl);
-      console.log("[scan] Environment:", process.env.NODE_ENV);
-      console.log("[scan] ========================================");
-
-      result = await runEnhancedAccessibilityScan(fullPageUrl);
-
-      console.log("[scan] ========================================");
-      console.log("[scan] Scan completed successfully");
-      console.log("[scan] Score:", result?.score);
-      console.log("[scan] Engine:", result?.engineName);
-      console.log("[scan] Violations count:", result?.violations?.length);
-      console.log("[scan] Is demo?:", result?.__demo);
-      console.log("[scan] Is mock?:", result?.mock);
-      console.log("[scan] ========================================");
-    } catch (scanError: any) {
-      console.error("[scan] ========================================");
-      console.error("[scan] ❌ SCAN FAILED");
-      console.error("[scan] Error:", scanError?.message);
-      console.error("[scan] Code:", scanError?.code);
-      console.error("[scan] Stack:", scanError?.stack);
-      console.error("[scan] ========================================");
-
-      await prisma.scan.update({
-        where: { id: runningScan.id },
-        data: {
-          status: "failed",
-          raw: {
-            error: scanError?.message,
-            code: scanError?.code,
-            stack: scanError?.stack
-          },
-        },
-      });
-
-      return NextResponse.json(
-        {
-          ok: false,
-          error: `Scan engine error: ${scanError?.message || "Unknown error"}`,
-          code: scanError?.code || "SCAN_FAILED",
-          scanId: runningScan.id,
-          details: process.env.NODE_ENV === "development" ? scanError?.stack : undefined,
-        },
-        { status: 500 }
-      );
-    }
-
-    // ----- 5) Mock/demo resultaten blokkeren -----
     const looksMock =
       result?.__demo === true ||
       result?.mock === true ||
@@ -290,46 +82,17 @@ export async function POST(req: Request) {
       !Array.isArray(result?.violations);
 
     if (looksMock) {
-      console.error("[scan] ========================================");
-      console.error("[scan] 🚫 MOCK/DEMO SCAN DETECTED AND BLOCKED");
-      console.error("[scan] This indicates the browser failed to launch");
-      console.error("[scan] Reasons:");
-      console.error("[scan]   - __demo flag:", result?.__demo);
-      console.error("[scan]   - mock flag:", result?.mock);
-      console.error("[scan]   - engineName:", result?.engineName);
-      console.error("[scan]   - hasViolationsArray:", Array.isArray(result?.violations));
-      console.error("[scan] ========================================");
-
-      await prisma.scan.update({
-        where: { id: runningScan.id },
-        data: {
-          status: "failed",
-          raw: {
-            error: "Mock/demo scan blocked - browser unavailable",
-            __demo: result?.__demo,
-            mock: result?.mock,
-            engineName: result?.engineName,
-            hasViolations: Array.isArray(result?.violations)
-          }
-        },
-      });
-
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "Scanner temporarily unavailable. The accessibility scanning engine could not be initialized. Please try again or contact support.",
-          code: "SCANNER_NO_BROWSER",
-          technical: process.env.NODE_ENV === "development" ? {
-            reason: "Mock data detected",
-            engineName: result?.engineName,
-            isDemo: result?.__demo
-          } : undefined
-        },
-        { status: 503 }
-      );
+      const error: any = new Error("Scanner temporarily unavailable. Browser initialization returned mock/demo data.");
+      error.code = "SCANNER_NO_BROWSER";
+      error.details = {
+        __demo: result?.__demo,
+        mock: result?.mock,
+        engineName: result?.engineName,
+        hasViolations: Array.isArray(result?.violations),
+      };
+      throw error;
     }
 
-    // ----- 6) Analytics/finaliseren -----
     const violations = result.violations || [];
     const impactCounts = {
       critical: result.impactCritical || 0,
@@ -354,9 +117,9 @@ export async function POST(req: Request) {
 
     const previousScan = await prisma.scan.findFirst({
       where: {
-        siteId: site.id,
-        pageId: page.id,
-        status: "done",
+        siteId,
+        pageId,
+        status: "COMPLETED",
         createdAt: { lt: new Date() },
       },
       orderBy: { createdAt: "desc" },
@@ -375,18 +138,18 @@ export async function POST(req: Request) {
     const performanceMetrics = await getPerformanceMetrics(fullPageUrl);
     const seoMetrics = analyzeSEOMetrics(violations);
     const complianceRisk = calculateComplianceRisk(Math.round(result.score), violations);
+    const serializedResult = JSON.parse(JSON.stringify(result));
 
     const completedScan = await prisma.scan.update({
-      where: { id: runningScan.id },
+      where: { id: scanId },
       data: {
-        status: "done",
+        status: "COMPLETED",
         score: Math.round(result.score),
         issues: violations.length,
         impactCritical: impactCounts.critical,
         impactSerious: impactCounts.serious,
         impactModerate: impactCounts.moderate,
         impactMinor: impactCounts.minor,
-
         wcagAACompliance,
         wcagAAACompliance,
         violationsByRule,
@@ -394,27 +157,24 @@ export async function POST(req: Request) {
         newIssues,
         scoreImprovement,
         previousScanId: previousScan?.id,
-
         performanceScore: performanceMetrics.performanceScore,
         firstContentfulPaint: performanceMetrics.firstContentfulPaint,
         largestContentfulPaint: performanceMetrics.largestContentfulPaint,
         cumulativeLayoutShift: performanceMetrics.cumulativeLayoutShift,
         firstInputDelay: performanceMetrics.firstInputDelay,
         totalBlockingTime: performanceMetrics.totalBlockingTime,
-
         seoScore: seoMetrics.seoScore,
         metaDescription: seoMetrics.metaDescription,
         headingStructure: seoMetrics.headingStructure,
         altTextCoverage: seoMetrics.altTextCoverage,
         linkAccessibility: seoMetrics.linkAccessibility,
-
         adaRiskLevel: complianceRisk.adaRiskLevel,
         wcag21Compliance: complianceRisk.wcag21Compliance,
         wcag22Compliance: complianceRisk.wcag22Compliance,
         complianceGaps: complianceRisk.complianceGaps,
         legalRiskScore: complianceRisk.legalRiskScore,
-
-        raw: JSON.parse(JSON.stringify(result)),
+        raw: serializedResult,
+        resultJson: serializedResult,
       },
       include: {
         site: true,
@@ -422,16 +182,14 @@ export async function POST(req: Request) {
       },
     });
 
-    // Only count normal user scans for billing/usage
     if (!isServiceCall) {
       if (useWeeklyFreeScan) {
-        await consumeWeeklyFreeScan(user.id);
+        await consumeWeeklyFreeScan(userId);
       } else {
-        await addPageUsage(user.id, 1);
+        await addPageUsage(userId, 1);
       }
     }
 
-    // Publish to public report system (non-blocking, never fails the scan)
     try {
       await publishScanReport({
         id: completedScan.id,
@@ -452,21 +210,247 @@ export async function POST(req: Request) {
         createdAt: completedScan.createdAt,
       });
     } catch (pubErr) {
-      console.error('[scan] Public report publish failed (non-blocking):', pubErr instanceof Error ? pubErr.message : pubErr);
+      console.error("[scan] Public report publish failed (non-blocking):", pubErr instanceof Error ? pubErr.message : pubErr);
+    }
+  } catch (scanError: any) {
+    console.error("[scan] Background scan failed:", scanError);
+
+    await prisma.scan.update({
+      where: { id: scanId },
+      data: {
+        status: "FAILED",
+        raw: {
+          error: scanError?.message,
+          code: scanError?.code,
+          stack: scanError?.stack,
+          details: scanError?.details,
+        },
+        resultJson: {
+          error: scanError?.message,
+          code: scanError?.code || "SCAN_FAILED",
+          details: scanError?.details,
+        },
+      },
+    });
+  }
+}
+
+function validatePublicUrl(url: string) {
+  const urlObj = new URL(url);
+
+  if (!["http:", "https:"].includes(urlObj.protocol)) {
+    throw Object.assign(new Error("Only http and https URLs are allowed"), { statusCode: 400 });
+  }
+
+  const hostname = urlObj.hostname.toLowerCase();
+  const isBlocked =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname === "[::1]" ||
+    hostname.endsWith(".local") ||
+    hostname.endsWith(".internal") ||
+    /^10\./.test(hostname) ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(hostname) ||
+    /^192\.168\./.test(hostname) ||
+    /^169\.254\./.test(hostname);
+
+  if (isBlocked) {
+    throw Object.assign(new Error("Scanning internal or private network addresses is not allowed"), { statusCode: 400 });
+  }
+
+  return {
+    siteUrl: urlObj.origin,
+    fullPageUrl: url,
+  };
+}
+
+export async function POST(req: Request) {
+  try {
+    const incomingSvcToken = req.headers.get(SERVICE_TOKEN_HEADER);
+    const svcToken = process.env.SCAN_SERVICE_TOKEN;
+    const isServiceCall = Boolean(incomingSvcToken && svcToken && incomingSvcToken === svcToken);
+
+    let user: { id: string; supabaseUser?: SupabaseUser };
+    let useWeeklyFreeScan = false;
+
+    if (isServiceCall) {
+      const forcedUserId = req.headers.get(SERVICE_USER_HEADER) || process.env.SCAN_SERVICE_USER_ID || "";
+
+      if (!forcedUserId) {
+        return NextResponse.json(
+          { ok: false, error: "Service scan requires a user ID. Send header 'x-scan-user-id' or set SCAN_SERVICE_USER_ID." },
+          { status: 400 }
+        );
+      }
+
+      const userExists = await prisma.user.findUnique({
+        where: { id: forcedUserId },
+        select: { id: true },
+      });
+      if (!userExists) {
+        return NextResponse.json({ ok: false, error: `Unknown user ID: ${forcedUserId}` }, { status: 400 });
+      }
+
+      user = { id: forcedUserId };
+    } else {
+      const authUser: Awaited<ReturnType<typeof requireAuth>> = await requireAuth();
+      user = { id: authUser.id, supabaseUser: authUser.supabaseUser };
+
+      if (user.supabaseUser) {
+        await ensureUserInDatabase(user.supabaseUser);
+      }
+
+      try {
+        await assertWithinLimits({
+          userId: user.id,
+          action: "scan",
+          pages: 1,
+        });
+      } catch (limitError: any) {
+        const errorCode: string | undefined = limitError?.code;
+        const isQuotaError = errorCode === "FREE_LIMIT_REACHED" || errorCode === "LIMIT_REACHED";
+
+        if (!isQuotaError) {
+          throw limitError;
+        }
+
+        const hasWeekly = await hasWeeklyFreeScanAvailable(user.id);
+        if (!hasWeekly) {
+          throw limitError;
+        }
+
+        useWeeklyFreeScan = true;
+      }
     }
 
-    return NextResponse.json({
-      ok: true,
-      scan: completedScan,
-      scanId: completedScan.id,
-      score: completedScan.score,
-      issues: completedScan.issues,
-      site: completedScan.site?.url,
-      page: completedScan.page?.url,
-      createdAt: completedScan.createdAt,
+    const { url } = await req.json();
+    if (!url) {
+      return NextResponse.json({ ok: false, error: "URL is required" }, { status: 400 });
+    }
+
+    let siteUrl: string;
+    let fullPageUrl: string;
+    try {
+      ({ siteUrl, fullPageUrl } = validatePublicUrl(url));
+    } catch (urlError: any) {
+      return NextResponse.json({ ok: false, error: urlError?.message || "Invalid URL" }, { status: urlError?.statusCode || 400 });
+    }
+
+    let site = await prisma.site.findUnique({
+      where: {
+        userId_url: { userId: user.id, url: siteUrl },
+      },
     });
+
+    if (!site) {
+      const userWithPlan = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { plan: true },
+      });
+
+      const currentSiteCount = await prisma.site.count({
+        where: { userId: user.id },
+      });
+
+      const { ENTITLEMENTS } = await import("@/lib/billing/plans");
+      const plan = (userWithPlan?.plan || "FREE") as keyof typeof ENTITLEMENTS;
+      const siteLimit = ENTITLEMENTS[plan].sites;
+
+      if (currentSiteCount >= siteLimit && !useWeeklyFreeScan) {
+        const hasWeekly = await hasWeeklyFreeScanAvailable(user.id);
+        if (hasWeekly) {
+          useWeeklyFreeScan = true;
+        }
+      }
+
+      const maxSitesAllowed = useWeeklyFreeScan ? siteLimit + 1 : siteLimit;
+
+      if (currentSiteCount >= maxSitesAllowed) {
+        const e: any = new Error(`Site limit reached for ${plan} plan (${siteLimit} sites). Upgrade to add more websites.`);
+        e.code = "SITE_LIMIT_REACHED";
+        e.limit = siteLimit;
+        e.current = currentSiteCount;
+        throw e;
+      }
+
+      site = await prisma.site.create({
+        data: { userId: user.id, url: siteUrl },
+      });
+
+      if (!isServiceCall && !useWeeklyFreeScan) {
+        await addSiteUsage(user.id);
+      }
+    }
+
+    let page = await prisma.page.findUnique({
+      where: { siteId_url: { siteId: site.id, url: fullPageUrl } },
+    });
+
+    if (!page) {
+      page = await prisma.page.create({
+        data: { siteId: site.id, url: fullPageUrl },
+      });
+    }
+
+    const pendingScan = await prisma.scan.create({
+      data: {
+        siteId: site.id,
+        pageId: page.id,
+        status: "PENDING",
+        score: 0,
+        issues: 0,
+      },
+    });
+
+    after(() =>
+      withTimeout(
+        processScanInBackground({
+          scanId: pendingScan.id,
+          siteId: site.id,
+          pageId: page.id,
+          siteUrl,
+          fullPageUrl,
+          userId: user.id,
+          isServiceCall,
+          useWeeklyFreeScan,
+        }),
+        BACKGROUND_SCAN_TIMEOUT_MS
+      ).catch((scanError) => {
+        console.error("[scan] Background scan timed out or crashed:", scanError);
+        return prisma.scan.update({
+          where: { id: pendingScan.id },
+          data: {
+            status: "FAILED",
+            raw: {
+              error: scanError?.message || "Background scan failed",
+              code: scanError?.code || "SCAN_FAILED",
+              stack: scanError?.stack,
+            },
+            resultJson: {
+              error: scanError?.message || "Background scan failed",
+              code: scanError?.code || "SCAN_FAILED",
+            },
+          },
+        }).catch((updateError) => {
+          console.error("[scan] Failed to persist background failure:", updateError);
+        });
+      })
+    );
+
+    return NextResponse.json(
+      {
+        ok: true,
+        accepted: true,
+        scanId: pendingScan.id,
+        status: pendingScan.status,
+        pollUrl: `/api/scans/${pendingScan.id}`,
+        message: "Scan accepted. Processing will continue in the background.",
+      },
+      { status: 202 }
+    );
   } catch (e: any) {
-    console.error("Scan failed:", e);
+    console.error("Scan request failed:", e);
 
     if (e instanceof Error) {
       if (e.message === "User not found") {
@@ -509,11 +493,8 @@ export async function POST(req: Request) {
           { status: 402 }
         );
       }
-          }
+    }
 
-    return NextResponse.json(
-      { ok: false, error: e?.message ?? "Scan failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: e?.message ?? "Scan failed" }, { status: 500 });
   }
 }

@@ -50,7 +50,7 @@ export async function GET(req: Request) {
 
     // Base where voor ALLE queries (zonder mock-filter)
     const baseWhere: any = {
-      status: "done",
+      status: "COMPLETED",
       createdAt: { gte: startDate, lte: endDate },
       ...(siteId ? { siteId } : { site: { userId: user.id } }),
     };
@@ -451,7 +451,7 @@ async function getRiskAssessment(whereCondition: any) {
 
 async function getBenchmarkComparison(userId: string, siteId?: string | null) {
   const userStats = await prisma.scan.aggregate({
-    where: { site: { userId }, ...(siteId ? { siteId } : {}), status: "done" },
+    where: { site: { userId }, ...(siteId ? { siteId } : {}), status: "COMPLETED" },
     _avg: { score: true, wcagAACompliance: true, performanceScore: true },
   });
 

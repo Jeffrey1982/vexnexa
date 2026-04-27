@@ -273,7 +273,7 @@ export async function getPortfolioAnalytics(userId: string) {
     where: { userId },
     include: {
       scans: {
-        where: { status: 'done' },
+        where: { status: 'COMPLETED' },
         orderBy: { createdAt: 'desc' },
         take: 1
       }

@@ -224,7 +224,7 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
       where: {
         siteId: crawl.siteId,
         pageId: page.id,
-        status: "done",
+        status: "COMPLETED",
         createdAt: { lt: new Date() }
       },
       orderBy: { createdAt: "desc" }
@@ -240,7 +240,7 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
       data: {
         siteId: crawl.siteId,
         pageId: page.id,
-        status: "done",
+        status: "COMPLETED",
         score: Math.round(scanResult.score),
         issues: violations.length,
         impactCritical: impactCounts.critical,

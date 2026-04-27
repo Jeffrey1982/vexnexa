@@ -109,7 +109,7 @@ export async function generateCombinedReport(
     scan = await prisma.scan.findFirst({
       where: {
         siteId,
-        status: "done"
+        status: "COMPLETED"
       },
       select: {
         id: true,

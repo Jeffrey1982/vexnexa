@@ -37,7 +37,7 @@ export async function GET(req: Request) {
       // Get user's statistics
       const whereCondition: any = {
         site: { userId: user.id },
-        status: "done"
+        status: "COMPLETED"
       };
 
       if (siteId) {

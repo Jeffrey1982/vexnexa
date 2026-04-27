@@ -80,7 +80,7 @@ export async function getScanTrendData(
       createdAt: {
         gte: startDate,
       },
-      status: "completed",
+      status: "COMPLETED",
     },
     orderBy: {
       createdAt: "asc",
@@ -196,7 +196,7 @@ export async function getScanComparison(
       createdAt: {
         lt: currentScan.createdAt,
       },
-      status: "completed",
+      status: "COMPLETED",
     },
     orderBy: {
       createdAt: "desc",
@@ -269,7 +269,7 @@ export async function getViolationTrends(
       createdAt: {
         gte: startDate,
       },
-      status: "completed",
+      status: "COMPLETED",
       violationsByRule: {
         not: { equals: null },
       },
@@ -366,7 +366,7 @@ export async function updateBenchmarkData(
   // Calculate benchmark from all completed scans
   const scans = await prisma.scan.findMany({
     where: {
-      status: "completed",
+      status: "COMPLETED",
       score: { not: null },
     },
     select: {

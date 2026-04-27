@@ -22,6 +22,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
+import { ScanProcessingStatus } from "@/components/dashboard/ScanProcessingStatus";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
 import { requireAuth } from "@/lib/auth";
 import { EnhancedScanResults } from "@/components/EnhancedScanResults";
@@ -124,12 +125,16 @@ async function getEnhancedAnalytics(scan: any) {
 
 function getStatusBadge(status: string) {
   switch (status) {
+    case "COMPLETED":
     case "done":
       return <Badge className="bg-success text-success-foreground border-success">{status}</Badge>;
+    case "PROCESSING":
     case "running":
       return <Badge className="bg-primary text-primary-foreground border-primary">{status}</Badge>;
+    case "FAILED":
     case "failed":
       return <Badge className="bg-critical text-critical-foreground border-critical">{status}</Badge>;
+    case "PENDING":
     case "queued":
     default:
       return <Badge className="bg-warning text-warning-foreground border-warning">{status}</Badge>;
@@ -145,6 +150,22 @@ export default async function ScanDetailPage({ params }: PageProps) {
 
   if (!scan) {
     notFound();
+  }
+
+  const siteUrl = scan.page?.url || scan.site.url;
+
+  if (scan.status === "PENDING" || scan.status === "PROCESSING") {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <DashboardNav user={user} />
+        <div className="flex-1">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-3xl">
+            <ScanProcessingStatus scanId={scan.id} initialStatus={scan.status} url={siteUrl} />
+          </div>
+        </div>
+        <DashboardFooter />
+      </div>
+    );
   }
 
   // Extract violations from raw data
@@ -170,7 +191,6 @@ export default async function ScanDetailPage({ params }: PageProps) {
     return isMinorOrModerate && fewNodes;
   }).slice(0, 5);
 
-  const siteUrl = scan.page?.url || scan.site.url;
   const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/scans/${scan.id}`;
 
   // Get enhanced analytics

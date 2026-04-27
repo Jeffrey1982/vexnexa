@@ -180,7 +180,7 @@ export async function updateBenchmarksFromScans() {
 
   const allScans = await prisma.scan.findMany({
     where: {
-      status: "done",
+      status: "COMPLETED",
       score: { not: null }
     },
     select: {

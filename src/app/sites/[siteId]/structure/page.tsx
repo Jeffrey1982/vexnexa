@@ -34,7 +34,7 @@ export default async function SiteStructurePage({ params }: PageProps) {
       pages: {
         include: {
           scans: {
-            where: { status: 'done' },
+            where: { status: 'COMPLETED' },
             orderBy: { createdAt: 'desc' },
             take: 1
           }

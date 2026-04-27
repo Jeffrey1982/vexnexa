@@ -50,7 +50,7 @@ const MIN_ISSUES_FOR_CONTENT = 0; // Even 0 issues is valid (great score)
  */
 export function isScanEligibleForPublicReport(scan: PublishableScan): boolean {
   // Must be a completed scan
-  if (scan.status !== 'done') return false;
+  if (scan.status !== 'done' && scan.status !== 'COMPLETED') return false;
 
   // Must have a valid score
   if (scan.score === null || scan.score === undefined) return false;

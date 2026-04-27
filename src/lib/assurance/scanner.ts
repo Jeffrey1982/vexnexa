@@ -154,7 +154,7 @@ export async function executeAssuranceScan(domainId: string): Promise<AssuranceS
     const scan = await prisma.scan.create({
       data: {
         siteId: site.id,
-        status: 'done',
+        status: 'COMPLETED',
         score: Math.round(scanResult.score),
         issues: scanResult.violations.length,
         impactCritical: scanResult.violations.filter((v) => v.impact === 'critical').length,

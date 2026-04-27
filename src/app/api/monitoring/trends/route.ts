@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     // Fetch historical scan data
     const scans = await prisma.scan.findMany({
       where: {
-        status: 'done',
+        status: 'COMPLETED',
         score: { not: null },
         createdAt: { gte: startDate },
         site: siteWhere

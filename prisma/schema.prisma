@@ -126,7 +126,7 @@ model Scan {
   id                     String          @id @default(cuid())
   siteId                 String
   pageId                 String?
-  status                 String
+  status                 ScanStatus      @default(PENDING)
   score                  Int?
   issues                 Int?
   reportUrl              String?
@@ -160,6 +160,7 @@ model Scan {
   scanDuration           Int?
   pageLoadTime           Int?
   elementsScanned        Int?
+  resultJson             Json?
   raw                    Json?
   deletedAt              DateTime?
   createdAt              DateTime        @default(now())
@@ -176,6 +177,13 @@ model Scan {
   @@index([createdAt])
   @@index([siteId, createdAt])
   @@index([deletedAt])
+}
+
+enum ScanStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
 }
 
 model Usage {

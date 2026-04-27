@@ -46,7 +46,7 @@ export async function POST(
       data: {
         siteId: originalScan.siteId,
         pageId: originalScan.pageId,
-        status: 'pending',
+        status: 'PENDING',
         previousScanId: originalScan.id,
       },
     })

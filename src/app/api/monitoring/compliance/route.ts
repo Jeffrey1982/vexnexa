@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
       include: {
         scans: {
           where: {
-            status: 'done',
+            status: 'COMPLETED',
             wcagAACompliance: { not: null }
           },
           orderBy: { createdAt: 'desc' },

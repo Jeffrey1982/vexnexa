@@ -31,7 +31,7 @@ export default async function AnalyticsPage() {
       where: { userId: user.id },
       include: {
         scans: {
-          where: { status: "done" },
+          where: { status: "COMPLETED" },
           orderBy: { createdAt: "desc" },
           take: 1,
           select: {
@@ -53,7 +53,7 @@ export default async function AnalyticsPage() {
     allScans = await prisma.scan.findMany({
       where: {
         siteId: { in: sites.map(s => s.id) },
-        status: "done"
+        status: "COMPLETED"
       },
       orderBy: { createdAt: "desc" },
       take: 100,

@@ -59,7 +59,7 @@ export default async function ScansPage() {
   const scans = await getAllScans(user.id);
 
   // Calculate stats
-  const completedScans = scans.filter(s => s.status === 'done');
+  const completedScans = scans.filter(s => s.status === 'COMPLETED');
   const avgScore = completedScans.length > 0
     ? Math.round(completedScans.reduce((sum, s) => sum + (s.score || 0), 0) / completedScans.length)
     : 0;
@@ -171,12 +171,12 @@ export default async function ScansPage() {
                         <div className="flex items-center justify-between text-xs">
                           <div className="flex items-center gap-3">
                             <Badge
-                              variant={scan.status === 'done' ? 'default' : 'outline'}
+                              variant={scan.status === 'COMPLETED' ? 'default' : 'outline'}
                               className={cn(
                                 "text-xs",
-                                scan.status === 'done' && 'bg-success text-success-foreground',
-                                scan.status === 'failed' && 'bg-critical text-critical-foreground',
-                                scan.status === 'running' && 'bg-primary text-primary-foreground'
+                                scan.status === 'COMPLETED' && 'bg-success text-success-foreground',
+                                scan.status === 'FAILED' && 'bg-critical text-critical-foreground',
+                                scan.status === 'PROCESSING' && 'bg-primary text-primary-foreground'
                               )}
                             >
                               {scan.status}
@@ -241,11 +241,11 @@ export default async function ScansPage() {
                           <TableCell>
                             <Link href={`/scans/${scan.id}`}>
                               <Badge
-                                variant={scan.status === 'done' ? 'default' : 'outline'}
+                                variant={scan.status === 'COMPLETED' ? 'default' : 'outline'}
                                 className={cn(
-                                  scan.status === 'done' && 'bg-success text-success-foreground',
-                                  scan.status === 'failed' && 'bg-critical text-critical-foreground',
-                                  scan.status === 'running' && 'bg-primary text-primary-foreground'
+                                  scan.status === 'COMPLETED' && 'bg-success text-success-foreground',
+                                  scan.status === 'FAILED' && 'bg-critical text-critical-foreground',
+                                  scan.status === 'PROCESSING' && 'bg-primary text-primary-foreground'
                                 )}
                               >
                                 {scan.status}

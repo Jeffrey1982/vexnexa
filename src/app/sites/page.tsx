@@ -30,7 +30,7 @@ async function getUserSites(userId: string) {
         },
         scans: {
           where: {
-            status: "done",
+            status: "COMPLETED",
           },
           orderBy: {
             createdAt: "desc",

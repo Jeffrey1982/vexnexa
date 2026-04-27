@@ -57,7 +57,7 @@ async function getHealthData() {
     }),
     prisma.scan.findMany({
       where: {
-        status: 'failed',
+        status: 'FAILED',
         createdAt: { gte: sevenDaysAgo }
       },
       select: {

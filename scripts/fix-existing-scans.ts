@@ -6,7 +6,7 @@ async function main() {
   // Get all completed scans (we'll fix them regardless)
   const scans = await prisma.scan.findMany({
     where: {
-      status: "done",
+      status: "COMPLETED",
     },
     orderBy: { createdAt: 'desc' },
     take: 20 // Limit to last 20 scans for now
@@ -76,7 +76,7 @@ async function main() {
         where: {
           siteId: scan.siteId,
           pageId: scan.pageId,
-          status: "done",
+          status: "COMPLETED",
           createdAt: { lt: scan.createdAt }
         },
         orderBy: { createdAt: "desc" }
