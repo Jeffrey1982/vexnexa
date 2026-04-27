@@ -2313,6 +2313,97 @@
         "storageDesc": "Bases de datos cifradas con controles de acceso restringidos",
         "incident": "Respuesta a incidentes",
         "incidentDesc": "Notificación dentro de 72 horas para incidentes de seguridad"
+      },
+      "sections": {
+        "dataHandling": "Manejo de datos",
+        "storage": "Almacenamiento de datos",
+        "retention": "Retención de datos",
+        "thirdParty": "Servicios de terceros",
+        "incidents": "Incidentes de seguridad",
+        "contact": "Contacto"
+      },
+      "dataHandling": {
+        "title": "Manejo de datos",
+        "content": "VexNexa escanea páginas web accesibles públicamente. Almacenamos temporalmente resultados de escaneo y metadatos para proporcionar nuestro servicio. No recopilamos ni almacenamos datos personales de los sitios web que escaneamos.",
+        "privacyByDesign": {
+          "title": "Privacidad desde el diseño",
+          "content": "Solo escaneamos contenido accesible públicamente y no intentamos acceder a áreas protegidas ni extraer información personal."
+        }
+      },
+      "dataStorage": {
+        "title": "Almacenamiento de datos",
+        "content": "Todos los datos de escaneo se almacenan de forma segura en bases de datos cifradas. El acceso está restringido solo al personal autorizado. Utilizamos cifrado estándar de la industria para datos en reposo y en tránsito.",
+        "securityMeasures": {
+          "title": "Medidas de seguridad",
+          "encryptionAtRest": "Cifrado en reposo: Cifrado AES-256 para datos almacenados",
+          "encryptionInTransit": "Cifrado en tránsito: TLS 1.3 para todas las conexiones",
+          "accessControl": "Control de acceso: Acceso basado en roles con autenticación multifactor",
+          "monitoring": "Monitoreo: Monitoreo de seguridad 24/7 y registro",
+          "audits": "Auditorías regulares: Evaluaciones trimestrales de seguridad y pruebas de penetración"
+        }
+      },
+      "dataRetention": {
+        "title": "Retención de datos",
+        "content": "Los resultados de escaneo se conservan durante la duración de tu suscripción más 30 días. Puedes solicitar la eliminación de tus datos en cualquier momento a través de la configuración de tu cuenta o contactando con soporte.",
+        "retentionPeriods": {
+          "title": "Períodos de retención",
+          "activeUsers": "Usuarios activos: Datos de escaneo conservados durante la duración de la suscripción",
+          "afterCancellation": "Después de la cancelación: Datos conservados durante 30 días para reactivación",
+          "accountDeletion": "Eliminación de cuenta: Todos los datos eliminados permanentemente dentro de 7 días",
+          "auditLogs": "Registros de auditoría: Conservados durante 1 año para fines de cumplimiento"
+        }
+      },
+      "thirdParty": {
+        "title": "Servicios de terceros",
+        "content": "Utilizamos servicios de terceros seleccionados para alojamiento, análisis y procesamiento de pagos. Todos los terceros son verificados por cumplimiento de seguridad y privacidad.",
+        "processors": {
+          "title": "Procesadores de terceros",
+          "vercel": "Vercel: Alojamiento y CDN (certificado SOC 2 Type II)",
+          "supabase": "Supabase: Base de datos y autenticación (certificado ISO 27001)",
+          "mollie": "Mollie: Procesamiento de pagos (conforme a PCI DSS)"
+        },
+        "gdprCompliance": {
+          "title": "Cumplimiento de GDPR",
+          "content": "Todos nuestros procesadores de terceros cumplen con GDPR y tienen acuerdos de procesamiento de datos en su lugar."
+        }
+      },
+      "incidentResponse": {
+        "title": "Respuesta a incidentes de seguridad",
+        "content": "En caso de un incidente de seguridad, notificaremos a los usuarios afectados dentro de las 72 horas y proporcionaremos detalles sobre el incidente y los pasos de remediación.",
+        "process": {
+          "title": "Proceso de respuesta a incidentes",
+          "detection": "Detección: Sistemas de monitoreo y alerta automatizados",
+          "assessment": "Evaluación: Evaluación inmediata de gravedad e impacto",
+          "containment": "Contención: Aislar sistemas afectados para evitar propagación",
+          "investigation": "Investigación: Análisis de causa raíz y forense",
+          "notification": "Notificación: Informar a usuarios afectados dentro de 72 horas",
+          "remediation": "Remediación: Corregir vulnerabilidades y restaurar servicio",
+          "postmortem": "Post-mortem: Documentar aprendizajes y mejorar procesos"
+        },
+        "reportVulnerability": {
+          "title": "Reportar una vulnerabilidad",
+          "content": "Si descubres una vulnerabilidad de seguridad, repórtala de manera responsable a",
+          "email": "info@vexnexa.com"
+        }
+      },
+      "contact": {
+        "title": "Contacto",
+        "securityInquiries": {
+          "title": "Consultas de seguridad",
+          "email": "info@vexnexa.com",
+          "description": "Para vulnerabilidades de seguridad o preocupaciones de privacidad, contáctanos en el correo electrónico anterior."
+        },
+        "businessInfo": {
+          "title": "Información comercial",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Países Bajos",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "securityQuestion": "¿Pregunta de seguridad?",
+        "securityDescription": "Tomamos la seguridad en serio.",
+        "contactSecurity": "Contactar seguridad"
       }
     },
     "sla": {
@@ -2329,6 +2420,78 @@
         "supportDesc": "Respuesta dentro de 4 horas para usuarios del plan Business",
         "monitoring": "Monitoreo 24/7",
         "monitoringDesc": "Monitoreo continuo con respuesta inmediata a incidentes"
+      },
+      "sections": {
+        "agreement": "Acuerdo de nivel de servicio",
+        "support": "Niveles de soporte",
+        "incidents": "Respuesta a incidentes",
+        "contact": "Contactar soporte"
+      },
+      "agreement": {
+        "title": "Acuerdo de nivel de servicio",
+        "content": "VexNexa se compromete a proporcionar un servicio confiable con los siguientes objetivos de disponibilidad:",
+        "uptime": "Tiempo de actividad: 99.9% de tiempo de actividad en todos los planes de pago (excluye mantenimiento programado)",
+        "scheduledMaintenance": "Mantenimiento programado: Anunciado con al menos 48 horas de anticipación",
+        "scanProcessing": "Procesamiento de escaneo: Los escaneos generalmente se completan dentro de 5-15 minutos para páginas estándar"
+      },
+      "supportLevels": {
+        "title": "Niveles de soporte",
+        "starter": {
+          "title": "Plan Starter",
+          "email": "Soporte por correo electrónico",
+          "responseTime": "Tiempo de respuesta: Dentro de 2 días hábiles",
+          "documentation": "Acceso a documentación y guías"
+        },
+        "pro": {
+          "title": "Plan Pro",
+          "priorityEmail": "Soporte prioritario por correo electrónico",
+          "responseTime": "Tiempo de respuesta: Dentro de 1 día hábil",
+          "advancedDocumentation": "Acceso a documentación avanzada",
+          "checkInCalls": "Llamadas trimestrales de seguimiento (opcional)"
+        },
+        "business": {
+          "title": "Plan Business",
+          "prioritySupport": "Soporte prioritario por correo electrónico y chat",
+          "responseTime": "Tiempo de respuesta: Dentro de 4 horas durante el horario comercial",
+          "accountManager": "Gerente de cuenta dedicado",
+          "monthlyCalls": "Llamadas mensuales de seguimiento",
+          "priorityFeatures": "Solicitudes de características prioritarias"
+        },
+        "enterprise": {
+          "title": "Plan Enterprise",
+          "support247": "Soporte 24/7 por teléfono, correo electrónico y chat",
+          "responseTime": "Tiempo de respuesta: Dentro de 1 hora para problemas críticos",
+          "accountTeam": "Equipo de cuenta dedicado",
+          "customSla": "SLA personalizado disponible",
+          "onCallSupport": "Soporte disponible para emergencias"
+        }
+      },
+      "incidentResponse": {
+        "title": "Respuesta a incidentes",
+        "content": "Monitoreamos nuestros sistemas 24/7 y respondemos a incidentes según su gravedad:",
+        "critical": "Crítico: Servicio caído - Respuesta inmediata",
+        "high": "Alto: Funcionalidad mayor afectada - Respuesta dentro de 2 horas",
+        "medium": "Medio: Funcionalidad menor afectada - Respuesta dentro de 1 día hábil",
+        "low": "Bajo: Problemas cosméticos o menores - Respuesta dentro de 3 días hábiles"
+      },
+      "contact": {
+        "title": "Contactar soporte",
+        "supportContact": {
+          "title": "Contacto de soporte",
+          "email": "info@vexnexa.com",
+          "dashboardForm": "O a través del formulario de contacto en tu panel"
+        },
+        "businessInfo": {
+          "title": "Información comercial",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Países Bajos",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "needHelp": "¿Necesitas ayuda?",
+        "responseTime": "Generalmente respondemos dentro de 1 día hábil.",
+        "contactUs": "Contáctanos"
       }
     }
   },

@@ -3222,6 +3222,185 @@
         "storageDesc": "Encrypted databases with restricted access controls",
         "incident": "Incident Response",
         "incidentDesc": "Notification within 72 hours for security incidents"
+      },
+      "sections": {
+        "dataHandling": "Data Handling",
+        "storage": "Data Storage",
+        "retention": "Data Retention",
+        "thirdParty": "Third-Party Services",
+        "incidents": "Security Incidents",
+        "contact": "Contact"
+      },
+      "dataHandling": {
+        "title": "Data Handling",
+        "content": "VexNexa scans publicly accessible web pages. We temporarily store scan results and metadata to provide our service. We do not collect or store personal data from the websites we scan.",
+        "privacyByDesign": {
+          "title": "Privacy by Design",
+          "content": "We only scan publicly accessible content and do not attempt to access protected areas or extract personal information."
+        }
+      },
+      "dataStorage": {
+        "title": "Data Storage",
+        "content": "All scan data is stored securely in encrypted databases. Access is restricted to authorized personnel only. We use industry-standard encryption for data at rest and in transit.",
+        "securityMeasures": {
+          "title": "Security Measures",
+          "encryptionAtRest": "Encryption at rest: AES-256 encryption for stored data",
+          "encryptionInTransit": "Encryption in transit: TLS 1.3 for all connections",
+          "accessControl": "Access control: Role-based access with multi-factor authentication",
+          "monitoring": "Monitoring: 24/7 security monitoring and logging",
+          "audits": "Regular audits: Quarterly security assessments and penetration testing"
+        }
+      },
+      "dataRetention": {
+        "title": "Data Retention",
+        "content": "Scan results are retained for the duration of your subscription plus 30 days. You can request deletion of your data at any time through your account settings or by contacting support.",
+        "retentionPeriods": {
+          "title": "Retention Periods",
+          "activeUsers": "Active users: Scan data retained for the duration of subscription",
+          "afterCancellation": "After cancellation: Data retained for 30 days for reactivation",
+          "accountDeletion": "Account deletion: All data permanently deleted within 7 days",
+          "auditLogs": "Audit logs: Retained for 1 year for compliance purposes"
+        }
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "content": "We use select third-party services for hosting, analytics, and payment processing. All third parties are vetted for security and privacy compliance.",
+        "processors": {
+          "title": "Third-Party Processors",
+          "vercel": "Vercel: Hosting and CDN (SOC 2 Type II certified)",
+          "supabase": "Supabase: Database and authentication (ISO 27001 certified)",
+          "mollie": "Mollie: Payment processing (PCI DSS compliant)"
+        },
+        "gdprCompliance": {
+          "title": "GDPR Compliance",
+          "content": "All our third-party processors are GDPR compliant and have Data Processing Agreements in place."
+        }
+      },
+      "incidentResponse": {
+        "title": "Security Incident Response",
+        "content": "In the event of a security incident, we will notify affected users within 72 hours and provide details about the incident and remediation steps.",
+        "process": {
+          "title": "Incident Response Process",
+          "detection": "Detection: Automated monitoring and alerting systems",
+          "assessment": "Assessment: Immediate evaluation of severity and impact",
+          "containment": "Containment: Isolate affected systems to prevent spread",
+          "investigation": "Investigation: Root cause analysis and forensics",
+          "notification": "Notification: Inform affected users within 72 hours",
+          "remediation": "Remediation: Fix vulnerabilities and restore service",
+          "postmortem": "Post-mortem: Document learnings and improve processes"
+        },
+        "reportVulnerability": {
+          "title": "Report a Vulnerability",
+          "content": "If you discover a security vulnerability, please report it responsibly to",
+          "email": "info@vexnexa.com"
+        }
+      },
+      "contact": {
+        "title": "Contact",
+        "securityInquiries": {
+          "title": "Security Inquiries",
+          "email": "info@vexnexa.com",
+          "description": "For security vulnerabilities or privacy concerns, please contact us at the email above."
+        },
+        "businessInfo": {
+          "title": "Business Information",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Netherlands",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "securityQuestion": "Security Question?",
+        "securityDescription": "We take security seriously.",
+        "contactSecurity": "Contact Security"
+      }
+    },
+    "sla": {
+      "title": "SLA & Support",
+      "description": "Our service level agreement and support information for all VexNexa users.",
+      "lastUpdated": "December 8, 2024",
+      "version": "v1.0",
+      "keyPoints": {
+        "title": "Key Points",
+        "description": "Our commitments to you",
+        "uptime": "Uptime",
+        "uptimeDesc": "99.9% uptime guarantee on all paid plans",
+        "support": "Support",
+        "supportDesc": "Response within 4 hours for Business plan users",
+        "monitoring": "24/7 Monitoring",
+        "monitoringDesc": "Continuous monitoring with immediate incident response"
+      },
+      "sections": {
+        "agreement": "Service Level Agreement",
+        "support": "Support Levels",
+        "incidents": "Incident Response",
+        "contact": "Contact Support"
+      },
+      "agreement": {
+        "title": "Service Level Agreement",
+        "content": "VexNexa commits to providing reliable service with the following availability targets:",
+        "uptime": "Uptime: 99.9% uptime on all paid plans (excludes scheduled maintenance)",
+        "scheduledMaintenance": "Scheduled Maintenance: Announced at least 48 hours in advance",
+        "scanProcessing": "Scan Processing: Scans typically complete within 5-15 minutes for standard pages"
+      },
+      "supportLevels": {
+        "title": "Support Levels",
+        "starter": {
+          "title": "Starter Plan",
+          "email": "Email support",
+          "responseTime": "Response time: Within 2 business days",
+          "documentation": "Access to documentation and guides"
+        },
+        "pro": {
+          "title": "Pro Plan",
+          "priorityEmail": "Priority email support",
+          "responseTime": "Response time: Within 1 business day",
+          "advancedDocumentation": "Access to advanced documentation",
+          "checkInCalls": "Quarterly check-in calls (optional)"
+        },
+        "business": {
+          "title": "Business Plan",
+          "prioritySupport": "Priority support via email and chat",
+          "responseTime": "Response time: Within 4 hours during business hours",
+          "accountManager": "Dedicated account manager",
+          "monthlyCalls": "Monthly check-in calls",
+          "priorityFeatures": "Priority feature requests"
+        },
+        "enterprise": {
+          "title": "Enterprise Plan",
+          "support247": "24/7 support via phone, email, and chat",
+          "responseTime": "Response time: Within 1 hour for critical issues",
+          "accountTeam": "Dedicated account team",
+          "customSla": "Custom SLA available",
+          "onCallSupport": "On-call support for emergencies"
+        }
+      },
+      "incidentResponse": {
+        "title": "Incident Response",
+        "content": "We monitor our systems 24/7 and respond to incidents according to severity:",
+        "critical": "Critical: Service down - Immediate response",
+        "high": "High: Major functionality impaired - Response within 2 hours",
+        "medium": "Medium: Minor functionality impaired - Response within 1 business day",
+        "low": "Low: Cosmetic or minor issues - Response within 3 business days"
+      },
+      "contact": {
+        "title": "Contact Support",
+        "supportContact": {
+          "title": "Support Contact",
+          "email": "info@vexnexa.com",
+          "dashboardForm": "Or via the contact form in your dashboard"
+        },
+        "businessInfo": {
+          "title": "Business Information",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Netherlands",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "needHelp": "Need help?",
+        "responseTime": "We typically respond within 1 business day.",
+        "contactUs": "Contact us"
       }
     }
   },

@@ -2304,6 +2304,97 @@
         "storageDesc": "Versleutelde databases met beperkte toegangscontroles",
         "incident": "Incident Response",
         "incidentDesc": "Notificatie binnen 72 uur bij security incidents"
+      },
+      "sections": {
+        "dataHandling": "Gegevensverwerking",
+        "storage": "Gegevensopslag",
+        "retention": "Gegevensbewaring",
+        "thirdParty": "Derde Partij Diensten",
+        "incidents": "Beveiligingsincidenten",
+        "contact": "Contact"
+      },
+      "dataHandling": {
+        "title": "Gegevensverwerking",
+        "content": "VexNexa scant publiek toegankelijke webpagina's. We slaan scanresultaten en metadata tijdelijk op om onze dienst te leveren. We verzamelen of slaan geen persoonsgegevens op van de websites die we scannen.",
+        "privacyByDesign": {
+          "title": "Privacy by Design",
+          "content": "We scannen alleen publiek toegankelijke content en proberen geen beveiligde gebieden te openen of persoonsinformatie te extraheren."
+        }
+      },
+      "dataStorage": {
+        "title": "Gegevensopslag",
+        "content": "Alle scangegevens worden veilig opgeslagen in versleutelde databases. Toegang is beperkt tot geautoriseerd personeel. We gebruiken industriestandaard versleuteling voor data at rest en in transit.",
+        "securityMeasures": {
+          "title": "Beveiligingsmaatregelen",
+          "encryptionAtRest": "Versleuteling at rest: AES-256 versleuteling voor opgeslagen data",
+          "encryptionInTransit": "Versleuteling in transit: TLS 1.3 voor alle verbindingen",
+          "accessControl": "Toegangscontrole: Rolgebaseerde toegang met multi-factor authenticatie",
+          "monitoring": "Monitoring: 24/7 beveiligingsmonitoring en logging",
+          "audits": "Regelmatige audits: Kwartaallijk beveiligingsassessments en penetratietesten"
+        }
+      },
+      "dataRetention": {
+        "title": "Gegevensbewaring",
+        "content": "Scanresultaten worden bewaard voor de duur van je abonnement plus 30 dagen. Je kunt op elk moment verwijdering van je gegevens aanvragen via je accountinstellingen of door contact op te nemen met support.",
+        "retentionPeriods": {
+          "title": "Bewaartermijnen",
+          "activeUsers": "Actieve gebruikers: Scangegevens bewaard voor de duur van het abonnement",
+          "afterCancellation": "Na annulering: Gegevens bewaard voor 30 dagen voor heractivatie",
+          "accountDeletion": "Accountverwijdering: Alle gegevens permanent verwijderd binnen 7 dagen",
+          "auditLogs": "Audit logs: Bewaard voor 1 jaar voor compliance doeleinden"
+        }
+      },
+      "thirdParty": {
+        "title": "Derde Partij Diensten",
+        "content": "We gebruiken geselecteerde derde partij diensten voor hosting, analytics en betalingsverwerking. Alle derde partijen worden gescreend op beveiliging en privacy compliance.",
+        "processors": {
+          "title": "Derde Partij Verwerkers",
+          "vercel": "Vercel: Hosting en CDN (SOC 2 Type II gecertificeerd)",
+          "supabase": "Supabase: Database en authenticatie (ISO 27001 gecertificeerd)",
+          "mollie": "Mollie: Betalingsverwerking (PCI DSS compliant)"
+        },
+        "gdprCompliance": {
+          "title": "GDPR Compliance",
+          "content": "Al onze derde partij verwerkers zijn GDPR compliant en hebben Data Processing Agreements in plaats."
+        }
+      },
+      "incidentResponse": {
+        "title": "Beveiligingsincident Response",
+        "content": "In geval van een beveiligingsincident, zullen we getroffen gebruikers binnen 72 uur op de hoogte stellen en details verstrekken over het incident en herstelstappen.",
+        "process": {
+          "title": "Incident Response Proces",
+          "detection": "Detectie: Geautomatiseerde monitoring en alarmeringssystemen",
+          "assessment": "Beoordeling: Directe evaluatie van ernst en impact",
+          "containment": "Beperking: Isolatie van getroffen systemen om verspreiding te voorkomen",
+          "investigation": "Onderzoek: Root cause analyse en forensisch onderzoek",
+          "notification": "Notificatie: Informeer getroffen gebruikers binnen 72 uur",
+          "remediation": "Herstel: Verhelp kwetsbaarheden en herstel dienst",
+          "postmortem": "Post-mortem: Documenteer lessen en verbeter processen"
+        },
+        "reportVulnerability": {
+          "title": "Meld een Kwetsbaarheid",
+          "content": "Als je een beveiligingskwetsbaarheid ontdekt, meld deze dan verantwoordelijk aan",
+          "email": "info@vexnexa.com"
+        }
+      },
+      "contact": {
+        "title": "Contact",
+        "securityInquiries": {
+          "title": "Beveiligingsvragen",
+          "email": "info@vexnexa.com",
+          "description": "Voor beveiligingskwetsbaarheden of privacy zorgen, neem contact op met het bovenstaande e-mailadres."
+        },
+        "businessInfo": {
+          "title": "Bedrijfsinformatie",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Nederland",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "securityQuestion": "Beveiligingsvraag?",
+        "securityDescription": "We nemen beveiliging serieus.",
+        "contactSecurity": "Contact Beveiliging"
       }
     },
     "sla": {
@@ -2320,6 +2411,78 @@
         "supportDesc": "Reactie binnen 4 uur voor Business plan gebruikers",
         "monitoring": "24/7 Monitoring",
         "monitoringDesc": "Continue monitoring met directe incident response"
+      },
+      "sections": {
+        "agreement": "Service Level Agreement",
+        "support": "Support Levels",
+        "incidents": "Incident Response",
+        "contact": "Contact Support"
+      },
+      "agreement": {
+        "title": "Service Level Agreement",
+        "content": "VexNexa verbindt zich tot het leveren van een betrouwbare dienst met de volgende beschikbaarheidsdoelstellingen:",
+        "uptime": "Uptime: 99.9% uptime op alle betaalde plannen (exclusief gepland onderhoud)",
+        "scheduledMaintenance": "Gepland Onderhoud: Aangekondigd minimaal 48 uur van tevoren",
+        "scanProcessing": "Scan Verwerking: Scans voltooien doorgaans binnen 5-15 minuten voor standaard pagina's"
+      },
+      "supportLevels": {
+        "title": "Support Levels",
+        "starter": {
+          "title": "Starter Plan",
+          "email": "E-mail support",
+          "responseTime": "Reactietijd: Binnen 2 werkdagen",
+          "documentation": "Toegang tot documentatie en gidsen"
+        },
+        "pro": {
+          "title": "Pro Plan",
+          "priorityEmail": "Prioriteit e-mail support",
+          "responseTime": "Reactietijd: Binnen 1 werkdag",
+          "advancedDocumentation": "Toegang tot geavanceerde documentatie",
+          "checkInCalls": "Kwartaallijk check-in gesprekken (optioneel)"
+        },
+        "business": {
+          "title": "Business Plan",
+          "prioritySupport": "Prioriteit support via e-mail en chat",
+          "responseTime": "Reactietijd: Binnen 4 uur tijdens kantooruren",
+          "accountManager": "Dedicated account manager",
+          "monthlyCalls": "Maandelijkse check-in gesprekken",
+          "priorityFeatures": "Prioriteit feature requests"
+        },
+        "enterprise": {
+          "title": "Enterprise Plan",
+          "support247": "24/7 support via telefoon, e-mail en chat",
+          "responseTime": "Reactietijd: Binnen 1 uur voor kritieke issues",
+          "accountTeam": "Dedicated account team",
+          "customSla": "Custom SLA beschikbaar",
+          "onCallSupport": "On-call support voor noodsituaties"
+        }
+      },
+      "incidentResponse": {
+        "title": "Incident Response",
+        "content": "We monitoren onze systemen 24/7 en reageren op incidenten volgens ernst:",
+        "critical": "Kritiek: Service plat - Directe reactie",
+        "high": "Hoog: Grote functionaliteit beperkt - Reactie binnen 2 uur",
+        "medium": "Medium: Kleine functionaliteit beperkt - Reactie binnen 1 werkdag",
+        "low": "Laag: Cosmetische of kleine problemen - Reactie binnen 3 werkdagen"
+      },
+      "contact": {
+        "title": "Contact Support",
+        "supportContact": {
+          "title": "Support Contact",
+          "email": "info@vexnexa.com",
+          "dashboardForm": "Of via het contactformulier in je dashboard"
+        },
+        "businessInfo": {
+          "title": "Bedrijfsinformatie",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Nederland",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "needHelp": "Hulp nodig?",
+        "responseTime": "We reageren doorgaans binnen 1 werkdag.",
+        "contactUs": "Neem contact op"
       }
     }
   },

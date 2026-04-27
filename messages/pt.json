@@ -2172,6 +2172,97 @@
         "storageDesc": "Bases de dados encriptadas com controlos de acesso restritos",
         "incident": "Resposta a incidentes",
         "incidentDesc": "Notificação dentro de 72 horas para incidentes de segurança"
+      },
+      "sections": {
+        "dataHandling": "Tratamento de dados",
+        "storage": "Armazenamento de dados",
+        "retention": "Retenção de dados",
+        "thirdParty": "Serviços de terceiros",
+        "incidents": "Incidentes de segurança",
+        "contact": "Contacto"
+      },
+      "dataHandling": {
+        "title": "Tratamento de dados",
+        "content": "A VexNexa digitaliza páginas web acessíveis publicamente. Armazenamos temporariamente resultados de digitalização e metadados para fornecer o nosso serviço. Não recolhemos nem armazenamos dados pessoais dos sites web que digitalizamos.",
+        "privacyByDesign": {
+          "title": "Privacidade desde a conceção",
+          "content": "Digitalizamos apenas conteúdo acessível publicamente e não tentamos aceder a áreas protegidas ou extrair informações pessoais."
+        }
+      },
+      "dataStorage": {
+        "title": "Armazenamento de dados",
+        "content": "Todos os dados de digitalização são armazenados de forma segura em bases de dados encriptadas. O acesso é restrito apenas a pessoal autorizado. Utilizamos encriptação padrão da indústria para dados em repouso e em trânsito.",
+        "securityMeasures": {
+          "title": "Medidas de segurança",
+          "encryptionAtRest": "Encriptação em repouso: Encriptação AES-256 para dados armazenados",
+          "encryptionInTransit": "Encriptação em trânsito: TLS 1.3 para todas as ligações",
+          "accessControl": "Controlo de acesso: Acesso baseado em funções com autenticação multifator",
+          "monitoring": "Monitorização: Monitorização de segurança 24/7 e registo",
+          "audits": "Auditorias regulares: Avaliações trimestrais de segurança e testes de penetração"
+        }
+      },
+      "dataRetention": {
+        "title": "Retenção de dados",
+        "content": "Os resultados de digitalização são retidos durante a duração da sua subscrição mais 30 dias. Pode solicitar a eliminação dos seus dados a qualquer momento através das definições da sua conta ou contactando o suporte.",
+        "retentionPeriods": {
+          "title": "Períodos de retenção",
+          "activeUsers": "Utilizadores ativos: Dados de digitalização retidos durante a duração da subscrição",
+          "afterCancellation": "Após cancelamento: Dados retidos durante 30 dias para reativação",
+          "accountDeletion": "Eliminação de conta: Todos os dados eliminados permanentemente dentro de 7 dias",
+          "auditLogs": "Registos de auditoria: Retidos durante 1 ano para fins de conformidade"
+        }
+      },
+      "thirdParty": {
+        "title": "Serviços de terceiros",
+        "content": "Utilizamos serviços de terceiros selecionados para alojamento, análise e processamento de pagamentos. Todos os terceiros são verificados quanto à conformidade de segurança e privacidade.",
+        "processors": {
+          "title": "Processadores de terceiros",
+          "vercel": "Vercel: Alojamento e CDN (certificado SOC 2 Type II)",
+          "supabase": "Supabase: Base de dados e autenticação (certificado ISO 27001)",
+          "mollie": "Mollie: Processamento de pagamentos (conforme PCI DSS)"
+        },
+        "gdprCompliance": {
+          "title": "Conformidade GDPR",
+          "content": "Todos os nossos processadores de terceiros estão em conformidade com o GDPR e têm acordos de processamento de dados em vigor."
+        }
+      },
+      "incidentResponse": {
+        "title": "Resposta a incidentes de segurança",
+        "content": "Em caso de incidente de segurança, notificaremos os utilizadores afetados dentro de 72 horas e forneceremos detalhes sobre o incidente e passos de remediação.",
+        "process": {
+          "title": "Processo de resposta a incidentes",
+          "detection": "Detecção: Sistemas de monitorização e alerta automatizados",
+          "assessment": "Avaliação: Avaliação imediata de gravidade e impacto",
+          "containment": "Contenção: Isolar sistemas afetados para impedir propagação",
+          "investigation": "Investigação: Análise de causa raiz e forense",
+          "notification": "Notificação: Informar utilizadores afetados dentro de 72 horas",
+          "remediation": "Remediação: Corrigir vulnerabilidades e restaurar serviço",
+          "postmortem": "Post-mortem: Documentar aprendizagens e melhorar processos"
+        },
+        "reportVulnerability": {
+          "title": "Reportar uma vulnerabilidade",
+          "content": "Se descobrir uma vulnerabilidade de segurança, por favor reporte-a de forma responsável para",
+          "email": "info@vexnexa.com"
+        }
+      },
+      "contact": {
+        "title": "Contacto",
+        "securityInquiries": {
+          "title": "Consultas de segurança",
+          "email": "info@vexnexa.com",
+          "description": "Para vulnerabilidades de segurança ou preocupações de privacidade, contacte-nos através do e-mail acima."
+        },
+        "businessInfo": {
+          "title": "Informações comerciais",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Holanda",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "securityQuestion": "Questão de segurança?",
+        "securityDescription": "Levamos a segurança a sério.",
+        "contactSecurity": "Contactar segurança"
       }
     },
     "sla": {
@@ -2188,6 +2279,78 @@
         "supportDesc": "Resposta dentro de 4 horas para utilizadores do plano Business",
         "monitoring": "Monitorização 24/7",
         "monitoringDesc": "Monitorização contínua com resposta imediata a incidentes"
+      },
+      "sections": {
+        "agreement": "Acordo de nível de serviço",
+        "support": "Níveis de suporte",
+        "incidents": "Resposta a incidentes",
+        "contact": "Contactar suporte"
+      },
+      "agreement": {
+        "title": "Acordo de nível de serviço",
+        "content": "A VexNexa compromete-se a fornecer um serviço fiável com os seguintes objetivos de disponibilidade:",
+        "uptime": "Tempo de atividade: 99.9% de tempo de atividade em todos os planos pagos (exclui manutenção programada)",
+        "scheduledMaintenance": "Manutenção programada: Anunciada pelo menos 48 horas antes",
+        "scanProcessing": "Processamento de digitalização: Digitalizações geralmente concluídas em 5-15 minutos para páginas padrão"
+      },
+      "supportLevels": {
+        "title": "Níveis de suporte",
+        "starter": {
+          "title": "Plano Starter",
+          "email": "Suporte por e-mail",
+          "responseTime": "Tempo de resposta: Dentro de 2 dias úteis",
+          "documentation": "Acesso a documentação e guias"
+        },
+        "pro": {
+          "title": "Plano Pro",
+          "priorityEmail": "Suporte prioritário por e-mail",
+          "responseTime": "Tempo de resposta: Dentro de 1 dia útil",
+          "advancedDocumentation": "Acesso a documentação avançada",
+          "checkInCalls": "Chamadas trimestrais de acompanhamento (opcional)"
+        },
+        "business": {
+          "title": "Plano Business",
+          "prioritySupport": "Suporte prioritário por e-mail e chat",
+          "responseTime": "Tempo de resposta: Dentro de 4 horas durante o horário comercial",
+          "accountManager": "Gestor de conta dedicado",
+          "monthlyCalls": "Chamadas mensais de acompanhamento",
+          "priorityFeatures": "Pedidos de funcionalidades prioritárias"
+        },
+        "enterprise": {
+          "title": "Plano Enterprise",
+          "support247": "Suporte 24/7 por telefone, e-mail e chat",
+          "responseTime": "Tempo de resposta: Dentro de 1 hora para problemas críticos",
+          "accountTeam": "Equipa de conta dedicada",
+          "customSla": "SLA personalizado disponível",
+          "onCallSupport": "Suporte disponível para emergências"
+        }
+      },
+      "incidentResponse": {
+        "title": "Resposta a incidentes",
+        "content": "Monitorizamos os nossos sistemas 24/7 e respondemos a incidentes de acordo com a gravidade:",
+        "critical": "Crítico: Serviço em baixo - Resposta imediata",
+        "high": "Alto: Funcionalidade major afetada - Resposta dentro de 2 horas",
+        "medium": "Médio: Funcionalidade menor afetada - Resposta dentro de 1 dia útil",
+        "low": "Baixo: Problemas cosméticos ou menores - Resposta dentro de 3 dias úteis"
+      },
+      "contact": {
+        "title": "Contactar suporte",
+        "supportContact": {
+          "title": "Contacto de suporte",
+          "email": "info@vexnexa.com",
+          "dashboardForm": "Ou através do formulário de contacto no seu painel"
+        },
+        "businessInfo": {
+          "title": "Informações comerciais",
+          "address": "Provencialeweg 46B, 1506 MC Zaandam, Holanda",
+          "kvk": "94848262",
+          "establishment": "000060294744"
+        }
+      },
+      "aside": {
+        "needHelp": "Precisa de ajuda?",
+        "responseTime": "Geralmente respondemos dentro de 1 dia útil.",
+        "contactUs": "Contacte-nos"
       }
     }
   },
