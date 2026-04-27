@@ -27,10 +27,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // sequenceType: 'first' returns methods usable as first payment in recurring
     const mollie = getMollieClient();
     const amount = tier ? getAmountForTier(tier, billingCycle) : undefined;
+    // Note: do NOT pass a top-level `currency` — Mollie rejects it.
+    // The currency lives inside `amount: { value, currency }`.
     const methods = await mollie.methods.list({
       sequenceType: SequenceType.first,
-      amount,
-      ...(amount ? { currency: 'EUR' } : {}),
+      ...(amount ? { amount } : {}),
     });
 
     const available: MethodInfo[] = [];
