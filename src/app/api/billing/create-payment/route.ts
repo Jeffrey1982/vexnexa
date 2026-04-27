@@ -235,7 +235,18 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    console.error("[create-payment] Error:", error);
+    const e = error as Record<string, unknown>;
+    console.error("[create-payment] Error:", {
+      message: error instanceof Error ? error.message : String(error),
+      name: error instanceof Error ? error.name : undefined,
+      statusCode: e?.statusCode ?? e?.status,
+      title: e?.title,
+      detail: e?.detail,
+      field: e?.field,
+      links: e?.links,
+      cause: e?.cause,
+      stack: error instanceof Error ? error.stack : undefined,
+    });
     return NextResponse.json(
       {
         error: "Failed to create payment",

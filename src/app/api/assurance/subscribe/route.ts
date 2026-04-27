@@ -142,15 +142,23 @@ export async function POST(req: NextRequest) {
     });
   } catch (providerErr: unknown) {
     const errObj = providerErr instanceof Error ? providerErr : new Error(String(providerErr));
-    const statusCode = (providerErr as any)?.statusCode || (providerErr as any)?.status;
-    const providerMessage = (providerErr as any)?.message || 'Unknown provider error';
+    const e = providerErr as Record<string, unknown>;
 
+    // Mollie SDK throws with rich diagnostic fields. Surface ALL of them so
+    // we never have to guess which combination broke.
     console.error(`[Assurance][${requestId}] Provider error:`, {
+      requestId,
+      tier,
+      billingCycle,
       message: errObj.message,
-      stack: errObj.stack,
-      statusCode,
-      providerMessage,
       name: errObj.name,
+      statusCode: e?.statusCode ?? e?.status,
+      title: e?.title,
+      detail: e?.detail,
+      field: e?.field,
+      links: e?.links,
+      cause: e?.cause,
+      stack: errObj.stack,
     });
 
     // Distinguish between config issues and transient provider errors
