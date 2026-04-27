@@ -39,27 +39,25 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-const lastUpdated = '27 april 2026'
-const policyVersion = 'v1.2'
-
-const sections = [
-  { id: 'toepassing', label: '1. Definities & Toepasselijkheid' },
-  { id: 'gebruik', label: '2. Gebruik van de dienst' },
-  { id: 'api', label: '3. API & Fair Use' },
-  { id: 'betalingen', label: '4. Betalingen & Abonnementen' },
-  { id: 'beschikbaarheid', label: '5. Beschikbaarheid & Support' },
-  { id: 'ip', label: '6. Intellectueel eigendom' },
-  { id: 'liability', label: '7. Garanties & Aansprakelijkheid' },
-  { id: 'privacy', label: '8. Privacy & Gegevensbescherming' },
-  { id: 'beindiging', label: '9. Beëindiging' },
-  { id: 'recht', label: '10. Toepasselijk recht & Geschillen' },
-  { id: 'wijzigingen', label: '11. Wijzigingen & Slotbepalingen' },
-  { id: 'contact', label: '12. Contact' },
-]
 
 export default async function TermsPage() {
   const t = await getTranslations('legal.terms');
   const tc = await getTranslations('legal.common');
+  
+  const sections = [
+    { id: 'toepassing', label: t('section1.title') },
+    { id: 'gebruik', label: t('section2.title') },
+    { id: 'api', label: t('section3.title') },
+    { id: 'betalingen', label: t('section4.title') },
+    { id: 'beschikbaarheid', label: t('section5.title') },
+    { id: 'ip', label: t('section6.title') },
+    { id: 'liability', label: t('section7.title') },
+    { id: 'privacy', label: t('section8.title') },
+    { id: 'beindiging', label: t('section9.title') },
+    { id: 'recht', label: t('section10.title') },
+    { id: 'wijzigingen', label: t('section11.title') },
+    { id: 'contact', label: t('section12.title') },
+  ]
 
   return (
     <div className="container mx-auto px-4 py-12 sm:py-16">
@@ -90,8 +88,8 @@ export default async function TermsPage() {
               <Calendar className="h-3 w-3" aria-hidden="true" />
               {tc('lastUpdated')}: {t('lastUpdated')}
             </Badge>
-            <Badge variant="secondary" aria-label={`Policy version ${policyVersion}`}>
-              {policyVersion}
+            <Badge variant="secondary" aria-label={`Policy version ${t('version')}`}>
+              {t('version')}
             </Badge>
           </div>
           <p className="mt-3 max-w-2xl text-base sm:text-lg text-muted-foreground">
@@ -152,30 +150,26 @@ export default async function TermsPage() {
         >
           {/* 1 */}
           <section id="toepassing">
-            <h2>1. Definities & Toepasselijkheid</h2>
-            <h3>Definities</h3>
+            <h2>{t('section1.title')}</h2>
+            <h3>{t('section1.definitionsTitle')}</h3>
             <ul>
-              <li><strong>VexNexa</strong>: de accessibility-scanningdienst onder vexnexa.com.</li>
-              <li><strong>Wij/ons</strong>: de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.).</li>
-              <li><strong>Gebruiker</strong>: iedere natuurlijke of rechtspersoon die de dienst gebruikt.</li>
-              <li><strong>Account</strong>: jouw persoonlijke of zakelijke toegang tot functies en geschiedenis.</li>
-              <li><strong>Scan</strong>: een geautomatiseerde toegankelijkheidstest van een webpagina.</li>
-              <li><strong>API</strong>: programmeerinterface voor geautomatiseerde toegang tot de dienst.</li>
+              <li><strong>{t('section1.definitions.0.term')}</strong>: {t('section1.definitions.0.desc')}</li>
+              <li><strong>{t('section1.definitions.1.term')}</strong>: {t('section1.definitions.1.desc')}</li>
+              <li><strong>{t('section1.definitions.2.term')}</strong>: {t('section1.definitions.2.desc')}</li>
+              <li><strong>{t('section1.definitions.3.term')}</strong>: {t('section1.definitions.3.desc')}</li>
+              <li><strong>{t('section1.definitions.4.term')}</strong>: {t('section1.definitions.4.desc')}</li>
+              <li><strong>{t('section1.definitions.5.term')}</strong>: {t('section1.definitions.5.desc')}</li>
             </ul>
-            <h3>Toepasselijkheid</h3>
-            <p>
-              Deze voorwaarden zijn van toepassing op elk gebruik van VexNexa, inclusief gratis en
-              betaalde accounts, de API, proefperiodes en alle daaraan gerelateerde communicatie.
-              Afwijkingen zijn alleen geldig indien schriftelijk overeengekomen.
-            </p>
+            <h3>{t('section1.applicabilityTitle')}</h3>
+            <p>{t('section1.applicability')}</p>
             <div className="not-prose mt-5 rounded-lg border bg-muted p-4">
-              <p className="font-medium">Juridische gegevens (dienstverlener)</p>
+              <p className="font-medium">{t('section1.legalInfoTitle')}</p>
               <p className="text-sm text-muted-foreground">
-                <strong>Bedrijfsnaam:</strong> VexNexa B.V. <br />
-                <strong>Adres:</strong> Provencialeweg 46B, 1562TB Krommenie, Nederland <br />
-                <strong>KvK-nummer:</strong> 94848262 &nbsp; <strong>Vestigingsnummer:</strong> 000060294744 <br />
+                <strong>Bedrijfsnaam:</strong> {t('section1.companyName')} <br />
+                <strong>Adres:</strong> {t('section1.address')} <br />
+                <strong>KvK-nummer:</strong> {t('section1.kvk')} &nbsp; <strong>Vestigingsnummer:</strong> {t('section1.establishment')} <br />
                 <strong>E-mail:</strong>{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
+                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </p>
             </div>
           </section>
@@ -184,28 +178,28 @@ export default async function TermsPage() {
 
           {/* 2 */}
           <section id="gebruik">
-            <h2>2. Gebruik van de dienst</h2>
-            <h3>Toegestaan gebruik</h3>
+            <h2>{t('section2.title')}</h2>
+            <h3>{t('section2.allowedTitle')}</h3>
             <ul>
-              <li>Scannen van websites die je in eigendom hebt of waarvoor je aantoonbare toestemming hebt</li>
-              <li>Interne projecten en klantopdrachten (rapporten delen is toegestaan)</li>
-              <li>Educatie/onderzoek en commercieel gebruik binnen de limieten van je abonnement</li>
+              <li>{t('section2.allowed.0')}</li>
+              <li>{t('section2.allowed.1')}</li>
+              <li>{t('section2.allowed.2')}</li>
             </ul>
-            <h3>Niet toegestaan</h3>
+            <h3>{t('section2.notAllowedTitle')}</h3>
             <ul>
-              <li>Scans op sites zonder toestemming van de eigenaar of beheerder</li>
-              <li>Het omzeilen van rate-limits, DDoS-achtig gedrag of het scrapen van persoonsgegevens</li>
-              <li>Reverse engineering, kopiëren of herverpakken van onze software of output als eigen product</li>
-              <li>Gebruik in strijd met wet- en regelgeving (waaronder auteursrecht, AVG en de Wet computercriminaliteit)</li>
+              <li>{t('section2.notAllowed.0')}</li>
+              <li>{t('section2.notAllowed.1')}</li>
+              <li>{t('section2.notAllowed.2')}</li>
+              <li>{t('section2.notAllowed.3')}</li>
             </ul>
-            <h3>Account & beveiliging</h3>
+            <h3>{t('section2.accountSecurityTitle')}</h3>
             <ul>
-              <li>Beheer je inloggegevens zorgvuldig; alle activiteit onder jouw account wordt aan jou toegerekend</li>
+              <li>{t('section2.accountSecurity.0')}</li>
               <li>
-                Meld misbruik of een vermoeden van een datalek direct via{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
+                {t('section2.accountSecurity.1')}{' '}
+                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </li>
-              <li>Bij vermoeden van misbruik of beveiligingsrisico kunnen we accounts tijdelijk blokkeren</li>
+              <li>{t('section2.accountSecurity.2')}</li>
             </ul>
           </section>
 
@@ -213,16 +207,12 @@ export default async function TermsPage() {
 
           {/* 3 */}
           <section id="api">
-            <h2>3. API & Fair Use</h2>
-            <p>
-              API-toegang is beschikbaar voor in aanmerking komende abonnementen. We hanteren fair-use
-              en technische limieten (requests per minuut/dag, gelijktijdige jobs). Details vind je in
-              je dashboard.
-            </p>
+            <h2>{t('section3.title')}</h2>
+            <p>{t('section3.content')}</p>
             <ul>
-              <li>API-sleutels zijn persoonlijk; delen of open-sourcen ervan is niet toegestaan</li>
-              <li>Resultaten mogen worden weergegeven in je eigen tooling, mits je &ldquo;VexNexa&rdquo; vermeldt in geautomatiseerde rapportages</li>
-              <li>Wijzigingen aan endpoints of limieten kunnen zonder voorafgaande kennisgeving worden doorgevoerd in geval van misbruik of verstoringen</li>
+              <li>{t('section3.rules.0')}</li>
+              <li>{t('section3.rules.1')}</li>
+              <li>{t('section3.rules.2')}</li>
             </ul>
           </section>
 
@@ -230,124 +220,96 @@ export default async function TermsPage() {
 
           {/* 4 */}
           <section id="betalingen">
-            <h2>4. Betalingen & Abonnementen</h2>
+            <h2>{t('section4.title')}</h2>
 
             <div className="not-prose my-5 rounded-lg border-l-4 border-primary bg-primary/5 p-4">
-              <p className="text-sm">
-                <strong>Belangrijk — prijsweergave:</strong> Prijzen op vexnexa.com en in de
-                checkout zijn <strong>inclusief 21% BTW</strong>, tenzij expliciet anders vermeld
-                voor zakelijke klanten met een geldig BTW-nummer (in dat geval kan de
-                BTW-verleggingsregeling of een 0%-tarief van toepassing zijn). Op je factuur wordt
-                het BTW-bedrag separaat gespecificeerd.
-              </p>
+              <p className="text-sm">{t('section4.priceNotice')}</p>
             </div>
 
-            <h3>Gratis (Trial)</h3>
+            <h3>{t('section4.trialTitle')}</h3>
             <ul>
-              <li>De gratis Trial blijft gratis met vaste maandelijkse limieten (100 pagina&apos;s per maand, 1 website)</li>
-              <li><strong>Harde limiet:</strong> bij overschrijding van het gratis verbruik wordt de dienst geblokkeerd tot de volgende maand of totdat je upgraded naar een betaald plan</li>
-              <li>De Trial verloopt na de aangegeven periode; een upgrade is vereist om de dienst te blijven gebruiken</li>
-              <li>Functies kunnen wijzigen — substantiële wijzigingen kondigen we vooraf aan</li>
-              <li>Er vindt geen automatische overage-facturatie plaats; upgrade naar een betaald plan voor verdere toegang</li>
+              <li>{t('section4.trial.0')}</li>
+              <li><strong>{t('section4.trial.1').split(':')[0]}:</strong>{t('section4.trial.1').substring(t('section4.trial.1').indexOf(':') + 1)}</li>
+              <li>{t('section4.trial.2')}</li>
+              <li>{t('section4.trial.3')}</li>
+              <li>{t('section4.trial.4')}</li>
             </ul>
 
-            <h3>Betaalde abonnementen</h3>
+            <h3>{t('section4.paidTitle')}</h3>
             <ul>
-              <li><strong>Prijzen zijn inclusief 21% BTW, tenzij expliciet anders vermeld voor zakelijke klanten.</strong></li>
+              <li><strong>{t('section4.paid.0')}</strong></li>
               <li>
-                Betaling verloopt uitsluitend via onze betaaldienstverlener <strong>Mollie B.V.</strong>{' '}
-                (Keizersgracht 313, 1016 EE Amsterdam). Beschikbare methoden zijn onder meer iDEAL,
-                creditcard en SEPA-incasso. VexNexa slaat zelf geen kaart- of rekeninggegevens op.
+                {t('section4.paid.1').replace('Mollie B.V.', '<strong>Mollie B.V.</strong>')}
               </li>
-              <li>Vooruitbetaling per maand of per jaar; automatische verlenging tenzij tijdig opgezegd</li>
-              <li>Opzegging is mogelijk tot de laatste dag van de lopende periode (de dienst loopt door tot het einde van de termijn)</li>
-              <li>Tussentijdse upgrades zijn mogelijk; kosten worden pro rata verrekend</li>
+              <li>{t('section4.paid.2')}</li>
+              <li>{t('section4.paid.3')}</li>
+              <li>{t('section4.paid.4')}</li>
             </ul>
 
-            <h3>Limieten & Overage (alleen betaalde plannen)</h3>
+            <h3>{t('section4.limitsTitle')}</h3>
             <ul>
-              <li><strong>Trial/Gratis:</strong> harde limiet — de dienst wordt geblokkeerd bij overschrijding. Een upgrade is vereist voor verdere toegang.</li>
+              <li><strong>{t('section4.limits.0').split(':')[0]}:</strong>{t('section4.limits.0').substring(t('section4.limits.0').indexOf(':') + 1)}</li>
               <li>
-                <strong>Betaalde plannen — overage-tarieven (alle bedragen zijn inclusief 21% BTW):</strong>{' '}
-                bij overschrijding van limieten worden extra scans automatisch in rekening gebracht
-                tegen €0,002 per pagina, €2,00 per extra site per maand, en €1,00 per extra
-                gebruiker per maand.
+                <strong>{t('section4.limits.1').split(':')[0]}:</strong>{t('section4.limits.1').substring(t('section4.limits.1').indexOf(':') + 1)}
               </li>
-              <li>Waarschuwingen volgen bij 80% en 100% van je limiet</li>
-              <li>Bij structurele overschrijdingen adviseren we een upgrade naar een hoger plan</li>
+              <li>{t('section4.limits.2')}</li>
+              <li>{t('section4.limits.3')}</li>
             </ul>
 
-            <h3>Restituties & Chargebacks</h3>
+            <h3>{t('section4.refundsTitle')}</h3>
             <ul>
-              <li>Geen restitutie bij vroegtijdige opzegging, tenzij wettelijk verplicht</li>
-              <li>Bij langdurige algehele storing (&gt;48 uur) kan een proportionele creditering worden aangeboden</li>
-              <li>Onterechte chargebacks kunnen leiden tot (tijdelijke) blokkering en doorberekening van kosten</li>
+              <li>{t('section4.refunds.0')}</li>
+              <li>{t('section4.refunds.1')}</li>
+              <li>{t('section4.refunds.2')}</li>
             </ul>
 
-            <h3>Herroepingsrecht consument</h3>
-            <p>
-              Voor consumenten binnen de EU geldt in beginsel een wettelijke bedenktijd van
-              <strong> 14 dagen</strong> bij overeenkomsten op afstand (Boek 6, Titel 5, Afdeling 2B BW).
-              VexNexa is een digitale dienst die direct na het starten van een scan of het bevestigen
-              van een upgrade wordt geleverd.
-            </p>
-            <p>
-              <strong>
-                Door een scan te starten of een (upgrade naar een) betaald abonnement te bevestigen,
-                geef je uitdrukkelijk toestemming voor onmiddellijke uitvoering van de overeenkomst
-                vóór afloop van de bedenktijd, en erken je dat je daarmee voor de betreffende
-                facturatieperiode afstand doet van je herroepingsrecht voor de reeds geleverde
-                digitale inhoud (artikel 6:230p sub g BW).
-              </strong>
-            </p>
-            <p>
-              Voor toekomstige facturatieperiodes blijft het recht bestaan om je abonnement op te
-              zeggen vóór de eerstvolgende verlengingsdatum, conform de opzegregels hierboven. De
-              afstand van het herroepingsrecht ziet uitsluitend op de reeds geleverde periode.
-            </p>
+            <h3>{t('section4.withdrawalTitle')}</h3>
+            <p>{t('section4.withdrawalIntro')}</p>
+            <p><strong>{t('section4.withdrawalWaiver')}</strong></p>
+            <p>{t('section4.withdrawalFuture')}</p>
           </section>
 
           <div className="h-px bg-border my-10 not-prose" />
 
           {/* 5 */}
           <section id="beschikbaarheid">
-            <h2>5. Beschikbaarheid & Support</h2>
-            <h3>SLA & Onderhoud</h3>
+            <h2>{t('section5.title')}</h2>
+            <h3>{t('section5.slaTitle')}</h3>
             <ul>
-              <li>We streven naar hoge beschikbaarheid, maar 100% uptime is niet gegarandeerd</li>
-              <li>Gepland onderhoud kondigen we waar mogelijk vooraf aan</li>
-              <li>Externe factoren (firewalls, robots.txt, rate-limits) kunnen scans verhinderen</li>
+              <li>{t('section5.sla.0')}</li>
+              <li>{t('section5.sla.1')}</li>
+              <li>{t('section5.sla.2')}</li>
             </ul>
-            <h3>Support</h3>
+            <h3>{t('section5.supportTitle')}</h3>
             <ul>
-              <li><strong>Free:</strong> e-mail binnen 72 uur</li>
-              <li><strong>Pro:</strong> e-mail binnen 24 uur</li>
-              <li><strong>Team:</strong> prioriteit (doorgaans &lt; 4 uur), optionele telefonische ondersteuning</li>
+              <li><strong>Free:</strong> {t('section5.support.0')}</li>
+              <li><strong>Pro:</strong> {t('section5.support.1')}</li>
+              <li><strong>Team:</strong> {t('section5.support.2')}</li>
             </ul>
-            <h3>Wijzigingen</h3>
-            <p>We kunnen functies, algoritmes of UI aanpassen; bij materiële impact informeren we tijdig.</p>
+            <h3>{t('section5.changesTitle')}</h3>
+            <p>{t('section5.changes')}</p>
           </section>
 
           <div className="h-px bg-border my-10 not-prose" />
 
           {/* 6 */}
           <section id="ip">
-            <h2>6. Intellectueel eigendom</h2>
-            <h3>Onze rechten</h3>
+            <h2>{t('section6.title')}</h2>
+            <h3>{t('section6.ourRightsTitle')}</h3>
             <ul>
-              <li>Software, algoritmes, UI, merken en documentatie blijven eigendom van ons (en/of onze licentiegevers)</li>
-              <li>Geen overdracht van IE-rechten; uitsluitend een beperkt, herroepbaar gebruiksrecht</li>
+              <li>{t('section6.ourRights.0')}</li>
+              <li>{t('section6.ourRights.1')}</li>
             </ul>
-            <h3>Jouw content & rapporten</h3>
+            <h3>{t('section6.yourContentTitle')}</h3>
             <ul>
-              <li>Je behoudt de rechten op je eigen websites en materialen</li>
-              <li>Je verleent ons de licentie die nodig is om scans uit te voeren en resultaten te tonen</li>
-              <li>Rapporten mogen intern en commercieel worden gebruikt; bronvermelding wordt gewaardeerd maar is niet verplicht</li>
+              <li>{t('section6.yourContent.0')}</li>
+              <li>{t('section6.yourContent.1')}</li>
+              <li>{t('section6.yourContent.2')}</li>
             </ul>
-            <h3>Meldingen</h3>
+            <h3>{t('section6.noticesTitle')}</h3>
             <p>
-              Vermoed je een inbreuk (bijvoorbeeld onbevoegd gebruik van je merk)? Mail{' '}
-              <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>.
+              {t('section6.notices')}{' '}
+              <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>.
             </p>
           </section>
 
@@ -355,21 +317,21 @@ export default async function TermsPage() {
 
           {/* 7 */}
           <section id="liability">
-            <h2>7. Garanties & Aansprakelijkheid</h2>
-            <h3>Beperkte garantie</h3>
+            <h2>{t('section7.title')}</h2>
+            <h3>{t('section7.warrantyTitle')}</h3>
             <ul>
-              <li>Scans volgen gangbare methoden (waaronder regels vergelijkbaar met axe-core), maar dekken niet alle WCAG-criteria in alle contexten</li>
-              <li>Vals-positieven/negatieven kunnen voorkomen; menselijke review blijft noodzakelijk</li>
+              <li>{t('section7.warranty.0')}</li>
+              <li>{t('section7.warranty.1')}</li>
             </ul>
-            <h3>Beperking van aansprakelijkheid</h3>
+            <h3>{t('section7.liabilityTitle')}</h3>
             <ul>
-              <li>Onze totale aansprakelijkheid is beperkt tot het bedrag dat je in de afgelopen 12 maanden hebt betaald</li>
-              <li>Geen aansprakelijkheid voor indirecte/gevolgschade, gederfde winst, gegevensverlies of reputatieschade</li>
-              <li>Uitsluitingen gelden niet bij opzet of bewuste roekeloosheid voor zover de wet dit toestaat</li>
+              <li>{t('section7.liability.0')}</li>
+              <li>{t('section7.liability.1')}</li>
+              <li>{t('section7.liability.2')}</li>
             </ul>
-            <h3>Overmacht</h3>
+            <h3>{t('section7.forceMajeureTitle')}</h3>
             <ul>
-              <li>Geen aansprakelijkheid voor gebeurtenissen buiten onze redelijke controle (waaronder storingen bij derden, oorlog, natuurrampen, cyberaanvallen)</li>
+              <li>{t('section7.forceMajeure')}</li>
             </ul>
           </section>
 
@@ -377,11 +339,10 @@ export default async function TermsPage() {
 
           {/* 8 */}
           <section id="privacy">
-            <h2>8. Privacy & Gegevensbescherming</h2>
+            <h2>{t('section8.title')}</h2>
             <p>
-              We verwerken persoonsgegevens conform ons{' '}
-              <Link className="text-primary hover:underline" href="/legal/privacy">privacybeleid</Link>.
-              Dat beleid maakt integraal onderdeel uit van deze voorwaarden.
+              {t('section8.content')}{' '}
+              <Link className="text-primary hover:underline" href="/legal/privacy">{t('footer.privacyLink')}</Link>.
             </p>
           </section>
 
@@ -389,21 +350,21 @@ export default async function TermsPage() {
 
           {/* 9 */}
           <section id="beindiging">
-            <h2>9. Beëindiging</h2>
-            <h3>Door jou</h3>
+            <h2>{t('section9.title')}</h2>
+            <h3>{t('section9.byYouTitle')}</h3>
             <ul>
-              <li>Opzegging via je account; toegang blijft bestaan tot het einde van de facturatieperiode</li>
-              <li>Je kunt verwijdering van accountgegevens aanvragen conform het privacybeleid</li>
+              <li>{t('section9.byYou.0')}</li>
+              <li>{t('section9.byYou.1')}</li>
             </ul>
-            <h3>Door ons</h3>
+            <h3>{t('section9.byUsTitle')}</h3>
             <ul>
-              <li>Bij schending van de voorwaarden, misbruik, wanbetaling of beveiligingsrisico&apos;s kunnen we (tijdelijk) beëindigen</li>
-              <li>Waar redelijk geven we eerst een waarschuwing en herstelperiode</li>
+              <li>{t('section9.byUs.0')}</li>
+              <li>{t('section9.byUs.1')}</li>
             </ul>
-            <h3>Gevolgen</h3>
+            <h3>{t('section9.consequencesTitle')}</h3>
             <ul>
-              <li>Toegang vervalt; gegevensbewaring volgt het privacybeleid</li>
-              <li>Openstaande bedragen blijven verschuldigd</li>
+              <li>{t('section9.consequences.0')}</li>
+              <li>{t('section9.consequences.1')}</li>
             </ul>
           </section>
 
@@ -411,39 +372,35 @@ export default async function TermsPage() {
 
           {/* 10 */}
           <section id="recht">
-            <h2>10. Toepasselijk recht & Geschillen</h2>
-            <h3>Recht</h3>
-            <p>Op deze overeenkomst is Nederlands recht van toepassing, met uitsluiting van conflictenrechtelijke regels.</p>
-            <h3>Geschillenbeslechting</h3>
+            <h2>{t('section10.title')}</h2>
+            <h3>{t('section10.lawTitle')}</h3>
+            <p>{t('section10.law')}</p>
+            <h3>{t('section10.disputesTitle')}</h3>
             <ol>
               <li>
-                Eerst proberen we het intern op te lossen: e-mail{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
+                {t('section10.disputes.0')}{' '}
+                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </li>
-              <li>Reactietermijn: 30 dagen om tot een oplossing te komen</li>
-              <li>Komen we er niet uit: mediation (indien beide partijen instemmen)</li>
-              <li>Bevoegde rechter: Rechtbank Amsterdam</li>
+              <li>{t('section10.disputes.1')}</li>
+              <li>{t('section10.disputes.2')}</li>
+              <li>{t('section10.disputes.3')}</li>
             </ol>
-            <h3>Consumentenrechten</h3>
-            <p>Consumenten behouden hun wettelijke rechten die niet contractueel uitgesloten kunnen worden.</p>
+            <h3>{t('section10.consumerRightsTitle')}</h3>
+            <p>{t('section10.consumerRights')}</p>
           </section>
 
           <div className="h-px bg-border my-10 not-prose" />
 
           {/* 11 */}
           <section id="wijzigingen">
-            <h2>11. Wijzigingen & Slotbepalingen</h2>
-            <h3>Wijzigingen</h3>
-            <p>
-              We kunnen deze voorwaarden aanpassen (bijvoorbeeld door wetgeving, nieuwe functies of
-              misbruikpreventie). Bij materiële wijzigingen informeren we je — doorgaans 30 dagen
-              vooraf. Voortgezet gebruik na de ingangsdatum geldt als aanvaarding.
-            </p>
-            <h3>Deelbaarheid & gehele overeenkomst</h3>
+            <h2>{t('section11.title')}</h2>
+            <h3>{t('section11.changesTitle')}</h3>
+            <p>{t('section11.changes')}</p>
+            <h3>{t('section11.severabilityTitle')}</h3>
             <ul>
-              <li>Indien een bepaling ongeldig of nietig wordt geacht, blijven de overige bepalingen van kracht</li>
-              <li>We vervangen een ongeldige bepaling door een geldige bepaling van vergelijkbare strekking</li>
-              <li>Deze voorwaarden + het privacybeleid vormen de gehele overeenkomst en vervangen eerdere communicatie</li>
+              <li>{t('section11.severability.0')}</li>
+              <li>{t('section11.severability.1')}</li>
+              <li>{t('section11.severability.2')}</li>
             </ul>
           </section>
 
@@ -451,13 +408,13 @@ export default async function TermsPage() {
 
           {/* 12 */}
           <section id="contact">
-            <h2>12. Contact</h2>
+            <h2>{t('section12.title')}</h2>
             <div className="not-prose rounded-lg border bg-muted p-4 space-y-2">
-              <p className="font-medium">Juridische vragen</p>
+              <p className="font-medium">{t('section12.titleText')}</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail:{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">info@vexnexa.com</a>
+                {t('section12.email')}{' '}
+                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </p>
             </div>
           </section>
@@ -468,10 +425,10 @@ export default async function TermsPage() {
               <p className="text-sm text-muted-foreground">{tc('lastUpdated')}: {t('lastUpdated')}</p>
               <div className="flex gap-3">
                 <Button variant="outline" asChild>
-                  <Link href="/legal/privacy">Privacybeleid</Link>
+                  <Link href="/legal/privacy">{t('footer.privacyLink')}</Link>
                 </Button>
                 <Button asChild>
-                  <Link href="/contact">Vragen? Neem contact op</Link>
+                  <Link href="/contact">{t('footer.contactLink')}</Link>
                 </Button>
               </div>
             </div>

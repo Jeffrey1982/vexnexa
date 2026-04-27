@@ -39,6 +39,24 @@
       },
       "twitter": "Visit VexNexa on Twitter"
     },
+    "dashboard": {
+      "description": "Professionele toegankelijkheidstests en compliance-monitoring.",
+      "dashboard": "Dashboard",
+      "overview": "Overzicht",
+      "scans": "Scans",
+      "sites": "Sites",
+      "teams": "Teams",
+      "settings": "Instellingen",
+      "billing": "Facturering",
+      "notifications": "Meldingen",
+      "whiteLabel": "White Label",
+      "support": "Support",
+      "contact": "Contact",
+      "privacyPolicy": "Privacybeleid",
+      "termsOfService": "Algemene Voorwaarden",
+      "allRightsReserved": "Alle rechten voorbehouden.",
+      "madeWithLove": "Gemaakt met ❤️ voor webtoegankelijkheid"
+    },
     "product": {
       "title": "Product",
       "features": "Functies",
@@ -2041,8 +2059,8 @@
     "terms": {
       "title": "Algemene Voorwaarden",
       "description": "Deze voorwaarden zijn van toepassing op het gebruik van de VexNexa accessibility-scanning service.",
-      "lastUpdated": "8 december 2024",
-      "version": "v1.1",
+      "lastUpdated": "27 april 2026",
+      "version": "v1.2",
       "summary": {
         "title": "Samenvatting (niet juridisch bindend)",
         "description": "In gewone taal — lees ook de volledige voorwaarden hieronder.",
@@ -2060,6 +2078,199 @@
           "Onrechtmatig of schadelijk gebruik (bv. scraping van persoonsgegevens)"
         ],
         "byUsing": "Door VexNexa te gebruiken ga je akkoord met deze voorwaarden."
+      },
+      "section1": {
+        "title": "1. Definities & Toepasselijkheid",
+        "definitionsTitle": "Definities",
+        "definitions": [
+          { "term": "VexNexa", "desc": "de accessibility-scanningdienst onder vexnexa.com." },
+          { "term": "Wij/ons", "desc": "de verwerkingsverantwoordelijke en dienstverlener (VexNexa B.V.)." },
+          { "term": "Gebruiker", "desc": "iedere natuurlijke of rechtspersoon die de dienst gebruikt." },
+          { "term": "Account", "desc": "jouw persoonlijke of zakelijke toegang tot functies en geschiedenis." },
+          { "term": "Scan", "desc": "een geautomatiseerde toegankelijkheidstest van een webpagina." },
+          { "term": "API", "desc": "programmeerinterface voor geautomatiseerde toegang tot de dienst." }
+        ],
+        "applicabilityTitle": "Toepasselijkheid",
+        "applicability": "Deze voorwaarden zijn van toepassing op elk gebruik van VexNexa, inclusief gratis en betaalde accounts, de API, proefperiodes en alle daaraan gerelateerde communicatie. Afwijkingen zijn alleen geldig indien schriftelijk overeengekomen.",
+        "legalInfoTitle": "Juridische gegevens (dienstverlener)",
+        "companyName": "VexNexa B.V.",
+        "address": "Provencialeweg 46B, 1562TB Krommenie, Nederland",
+        "kvk": "94848262",
+        "establishment": "000060294744",
+        "email": "info@vexnexa.com"
+      },
+      "section2": {
+        "title": "2. Gebruik van de dienst",
+        "allowedTitle": "Toegestaan gebruik",
+        "allowed": [
+          "Scannen van websites die je in eigendom hebt of waarvoor je aantoonbare toestemming hebt",
+          "Interne projecten en klantopdrachten (rapporten delen is toegestaan)",
+          "Educatie/onderzoek en commercieel gebruik binnen de limieten van je abonnement"
+        ],
+        "notAllowedTitle": "Niet toegestaan",
+        "notAllowed": [
+          "Scans op sites zonder toestemming van de eigenaar of beheerder",
+          "Het omzeilen van rate-limits, DDoS-achtig gedrag of het scrapen van persoonsgegevens",
+          "Reverse engineering, kopiëren of herverpakken van onze software of output als eigen product",
+          "Gebruik in strijd met wet- en regelgeving (waaronder auteursrecht, AVG en de Wet computercriminaliteit)"
+        ],
+        "accountSecurityTitle": "Account & beveiliging",
+        "accountSecurity": [
+          "Beheer je inloggegevens zorgvuldig; alle activiteit onder jouw account wordt aan jou toegerekend",
+          "Meld misbruik of een vermoeden van een datalek direct via info@vexnexa.com",
+          "Bij vermoeden van misbruik of beveiligingsrisico kunnen we accounts tijdelijk blokkeren"
+        ]
+      },
+      "section3": {
+        "title": "3. API & Fair Use",
+        "content": "API-toegang is beschikbaar voor in aanmerking komende abonnementen. We hanteren fair-use en technische limieten (requests per minuut/dag, gelijktijdige jobs). Details vind je in je dashboard.",
+        "rules": [
+          "API-sleutels zijn persoonlijk; delen of open-sourcen ervan is niet toegestaan",
+          "Resultaten mogen worden weergegeven in je eigen tooling, mits je \"VexNexa\" vermeldt in geautomatiseerde rapportages",
+          "Wijzigingen aan endpoints of limieten kunnen zonder voorafgaande kennisgeving worden doorgevoerd in geval van misbruik of verstoringen"
+        ]
+      },
+      "section4": {
+        "title": "4. Betalingen & Abonnementen",
+        "priceNotice": "Belangrijk — prijsweergave: Prijzen op vexnexa.com en in de checkout zijn inclusief 21% BTW, tenzij expliciet anders vermeld voor zakelijke klanten met een geldig BTW-nummer (in dat geval kan de BTW-verleggingsregeling of een 0%-tarief van toepassing zijn). Op je factuur wordt het BTW-bedrag separaat gespecificeerd.",
+        "trialTitle": "Gratis (Trial)",
+        "trial": [
+          "De gratis Trial blijft gratis met vaste maandelijkse limieten (100 pagina's per maand, 1 website)",
+          "Harde limiet: bij overschrijding van het gratis verbruik wordt de dienst geblokkeerd tot de volgende maand of totdat je upgraded naar een betaald plan",
+          "De Trial verloopt na de aangegeven periode; een upgrade is vereist om de dienst te blijven gebruiken",
+          "Functies kunnen wijzigen — substantiële wijzigingen kondigen we vooraf aan",
+          "Er vindt geen automatische overage-facturatie plaats; upgrade naar een betaald plan voor verdere toegang"
+        ],
+        "paidTitle": "Betaalde abonnementen",
+        "paid": [
+          "Prijzen zijn inclusief 21% BTW, tenzij expliciet anders vermeld voor zakelijke klanten.",
+          "Betaling verloopt uitsluitend via onze betaaldienstverlener Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam). Beschikbare methoden zijn onder meer iDEAL, creditcard en SEPA-incasso. VexNexa slaat zelf geen kaart- of rekeninggegevens op.",
+          "Vooruitbetaling per maand of per jaar; automatische verlenging tenzij tijdig opgezegd",
+          "Opzegging is mogelijk tot de laatste dag van de lopende periode (de dienst loopt door tot het einde van de termijn)",
+          "Tussentijdse upgrades zijn mogelijk; kosten worden pro rata verrekend"
+        ],
+        "limitsTitle": "Limieten & Overage (alleen betaalde plannen)",
+        "limits": [
+          "Trial/Gratis: harde limiet — de dienst wordt geblokkeerd bij overschrijding. Een upgrade is vereist voor verdere toegang.",
+          "Betaalde plannen — overage-tarieven (alle bedragen zijn inclusief 21% BTW): bij overschrijding van limieten worden extra scans automatisch in rekening gebracht tegen €0,002 per pagina, €2,00 per extra site per maand, en €1,00 per extra gebruiker per maand.",
+          "Waarschuwingen volgen bij 80% en 100% van je limiet",
+          "Bij structurele overschrijdingen adviseren we een upgrade naar een hoger plan"
+        ],
+        "refundsTitle": "Restituties & Chargebacks",
+        "refunds": [
+          "Geen restitutie bij vroegtijdige opzegging, tenzij wettelijk verplicht",
+          "Bij langdurige algehele storing (>48 uur) kan een proportionele creditering worden aangeboden",
+          "Onterechte chargebacks kunnen leiden tot (tijdelijke) blokkering en doorberekening van kosten"
+        ],
+        "withdrawalTitle": "Herroepingsrecht consument",
+        "withdrawalIntro": "Voor consumenten binnen de EU geldt in beginsel een wettelijke bedenktijd van 14 dagen bij overeenkomsten op afstand (Boek 6, Titel 5, Afdeling 2B BW). VexNexa is een digitale dienst die direct na het starten van een scan of het bevestigen van een upgrade wordt geleverd.",
+        "withdrawalWaiver": "Door een scan te starten of een (upgrade naar een) betaald abonnement te bevestigen, geef je uitdrukkelijk toestemming voor onmiddellijke uitvoering van de overeenkomst vóór afloop van de bedenktijd, en erken je dat je daarmee voor de betreffende facturatieperiode afstand doet van je herroepingsrecht voor de reeds geleverde digitale inhoud (artikel 6:230p sub g BW).",
+        "withdrawalFuture": "Voor toekomstige facturatieperiodes blijft het recht bestaan om je abonnement op te zeggen vóór de eerstvolgende verlengingsdatum, conform de opzegregels hierboven. De afstand van het herroepingsrecht ziet uitsluitend op de reeds geleverde periode."
+      },
+      "section5": {
+        "title": "5. Beschikbaarheid & Support",
+        "slaTitle": "SLA & Onderhoud",
+        "sla": [
+          "We streven naar hoge beschikbaarheid, maar 100% uptime is niet gegarandeerd",
+          "Gepland onderhoud kondigen we waar mogelijk vooraf aan",
+          "Externe factoren (firewalls, robots.txt, rate-limits) kunnen scans verhinderen"
+        ],
+        "supportTitle": "Support",
+        "support": [
+          "Free: e-mail binnen 72 uur",
+          "Pro: e-mail binnen 24 uur",
+          "Team: prioriteit (doorgaans < 4 uur), optionele telefonische ondersteuning"
+        ],
+        "changesTitle": "Wijzigingen",
+        "changes": "We kunnen functies, algoritmes of UI aanpassen; bij materiële impact informeren we tijdig."
+      },
+      "section6": {
+        "title": "6. Intellectueel eigendom",
+        "ourRightsTitle": "Onze rechten",
+        "ourRights": [
+          "Software, algoritmes, UI, merken en documentatie blijven eigendom van ons (en/of onze licentiegevers)",
+          "Geen overdracht van IE-rechten; uitsluitend een beperkt, herroepbaar gebruiksrecht"
+        ],
+        "yourContentTitle": "Jouw content & rapporten",
+        "yourContent": [
+          "Je behoudt de rechten op je eigen websites en materialen",
+          "Je verleent ons de licentie die nodig is om scans uit te voeren en resultaten te tonen",
+          "Rapporten mogen intern en commercieel worden gebruikt; bronvermelding wordt gewaardeerd maar is niet verplicht"
+        ],
+        "noticesTitle": "Meldingen",
+        "notices": "Vermoed je een inbreuk (bijvoorbeeld onbevoegd gebruik van je merk)? Mail info@vexnexa.com."
+      },
+      "section7": {
+        "title": "7. Garanties & Aansprakelijkheid",
+        "warrantyTitle": "Beperkte garantie",
+        "warranty": [
+          "Scans volgen gangbare methoden (waaronder regels vergelijkbaar met axe-core), maar dekken niet alle WCAG-criteria in alle contexten",
+          "Vals-positieven/negatieven kunnen voorkomen; menselijke review blijft noodzakelijk"
+        ],
+        "liabilityTitle": "Beperking van aansprakelijkheid",
+        "liability": [
+          "Onze totale aansprakelijkheid is beperkt tot het bedrag dat je in de afgelopen 12 maanden hebt betaald",
+          "Geen aansprakelijkheid voor indirecte/gevolgschade, gederfde winst, gegevensverlies of reputatieschade",
+          "Uitsluitingen gelden niet bij opzet of bewuste roekeloosheid voor zover de wet dit toestaat"
+        ],
+        "forceMajeureTitle": "Overmacht",
+        "forceMajeure": "Geen aansprakelijkheid voor gebeurtenissen buiten onze redelijke controle (waaronder storingen bij derden, oorlog, natuurrampen, cyberaanvallen)"
+      },
+      "section8": {
+        "title": "8. Privacy & Gegevensbescherming",
+        "content": "We verwerken persoonsgegevens conform ons privacybeleid. Dat beleid maakt integraal onderdeel uit van deze voorwaarden."
+      },
+      "section9": {
+        "title": "9. Beëindiging",
+        "byYouTitle": "Door jou",
+        "byYou": [
+          "Opzegging via je account; toegang blijft bestaan tot het einde van de facturatieperiode",
+          "Je kunt verwijdering van accountgegevens aanvragen conform het privacybeleid"
+        ],
+        "byUsTitle": "Door ons",
+        "byUs": [
+          "Bij schending van de voorwaarden, misbruik, wanbetaling of beveiligingsrisico's kunnen we (tijdelijk) beëindigen",
+          "Waar redelijk geven we eerst een waarschuwing en herstelperiode"
+        ],
+        "consequencesTitle": "Gevolgen",
+        "consequences": [
+          "Toegang vervalt; gegevensbewaring volgt het privacybeleid",
+          "Openstaande bedragen blijven verschuldigd"
+        ]
+      },
+      "section10": {
+        "title": "10. Toepasselijk recht & Geschillen",
+        "lawTitle": "Recht",
+        "law": "Op deze overeenkomst is Nederlands recht van toepassing, met uitsluiting van conflictenrechtelijke regels.",
+        "disputesTitle": "Geschillenbeslechting",
+        "disputes": [
+          "Eerst proberen we het intern op te lossen: e-mail info@vexnexa.com",
+          "Reactietermijn: 30 dagen om tot een oplossing te komen",
+          "Komen we er niet uit: mediation (indien beide partijen instemmen)",
+          "Bevoegde rechter: Rechtbank Amsterdam"
+        ],
+        "consumerRightsTitle": "Consumentenrechten",
+        "consumerRights": "Consumenten behouden hun wettelijke rechten die niet contractueel uitgesloten kunnen worden."
+      },
+      "section11": {
+        "title": "11. Wijzigingen & Slotbepalingen",
+        "changesTitle": "Wijzigingen",
+        "changes": "We kunnen deze voorwaarden aanpassen (bijvoorbeeld door wetgeving, nieuwe functies of misbruikpreventie). Bij materiële wijzigingen informeren we je — doorgaans 30 dagen vooraf. Voortgezet gebruik na de ingangsdatum geldt als aanvaarding.",
+        "severabilityTitle": "Deelbaarheid & gehele overeenkomst",
+        "severability": [
+          "Indien een bepaling ongeldig of nietig wordt geacht, blijven de overige bepalingen van kracht",
+          "We vervangen een ongeldige bepaling door een geldige bepaling van vergelijkbare strekking",
+          "Deze voorwaarden + het privacybeleid vormen de gehele overeenkomst en vervangen eerdere communicatie"
+        ]
+      },
+      "section12": {
+        "title": "12. Contact",
+        "titleText": "Juridische vragen",
+        "email": "E-mail: info@vexnexa.com"
+      },
+      "footer": {
+        "privacyLink": "Privacybeleid",
+        "contactLink": "Vragen? Neem contact op"
       }
     },
     "security": {

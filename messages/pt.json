@@ -20,24 +20,42 @@
   "footer": {
     "brand": {
       "name": "VexNexa",
-      "tagline": "Escaneamento WCAG amigável para desenvolvedores. Sem overlays. Sem BS.",
+      "tagline": "Varredura WCAG amigável para desenvolvedores. Sem overlays. Sem enrolação.",
       "followUs": "Siga-nos",
       "newsletter": {
-        "title": "Mantenha-se atualizado",
-        "description": "Subscreva a nossa newsletter para atualizações e dicas de acessibilidade.",
-        "placeholder": "Introduza o seu email",
-        "subscribe": "Subscrever",
-        "success": "Obrigado por subscrever!",
-        "confirmTitle": "Confirmation email sent!",
-        "confirmDescription": "Check your inbox and click the link to complete your subscription.",
-        "successTitle": "Thanks for subscribing!",
-        "successDescription": "We'll keep you updated with new features and tips.",
-        "alreadyTitle": "This email address is already subscribed",
-        "alreadyDescription": "Thanks for your interest!",
-        "errorTitle": "Something went wrong",
-        "errorDescription": "Please try again later."
+        "title": "Fique por dentro",
+        "description": "Inscreva-se em nossa newsletter para atualizações e dicas de acessibilidade.",
+        "placeholder": "Digite seu e-mail",
+        "subscribe": "Inscrever-se",
+        "success": "Obrigado por se inscrever!",
+        "confirmTitle": "E-mail de confirmação enviado!",
+        "confirmDescription": "Verifique sua caixa de entrada e clique no link para completar sua inscrição.",
+        "successTitle": "Obrigado por se inscrever!",
+        "successDescription": "Mantemos você atualizado com novos recursos e dicas.",
+        "alreadyTitle": "Este endereço de e-mail já está inscrito",
+        "alreadyDescription": "Obrigado pelo seu interesse!",
+        "errorTitle": "Algo deu errado",
+        "errorDescription": "Por favor, tente novamente mais tarde."
       },
-      "twitter": "Visit VexNexa on Twitter"
+      "twitter": "Visite VexNexa no Twitter"
+    },
+    "dashboard": {
+      "description": "Testes de acessibilidade profissionais e monitoramento de conformidade.",
+      "dashboard": "Painel",
+      "overview": "Visão Geral",
+      "scans": "Varreduras",
+      "sites": "Sites",
+      "teams": "Equipes",
+      "settings": "Configurações",
+      "billing": "Faturamento",
+      "notifications": "Notificações",
+      "whiteLabel": "White Label",
+      "support": "Suporte",
+      "contact": "Contato",
+      "privacyPolicy": "Política de Privacidade",
+      "termsOfService": "Termos de Serviço",
+      "allRightsReserved": "Todos os direitos reservados.",
+      "madeWithLove": "Feito com ❤️ para acessibilidade web"
     },
     "product": {
       "title": "Produto",
@@ -1909,8 +1927,8 @@
     "terms": {
       "title": "Termos de serviço",
       "description": "Estes termos aplicam-se ao uso do serviço de escaneamento de acessibilidade VexNexa.",
-      "lastUpdated": "8 de dezembro de 2024",
-      "version": "v1.1",
+      "lastUpdated": "27 de abril de 2026",
+      "version": "v1.2",
       "summary": {
         "title": "Resumo (não legalmente vinculativo)",
         "description": "Em linguagem simples — leia também os termos completos abaixo.",
@@ -1928,6 +1946,199 @@
           "Uso ilegal ou prejudicial (ex., extrair dados pessoais)"
         ],
         "byUsing": "Ao usar a VexNexa concorda com estes termos."
+      },
+      "section1": {
+        "title": "1. Definições & Aplicabilidade",
+        "definitionsTitle": "Definições",
+        "definitions": [
+          { "term": "VexNexa", "desc": "o serviço de escaneamento de acessibilidade sob vexnexa.com." },
+          { "term": "Nós", "desc": "o responsável pelo tratamento e prestador de serviços (VexNexa B.V.)." },
+          { "term": "Utilizador", "desc": "qualquer pessoa singular ou coletiva que utiliza o serviço." },
+          { "term": "Conta", "desc": "o seu acesso pessoal ou empresarial a funcionalidades e histórico." },
+          { "term": "Scan", "desc": "um teste de acessibilidade automatizado de uma página web." },
+          { "term": "API", "desc": "interface de programação para acesso automatizado ao serviço." }
+        ],
+        "applicabilityTitle": "Aplicabilidade",
+        "applicability": "Estes termos aplicam-se a qualquer uso da VexNexa, incluindo contas gratuitas e pagas, a API, períodos de teste e toda a comunicação relacionada. Os desvios só são válidos se acordados por escrito.",
+        "legalInfoTitle": "Detalhes legais (prestador de serviços)",
+        "companyName": "VexNexa B.V.",
+        "address": "Provencialeweg 46B, 1562TB Krommenie, Países Baixos",
+        "kvk": "94848262",
+        "establishment": "000060294744",
+        "email": "info@vexnexa.com"
+      },
+      "section2": {
+        "title": "2. Uso do Serviço",
+        "allowedTitle": "Uso permitido",
+        "allowed": [
+          "Escanear sites web de que é proprietário ou para os quais tem permissão demonstrável",
+          "Projetos internos e atribuições de clientes (partilhar relatórios é permitido)",
+          "Educação/investigação e uso comercial dentro dos limites da sua subscrição"
+        ],
+        "notAllowedTitle": "Não permitido",
+        "notAllowed": [
+          "Scans em sites sem permissão do proprietário ou administrador",
+          "Contornar limites de taxa, comportamento tipo DDoS ou extração de dados pessoais",
+          "Engenharia reversa, copiar ou reembalar o nosso software ou resultados como seu próprio produto",
+          "Uso em violação de leis e regulamentos (incluindo direitos de autor, RGPD e a lei sobre criminalidade informática)"
+        ],
+        "accountSecurityTitle": "Conta & segurança",
+        "accountSecurity": [
+          "Gerir as suas credenciais de login com cuidado; toda a atividade sob a sua conta é-lhe atribuída",
+          "Reportar abuso ou suspeita de violação de dados imediatamente via info@vexnexa.com",
+          "Em caso de suspeita de abuso ou riscos de segurança, podemos bloquear contas temporariamente"
+        ]
+      },
+      "section3": {
+        "title": "3. API & Uso Justo",
+        "content": "O acesso à API está disponível para subscrições elegíveis. Aplicamos limites de uso justo e técnicos (pedidos por minuto/dia, trabalhos simultâneos). Os detalhes estão no seu painel.",
+        "rules": [
+          "As chaves API são pessoais; partilhá-las ou colocá-las em open source não é permitido",
+          "Os resultados podem ser exibidos nas suas próprias ferramentas, desde que mencione \"VexNexa\" em relatórios automatizados",
+          "Alterações a endpoints ou limites podem ser implementadas sem aviso prévio em caso de abuso ou perturbações"
+        ]
+      },
+      "section4": {
+        "title": "4. Pagamentos & Subscrições",
+        "priceNotice": "Importante — exibição de preços: Os preços em vexnexa.com e no checkout incluem 21% de IVA, salvo indicação expressa em contrário para clientes empresariais com um número de IVA válido (neste caso, o regime de autoliquidação ou uma taxa de 0% pode aplicar-se). O valor do IVA é especificado separadamente na sua fatura.",
+        "trialTitle": "Grátis (Teste)",
+        "trial": [
+          "O teste gratuito permanece gratuito com limites mensais fixos (100 páginas por mês, 1 site web)",
+          "Limite estrito: quando o uso gratuito é excedido, o serviço é bloqueado até ao mês seguinte ou até atualizar para um plano pago",
+          "O teste expira após o período indicado; uma atualização é necessária para continuar a usar o serviço",
+          "As funcionalidades podem mudar — anunciamos alterações substanciais com antecedência",
+          "Não ocorre faturação automática de excedente; atualize para um plano pago para acesso continuado"
+        ],
+        "paidTitle": "Subscrições pagas",
+        "paid": [
+          "Os preços incluem 21% de IVA, salvo indicação expressa em contrário para clientes empresariais.",
+          "Os pagamentos são processados exclusivamente através do nosso prestador de pagamentos Mollie B.V. (Keizersgracht 313, 1016 EE Amesterdão). Os métodos disponíveis incluem iDEAL, cartão de crédito e débito SEPA. A VexNexa não armazena dados de cartões ou contas.",
+          "Pagamento antecipado mensal ou anual; renovação automática salvo cancelamento atempado",
+          "O cancelamento é possível até ao último dia do período em curso (o serviço continua até ao final do prazo)",
+          "Atualizações a meio do período são possíveis; os custos são calculados pro rata"
+        ],
+        "limitsTitle": "Limites & Excedente (apenas planos pagos)",
+        "limits": [
+          "Teste/Grátis: limite estrito — o serviço é bloqueado ao exceder. Uma atualização é necessária para acesso continuado.",
+          "Planos pagos — taxas de excedente (todos os valores incluem 21% de IVA): quando os limites são excedidos, scans adicionais são faturados automaticamente a €0,002 por página, €2,00 por site adicional por mês e €1,00 por utilizador adicional por mês.",
+          "Avisos seguem aos 80% e 100% do seu limite",
+          "Para excedentes consistentes, recomendamos atualizar para um plano superior"
+        ],
+        "refundsTitle": "Reembolsos & Chargebacks",
+        "refunds": [
+          "Sem reembolso por cancelamento antecipado salvo se legalmente exigido",
+          "Para falhas totais prolongadas (>48 horas), um crédito proporcional pode ser oferecido",
+          "Chargebacks injustificados podem levar a bloqueios (temporários) e passagem de custos"
+        ],
+        "withdrawalTitle": "Direito de retratação do consumidor",
+        "withdrawalIntro": "Para consumidores dentro da UE, aplica-se em princípio um período de reflexão legal de 14 dias para contratos à distância (Livro 6, Título 5, Secção 2B BW). A VexNexa é um serviço digital entregue imediatamente após iniciar um scan ou confirmar uma atualização.",
+        "withdrawalWaiver": "Ao iniciar um scan ou confirmar uma (atualização para uma) subscrição paga, consente explicitamente a execução imediata do contrato antes da expiração do período de reflexão, e reconhece que com isso renuncia ao seu direito de retratação para o conteúdo digital já entregue para o período de faturação relevante (artigo 6:230p sub g BW).",
+        "withdrawalFuture": "Para períodos de faturação futuros, o direito de cancelar a sua subscrição antes da próxima data de renovação permanece, sujeito às regras de cancelamento acima. A renúncia ao direito de retratação aplica-se apenas ao período já entregue."
+      },
+      "section5": {
+        "title": "5. Disponibilidade & Suporte",
+        "slaTitle": "SLA & Manutenção",
+        "sla": [
+          "Esforçamo-nos por alta disponibilidade, mas 100% de uptime não é garantido",
+          "Anunciamos manutenção planeada onde possível com antecedência",
+          "Fatores externos (firewalls, robots.txt, limites de taxa) podem impedir scans"
+        ],
+        "supportTitle": "Suporte",
+        "support": [
+          "Free: e-mail dentro de 72 horas",
+          "Pro: e-mail dentro de 24 horas",
+          "Team: prioridade (tipicamente < 4 horas), suporte telefónico opcional"
+        ],
+        "changesTitle": "Alterações",
+        "changes": "Podemos ajustar funcionalidades, algoritmos ou UI; para impacto material, informamos atempadamente."
+      },
+      "section6": {
+        "title": "6. Propriedade Intelectual",
+        "ourRightsTitle": "Nossos direitos",
+        "ourRights": [
+          "Software, algoritmos, UI, marcas e documentação permanecem nossa propriedade (e/ou dos nossos licenciadores)",
+          "Sem transferência de direitos de PI; apenas um direito de uso limitado e revogável"
+        ],
+        "yourContentTitle": "Seu conteúdo & relatórios",
+        "yourContent": [
+          "Conserva os direitos aos seus próprios sites web e materiais",
+          "Concede-nos a licença necessária para realizar scans e exibir resultados",
+          "Relatórios podem ser usados interna e comercialmente; atribuição é apreciada mas não obrigatória"
+        ],
+        "noticesTitle": "Avisos",
+        "notices": "Suspeita de infração (ex., uso não autorizado da sua marca)? Envie e-mail para info@vexnexa.com."
+      },
+      "section7": {
+        "title": "7. Garantias & Responsabilidade",
+        "warrantyTitle": "Garantia limitada",
+        "warranty": [
+          "Scans seguem métodos padrão (incluindo regras semelhantes a axe-core), mas não cobrem todos os critérios WCAG em todos os contextos",
+          "Falsos positivos/negativos podem ocorrer; revisão humana permanece necessária"
+        ],
+        "liabilityTitle": "Limitação de responsabilidade",
+        "liability": [
+          "Nossa responsabilidade total é limitada ao valor que pagou nos últimos 12 meses",
+          "Sem responsabilidade por danos indiretos/consequentes, lucros perdidos, perda de dados ou danos reputacionais",
+          "Exclusões não se aplicam em caso de intenção ou negligência deliberada na medida permitida por lei"
+        ],
+        "forceMajeureTitle": "Força maior",
+        "forceMajeure": "Sem responsabilidade por eventos fora do nosso controlo razoável (incluindo falhas em terceiros, guerra, catástrofes naturais, ciberataques)"
+      },
+      "section8": {
+        "title": "8. Privacidade & Proteção de Dados",
+        "content": "Processamos dados pessoais de acordo com a nossa política de privacidade. Essa política forma parte integrante destes termos."
+      },
+      "section9": {
+        "title": "9. Rescisão",
+        "byYouTitle": "Por si",
+        "byYou": [
+          "Cancelamento através da sua conta; acesso continua até ao final do período de faturação",
+          "Pode solicitar a eliminação de dados de conta de acordo com a política de privacidade"
+        ],
+        "byUsTitle": "Por nós",
+        "byUs": [
+          "Por violação dos termos, abuso, não pagamento ou riscos de segurança, podemos (temporariamente) rescindir",
+          "Onde razoável, damos primeiro um aviso e período de recuperação"
+        ],
+        "consequencesTitle": "Consequências",
+        "consequences": [
+          "Acesso expira; retenção de dados segue a política de privacidade",
+          "Valores em aberto permanecem devidos"
+        ]
+      },
+      "section10": {
+        "title": "10. Lei Aplicável & Litígios",
+        "lawTitle": "Lei",
+        "law": "A lei neerlandesa aplica-se a este acordo, com exclusão de regras de conflito de leis.",
+        "disputesTitle": "Resolução de litígios",
+        "disputes": [
+          "Primeiro tentamos resolver internamente: e-mail info@vexnexa.com",
+          "Período de resposta: 30 dias para chegar a uma solução",
+          "Se não conseguirmos resolver: mediação (se ambas as partes concordarem)",
+          "Tribunal competente: Tribunal de Amesterdão"
+        ],
+        "consumerRightsTitle": "Direitos do consumidor",
+        "consumerRights": "Os consumidores conservam os seus direitos legais que não podem ser excluídos contratualmente."
+      },
+      "section11": {
+        "title": "11. Alterações & Disposições Finais",
+        "changesTitle": "Alterações",
+        "changes": "Podemos ajustar estes termos (ex., por legislação, novas funcionalidades ou prevenção de abuso). Para alterações materiais, informamos — tipicamente 30 dias antes. O uso continuado após a data de entrada em vigor constitui aceitação.",
+        "severabilityTitle": "Divisibilidade & acordo completo",
+        "severability": [
+          "Se uma disposição for considerada inválida ou nula, as disposições restantes permanecem em vigor",
+          "Substituímos uma disposição inválida por uma disposição válida de propósito semelhante",
+          "Estes termos + a política de privacidade constituem o acordo completo e substituem comunicações anteriores"
+        ]
+      },
+      "section12": {
+        "title": "12. Contacto",
+        "titleText": "Questões legais",
+        "email": "E-mail: info@vexnexa.com"
+      },
+      "footer": {
+        "privacyLink": "Política de privacidade",
+        "contactLink": "Questões? Contacte-nos"
       }
     },
     "security": {

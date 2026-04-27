@@ -20,24 +20,42 @@
   "footer": {
     "brand": {
       "name": "VexNexa",
-      "tagline": "Developer-friendly WCAG scanning. No overlays. No BS.",
-      "followUs": "Follow us",
+      "tagline": "Entwicklerfreundliche WCAG-Scans. Keine Overlays. Kein Unsinn.",
+      "followUs": "Folgen Sie uns",
       "newsletter": {
-        "title": "Stay up to date",
-        "description": "Subscribe to our newsletter for updates and accessibility tips.",
-        "placeholder": "Enter your email",
-        "subscribe": "Subscribe",
-        "success": "Thanks for subscribing!",
-        "confirmTitle": "Confirmation email sent!",
-        "confirmDescription": "Check your inbox and click the link to complete your subscription.",
-        "successTitle": "Thanks for subscribing!",
-        "successDescription": "We'll keep you updated with new features and tips.",
-        "alreadyTitle": "This email address is already subscribed",
-        "alreadyDescription": "Thanks for your interest!",
-        "errorTitle": "Something went wrong",
-        "errorDescription": "Please try again later."
+        "title": "Bleiben Sie auf dem Laufenden",
+        "description": "Abonnieren Sie unseren Newsletter für Updates und Barrierefreiheitstipps.",
+        "placeholder": "Geben Sie Ihre E-Mail ein",
+        "subscribe": "Abonnieren",
+        "success": "Danke für das Abonnement!",
+        "confirmTitle": "Bestätigungs-E-Mail gesendet!",
+        "confirmDescription": "Überprüfen Sie Ihren Posteingang und klicken Sie auf den Link, um das Abonnement abzuschließen.",
+        "successTitle": "Danke für das Abonnement!",
+        "successDescription": "Wir halten Sie über neue Funktionen und Tipps auf dem Laufenden.",
+        "alreadyTitle": "Diese E-Mail-Adresse ist bereits abonniert",
+        "alreadyDescription": "Danke für Ihr Interesse!",
+        "errorTitle": "Etwas ist schiefgelaufen",
+        "errorDescription": "Bitte versuchen Sie es später erneut."
       },
-      "twitter": "Visit VexNexa on Twitter"
+      "twitter": "VexNexa auf Twitter besuchen"
+    },
+    "dashboard": {
+      "description": "Professionelle Barrierefreiheitstests und Compliance-Monitoring.",
+      "dashboard": "Dashboard",
+      "overview": "Übersicht",
+      "scans": "Scans",
+      "sites": "Websites",
+      "teams": "Teams",
+      "settings": "Einstellungen",
+      "billing": "Abrechnung",
+      "notifications": "Benachrichtigungen",
+      "whiteLabel": "White Label",
+      "support": "Support",
+      "contact": "Kontakt",
+      "privacyPolicy": "Datenschutzerklärung",
+      "termsOfService": "Allgemeine Geschäftsbedingungen",
+      "allRightsReserved": "Alle Rechte vorbehalten.",
+      "madeWithLove": "Gemaakt mit ❤️ für Web-Barrierefreiheit"
     },
     "product": {
       "title": "Product",
@@ -1691,31 +1709,31 @@
       "title": "Frequently Asked Questions",
       "subtitle": "Answers to the most common questions about VexNexa",
       "privacy": {
-        "question": "How does VexNexa handle privacy?",
-        "answer": "We only scan publicly accessible content and don't store personal data. Our scans are fully GDPR compliant and we don't share data with third parties."
+        "question": "Wie geht VexNexa mit der Privatsphäre um?",
+        "answer": "Wir scannen nur öffentlich zugängliche Inhalte und speichern keine persönlichen Daten. Unsere Scans sind vollständig DSGVO-konform und wir teilen keine Daten mit Dritten."
       },
       "performance": {
-        "question": "Does scanning impact my website's performance?",
-        "answer": "No, our scans have no noticeable impact on your website. We simulate a normal visitor and don't perform stress tests. Scans run in the background without straining your site."
+        "question": "Beeinflusst das Scannen die Leistung meiner Website?",
+        "answer": "Nein, unsere Scans haben keine spürbaren Auswirkungen auf Ihre Website. Wir simulieren einen normalen Besucher und führen keine Stresstests durch. Die Scans laufen im Hintergrund, ohne Ihre Website zu belasten."
       },
       "cookies": {
-        "question": "Do I need to accept cookies to use VexNexa?",
-        "answer": "Basic functionality works without cookies. We only use cookies for analytics (optional) and to remember your preferences. You can refuse all cookies and the tool remains fully functional."
+        "question": "Muss ich Cookies akzeptieren, um VexNexa zu verwenden?",
+        "answer": "Die grundlegende Funktionalität funktioniert ohne Cookies. Wir verwenden Cookies nur für Analytics (optional) und um Ihre Präferenzen zu speichern. Sie können alle Cookies ablehnen und das Tool bleibt vollständig funktionsfähig."
       },
       "international": {
-        "question": "Can I scan international websites?",
-        "answer": "Yes! VexNexa works with websites in all languages and countries. We support international character sets and can scan websites regardless of location or language of content."
+        "question": "Kann ich internationale Websites scannen?",
+        "answer": "Ja! VexNexa funktioniert mit Websites in allen Sprachen und Ländern. Wir unterstützen internationale Zeichensätze und können Websites unabhängig vom Standort oder der Sprache des Inhalts scannen."
       },
       "account": {
-        "question": "Do I need an account or can I create teams?",
-        "answer": "A free account is required to run scans. This lets us save your results, provide exports, and track improvements over time. No credit card needed to get started."
+        "question": "Benötige ich ein Konto oder kann ich Teams erstellen?",
+        "answer": "Ein kostenloses Konto ist erforderlich, um Scans durchzuführen. Dies ermöglicht es uns, Ihre Ergebnisse zu speichern, Exports bereitzustellen und Verbesserungen im Zeitverlauf zu verfolgen. Keine Kreditkarte erforderlich, um zu beginnen."
       },
       "support": {
-        "question": "What kind of support do I get?",
-        "answer": "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times."
+        "question": "Welchen Support erhalte ich?",
+        "answer": "Alle Benutzer erhalten E-Mail-Support. Wir streben an, innerhalb von 1 Werktag zu antworten. Business- und Enterprise-Pläne enthalten Prioritäts-Support mit schnelleren Reaktionszeiten."
       },
-      "moreQuestions": "Have other questions?",
-      "contactUs": "Contact us"
+      "moreQuestions": "Haben Sie weitere Fragen?",
+      "contactUs": "Kontaktieren Sie uns"
     },
     "cta": {
       "title": "Ready to get started?",
@@ -1845,236 +1863,429 @@
       "contactUs": "Contact us"
     },
     "privacy": {
-      "title": "Privacy Policy",
-      "metaDescription": "Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.",
-      "description": "How VexNexa handles your personal data and protects your privacy.",
-      "lastUpdated": "April 27, 2026",
+      "title": "Datenschutzerklärung",
+      "metaDescription": "Lesen Sie unsere Datenschutzerklärung: wie VexNexa mit Ihren Daten, Cookies und Privatsphäre umgeht. DSGVO-konform.",
+      "description": "Wie VexNexa mit Ihren persönlichen Daten umgeht und Ihre Privatsphäre schützt.",
+      "lastUpdated": "27. April 2026",
       "version": "v1.3",
       "summary": {
-        "title": "Privacy at a glance",
-        "description": "The most important points in one overview.",
-        "doTitle": "✅ What we DO",
+        "title": "Datenschutz auf einen Blick",
+        "description": "Die wichtigsten Punkte in einer Übersicht.",
+        "doTitle": "✅ Was wir WIRKLICH tun",
         "doItems": [
-          "Only scan publicly accessible pages",
-          "Store data securely in the EU",
-          "Data minimization & transparency",
-          "Clear rights and settings"
+          "Nur öffentlich zugängliche Seiten scannen",
+          "Daten sicher in der EU speichern",
+          "Datenminimierung & Transparenz",
+          "Klare Rechte und Einstellungen"
         ],
-        "dontTitle": "❌ What we DON'T do",
+        "dontTitle": "❌ Was wir NICHT tun",
         "dontItems": [
-          "Store personal data from page content",
-          "Sell data to third parties",
-          "Non-essential cookies without consent",
-          "Unsecured transfers outside the EU"
+          "Persönliche Daten aus Seiteninhalten speichern",
+          "Daten an Dritte verkaufen",
+          "Nicht-essentielle Cookies ohne Zustimmung",
+          "Unsichere Übertragungen außerhalb der EU"
         ]
       },
       "section1": {
-        "title": "1. Who we are",
-        "content": "VexNexa is an accessibility-scanning service developed in the Netherlands. We help website owners make their sites more accessible by testing WCAG compliance.",
-        "contactTitle": "Contact details (data controller)",
-        "companyName": "Company name",
-        "companyValue": "VexNexa B.V. (VexNexa is part of VexNexa)",
-        "address": "Address",
-        "addressValue": "Provencialeweg 46B, 1506 MC Zaandam, Netherlands",
-        "kvk": "Chamber of Commerce",
-        "vat": "VAT",
-        "email": "Email",
+        "title": "1. Wer wir sind",
+        "content": "VexNexa ist ein Barrierefreiheits-Scanning-Dienst, der in den Niederlanden entwickelt wurde. Wir helfen Website-Besitzern, ihre Websites zugänglicher zu machen, indem wir die WCAG-Konformität testen.",
+        "contactTitle": "Kontaktdetails (Verantwortlicher für die Datenverarbeitung)",
+        "companyName": "Firmenname",
+        "companyValue": "VexNexa B.V. (VexNexa ist Teil von VexNexa)",
+        "address": "Adresse",
+        "addressValue": "Provencialeweg 46B, 1562TB Krommenie, Niederlande",
+        "kvk": "Handelskammernummer",
+        "vat": "Mehrwertsteuer",
+        "email": "E-Mail",
         "website": "Website"
       },
       "section2": {
-        "title": "2. What data we collect",
-        "scanDataTitle": "Scan data",
+        "title": "2. Welche Daten wir sammeln",
+        "scanDataTitle": "Scandaten",
         "scanDataItems": [
-          "URL of the scanned page",
-          "Technical metadata about accessibility issues",
-          "Scan timestamps",
-          "IP address for rate-limiting and abuse prevention"
+          "URL der gescannten Seite",
+          "Technische Metadaten über Barrierefreiheitsprobleme",
+          "Scan-Zeitstempel",
+          "IP-Adresse für Rate-Limiting und Missbrauchsprävention"
         ],
-        "important": "Important",
-        "importantNote": "we do not store personal data from page content (such as names, emails, phone numbers); we only analyze HTML structure and accessibility.",
-        "accountTitle": "Account data (optional)",
+        "important": "Wichtig",
+        "importantNote": "Wir speichern keine persönlichen Daten aus Seiteninhalten (wie Namen, E-Mails, Telefonnummern); wir analysieren nur die HTML-Struktur und Barrierefreiheit.",
+        "accountTitle": "Kontodaten (optional)",
         "accountItems": [
-          "Email address",
-          "Name (if provided)",
-          "Hashed password",
-          "Account preferences"
+          "E-Mail-Adresse",
+          "Name (falls angegeben)",
+          "Gehashtes Passwort",
+          "Kontoeinstellungen"
         ],
-        "contactTitle": "Contact",
+        "contactTitle": "Kontakt",
         "contactItems": [
-          "Name and email address",
-          "Message content",
-          "Submission timestamp"
+          "Name und E-Mail-Adresse",
+          "Nachrichteninhalt",
+          "Zeitstempel der Übermittlung"
         ],
-        "googleOauthTitle": "Sign in with Google (OAuth)",
-        "googleOauthIntro": "When you choose to sign in with your Google account, we receive only the following information from your Google profile via the Google OAuth integration:",
+        "googleOauthTitle": "Anmeldung mit Google (OAuth)",
+        "googleOauthIntro": "Wenn Sie sich mit Ihrem Google-Konto anmelden, erhalten wir über die Google OAuth-Integration ausschließlich die folgenden Informationen aus Ihrem Google-Profil:",
         "googleOauthItems": [
-          "Your email address (required for account identification)",
-          "Your full name as registered with Google",
-          "A unique Google account ID (sub) to link future logins"
+          "Ihre E-Mail-Adresse (erforderlich für die Konto-Identifikation)",
+          "Ihr vollständiger Name wie bei Google registriert",
+          "Eine eindeutige Google-Konto-ID (sub) zur Verknüpfung zukünftiger Anmeldungen"
         ],
-        "googleOauthExtra": "We do not request access to your Gmail, contacts, calendar or Drive. We never see your Google password; authentication is handled entirely by Google.",
-        "paymentsTitle": "Payment data",
-        "paymentsImportant": "Important",
-        "paymentsNote": "VexNexa does not store credit card or bank account numbers itself. All payment data is processed exclusively by our payment service provider Mollie B.V. within their PCI-DSS certified environment.",
+        "googleOauthExtra": "Wir fordern keinen Zugriff auf Ihr Gmail, Kontakte, Kalender oder Drive. Wir sehen Ihr Google-Passwort niemals; die Authentifizierung erfolgt vollständig über Google.",
+        "paymentsTitle": "Zahlungsdaten",
+        "paymentsImportant": "Wichtig",
+        "paymentsNote": "VexNexa speichert selbst keine Kreditkarten- oder Bankkontonummern. Alle Zahlungsdaten werden ausschließlich von unserem Zahlungsanbieter Mollie B.V. in deren PCI-DSS-zertifizierter Umgebung verarbeitet.",
         "paymentsItems": [
-          "We receive only a payment reference (payment ID), the status (success/failure), the amount, and the payment-method type (e.g. iDEAL, SEPA, card) from Mollie — never the card number itself.",
-          "For legally required invoicing we retain invoice details (company name, address, VAT number, invoice number, amount).",
-          "You can revoke a stored payment method at any time by canceling your subscription or contacting support."
+          "Wir erhalten von Mollie nur eine Zahlungsreferenz (Zahlungs-ID), den Status (erfolgreich/fehlgeschlagen), den Betrag und den Zahlungsmittel-Typ (z. B. iDEAL, SEPA, Karte) — niemals die Kartennummer selbst.",
+          "Für gesetzlich erforderliche Rechnungen speichern wir Rechnungsdetails (Firmenname, Adresse, USt-Nummer, Rechnungsnummer, Betrag).",
+          "Sie können eine gespeicherte Zahlungsmethode jederzeit widerrufen, indem Sie Ihr Abonnement kündigen oder den Support kontaktieren."
         ]
       },
       "section3": {
-        "title": "3. Legal basis (Art. 6 GDPR)",
+        "title": "3. Rechtsgrundlage (Art. 6 DSGVO)",
         "items": [
-          "Performance of contract – scans, results, account management.",
-          "Legitimate interest – security (rate-limiting, abuse detection), basic improvements.",
-          "Consent – analytics/marketing cookies and any opt-in communication.",
-          "Legal obligation – retention requirements and requests from authorities."
+          "Vertragserfüllung – Scans, Ergebnisse, Kontoverwaltung.",
+          "Berechtigtes Interesse – Sicherheit (Rate-Limiting, Missbrauchserkennung), grundlegende Verbesserungen.",
+          "Einwilligung – Analytics/Marketing-Cookies und jede Opt-in-Kommunikation.",
+          "Gesetzliche Verpflichtung – Aufbewahrungsanforderungen und Anfragen von Behörden."
         ]
       },
       "section4": {
-        "title": "4. Cookies and tracking",
-        "functionalTitle": "Functional cookies (necessary)",
+        "title": "4. Cookies und Tracking",
+        "functionalTitle": "Funktionale Cookies (notwendig)",
         "functionalItems": [
-          "Session for logged-in users",
-          "Preferences (language, theme)",
-          "Cookie consent status"
+          "Sitzung für angemeldete Benutzer",
+          "Präferenzen (Sprache, Thema)",
+          "Cookie-Einwilligungsstatus"
         ],
-        "analyticsTitle": "Analytics cookies (optional)",
-        "analyticsIntro": "With consent, we may use privacy-friendly analytics (e.g., Vercel Analytics or alternative). We measure aggregated statistics, not individual profiles.",
+        "analyticsTitle": "Analytics-Cookies (optional)",
+        "analyticsIntro": "Mit Einwilligung können wir datenschutzfreundliche Analytics verwenden (z. B. Vercel Analytics oder Alternative). Wir messen aggregierte Statistiken, keine individuellen Profile.",
         "analyticsItems": [
-          "Visitor statistics (aggregated/anonymous)",
-          "Popular pages and features",
-          "Technical performance"
+          "Besucherstatistiken (aggregiert/anonym)",
+          "Beliebte Seiten und Funktionen",
+          "Technische Leistung"
         ],
-        "manageText": "You can manage consent through the",
-        "cookieSettings": "cookie settings",
-        "utmTitle": "UTM parameters",
-        "utmText": "We may temporarily store UTM parameters to understand origin. These contain no personal data."
+        "manageText": "Sie können die Einwilligung über die",
+        "cookieSettings": "Cookie-Einstellungen verwalten",
+        "utmTitle": "UTM-Parameter",
+        "utmText": "Wir können UTM-Parameter temporär speichern, um den Ursprung zu verstehen. Diese enthalten keine persönlichen Daten."
       },
       "section5": {
-        "title": "5. How and why we use data",
+        "title": "5. Wie und warum wir Daten verwenden",
         "items": [
-          "Performing scans and displaying results",
-          "Account management and login",
-          "Customer service and support",
-          "Service improvement (with consent for analytics)",
-          "Compliance with laws and regulations"
+          "Durchführung von Scans und Anzeige von Ergebnissen",
+          "Kontoverwaltung und Anmeldung",
+          "Kundenservice und Support",
+          "Serviceverbesserung (mit Einwilligung für Analytics)",
+          "Einhaltung von Gesetzen und Vorschriften"
         ],
-        "noSelling": "We do not sell or rent your data to third parties for marketing purposes."
+        "noSelling": "Wir verkaufen oder vermieten Ihre Daten nicht an Dritte für Marketingzwecke."
       },
       "section6": {
-        "title": "6. Recipients and processors",
-        "intro": "We share data only with service providers that process it on our behalf under a Data Processing Agreement (DPA) compliant with Art. 28 GDPR. Per category, the current processors are:",
+        "title": "6. Empfänger und Auftragsverarbeiter",
+        "intro": "Wir teilen Daten nur mit Dienstleistern, die diese in unserem Auftrag unter einer Datenverarbeitungsvereinbarung (AVV) verarbeiten, die Art. 28 DSGVO entspricht. Pro Kategorie sind die aktuellen Auftragsverarbeiter:",
         "processors": {
-          "hostingLabel": "Hosting & edge",
-          "hostingValue": "Vercel Inc. — application hosting and edge routing. Any data transfers to the United States are covered by EU Standard Contractual Clauses (SCCs) and supplementary technical measures.",
-          "databaseLabel": "Database & storage",
-          "databaseValue": "Supabase (hosted on AWS in the EU, Frankfurt region) — primary storage for account and scan data. Data remains within the EU.",
-          "authLabel": "Authentication",
-          "authValue": "Supabase Auth for email/password login, and Google LLC for the optional Google OAuth integration. With Google OAuth we receive only your email address, full name, and a Google account ID.",
-          "paymentsLabel": "Payments",
-          "paymentsValue": "Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam) — handles all payments and is independently PCI-DSS certified. VexNexa does not store any card data.",
-          "emailLabel": "Email (transactional)",
-          "emailValue": "Resend (Resend Inc.) — sends transactional email such as verification, password reset, and invoice/report notifications. Data transfers are covered by SCCs."
+          "hostingLabel": "Hosting & Edge",
+          "hostingValue": "Vercel Inc. — Application-Hosting und Edge-Routing. Alle Datenübertragungen in die USA sind durch EU-Standardvertragsklauseln (SCCs) und ergänzende technische Maßnahmen abgedeckt.",
+          "databaseLabel": "Datenbank & Speicher",
+          "databaseValue": "Supabase (gehostet auf AWS in der EU, Region Frankfurt) — primärer Speicher für Konto- und Scandaten. Daten verbleiben innerhalb der EU.",
+          "authLabel": "Authentifizierung",
+          "authValue": "Supabase Auth für E-Mail/Passwort-Anmeldung und Google LLC für die optionale Google OAuth-Integration. Mit Google OAuth erhalten wir nur Ihre E-Mail-Adresse, Ihren vollständigen Namen und eine Google-Konto-ID.",
+          "paymentsLabel": "Zahlungen",
+          "paymentsValue": "Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam) — bearbeitet alle Zahlungen und ist unabhängig PCI-DSS-zertifiziert. VexNexa speichert keine Kartendaten.",
+          "emailLabel": "E-Mail (transaktional)",
+          "emailValue": "Resend (Resend Inc.) — sendet transaktionale E-Mails wie Verifizierung, Passwort-Reset und Rechnungs-/Berichtbenachrichtigungen. Datenübertragungen sind durch SCCs abgedeckt."
         }
       },
       "section7": {
-        "title": "7. Transfers outside EU/EEA",
-        "content": "If transfers outside the EU take place (e.g., edge-routing or support logs), we use appropriate safeguards such as EU Standard Contractual Clauses and additional measures."
+        "title": "7. Übertragungen außerhalb der EU/des EWR",
+        "content": "Wenn Übertragungen außerhalb der EU stattfinden (z. B. Edge-Routing oder Support-Protokolle), verwenden wir angemessene Schutzmaßnahmen wie EU-Standardvertragsklauseln und ergänzende Maßnahmen."
       },
       "section8": {
-        "title": "8. Data storage, security & retention",
-        "storageTitle": "Storage locations",
+        "title": "8. Datenspeicherung, Sicherheit & Aufbewahrung",
+        "storageTitle": "Speicherorte",
         "storageItems": [
-          "Database/compute in EU data centers",
-          "Backups within Europe"
+          "Datenbank/Compute in EU-Rechenzentren",
+          "Backups innerhalb Europas"
         ],
-        "securityTitle": "Security measures",
+        "securityTitle": "Sicherheitsmaßnahmen",
         "securityItems": [
-          "TLS/HTTPS end-to-end",
-          "Hashed passwords",
-          "Least-privilege access control & monitoring",
-          "Regular patches/updates",
-          "Data minimization"
+          "TLS/HTTPS Ende-zu-Ende",
+          "Gehashte Passwörter",
+          "Zugriffskontrolle nach dem Prinzip der geringsten Rechte & Überwachung",
+          "Regelmäßige Patches/Updates",
+          "Datenminimierung"
         ],
-        "retentionTitle": "Retention periods",
+        "retentionTitle": "Aufbewahrungsfristen",
         "retentionItems": [
-          "Scan data: 1 year (Free); longer for paid accounts (configurable in your account)",
-          "Account data: until account deletion or as long as legally required",
-          "Contact messages: up to 2 years",
-          "Analytics: up to 24 months (aggregated/anonymized where possible)",
-          "Invoice data is retained for 7 years in accordance with the statutory tax retention obligation of the Dutch Tax Administration (Belastingdienst)."
+          "Scandaten: 1 Jahr (Free); länger für kostenpflichtige Konten (in Ihrem Konto konfigurierbar)",
+          "Kontodaten: bis zur Kontolöschung oder so lange gesetzlich erforderlich",
+          "Kontaktnachrichten: bis zu 2 Jahren",
+          "Analytics: bis zu 24 Monaten (wo möglich aggregiert/anonymisiert)",
+          "Rechnungsdaten werden 7 Jahre aufbewahrt in Übereinstimmung mit der gesetzlichen Steuer-Aufbewahrungspflicht der niederländischen Steuerbehörde (Belastingdienst)."
         ],
-        "retentionNote": "We delete or anonymize earlier when data is no longer needed, unless retention is legally required (such as the fiscal retention obligation for invoice data)."
+        "retentionNote": "Wir löschen oder anonymisieren früher, wenn Daten nicht mehr benötigt werden, es sei denn, die Aufbewahrung ist gesetzlich erforderlich (wie die steuerliche Aufbewahrungspflicht für Rechnungsdaten)."
       },
       "section9": {
-        "title": "9. Your rights (GDPR/AVG)",
-        "accessTitle": "🔍 Right of access",
-        "accessDesc": "Request what data we have about you.",
-        "rectificationTitle": "✏️ Rectification",
-        "rectificationDesc": "Have incorrect data corrected.",
-        "erasureTitle": "🗑️ Erasure",
-        "erasureDesc": "Have data deleted.",
-        "restrictionTitle": "⏸️ Restriction",
-        "restrictionDesc": "Restrict processing (temporarily).",
-        "portabilityTitle": "📦 Data portability",
-        "portabilityDesc": "Receive data in a common format.",
-        "objectionTitle": "❌ Objection",
-        "objectionDesc": "Object to processing based on legitimate interest.",
-        "exerciseText": "To exercise your rights? Email",
-        "responseText": "We respond within 30 days."
+        "title": "9. Ihre Rechte (DSGVO/AVG)",
+        "accessTitle": "🔍 Auskunftsrecht",
+        "accessDesc": "Anfordern, welche Daten wir über Sie haben.",
+        "rectificationTitle": "✏️ Berichtigung",
+        "rectificationDesc": "Falsche Daten korrigieren lassen.",
+        "erasureTitle": "🗑️ Löschung",
+        "erasureDesc": "Daten löschen lassen.",
+        "restrictionTitle": "⏸️ Einschränkung",
+        "restrictionDesc": "Verarbeitung einschränken (vorübergehend).",
+        "portabilityTitle": "📦 Datenübertragbarkeit",
+        "portabilityDesc": "Daten in einem gängigen Format erhalten.",
+        "objectionTitle": "❌ Widerspruch",
+        "objectionDesc": "Widerspruch gegen Verarbeitung aufgrund berechtigten Interesses.",
+        "exerciseText": "Um Ihre Rechte auszuüben? E-Mail",
+        "responseText": "Wir antworten innerhalb von 30 Tagen."
       },
       "section10": {
-        "title": "10. Children",
-        "content": "Not directed at children under 16 years. Contact us if data has been collected; we will delete it."
+        "title": "10. Kinder",
+        "content": "Nicht an Kinder unter 16 Jahren gerichtet. Kontaktieren Sie uns, wenn Daten gesammelt wurden; wir werden sie löschen."
       },
       "section11": {
-        "title": "11. Data breaches",
-        "content": "We immediately investigate the impact, limit risks and report if required to the Dutch Data Protection Authority and affected parties."
+        "title": "11. Datenpannen",
+        "content": "Wir untersuchen sofort die Auswirkungen, begrenzen Risiken und melden falls erforderlich an die niederländische Datenschutzbehörde und betroffene Parteien."
       },
       "section12": {
-        "title": "12. Automated decision-making",
-        "content": "We do not make decisions based solely on automated processing with legal effects for you."
+        "title": "12. Automatisierte Entscheidungsfindung",
+        "content": "Wir treffen keine Entscheidungen ausschließlich auf Basis automatisierter Verarbeitung mit rechtlichen Wirkungen für Sie."
       },
       "section13": {
-        "title": "13. Changes to this policy",
-        "content": "We communicate significant changes via email (if applicable), a notification on the site and update of the date."
+        "title": "13. Änderungen an dieser Richtlinie",
+        "content": "Wir kommunizieren wesentliche Änderungen per E-Mail (falls zutreffend), einer Benachrichtigung auf der Website und Aktualisierung des Datums."
       },
       "section14": {
-        "title": "14. Contact & complaints",
-        "getInTouch": "Get in touch",
-        "emailLabel": "Email",
-        "useForm": "Or use the",
-        "contactForm": "contact form",
-        "notSatisfied": "Not satisfied? File a complaint with the Dutch Data Protection Authority via"
+        "title": "14. Kontakt & Beschwerden",
+        "getInTouch": "Kontaktieren Sie uns",
+        "emailLabel": "E-Mail",
+        "useForm": "Oder verwenden Sie das",
+        "contactForm": "Kontaktformular",
+        "notSatisfied": "Nicht zufrieden? Reichen Sie eine Beschwerde bei der niederländischen Datenschutzbehörde ein über"
       },
       "footer": {
-        "questions": "Questions? Get in touch",
-        "termsLink": "Terms of Service"
+        "questions": "Fragen? Kontaktieren Sie uns",
+        "termsLink": "Allgemeine Geschäftsbedingungen"
       }
     },
     "terms": {
-      "title": "Terms of Service",
-      "description": "These terms apply to the use of the VexNexa accessibility-scanning service.",
-      "lastUpdated": "December 8, 2024",
-      "version": "v1.1",
+      "title": "Allgemeine Geschäftsbedingungen",
+      "description": "Diese Bedingungen gelten für die Nutzung des VexNexa-Barrierefreiheits-Scanning-Dienstes.",
+      "lastUpdated": "27. April 2026",
+      "version": "v1.2",
       "summary": {
-        "title": "Summary (not legally binding)",
-        "description": "In plain language — also read the full terms below.",
-        "mayTitle": "✅ What you may do",
+        "title": "Zusammenfassung (nicht rechtlich bindend)",
+        "description": "In einfacher Sprache — lesen Sie auch die vollständigen Bedingungen unten.",
+        "mayTitle": "✅ Was Sie tun dürfen",
         "mayItems": [
-          "Scan your own sites (or with owner permission)",
-          "Share reports with your team/clients",
-          "Cancel subscription whenever you want",
-          "Contact support for questions"
+          "Scannen Ihrer eigenen Websites (oder mit Erlaubnis des Eigentümers)",
+          "Berichte mit Ihrem Team/Kunden teilen",
+          "Abonnement jederzeit kündigen",
+          "Support bei Fragen kontaktieren"
         ],
-        "notAllowedTitle": "❌ Not allowed",
+        "notAllowedTitle": "❌ Nicht zulässig",
         "notAllowedItems": [
-          "Scanning without owner permission",
-          "Abuse/bypassing rate-limits or reverse-engineering",
-          "Unlawful or harmful use (e.g., scraping personal data)"
+          "Scannen ohne Erlaubnis des Eigentümers",
+          "Missbrauch/Umgehung von Rate-Limits oder Reverse-Engineering",
+          "Gesetzwidrige oder schädliche Nutzung (z. B. Scraping personenbezogener Daten)"
         ],
-        "byUsing": "By using VexNexa you agree to these terms."
+        "byUsing": "Durch die Nutzung von VexNexa stimmen Sie diesen Bedingungen zu."
+      },
+      "section1": {
+        "title": "1. Definitionen & Geltungsbereich",
+        "definitionsTitle": "Definitionen",
+        "definitions": [
+          { "term": "VexNexa", "desc": "der Barrierefreiheits-Scanning-Dienst unter vexnexa.com." },
+          { "term": "Wir/uns", "desc": "der Verantwortliche und Diensteanbieter (VexNexa B.V.)." },
+          { "term": "Benutzer", "desc": "jede natürliche oder juristische Person, die den Dienst nutzt." },
+          { "term": "Konto", "desc": "Ihr persönlicher oder geschäftlicher Zugang zu Funktionen und Verlauf." },
+          { "term": "Scan", "desc": "ein automatisierter Barrierefreiheitstest einer Webseite." },
+          { "term": "API", "desc": "Programmierschnittstelle für automatisierten Zugang zum Dienst." }
+        ],
+        "applicabilityTitle": "Geltungsbereich",
+        "applicability": "Diese Bedingungen gelten für jede Nutzung von VexNexa, einschließlich kostenloser und kostenpflichtiger Konten, der API, Testzeiträume und aller damit verbundenen Kommunikation. Abweichungen sind nur schriftlich gültig.",
+        "legalInfoTitle": "Rechtliche Angaben (Diensteanbieter)",
+        "companyName": "VexNexa B.V.",
+        "address": "Provencialeweg 46B, 1562TB Krommenie, Niederlande",
+        "kvk": "94848262",
+        "establishment": "000060294744",
+        "email": "info@vexnexa.com"
+      },
+      "section2": {
+        "title": "2. Nutzung des Dienstes",
+        "allowedTitle": "Zulässige Nutzung",
+        "allowed": [
+          "Scannen von Websites, die Ihnen gehören oder für die Sie nachweisbare Erlaubnis haben",
+          "Interne Projekte und Kundenaufträge (Teilen von Berichten ist zulässig)",
+          "Bildung/Forschung und kommerzielle Nutzung innerhalb der Grenzen Ihres Abonnements"
+        ],
+        "notAllowedTitle": "Nicht zulässig",
+        "notAllowed": [
+          "Scans auf Websites ohne Erlaubnis des Eigentümers oder Administrators",
+          "Umgehung von Rate-Limits, DDoS-ähnliches Verhalten oder Scraping personenbezogener Daten",
+          "Reverse-Engineering, Kopieren oder Neuverpackung unserer Software oder Ausgabe als eigenes Produkt",
+          "Nutzung unter Verletzung von Gesetzen und Vorschriften (einschließlich Urheberrecht, DSGVO und Computerstrafgesetz)"
+        ],
+        "accountSecurityTitle": "Konto & Sicherheit",
+        "accountSecurity": [
+          "Verwalten Sie Ihre Anmeldedaten sorgfältig; alle Aktivitäten unter Ihrem Konto werden Ihnen zugerechnet",
+          "Melden Sie Missbrauch oder vermuteten Datenverstoß sofort über info@vexnexa.com",
+          "Bei Verdacht auf Missbrauch oder Sicherheitsrisiken können wir Konten vorübergehend sperren"
+        ]
+      },
+      "section3": {
+        "title": "3. API & Fair Use",
+        "content": "API-Zugang ist für berechtigte Abonnements verfügbar. Wir wenden Fair-Use- und technische Grenzen durch (Anfragen pro Minute/Tag, gleichzeitige Jobs). Details finden Sie in Ihrem Dashboard.",
+        "rules": [
+          "API-Schlüssel sind persönlich; Teilen oder Open-Sourcen ist nicht zulässig",
+          "Ergebnisse dürfen in Ihren eigenen Tools angezeigt werden, sofern Sie \"VexNexa\" in automatisierten Berichten erwähnen",
+          "Änderungen an Endpunkten oder Grenzen können ohne Vorankündigung bei Missbrauch oder Störungen implementiert werden"
+        ]
+      },
+      "section4": {
+        "title": "4. Zahlungen & Abonnements",
+        "priceNotice": "Wichtig — Preisanzeige: Preise auf vexnexa.com und im Checkout inklusive 21% MwSt., sofern nicht explizit anders für Geschäftskunden mit gültiger USt-Nummer angegeben (in diesem Fall kann die Umkehrsteuerregelung oder ein 0%-Satz gelten). Der MwSt.-Betrag wird separat auf Ihrer Rechnung ausgewiesen.",
+        "trialTitle": "Kostenlos (Test)",
+        "trial": [
+          "Der kostenlose Test bleibt kostenlos mit festen monatlichen Grenzen (100 Seiten pro Monat, 1 Website)",
+          "Harte Grenze: Bei Überschreitung der kostenlosen Nutzung wird der Dienst bis zum nächsten Monat oder bis zum Upgrade auf ein kostenpflichtiges Plan gesperrt",
+          "Der Test läuft nach der angegebenen Zeit ab; ein Upgrade ist erforderlich, um den Dienst weiterhin zu nutzen",
+          "Funktionen können sich ändern — wir kündigen wesentliche Änderungen im Voraus an",
+          "Es erfolgt keine automatische Overage-Abrechnung; Upgrade auf ein kostenpflichtiges Plan für weiteren Zugang"
+        ],
+        "paidTitle": "Kostenpflichtige Abonnements",
+        "paid": [
+          "Preise inklusive 21% MwSt., sofern nicht explizit anders für Geschäftskunden angegeben.",
+          "Zahlung erfolgt ausschließlich über unseren Zahlungsanbieter Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam). Verfügbare Methoden umfassen iDEAL, Kreditkarte und SEPA-Lastschrift. VexNexa speichert selbst keine Karten- oder Kontodaten.",
+          "Vorauszahlung monatlich oder jährlich; automatische Verlängerung除非 rechtzeitig gekündigt",
+          "Kündigung ist bis zum letzten Tag des laufenden Zeitraums möglich (Dienst läuft bis zum Ende der Zeit weiter)",
+          "Mid-Term-Upgrades sind möglich; Kosten werden anteilig verrechnet"
+        ],
+        "limitsTitle": "Grenzen & Overage (nur kostenpflichtige Pläne)",
+        "limits": [
+          "Test/Kostenlos: harte Grenze — Dienst wird bei Überschreitung gesperrt. Ein Upgrade ist für weiteren Zugang erforderlich.",
+          "Kostenpflichtige Pläne — Overage-Sätze (alle Beträge inklusive 21% MwSt.): Bei Überschreitung der Grenzen werden zusätzliche Scans automatisch mit €0,002 pro Seite, €2,00 pro zusätzlicher Website pro Monat und €1,00 pro zusätzlichem Benutzer pro Monat berechnet.",
+          "Warnungen folgen bei 80% und 100% Ihrer Grenze",
+          "Bei konsistenten Überschreitungen empfehlen wir ein Upgrade auf einen höheren Plan"
+        ],
+        "refundsTitle": "Rückerstattungen & Chargebacks",
+        "refunds": [
+          "Keine Rückerstattung bei vorzeitiger Kündigung, sofern gesetzlich nicht vorgeschrieben",
+          "Bei längeren vollständigen Ausfällen (>48 Stunden) kann eine proportionale Gutschrift angeboten werden",
+          "Unberechtigte Chargebacks können zu (vorübergehender) Sperrung und Weitergabe der Kosten führen"
+        ],
+        "withdrawalTitle": "Widerrufsrecht Verbraucher",
+        "withdrawalIntro": "Für Verbraucher innerhalb der EU gilt grundsätzlich eine gesetzliche Widerrufsfrist von 14 Tagen bei Fernabsatzverträgen (Buch 6, Titel 5, Abschnitt 2B BW). VexNexa ist ein digitaler Dienst, der unmittelbar nach Start eines Scans oder Bestätigung eines Upgrades geliefert wird.",
+        "withdrawalWaiver": "Durch Start eines Scans oder Bestätigung eines (Upgrades zu einem) kostenpflichtigen Abonnements stimmen Sie ausdrücklich der sofortigen Ausführung des Vertrags vor Ablauf der Widerrufsfrist zu und erkennen an, dass Sie damit für den betreffenden Abrechnungszeitraum auf Ihr Widerrufsrecht für die bereits gelieferten digitalen Inhalte verzichten (Artikel 6:230p sub g BW).",
+        "withdrawalFuture": "Für zukünftige Abrechnungszeiträume bleibt das Recht bestehen, Ihr Abonnement vor der nächsten Verlängerungszeit zu kündigen, unter Einhaltung der oben genannten Kündigungsregeln. Der Verzicht auf das Widerrufsrecht gilt nur für den bereits gelieferten Zeitraum."
+      },
+      "section5": {
+        "title": "5. Verfügbarkeit & Support",
+        "slaTitle": "SLA & Wartung",
+        "sla": [
+          "Wir streben hohe Verfügbarkeit an, aber 100% Uptime ist nicht garantiert",
+          "Wir kündigen geplante Wartung wo möglich im Voraus an",
+          "Externe Faktoren (Firewalls, robots.txt, Rate-Limits) können Scans verhindern"
+        ],
+        "supportTitle": "Support",
+        "support": [
+          "Free: E-Mail innerhalb von 72 Stunden",
+          "Pro: E-Mail innerhalb von 24 Stunden",
+          "Team: Priorität (typischerweise < 4 Stunden), optionaler Telefonsupport"
+        ],
+        "changesTitle": "Änderungen",
+        "changes": "Wir können Funktionen, Algorithmen oder UI anpassen; bei materieller Auswirkung informieren wir rechtzeitig."
+      },
+      "section6": {
+        "title": "6. Geistiges Eigentum",
+        "ourRightsTitle": "Unsere Rechte",
+        "ourRights": [
+          "Software, Algorithmen, UI, Marken und Dokumentation bleiben unser Eigentum (und/oder unserer Lizenzgeber)",
+          "Keine Übertragung von IP-Rechten; nur ein eingeschränktes, widerrufbales Nutzungsrecht"
+        ],
+        "yourContentTitle": "Ihre Inhalte & Berichte",
+        "yourContent": [
+          "Sie behalten die Rechte an Ihren eigenen Websites und Materialien",
+          "Sie gewähren uns die Lizenz, die zur Durchführung von Scans und Anzeige von Ergebnissen erforderlich ist",
+          "Berichte dürfen intern und kommerziell verwendet werden; Attribution wird geschätzt, ist aber nicht erforderlich"
+        ],
+        "noticesTitle": "Mitteilungen",
+        "notices": "Verdacht auf Verletzung (z. B. unbefugte Nutzung Ihrer Marke)? E-Mail info@vexnexa.com."
+      },
+      "section7": {
+        "title": "7. Garantien & Haftung",
+        "warrantyTitle": "Eingeschränkte Garantie",
+        "warranty": [
+          "Scans folgen Standardmethoden (einschließlich Regeln ähnlich wie axe-core), decken aber nicht alle WCAG-Kriterien in allen Kontexten ab",
+          "Falsch-Positive/Negative können auftreten; menschliche Überprüfung bleibt erforderlich"
+        ],
+        "liabilityTitle": "Haftungsbeschränkung",
+        "liability": [
+          "Unsere Gesamthaftung ist auf den Betrag begrenzt, den Sie in den letzten 12 Monaten gezahlt haben",
+          "Keine Haftung für indirekte/folgebezogene Schäden, entgangenen Gewinn, Datenverlust oder Rufschäden",
+          "Ausschlüsse gelten nicht bei Vorsatz oder bewusster Fahrlässigkeit, soweit gesetzlich zulässig"
+        ],
+        "forceMajeureTitle": "Höhere Gewalt",
+        "forceMajeure": "Keine Haftung für Ereignisse außerhalb unserer zumutbaren Kontrolle (einschließlich Ausfälle bei Dritten, Krieg, Naturkatastrophen, Cyberangriffe)"
+      },
+      "section8": {
+        "title": "8. Datenschutz & Datenschutz",
+        "content": "Wir verarbeiten personenbezogene Daten in Übereinstimmung mit unserer Datenschutzrichtlinie. Diese Richtlinie bildet einen integralen Bestandteil dieser Bedingungen."
+      },
+      "section9": {
+        "title": "9. Beendigung",
+        "byYouTitle": "Durch Sie",
+        "byYou": [
+          "Kündigung über Ihr Konto; Zugang bleibt bis zum Ende des Abrechnungszeitraums bestehen",
+          "Sie können Löschung von Kontodaten in Übereinstimmung mit der Datenschutzrichtlinie beantragen"
+        ],
+        "byUsTitle": "Durch uns",
+        "byUs": [
+          "Bei Verletzung der Bedingungen, Missbrauch, Nichtzahlung oder Sicherheitsrisiken können wir (vorübergehend) beenden",
+          "Wo angemessen geben wir zuerst eine Warnung und Wiederherstellungszeitraum"
+        ],
+        "consequencesTitle": "Folgen",
+        "consequences": [
+          "Zugang erlischt; Datenaufbewahrung folgt der Datenschutzrichtlinie",
+          "Offene Beträge bleiben fällig"
+        ]
+      },
+      "section10": {
+        "title": "10. Anwendbares Recht & Streitigkeiten",
+        "lawTitle": "Recht",
+        "law": "Auf diese Vereinbarung ist niederländisches Recht anwendbar, unter Ausschluss kollisionsrechtlicher Regeln.",
+        "disputesTitle": "Streitbeilegung",
+        "disputes": [
+          "Zuerst versuchen wir intern zu lösen: E-Mail info@vexnexa.com",
+          "Reaktionszeitraum: 30 Tage um zu einer Lösung zu kommen",
+          "Wenn wir nicht lösen können: Mediation (wenn beide Parteien zustimmen)",
+          "Zuständiges Gericht: Bezirksgericht Amsterdam"
+        ],
+        "consumerRightsTitle": "Verbraucherrechte",
+        "consumerRights": "Verbraucher behalten ihre gesetzlichen Rechte, die nicht vertraglich ausgeschlossen werden können."
+      },
+      "section11": {
+        "title": "11. Änderungen & Schlussbestimmungen",
+        "changesTitle": "Änderungen",
+        "changes": "Wir können diese Bedingungen anpassen (z. B. durch Gesetzgebung, neue Funktionen oder Missbrauchsprävention). Bei materiellen Änderungen informieren wir Sie — typischerweise 30 Tage im Voraus. Fortgesetzte Nutzung nach dem Inkrafttreten gilt als Annahme.",
+        "severabilityTitle": "Salvatorische Klausel & gesamte Vereinbarung",
+        "severability": [
+          "Wenn eine Bestimmung als ungültig oder nichtig erachtet wird, bleiben die übrigen Bestimmungen in Kraft",
+          "Wir ersetzen eine ungültige Bestimmung durch eine gültige Bestimmung von ähnlicher Tragweite",
+          "Diese Bedingungen + die Datenschutzrichtlinie bilden die gesamte Vereinbarung und ersetzen frühere Kommunikation"
+        ]
+      },
+      "section12": {
+        "title": "12. Kontakt",
+        "titleText": "Rechtliche Fragen",
+        "email": "E-Mail: info@vexnexa.com"
+      },
+      "footer": {
+        "privacyLink": "Datenschutzrichtlinie",
+        "contactLink": "Fragen? Kontaktieren Sie uns"
       }
     },
     "security": {

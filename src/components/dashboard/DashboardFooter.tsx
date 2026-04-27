@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import VexnexaLogo from '@/components/brand/VexnexaLogo';
+import { useTranslations } from 'next-intl';
 
 export default function DashboardFooter() {
   const currentYear = new Date().getFullYear();
+  const t = useTranslations('footer');
 
   return (
     <footer className="border-t border-border/50 bg-muted/30 mt-auto">
@@ -14,32 +16,32 @@ export default function DashboardFooter() {
               <VexnexaLogo size={38} />
             </Link>
             <p className="text-xs text-muted-foreground">
-              Professional accessibility testing and compliance monitoring.
+              {t('description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-sm mb-3">Dashboard</h3>
+            <h3 className="font-semibold text-sm mb-3">{t('dashboard')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/dashboard" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Overview
+                  {t('overview')}
                 </Link>
               </li>
               <li>
                 <Link href="/scans" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Scans
+                  {t('scans')}
                 </Link>
               </li>
               <li>
                 <Link href="/sites" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Sites
+                  {t('sites')}
                 </Link>
               </li>
               <li>
                 <Link href="/teams" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Teams
+                  {t('teams')}
                 </Link>
               </li>
             </ul>
@@ -47,21 +49,21 @@ export default function DashboardFooter() {
 
           {/* Settings */}
           <div>
-            <h3 className="font-semibold text-sm mb-3">Settings</h3>
+            <h3 className="font-semibold text-sm mb-3">{t('settings')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/settings/billing" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Billing
+                  {t('billing')}
                 </Link>
               </li>
               <li>
                 <Link href="/settings/notifications" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Notifications
+                  {t('notifications')}
                 </Link>
               </li>
               <li>
                 <Link href="/settings/white-label" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  White Label
+                  {t('whiteLabel')}
                 </Link>
               </li>
             </ul>
@@ -69,21 +71,21 @@ export default function DashboardFooter() {
 
           {/* Support */}
           <div>
-            <h3 className="font-semibold text-sm mb-3">Support</h3>
+            <h3 className="font-semibold text-sm mb-3">{t('support')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/contact" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
+                  {t('contact')}
                 </Link>
               </li>
               <li>
                 <Link href="/legal/privacy" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy Policy
+                  {t('privacyPolicy')}
                 </Link>
               </li>
               <li>
                 <Link href="/legal/terms" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Terms of Service
+                  {t('termsOfService')}
                 </Link>
               </li>
             </ul>
@@ -93,10 +95,10 @@ export default function DashboardFooter() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-6 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {currentYear} VexNexa. All rights reserved.
+            © {currentYear} VexNexa. {t('allRightsReserved')}
           </p>
           <p className="text-xs text-muted-foreground">
-            Made with ❤️ for web accessibility
+            {t('madeWithLove')}
           </p>
         </div>
       </div>

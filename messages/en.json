@@ -1033,11 +1033,10 @@
   "footer": {
     "brand": {
       "name": "VexNexa",
-      "tagline": "Developer-friendly WCAG scanning. No overlays. No BS.",
+      "tagline": "Developer-friendly WCAG scanning. No overlays. No nonsense.",
       "followUs": "Follow us",
-      "twitter": "Visit VexNexa on Twitter",
       "newsletter": {
-        "title": "Stay up to date",
+        "title": "Stay in the loop",
         "description": "Subscribe to our newsletter for updates and accessibility tips.",
         "placeholder": "Enter your email",
         "subscribe": "Subscribe",
@@ -1050,7 +1049,26 @@
         "alreadyDescription": "Thanks for your interest!",
         "errorTitle": "Something went wrong",
         "errorDescription": "Please try again later."
-      }
+      },
+      "twitter": "Visit VexNexa on Twitter"
+    },
+    "dashboard": {
+      "description": "Professional accessibility testing and compliance monitoring.",
+      "dashboard": "Dashboard",
+      "overview": "Overview",
+      "scans": "Scans",
+      "sites": "Sites",
+      "teams": "Teams",
+      "settings": "Settings",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "whiteLabel": "White Label",
+      "support": "Support",
+      "contact": "Contact",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "allRightsReserved": "All rights reserved.",
+      "madeWithLove": "Made with ❤️ for web accessibility"
     },
     "product": {
       "title": "Product",
@@ -2959,8 +2977,8 @@
     "terms": {
       "title": "Terms of Service",
       "description": "These terms apply to the use of the VexNexa accessibility-scanning service.",
-      "lastUpdated": "December 8, 2024",
-      "version": "v1.1",
+      "lastUpdated": "April 27, 2026",
+      "version": "v1.2",
       "summary": {
         "title": "Summary (not legally binding)",
         "description": "In plain language — also read the full terms below.",
@@ -2978,6 +2996,199 @@
           "Unlawful or harmful use (e.g., scraping personal data)"
         ],
         "byUsing": "By using VexNexa you agree to these terms."
+      },
+      "section1": {
+        "title": "1. Definitions & Applicability",
+        "definitionsTitle": "Definitions",
+        "definitions": [
+          { "term": "VexNexa", "desc": "the accessibility-scanning service under vexnexa.com." },
+          { "term": "We/us", "desc": "the data controller and service provider (VexNexa B.V.)." },
+          { "term": "User", "desc": "any natural or legal person using the service." },
+          { "term": "Account", "desc": "your personal or business access to features and history." },
+          { "term": "Scan", "desc": "an automated accessibility test of a webpage." },
+          { "term": "API", "desc": "programming interface for automated access to the service." }
+        ],
+        "applicabilityTitle": "Applicability",
+        "applicability": "These terms apply to any use of VexNexa, including free and paid accounts, the API, trial periods, and all related communications. Deviations are only valid if agreed in writing.",
+        "legalInfoTitle": "Legal details (service provider)",
+        "companyName": "VexNexa B.V.",
+        "address": "Provencialeweg 46B, 1562TB Krommenie, Netherlands",
+        "kvk": "94848262",
+        "establishment": "000060294744",
+        "email": "info@vexnexa.com"
+      },
+      "section2": {
+        "title": "2. Use of the Service",
+        "allowedTitle": "Allowed use",
+        "allowed": [
+          "Scanning websites you own or have demonstrable permission for",
+          "Internal projects and client assignments (sharing reports is allowed)",
+          "Education/research and commercial use within your subscription limits"
+        ],
+        "notAllowedTitle": "Not allowed",
+        "notAllowed": [
+          "Scans on sites without owner or administrator permission",
+          "Bypassing rate-limits, DDoS-like behavior, or scraping personal data",
+          "Reverse engineering, copying, or repackaging our software or output as your own product",
+          "Use in violation of laws and regulations (including copyright, GDPR, and the Computer Misuse Act)"
+        ],
+        "accountSecurityTitle": "Account & security",
+        "accountSecurity": [
+          "Manage your login credentials carefully; all activity under your account is attributed to you",
+          "Report abuse or suspected data breach immediately via info@vexnexa.com",
+          "In case of suspected abuse or security risks, we may temporarily block accounts"
+        ]
+      },
+      "section3": {
+        "title": "3. API & Fair Use",
+        "content": "API access is available for eligible subscriptions. We enforce fair-use and technical limits (requests per minute/day, concurrent jobs). Details are in your dashboard.",
+        "rules": [
+          "API keys are personal; sharing or open-sourcing them is not allowed",
+          "Results may be displayed in your own tooling, provided you mention \"VexNexa\" in automated reports",
+          "Changes to endpoints or limits may be implemented without prior notice in case of abuse or disruptions"
+        ]
+      },
+      "section4": {
+        "title": "4. Payments & Subscriptions",
+        "priceNotice": "Important — price display: Prices on vexnexa.com and in checkout include 21% VAT, unless explicitly stated otherwise for business customers with a valid VAT number (in which case the VAT reverse charge scheme or a 0% rate may apply). The VAT amount is specified separately on your invoice.",
+        "trialTitle": "Free (Trial)",
+        "trial": [
+          "The free Trial remains free with fixed monthly limits (100 pages per month, 1 website)",
+          "Hard limit: when free usage is exceeded, the service is blocked until the next month or until you upgrade to a paid plan",
+          "The Trial expires after the indicated period; an upgrade is required to continue using the service",
+          "Features may change — we announce substantial changes in advance",
+          "No automatic overage billing occurs; upgrade to a paid plan for continued access"
+        ],
+        "paidTitle": "Paid subscriptions",
+        "paid": [
+          "Prices include 21% VAT, unless explicitly stated otherwise for business customers.",
+          "Payments are processed exclusively through our payment provider Mollie B.V. (Keizersgracht 313, 1016 EE Amsterdam). Available methods include iDEAL, credit card, and SEPA direct debit. VexNexa does not store card or account details itself.",
+          "Prepayment monthly or yearly; automatic renewal unless cancelled in time",
+          "Cancellation is possible until the last day of the current period (service continues until the end of the term)",
+          "Mid-term upgrades are possible; costs are prorated"
+        ],
+        "limitsTitle": "Limits & Overage (paid plans only)",
+        "limits": [
+          "Trial/Free: hard limit — service is blocked upon exceeding. An upgrade is required for continued access.",
+          "Paid plans — overage rates (all amounts include 21% VAT): when limits are exceeded, extra scans are automatically charged at €0.002 per page, €2.00 per extra site per month, and €1.00 per extra user per month.",
+          "Warnings follow at 80% and 100% of your limit",
+          "For consistent overages, we recommend upgrading to a higher plan"
+        ],
+        "refundsTitle": "Refunds & Chargebacks",
+        "refunds": [
+          "No refund for early cancellation unless legally required",
+          "For prolonged total outages (>48 hours), a proportional credit may be offered",
+          "Unwarranted chargebacks may lead to (temporary) blocking and pass-through of costs"
+        ],
+        "withdrawalTitle": "Consumer right of withdrawal",
+        "withdrawalIntro": "For consumers within the EU, a statutory cooling-off period of 14 days generally applies to distance contracts (Book 6, Title 5, Section 2B BW). VexNexa is a digital service delivered immediately after starting a scan or confirming an upgrade.",
+        "withdrawalWaiver": "By starting a scan or confirming a (upgrade to a) paid subscription, you explicitly consent to immediate execution of the contract before the cooling-off period expires, and acknowledge that you thereby waive your right of withdrawal for the digital content already delivered for the relevant billing period (article 6:230p sub g BW).",
+        "withdrawalFuture": "For future billing periods, the right to cancel your subscription before the next renewal date remains, subject to the cancellation rules above. The waiver of the right of withdrawal applies only to the period already delivered."
+      },
+      "section5": {
+        "title": "5. Availability & Support",
+        "slaTitle": "SLA & Maintenance",
+        "sla": [
+          "We strive for high availability, but 100% uptime is not guaranteed",
+          "We announce planned maintenance where possible in advance",
+          "External factors (firewalls, robots.txt, rate-limits) may prevent scans"
+        ],
+        "supportTitle": "Support",
+        "support": [
+          "Free: email within 72 hours",
+          "Pro: email within 24 hours",
+          "Team: priority (typically < 4 hours), optional phone support"
+        ],
+        "changesTitle": "Changes",
+        "changes": "We may adjust features, algorithms, or UI; for material impact, we inform in time."
+      },
+      "section6": {
+        "title": "6. Intellectual Property",
+        "ourRightsTitle": "Our rights",
+        "ourRights": [
+          "Software, algorithms, UI, trademarks, and documentation remain our property (and/or our licensors)",
+          "No transfer of IP rights; only a limited, revocable usage right"
+        ],
+        "yourContentTitle": "Your content & reports",
+        "yourContent": [
+          "You retain rights to your own websites and materials",
+          "You grant us the license needed to perform scans and display results",
+          "Reports may be used internally and commercially; attribution is appreciated but not required"
+        ],
+        "noticesTitle": "Notices",
+        "notices": "Suspect an infringement (e.g., unauthorized use of your trademark)? Email info@vexnexa.com."
+      },
+      "section7": {
+        "title": "7. Warranties & Liability",
+        "warrantyTitle": "Limited warranty",
+        "warranty": [
+          "Scans follow standard methods (including rules similar to axe-core), but do not cover all WCAG criteria in all contexts",
+          "False positives/negatives may occur; human review remains necessary"
+        ],
+        "liabilityTitle": "Limitation of liability",
+        "liability": [
+          "Our total liability is limited to the amount you paid in the past 12 months",
+          "No liability for indirect/consequential damage, lost profits, data loss, or reputational damage",
+          "Exclusions do not apply in case of intent or willful recklessness to the extent permitted by law"
+        ],
+        "forceMajeureTitle": "Force majeure",
+        "forceMajeure": "No liability for events beyond our reasonable control (including third-party outages, war, natural disasters, cyberattacks)"
+      },
+      "section8": {
+        "title": "8. Privacy & Data Protection",
+        "content": "We process personal data in accordance with our privacy policy. That policy forms an integral part of these terms."
+      },
+      "section9": {
+        "title": "9. Termination",
+        "byYouTitle": "By you",
+        "byYou": [
+          "Cancellation via your account; access continues until the end of the billing period",
+          "You can request deletion of account data in accordance with the privacy policy"
+        ],
+        "byUsTitle": "By us",
+        "byUs": [
+          "For violation of terms, abuse, non-payment, or security risks, we may (temporarily) terminate",
+          "Where reasonable, we first give a warning and recovery period"
+        ],
+        "consequencesTitle": "Consequences",
+        "consequences": [
+          "Access expires; data retention follows the privacy policy",
+          "Outstanding amounts remain due"
+        ]
+      },
+      "section10": {
+        "title": "10. Applicable Law & Disputes",
+        "lawTitle": "Law",
+        "law": "Dutch law applies to this agreement, to the exclusion of conflict-of-law rules.",
+        "disputesTitle": "Dispute resolution",
+        "disputes": [
+          "First we try to resolve internally: email info@vexnexa.com",
+          "Response period: 30 days to reach a solution",
+          "If we cannot resolve: mediation (if both parties agree)",
+          "Competent court: Amsterdam District Court"
+        ],
+        "consumerRightsTitle": "Consumer rights",
+        "consumerRights": "Consumers retain their statutory rights that cannot be contractually excluded."
+      },
+      "section11": {
+        "title": "11. Changes & Final Provisions",
+        "changesTitle": "Changes",
+        "changes": "We may adjust these terms (e.g., due to legislation, new features, or abuse prevention). For material changes, we inform you — typically 30 days in advance. Continued use after the effective date constitutes acceptance.",
+        "severabilityTitle": "Severability & entire agreement",
+        "severability": [
+          "If a provision is deemed invalid or void, the remaining provisions remain in force",
+          "We replace an invalid provision with a valid provision of similar purport",
+          "These terms + the privacy policy constitute the entire agreement and supersede prior communications"
+        ]
+      },
+      "section12": {
+        "title": "12. Contact",
+        "titleText": "Legal questions",
+        "email": "Email: info@vexnexa.com"
+      },
+      "footer": {
+        "privacyLink": "Privacy Policy",
+        "contactLink": "Questions? Contact us"
       }
     },
     "security": {
