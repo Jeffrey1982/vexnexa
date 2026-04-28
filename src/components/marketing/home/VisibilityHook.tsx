@@ -17,7 +17,7 @@ export function VisibilityHook() {
 
   return (
     <section
-      className="relative bg-[#0A0F1E] py-16 sm:py-20"
+      className="relative bg-white dark:bg-[#0A0F1E] py-16 sm:py-20"
       aria-labelledby="visibility-hook-heading"
     >
       <div className="container mx-auto px-4">
@@ -34,7 +34,7 @@ export function VisibilityHook() {
                   role="img"
                 >
                   {/* track */}
-                  <circle cx="80" cy="80" r="68" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
+                  <circle cx="80" cy="80" r="68" fill="none" className="stroke-slate-200 dark:stroke-white/10" strokeWidth="10" />
                   {/* 30% arc — the "hidden" segment in gold */}
                   <circle
                     cx="80"
@@ -65,7 +65,7 @@ export function VisibilityHook() {
                     fontFamily="ui-sans-serif, system-ui"
                     fontSize="11"
                     letterSpacing="2"
-                    fill="rgba(255,255,255,0.55)"
+                    className="fill-slate-500 dark:fill-white/55"
                   >
                     HIDDEN
                   </text>
@@ -80,13 +80,13 @@ export function VisibilityHook() {
               </p>
               <h2
                 id="visibility-hook-heading"
-                className="mt-3 font-display text-3xl font-bold leading-tight text-white sm:text-4xl"
+                className="mt-3 font-display text-3xl font-bold leading-tight text-slate-900 dark:text-white sm:text-4xl"
               >
                 {t("title")}
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-white/70">{t("body")}</p>
+              <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-white/70">{t("body")}</p>
 
-              <div className="mt-6 flex items-center gap-2 text-sm text-white/60">
+              <div className="mt-6 flex items-center gap-2 text-sm text-slate-500 dark:text-white/60">
                 <Eye className="h-4 w-4 text-[#D4AF37]" aria-hidden />
                 <span>{t("footnote")}</span>
               </div>

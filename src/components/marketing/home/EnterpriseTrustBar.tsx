@@ -28,7 +28,7 @@ export function EnterpriseTrustBar() {
 
   return (
     <section
-      className="relative border-y border-white/[0.06] bg-[#0A0F1E]/95 py-10"
+      className="relative border-y border-slate-200 dark:border-white/[0.06] bg-white dark:bg-[#0A0F1E]/95 py-10"
       aria-labelledby="enterprise-trustbar-heading"
     >
       <div className="container mx-auto px-4">
@@ -43,7 +43,7 @@ export function EnterpriseTrustBar() {
           {items.map(({ Icon, key }) => (
             <li
               key={key}
-              className="flex items-center justify-center gap-2 text-sm text-white/65"
+              className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-white/65"
             >
               <Icon className="h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
               <span className="text-center">{t(`items.${key}`)}</span>
@@ -51,7 +51,7 @@ export function EnterpriseTrustBar() {
           ))}
         </ul>
 
-        <p className="mt-6 text-center text-[11px] leading-relaxed text-white/40">
+        <p className="mt-6 text-center text-[11px] leading-relaxed text-slate-400 dark:text-white/40">
           {t("disclaimer")}
         </p>
       </div>

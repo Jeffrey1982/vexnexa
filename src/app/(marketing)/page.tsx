@@ -579,7 +579,7 @@ export default function HomePage() {
         Deep-Navy + Gold "Nasdaq-style" palette to the marketing landing.
         The dashboard, auth, and legal routes keep their existing brand.
       */}
-      <div className="vn-enterprise-theme bg-[#0A0F1E] text-white antialiased">
+      <div className="vn-enterprise-theme bg-white text-slate-900 antialiased dark:bg-[#0A0F1E] dark:text-white">
         <EnterpriseHero />
         <EnterpriseTrustBar />
         <VisibilityHook />
@@ -593,7 +593,7 @@ export default function HomePage() {
           a darker context. The FAQ component already uses semantic
           neutrals so it inherits gracefully.
         */}
-        <section className="bg-[#0A0F1E] py-16">
+        <section className="bg-white py-16 dark:bg-[#0A0F1E]">
           <div className="mx-auto max-w-3xl px-4">
             <FAQ items={faqItems} />
           </div>

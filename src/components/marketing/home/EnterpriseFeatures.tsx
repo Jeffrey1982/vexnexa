@@ -46,7 +46,7 @@ export function EnterpriseFeatures() {
 
   return (
     <section
-      className="relative bg-[#0A0F1E] py-20 sm:py-24"
+      className="relative bg-white dark:bg-[#0A0F1E] py-20 sm:py-24"
       aria-labelledby="enterprise-features-heading"
     >
       <div className="container mx-auto px-4">
@@ -56,18 +56,18 @@ export function EnterpriseFeatures() {
           </p>
           <h2
             id="enterprise-features-heading"
-            className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl"
           >
             {t("title")}
           </h2>
-          <p className="mt-4 text-lg text-white/70">{t("subtitle")}</p>
+          <p className="mt-4 text-lg text-slate-600 dark:text-white/70">{t("subtitle")}</p>
         </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {items.map(({ key, Icon, titleKey, bodyKey, bullets }) => (
             <article
               key={key}
-              className="group relative flex flex-col rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-7 transition-colors hover:border-[#D4AF37]/30"
+              className="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-colors hover:border-[#D4AF37]/30"
             >
               {/* Top hairline in gold */}
               <span
@@ -79,12 +79,12 @@ export function EnterpriseFeatures() {
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
 
-              <h3 className="mt-5 font-display text-xl font-semibold text-white">
+              <h3 className="mt-5 font-display text-xl font-semibold text-slate-900 dark:text-white">
                 {t(titleKey)}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/70">{t(bodyKey)}</p>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-white/70">{t(bodyKey)}</p>
 
-              <ul className="mt-5 space-y-2.5 text-sm text-white/65">
+              <ul className="mt-5 space-y-2.5 text-sm text-slate-600 dark:text-white/65">
                 {bullets.map((b) => (
                   <li key={b} className="flex gap-2">
                     <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-[#D4AF37]" aria-hidden />
