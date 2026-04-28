@@ -45,7 +45,7 @@ export function EnterpriseTrustBar() {
               key={key}
               className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-white/65"
             >
-              <Icon className="h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
+              <Icon className="h-4 w-4 shrink-0 text-primary" aria-hidden />
               <span className="text-center">{t(`items.${key}`)}</span>
             </li>
           ))}

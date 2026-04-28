@@ -51,7 +51,7 @@ export function EnterpriseFeatures() {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             {t("eyebrow")}
           </p>
           <h2
@@ -67,15 +67,15 @@ export function EnterpriseFeatures() {
           {items.map(({ key, Icon, titleKey, bodyKey, bullets }) => (
             <article
               key={key}
-              className="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-colors hover:border-[#D4AF37]/30"
+              className="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-colors hover:border-primary/30"
             >
               {/* Top hairline in gold */}
               <span
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent"
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
               />
 
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
 
@@ -87,7 +87,7 @@ export function EnterpriseFeatures() {
               <ul className="mt-5 space-y-2.5 text-sm text-slate-600 dark:text-white/65">
                 {bullets.map((b) => (
                   <li key={b} className="flex gap-2">
-                    <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-[#D4AF37]" aria-hidden />
+                    <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />
                     <span>{t(b)}</span>
                   </li>
                 ))}
@@ -99,7 +99,7 @@ export function EnterpriseFeatures() {
         <div className="mt-10 flex justify-start">
           <Link
             href="/features"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#D4AF37] hover:text-[#E5C158]"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
           >
             {t("viewAll")} <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
