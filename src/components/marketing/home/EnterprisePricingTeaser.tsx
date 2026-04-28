@@ -46,7 +46,7 @@ export function EnterprisePricingTeaser() {
     >
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-8 text-center shadow-2xl sm:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#3b82f6]">
             {t("eyebrow")}
           </p>
           <h2
@@ -73,7 +73,7 @@ export function EnterprisePricingTeaser() {
               }}
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                 vatInclusive
-                  ? "bg-[#D4AF37] text-[#0A0F1E]"
+                  ? "bg-[#3b82f6] text-[#0A0F1E]"
                   : "text-white/70 hover:text-white"
               }`}
             >
@@ -89,7 +89,7 @@ export function EnterprisePricingTeaser() {
               }}
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                 !vatInclusive
-                  ? "bg-[#D4AF37] text-[#0A0F1E]"
+                  ? "bg-[#3b82f6] text-[#0A0F1E]"
                   : "text-white/70 hover:text-white"
               }`}
             >
@@ -111,19 +111,19 @@ export function EnterprisePricingTeaser() {
           {/* What's included */}
           <ul className="mx-auto mt-7 grid max-w-md gap-2 text-left text-sm text-white/75 sm:grid-cols-2">
             <li className="flex items-start gap-2">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#3b82f6]" aria-hidden />
               <span>{t("included.audit")}</span>
             </li>
             <li className="flex items-start gap-2">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#3b82f6]" aria-hidden />
               <span>{t("included.portfolio")}</span>
             </li>
             <li className="flex items-start gap-2">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#3b82f6]" aria-hidden />
               <span>{t("included.aiVision")}</span>
             </li>
             <li className="flex items-start gap-2">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#3b82f6]" aria-hidden />
               <span>{t("included.history")}</span>
             </li>
           </ul>
@@ -133,7 +133,7 @@ export function EnterprisePricingTeaser() {
             <Button
               size="lg"
               asChild
-              className="h-12 rounded-xl bg-[#D4AF37] px-7 font-semibold text-[#0A0F1E] hover:bg-[#E5C158] focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
+              className="h-12 rounded-xl bg-[#3b82f6] px-7 font-semibold text-[#0A0F1E] hover:bg-[#60a5fa] focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
             >
               <Link
                 href="/pricing"
@@ -162,9 +162,9 @@ export function EnterprisePricingTeaser() {
           </div>
 
           {/* 20% allocation transparency line */}
-          <div className="mt-8 rounded-xl border border-[#D4AF37]/25 bg-[#D4AF37]/[0.05] px-5 py-4 text-left">
+          <div className="mt-8 rounded-xl border border-[#3b82f6]/25 bg-[#3b82f6]/[0.05] px-5 py-4 text-left">
             <p className="flex items-start gap-2 text-sm leading-relaxed text-white/80">
-              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#D4AF37]" aria-hidden />
+              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#3b82f6]" aria-hidden />
               <span>{t("allocation")}</span>
             </p>
           </div>
