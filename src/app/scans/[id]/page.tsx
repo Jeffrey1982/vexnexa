@@ -101,6 +101,16 @@ function getVniMotivationKey(tierKey: string) {
   return tierKey === "Apex" ? "maintainingApex" : "targetElite";
 }
 
+function estimateVniFixTime(stats: ReturnType<typeof computeIssueStats>) {
+  const totalHours = Math.ceil(
+    stats.critical * 2 + stats.serious * 1.5 + stats.moderate * 0.5 + stats.minor * 0.15
+  );
+  if (totalHours <= 1) return "< 1 hour";
+  if (totalHours <= 8) return `${totalHours} hours`;
+  const days = Math.ceil(totalHours / 8);
+  return days === 1 ? "~1 day" : `~${days} days`;
+}
+
 async function getScanDetails(id: string) {
   try {
     const scan = await prisma.scan.findUnique({
@@ -268,6 +278,8 @@ export default async function ScanDetailPage({ params }: PageProps) {
   const vniScore = typeof vni?.score === "number" ? vni.score : null;
   const vniTier = vniScore !== null ? getVniTier(vniScore) : null;
   const vniMotivationKey = vniTier ? getVniMotivationKey(vniTier.key) : null;
+  const vniProgress = vniScore !== null ? Math.min(100, Math.max(0, (vniScore / 2500) * 100)) : 0;
+  const estimatedFixTime = estimateVniFixTime(stats);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -301,8 +313,8 @@ export default async function ScanDetailPage({ params }: PageProps) {
                   {scan.score !== null && vniScore === null && <ScoreBadge score={scan.score} size="lg" />}
                 </CardTitle>
                 {vniScore !== null && (
-                  <div className="mt-3 flex w-full max-w-xl flex-col gap-2 overflow-hidden rounded-lg border border-amber-300/60 bg-gradient-to-br from-amber-50 via-background to-amber-100/70 px-3 pb-3 pt-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] dark:border-amber-500/40 dark:from-amber-950/30 dark:via-background dark:to-amber-900/20 sm:inline-flex sm:w-auto">
-                    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+                  <div className="mt-3 flex w-full max-w-xl flex-col gap-4 overflow-hidden rounded-xl border border-amber-300/60 bg-gradient-to-br from-amber-50 via-background to-amber-100/70 px-4 py-6 shadow-[0_0_15px_rgba(245,158,11,0.22)] dark:border-amber-500/40 dark:from-amber-950/30 dark:via-background dark:to-amber-900/20 sm:inline-flex sm:w-auto sm:px-6">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4">
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <Gem className="h-5 w-5 text-amber-500" aria-hidden="true" />
                         <span className="text-sm font-medium text-muted-foreground">{tVni("ranking")}</span>
@@ -325,6 +337,12 @@ export default async function ScanDetailPage({ params }: PageProps) {
                         </div>
                       )}
                     </div>
+                    <div className="mx-auto my-1 h-2 w-full max-w-sm overflow-hidden rounded-full bg-amber-100 ring-1 ring-amber-200/80 dark:bg-amber-950/40 dark:ring-amber-500/30" aria-hidden="true">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-amber-300 via-amber-500 to-orange-500"
+                        style={{ width: `${vniProgress}%` }}
+                      />
+                    </div>
                     {vniMotivationKey && (
                       <div className="text-xs font-medium leading-snug text-amber-700 dark:text-amber-300 sm:pl-7">
                         {tVni(vniMotivationKey)}
@@ -341,6 +359,10 @@ export default async function ScanDetailPage({ params }: PageProps) {
                         </div>
                       </div>
                     )}
+                    <div className="flex items-center justify-between gap-4 border-t border-amber-200/70 px-4 pt-3 text-xs font-medium text-slate-500 dark:border-amber-500/30 dark:text-slate-400">
+                      <span>{stats.total} issues</span>
+                      <span>Fix {estimatedFixTime}</span>
+                    </div>
                   </div>
                 )}
                 <CardDescription className="flex items-center gap-2 mt-2 sm:mt-3 text-sm sm:text-base">
