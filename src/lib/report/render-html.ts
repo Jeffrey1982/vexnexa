@@ -408,18 +408,39 @@ function renderTopPriorityFixes(fixes: TopPriorityFix[], s: ReportStyle): string
   return `<div class="tpf-section">
     <h3 class="subsection-title ${corp(s) ? "" : "tpf-heading-premium"}">Top priority fixes</h3>
     <table class="${tblCls}">
-      <thead><tr><th>#</th><th>Issue</th><th>Severity</th><th>Elements</th><th>Impact score</th></tr></thead>
+      <colgroup>
+        <col class="tpf-col-rank" />
+        <col class="tpf-col-issue" />
+        <col class="tpf-col-severity" />
+        <col class="tpf-col-elements" />
+        <col class="tpf-col-effort" />
+      </colgroup>
+      <thead><tr><th>#</th><th>Issue</th><th>Severity</th><th>Elements</th><th>Est. fix time</th></tr></thead>
       <tbody>
         ${fixes.map((f) => `<tr>
           <td class="tpf-rank">${f.rank}</td>
           <td class="tpf-title">${esc(f.title)}</td>
-          <td>${sevChip(f.severity)}</td>
+          <td class="tpf-severity">${sevChip(f.severity)}</td>
           <td class="tpf-num">${f.affectedElements}</td>
-          <td class="tpf-num"><strong>${f.weightedImpact}</strong></td>
+          <td class="tpf-effort"><span class="tpf-effort-label">Est.</span> ${esc(estimatePriorityFixTime(f.severity, f.affectedElements))}</td>
         </tr>`).join("")}
       </tbody>
     </table>
   </div>`;
+}
+
+function estimatePriorityFixTime(severity: Severity, affectedElements: number): string {
+  const multiplier: Record<Severity, number> = {
+    critical: 2,
+    serious: 1.5,
+    moderate: 0.5,
+    minor: 0.25,
+  };
+  const hours = Math.max(1, Math.ceil((multiplier[severity] ?? 0.5) * Math.max(1, affectedElements)));
+  if (hours <= 1) return "< 1 hour";
+  if (hours <= 8) return `${hours} hours`;
+  const days = Math.ceil(hours / 8);
+  return days === 1 ? "~1 day" : `~${days} days`;
 }
 
 function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle): string {
@@ -1382,18 +1403,23 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 /* ═══════════════════════════════════════════════════
    TOP PRIORITY FIXES
    ═══════════════════════════════════════════════════ */
-.tpf-section{margin-top:var(--space-lg)}
-.tpf-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:var(--space-sm)}
-.tpf-table th{background:#F3F4F6;padding:var(--space-sm) 10px;text-align:left;font-weight:700;border:1px solid #E5E7EB;
-  font-size:10px;text-transform:uppercase;letter-spacing:0.3px}
-.tpf-table td{padding:var(--space-sm) 10px;border:1px solid #E5E7EB;vertical-align:middle}
-.tpf-table tbody tr:nth-child(even){background:#FAFAFA}
-.tpf-rank{text-align:center;font-weight:700;color:#6B7280;width:30px}
-.tpf-title{font-weight:600;color:#374151}
-.tpf-num{text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tpf-section{margin-top:var(--space-lg);page-break-inside:avoid}
+.tpf-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:12px;margin-top:var(--space-sm);border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;background:white}
+.tpf-table th{background:#F8FAFC;padding:12px 8px;text-align:left;font-weight:750;border-bottom:1px solid #E5E7EB;
+  font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:#475569;line-height:1.25}
+.tpf-table td{padding:12px 8px;border-bottom:1px solid #E5E7EB;vertical-align:middle;line-height:1.4}
+.tpf-table tbody tr:nth-child(even){background:#F8FAFC}
+.tpf-table tbody tr:last-child td{border-bottom:none}
+.tpf-col-rank{width:34px}.tpf-col-issue{width:auto}.tpf-col-severity{width:102px}.tpf-col-elements{width:70px}.tpf-col-effort{width:104px}
+.tpf-rank{text-align:center;font-weight:800;color:#64748B;font-variant-numeric:tabular-nums}
+.tpf-title{font-weight:650;color:#1F2937;overflow-wrap:anywhere;word-break:normal;hyphens:auto}
+.tpf-severity{text-align:left}
+.tpf-num{text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums;color:#334155;font-weight:700}
+.tpf-effort{white-space:nowrap;color:#475569;font-weight:650;font-variant-numeric:tabular-nums}
+.tpf-effort-label{display:inline-flex;align-items:center;margin-right:4px;color:#94A3B8;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.04em}
 .tpf-heading-premium{font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dark);font-weight:800;margin-top:var(--space-2xl)}
-.tpf-table-premium{border-radius:14px;overflow:hidden;border:1px solid #E2E8F0;box-shadow:0 2px 16px rgba(10,37,64,.05)}
-.tpf-table-premium th{background:var(--primary);color:#fff;border:none;padding:14px 12px;font-size:9px;letter-spacing:0.08em;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.tpf-table-premium{border-color:#E2E8F0;box-shadow:0 2px 16px rgba(10,37,64,.05)}
+.tpf-table-premium th{background:var(--primary);color:#fff;border:none;padding:12px 8px;font-size:9px;letter-spacing:0.08em;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .tpf-table-premium td{border-color:#F1F5F9}
 .tpf-table-premium tbody tr:nth-child(even){background:var(--vn-surface)}
 .tpf-table-premium tbody tr:hover{background:#F1F5F9}

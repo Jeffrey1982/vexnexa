@@ -806,7 +806,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
           <ExportBar scanId={scan.id} />
           {/* Quick Wins */}
           {quickWins.length > 0 && (
-            <Card>
+            <Card className="overflow-hidden">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-display">
                   <CheckCircle className="w-5 h-5 text-success" />
@@ -817,22 +817,33 @@ export default async function ScanDetailPage({ params }: PageProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {quickWins.map((violation) => (
+                <div className="overflow-hidden rounded-xl border border-border/70">
+                  {quickWins.map((violation, index) => (
                     <DrawerDetails 
-                      key={violation.id}
+                      key={`${violation.id}-${index}`}
                       violation={violation}
                       trigger={
                         <Button
                           variant="ghost"
-                          className="w-full justify-start h-auto p-3 text-left"
+                          className={cn(
+                            "h-auto w-full justify-start rounded-none px-3 py-3 text-left whitespace-normal",
+                            "border-b border-border/70 last:border-b-0 hover:bg-muted/60",
+                            index % 2 === 1 && "bg-muted/30"
+                          )}
                         >
-                          <div className="min-w-0 w-full">
-                            <div className="font-medium text-sm mb-1 break-words">
-                              {violation.help}
+                          <div className="flex min-w-0 w-full items-start gap-3">
+                            <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-success/10 text-[11px] font-bold text-success">
+                              {index + 1}
                             </div>
-                            <div className="text-xs text-muted-foreground">
-                              {violation.nodes.length} element{violation.nodes.length !== 1 ? 's' : ''}
+                            <div className="min-w-0 flex-1">
+                              <div className="break-words text-sm font-medium leading-snug text-foreground">
+                                {violation.help}
+                              </div>
+                              <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+                                <SeverityBadge severity={violation.impact || "minor"} />
+                                <span>{violation.nodes.length} element{violation.nodes.length !== 1 ? 's' : ''}</span>
+                                <span className="text-muted-foreground/60">Est. review</span>
+                              </div>
                             </div>
                           </div>
                         </Button>
