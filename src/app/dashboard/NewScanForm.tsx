@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { TouchButton } from "@/components/ui/touch-button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Search, AlertCircle, Sparkles, Info } from "lucide-react";
+import { Loader2, AlertCircle, Sparkles, Info } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { normalizeUrl } from "@/lib/url";
 
 export function NewScanForm() {
   const t = useTranslations("dashboard.newScan");
@@ -18,56 +19,62 @@ export function NewScanForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.trim()) return;
+
+    const normalizedUrl = normalizeUrl(url);
+    if (!normalizedUrl) {
+      setError("Please enter a valid website URL.");
+      return;
+    }
 
     setIsLoading(true);
     setError("");
 
     try {
-      console.log('🔍 Starting scan for URL:', url.trim());
-      console.log('🔍 Sending request to /api/scan...');
+      setUrl(normalizedUrl);
+      console.log("[NewScanForm] Starting scan for URL:", normalizedUrl);
+      console.log("[NewScanForm] Sending request to /api/scan...");
 
       const response = await fetch("/api/scan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url: url.trim() }),
+        body: JSON.stringify({ url: normalizedUrl }),
       });
 
-      console.log('🔍 Response status:', response.status);
-      console.log('🔍 Response headers:', Object.fromEntries(response.headers.entries()));
+      console.log("[NewScanForm] Response status:", response.status);
+      console.log("[NewScanForm] Response headers:", Object.fromEntries(response.headers.entries()));
 
       const data = await response.json();
-      console.log('🔍 Response data:', data);
+      console.log("[NewScanForm] Response data:", data);
 
       if (!response.ok) {
-        console.error('🔍 Request failed with status:', response.status, 'data:', data);
+        console.error("[NewScanForm] Request failed with status:", response.status, "data:", data);
         throw new Error(data.error || `Failed to start scan (${response.status})`);
       }
 
       if (data.scanId) {
-        console.log('🔍 Scan started successfully, redirecting to:', `/scans/${data.scanId}`);
+        console.log("[NewScanForm] Scan started successfully, redirecting to:", `/scans/${data.scanId}`);
         router.push(`/scans/${data.scanId}`);
       } else {
-        console.error('🔍 No scan ID in response:', data);
+        console.error("[NewScanForm] No scan ID in response:", data);
         throw new Error("No scan ID returned");
       }
     } catch (err: any) {
-      console.error('🔍 Scan request failed:', err);
-      setError(err.message || 'An unknown error occurred');
+      console.error("[NewScanForm] Scan request failed:", err);
+      setError(err.message || "An unknown error occurred");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate>
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
         <div className="flex-1">
           <Input
-            type="url"
-            placeholder={tScan("placeholder")}
+            type="text"
+            placeholder="e.g., https://example.com or example.com"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={isLoading}
