@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -32,6 +32,7 @@ import {
   Clock
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { normalizeUrl } from '@/lib/url'
 import VexnexaLogo from '@/components/brand/VexnexaLogo'
 import { useTranslations } from 'next-intl'
 
@@ -109,6 +110,7 @@ export default function ModernRegistrationForm() {
 
   const router = useRouter()
   const supabase = createClient()
+  const formRef = useRef<HTMLFormElement>(null)
   const { isCoolingDown: isResendCooling, countdownLabel: resendCountdown, startCooldown: startResendCooldown } = useAuthCooldown('signup-resend', signupEmail)
 
   // Check if user is already logged in and redirect
@@ -124,6 +126,21 @@ export default function ModernRegistrationForm() {
 
     checkAuthStatus()
   }, [supabase, router])
+
+  useEffect(() => {
+    const focusFirstField = () => {
+      const nextField = formRef.current?.querySelector<HTMLElement>(
+        `[data-registration-step="${currentStep}"] input:not([type="hidden"]):not([disabled]), ` +
+        `[data-registration-step="${currentStep}"] button:not([disabled]), ` +
+        `[data-registration-step="${currentStep}"] [tabindex]:not([tabindex="-1"])`
+      )
+
+      nextField?.focus()
+    }
+
+    const timeout = window.setTimeout(focusFirstField, 50)
+    return () => window.clearTimeout(timeout)
+  }, [currentStep])
 
   const handleOAuthSignUp = async () => {
     setLoading(true)
@@ -221,12 +238,12 @@ export default function ModernRegistrationForm() {
         }
         // Validate website URL if provided
         if (formData.website) {
-          try {
-            new URL(formData.website)
-          } catch {
+          const normalizedWebsite = normalizeUrl(formData.website)
+          if (!normalizedWebsite) {
             setError(t('validation.validWebsite'))
             return false
           }
+          updateFormData('website', normalizedWebsite)
         }
         break
       // Step 4 is optional
@@ -273,7 +290,7 @@ export default function ModernRegistrationForm() {
     }
   }
 
-  const handleSubmit = async () => {
+  const handleCreateAccount = async () => {
     if (!validateStep(currentStep)) return
 
     setLoading(true)
@@ -332,6 +349,19 @@ export default function ModernRegistrationForm() {
     }
   }
 
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (loading) return
+
+    if (currentStep === 4) {
+      void handleCreateAccount()
+      return
+    }
+
+    nextStep()
+  }
+
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center mb-8">
       {steps.map((step, index) => (
@@ -360,7 +390,7 @@ export default function ModernRegistrationForm() {
   )
 
   const renderStep1 = () => (
-    <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
+    <div data-registration-step="1" className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
         <div className="mx-auto mb-4">
           <VexnexaLogo size={56} />
@@ -419,7 +449,7 @@ export default function ModernRegistrationForm() {
   )
 
   const renderStep2 = () => (
-    <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
+    <div data-registration-step="2" className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
         <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full mx-auto flex items-center justify-center mb-4">
           <User className="w-8 h-8 text-white" />
@@ -489,7 +519,7 @@ export default function ModernRegistrationForm() {
   )
 
   const renderStep3 = () => (
-    <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
+    <div data-registration-step="3" className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-blue-500">
           <Phone className="w-8 h-8 text-white" />
@@ -543,7 +573,7 @@ export default function ModernRegistrationForm() {
   )
 
   const renderStep4 = () => (
-    <div className="space-y-6 animate-in slide-in-from-right-5 duration-300">
+    <div data-registration-step="4" className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
           <Sparkles className="w-8 h-8 text-white" />
@@ -599,6 +629,7 @@ export default function ModernRegistrationForm() {
     <div className="flex justify-between">
       {currentStep > 1 && (
         <Button
+          type="button"
           variant="outline"
           onClick={prevStep}
           disabled={loading}
@@ -610,7 +641,7 @@ export default function ModernRegistrationForm() {
       )}
       
       <Button
-        onClick={currentStep === 4 ? handleSubmit : nextStep}
+        type="submit"
         disabled={loading}
         className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl px-8 py-3 font-medium transition-all duration-200 hover:scale-105 focus:ring-4 focus:ring-blue-500/20"
       >
@@ -721,21 +752,25 @@ export default function ModernRegistrationForm() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {renderStepIndicator()}
-            {renderCurrentStep()}
-            {renderStepButtons()}
-            
-            {error && (
-              <Alert variant="destructive" className="mt-4">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            
-            {message && (
-              <Alert className="mt-4">
-                <AlertDescription>{message}</AlertDescription>
-              </Alert>
-            )}
+            <form ref={formRef} onSubmit={handleFormSubmit} className="space-y-6">
+              {renderStepIndicator()}
+              {renderCurrentStep()}
+              {renderStepButtons()}
+
+              <div aria-live="assertive" aria-atomic="true">
+                {error && (
+                  <Alert variant="destructive" className="mt-4">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+              </div>
+
+              {message && (
+                <Alert className="mt-4">
+                  <AlertDescription>{message}</AlertDescription>
+                </Alert>
+              )}
+            </form>
 
             {/* OAuth Sign Up */}
             <div className="mt-6 text-center">
