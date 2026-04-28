@@ -569,8 +569,12 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
    ═══════════════════════════════════════════════════════════ */
 
 function renderPerformanceParadox(d: ReportData, primary: string, s: ReportStyle): string {
-  if (!d.qualityMetrics) return "";
-  const q = d.qualityMetrics;
+  const q = d.qualityMetrics ?? {
+    totalPageWeightBytes: 0,
+    largestContentfulPaintMs: 1500,
+    domNodeCount: 0,
+    performanceParadox: false,
+  };
   const lcpMs = visualLoadMs(q.largestContentfulPaintMs);
   return pageSection(d.labels.realWorldQuality, primary, s, `
   ${q.performanceParadox ? `<div class="paradox-banner"><strong>${esc(d.labels.performanceParadox)}</strong><span>${esc(d.labels.technicallyOptimizedHeavy)}</span></div>` : ""}
@@ -596,8 +600,14 @@ function renderPerformanceParadox(d: ReportData, primary: string, s: ReportStyle
 }
 
 function renderAiVisionAudit(d: ReportData, primary: string, s: ReportStyle): string {
-  if (!d.aiVisionAudit.length) return "";
   const pageTitle = d.pageTitle || d.domain;
+  if (!d.aiVisionAudit.length) {
+    return pageSection("AI-Powered Content Intelligence", primary, s, `
+  <p class="section-intro">AI-powered image analysis using Gemini 1.5 Flash validates alt-text accuracy against visual content.</p>
+  <div class="empty-state"><p>AI Vision analysis is being processed or no images were found on the scanned pages.</p></div>
+  `, "ai-vision-audit");
+  }
+
   return pageSection("AI-Powered Content Intelligence", primary, s, `
   <p class="section-intro">AI-powered image analysis using Gemini 1.5 Flash validates alt-text accuracy against visual content. This table shows images analyzed during the scan with AI confidence scores and compliance assessments.</p>
   <table class="ai-table">
@@ -628,7 +638,10 @@ function wcagStatusChip(status: WcagMatrixRow["status"]): string {
 
 function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): string {
   const matrix = d.wcagMatrix ?? [];
-  if (matrix.length === 0) return "";
+  if (matrix.length === 0) {
+    return pageSection("WCAG 2.2 Compliance Matrix", primary, s,
+      `<div class="empty-state"><p>No automated issues detected in this category.</p></div>`, "wcag-matrix");
+  }
 
   // Show failing criteria first, then manual review, passing, not tested
   const failing = matrix.filter((r) => r.status === "Fail");
@@ -680,6 +693,11 @@ function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): strin
 function renderScanConfiguration(d: ReportData, primary: string, s: ReportStyle): string {
   const sc = d.scanConfig;
   if (!sc) return "";
+  const scannedPagesRows = d.scannedPages.length
+    ? `<tr><td class="sct-label">Pages Included</td><td>${d.scannedPages.map((page, index) =>
+        `<div class="scan-page-row"><strong>${index + 1}.</strong> ${esc(page.url)}${typeof page.issues === "number" ? ` <span>${page.issues} issue${page.issues !== 1 ? "s" : ""}</span>` : ""}</div>`
+      ).join("")}</td></tr>`
+    : "";
 
   return pageSection("Scan Configuration", primary, s, `
   <table class="scan-config-table">
@@ -691,6 +709,7 @@ function renderScanConfiguration(d: ReportData, primary: string, s: ReportStyle)
     <tr><td class="sct-label">Viewport</td><td>${esc(sc.viewport)}</td></tr>
     <tr><td class="sct-label">Standards Tested</td><td>${sc.standardsTested.map((st) => `<span class="ac-chip ac-chip-wcag">${esc(st)}</span>`).join(" ")}</td></tr>
     <tr><td class="sct-label">Engine</td><td>${esc(sc.engineName)} v${esc(sc.engineVersion)}</td></tr>
+    ${scannedPagesRows}
   </table>`, "scan-config");
 }
 
@@ -731,7 +750,7 @@ function renderChunkedEvidenceTable(details: ReportData["priorityIssues"][0]["af
 function renderPriorityIssues(d: ReportData, primary: string, s: ReportStyle): string {
   if (d.priorityIssues.length === 0) {
     return pageSection("Audit Findings", primary, s,
-      `<div class="empty-state"><p>No accessibility issues were detected during this scan.</p></div>`, "findings-index");
+      `<div class="empty-state"><p>No automated issues detected in this category.</p></div>`, "findings-index");
   }
 
   if (corp(s)) {
@@ -1400,6 +1419,8 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .scan-config-table td{padding:10px var(--space-md);border-bottom:1px solid #E5E7EB;font-size:13px}
 .sct-label{font-weight:600;color:#374151;width:160px;background:#F9FAFB}
 .scan-config-table code{font-family:var(--mono);font-size:11px;background:#F3F4F6;padding:2px 6px;border-radius:var(--rs);line-height:1.5}
+.scan-page-row{font-size:11px;line-height:1.55;padding:2px 0;overflow-wrap:anywhere;word-break:break-word}
+.scan-page-row span{color:#6B7280;margin-left:6px}
 
 /* ═══════════════════════════════════════════════════
    AI VISION AUDIT TABLE

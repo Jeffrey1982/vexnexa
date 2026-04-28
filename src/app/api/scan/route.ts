@@ -144,6 +144,29 @@ function aggregateDeepScanResults(
     qualityWarnings: pages.flatMap((page) =>
       (page.result.qualityWarnings || []).map((warning: any) => ({ ...warning, pageUrl: page.url }))
     ),
+    deepScan: {
+      startUrl: homepageUrl,
+      scannedPages: pages.length,
+      aiAnalyzedPages: pages.filter((page) => page.aiAnalyzed).length,
+      worstPage: {
+        url: worstPage.url,
+        title: worstPage.result.title,
+        score: worstPage.result.score,
+        vniScore: worstPage.result.vni?.score,
+        issues: worstPage.result.violations?.length || 0,
+      },
+      pages: pages.map((page) => ({
+        url: page.url,
+        title: page.result.title,
+        score: page.result.score,
+        vniScore: page.result.vni?.score,
+        issues: page.result.violations?.length || 0,
+        lcp: page.result.largestContentfulPaintMs,
+        pageWeightBytes: page.result.totalPageWeightBytes,
+        domNodeCount: page.result.domNodeCount,
+        aiAnalyzed: page.aiAnalyzed,
+      })),
+    } as any,
     vni: {
       ...first.vni,
       score: vniScore,

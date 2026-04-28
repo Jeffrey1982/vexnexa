@@ -55,6 +55,17 @@ export async function GET(
       if (dataUrl) resolved.whiteLabelConfig.logoUrl = dataUrl;
     }
 
+    const resultJson = scan.resultJson && typeof scan.resultJson === "object" ? scan.resultJson as Record<string, unknown> : {};
+    const rawJson = scan.raw && typeof scan.raw === "object" ? scan.raw as Record<string, unknown> : {};
+    const mergedRaw: Record<string, unknown> = { ...rawJson, ...resultJson };
+    if (!Array.isArray(mergedRaw.violations) && Array.isArray(rawJson.violations)) {
+      mergedRaw.violations = rawJson.violations;
+    }
+    const rawDeepScan = (rawJson.vni as any)?.internal?.deepScan || (rawJson as any).deepScan;
+    if (!(mergedRaw as any).deepScan && rawDeepScan) {
+      (mergedRaw as any).deepScan = rawDeepScan;
+    }
+
     // Transform + render
     const reportData = transformScanToReport(
       {
@@ -68,7 +79,7 @@ export async function GET(
         wcagAACompliance: (scan as Record<string, unknown>).wcagAACompliance as number | null | undefined,
         wcagAAACompliance: (scan as Record<string, unknown>).wcagAAACompliance as number | null | undefined,
         createdAt: scan.createdAt.toISOString(),
-        raw: scan.resultJson || scan.raw,
+        raw: mergedRaw,
         site: { url: scan.site.url },
         page: scan.page ? { url: scan.page.url, title: scan.page.title ?? undefined } : null,
       },

@@ -1311,6 +1311,77 @@ describe("Real-world quality metrics", () => {
   });
 });
 
+describe("Deep scan PDF section rendering", () => {
+  const deepScanPages = Array.from({ length: 10 }, (_, index) => ({
+    url: `https://springbokagency.com/page-${index + 1}`,
+    title: `Springbok page ${index + 1}`,
+    score: 90 - index,
+    issues: index + 1,
+    lcp: 0,
+    pageWeightBytes: 1_000_000 + index,
+    domNodeCount: 600 + index,
+    aiAnalyzed: index < 3,
+  }));
+
+  it("keeps matrix and findings when VNI is hidden but deep-scan data exists", () => {
+    const report = transformScanToReport({
+      ...makeScan({
+        raw: {
+          vni: null,
+          deepScan: { scannedPages: 10, pages: deepScanPages },
+          totalPageWeightBytes: 1_400_000,
+          largestContentfulPaintMs: 0,
+          domNodeCount: 700,
+        },
+      }),
+      site: { url: "https://springbokagency.com" },
+      page: { url: "https://springbokagency.com", title: "Springbok" },
+    });
+    const html = renderReportHTML(report);
+
+    expect(report.vni).toBeUndefined();
+    expect(report.pagesScanned).toBe(10);
+    expect(report.scannedPages).toHaveLength(10);
+    expect(report.priorityIssues.length).toBeGreaterThan(0);
+    expect(report.wcagMatrix.length).toBeGreaterThan(0);
+    expect(html).toContain("WCAG 2.2 Compliance Matrix");
+    expect(html).toContain("Audit Findings");
+    expect(html).toContain("Pages Included");
+    expect(html).toContain("https://springbokagency.com/page-10");
+  });
+
+  it("renders AI Vision placeholder when no images were analyzed", () => {
+    const html = renderReportHTML(getReport({ raw: { aiContentChecks: [] } }));
+
+    expect(html).toContain("AI-Powered Content Intelligence");
+    expect(html).toContain("AI Vision analysis is being processed or no images were found on the scanned pages.");
+  });
+
+  it("renders Performance with fallback Visual Load Time when metrics are missing", () => {
+    const html = renderReportHTML(getReport());
+
+    expect(html).toContain("Visual Load Time");
+    expect(html).toContain("<strong>1.5s</strong>");
+    expect(html).not.toContain("Calculating...");
+  });
+
+  it("renders headers and empty states for clean scans", () => {
+    const html = renderReportHTML(getReport({
+      issues: 0,
+      impactCritical: 0,
+      impactSerious: 0,
+      impactModerate: 0,
+      impactMinor: 0,
+      violations: [],
+      raw: { vni: null, deepScan: { scannedPages: 10, pages: deepScanPages } },
+    }));
+
+    expect(html).toContain("WCAG 2.2 Compliance Matrix");
+    expect(html).toContain("Audit Findings");
+    expect(html).toContain("No automated issues detected in this category.");
+  });
+});
+
 describe("DOCX WCAG Matrix — alignment and layout", () => {
   const docxRoute = readFileSync(
     join(process.cwd(), "src/app/api/reports/[scanId]/docx/route.ts"),

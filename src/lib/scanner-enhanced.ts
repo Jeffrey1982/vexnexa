@@ -57,6 +57,7 @@ export interface EnhancedScanResult extends ScanResult {
   vni: VniResult;
   aiContentChecks?: ImageAnalysisResult[];
   discoveredInternalLinks?: string[];
+  deepScan?: unknown;
   engineName?: string | null;
   axeVersion?: string | null;
   title?: string;

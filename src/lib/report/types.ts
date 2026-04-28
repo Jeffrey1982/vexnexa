@@ -145,6 +145,17 @@ export interface ReportAiVisionItem {
   recommendation?: string;
 }
 
+export interface ReportScannedPage {
+  url: string;
+  title?: string;
+  score?: number;
+  issues?: number;
+  lcp?: number;
+  pageWeightBytes?: number;
+  domNodeCount?: number;
+  aiAnalyzed?: boolean;
+}
+
 /** A single priority issue for the report */
 export interface ReportIssue {
   id: string;
@@ -205,6 +216,7 @@ export interface ReportData {
   vni?: ReportVni;
   qualityMetrics?: ReportQualityMetrics;
   aiVisionAudit: ReportAiVisionItem[];
+  scannedPages: ReportScannedPage[];
   /** Optional branding override — if absent, default VexNexa branding applies */
   reportBranding?: ReportBranding;
   /** Previous health score for trend comparison (future use) */

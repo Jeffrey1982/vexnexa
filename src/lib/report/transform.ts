@@ -17,6 +17,7 @@ import type {
   ReportVni,
   ReportQualityMetrics,
   ReportAiVisionItem,
+  ReportScannedPage,
 } from "./types";
 import { DEFAULT_THEME, DEFAULT_WHITE_LABEL, DEFAULT_CTA } from "./types";
 import { DEFAULT_REPORT_LABELS } from "./labels";
@@ -421,6 +422,67 @@ function computeTopPriorityFixes(issues: ReportIssue[]): TopPriorityFix[] {
     .map((fix, idx) => ({ ...fix, rank: idx + 1 }));
 }
 
+function getDeepScan(raw: Record<string, any>): any {
+  return raw?.vni?.internal?.deepScan ||
+    raw?.deepScan ||
+    raw?.internal?.deepScan ||
+    raw?.resultJson?.vni?.internal?.deepScan ||
+    null;
+}
+
+function normalizeScannedPages(raw: Record<string, any>, deepScan: any): ReportScannedPage[] {
+  const candidates = Array.isArray(deepScan?.pages)
+    ? deepScan.pages
+    : Array.isArray(raw?.pages)
+      ? raw.pages
+      : Array.isArray(raw?.scannedPages)
+        ? raw.scannedPages
+        : [];
+
+  return candidates
+    .map((page: any) => ({
+      url: String(page?.url || page?.pageUrl || page?.result?.url || ""),
+      title: page?.title || page?.result?.title,
+      score: typeof page?.score === "number" ? page.score : page?.result?.score,
+      issues: typeof page?.issues === "number" ? page.issues : page?.result?.violations?.length,
+      lcp: typeof page?.lcp === "number" ? page.lcp : page?.result?.largestContentfulPaintMs,
+      pageWeightBytes: typeof page?.pageWeightBytes === "number" ? page.pageWeightBytes : page?.result?.totalPageWeightBytes,
+      domNodeCount: typeof page?.domNodeCount === "number" ? page.domNodeCount : page?.result?.domNodeCount,
+      aiAnalyzed: Boolean(page?.aiAnalyzed),
+    }))
+    .filter((page: ReportScannedPage) => page.url);
+}
+
+function normalizeViolations(raw: Record<string, any>, deepScan: any): Array<{
+  id: string;
+  impact?: Severity | null;
+  help?: string;
+  description?: string;
+  helpUrl?: string;
+  tags?: string[];
+  pageUrl?: string;
+  pageTitle?: string;
+  nodes?: Array<{ target?: string[]; html?: string }>;
+}> {
+  if (Array.isArray(raw?.violations)) {
+    return raw.violations;
+  }
+
+  const pages = Array.isArray(deepScan?.pages) ? deepScan.pages : Array.isArray(raw?.pages) ? raw.pages : [];
+  return pages.flatMap((page: any) => {
+    const violations = Array.isArray(page?.violations)
+      ? page.violations
+      : Array.isArray(page?.result?.violations)
+        ? page.result.violations
+        : [];
+    return violations.map((violation: any) => ({
+      ...violation,
+      pageUrl: violation.pageUrl || page?.url || page?.pageUrl,
+      pageTitle: violation.pageTitle || page?.title || page?.result?.title,
+    }));
+  });
+}
+
 /** Transform a raw scan result into ReportData */
 export function transformScanToReport(
   scan: {
@@ -455,8 +517,14 @@ export function transformScanToReport(
   // Canonical health score — use the DB-persisted score (from scoreFromAxe)
   // so dashboard and exports always display the same number.
   const raw = scan.raw && typeof scan.raw === "object" ? (scan.raw as Record<string, any>) : {};
-  const deepScan = raw?.vni?.internal?.deepScan;
-  const pagesScanned = Number(deepScan?.scannedPages || raw?.discoveredInternalLinks?.length + 1 || 1);
+  const deepScan = getDeepScan(raw);
+  const scannedPages = normalizeScannedPages(raw, deepScan);
+  const pagesScanned = Number(
+    deepScan?.scannedPages ||
+    scannedPages.length ||
+    raw?.discoveredInternalLinks?.length + 1 ||
+    1
+  );
   const reportLabels: ReportLabels = { ...DEFAULT_REPORT_LABELS, ...labels };
   const healthScore: HealthScore = scan.score != null
     ? buildHealthScoreFromCanonical(scan.score, breakdown, pagesScanned)
@@ -466,18 +534,7 @@ export function transformScanToReport(
   const compliancePercentage: number = scan.wcagAACompliance ?? Math.round(healthScore.value * 0.95);
 
   // Extract violations from raw scan data
-  let rawViolations: Array<{
-    id: string;
-    impact?: Severity | null;
-    help?: string;
-    description?: string;
-    helpUrl?: string;
-    tags?: string[];
-    nodes?: Array<{ target?: string[]; html?: string }>;
-  }> = [];
-  if (raw && "violations" in raw) {
-    rawViolations = (raw.violations as typeof rawViolations) ?? [];
-  }
+  const rawViolations = normalizeViolations(raw, deepScan);
 
   // Transform violations into executive-friendly issues
   const priorityIssues: ReportIssue[] = rawViolations
@@ -600,6 +657,7 @@ export function transformScanToReport(
     vni,
     qualityMetrics,
     aiVisionAudit,
+    scannedPages,
     scanTimestamp: typeof scan.createdAt === "string" ? scan.createdAt : scan.createdAt.toISOString(),
   };
 }
