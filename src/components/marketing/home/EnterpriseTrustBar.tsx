@@ -34,7 +34,7 @@ export function EnterpriseTrustBar() {
       <div className="container mx-auto px-4">
         <p
           id="enterprise-trustbar-heading"
-          className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45"
+          className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-white/45"
         >
           {t("eyebrow")}
         </p>

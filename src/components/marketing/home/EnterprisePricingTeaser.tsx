@@ -133,7 +133,7 @@ export function EnterprisePricingTeaser() {
             <Button
               size="lg"
               asChild
-              className="h-12 rounded-xl bg-[#D4AF37] px-7 font-semibold text-[#0A0F1E] hover:bg-[#E5C158] focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
+              className="h-12 rounded-xl bg-[#D4AF37] px-7 font-semibold text-[#0A0F1E] hover:bg-[#B8941F] dark:hover:bg-[#E5C158] focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
             >
               <Link
                 href="/pricing"

@@ -151,7 +151,7 @@ export function EfficiencyCalculator() {
                 </li>
               </ul>
 
-              <p className="mt-5 text-[11px] leading-relaxed text-white/45">
+              <p className="mt-5 text-[11px] leading-relaxed text-slate-500 dark:text-white/45">
                 {t("disclaimer")}
               </p>
             </div>
