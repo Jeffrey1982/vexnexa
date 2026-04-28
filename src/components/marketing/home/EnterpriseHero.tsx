@@ -76,7 +76,7 @@ export function EnterpriseHero() {
             <Button
               size="lg"
               asChild
-              className="h-12 rounded-xl bg-[#3b82f6] px-7 font-semibold text-[#0A0F1E] hover:bg-[#60a5fa] focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
+              className="h-12 rounded-xl bg-[#3b82f6] px-7 font-semibold text-white hover:bg-[#60a5fa] focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
             >
               <Link
                 href="/contact?intent=enterprise"
@@ -152,31 +152,31 @@ function VNIRankVisual() {
           {t("subtitle")}
         </h3>
 
-        {/* Highlighted 1-star "Insolvent" card */}
-        <div className="mt-5 rounded-xl border border-[#FCA5A5]/30 bg-[#FCA5A5]/[0.07] p-4">
+        {/* Highlighted example — matches dashboard scan result style */}
+        <div className="mt-5 rounded-xl border border-[#3b82f6]/30 bg-[#3b82f6]/[0.07] p-4">
           <div className="flex items-start gap-3">
-            <div className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FCA5A5]/20 text-[#FCA5A5]">
-              <ShieldAlert className="h-4 w-4" aria-hidden />
+            <div className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#3b82f6]/20 text-[#3b82f6]">
+              <FileCheck2 className="h-4 w-4" aria-hidden />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="font-mono text-sm text-white truncate">example-enterprise.com</p>
-                <span className="rounded-md bg-[#FCA5A5]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#FCA5A5]">
-                  {t("priorityBadge")}
+                <span className="rounded-md bg-[#3b82f6]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#3b82f6]">
+                  {t("ranks.compliant")}
                 </span>
               </div>
               <div className="mt-1 flex items-center gap-2">
-                <Stars filled={1} />
-                <span className="text-xs text-white/70">{t("ranks.insolvent")}</span>
+                <Stars filled={3} />
+                <span className="text-xs text-white/70">{t("ranks.compliant")} — 3 / 5</span>
               </div>
-              <p className="mt-2 text-xs leading-relaxed text-white/60">{t("priorityCopy")}</p>
+              <p className="mt-2 text-xs leading-relaxed text-white/60">{t("disclaimer")}</p>
             </div>
           </div>
         </div>
 
         {/* Other ranks */}
         <ul className="mt-4 space-y-1.5">
-          {ranks.slice(1).map((r) => (
+          {ranks.filter((r) => r.stars !== 3).map((r) => (
             <li
               key={r.key}
               className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2"

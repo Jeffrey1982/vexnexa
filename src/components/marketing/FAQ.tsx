@@ -43,12 +43,12 @@ export function FAQ({ items, title = "Frequently Asked Questions", description }
               >
                 <button
                   onClick={() => toggleItem(index)}
-                  className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-foreground"
+                  className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-slate-900"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                   id={`faq-question-${index}`}
                 >
-                  <span className="font-semibold text-lg pr-8 text-foreground">{item.question}</span>
+                  <span className="font-semibold text-lg pr-8 text-slate-900">{item.question}</span>
                   <ChevronDown
                     className={cn(
                       "w-5 h-5 text-primary transition-transform flex-shrink-0",
@@ -66,7 +66,7 @@ export function FAQ({ items, title = "Frequently Asked Questions", description }
                   role="region"
                   aria-labelledby={`faq-question-${index}`}
                 >
-                  <div className="px-6 py-5 text-muted-foreground leading-relaxed border-t">
+                  <div className="px-6 py-5 text-slate-600 leading-relaxed border-t">
                     {item.answer}
                   </div>
                 </div>

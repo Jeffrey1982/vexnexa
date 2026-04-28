@@ -73,7 +73,7 @@ export function EnterprisePricingTeaser() {
               }}
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                 vatInclusive
-                  ? "bg-[#3b82f6] text-[#0A0F1E]"
+                  ? "bg-[#3b82f6] text-white"
                   : "text-white/70 hover:text-white"
               }`}
             >
@@ -89,7 +89,7 @@ export function EnterprisePricingTeaser() {
               }}
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                 !vatInclusive
-                  ? "bg-[#3b82f6] text-[#0A0F1E]"
+                  ? "bg-[#3b82f6] text-white"
                   : "text-white/70 hover:text-white"
               }`}
             >
@@ -133,7 +133,7 @@ export function EnterprisePricingTeaser() {
             <Button
               size="lg"
               asChild
-              className="h-12 rounded-xl bg-[#3b82f6] px-7 font-semibold text-[#0A0F1E] hover:bg-[#60a5fa] focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
+              className="h-12 rounded-xl bg-[#3b82f6] px-7 font-semibold text-white hover:bg-[#60a5fa] focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
             >
               <Link
                 href="/pricing"
