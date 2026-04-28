@@ -466,7 +466,6 @@ function PilotPartnerBanner() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {t('subtitle')}
           </p>
-          <PartnerStandardsBar />
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button size="lg" asChild className="rounded-2xl gradient-primary py-4 px-8">
               <Link

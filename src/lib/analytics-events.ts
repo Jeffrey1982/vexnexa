@@ -27,6 +27,8 @@ export type FunnelEvent =
   | 'pilot_partner_sample_report_click'
   | 'pilot_partner_contact_click'
   | 'pilot_banner_click'
+  | 'hero_cta_click'
+  | 'pricing_vat_toggle'
   | 'cta_click';
 
 interface TrackOptions {
