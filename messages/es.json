@@ -501,6 +501,116 @@
       "moderateElements": "Moderado ? 2 elementos",
       "whiteLabel": "Marca blanca",
       "exportReady": "Exportaci?n PDF y Word lista"
+    },
+    "enterprise": {
+      "hero": {
+        "eyebrow": "Accesibilidad IA-Vision · era EAA & ADA",
+        "title": "Más allá del cumplimiento. El estándar global de inclusión digital.",
+        "subtitle": "Los escáneres estándar encuentran errores de código. VexNexa usa IA-Vision para resolver la brecha de la experiencia humana. Análisis de nivel profesional para la era EAA & ADA.",
+        "pillar1Title": "Mitigación significativa del riesgo",
+        "pillar1Body": "Saca a la luz barreras que los motores basados en reglas no detectan — antes de que se conviertan en exposición legal.",
+        "pillar2Title": "Reporting listo para auditoría",
+        "pillar2Body": "Pruebas con sello de tiempo y exportables, alineadas con auditoría interna y compras.",
+        "ctaPrimary": "Reserva una demo enterprise",
+        "ctaSecondary": "Ver un informe de muestra",
+        "noCard": "No se requiere tarjeta de crédito para ver un informe de muestra."
+      },
+      "vni": {
+        "title": "VexNexa Index (VNI)",
+        "subtitle": "Un ranking de cumplimiento de 1 a 5 estrellas para cada dominio de tu portafolio.",
+        "liveLabel": "Escaneo de portafolio",
+        "priorityBadge": "High-Priority Action Required",
+        "priorityCopy": "Los dominios calificados como Insolvent (1 estrella) se marcan para revisión inmediata. Es una señal de auditoría interna, no un veredicto legal.",
+        "ranks": {
+          "insolvent": "Insolvent — 1 estrella",
+          "foundational": "Foundational — 2 estrellas",
+          "compliant": "Compliant — 3 estrellas",
+          "auditReady": "Audit-Ready — 4 estrellas",
+          "leading": "Industry-Leading — 5 estrellas"
+        },
+        "targetLabel": "Objetivo",
+        "disclaimer": "Las calificaciones VNI se derivan de hallazgos automatizados de IA-Vision combinados con la cobertura de reglas WCAG 2.2. Son una señal indicativa de riesgo, no una certificación legal."
+      },
+      "visibility": {
+        "eyebrow": "Visibilidad",
+        "title": "No se puede arreglar lo que no se ve.",
+        "body": "VexNexa descubre aproximadamente el 30 % de las barreras de accesibilidad que la automatización tradicional basada en reglas no detecta — lógica de interacción, ambigüedad perceptiva y fallos dependientes del contexto que requieren comprensión a nivel de visión.",
+        "footnote": "Observación del sector basada en auditorías WCAG publicadas; la mejora real varía según la complejidad del sitio."
+      },
+      "trustBar": {
+        "eyebrow": "Diseñado para equipos de riesgo y auditoría enterprise",
+        "items": {
+          "wcag": "Motor de escaneo WCAG 2.2 AA",
+          "eaa": "Reporting alineado con EAA & ADA",
+          "pci": "PCI-DSS vía Mollie B.V.",
+          "eu": "Alojado en la UE (AWS Frankfurt)",
+          "audit": "Exportaciones PDF y DOCX listas para auditoría"
+        },
+        "disclaimer": "VexNexa proporciona herramientas de mitigación de riesgo y evidencia lista para auditoría. La certificación final de cumplimiento sigue siendo responsabilidad de tu organización y sus asesores de accesibilidad."
+      },
+      "features": {
+        "eyebrow": "Tres pilares · Mitigación sobre garantía",
+        "title": "Inteligencia de accesibilidad de nivel enterprise.",
+        "subtitle": "Tres capacidades que te llevan del escaneo basado en reglas a un programa de cumplimiento defendible.",
+        "viewAll": "Explora todas las funciones",
+        "aiVision": {
+          "title": "Análisis contextual IA-Vision",
+          "body": "Analizamos lógica de interacción y contexto visual — no solo etiquetas de marcado. Resultado: hallazgos que coinciden con la experiencia real del usuario.",
+          "b1": "Consciente de la lógica: analiza flujos, no elementos sueltos",
+          "b2": "Detecta ambigüedad perceptiva invisible para axe-core",
+          "b3": "Reduce falsos positivos en bases de código a escala enterprise"
+        },
+        "history": {
+          "title": "Seguimiento histórico de cumplimiento",
+          "body": "Historial de escaneos con sello de tiempo por dominio para demostrar progreso a auditoría interna, compras y dirección.",
+          "b1": "Líneas de tendencia por criterio WCAG y por dominio",
+          "b2": "Alertas de regresión cuando un despliegue baja tu VNI",
+          "b3": "Evidencia exportable alineada con estándares de auditoría interna"
+        },
+        "portfolio": {
+          "title": "Vista de portafolio enterprise",
+          "body": "Gestiona cientos de dominios en un solo panel. Agrega riesgo por unidad de negocio, región o marca — y enruta la remediación al equipo correcto.",
+          "b1": "Agregación de riesgo por BU, región o marca",
+          "b2": "Acceso por roles con registros de actividad para auditoría",
+          "b3": "API y webhooks para integración con SIEM y ticketing"
+        }
+      },
+      "calculator": {
+        "eyebrow": "Calculadora de eficiencia",
+        "title": "Hasta ~80 % menos de tiempo que una auditoría manual.",
+        "subtitle": "Reducción indicativa de tiempo y coste frente a una auditoría WCAG totalmente manual. Ajusta los parámetros a tu portafolio.",
+        "pagesLabel": "Páginas a auditar al mes",
+        "pagesHint": "Total entre todos los dominios.",
+        "rateLabel": "Tarifa horaria interna",
+        "rateHint": "Se usa para estimar la reducción de coste.",
+        "resultEyebrow": "Reducción indicativa",
+        "timeSaved": "menos esfuerzo que una auditoría totalmente manual",
+        "manualLabel": "Auditoría manual",
+        "vnLabel": "VexNexa IA-Vision",
+        "savedLabel": "Reducción",
+        "hoursShort": "h",
+        "disclaimer": "Base de 30 min por página (manual) frente a 6 min por página (VexNexa, revisión humana incluida); estimación redondeada del sector. El ahorro real varía según la complejidad del sitio."
+      },
+      "pricingTeaser": {
+        "eyebrow": "Precios enterprise transparentes",
+        "title": "Precios por dominio. Sin recargos ocultos.",
+        "subtitle": "Elige cómo quieres ver los precios. El selector refleja cómo se aplica el IVA neerlandés (21 %) — cada línea aparece desglosada en tu factura.",
+        "vatToggleLabel": "Selector de IVA",
+        "vatIncl": "IVA incl. (21 %)",
+        "vatExcl": "IVA excl. (21 %)",
+        "perMonth": "/ mes",
+        "vatNoticeIncl": "Plan Pro, facturación mensual. Todos los precios incluyen IVA neerlandés del 21 %.",
+        "vatNoticeExcl": "Plan Pro, facturación mensual. El IVA del 21 % se añade en el checkout para clientes neerlandeses.",
+        "included": {
+          "audit": "Exportaciones PDF y DOCX listas para auditoría",
+          "portfolio": "Vista de portafolio enterprise",
+          "aiVision": "Análisis contextual IA-Vision",
+          "history": "Seguimiento histórico de cumplimiento"
+        },
+        "ctaPrimary": "Ver tarifas completas",
+        "ctaSecondary": "Hablar con ventas enterprise",
+        "allocation": "El 20 % de cada inversión se asigna directamente al entrenamiento continuo del modelo de IA y a la investigación legislativa en tiempo real, de modo que tu accesibilidad digital evoluciona automáticamente con los estándares globales más estrictos."
+      }
     }
   },
   "pricing": {

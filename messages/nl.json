@@ -492,6 +492,116 @@
       "moderateElements": "Matig ? 2 elementen",
       "whiteLabel": "White-label",
       "exportReady": "PDF- en Word-export klaar"
+    },
+    "enterprise": {
+      "hero": {
+        "eyebrow": "AI-Vision toegankelijkheid · EAA & ADA-tijdperk",
+        "title": "Voorbij compliance. De wereldwijde standaard voor digitale inclusie.",
+        "subtitle": "Standaard scanners vinden codefouten. VexNexa gebruikt AI-Vision om de Human Experience-gap op te lossen. Professionele inzichten voor het EAA & ADA-tijdperk.",
+        "pillar1Title": "Significante risicobeperking",
+        "pillar1Body": "Maak barrières zichtbaar die regel-gebaseerde scanners missen — voordat ze juridische blootstelling worden.",
+        "pillar2Title": "Audit-klare rapportage",
+        "pillar2Body": "Tijdgestempelde, exporteerbare bewijsvoering die aansluit op interne audit en inkoop.",
+        "ctaPrimary": "Plan een enterprise walkthrough",
+        "ctaSecondary": "Bekijk een voorbeeldrapport",
+        "noCard": "Geen creditcard nodig om een voorbeeldrapport in te zien."
+      },
+      "vni": {
+        "title": "VexNexa Index (VNI)",
+        "subtitle": "Een 1-tot-5-sterren compliance-rang voor elk domein in je portfolio.",
+        "liveLabel": "Portfolio-scan",
+        "priorityBadge": "High-Priority Action Required",
+        "priorityCopy": "Domeinen die als Insolvent (1 ster) worden geclassificeerd worden gemarkeerd voor onmiddellijke review. Dit is een intern-audit signaal, geen juridisch oordeel.",
+        "ranks": {
+          "insolvent": "Insolvent — 1 ster",
+          "foundational": "Foundational — 2 sterren",
+          "compliant": "Compliant — 3 sterren",
+          "auditReady": "Audit-Ready — 4 sterren",
+          "leading": "Industry-Leading — 5 sterren"
+        },
+        "targetLabel": "Doel",
+        "disclaimer": "VNI-ratings zijn afgeleid van geautomatiseerde AI-Vision-bevindingen gecombineerd met WCAG 2.2-regeldekking. Het is een indicatief risicosignaal, geen juridische certificering."
+      },
+      "visibility": {
+        "eyebrow": "Zichtbaarheid",
+        "title": "Je kunt niet repareren wat je niet ziet.",
+        "body": "VexNexa legt circa 30% van de toegankelijkheidsbarrières bloot die traditionele regel-gebaseerde automatisering mist — interactielogica, perceptuele ambiguïteit en contextafhankelijke fouten die een vision-niveau begrip vereisen.",
+        "footnote": "Branche-observatie op basis van gepubliceerde WCAG-audits; werkelijke meerwaarde varieert per site-complexiteit."
+      },
+      "trustBar": {
+        "eyebrow": "Gebouwd voor enterprise risk- en audit-teams",
+        "items": {
+          "wcag": "WCAG 2.2 AA scan-engine",
+          "eaa": "EAA & ADA-uitgelijnde rapportage",
+          "pci": "PCI-DSS via Mollie B.V.",
+          "eu": "Gehost in de EU (AWS Frankfurt)",
+          "audit": "Audit-klare PDF- & DOCX-exports"
+        },
+        "disclaimer": "VexNexa levert risico-mitigerende tooling en audit-klare bewijsvoering. Eindverantwoordelijkheid voor compliance-certificering blijft bij je organisatie en haar toegankelijkheidsadviseurs."
+      },
+      "features": {
+        "eyebrow": "Drie pijlers · Mitigatie boven garantie",
+        "title": "Enterprise-grade toegankelijkheidsintelligentie.",
+        "subtitle": "Drie capaciteiten die je verplaatsen van regel-gebaseerd scannen naar een verdedigbaar compliance-programma.",
+        "viewAll": "Bekijk de volledige feature-set",
+        "aiVision": {
+          "title": "AI-Vision context-analyse",
+          "body": "We analyseren interactielogica en visuele context — niet alleen markup-tags. Het resultaat: bevindingen die overeenkomen met hoe een echte gebruiker de pagina daadwerkelijk ervaart.",
+          "b1": "Logica-bewust: analyseert flows, niet losse elementen",
+          "b2": "Detecteert perceptuele ambiguïteit die axe-core niet ziet",
+          "b3": "Vermindert vals-positieven op enterprise-codebases"
+        },
+        "history": {
+          "title": "Historische compliance-tracking",
+          "body": "Tijdgestempelde scan-historie per domein toont voortgang voor interne audit, inkoop-reviews en bestuurs-rapportage.",
+          "b1": "Trendlijnen per WCAG-criterium per domein",
+          "b2": "Regressie-alerts wanneer een deploy je VNI-rang verlaagt",
+          "b3": "Exporteerbaar bewijs in lijn met interne audit-standaarden"
+        },
+        "portfolio": {
+          "title": "Enterprise portfolio-view",
+          "body": "Beheer honderden domeinen in één dashboard. Aggregeer risico per business unit, regio of merk — en stuur remediation naar het juiste team.",
+          "b1": "Risico-aggregatie per BU, regio of merk",
+          "b2": "Rol-gebaseerde toegang met audit-grade activity-logs",
+          "b3": "API en webhooks voor SIEM- en ticketing-integratie"
+        }
+      },
+      "calculator": {
+        "eyebrow": "Efficiency-calculator",
+        "title": "Tot ~80% minder tijd dan een handmatige audit.",
+        "subtitle": "Indicatieve tijd- en kostenreductie ten opzichte van een volledig handmatige WCAG-audit. Pas de invoer aan je portfolio aan.",
+        "pagesLabel": "Pagina's te auditen per maand",
+        "pagesHint": "Totaal over alle domeinen.",
+        "rateLabel": "Intern uurtarief",
+        "rateHint": "Gebruikt om de kostenreductie in te schatten.",
+        "resultEyebrow": "Indicatieve reductie",
+        "timeSaved": "minder inspanning dan een volledig handmatige audit",
+        "manualLabel": "Handmatige audit",
+        "vnLabel": "VexNexa AI-Vision",
+        "savedLabel": "Reductie",
+        "hoursShort": "u",
+        "disclaimer": "Basis van 30 min per pagina (handmatig) versus 6 min per pagina (VexNexa, inclusief menselijke review) is een branche-afgeronde schatting. Werkelijke besparingen variëren per site-complexiteit."
+      },
+      "pricingTeaser": {
+        "eyebrow": "Transparante enterprise-prijzen",
+        "title": "Prijzen per domein. Geen verborgen toeslagen.",
+        "subtitle": "Kies hoe je de prijzen wilt zien. De toggle weerspiegelt hoe Nederlandse BTW (21%) wordt toegepast — elk regelitem is volledig gespecificeerd op je factuur.",
+        "vatToggleLabel": "BTW-weergave toggle",
+        "vatIncl": "Incl. 21% BTW",
+        "vatExcl": "Excl. 21% BTW",
+        "perMonth": "/ maand",
+        "vatNoticeIncl": "Pro-plan, maandelijks gefactureerd. Alle prijzen zijn inclusief 21% BTW.",
+        "vatNoticeExcl": "Pro-plan, maandelijks gefactureerd. 21% BTW wordt bij checkout toegevoegd voor Nederlandse klanten.",
+        "included": {
+          "audit": "Audit-klare PDF- & DOCX-exports",
+          "portfolio": "Enterprise portfolio-view",
+          "aiVision": "AI-Vision context-analyse",
+          "history": "Historische compliance-tracking"
+        },
+        "ctaPrimary": "Bekijk de volledige prijspagina",
+        "ctaSecondary": "Spreek met enterprise sales",
+        "allocation": "20% van elke investering wordt direct gealloceerd aan continue AI-model training en real-time wetgevingsresearch, waardoor uw digitale toegankelijkheid automatisch mee-evolueert met de strengste wereldwijde standaarden."
+      }
     }
   },
   "pricing": {

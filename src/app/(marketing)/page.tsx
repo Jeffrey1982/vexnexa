@@ -23,11 +23,14 @@ import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 import { Quote, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
-import { PartnerStandardsBar } from "@/components/marketing/PartnerStandardsBar";
-import { HomeHeroPremium } from "@/components/marketing/home/HomeHeroPremium";
-import { HomeFeaturesPremium } from "@/components/marketing/home/HomeFeaturesPremium";
-import { PricingTeaserSection } from "@/components/marketing/home/PricingTeaserSection";
+// Legacy premium components retained for reference / non-landing pages.
+// The new "Nasdaq-style" enterprise landing uses the components below.
+import { EnterpriseHero } from "@/components/marketing/home/EnterpriseHero";
+import { VisibilityHook } from "@/components/marketing/home/VisibilityHook";
+import { EnterpriseTrustBar } from "@/components/marketing/home/EnterpriseTrustBar";
+import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatures";
+import { EfficiencyCalculator } from "@/components/marketing/home/EfficiencyCalculator";
+import { EnterprisePricingTeaser } from "@/components/marketing/home/EnterprisePricingTeaser";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -572,22 +575,31 @@ export default function HomePage() {
   return (
     <>
       <JsonLd />
-      <HomeHeroPremium />
-      <SocialProofStrip />
-      <TrustStrip />
-      <WorkflowSection />
-      <WhatYouGetSection />
-      <HomeFeaturesPremium />
-      <WhyTeamsSection />
-      <BuiltForSection />
-      <StandardsTrustBar variant="compact" showHeading={false} />
-      <TestimonialsSection />
-      <PricingTeaserSection />
-      <SampleReportSection />
-      <AgencyOfferSection />
-      <PilotPartnerBanner />
-      <FAQ items={faqItems} />
-      <FinalCTASection />
+      {/*
+        vn-enterprise-theme: a scoping wrapper that limits the dark
+        Deep-Navy + Gold "Nasdaq-style" palette to the marketing landing.
+        The dashboard, auth, and legal routes keep their existing brand.
+      */}
+      <div className="vn-enterprise-theme bg-[#0A0F1E] text-white antialiased">
+        <EnterpriseHero />
+        <EnterpriseTrustBar />
+        <VisibilityHook />
+        <EnterpriseFeatures />
+        <EfficiencyCalculator />
+        <EnterprisePricingTeaser />
+
+        {/*
+          FAQ kept for SEO + CRO; we render it on the dark surface with
+          a wrapper that supplies the FAQ component's own light styles
+          a darker context. The FAQ component already uses semantic
+          neutrals so it inherits gracefully.
+        */}
+        <section className="bg-[#0A0F1E] py-16">
+          <div className="mx-auto max-w-3xl px-4">
+            <FAQ items={faqItems} />
+          </div>
+        </section>
+      </div>
     </>
   );
 }

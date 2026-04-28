@@ -501,6 +501,116 @@
       "moderateElements": "Mittel ? 2 Elemente",
       "whiteLabel": "White-Label",
       "exportReady": "PDF- und Word-Export bereit"
+    },
+    "enterprise": {
+      "hero": {
+        "eyebrow": "AI-Vision Accessibility · EAA & ADA Era",
+        "title": "Beyond Compliance. The Global Standard for Digital Inclusion.",
+        "subtitle": "Standard scanners find code errors. VexNexa uses AI-Vision to solve the Human Experience gap. Professional-grade insights for the EAA & ADA era.",
+        "pillar1Title": "Significant Risk Mitigation",
+        "pillar1Body": "Surface barriers that rule-based engines miss — before they become exposure.",
+        "pillar2Title": "Audit-Ready Reporting",
+        "pillar2Body": "Time-stamped, exportable evidence that aligns with internal-audit and procurement.",
+        "ctaPrimary": "Book an Enterprise Walkthrough",
+        "ctaSecondary": "View a Sample Report",
+        "noCard": "No credit card required to preview a sample report."
+      },
+      "vni": {
+        "title": "VexNexa Index (VNI)",
+        "subtitle": "A 1-to-5 star compliance rank for every domain in your portfolio.",
+        "liveLabel": "Portfolio scan",
+        "priorityBadge": "High-Priority Action Required",
+        "priorityCopy": "Domains rated Insolvent (1 star) are flagged for immediate review. This is an internal-audit signal, not a legal verdict.",
+        "ranks": {
+          "insolvent": "Insolvent — 1 star",
+          "foundational": "Foundational — 2 stars",
+          "compliant": "Compliant — 3 stars",
+          "auditReady": "Audit-Ready — 4 stars",
+          "leading": "Industry-Leading — 5 stars"
+        },
+        "targetLabel": "Target",
+        "disclaimer": "VNI ratings are derived from automated AI-Vision findings combined with WCAG 2.2 rule coverage. They are an indicative risk signal, not a legal certification."
+      },
+      "visibility": {
+        "eyebrow": "Visibility",
+        "title": "You can't fix what you can't see.",
+        "body": "VexNexa uncovers approximately 30% of accessibility barriers that traditional rule-based automation misses — interaction logic, perceptual ambiguity, and context-dependent failures that need vision-level understanding.",
+        "footnote": "Industry observation across published WCAG audits; actual coverage gain varies by site complexity."
+      },
+      "trustBar": {
+        "eyebrow": "Built for enterprise risk and audit teams",
+        "items": {
+          "wcag": "WCAG 2.2 AA scan engine",
+          "eaa": "EAA & ADA-aligned reporting",
+          "pci": "PCI-DSS via Mollie B.V.",
+          "eu": "Hosted in the EU (AWS Frankfurt)",
+          "audit": "Audit-ready PDF & DOCX exports"
+        },
+        "disclaimer": "VexNexa provides risk-mitigation tooling and audit-ready evidence. Final compliance certification remains the responsibility of your organisation and its accessibility advisors."
+      },
+      "features": {
+        "eyebrow": "Three pillars · Mitigation over guarantee",
+        "title": "Enterprise-grade accessibility intelligence.",
+        "subtitle": "Three capabilities that move you from rule-based scanning to a defensible compliance program.",
+        "viewAll": "Explore the full feature set",
+        "aiVision": {
+          "title": "AI-Vision Context Analysis",
+          "body": "We analyse interaction logic and visual context — not just markup tags. The result: findings that match how a real user actually experiences the page.",
+          "b1": "Logic-aware: analyses flows, not single elements",
+          "b2": "Detects perceptual ambiguity invisible to axe-core",
+          "b3": "Reduces false positives on enterprise-scale codebases"
+        },
+        "history": {
+          "title": "Historical Compliance Tracking",
+          "body": "Time-stamped scan history per domain shows progress for internal-audit, procurement reviews, and board-level reporting.",
+          "b1": "Per-domain trend lines on every WCAG criterion",
+          "b2": "Regression alerts when a deploy lowers your VNI rank",
+          "b3": "Exportable evidence aligned with internal audit standards"
+        },
+        "portfolio": {
+          "title": "Enterprise Portfolio View",
+          "body": "Manage hundreds of domains in one dashboard. Roll up risk by business unit, region, or brand — and route remediation to the right team.",
+          "b1": "Roll-up risk by BU, region, or brand",
+          "b2": "Role-based access with audit-grade activity logs",
+          "b3": "API and webhooks for SIEM and ticketing integration"
+        }
+      },
+      "calculator": {
+        "eyebrow": "Efficiency calculator",
+        "title": "Up to ~80% less time than a manual audit.",
+        "subtitle": "Indicative time and cost reduction versus a fully manual WCAG audit. Adjust the inputs to your portfolio.",
+        "pagesLabel": "Pages to audit per month",
+        "pagesHint": "Total across all domains.",
+        "rateLabel": "Internal hourly rate",
+        "rateHint": "Used to estimate cost reduction.",
+        "resultEyebrow": "Indicative reduction",
+        "timeSaved": "less effort than a fully manual audit",
+        "manualLabel": "Manual audit",
+        "vnLabel": "VexNexa AI-Vision",
+        "savedLabel": "Reduction",
+        "hoursShort": "h",
+        "disclaimer": "Baseline of 30 min per page (manual) versus 6 min per page (VexNexa, including human review) is an industry-rounded estimate. Actual savings vary by site complexity."
+      },
+      "pricingTeaser": {
+        "eyebrow": "Transparent enterprise pricing",
+        "title": "Per-domain pricing. No hidden surcharges.",
+        "subtitle": "Choose how you want prices displayed. The toggle reflects how Dutch VAT (21%) is applied — every line item is fully itemised on your invoice.",
+        "vatToggleLabel": "VAT display toggle",
+        "vatIncl": "Incl. 21% BTW (VAT)",
+        "vatExcl": "Excl. 21% BTW (VAT)",
+        "perMonth": "/ month",
+        "vatNoticeIncl": "Pro plan, billed monthly. All prices include 21% Dutch VAT.",
+        "vatNoticeExcl": "Pro plan, billed monthly. 21% VAT is added at checkout for Dutch customers.",
+        "included": {
+          "audit": "Audit-ready PDF & DOCX exports",
+          "portfolio": "Enterprise portfolio view",
+          "aiVision": "AI-Vision context analysis",
+          "history": "Historical compliance tracking"
+        },
+        "ctaPrimary": "View Full Pricing",
+        "ctaSecondary": "Talk to Enterprise Sales",
+        "allocation": "20% of every subscription is directly allocated to continuous AI-model training and real-time legislation research, so your digital accessibility automatically evolves with the strictest global standards."
+      }
     }
   },
   "pricing": {
