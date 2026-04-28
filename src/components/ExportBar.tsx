@@ -108,8 +108,10 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
             onClick={exportPdf}
             disabled={pdfStatus === "loading"}
             className={cn(
-              "flex items-center gap-2 transition-all",
-              pdfStatus === "success" && "border-success text-success hover:bg-success/10"
+              "flex items-center gap-2 border-success bg-success text-success-foreground shadow-sm transition-all hover:bg-success/90",
+              "disabled:opacity-80",
+              pdfStatus === "success" && "bg-success hover:bg-success/90",
+              pdfStatus === "error" && "border-destructive"
             )}
           >
             {pdfStatus === "idle" && <FileText className="w-4 h-4" />}
