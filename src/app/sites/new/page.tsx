@@ -12,6 +12,7 @@ import Link from "next/link";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
+import { normalizeUrl } from "@/lib/url";
 
 export default function NewSitePage() {
   const [user, setUser] = useState<any>(null);
@@ -32,25 +33,13 @@ export default function NewSitePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!url) {
-      setError("Please enter a URL");
+    const validUrl = normalizeUrl(url);
+    if (!validUrl) {
+      setError("Please enter a valid website URL.");
       return;
     }
 
-    // Basic URL validation
-    let validUrl: string;
-    try {
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        validUrl = 'https://' + url;
-      } else {
-        validUrl = url;
-      }
-      new URL(validUrl); // This will throw if invalid
-    } catch {
-      setError("Please enter a valid URL (e.g., example.com or https://example.com)");
-      return;
-    }
-
+    setUrl(validUrl);
     setLoading(true);
     setError("");
 
@@ -113,10 +102,11 @@ export default function NewSitePage() {
                 <Label htmlFor="url">Website URL</Label>
                 <Input
                   id="url"
-                  type="url"
+                  type="text"
+                  inputMode="url"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://example.com or example.com"
+                  placeholder="e.g., https://example.com or example.com"
                   className="h-12"
                   disabled={loading}
                 />

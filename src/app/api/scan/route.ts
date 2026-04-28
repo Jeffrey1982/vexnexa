@@ -19,6 +19,7 @@ import {
   calculateComplianceRisk,
 } from "@/lib/performance-analytics";
 import { publishScanReport } from "@/lib/public-reports";
+import { normalizeUrl } from "@/lib/url";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -583,14 +584,15 @@ export async function POST(req: Request) {
     }
 
     const { url } = await req.json();
-    if (!url) {
-      return NextResponse.json({ ok: false, error: "URL is required" }, { status: 400 });
+    const normalizedUrl = normalizeUrl(url);
+    if (!normalizedUrl) {
+      return NextResponse.json({ ok: false, error: "Please enter a valid website URL." }, { status: 400 });
     }
 
     let siteUrl: string;
     let fullPageUrl: string;
     try {
-      ({ siteUrl, fullPageUrl } = validatePublicUrl(url));
+      ({ siteUrl, fullPageUrl } = validatePublicUrl(normalizedUrl));
     } catch (urlError: any) {
       return NextResponse.json({ ok: false, error: urlError?.message || "Invalid URL" }, { status: urlError?.statusCode || 400 });
     }

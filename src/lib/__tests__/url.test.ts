@@ -6,6 +6,14 @@ describe('normalizeUrl', () => {
     expect(normalizeUrl('example.com')).toBe('https://example.com/')
   })
 
+  it('adds https:// when a www domain is provided', () => {
+    expect(normalizeUrl('www.example.com')).toBe('https://www.example.com/')
+  })
+
+  it('normalizes plain production domains before scanning', () => {
+    expect(normalizeUrl('springbokagency.com')).toBe('https://springbokagency.com/')
+  })
+
   it('preserves https:// protocol', () => {
     expect(normalizeUrl('https://example.com')).toBe('https://example.com/')
   })
@@ -33,6 +41,10 @@ describe('normalizeUrl', () => {
 
   it('returns null for invalid URL', () => {
     expect(normalizeUrl('not a url at all :::')).toBeNull()
+  })
+
+  it('returns null for single-word input', () => {
+    expect(normalizeUrl('hello')).toBeNull()
   })
 
   it('handles null/undefined input gracefully', () => {

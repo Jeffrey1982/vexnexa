@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth } from '@/lib/auth'
 import { runEnhancedAccessibilityScan } from '@/lib/scanner-enhanced'
+import { normalizeUrl } from '@/lib/url'
 import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
 
 const ScanRequestSchema = z.object({
-  url: z.string().url('Invalid URL format'),
+  url: z.string(),
 })
 
 export async function POST(request: NextRequest) {
@@ -25,7 +26,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { url } = validation.data
+    const url = normalizeUrl(validation.data.url)
+    if (!url) {
+      return NextResponse.json(
+        { error: 'Please enter a valid website URL.' },
+        { status: 400 }
+      )
+    }
 
     if (process.env.NODE_ENV === 'development') {
       console.log('Scanning URL:', url)

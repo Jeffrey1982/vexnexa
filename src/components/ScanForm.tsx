@@ -1,6 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { normalizeUrl } from "@/lib/url";
 
 export default function ScanForm() {
   const t = useTranslations("scanForm");
@@ -11,31 +13,40 @@ export default function ScanForm() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setRes(null);
     setError(null);
+
+    const normalizedUrl = normalizeUrl(url);
+    if (!normalizedUrl) {
+      setError("Please enter a valid website URL.");
+      return;
+    }
+
+    setUrl(normalizedUrl);
+    setLoading(true);
+
     try {
-      console.log('🔍 [ScanForm] Starting scan for URL:', url);
+      console.log("[ScanForm] Starting scan for URL:", normalizedUrl);
 
       const r = await fetch("/api/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url: normalizedUrl }),
       });
 
-      console.log('🔍 [ScanForm] Response status:', r.status);
+      console.log("[ScanForm] Response status:", r.status);
 
       const data = await r.json();
-      console.log('🔍 [ScanForm] Response data:', data);
+      console.log("[ScanForm] Response data:", data);
 
       if (!r.ok || !data.ok) {
-        console.error('🔍 [ScanForm] Request failed:', data);
+        console.error("[ScanForm] Request failed:", data);
         throw new Error(data.error || t("errors.failed"));
       }
 
       setRes(data);
     } catch (err: any) {
-      console.error('🔍 [ScanForm] Error:', err);
+      console.error("[ScanForm] Error:", err);
       setError(err.message ?? t("errors.failed"));
     } finally {
       setLoading(false);
@@ -47,9 +58,10 @@ export default function ScanForm() {
       <form onSubmit={onSubmit} className="flex gap-2">
         <input
           type="text"
+          inputMode="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder={t("placeholder")}
+          placeholder="e.g., https://example.com or example.com"
           className="flex-1 border rounded-xl px-3 py-2"
           required
         />
@@ -71,7 +83,7 @@ export default function ScanForm() {
             {JSON.stringify(res.summary?.top ?? [], null, 2)}
           </pre>
           <a href={`/scans/${res.scanId}`} className="text-blue-600 underline text-sm mt-2 inline-block">
-            {t("button.success")} →
+            {t("button.success")} -&gt;
           </a>
         </div>
       )}
