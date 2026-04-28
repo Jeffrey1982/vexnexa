@@ -203,16 +203,16 @@ function ScanResultsContent() {
 
           {/* Overview Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Card>
+            <Card className="overflow-hidden">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Accessibility Score</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Enhanced Accessibility Score</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pb-5">
                 <div className={`text-3xl font-bold ${getScoreColor(result.score)}`}>
                   {result.score}/100
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {result.score >= 90 ? 'Excellent' : result.score >= 70 ? 'Good' : 'Needs Improvement'}
+                  Technical WCAG foundation
                 </p>
               </CardContent>
             </Card>

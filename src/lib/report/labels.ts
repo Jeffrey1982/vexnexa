@@ -12,6 +12,8 @@ type Locale = keyof typeof messages;
 export const DEFAULT_REPORT_LABELS: ReportLabels = {
   vniIndex: "VexNexa Index",
   vniRank: "VNI Rank",
+  enhancedAccessibilityScore: "Enhanced Accessibility Score",
+  technicalWcagFoundation: "Technical WCAG foundation",
   outOf2500: "out of 2500",
   aiVisionAudit: "AI-Vision Audit",
   imageAltText: "Alt text",

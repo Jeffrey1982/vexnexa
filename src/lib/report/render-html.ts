@@ -123,6 +123,7 @@ function vniBadge(d: ReportData): string {
   const stars = "★★★★★".slice(0, d.vni.stars);
   return `<div class="vni-badge">
     <div class="vni-copy">
+      <div class="vni-label">${esc(d.labels.vniRank)} <span>${d.vni.score} ${esc(d.labels.outOf2500)}</span></div>
       <div class="vni-tier">${esc(d.vni.tier)} <span class="vni-stars">${stars}</span></div>
     </div>
   </div>`;
@@ -323,8 +324,9 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
     <div class="cover-main-right">
       <div class="cover-score-card-corp">
         ${d.vni ? vniBadge(d) : `<div class="csc-score" style="color:${gc}">${hs.value}</div><div class="csc-of">/100</div>`}
-        <div class="csc-grade">${d.vni ? esc(d.labels.vniRank) : `Grade ${hs.grade} &mdash; ${hs.label}`}</div>
+        <div class="csc-grade">${d.vni ? esc(d.labels.vniIndex) : `Grade ${hs.grade} &mdash; ${hs.label}`}</div>
         <div class="csc-bar-track"><div class="csc-bar-fill" style="width:${d.vni ? vniBand(d.vni.score) : Math.min(100, hs.value)}%;background:${d.vni ? GOLD : gc}"></div></div>
+        ${d.vni ? `<div class="csc-secondary"><span>${esc(d.labels.enhancedAccessibilityScore)}</span><strong>${hs.value}/100</strong><small>${esc(d.labels.technicalWcagFoundation)}</small></div>` : ""}
         <div class="csc-meta">
           <span>${d.issueBreakdown.total} issues</span>
           <span>Fix: ${esc(d.estimatedFixTime)}</span>
@@ -382,7 +384,8 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
     <div class="cover-main-right">
       <div class="cover-score-panel">
         ${d.vni ? vniBadge(d) : scoreRingSVG(hs.value, primary, BRAND_NAVY)}
-        <p class="csc-label-light">${d.vni ? esc(d.labels.vniRank) : hs.label}</p>
+        <p class="csc-label-light">${d.vni ? esc(d.labels.vniIndex) : esc(d.labels.enhancedAccessibilityScore)}</p>
+        ${d.vni ? `<div class="csc-secondary-light"><span>${esc(d.labels.enhancedAccessibilityScore)}</span><strong>${hs.value}/100</strong><small>${esc(d.labels.technicalWcagFoundation)}</small></div>` : ""}
         <p class="csc-meta-light">Risk <strong style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</strong> · WCAG checks passed <strong style="color:${esc(primary)}">${d.compliancePercentage}%</strong></p>
       </div>
     </div>
@@ -424,11 +427,12 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   const anchorId = "exec-summary";
   const hs = d.healthScore;
   const hsColor = hs.value >= 80 ? "#16A34A" : hs.value >= 60 ? "#D97706" : "#DC2626";
-  const primaryScoreLabel = d.vni ? d.labels.vniIndex : "Health Score";
+  const primaryScoreLabel = d.vni ? d.labels.vniRank : d.labels.enhancedAccessibilityScore;
   const primaryScoreValue = d.vni ? `${d.vni.tier}` : `${hs.value}/100`;
   const primaryScoreColor = d.vni ? GOLD : hsColor;
   const metrics: { label: string; value: string | number; color: string }[] = [
     { label: primaryScoreLabel, value: primaryScoreValue, color: primaryScoreColor },
+    ...(d.vni ? [{ label: d.labels.enhancedAccessibilityScore, value: `${hs.value}/100`, color: hsColor }] : []),
     { label: "Total Issues", value: d.issueBreakdown.total, color: "#6B7280" },
     { label: "Critical", value: d.issueBreakdown.critical, color: "#DC2626" },
     { label: "Serious", value: d.issueBreakdown.serious, color: "#EA580C" },
@@ -476,7 +480,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
       <div class="exec-mega-bar"><div class="exec-mega-bar-fill" style="width:${d.vni ? vniBand(d.vni.score) : Math.min(100, hs.value)}%;background:linear-gradient(90deg,#FDE68A 0%,${GOLD} 100%)"></div></div>
     </div>
     <div class="exec-hero-copy">
-      <p class="exec-lead">The <strong>${esc(primaryScoreLabel)}</strong> is VexNexa's quality index across accessibility, AI content integrity, performance, color/contrast, and UX signals. Higher ranks indicate stronger site-wide user experience and lower remediation risk.</p>
+      <p class="exec-lead">${d.vni ? `The <strong>${esc(primaryScoreLabel)}</strong> is the lead VexNexa quality signal across accessibility, AI content integrity, performance, color/contrast, and UX. The <strong>${esc(d.labels.enhancedAccessibilityScore)}</strong> remains the technical WCAG foundation.` : `The <strong>${esc(primaryScoreLabel)}</strong> is the technical WCAG foundation for this report.`}</p>
       <ul class="exec-lead-bullets">
         <li><strong style="color:${esc(primary)}">${d.compliancePercentage}%</strong> automated WCAG checks passed</li>
         <li><strong>${d.issueBreakdown.total}</strong> open findings · <strong style="color:${riskClr(d.riskLevel)}">${d.riskLevel}</strong> risk</li>
@@ -487,7 +491,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   <div class="exec-cards exec-cards-premium">
     <div class="exec-card exec-card-premium">
       <h3>Site status</h3>
-      <p><strong>${esc(d.domain)}</strong> — ${esc(primaryScoreLabel)} <strong style="color:${primaryScoreColor}">${esc(primaryScoreValue)}</strong>${d.vni ? ` (${"★★★★★".slice(0, d.vni.stars)})` : ` (grade ${hs.grade})`}.
+      <p><strong>${esc(d.domain)}</strong> — ${esc(primaryScoreLabel)} <strong style="color:${primaryScoreColor}">${esc(primaryScoreValue)}</strong>${d.vni ? ` (${"★★★★★".slice(0, d.vni.stars)}), ${esc(d.labels.enhancedAccessibilityScore)} <strong style="color:${hsColor}">${hs.value}/100</strong>` : ` (grade ${hs.grade})`}.
       ${d.issueBreakdown.critical > 0
         ? ` <span class="exec-alert-inline">${d.issueBreakdown.critical} critical issue${d.issueBreakdown.critical !== 1 ? "s" : ""} need immediate attention.</span>`
         : " No critical issues were detected in this scan."}</p>
@@ -535,7 +539,7 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
       <div class="progress-stack">
         ${progressBar("WCAG AA", d.compliancePercentage, aaClr, s)}
         ${progressBar("WCAG AAA", Math.round(d.compliancePercentage * 0.7), aaaClr, s)}
-        ${progressBar(d.vni ? d.labels.vniIndex : "Score", d.vni ? Math.round(vniBand(d.vni.score)) : d.score, d.vni ? GOLD : primary, s)}
+        ${progressBar(d.vni ? d.labels.vniIndex : d.labels.enhancedAccessibilityScore, d.vni ? Math.round(vniBand(d.vni.score)) : d.score, d.vni ? GOLD : primary, s)}
       </div>
     </div>
   </div>
@@ -1108,11 +1112,15 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .csp-ser{border-color:#FED7AA;color:#9A3412;background:#FFF7ED}
 .csp-mod{border-color:#FDE68A;color:#854D0E;background:#FFFBEB}
 .csp-min{border-color:#E2E8F0;color:#475569;background:#F8FAFC}
-.cover-score-panel{background:#fff;border:1px solid #E2E8F0;border-radius:20px;padding:var(--space-lg) var(--space-md);
-  box-shadow:0 4px 24px rgba(10,37,64,.08);text-align:center;min-width:260px;
+.cover-score-panel{background:#fff;border:1px solid #E2E8F0;border-radius:20px;padding:var(--space-lg) var(--space-md) calc(var(--space-lg) + 4px);
+  box-shadow:0 4px 24px rgba(10,37,64,.08);text-align:center;min-width:260px;max-width:300px;overflow:hidden;box-sizing:border-box;
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-label-light{font-size:15px;font-weight:600;color:#475569;margin-top:var(--space-sm)}
 .csc-meta-light{font-size:12px;color:#64748B;margin-top:var(--space-sm);line-height:1.5}
+.csc-secondary-light{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:var(--space-sm);padding:8px 10px;border:1px solid #E2E8F0;border-radius:10px;background:#F8FAFC}
+.csc-secondary-light span{font-size:10px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#64748B;line-height:1.25}
+.csc-secondary-light strong{font-size:18px;color:#0F172A;line-height:1}
+.csc-secondary-light small{font-size:10px;color:#94A3B8;line-height:1.2}
 .cover-footer-light{border-top:1px solid #E2E8F0;padding-top:var(--space-md);margin-top:auto;flex-wrap:wrap;gap:var(--space-sm)}
 .cover-footer-corp{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-sm)}
 .cover-scanid-light{font-size:10px;color:#94A3B8;font-family:var(--mono)}
@@ -1167,14 +1175,19 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .cover-severity-bar-dark{color:rgba(255,255,255,.5)}
 .cover-severity-bar-dark .csb-sep{color:rgba(255,255,255,.15)}
 
-.cover-score-card-corp{background:#F9FAFB;border:1px solid #B8BEC6;border-radius:var(--r);padding:var(--space-xl) var(--space-lg);text-align:center;min-width:220px;
+.cover-score-card-corp{background:#F9FAFB;border:1px solid #B8BEC6;border-radius:var(--r);padding:var(--space-xl) var(--space-lg) calc(var(--space-xl) + 4px);text-align:center;min-width:220px;max-width:280px;overflow:hidden;box-sizing:border-box;
   box-shadow:0 1px 4px rgba(0,0,0,.05);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .csc-score{font-size:52px;font-weight:900;line-height:1;display:inline}
 .csc-of{font-size:20px;font-weight:400;color:#9CA3AF;display:inline}
 .csc-grade{font-size:13px;color:#6B7280;margin:var(--space-sm) 0 var(--space-md)}
-.csc-bar-track{height:9px;background:#E5E7EB;border-radius:4px;overflow:hidden;max-width:200px;margin:0 auto}
+.csc-bar-track{height:9px;background:#E5E7EB;border-radius:4px;overflow:hidden;width:100%;max-width:200px;margin:0 auto}
 .csc-bar-fill{height:100%;border-radius:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.csc-meta{display:flex;justify-content:space-between;margin-top:var(--space-sm);font-size:11px;color:#9CA3AF}
+.csc-secondary{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:var(--space-sm);padding:7px 8px;border:1px solid #E5E7EB;border-radius:8px;background:#fff}
+.csc-secondary span{font-size:9px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#6B7280;line-height:1.25}
+.csc-secondary strong{font-size:16px;color:#111827;line-height:1}
+.csc-secondary small{font-size:9px;color:#9CA3AF;line-height:1.2}
+.csc-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 12px;margin-top:var(--space-sm);font-size:10px;line-height:1.25;color:#9CA3AF}
+.csc-meta span{white-space:normal}
 
 /* ═══════════════════════════════════════════════════
    SECTION TITLES — consistent spacing
@@ -1230,9 +1243,9 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .ehb-meta{display:flex;flex-direction:column;gap:var(--space-xs)}
 .ehb-grade{font-size:15px;font-weight:700;color:#374151}
 .ehb-label{font-size:13px;color:#6B7280;font-weight:500}
-.vni-badge{display:flex;align-items:center;gap:16px;justify-content:center;background:linear-gradient(135deg,#FFFBEB,#FFFFFF 45%,#FEF3C7);border:1px solid #FCD34D;border-radius:18px;padding:20px;box-shadow:0 0 18px rgba(245,158,11,.22);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.vni-badge{display:flex;align-items:center;gap:16px;justify-content:center;background:linear-gradient(135deg,#FFFBEB,#FFFFFF 45%,#FEF3C7);border:1px solid #FCD34D;border-radius:18px;padding:16px;box-shadow:0 0 18px rgba(245,158,11,.22);overflow:hidden;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .vni-score{font-size:56px;font-weight:900;line-height:.95;color:#D97706;font-variant-numeric:tabular-nums}
-.vni-copy{text-align:left}.vni-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#92400E;font-weight:800}.vni-label span{display:block;color:#A16207;font-weight:600;text-transform:none;letter-spacing:0;margin-top:2px}.vni-tier{font-size:22px;font-weight:900;color:#B45309;margin-top:6px}.vni-stars{display:block;color:#D97706;letter-spacing:2px;font-size:15px;margin-top:4px}
+.vni-copy{text-align:left;min-width:0}.vni-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#92400E;font-weight:800;line-height:1.25;overflow-wrap:anywhere}.vni-label span{display:block;color:#A16207;font-weight:600;text-transform:none;letter-spacing:0;margin-top:2px}.vni-tier{font-size:21px;font-weight:900;color:#B45309;margin-top:6px;line-height:1.05;overflow-wrap:anywhere}.vni-stars{display:block;color:#D97706;letter-spacing:1px;font-size:14px;margin-top:4px}
 .exec-health-detail{flex:1}
 .exec-health-detail p{font-size:13px;color:#4B5563;margin-bottom:var(--space-xs);line-height:1.6}
 

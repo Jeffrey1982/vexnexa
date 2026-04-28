@@ -343,7 +343,8 @@ export const PDFReport: React.FC<PDFReportProps> = ({
           <View style={[styles.scoreCircle, { backgroundColor: getScoreColor(scanData.score) }]}>
             <Text style={styles.scoreText}>{scanData.score}</Text>
           </View>
-          <Text style={styles.scoreLabel}>{scoreInfo.label} Accessibility Score</Text>
+          <Text style={styles.scoreLabel}>Enhanced Accessibility Score</Text>
+          <Text style={styles.scoreDescription}>Technical WCAG foundation · {scoreInfo.label}</Text>
           <Text style={styles.scoreDescription}>{scoreInfo.description}</Text>
         </View>
 

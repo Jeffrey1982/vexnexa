@@ -3184,6 +3184,8 @@
     "vni": {
       "label": "VexNexa Index",
       "ranking": "VNI-Ranking",
+      "enhancedAccessibilityScore": "Erweiterter Accessibility-Score",
+      "technicalWcagFoundation": "Technische WCAG-Grundlage",
       "targetElite": "Ziel: Elite-Rang",
       "maintainingApex": "Apex-Status halten",
       "tier": {
@@ -3197,6 +3199,8 @@
     "pdf": {
       "vniIndex": "VexNexa Index",
       "vniRank": "VNI-Rang",
+      "enhancedAccessibilityScore": "Erweiterter Accessibility-Score",
+      "technicalWcagFoundation": "Technische WCAG-Grundlage",
       "outOf2500": "von 2500",
       "aiVisionAudit": "AI-Vision-Audit",
       "imageAltText": "Alt-Text",

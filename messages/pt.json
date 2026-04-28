@@ -3035,9 +3035,11 @@
       }
     },
     "vni": {
-      "label": "?ndice VexNexa",
-      "ranking": "Classifica??o VNI",
-      "targetElite": "Meta: n?vel Elite",
+      "label": "Indice VexNexa",
+      "ranking": "Classificacao VNI",
+      "enhancedAccessibilityScore": "Pontuacao de acessibilidade melhorada",
+      "technicalWcagFoundation": "Base tecnica WCAG",
+      "targetElite": "Meta: nivel Elite",
       "maintainingApex": "Mantendo status Apex",
       "tier": {
         "Insolvent": "Insolvent",
@@ -3050,6 +3052,8 @@
     "pdf": {
       "vniIndex": "Indice VexNexa",
       "vniRank": "Classificacao VNI",
+      "enhancedAccessibilityScore": "Pontuacao de acessibilidade melhorada",
+      "technicalWcagFoundation": "Base tecnica WCAG",
       "outOf2500": "de 2500",
       "aiVisionAudit": "Auditoria AI-Vision",
       "imageAltText": "Texto alternativo",

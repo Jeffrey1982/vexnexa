@@ -102,6 +102,8 @@ export interface TopPriorityFix {
 export interface ReportLabels {
   vniIndex: string;
   vniRank: string;
+  enhancedAccessibilityScore: string;
+  technicalWcagFoundation: string;
   outOf2500: string;
   aiVisionAudit: string;
   imageAltText: string;

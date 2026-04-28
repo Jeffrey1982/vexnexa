@@ -298,18 +298,18 @@ export default async function ScanDetailPage({ params }: PageProps) {
               <div className="min-w-0 flex-1">
                 <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 font-display text-lg sm:text-xl lg:text-2xl">
                   <span className="truncate">{new URL(siteUrl).hostname}</span>
-                  {scan.score !== null && <ScoreBadge score={scan.score} size="lg" />}
+                  {scan.score !== null && vniScore === null && <ScoreBadge score={scan.score} size="lg" />}
                 </CardTitle>
                 {vniScore !== null && (
-                  <div className="mt-3 inline-flex flex-col gap-1 rounded-lg border border-amber-300/60 bg-gradient-to-br from-amber-50 via-background to-amber-100/70 px-3 py-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] dark:border-amber-500/40 dark:from-amber-950/30 dark:via-background dark:to-amber-900/20">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="flex items-center gap-2">
+                  <div className="mt-3 flex w-full max-w-xl flex-col gap-2 overflow-hidden rounded-lg border border-amber-300/60 bg-gradient-to-br from-amber-50 via-background to-amber-100/70 px-3 pb-3 pt-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] dark:border-amber-500/40 dark:from-amber-950/30 dark:via-background dark:to-amber-900/20 sm:inline-flex sm:w-auto">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+                      <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <Gem className="h-5 w-5 text-amber-500" aria-hidden="true" />
-                        <span className="text-sm font-medium text-muted-foreground">{tVni("label")}</span>
+                        <span className="text-sm font-medium text-muted-foreground">{tVni("ranking")}</span>
                         <span className="text-xl font-bold leading-none text-foreground">{vniScore}/2500</span>
                       </div>
                       {vniTier && (
-                        <div className="flex items-center gap-2">
+                        <div className="flex min-w-0 flex-wrap items-center gap-2">
                           <span className="text-xl font-bold leading-none bg-gradient-to-br from-amber-300 via-yellow-500 to-amber-600 bg-clip-text text-transparent">
                             {tVni(`tier.${vniTier.key}`)}
                           </span>
@@ -326,8 +326,19 @@ export default async function ScanDetailPage({ params }: PageProps) {
                       )}
                     </div>
                     {vniMotivationKey && (
-                      <div className="pl-7 text-xs font-medium text-amber-700 dark:text-amber-300">
+                      <div className="text-xs font-medium leading-snug text-amber-700 dark:text-amber-300 sm:pl-7">
                         {tVni(vniMotivationKey)}
+                      </div>
+                    )}
+                    {scan.score !== null && (
+                      <div className="rounded-md border border-amber-200/70 bg-white/75 px-2.5 py-2 text-xs shadow-sm dark:border-amber-500/30 dark:bg-background/40">
+                        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                          <span className="font-medium text-muted-foreground">{tVni("enhancedAccessibilityScore")}</span>
+                          <span className="font-semibold text-foreground">{scan.score}/100</span>
+                        </div>
+                        <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+                          {tVni("technicalWcagFoundation")}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -400,10 +411,10 @@ export default async function ScanDetailPage({ params }: PageProps) {
             <div className="overflow-x-auto">
               <TabsList className={`grid w-full min-w-max ${isEnhancedScan ? 'grid-cols-6' : 'grid-cols-5'} md:min-w-0`}>
                 {isEnhancedScan && (
-                  <TabsTrigger value="enhanced" className="text-xs sm:text-sm">🚀 Enhanced</TabsTrigger>
+                  <TabsTrigger value="enhanced" className="text-xs sm:text-sm">Enhanced</TabsTrigger>
                 )}
                 <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
-                <TabsTrigger value="heatmap" className="text-xs sm:text-sm">🗺️ Heatmap</TabsTrigger>
+                <TabsTrigger value="heatmap" className="text-xs sm:text-sm">Heatmap</TabsTrigger>
                 <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
                 <TabsTrigger value="violations" className="text-xs sm:text-sm">Violations</TabsTrigger>
                 <TabsTrigger value="raw" className="text-xs sm:text-sm">Raw JSON</TabsTrigger>
