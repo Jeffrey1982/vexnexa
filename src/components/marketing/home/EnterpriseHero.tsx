@@ -32,14 +32,14 @@ export function EnterpriseHero() {
     >
       {/* Ambient gold glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[#3b82f6]/10 blur-[120px]" />
+        <div className="absolute -top-32 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[#D4AF37]/10 blur-[120px]" />
         <div className="absolute -bottom-32 right-0 h-[28rem] w-[28rem] rounded-full bg-[#1E3A8A]/40 blur-[100px]" />
       </div>
 
       <div className="relative container mx-auto grid gap-12 px-4 py-20 sm:py-28 lg:grid-cols-[1.1fr_1fr] lg:items-center">
         {/* Copy column */}
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#3b82f6]">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
             <FileCheck2 className="h-3.5 w-3.5" aria-hidden />
             {t("eyebrow")}
           </span>
@@ -57,14 +57,14 @@ export function EnterpriseHero() {
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4 max-w-lg">
             <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-[#3b82f6]" aria-hidden />
+              <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-[#D4AF37]" aria-hidden />
               <div>
                 <p className="text-sm font-semibold text-white">{t("pillar1Title")}</p>
                 <p className="mt-1 text-xs leading-relaxed text-white/60">{t("pillar1Body")}</p>
               </div>
             </div>
             <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <FileCheck2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3b82f6]" aria-hidden />
+              <FileCheck2 className="mt-0.5 h-5 w-5 shrink-0 text-[#D4AF37]" aria-hidden />
               <div>
                 <p className="text-sm font-semibold text-white">{t("pillar2Title")}</p>
                 <p className="mt-1 text-xs leading-relaxed text-white/60">{t("pillar2Body")}</p>
@@ -76,7 +76,7 @@ export function EnterpriseHero() {
             <Button
               size="lg"
               asChild
-              className="h-12 rounded-xl bg-[#3b82f6] px-7 font-semibold text-white hover:bg-[#60a5fa] focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
+              className="h-12 rounded-xl bg-[#D4AF37] px-7 font-semibold text-[#0A0F1E] hover:bg-[#E5C158] focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0F1E]"
             >
               <Link
                 href="/contact?intent=enterprise"
@@ -132,7 +132,7 @@ function VNIRankVisual() {
     { stars: 2, key: "foundational" as const, accent: "#FDBA74", label: t("ranks.foundational") },
     { stars: 3, key: "compliant" as const, accent: "#FDE68A", label: t("ranks.compliant") },
     { stars: 4, key: "auditReady" as const, accent: "#86EFAC", label: t("ranks.auditReady") },
-    { stars: 5, key: "leading" as const, accent: "#3b82f6", label: t("ranks.leading") },
+    { stars: 5, key: "leading" as const, accent: "#D4AF37", label: t("ranks.leading") },
   ];
 
   return (
@@ -140,7 +140,7 @@ function VNIRankVisual() {
       {/* Card */}
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.02] p-6 shadow-2xl backdrop-blur-sm sm:p-7">
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#3b82f6]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
             {t("title")}
           </p>
           <span className="rounded-full border border-white/10 bg-black/40 px-2 py-0.5 text-[10px] font-medium text-white/60">
@@ -153,15 +153,15 @@ function VNIRankVisual() {
         </h3>
 
         {/* Highlighted example — matches dashboard scan result style */}
-        <div className="mt-5 rounded-xl border border-[#3b82f6]/30 bg-[#3b82f6]/[0.07] p-4">
+        <div className="mt-5 rounded-xl border border-[#D4AF37]/30 bg-[#D4AF37]/[0.07] p-4">
           <div className="flex items-start gap-3">
-            <div className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#3b82f6]/20 text-[#3b82f6]">
+            <div className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#D4AF37]/20 text-[#D4AF37]">
               <FileCheck2 className="h-4 w-4" aria-hidden />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="font-mono text-sm text-white truncate">example-enterprise.com</p>
-                <span className="rounded-md bg-[#3b82f6]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#3b82f6]">
+                <span className="rounded-md bg-[#D4AF37]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#D4AF37]">
                   {t("ranks.compliant")}
                 </span>
               </div>
@@ -169,7 +169,6 @@ function VNIRankVisual() {
                 <Stars filled={3} />
                 <span className="text-xs text-white/70">{t("ranks.compliant")} — 3 / 5</span>
               </div>
-              <p className="mt-2 text-xs leading-relaxed text-white/60">{t("disclaimer")}</p>
             </div>
           </div>
         </div>
@@ -210,7 +209,7 @@ function Stars({ filled }: { filled: number }) {
         <svg
           key={i}
           viewBox="0 0 24 24"
-          className={`h-3.5 w-3.5 ${i <= filled ? "fill-[#3b82f6]" : "fill-white/10"}`}
+          className={`h-3.5 w-3.5 ${i <= filled ? "fill-[#D4AF37]" : "fill-white/10"}`}
           aria-hidden
         >
           <path d="M12 2l2.6 6.7H22l-5.7 4.4L18.5 22 12 17.6 5.5 22l2.2-8.9L2 8.7h7.4z" />

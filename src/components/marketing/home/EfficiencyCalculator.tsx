@@ -56,7 +56,7 @@ export function EfficiencyCalculator() {
           <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
             {/* Copy + inputs */}
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#3b82f6]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">
                 <Calculator className="h-3.5 w-3.5" aria-hidden />
                 {t("eyebrow")}
               </span>
@@ -81,7 +81,7 @@ export function EfficiencyCalculator() {
                     inputMode="numeric"
                     value={pages}
                     onChange={(e) => setPages(parseInt(e.target.value, 10) || 0)}
-                    className="mt-2 block w-full rounded-lg border border-white/15 bg-white/[0.04] px-3 py-2.5 text-base font-semibold text-white outline-none transition focus:border-[#3b82f6]/60 focus:ring-2 focus:ring-[#3b82f6]/30"
+                    className="mt-2 block w-full rounded-lg border border-white/15 bg-white/[0.04] px-3 py-2.5 text-base font-semibold text-white outline-none transition focus:border-[#D4AF37]/60 focus:ring-2 focus:ring-[#D4AF37]/30"
                     aria-describedby="pages-hint"
                   />
                   <span id="pages-hint" className="mt-1 block text-xs text-white/50">
@@ -91,7 +91,7 @@ export function EfficiencyCalculator() {
 
                 <label className="block text-sm">
                   <span className="font-medium text-white/80">{t("rateLabel")}</span>
-                  <div className="mt-2 flex items-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-2.5 focus-within:border-[#3b82f6]/60 focus-within:ring-2 focus-within:ring-[#3b82f6]/30">
+                  <div className="mt-2 flex items-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-2.5 focus-within:border-[#D4AF37]/60 focus-within:ring-2 focus-within:ring-[#D4AF37]/30">
                     <span className="text-base font-semibold text-white/60">€</span>
                     <input
                       type="number"
@@ -112,13 +112,13 @@ export function EfficiencyCalculator() {
             </div>
 
             {/* Output card */}
-            <div className="rounded-2xl border border-[#3b82f6]/30 bg-gradient-to-b from-[#3b82f6]/[0.06] to-transparent p-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#3b82f6]">
+            <div className="rounded-2xl border border-[#D4AF37]/30 bg-gradient-to-b from-[#D4AF37]/[0.06] to-transparent p-6">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">
                 {t("resultEyebrow")}
               </p>
 
               <div className="mt-3 flex items-baseline gap-2">
-                <span className="font-display text-5xl font-bold text-[#3b82f6] tabular-nums">
+                <span className="font-display text-5xl font-bold text-[#D4AF37] tabular-nums">
                   {result.pctSaved}%
                 </span>
                 <span className="text-sm font-medium text-white/70">{t("timeSaved")}</span>
@@ -135,17 +135,17 @@ export function EfficiencyCalculator() {
                 </li>
                 <li className="flex items-center justify-between gap-3 rounded-lg bg-white/[0.03] px-3 py-2">
                   <span className="flex items-center gap-2 text-white/65">
-                    <Sparkles className="h-4 w-4 text-[#3b82f6]" aria-hidden /> {t("vnLabel")}
+                    <Sparkles className="h-4 w-4 text-[#D4AF37]" aria-hidden /> {t("vnLabel")}
                   </span>
                   <span className="font-mono tabular-nums">
                     {fmtHours.format(Math.round(result.vnHours))} {t("hoursShort")}
                   </span>
                 </li>
-                <li className="flex items-center justify-between gap-3 rounded-lg border border-[#3b82f6]/30 bg-[#3b82f6]/[0.07] px-3 py-2.5">
+                <li className="flex items-center justify-between gap-3 rounded-lg border border-[#D4AF37]/30 bg-[#D4AF37]/[0.07] px-3 py-2.5">
                   <span className="flex items-center gap-2 font-semibold text-white">
-                    <ArrowDownToLine className="h-4 w-4 text-[#3b82f6]" aria-hidden /> {t("savedLabel")}
+                    <ArrowDownToLine className="h-4 w-4 text-[#D4AF37]" aria-hidden /> {t("savedLabel")}
                   </span>
-                  <span className="font-mono font-semibold tabular-nums text-[#3b82f6]">
+                  <span className="font-mono font-semibold tabular-nums text-[#D4AF37]">
                     {fmtHours.format(Math.round(result.hoursSaved))} {t("hoursShort")} · {fmtMoney.format(Math.round(result.costSaved))}
                   </span>
                 </li>

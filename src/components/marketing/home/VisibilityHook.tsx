@@ -26,7 +26,7 @@ export function VisibilityHook() {
             {/* Visual */}
             <div className="flex justify-center lg:justify-start">
               <div className="relative h-32 w-32 sm:h-40 sm:w-40">
-                <div className="absolute inset-0 rounded-full bg-[#3b82f6]/10 blur-2xl" />
+                <div className="absolute inset-0 rounded-full bg-[#D4AF37]/10 blur-2xl" />
                 <svg
                   viewBox="0 0 160 160"
                   className="relative h-full w-full"
@@ -41,7 +41,7 @@ export function VisibilityHook() {
                     cy="80"
                     r="68"
                     fill="none"
-                    stroke="#3b82f6"
+                    stroke="#D4AF37"
                     strokeWidth="10"
                     strokeLinecap="round"
                     strokeDasharray={`${0.3 * 2 * Math.PI * 68} ${2 * Math.PI * 68}`}
@@ -54,7 +54,7 @@ export function VisibilityHook() {
                     fontFamily="ui-sans-serif, system-ui"
                     fontSize="32"
                     fontWeight="700"
-                    fill="#3b82f6"
+                    fill="#D4AF37"
                   >
                     30%
                   </text>
@@ -75,7 +75,7 @@ export function VisibilityHook() {
 
             {/* Copy */}
             <div>
-              <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#3b82f6]">
+              <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                 <EyeOff className="h-3.5 w-3.5" aria-hidden /> {t("eyebrow")}
               </p>
               <h2
@@ -87,7 +87,7 @@ export function VisibilityHook() {
               <p className="mt-4 text-base leading-relaxed text-white/70">{t("body")}</p>
 
               <div className="mt-6 flex items-center gap-2 text-sm text-white/60">
-                <Eye className="h-4 w-4 text-[#3b82f6]" aria-hidden />
+                <Eye className="h-4 w-4 text-[#D4AF37]" aria-hidden />
                 <span>{t("footnote")}</span>
               </div>
             </div>
