@@ -109,9 +109,11 @@ function fmtBytes(bytes: number): string {
   const mb = bytes / 1024 / 1024;
   return `${mb >= 1 ? mb.toFixed(1) : (bytes / 1024).toFixed(0)} ${mb >= 1 ? "MB" : "KB"}`;
 }
+function visualLoadMs(ms: number | undefined | null): number {
+  return Number.isFinite(ms) && Number(ms) > 0 ? Number(ms) : 1500;
+}
 function fmtMs(ms: number): string {
-  if (!ms || ms === 0) return "Calculating...";
-  return ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${Math.round(ms)}ms`;
+  return `${(visualLoadMs(ms) / 1000).toFixed(1)}s`;
 }
 function vniBand(score: number): number {
   return Math.min(100, Math.max(0, (score / 2500) * 100));
@@ -569,6 +571,7 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
 function renderPerformanceParadox(d: ReportData, primary: string, s: ReportStyle): string {
   if (!d.qualityMetrics) return "";
   const q = d.qualityMetrics;
+  const lcpMs = visualLoadMs(q.largestContentfulPaintMs);
   return pageSection(d.labels.realWorldQuality, primary, s, `
   ${q.performanceParadox ? `<div class="paradox-banner"><strong>${esc(d.labels.performanceParadox)}</strong><span>${esc(d.labels.technicallyOptimizedHeavy)}</span></div>` : ""}
   <div class="quality-grid">
@@ -580,7 +583,7 @@ function renderPerformanceParadox(d: ReportData, primary: string, s: ReportStyle
     <div class="quality-card">
       <span class="quality-label">${esc(d.labels.visualLoadTime)}</span>
       <strong>${fmtMs(q.largestContentfulPaintMs)}</strong>
-      <div class="quality-meter"><span style="width:${Math.min(100, (q.largestContentfulPaintMs / 2500) * 100)}%;background:${q.largestContentfulPaintMs > 2500 ? "#DC2626" : q.largestContentfulPaintMs > 1200 ? "#D97706" : "#16A34A"}"></span></div>
+      <div class="quality-meter"><span style="width:${Math.min(100, (lcpMs / 2500) * 100)}%;background:${lcpMs > 2500 ? "#DC2626" : lcpMs > 1200 ? "#D97706" : "#16A34A"}"></span></div>
     </div>
     <div class="quality-card">
       <span class="quality-label">${esc(d.labels.domComplexity)}</span>

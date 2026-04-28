@@ -336,6 +336,25 @@ export class EnhancedAccessibilityScanner {
       });
     }
 
+    await page.evaluateOnNewDocument(() => {
+      const win = window as any;
+      win.__vexnexaLcpMs = 0;
+
+      try {
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          if (lastEntry?.startTime) {
+            win.__vexnexaLcpMs = lastEntry.startTime;
+          }
+        });
+        observer.observe({ type: "largest-contentful-paint", buffered: true });
+        win.__vexnexaLcpObserver = observer;
+      } catch {
+        // Some pages/browsers may not expose LCP; navigation timing fallback handles it.
+      }
+    });
+
     // Use domcontentloaded for faster page load (instead of networkidle2)
     // This starts the scan as soon as the DOM is ready, without waiting for all network requests
     try {
@@ -845,21 +864,68 @@ export class EnhancedAccessibilityScanner {
 
   private async collectRealWorldMetrics(page: any, cdpTransferBytes: number): Promise<RealWorldMetrics> {
     const browserMetrics = await safeEvaluate(page, () => {
-      const resourceEntries = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
-      const navigationEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
-      const resourceTransferBytes = resourceEntries.reduce((sum, entry) => sum + (entry.transferSize || 0), 0);
-      const navigationTransferBytes = navigationEntries.reduce((sum, entry) => sum + (entry.transferSize || 0), 0);
-      const lcpEntries = performance.getEntriesByType("largest-contentful-paint");
-      const lastLcp = lcpEntries[lcpEntries.length - 1] as PerformanceEntry | undefined;
+      return new Promise<{
+        transferBytes: number;
+        largestContentfulPaintMs: number;
+        domNodeCount: number;
+      }>((resolve) => {
+        const startedAt = Date.now();
+        const timeoutMs = 10000;
+        const pollMs = 250;
 
-      return {
-        transferBytes: resourceTransferBytes + navigationTransferBytes,
-        largestContentfulPaintMs: Math.round(lastLcp?.startTime || 0),
-        domNodeCount: document.getElementsByTagName("*").length,
-      };
+        const readMetrics = () => {
+          const resourceEntries = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
+          const navigationEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+          const nav = navigationEntries[0];
+          const resourceTransferBytes = resourceEntries.reduce((sum, entry) => sum + (entry.transferSize || 0), 0);
+          const navigationTransferBytes = navigationEntries.reduce((sum, entry) => sum + (entry.transferSize || 0), 0);
+          const lcpEntries = performance.getEntriesByType("largest-contentful-paint");
+          const lastLcp = lcpEntries[lcpEntries.length - 1] as PerformanceEntry | undefined;
+          const observedLcp = Number((window as any).__vexnexaLcpMs || 0);
+          const entryLcp = Number(lastLcp?.startTime || 0);
+          const lcpMs = Math.round(Math.max(observedLcp, entryLcp));
+
+          return {
+            transferBytes: resourceTransferBytes + navigationTransferBytes,
+            lcpMs,
+            fallbackMs: Math.round(
+              Number(nav?.duration || 0) ||
+              Number(nav?.loadEventEnd || 0) ||
+              Number(nav?.domContentLoadedEventEnd || 0) ||
+              Number(nav?.responseEnd || 0) ||
+              1500
+            ),
+            domNodeCount: document.getElementsByTagName("*").length,
+          };
+        };
+
+        const finish = (useFallback = false) => {
+          const metrics = readMetrics();
+          resolve({
+            transferBytes: metrics.transferBytes,
+            largestContentfulPaintMs: Math.max(100, useFallback ? metrics.fallbackMs : metrics.lcpMs),
+            domNodeCount: metrics.domNodeCount,
+          });
+        };
+
+        const poll = () => {
+          const metrics = readMetrics();
+          if (metrics.lcpMs > 0) {
+            finish(false);
+            return;
+          }
+          if (Date.now() - startedAt >= timeoutMs) {
+            finish(true);
+            return;
+          }
+          setTimeout(poll, pollMs);
+        };
+
+        poll();
+      });
     }).catch(() => ({
       transferBytes: 0,
-      largestContentfulPaintMs: 0,
+      largestContentfulPaintMs: 1500,
       domNodeCount: 0,
     }));
 

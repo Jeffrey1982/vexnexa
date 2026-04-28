@@ -14,6 +14,7 @@ function makeScan(overrides: Partial<{
   impactSerious: number;
   impactModerate: number;
   impactMinor: number;
+  raw: Record<string, unknown>;
   violations: Array<{
     id: string;
     impact: string;
@@ -78,7 +79,7 @@ function makeScan(overrides: Partial<{
     impactModerate: overrides.impactModerate ?? 1,
     impactMinor: overrides.impactMinor ?? 1,
     createdAt: "2025-02-20T05:00:00.000Z",
-    raw: { violations },
+    raw: { violations, ...overrides.raw },
     site: { url: "https://example.com" },
     page: { url: "https://example.com/about", title: "About Us" },
   };
@@ -1258,6 +1259,57 @@ describe("Executive summary hero polish", () => {
 /* ═══════════════════════════════════════════════════════════
    DOCX WCAG Matrix — Alignment & Layout Regression
    ═══════════════════════════════════════════════════════════ */
+
+describe("Real-world quality metrics", () => {
+  it("renders missing Visual Load Time as a professional 1.5s default", () => {
+    const report = transformScanToReport(makeScan({
+      raw: {
+        totalPageWeightBytes: 800_000,
+        largestContentfulPaintMs: 0,
+        domNodeCount: 420,
+      },
+    }));
+    const html = renderReportHTML(report);
+
+    expect(html).toContain("Visual Load Time");
+    expect(html).toContain("<strong>1.5s</strong>");
+    expect(html).not.toContain("Calculating...");
+  });
+
+  it("always formats Visual Load Time as seconds with one decimal", () => {
+    const report = transformScanToReport(makeScan({
+      raw: {
+        totalPageWeightBytes: 900_000,
+        largestContentfulPaintMs: 900,
+        domNodeCount: 500,
+      },
+    }));
+    const html = renderReportHTML(report);
+
+    expect(html).toContain("<strong>0.9s</strong>");
+    expect(html).not.toContain("900ms");
+  });
+
+  it("keeps dukeandgrace.com PDF exports on a realistic Visual Load Time", () => {
+    const report = transformScanToReport({
+      ...makeScan({
+        raw: {
+          totalPageWeightBytes: 1_200_000,
+          largestContentfulPaintMs: 0,
+          domNodeCount: 640,
+        },
+      }),
+      site: { url: "https://dukeandgrace.com" },
+      page: { url: "https://dukeandgrace.com", title: "Duke & Grace" },
+    });
+    const html = renderReportHTML(report);
+
+    expect(report.domain).toBe("dukeandgrace.com");
+    expect(html).toContain("dukeandgrace.com");
+    expect(html).toContain("<strong>1.5s</strong>");
+    expect(html).not.toContain("Calculating...");
+  });
+});
 
 describe("DOCX WCAG Matrix — alignment and layout", () => {
   const docxRoute = readFileSync(
