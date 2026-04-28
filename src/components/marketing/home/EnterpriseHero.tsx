@@ -175,7 +175,7 @@ function VNIRankVisual() {
 
         {/* Other ranks */}
         <ul className="mt-4 space-y-1.5">
-          {ranks.filter((r) => r.stars !== 3).map((r) => (
+          {ranks.map((r) => (
             <li
               key={r.key}
               className="flex items-center justify-between rounded-lg border border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.02] px-3 py-2"
