@@ -261,7 +261,7 @@ export default async function AdminHealthPage() {
         <Card>
           <CardHeader>
             <CardTitle>At-Risk Customers</CardTitle>
-            <CardDescription>Sorted by risk score (highest first) - Requires proactive outreach</CardDescription>
+            <CardDescription>Sorted by risk score (highest first) - Requires proactive follow-up</CardDescription>
           </CardHeader>
           <CardContent>
             {atRiskUsers.length === 0 ? (
