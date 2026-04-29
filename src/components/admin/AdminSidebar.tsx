@@ -122,7 +122,13 @@ export function AdminSidebar() {
 
   const openGroups = useMemo(() => Array.from(new Set([...expandedGroups, ...activeGroups])), [expandedGroups, activeGroups]);
 
-  const isActive = (path: string) => pathname === path || pathname?.startsWith(path + '/');
+  const isActive = (path: string) => {
+    if (path === '/admin') {
+      return pathname === '/admin';
+    }
+
+    return pathname === path || pathname?.startsWith(path + '/');
+  };
 
   const toggleGroup = (label: string) => {
     setExpandedGroups((current) =>
@@ -144,7 +150,7 @@ export function AdminSidebar() {
           inset ? 'mx-3 px-4 py-2' : 'px-3 py-2.5',
           active
             ? 'bg-[#D4AF37] text-[#0A0F1E] shadow-sm'
-            : 'text-white/68 hover:bg-white/10 hover:text-white'
+            : 'text-slate-200 hover:bg-white/10 hover:text-white'
         )}
       >
         {active && <span className="absolute left-0 top-2 bottom-2 w-1 rounded-full bg-[#0A0F1E]/70" />}
@@ -158,10 +164,10 @@ export function AdminSidebar() {
     <div className="relative z-10 flex h-full flex-col">
       <div className="border-b border-white/10 p-4">
         <div className="flex items-center gap-3">
-          <VexnexaLogo size={42} />
+          <VexnexaLogo size={42} className="[&_span]:!text-white" />
           <div className="min-w-0">
             <div className="font-bold text-lg text-white">Admin</div>
-            <div className="text-xs text-white/55">Control Center</div>
+            <div className="text-xs text-slate-300">Control Center</div>
           </div>
         </div>
       </div>
@@ -189,7 +195,7 @@ export function AdminSidebar() {
                   aria-expanded={expanded}
                   className={cn(
                     'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all',
-                    active ? 'text-[#D4AF37]' : 'text-white/48 hover:bg-white/5 hover:text-white/80'
+                    active ? 'text-[#D4AF37]' : 'text-slate-300 hover:bg-white/5 hover:text-white'
                   )}
                 >
                   <Icon className="h-4 w-4 shrink-0" />
