@@ -12,12 +12,10 @@ import {
   TrendingUp,
   DollarSign,
   Ticket,
-  Mail,
   FileText,
   Palette,
   UserCog,
   ChevronDown,
-  ChevronRight,
   Menu,
   X,
   Search,
@@ -26,20 +24,14 @@ import {
   Award,
   Bell,
   Settings as SettingsIcon,
-  ScrollText,
-  HeartPulse,
-  Webhook,
-  ShieldBan,
-  LayoutTemplate,
   SendHorizonal,
-  ServerCog,
-  MessageSquare,
   ClipboardList,
   Inbox,
   Megaphone,
   Building2,
   Upload,
   Calendar,
+  Radar,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import VexnexaLogo from '@/components/brand/VexnexaLogo';
@@ -59,7 +51,7 @@ interface NavGroup {
 export function AdminSidebar() {
   const pathname = usePathname();
   // Keep all groups permanently expanded for better UX in sidebar
-  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Mail', 'Outreach', 'Support', 'SEO Health']);
+  const [expandedGroups] = useState<string[]>(['Resources', 'Business', 'Outreach', 'Support', 'SEO Health']);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -86,6 +78,7 @@ export function AdminSidebar() {
   const primaryNavItems: NavItem[] = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/users', label: 'Users', icon: Users },
+    { href: '/admin/scans', label: 'Scans', icon: Radar },
     { href: '/admin/health', label: 'Health', icon: Activity },
   ];
 
@@ -126,20 +119,6 @@ export function AdminSidebar() {
       ]
     },
     {
-      label: 'Mail',
-      icon: Mail,
-      items: [
-        { href: '/admin/email', label: 'Email Overview', icon: Mail },
-        { href: '/admin/email/logs', label: 'Message Logs', icon: ScrollText },
-        { href: '/admin/email/health', label: 'Delivery Health', icon: HeartPulse },
-        { href: '/admin/email/events', label: 'Webhook Events', icon: Webhook },
-        { href: '/admin/email/suppressions', label: 'Suppressions', icon: ShieldBan },
-        { href: '/admin/email/templates', label: 'Templates', icon: LayoutTemplate },
-        { href: '/admin/email/send-test', label: 'Send Test', icon: SendHorizonal },
-        { href: '/admin/email/domains', label: 'Domains & DNS', icon: ServerCog },
-      ]
-    },
-    {
       label: 'Outreach',
       icon: Megaphone,
       items: [
@@ -165,12 +144,12 @@ export function AdminSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full relative z-10">
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-border">
+      <div className="p-4 border-b border-white/10">
         <div className="flex items-center gap-3">
           <VexnexaLogo size={42} />
           <div>
-            <div className="text-gray-900 dark:text-foreground font-bold text-lg">Admin</div>
-            <div className="text-muted-foreground dark:text-muted-foreground text-xs">Panel</div>
+            <div className="text-white font-bold text-lg">Admin</div>
+            <div className="text-white/55 text-xs">Panel</div>
           </div>
         </div>
       </div>
@@ -189,10 +168,10 @@ export function AdminSidebar() {
                 onClick={() => setMobileOpen(false)}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
+                  'flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all',
                   active
-                    ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 shadow-sm'
-                    : 'text-foreground/80 hover:bg-gray-50 dark:hover:bg-muted'
+                    ? 'bg-[#D4AF37] text-[#0A0F1E] shadow-sm'
+                    : 'text-white/75 hover:bg-white/10 hover:text-white'
                 )}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
@@ -214,7 +193,7 @@ export function AdminSidebar() {
                 <div
                   className={cn(
                     'w-full flex items-center gap-3 px-6 py-2.5 text-sm font-semibold',
-                    active ? 'text-orange-600 dark:text-orange-400' : 'text-muted-foreground'
+                    active ? 'text-[#D4AF37]' : 'text-white/45'
                   )}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
@@ -234,10 +213,10 @@ export function AdminSidebar() {
                           onClick={() => setMobileOpen(false)}
                           aria-current={itemActive ? 'page' : undefined}
                           className={cn(
-                            'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-lg transition-all mx-3',
+                            'flex items-center gap-3 px-12 py-2 text-sm font-medium rounded-xl transition-all mx-3',
                             itemActive
-                              ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400'
-                              : 'text-muted-foreground hover:bg-gray-50 dark:hover:bg-muted hover:text-gray-900 dark:text-foreground dark:hover:text-foreground'
+                              ? 'bg-[#D4AF37] text-[#0A0F1E]'
+                              : 'text-white/60 hover:bg-white/10 hover:text-white'
                           )}
                         >
                           <ItemIcon className="w-4 h-4 flex-shrink-0" />
@@ -263,7 +242,7 @@ export function AdminSidebar() {
         aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
         aria-expanded={mobileOpen}
         aria-controls="admin-sidebar"
-        className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white dark:bg-card rounded-lg shadow-lg border border-gray-200 dark:border-border"
+        className="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-white dark:bg-card rounded-xl shadow-lg border border-gray-200 dark:border-border"
       >
         {mobileOpen ? (
           <X className="w-5 h-5 text-muted-foreground" />
@@ -286,7 +265,7 @@ export function AdminSidebar() {
         role="navigation"
         aria-label="Admin navigation"
         className={cn(
-          'fixed top-0 left-0 z-50 h-screen bg-white dark:bg-[var(--surface-1)] border-r border-gray-200 dark:border-white/[0.06] transition-transform pointer-events-auto',
+          'fixed top-0 left-0 z-50 h-screen bg-[#0A0F1E] border-r border-white/10 transition-transform pointer-events-auto',
           'w-72',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}

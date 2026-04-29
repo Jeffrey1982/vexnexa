@@ -92,7 +92,7 @@ async function main(): Promise<void> {
       variables JSONB DEFAULT '{}'::jsonb,
       status TEXT NOT NULL DEFAULT 'pending',
       error TEXT,
-      mailgun_message_id TEXT,
+      provider_message_id TEXT,
       sent_at TIMESTAMPTZ,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
       CONSTRAINT uq_campaign_recipient UNIQUE (campaign_id, email)

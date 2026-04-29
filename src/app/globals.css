@@ -33,7 +33,7 @@
     --popover-foreground: 222 47% 11%;
 
     /* Primary — blue CTA (#3b82f6) */
-    --primary: 217 91% 60%;
+    --primary: 46 65% 52%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary — neutral UI surfaces (shadcn) */
@@ -52,7 +52,7 @@
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --ring: 46 65% 52%;
 
     --success: 152 69% 31%;
     --success-foreground: 0 0% 100%;
@@ -77,7 +77,7 @@
 
     --radius: 0.5rem;
 
-    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --gradient-primary: linear-gradient(135deg, #D4AF37 0%, #B89222 100%);
     --gradient-subtle: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
     --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
     --shadow-soft: 0 4px 14px -2px rgb(0 0 0 / 0.08);
@@ -88,9 +88,9 @@
     --vn-border: #e2e8f0;
     --vn-text: #0f172a;
     --vn-text-muted: #64748b;
-    --vn-primary: #3b82f6;
-    --vn-primary-hover: #2563eb;
-    --vn-accent: #3b82f6;
+    --vn-primary: #D4AF37;
+    --vn-primary-hover: #B89222;
+    --vn-accent: #D4AF37;
 
     --vn-primary-aaa-btn: #1e40af;
     --vn-primary-aaa-btn-hover: #1e3a8a;
@@ -100,8 +100,8 @@
     --vn-disabled-fg: #64748b;
 
     --selected-bg: 213 94% 95%;
-    --selected-border: 217 91% 60%;
-    --selected-ring: 217 91% 60% / 0.35;
+    --selected-border: 46 65% 52%;
+    --selected-ring: 46 65% 52% / 0.35;
     --selected-text: 222 47% 11%;
     --selected-text-muted: 215 16% 35%;
   }
@@ -117,7 +117,7 @@
     --popover: 0 0% 7.1%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 213 94% 68%;
+    --primary: 46 65% 52%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 14%;
@@ -134,7 +134,7 @@
 
     --border: 240 6% 16%;
     --input: 240 6% 16%;
-    --ring: 213 94% 68%;
+    --ring: 46 65% 52%;
 
     --success: 152 69% 40%;
     --success-foreground: 0 0% 100%;
@@ -169,9 +169,9 @@
     --vn-border: #27272a;
     --vn-text: #fafafa;
     --vn-text-muted: #a1a1aa;
-    --vn-primary: #60a5fa;
-    --vn-primary-hover: #3b82f6;
-    --vn-accent: #3b82f6;
+    --vn-primary: #D4AF37;
+    --vn-primary-hover: #E2C766;
+    --vn-accent: #D4AF37;
 
     --vn-primary-aaa-btn: #2563eb;
     --vn-primary-aaa-btn-hover: #1d4ed8;
@@ -180,14 +180,14 @@
     --vn-disabled-bg: #27272a;
     --vn-disabled-fg: #71717a;
 
-    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --gradient-primary: linear-gradient(135deg, #D4AF37 0%, #B89222 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(var(--background)) 100%);
 
     --shadow-elegant: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
     --selected-bg: 217 30% 14%;
-    --selected-border: 213 94% 68%;
-    --selected-ring: 213 94% 68% / 0.35;
+    --selected-border: 46 65% 52%;
+    --selected-ring: 46 65% 52% / 0.35;
     --selected-text: 0 0% 98%;
     --selected-text-muted: 240 5% 65%;
   }
