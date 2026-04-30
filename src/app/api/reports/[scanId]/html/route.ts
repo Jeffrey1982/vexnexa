@@ -8,6 +8,7 @@ import {
   extractQueryOverrides,
   getStoredWhiteLabel,
 } from "@/lib/report";
+import { assertWithinLimits } from "@/lib/billing/entitlements";
 
 export const runtime = "nodejs";
 
@@ -36,6 +37,11 @@ export async function GET(
     if (scan.site.userId !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_pdf",
+    });
 
     // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);

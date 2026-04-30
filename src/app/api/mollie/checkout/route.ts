@@ -8,7 +8,7 @@ import type { MolliePayment } from "@/types/mollie"
 export const dynamic = 'force-dynamic'
 
 const CheckoutSchema = z.object({
-  plan: z.enum(["STARTER", "PRO", "BUSINESS", "ENTERPRISE"]),
+  plan: z.enum(["STARTER", "PRO", "BUSINESS", "PIONEER", "ENTERPRISE"]),
   billingCycle: z.enum(["monthly", "yearly"]).optional().default("monthly")
 })
 

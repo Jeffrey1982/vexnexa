@@ -22,6 +22,8 @@ type ApiResponse = {
   status: MolliePaymentStatus
   plan: string | null
   billingInterval: string | null
+  type?: string | null
+  isOneOffCheckout?: boolean
   user: { plan: string; subscriptionStatus: string }
 }
 
@@ -99,7 +101,7 @@ export default function CheckoutReturnClient() {
         }
 
         // Paid AND webhook has already upgraded the user → redirect
-        if (data.status === 'paid' && data.user.plan !== 'FREE') {
+        if (data.status === 'paid' && (data.user.plan !== 'FREE' || data.isOneOffCheckout)) {
           setState({ kind: 'paid' })
           scheduleRedirect('/dashboard?checkout=success')
           return

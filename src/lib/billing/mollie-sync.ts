@@ -26,7 +26,7 @@ function buildProductDefs(): ProductDef[] {
   const defs: ProductDef[] = []
 
   // Tier products
-  const tiers: PlanKey[] = ["STARTER", "PRO", "BUSINESS", "ENTERPRISE"]
+  const tiers: PlanKey[] = ["STARTER", "PRO", "BUSINESS", "PIONEER", "ENTERPRISE"]
   for (const tier of tiers) {
     const monthly = BASE_PRICES[tier]
     const yearly = ANNUAL_PRICES[tier]

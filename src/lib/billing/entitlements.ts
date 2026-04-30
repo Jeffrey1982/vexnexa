@@ -7,6 +7,24 @@ export function getEntitlements<P extends keyof typeof ENTITLEMENTS>(plan: P): (
   return ENTITLEMENTS[plan]
 }
 
+const BLOCKED_BILLING_STATUSES = new Set(["past_due", "canceled", "failed"])
+
+function assertRevenueAccess(user: { plan: string; subscriptionStatus: string }, action: string): void {
+  if (user.plan === "FREE") return
+  if (user.subscriptionStatus === "active") return
+
+  const e: any = new Error(
+    BLOCKED_BILLING_STATUSES.has(user.subscriptionStatus)
+      ? `Access blocked: subscription status is ${user.subscriptionStatus}.`
+      : "Access blocked: paid subscription is not active.",
+  )
+  e.code = "SUBSCRIPTION_INACTIVE"
+  e.feature = action
+  e.subscriptionStatus = user.subscriptionStatus
+  e.gracePeriodDays = 0
+  throw e
+}
+
 // Get total entitlements including add-ons
 export async function getTotalEntitlements(userId: string): Promise<Record<string, any>> {
   const user = await prisma.user.findUnique({
@@ -99,6 +117,8 @@ export async function assertWithinLimits(opts: {
     }
   })
   if (!user) throw new Error("User not found")
+
+  assertRevenueAccess(user, opts.action)
 
   const plan = user.plan as keyof typeof ENTITLEMENTS
   const baseEnt = ENTITLEMENTS[plan]

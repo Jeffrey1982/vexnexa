@@ -10,17 +10,27 @@
  *   STARTER    → "Starter" (legacy, hidden from new signups)
  *   PRO        → "Pro"
  *   BUSINESS   → "Agency"
+ *   PIONEER    → "Pioneer Deal"
  *   ENTERPRISE → "Enterprise"
  */
 
-export type PlanKey = "FREE" | "STARTER" | "PRO" | "BUSINESS" | "ENTERPRISE";
+export type PlanKey = "FREE" | "STARTER" | "PRO" | "BUSINESS" | "PIONEER" | "ENTERPRISE";
 export type BillingInterval = "monthly" | "yearly";
 
 /** Plans available for new self-serve signups */
-export const SELF_SERVE_PLANS: PlanKey[] = ["PRO", "BUSINESS"] as const;
+export const SELF_SERVE_PLANS: PlanKey[] = ["PRO", "BUSINESS", "PIONEER"] as const;
 
 /** Plans shown on the public pricing page */
-export const PUBLIC_PLANS: PlanKey[] = ["FREE", "PRO", "BUSINESS"] as const;
+export const PUBLIC_PLANS: PlanKey[] = ["FREE", "PRO", "BUSINESS", "PIONEER"] as const;
+
+export const PLAN_IDS: Record<PlanKey, string> = {
+  FREE: "VN-F-0",
+  STARTER: "VN-S-19",
+  PRO: "VN-PRO-3495",
+  BUSINESS: "VN-B-9995",
+  PIONEER: "VN-P-499",
+  ENTERPRISE: "VN-E-1500",
+} as const;
 
 /**
  * Fixed VAT-inclusive prices charged via Mollie.
@@ -35,7 +45,8 @@ export const PLAN_PRICES: Record<
   STARTER: { monthly: 19.0, yearly: 193.8 }, // legacy — kept for existing users
   PRO: { monthly: 34.95, yearly: 349.5 },
   BUSINESS: { monthly: 99.95, yearly: 999.5 },
-  ENTERPRISE: { monthly: 0, yearly: 0 }, // no self-serve checkout
+  PIONEER: { monthly: 499.0, yearly: 5988.0 },
+  ENTERPRISE: { monthly: 1500.0, yearly: 18000.0 },
 } as const;
 
 /** Human-readable plan display names */
@@ -44,6 +55,7 @@ export const PLAN_DISPLAY_NAMES: Record<PlanKey, string> = {
   STARTER: "Starter",
   PRO: "Pro",
   BUSINESS: "Agency",
+  PIONEER: "Pioneer Deal",
   ENTERPRISE: "Enterprise",
 } as const;
 
@@ -53,6 +65,7 @@ export const PLAN_DESCRIPTIONS: Record<PlanKey, string> = {
   STARTER: "Starter plan for small websites",
   PRO: "Professional scanning for growing teams",
   BUSINESS: "Full-featured plan for agencies and large teams",
+  PIONEER: "Pioneer partner deal with premium reporting access",
   ENTERPRISE: "Custom solution with dedicated support",
 } as const;
 
@@ -202,6 +215,7 @@ export function buildPaymentMetadata(opts: {
   return {
     userId: opts.userId,
     planKey: opts.planKey,
+    planId: PLAN_IDS[opts.planKey],
     billingInterval: opts.billingInterval,
     customerType: opts.customerType,
     companyName: opts.companyName ?? "",

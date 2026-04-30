@@ -43,7 +43,7 @@ function countryToMollieLocale(country: string): string | undefined {
 }
 
 const CreatePaymentSchema = z.object({
-  plan: z.enum(["STARTER", "PRO", "BUSINESS", "ENTERPRISE"]),
+  plan: z.enum(["STARTER", "PRO", "BUSINESS", "PIONEER", "ENTERPRISE"]),
   billingCycle: z.enum(["monthly", "yearly"]).default("monthly"),
   purchaseAs: z.enum(["individual", "company"]).default("individual"),
   // Company fields — optional, for invoice/data quality only

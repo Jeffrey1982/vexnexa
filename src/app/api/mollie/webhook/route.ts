@@ -136,12 +136,18 @@ export async function POST(request: NextRequest) {
 
     // 5. Dispatch to the correct worker
     try {
+      let processingResult: "processed" | "pending" | void = undefined
+
       if (type === 'payment') {
-        await processWebhookPayment(id)
+        processingResult = await processWebhookPayment(id)
       } else if (type === 'subscription') {
         await processSubscriptionWebhook(id)
       } else {
         console.warn('[Mollie Webhook] Unknown type, recording as processed:', type)
+      }
+
+      if (processingResult === "pending") {
+        return NextResponse.json({ success: true, pending: true })
       }
 
       // 6. Mark as processed

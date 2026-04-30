@@ -13,7 +13,8 @@ export const PRICES = {
   STARTER: { amount: "19.00", currency: "EUR", interval: "1 month" },
   PRO: { amount: "34.95", currency: "EUR", interval: "1 month" },
   BUSINESS: { amount: "99.95", currency: "EUR", interval: "1 month" },
-  ENTERPRISE: { amount: "349.00", currency: "EUR", interval: "1 month" },
+  PIONEER: { amount: "499.00", currency: "EUR", interval: "1 month" },
+  ENTERPRISE: { amount: "1500.00", currency: "EUR", interval: "1 month" },
 } as const;
 
 // Overflow pricing - charges when plan limits are exceeded
@@ -39,16 +40,17 @@ export type Entitlements = {
   accountManager?: boolean;
 };
 
-export const ENTITLEMENTS: Record<"FREE" | "STARTER" | "PRO" | "BUSINESS" | "ENTERPRISE", Entitlements> = {
+export const ENTITLEMENTS: Record<"FREE" | "STARTER" | "PRO" | "BUSINESS" | "PIONEER" | "ENTERPRISE", Entitlements> = {
   FREE: { sites: 1, pagesPerMonth: 100, users: 1, pdf: true, word: false, schedule: false, crawl: false, integrations: [], historyMonths: 1 },
   STARTER: { sites: 1, pagesPerMonth: 500, users: 1, pdf: true, word: false, schedule: false, crawl: true, integrations: [], historyMonths: 6 },
   PRO: { sites: 3, pagesPerMonth: 5000, users: 5, pdf: true, word: true, schedule: true, crawl: true, integrations: ["slack", "jira"], historyMonths: 12, prioritySupport: true },
   BUSINESS: { sites: 10, pagesPerMonth: 25000, users: 15, pdf: true, word: true, schedule: true, crawl: true, integrations: ["slack", "jira", "teams"], historyMonths: 24, whiteLabel: true, prioritySupport: true },
+  PIONEER: { sites: 25, pagesPerMonth: 100000, users: 50, pdf: true, word: true, schedule: true, crawl: true, integrations: ["slack", "jira", "teams", "api"], historyMonths: 36, whiteLabel: true, prioritySupport: true, sla: true, accountManager: true },
   ENTERPRISE: { sites: 25, pagesPerMonth: 100000, users: 999, pdf: true, word: true, schedule: true, crawl: true, integrations: ["slack", "jira", "teams", "api"], historyMonths: 36, whiteLabel: true, prioritySupport: true, sla: true, accountManager: true },
 };
 
 export function planKeyFromString(p: string) {
-  return (["FREE", "STARTER", "PRO", "BUSINESS", "ENTERPRISE"] as const).includes(p as any) ? (p as any) : "FREE";
+  return (["FREE", "STARTER", "PRO", "BUSINESS", "PIONEER", "ENTERPRISE"] as const).includes(p as any) ? (p as any) : "FREE";
 }
 
 export function formatPrice(plan: keyof typeof PRICES) {
@@ -61,4 +63,4 @@ export function formatPrice(plan: keyof typeof PRICES) {
  */
 export const PLAN_NAMES = PLAN_DISPLAY_NAMES;
 
-export type Plan = "FREE" | "STARTER" | "PRO" | "BUSINESS" | "ENTERPRISE";
+export type Plan = "FREE" | "STARTER" | "PRO" | "BUSINESS" | "PIONEER" | "ENTERPRISE";

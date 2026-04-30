@@ -17,7 +17,8 @@ function buildProductDefs(): ProductDef[] {
     STARTER:    { monthly: 24.99, yearly: 249 },
     PRO:        { monthly: 59.99, yearly: 599 },
     BUSINESS:   { monthly: 129,   yearly: 1299 },
-    ENTERPRISE: { monthly: 299,   yearly: 2990 },
+    PIONEER:    { monthly: 499,   yearly: 5988 },
+    ENTERPRISE: { monthly: 1500,  yearly: 18000 },
   };
 
   const ADDON_PRICES: Record<string, number> = {

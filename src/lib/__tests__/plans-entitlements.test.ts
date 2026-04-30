@@ -15,13 +15,13 @@ import {
 import { getEntitlements } from '../billing/entitlements'
 
 describe('plan entitlement matrix', () => {
-  it('defines all 5 plans', () => {
+  it('defines all 6 plans', () => {
     const keys = Object.keys(ENTITLEMENTS).sort()
-    expect(keys).toEqual(['BUSINESS', 'ENTERPRISE', 'FREE', 'PRO', 'STARTER'])
+    expect(keys).toEqual(['BUSINESS', 'ENTERPRISE', 'FREE', 'PIONEER', 'PRO', 'STARTER'])
   })
 
   it('has monotonically non-decreasing page limits as plans scale up', () => {
-    const order = ['FREE', 'STARTER', 'PRO', 'BUSINESS', 'ENTERPRISE'] as const
+    const order = ['FREE', 'STARTER', 'PRO', 'BUSINESS', 'PIONEER', 'ENTERPRISE'] as const
     for (let i = 1; i < order.length; i++) {
       expect(ENTITLEMENTS[order[i]].pagesPerMonth).toBeGreaterThanOrEqual(
         ENTITLEMENTS[order[i - 1]].pagesPerMonth,
@@ -40,11 +40,13 @@ describe('plan entitlement matrix', () => {
     expect(ENTITLEMENTS.STARTER.whiteLabel).toBeFalsy()
     expect(ENTITLEMENTS.PRO.whiteLabel).toBeFalsy()
     expect(ENTITLEMENTS.BUSINESS.whiteLabel).toBe(true)
+    expect(ENTITLEMENTS.PIONEER.whiteLabel).toBe(true)
     expect(ENTITLEMENTS.ENTERPRISE.whiteLabel).toBe(true)
   })
 
   it('grants SLA only on ENTERPRISE', () => {
     expect(ENTITLEMENTS.ENTERPRISE.sla).toBe(true)
+    expect(ENTITLEMENTS.PIONEER.sla).toBe(true)
     expect(ENTITLEMENTS.BUSINESS.sla).toBeFalsy()
     expect(ENTITLEMENTS.FREE.sla).toBeFalsy()
   })
@@ -66,7 +68,7 @@ describe('getEntitlements', () => {
 
 describe('PRICES', () => {
   it('is in ascending price order FREE < STARTER < PRO < BUSINESS < ENTERPRISE', () => {
-    const order = ['FREE', 'STARTER', 'PRO', 'BUSINESS', 'ENTERPRISE'] as const
+    const order = ['FREE', 'STARTER', 'PRO', 'BUSINESS', 'PIONEER', 'ENTERPRISE'] as const
     for (let i = 1; i < order.length; i++) {
       expect(Number(PRICES[order[i]].amount)).toBeGreaterThan(
         Number(PRICES[order[i - 1]].amount),
@@ -85,6 +87,7 @@ describe('planKeyFromString', () => {
   it('returns the plan key when valid', () => {
     expect(planKeyFromString('PRO')).toBe('PRO')
     expect(planKeyFromString('BUSINESS')).toBe('BUSINESS')
+    expect(planKeyFromString('PIONEER')).toBe('PIONEER')
   })
 
   it('falls back to FREE for unknown input', () => {

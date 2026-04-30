@@ -12,6 +12,7 @@ import {
   type BillingInterval,
 } from "./pricing-config";
 import { sendInvoiceForPayment } from "./invoice-service";
+import { purchaseAddOn } from "./addon-flows";
 import type { Customer, Payment, PaymentCreateParams } from "@mollie/api-client";
 import { SequenceType } from "@mollie/api-client";
 import type { Plan as PrismaPlan } from "@prisma/client";
@@ -396,6 +397,7 @@ export async function createSubscription(opts: {
     interval: getMollieInterval(billingCycle),
     description: `VexNexa ${planDisplayName} Plan (${billingCycleLabel}) — All prices include VAT`,
     startDate: new Date().toISOString().split("T")[0],
+    webhookUrl: appUrl("/api/mollie/webhook"),
     metadata: buildPaymentMetadata({
       userId,
       planKey: plan as PlanKey,
@@ -496,22 +498,88 @@ export async function changePlan(opts: { userId: string; newPlan: Exclude<Plan, 
 export async function processWebhookPayment(paymentId: string) {
   // Fetch payment details from Mollie (never trust webhook data directly)
   const payment = await mollie.payments.get(paymentId);
+  const terminalFailureStatuses = ["canceled", "expired", "failed"] as const;
+  const isTerminalFailure = (terminalFailureStatuses as readonly string[]).includes(payment.status);
 
   // Check if this is an add-on related payment
   const metadata = payment.metadata as any;
   if (metadata?.type === "addon_subscription") {
-    return;
+    return "processed";
   }
 
   if (metadata?.type === "payment_method_reset") {
-    return;
+    return "processed";
+  }
+
+  if (metadata?.type === "audit_payment") {
+    if (!metadata?.userId) {
+      console.error("Audit payment missing userId:", payment.id);
+      return "processed";
+    }
+
+    if (payment.status !== "paid") {
+      return isTerminalFailure ? "processed" : "pending";
+    }
+
+    if (payment.status === "paid") {
+      const credits = Number.parseInt(metadata.auditCredits ?? "1", 10);
+      await prisma.user.update({
+        where: { id: metadata.userId },
+        data: {
+          auditCredits: {
+            increment: Number.isFinite(credits) && credits > 0 ? credits : 1,
+          },
+        },
+      });
+
+      try {
+        await sendInvoiceForPayment(paymentId);
+      } catch (invoiceError) {
+        console.error("[Webhook] Failed to send audit invoice:", invoiceError);
+      }
+      return "processed";
+    }
+  }
+
+  if (metadata?.type === "addon_checkout") {
+    if (!metadata?.userId || !metadata?.addOnType) {
+      console.error("Add-on checkout payment missing metadata:", payment.id);
+      return "processed";
+    }
+
+    if (payment.status !== "paid") {
+      if (isTerminalFailure) {
+        await prisma.user.update({
+          where: { id: metadata.userId },
+          data: {
+            ...(payment.status === "failed" ? { subscriptionStatus: "past_due" } : {}),
+            lastFailedPaymentAt: new Date(),
+            lastFailedPaymentReason: `mollie:${payment.status}`,
+          },
+        });
+      }
+      return isTerminalFailure ? "processed" : "pending";
+    }
+
+    if (payment.status === "paid") {
+      const nextBillingDate = new Date();
+      nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
+
+      await purchaseAddOn({
+        userId: metadata.userId,
+        type: metadata.addOnType,
+        quantity: Number.parseInt(metadata.quantity ?? "1", 10) || 1,
+        firstBillingDate: nextBillingDate.toISOString().split("T")[0],
+      });
+      return "processed";
+    }
   }
 
   if (!metadata?.userId || !metadata?.planKey) {
     // Fall back to legacy metadata format
     if (!metadata?.userId || !metadata?.plan) {
       console.error("Payment missing required metadata:", payment.id);
-      return;
+      return "processed";
     }
   }
 
@@ -524,12 +592,13 @@ export async function processWebhookPayment(paymentId: string) {
   // (without this, ProcessedWebhook silently records the event as "processed"
   // and the user is left in the dark).
   if (payment.status !== "paid") {
-    const terminalFailureStatuses = ["canceled", "expired", "failed"] as const;
-    if ((terminalFailureStatuses as readonly string[]).includes(payment.status)) {
+    if (isTerminalFailure) {
       try {
+        const shouldMarkPastDue = payment.status === "failed";
         await prisma.user.update({
           where: { id: userId },
           data: {
+            ...(shouldMarkPastDue ? { subscriptionStatus: "past_due" } : {}),
             lastFailedPaymentAt: new Date(),
             lastFailedPaymentReason: `mollie:${payment.status}`,
           },
@@ -545,7 +614,7 @@ export async function processWebhookPayment(paymentId: string) {
     }
     // Open / pending / authorized statuses: do nothing — Mollie will send a
     // follow-up webhook when the payment reaches a terminal state.
-    return;
+    return isTerminalFailure ? "processed" : "pending";
   }
 
   // Payment is successful — create subscription. createSubscription() is the
@@ -582,6 +651,8 @@ export async function processWebhookPayment(paymentId: string) {
   } catch (invoiceError) {
     console.error("[Webhook] Failed to send invoice:", invoiceError);
   }
+
+  return "processed";
 }
 
 /**

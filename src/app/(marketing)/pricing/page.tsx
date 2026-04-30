@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -144,7 +145,7 @@ function HeroSection() {
 
         <p className="text-sm opacity-75 mt-6 text-center">
           {t("needMore")}{" "}
-          <Link href="/contact" className="underline hover:opacity-100">
+          <Link href="/pricing#overflow" className="underline hover:opacity-100">
             {t("contactUs")}
           </Link>
         </p>
@@ -255,6 +256,22 @@ function PricingCards() {
       limitations: [],
       ctaVariant: "default",
     },
+    {
+      key: "PIONEER" as PlanKey,
+      name: PLAN_DISPLAY_NAMES.PIONEER,
+      description: "Pioneer partner access with premium VNI reporting and white-label workflows.",
+      highlighted: false,
+      features: [
+        `${ENTITLEMENTS.PIONEER.sites} websites`,
+        `${ENTITLEMENTS.PIONEER.pagesPerMonth.toLocaleString()} pages per month`,
+        `${ENTITLEMENTS.PIONEER.users} users`,
+        "VNI scans and PDF/DOCX reports",
+        "White-label reports",
+        "Priority support and SLA",
+      ],
+      limitations: [],
+      ctaVariant: "default",
+    },
   ];
 
   const handleUpgrade = (planKey: PlanKey) => {
@@ -269,7 +286,7 @@ function PricingCards() {
   const discountPercent = getYearlyDiscountPercent("PRO");
 
   return (
-    <section className="py-20">
+    <section id="plans" className="py-20">
       <div className="container mx-auto px-4">
         {error && (
           <Alert className="mb-8 max-w-md mx-auto" variant="destructive">
@@ -314,7 +331,7 @@ function PricingCards() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {plans.map((plan) => {
             const priceDisplay = fmtPrice(plan.key, billingCycle);
             const discountBadge = getDiscountBadge(billingCycle, plan.key);
@@ -469,18 +486,6 @@ function PricingCards() {
           </Card>
         </div>
 
-        <div className="text-center mt-8">
-          <p className="text-muted-foreground">
-            {tp("needCustom")}{" "}
-            <Link
-              href="/contact"
-              className="text-primary hover:underline ml-1"
-            >
-              {tp("contactSales")}
-            </Link>
-          </p>
-        </div>
-
         {/* Checkout Dialog */}
         <CheckoutDialog
           open={!!checkoutPlan}
@@ -495,10 +500,85 @@ function PricingCards() {
   );
 }
 
+function DirectCheckoutButton(props: {
+  endpoint: "/api/billing/create-audit-payment" | "/api/billing/create-addon-payment";
+  payload: Record<string, unknown>;
+  children: ReactNode;
+  variant?: ComponentProps<typeof Button>["variant"];
+  className?: string;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const tCommon = useTranslations("common");
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(props.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(props.payload),
+      });
+
+      if (res.status === 401) {
+        window.location.href = `/auth/login?redirect=${encodeURIComponent("/pricing")}`;
+        return;
+      }
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Checkout failed");
+      }
+
+      const checkoutUrl = data.checkoutUrl || data.url;
+      if (!checkoutUrl) {
+        throw new Error("Checkout URL missing");
+      }
+
+      window.location.href = checkoutUrl;
+    } catch (checkoutError) {
+      setError(checkoutError instanceof Error ? checkoutError.message : "Checkout failed");
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={props.className}>
+      <Button
+        className="w-full"
+        variant={props.variant ?? "outline"}
+        onClick={handleCheckout}
+        disabled={loading}
+      >
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            {tCommon("loading")}
+          </>
+        ) : (
+          props.children
+        )}
+      </Button>
+      {error && <p className="mt-2 text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}
+
 function AuditServicesSection() {
   const tp = useTranslations("pricing.page");
 
   const audits = [
+    {
+      ...AUDIT_PRICES.FAST_FIX,
+      description: "Fast-Fix audit with prioritized remediation guidance and one audit credit.",
+      features: [
+        "Priority technical review",
+        "VNI and WCAG remediation report",
+        "Developer-ready fix guidance",
+      ],
+    },
     {
       ...AUDIT_PRICES.QUICK,
       description: tp("audits.quick.description"),
@@ -531,7 +611,7 @@ function AuditServicesSection() {
   ];
 
   return (
-    <section className="border-y border-border/60 bg-muted py-20">
+    <section id="audits" className="border-y border-border/60 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge
@@ -584,14 +664,14 @@ function AuditServicesSection() {
                     </div>
                   ))}
                 </div>
-                <Button className="w-full mt-4" variant="outline" asChild>
-                  <Link
-                    href={`/contact?subject=audit&product=${audit.productId}`}
-                  >
+                <DirectCheckoutButton
+                  endpoint="/api/billing/create-audit-payment"
+                  payload={{ productId: audit.productId }}
+                  className="mt-4"
+                >
                     {tp("audits.cta")}{" "}
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+                </DirectCheckoutButton>
               </CardContent>
             </Card>
           ))}
@@ -642,7 +722,7 @@ function AuditBundlesSection() {
   ];
 
   return (
-    <section className="py-20">
+    <section id="audit-bundles" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4">
@@ -691,14 +771,14 @@ function AuditBundlesSection() {
                     </div>
                   ))}
                 </div>
-                <Button className="w-full mt-4" variant="outline" asChild>
-                  <Link
-                    href={`/contact?subject=audit-bundle&product=${bundle.productId}`}
-                  >
+                <DirectCheckoutButton
+                  endpoint="/api/billing/create-audit-payment"
+                  payload={{ productId: bundle.productId }}
+                  className="mt-4"
+                >
                     {tp("auditBundles.cta")}{" "}
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+                </DirectCheckoutButton>
               </CardContent>
             </Card>
           ))}
@@ -715,14 +795,17 @@ function AddOnsSection() {
     {
       label: tp("addons.websites.site1"),
       price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1,
+      type: "EXTRA_WEBSITE_1",
     },
     {
       label: tp("addons.websites.sites5"),
       price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5,
+      type: "EXTRA_WEBSITE_5",
     },
     {
       label: tp("addons.websites.sites10"),
       price: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10,
+      type: "EXTRA_WEBSITE_10",
     },
   ];
 
@@ -731,16 +814,19 @@ function AddOnsSection() {
       label: tp("addons.pages.25k"),
       price: PAGE_PACK_PRICES.PAGE_PACK_25K,
       pages: 25000,
+      type: "PAGE_PACK_25K",
     },
     {
       label: tp("addons.pages.100k"),
       price: PAGE_PACK_PRICES.PAGE_PACK_100K,
       pages: 100000,
+      type: "PAGE_PACK_100K",
     },
     {
       label: tp("addons.pages.250k"),
       price: PAGE_PACK_PRICES.PAGE_PACK_250K,
       pages: 250000,
+      type: "PAGE_PACK_250K",
     },
   ];
 
@@ -753,7 +839,7 @@ function AddOnsSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
+    <section id="packs" className="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge
@@ -802,6 +888,13 @@ function AddOnsSection() {
                       <p className="text-[10px] text-muted-foreground">
                         incl. VAT
                       </p>
+                      <DirectCheckoutButton
+                        endpoint="/api/billing/create-addon-payment"
+                        payload={{ type: pack.type }}
+                        className="mt-2"
+                      >
+                        Checkout
+                      </DirectCheckoutButton>
                     </div>
                   </div>
                 ))}
@@ -846,6 +939,13 @@ function AddOnsSection() {
                         <p className="text-[10px] text-muted-foreground">
                           incl. VAT
                         </p>
+                        <DirectCheckoutButton
+                          endpoint="/api/billing/create-addon-payment"
+                          payload={{ type: pack.type }}
+                          className="mt-2"
+                        >
+                          Checkout
+                        </DirectCheckoutButton>
                       </div>
                     </div>
                   );
@@ -861,14 +961,7 @@ function AddOnsSection() {
                   </p>
                 </div>
                 <p className="text-xs text-muted-foreground text-center">
-                  {tp("addons.needHigher")}{" "}
-                  <Link
-                    href="/contact?subject=enterprise-volume"
-                    className="text-primary hover:underline font-medium"
-                  >
-                    {tp("addons.pages.contactSales")}
-                  </Link>{" "}
-                  {tp("addons.contactEnterprise")}
+                  {tp("addons.needHigher")} {tp("addons.contactEnterprise")}
                 </p>
               </div>
             </CardContent>
@@ -947,7 +1040,7 @@ function OverflowPricingSection() {
   const t = useTranslations("pricing.overflow");
 
   return (
-    <section className="border-y border-border/40 bg-muted py-20">
+    <section id="overflow" className="border-y border-border/40 bg-muted py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -1144,7 +1237,7 @@ function PilotOfferBanner() {
             {tPage("pilotBanner.subtitle")}
           </p>
           <Button asChild className="gradient-primary">
-            <Link href="/contact?from=pilot-pricing">
+            <Link href="/pricing#plans">
               {tPage("pilotBanner.cta")}{" "}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>

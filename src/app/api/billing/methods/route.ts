@@ -96,7 +96,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 }
 
 function getAmountForTier(tier: string, billingCycle: string): { value: string; currency: string } | undefined {
-  const validPlans: PlanKey[] = ['STARTER', 'PRO', 'BUSINESS', 'ENTERPRISE'];
+  const validPlans: PlanKey[] = ['STARTER', 'PRO', 'BUSINESS', 'PIONEER', 'ENTERPRISE'];
   if (!validPlans.includes(tier as PlanKey)) return undefined;
 
   const cycle = billingCycle === 'yearly' ? 'yearly' : 'monthly';

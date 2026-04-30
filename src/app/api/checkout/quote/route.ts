@@ -14,7 +14,7 @@ import {
 export const dynamic = "force-dynamic";
 
 const QuoteSchema = z.object({
-  plan: z.enum(["STARTER", "PRO", "BUSINESS", "ENTERPRISE"]),
+  plan: z.enum(["STARTER", "PRO", "BUSINESS", "PIONEER", "ENTERPRISE"]),
   billingCycle: z.enum(["monthly", "yearly"]).optional().default("monthly"),
 });
 

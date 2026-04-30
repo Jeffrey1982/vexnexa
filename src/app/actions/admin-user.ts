@@ -570,7 +570,7 @@ export interface UpdateUserSettingsInput {
 
 const VALID_FREQUENCIES = ['weekly', 'biweekly', 'monthly'] as const;
 const VALID_FORMATS = ['pdf', 'docx', 'both'] as const;
-const VALID_STATUSES = ['active', 'canceled', 'past_due', 'inactive', 'suspended'] as const;
+  const VALID_STATUSES = ['active', 'canceled', 'past_due', 'failed', 'inactive', 'suspended'] as const;
 const VALID_INTERVALS = ['monthly', 'yearly'] as const;
 const VALID_ASSURANCE_TIERS = ['BASIC', 'PRO', 'PUBLIC_SECTOR'] as const;
 

@@ -13,8 +13,9 @@ export async function purchaseAddOn(opts: {
   userId: string
   type: AddOnType
   quantity?: number // Only for EXTRA_SEAT, defaults to 1
+  firstBillingDate?: string
 }) {
-  const { userId, type, quantity = 1 } = opts
+  const { userId, type, quantity = 1, firstBillingDate } = opts
 
   // Validate quantity
   if (quantity < 1) {
@@ -140,7 +141,7 @@ export async function purchaseAddOn(opts: {
     },
     interval: "1 month",
     description: `VexNexa - ${ADDON_NAMES[type]}${quantity > 1 ? ` x${quantity}` : ""} (incl. ${Math.round(tax.vatRate * 100)}% BTW)`,
-    startDate: new Date().toISOString().split('T')[0],
+    startDate: firstBillingDate ?? new Date().toISOString().split('T')[0],
     metadata: {
       userId,
       addOnId: addOn.id,

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { pdf } from "@react-pdf/renderer";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { assertWithinLimits } from "@/lib/billing/entitlements";
 import { PDFReport } from "@/lib/pdf-generator";
 
 export async function POST(req: NextRequest) {
@@ -16,6 +17,11 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_pdf",
+    });
 
     // Fetch scan data with all necessary relations
     const scan = await prisma.scan.findFirst({

@@ -35,6 +35,7 @@ export const BASE_PRICES: Record<PlanKey, number> = {
   STARTER: PLAN_PRICES.STARTER.monthly,
   PRO: PLAN_PRICES.PRO.monthly,
   BUSINESS: PLAN_PRICES.BUSINESS.monthly,
+  PIONEER: PLAN_PRICES.PIONEER.monthly,
   ENTERPRISE: PLAN_PRICES.ENTERPRISE.monthly,
 } as const;
 
@@ -44,6 +45,7 @@ export const ANNUAL_PRICES: Record<PlanKey, number> = {
   STARTER: PLAN_PRICES.STARTER.yearly,
   PRO: PLAN_PRICES.PRO.yearly,
   BUSINESS: PLAN_PRICES.BUSINESS.yearly,
+  PIONEER: PLAN_PRICES.PIONEER.yearly,
   ENTERPRISE: PLAN_PRICES.ENTERPRISE.yearly,
 } as const;
 
@@ -70,6 +72,7 @@ export const ASSURANCE_ADDON_PRICES: Partial<Record<PlanKey, number>> = {
 
 /* ─── Handmatige Audits — eenmalig (incl. VAT) ─── */
 export const AUDIT_PRICES = {
+  FAST_FIX: { productId: "vexnexa-audit-fast-fix", price: 1500.0, label: "Fast-Fix Audit" },
   QUICK: { productId: "vexnexa-audit-quick", price: 249.0, label: "Quickscan Audit" },
   FULL: { productId: "vexnexa-audit-full", price: 549.0, label: "Full Site Audit" },
   ENTERPRISE: { productId: "vexnexa-audit-enterprise", price: 1199.0, label: "Enterprise Audit" },
@@ -97,6 +100,7 @@ export const PLAN_PRODUCT_IDS: Record<PlanKey, { monthly: string; yearly: string
   STARTER: { monthly: "vexnexa-starter-monthly", yearly: "vexnexa-starter-yearly" },
   PRO: { monthly: "vexnexa-pro-monthly", yearly: "vexnexa-pro-yearly" },
   BUSINESS: { monthly: "vexnexa-business-monthly", yearly: "vexnexa-business-yearly" },
+  PIONEER: { monthly: "VN-P-499", yearly: "VN-P-499-yearly" },
   ENTERPRISE: { monthly: "vexnexa-enterprise-monthly", yearly: "vexnexa-enterprise-yearly" },
 } as const;
 
@@ -123,6 +127,7 @@ export const HISTORY_MONTHS: Record<PlanKey, number> = {
   STARTER: 6,
   PRO: 12,
   BUSINESS: 24,
+  PIONEER: 36,
   ENTERPRISE: 36,
 } as const;
 
@@ -189,10 +194,6 @@ export function formatPriceDisplay(
     return { mainPrice: "Free", period: "forever" };
   }
 
-  if (planKey === "ENTERPRISE") {
-    return { mainPrice: "Custom", period: "" };
-  }
-
   if (cycle === "yearly") {
     return {
       mainPrice: formatEuro(pricing.yearly.total, locale),
@@ -225,6 +226,7 @@ export function getCTAText(cycle: BillingCycle, planKey?: PlanKey): string {
   if (planKey === "FREE") return "Start Free";
   if (planKey === "PRO") return "Get Pro";
   if (planKey === "BUSINESS") return "Get Agency";
+  if (planKey === "PIONEER") return "Get Pioneer";
   if (planKey === "ENTERPRISE") return "Contact Sales";
   return cycle === "monthly" ? "Start Monthly Plan" : "Start Annual Plan";
 }
@@ -233,7 +235,7 @@ export function getCTAText(cycle: BillingCycle, planKey?: PlanKey): string {
  * Whether a plan includes Assurance for free.
  */
 export function planIncludesAssurance(planKey: PlanKey): boolean {
-  return planKey === "BUSINESS" || planKey === "ENTERPRISE";
+  return planKey === "BUSINESS" || planKey === "PIONEER" || planKey === "ENTERPRISE";
 }
 
 /**
@@ -272,7 +274,8 @@ export const PRICES = {
   STARTER: { amount: "19.00", currency: "EUR", interval: "1 month" },
   PRO: { amount: "34.95", currency: "EUR", interval: "1 month" },
   BUSINESS: { amount: "99.95", currency: "EUR", interval: "1 month" },
-  ENTERPRISE: { amount: "349.00", currency: "EUR", interval: "1 month" },
+  PIONEER: { amount: "499.00", currency: "EUR", interval: "1 month" },
+  ENTERPRISE: { amount: "1500.00", currency: "EUR", interval: "1 month" },
 } as const;
 
 export function formatPrice(plan: keyof typeof PRICES): string {

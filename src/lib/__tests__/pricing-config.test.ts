@@ -34,9 +34,11 @@ describe('pricing-config', () => {
       expect(PLAN_PRICES.FREE.yearly).toBe(0)
     })
 
-    it('has zero prices for ENTERPRISE (no self-serve)', () => {
-      expect(PLAN_PRICES.ENTERPRISE.monthly).toBe(0)
-      expect(PLAN_PRICES.ENTERPRISE.yearly).toBe(0)
+    it('has correct Pioneer and Enterprise prices', () => {
+      expect(PLAN_PRICES.PIONEER.monthly).toBe(499.00)
+      expect(PLAN_PRICES.PIONEER.yearly).toBe(5988.00)
+      expect(PLAN_PRICES.ENTERPRISE.monthly).toBe(1500.00)
+      expect(PLAN_PRICES.ENTERPRISE.yearly).toBe(18000.00)
     })
 
     it('has correct Starter prices (legacy)', () => {
@@ -54,6 +56,7 @@ describe('pricing-config', () => {
       expect(PLAN_DISPLAY_NAMES.FREE).toBe('Free')
       expect(PLAN_DISPLAY_NAMES.STARTER).toBe('Starter')
       expect(PLAN_DISPLAY_NAMES.PRO).toBe('Pro')
+      expect(PLAN_DISPLAY_NAMES.PIONEER).toBe('Pioneer Deal')
       expect(PLAN_DISPLAY_NAMES.ENTERPRISE).toBe('Enterprise')
     })
   })
@@ -62,6 +65,7 @@ describe('pricing-config', () => {
     it('returns correct monthly amounts for paid plans', () => {
       expect(getMollieAmount('PRO', 'monthly')).toBe(34.95)
       expect(getMollieAmount('BUSINESS', 'monthly')).toBe(99.95)
+      expect(getMollieAmount('PIONEER', 'monthly')).toBe(499.00)
       expect(getMollieAmount('STARTER', 'monthly')).toBe(19.00)
     })
 
@@ -81,9 +85,10 @@ describe('pricing-config', () => {
   })
 
   describe('isSelfServePlan', () => {
-    it('returns true for PRO and BUSINESS', () => {
+    it('returns true for PRO, BUSINESS, and PIONEER', () => {
       expect(isSelfServePlan('PRO')).toBe(true)
       expect(isSelfServePlan('BUSINESS')).toBe(true)
+      expect(isSelfServePlan('PIONEER')).toBe(true)
     })
 
     it('returns false for FREE, STARTER, and ENTERPRISE', () => {
@@ -192,6 +197,7 @@ describe('pricing-config', () => {
 
       expect(meta.userId).toBe('user-123')
       expect(meta.planKey).toBe('PRO')
+      expect(meta.planId).toBe('VN-PRO-3495')
       expect(meta.billingInterval).toBe('monthly')
       expect(meta.customerType).toBe('company')
       expect(meta.companyName).toBe('Acme B.V.')
@@ -218,12 +224,12 @@ describe('pricing-config', () => {
   })
 
   describe('plan list constants', () => {
-    it('SELF_SERVE_PLANS contains only PRO and BUSINESS', () => {
-      expect(SELF_SERVE_PLANS).toEqual(['PRO', 'BUSINESS'])
+    it('SELF_SERVE_PLANS contains PRO, BUSINESS, and PIONEER', () => {
+      expect(SELF_SERVE_PLANS).toEqual(['PRO', 'BUSINESS', 'PIONEER'])
     })
 
-    it('PUBLIC_PLANS contains FREE, PRO, and BUSINESS', () => {
-      expect(PUBLIC_PLANS).toEqual(['FREE', 'PRO', 'BUSINESS'])
+    it('PUBLIC_PLANS contains FREE, PRO, BUSINESS, and PIONEER', () => {
+      expect(PUBLIC_PLANS).toEqual(['FREE', 'PRO', 'BUSINESS', 'PIONEER'])
     })
   })
 })

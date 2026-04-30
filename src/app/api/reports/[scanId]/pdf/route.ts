@@ -42,6 +42,12 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    const { assertWithinLimits } = await import("@/lib/billing/entitlements");
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_pdf",
+    });
+
     // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);
     const qp = extractQueryOverrides(url);

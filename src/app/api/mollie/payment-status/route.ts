@@ -53,6 +53,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       paymentId: payment.id,
       status: payment.status, // 'open' | 'pending' | 'authorized' | 'paid' | 'canceled' | 'expired' | 'failed'
+      type: metadata.type ?? null,
+      isOneOffCheckout: metadata.type === 'audit_payment' || metadata.type === 'addon_checkout',
       plan: (metadata.planKey ?? metadata.plan ?? null) as string | null,
       billingInterval: (metadata.billingInterval ?? metadata.billingCycle ?? null) as string | null,
       user: {

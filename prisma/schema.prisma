@@ -47,6 +47,7 @@ model User {
   lastLoginAt            DateTime?
   lastFailedPaymentAt    DateTime?
   lastFailedPaymentReason String?
+  auditCredits           Int                     @default(0) @map("audit_credits")
   createdAt              DateTime                @default(now())
   updatedAt              DateTime                @updatedAt
   addOns                 AddOn[]
@@ -1156,6 +1157,7 @@ enum Plan {
   STARTER
   PRO
   BUSINESS
+  PIONEER
   ENTERPRISE
 }
 
