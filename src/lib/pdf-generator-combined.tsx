@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 30,
     padding: 30,
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#0d9488',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   websiteInfo: {
     marginBottom: 20,
     padding: 15,
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#F0FDFA',
     borderRadius: 8,
     border: '1pt solid #BFDBFE',
   },
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     marginBottom: 15,
     paddingLeft: 8,
-    borderLeft: '3pt solid #3B82F6',
+    borderLeft: '3pt solid #0d9488',
   },
   impactGrid: {
     flexDirection: 'row',
@@ -292,8 +292,8 @@ const styles = StyleSheet.create({
   },
   wcagBadge: {
     fontSize: 8,
-    color: '#3B82F6',
-    backgroundColor: '#EFF6FF',
+    color: '#0d9488',
+    backgroundColor: '#F0FDFA',
     padding: '2 4',
     borderRadius: 4,
     marginTop: 3,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   footerLogo: {
     fontSize: 12,
     fontWeight: 600,
-    color: '#3B82F6',
+    color: '#0d9488',
     marginBottom: 3,
   },
   footerText: {
@@ -372,7 +372,7 @@ interface CombinedPDFReportProps {
 export const CombinedPDFReport: React.FC<CombinedPDFReportProps> = ({
   reportData,
   brandName,
-  primaryColor = '#3B82F6'
+  primaryColor = '#0d9488'
 }) => {
   const getScoreColor = (score: number) => {
     if (score >= 90) return '#10B981';

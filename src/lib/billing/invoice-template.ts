@@ -137,7 +137,7 @@ export function generateInvoiceHtml(data: InvoiceData): string {
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1E1E1E; margin: 0; padding: 0; background: #F8F9FA; }
     .invoice { max-width: 680px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; }
-    .header { background: #3b82f6; color: #fff; padding: 32px 40px; }
+    .header { background: #0d9488; color: #fff; padding: 32px 40px; }
     .header h1 { margin: 0 0 4px; font-size: 24px; font-weight: 700; }
     .header p { margin: 0; opacity: 0.85; font-size: 14px; }
     .body { padding: 32px 40px; }
@@ -151,7 +151,7 @@ export function generateInvoiceHtml(data: InvoiceData): string {
     td.amount { text-align: right; font-variant-numeric: tabular-nums; }
     th.amount { text-align: right; }
     .total-row td { border-bottom: none; font-weight: 700; font-size: 16px; padding-top: 16px; }
-    .tax-note { font-size: 12px; color: #5A5A5A; margin-top: 16px; padding: 12px 16px; background: #F8F9FA; border-radius: 6px; border-left: 3px solid #3b82f6; }
+    .tax-note { font-size: 12px; color: #5A5A5A; margin-top: 16px; padding: 12px 16px; background: #F8F9FA; border-radius: 6px; border-left: 3px solid #0d9488; }
     .footer { padding: 24px 40px; border-top: 1px solid #E5E7EB; font-size: 12px; color: #5A5A5A; text-align: center; }
     @media print { body { background: #fff; } .invoice { box-shadow: none; margin: 0; } }
   </style>

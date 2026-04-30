@@ -100,7 +100,7 @@ This message was sent via the contact form on vexnexa.com
             <strong>Thank you for contacting us!</strong> We have successfully received your message and our team will review it shortly.
           </p>
 
-          <div style="background: #F8F9FA; border-left: 4px solid #3b82f6; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+          <div style="background: #F8F9FA; border-left: 4px solid #0d9488; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
             <p style="color: #1E1E1E; font-size: 16px; margin: 0; font-weight: 600;">
               ⚡ We reply as fast as possible - usually within a few hours!
             </p>
@@ -112,7 +112,7 @@ This message was sent via the contact form on vexnexa.com
           </div>
 
           <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin: 24px 0;">
-            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #3b82f6; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
+            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
           </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -123,7 +123,7 @@ This message was sent via the contact form on vexnexa.com
           </p>
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center; margin-top: 30px;">
-            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #3b82f6; text-decoration: none;">vexnexa.com</a><br>
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #0d9488; text-decoration: none;">vexnexa.com</a><br>
             Privacy-first WCAG scanning • Made in the Netherlands
           </p>
         </div>
@@ -220,7 +220,7 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
             <p><strong>Agency / company:</strong> ${e(companyName)}</p>
             <p><strong>Work email:</strong> ${e(email)}</p>
             ${phone ? `<p><strong>Phone:</strong> ${e(phone)}</p>` : ''}
-            <p><strong>Agency website:</strong> <a href="${e(website)}" style="color: #3b82f6;">${e(website)}</a></p>
+            <p><strong>Agency website:</strong> <a href="${e(website)}" style="color: #0d9488;">${e(website)}</a></p>
             <p><strong>Client websites managed:</strong> ${e(clientSites)}</p>
             <p><strong>Services offered:</strong> ${e(servicesLine)}</p>
           </div>
@@ -512,11 +512,11 @@ export async function sendAdminEmail(data: AdminEmailData) {
           <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
             <p>Hello,</p>
 
-            <div style="background: #F8F9FA; padding: 20px; border-left: 4px solid #3b82f6; border-radius: 4px; margin: 20px 0;">
+            <div style="background: #F8F9FA; padding: 20px; border-left: 4px solid #0d9488; border-radius: 4px; margin: 20px 0;">
               <p style="white-space: pre-wrap; margin: 0;">${message.replace(/\n/g, '<br>')}</p>
             </div>
 
-            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #3b82f6;">info@vexnexa.com</a>.</p>
+            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #0d9488;">info@vexnexa.com</a>.</p>
 
             <p style="margin-top: 30px;">
               Best regards,<br>
@@ -528,7 +528,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
           <div style="background: #f8f9fa; padding: 15px; text-align: center; border-radius: 0 0 8px 8px;">
             <p style="color: #6b7280; font-size: 12px; margin: 0;">
               VexNexa - WCAG accessibility scanning platform<br>
-              <a href="https://vexnexa.com" style="color: #3b82f6; text-decoration: none;">vexnexa.com</a>
+              <a href="https://vexnexa.com" style="color: #0d9488; text-decoration: none;">vexnexa.com</a>
             </p>
           </div>
         </div>
@@ -617,7 +617,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Email:</td>
-                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #3b82f6;">${email}</a></td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #0d9488;">${email}</a></td>
                 </tr>
 
                 ${company ? `<tr>
@@ -634,7 +634,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
                 </tr>` : ''}
                 ${website ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Website:</td>
-                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #3b82f6;" target="_blank">${website}</a></td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #0d9488;" target="_blank">${website}</a></td>
                 </tr>` : ''}
                 ${country ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Country:</td>
@@ -659,7 +659,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
               </p>
             </div>
 
-            <div style="background: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+            <div style="background: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #0d9488;">
               <h4 style="color: #1E1E1E; margin: 0 0 8px 0; font-size: 16px;">Plan Information</h4>
               <p style="margin: 4px 0; color: #1E1E1E;">
                 <strong>Plan:</strong> Free Forever

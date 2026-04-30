@@ -207,8 +207,8 @@ export default function OnboardingPage() {
         {/* Floating elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -left-4 -top-4 h-72 w-72 animate-blob rounded-full bg-primary/10 mix-blend-multiply opacity-60 blur-xl filter"></div>
-          <div className="absolute -top-4 -right-4 w-72 h-72 bg-[#FFD166] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#3b82f6] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+          <div className="absolute -top-4 -right-4 w-72 h-72 bg-teal-400 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#0d9488] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
         </div>
 
         <Card className="backdrop-blur-sm bg-white/90 dark:bg-[#1E1E1E]/90 shadow-2xl border border-[#C0C3C7]/20">
@@ -229,7 +229,7 @@ export default function OnboardingPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#3b82f6]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#0d9488]">
                   <User className="w-4 h-4" />
                   Personal Information
                 </div>
@@ -267,7 +267,7 @@ export default function OnboardingPage() {
 
               {/* Professional Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#3b82f6]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#0d9488]">
                   <Building className="w-4 h-4" />
                   Professional Information
                 </div>
@@ -303,7 +303,7 @@ export default function OnboardingPage() {
 
               {/* Contact Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#3b82f6]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#0d9488]">
                   <Phone className="w-4 h-4" />
                   Contact Information (Optional)
                 </div>
@@ -354,7 +354,7 @@ export default function OnboardingPage() {
 
               {/* Billing Identity */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#3b82f6]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#0d9488]">
                   <FileText className="w-4 h-4" />
                   Billing Identity (Optional)
                 </div>
@@ -621,7 +621,7 @@ export default function OnboardingPage() {
 
               {/* Preferences */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#3b82f6]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#0d9488]">
                   <Sparkles className="w-4 h-4" />
                   Communication Preferences
                 </div>
@@ -722,15 +722,15 @@ export default function OnboardingPage() {
             <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
               <div className="flex items-center justify-center gap-6 text-xs text-[#5A5A5A] dark:text-[#C0C3C7]">
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3 h-3 text-[#3b82f6]" />
+                  <Shield className="w-3 h-3 text-[#0d9488]" />
                   <span>Secure & Private</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-[#3b82f6]" />
+                  <CheckCircle className="w-3 h-3 text-[#0d9488]" />
                   <span>GDPR Compliant</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-[#FFD166]" />
+                  <Zap className="w-3 h-3 text-teal-500" />
                   <span>Instant Access</span>
                 </div>
               </div>

@@ -72,7 +72,7 @@ ${renderCTA(data, primary, s)}
 
 /** VexNexa report brand — PDF/HTML (matches product guidelines) */
 const BRAND_NAVY = "#1e3a8a";
-const BRAND_MINT = "#3b82f6";
+const BRAND_MINT = "#0d9488";
 const GOLD = "#D97706";
 
 function esc(s: string | undefined | null): string {
@@ -92,7 +92,7 @@ function sevClr(sv: Severity): string {
   return ({ critical: "#DC2626", serious: "#F97316", moderate: "#FACC15", minor: "#9CA3AF" })[sv];
 }
 function sevBg(sv: Severity): string {
-  return ({ critical: "#FEF2F2", serious: "#FFF7ED", moderate: "#FFFBEB", minor: "#EFF6FF" })[sv];
+  return ({ critical: "#FEF2F2", serious: "#FFF7ED", moderate: "#FFFBEB", minor: "#F0FDFA" })[sv];
 }
 function riskClr(r: string): string {
   return ({ Low: "#16A34A", Moderate: "#D97706", High: "#EA580C", Critical: "#DC2626" })[r] ?? "#6B7280";
@@ -185,7 +185,7 @@ function scoreRingSVG(score: number, gradientStart: string, gradientEnd: string)
   const r = 100;
   const circ = 2 * Math.PI * r;
   const offset = circ - (score / 100) * circ;
-  const gc = score >= 80 ? "#2563eb" : score >= 60 ? "#b45309" : "#b91c1c";
+  const gc = score >= 80 ? "#0f766e" : score >= 60 ? "#b45309" : "#b91c1c";
   const gradId = "vn-score-grad";
   return `<svg class="score-ring-svg" width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Health score ${score} out of 100, grade ${grade(score)}">
   <defs>
@@ -458,7 +458,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     { label: "Critical", value: d.issueBreakdown.critical, color: "#DC2626" },
     { label: "Serious", value: d.issueBreakdown.serious, color: "#EA580C" },
     { label: "Moderate", value: d.issueBreakdown.moderate, color: "#D97706" },
-    { label: "Minor", value: d.issueBreakdown.minor, color: "#2563EB" },
+    { label: "Minor", value: d.issueBreakdown.minor, color: "#0f766e" },
     { label: "WCAG Checks Passed", value: `${d.compliancePercentage}%`, color: "#16A34A" },
     { label: "Est. Fix Time", value: d.estimatedFixTime, color: "#7C3AED" },
   ];
@@ -988,7 +988,7 @@ function buildCSS(primary: string, _secondary: string, _accent: string, bg: stri
   --space-xs:4px;--space-sm:8px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:56px;
   --r:${radius};--rs:${radiusSm};--shadow:${shadow};--card-bg:${cardBg};--card-border:${cardBorder};
   --dark:${dark};--bg:${bg};--primary:${primary};
-  --vn-navy:#1e3a8a;--vn-mint:#3b82f6;--vn-surface:#F8FAFC;
+  --vn-navy:#1e3a8a;--vn-mint:#0d9488;--vn-surface:#F8FAFC;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;
   --sev-critical:#DC2626;--sev-serious:#F97316;--sev-moderate:#FACC15;--sev-minor:#9CA3AF}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1354,7 +1354,7 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .ac-section p{font-size:12px;color:#374151;line-height:1.6}
 .ac-footer{display:flex;flex-wrap:wrap;gap:var(--space-sm);padding-top:var(--space-sm);border-top:1px solid #F3F4F6}
 .ac-chip{font-size:10px;padding:2px 8px;border-radius:var(--rs);background:#F3F4F6;color:#6B7280;font-weight:600}
-.ac-chip-wcag{background:#EFF6FF;color:#1D4ED8}
+.ac-chip-wcag{background:#F0FDFA;color:#0f172a}
 .ac-tech-row{margin-top:var(--space-sm);font-size:10px;color:#9CA3AF}
 .ac-tech-label{font-weight:600}
 .ac-tech-row code{font-family:var(--mono);font-size:10px;background:#F3F4F6;padding:1px 4px;border-radius:3px}
@@ -1445,7 +1445,7 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .wcag-row-fail{background:#FEF2F2!important}
 .wcag-criterion{font-weight:500;color:#374151}
 .wcag-level{text-align:center}
-.wcag-level-badge{display:inline-flex;align-items:center;justify-content:center;padding:2px 8px;border-radius:var(--rs);background:#EFF6FF;color:#1D4ED8;
+.wcag-level-badge{display:inline-flex;align-items:center;justify-content:center;padding:2px 8px;border-radius:var(--rs);background:#F0FDFA;color:#0f172a;
   font-size:10px;font-weight:700;min-width:24px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .wcag-status-chip{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--rs);font-size:10px;font-weight:700;
   letter-spacing:0.3px;line-height:1.4;-webkit-print-color-adjust:exact;print-color-adjust:exact}

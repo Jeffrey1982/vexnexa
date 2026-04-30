@@ -80,7 +80,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#3b82f6',
+  themeColor: '#0d9488',
 }
 
 export default async function RootLayout({
@@ -123,12 +123,12 @@ export default async function RootLayout({
         <meta name="application-name" content="VexNexa" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#3b82f6" />
+        <meta name="msapplication-TileColor" content="#0d9488" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#3b82f6" />
-        <meta name="msapplication-navbutton-color" content="#3b82f6" />
+        <meta name="theme-color" content="#0d9488" />
+        <meta name="msapplication-navbutton-color" content="#0d9488" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         {/* Preload Service Worker */}

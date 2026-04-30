@@ -375,7 +375,7 @@ export default function ModernLoginForm() {
                   <span>Secure</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-[#FFD166]" aria-hidden="true" />
+                    <Zap className="w-3 h-3 text-teal-500" aria-hidden="true" />
                   <span>Free plan</span>
                 </div>
                 <div className="flex items-center gap-1">

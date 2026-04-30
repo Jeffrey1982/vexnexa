@@ -14,37 +14,37 @@
   --color-border: #E2E8F0;
   --color-border-strong: #CBD5E1;
 
-  /* ===== Colors - Primary (Blue) ===== */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-active: #1d4ed8;
+  /* ===== Colors - Primary (Teal) ===== */
+  --color-primary: #0d9488;
+  --color-primary-hover: #0f766e;
+  --color-primary-active: #115e59;
   --color-primary-foreground: #FFFFFF;
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
 
-  /* ===== Colors - Secondary (Solar Gold) ===== */
-  --color-secondary: #FFD166; /* Solar Gold */
-  --color-secondary-hover: #FFBF33;
-  --color-secondary-active: #FFAD00;
-  --color-secondary-foreground: #1E1E1E;
-  --color-secondary-50: #FFFCF0;
-  --color-secondary-100: #FFF8DC;
-  --color-secondary-200: #FFF0B3;
-  --color-secondary-300: #FFE999;
-  --color-secondary-400: #FFE07F;
-  --color-secondary-500: #FFD166;
-  --color-secondary-600: #FFBF33;
-  --color-secondary-700: #FFAD00;
-  --color-secondary-800: #CC8A00;
-  --color-secondary-900: #996700;
+  /* ===== Colors - Secondary (Deep Navy) ===== */
+  --color-secondary: #0f172a;
+  --color-secondary-hover: #1e293b;
+  --color-secondary-active: #020617;
+  --color-secondary-foreground: #FFFFFF;
+  --color-secondary-50: #f8fafc;
+  --color-secondary-100: #f1f5f9;
+  --color-secondary-200: #e2e8f0;
+  --color-secondary-300: #cbd5e1;
+  --color-secondary-400: #94a3b8;
+  --color-secondary-500: #64748b;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1e293b;
+  --color-secondary-900: #0f172a;
 
   /* ===== Colors - Success (Emerald) ===== */
   --color-success: #059669;
@@ -62,21 +62,21 @@
   --color-success-800: #065f46;
   --color-success-900: #064e3b;
 
-  /* ===== Colors - Warning (Solar Gold) ===== */
-  --color-warning: #FFD166;
-  --color-warning-hover: #FFBF33;
-  --color-warning-bg: #FFF8DC;
-  --color-warning-foreground: #1E1E1E;
-  --color-warning-50: #FFFCF0;
-  --color-warning-100: #FFF8DC;
-  --color-warning-200: #FFF0B3;
-  --color-warning-300: #FFE999;
-  --color-warning-400: #FFE07F;
-  --color-warning-500: #FFD166;
-  --color-warning-600: #FFBF33;
-  --color-warning-700: #FFAD00;
-  --color-warning-800: #CC8A00;
-  --color-warning-900: #996700;
+  /* ===== Colors - Warning (Accessible Orange) ===== */
+  --color-warning: #f97316;
+  --color-warning-hover: #ea580c;
+  --color-warning-bg: #fff7ed;
+  --color-warning-foreground: #431407;
+  --color-warning-50: #fff7ed;
+  --color-warning-100: #ffedd5;
+  --color-warning-200: #fed7aa;
+  --color-warning-300: #fdba74;
+  --color-warning-400: #fb923c;
+  --color-warning-500: #f97316;
+  --color-warning-600: #ea580c;
+  --color-warning-700: #c2410c;
+  --color-warning-800: #9a3412;
+  --color-warning-900: #7c2d12;
 
   /* ===== Colors - Destructive (Vibrant Red) ===== */
   --color-destructive: #EF4444;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-primary-glow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-  --shadow-secondary-glow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  --shadow-primary-glow: 0 0 0 3px rgba(13, 148, 136, 0.25);
+  --shadow-secondary-glow: 0 0 0 3px rgba(15, 23, 42, 0.16);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  --gradient-warm: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
-  --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --gradient-primary: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  --gradient-warm: linear-gradient(135deg, #5eead4 0%, #0d9488 100%);
+  --gradient-hero: linear-gradient(135deg, #0f172a 0%, #0d9488 100%);
   --gradient-subtle: linear-gradient(to bottom, #F8FAFC 0%, #FFFFFF 100%);
-  --gradient-mesh: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  --gradient-mesh: linear-gradient(135deg, #0f172a 0%, #0d9488 50%, #14b8a6 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;
@@ -304,8 +304,8 @@
 
 .bg-grid-subtle {
   background-image:
-    linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(13, 148, 136, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(13, 148, 136, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 

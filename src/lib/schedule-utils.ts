@@ -296,7 +296,7 @@ export function buildReportEmailHtml(params: {
       <hr style="margin:24px 0;border:none;border-top:1px solid #E5E7EB;">
 
       <p style="color:#9CA3AF;font-size:12px;text-align:center;">
-        <a href="${manageUrl}" style="color:#3b82f6;text-decoration:none;">Manage schedule</a> ·
+        <a href="${manageUrl}" style="color:#0d9488;text-decoration:none;">Manage schedule</a> ·
         <a href="${manageUrl}?unsubscribe=true" style="color:#9CA3AF;text-decoration:none;">Unsubscribe</a>
       </p>
       <p style="color:#9CA3AF;font-size:11px;text-align:center;margin-top:8px;">

@@ -212,8 +212,8 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                   <Area
                     type="monotone"
                     dataKey="score"
-                    stroke="#3b82f6"
-                    fill="#3b82f6"
+                    stroke="#0d9488"
+                    fill="#0d9488"
                     fillOpacity={0.2}
                     strokeWidth={2}
                   />

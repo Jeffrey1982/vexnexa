@@ -304,7 +304,7 @@ export function CompetitiveAnalysis({
                     <Scatter
                       key={index}
                       data={[entry]}
-                      fill={entry.isYou ? "#3B82F6" : "#94A3B8"}
+                      fill={entry.isYou ? "#0d9488" : "#94A3B8"}
                       r={entry.isYou ? 8 : 5}
                     />
                   ))}
@@ -346,7 +346,7 @@ export function CompetitiveAnalysis({
                   radius={[4, 4, 0, 0]}
                 >
                   {comparisonData.map((entry, index) => (
-                    <Bar key={index} fill={entry.isYou ? "#3B82F6" : "#94A3B8"} />
+                    <Bar key={index} fill={entry.isYou ? "#0d9488" : "#94A3B8"} />
                   ))}
                 </Bar>
               </BarChart>
@@ -369,8 +369,8 @@ export function CompetitiveAnalysis({
                 <Radar
                   name="Your Site"
                   dataKey="yourSite"
-                  stroke="#3B82F6"
-                  fill="#3B82F6"
+                  stroke="#0d9488"
+                  fill="#0d9488"
                   fillOpacity={0.1}
                   strokeWidth={2}
                 />

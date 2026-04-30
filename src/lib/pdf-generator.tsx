@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 30,
     padding: 30,
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#0d9488',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   websiteInfo: {
     marginBottom: 20,
     padding: 15,
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#F0FDFA',
     borderRadius: 8,
     border: '1pt solid #BFDBFE',
   },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     marginBottom: 15,
     paddingLeft: 8,
-    borderLeft: '3pt solid #3B82F6',
+    borderLeft: '3pt solid #0d9488',
   },
   impactGrid: {
     flexDirection: 'row',
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   footerLogo: {
     fontSize: 12,
     fontWeight: 600,
-    color: '#3B82F6',
+    color: '#0d9488',
     marginBottom: 3,
   },
   footerText: {
@@ -267,7 +267,7 @@ export const PDFReport: React.FC<PDFReportProps> = ({
   scanData,
   brandName,
   brandLogo,
-  primaryColor = '#3B82F6',
+  primaryColor = '#0d9488',
   footerText,
   supportEmail,
   showPoweredBy = true,

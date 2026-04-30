@@ -149,7 +149,7 @@ export function AdminSidebar() {
           'group relative flex items-center gap-3 rounded-xl text-sm font-medium transition-all',
           inset ? 'mx-3 px-4 py-2' : 'px-3 py-2.5',
           active
-            ? 'bg-[#D4AF37] text-[#0A0F1E] shadow-sm'
+            ? 'bg-teal-500 text-slate-950 shadow-sm'
             : 'text-slate-200 hover:bg-white/10 hover:text-white'
         )}
       >
@@ -195,7 +195,7 @@ export function AdminSidebar() {
                   aria-expanded={expanded}
                   className={cn(
                     'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all',
-                    active ? 'text-[#D4AF37]' : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                    active ? 'text-teal-300' : 'text-slate-300 hover:bg-white/5 hover:text-white'
                   )}
                 >
                   <Icon className="h-4 w-4 shrink-0" />

@@ -20,7 +20,7 @@ import { trackEvent } from "@/lib/analytics-events";
  * • will-change only on actively animating elements.
  * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
  * • Background blur hidden on mobile to reduce GPU compositing cost.
- * • Accent palette: blue-500 (#3b82f6) + slate-700 base.
+ * • Accent palette: blue-500 (#0d9488) + slate-700 base.
  */
 
 /* ── Circumference constant for score ring (r=34) ── */
@@ -85,14 +85,14 @@ function DashboardMockup() {
       {/* Dashboard header — typographic logo, no SVG icon */}
       <div className="mb-4 flex items-center justify-between border-b border-slate-700/50 pb-3">
         <span className="text-[15px] font-bold tracking-wide text-white">
-          Vex<span className="text-blue-500">Nexa</span>
+          Vex<span className="text-teal-400">Nexa</span>
         </span>
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
-            <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
+            <span className="hero-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-500" />
           </span>
-          <span className="text-[11px] font-medium uppercase tracking-wider text-blue-400">{t("liveScan")}</span>
+          <span className="text-[11px] font-medium uppercase tracking-wider text-teal-400">{t("liveScan")}</span>
         </div>
       </div>
 
@@ -106,10 +106,10 @@ function DashboardMockup() {
       <div className="mb-5">
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-[11px] font-medium text-zinc-400">{t("scanProgress")}</span>
-          <span ref={pctRef} className="text-[11px] font-semibold text-blue-400">...%</span>
+          <span ref={pctRef} className="text-[11px] font-semibold text-teal-400">...%</span>
         </div>
         <div className="h-2 w-full rounded-full bg-zinc-800 overflow-hidden">
-          <div className="hero-bar h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 origin-left" />
+          <div className="hero-bar h-2 rounded-full bg-gradient-to-r from-teal-600 to-teal-400 origin-left" />
         </div>
       </div>
 
@@ -121,14 +121,14 @@ function DashboardMockup() {
             <circle
               ref={ringRef}
               cx="40" cy="40" r="34" fill="none"
-              stroke="#3b82f6"
+              stroke="#14b8a6"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={RING_C}
               strokeDashoffset={RING_C * (1 - SCORE_START / 100)}
             />
           </svg>
-          <span ref={scoreRef} className="absolute text-2xl font-bold tabular-nums text-blue-400">
+          <span ref={scoreRef} className="absolute text-2xl font-bold tabular-nums text-teal-400">
             {SCORE_START}
           </span>
         </div>
@@ -149,35 +149,35 @@ function DashboardMockup() {
             <p className="text-[10px] text-red-400/70">{t("criticalElements")}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3 rounded-xl bg-amber-500/10 border border-amber-500/20 px-3.5 py-2.5">
-          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-amber-500/20">
-            <span className="text-[10px] font-bold text-amber-400">~</span>
+        <div className="flex items-center gap-3 rounded-xl border border-teal-500/20 bg-teal-500/10 px-3.5 py-2.5">
+          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-teal-500/20">
+            <span className="text-[10px] font-bold text-teal-300">~</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] font-semibold text-amber-300 truncate">{t("lowContrast")}</p>
-            <p className="text-[10px] text-amber-400/70">{t("moderateElements")}</p>
+            <p className="text-[12px] font-semibold text-teal-300 truncate">{t("lowContrast")}</p>
+            <p className="text-[10px] text-teal-400/70">{t("moderateElements")}</p>
           </div>
         </div>
       </div>
 
       {/* White-label report — CSS-only delayed scale+fade */}
-      <div className="hero-report rounded-2xl border border-blue-500/20 bg-gradient-to-br from-zinc-800/80 to-zinc-800/40 p-4">
+      <div className="hero-report rounded-2xl border border-teal-500/20 bg-gradient-to-br from-zinc-800/80 to-zinc-800/40 p-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-5 w-5 rounded bg-slate-600" />
             <span className="text-[11px] font-semibold text-zinc-300">Your Digital Agency</span>
           </div>
-          <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-400">
+          <span className="rounded-full bg-teal-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-teal-400">
             {t("whiteLabel")}
           </span>
         </div>
         <div className="space-y-1.5">
           <div className="h-1.5 w-[80%] rounded-full bg-zinc-700" />
           <div className="h-1.5 w-[60%] rounded-full bg-zinc-700" />
-          <div className="h-1.5 w-[70%] rounded-full bg-blue-500/20" />
+          <div className="h-1.5 w-[70%] rounded-full bg-teal-500/20" />
         </div>
         <div className="mt-3 flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-blue-500" />
+          <div className="h-1 w-1 rounded-full bg-teal-500" />
           <span className="text-[10px] text-zinc-500">{t("exportReady")}</span>
         </div>
       </div>

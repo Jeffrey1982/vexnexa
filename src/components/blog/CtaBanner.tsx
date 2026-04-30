@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export function CtaBanner() {
   return (
-    <div className="my-8 rounded-xl border border-border/60 bg-gradient-to-r from-primary to-[#3B82F6] p-8 shadow-lg">
+    <div className="my-8 rounded-xl border border-border/60 bg-gradient-to-r from-primary to-[#0d9488] p-8 shadow-lg">
       <div className="space-y-6 text-center">
         <div className="flex items-center justify-center gap-3">
           <div className="rounded-lg bg-white/20 p-3 backdrop-blur-sm">

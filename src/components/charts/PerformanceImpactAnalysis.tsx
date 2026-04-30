@@ -121,7 +121,7 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
   function getCategoryColor(category: string) {
     switch (category) {
       case "excellent": return "#10B981";
-      case "good": return "#3B82F6";
+      case "good": return "#0d9488";
       case "needs-improvement": return "#F59E0B";
       case "poor": return "#EF4444";
       default: return "#6B7280";

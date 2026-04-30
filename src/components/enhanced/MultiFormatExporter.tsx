@@ -167,7 +167,7 @@ export function MultiFormatExporter({ scanData, className, onExport }: MultiForm
     <title>Accessibility Report - ${new URL(scanData.url).hostname}</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { background: #3b82f6; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .header { background: #0d9488; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
         .score { font-size: 3em; font-weight: bold; text-align: center; }
         .section { margin-bottom: 30px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; }
         .issue { margin: 10px 0; padding: 10px; background: #f9fafb; border-radius: 4px; }

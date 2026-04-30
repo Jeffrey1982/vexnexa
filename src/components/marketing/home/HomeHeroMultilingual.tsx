@@ -20,7 +20,7 @@ import { trackEvent } from "@/lib/analytics-events";
  * • will-change only on actively animating elements.
  * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
  * • Background blur hidden on mobile to reduce GPU compositing cost.
- * • Accent palette: blue-500 (#3b82f6) + slate-700 base.
+ * • Accent palette: blue-500 (#0d9488) + slate-700 base.
  * • WCAG AAA contrast: slate-100 text on zinc-900 background (≥7:1).
  */
 
@@ -83,7 +83,7 @@ function DashboardMockup() {
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 text-white font-bold">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 text-white font-bold">
               V
             </div>
             <div>
@@ -123,12 +123,12 @@ function DashboardMockup() {
                   transformOrigin: "center",
                   transition: "none",
                 }}
-                className="text-blue-500"
+                className="text-teal-500"
               />
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#2563eb" />
+                  <stop offset="0%" stopColor="#14b8a6" />
+                  <stop offset="100%" stopColor="#0d9488" />
                 </linearGradient>
               </defs>
             </svg>
@@ -155,8 +155,8 @@ function DashboardMockup() {
               <div className="text-xs text-slate-400">3 instances</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 rounded-lg bg-amber-500/10 border border-amber-500/20 p-3">
-            <div className="h-2 w-2 rounded-full bg-amber-500"></div>
+          <div className="flex items-center gap-3 rounded-lg border border-teal-500/20 bg-teal-500/10 p-3">
+            <div className="h-2 w-2 rounded-full bg-teal-500"></div>
             <div className="flex-1">
               <div className="text-sm font-medium text-slate-100">Low contrast text</div>
               <div className="text-xs text-slate-400">5 instances</div>
@@ -168,7 +168,7 @@ function DashboardMockup() {
         <div className="flex items-center justify-between border-t border-slate-700 pt-4">
           <div className="text-xs text-slate-400">example.com</div>
           <div className="flex gap-2">
-            <div className="h-6 w-6 rounded bg-blue-500"></div>
+            <div className="h-6 w-6 rounded bg-teal-500"></div>
             <div className="h-6 w-6 rounded bg-slate-700"></div>
           </div>
         </div>

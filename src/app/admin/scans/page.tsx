@@ -11,7 +11,7 @@ export default function AdminScansPage() {
           <div className="mb-8 flex items-center justify-between">
             <div>
               <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-foreground">
-                <Radar className="text-[#D4AF37]" />
+                <Radar className="text-teal-500" />
                 Scan Performance
               </h1>
               <p className="mt-1 text-muted-foreground">

@@ -78,10 +78,10 @@ function StatusBadge({ status }: { status: AdminScan["status"] }) {
         "rounded-xl border px-2.5 py-1",
         status === "COMPLETED" && "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
         status === "FAILED" && "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300",
-        scanning && "border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#8A6A12]"
+        scanning && "border-teal-500/40 bg-teal-500/10 text-teal-700 dark:text-teal-300"
       )}
     >
-      {scanning && <span className="mr-1.5 inline-flex h-2 w-2 animate-ping rounded-full bg-[#D4AF37]" />}
+      {scanning && <span className="mr-1.5 inline-flex h-2 w-2 animate-ping rounded-full bg-teal-500" />}
       {scanning && <Loader2 className="mr-1 h-3 w-3 animate-spin" />}
       {statusLabel(status)}
     </Badge>
@@ -105,7 +105,7 @@ function VniBadge({ scan }: { scan: AdminScan }) {
       className={cn(
         "inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-sm font-semibold",
         elite
-          ? "border-[#D4AF37]/50 bg-[#D4AF37]/15 text-[#8A6A12] dark:text-[#F2D675]"
+          ? "border-teal-500/50 bg-teal-500/15 text-teal-700 dark:text-teal-300"
           : "border-border bg-muted/40 text-muted-foreground"
       )}
     >
@@ -121,7 +121,7 @@ function VniBadge({ scan }: { scan: AdminScan }) {
             <Star
               className={cn(
                 "h-3.5 w-3.5",
-                index < stars ? "fill-[#D4AF37] text-[#D4AF37]" : "text-muted-foreground/30"
+                index < stars ? "fill-teal-500 text-teal-500" : "text-muted-foreground/30"
               )}
             />
           </motion.span>
@@ -152,7 +152,7 @@ export function AdminScansClient() {
         <Card className="rounded-xl">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Activity className="h-4 w-4 text-[#D4AF37]" />
+              <Activity className="h-4 w-4 text-teal-500" />
               Active scans
             </CardTitle>
           </CardHeader>
@@ -163,7 +163,7 @@ export function AdminScansClient() {
         <Card className="rounded-xl">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Gauge className="h-4 w-4 text-[#D4AF37]" />
+              <Gauge className="h-4 w-4 text-teal-500" />
               Average score
             </CardTitle>
           </CardHeader>
@@ -174,12 +174,12 @@ export function AdminScansClient() {
         <Card className="rounded-xl">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Star className="h-4 w-4 fill-[#D4AF37] text-[#D4AF37]" />
+              <Star className="h-4 w-4 fill-teal-500 text-teal-500" />
               Elite VNI
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-[#D4AF37]">{eliteScans}</div>
+            <div className="text-3xl font-bold text-teal-600">{eliteScans}</div>
           </CardContent>
         </Card>
       </div>
@@ -187,7 +187,7 @@ export function AdminScansClient() {
       <Card className="rounded-xl">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <Radar className="h-5 w-5 text-[#D4AF37]" />
+            <Radar className="h-5 w-5 text-teal-500" />
             Realtime scans
           </CardTitle>
           <div className="text-xs text-muted-foreground">
@@ -240,7 +240,7 @@ export function AdminScansClient() {
                           </div>
                         </div>
                         {scan.status === "COMPLETED" && (
-                          <Button asChild size="sm" className="shrink-0 bg-[#D4AF37] text-[#0A0F1E] hover:bg-[#B89222]">
+                          <Button asChild size="sm" className="shrink-0 bg-teal-600 text-white hover:bg-teal-700">
                             <a href={`/api/admin/download-report?scanId=${scan.id}`} target="_blank" rel="noreferrer">
                               <Download className="h-4 w-4" />
                               PDF

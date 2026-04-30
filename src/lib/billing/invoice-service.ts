@@ -236,7 +236,7 @@ async function sendInvoiceEmail(opts: {
     subject: `Your VexNexa Invoice — ${invoiceNumber}`,
     html: `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: #3b82f6; color: #fff; padding: 24px 32px; border-radius: 8px 8px 0 0;">
+        <div style="background: #0d9488; color: #fff; padding: 24px 32px; border-radius: 8px 8px 0 0;">
           <h2 style="margin: 0; font-size: 22px; font-weight: 700;">VexNexa</h2>
           <p style="margin: 6px 0 0; opacity: 0.85; font-size: 14px;">Payment Confirmation & Invoice</p>
         </div>
@@ -258,14 +258,14 @@ async function sendInvoiceEmail(opts: {
 
           <p style="color: #4B5563; font-size: 14px; line-height: 1.6; margin: 0;">
             If you have any questions about your invoice, please contact us at
-            <a href="mailto:info@vexnexa.com" style="color: #3b82f6; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
+            <a href="mailto:info@vexnexa.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
           </p>
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
           <p style="color: #9CA3AF; font-size: 12px; margin: 0;">
             VexNexa B.V. · Netherlands ·
-            <a href="https://vexnexa.com" style="color: #3b82f6; text-decoration: none;">vexnexa.com</a>
+            <a href="https://vexnexa.com" style="color: #0d9488; text-decoration: none;">vexnexa.com</a>
           </p>
         </div>
       </div>

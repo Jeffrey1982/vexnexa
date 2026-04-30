@@ -11,7 +11,7 @@ interface BrandedFooterProps {
 
 export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
   let settings = null;
-  
+
   try {
     const whiteLabelContext = useWhiteLabel();
     settings = whiteLabelContext.settings;
@@ -30,7 +30,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
   const phone = settings?.phone;
 
   return (
-    <footer 
+    <footer
       className={`bg-gray-50 border-t border-gray-200 ${className}`}
       style={{
         backgroundColor: settings?.secondaryColor ? `${settings.secondaryColor}08` : undefined
@@ -50,16 +50,16 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   className="h-6 w-auto object-contain"
                 />
               ) : (
-                <div 
+                <div
                   className="h-6 w-6 rounded flex items-center justify-center text-white font-bold text-xs"
-                  style={{ 
-                    backgroundColor: settings?.primaryColor || '#3B82F6' 
+                  style={{
+                    backgroundColor: settings?.primaryColor || '#0d9488'
                   }}
                 >
                   {companyName.charAt(0).toUpperCase()}
                 </div>
               )}
-              <span 
+              <span
                 className="text-lg font-semibold"
                 style={{
                   color: settings?.secondaryColor || '#1F2937'
@@ -68,7 +68,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                 {companyName}
               </span>
             </div>
-            <p 
+            <p
               className="text-sm"
               style={{
                 color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
@@ -80,7 +80,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h3 
+            <h3
               className="text-sm font-semibold uppercase tracking-wider mb-4"
               style={{
                 color: settings?.secondaryColor || '#1F2937'
@@ -96,7 +96,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                  e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -111,7 +111,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                  e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -126,7 +126,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                  e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -139,7 +139,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
 
           {/* Legal */}
           <div>
-            <h3 
+            <h3
               className="text-sm font-semibold uppercase tracking-wider mb-4"
               style={{
                 color: settings?.secondaryColor || '#1F2937'
@@ -155,7 +155,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                  e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -170,7 +170,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                  e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -183,7 +183,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
 
           {/* Contact */}
           <div>
-            <h3 
+            <h3
               className="text-sm font-semibold uppercase tracking-wider mb-4"
               style={{
                 color: settings?.secondaryColor || '#1F2937'
@@ -200,7 +200,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                    e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -217,7 +217,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                    e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -236,7 +236,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                    e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -252,7 +252,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
         {/* Bottom Section */}
         <div className="mt-8 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p 
+            <p
               className="text-sm mb-4 md:mb-0"
               style={{
                 color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
@@ -260,10 +260,10 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
             >
               {footerText}
             </p>
-            
+
             {showPoweredBy && (
               <div className="flex items-center text-sm">
-                <span 
+                <span
                   className="mr-1"
                   style={{
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
@@ -277,14 +277,14 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   rel="noopener noreferrer"
                   className="font-semibold transition-colors"
                   style={{
-                    color: settings?.primaryColor || '#3B82F6'
+                    color: settings?.primaryColor || '#0d9488'
                   }}
                   onMouseEnter={(e) => {
-                    const color = settings?.primaryColor || '#3B82F6';
+                    const color = settings?.primaryColor || '#0d9488';
                     e.currentTarget.style.color = darkenColor(color, 0.1);
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#3B82F6';
+                    e.currentTarget.style.color = settings?.primaryColor || '#0d9488';
                   }}
                 >
                   VexNexa

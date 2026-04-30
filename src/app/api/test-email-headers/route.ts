@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       subject: 'TEST: Professional Email Headers & UTM Tracking',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #3B82F6;">🧪 Email Headers & UTM Test</h2>
+          <h2 style="color: #0d9488;">🧪 Email Headers & UTM Test</h2>
 
           <p>This email tests all professional email improvements:</p>
 
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
           <div style="text-align: center; margin: 32px 0;">
             <h3>Test Links with UTM:</h3>
             <p>
-              <a href="${dashboardUrl}" style="display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 8px;">
+              <a href="${dashboardUrl}" style="display: inline-block; background: #0d9488; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 8px;">
                 Dashboard (UTM tracked)
               </a>
             </p>

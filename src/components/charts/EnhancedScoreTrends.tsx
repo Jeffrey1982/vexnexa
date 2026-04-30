@@ -285,7 +285,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
             <Line
               type="monotone"
               dataKey="score"
-              stroke="#3B82F6"
+              stroke="#0d9488"
               strokeWidth={3}
               dot={(props) => {
                 const { payload } = props;
@@ -295,7 +295,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
                     cx={props.cx}
                     cy={props.cy}
                     r={4}
-                    fill="#3B82F6"
+                    fill="#0d9488"
                     stroke="#ffffff"
                     strokeWidth={2}
                   />

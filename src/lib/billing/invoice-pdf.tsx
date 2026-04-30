@@ -18,7 +18,7 @@ import type { InvoiceData } from './invoice-template';
 
 // ── Styles ─────────────────────────────────────────────
 
-const BRAND_TEAL = '#3b82f6'; // VexNexa primary brand color
+const BRAND_TEAL = '#0d9488'; // VexNexa primary brand color
 const DARK = '#1E1E1E';
 const MUTED = '#5A5A5A';
 const LIGHT_BG = '#F8F9FA';

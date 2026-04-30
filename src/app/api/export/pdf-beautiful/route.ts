@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     // Use white-label branding or fallback to VexNexa
     const brandName = whiteLabel?.companyName || 'VexNexa';
     const brandLogo = whiteLabel?.logoUrl;
-    const primaryColor = whiteLabel?.primaryColor || '#3b82f6';
+    const primaryColor = whiteLabel?.primaryColor || '#0d9488';
     const secondaryColor = whiteLabel?.secondaryColor || '#1e40af';
     const footerText = whiteLabel?.footerText || undefined;
     const supportEmail = whiteLabel?.supportEmail || undefined;
@@ -197,7 +197,7 @@ export async function POST(req: NextRequest) {
 
             /* Website Info */
             .website-info {
-                background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+                background: linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 100%);
                 border-radius: 12px;
                 padding: 20px;
                 margin-bottom: 25px;

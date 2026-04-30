@@ -33,7 +33,7 @@ interface WhiteLabelSettings {
 export default function WhiteLabelPage() {
   const [authUser, setAuthUser] = useState<any>(null);
   const [settings, setSettings] = useState<WhiteLabelSettings>({
-    primaryColor: '#3B82F6',
+    primaryColor: '#0d9488',
     secondaryColor: '#1F2937',
     accentColor: '#10B981',
     showPoweredBy: true
@@ -163,7 +163,7 @@ export default function WhiteLabelPage() {
       try {
         const response = await fetch('/api/white-label', { method: 'DELETE' });
         if (response.ok) {
-          setSettings({ primaryColor: '#3B82F6', secondaryColor: '#1F2937', accentColor: '#10B981', showPoweredBy: true });
+          setSettings({ primaryColor: '#0d9488', secondaryColor: '#1F2937', accentColor: '#10B981', showPoweredBy: true });
           alert('Settings reset to default');
         }
       } catch (error) {
@@ -320,7 +320,7 @@ export default function WhiteLabelPage() {
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {([
-                      { key: 'primaryColor' as const, label: 'Primary Color', placeholder: '#3B82F6' },
+                      { key: 'primaryColor' as const, label: 'Primary Color', placeholder: '#0d9488' },
                       { key: 'secondaryColor' as const, label: 'Secondary Color', placeholder: '#1F2937' },
                       { key: 'accentColor' as const, label: 'Accent Color', placeholder: '#10B981' },
                     ]).map(({ key, label, placeholder }) => (
