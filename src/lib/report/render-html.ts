@@ -48,7 +48,7 @@ ${data.faviconUrl ? `<link rel="icon" href="${esc(data.faviconUrl)}" />` : ""}
 </head>
 <body class="style-${s}">
 <div class="running-header" aria-hidden="true"><span class="rh-left">${esc(data.domain)}</span><span class="rh-right">${fmtDate(data.scanDate, data.labels.locale)}</span></div>
-<div class="running-footer" aria-hidden="true"><span class="rf-left">${esc(data.labels.generatedBy)} ${esc(brandName)}</span><span class="rf-center">${esc(data.labels.reportVersion)} · ${esc(credit)}</span><span class="rf-right"></span></div>
+<div class="running-footer" aria-hidden="true"><span class="rf-left">${esc(data.labels.generatedBy)} ${esc(brandName)}</span><span class="rf-center">${esc(data.labels.reportVersion)} ï¿½ ${esc(credit)}</span><span class="rf-right"></span></div>
 ${renderCover(data, primary, s)}
 ${isLong ? renderTOC(data, primary, s) : ""}
 ${renderExecutiveSummary(data, primary, s)}
@@ -734,7 +734,7 @@ function renderWcagMatrix(d: ReportData, primary: string, s: ReportStyle): strin
   ${pi === 0 ? `<div class="matrix-legend">
     <span class="ml-item"><span class="wcag-status-chip" style="background:#DCFCE7;color:#16A34A">${esc(d.labels.pass)}</span> ${d.labels.locale === "nl" ? "Geen overtredingen gedetecteerd" : d.labels.locale === "fr" ? "Aucune violation detectee" : "No violations detected"}</span>
     <span class="ml-item"><span class="wcag-status-chip" style="background:#FEF2F2;color:#DC2626">${esc(d.labels.fail)}</span> ${d.labels.locale === "nl" ? "Geautomatiseerde overtredingen gedetecteerd" : d.labels.locale === "fr" ? "Violations automatisees detectees" : "Automated violations detected"}</span>
-    <span class="ml-item"><span class="wcag-status-chip" style="background:#FFF7ED;color:#EA580C">${esc(d.labels.needsManualReview)}</span> ${d.labels.locale === "nl" ? "Niet volledig automatisch te verifiëren" : d.labels.locale === "fr" ? "Ne peut pas etre verifie entierement automatiquement" : "Cannot be fully verified automatically"}</span>
+    <span class="ml-item"><span class="wcag-status-chip" style="background:#FFF7ED;color:#EA580C">${esc(d.labels.needsManualReview)}</span> ${d.labels.locale === "nl" ? "Niet volledig automatisch te verifiï¿½ren" : d.labels.locale === "fr" ? "Ne peut pas etre verifie entierement automatiquement" : "Cannot be fully verified automatically"}</span>
     <span class="ml-item"><span class="wcag-status-chip" style="background:#F3F4F6;color:#6B7280">${esc(d.labels.notTested)}</span> ${d.labels.locale === "nl" ? "Buiten scanbereik" : d.labels.locale === "fr" ? "Hors perimetre du scan" : "Outside scan scope"}</span>
   </div>
   <p class="matrix-summary">${esc(d.labels.testedAgainst)} <strong>${matrix.length}</strong> WCAG 2.2 ${esc(d.labels.successCriterion).toLowerCase()}.
