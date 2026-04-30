@@ -88,6 +88,12 @@ export function ReportV2Toolbar({ scanId, currentLocale, currentStyle }: Props) 
 
       <a
         href={pdfHref}
+        // Open the PDF in a new tab so the user stays on the report page —
+        // otherwise the browser navigates away to display the PDF inline,
+        // and pressing Back can leave the iframe + router state in a stale
+        // shape where re-selecting another language has no effect.
+        target="_blank"
+        rel="noopener noreferrer"
         // No `download` attr: the PDF route streams `application/pdf` so the
         // browser will offer a save dialog with the right filename anyway.
         className="inline-flex items-center gap-2 rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors"
