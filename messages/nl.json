@@ -637,7 +637,7 @@
         "cta": "Start met Starter",
         "features": {
           "sites": "{count} website",
-          "pages": "pagina?s/maand",
+          "pages": "pagina's/maand",
           "users": "{count} gebruiker",
           "pdfExport": "PDF export",
           "basicReports": "Basis rapporten",
@@ -1864,8 +1864,8 @@
       "title": "Maak van toegankelijkheidschecks een herhaalbaar proces",
       "subtitle": "VexNexa helpt teams problemen te vinden, prioriteiten uit te leggen en verbetering aan te tonen.",
       "catchIssues": {
-        "title": "Vind problemen v??r livegang",
-        "description": "Scan pagina?s op WCAG 2.2 en bekijk geprioriteerde bevindingen met details per element."
+        "title": "Vind problemen voor livegang",
+        "description": "Scan pagina's op WCAG 2.2 en bekijk geprioriteerde bevindingen met details per element."
       },
       "clientReports": {
         "title": "Maak klantklare rapporten",
@@ -1900,15 +1900,15 @@
     "builtFor": {
       "title": "Gebouwd voor teams die toegankelijke sites opleveren",
       "agencies": {
-        "title": "Agencies en studio?s",
+        "title": "Agencies en studio's",
         "description": "Lever toegankelijkheidsrapporten en monitoring voor meerdere klantsites."
       },
       "internal": {
         "title": "Interne productteams",
-        "description": "Volg toegankelijkheid v??r releases en documenteer voortdurende verbetering."
+        "description": "Volg toegankelijkheid voor releases en documenteer voortdurende verbetering."
       },
       "multiSite": {
-        "title": "Portfolio?s met meerdere sites",
+        "title": "Portfolio's met meerdere sites",
         "description": "Beheer scans, trends en rapporten over een groeiend portfolio."
       }
     },
@@ -3209,7 +3209,7 @@
       "subtitle": "Plak een URL, start de scan en zie elke WCAG-overtreding op ernst gerangschikt, met getroffen elementen en hersteladvies.",
       "ctaPrimary": "Start je gratis scan",
       "ctaSecondary": "Bekijk voorbeeldrapport",
-      "note": "Geen creditcard vereist. De meeste scans van ??n pagina zijn binnen een minuut klaar."
+      "note": "Geen creditcard vereist. De meeste scans van een pagina zijn binnen een minuut klaar."
     }
   },
   "checkout": {
