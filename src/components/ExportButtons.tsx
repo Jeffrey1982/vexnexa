@@ -6,20 +6,36 @@ import { FileText, Loader2 } from "lucide-react";
 import { openPdf } from "@/lib/pdf/open-pdf";
 import { shouldUseInlinePdfOpen } from "@/lib/device";
 import { toast } from "@/hooks/use-toast";
+import {
+  PdfLanguageSelector,
+  detectInitialPdfLocale,
+  type PdfLocale,
+} from "@/components/PdfLanguageSelector";
 
 interface ExportButtonsProps {
   scanId: string;
   className?: string;
+  /**
+   * Hide the language selector when the surrounding page already controls the
+   * export language (e.g. report-v2). Defaults to showing the selector.
+   */
+  showLanguageSelector?: boolean;
 }
 
-export function ExportButtons({ scanId, className }: ExportButtonsProps) {
+export function ExportButtons({
+  scanId,
+  className,
+  showLanguageSelector = true,
+}: ExportButtonsProps) {
   const [exportingPdf, setExportingPdf] = useState(false);
+  const [pdfLocale, setPdfLocale] = useState<PdfLocale>(detectInitialPdfLocale());
 
   const exportPdf = async () => {
     setExportingPdf(true);
     try {
+      const pdfUrl = `/api/reports/${scanId}/pdf?language=${encodeURIComponent(pdfLocale)}`;
       if (shouldUseInlinePdfOpen()) {
-        openPdf({ url: `/api/reports/${scanId}/pdf` });
+        openPdf({ url: pdfUrl });
         toast({
           title: "PDF opened",
           description: "Use Share -> Save to Files to download.",
@@ -27,7 +43,7 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
         return;
       }
 
-      const response = await fetch(`/api/reports/${scanId}/pdf`);
+      const response = await fetch(pdfUrl);
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF");
@@ -36,7 +52,10 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
       const ct = response.headers.get("Content-Type") ?? "";
       if (ct.includes("application/pdf")) {
         const blob = await response.blob();
-        openPdf({ blob, filename: `vexnexa-report-${scanId}.pdf` });
+        openPdf({
+          blob,
+          filename: `vexnexa-report-${scanId}-${pdfLocale}.pdf`,
+        });
       } else {
         const html = await response.text();
         const w = window.open("", "_blank");
@@ -56,7 +75,15 @@ export function ExportButtons({ scanId, className }: ExportButtonsProps) {
   };
 
   return (
-    <div className={`flex gap-2 ${className}`}>
+    <div className={`flex flex-wrap items-center gap-2 ${className ?? ""}`}>
+      {showLanguageSelector && (
+        <PdfLanguageSelector
+          value={pdfLocale}
+          onChange={setPdfLocale}
+          disabled={exportingPdf}
+          ariaLabel="PDF export language"
+        />
+      )}
       <Button
         variant="outline"
         onClick={exportPdf}

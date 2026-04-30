@@ -86,6 +86,91 @@ const RULE_EXPLANATIONS: Record<string, { title: string; explanation: string; im
   },
 };
 
+const RULE_TRANSLATIONS: Record<string, Record<string, Partial<typeof RULE_EXPLANATIONS[string]>>> = {
+  nl: {
+    "color-contrast": {
+      title: "Onvoldoende kleurcontrast",
+      explanation: "Tekstelementen hebben te weinig contrast met hun achtergrond, waardoor ze moeilijk leesbaar zijn voor gebruikers met slechtziendheid of kleurenblindheid.",
+      impact: "Gebruikers met een visuele beperking kunnen content mogelijk niet lezen, waardoor informatie verloren gaat.",
+      recommendation: "Verhoog de contrastverhouding tussen tekst en achtergrond tot minimaal WCAG AA: 4,5:1 voor normale tekst en 3:1 voor grote tekst.",
+    },
+    "image-alt": {
+      title: "Afbeeldingen missen alternatieve tekst",
+      explanation: "Afbeeldingen missen beschrijvende alt-tekst, waardoor ze onzichtbaar zijn voor screenreadergebruikers.",
+      impact: "Blinde en slechtziende gebruikers kunnen de inhoud of functie van afbeeldingen niet begrijpen.",
+      recommendation: "Voeg beschrijvende alt-attributen toe aan betekenisvolle afbeeldingen. Gebruik alt=\"\" voor decoratieve afbeeldingen.",
+    },
+    "label": {
+      title: "Formuliervelden missen labels",
+      explanation: "Formuliervelden hebben geen gekoppelde labels, waardoor onduidelijk is welke informatie gebruikers moeten invullen.",
+      impact: "Screenreadergebruikers kunnen formuliervelden niet identificeren en andere gebruikers kunnen twijfelen over de gevraagde invoer.",
+      recommendation: "Koppel elk invoerveld aan een label met een for-attribuut dat overeenkomt met het id van het invoerveld.",
+    },
+    "link-name": {
+      title: "Links zonder toegankelijke naam",
+      explanation: "Links hebben geen herkenbare tekst die hun bestemming of doel beschrijft.",
+      impact: "Screenreadergebruikers horen alleen 'link' zonder context, wat navigatie moeilijk maakt.",
+      recommendation: "Zorg dat elke link beschrijvende tekst, aria-label of aria-labelledby heeft.",
+    },
+    "button-name": {
+      title: "Knoppen zonder toegankelijke naam",
+      explanation: "Interactieve knoppen missen tekst of labels die hun actie beschrijven.",
+      impact: "Gebruikers van hulptechnologie kunnen niet bepalen wat de knop doet.",
+      recommendation: "Voeg zichtbare tekst, aria-label of aria-labelledby toe aan alle knoppen.",
+    },
+    "html-has-lang": {
+      title: "Pagina mist taalverklaring",
+      explanation: "Het HTML-document declareert de primaire taal niet, waardoor hulptechnologie de verkeerde uitspraak kan gebruiken.",
+      impact: "Screenreaders kunnen content verkeerd uitspreken, waardoor de pagina moeilijker te begrijpen is.",
+      recommendation: "Voeg een lang-attribuut toe aan het html-element, bijvoorbeeld lang=\"nl\" voor Nederlands.",
+    },
+  },
+  fr: {
+    "color-contrast": {
+      title: "Contraste de couleur insuffisant",
+      explanation: "Les éléments de texte n'ont pas assez de contraste avec leur arrière-plan, ce qui les rend difficiles à lire pour les personnes malvoyantes ou daltoniennes.",
+      impact: "Les utilisateurs avec une déficience visuelle peuvent ne pas pouvoir lire le contenu.",
+      recommendation: "Augmentez le ratio de contraste entre le texte et l'arrière-plan pour atteindre le minimum WCAG AA : 4,5:1 pour le texte normal et 3:1 pour le grand texte.",
+    },
+    "image-alt": {
+      title: "Images sans texte alternatif",
+      explanation: "Les images ne disposent pas d'un texte alternatif descriptif et restent donc invisibles pour les lecteurs d'écran.",
+      impact: "Les personnes aveugles ou malvoyantes ne peuvent pas comprendre le contenu ou l'objectif des images.",
+      recommendation: "Ajoutez des attributs alt descriptifs aux images informatives. Utilisez alt=\"\" pour les images décoratives.",
+    },
+    "label": {
+      title: "Champs de formulaire sans libellé",
+      explanation: "Les champs de formulaire n'ont pas de libellés associés, ce qui rend la saisie attendue ambiguë.",
+      impact: "Les utilisateurs de lecteurs d'écran ne peuvent pas identifier les champs du formulaire.",
+      recommendation: "Associez chaque champ à un élément label avec un attribut for correspondant à l'id du champ.",
+    },
+    "link-name": {
+      title: "Liens sans nom accessible",
+      explanation: "Les liens n'ont pas de texte discernable décrivant leur destination ou leur objectif.",
+      impact: "Les utilisateurs de lecteurs d'écran entendent seulement 'lien' sans contexte.",
+      recommendation: "Assurez-vous que tous les liens ont un texte descriptif, aria-label ou aria-labelledby.",
+    },
+    "button-name": {
+      title: "Boutons sans nom accessible",
+      explanation: "Les boutons interactifs n'ont pas de texte ou de libellé décrivant leur action.",
+      impact: "Les utilisateurs de technologies d'assistance ne peuvent pas comprendre l'action du bouton.",
+      recommendation: "Ajoutez un texte visible, aria-label ou aria-labelledby à tous les boutons.",
+    },
+    "html-has-lang": {
+      title: "Langue de la page non déclarée",
+      explanation: "Le document HTML ne déclare pas sa langue principale, ce qui peut entraîner une mauvaise prononciation par les technologies d'assistance.",
+      impact: "Les lecteurs d'écran peuvent mal prononcer le contenu, rendant la page plus difficile à comprendre.",
+      recommendation: "Ajoutez un attribut lang à l'élément html, par exemple lang=\"fr\" pour le français.",
+    },
+  },
+};
+
+function translatedRule(id: string, locale: string | undefined) {
+  const base = RULE_EXPLANATIONS[id];
+  const translated = RULE_TRANSLATIONS[locale || ""]?.[id];
+  return translated ? { ...base, ...translated } : base;
+}
+
 /** Estimate fix time based on severity and element count */
 function estimateFixTime(severity: Severity, elementCount: number): string {
   const baseMinutes: Record<Severity, number> = {
@@ -146,6 +231,26 @@ function determineRiskSummary(riskLevel: RiskLevel): string {
     case "Critical":
       return "Critical accessibility barriers were detected that may impact key user journeys and core functionality. Prompt remediation is strongly recommended to reduce compliance risk and improve the experience for all users.";
   }
+}
+
+function determineRiskSummaryForLocale(riskLevel: RiskLevel, locale?: string): string {
+  if (locale === "nl") {
+    switch (riskLevel) {
+      case "Low": return "De beoordeelde pagina's tonen sterke toegankelijkheidspraktijken met minimale drempels. Doorlopende monitoring wordt aanbevolen om dit niveau te behouden.";
+      case "Moderate": return "Er zijn meerdere toegankelijkheidsgaten gevonden die gebruikers van hulptechnologie kunnen raken. Gerichte oplossing binnen 30 dagen wordt aanbevolen.";
+      case "High": return "Er zijn aanzienlijke toegankelijkheidsdrempels gevonden die sommige gebruikers waarschijnlijk verhinderen belangrijke taken af te ronden. Geprioriteerd herstel wordt sterk aanbevolen.";
+      case "Critical": return "Er zijn kritieke toegankelijkheidsdrempels gevonden die belangrijke gebruikersroutes en kernfunctionaliteit kunnen raken. Snelle oplossing wordt sterk aanbevolen.";
+    }
+  }
+  if (locale === "fr") {
+    switch (riskLevel) {
+      case "Low": return "Les pages évaluées montrent de bonnes pratiques d'accessibilité avec peu d'obstacles détectés. Une surveillance continue est recommandée pour maintenir ce niveau.";
+      case "Moderate": return "Plusieurs écarts d'accessibilité ont été identifiés et peuvent affecter les utilisateurs de technologies d'assistance. Une correction ciblée sous 30 jours est recommandée.";
+      case "High": return "Des obstacles d'accessibilité importants ont été détectés et peuvent empêcher certains utilisateurs d'accomplir des tâches clés. Une correction priorisée est fortement recommandée.";
+      case "Critical": return "Des obstacles critiques ont été détectés et peuvent affecter les parcours utilisateurs clés et les fonctionnalités principales. Une correction rapide est fortement recommandée.";
+    }
+  }
+  return determineRiskSummary(riskLevel);
 }
 
 /** Extract WCAG criteria from axe tags */
@@ -544,7 +649,7 @@ export function transformScanToReport(
     })
     .map((v) => {
       const severity: Severity = (v.impact as Severity) ?? "minor";
-      const known = RULE_EXPLANATIONS[v.id];
+      const known = translatedRule(v.id, reportLabels.locale);
       const allNodes = v.nodes ?? [];
       const elementCount: number = allNodes.length || 1;
       // Full element details for export-grade reports (safety cap: 5000)
@@ -560,9 +665,9 @@ export function transformScanToReport(
         id: v.id,
         severity,
         title: known?.title ?? v.help ?? v.id,
-        explanation: known?.explanation ?? v.description ?? "An accessibility issue was detected on this page.",
-        impact: known?.impact ?? "Users with disabilities may encounter barriers when interacting with affected elements.",
-        recommendation: known?.recommendation ?? "Review the affected elements and apply the appropriate WCAG fix.",
+        explanation: known?.explanation ?? v.description ?? (reportLabels.locale === "nl" ? "Er is een toegankelijkheidsprobleem op deze pagina gevonden." : reportLabels.locale === "fr" ? "Un problème d'accessibilité a été détecté sur cette page." : "An accessibility issue was detected on this page."),
+        impact: known?.impact ?? (reportLabels.locale === "nl" ? "Gebruikers met een beperking kunnen drempels ervaren bij het gebruik van de getroffen elementen." : reportLabels.locale === "fr" ? "Les utilisateurs en situation de handicap peuvent rencontrer des obstacles avec les éléments affectés." : "Users with disabilities may encounter barriers when interacting with affected elements."),
+        recommendation: known?.recommendation ?? (reportLabels.locale === "nl" ? "Controleer de getroffen elementen en pas de juiste WCAG-oplossing toe." : reportLabels.locale === "fr" ? "Examinez les éléments affectés et appliquez la correction WCAG appropriée." : "Review the affected elements and apply the appropriate WCAG fix."),
         affectedElements: elementCount,
         estimatedFixTime: estimateFixTime(severity, elementCount),
         wcagCriteria: extractWcagCriteria(v.tags ?? []),
@@ -638,8 +743,8 @@ export function transformScanToReport(
     maturityLevel: determineMaturityLevel(healthScore.value),
     issueBreakdown: breakdown,
     priorityIssues,
-    legalRisk: determineRiskSummary(riskLevel),
-    riskSummary: determineRiskSummary(riskLevel),
+    legalRisk: determineRiskSummaryForLocale(riskLevel, reportLabels.locale),
+    riskSummary: determineRiskSummaryForLocale(riskLevel, reportLabels.locale),
     estimatedFixTime: estimateTotalFixTime(breakdown),
     engineName: "axe-core",
     engineVersion: "4.10",

@@ -93,7 +93,8 @@ function ScanResultsContent() {
     setExportLoading(true);
     try {
       // Use the v2 PDF report route (defaults to corporate/light)
-      openPdf({ url: `/api/reports/${result.scanId}/pdf` });
+      const locale = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=([^;]+)/)?.[1] || "en";
+      openPdf({ url: `/api/reports/${result.scanId}/pdf?language=${encodeURIComponent(locale)}` });
 
       if (shouldUseInlinePdfOpen()) {
         toast({

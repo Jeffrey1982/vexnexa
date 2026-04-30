@@ -53,7 +53,12 @@ export async function GET(
     const qp = extractQueryOverrides(url);
     const storedWL = await getStoredWhiteLabel(user.id);
     const resolved = resolveWhiteLabelConfig(qp, storedWL);
-    const labels = resolveReportLabels(req.headers.get("accept-language"));
+    const explicitLocale =
+      url.searchParams.get("language") ||
+      url.searchParams.get("locale") ||
+      req.cookies.get("NEXT_LOCALE")?.value ||
+      null;
+    const labels = resolveReportLabels(req.headers.get("accept-language"), explicitLocale);
 
     // Embed logo as data URL so it renders in print/PDF
     if (resolved.whiteLabelConfig.logoUrl) {

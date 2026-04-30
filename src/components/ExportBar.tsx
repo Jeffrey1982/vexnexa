@@ -8,6 +8,11 @@ import { cn } from "@/lib/utils";
 import { openPdf } from "@/lib/pdf/open-pdf";
 import { shouldUseInlinePdfOpen } from "@/lib/device";
 import { toast } from "@/hooks/use-toast";
+import {
+  PdfLanguageSelector,
+  detectInitialPdfLocale,
+  type PdfLocale,
+} from "@/components/PdfLanguageSelector";
 
 interface ExportBarProps {
   scanId: string;
@@ -18,12 +23,14 @@ type ExportStatus = "idle" | "loading" | "success" | "error";
 
 export function ExportBar({ scanId, className }: ExportBarProps) {
   const [pdfStatus, setPdfStatus] = useState<ExportStatus>("idle");
+  const [pdfLocale, setPdfLocale] = useState<PdfLocale>(detectInitialPdfLocale());
 
   const exportPdf = async () => {
     setPdfStatus("loading");
     try {
+      const pdfUrl = `/api/reports/${scanId}/pdf?language=${encodeURIComponent(pdfLocale)}`;
       if (shouldUseInlinePdfOpen()) {
-        openPdf({ url: `/api/reports/${scanId}/pdf` });
+        openPdf({ url: pdfUrl });
         setPdfStatus("success");
         setTimeout(() => setPdfStatus("idle"), 3000);
         toast({
@@ -33,7 +40,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
         return;
       }
 
-      const response = await fetch(`/api/reports/${scanId}/pdf`);
+      const response = await fetch(pdfUrl);
 
       if (!response.ok) {
         throw new Error("Failed to generate PDF report");
@@ -42,7 +49,10 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
       const ct = response.headers.get("Content-Type") ?? "";
       if (ct.includes("application/pdf")) {
         const blob = await response.blob();
-        openPdf({ blob, filename: `vexnexa-report-${scanId}.pdf` });
+        openPdf({
+          blob,
+          filename: `vexnexa-report-${scanId}-${pdfLocale}.pdf`,
+        });
       } else {
         const html = await response.text();
         const w = window.open("", "_blank");
@@ -94,7 +104,7 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
   return (
     <Card className={cn("border-dashed", className)}>
       <CardContent className="p-4">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="font-display font-semibold text-sm">Export Report</h3>
             <p className="text-xs text-muted-foreground">
@@ -102,21 +112,29 @@ export function ExportBar({ scanId, className }: ExportBarProps) {
             </p>
           </div>
 
-          <Button
-            variant={pdfStatus === "error" ? "destructive" : "outline"}
-            size="sm"
-            onClick={exportPdf}
-            disabled={pdfStatus === "loading"}
-            className={cn(
-              "flex items-center gap-2 border-success bg-success text-success-foreground shadow-sm transition-all hover:bg-success/90",
-              "disabled:opacity-80",
-              pdfStatus === "success" && "bg-success hover:bg-success/90",
-              pdfStatus === "error" && "border-destructive"
-            )}
-          >
-            {pdfStatus === "idle" && <FileText className="w-4 h-4" />}
-            {getButtonContent(pdfStatus)}
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <PdfLanguageSelector
+              value={pdfLocale}
+              onChange={setPdfLocale}
+              disabled={pdfStatus === "loading"}
+              ariaLabel="PDF export language"
+            />
+            <Button
+              variant={pdfStatus === "error" ? "destructive" : "outline"}
+              size="sm"
+              onClick={exportPdf}
+              disabled={pdfStatus === "loading"}
+              className={cn(
+                "flex items-center gap-2 border-success bg-success text-success-foreground shadow-sm transition-all hover:bg-success/90",
+                "disabled:opacity-80",
+                pdfStatus === "success" && "bg-success hover:bg-success/90",
+                pdfStatus === "error" && "border-destructive"
+              )}
+            >
+              {pdfStatus === "idle" && <FileText className="w-4 h-4" />}
+              {getButtonContent(pdfStatus)}
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

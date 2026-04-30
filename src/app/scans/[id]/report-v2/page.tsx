@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { transformScanToReport, renderReportHTML, resolveReportLabels } from "@/lib/report";
@@ -25,6 +26,8 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
   const { id } = await params;
   const sp = await searchParams;
   const styleParam: ReportStyle = sp.reportStyle === "corporate" ? "corporate" : "premium";
+  const cookieStore = await cookies();
+  const locale = typeof sp.language === "string" ? sp.language : cookieStore.get("NEXT_LOCALE")?.value || "en";
 
   const scan = await prisma.scan.findUnique({
     where: { id },
@@ -55,11 +58,13 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
     undefined,
     undefined,
     styleParam,
-    resolveReportLabels()
+    resolveReportLabels(undefined, locale)
   );
 
   const reportHtml: string = renderReportHTML(reportData);
-  const styleQs: string = styleParam === "corporate" ? "?reportStyle=corporate" : "";
+  const query = new URLSearchParams({ language: locale });
+  if (styleParam === "corporate") query.set("reportStyle", "corporate");
+  const styleQs = `?${query.toString()}`;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -83,7 +88,7 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
               </div>
               <div className="flex gap-3">
                 <a
-                  href={styleParam === "corporate" ? `/scans/${id}/report-v2` : `/scans/${id}/report-v2?reportStyle=corporate`}
+                  href={styleParam === "corporate" ? `/scans/${id}/report-v2?language=${encodeURIComponent(locale)}` : `/scans/${id}/report-v2?reportStyle=corporate&language=${encodeURIComponent(locale)}`}
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-4 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
                 >
                   {styleParam === "corporate" ? "Premium Style" : "Corporate Style"}
