@@ -571,15 +571,6 @@ function AuditServicesSection() {
 
   const audits = [
     {
-      ...AUDIT_PRICES.FAST_FIX,
-      description: "Fast-Fix audit with prioritized remediation guidance and one audit credit.",
-      features: [
-        "Priority technical review",
-        "VNI and WCAG remediation report",
-        "Developer-ready fix guidance",
-      ],
-    },
-    {
       ...AUDIT_PRICES.QUICK,
       description: tp("audits.quick.description"),
       features: [
@@ -608,6 +599,15 @@ function AuditServicesSection() {
         tp("audits.enterprise.features.implementation"),
       ],
     },
+    {
+      ...AUDIT_PRICES.FAST_FIX,
+      description: "Fast-Fix audit with prioritized remediation guidance and one audit credit.",
+      features: [
+        "Priority technical review",
+        "VNI and WCAG remediation report",
+        "Developer-ready fix guidance",
+      ],
+    },
   ];
 
   return (
@@ -630,33 +630,22 @@ function AuditServicesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
           {audits.map((audit) => (
             <Card
               key={audit.productId}
-              className="bg-card flex flex-col"
+              className="bg-card flex h-full flex-col"
             >
-              <CardHeader>
-                <CardTitle className="font-display text-xl">
+              <CardHeader className="min-h-36">
+                <CardTitle className="font-display text-xl leading-tight">
                   {audit.label}
                 </CardTitle>
                 <p className="text-muted-foreground text-sm">
                   {audit.description}
                 </p>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="mb-4">
-                  <span className="text-3xl font-bold font-display">
-                    {formatEuro(audit.price)}
-                  </span>
-                  <span className="text-muted-foreground text-sm ml-1">
-                    {tp("audits.oneTime")}
-                  </span>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">
-                    incl. VAT
-                  </p>
-                </div>
-                <div className="space-y-2 flex-1">
+              <CardContent className="flex flex-1 flex-col justify-between">
+                <div className="space-y-2">
                   {audit.features.map((feature, i) => (
                     <div key={i} className="flex items-start space-x-2">
                       <Check className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
@@ -664,14 +653,33 @@ function AuditServicesSection() {
                     </div>
                   ))}
                 </div>
-                <DirectCheckoutButton
-                  endpoint="/api/billing/create-audit-payment"
-                  payload={{ productId: audit.productId }}
-                  className="mt-4"
-                >
+
+                <div className="mt-8 space-y-4">
+                  <div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-bold font-display">
+                        {formatEuro(audit.price)}
+                      </span>
+                      <span className="text-muted-foreground text-sm">
+                        {tp("audits.oneTime")}
+                      </span>
+                    </div>
+                    <p className="text-[10px] uppercase tracking-wide text-muted-foreground mt-1">
+                      incl. VAT
+                    </p>
+                  </div>
+                  <DirectCheckoutButton
+                    endpoint="/api/billing/create-audit-payment"
+                    payload={{
+                      productId: audit.productId,
+                      amount: audit.price,
+                      currency: "EUR",
+                    }}
+                  >
                     {tp("audits.cta")}{" "}
                     <ArrowRight className="ml-2 h-4 w-4" />
-                </DirectCheckoutButton>
+                  </DirectCheckoutButton>
+                </div>
               </CardContent>
             </Card>
           ))}
