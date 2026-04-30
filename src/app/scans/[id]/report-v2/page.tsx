@@ -6,7 +6,8 @@ import { transformScanToReport, renderReportHTML, resolveReportLabels } from "@/
 import type { ReportStyle } from "@/lib/report";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Download } from "lucide-react";
+import { FileText } from "lucide-react";
+import { ReportV2Toolbar } from "@/components/report/ReportV2Toolbar";
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +66,8 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
   const query = new URLSearchParams({ language: locale });
   if (styleParam === "corporate") query.set("reportStyle", "corporate");
   const styleQs = `?${query.toString()}`;
+  // The download/style buttons live in <ReportV2Toolbar />; the HTML-print
+  // link below still uses `styleQs` so power users keep a print fallback.
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -86,21 +89,11 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
                   </p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <a
-                  href={styleParam === "corporate" ? `/scans/${id}/report-v2?language=${encodeURIComponent(locale)}` : `/scans/${id}/report-v2?reportStyle=corporate&language=${encodeURIComponent(locale)}`}
-                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-4 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
-                >
-                  {styleParam === "corporate" ? "Premium Style" : "Corporate Style"}
-                </a>
-                <a
-                  href={`/api/reports/${id}/pdf${styleQs}`}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--vn-primary-aaa-btn)] text-[var(--vn-on-primary-aaa-btn)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--vn-primary-aaa-btn-hover)] transition-colors"
-                >
-                  <Download className="w-4 h-4" />
-                  Download PDF
-                </a>
-              </div>
+              <ReportV2Toolbar
+                scanId={id}
+                currentLocale={locale}
+                currentStyle={styleParam}
+              />
             </div>
 
             {/* Report Preview */}

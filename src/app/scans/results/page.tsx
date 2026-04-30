@@ -14,6 +14,11 @@ import { createClient } from "@/lib/supabase/client-new";
 import { openPdf } from "@/lib/pdf/open-pdf";
 import { shouldUseInlinePdfOpen } from "@/lib/device";
 import { toast } from "@/hooks/use-toast";
+import {
+  PdfLanguageSelector,
+  detectInitialPdfLocale,
+  type PdfLocale,
+} from "@/components/PdfLanguageSelector";
 
 interface ScanResult {
   scanId: string;
@@ -51,6 +56,7 @@ function ScanResultsContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [exportLoading, setExportLoading] = useState(false);
+  const [pdfLocale, setPdfLocale] = useState<PdfLocale>(detectInitialPdfLocale());
   const [user, setUser] = useState<any>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -92,9 +98,9 @@ function ScanResultsContent() {
     if (!result) return;
     setExportLoading(true);
     try {
-      // Use the v2 PDF report route (defaults to corporate/light)
-      const locale = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=([^;]+)/)?.[1] || "en";
-      openPdf({ url: `/api/reports/${result.scanId}/pdf?language=${encodeURIComponent(locale)}` });
+      // Use the chosen language from the selector — falls back to NEXT_LOCALE
+      // cookie (via detectInitialPdfLocale) when the selector hasn't been touched.
+      openPdf({ url: `/api/reports/${result.scanId}/pdf?language=${encodeURIComponent(pdfLocale)}` });
 
       if (shouldUseInlinePdfOpen()) {
         toast({
@@ -191,14 +197,22 @@ function ScanResultsContent() {
                   <span className="text-muted-foreground">{result.url}</span>
                 </div>
               </div>
-              <Button onClick={handleExportPDF} disabled={exportLoading}>
-                {exportLoading ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                ) : (
-                  <Download className="w-4 h-4 mr-2" />
-                )}
-                {exportLoading ? 'Generating PDF...' : 'Export PDF'}
-              </Button>
+              <div className="flex flex-wrap items-center gap-2">
+                <PdfLanguageSelector
+                  value={pdfLocale}
+                  onChange={setPdfLocale}
+                  disabled={exportLoading}
+                  ariaLabel="PDF export language"
+                />
+                <Button onClick={handleExportPDF} disabled={exportLoading}>
+                  {exportLoading ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Download className="w-4 h-4 mr-2" />
+                  )}
+                  {exportLoading ? 'Generating PDF...' : 'Export PDF'}
+                </Button>
+              </div>
             </div>
           </div>
 
