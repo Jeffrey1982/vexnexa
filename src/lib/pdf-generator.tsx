@@ -318,6 +318,8 @@ export const PDFReport: React.FC<PDFReportProps> = ({
         <View style={[styles.header, { backgroundColor: primaryColor }]}>
           <View style={styles.headerContent}>
             {brandLogo && !brandLogo.startsWith('data:') ? (
+              // React PDF Image is not a browser image element; jsx-a11y alt-text does not apply here.
+              // eslint-disable-next-line jsx-a11y/alt-text
               <Image src={brandLogo} style={{ width: 120, height: 40, marginBottom: 8, objectFit: 'contain' as any }} />
             ) : null}
             <Text style={styles.brandName}>{brandName}</Text>

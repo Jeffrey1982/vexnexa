@@ -3,17 +3,18 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = process.env.DEV_USER_EMAIL ?? "dev@vexnexa.local";
+  const email = process.env.DEV_USER_EMAIL ?? "e2e@vexnexa.test";
   const siteUrl = process.env.SEED_SITE_URL ?? "https://example.com/";
 
-  // user with trial plan
+  // local development / E2E user
   const user = await prisma.user.upsert({
     where: { email },
     update: {},
     create: { 
       email,
-      plan: "TRIAL",
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
+      plan: "FREE",
+      subscriptionStatus: "active",
+      profileCompleted: true,
     },
   });
 
@@ -28,7 +29,7 @@ async function main() {
   await prisma.scan.create({
     data: {
       siteId: site.id,
-      status: "done",
+      status: "COMPLETED",
       score: 72,
       issues: 3,
       impactCritical: 0,

@@ -239,7 +239,6 @@ export function CheckoutDialog({
                     ? "border-primary bg-primary/5 shadow-sm"
                     : "border-border hover:border-muted-foreground/30 hover:bg-muted/30"
                 )}
-                aria-pressed={purchaseAs === "individual"}
                 role="radio"
                 aria-checked={purchaseAs === "individual"}
               >
@@ -280,7 +279,6 @@ export function CheckoutDialog({
                     ? "border-primary bg-primary/5 shadow-sm"
                     : "border-border hover:border-muted-foreground/30 hover:bg-muted/30"
                 )}
-                aria-pressed={purchaseAs === "company"}
                 role="radio"
                 aria-checked={purchaseAs === "company"}
               >

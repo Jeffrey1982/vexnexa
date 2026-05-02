@@ -10,6 +10,7 @@ yarn-error.log*
 pnpm-lock.yaml
 .DS_Store
 .vscode/
+.claude/
 .vercel
 
 # environment variables - NEVER COMMIT THESE

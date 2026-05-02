@@ -2,8 +2,13 @@
 # Script to manually trigger SEO health monitoring cron jobs
 # This will populate initial data for the SEO Health dashboard
 
-CRON_TOKEN="${CRON_TOKEN:-vGsiw1+JJ7YB+IWwWqerbB8o3bDk2Ryib9grk8LyHrU=}"
+CRON_SECRET="${CRON_SECRET:-${CRON_TOKEN:-}}"
 BASE_URL="${BASE_URL:-https://www.vexnexa.com}"
+
+if [ -z "$CRON_SECRET" ]; then
+  echo "Set CRON_SECRET before running this script."
+  exit 1
+fi
 
 echo "🚀 Triggering SEO Health Monitoring Cron Jobs"
 echo "=============================================="
@@ -19,7 +24,7 @@ trigger_cron() {
   echo "   POST $BASE_URL$endpoint"
 
   response=$(curl -s -w "\n%{http_code}" -X POST "$BASE_URL$endpoint" \
-    -H "X-CRON-TOKEN: $CRON_TOKEN" \
+    -H "Authorization: Bearer $CRON_SECRET" \
     -H "Content-Type: application/json")
 
   http_code=$(echo "$response" | tail -n1)

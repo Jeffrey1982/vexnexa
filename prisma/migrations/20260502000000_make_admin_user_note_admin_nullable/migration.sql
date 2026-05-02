@@ -1,0 +1,1 @@
+ALTER TABLE "AdminUserNote" ALTER COLUMN "adminId" DROP NOT NULL;

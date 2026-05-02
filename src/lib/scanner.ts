@@ -42,7 +42,6 @@ let localScoreFromAxe = (r: any) => {
 };
 try {
   // Dynamisch importeren als het project al een scorer heeft
-  // eslint-disable-next-line
   const maybe = require("@/lib/scoring");
   if (maybe?.scoreFromAxe) localScoreFromAxe = maybe.scoreFromAxe;
 } catch {}

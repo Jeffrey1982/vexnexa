@@ -35,11 +35,9 @@ function getClient(): SupabaseClient {
  * Lazy-initialized so it doesn't throw during Next.js build-time page collection.
  * Server-only – never import this in client components.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const supabaseAdmin: SupabaseClient = new Proxy({} as any, {
   get(_target: unknown, prop: string | symbol): unknown {
     const client = getClient();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value = (client as any)[prop];
     if (typeof value === "function") {
       return value.bind(client);

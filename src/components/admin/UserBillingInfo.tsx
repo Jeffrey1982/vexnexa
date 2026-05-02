@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
   const [cancelReason, setCancelReason] = useState('');
   const [canceling, setCanceling] = useState(false);
 
-  const loadPayments = async () => {
+  const loadPayments = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -54,9 +54,9 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user.id]);
 
-  const loadSubscription = async () => {
+  const loadSubscription = useCallback(async () => {
     if (!user.mollieSubscriptionId) return;
 
     setSubscriptionLoading(true);
@@ -70,14 +70,14 @@ export function UserBillingInfo({ user }: UserBillingInfoProps) {
     } finally {
       setSubscriptionLoading(false);
     }
-  };
+  }, [user.id, user.mollieSubscriptionId]);
 
   useEffect(() => {
     if (user.mollieCustomerId) {
       loadPayments();
       loadSubscription();
     }
-  }, [user.id, user.mollieCustomerId, user.mollieSubscriptionId]);
+  }, [loadPayments, loadSubscription, user.mollieCustomerId]);
 
   const handleRefund = async () => {
     if (!selectedPayment || !refundAmount) return;

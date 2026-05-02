@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client-new'
 
@@ -44,11 +44,30 @@ export default function ApiLogsPage() {
   const [loading, setLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
 
-  useEffect(() => {
-    checkAdminAndLoadData()
+  const loadApiStats = useCallback(async () => {
+    try {
+      const [statsRes, logsRes] = await Promise.all([
+        fetch('/api/admin/system/api-stats'),
+        fetch('/api/admin/system/api-logs?limit=50')
+      ])
+
+      if (statsRes.ok) {
+        const data = await statsRes.json()
+        setStats(data.data)
+      }
+
+      if (logsRes.ok) {
+        const data = await logsRes.json()
+        setRecentLogs(data.data.logs || [])
+      }
+    } catch (error) {
+      console.error('Error loading API data:', error)
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
-  const checkAdminAndLoadData = async () => {
+  const checkAdminAndLoadData = useCallback(async () => {
     try {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
@@ -71,30 +90,11 @@ export default function ApiLogsPage() {
       console.error('Error checking admin status:', error)
       setLoading(false)
     }
-  }
+  }, [loadApiStats, router])
 
-  const loadApiStats = async () => {
-    try {
-      const [statsRes, logsRes] = await Promise.all([
-        fetch('/api/admin/system/api-stats'),
-        fetch('/api/admin/system/api-logs?limit=50')
-      ])
-
-      if (statsRes.ok) {
-        const data = await statsRes.json()
-        setStats(data.data)
-      }
-
-      if (logsRes.ok) {
-        const data = await logsRes.json()
-        setRecentLogs(data.data.logs || [])
-      }
-    } catch (error) {
-      console.error('Error loading API data:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  useEffect(() => {
+    checkAdminAndLoadData()
+  }, [checkAdminAndLoadData])
 
   if (loading) {
     return (

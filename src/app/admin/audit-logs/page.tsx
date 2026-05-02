@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client-new'
 
@@ -32,36 +32,7 @@ export default function AuditLogsPage() {
   const [filterEntity, setFilterEntity] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
 
-  useEffect(() => {
-    checkAdminAndLoadData()
-  }, [page, filterAction, filterEntity, searchEmail])
-
-  const checkAdminAndLoadData = async () => {
-    try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
-
-      // Check if user is admin
-      const response = await fetch('/api/admin/system/health')
-      if (response.status === 403) {
-        router.push('/dashboard')
-        return
-      }
-
-      setIsAdmin(true)
-      await loadAuditLogs()
-    } catch (error) {
-      console.error('Error checking admin status:', error)
-      setLoading(false)
-    }
-  }
-
-  const loadAuditLogs = async () => {
+  const loadAuditLogs = useCallback(async () => {
     try {
       setLoading(true)
 
@@ -85,7 +56,36 @@ export default function AuditLogsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [filterAction, filterEntity, page, searchEmail])
+
+  const checkAdminAndLoadData = useCallback(async () => {
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        router.push('/auth/login')
+        return
+      }
+
+      // Check if user is admin
+      const response = await fetch('/api/admin/system/health')
+      if (response.status === 403) {
+        router.push('/dashboard')
+        return
+      }
+
+      setIsAdmin(true)
+      await loadAuditLogs()
+    } catch (error) {
+      console.error('Error checking admin status:', error)
+      setLoading(false)
+    }
+  }, [loadAuditLogs, router])
+
+  useEffect(() => {
+    checkAdminAndLoadData()
+  }, [checkAdminAndLoadData])
 
   const getActionBadge = (action: string, actorType: string) => {
     const actionColors: Record<string, string> = {

@@ -71,5 +71,6 @@ async function handler(req: NextRequest) {
   }
 }
 
+export const GET = withCronAuth(handler);
 export const POST = withCronAuth(handler);
 export const dynamic = 'force-dynamic';

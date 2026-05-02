@@ -10,12 +10,12 @@
 import { test, expect } from '@playwright/test'
 
 test('unauthenticated users are redirected from /dashboard to /auth/login', async ({ page }) => {
-  await page.goto('/dashboard')
+  await page.goto('/dashboard', { waitUntil: 'domcontentloaded' })
   await expect(page).toHaveURL(/\/(auth\/)?login/)
 })
 
 test('login page shows validation error on empty submit', async ({ page }) => {
-  await page.goto('/auth/login')
+  await page.goto('/auth/login', { waitUntil: 'domcontentloaded' })
   // The login page also renders 'Sign in with Google' — target the submit button specifically.
   await page.getByRole('button', { name: 'Sign In', exact: true }).click()
   // Either native browser validation or a visible error message is acceptable.
@@ -32,7 +32,7 @@ test('login page shows validation error on empty submit', async ({ page }) => {
 })
 
 test('login with invalid credentials shows a user-visible error', async ({ page }) => {
-  await page.goto('/auth/login')
+  await page.goto('/auth/login', { waitUntil: 'domcontentloaded' })
   await page.getByLabel(/email/i).fill('nobody@vexnexa.test')
   await page.getByLabel(/password/i).first().fill('wrong-password-123')
   await page.getByRole('button', { name: 'Sign In', exact: true }).click()
@@ -43,7 +43,7 @@ test('login with invalid credentials shows a user-visible error', async ({ page 
 })
 
 test('signup page requires email, password, and accepts terms', async ({ page }) => {
-  await page.goto('/auth/register')
+  await page.goto('/auth/register', { waitUntil: 'domcontentloaded' })
   await expect(page.getByLabel(/email/i)).toBeVisible()
   // Register page has both 'Password' and 'Confirm Password' — assert the first.
   await expect(page.getByLabel(/password/i).first()).toBeVisible()

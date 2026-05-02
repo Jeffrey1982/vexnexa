@@ -254,4 +254,5 @@ async function advanceNextRunAt(schedule: any, resetFailures: boolean = false): 
   });
 }
 
+export const GET = withCronAuth(handler);
 export const POST = withCronAuth(handler);

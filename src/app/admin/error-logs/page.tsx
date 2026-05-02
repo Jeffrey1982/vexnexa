@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client-new'
 
@@ -28,11 +28,22 @@ export default function ErrorLogsPage() {
   const [loading, setLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
 
-  useEffect(() => {
-    checkAdminAndLoadData()
+  const loadErrorData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/system/errors')
+
+      if (response.ok) {
+        const data = await response.json()
+        setErrorData(data.data)
+      }
+    } catch (error) {
+      console.error('Error loading error data:', error)
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
-  const checkAdminAndLoadData = async () => {
+  const checkAdminAndLoadData = useCallback(async () => {
     try {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
@@ -55,22 +66,11 @@ export default function ErrorLogsPage() {
       console.error('Error checking admin status:', error)
       setLoading(false)
     }
-  }
+  }, [loadErrorData, router])
 
-  const loadErrorData = async () => {
-    try {
-      const response = await fetch('/api/admin/system/errors')
-
-      if (response.ok) {
-        const data = await response.json()
-        setErrorData(data.data)
-      }
-    } catch (error) {
-      console.error('Error loading error data:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  useEffect(() => {
+    checkAdminAndLoadData()
+  }, [checkAdminAndLoadData])
 
   if (loading) {
     return (

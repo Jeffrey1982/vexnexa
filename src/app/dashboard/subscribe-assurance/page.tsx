@@ -605,12 +605,16 @@ export default function SubscribeAssurancePage(): JSX.Element {
                             title={method.description}
                           >
                             {method.imageSvg ? (
+                              // Small external Mollie method icons are not LCP content and cannot be statically optimized.
+                              // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src={method.imageSvg}
                                 alt={method.description}
                                 className="h-5 w-auto"
                               />
                             ) : method.imageUrl ? (
+                              // Small external Mollie method icons are not LCP content and cannot be statically optimized.
+                              // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src={method.imageUrl}
                                 alt={method.description}

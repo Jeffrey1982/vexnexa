@@ -62,6 +62,7 @@ export function useAuthCooldown(action: string, email: string): UseAuthCooldownR
   const cooldownSec: number = getCooldownSeconds()
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const hasRemainingSeconds = remainingSeconds > 0
 
   // Restore cooldown from localStorage on mount / email change
   useEffect(() => {
@@ -94,7 +95,7 @@ export function useAuthCooldown(action: string, email: string): UseAuthCooldownR
   useEffect(() => {
     if (intervalRef.current) clearInterval(intervalRef.current)
 
-    if (remainingSeconds > 0) {
+    if (hasRemainingSeconds) {
       intervalRef.current = setInterval(() => {
         setRemainingSeconds((prev) => {
           const next: number = prev - 1
@@ -114,7 +115,7 @@ export function useAuthCooldown(action: string, email: string): UseAuthCooldownR
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [remainingSeconds > 0, action, email])
+  }, [hasRemainingSeconds, action, email])
 
   const startCooldown = useCallback((): void => {
     const expiresAt: number = Date.now() + cooldownSec * 1000

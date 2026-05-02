@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client-new'
 
@@ -23,36 +23,7 @@ export default function DeletedItemsPage() {
   const [filterType, setFilterType] = useState('')
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
-  useEffect(() => {
-    checkAdminAndLoadData()
-  }, [filterType])
-
-  const checkAdminAndLoadData = async () => {
-    try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
-
-      // Check if user is admin
-      const response = await fetch('/api/admin/system/health')
-      if (response.status === 403) {
-        router.push('/dashboard')
-        return
-      }
-
-      setIsAdmin(true)
-      await loadDeletedItems()
-    } catch (error) {
-      console.error('Error checking admin status:', error)
-      setLoading(false)
-    }
-  }
-
-  const loadDeletedItems = async () => {
+  const loadDeletedItems = useCallback(async () => {
     try {
       setLoading(true)
 
@@ -81,7 +52,36 @@ export default function DeletedItemsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [filterType])
+
+  const checkAdminAndLoadData = useCallback(async () => {
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        router.push('/auth/login')
+        return
+      }
+
+      // Check if user is admin
+      const response = await fetch('/api/admin/system/health')
+      if (response.status === 403) {
+        router.push('/dashboard')
+        return
+      }
+
+      setIsAdmin(true)
+      await loadDeletedItems()
+    } catch (error) {
+      console.error('Error checking admin status:', error)
+      setLoading(false)
+    }
+  }, [loadDeletedItems, router])
+
+  useEffect(() => {
+    checkAdminAndLoadData()
+  }, [checkAdminAndLoadData])
 
   const restoreItem = async (itemId: string, itemType: string) => {
     if (!confirm('Are you sure you want to restore this item?')) {

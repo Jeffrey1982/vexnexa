@@ -1,14 +1,18 @@
 #!/bin/bash
 # Test the new deployment URL
 
-DEPLOYMENT_URL="https://vexnexa-5ekbydzvi-jeffreyaay-gmailcoms-projects.vercel.app"
-CRON_TOKEN="vGsiw1+JJ7YB+IWwWqerbB8o3bDk2Ryib9grk8LyHrU="
+DEPLOYMENT_URL="${DEPLOYMENT_URL:-https://www.vexnexa.com}"
+CRON_SECRET="${CRON_SECRET:-${CRON_TOKEN:-}}"
+if [ -z "$CRON_SECRET" ]; then
+  echo "Set CRON_SECRET before running this script."
+  exit 1
+fi
 
 echo "Testing new deployment at: $DEPLOYMENT_URL"
 echo ""
 
 response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$DEPLOYMENT_URL/api/cron/ingest-gsc" \
-  -H "X-CRON-TOKEN: $CRON_TOKEN" \
+  -H "Authorization: Bearer $CRON_SECRET" \
   -H "Content-Type: application/json")
 
 http_code=$(echo "$response" | grep "HTTP_STATUS:" | cut -d: -f2)

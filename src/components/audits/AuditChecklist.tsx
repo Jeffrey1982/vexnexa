@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CheckCircle2,
@@ -102,11 +102,7 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
     elementSelector: ""
   });
 
-  useEffect(() => {
-    fetchAudit();
-  }, [auditId]);
-
-  const fetchAudit = async () => {
+  const fetchAudit = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`/api/audits/${auditId}`);
@@ -122,7 +118,11 @@ export default function AuditChecklist({ auditId }: AuditChecklistProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [auditId]);
+
+  useEffect(() => {
+    fetchAudit();
+  }, [fetchAudit]);
 
   const toggleCategory = (category: string) => {
     const newExpanded = new Set(expandedCategories);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FileCheck,
@@ -66,11 +66,7 @@ export default function AuditDashboard() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [siteFilter, setSiteFilter] = useState<string>("all");
 
-  useEffect(() => {
-    fetchAudits();
-  }, [statusFilter, siteFilter]);
-
-  const fetchAudits = async () => {
+  const fetchAudits = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -87,7 +83,11 @@ export default function AuditDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [siteFilter, statusFilter]);
+
+  useEffect(() => {
+    fetchAudits();
+  }, [fetchAudits]);
 
   const getProgressColor = (percentage: number) => {
     if (percentage >= 80) return "bg-green-500";

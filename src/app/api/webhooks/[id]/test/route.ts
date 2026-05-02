@@ -38,7 +38,7 @@ export async function POST(
       event: 'TEST',
       timestamp: new Date().toISOString(),
       data: {
-        message: 'This is a test webhook from Tutusporta',
+        message: 'This is a test webhook from VexNexa',
         webhookId: webhook.id,
         webhookName: webhook.name,
       },
@@ -58,7 +58,7 @@ export async function POST(
         headers: {
           'Content-Type': 'application/json',
           'X-Webhook-Signature': signature,
-          'User-Agent': 'Tutusporta-Webhook/1.0',
+          'User-Agent': 'VexNexa-Webhook/1.0',
         },
         body: payloadString,
       })

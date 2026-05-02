@@ -66,11 +66,17 @@ function ContactPageContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submittedRef, setSubmittedRef] = useState<string>("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
     reason: "",
+    // Lead-form additions (sent to /api/contact, surfaced in info@ email)
+    companyName: "",
+    phoneNumber: "",
+    domainCount: "",
+    industry: "",
     // honeypot
     company: "",
   });
@@ -78,10 +84,65 @@ function ContactPageContent() {
   // Capture source page from ?from= URL param
   const searchParams = useSearchParams();
   const [source, setSource] = useState("");
+
+  // Read ?intent= so the form can switch between General / Walkthrough /
+  // Sample-PDF / White-label modes. Defaults to "general".
+  type Intent = "general" | "walkthrough" | "sample-pdf" | "white-label";
+  const intentOptions: readonly Intent[] = ["general", "walkthrough", "sample-pdf", "white-label"];
+  const [intent, setIntent] = useState<Intent>("general");
+
   useEffect(() => {
     const from = searchParams.get("from");
     if (from) setSource(from);
+    const raw = (searchParams.get("intent") || "").toLowerCase();
+    const matched = (intentOptions as readonly string[]).includes(raw)
+      ? (raw as Intent)
+      : "general";
+    setIntent(matched);
+    // Pre-select a sensible reason based on the intent so the dropdown
+    // already reflects what the user came here for.
+    setFormData((p) => ({
+      ...p,
+      reason:
+        matched === "sample-pdf"
+          ? "sample_report"
+          : matched === "white-label"
+          ? "white_label_reports"
+          : matched === "walkthrough"
+          ? "agency_use"
+          : p.reason,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
+
+  // Per-intent banner copy + which extra fields to render.
+  const intentBanner: Record<Intent, { title: string; subtitle: string; cta: string }> = {
+    general: {
+      title: "Get in touch",
+      subtitle: "Send us a message and we'll get back to you as fast as possible.",
+      cta: "Send message",
+    },
+    walkthrough: {
+      title: "Plan your Enterprise Walkthrough",
+      subtitle:
+        "30-minute guided demo of the AI-Vision platform, VNI portfolio view, and audit-ready reporting. We respond within one business day to schedule.",
+      cta: "Request walkthrough",
+    },
+    "sample-pdf": {
+      title: "Request a sample PDF report",
+      subtitle:
+        "We'll send a sanitised real-world VexNexa report so you can show your team exactly what the audit-ready output looks like.",
+      cta: "Request sample report",
+    },
+    "white-label": {
+      title: "Request a white-label sample",
+      subtitle:
+        "See how VexNexa rebrands the entire scan-to-report flow under your agency colours. We respond within one business day with previews.",
+      cta: "Request white-label sample",
+    },
+  };
+  const banner = intentBanner[intent];
+  const showLeadFields = intent !== "general";
 
   const contactReasons: { value: string; label: string }[] = [
     { value: "agency_use", label: "Agency use" },
@@ -151,20 +212,36 @@ function ContactPageContent() {
           message: formData.message.trim(),
           reason: formData.reason,
           source: source || undefined,
+          intent,
+          companyName: formData.companyName.trim() || undefined,
+          phoneNumber: formData.phoneNumber.trim() || undefined,
+          domainCount: formData.domainCount.trim() || undefined,
+          industry: formData.industry.trim() || undefined,
         }),
       });
 
       if (response.ok) {
+        const data = (await response.json().catch(() => ({}))) as { messageId?: string };
+        if (data?.messageId) setSubmittedRef(data.messageId);
         toast({
           title: t('form.toast.successTitle'),
           description: t('form.toast.successDescription'),
         });
-        const emailForTrack = formData.email;
         const len = formData.message.length;
-        setFormData({ name: "", email: "", message: "", reason: "", company: "" });
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+          reason: "",
+          companyName: "",
+          phoneNumber: "",
+          domainCount: "",
+          industry: "",
+          company: "",
+        });
         setConsent(false);
 
-        trackEvent("contact_cta_click", { location: "form_submit", message_length: len });
+        trackEvent("contact_cta_click", { location: "form_submit", message_length: len, intent });
       } else {
         throw new Error("Failed to send message");
       }
@@ -196,18 +273,32 @@ function ContactPageContent() {
         {t('skipLink')}
       </a>
 
-      {/* Hero */}
+      {/* Hero — switches to intent-aware copy when ?intent= is present */}
       <section className="container mx-auto px-4 py-12 sm:py-16">
         <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-b from-primary/5 via-transparent to-transparent">
           <div className="absolute -top-24 -right-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative max-w-4xl mx-auto text-center space-y-4 p-8 sm:p-12">
+            {intent !== "general" && (
+              <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                {intent === "walkthrough"
+                  ? "Enterprise"
+                  : intent === "sample-pdf"
+                  ? "Sample Report"
+                  : "White-Label"}
+              </span>
+            )}
             <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-              {t('pageHero.title')}{" "}
-              <span className="text-primary">{t('pageHero.titleHighlight')}</span>
+              {intent === "general" ? (
+                <>
+                  {t("pageHero.title")} <span className="text-primary">{t("pageHero.titleHighlight")}</span>
+                </>
+              ) : (
+                banner.title
+              )}
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('pageHero.subtitle')}
+              {intent === "general" ? t("pageHero.subtitle") : banner.subtitle}
             </p>
           </div>
         </div>
@@ -372,6 +463,61 @@ function ContactPageContent() {
                     )}
                   </div>
 
+                  {/* Lead-form extras — only rendered when ?intent= is set */}
+                  {showLeadFields && (
+                    <div className="grid gap-4 sm:grid-cols-2 rounded-lg border border-primary/20 bg-primary/[0.04] p-4">
+                      <div className="space-y-2 sm:col-span-2">
+                        <Label htmlFor="companyName">Company / organisation</Label>
+                        <Input
+                          id="companyName"
+                          type="text"
+                          autoComplete="organization"
+                          value={formData.companyName}
+                          onChange={(e) => handleInput("companyName", e.target.value)}
+                          disabled={isSubmitting}
+                          placeholder="Your company name"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phoneNumber">Phone (optional)</Label>
+                        <Input
+                          id="phoneNumber"
+                          type="tel"
+                          autoComplete="tel"
+                          value={formData.phoneNumber}
+                          onChange={(e) => handleInput("phoneNumber", e.target.value)}
+                          disabled={isSubmitting}
+                          placeholder="+31 …"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="domainCount">
+                          {intent === "white-label" ? "Client sites under management" : "Domains/sites in scope"}
+                        </Label>
+                        <Input
+                          id="domainCount"
+                          type="text"
+                          inputMode="numeric"
+                          value={formData.domainCount}
+                          onChange={(e) => handleInput("domainCount", e.target.value)}
+                          disabled={isSubmitting}
+                          placeholder="e.g. 1, 5, 25, 100+"
+                        />
+                      </div>
+                      <div className="space-y-2 sm:col-span-2">
+                        <Label htmlFor="industry">Industry / sector (optional)</Label>
+                        <Input
+                          id="industry"
+                          type="text"
+                          value={formData.industry}
+                          onChange={(e) => handleInput("industry", e.target.value)}
+                          disabled={isSubmitting}
+                          placeholder="e.g. Public sector, e-commerce, finance, agency"
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   <div className="space-y-2">
                     <Label htmlFor="reason">What are you contacting us about? *</Label>
                     <Select
@@ -463,10 +609,22 @@ function ContactPageContent() {
                     ) : (
                       <>
                         <Send className="mr-2 h-4 w-4" aria-hidden="true" />
-                        {t('form.submit.idle')}
+                        {intent === "general" ? t("form.submit.idle") : banner.cta}
                       </>
                     )}
                   </Button>
+
+                  {submittedRef && (
+                    <div className="rounded-lg border border-success/40 bg-success/[0.06] p-4 text-sm">
+                      <p className="font-medium text-foreground">
+                        ✓ Request received — thank you!
+                      </p>
+                      <p className="mt-1 text-muted-foreground">
+                        Reference: <code className="rounded bg-muted px-1.5 py-0.5 text-xs">{submittedRef}</code>
+                        . We&apos;ve sent a confirmation to your email.
+                      </p>
+                    </div>
+                  )}
                 </form>
               </CardContent>
             </Card>

@@ -35,7 +35,7 @@ export interface LogEntry {
 }
 
 class Logger {
-  private serviceName: string = 'tutusporta'
+  private serviceName: string = 'vexnexa'
   private environment: string = process.env.NODE_ENV || 'development'
 
   /**

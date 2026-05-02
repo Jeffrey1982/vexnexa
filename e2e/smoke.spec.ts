@@ -19,7 +19,7 @@ const PUBLIC_ROUTES = [
 
 for (const { path, title } of PUBLIC_ROUTES) {
   test(`public route ${path} renders with 200`, async ({ page }) => {
-    const response = await page.goto(path)
+    const response = await page.goto(path, { waitUntil: 'domcontentloaded' })
     expect(response, `No response for ${path}`).not.toBeNull()
     expect(response!.status(), `Bad status for ${path}`).toBeLessThan(400)
     await expect(page).toHaveTitle(title)
@@ -27,7 +27,7 @@ for (const { path, title } of PUBLIC_ROUTES) {
 }
 
 test('home page has a working CTA that points at signup or pricing', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
   const cta = page
     .getByRole('link', { name: /get started|start|try|sign ?up|pricing/i })
     .first()
@@ -37,7 +37,7 @@ test('home page has a working CTA that points at signup or pricing', async ({ pa
 })
 
 test('pricing page shows at least 3 plans', async ({ page }) => {
-  await page.goto('/pricing')
+  await page.goto('/pricing', { waitUntil: 'domcontentloaded' })
   // Don't hard-code plan names — the site is multilingual. Just count them.
   const planCards = page.locator('[data-plan], [data-testid="plan-card"], article')
   const count = await planCards.count()
@@ -45,7 +45,7 @@ test('pricing page shows at least 3 plans', async ({ page }) => {
 })
 
 test('language switcher changes page content', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
   const switcher = page
     .getByRole('button', { name: /language|taal|nederlands|english/i })
     .first()

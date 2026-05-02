@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Calculator, Clock, ArrowDownToLine, Sparkles } from "lucide-react";
 
 /**
@@ -24,6 +24,7 @@ const MANUAL_MIN_PER_PAGE = 30;
 const VEXNEXA_MIN_PER_PAGE = 6; // incl. human review of AI-Vision findings
 
 export function EfficiencyCalculator() {
+  const locale = useLocale();
   const t = useTranslations("home.enterprise.calculator");
   const [pages, setPages] = useState<number>(1000);
   const [rate, setRate] = useState<number>(85);
@@ -39,12 +40,19 @@ export function EfficiencyCalculator() {
     return { manualHours, vnHours, hoursSaved, pctSaved, costSaved };
   }, [pages, rate]);
 
-  const fmtHours = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
-  const fmtMoney = new Intl.NumberFormat(undefined, {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  });
+  const fmtHours = useMemo(
+    () => new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }),
+    [locale],
+  );
+  const fmtMoney = useMemo(
+    () =>
+      new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: "EUR",
+        maximumFractionDigits: 0,
+      }),
+    [locale],
+  );
 
   return (
     <section

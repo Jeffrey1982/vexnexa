@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client-new';
@@ -46,18 +46,7 @@ export default function WhiteLabelPage() {
     favicon: false
   });
 
-  const supabase = createClient();
-
-  useEffect(() => {
-    const getAuthUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setAuthUser(user);
-    };
-    getAuthUser();
-    loadSettings();
-  }, []);
-
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetch('/api/white-label');
@@ -76,7 +65,17 @@ export default function WhiteLabelPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const getAuthUser = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      setAuthUser(user);
+    };
+    getAuthUser();
+    loadSettings();
+  }, [loadSettings]);
 
   const validateSettings = (): { valid: boolean; errors: string[] } => {
     const errors: string[] = [];

@@ -450,6 +450,8 @@ export default function BlogEditor({ initialData, onSave, onCancel }: BlogEditor
               </div>
               {formData.coverImage && (
                 <div className="mt-3 rounded-lg overflow-hidden border border-gray-200 dark:border-white/[0.06]">
+                  {/* User-entered preview URLs can be arbitrary remote images, so Next Image cannot preconfigure them. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={formData.coverImage}
                     alt="Cover preview"

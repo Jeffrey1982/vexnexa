@@ -1,40 +1,44 @@
 /**
  * Cron Job Authentication
- * Validates X-CRON-TOKEN header to secure cron endpoints
+ * Validates Vercel cron Authorization headers and legacy X-CRON-TOKEN headers.
  */
 
 import { NextRequest } from 'next/server';
 
 /**
  * Validate cron job request
- * Checks X-CRON-TOKEN header against CRON_TOKEN env var
+ * Prefer Vercel's Authorization: Bearer $CRON_SECRET contract.
+ * Keep X-CRON-TOKEN + CRON_TOKEN as a backwards-compatible fallback.
  */
 export function validateCronToken(request: NextRequest): {
   valid: boolean;
   error?: string;
 } {
-  const cronToken = process.env.CRON_TOKEN;
+  const expectedSecret = process.env.CRON_SECRET ?? process.env.CRON_TOKEN;
 
-  if (!cronToken) {
+  if (!expectedSecret) {
     return {
       valid: false,
-      error: 'CRON_TOKEN environment variable not configured',
+      error: 'Cron secret environment variable not configured',
     };
   }
 
-  const requestToken = request.headers.get('x-cron-token');
+  const authHeader = request.headers.get('authorization');
+  const bearerToken = authHeader?.match(/^Bearer\s+(.+)$/i)?.[1];
+  const legacyToken = request.headers.get('x-cron-token');
+  const requestToken = bearerToken ?? legacyToken;
 
   if (!requestToken) {
     return {
       valid: false,
-      error: 'Missing X-CRON-TOKEN header',
+      error: 'Missing cron authorization token',
     };
   }
 
-  if (requestToken !== cronToken) {
+  if (requestToken !== expectedSecret) {
     return {
       valid: false,
-      error: 'Invalid CRON_TOKEN',
+      error: 'Invalid cron authorization token',
     };
   }
 

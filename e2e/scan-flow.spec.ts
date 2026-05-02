@@ -9,7 +9,7 @@
 import { test, expect } from './fixtures'
 
 test('dashboard shows the sites overview to an authed user', async ({ authedPage }) => {
-  await authedPage.goto('/dashboard')
+  await authedPage.goto('/dashboard', { waitUntil: 'domcontentloaded' })
   await expect(authedPage).toHaveURL(/\/dashboard/)
   await expect(
     authedPage.getByRole('heading', { level: 1 }).first(),
@@ -17,7 +17,7 @@ test('dashboard shows the sites overview to an authed user', async ({ authedPage
 })
 
 test('user can navigate to the sites list', async ({ authedPage }) => {
-  await authedPage.goto('/dashboard')
+  await authedPage.goto('/dashboard', { waitUntil: 'domcontentloaded' })
   const sitesLink = authedPage.getByRole('link', { name: /sites?/i }).first()
   if (await sitesLink.isVisible().catch(() => false)) {
     await sitesLink.click()
@@ -38,6 +38,6 @@ test('scan results page renders for a finished scan (if any)', async ({ authedPa
   if (!scan?.id) {
     test.skip(true, 'no scan available for this test user')
   }
-  await authedPage.goto(`/dashboard/scans/${scan.id}`)
+  await authedPage.goto(`/scans/${scan.id}`, { waitUntil: 'domcontentloaded' })
   await expect(authedPage.locator('main, [role="main"]').first()).toBeVisible()
 })

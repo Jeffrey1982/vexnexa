@@ -124,5 +124,6 @@ async function handler(request: NextRequest) {
   }
 }
 
+export const GET = withCronAuth(handler);
 export const POST = withCronAuth(handler);
 export const dynamic = 'force-dynamic';

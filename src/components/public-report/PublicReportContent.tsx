@@ -47,6 +47,8 @@ export function PublicReportContent({ report, history, normalizedDomain, isCanon
       <section className="bg-white dark:bg-[var(--surface-1)] border-b border-gray-200 dark:border-white/[0.06]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+            {/* Google favicon URLs are dynamic per scanned domain; keep this as a plain eager image. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={faviconUrl}
               alt=""

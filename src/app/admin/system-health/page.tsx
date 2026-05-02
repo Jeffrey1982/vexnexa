@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client-new'
 
@@ -53,23 +53,35 @@ export default function SystemHealthPage() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [refreshInterval, setRefreshInterval] = useState<NodeJS.Timeout | null>(null)
 
-  useEffect(() => {
-    checkAdminAndLoadData()
+  const loadHealthData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/system/health')
 
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(() => {
-      loadHealthData()
-      loadPerformanceData()
-    }, 30000)
-
-    setRefreshInterval(interval)
-
-    return () => {
-      if (interval) clearInterval(interval)
+      if (response.ok) {
+        const data = await response.json()
+        setHealth(data.data)
+      }
+    } catch (error) {
+      console.error('Error loading health data:', error)
+    } finally {
+      setLoading(false)
     }
   }, [])
 
-  const checkAdminAndLoadData = async () => {
+  const loadPerformanceData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/system/performance')
+
+      if (response.ok) {
+        const data = await response.json()
+        setPerformance(data.data)
+      }
+    } catch (error) {
+      console.error('Error loading performance data:', error)
+    }
+  }, [])
+
+  const checkAdminAndLoadData = useCallback(async () => {
     try {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
@@ -92,35 +104,23 @@ export default function SystemHealthPage() {
       console.error('Error checking admin status:', error)
       setLoading(false)
     }
-  }
+  }, [loadHealthData, loadPerformanceData, router])
 
-  const loadHealthData = async () => {
-    try {
-      const response = await fetch('/api/admin/system/health')
+  useEffect(() => {
+    checkAdminAndLoadData()
 
-      if (response.ok) {
-        const data = await response.json()
-        setHealth(data.data)
-      }
-    } catch (error) {
-      console.error('Error loading health data:', error)
-    } finally {
-      setLoading(false)
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(() => {
+      loadHealthData()
+      loadPerformanceData()
+    }, 30000)
+
+    setRefreshInterval(interval)
+
+    return () => {
+      if (interval) clearInterval(interval)
     }
-  }
-
-  const loadPerformanceData = async () => {
-    try {
-      const response = await fetch('/api/admin/system/performance')
-
-      if (response.ok) {
-        const data = await response.json()
-        setPerformance(data.data)
-      }
-    } catch (error) {
-      console.error('Error loading performance data:', error)
-    }
-  }
+  }, [checkAdminAndLoadData, loadHealthData, loadPerformanceData])
 
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 Bytes'

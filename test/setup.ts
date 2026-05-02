@@ -21,6 +21,7 @@ process.env.MOLLIE_API_KEY ??= 'test_mollie_key'
 process.env.MAILGUN_API_KEY ??= 'test-mailgun-key'
 process.env.MAILGUN_DOMAIN ??= 'mg.test.vexnexa.com'
 process.env.CRON_SECRET ??= 'test-cron-secret'
+process.env.CRON_TOKEN ??= 'test-cron-secret'
 process.env.NEXTAUTH_SECRET ??= 'test-nextauth-secret'
 process.env.NEXT_PUBLIC_APP_URL ??= 'http://localhost:3000'
 

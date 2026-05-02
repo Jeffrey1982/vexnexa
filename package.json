@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node -e \"try{require('child_process').execSync('npx tsx scripts/migrate-production.ts',{stdio:'inherit'})}catch(e){}\" && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint src next.config.js playwright.config.ts vitest.config.ts",
     "test": "vitest run",
@@ -27,11 +27,9 @@
     "db:seed": "prisma db seed",
     "db:reset": "npx tsx scripts/safe-migrate.ts",
     "db:migrate": "prisma migrate dev -n site-wide-crawl",
+    "db:migrate:production": "tsx scripts/migrate-production.ts",
     "worker:crawl": "tsx scripts/run-crawl.ts",
     "postinstall": "prisma generate"
-  },
-  "prisma": {
-    "seed": "node prisma/seed.mjs"
   },
   "dependencies": {
     "@axe-core/playwright": "4.10.2",
@@ -99,11 +97,11 @@
     "html-to-image": "^1.11.13",
     "html2canvas": "^1.4.1",
     "jsdom": "^27.3.0",
-    "jspdf": "^3.0.3",
+    "jspdf": "^4.2.1",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.542.0",
     "marked": "^17.0.1",
-    "next": "16.2.1",
+    "next": "^16.2.4",
     "next-intl": "^4.4.0",
     "next-themes": "^0.4.6",
     "node-fetch": "^3.3.2",
@@ -137,9 +135,10 @@
     "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.20",
     "cross-env": "^10.1.0",
+    "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
-    "eslint-config-next": "16.2.1",
-    "postcss": "^8.4.47",
+    "eslint-config-next": "^16.2.4",
+    "postcss": "^8.5.13",
     "prisma": "^6.15.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.13",

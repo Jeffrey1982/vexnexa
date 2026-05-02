@@ -1,11 +1,74 @@
 import { PrismaClient } from "@prisma/client";
 
+/**
+ * Defensive DATABASE_URL builder.
+ *
+ * Supabase's Transaction Pooler (port 6543, `*.pooler.supabase.com`) multiplexes
+ * physical connections across requests. Prisma's default named-prepared-statement
+ * mode is incompatible with that — you'll see Postgres error 42P05
+ * ("prepared statement \"s4\" already exists") on every other request.
+ *
+ * The fix is to set `?pgbouncer=true&connection_limit=1` on the connection
+ * string. We append those flags here at runtime if they're missing, so a
+ * misconfigured `DATABASE_URL` env var on Vercel can no longer break the app.
+ *
+ * Detection rule (intentionally conservative):
+ *   - Host matches `*.pooler.supabase.com`, OR
+ *   - Port is exactly 6543
+ *
+ * If neither matches we leave the URL untouched.
+ */
+function buildSafeDatabaseUrl(): string | undefined {
+  const raw = process.env.DATABASE_URL;
+  if (!raw) return undefined;
+
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    // Not a parseable URL — let Prisma surface its own error.
+    return raw;
+  }
+
+  const host = url.hostname.toLowerCase();
+  const port = url.port;
+  const looksLikePooler =
+    host.endsWith(".pooler.supabase.com") || port === "6543";
+
+  if (!looksLikePooler) return raw;
+
+  let mutated = false;
+
+  if (!url.searchParams.has("pgbouncer")) {
+    url.searchParams.set("pgbouncer", "true");
+    mutated = true;
+  }
+  if (!url.searchParams.has("connection_limit")) {
+    url.searchParams.set("connection_limit", "1");
+    mutated = true;
+  }
+
+  if (mutated && process.env.NODE_ENV !== "test") {
+    // Single-line warning so it shows up clearly in Vercel logs.
+    console.warn(
+      "[prisma] DATABASE_URL points at the Supabase Transaction Pooler but " +
+        "is missing pgbouncer=true / connection_limit=1 — auto-applying both " +
+        "to avoid Postgres error 42P05 (prepared statement already exists). " +
+        "Recommended: set the flags directly on the env var so this code path " +
+        "becomes a no-op."
+    );
+  }
+
+  return url.toString();
+}
+
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
 const baseClient =
   globalForPrisma.prisma ??
   new PrismaClient({
     log: process.env.NODE_ENV === "development" ? ["error"] : [],
+    datasourceUrl: buildSafeDatabaseUrl(),
   });
 
 /**

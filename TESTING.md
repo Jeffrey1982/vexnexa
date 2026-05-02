@@ -38,7 +38,7 @@ playwright.config.ts     # Playwright config (local + staging projects)
 
 ## Current state
 
-- **14 test files, 369 passing, 0 skipped, 0 failing.**
+- **14 test files, 379 passing, 0 skipped, 0 failing.**
 - Coverage is collected for `src/lib/**`, `src/app/api/**`, and
   `src/middleware.ts`. Thresholds are intentionally conservative
   (25% lines / 55% branches) so CI goes green today; ratchet up as
@@ -60,12 +60,12 @@ playwright.config.ts     # Playwright config (local + staging projects)
 | Coupon system | `coupon-system.test.ts` |
 | Report / format helpers | `report.test.ts`, `format.test.ts` |
 
-### What's quarantined
+### Removed legacy test drafts
 
-Seven test files from earlier agent worktrees (`*.test.ts.quarantined`)
-were grep-for-string tests against source files. They fail against the
-current codebase and are **not** behavioural. See
-`src/lib/__tests__/QUARANTINE.md`. Rewrite them as real tests or delete.
+Seven `*.test.ts.quarantined` files from earlier agent worktrees were removed.
+They were grep-for-string tests against source files, failed against the
+current codebase, and were not behavioural. See
+`src/lib/__tests__/QUARANTINE.md` for the preserved intent.
 
 ## Writing new unit tests
 
@@ -101,7 +101,7 @@ as coverage increases.
 
 ## Known gaps / TODO
 
-- `src/app/api/**` route handlers (187 files) have no direct tests yet.
+- Most `src/app/api/**` route handlers have no direct tests yet.
   The lib-layer they call is covered; next step is a tRPC-style
   integration harness that fetches routes in-process.
 - React component rendering tests are not yet wired (jsdom config is

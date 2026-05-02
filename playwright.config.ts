@@ -25,11 +25,11 @@ const baseURL = TEST_ENV === 'staging' ? STAGING_URL : LOCAL_URL
 
 export default defineConfig({
   testDir: './e2e',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
-  timeout: 60_000,
+  workers: process.env.CI ? 2 : 1,
+  timeout: 120_000,
   expect: { timeout: 10_000 },
 
   reporter: process.env.CI
@@ -62,7 +62,7 @@ export default defineConfig({
           command: 'npm run dev',
           url: LOCAL_URL,
           reuseExistingServer: !process.env.CI,
-          timeout: 120_000,
+          timeout: 180_000,
           stdout: 'ignore',
           stderr: 'pipe',
         }

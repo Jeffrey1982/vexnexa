@@ -11,9 +11,9 @@
 GitHub's secret scanning system detected exposed API keys in your documentation files. The following secrets were found committed to your public repository:
 
 ### Exposed Secrets:
-1. **Resend API Key**: `re_5KGENYCh_GGHLe2EXS4abT4ugyZjnNCpf`
-2. **Mollie API Key**: `live_vur5Jktfz6jkdU23SrUWdkst9GJqpa`
-3. **Database Password**: `Destiney1982!`
+1. **Resend API Key**: `[REDACTED_RESEND_API_KEY]`
+2. **Mollie API Key**: `[REDACTED_MOLLIE_API_KEY]`
+3. **Database Password**: `[REDACTED_DATABASE_PASSWORD]`
 4. **Database Connection Strings**: Full URLs with credentials
 
 ### Location:
@@ -36,7 +36,7 @@ GitHub's secret scanning system detected exposed API keys in your documentation 
 **This is your HIGHEST priority - do this first!**
 
 1. Go to: https://resend.com/api-keys
-2. **Delete** the compromised key: `re_5KGENYCh_GGHLe2EXS4abT4ugyZjnNCpf`
+2. **Delete** the compromised key shown in your secret scanner alert.
 3. Click "Create API Key"
 4. Copy the new key (you'll only see it once!)
 5. Update Vercel:
@@ -59,7 +59,7 @@ GitHub's secret scanning system detected exposed API keys in your documentation 
 ### Step 2: Rotate Mollie API Key (5 minutes)
 
 1. Go to: https://www.mollie.com/dashboard/developers/api-keys
-2. **Revoke** the compromised key: `live_vur5Jktfz6jkdU23SrUWdkst9GJqpa`
+2. **Revoke** the compromised key shown in your secret scanner alert.
 3. Generate a new Live API key
 4. Copy the new key
 5. Update Vercel:
@@ -231,7 +231,7 @@ npm run dev
 3. **Use environment variable references in docs**:
    ```bash
    # ❌ Bad (real key)
-   RESEND_API_KEY=re_5KGENYCh_GGHLe2EXS4abT4ugyZjnNCpf
+   RESEND_API_KEY=[REDACTED_RESEND_API_KEY]
 
    # ✅ Good (placeholder)
    RESEND_API_KEY=your_resend_api_key_here

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,11 +28,7 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
     active: true,
   });
 
-  useEffect(() => {
-    fetchDomain();
-  }, []);
-
-  const fetchDomain = async () => {
+  const fetchDomain = useCallback(async () => {
     try {
       const response = await fetch(`/api/assurance/domains/${params.id}`);
       if (!response.ok) throw new Error('Failed to fetch domain');
@@ -51,7 +47,11 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
       setError(err instanceof Error ? err.message : 'Failed to load domain');
       setIsLoading(false);
     }
-  };
+  }, [params.id]);
+
+  useEffect(() => {
+    fetchDomain();
+  }, [fetchDomain]);
 
   const handleAddEmail = () => {
     if (!currentEmail) return;

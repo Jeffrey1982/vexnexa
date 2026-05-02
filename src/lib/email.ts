@@ -24,12 +24,50 @@ function escapeHtmlForEmail(text: string): string {
     .replace(/"/g, '&quot;')
 }
 
+/**
+ * Intents the contact form supports. `general` is the regular contact path;
+ * the others come from the lead-deeplinks on the marketing landing.
+ */
+export type ContactIntent = 'general' | 'walkthrough' | 'sample-pdf' | 'white-label'
+
+const INTENT_META: Record<ContactIntent, { label: string; subject: string; eta: string }> = {
+  general: {
+    label: 'General enquiry',
+    subject: 'New contact message',
+    eta: 'usually within a few hours',
+  },
+  walkthrough: {
+    label: 'Enterprise walkthrough request',
+    subject: '🤝 Enterprise walkthrough requested',
+    eta: 'within one business day to schedule a 30-minute walkthrough',
+  },
+  'sample-pdf': {
+    label: 'Sample PDF report request',
+    subject: '📄 Sample PDF report requested',
+    eta: 'within one business day with a sample report attached',
+  },
+  'white-label': {
+    label: 'White-label sample / setup request',
+    subject: '🎨 White-label sample requested',
+    eta: 'within one business day with white-label sample previews',
+  },
+}
+
 export interface ContactEmailData {
   name: string
   email: string
   message: string
   reason?: string
   source?: string
+  // Lead-form additions — all optional so the basic flow keeps working.
+  intent?: ContactIntent
+  companyName?: string
+  phoneNumber?: string
+  domainCount?: string
+  industry?: string
+  language?: string
+  /** ContactMessage.id — surfaces in both emails so support can quote it. */
+  referenceId?: string
 }
 
 export async function sendContactNotification(data: ContactEmailData) {
@@ -39,77 +77,137 @@ export async function sendContactNotification(data: ContactEmailData) {
   }
 
   try {
-    const { name, email, message, reason, source } = data
+    const {
+      name,
+      email,
+      message,
+      reason,
+      source,
+      intent = 'general',
+      companyName,
+      phoneNumber,
+      domainCount,
+      industry,
+      language,
+      referenceId,
+    } = data
+
+    const meta = INTENT_META[intent] ?? INTENT_META.general
+    const intentBadge = `${meta.label}`
+    const refLine = referenceId ? `Ref: ${referenceId}` : ''
+
+    // Build the lead-detail rows shared between html + text — only includes the
+    // fields the visitor actually filled in.
+    const detailRows: { label: string; value: string }[] = []
+    detailRows.push({ label: 'Intent', value: meta.label })
+    if (companyName) detailRows.push({ label: 'Company', value: companyName })
+    detailRows.push({ label: 'Email', value: email })
+    if (phoneNumber) detailRows.push({ label: 'Phone', value: phoneNumber })
+    if (domainCount) detailRows.push({ label: 'Domains/sites', value: domainCount })
+    if (industry) detailRows.push({ label: 'Industry', value: industry })
+    if (language) detailRows.push({ label: 'Preferred language', value: language })
+    if (reason) detailRows.push({ label: 'Reason', value: reason })
+    if (source) detailRows.push({ label: 'Source page', value: source })
+    if (referenceId) detailRows.push({ label: 'Reference', value: referenceId })
+
+    const detailRowsHtml = detailRows
+      .map(
+        (r) =>
+          `<p><strong>${escapeHtmlForEmail(r.label)}:</strong> ${escapeHtmlForEmail(r.value)}</p>`
+      )
+      .join('')
+    const detailRowsText = detailRows.map((r) => `${r.label}: ${r.value}`).join('\n')
 
     // Send notification to your team
     const teamNotification = await resend.emails.send({
       from: 'VexNexa Contact <onboarding@resend.dev>',
       to: ['info@vexnexa.com'],
-      subject: `New contact message from ${name}`,
+      replyTo: email,
+      subject: `${meta.subject} — ${name}${companyName ? ` (${companyName})` : ''}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #D45A00;">New contact message</h2>
+          <div style="display: inline-block; background: #0d9488; color: white; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;">${escapeHtmlForEmail(intentBadge)}</div>
+          <h2 style="color: #0d9488; margin-top: 0;">New lead from ${escapeHtmlForEmail(name)}</h2>
 
           <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Contact details</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ''}
-            ${source ? `<p><strong>Source page:</strong> ${source}</p>` : ''}
+            <h3 style="margin-top: 0;">Lead details</h3>
+            <p><strong>Name:</strong> ${escapeHtmlForEmail(name)}</p>
+            ${detailRowsHtml}
           </div>
 
           <div style="background: #ffffff; padding: 20px; border: 1px solid #C0C3C7; border-radius: 8px;">
             <h3 style="margin-top: 0;">Message</h3>
-            <p style="white-space: pre-wrap;">${message}</p>
+            <p style="white-space: pre-wrap;">${escapeHtmlForEmail(message)}</p>
           </div>
 
-          <p style="margin-top: 30px; color: #4B5563; font-size: 14px;">
-            This message was sent via the contact form on vexnexa.com
+          <p style="margin-top: 24px; color: #4B5563; font-size: 14px;">
+            Reply directly — this email's <strong>Reply-To</strong> is set to the lead's address.
+          </p>
+          <p style="color: #9CA3AF; font-size: 12px;">
+            ${refLine ? escapeHtmlForEmail(refLine) + ' · ' : ''}Sent via vexnexa.com contact form.
           </p>
         </div>
       `,
       text: `
-New contact message from ${name}
+${meta.subject} — ${name}${companyName ? ` (${companyName})` : ''}
 
 Name: ${name}
-Email: ${email}
-${reason ? `Reason: ${reason}\n` : ''}${source ? `Source page: ${source}\n` : ''}
+${detailRowsText}
+
 Message:
 ${message}
 
-This message was sent via the contact form on vexnexa.com
-      `.trim()
+${refLine}
+Sent via vexnexa.com contact form.
+      `.trim(),
     })
+
+    // Subject + opening line are intent-aware; everything else stays consistent.
+    const userSubject =
+      intent === 'general'
+        ? 'Thank you for contacting VexNexa — we reply as fast as possible'
+        : `Thank you — your ${meta.label.toLowerCase()} is in good hands`
+    const userOpener =
+      intent === 'general'
+        ? '<strong>Thank you for contacting us!</strong> We have successfully received your message and our team will review it shortly.'
+        : `<strong>Thank you for your ${escapeHtmlForEmail(meta.label.toLowerCase())}.</strong> We have received it and will get back to you ${escapeHtmlForEmail(meta.eta)}.`
 
     // Send confirmation to the user
     const userConfirmation = await resend.emails.send({
       from: 'VexNexa <onboarding@resend.dev>',
       to: [email],
-      subject: 'Thank you for contacting VexNexa - We reply as fast as possible',
+      replyTo: 'info@vexnexa.com',
+      subject: userSubject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: #D45A00; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
+            <div style="display: inline-block; background: #0d9488; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
             <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
-            <p style="color: #4B5563; margin: 8px 0 0 0; font-size: 16px;">WCAG accessibility scanning platform</p>
+            <p style="color: #4B5563; margin: 8px 0 0 0; font-size: 16px;">AI-Vision accessibility for the EAA &amp; ADA era</p>
           </div>
 
-          <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px;">Hello ${name}! 👋</h2>
+          <h2 style="color: #1F2937; font-size: 24px; margin-bottom: 16px;">Hello ${escapeHtmlForEmail(name)} 👋</h2>
 
           <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-            <strong>Thank you for contacting us!</strong> We have successfully received your message and our team will review it shortly.
+            ${userOpener}
           </p>
 
           <div style="background: #F8F9FA; border-left: 4px solid #0d9488; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
             <p style="color: #1E1E1E; font-size: 16px; margin: 0; font-weight: 600;">
-              ⚡ We reply as fast as possible - usually within a few hours!
+              ⚡ Expected response: ${escapeHtmlForEmail(meta.eta)}.
             </p>
           </div>
 
           <div style="background: #F8F9FA; padding: 24px; border-radius: 8px; margin: 24px 0;">
             <h3 style="color: #1F2937; font-size: 18px; margin: 0 0 16px 0; font-weight: 600;">Your message:</h3>
-            <p style="white-space: pre-wrap; color: #4B5563; line-height: 1.6; margin: 0;">${message}</p>
+            <p style="white-space: pre-wrap; color: #4B5563; line-height: 1.6; margin: 0;">${escapeHtmlForEmail(message)}</p>
           </div>
+
+          ${
+            referenceId
+              ? `<p style="color: #6B7280; font-size: 13px; margin: 16px 0;">Reference number: <code style="background:#F3F4F6;padding:2px 6px;border-radius:4px;">${escapeHtmlForEmail(referenceId)}</code> — please quote this if you reply.</p>`
+              : ''
+          }
 
           <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin: 24px 0;">
             For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #0d9488; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
@@ -124,19 +222,24 @@ This message was sent via the contact form on vexnexa.com
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center; margin-top: 30px;">
             <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #0d9488; text-decoration: none;">vexnexa.com</a><br>
-            Privacy-first WCAG scanning • Made in the Netherlands
+            Privacy-first WCAG scanning • Provencialeweg 46B, 1506 MC Zaandam, Netherlands
           </p>
         </div>
       `,
       text: `
-Hello ${name}! 👋
+Hello ${name}
 
-Thank you for contacting us! We have successfully received your message and our team will review it shortly.
+${
+  intent === 'general'
+    ? 'Thank you for contacting us! We have successfully received your message and our team will review it shortly.'
+    : `Thank you for your ${meta.label.toLowerCase()}. We have received it and will get back to you ${meta.eta}.`
+}
 
-⚡ We reply as fast as possible - usually within a few hours!
+Expected response: ${meta.eta}.
 
 Your message:
 ${message}
+${referenceId ? `\nReference number: ${referenceId} — please quote this if you reply.` : ''}
 
 For urgent questions, you can also email us directly at info@vexnexa.com.
 
@@ -144,8 +247,8 @@ Best regards,
 The VexNexa Team
 
 VexNexa | vexnexa.com
-Privacy-first WCAG scanning • Made in the Netherlands
-      `.trim()
+Provencialeweg 46B, 1506 MC Zaandam, Netherlands
+      `.trim(),
     })
 
     console.log('✅ Contact emails sent successfully:', {

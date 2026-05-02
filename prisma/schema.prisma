@@ -665,11 +665,11 @@ model SupportTicketMessage {
 model AdminUserNote {
   id        String   @id @default(cuid())
   userId    String
-  adminId   String
+  adminId   String?
   note      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  admin     User     @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
+  admin     User?    @relation("AdminNotes", fields: [adminId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([adminId])

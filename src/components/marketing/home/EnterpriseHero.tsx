@@ -79,7 +79,7 @@ export function EnterpriseHero() {
               className="h-12 rounded-xl bg-primary px-7 font-semibold text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
             >
               <Link
-                href="/contact?intent=enterprise"
+                href="/contact?intent=walkthrough"
                 onClick={() =>
                   trackEvent("hero_cta_click", { location: "enterprise_hero_primary" })
                 }
@@ -95,7 +95,7 @@ export function EnterpriseHero() {
               className="h-12 rounded-xl border-slate-200 dark:border-white/20 bg-slate-50 dark:bg-white/[0.04] px-7 font-semibold text-slate-900 dark:text-white hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-white/40"
             >
               <Link
-                href="/sample-report"
+                href="/contact?intent=sample-pdf"
                 onClick={() =>
                   trackEvent("hero_cta_click", { location: "enterprise_hero_sample" })
                 }

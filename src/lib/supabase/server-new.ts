@@ -3,6 +3,40 @@ import { cookies } from 'next/headers'
 
 export async function createClient() {
   const cookieStore = await cookies()
+
+  const devUserId = cookieStore.get('vn_dev_user_id')?.value
+  const devUserEmail = cookieStore.get('vn_dev_user_email')?.value
+
+  if (process.env.NODE_ENV !== 'production' && devUserId && devUserEmail) {
+    return {
+      auth: {
+        getUser: async () => ({
+          data: {
+            user: {
+              id: devUserId,
+              email: devUserEmail,
+              created_at: new Date().toISOString(),
+              user_metadata: {},
+            },
+          },
+          error: null,
+        }),
+        getSession: async () => ({
+          data: {
+            session: {
+              user: {
+                id: devUserId,
+                email: devUserEmail,
+                created_at: new Date().toISOString(),
+                user_metadata: {},
+              },
+            },
+          },
+          error: null,
+        }),
+      },
+    } as any
+  }
   
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY

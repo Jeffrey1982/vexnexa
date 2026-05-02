@@ -159,5 +159,6 @@ async function sendWebhookNotification(webhookUrl: string, scheduledScan: any, s
   }
 }
 
+export const GET = withCronAuth(handler);
 export const POST = withCronAuth(handler);
 export const dynamic = 'force-dynamic';

@@ -1,17 +1,20 @@
 #!/bin/bash
 # Test production CRON endpoint with local token
 
-echo "Testing CRON_TOKEN authentication on production..."
+echo "Testing CRON_SECRET authentication on production..."
 echo ""
 
-# Use the token from .env.local
-CRON_TOKEN="vGsiw1+JJ7YB+IWwWqerbB8o3bDk2Ryib9grk8LyHrU="
+CRON_SECRET="${CRON_SECRET:-${CRON_TOKEN:-}}"
+if [ -z "$CRON_SECRET" ]; then
+  echo "Set CRON_SECRET before running this script."
+  exit 1
+fi
 
 echo "Making request to: https://www.vexnexa.com/api/cron/ingest-gsc"
 echo ""
 
 response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "https://www.vexnexa.com/api/cron/ingest-gsc" \
-  -H "X-CRON-TOKEN: $CRON_TOKEN" \
+  -H "Authorization: Bearer $CRON_SECRET" \
   -H "Content-Type: application/json")
 
 http_code=$(echo "$response" | grep "HTTP_STATUS:" | cut -d: -f2)

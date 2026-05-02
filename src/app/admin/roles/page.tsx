@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client-new'
 
@@ -21,11 +21,26 @@ export default function AdminRolesPage() {
   const [searchEmail, setSearchEmail] = useState('')
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
-  useEffect(() => {
-    checkAdminAndLoadData()
+  const loadAdminUsers = useCallback(async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/admin/manage-admin-role')
+
+      if (response.ok) {
+        const data = await response.json()
+        setAdminUsers(data.data || [])
+      } else {
+        setMessage({ type: 'error', text: 'Failed to load admin users' })
+      }
+    } catch (error) {
+      console.error('Error loading admin users:', error)
+      setMessage({ type: 'error', text: 'Error loading admin users' })
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
-  const checkAdminAndLoadData = async () => {
+  const checkAdminAndLoadData = useCallback(async () => {
     try {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
@@ -48,26 +63,11 @@ export default function AdminRolesPage() {
       console.error('Error checking admin status:', error)
       setLoading(false)
     }
-  }
+  }, [loadAdminUsers, router])
 
-  const loadAdminUsers = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/admin/manage-admin-role')
-
-      if (response.ok) {
-        const data = await response.json()
-        setAdminUsers(data.data || [])
-      } else {
-        setMessage({ type: 'error', text: 'Failed to load admin users' })
-      }
-    } catch (error) {
-      console.error('Error loading admin users:', error)
-      setMessage({ type: 'error', text: 'Error loading admin users' })
-    } finally {
-      setLoading(false)
-    }
-  }
+  useEffect(() => {
+    checkAdminAndLoadData()
+  }, [checkAdminAndLoadData])
 
   const searchUser = async () => {
     if (!searchEmail.trim()) {
