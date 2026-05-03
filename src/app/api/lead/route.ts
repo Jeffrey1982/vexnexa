@@ -10,6 +10,20 @@ const newsletterSchema = z.object({
   source: z.string().optional()
 })
 
+const DEFAULT_MARKETING_FROM = 'VexNexa <updates@vexnexa.com>'
+
+function getMarketingFromAddress() {
+  return (process.env.RESEND_FROM_EMAIL || DEFAULT_MARKETING_FROM).trim()
+}
+
+function getAdminFromAddress() {
+  return (
+    process.env.RESEND_ADMIN_FROM_EMAIL ||
+    process.env.RESEND_FROM_EMAIL ||
+    DEFAULT_MARKETING_FROM
+  ).trim()
+}
+
 type ConfirmationCopy = {
   subject: string
   heading: string
@@ -126,7 +140,7 @@ export async function POST(request: NextRequest) {
     )
 
     const baseEmailOptions = {
-      from: 'VexNexa <onboarding@resend.dev>',
+      from: getMarketingFromAddress(),
       to: [email],
       subject: confirmationCopy.subject,
       html: `
@@ -196,6 +210,19 @@ Privacy-first WCAG scanning - Made in the Netherlands
 
     const result = await resend.emails.send(finalEmailOptions)
 
+    if (result.error) {
+      console.error('Failed to send newsletter confirmation email:', {
+        source: friendlySource,
+        technicalSource: source || 'footer_newsletter',
+        error: result.error
+      })
+
+      return NextResponse.json(
+        { error: 'Confirmation email could not be sent. Please contact support.' },
+        { status: 502 }
+      )
+    }
+
     console.log(confirmationCopy.logLabel, {
       emailId: result?.data?.id,
       recipient: email,
@@ -208,7 +235,7 @@ Privacy-first WCAG scanning - Made in the Netherlands
     try {
       const adminEmail = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
       const adminResult = await resend.emails.send({
-        from: 'VexNexa Notifications <onboarding@resend.dev>',
+        from: getAdminFromAddress(),
         to: [adminEmail],
         subject: confirmationCopy.adminSubject,
         html: `
@@ -231,6 +258,11 @@ Timestamp: ${new Date().toLocaleString('en-US')}
 IP address: ${clientIP}
 Status: Awaiting confirmation (double opt-in)`
       })
+
+      if (adminResult.error) {
+        console.error('Failed to send admin notification:', adminResult.error)
+        return
+      }
 
       console.log('Admin notification sent', {
         emailId: adminResult?.data?.id,
