@@ -40,24 +40,7 @@
       },
       "twitter": "Visit VexNexa on Twitter"
     },
-    "dashboard": {
-      "description": "Professionele toegankelijkheidstests en compliance-monitoring.",
-      "dashboard": "Dashboard",
-      "overview": "Overzicht",
-      "scans": "Scans",
-      "sites": "Sites",
-      "teams": "Teams",
-      "settings": "Instellingen",
-      "billing": "Facturering",
-      "notifications": "Meldingen",
-      "whiteLabel": "White Label",
-      "support": "Support",
-      "contact": "Contact",
-      "privacyPolicy": "Privacybeleid",
-      "termsOfService": "Algemene Voorwaarden",
-      "allRightsReserved": "Alle rechten voorbehouden.",
-      "madeWithLove": "Gemaakt met ❤️ voor webtoegankelijkheid"
-    },
+    "dashboard": "Dashboard",
     "brandedFooter": {
       "description": "Toegankelijkheidstests en compliance platform",
       "quickLinks": "Snelle Links",
@@ -84,13 +67,9 @@
       "dashboard": "Dashboard"
     },
     "support": {
-      "title": "Ondersteuning",
+      "title": "Support",
       "contact": "Contact",
-      "help": "Helpcentrum",
-      "faq": "Veelgestelde Vragen",
-      "api": "API Documentatie",
-      "status": "Systeemstatus",
-      "about": "About",
+      "about": "Over ons",
       "blog": "Blog"
     },
     "legal": {
@@ -111,7 +90,21 @@
       "pilotPartner": "Pilot Partner Program",
       "agencyMonitoring": "Agency Monitoring"
     },
-    "disclaimer": "Public content scanning • No storage of personal data"
+    "disclaimer": "Public content scanning • No storage of personal data",
+    "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",
+    "overview": "Overzicht",
+    "scans": "Scans",
+    "sites": "Sites",
+    "teams": "Teams",
+    "settings": "Instellingen",
+    "billing": "Facturatie",
+    "notifications": "Meldingen",
+    "whiteLabel": "White-label",
+    "contact": "Contact",
+    "privacyPolicy": "Privacybeleid",
+    "termsOfService": "Servicevoorwaarden",
+    "allRightsReserved": "Alle rechten voorbehouden.",
+    "madeWithLove": "Gebouwd in Nederland."
   },
   "hero": {
     "headline": "WCAG 2.2 zonder de ruis.",
@@ -644,12 +637,19 @@
           "basicReports": "Basis rapporten",
           "emailSupport": "E-mail support",
           "site": "website",
-          "user": "gebruiker"
+          "user": "gebruiker",
+          "pdf": "PDF-export",
+          "history": "Geschiedenis van {count} maanden",
+          "support": "E-mailsupport"
         },
         "limitations": {
           "noWord": "Geen Word export",
           "noScheduling": "Geen planning",
-          "limitedIntegrations": "Beperkte integraties"
+          "limitedIntegrations": "Beperkte integraties",
+          "noWordExports": "Geen Word-exports",
+          "noCrawling": "Geen crawling",
+          "noIntegrations": "Geen integraties",
+          "noWhiteLabel": "Geen white-label rapporten"
         }
       },
       "pro": {
@@ -1111,6 +1111,20 @@
       "title": "Praat met ons over rapporten, monitoring of",
       "titleHighlight": "agencygebruik",
       "subtitle": "Vragen over plannen, white-label rapportage of hoe VexNexa in je workflow past? We helpen je snel de juiste setup te vinden."
+    },
+    "quickReasons": {
+      "sampleReport": {
+        "title": "Vraag een walkthrough van een voorbeeldrapport aan",
+        "description": "Zie precies wat je klanten of stakeholders ontvangen."
+      },
+      "agencyWorkflows": {
+        "title": "Vraag naar agency-workflows",
+        "description": "White-label rapporten, multi-site beheer en team seats."
+      },
+      "choosePlan": {
+        "title": "Hulp bij het kiezen van het juiste plan",
+        "description": "We adviseren de setup die past bij je team en volume."
+      }
     }
   },
   "auth": {
@@ -1168,7 +1182,9 @@
         "allFieldsRequired": "Vul alle velden in",
         "invalidEmail": "Voer een geldig e-mailadres in",
         "passwordLength": "Wachtwoord moet minimaal 8 tekens bevatten",
-        "passwordsMatch": "Wachtwoorden moeten overeenkomen"
+        "passwordsMatch": "Wachtwoorden moeten overeenkomen",
+        "tooManyRequests": "Te veel registratiepogingen. Wacht even en probeer het opnieuw.",
+        "timeout": "Registreren duurde te lang. Probeer het zo opnieuw."
       },
       "success": {
         "title": "Account created successfully!",
@@ -1198,6 +1214,19 @@
           "title": "Preferences",
           "description": "Customize your experience"
         }
+      },
+      "validation": {
+        "requiredFields": "Vul alle verplichte velden in.",
+        "validEmail": "Vul een geldig e-mailadres in.",
+        "passwordsMatch": "De wachtwoorden komen niet overeen.",
+        "passwordLength": "Het wachtwoord moet minimaal 8 tekens lang zijn.",
+        "passwordUppercase": "Het wachtwoord moet minimaal ??n hoofdletter bevatten.",
+        "passwordLowercase": "Het wachtwoord moet minimaal ??n kleine letter bevatten.",
+        "passwordNumber": "Het wachtwoord moet minimaal ??n cijfer bevatten.",
+        "namesRequired": "Vul je voor- en achternaam in.",
+        "validName": "Vul een geldige naam in.",
+        "validPhone": "Vul een geldig telefoonnummer in.",
+        "validWebsite": "Vul een geldige website-URL in."
       }
     },
     "forgotPassword": {
@@ -1673,7 +1702,10 @@
       "resubscribe": "Opnieuw inschrijven",
       "feedbackTitle": "Feedback:",
       "feedbackMessage": "We zouden graag weten waarom je je hebt uitgeschreven.",
-      "shareFeedback": "Deel je feedback"
+      "shareFeedback": "Deel je feedback",
+      "accidentalNote": "<strong>Per ongeluk afgemeld?</strong> Je kunt je op elk moment opnieuw aanmelden.",
+      "backToHome": "Terug naar home",
+      "feedbackNote": "Van gedachten veranderd of feedback? <a href=\"/contact\" class=\"underline\">Neem contact op</a>."
     },
     "invalid": {
       "title": {
@@ -1711,7 +1743,13 @@
       "resubscribe": "Opnieuw inschrijven",
       "subscribeNewsletter": "Inschrijven voor nieuwsbrief",
       "contactSupport": "Contact opnemen",
-      "loading": "Laden..."
+      "loading": "Laden...",
+      "buttons": {
+        "tryAgain": "Probeer opnieuw",
+        "subscribeNewsletter": "Opnieuw aanmelden",
+        "contact": "Neem contact op",
+        "backToHome": "Terug naar home"
+      }
     }
   },
   "features": {
@@ -3178,6 +3216,58 @@
       "badge": "Snelle start",
       "title": "Start met je eerste scan",
       "subtitle": "Vul je website-URL in en wij voeren een uitgebreide toegankelijkheidsscan uit"
+    },
+    "form": {
+      "title": "Start je eerste scan",
+      "description": "We analyseren je website op toegankelijkheidsproblemen en geven concrete aanbevelingen",
+      "url": {
+        "label": "Website-URL",
+        "placeholder": "https://voorbeeld.nl",
+        "help": "Voer de volledige URL in van de pagina die je wilt scannen"
+      },
+      "frequency": {
+        "label": "Scanfrequentie",
+        "once": "Eenmalige scan",
+        "weekly": "Wekelijks",
+        "monthly": "Maandelijks",
+        "help": {
+          "once": "Voer nu ??n scan uit",
+          "recurring": "Scan je site automatisch {frequency}"
+        }
+      },
+      "notify": {
+        "label": "Mail mij wanneer de scan klaar is",
+        "help": "Je ontvangt een melding met een link naar je resultaten"
+      },
+      "submit": {
+        "text": "Start toegankelijkheidsscan",
+        "loading": "Scan wordt gestart..."
+      }
+    },
+    "errors": {
+      "urlRequired": "Vul een URL in",
+      "urlInvalid": "Vul een geldige URL in"
+    },
+    "nextSteps": {
+      "title": "Wat gebeurt er daarna?",
+      "step1": {
+        "title": "De scan draait automatisch",
+        "description": "Onze scanner analyseert je pagina op WCAG-compliance en 8 extra toegankelijkheidscategorie?n"
+      },
+      "step2": {
+        "title": "Bekijk je gedetailleerde rapport",
+        "description": "Zie geprioriteerde problemen met codefragmenten, screenshots en duidelijke herstelstappen"
+      },
+      "step3": {
+        "title": "Los topissues op -> scan opnieuw -> verbeter",
+        "description": "Werk issues af op prioriteit, scan opnieuw om voortgang te volgen en deel rapporten met je team"
+      }
+    },
+    "footer": {
+      "notReady": "Nog niet klaar om te scannen?",
+      "learnMore": "Lees meer over onze functies",
+      "haveAccount": "Heb je al een account?",
+      "signIn": "Inloggen"
     }
   },
   "websiteAccessibilityChecker": {
@@ -3189,6 +3279,143 @@
       "ctaPrimary": "Check je site gratis",
       "ctaSecondary": "Bekijk alle functies",
       "note": "Gratis check. Geen creditcard. Resultaten in seconden."
+    },
+    "passFailProblem": {
+      "title": "Waarom \"78% toegankelijk\" bijna niets zegt",
+      "subtitle": "E?n percentage verbergt meer dan het laat zien. Twee sites kunnen allebei 78% scoren: de ene heeft drie kritieke keyboard traps, de andere veertig ontbrekende alt-teksten op decoratieve afbeeldingen. De eerste is onbruikbaar. De tweede is grotendeels prima.",
+      "solution": "Basischeckers behandelen elke mislukte regel alsof die even belangrijk is. VexNexa doet dat niet. Elke overtreding wordt gewogen op echte gebruikersimpact, zodat je urgent werk scheidt van cosmetiek."
+    },
+    "whatYouGet": {
+      "weightedScore": {
+        "title": "Gewogen gezondheidsscore",
+        "description": "Geen simpele verhouding. Kritieke issues wegen zwaarder dan kleine issues, waardoor de score echte gebruikersimpact weerspiegelt."
+      },
+      "severityTiers": {
+        "title": "Ernstniveaus",
+        "description": "Vier niveaus: kritiek, ernstig, gemiddeld en klein, zodat je team zonder giswerk kan triageren. Kritieke issues staan altijd bovenaan."
+      },
+      "elementDetail": {
+        "title": "Detail op elementniveau",
+        "description": "Zie de exacte CSS-selector en HTML-snippet voor elke overtreding. Geen speurtocht door je code."
+      },
+      "wcagReferences": {
+        "title": "WCAG-criteriumreferenties",
+        "description": "Elke overtreding verwijst naar het specifieke WCAG-succescriterium, met heldere uitleg waarom het belangrijk is."
+      },
+      "riskAssessment": {
+        "title": "Risicobeoordeling",
+        "description": "Begrijp welke issues gebruikers volledig blokkeren en welke vooral kleine ongemakken zijn. Prioriteer fixes die toegankelijkheid echt verbeteren."
+      },
+      "trendTracking": {
+        "title": "Trendtracking",
+        "description": "Monitor hoe je score door de tijd verandert. Zie of nieuwe functies toegankelijkheid verbeteren of regressies introduceren."
+      },
+      "title": "Hoe een echte toegankelijkheidscheck eruitziet",
+      "subtitle": "VexNexa gaat verder dan simpele pass/fail-tests. Krijg bruikbare inzichten om fixes te prioriteren en verbetering te volgen."
+    },
+    "comparison": {
+      "items": {
+        "resultFormat": {
+          "label": "Resultaatvorm",
+          "basic": "E?n score of badge",
+          "vexnexa": "Overtredingenlijst op ernst"
+        },
+        "issueContext": {
+          "label": "Issuecontext",
+          "basic": "Alleen rule-ID",
+          "vexnexa": "CSS-selector + HTML-snippet + WCAG-ref"
+        },
+        "prioritization": {
+          "label": "Prioritering",
+          "basic": "Geen: vlakke lijst",
+          "vexnexa": "4 ernstniveaus + gewogen impactscore"
+        },
+        "reporting": {
+          "label": "Rapportage",
+          "basic": "Screenshot of copy/paste",
+          "vexnexa": "PDF en DOCX met volledige details"
+        },
+        "rechecking": {
+          "label": "Opnieuw controleren",
+          "basic": "Handmatig opnieuw draaien, geen historie",
+          "vexnexa": "Scorehistorie + regressietracking"
+        },
+        "branding": {
+          "label": "Branding",
+          "basic": "Logo van derde partij op output",
+          "vexnexa": "White-label met je eigen merk"
+        }
+      },
+      "title": "Hoe VexNexa zich vergelijkt met gratis checkers",
+      "subtitle": "Gratis toegankelijkheidscheckers zijn nuttig voor een snelle blik. Maar voor prioriteren, compliance documenteren of verbetering volgen heb je meer nodig dan pass/fail.",
+      "table": {
+        "capability": "Mogelijkheid",
+        "freeChecker": "Gratis checker",
+        "vexnexa": "VexNexa"
+      }
+    },
+    "audience": {
+      "marketing": {
+        "title": "Marketing- en contentteams",
+        "description": "Controleer landingspagina?s v??r campagnes live gaan. Voorkom ontoegankelijke content die bezoekers uitsluit of klachten veroorzaakt."
+      },
+      "procurement": {
+        "title": "Inkoop en compliance",
+        "description": "Voeg toegankelijkheidsrapporten toe aan leveranciersbeoordelingen, RFP-antwoorden en interne audits. Gestructureerd bewijs, geen screenshot."
+      },
+      "freelancers": {
+        "title": "Freelancers en consultants",
+        "description": "Voeg toegankelijkheidschecks toe aan je deliverables. Exporteer branded rapporten die je waarde per project aantonen."
+      },
+      "title": "Ontworpen voor mensen die meer nodig hebben dan een badge"
+    },
+    "limitations": {
+      "title": "Wat automatische checks niet kunnen",
+      "description": "Geen tool vindt alles. Automatische checkers detecteren betrouwbaar zaken zoals ontbrekende alt-tekst, contrastproblemen en ontbrekende formulierlabels. Criteria rond betekenis, leesvolgorde of complexe keyboardinteracties vereisen nog steeds menselijke review.",
+      "solution": "VexNexa markeert waar handmatige review wordt aanbevolen en helpt prioriteren wat automatische tests w?l vinden, zodat experttijd telt."
+    },
+    "faq": {
+      "q1": {
+        "question": "Waarin verschilt VexNexa van WAVE of Lighthouse?",
+        "answer": "WAVE en Lighthouse zijn uitstekende gratis tools voor snelle checks. VexNexa voegt ernstprioritering, CSS-selectors op elementniveau, exporteerbare PDF/DOCX-rapporten, scoretracking en white-label branding toe."
+      },
+      "q2": {
+        "question": "Kan ik meer dan ??n pagina tegelijk controleren?",
+        "answer": "Ja. Betaalde plannen ondersteunen multi-page scans. Elke pagina krijgt een eigen overtredingenlijst en draagt bij aan de totale sitegezondheidsscore."
+      },
+      "q3": {
+        "question": "Tegen welke standaarden checkt VexNexa?",
+        "answer": "VexNexa checkt tegen WCAG 2.1 Level AA en geselecteerde WCAG 2.2-criteria met axe-core. Elke overtreding verwijst naar het relevante succescriterium."
+      },
+      "q4": {
+        "question": "Moet ik een account aanmaken?",
+        "answer": "Je kunt ??n pagina zonder account scannen om resultaten te zien. Voor monitoring, multi-page scans of exports heb je een gratis account nodig."
+      },
+      "q5": {
+        "question": "Hoe nauwkeurig zijn de resultaten?",
+        "answer": "VexNexa gebruikt axe-core, dezelfde vertrouwde engine die wordt gebruikt door Microsoft, Google en de Amerikaanse overheid. Automatische tests vinden niet alles; daarom markeert VexNexa waar handmatige review nodig is."
+      },
+      "title": "Toegankelijkheidschecker - FAQ"
+    },
+    "finalCTA": {
+      "title": "Zie wat een echte toegankelijkheidscheck onthult",
+      "subtitle": "Draai je eerste check gratis: geen creditcard, geen verplichting. Als de resultaten nuttig zijn, weet je team wat te doen.",
+      "ctaPrimary": "Start je gratis check"
+    },
+    "relatedSolutions": {
+      "title": "Gerelateerde toegankelijkheidstools",
+      "wcagScan": {
+        "title": "Draai een WCAG-scan",
+        "description": "Plak een URL en krijg binnen seconden overtredingen gerangschikt op ernst."
+      },
+      "complianceReport": {
+        "title": "Exporteer compliancerapporten",
+        "description": "Download gestructureerde PDF- en DOCX-rapporten voor stakeholders en audits."
+      },
+      "whiteLabel": {
+        "title": "Brand je rapporten",
+        "description": "Lever rapporten onder je eigen logo met white-label branding."
+      }
     }
   },
   "wcagComplianceReport": {
@@ -3200,6 +3427,115 @@
       "ctaPrimary": "Genereer je eerste rapport",
       "ctaSecondary": "Bekijk een voorbeeldrapport",
       "note": "Gratis proefperiode. Geen creditcard vereist. Eerste rapport in minuten."
+    },
+    "reportingGap": {
+      "title": "Scanresultaten alleen overtuigen besluitvormers niet",
+      "subtitle": "Je weet dat de site toegankelijkheidsproblemen heeft. De scanner bevestigde het. Maar een screenshot van tooloutput doorsturen naar je compliance officer, inkoopteam of executive sponsor brengt zelden beweging.",
+      "context": "Besluitvormers hebben context nodig: hoe ernstig is het, wat moet eerst worden opgelost, hoe ziet herstel eruit en hoe koppelt de huidige staat aan WCAG-criteria. Daarvoor heb je een rapport nodig, geen dashboard."
+    },
+    "reportStructure": {
+      "executiveSummary": {
+        "title": "Managementsamenvatting",
+        "description": "Gezondheidsscore, cijfer (A t/m F), risiconiveau en een heldere samenvatting. Gemaakt voor niet-technische lezers die de hoofdboodschap nodig hebben, niet de code."
+      },
+      "severityBreakdown": {
+        "title": "Verdeling op ernst",
+        "description": "Aantallen issues per ernstniveau: kritiek, ernstig, gemiddeld, klein. Donutchart en voortgangsbalken maken de verdeling direct duidelijk."
+      },
+      "wcagMatrix": {
+        "title": "WCAG-compliancematrix",
+        "description": "Een criterium-voor-criterium tabel met geslaagd, gefaald, handmatige review nodig of niet getest voor elk relevant WCAG-succescriterium."
+      },
+      "topPriority": {
+        "title": "Topprioriteit fixes",
+        "description": "De issues met hoogste impact, gerangschikt op gewogen ernst. Elke regel bevat aantal getroffen elementen en impactscore zodat teams weten waar te beginnen."
+      },
+      "detailedList": {
+        "title": "Gedetailleerde issuelijst",
+        "description": "Elke overtreding met WCAG-criterium, ernst, getroffen CSS-selectors, HTML-snippets en een link naar het relevante WCAG Understanding-document."
+      },
+      "eaaReadiness": {
+        "title": "EAA-readinessindicator",
+        "description": "Voor Europese complianceworkflows: een EAA 2025-readinessbadge en toelichting op hoe de site aansluit op de European Accessibility Act."
+      },
+      "title": "In een VexNexa-compliancerapport",
+      "subtitle": "Elke sectie is gebouwd voor een specifieke lezer: van executives die een samenvatting op ??n pagina nodig hebben tot developers die selectors nodig hebben."
+    },
+    "exportFormats": {
+      "title": "Twee formaten, ??n consistent rapport",
+      "pdf": {
+        "title": "PDF-rapport",
+        "description": "Printgeoptimaliseerde layout met visuele grafieken, branded cover en professionele typografie. Ideaal om te delen met stakeholders, RFP-antwoorden of fysieke meetings.",
+        "features": {
+          "paginated": "Gepagineerd met lopende headers en footers",
+          "charts": "Donutcharts, voortgangsbalken en scorekaarten",
+          "branding": "Optionele white-label branding",
+          "print": "Direct printen vanuit de browser, geen conversie nodig"
+        }
+      },
+      "docx": {
+        "title": "DOCX-rapport",
+        "description": "Bewerkbaar Word-document met dezelfde inhoudsstructuur. Voeg eigen commentaar toe, pas aan per klant of plak in bestaande offertemplates.",
+        "features": {
+          "editable": "Volledig bewerkbaar in Microsoft Word of Google Docs",
+          "headings": "Gestructureerde koppen voor eenvoudige navigatie",
+          "formatting": "Tabellen, opgemaakte tekst en ernstindicatoren",
+          "branding": "White-label branding met ingesloten logo"
+        }
+      }
+    },
+    "audience": {
+      "compliance": {
+        "title": "Compliance officers",
+        "useCase": "Voeg WCAG-documentatie toe aan interne audits en regelgevingsdossiers. De WCAG-matrix levert bewijs op criteriumniveau."
+      },
+      "agency": {
+        "title": "Agencyteams",
+        "useCase": "Lever professionele rapporten aan klanten onder je eigen merk. Toon voortgang door de tijd en onderbouw toegankelijkheidsbudgetten."
+      },
+      "procurement": {
+        "title": "Inkoop en juridisch",
+        "useCase": "Beoordeel toegankelijkheidsclaims van leveranciers met gestructureerd bewijs. Gebruik rapporten bij aanbestedingen en contractcompliance."
+      },
+      "title": "Rapporten voor de mensen die beslissingen nemen"
+    },
+    "scope": {
+      "title": "Een compliancerapport, geen compliancegarantie",
+      "description": "VexNexa-rapporten documenteren wat geautomatiseerde tests detecteren. Ze dekken een betekenisvol deel van WCAG, maar volledige conformiteit vereist geautomatiseerde ?n handmatige beoordeling. Het rapport markeert helder wat getest is, wat slaagde en wat handmatige review nodig heeft.",
+      "disclaimer": "Gebruik VexNexa-rapporten als onderdeel van een breder complianceproces, niet als losse juridische certificering."
+    },
+    "faq": {
+      "q1": {
+        "question": "Welke WCAG-criteria dekt het compliancerapport?",
+        "answer": "Het rapport dekt testbare WCAG 2.1 Level AA-criteria en geselecteerde WCAG 2.2-criteria. De WCAG-matrix toont expliciet de status per criterium: geslaagd, gefaald, handmatige review nodig of niet getest."
+      },
+      "q2": {
+        "question": "Kan ik het rapport aanpassen voordat ik het deel?",
+        "answer": "Ja. De DOCX-export is volledig bewerkbaar: je kunt commentaar toevoegen, secties verwijderen of content in eigen templates plakken. De PDF is afgerond voor direct delen of printen."
+      },
+      "q3": {
+        "question": "Bevat het rapport hersteladvies?",
+        "answer": "Elke overtreding bevat een beschrijving, waarom het belangrijk is en een link naar het relevante WCAG Understanding-document. De topprioriteiten rangschikken issues op impact voor planning van herstelsprints."
+      },
+      "q4": {
+        "question": "Waarin verschilt dit van output van een basischecker?",
+        "answer": "Basischeckers geven ruwe data: een lijst overtredingen en misschien een score. VexNexa-rapporten structureren die data voor besluitvormers met samenvattingen, ernstverdeling, WCAG-matrixen en geprioriteerde actielijsten."
+      },
+      "q5": {
+        "question": "Kan ik deze rapporten gebruiken voor juridische compliance?",
+        "answer": "VexNexa-rapporten leveren sterk bewijs van toegankelijkheidstests en herstelplanning. Gebruik ze wel als onderdeel van een bredere strategie met handmatige tests en expertreview."
+      },
+      "q6": {
+        "question": "Bevatten rapporten white-label branding?",
+        "answer": "Ja. Business- en Enterprise-plannen bevatten volledige white-label branding met je bedrijfslogo, kleuren en contactinformatie."
+      },
+      "title": "Compliance-rapporten - FAQ"
+    },
+    "finalCTA": {
+      "title": "Genereer een rapport dat gelezen wordt",
+      "subtitle": "Scan een URL, bekijk de bevindingen en download een gestructureerd WCAG-compliancerapport in minder dan vijf minuten.",
+      "ctaPrimary": "Maak je eerste rapport",
+      "ctaSecondary": "Bekijk plannen en prijzen"
     }
   },
   "wcagScan": {
@@ -3211,6 +3547,115 @@
       "ctaPrimary": "Start je gratis scan",
       "ctaSecondary": "Bekijk voorbeeldrapport",
       "note": "Geen creditcard vereist. De meeste scans van een pagina zijn binnen een minuut klaar."
+    },
+    "problem": {
+      "title": "De meeste WCAG-scans geven je een cijfer. Geen plan.",
+      "subtitle": "Je hebt waarschijnlijk eerder een gratis toegankelijkheidschecker geprobeerd. Die gaf een score, somde fouten op en liet je naar cryptische rule-ID?s kijken zonder te weten wat eerst te repareren.",
+      "issues": {
+        "flatErrors": {
+          "title": "Vlakke foutlijsten",
+          "description": "Geen prioritering: een ontbrekende alt-tekst staat naast een keyboard trap."
+        },
+        "noElementContext": {
+          "title": "Geen elementcontext",
+          "description": "Je weet dat een regel faalt, maar niet welk element in welk paginagedeelte."
+        },
+        "staleResults": {
+          "title": "Verouderde resultaten",
+          "description": "Eenmalige scans zonder manier om te volgen of de fixes van vorige maand zijn blijven staan."
+        }
+      }
+    },
+    "solution": {
+      "title": "Een WCAG-scan die echt vertelt wat je moet doen",
+      "subtitle": "VexNexa scant op WCAG 2.1 AA en 2.2-criteria met de axe-core engine, dezelfde engine die wordt vertrouwd door Microsoft, Google en de Amerikaanse overheid.",
+      "features": {
+        "severityRanked": {
+          "title": "Overtredingen op ernst gerangschikt",
+          "description": "Elk issue wordt beoordeeld op impact: kritiek, ernstig, gemiddeld of klein. Repareer eerst wat ertoe doet."
+        },
+        "elementDetail": {
+          "title": "Detail op elementniveau",
+          "description": "Zie de exacte CSS-selector, HTML-snippet en paginalocatie per overtreding. Geen giswerk."
+        },
+        "healthScore": {
+          "title": "Gezondheidsscore (0-100)",
+          "description": "Een gewogen score die rekening houdt met aantal issues en ernst. Volg verbetering door de tijd."
+        },
+        "exportReports": {
+          "title": "Rapporten klaar voor export",
+          "description": "Download je WCAG-scanresultaten als PDF of Word met volledige details en hersteladvies."
+        }
+      }
+    },
+    "howItWorks": {
+      "steps": {
+        "enterUrl": {
+          "title": "Voer een URL in",
+          "description": "Plak een pagina-URL in de scanner. Openbaar of afgeschermd: VexNexa ondersteunt beide workflows."
+        },
+        "scanRuns": {
+          "title": "De scan draait in seconden",
+          "description": "De axe-core engine beoordeelt de pagina realtime op WCAG 2.1 AA en geselecteerde 2.2-criteria."
+        },
+        "reviewResults": {
+          "title": "Bekijk gerangschikte resultaten",
+          "description": "Overtredingen staan gesorteerd op ernst met getroffen elementen, hersteladvies en WCAG-referenties."
+        },
+        "exportShare": {
+          "title": "Exporteer of deel",
+          "description": "Download een PDF- of DOCX-rapport. Deel resultaten met je team of voeg ze toe aan klantdeliverables."
+        }
+      },
+      "title": "Vier stappen van URL naar fixlijst"
+    },
+    "comparison": {
+      "features": {
+        "severityRanked": "Overtredingen gerangschikt op ernst",
+        "elementSelectors": "CSS-selectors van getroffen elementen",
+        "wcag22Coverage": "Dekking van WCAG 2.2-criteria",
+        "pdfDocxExport": "PDF- en DOCX-export",
+        "healthTracking": "Gezondheidsscore volgen door de tijd",
+        "whiteLabel": "White-label rapportbranding",
+        "basicPassFail": "Basisresultaat geslaagd/gezakt",
+        "freeSinglePage": "Gratis check voor ??n pagina"
+      },
+      "title": "VexNexa versus basischeckers",
+      "subtitle": "Gratis checkers zijn prima voor een snelle blik. Als je moet prioriteren, rapporteren en volgen, heb je meer nodig.",
+      "table": {
+        "feature": "Functie",
+        "vexnexa": "VexNexa",
+        "basicChecker": "Basischecker"
+      }
+    },
+    "useCases": {
+      "siteOwners": {
+        "title": "Site-eigenaren en marketingteams",
+        "description": "Controleer of je publieke pagina?s voldoen aan WCAG AA v??r een redesignlancering of wettelijke deadline."
+      },
+      "developers": {
+        "title": "Developers en QA-engineers",
+        "description": "Integreer WCAG-scans in je sprintworkflow. Vang regressies voordat ze productie bereiken."
+      },
+      "compliance": {
+        "title": "Compliance- en juridische teams",
+        "description": "Genereer gestructureerde rapporten om je toegankelijkheidspositie te documenteren voor audits en inkoop."
+      }
+    },
+    "relatedSolutions": {
+      "title": "Ontdek meer toegankelijkheidsworkflows",
+      "complianceReports": {
+        "title": "Compliance-rapporten",
+        "description": "Zet scanresultaten om in direct bruikbare PDF- en DOCX-rapporten voor executives."
+      },
+      "accessibilityChecker": {
+        "title": "Toegankelijkheidschecker",
+        "description": "Vergelijk VexNexa met basischeckers en zie wat je mist."
+      },
+      "ongoingMonitoring": {
+        "title": "Doorlopende monitoring",
+        "description": "Plan terugkerende scans en volg toegankelijkheidstrends door de tijd."
+      }
     }
   },
   "checkout": {
@@ -3410,5 +3855,23 @@
       "Informational": "Informatief"
     },
     "dateRecently": "Recent"
+  },
+  "dashboardFooter": {
+    "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",
+    "dashboard": "Dashboard",
+    "overview": "Overzicht",
+    "scans": "Scans",
+    "sites": "Sites",
+    "teams": "Teams",
+    "settings": "Instellingen",
+    "billing": "Facturatie",
+    "notifications": "Meldingen",
+    "whiteLabel": "White-label",
+    "support": "Support",
+    "contact": "Contact",
+    "privacyPolicy": "Privacybeleid",
+    "termsOfService": "Servicevoorwaarden",
+    "allRightsReserved": "Alle rechten voorbehouden.",
+    "madeWithLove": "Gebouwd in Nederland."
   }
 }

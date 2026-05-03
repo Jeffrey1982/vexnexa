@@ -1053,24 +1053,7 @@
       },
       "twitter": "Visit VexNexa on Twitter"
     },
-    "dashboard": {
-      "description": "Professional accessibility testing and compliance monitoring.",
-      "dashboard": "Dashboard",
-      "overview": "Overview",
-      "scans": "Scans",
-      "sites": "Sites",
-      "teams": "Teams",
-      "settings": "Settings",
-      "billing": "Billing",
-      "notifications": "Notifications",
-      "whiteLabel": "White Label",
-      "support": "Support",
-      "contact": "Contact",
-      "privacyPolicy": "Privacy Policy",
-      "termsOfService": "Terms of Service",
-      "allRightsReserved": "All rights reserved.",
-      "madeWithLove": "Made with ❤️ for web accessibility"
-    },
+    "dashboard": "Dashboard",
     "brandedFooter": {
       "description": "Accessibility testing and compliance platform",
       "quickLinks": "Quick Links",
@@ -1110,11 +1093,7 @@
       "title": "Support",
       "contact": "Contact",
       "about": "About",
-      "blog": "Blog",
-      "help": "Help Center",
-      "faq": "FAQ",
-      "api": "API Docs",
-      "status": "System Status"
+      "blog": "Blog"
     },
     "legal": {
       "title": "Legal",
@@ -1124,7 +1103,21 @@
       "sla": "SLA & Support"
     },
     "copyright": "All rights reserved.",
-    "disclaimer": "Public content scanning • No storage of personal data"
+    "disclaimer": "Public content scanning • No storage of personal data",
+    "description": "Accessibility monitoring, reporting, and remediation workflows for modern teams.",
+    "overview": "Overview",
+    "scans": "Scans",
+    "sites": "Sites",
+    "teams": "Teams",
+    "settings": "Settings",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "whiteLabel": "White-label",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "allRightsReserved": "All rights reserved.",
+    "madeWithLove": "Built in the Netherlands."
   },
   "home": {
     "headline": "WCAG 2.2 without the noise.",
@@ -2288,7 +2281,9 @@
         "allFieldsRequired": "Please fill in all fields",
         "invalidEmail": "Please enter a valid email address",
         "passwordLength": "Password must be at least 8 characters",
-        "passwordsMatch": "Passwords must match"
+        "passwordsMatch": "Passwords must match",
+        "tooManyRequests": "Too many signup attempts. Please wait a moment and try again.",
+        "timeout": "Signup took too long. Please try again in a moment."
       },
       "success": {
         "title": "Account created successfully!",
@@ -2318,6 +2313,19 @@
           "title": "Preferences",
           "description": "Customize your experience"
         }
+      },
+      "validation": {
+        "requiredFields": "Please fill in all required fields.",
+        "validEmail": "Please enter a valid email address.",
+        "passwordsMatch": "Passwords do not match.",
+        "passwordLength": "Password must be at least 8 characters long.",
+        "passwordUppercase": "Password must include at least one uppercase letter.",
+        "passwordLowercase": "Password must include at least one lowercase letter.",
+        "passwordNumber": "Password must include at least one number.",
+        "namesRequired": "Please enter your first and last name.",
+        "validName": "Please enter a valid name.",
+        "validPhone": "Please enter a valid phone number.",
+        "validWebsite": "Please enter a valid website URL."
       }
     },
     "login": {
@@ -2804,7 +2812,10 @@
       "resubscribe": "Resubscribe",
       "feedbackTitle": "Feedback:",
       "feedbackMessage": "We'd like to know why you unsubscribed.",
-      "shareFeedback": "Share your feedback"
+      "shareFeedback": "Share your feedback",
+      "accidentalNote": "<strong>Unsubscribed by accident?</strong> You can subscribe again at any time.",
+      "backToHome": "Back to home",
+      "feedbackNote": "Changed your mind or have feedback? <a href=\"/contact\" class=\"underline\">Contact us</a>."
     },
     "invalid": {
       "title": {
@@ -2842,7 +2853,13 @@
       "resubscribe": "Resubscribe",
       "subscribeNewsletter": "Subscribe to newsletter",
       "contactSupport": "Contact support",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "buttons": {
+        "tryAgain": "Try again",
+        "subscribeNewsletter": "Subscribe again",
+        "contact": "Contact us",
+        "backToHome": "Back to home"
+      }
     }
   },
   "demo": {
@@ -3913,5 +3930,23 @@
       "Informational": "Informational"
     },
     "dateRecently": "Recently"
+  },
+  "dashboardFooter": {
+    "description": "Accessibility monitoring, reporting, and remediation workflows for modern teams.",
+    "dashboard": "Dashboard",
+    "overview": "Overview",
+    "scans": "Scans",
+    "sites": "Sites",
+    "teams": "Teams",
+    "settings": "Settings",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "whiteLabel": "White-label",
+    "support": "Support",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "allRightsReserved": "All rights reserved.",
+    "madeWithLove": "Built in the Netherlands."
   }
 }

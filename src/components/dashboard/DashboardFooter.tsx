@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 export default function DashboardFooter() {
   const currentYear = new Date().getFullYear();
-  const t = useTranslations('footer');
+  const t = useTranslations('dashboardFooter');
 
   return (
     <footer className="border-t border-border/50 bg-muted/30 mt-auto">

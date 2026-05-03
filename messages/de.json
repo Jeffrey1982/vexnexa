@@ -40,24 +40,7 @@
       },
       "twitter": "VexNexa auf Twitter besuchen"
     },
-    "dashboard": {
-      "description": "Professionelle Barrierefreiheitstests und Compliance-Monitoring.",
-      "dashboard": "Dashboard",
-      "overview": "Übersicht",
-      "scans": "Scans",
-      "sites": "Websites",
-      "teams": "Teams",
-      "settings": "Einstellungen",
-      "billing": "Abrechnung",
-      "notifications": "Benachrichtigungen",
-      "whiteLabel": "White Label",
-      "support": "Support",
-      "contact": "Kontakt",
-      "privacyPolicy": "Datenschutzerklärung",
-      "termsOfService": "Allgemeine Geschäftsbedingungen",
-      "allRightsReserved": "Alle Rechte vorbehalten.",
-      "madeWithLove": "Gemaakt mit ❤️ für Web-Barrierefreiheit"
-    },
+    "dashboard": "Dashboard",
     "brandedFooter": {
       "description": "Barrierefreiheitstests und Compliance-Plattform",
       "quickLinks": "Schnelle Links",
@@ -85,12 +68,8 @@
     },
     "support": {
       "title": "Support",
-      "contact": "Contact",
-      "help": "Help Center",
-      "faq": "FAQ",
-      "api": "API Docs",
-      "status": "System Status",
-      "about": "About",
+      "contact": "Kontakt",
+      "about": "?ber uns",
       "blog": "Blog"
     },
     "legal": {
@@ -111,7 +90,21 @@
       "pilotPartner": "Pilot Partner Program",
       "agencyMonitoring": "Agency Monitoring"
     },
-    "disclaimer": "Public content scanning • No storage of personal data"
+    "disclaimer": "Public content scanning • No storage of personal data",
+    "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
+    "overview": "?bersicht",
+    "scans": "Scans",
+    "sites": "Websites",
+    "teams": "Teams",
+    "settings": "Einstellungen",
+    "billing": "Abrechnung",
+    "notifications": "Benachrichtigungen",
+    "whiteLabel": "White-Label",
+    "contact": "Kontakt",
+    "privacyPolicy": "Datenschutzerkl?rung",
+    "termsOfService": "Nutzungsbedingungen",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "madeWithLove": "Gebaut in den Niederlanden."
   },
   "hero": {
     "headline": "WCAG 2.2 ohne den Lärm.",
@@ -653,12 +646,19 @@
           "basicReports": "Basic reports",
           "emailSupport": "Email support",
           "site": "Website",
-          "user": "Benutzer"
+          "user": "Benutzer",
+          "pdf": "PDF-Export",
+          "history": "Verlauf ?ber {count} Monate",
+          "support": "E-Mail-Support"
         },
         "limitations": {
           "noWord": "No Word export",
           "noScheduling": "No scheduling",
-          "limitedIntegrations": "Limited integrations"
+          "limitedIntegrations": "Limited integrations",
+          "noWordExports": "Keine Word-Exporte",
+          "noCrawling": "Kein Crawling",
+          "noIntegrations": "Keine Integrationen",
+          "noWhiteLabel": "Keine White-Label-Berichte"
         }
       },
       "pro": {
@@ -1120,6 +1120,20 @@
       "title": "Sprechen Sie mit uns ?ber Berichte, Monitoring oder",
       "titleHighlight": "Agenturnutzung",
       "subtitle": "Fragen zu Pl?nen, White-Label-Berichten oder wie VexNexa in Ihren Workflow passt? Wir helfen Ihnen schnell zur passenden Einrichtung."
+    },
+    "quickReasons": {
+      "sampleReport": {
+        "title": "Walkthrough eines Beispielberichts anfragen",
+        "description": "Sieh genau, was deine Kunden oder Stakeholder erhalten."
+      },
+      "agencyWorkflows": {
+        "title": "Nach Agentur-Workflows fragen",
+        "description": "White-Label-Berichte, Multi-Site-Management und Teampl?tze."
+      },
+      "choosePlan": {
+        "title": "Hilfe bei der Wahl des richtigen Plans",
+        "description": "Wir empfehlen die Einrichtung, die zu deinem Team und Volumen passt."
+      }
     }
   },
   "auth": {
@@ -1177,7 +1191,9 @@
         "allFieldsRequired": "Please fill in all fields",
         "invalidEmail": "Please enter a valid email address",
         "passwordLength": "Password must be at least 8 characters",
-        "passwordsMatch": "Passwords must match"
+        "passwordsMatch": "Passwords must match",
+        "tooManyRequests": "Zu viele Registrierungsversuche. Bitte warte kurz und versuche es erneut.",
+        "timeout": "Die Registrierung hat zu lange gedauert. Bitte versuche es gleich erneut."
       },
       "success": {
         "title": "Account created successfully!",
@@ -1207,6 +1223,19 @@
           "title": "Preferences",
           "description": "Customize your experience"
         }
+      },
+      "validation": {
+        "requiredFields": "Bitte f?lle alle Pflichtfelder aus.",
+        "validEmail": "Bitte gib eine g?ltige E-Mail-Adresse ein.",
+        "passwordsMatch": "Die Passw?rter stimmen nicht ?berein.",
+        "passwordLength": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "passwordUppercase": "Das Passwort muss mindestens einen Gro?buchstaben enthalten.",
+        "passwordLowercase": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten.",
+        "passwordNumber": "Das Passwort muss mindestens eine Zahl enthalten.",
+        "namesRequired": "Bitte gib deinen Vor- und Nachnamen ein.",
+        "validName": "Bitte gib einen g?ltigen Namen ein.",
+        "validPhone": "Bitte gib eine g?ltige Telefonnummer ein.",
+        "validWebsite": "Bitte gib eine g?ltige Website-URL ein."
       }
     },
     "forgotPassword": {
@@ -1688,7 +1717,10 @@
       "resubscribe": "Resubscribe",
       "feedbackTitle": "Feedback:",
       "feedbackMessage": "We'd like to know why you unsubscribed.",
-      "shareFeedback": "Share your feedback"
+      "shareFeedback": "Share your feedback",
+      "accidentalNote": "<strong>Versehentlich abgemeldet?</strong> Du kannst dich jederzeit erneut anmelden.",
+      "backToHome": "Zur Startseite",
+      "feedbackNote": "Meinung ge?ndert oder Feedback? <a href=\"/contact\" class=\"underline\">Kontaktiere uns</a>."
     },
     "invalid": {
       "title": {
@@ -1726,7 +1758,13 @@
       "resubscribe": "Resubscribe",
       "subscribeNewsletter": "Subscribe to newsletter",
       "contactSupport": "Contact support",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "buttons": {
+        "tryAgain": "Erneut versuchen",
+        "subscribeNewsletter": "Erneut abonnieren",
+        "contact": "Kontakt aufnehmen",
+        "backToHome": "Zur Startseite"
+      }
     }
   },
   "features": {
@@ -3193,6 +3231,58 @@
       "badge": "Schnellstart",
       "title": "Starten Sie mit Ihrem ersten Scan",
       "subtitle": "Geben Sie Ihre Website-URL ein und wir f?hren einen umfassenden Barrierefreiheits-Scan durch"
+    },
+    "form": {
+      "title": "Starte deinen ersten Scan",
+      "description": "Wir analysieren deine Website auf Barrierefreiheitsprobleme und liefern umsetzbare Empfehlungen",
+      "url": {
+        "label": "Website-URL",
+        "placeholder": "https://beispiel.de",
+        "help": "Gib die vollst?ndige URL der Seite ein, die du scannen m?chtest"
+      },
+      "frequency": {
+        "label": "Scan-H?ufigkeit",
+        "once": "Einmaliger Scan",
+        "weekly": "W?chentlich",
+        "monthly": "Monatlich",
+        "help": {
+          "once": "Jetzt einen einzelnen Scan ausf?hren",
+          "recurring": "Deine Website automatisch {frequency} scannen"
+        }
+      },
+      "notify": {
+        "label": "E-Mail senden, wenn der Scan abgeschlossen ist",
+        "help": "Du erh?ltst eine Benachrichtigung mit einem Link zu deinen Ergebnissen"
+      },
+      "submit": {
+        "text": "Barrierefreiheitsscan starten",
+        "loading": "Scan wird gestartet..."
+      }
+    },
+    "errors": {
+      "urlRequired": "Bitte gib eine URL ein",
+      "urlInvalid": "Bitte gib eine g?ltige URL ein"
+    },
+    "nextSteps": {
+      "title": "Was passiert als N?chstes?",
+      "step1": {
+        "title": "Der Scan l?uft automatisch",
+        "description": "Unser Scanner analysiert deine Seite auf WCAG-Konformit?t und 8 zus?tzliche Barrierefreiheitskategorien"
+      },
+      "step2": {
+        "title": "Detaillierten Bericht ansehen",
+        "description": "Sieh priorisierte Probleme mit Codeausschnitten, Screenshots und klaren Behebungsschritten"
+      },
+      "step3": {
+        "title": "Top-Probleme beheben -> erneut scannen -> verbessern",
+        "description": "Arbeite Probleme nach Priorit?t ab, scanne erneut, verfolge den Fortschritt und teile Berichte mit deinem Team"
+      }
+    },
+    "footer": {
+      "notReady": "Noch nicht bereit f?r einen Scan?",
+      "learnMore": "Mehr ?ber unsere Funktionen erfahren",
+      "haveAccount": "Du hast bereits ein Konto?",
+      "signIn": "Anmelden"
     }
   },
   "websiteAccessibilityChecker": {
@@ -3204,6 +3294,143 @@
       "ctaPrimary": "Website kostenlos pr?fen",
       "ctaSecondary": "Alle Funktionen ansehen",
       "note": "Kostenlose Pr?fung. Keine Kreditkarte. Ergebnisse in Sekunden."
+    },
+    "passFailProblem": {
+      "title": "Warum \"78 % barrierefrei\" fast nichts aussagt",
+      "subtitle": "Ein einzelner Prozentsatz verbirgt mehr, als er zeigt. Zwei Websites k?nnen beide 78 % erreichen: eine hat drei kritische Tastaturfallen, die andere vierzig fehlende Alt-Texte f?r dekorative Bilder. Die erste ist unbenutzbar. Die zweite ist weitgehend in Ordnung.",
+      "solution": "Basis-Checker behandeln jede fehlgeschlagene Regel gleich. VexNexa nicht. Jeder Versto? wird nach realer Nutzerwirkung gewichtet, damit du Dringendes von Kosmetik trennen kannst."
+    },
+    "whatYouGet": {
+      "weightedScore": {
+        "title": "Gewichteter Health Score",
+        "description": "Kein einfaches Verh?ltnis. Kritische Probleme wiegen st?rker als kleine, sodass der Score echte Nutzerwirkung widerspiegelt."
+      },
+      "severityTiers": {
+        "title": "Schweregradstufen",
+        "description": "Vier Stufen: kritisch, ernst, moderat, gering. So kann dein Team ohne R?tselraten triagieren. Kritische Probleme stehen immer zuerst."
+      },
+      "elementDetail": {
+        "title": "Details auf Elementebene",
+        "description": "Sieh den exakten CSS-Selektor und das HTML-Snippet f?r jeden Versto?. Keine Suche im Code."
+      },
+      "wcagReferences": {
+        "title": "WCAG-Kriteriumsreferenzen",
+        "description": "Jeder Versto? verweist auf das konkrete WCAG-Erfolgskriterium, mit verst?ndlicher Erkl?rung, warum es wichtig ist."
+      },
+      "riskAssessment": {
+        "title": "Risikobewertung",
+        "description": "Verstehe, welche Probleme Nutzer vollst?ndig blockieren und welche nur kleine H?rden sind. Priorisiere Fixes, die Accessibility wirklich verbessern."
+      },
+      "trendTracking": {
+        "title": "Trendverfolgung",
+        "description": "Beobachte, wie sich dein Score ?ber die Zeit ver?ndert. Sieh, ob neue Funktionen Accessibility verbessern oder Regressionen einschleichen."
+      },
+      "title": "Wie ein echter Accessibility-Check aussieht",
+      "subtitle": "VexNexa geht ?ber einfache Pass/Fail-Tests hinaus. Erhalte umsetzbare Einblicke, um Fixes zu priorisieren und Fortschritt zu verfolgen."
+    },
+    "comparison": {
+      "items": {
+        "resultFormat": {
+          "label": "Ergebnisformat",
+          "basic": "Einzelner Score oder Badge",
+          "vexnexa": "Nach Schweregrad sortierte Versto?liste"
+        },
+        "issueContext": {
+          "label": "Problemkontext",
+          "basic": "Nur Regel-ID",
+          "vexnexa": "CSS-Selektor + HTML-Snippet + WCAG-Referenz"
+        },
+        "prioritization": {
+          "label": "Priorisierung",
+          "basic": "Keine: flache Liste",
+          "vexnexa": "4 Schweregrade + gewichteter Impact Score"
+        },
+        "reporting": {
+          "label": "Reporting",
+          "basic": "Screenshot oder Copy/Paste",
+          "vexnexa": "PDF und DOCX mit vollst?ndigen Details"
+        },
+        "rechecking": {
+          "label": "Erneut pr?fen",
+          "basic": "Manuell erneut ausf?hren, keine Historie",
+          "vexnexa": "Score-Historie + Regressionstracking"
+        },
+        "branding": {
+          "label": "Branding",
+          "basic": "Drittanbieterlogo im Output",
+          "vexnexa": "White-Label mit deiner Marke"
+        }
+      },
+      "title": "Wie VexNexa im Vergleich zu kostenlosen Checkern abschneidet",
+      "subtitle": "Kostenlose Accessibility-Checker sind n?tzlich f?r einen schnellen Blick. Wenn du Fixes priorisieren, Compliance dokumentieren oder Fortschritt verfolgen musst, brauchst du mehr als Pass/Fail.",
+      "table": {
+        "capability": "F?higkeit",
+        "freeChecker": "Kostenloser Checker",
+        "vexnexa": "VexNexa"
+      }
+    },
+    "audience": {
+      "marketing": {
+        "title": "Marketing- und Content-Teams",
+        "description": "Pr?fe Landingpages, bevor Kampagnen live gehen. Vermeide Inhalte, die Besucher ausschlie?en oder Beschwerden ausl?sen."
+      },
+      "procurement": {
+        "title": "Einkauf und Compliance",
+        "description": "F?ge Accessibility-Berichte zu Lieferantenbewertungen, RFP-Antworten und internen Audits hinzu. Strukturierte Nachweise statt Screenshot."
+      },
+      "freelancers": {
+        "title": "Freelancer und Consultants",
+        "description": "Erg?nze deine Deliverables um Accessibility-Checks. Exportiere gebrandete Berichte, die deinen Wert zeigen."
+      },
+      "title": "F?r Menschen, die mehr brauchen als ein Badge"
+    },
+    "limitations": {
+      "title": "Was automatische Checks nicht k?nnen",
+      "description": "Kein Tool findet alles. Automatische Checker erkennen zuverl?ssig fehlende Alt-Texte, Kontrastprobleme und fehlende Formularlabels. Kriterien zu Bedeutung, Lesereihenfolge oder komplexen Tastaturinteraktionen brauchen weiterhin menschliche Pr?fung.",
+      "solution": "VexNexa markiert, wo manuelle Pr?fung empfohlen wird, und hilft zu priorisieren, was automatisierte Tests finden."
+    },
+    "faq": {
+      "q1": {
+        "question": "Wie unterscheidet sich VexNexa von WAVE oder Lighthouse?",
+        "answer": "WAVE und Lighthouse sind hervorragende kostenlose Tools f?r schnelle Checks. VexNexa erg?nzt Schweregradpriorisierung, Element-CSS-Selektoren, exportierbare PDF/DOCX-Berichte, Scoretracking und White-Label-Branding."
+      },
+      "q2": {
+        "question": "Kann ich mehr als eine Seite gleichzeitig pr?fen?",
+        "answer": "Ja. Bezahlte Pl?ne unterst?tzen Mehrseiten-Scans. Jede Seite erh?lt eine eigene priorisierte Versto?liste und tr?gt zum gesamten Site Health Score bei."
+      },
+      "q3": {
+        "question": "Gegen welche Standards pr?ft VexNexa?",
+        "answer": "VexNexa pr?ft gegen WCAG 2.1 Level AA und ausgew?hlte WCAG 2.2-Kriterien mit axe-core. Jeder gemeldete Versto? verweist auf das passende Erfolgskriterium."
+      },
+      "q4": {
+        "question": "Muss ich ein Konto erstellen?",
+        "answer": "Du kannst eine einzelne Seite ohne Konto scannen. F?r Monitoring, Mehrseiten-Scans oder Exporte brauchst du ein kostenloses Konto."
+      },
+      "q5": {
+        "question": "Wie genau sind die Ergebnisse?",
+        "answer": "VexNexa nutzt axe-core, dieselbe vertrauensw?rdige Engine, die Microsoft, Google und die US-Regierung verwenden. Automatisierte Tests finden nicht alles, daher markiert VexNexa empfohlene manuelle Pr?fungen."
+      },
+      "title": "Accessibility-Checker - FAQ"
+    },
+    "finalCTA": {
+      "title": "Sieh, was ein echter Accessibility-Check zeigt",
+      "subtitle": "Starte deinen ersten Check kostenlos: keine Kreditkarte, keine Verpflichtung. Wenn die Ergebnisse hilfreich sind, wei? dein Team, was zu tun ist.",
+      "ctaPrimary": "Kostenlosen Check starten"
+    },
+    "relatedSolutions": {
+      "title": "Verwandte Accessibility-Tools",
+      "wcagScan": {
+        "title": "WCAG-Scan ausf?hren",
+        "description": "F?ge eine URL ein und erhalte in Sekunden nach Schwere sortierte Verst??e."
+      },
+      "complianceReport": {
+        "title": "Compliance-Berichte exportieren",
+        "description": "Lade strukturierte PDF- und DOCX-Berichte f?r Stakeholder und Audits herunter."
+      },
+      "whiteLabel": {
+        "title": "Berichte branden",
+        "description": "Liefere Berichte unter deinem eigenen Logo mit White-Label-Branding."
+      }
     }
   },
   "wcagComplianceReport": {
@@ -3215,6 +3442,115 @@
       "ctaPrimary": "Ersten Bericht erstellen",
       "ctaSecondary": "Beispielbericht ansehen",
       "note": "Kostenlose Testphase. Keine Kreditkarte erforderlich. Erster Bericht in Minuten."
+    },
+    "reportingGap": {
+      "title": "Scanergebnisse allein ?berzeugen Entscheider nicht",
+      "subtitle": "Du wei?t, dass die Website Accessibility-Probleme hat. Der Scanner hat es best?tigt. Aber ein Screenshot aus einem Tool bewegt Compliance, Einkauf oder Executive Sponsor selten zum Handeln.",
+      "context": "Entscheider brauchen Kontext: wie schlimm ist es, was muss zuerst behoben werden, wie sieht Remediation aus und wie passt der aktuelle Zustand zu WCAG-Kriterien. Daf?r braucht es einen Bericht, kein Dashboard."
+    },
+    "reportStructure": {
+      "executiveSummary": {
+        "title": "Executive Summary",
+        "description": "Health Score, Note (A bis F), Risikostufe und verst?ndliche ?bersicht. F?r nichttechnische Leser, die die Kernaussage brauchen, nicht den Code."
+      },
+      "severityBreakdown": {
+        "title": "Aufschl?sselung nach Schweregrad",
+        "description": "Problemzahlen nach Schweregrad: kritisch, ernst, moderat, gering. Donutdiagramm und Fortschrittsbalken machen die Verteilung sofort klar."
+      },
+      "wcagMatrix": {
+        "title": "WCAG-Compliance-Matrix",
+        "description": "Eine kriteriumsweise Tabelle mit bestanden, fehlgeschlagen, manuelle Pr?fung n?tig oder nicht getestet f?r jedes relevante WCAG-Erfolgskriterium."
+      },
+      "topPriority": {
+        "title": "Wichtigste Korrekturen",
+        "description": "Die wirkungsst?rksten Probleme nach gewichteter Schwere sortiert. Jeder Eintrag enth?lt betroffene Elemente und Impact Score."
+      },
+      "detailedList": {
+        "title": "Detaillierte Problemliste",
+        "description": "Jeder Versto? mit WCAG-Kriterium, Schweregrad, betroffenen CSS-Selektoren, HTML-Snippets und Link zum relevanten WCAG Understanding-Dokument."
+      },
+      "eaaReadiness": {
+        "title": "EAA-Readiness-Indikator",
+        "description": "F?r europ?ische Compliance-Workflows: ein EAA-2025-Readiness-Badge und Hinweise zur Zuordnung zur European Accessibility Act."
+      },
+      "title": "In einem VexNexa-Compliance-Bericht",
+      "subtitle": "Jeder Abschnitt ist f?r einen bestimmten Leser aufgebaut: von F?hrungskr?ften mit One-Page-Summary bis zu Entwicklern mit Elementselektoren."
+    },
+    "exportFormats": {
+      "title": "Zwei Formate, ein konsistenter Bericht",
+      "pdf": {
+        "title": "PDF-Bericht",
+        "description": "Druckoptimiertes Layout mit visuellen Diagrammen, gebrandetem Cover und professioneller Typografie. Ideal f?r Stakeholder, RFP-Antworten oder Meetings.",
+        "features": {
+          "paginated": "Paginiert mit laufenden Kopf- und Fu?zeilen",
+          "charts": "Donutdiagramme, Fortschrittsbalken und Score Cards",
+          "branding": "Optionales White-Label-Branding",
+          "print": "Direkt aus dem Browser drucken, keine Konvertierung n?tig"
+        }
+      },
+      "docx": {
+        "title": "DOCX-Bericht",
+        "description": "Bearbeitbares Word-Dokument mit gleicher Inhaltsstruktur. Erg?nze Kommentare, passe es f?r Kunden an oder f?ge es in bestehende Vorlagen ein.",
+        "features": {
+          "editable": "Vollst?ndig bearbeitbar in Microsoft Word oder Google Docs",
+          "headings": "Strukturierte ?berschriften f?r einfache Navigation",
+          "formatting": "Tabellen, formatierter Text und Schweregradindikatoren",
+          "branding": "White-Label-Branding mit eingebettetem Logo"
+        }
+      }
+    },
+    "audience": {
+      "compliance": {
+        "title": "Compliance Officers",
+        "useCase": "F?ge WCAG-Dokumentation internen Audits und regulatorischen Unterlagen hinzu. Die WCAG-Matrix liefert Nachweise auf Kriteriumsebene."
+      },
+      "agency": {
+        "title": "Agenturteams",
+        "useCase": "Liefere professionelle Berichte unter eigener Marke. Zeige Fortschritt ?ber Zeit und begr?nde Accessibility-Budgets."
+      },
+      "procurement": {
+        "title": "Einkauf und Recht",
+        "useCase": "Bewerte Accessibility-Aussagen von Anbietern mit strukturierten Nachweisen. Nutze Berichte f?r Ausschreibungen und Vertragscompliance."
+      },
+      "title": "Berichte f?r Menschen, die Entscheidungen treffen"
+    },
+    "scope": {
+      "title": "Ein Compliance-Bericht, keine Compliance-Garantie",
+      "description": "VexNexa-Berichte dokumentieren, was automatisierte Tests erkennen. Sie decken einen relevanten Teil von WCAG ab, vollst?ndige Konformit?t erfordert aber automatisierte und manuelle Bewertung.",
+      "disclaimer": "Nutze VexNexa-Berichte als Teil eines breiteren Compliance-Prozesses, nicht als eigenst?ndige rechtliche Zertifizierung."
+    },
+    "faq": {
+      "q1": {
+        "question": "Welche WCAG-Kriterien deckt der Compliance-Bericht ab?",
+        "answer": "Der Bericht deckt testbare WCAG 2.1 Level AA-Kriterien und ausgew?hlte WCAG 2.2-Kriterien ab. Die Matrix zeigt pro Kriterium den Status: bestanden, fehlgeschlagen, manuelle Pr?fung n?tig oder nicht getestet."
+      },
+      "q2": {
+        "question": "Kann ich den Bericht vor dem Teilen anpassen?",
+        "answer": "Ja. Der DOCX-Export ist vollst?ndig bearbeitbar: Kommentare hinzuf?gen, Abschnitte entfernen oder Inhalte in eigene Vorlagen ?bernehmen. Das PDF ist f?r direktes Teilen oder Drucken finalisiert."
+      },
+      "q3": {
+        "question": "Enth?lt der Bericht Behebungshinweise?",
+        "answer": "Jeder Versto? enth?lt Beschreibung, Bedeutung und Link zum relevanten WCAG Understanding-Dokument. Die Priorit?tenliste ordnet Probleme nach Impact."
+      },
+      "q4": {
+        "question": "Wie unterscheidet sich das von einem Basis-Checker?",
+        "answer": "Basis-Checker liefern Rohdaten. VexNexa-Berichte strukturieren diese Daten f?r Entscheider: Executive Summary, Schweregradverteilung, WCAG-Matrix und priorisierte Aktionslisten."
+      },
+      "q5": {
+        "question": "Kann ich diese Berichte f?r rechtliche Compliance nutzen?",
+        "answer": "VexNexa-Berichte liefern starke Nachweise f?r Tests und Remediation-Planung. Sie sollten Teil einer breiteren Strategie mit manuellen Tests und Expertenpr?fung sein."
+      },
+      "q6": {
+        "question": "Enthalten Berichte White-Label-Branding?",
+        "answer": "Ja. Business- und Enterprise-Pl?ne enthalten vollst?ndiges White-Label-Branding mit Logo, Farben und Kontaktinformationen."
+      },
+      "title": "Compliance-Berichte - FAQ"
+    },
+    "finalCTA": {
+      "title": "Erstelle einen Bericht, der gelesen wird",
+      "subtitle": "Scanne eine URL, pr?fe die Ergebnisse und lade einen strukturierten WCAG-Compliance-Bericht in unter f?nf Minuten herunter.",
+      "ctaPrimary": "Ersten Bericht erstellen",
+      "ctaSecondary": "Pl?ne und Preise ansehen"
     }
   },
   "wcagScan": {
@@ -3226,6 +3562,115 @@
       "ctaPrimary": "Kostenlosen Scan starten",
       "ctaSecondary": "Beispielbericht ansehen",
       "note": "Keine Kreditkarte erforderlich. Die meisten Einzelseiten-Scans sind in unter einer Minute fertig."
+    },
+    "problem": {
+      "title": "Die meisten WCAG-Scans liefern eine Zahl. Keinen Plan.",
+      "subtitle": "Wahrscheinlich hast du schon einmal einen kostenlosen Accessibility-Checker ausprobiert. Er gab eine Punktzahl aus, listete Fehler auf und lie? dich mit kryptischen Regel-IDs zur?ck.",
+      "issues": {
+        "flatErrors": {
+          "title": "Flache Fehlerlisten",
+          "description": "Keine Priorisierung: ein fehlender Alt-Text steht neben einer Tastaturfalle."
+        },
+        "noElementContext": {
+          "title": "Kein Elementkontext",
+          "description": "Du wei?t, dass eine Regel fehlschl?gt, aber nicht welches Element in welchem Seitenbereich betroffen ist."
+        },
+        "staleResults": {
+          "title": "Veraltete Ergebnisse",
+          "description": "Einmalige Scans ohne M?glichkeit zu verfolgen, ob die Korrekturen vom letzten Monat gehalten haben."
+        }
+      }
+    },
+    "solution": {
+      "title": "Ein WCAG-Scan, der dir wirklich sagt, was zu tun ist",
+      "subtitle": "VexNexa scannt nach WCAG 2.1 AA und 2.2-Kriterien mit der axe-core Engine, derselben Engine, der Microsoft, Google und die US-Regierung vertrauen.",
+      "features": {
+        "severityRanked": {
+          "title": "Nach Schweregrad sortierte Verst??e",
+          "description": "Jedes Problem wird nach Auswirkung bewertet: kritisch, ernst, moderat oder gering. Behebe zuerst, was z?hlt."
+        },
+        "elementDetail": {
+          "title": "Details auf Elementebene",
+          "description": "Sieh den exakten CSS-Selektor, das HTML-Snippet und die Seitenposition f?r jeden Versto?. Kein R?tselraten."
+        },
+        "healthScore": {
+          "title": "Health Score (0-100)",
+          "description": "Ein gewichteter Score, der Anzahl und Schwere der Probleme ber?cksichtigt. Verfolge Verbesserungen ?ber die Zeit."
+        },
+        "exportReports": {
+          "title": "Exportfertige Berichte",
+          "description": "Lade deine WCAG-Scanergebnisse als PDF oder Word mit vollst?ndigen Details und Behebungshinweisen herunter."
+        }
+      }
+    },
+    "howItWorks": {
+      "steps": {
+        "enterUrl": {
+          "title": "URL eingeben",
+          "description": "F?ge eine beliebige Seiten-URL in den Scanner ein. ?ffentlich oder authentifiziert: VexNexa unterst?tzt beide Workflows."
+        },
+        "scanRuns": {
+          "title": "Der Scan l?uft in Sekunden",
+          "description": "Die axe-core Engine bewertet die Seite in Echtzeit nach WCAG 2.1 AA und ausgew?hlten 2.2-Kriterien."
+        },
+        "reviewResults": {
+          "title": "Priorisierte Ergebnisse pr?fen",
+          "description": "Verst??e erscheinen nach Schwere sortiert mit betroffenen Elementen, Behebungshinweisen und WCAG-Referenzen."
+        },
+        "exportShare": {
+          "title": "Exportieren oder teilen",
+          "description": "Lade einen PDF- oder DOCX-Bericht herunter. Teile Ergebnisse mit deinem Team oder h?nge sie an Kundenergebnisse an."
+        }
+      },
+      "title": "Vier Schritte von der URL zur Fixliste"
+    },
+    "comparison": {
+      "features": {
+        "severityRanked": "Nach Schweregrad sortierte Verst??e",
+        "elementSelectors": "CSS-Selektoren betroffener Elemente",
+        "wcag22Coverage": "Abdeckung von WCAG 2.2-Kriterien",
+        "pdfDocxExport": "PDF- und DOCX-Export",
+        "healthTracking": "Health Score ?ber die Zeit verfolgen",
+        "whiteLabel": "White-Label-Berichtsbranding",
+        "basicPassFail": "Einfaches Bestehen/Nichtbestehen-Ergebnis",
+        "freeSinglePage": "Kostenloser Check f?r eine Seite"
+      },
+      "title": "VexNexa im Vergleich zu Basis-Checkern",
+      "subtitle": "Kostenlose Checker reichen f?r einen schnellen Blick. Wenn du priorisieren, berichten und nachverfolgen musst, brauchst du mehr.",
+      "table": {
+        "feature": "Funktion",
+        "vexnexa": "VexNexa",
+        "basicChecker": "Basis-Checker"
+      }
+    },
+    "useCases": {
+      "siteOwners": {
+        "title": "Website-Betreiber und Marketingteams",
+        "description": "Pr?fe vor einem Redesign-Launch oder einer regulatorischen Frist, ob ?ffentliche Seiten WCAG AA erf?llen."
+      },
+      "developers": {
+        "title": "Entwickler und QA-Engineers",
+        "description": "Integriere WCAG-Scans in deinen Sprint-Workflow. Fange Regressionen ab, bevor sie in Produktion gehen."
+      },
+      "compliance": {
+        "title": "Compliance- und Rechtsteams",
+        "description": "Erstelle strukturierte Berichte, um deinen Accessibility-Status f?r Audits und Beschaffung zu dokumentieren."
+      }
+    },
+    "relatedSolutions": {
+      "title": "Weitere Accessibility-Workflows entdecken",
+      "complianceReports": {
+        "title": "Compliance-Berichte",
+        "description": "Wandle Scanergebnisse in executive-taugliche PDF- und DOCX-Berichte um."
+      },
+      "accessibilityChecker": {
+        "title": "Accessibility-Checker",
+        "description": "Vergleiche VexNexa mit Basis-Checkern und sieh, was dir bisher fehlt."
+      },
+      "ongoingMonitoring": {
+        "title": "Laufendes Monitoring",
+        "description": "Plane wiederkehrende Scans und verfolge Accessibility-Trends ?ber die Zeit."
+      }
     }
   },
   "checkout": {
@@ -3425,5 +3870,23 @@
       "Informational": "Informational"
     },
     "dateRecently": "Recently"
+  },
+  "dashboardFooter": {
+    "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
+    "dashboard": "Dashboard",
+    "overview": "?bersicht",
+    "scans": "Scans",
+    "sites": "Websites",
+    "teams": "Teams",
+    "settings": "Einstellungen",
+    "billing": "Abrechnung",
+    "notifications": "Benachrichtigungen",
+    "whiteLabel": "White-Label",
+    "support": "Support",
+    "contact": "Kontakt",
+    "privacyPolicy": "Datenschutzerkl?rung",
+    "termsOfService": "Nutzungsbedingungen",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "madeWithLove": "Gebaut in den Niederlanden."
   }
 }

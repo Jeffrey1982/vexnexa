@@ -40,24 +40,7 @@
       },
       "twitter": "Visite VexNexa no Twitter"
     },
-    "dashboard": {
-      "description": "Testes de acessibilidade profissionais e monitoramento de conformidade.",
-      "dashboard": "Painel",
-      "overview": "Visão Geral",
-      "scans": "Varreduras",
-      "sites": "Sites",
-      "teams": "Equipes",
-      "settings": "Configurações",
-      "billing": "Faturamento",
-      "notifications": "Notificações",
-      "whiteLabel": "White Label",
-      "support": "Suporte",
-      "contact": "Contato",
-      "privacyPolicy": "Política de Privacidade",
-      "termsOfService": "Termos de Serviço",
-      "allRightsReserved": "Todos os direitos reservados.",
-      "madeWithLove": "Feito com ❤️ para acessibilidade web"
-    },
+    "dashboard": "Painel",
     "brandedFooter": {
       "description": "Plataforma de testes de acessibilidade e conformidade",
       "quickLinks": "Links Rápidos",
@@ -86,11 +69,7 @@
     "support": {
       "title": "Suporte",
       "contact": "Contacto",
-      "help": "Centro de ajuda",
-      "faq": "Perguntas frequentes",
-      "api": "Documentação da API",
-      "status": "Estado do sistema",
-      "about": "About",
+      "about": "Sobre n?s",
       "blog": "Blog"
     },
     "legal": {
@@ -111,7 +90,21 @@
       "pilotPartner": "Pilot Partner Program",
       "agencyMonitoring": "Agency Monitoring"
     },
-    "disclaimer": "Public content scanning • No storage of personal data"
+    "disclaimer": "Public content scanning • No storage of personal data",
+    "description": "Monitoriza??o, relat?rios e fluxos de corre??o de acessibilidade para equipas modernas.",
+    "overview": "Vis?o geral",
+    "scans": "Scans",
+    "sites": "Sites",
+    "teams": "Equipas",
+    "settings": "Defini??es",
+    "billing": "Fatura??o",
+    "notifications": "Notifica??es",
+    "whiteLabel": "Marca branca",
+    "contact": "Contacto",
+    "privacyPolicy": "Pol?tica de privacidade",
+    "termsOfService": "Termos de servi?o",
+    "allRightsReserved": "Todos os direitos reservados.",
+    "madeWithLove": "Criado nos Pa?ses Baixos."
   },
   "hero": {
     "headline": "WCAG 2.2 sem o ruído.",
@@ -512,12 +505,19 @@
           "basicReports": "Relatórios básicos",
           "emailSupport": "Suporte por email",
           "site": "site",
-          "user": "utilizador"
+          "user": "utilizador",
+          "pdf": "Exporta??o PDF",
+          "history": "Hist?rico de {count} meses",
+          "support": "Suporte por e-mail"
         },
         "limitations": {
           "noWord": "Sem exportação Word",
           "noScheduling": "Sem agendamento",
-          "limitedIntegrations": "Integrações limitadas"
+          "limitedIntegrations": "Integrações limitadas",
+          "noWordExports": "Sem exporta??es Word",
+          "noCrawling": "Sem crawling",
+          "noIntegrations": "Sem integra??es",
+          "noWhiteLabel": "Sem relat?rios de marca branca"
         }
       },
       "pro": {
@@ -979,6 +979,20 @@
       "title": "Fale connosco sobre relat?rios, monitoriza??o ou",
       "titleHighlight": "uso por ag?ncias",
       "subtitle": "Perguntas sobre planos, relat?rios de marca branca ou como a VexNexa encaixa no seu workflow? Ajudamos a encontrar rapidamente a configura??o certa."
+    },
+    "quickReasons": {
+      "sampleReport": {
+        "title": "Pedir apresenta??o de um relat?rio exemplo",
+        "description": "Veja exatamente o que os seus clientes ou stakeholders ir?o receber."
+      },
+      "agencyWorkflows": {
+        "title": "Perguntar sobre workflows para ag?ncias",
+        "description": "Relat?rios de marca branca, gest?o multi-site e lugares de equipa."
+      },
+      "choosePlan": {
+        "title": "Ajuda para escolher o plano certo",
+        "description": "Recomendaremos a configura??o adequada ? sua equipa e volume."
+      }
     }
   },
   "auth": {
@@ -1036,7 +1050,9 @@
         "allFieldsRequired": "Por favor preencha todos os campos",
         "invalidEmail": "Por favor introduza um endereço de email válido",
         "passwordLength": "A palavra-passe deve ter pelo menos 8 caracteres",
-        "passwordsMatch": "As palavras-passe devem coincidir"
+        "passwordsMatch": "As palavras-passe devem coincidir",
+        "tooManyRequests": "Demasiadas tentativas de registo. Aguarde um momento e tente novamente.",
+        "timeout": "O registo demorou demasiado. Tente novamente dentro de instantes."
       },
       "success": {
         "title": "Account created successfully!",
@@ -1066,6 +1082,19 @@
           "title": "Preferences",
           "description": "Customize your experience"
         }
+      },
+      "validation": {
+        "requiredFields": "Preencha todos os campos obrigat?rios.",
+        "validEmail": "Introduza um endere?o de e-mail v?lido.",
+        "passwordsMatch": "As palavras-passe n?o coincidem.",
+        "passwordLength": "A palavra-passe deve ter pelo menos 8 caracteres.",
+        "passwordUppercase": "A palavra-passe deve incluir pelo menos uma letra mai?scula.",
+        "passwordLowercase": "A palavra-passe deve incluir pelo menos uma letra min?scula.",
+        "passwordNumber": "A palavra-passe deve incluir pelo menos um n?mero.",
+        "namesRequired": "Introduza o seu nome e apelido.",
+        "validName": "Introduza um nome v?lido.",
+        "validPhone": "Introduza um n?mero de telefone v?lido.",
+        "validWebsite": "Introduza um URL de website v?lido."
       }
     },
     "forgotPassword": {
@@ -1541,7 +1570,10 @@
       "resubscribe": "Voltar a subscrever",
       "feedbackTitle": "Comentários:",
       "feedbackMessage": "Gostaríamos de saber porque cancelou a subscrição.",
-      "shareFeedback": "Partilhe os seus comentários"
+      "shareFeedback": "Partilhe os seus comentários",
+      "accidentalNote": "<strong>Cancelou a subscri??o por engano?</strong> Pode subscrever novamente a qualquer momento.",
+      "backToHome": "Voltar ao in?cio",
+      "feedbackNote": "Mudou de ideias ou tem feedback? <a href=\"/contact\" class=\"underline\">Contacte-nos</a>."
     },
     "invalid": {
       "title": {
@@ -1579,7 +1611,13 @@
       "resubscribe": "Voltar a subscrever",
       "subscribeNewsletter": "Subscrever newsletter",
       "contactSupport": "Contactar suporte",
-      "loading": "A carregar..."
+      "loading": "A carregar...",
+      "buttons": {
+        "tryAgain": "Tentar novamente",
+        "subscribeNewsletter": "Subscrever novamente",
+        "contact": "Contactar",
+        "backToHome": "Voltar ao in?cio"
+      }
     }
   },
   "features": {
@@ -3046,6 +3084,58 @@
       "badge": "In?cio r?pido",
       "title": "Comece com o seu primeiro scan",
       "subtitle": "Introduza o URL do seu site e faremos um scan completo de acessibilidade"
+    },
+    "form": {
+      "title": "Inicie o seu primeiro scan",
+      "description": "Vamos analisar o seu website para encontrar problemas de acessibilidade e fornecer recomenda??es acion?veis",
+      "url": {
+        "label": "URL do website",
+        "placeholder": "https://exemplo.pt",
+        "help": "Introduza o URL completo da p?gina que pretende analisar"
+      },
+      "frequency": {
+        "label": "Frequ?ncia do scan",
+        "once": "Scan ?nico",
+        "weekly": "Semanal",
+        "monthly": "Mensal",
+        "help": {
+          "once": "Executar um ?nico scan agora",
+          "recurring": "Analisar automaticamente o seu site {frequency}"
+        }
+      },
+      "notify": {
+        "label": "Enviar-me um e-mail quando o scan estiver conclu?do",
+        "help": "Receber? uma notifica??o com um link para ver os resultados"
+      },
+      "submit": {
+        "text": "Iniciar scan de acessibilidade",
+        "loading": "A iniciar scan..."
+      }
+    },
+    "errors": {
+      "urlRequired": "Introduza um URL",
+      "urlInvalid": "Introduza um URL v?lido"
+    },
+    "nextSteps": {
+      "title": "O que acontece a seguir?",
+      "step1": {
+        "title": "O scan ? executado automaticamente",
+        "description": "O nosso scanner analisa a sua p?gina quanto ? conformidade WCAG e 8 categorias adicionais de acessibilidade"
+      },
+      "step2": {
+        "title": "Veja o seu relat?rio detalhado",
+        "description": "Veja problemas priorizados com snippets de c?digo, capturas de ecr? e passos claros de corre??o"
+      },
+      "step3": {
+        "title": "Corrija os principais problemas -> volte a analisar -> melhore",
+        "description": "Resolva os problemas por prioridade, volte a analisar para acompanhar o progresso e partilhe relat?rios com a sua equipa"
+      }
+    },
+    "footer": {
+      "notReady": "Ainda n?o est? pronto para analisar?",
+      "learnMore": "Saiba mais sobre as nossas funcionalidades",
+      "haveAccount": "J? tem uma conta?",
+      "signIn": "Iniciar sess?o"
     }
   },
   "websiteAccessibilityChecker": {
@@ -3057,6 +3147,143 @@
       "ctaPrimary": "Verificar site gr?tis",
       "ctaSecondary": "Explorar funcionalidades",
       "note": "Verifica??o gr?tis. Sem cart?o. Resultados em segundos."
+    },
+    "passFailProblem": {
+      "title": "Porque \"78% acess?vel\" quase n?o diz nada",
+      "subtitle": "Uma ?nica percentagem esconde mais do que revela. Dois sites podem ter 78%: um tem tr?s armadilhas de teclado cr?ticas, outro tem quarenta textos alt em falta em imagens decorativas. O primeiro ? inutiliz?vel. O segundo est? quase bem.",
+      "solution": "Verificadores b?sicos tratam cada regra falhada como igual. A VexNexa n?o. Cada viola??o ? ponderada pelo impacto real para separar o urgente do cosm?tico."
+    },
+    "whatYouGet": {
+      "weightedScore": {
+        "title": "Pontua??o de sa?de ponderada",
+        "description": "N?o ? uma propor??o simples. Problemas cr?ticos pesam mais que menores, refletindo impacto real nos utilizadores."
+      },
+      "severityTiers": {
+        "title": "N?veis de gravidade",
+        "description": "Quatro n?veis: cr?tico, s?rio, moderado e menor, para a equipa priorizar sem adivinhar. Problemas cr?ticos aparecem sempre primeiro."
+      },
+      "elementDetail": {
+        "title": "Detalhe ao n?vel do elemento",
+        "description": "Veja o seletor CSS exato e o snippet HTML para cada viola??o. Sem procurar pelo c?digo."
+      },
+      "wcagReferences": {
+        "title": "Refer?ncias a crit?rios WCAG",
+        "description": "Cada viola??o liga ao crit?rio WCAG espec?fico, com explica??o clara sobre a import?ncia."
+      },
+      "riskAssessment": {
+        "title": "Avalia??o de risco",
+        "description": "Perceba que problemas bloqueiam completamente utilizadores e quais s?o inconvenientes menores. Priorize corre??es que melhoram realmente a acessibilidade."
+      },
+      "trendTracking": {
+        "title": "Acompanhamento de tend?ncias",
+        "description": "Monitorize como a pontua??o muda ao longo do tempo. Veja se novas funcionalidades melhoram a acessibilidade ou introduzem regress?es."
+      },
+      "title": "Como ? uma verifica??o real de acessibilidade",
+      "subtitle": "A VexNexa vai al?m de simples testes passa/falha. Obtenha insights acion?veis para priorizar corre??es e acompanhar melhorias."
+    },
+    "comparison": {
+      "items": {
+        "resultFormat": {
+          "label": "Formato do resultado",
+          "basic": "Pontua??o ?nica ou badge",
+          "vexnexa": "Lista de viola??es por gravidade"
+        },
+        "issueContext": {
+          "label": "Contexto do problema",
+          "basic": "Apenas ID da regra",
+          "vexnexa": "Seletor CSS + snippet HTML + ref WCAG"
+        },
+        "prioritization": {
+          "label": "Prioriza??o",
+          "basic": "Nenhuma: lista plana",
+          "vexnexa": "4 n?veis + pontua??o de impacto ponderada"
+        },
+        "reporting": {
+          "label": "Relat?rios",
+          "basic": "Captura ou copiar/colar",
+          "vexnexa": "PDF e DOCX com detalhe completo"
+        },
+        "rechecking": {
+          "label": "Nova verifica??o",
+          "basic": "Reexecu??o manual, sem hist?rico",
+          "vexnexa": "Hist?rico de pontua??o + regress?es"
+        },
+        "branding": {
+          "label": "Branding",
+          "basic": "Logo de terceiro no output",
+          "vexnexa": "Marca branca com a sua marca"
+        }
+      },
+      "title": "Como a VexNexa compara com verificadores gratuitos",
+      "subtitle": "Verificadores gratuitos s?o ?teis para uma vista r?pida. Para priorizar corre??es, documentar conformidade ou acompanhar melhoria, precisa de mais que passa/falha.",
+      "table": {
+        "capability": "Capacidade",
+        "freeChecker": "Verificador gratuito",
+        "vexnexa": "VexNexa"
+      }
+    },
+    "audience": {
+      "marketing": {
+        "title": "Equipas de marketing e conte?do",
+        "description": "Verifique landing pages antes de campanhas irem live. Evite publicar conte?do inacess?vel que exclui visitantes ou gera reclama??es."
+      },
+      "procurement": {
+        "title": "Procurement e compliance",
+        "description": "Anexe relat?rios de acessibilidade a avalia??es de fornecedores, RFPs e auditorias internas. Evid?ncia estruturada, n?o uma captura."
+      },
+      "freelancers": {
+        "title": "Freelancers e consultores",
+        "description": "Adicione verifica??es de acessibilidade aos seus entreg?veis. Exporte relat?rios com marca que demonstram o seu valor."
+      },
+      "title": "Desenhado para quem precisa de mais que um badge"
+    },
+    "limitations": {
+      "title": "O que verifica??es autom?ticas n?o conseguem fazer",
+      "description": "Nenhuma ferramenta encontra tudo. Verificadores autom?ticos detetam bem alt em falta, problemas de contraste e labels de formul?rio ausentes. Mas significado do conte?do, ordem de leitura ou intera??es complexas de teclado exigem revis?o humana.",
+      "solution": "A VexNexa assinala onde a revis?o manual ? recomendada e ajuda a priorizar o que os testes autom?ticos encontram."
+    },
+    "faq": {
+      "q1": {
+        "question": "Como a VexNexa difere do WAVE ou Lighthouse?",
+        "answer": "WAVE e Lighthouse s?o excelentes ferramentas gratuitas para checks r?pidos. A VexNexa adiciona gravidade, seletores CSS, relat?rios PDF/DOCX, tracking de pontua??o e marca branca."
+      },
+      "q2": {
+        "question": "Posso verificar mais de uma p?gina de cada vez?",
+        "answer": "Sim. Planos pagos suportam scans multi-p?gina. Cada p?gina gera a sua lista de viola??es e contribui para a pontua??o geral do site."
+      },
+      "q3": {
+        "question": "Que standards a VexNexa verifica?",
+        "answer": "A VexNexa verifica WCAG 2.1 n?vel AA e crit?rios WCAG 2.2 selecionados com axe-core. Cada viola??o referencia o crit?rio correspondente."
+      },
+      "q4": {
+        "question": "Preciso de criar conta?",
+        "answer": "Pode analisar uma p?gina sem conta para ver resultados. Para monitoriza??o, scans multi-p?gina ou exporta??o, precisa de uma conta gratuita."
+      },
+      "q5": {
+        "question": "Qu?o precisos s?o os resultados?",
+        "answer": "A VexNexa usa axe-core, motor de confian?a usado pela Microsoft, Google e governo dos EUA. Testes autom?ticos n?o detetam tudo; por isso a VexNexa marca onde revis?o manual ? recomendada."
+      },
+      "title": "Verificador de acessibilidade - FAQ"
+    },
+    "finalCTA": {
+      "title": "Veja o que uma verifica??o real revela",
+      "subtitle": "Execute a primeira verifica??o gr?tis: sem cart?o, sem compromisso. Se os resultados forem ?teis, a equipa saber? o que fazer.",
+      "ctaPrimary": "Iniciar verifica??o gratuita"
+    },
+    "relatedSolutions": {
+      "title": "Ferramentas de acessibilidade relacionadas",
+      "wcagScan": {
+        "title": "Executar um scan WCAG",
+        "description": "Cole um URL e receba viola??es ordenadas por gravidade em segundos."
+      },
+      "complianceReport": {
+        "title": "Exportar relat?rios de conformidade",
+        "description": "Descarregue relat?rios PDF e DOCX estruturados para stakeholders e auditorias."
+      },
+      "whiteLabel": {
+        "title": "Branding dos seus relat?rios",
+        "description": "Entregue relat?rios com o seu pr?prio logo atrav?s de marca branca."
+      }
     }
   },
   "wcagComplianceReport": {
@@ -3068,6 +3295,115 @@
       "ctaPrimary": "Gerar primeiro relat?rio",
       "ctaSecondary": "Ver relat?rio de exemplo",
       "note": "Teste gr?tis. Sem cart?o. Primeiro relat?rio em minutos."
+    },
+    "reportingGap": {
+      "title": "Resultados de scan isolados n?o convencem decisores",
+      "subtitle": "Sabe que o site tem problemas de acessibilidade. O scanner confirmou. Mas enviar uma captura de ecr? para compliance, procurement ou dire??o raramente muda algo.",
+      "context": "Os decisores precisam de contexto: gravidade, o que corrigir primeiro, como ? a remedia??o e como o estado atual mapeia para WCAG. Isso exige um relat?rio, n?o um dashboard."
+    },
+    "reportStructure": {
+      "executiveSummary": {
+        "title": "Resumo executivo",
+        "description": "Pontua??o de sa?de, classifica??o (A a F), n?vel de risco e vis?o clara. Para leitores n?o t?cnicos que precisam da mensagem principal, n?o do c?digo."
+      },
+      "severityBreakdown": {
+        "title": "Distribui??o por gravidade",
+        "description": "Contagem de problemas por gravidade: cr?tico, s?rio, moderado, menor. Gr?fico donut e barras tornam a distribui??o clara."
+      },
+      "wcagMatrix": {
+        "title": "Matriz de conformidade WCAG",
+        "description": "Tabela crit?rio a crit?rio com passa, falha, requer revis?o manual ou n?o testado para cada crit?rio WCAG relevante."
+      },
+      "topPriority": {
+        "title": "Corre??es priorit?rias",
+        "description": "Os problemas de maior impacto ordenados por gravidade ponderada. Cada entrada inclui elementos afetados e pontua??o de impacto."
+      },
+      "detailedList": {
+        "title": "Lista detalhada de problemas",
+        "description": "Cada viola??o com crit?rio WCAG, gravidade, seletores CSS afetados, snippets HTML e link para o documento WCAG Understanding relevante."
+      },
+      "eaaReadiness": {
+        "title": "Indicador de prepara??o EAA",
+        "description": "Para workflows europeus: badge de prepara??o EAA 2025 e notas sobre o mapeamento para a European Accessibility Act."
+      },
+      "title": "Dentro de um relat?rio de conformidade VexNexa",
+      "subtitle": "Cada sec??o ? estruturada para um leitor espec?fico: executivos que precisam de resumo e programadores que precisam de seletores."
+    },
+    "exportFormats": {
+      "title": "Dois formatos, um relat?rio consistente",
+      "pdf": {
+        "title": "Relat?rio PDF",
+        "description": "Layout otimizado para impress?o com gr?ficos, capa com marca e tipografia profissional. Ideal para stakeholders, RFPs ou reuni?es.",
+        "features": {
+          "paginated": "Paginado com cabe?alhos e rodap?s cont?nuos",
+          "charts": "Gr?ficos donut, barras de progresso e cart?es de pontua??o",
+          "branding": "Branding de marca branca opcional",
+          "print": "Impress?o direta no browser, sem convers?o"
+        }
+      },
+      "docx": {
+        "title": "Relat?rio DOCX",
+        "description": "Documento Word edit?vel com a mesma estrutura. Adicione coment?rios, personalize para clientes ou cole em templates existentes.",
+        "features": {
+          "editable": "Totalmente edit?vel no Microsoft Word ou Google Docs",
+          "headings": "T?tulos estruturados para navega??o simples",
+          "formatting": "Tabelas, texto formatado e indicadores de gravidade",
+          "branding": "Marca branca com logo incorporado"
+        }
+      }
+    },
+    "audience": {
+      "compliance": {
+        "title": "Respons?veis de compliance",
+        "useCase": "Anexe documenta??o WCAG a auditorias internas e processos regulat?rios. A matriz fornece evid?ncia ao n?vel do crit?rio."
+      },
+      "agency": {
+        "title": "Equipas de ag?ncia",
+        "useCase": "Entregue relat?rios profissionais sob a sua marca. Mostre progresso e justifique or?amentos de acessibilidade."
+      },
+      "procurement": {
+        "title": "Procurement e jur?dico",
+        "useCase": "Avalie claims de acessibilidade de fornecedores com evid?ncia estruturada. Use relat?rios em concursos e contratos."
+      },
+      "title": "Relat?rios desenhados para quem toma decis?es"
+    },
+    "scope": {
+      "title": "Um relat?rio de conformidade, n?o uma garantia",
+      "description": "Os relat?rios VexNexa documentam o que os testes autom?ticos detetam. Cobrem uma parte significativa de WCAG, mas conformidade total requer avalia??o autom?tica e manual.",
+      "disclaimer": "Use os relat?rios VexNexa como parte de um processo de conformidade mais amplo, n?o como certifica??o legal aut?noma."
+    },
+    "faq": {
+      "q1": {
+        "question": "Que crit?rios WCAG o relat?rio cobre?",
+        "answer": "Cobre crit?rios test?veis WCAG 2.1 n?vel AA e crit?rios WCAG 2.2 selecionados. A matriz mostra explicitamente o estado de cada crit?rio."
+      },
+      "q2": {
+        "question": "Posso personalizar o relat?rio antes de partilhar?",
+        "answer": "Sim. O DOCX ? totalmente edit?vel: adicione coment?rios, remova sec??es ou cole em templates. O PDF fica finalizado para partilha ou impress?o."
+      },
+      "q3": {
+        "question": "O relat?rio inclui orienta??o de remedia??o?",
+        "answer": "Cada viola??o inclui descri??o, porque importa e link para o documento WCAG Understanding relevante. As prioridades s?o ordenadas por impacto."
+      },
+      "q4": {
+        "question": "Como difere de um verificador b?sico?",
+        "answer": "Ferramentas b?sicas d?o dados brutos. A VexNexa estrutura esses dados para decisores: resumo executivo, gravidade, matriz WCAG e a??es priorizadas."
+      },
+      "q5": {
+        "question": "Posso usar estes relat?rios para conformidade legal?",
+        "answer": "Fornecem forte evid?ncia de testes e planeamento, mas devem fazer parte de uma estrat?gia mais ampla com testes manuais e revis?o especializada."
+      },
+      "q6": {
+        "question": "Os relat?rios incluem marca branca?",
+        "answer": "Sim. Os planos Business e Enterprise incluem marca branca completa com logo, cores e informa??o de contacto."
+      },
+      "title": "Relat?rios de conformidade - FAQ"
+    },
+    "finalCTA": {
+      "title": "Gere um relat?rio que ser? lido",
+      "subtitle": "Analise um URL, reveja conclus?es e descarregue um relat?rio WCAG estruturado em menos de cinco minutos.",
+      "ctaPrimary": "Criar o meu primeiro relat?rio",
+      "ctaSecondary": "Ver planos e pre?os"
     }
   },
   "wcagScan": {
@@ -3079,6 +3415,115 @@
       "ctaPrimary": "Iniciar scan gratuito",
       "ctaSecondary": "Ver relat?rio de exemplo",
       "note": "Sem cart?o necess?rio. A maioria dos scans de uma p?gina termina em menos de um minuto."
+    },
+    "problem": {
+      "title": "A maioria dos scans WCAG d?-lhe um n?mero. N?o um plano.",
+      "subtitle": "Provavelmente j? experimentou um verificador de acessibilidade gratuito. Ele devolveu uma pontua??o, listou erros e deixou-o a olhar para IDs de regras cr?pticos sem saber o que corrigir primeiro.",
+      "issues": {
+        "flatErrors": {
+          "title": "Listas de erros planas",
+          "description": "Sem prioriza??o: um alt em falta aparece ao lado de uma armadilha de teclado."
+        },
+        "noElementContext": {
+          "title": "Sem contexto do elemento",
+          "description": "Sabe que uma regra falhou, mas n?o qual elemento nem que sec??o da p?gina est? afetada."
+        },
+        "staleResults": {
+          "title": "Resultados desatualizados",
+          "description": "Scans pontuais sem forma de acompanhar se as corre??es do m?s passado se mantiveram."
+        }
+      }
+    },
+    "solution": {
+      "title": "Um scan WCAG que realmente diz o que fazer",
+      "subtitle": "A VexNexa analisa WCAG 2.1 AA e crit?rios 2.2 com o motor axe-core, o mesmo motor usado pela Microsoft, Google e governo dos EUA.",
+      "features": {
+        "severityRanked": {
+          "title": "Viola??es ordenadas por gravidade",
+          "description": "Cada problema ? pontuado por impacto: cr?tico, s?rio, moderado ou menor. Corrija primeiro o que importa."
+        },
+        "elementDetail": {
+          "title": "Detalhe ao n?vel do elemento",
+          "description": "Veja o seletor CSS exato, o snippet HTML e a localiza??o na p?gina para cada viola??o. Sem adivinha??o."
+        },
+        "healthScore": {
+          "title": "Pontua??o de sa?de (0-100)",
+          "description": "Uma pontua??o ponderada que considera quantidade e gravidade dos problemas. Acompanhe a melhoria ao longo do tempo."
+        },
+        "exportReports": {
+          "title": "Relat?rios prontos para exporta??o",
+          "description": "Descarregue os resultados do scan WCAG em PDF ou Word com detalhes completos e orienta??o de corre??o."
+        }
+      }
+    },
+    "howItWorks": {
+      "steps": {
+        "enterUrl": {
+          "title": "Introduza um URL",
+          "description": "Cole qualquer URL de p?gina no scanner. P?blico ou autenticado: a VexNexa suporta ambos os workflows."
+        },
+        "scanRuns": {
+          "title": "O scan corre em segundos",
+          "description": "O motor axe-core avalia a p?gina em tempo real contra WCAG 2.1 AA e crit?rios 2.2 selecionados."
+        },
+        "reviewResults": {
+          "title": "Reveja resultados ordenados",
+          "description": "As viola??es aparecem ordenadas por gravidade com elementos afetados, orienta??o de corre??o e refer?ncias WCAG."
+        },
+        "exportShare": {
+          "title": "Exporte ou partilhe",
+          "description": "Descarregue um relat?rio PDF ou DOCX. Partilhe resultados com a equipa ou anexe-os a entreg?veis de cliente."
+        }
+      },
+      "title": "Quatro passos do URL ? lista de corre??es"
+    },
+    "comparison": {
+      "features": {
+        "severityRanked": "Viola??es ordenadas por gravidade",
+        "elementSelectors": "Seletores CSS dos elementos afetados",
+        "wcag22Coverage": "Cobertura de crit?rios WCAG 2.2",
+        "pdfDocxExport": "Exporta??o PDF e DOCX",
+        "healthTracking": "Acompanhamento da pontua??o de sa?de ao longo do tempo",
+        "whiteLabel": "Branding de relat?rios em marca branca",
+        "basicPassFail": "Resultado b?sico passa/falha",
+        "freeSinglePage": "Verifica??o gratuita de uma p?gina"
+      },
+      "title": "VexNexa vs. verificadores b?sicos",
+      "subtitle": "Os verificadores gratuitos servem para uma vista r?pida. Para priorizar, reportar e acompanhar, precisa de mais.",
+      "table": {
+        "feature": "Funcionalidade",
+        "vexnexa": "VexNexa",
+        "basicChecker": "Verificador b?sico"
+      }
+    },
+    "useCases": {
+      "siteOwners": {
+        "title": "Propriet?rios de sites e equipas de marketing",
+        "description": "Verifique se as suas p?ginas p?blicas cumprem WCAG AA antes de um redesign ou prazo regulat?rio."
+      },
+      "developers": {
+        "title": "Programadores e engenheiros QA",
+        "description": "Integre scans WCAG no workflow de sprint. Detete regress?es antes da produ??o."
+      },
+      "compliance": {
+        "title": "Equipas jur?dicas e de conformidade",
+        "description": "Gere relat?rios estruturados para documentar a postura de acessibilidade em auditorias e procurement."
+      }
+    },
+    "relatedSolutions": {
+      "title": "Explore mais workflows de acessibilidade",
+      "complianceReports": {
+        "title": "Relat?rios de conformidade",
+        "description": "Transforme resultados de scan em relat?rios PDF e DOCX prontos para executivos."
+      },
+      "accessibilityChecker": {
+        "title": "Verificador de acessibilidade",
+        "description": "Compare a VexNexa com verificadores b?sicos e veja o que lhe faltava."
+      },
+      "ongoingMonitoring": {
+        "title": "Monitoriza??o cont?nua",
+        "description": "Agende scans recorrentes e acompanhe tend?ncias de acessibilidade ao longo do tempo."
+      }
     }
   },
   "checkout": {
@@ -3278,5 +3723,23 @@
       "Informational": "Informativo"
     },
     "dateRecently": "Recentemente"
+  },
+  "dashboardFooter": {
+    "description": "Monitoriza??o, relat?rios e fluxos de corre??o de acessibilidade para equipas modernas.",
+    "dashboard": "Painel",
+    "overview": "Vis?o geral",
+    "scans": "Scans",
+    "sites": "Sites",
+    "teams": "Equipas",
+    "settings": "Defini??es",
+    "billing": "Fatura??o",
+    "notifications": "Notifica??es",
+    "whiteLabel": "Marca branca",
+    "support": "Suporte",
+    "contact": "Contacto",
+    "privacyPolicy": "Pol?tica de privacidade",
+    "termsOfService": "Termos de servi?o",
+    "allRightsReserved": "Todos os direitos reservados.",
+    "madeWithLove": "Criado nos Pa?ses Baixos."
   }
 }

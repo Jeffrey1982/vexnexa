@@ -60,7 +60,7 @@ function NewsletterInvalidContent() {
             <ul className="space-y-1 text-sm text-muted-foreground">
               {content.details.map((detail, index) => (
                 <li key={index} className="flex items-start">
-                  <span className="mr-2 mt-0.5">•</span>
+                  <span className="mr-2 mt-0.5">-</span>
                   <span>{detail}</span>
                 </li>
               ))}
