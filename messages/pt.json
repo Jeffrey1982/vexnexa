@@ -3177,5 +3177,106 @@
       "realWorldQuality": "Qualidade real",
       "technicallyOptimizedHeavy": "Tecnicamente otimizado, mas fisicamente pesado."
     }
+  },
+  "updates": {
+    "metadata": {
+      "title": "Estado e atualizações - VexNexa",
+      "description": "Acompanhe as atualizações de produto da VexNexa, problemas conhecidos, correções resolvidas e notas de fiabilidade."
+    },
+    "hero": {
+      "badge": "Estado e atualizações",
+      "title": "Atualizações de produto, problemas conhecidos e correções resolvidas",
+      "subtitle": "Um local público para as notas de fiabilidade da VexNexa. Quando algo afeta clientes, reconhecemos, acompanhamos e mostramos quando está resolvido.",
+      "reportIssueCta": "Reportar um problema",
+      "methodologyCta": "Ler a nossa metodologia"
+    },
+    "aside": {
+      "title": "Mantenha-se informado",
+      "subtitle": "Receba o estado público e as notas de versão."
+    },
+    "components": {
+      "publicWebsite": "Site público",
+      "accessibilityScanner": "Scanner de acessibilidade",
+      "reportsAndExports": "Relatórios e exportações",
+      "billingAndCheckout": "Faturação e pagamento",
+      "emailDelivery": "Entrega de email",
+      "operational": "Operacional"
+    },
+    "knownIssues": {
+      "title": "Problemas conhecidos",
+      "subtitle": "Problemas públicos selecionados que podem afetar clientes ou parceiros piloto.",
+      "currentBadge": "Atual",
+      "lastChecked": "Última verificação",
+      "fallbackTitle": "Sem problemas públicos ativos",
+      "fallbackStatus": "Sem problemas",
+      "fallbackSeverity": "Informativo",
+      "fallbackBody": "Atualmente não há problemas conhecidos visíveis para utilizadores que exijam uma solução alternativa pública."
+    },
+    "recentFixes": {
+      "title": "Correções recentes",
+      "subtitle": "Notas públicas para erros visíveis e melhorias de qualidade, após a sua resolução.",
+      "items": [
+        {
+          "title": "O service worker já não trata assets externos",
+          "status": "Resolvido",
+          "body": "O service worker agora coloca em cache apenas pedidos próprios da VexNexa e ignora assets de terceiros, evitando ruído na consola por recursos externos desatualizados."
+        },
+        {
+          "title": "Badge externo removido do rodapé",
+          "status": "Resolvido",
+          "body": "Foi removido um badge de terceiros desatualizado do rodapé público e a linha de copyright foi limpa."
+        },
+        {
+          "title": "Ciclo de vida de problemas e evidências adicionados aos resultados de scan",
+          "status": "Lançado",
+          "body": "As constatações de scan podem agora incluir seletores, evidências de página, capturas de ecrã e estados de fluxo para acompanhamento da remediação."
+        }
+      ]
+    },
+    "productUpdates": {
+      "title": "Atualizações de produto",
+      "subtitle": "Nem toda atualização é um incidente. Esta secção regista o progresso do produto que importa para clientes.",
+      "items": [
+        {
+          "title": "Relatório de exemplo ampliado",
+          "body": "A pré-visualização pública do relatório mostra agora contexto de fluxo, exemplos de evidência e detalhes de problemas orientados à remediação."
+        },
+        {
+          "title": "Páginas de metodologia e conformidade adicionadas",
+          "body": "A VexNexa explica agora com maior clareza a cobertura dos scans, o tratamento de evidências, os limites da automação e o posicionamento de conformidade."
+        },
+        {
+          "title": "Canal de comunicação público lançado",
+          "body": "Os problemas conhecidos e as correções relevantes têm agora um único local público para clientes e parceiros piloto."
+        }
+      ]
+    },
+    "policy": {
+      "title": "O que publicamos",
+      "rules": [
+        "Publicamos erros visíveis para utilizadores que possam afetar scans, relatórios, início de sessão, faturação ou entrega.",
+        "Não publicamos detalhes de exploits, dados de clientes, credenciais ou detalhes de infraestrutura interna.",
+        "Para incidentes ativos, as atualizações incluem impacto, estado, solução alternativa quando disponível e a próxima atualização prevista.",
+        "Incidentes graves podem receber uma breve nota pós-incidente após a resolução."
+      ]
+    },
+    "issueStates": {
+      "title": "Estados do problema",
+      "investigating": "A investigar",
+      "fixInProgress": "Correção em curso",
+      "monitoring": "A monitorizar",
+      "resolved": "Resolvido"
+    },
+    "statusLabels": {
+      "Investigating": "A investigar",
+      "Fix in progress": "Correção em curso",
+      "Monitoring": "A monitorizar",
+      "Resolved": "Resolvido",
+      "Fixed": "Resolvido",
+      "Released": "Lançado",
+      "Clear": "Sem problemas",
+      "Informational": "Informativo"
+    },
+    "dateRecently": "Recentemente"
   }
 }

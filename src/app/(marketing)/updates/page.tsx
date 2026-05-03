@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,81 +20,25 @@ import { cn } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
 import type { StatusUpdate } from "@prisma/client";
 
-export const metadata: Metadata = {
-  title: "Status & Updates - VexNexa",
-  description:
-    "Follow VexNexa product updates, known issues, resolved fixes and reliability notes.",
-  alternates: {
-    canonical: "https://vexnexa.com/updates",
-  },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("updates.metadata");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: "https://vexnexa.com/updates",
+    },
+    robots: { index: true, follow: true },
+  };
+}
 
 export const dynamic = "force-dynamic";
 
-const components = [
-  { name: "Public website", status: "Operational", tone: "ok" },
-  { name: "Accessibility scanner", status: "Operational", tone: "ok" },
-  { name: "Reports and exports", status: "Operational", tone: "ok" },
-  { name: "Billing and checkout", status: "Operational", tone: "ok" },
-  { name: "Email delivery", status: "Operational", tone: "ok" },
-] as const;
-
-const fallbackKnownIssues = [
-  {
-    title: "No active public issues",
-    status: "Clear",
-    severity: "Informational",
-    date: "May 3, 2026",
-    body: "There are currently no known user-facing issues that require a public workaround.",
-  },
-] as const;
-
-const fallbackRecentFixes = [
-  {
-    title: "Service worker no longer handles external assets",
-    date: "May 3, 2026",
-    status: "Fixed",
-    body: "The service worker now only caches VexNexa-owned requests and ignores third-party assets, preventing stale external-resource console noise.",
-  },
-  {
-    title: "External badge removed from the footer",
-    date: "May 2, 2026",
-    status: "Fixed",
-    body: "Removed a retired third-party badge from the public footer and cleaned up the copyright line.",
-  },
-  {
-    title: "Issue lifecycle and evidence added to scan results",
-    date: "May 2, 2026",
-    status: "Released",
-    body: "Scan findings can now carry selectors, page evidence, screenshots and workflow states for remediation tracking.",
-  },
-] as const;
-
-const fallbackProductUpdates = [
-  {
-    title: "Sample report expanded",
-    body: "The public report preview now shows workflow context, evidence examples and remediation-oriented issue detail.",
-    icon: Sparkles,
-  },
-  {
-    title: "Methodology and compliance pages added",
-    body: "VexNexa now explains scan coverage, evidence handling, automation boundaries and compliance positioning more clearly.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Public communication channel launched",
-    body: "Known issues and notable fixes now have a single public home for customers and pilot partners.",
-    icon: Megaphone,
-  },
-] as const;
-
-const policyRules = [
-  "We publish user-facing bugs that can affect scans, reports, login, billing or delivery.",
-  "We do not publish exploit details, customer data, credentials or internal infrastructure details.",
-  "For active incidents, updates include impact, status, workaround when available and the next expected update.",
-  "Major incidents may receive a short post-incident note after resolution.",
-] as const;
+/**
+ * The icon assigned to each fallback product update — mirrors the original
+ * design but lookup keys are stable so translations can drive the copy.
+ */
+const FALLBACK_PRODUCT_ICONS = [Sparkles, ShieldCheck, Megaphone] as const;
 
 async function getPublishedUpdates(): Promise<StatusUpdate[]> {
   try {
@@ -111,13 +56,33 @@ async function getPublishedUpdates(): Promise<StatusUpdate[]> {
   }
 }
 
-function formatPublicDate(value: Date | null) {
-  if (!value) return "Recently";
-  return new Intl.DateTimeFormat("en", {
+function formatPublicDate(value: Date | null, locale: string, fallback: string) {
+  if (!value) return fallback;
+  return new Intl.DateTimeFormat(locale, {
     month: "long",
     day: "numeric",
     year: "numeric",
   }).format(value);
+}
+
+/**
+ * Map a DB status string (`Resolved`, `Fixed`, `Investigating`, …) to a
+ * translated label. Falls back to the raw value if a translation is missing,
+ * so a newly added admin status never breaks the page.
+ */
+function makeStatusTranslator(t: Awaited<ReturnType<typeof getTranslations>>) {
+  return (raw: string | null | undefined): string => {
+    if (!raw) return "";
+    try {
+      const translated = t(`statusLabels.${raw}` as never);
+      if (typeof translated === "string" && translated.length > 0) {
+        return translated;
+      }
+    } catch {
+      // next-intl throws on unknown keys; fall through to the raw value.
+    }
+    return raw;
+  };
 }
 
 function StatusDot({ tone }: { tone: "ok" | "warning" }) {
@@ -133,6 +98,10 @@ function StatusDot({ tone }: { tone: "ok" | "warning" }) {
 }
 
 export default async function UpdatesPage() {
+  const t = await getTranslations("updates");
+  const locale = await getLocale();
+  const translateStatus = makeStatusTranslator(t);
+
   const publishedUpdates = await getPublishedUpdates();
   const activePublicIssues = publishedUpdates.filter(
     (update) =>
@@ -146,35 +115,78 @@ export default async function UpdatesPage() {
   );
   const dynamicProductUpdates = publishedUpdates.filter((update) => update.type === "PRODUCT_UPDATE");
 
+  // Status component grid — the names are translated, the tone stays "ok"
+  // until a real incident arrives (would be flipped server-side).
+  const components = [
+    { key: "publicWebsite", tone: "ok" as const },
+    { key: "accessibilityScanner", tone: "ok" as const },
+    { key: "reportsAndExports", tone: "ok" as const },
+    { key: "billingAndCheckout", tone: "ok" as const },
+    { key: "emailDelivery", tone: "ok" as const },
+  ];
+
+  const fallbackDate = t("dateRecently");
+
+  // Known issues — dynamic from DB, with a translated fallback when empty.
   const knownIssues =
     activePublicIssues.length > 0
       ? activePublicIssues.map((issue) => ({
           title: issue.title,
-          status: issue.publicStatus,
-          severity: issue.severity,
-          date: formatPublicDate(issue.publishedAt ?? issue.updatedAt),
+          status: translateStatus(issue.publicStatus),
+          severity: translateStatus(issue.severity) || issue.severity,
+          date: formatPublicDate(issue.publishedAt ?? issue.updatedAt, locale, fallbackDate),
           body: issue.summary,
         }))
-      : fallbackKnownIssues;
+      : [
+          {
+            title: t("knownIssues.fallbackTitle"),
+            status: t("knownIssues.fallbackStatus"),
+            severity: t("knownIssues.fallbackSeverity"),
+            date: fallbackDate,
+            body: t("knownIssues.fallbackBody"),
+          },
+        ];
 
+  // Recent fixes — dynamic when present, otherwise translated example items.
   const recentFixes =
     dynamicFixes.length > 0
       ? dynamicFixes.map((fix) => ({
           title: fix.title,
-          status: fix.publicStatus === "Resolved" ? "Fixed" : fix.publicStatus,
-          date: formatPublicDate(fix.publishedAt ?? fix.updatedAt),
+          status:
+            fix.publicStatus === "Resolved"
+              ? translateStatus("Fixed")
+              : translateStatus(fix.publicStatus),
+          date: formatPublicDate(fix.publishedAt ?? fix.updatedAt, locale, fallbackDate),
           body: fix.summary,
         }))
-      : fallbackRecentFixes;
+      : [0, 1, 2].map((i) => ({
+          title: t(`recentFixes.items.${i}.title`),
+          status: t(`recentFixes.items.${i}.status`),
+          date: fallbackDate,
+          body: t(`recentFixes.items.${i}.body`),
+        }));
 
+  // Product updates — same pattern: dynamic or translated fallback.
   const productUpdates =
     dynamicProductUpdates.length > 0
-      ? dynamicProductUpdates.map((update) => ({
+      ? dynamicProductUpdates.map((update, idx) => ({
           title: update.title,
           body: update.summary,
-          icon: Megaphone,
+          icon: FALLBACK_PRODUCT_ICONS[idx % FALLBACK_PRODUCT_ICONS.length],
         }))
-      : fallbackProductUpdates;
+      : [0, 1, 2].map((i) => ({
+          title: t(`productUpdates.items.${i}.title`),
+          body: t(`productUpdates.items.${i}.body`),
+          icon: FALLBACK_PRODUCT_ICONS[i],
+        }));
+
+  const policyRules = [0, 1, 2, 3].map((i) => t(`policy.rules.${i}`));
+  const issueStateLabels = [
+    t("issueStates.investigating"),
+    t("issueStates.fixInProgress"),
+    t("issueStates.monitoring"),
+    t("issueStates.resolved"),
+  ];
 
   return (
     <main className="bg-background">
@@ -182,23 +194,23 @@ export default async function UpdatesPage() {
         <div className="container mx-auto grid gap-10 px-4 py-14 lg:grid-cols-[1fr_380px] lg:py-20">
           <div className="max-w-4xl">
             <Badge variant="outline" className="bg-background/80">
-              Status & Updates
+              {t("hero.badge")}
             </Badge>
             <h1 className="mt-5 max-w-3xl font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Product updates, known issues and resolved fixes
+              {t("hero.title")}
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-              A public place for VexNexa reliability notes. If something affects customers, we acknowledge it, track it, and show when it has been resolved.
+              {t("hero.subtitle")}
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button asChild>
                 <Link href="/contact?subject=issue-report">
-                  Report an issue
+                  {t("hero.reportIssueCta")}
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
               <Button variant="outline" asChild>
-                <Link href="/methodology">Read our methodology</Link>
+                <Link href="/methodology">{t("hero.methodologyCta")}</Link>
               </Button>
             </div>
           </div>
@@ -209,8 +221,8 @@ export default async function UpdatesPage() {
                 <Bell className="h-5 w-5" aria-hidden="true" />
               </div>
               <div>
-                <h2 className="font-semibold">Stay informed</h2>
-                <p className="text-sm text-muted-foreground">Get public status and release notes.</p>
+                <h2 className="font-semibold">{t("aside.title")}</h2>
+                <p className="text-sm text-muted-foreground">{t("aside.subtitle")}</p>
               </div>
             </div>
             <div className="mt-5">
@@ -222,15 +234,20 @@ export default async function UpdatesPage() {
 
       <section className="container mx-auto px-4 py-12">
         <div className="grid gap-4 md:grid-cols-5">
-          {components.map((component) => (
-            <div key={component.name} className="rounded-lg border border-border bg-card p-4">
-              <div className="flex items-center gap-2">
-                <StatusDot tone={component.tone} />
-                <span className="text-sm font-medium text-teal-700">{component.status}</span>
+          {components.map((component) => {
+            const name = t(`components.${component.key}` as never);
+            return (
+              <div key={component.key} className="rounded-lg border border-border bg-card p-4">
+                <div className="flex items-center gap-2">
+                  <StatusDot tone={component.tone} />
+                  <span className="text-sm font-medium text-teal-700">
+                    {t("components.operational")}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm font-semibold text-card-foreground">{name}</p>
               </div>
-              <p className="mt-3 text-sm font-semibold text-card-foreground">{component.name}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -240,13 +257,13 @@ export default async function UpdatesPage() {
             <div className="mb-4 flex items-center justify-between gap-4">
               <div>
                 <h2 id="known-issues-heading" className="font-display text-2xl font-bold">
-                  Known issues
+                  {t("knownIssues.title")}
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Curated public issues that may affect customers or pilot partners.
+                  {t("knownIssues.subtitle")}
                 </p>
               </div>
-              <Badge variant="secondary">Current</Badge>
+              <Badge variant="secondary">{t("knownIssues.currentBadge")}</Badge>
             </div>
 
             <div className="space-y-4">
@@ -266,7 +283,9 @@ export default async function UpdatesPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm leading-6 text-muted-foreground">{issue.body}</p>
-                    <p className="mt-4 text-xs text-muted-foreground">Last checked: {issue.date}</p>
+                    <p className="mt-4 text-xs text-muted-foreground">
+                      {t("knownIssues.lastChecked")}: {issue.date}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -276,10 +295,10 @@ export default async function UpdatesPage() {
           <section aria-labelledby="recent-fixes-heading">
             <div className="mb-4">
               <h2 id="recent-fixes-heading" className="font-display text-2xl font-bold">
-                Recent fixes
+                {t("recentFixes.title")}
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Public notes for visible bugs and quality improvements after they are resolved.
+                {t("recentFixes.subtitle")}
               </p>
             </div>
 
@@ -307,7 +326,7 @@ export default async function UpdatesPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-lg">
                 <AlertTriangle className="h-5 w-5 text-amber-600" aria-hidden="true" />
-                What we publish
+                {t("policy.title")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -326,11 +345,11 @@ export default async function UpdatesPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-lg">
                 <Clock3 className="h-5 w-5 text-primary" aria-hidden="true" />
-                Issue states
+                {t("issueStates.title")}
               </CardTitle>
             </CardHeader>
             <CardContent className="grid gap-3 text-sm">
-              {["Investigating", "Fix in progress", "Monitoring", "Resolved"].map((state) => (
+              {issueStateLabels.map((state) => (
                 <div key={state} className="flex items-center justify-between rounded-md border border-border px-3 py-2">
                   <span>{state}</span>
                   <GitBranch className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
@@ -344,9 +363,9 @@ export default async function UpdatesPage() {
       <section className="border-y border-border/60 bg-muted/40">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-2xl">
-            <h2 className="font-display text-2xl font-bold">Product updates</h2>
+            <h2 className="font-display text-2xl font-bold">{t("productUpdates.title")}</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              Not every update is an incident. This section tracks product progress that matters for customers.
+              {t("productUpdates.subtitle")}
             </p>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-3">

@@ -3309,5 +3309,106 @@
       "realWorldQuality": "Real-world kwaliteit",
       "technicallyOptimizedHeavy": "Technisch geoptimaliseerd, maar fysiek te zwaar."
     }
+  },
+  "updates": {
+    "metadata": {
+      "title": "Status & Updates - VexNexa",
+      "description": "Volg VexNexa product-updates, bekende problemen, opgeloste fixes en betrouwbaarheidsnotities."
+    },
+    "hero": {
+      "badge": "Status & Updates",
+      "title": "Product-updates, bekende problemen en opgeloste fixes",
+      "subtitle": "Een openbare plek voor VexNexa betrouwbaarheidsnotities. Als iets klanten raakt, erkennen we het, volgen we het en tonen we wanneer het is opgelost.",
+      "reportIssueCta": "Probleem melden",
+      "methodologyCta": "Lees onze methodologie"
+    },
+    "aside": {
+      "title": "Blijf op de hoogte",
+      "subtitle": "Ontvang openbare status- en release-updates."
+    },
+    "components": {
+      "publicWebsite": "Publieke website",
+      "accessibilityScanner": "Toegankelijkheidsscanner",
+      "reportsAndExports": "Rapporten en exports",
+      "billingAndCheckout": "Facturatie en checkout",
+      "emailDelivery": "E-mailbezorging",
+      "operational": "Operationeel"
+    },
+    "knownIssues": {
+      "title": "Bekende problemen",
+      "subtitle": "Geselecteerde openbare problemen die klanten of pilot-partners kunnen raken.",
+      "currentBadge": "Actueel",
+      "lastChecked": "Laatst gecontroleerd",
+      "fallbackTitle": "Geen actieve openbare problemen",
+      "fallbackStatus": "Geen issues",
+      "fallbackSeverity": "Informatief",
+      "fallbackBody": "Er zijn momenteel geen bekende klantzichtbare problemen die een openbare workaround vereisen."
+    },
+    "recentFixes": {
+      "title": "Recente fixes",
+      "subtitle": "Openbare notities voor zichtbare bugs en kwaliteitsverbeteringen nadat ze zijn opgelost.",
+      "items": [
+        {
+          "title": "Service worker behandelt geen externe assets meer",
+          "status": "Opgelost",
+          "body": "De service worker cachet nu alleen nog VexNexa-eigen requests en negeert third-party assets, wat verouderde externe-resource console-meldingen voorkomt."
+        },
+        {
+          "title": "Externe badge uit de footer verwijderd",
+          "status": "Opgelost",
+          "body": "Een uitgefaseerde third-party badge is uit de publieke footer verwijderd en de copyright-regel is opgeschoond."
+        },
+        {
+          "title": "Issue-lifecycle en evidence toegevoegd aan scanresultaten",
+          "status": "Uitgerold",
+          "body": "Scanbevindingen kunnen nu selectors, pagina-evidence, screenshots en workflow-statussen dragen voor remediation-tracking."
+        }
+      ]
+    },
+    "productUpdates": {
+      "title": "Product-updates",
+      "subtitle": "Niet elke update is een incident. Deze sectie volgt productvoortgang die relevant is voor klanten.",
+      "items": [
+        {
+          "title": "Voorbeeldrapport uitgebreid",
+          "body": "De publieke rapport-preview toont nu workflow-context, evidence-voorbeelden en remediation-gerichte issue-details."
+        },
+        {
+          "title": "Methodologie- en compliance-pagina's toegevoegd",
+          "body": "VexNexa legt nu duidelijker uit wat scans dekken, hoe evidence wordt afgehandeld, waar automatisering grenzen heeft en hoe wij ons positioneren rond compliance."
+        },
+        {
+          "title": "Openbaar communicatiekanaal gelanceerd",
+          "body": "Bekende problemen en belangrijke fixes hebben nu één openbare plek voor klanten en pilot-partners."
+        }
+      ]
+    },
+    "policy": {
+      "title": "Wat we publiceren",
+      "rules": [
+        "We publiceren klantzichtbare bugs die scans, rapporten, login, facturatie of bezorging kunnen raken.",
+        "We publiceren geen exploit-details, klantdata, credentials of interne infrastructuur-details.",
+        "Voor actieve incidenten bevatten updates impact, status, workaround indien beschikbaar en de volgende verwachte update.",
+        "Grote incidenten kunnen een korte post-incident notitie krijgen na oplossing."
+      ]
+    },
+    "issueStates": {
+      "title": "Issue-statussen",
+      "investigating": "Onderzoek loopt",
+      "fixInProgress": "Fix in voorbereiding",
+      "monitoring": "Monitoren",
+      "resolved": "Opgelost"
+    },
+    "statusLabels": {
+      "Investigating": "Onderzoek loopt",
+      "Fix in progress": "Fix in voorbereiding",
+      "Monitoring": "Monitoren",
+      "Resolved": "Opgelost",
+      "Fixed": "Opgelost",
+      "Released": "Uitgerold",
+      "Clear": "Geen issues",
+      "Informational": "Informatief"
+    },
+    "dateRecently": "Recent"
   }
 }

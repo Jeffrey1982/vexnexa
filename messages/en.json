@@ -3812,5 +3812,106 @@
       "realWorldQuality": "Real-World Quality",
       "technicallyOptimizedHeavy": "Technically optimized, but physically heavy."
     }
+  },
+  "updates": {
+    "metadata": {
+      "title": "Status & Updates - VexNexa",
+      "description": "Follow VexNexa product updates, known issues, resolved fixes and reliability notes."
+    },
+    "hero": {
+      "badge": "Status & Updates",
+      "title": "Product updates, known issues and resolved fixes",
+      "subtitle": "A public place for VexNexa reliability notes. If something affects customers, we acknowledge it, track it, and show when it has been resolved.",
+      "reportIssueCta": "Report an issue",
+      "methodologyCta": "Read our methodology"
+    },
+    "aside": {
+      "title": "Stay informed",
+      "subtitle": "Get public status and release notes."
+    },
+    "components": {
+      "publicWebsite": "Public website",
+      "accessibilityScanner": "Accessibility scanner",
+      "reportsAndExports": "Reports and exports",
+      "billingAndCheckout": "Billing and checkout",
+      "emailDelivery": "Email delivery",
+      "operational": "Operational"
+    },
+    "knownIssues": {
+      "title": "Known issues",
+      "subtitle": "Curated public issues that may affect customers or pilot partners.",
+      "currentBadge": "Current",
+      "lastChecked": "Last checked",
+      "fallbackTitle": "No active public issues",
+      "fallbackStatus": "Clear",
+      "fallbackSeverity": "Informational",
+      "fallbackBody": "There are currently no known user-facing issues that require a public workaround."
+    },
+    "recentFixes": {
+      "title": "Recent fixes",
+      "subtitle": "Public notes for visible bugs and quality improvements after they are resolved.",
+      "items": [
+        {
+          "title": "Service worker no longer handles external assets",
+          "status": "Fixed",
+          "body": "The service worker now only caches VexNexa-owned requests and ignores third-party assets, preventing stale external-resource console noise."
+        },
+        {
+          "title": "External badge removed from the footer",
+          "status": "Fixed",
+          "body": "Removed a retired third-party badge from the public footer and cleaned up the copyright line."
+        },
+        {
+          "title": "Issue lifecycle and evidence added to scan results",
+          "status": "Released",
+          "body": "Scan findings can now carry selectors, page evidence, screenshots and workflow states for remediation tracking."
+        }
+      ]
+    },
+    "productUpdates": {
+      "title": "Product updates",
+      "subtitle": "Not every update is an incident. This section tracks product progress that matters for customers.",
+      "items": [
+        {
+          "title": "Sample report expanded",
+          "body": "The public report preview now shows workflow context, evidence examples and remediation-oriented issue detail."
+        },
+        {
+          "title": "Methodology and compliance pages added",
+          "body": "VexNexa now explains scan coverage, evidence handling, automation boundaries and compliance positioning more clearly."
+        },
+        {
+          "title": "Public communication channel launched",
+          "body": "Known issues and notable fixes now have a single public home for customers and pilot partners."
+        }
+      ]
+    },
+    "policy": {
+      "title": "What we publish",
+      "rules": [
+        "We publish user-facing bugs that can affect scans, reports, login, billing or delivery.",
+        "We do not publish exploit details, customer data, credentials or internal infrastructure details.",
+        "For active incidents, updates include impact, status, workaround when available and the next expected update.",
+        "Major incidents may receive a short post-incident note after resolution."
+      ]
+    },
+    "issueStates": {
+      "title": "Issue states",
+      "investigating": "Investigating",
+      "fixInProgress": "Fix in progress",
+      "monitoring": "Monitoring",
+      "resolved": "Resolved"
+    },
+    "statusLabels": {
+      "Investigating": "Investigating",
+      "Fix in progress": "Fix in progress",
+      "Monitoring": "Monitoring",
+      "Resolved": "Resolved",
+      "Fixed": "Fixed",
+      "Released": "Released",
+      "Clear": "Clear",
+      "Informational": "Informational"
+    },
+    "dateRecently": "Recently"
   }
 }
