@@ -3146,6 +3146,23 @@
   "blog": {
     "title": "Inzichten & Updates",
     "subtitle": "De laatste ontwikkelingen in webtoegankelijkheid en WCAG-naleving",
+    "badge": "VexNexa Journal",
+    "heroCtaPrimary": "Start een gratis scan",
+    "heroCtaSecondary": "Bekijk voorbeeldrapport",
+    "editorialCard": {
+      "title": "Praktische toegankelijkheidsnotities",
+      "subtitle": "Gidsen, productinzichten en compliance-context voor teams die websites opleveren."
+    },
+    "postsPublished": "Gepubliceerde posts",
+    "categoriesTracked": "Onderwerpen",
+    "featuredLabel": "Uitgelicht",
+    "latestArticle": "Nieuwste artikel",
+    "readArticle": "Lees artikel",
+    "browseAll": "Ontdek",
+    "allArticles": "Alle artikelen",
+    "minRead": "min leestijd",
+    "fallbackCategory": "Toegankelijkheid",
+    "emptyTitle": "Nog geen artikelen",
     "empty": "Geen blogposts gevonden. Kom later terug voor nieuwe content!",
     "writtenBy": "Geschreven door:",
     "metadata": {

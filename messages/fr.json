@@ -3113,6 +3113,23 @@
   "blog": {
     "title": "Perspectives & Actualités",
     "subtitle": "Les dernières évolutions en accessibilité web et conformité WCAG",
+    "badge": "Journal VexNexa",
+    "heroCtaPrimary": "Lancer un scan gratuit",
+    "heroCtaSecondary": "Voir un exemple de rapport",
+    "editorialCard": {
+      "title": "Notes pratiques sur l'accessibilité",
+      "subtitle": "Guides, réflexion produit et contexte conformité pour les équipes qui livrent des sites web."
+    },
+    "postsPublished": "Articles publiés",
+    "categoriesTracked": "Sujets couverts",
+    "featuredLabel": "À la une",
+    "latestArticle": "Dernier article",
+    "readArticle": "Lire l'article",
+    "browseAll": "Parcourir",
+    "allArticles": "Tous les articles",
+    "minRead": "min de lecture",
+    "fallbackCategory": "Accessibilité",
+    "emptyTitle": "Aucun article pour le moment",
     "empty": "Aucun article trouvé. Revenez plus tard pour du nouveau contenu !",
     "writtenBy": "Rédigé par :",
     "metadata": {

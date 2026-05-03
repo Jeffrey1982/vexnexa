@@ -3161,6 +3161,23 @@
   "blog": {
     "title": "Einblicke & Neuigkeiten",
     "subtitle": "Aktuelle Entwicklungen in Web-Barrierefreiheit und WCAG-Konformität",
+    "badge": "VexNexa Journal",
+    "heroCtaPrimary": "Kostenlosen Scan starten",
+    "heroCtaSecondary": "Beispielbericht ansehen",
+    "editorialCard": {
+      "title": "Praktische Hinweise zur Barrierefreiheit",
+      "subtitle": "Leitfäden, Produktdenken und Compliance-Kontext für Teams, die Websites veröffentlichen."
+    },
+    "postsPublished": "Veröffentlichte Beiträge",
+    "categoriesTracked": "Themenbereiche",
+    "featuredLabel": "Empfohlen",
+    "latestArticle": "Neuester Artikel",
+    "readArticle": "Artikel lesen",
+    "browseAll": "Entdecken",
+    "allArticles": "Alle Artikel",
+    "minRead": "Min. Lesezeit",
+    "fallbackCategory": "Barrierefreiheit",
+    "emptyTitle": "Noch keine Artikel",
     "empty": "Keine Blogbeiträge gefunden. Schauen Sie später wieder vorbei!",
     "writtenBy": "Geschrieben von:",
     "metadata": {

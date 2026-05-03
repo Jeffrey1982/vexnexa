@@ -3155,6 +3155,23 @@
   "blog": {
     "title": "Ideas & Novedades",
     "subtitle": "Últimos desarrollos en accesibilidad web y cumplimiento WCAG",
+    "badge": "Diario VexNexa",
+    "heroCtaPrimary": "Iniciar un escaneo gratis",
+    "heroCtaSecondary": "Ver informe de ejemplo",
+    "editorialCard": {
+      "title": "Notas prácticas de accesibilidad",
+      "subtitle": "Guías, ideas de producto y contexto de cumplimiento para equipos que publican sitios web."
+    },
+    "postsPublished": "Publicaciones",
+    "categoriesTracked": "Temas cubiertos",
+    "featuredLabel": "Destacado",
+    "latestArticle": "Artículo más reciente",
+    "readArticle": "Leer artículo",
+    "browseAll": "Explorar",
+    "allArticles": "Todos los artículos",
+    "minRead": "min de lectura",
+    "fallbackCategory": "Accesibilidad",
+    "emptyTitle": "Aún no hay artículos",
     "empty": "No se encontraron publicaciones. ¡Vuelva más tarde para nuevo contenido!",
     "writtenBy": "Escrito por:",
     "metadata": {

@@ -3726,6 +3726,23 @@
   "blog": {
     "title": "Insights & Updates",
     "subtitle": "Latest developments in web accessibility and WCAG compliance",
+    "badge": "VexNexa Journal",
+    "heroCtaPrimary": "Start a free scan",
+    "heroCtaSecondary": "View sample report",
+    "editorialCard": {
+      "title": "Practical accessibility notes",
+      "subtitle": "Guides, product thinking, and compliance context for teams shipping websites."
+    },
+    "postsPublished": "Published posts",
+    "categoriesTracked": "Topics covered",
+    "featuredLabel": "Featured",
+    "latestArticle": "Latest article",
+    "readArticle": "Read article",
+    "browseAll": "Browse",
+    "allArticles": "All articles",
+    "minRead": "min read",
+    "fallbackCategory": "Accessibility",
+    "emptyTitle": "No articles yet",
     "empty": "No blog posts found. Check back later for new content!",
     "writtenBy": "Written by:",
     "metadata": {
