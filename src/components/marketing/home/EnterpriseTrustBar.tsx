@@ -51,7 +51,7 @@ export function EnterpriseTrustBar() {
           ))}
         </ul>
 
-        <p className="mt-6 text-center text-[11px] leading-relaxed text-slate-400 dark:text-white/40">
+        <p className="mt-6 text-center text-[11px] leading-relaxed text-slate-600 dark:text-white/60">
           {t("disclaimer")}
         </p>
       </div>

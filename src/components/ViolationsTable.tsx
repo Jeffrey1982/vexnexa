@@ -260,6 +260,18 @@ export function ViolationsTable({ violations, className }: ViolationsTableProps)
                           <p className="text-xs mt-1 break-words">{node.failureSummary}</p>
                         </div>
                       )}
+
+                      {node.screenshotDataUrl && (
+                        <div>
+                          <span className="font-medium text-xs text-muted-foreground">Screenshot:</span>
+                          <div
+                            className="mt-1 h-32 rounded-md border bg-muted bg-contain bg-center bg-no-repeat"
+                            style={{ backgroundImage: `url(${node.screenshotDataUrl})` }}
+                            aria-label="Element screenshot evidence"
+                            role="img"
+                          />
+                        </div>
+                      )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>

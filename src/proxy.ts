@@ -5,6 +5,17 @@ import { apiLimiter, authLimiter } from '@/lib/rate-limit'
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl
   const pathname = url.pathname
+
+  if (pathname === '/sw.js') {
+    const response = NextResponse.next()
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+    response.headers.set('Pragma', 'no-cache')
+    response.headers.set('Expires', '0')
+    response.headers.set('Service-Worker-Allowed', '/')
+    response.headers.set('X-Content-Type-Options', 'nosniff')
+    return response
+  }
+
   // Legacy Shopify URL patterns
   const SHOPIFY_PATTERNS = [
     /^\/products\//,

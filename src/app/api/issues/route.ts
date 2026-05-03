@@ -99,7 +99,23 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const user = await requireAuth();
-    const { scanId, violationId, title, description, priority = 'MEDIUM', assignedToId, dueDate } = await req.json();
+    const {
+      scanId,
+      violationId,
+      title,
+      description,
+      priority = 'MEDIUM',
+      impact,
+      wcagCriteria = [],
+      helpUrl,
+      pageUrl,
+      selector,
+      htmlSnippet,
+      failureSummary,
+      screenshotDataUrl,
+      assignedToId,
+      dueDate,
+    } = await req.json();
 
     if (!scanId || !violationId || !title) {
       return NextResponse.json(
@@ -146,6 +162,14 @@ export async function POST(req: NextRequest) {
         title: title.trim(),
         description: description?.trim(),
         priority: priority as any,
+        impact,
+        wcagCriteria,
+        helpUrl,
+        pageUrl,
+        selector,
+        htmlSnippet,
+        failureSummary,
+        screenshotDataUrl,
         assignedToId,
         createdById: user.id,
         dueDate: dueDate ? new Date(dueDate) : null

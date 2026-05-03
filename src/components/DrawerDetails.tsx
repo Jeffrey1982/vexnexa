@@ -51,6 +51,18 @@ export function DrawerDetails({ violation, trigger }: DrawerDetailsProps) {
         </SheetHeader>
 
         <div className="mt-6 space-y-4">
+          {violation.evidence?.screenshotDataUrl && (
+            <div>
+              <h4 className="font-medium mb-2">Screenshot Evidence</h4>
+              <div
+                className="h-48 rounded-lg border bg-muted bg-contain bg-center bg-no-repeat"
+                style={{ backgroundImage: `url(${violation.evidence.screenshotDataUrl})` }}
+                aria-label="Screenshot evidence for the affected element"
+                role="img"
+              />
+            </div>
+          )}
+
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">
               Affected Elements ({violation.nodes.length})
@@ -117,6 +129,18 @@ export function DrawerDetails({ violation, trigger }: DrawerDetailsProps) {
                         <p className="text-sm mt-1 text-muted-foreground">
                           {node.failureSummary}
                         </p>
+                      </div>
+                    )}
+
+                    {node.screenshotDataUrl && (
+                      <div>
+                        <span className="font-medium text-sm">Element Screenshot</span>
+                        <div
+                          className="mt-2 h-36 rounded-md border bg-muted bg-contain bg-center bg-no-repeat"
+                          style={{ backgroundImage: `url(${node.screenshotDataUrl})` }}
+                          aria-label="Element screenshot evidence"
+                          role="img"
+                        />
                       </div>
                     )}
 

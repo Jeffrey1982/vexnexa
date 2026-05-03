@@ -163,7 +163,7 @@ export async function PUT(
     const updateData: any = {};
     const activities: Array<{ action: string; oldValue?: string; newValue?: string }> = [];
 
-    if (updates.title && updates.title !== existingIssue.title) {
+    if ('title' in updates && updates.title && updates.title !== existingIssue.title) {
       updateData.title = updates.title.trim();
       activities.push({
         action: 'title_changed',
@@ -172,7 +172,7 @@ export async function PUT(
       });
     }
 
-    if (updates.description !== existingIssue.description) {
+    if ('description' in updates && updates.description !== existingIssue.description) {
       updateData.description = updates.description?.trim();
       activities.push({
         action: 'description_changed',
@@ -184,10 +184,10 @@ export async function PUT(
     if (updates.status && updates.status !== existingIssue.status) {
       updateData.status = updates.status;
 
-      if (updates.status === 'RESOLVED') {
+      if (['RESOLVED', 'ACCEPTED_RISK', 'FALSE_POSITIVE', 'CLOSED'].includes(updates.status)) {
         updateData.resolvedAt = new Date();
         updateData.resolvedById = user.id;
-      } else if (existingIssue.status === 'RESOLVED') {
+      } else if (['RESOLVED', 'ACCEPTED_RISK', 'FALSE_POSITIVE', 'CLOSED'].includes(existingIssue.status)) {
         updateData.resolvedAt = null;
         updateData.resolvedById = null;
       }
@@ -208,7 +208,7 @@ export async function PUT(
       });
     }
 
-    if (updates.assignedToId !== existingIssue.assignedToId) {
+    if ('assignedToId' in updates && updates.assignedToId !== existingIssue.assignedToId) {
       updateData.assignedToId = updates.assignedToId;
       updateData.assignedById = user.id;
       activities.push({
@@ -218,13 +218,49 @@ export async function PUT(
       });
     }
 
-    if (updates.dueDate !== existingIssue.dueDate) {
-      updateData.dueDate = updates.dueDate ? new Date(updates.dueDate) : null;
-      activities.push({
-        action: 'due_date_changed',
-        oldValue: existingIssue.dueDate?.toISOString() || 'None',
-        newValue: updates.dueDate || 'None'
-      });
+    if ('dueDate' in updates) {
+      const nextDueDate = updates.dueDate ? new Date(updates.dueDate) : null;
+      const currentDueDateValue = existingIssue.dueDate?.toISOString() || null;
+      const nextDueDateValue = nextDueDate?.toISOString() || null;
+
+      if (nextDueDateValue === currentDueDateValue) {
+        // No-op, but keep other requested updates in the same request.
+      } else {
+        updateData.dueDate = nextDueDate;
+        activities.push({
+          action: 'due_date_changed',
+          oldValue: existingIssue.dueDate?.toISOString() || 'None',
+          newValue: updates.dueDate || 'None'
+        });
+      }
+    }
+
+    const evidenceFields = [
+      'impact',
+      'wcagCriteria',
+      'helpUrl',
+      'pageUrl',
+      'selector',
+      'htmlSnippet',
+      'failureSummary',
+      'screenshotDataUrl',
+      'acceptedRiskReason',
+      'falsePositiveReason',
+    ] as const;
+
+    for (const field of evidenceFields) {
+      if (field in updates && updates[field] !== (existingIssue as any)[field]) {
+        updateData[field] = updates[field];
+        activities.push({
+          action: `${field}_changed`,
+          oldValue: Array.isArray((existingIssue as any)[field])
+            ? (existingIssue as any)[field].join(', ')
+            : ((existingIssue as any)[field] || 'None'),
+          newValue: Array.isArray(updates[field])
+            ? updates[field].join(', ')
+            : (updates[field] || 'None'),
+        });
+      }
     }
 
     // Update the issue

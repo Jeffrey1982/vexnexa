@@ -13,6 +13,11 @@ const PUBLIC_ROUTES = [
   { path: '/features', title: /feature|vexnexa/i },
   { path: '/pricing', title: /pricing|prijzen|vexnexa/i },
   { path: '/contact', title: /contact|vexnexa/i },
+  { path: '/sample-report', title: /sample report|rapport|vexnexa/i },
+  { path: '/updates', title: /status|updates|vexnexa/i },
+  { path: '/methodology', title: /methodology|vexnexa/i },
+  { path: '/compliance', title: /compliance|trust|vexnexa/i },
+  { path: '/legal/security', title: /security|privacy|vexnexa/i },
   { path: '/auth/login', title: /log ?in|sign ?in|vexnexa/i },
   { path: '/auth/register', title: /sign ?up|register|vexnexa/i },
 ]

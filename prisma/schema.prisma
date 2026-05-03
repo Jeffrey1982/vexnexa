@@ -9,79 +9,79 @@ datasource db {
 }
 
 model User {
-  id                     String                  @id @default(cuid())
-  email                  String                  @unique
-  firstName              String?
-  lastName               String?
-  company                String?
-  jobTitle               String?
-  phoneNumber            String?
-  website                String?
-  country                String?
-  marketingEmails        Boolean                 @default(false)
-  productUpdates         Boolean                 @default(true)
-  teamInvitations        Boolean                 @default(true)
-  scanNotifications      Boolean                 @default(true)
-  weeklyReports          Boolean                 @default(false)
-  reportEmailEnabled     Boolean                 @default(false)
-  reportEmailFrequency   String                  @default("monthly")
-  reportRecipientEmail   String?
-  reportFormat           String                  @default("pdf")
-  nextReportAt           DateTime?
-  lastReportSentAt       DateTime?
-  profileCompleted       Boolean                 @default(false)
-  plan                   Plan                    @default(FREE)
-  subscriptionStatus     String                  @default("active")
-  trialEndsAt            DateTime?
-  trialStartsAt          DateTime?
-  trialOrigin            String?
-  mollieCustomerId       String?                 @unique
-  mollieSubscriptionId   String?
-  billingInterval        String                  @default("monthly")
-  hasAssurance           Boolean                 @default(false)
-  extraWebsiteCount      Int                     @default(0)
-  extraSeats             Int                     @default(0)
-  isAdmin                Boolean                 @default(false)
-  deletedAt              DateTime?
-  deletedBy              String?
-  lastLoginAt            DateTime?
-  lastFailedPaymentAt    DateTime?
+  id                      String                  @id @default(cuid())
+  email                   String                  @unique
+  firstName               String?
+  lastName                String?
+  company                 String?
+  jobTitle                String?
+  phoneNumber             String?
+  website                 String?
+  country                 String?
+  marketingEmails         Boolean                 @default(false)
+  productUpdates          Boolean                 @default(true)
+  teamInvitations         Boolean                 @default(true)
+  scanNotifications       Boolean                 @default(true)
+  weeklyReports           Boolean                 @default(false)
+  reportEmailEnabled      Boolean                 @default(false)
+  reportEmailFrequency    String                  @default("monthly")
+  reportRecipientEmail    String?
+  reportFormat            String                  @default("pdf")
+  nextReportAt            DateTime?
+  lastReportSentAt        DateTime?
+  profileCompleted        Boolean                 @default(false)
+  plan                    Plan                    @default(FREE)
+  subscriptionStatus      String                  @default("active")
+  trialEndsAt             DateTime?
+  trialStartsAt           DateTime?
+  trialOrigin             String?
+  mollieCustomerId        String?                 @unique
+  mollieSubscriptionId    String?
+  billingInterval         String                  @default("monthly")
+  hasAssurance            Boolean                 @default(false)
+  extraWebsiteCount       Int                     @default(0)
+  extraSeats              Int                     @default(0)
+  isAdmin                 Boolean                 @default(false)
+  deletedAt               DateTime?
+  deletedBy               String?
+  lastLoginAt             DateTime?
+  lastFailedPaymentAt     DateTime?
   lastFailedPaymentReason String?
-  auditCredits           Int                     @default(0) @map("audit_credits")
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
-  addOns                 AddOn[]
-  adminNotes             AdminUserNote[]         @relation("AdminNotes")
-  assuranceSubscriptions AssuranceSubscription[] @relation("AssuranceSubscriptions")
-  auditAttachments       AuditAttachment[]
-  testedAuditItems       AuditItem[]
-  auditTemplates         AuditTemplate[]
-  billingProfile         BillingProfile?
-  blogPosts              BlogPost[]
-  checkoutQuotes         CheckoutQuote[]
-  assignedByIssues       Issue[]                 @relation("AssignedBy")
-  assignedIssues         Issue[]                 @relation("AssignedTo")
-  createdIssues          Issue[]                 @relation("CreatedBy")
-  resolvedIssues         Issue[]                 @relation("ResolvedBy")
-  issueActivities        IssueActivity[]
-  issueComments          IssueComment[]
-  assignedAudits         ManualAudit[]           @relation("AuditAssignee")
-  createdAudits          ManualAudit[]           @relation("AuditCreator")
-  reviewedAudits         ManualAudit[]           @relation("AuditReviewer")
-  notifications          Notification[]
-  portfolios             Portfolio[]
-  scanSchedules          ScanSchedule[]          @relation("UserScanSchedules")
-  scheduledScans         ScheduledScan[]
-  sites                  Site[]
-  supportTickets         SupportTicket[]
-  supportTicketMessages  SupportTicketMessage[]
-  ownedTeams             Team[]                  @relation("TeamOwner")
-  sentInvites            TeamInvite[]            @relation("InvitedBy")
-  invitedBy              TeamMember[]            @relation("InvitedByUser")
-  teamMemberships        TeamMember[]
-  usages                 Usage[]
-  webhookEndpoints       WebhookEndpoint[]
-  whiteLabel             WhiteLabel?
+  auditCredits            Int                     @default(0) @map("audit_credits")
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  addOns                  AddOn[]
+  adminNotes              AdminUserNote[]         @relation("AdminNotes")
+  assuranceSubscriptions  AssuranceSubscription[] @relation("AssuranceSubscriptions")
+  auditAttachments        AuditAttachment[]
+  testedAuditItems        AuditItem[]
+  auditTemplates          AuditTemplate[]
+  billingProfile          BillingProfile?
+  blogPosts               BlogPost[]
+  checkoutQuotes          CheckoutQuote[]
+  assignedByIssues        Issue[]                 @relation("AssignedBy")
+  assignedIssues          Issue[]                 @relation("AssignedTo")
+  createdIssues           Issue[]                 @relation("CreatedBy")
+  resolvedIssues          Issue[]                 @relation("ResolvedBy")
+  issueActivities         IssueActivity[]
+  issueComments           IssueComment[]
+  assignedAudits          ManualAudit[]           @relation("AuditAssignee")
+  createdAudits           ManualAudit[]           @relation("AuditCreator")
+  reviewedAudits          ManualAudit[]           @relation("AuditReviewer")
+  notifications           Notification[]
+  portfolios              Portfolio[]
+  scanSchedules           ScanSchedule[]          @relation("UserScanSchedules")
+  scheduledScans          ScheduledScan[]
+  sites                   Site[]
+  supportTickets          SupportTicket[]
+  supportTicketMessages   SupportTicketMessage[]
+  ownedTeams              Team[]                  @relation("TeamOwner")
+  sentInvites             TeamInvite[]            @relation("InvitedBy")
+  invitedBy               TeamMember[]            @relation("InvitedByUser")
+  teamMemberships         TeamMember[]
+  usages                  Usage[]
+  webhookEndpoints        WebhookEndpoint[]
+  whiteLabel              WhiteLabel?
 
   @@index([deletedAt])
 }
@@ -353,31 +353,41 @@ model TeamInvite {
 }
 
 model Issue {
-  id             String          @id @default(cuid())
-  scanId         String
-  violationId    String
-  title          String
-  description    String?
-  status         IssueStatus     @default(OPEN)
-  priority       IssuePriority   @default(MEDIUM)
-  assignedToId   String?
-  assignedById   String?
-  createdById    String
-  resolvedAt     DateTime?
-  resolvedById   String?
-  dueDate        DateTime?
-  estimatedHours Int?
-  actualHours    Int?
-  tags           String[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  assignedBy     User?           @relation("AssignedBy", fields: [assignedById], references: [id])
-  assignedTo     User?           @relation("AssignedTo", fields: [assignedToId], references: [id])
-  createdBy      User            @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
-  resolvedBy     User?           @relation("ResolvedBy", fields: [resolvedById], references: [id])
-  scan           Scan            @relation(fields: [scanId], references: [id], onDelete: Cascade)
-  activities     IssueActivity[]
-  comments       IssueComment[]
+  id                  String          @id @default(cuid())
+  scanId              String
+  violationId         String
+  title               String
+  description         String?
+  status              IssueStatus     @default(OPEN)
+  priority            IssuePriority   @default(MEDIUM)
+  impact              String?
+  wcagCriteria        String[]        @default([])
+  helpUrl             String?
+  pageUrl             String?
+  selector            String?
+  htmlSnippet         String?
+  failureSummary      String?
+  screenshotDataUrl   String?
+  acceptedRiskReason  String?
+  falsePositiveReason String?
+  assignedToId        String?
+  assignedById        String?
+  createdById         String
+  resolvedAt          DateTime?
+  resolvedById        String?
+  dueDate             DateTime?
+  estimatedHours      Int?
+  actualHours         Int?
+  tags                String[]
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  assignedBy          User?           @relation("AssignedBy", fields: [assignedById], references: [id])
+  assignedTo          User?           @relation("AssignedTo", fields: [assignedToId], references: [id])
+  createdBy           User            @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
+  resolvedBy          User?           @relation("ResolvedBy", fields: [resolvedById], references: [id])
+  scan                Scan            @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  activities          IssueActivity[]
+  comments            IssueComment[]
 
   @@unique([scanId, violationId])
   @@index([scanId])
@@ -662,6 +672,31 @@ model SupportTicketMessage {
   @@index([createdAt])
 }
 
+model StatusUpdate {
+  id           String           @id @default(cuid())
+  type         StatusUpdateType @default(KNOWN_ISSUE)
+  title        String
+  summary      String
+  body         String?
+  publicStatus String           @default("Investigating")
+  severity     String           @default("Informational")
+  sourceType   String?
+  sourceId     String?
+  sourceUrl    String?
+  isPublished  Boolean          @default(false)
+  publishedAt  DateTime?
+  archivedAt   DateTime?
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([type])
+  @@index([isPublished, publishedAt])
+  @@index([sourceType, sourceId])
+  @@index([archivedAt])
+}
+
 model AdminUserNote {
   id        String   @id @default(cuid())
   userId    String
@@ -869,16 +904,16 @@ model MollieProduct {
 /// `webhookType` distinguishes "payment" vs. "subscription" vs. "addon" etc.
 /// Status values: "received" | "processed" | "failed".
 model ProcessedWebhook {
-  id          String   @id @default(cuid())
-  webhookId   String
-  webhookType String
-  status      String   @default("received")
+  id           String    @id @default(cuid())
+  webhookId    String
+  webhookType  String
+  status       String    @default("received")
   errorMessage String?
-  attempts    Int      @default(1)
-  metadata    Json?
-  processedAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  attempts     Int       @default(1)
+  metadata     Json?
+  processedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@unique([webhookId, webhookType])
   @@index([status])
@@ -1171,6 +1206,8 @@ enum IssueStatus {
   OPEN
   IN_PROGRESS
   RESOLVED
+  ACCEPTED_RISK
+  FALSE_POSITIVE
   CLOSED
 }
 
@@ -1205,6 +1242,13 @@ enum TicketCategory {
 enum MessageSenderType {
   USER
   ADMIN
+}
+
+enum StatusUpdateType {
+  KNOWN_ISSUE
+  INCIDENT
+  FIX
+  PRODUCT_UPDATE
 }
 
 enum AdminEventType {

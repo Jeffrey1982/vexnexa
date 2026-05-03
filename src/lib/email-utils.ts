@@ -128,6 +128,7 @@ export const SOURCE_NAMES = {
   'features_newsletter': 'the features page',
   'blog_newsletter': 'our blog',
   'about_newsletter': 'the about us page',
+  'updates_newsletter': 'the Status & Updates page',
 
   // Pop-ups and modals
   'popup_newsletter': 'a popup on our website',

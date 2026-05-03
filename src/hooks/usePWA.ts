@@ -45,6 +45,11 @@ export function usePWA() {
         // Register service worker
         const registration = await navigator.serviceWorker.register('/sw.js', {
           scope: '/',
+          updateViaCache: 'none',
+        });
+
+        registration.update().catch((updateError) => {
+          console.warn('Service Worker update check failed:', updateError);
         });
 
         console.log('🔧 Service Worker registered successfully:', registration.scope);
@@ -65,10 +70,7 @@ export function usePWA() {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 console.log('🔄 New service worker installed, prompting for reload...');
 
-                // Notify user about update
-                if (window.confirm('A new version is available. Reload to update?')) {
-                  window.location.reload();
-                }
+                // The controllerchange handler below reloads once after activation.
               }
             });
           }

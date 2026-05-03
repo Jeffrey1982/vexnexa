@@ -27,6 +27,7 @@ import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
 import { requireAuth } from "@/lib/auth";
 import { getTranslations } from "next-intl/server";
 import { EnhancedScanResults } from "@/components/EnhancedScanResults";
+import { IssueLifecyclePanel } from "@/components/issues/IssueLifecyclePanel";
 import {
   getScanTrendData,
   getBenchmarkComparison,
@@ -122,6 +123,17 @@ async function getScanDetails(id: string) {
           },
         },
         page: true,
+        scanIssues: {
+          include: {
+            _count: {
+              select: { comments: true },
+            },
+          },
+          orderBy: [
+            { priority: "desc" },
+            { createdAt: "desc" },
+          ],
+        },
       },
     });
 
@@ -431,13 +443,14 @@ export default async function ScanDetailPage({ params }: PageProps) {
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           <Tabs defaultValue={isEnhancedScan ? "enhanced" : "overview"} className="w-full">
             <div className="overflow-x-auto">
-              <TabsList className={`grid w-full min-w-max ${isEnhancedScan ? 'grid-cols-6' : 'grid-cols-5'} md:min-w-0`}>
+              <TabsList className={`grid w-full min-w-max ${isEnhancedScan ? 'grid-cols-7' : 'grid-cols-6'} md:min-w-0`}>
                 {isEnhancedScan && (
                   <TabsTrigger value="enhanced" className="text-xs sm:text-sm">Enhanced</TabsTrigger>
                 )}
                 <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
                 <TabsTrigger value="heatmap" className="text-xs sm:text-sm">Heatmap</TabsTrigger>
                 <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
+                <TabsTrigger value="workflow" className="text-xs sm:text-sm">Workflow</TabsTrigger>
                 <TabsTrigger value="violations" className="text-xs sm:text-sm">Violations</TabsTrigger>
                 <TabsTrigger value="raw" className="text-xs sm:text-sm">Raw JSON</TabsTrigger>
               </TabsList>
@@ -774,6 +787,10 @@ export default async function ScanDetailPage({ params }: PageProps) {
                   <ViolationsTable violations={violations} />
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            <TabsContent value="workflow" className="mt-6">
+              <IssueLifecyclePanel scanId={scan.id} initialIssues={(scan as any).scanIssues || []} />
             </TabsContent>
 
             <TabsContent value="raw" className="mt-6">

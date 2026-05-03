@@ -12,6 +12,9 @@ export async function GET() {
     { url: `${baseUrl}/pricing`, priority: 0.9, changefreq: 'weekly' },
     { url: `${baseUrl}/about`, priority: 0.7, changefreq: 'monthly' },
     { url: `${baseUrl}/contact`, priority: 0.7, changefreq: 'monthly' },
+    { url: `${baseUrl}/updates`, priority: 0.75, changefreq: 'weekly' },
+    { url: `${baseUrl}/methodology`, priority: 0.75, changefreq: 'monthly' },
+    { url: `${baseUrl}/compliance`, priority: 0.75, changefreq: 'monthly' },
     { url: `${baseUrl}/partner-apply`, priority: 0.85, changefreq: 'weekly' },
     { url: `${baseUrl}/blog`, priority: 0.8, changefreq: 'weekly' },
     { url: `${baseUrl}/changelog`, priority: 0.6, changefreq: 'weekly' },
@@ -24,6 +27,8 @@ export async function GET() {
     { url: `${baseUrl}/eaa-compliance-monitoring`, priority: 0.9, changefreq: 'weekly' },
     { url: `${baseUrl}/sample-report`, priority: 0.8, changefreq: 'monthly' },
     { url: `${baseUrl}/legal/privacy`, priority: 0.3, changefreq: 'monthly' },
+    { url: `${baseUrl}/legal/security`, priority: 0.3, changefreq: 'monthly' },
+    { url: `${baseUrl}/legal/sla`, priority: 0.3, changefreq: 'monthly' },
     { url: `${baseUrl}/legal/terms`, priority: 0.3, changefreq: 'monthly' },
   ]
 

@@ -20,6 +20,7 @@ import {
 } from "@/lib/performance-analytics";
 import { publishScanReport } from "@/lib/public-reports";
 import { normalizeUrl } from "@/lib/url";
+import { syncScanIssuesFromViolations } from "@/lib/issues/sync-scan-issues";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -438,6 +439,18 @@ async function processScanInBackground({
         page: true,
       },
     });
+
+    try {
+      const syncSummary = await syncScanIssuesFromViolations({
+        scanId: completedScan.id,
+        createdById: completedScan.site.userId,
+        fallbackPageUrl: completedScan.page?.url || fullPageUrl,
+        violations: formattedViolations as any,
+      });
+      console.log("[scan] Synced scan issues:", syncSummary);
+    } catch (issueSyncError) {
+      console.error("[scan] Issue sync failed (non-blocking):", issueSyncError);
+    }
 
     if (!isServiceCall) {
       if (useWeeklyFreeScan) {

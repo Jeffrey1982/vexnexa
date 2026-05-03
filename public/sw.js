@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v14-admin-fix';
+const CACHE_NAME = 'vexnexa-v15-same-origin-cache';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -61,6 +61,12 @@ self.addEventListener('fetch', (event) => {
 
   // Skip non-HTTP requests
   if (!url.protocol.startsWith('http')) {
+    return;
+  }
+
+  // Only handle VexNexa-owned same-origin requests. External scripts, images,
+  // analytics, payment, and CDN assets must be handled by the browser and CSP.
+  if (url.origin !== self.location.origin) {
     return;
   }
 
@@ -254,7 +260,10 @@ async function cacheFirstStrategy(request) {
     return networkResponse;
   } catch (error) {
     console.log('🌐 Network failed for:', request.url);
-    throw error;
+    return new Response('', {
+      status: 504,
+      statusText: 'Gateway Timeout',
+    });
   }
 }
 

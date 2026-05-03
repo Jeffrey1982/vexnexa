@@ -131,8 +131,6 @@ export default async function RootLayout({
         <meta name="msapplication-navbutton-color" content="#0d9488" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        {/* Preload Service Worker */}
-        <link rel="prefetch" href="/sw.js" />
       </head>
       <body className="min-h-screen font-sans antialiased bg-background text-foreground" suppressHydrationWarning>
         <GoogleAnalytics />

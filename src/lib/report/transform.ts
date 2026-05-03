@@ -567,7 +567,18 @@ function normalizeViolations(raw: Record<string, any>, deepScan: any): Array<{
   tags?: string[];
   pageUrl?: string;
   pageTitle?: string;
-  nodes?: Array<{ target?: string[]; html?: string }>;
+  evidence?: {
+    selector?: string;
+    htmlSnippet?: string;
+    failureSummary?: string;
+    screenshotDataUrl?: string;
+  };
+  nodes?: Array<{
+    target?: string[];
+    html?: string;
+    failureSummary?: string;
+    screenshotDataUrl?: string;
+  }>;
 }> {
   if (Array.isArray(raw?.violations)) {
     return raw.violations;
@@ -659,7 +670,19 @@ export function transformScanToReport(
         selector: (n.target ?? []).join(" > ") || "unknown",
         html: (n.html ?? "").slice(0, 1000),
         pageUrl,
+        failureSummary: n.failureSummary ?? v.evidence?.failureSummary,
+        screenshotDataUrl: n.screenshotDataUrl ?? v.evidence?.screenshotDataUrl,
       }));
+
+      if (elementDetails.length === 0 && v.evidence) {
+        elementDetails.push({
+          selector: v.evidence.selector || "unknown",
+          html: (v.evidence.htmlSnippet ?? "").slice(0, 1000),
+          pageUrl,
+          failureSummary: v.evidence.failureSummary,
+          screenshotDataUrl: v.evidence.screenshotDataUrl,
+        });
+      }
 
       return {
         id: v.id,

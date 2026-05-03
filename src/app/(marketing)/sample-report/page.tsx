@@ -16,6 +16,9 @@ import {
   Shield,
   Eye,
   Code,
+  Camera,
+  GitPullRequest,
+  ListChecks,
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
@@ -37,6 +40,9 @@ const sampleIssues: {
   severity: "critical" | "serious" | "moderate" | "minor";
   wcag: string;
   element: string;
+  selector: string;
+  pageUrl: string;
+  status: "Open" | "In progress" | "Resolved" | "Accepted risk";
   description: string;
   fix: string;
 }[] = [
@@ -45,6 +51,9 @@ const sampleIssues: {
     severity: "critical",
     wcag: "1.1.1 Non-text Content (A)",
     element: '<img src="/hero-banner.jpg">',
+    selector: "main img.hero-banner",
+    pageUrl: "/",
+    status: "Open",
     description:
       "5 images are missing alt attributes. Screen readers cannot convey their content to users who rely on assistive technology.",
     fix: 'Add descriptive alt text to each image, e.g. alt="Team collaborating on a project".',
@@ -54,6 +63,9 @@ const sampleIssues: {
     severity: "serious",
     wcag: "1.3.1 Info and Relationships (A)",
     element: '<input type="email" placeholder="Email">',
+    selector: "form.newsletter input[type=email]",
+    pageUrl: "/contact",
+    status: "In progress",
     description:
       "3 form inputs rely on placeholder text instead of associated <label> elements. Placeholders disappear on focus and are not reliably announced by screen readers.",
     fix: "Add a visible <label> element with a for attribute matching the input's id.",
@@ -63,6 +75,9 @@ const sampleIssues: {
     severity: "serious",
     wcag: "1.4.3 Contrast (Minimum) (AA)",
     element: '<p class="text-light">',
+    selector: ".pricing-card .text-light",
+    pageUrl: "/pricing",
+    status: "Open",
     description:
       "Body text (#999 on #fff) has a contrast ratio of 2.85:1. WCAG AA requires at least 4.5:1 for normal text.",
     fix: "Darken the text colour to at least #767676 to meet the 4.5:1 ratio.",
@@ -72,6 +87,9 @@ const sampleIssues: {
     severity: "moderate",
     wcag: "2.4.1 Bypass Blocks (A)",
     element: "<body>",
+    selector: "body > header + main",
+    pageUrl: "/",
+    status: "Resolved",
     description:
       "No skip-to-content link is present. Keyboard users must tab through the entire navigation on every page.",
     fix: 'Add a visually hidden skip link as the first focusable element: <a href="#main-content" class="skip-link">Skip to content</a>.',
@@ -81,6 +99,9 @@ const sampleIssues: {
     severity: "serious",
     wcag: "2.1.1 Keyboard (A)",
     element: '<div onclick="toggle()">',
+    selector: ".faq-question[onclick]",
+    pageUrl: "/features",
+    status: "Open",
     description:
       "2 clickable <div> elements cannot be reached or activated with the keyboard. Users who cannot use a mouse are blocked.",
     fix: "Replace <div> with <button> or add tabindex=\"0\", role=\"button\", and a keydown handler for Enter/Space.",
@@ -90,6 +111,9 @@ const sampleIssues: {
     severity: "moderate",
     wcag: "3.1.1 Language of Page (A)",
     element: "<html>",
+    selector: "html",
+    pageUrl: "/",
+    status: "Accepted risk",
     description:
       "The <html> element is missing the lang attribute. Screen readers may mispronounce content.",
     fix: 'Add lang="en" (or the correct language) to the <html> tag.',
@@ -102,6 +126,13 @@ const severityColors: Record<string, string> = {
   moderate: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
   minor: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
 };
+
+const workflowSteps = [
+  { label: "Open", count: 18, color: "bg-red-500" },
+  { label: "In progress", count: 7, color: "bg-amber-500" },
+  { label: "Resolved", count: 4, color: "bg-green-500" },
+  { label: "Accepted risk", count: 2, color: "bg-blue-500" },
+];
 
 function ScoreRing({ score }: { score: number }) {
   const circumference = 2 * Math.PI * 54;
@@ -305,6 +336,20 @@ export default function SampleReportPage() {
                     <div className="bg-muted/50 rounded-md p-3 font-mono text-xs overflow-x-auto">
                       <code>{issue.element}</code>
                     </div>
+                    <div className="grid grid-cols-1 gap-3 rounded-md border bg-background p-3 text-xs sm:grid-cols-3">
+                      <div>
+                        <p className="font-medium text-foreground">Page</p>
+                        <p className="mt-1 text-muted-foreground">{issue.pageUrl}</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Selector</p>
+                        <code className="mt-1 block truncate text-muted-foreground">{issue.selector}</code>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Workflow</p>
+                        <p className="mt-1 text-muted-foreground">{issue.status}</p>
+                      </div>
+                    </div>
                     <div className="flex items-start gap-2">
                       <Code className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                       <p className="text-sm"><strong>Fix:</strong> {issue.fix}</p>
@@ -312,6 +357,57 @@ export default function SampleReportPage() {
                     <p className="text-xs text-muted-foreground">WCAG {issue.wcag}</p>
                   </div>
                 ))}
+              </CardContent>
+            </Card>
+
+            {/* Evidence + workflow */}
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="font-display flex items-center gap-2">
+                  <Camera className="h-5 w-5 text-primary" />
+                  Evidence and remediation workflow
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="rounded-lg border bg-muted/20 p-4">
+                    <div className="flex items-center gap-2 font-medium">
+                      <Camera className="h-4 w-4 text-primary" />
+                      Visual evidence
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Screenshots, selectors and HTML snippets stay attached to each finding so developers can reproduce the issue faster.
+                    </p>
+                  </div>
+                  <div className="rounded-lg border bg-muted/20 p-4">
+                    <div className="flex items-center gap-2 font-medium">
+                      <GitPullRequest className="h-4 w-4 text-primary" />
+                      Lifecycle states
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Findings can move from open to in progress, resolved, accepted risk or false positive without losing audit history.
+                    </p>
+                  </div>
+                  <div className="rounded-lg border bg-muted/20 p-4">
+                    <div className="flex items-center gap-2 font-medium">
+                      <ListChecks className="h-4 w-4 text-primary" />
+                      Audit trace
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Each report keeps scan metadata, WCAG mappings, affected pages and remediation notes together.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-4">
+                  {workflowSteps.map((step) => (
+                    <div key={step.label} className="rounded-lg border p-4">
+                      <div className={`mb-3 h-1.5 rounded-full ${step.color}`} />
+                      <p className="text-2xl font-bold font-display">{step.count}</p>
+                      <p className="text-xs text-muted-foreground">{step.label}</p>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
 

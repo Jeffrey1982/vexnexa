@@ -30,7 +30,7 @@ export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) 
         width={markWidth}
         height={size}
         className="object-contain object-left"
-        style={{ height: size, width: "auto" }}
+        style={{ width: markWidth, height: size }}
         priority
       />
       <span

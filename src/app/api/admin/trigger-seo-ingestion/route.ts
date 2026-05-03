@@ -15,13 +15,13 @@ export async function POST(request: NextRequest) {
     // Require admin authentication
     await requireAdminAPI();
 
-    const cronToken = process.env.CRON_TOKEN;
+    const cronToken = process.env.CRON_SECRET ?? process.env.CRON_TOKEN;
 
     if (!cronToken) {
       return NextResponse.json(
         {
-          error: 'CRON_TOKEN not configured',
-          message: 'Please set CRON_TOKEN environment variable in Vercel'
+          error: 'Cron secret not configured',
+          message: 'Please set CRON_SECRET or CRON_TOKEN environment variable in Vercel'
         },
         { status: 500 }
       );
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
         const response = await fetch(`${baseUrl}${job.path}`, {
           method: 'POST',
           headers: {
-            'X-CRON-TOKEN': cronToken,
+            'Authorization': `Bearer ${cronToken}`,
             'Content-Type': 'application/json',
           },
         });

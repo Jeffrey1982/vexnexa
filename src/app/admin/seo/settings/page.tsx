@@ -120,7 +120,7 @@ export default async function AdminSeoSettingsPage() {
                 <span className="text-green-600">✓</span> GOOGLE_PRIVATE_KEY
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-green-600">✓</span> CRON_TOKEN
+                <span className="text-green-600">✓</span> CRON_SECRET / CRON_TOKEN
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-green-600">✓</span> NEXT_PUBLIC_GA4_MEASUREMENT_ID
@@ -306,7 +306,7 @@ export default async function AdminSeoSettingsPage() {
           </div>
         </div>
         <p className="text-xs text-muted-foreground mt-3">
-          All endpoints require <code className="bg-gray-200 px-1 rounded">X-CRON-TOKEN</code> header matching your <code className="bg-gray-200 px-1 rounded">CRON_TOKEN</code> environment variable.
+          All endpoints require <code className="bg-gray-200 px-1 rounded">Authorization: Bearer</code> with <code className="bg-gray-200 px-1 rounded">CRON_SECRET</code>. Legacy <code className="bg-gray-200 px-1 rounded">X-CRON-TOKEN</code> with <code className="bg-gray-200 px-1 rounded">CRON_TOKEN</code> is still supported.
         </p>
       </div>
     </AdminPageShell>

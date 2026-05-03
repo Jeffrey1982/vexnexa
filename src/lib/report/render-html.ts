@@ -802,6 +802,15 @@ function renderChunkedEvidenceTable(details: ReportData["priorityIssues"][0]["af
   return chunks.map((chunk, ci) => {
     const offset = ci * EVIDENCE_CHUNK_SIZE;
     const label = totalChunks > 1 ? ` <span class="ev-chunk-label">(${ci + 1}/${totalChunks})</span>` : "";
+    const screenshots = chunk.filter((el) => Boolean(el.screenshotDataUrl)).slice(0, 4);
+    const screenshotGrid = screenshots.length
+      ? `<div class="evidence-screenshots">
+          ${screenshots.map((el, idx) => `<figure class="evidence-shot">
+            <img class="evidence-shot-img" src="${esc(el.screenshotDataUrl || "")}" alt="Evidence screenshot ${offset + idx + 1}" />
+            <figcaption>${esc(el.selector || el.pageUrl || domain)}</figcaption>
+          </figure>`).join("")}
+        </div>`
+      : "";
     return `<div class="ac-section" style="margin-top:8px">
       <div class="ac-label">${esc(d.labels.affectedElements)}${label}</div>
       <table class="evidence-table">
@@ -811,10 +820,11 @@ function renderChunkedEvidenceTable(details: ReportData["priorityIssues"][0]["af
             <td class="ev-num">${offset + idx + 1}</td>
             <td class="ev-url">${esc(el.pageUrl || domain)}</td>
             <td class="ev-mono">${esc(el.selector)}</td>
-            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}</td>
+            <td class="ev-mono">${el.html ? esc(el.html) : "&mdash;"}${el.failureSummary ? `<div class="ev-failure">${esc(el.failureSummary)}</div>` : ""}</td>
           </tr>`).join("")}
         </tbody>
       </table>
+      ${screenshotGrid}
     </div>`;
   }).join("");
 }
@@ -1588,6 +1598,11 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
 .ev-url{font-family:var(--mono);font-size:9px;color:#6B7280;overflow-wrap:anywhere;word-break:break-all;line-height:1.5;hyphens:auto}
 .ev-mono{font-family:var(--mono);font-size:9px;color:#374151;
   white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all;line-height:1.6;hyphens:auto}
+.ev-failure{margin-top:6px;padding-top:6px;border-top:1px dashed #CBD5E1;color:#7F1D1D;white-space:pre-wrap}
+.evidence-screenshots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:8px 0 14px}
+.evidence-shot{margin:0;border:1px solid #E5E7EB;border-radius:8px;background:#F8FAFC;overflow:hidden;break-inside:avoid}
+.evidence-shot-img{display:block;width:100%;height:118px;object-fit:cover;background:#FFFFFF;border-bottom:1px solid #E5E7EB}
+.evidence-shot figcaption{padding:6px 8px;font-family:var(--mono);font-size:8px;color:#64748B;line-height:1.4;overflow-wrap:anywhere;word-break:break-all}
 
 /* ═══════════════════════════════════════════════════
    COMPLIANCE & LEGAL

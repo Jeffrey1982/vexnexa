@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics-events";
 
@@ -23,6 +23,7 @@ import { trackEvent } from "@/lib/analytics-events";
  * Theme: dark mode, scoped to landing.
  */
 export function EnterprisePricingTeaser() {
+  const locale = useLocale();
   const t = useTranslations("home.enterprise.pricingTeaser");
   const [vatInclusive, setVatInclusive] = useState<boolean>(true);
 
@@ -32,7 +33,7 @@ export function EnterprisePricingTeaser() {
   const PRO_EX_VAT = Math.round((PRO_INC_VAT / 1.21) * 100) / 100;
 
   const displayPrice = vatInclusive ? PRO_INC_VAT : PRO_EX_VAT;
-  const fmt = new Intl.NumberFormat(undefined, {
+  const fmt = new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: 2,

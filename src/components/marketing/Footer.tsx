@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail, Twitter } from "lucide-react";
+import { Mail, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import VexnexaLogo from "@/components/brand/VexnexaLogo";
@@ -225,22 +225,8 @@ export function Footer({ className }: FooterProps) {
         <div className="pt-8 border-t border-border/40">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-              <span>Vexnexa © {currentYear} • {t('copyright')}</span>
+              <span>VexNexa &copy; {currentYear} &bull; {t('copyright')}</span>
             </div>
-
-            <a
-              href="https://saasbrowser.com/en/saas/1465297/vexnexa"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://static-files.saasbrowser.com/saas-browser-badge-14.svg"
-                alt="VexNexa - SaaS database"
-                width={200}
-                height={40}
-              />
-            </a>
 
             <div className="text-xs text-muted-foreground text-center md:text-right max-w-md">
               {t('disclaimer')}

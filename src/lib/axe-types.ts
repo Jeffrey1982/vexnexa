@@ -3,6 +3,7 @@ export interface ViolationNode {
   html?: string;
   impact?: "critical" | "serious" | "moderate" | "minor";
   failureSummary?: string;
+  screenshotDataUrl?: string;
   any?: any[];
   all?: any[];
   none?: any[];
@@ -16,6 +17,13 @@ export interface Violation {
   helpUrl: string;
   tags: string[];
   nodes: ViolationNode[];
+  pageUrl?: string;
+  evidence?: {
+    selector?: string;
+    htmlSnippet?: string;
+    failureSummary?: string;
+    screenshotDataUrl?: string;
+  };
 }
 
 export interface AxeResults {

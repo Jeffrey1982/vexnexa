@@ -76,7 +76,7 @@ export default async function SecurityPage() {
             className="inline-flex items-center text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring rounded-md"
           >
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-            {tc('backToHomepage')}
+            {tc('backToHome')}
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">

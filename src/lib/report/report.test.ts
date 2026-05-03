@@ -21,7 +21,7 @@ function makeScan(overrides: Partial<{
     help: string;
     description: string;
     tags: string[];
-    nodes: Array<{ target: string[]; html: string }>;
+    nodes: Array<{ target: string[]; html: string; failureSummary?: string; screenshotDataUrl?: string }>;
   }>;
 }> = {}) {
   const violations = overrides.violations ?? [
@@ -295,6 +295,34 @@ describe("Evidence Tables — Page/URL column", () => {
     expect(ccIssue?.affectedElementDetails.length).toBe(3);
     const imgIssue = report.priorityIssues.find((i) => i.id === "image-alt");
     expect(imgIssue?.affectedElementDetails.length).toBe(2);
+  });
+
+  it("preserves screenshot and failure evidence in report output", () => {
+    const screenshotDataUrl = "data:image/jpeg;base64,abc123";
+    const report = getReport({
+      violations: [{
+        id: "button-name",
+        impact: "serious",
+        help: "Buttons must have discernible text",
+        description: "Ensures buttons have an accessible name.",
+        tags: ["wcag412", "wcag2a"],
+        nodes: [{
+          target: ["button.icon-only"],
+          html: "<button><svg></svg></button>",
+          failureSummary: "Fix any of the following: Element does not have inner text",
+          screenshotDataUrl,
+        }],
+      }],
+    });
+
+    const detail = report.priorityIssues[0].affectedElementDetails[0];
+    expect(detail.failureSummary).toContain("Element does not have inner text");
+    expect(detail.screenshotDataUrl).toBe(screenshotDataUrl);
+
+    const html = renderReportHTML(report);
+    expect(html).toContain("evidence-screenshots");
+    expect(html).toContain("ev-failure");
+    expect(html).toContain(screenshotDataUrl);
   });
 });
 

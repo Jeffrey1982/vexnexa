@@ -52,6 +52,7 @@ export function Navbar({ className }: NavbarProps) {
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
     { name: t('sampleReport'), href: "/sample-report" },
+    { name: t('updates'), href: "/updates" },
     { name: t('contact'), href: "/contact" },
   ];
 
@@ -101,7 +102,7 @@ export function Navbar({ className }: NavbarProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center space-x-8 md:flex lg:space-x-10">
+          <div className="hidden items-center space-x-5 md:flex lg:space-x-8">
             {navigationItems.map((item) => {
               const active =
                 item.href === "/"

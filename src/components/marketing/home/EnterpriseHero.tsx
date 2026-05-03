@@ -143,14 +143,14 @@ function VNIRankVisual() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
             {t("title")}
           </p>
-          <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-black/40 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:text-white/60">
+          <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-black/40 px-2 py-0.5 text-[10px] font-medium text-slate-700 dark:text-white/70">
             {t("liveLabel")}
           </span>
         </div>
 
-        <h3 className="mt-3 font-display text-xl font-semibold text-slate-900 dark:text-white">
+        <p className="mt-3 font-display text-xl font-semibold text-slate-900 dark:text-white">
           {t("subtitle")}
-        </h3>
+        </p>
 
         {/* Highlighted example — matches dashboard scan result style */}
         <div className="mt-5 rounded-xl border border-primary/40 bg-primary/[0.12] dark:bg-primary/[0.07] p-4">
@@ -201,7 +201,7 @@ function VNIRankVisual() {
 
 function Stars({ filled }: { filled: number }) {
   return (
-    <span className="inline-flex gap-0.5" aria-label={`${filled} of 5 stars`}>
+    <span className="inline-flex gap-0.5" role="img" aria-label={`${filled} of 5 stars`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <svg
           key={i}

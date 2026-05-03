@@ -40,6 +40,8 @@ export interface AffectedElementDetail {
   selector: string;
   html: string;
   pageUrl?: string;
+  failureSummary?: string;
+  screenshotDataUrl?: string;
 }
 
 /**
