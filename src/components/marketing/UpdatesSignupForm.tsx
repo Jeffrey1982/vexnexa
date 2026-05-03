@@ -36,7 +36,7 @@ export function UpdatesSignupForm() {
       }
 
       setState("success");
-      setMessage("Check your inbox to confirm your subscription.");
+      setMessage("Check your inbox to confirm Status & Updates.");
       setEmail("");
     } catch (error) {
       setState("error");
