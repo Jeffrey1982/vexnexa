@@ -2627,6 +2627,11 @@
       "loading": "Scan en cours...",
       "success": "Scan terminé"
     },
+    "vniToggle": {
+      "label": "Audit de Risque Profond (VNI)",
+      "subtext": "Les résultats incluront le statut VNI dans le rapport PDF.",
+      "tooltip": "Activer VNI inclut l'évaluation Human-Risk Assessment et le statut 'Insolvent' dans votre rapport PDF."
+    },
     "errors": {
       "invalidUrl": "Veuillez entrer une URL valide",
       "required": "L'URL est obligatoire",

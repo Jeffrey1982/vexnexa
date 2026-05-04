@@ -2675,6 +2675,11 @@
       "loading": "Scanning...",
       "success": "Scan Complete"
     },
+    "vniToggle": {
+      "label": "Tiefe Risiko-Prüfung (VNI)",
+      "subtext": "Ergebnisse enthalten VNI-Status im PDF-Bericht.",
+      "tooltip": "Wenn VNI aktiviert ist, enthält Ihr PDF-Bericht die Human-Risk Assessment und den Status 'Insolvent'."
+    },
     "errors": {
       "invalidUrl": "Please enter a valid URL",
       "required": "URL is required",

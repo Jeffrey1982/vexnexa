@@ -2660,6 +2660,11 @@
       "loading": "Bezig met scannen...",
       "success": "Scan voltooid"
     },
+    "vniToggle": {
+      "label": "Diepe Risico Audit (VNI)",
+      "subtext": "Resultaten inclusief VNI Status in PDF rapport.",
+      "tooltip": "Als VNI is ingeschakeld, bevat je PDF-rapport de Human-Risk Assessment en de status 'Insolvent'."
+    },
     "errors": {
       "invalidUrl": "Voer een geldige URL in",
       "required": "URL is verplicht",

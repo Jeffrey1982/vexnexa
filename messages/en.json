@@ -3557,6 +3557,11 @@
       "loading": "Scanning...",
       "success": "Scan Complete"
     },
+    "vniToggle": {
+      "label": "Deep Risk Audit (VNI)",
+      "subtext": "Results will include VNI Status in PDF report.",
+      "tooltip": "Enabling VNI includes the Human-Risk Assessment and 'Insolvent' status in your PDF report."
+    },
     "errors": {
       "invalidUrl": "Please enter a valid URL",
       "required": "URL is required",

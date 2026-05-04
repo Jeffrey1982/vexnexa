@@ -15,6 +15,7 @@ import {
 interface ExportButtonsProps {
   scanId: string;
   className?: string;
+  includeVNI?: boolean;
   /**
    * Hide the language selector when the surrounding page already controls the
    * export language (e.g. report-v2). Defaults to showing the selector.
@@ -25,6 +26,7 @@ interface ExportButtonsProps {
 export function ExportButtons({
   scanId,
   className,
+  includeVNI = true,
   showLanguageSelector = true,
 }: ExportButtonsProps) {
   const [exportingPdf, setExportingPdf] = useState(false);
@@ -33,7 +35,7 @@ export function ExportButtons({
   const exportPdf = async () => {
     setExportingPdf(true);
     try {
-      const pdfUrl = `/api/reports/${scanId}/pdf?language=${encodeURIComponent(pdfLocale)}`;
+      const pdfUrl = `/api/reports/${scanId}/pdf?language=${encodeURIComponent(pdfLocale)}&includeVNI=${includeVNI ? "true" : "false"}`;
       if (shouldUseInlinePdfOpen()) {
         openPdf({ url: pdfUrl });
         toast({

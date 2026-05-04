@@ -820,7 +820,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
         {/* Right Column - Sidebar */}
         <div className="space-y-6">
           {/* Export Bar */}
-          <ExportBar scanId={scan.id} />
+          <ExportBar scanId={scan.id} includeVNI={vniScore !== null} />
           {/* Quick Wins */}
           {quickWins.length > 0 && (
             <Card className="overflow-hidden">

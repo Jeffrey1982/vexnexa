@@ -152,6 +152,12 @@ function EmptyState() {
   );
 }
 
+function scanIncludesVni(scan: any) {
+  const raw = scan?.raw && typeof scan.raw === "object" ? scan.raw : null;
+  const resultJson = scan?.resultJson && typeof scan.resultJson === "object" ? scan.resultJson : null;
+  return Boolean(resultJson?.vni || raw?.vni);
+}
+
 export default async function DashboardPage() {
   // Get translations
   const t = await getTranslations('dashboard');
@@ -489,7 +495,7 @@ export default async function DashboardPage() {
                             <ScoreBadge score={scan.score} size="sm" />
                           )}
                           {scan.status === 'done' ? (
-                            <ExportButtons scanId={scan.id} className="flex-shrink-0" />
+                            <ExportButtons scanId={scan.id} includeVNI={scanIncludesVni(scan)} className="flex-shrink-0" />
                           ) : (
                             <Badge variant="outline" className="text-xs">
                               {scan.status}

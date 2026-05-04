@@ -8,11 +8,13 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, AlertCircle, Sparkles, Info } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { normalizeUrl } from "@/lib/url";
+import { cn } from "@/lib/utils";
 
 export function NewScanForm() {
   const t = useTranslations("dashboard.newScan");
   const tScan = useTranslations("scanForm");
   const [url, setUrl] = useState("");
+  const [includeVNI, setIncludeVNI] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -39,7 +41,11 @@ export function NewScanForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url: normalizedUrl }),
+        body: JSON.stringify({
+          url: normalizedUrl,
+          includeVNI,
+          standard: "WCAG 2.2 AA",
+        }),
       });
 
       console.log("[NewScanForm] Response status:", response.status);
@@ -104,6 +110,47 @@ export function NewScanForm() {
             </>
           )}
         </TouchButton>
+      </div>
+
+      <div className="flex justify-center pt-1">
+        <button
+          type="button"
+          onClick={() => setIncludeVNI((value) => !value)}
+          disabled={isLoading}
+          aria-pressed={includeVNI}
+          className="group flex w-full max-w-md items-center justify-between gap-4 rounded-xl border border-[#FF8C00]/30 bg-background px-4 py-3 text-left shadow-sm transition-all hover:border-[#FF8C00]/60 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:min-w-[420px]"
+        >
+          <span className="min-w-0">
+            <span className="flex items-center gap-2 text-sm font-semibold text-foreground sm:text-base">
+              {tScan("vniToggle.label")}
+              <span
+                className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-[#FF8C00]/40 bg-[#FF8C00]/10 text-[10px] font-bold text-[#FF8C00]"
+                title={tScan("vniToggle.tooltip")}
+                aria-label={tScan("vniToggle.tooltip")}
+              >
+                i
+              </span>
+            </span>
+            <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+              {tScan("vniToggle.subtext")}
+            </span>
+          </span>
+
+          <span
+            className={cn(
+              "relative inline-flex h-7 w-14 flex-none items-center rounded-full border border-transparent transition-colors",
+              includeVNI ? "bg-[#FF8C00]" : "bg-input"
+            )}
+            aria-hidden="true"
+          >
+            <span
+              className={cn(
+                "absolute left-1 h-5 w-5 rounded-full bg-background shadow-md transition-transform",
+                includeVNI && "translate-x-7"
+              )}
+            />
+          </span>
+        </button>
       </div>
 
       <div aria-live="assertive" aria-atomic="true">

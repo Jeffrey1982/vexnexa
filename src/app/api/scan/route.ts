@@ -33,6 +33,26 @@ const MAX_DEEP_SCAN_PAGES = 10;
 const MAX_AI_PAGES = 3;
 const PAGE_COOLDOWN_MS = 1_500;
 
+function stripVniPayload(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(stripVniPayload);
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const stripped: Record<string, unknown> = {};
+  for (const [key, nestedValue] of Object.entries(value as Record<string, unknown>)) {
+    if (key === "vni" || key === "vniScore" || key === "aiContentChecks") {
+      continue;
+    }
+    stripped[key] = stripVniPayload(nestedValue);
+  }
+
+  return stripped;
+}
+
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
@@ -93,12 +113,13 @@ async function scanWithDeadline(
   scanner: EnhancedAccessibilityScanner,
   url: string,
   deadlineMs: number,
-  enableAiImageAnalysis: boolean
+  enableAiImageAnalysis: boolean,
+  includeVNI: boolean
 ) {
   const remainingMs = Math.max(1, deadlineMs - Date.now());
 
   return Promise.race([
-    scanner.scanUrl(url, { enableAiImageAnalysis }),
+    scanner.scanUrl(url, { enableAiImageAnalysis, includeVNI }),
     new Promise<never>((_, reject) =>
       setTimeout(() => reject(new Error("Deep scan reached the 90s safety limit")), remainingMs)
     ),
@@ -225,6 +246,7 @@ async function processScanInBackground({
   userId,
   isServiceCall,
   useWeeklyFreeScan,
+  includeVNI,
 }: {
   scanId: string;
   siteId: string;
@@ -234,15 +256,16 @@ async function processScanInBackground({
   userId: string;
   isServiceCall: boolean;
   useWeeklyFreeScan: boolean;
+  includeVNI: boolean;
 }) {
   const startedAt = Date.now();
   const deadlineMs = startedAt + BACKGROUND_SCAN_TIMEOUT_MS;
   const scanner = new EnhancedAccessibilityScanner();
 
   try {
-    console.log("[scan] Starting depth-1 enhanced accessibility scan:", fullPageUrl);
+    console.log("[scan] Starting depth-1 accessibility scan:", { fullPageUrl, includeVNI });
     await updateScanProgress(scanId, {
-      message: "Preparing deep scan...",
+      message: includeVNI ? "Preparing deep risk audit..." : "Preparing technical scan...",
       currentPage: 0,
       totalPages: MAX_DEEP_SCAN_PAGES,
       currentUrl: fullPageUrl,
@@ -265,7 +288,7 @@ async function processScanInBackground({
       attemptedUrls.add(pageUrl);
       const currentPageNumber = scannedPages.length + 1;
       const totalPages = Math.min(MAX_DEEP_SCAN_PAGES, Math.max(queue.length, currentPageNumber));
-      const aiAnalyzed = currentPageNumber <= MAX_AI_PAGES;
+      const aiAnalyzed = includeVNI && currentPageNumber <= MAX_AI_PAGES;
 
       await updateScanProgress(scanId, {
         message: `Analyzing page ${currentPageNumber} of ${totalPages}...`,
@@ -277,7 +300,7 @@ async function processScanInBackground({
 
       let pageResult: EnhancedScanResult;
       try {
-        pageResult = await scanWithDeadline(scanner, pageUrl, deadlineMs, aiAnalyzed);
+        pageResult = await scanWithDeadline(scanner, pageUrl, deadlineMs, aiAnalyzed, includeVNI);
       } catch (pageError: any) {
         if (scannedPages.length > 0 && pageError?.message?.includes("90s safety limit")) {
           console.warn("[scan] Deep scan page stopped by safety limit; aggregating completed pages.");
@@ -392,6 +415,21 @@ async function processScanInBackground({
     const seoMetrics = analyzeSEOMetrics(violations);
     const complianceRisk = calculateComplianceRisk(Math.round(result.score), violations);
     const serializedResult = JSON.parse(JSON.stringify(result));
+    const persistedResult = includeVNI
+      ? {
+          ...serializedResult,
+          scanOptions: {
+            includeVNI: true,
+            standard: "WCAG 2.2 AA",
+          },
+        }
+      : {
+          ...(stripVniPayload(serializedResult) as Record<string, unknown>),
+          scanOptions: {
+            includeVNI: false,
+            standard: "WCAG 2.2 AA",
+          },
+        };
 
     const completedScan = await prisma.scan.update({
       where: { id: scanId },
@@ -431,8 +469,8 @@ async function processScanInBackground({
         wcag22Compliance: complianceRisk.wcag22Compliance,
         complianceGaps: complianceRisk.complianceGaps,
         legalRiskScore: complianceRisk.legalRiskScore,
-        raw: serializedResult,
-        resultJson: serializedResult,
+        raw: persistedResult,
+        resultJson: persistedResult,
       },
       include: {
         site: true,
@@ -596,7 +634,9 @@ export async function POST(req: Request) {
       }
     }
 
-    const { url } = await req.json();
+    const body = await req.json();
+    const { url } = body;
+    const includeVNI = Boolean(body?.includeVNI);
     const normalizedUrl = normalizeUrl(url);
     if (!normalizedUrl) {
       return NextResponse.json({ ok: false, error: "Please enter a valid website URL." }, { status: 400 });
@@ -687,6 +727,7 @@ export async function POST(req: Request) {
           userId: user.id,
           isServiceCall,
           useWeeklyFreeScan,
+          includeVNI,
         }),
         BACKGROUND_SCAN_TIMEOUT_MS + 15_000
       ).catch((scanError) => {

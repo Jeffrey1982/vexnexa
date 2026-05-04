@@ -16,19 +16,20 @@ import {
 
 interface ExportBarProps {
   scanId: string;
+  includeVNI?: boolean;
   className?: string;
 }
 
 type ExportStatus = "idle" | "loading" | "success" | "error";
 
-export function ExportBar({ scanId, className }: ExportBarProps) {
+export function ExportBar({ scanId, includeVNI = true, className }: ExportBarProps) {
   const [pdfStatus, setPdfStatus] = useState<ExportStatus>("idle");
   const [pdfLocale, setPdfLocale] = useState<PdfLocale>(detectInitialPdfLocale());
 
   const exportPdf = async () => {
     setPdfStatus("loading");
     try {
-      const pdfUrl = `/api/reports/${scanId}/pdf?language=${encodeURIComponent(pdfLocale)}`;
+      const pdfUrl = `/api/reports/${scanId}/pdf?language=${encodeURIComponent(pdfLocale)}&includeVNI=${includeVNI ? "true" : "false"}`;
       if (shouldUseInlinePdfOpen()) {
         openPdf({ url: pdfUrl });
         setPdfStatus("success");

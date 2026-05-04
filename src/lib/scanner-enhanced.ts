@@ -410,6 +410,7 @@ export class EnhancedAccessibilityScanner {
     const total = violations.length + passes.length || 1;
     const basicScore = Math.round((passes.length / total) * 100);
 
+    const shouldCalculateVni = options.includeVNI !== false;
     const [
       keyboardNavigation,
       screenReaderCompatibility,
@@ -430,8 +431,26 @@ export class EnhancedAccessibilityScanner {
       this.testAdvancedColorVision(page),
       this.testPerformanceImpact(page),
       this.testLanguageSupport(page),
-      collectVniColorMetrics(page),
-      collectVniDesignMetrics(page),
+      shouldCalculateVni
+        ? collectVniColorMetrics(page)
+        : Promise.resolve({
+            contrast: {
+              sampled: 0,
+              failingNormal: 0,
+              failingProtanopia: 0,
+              failingDeuteranopia: 0,
+              failingTritanopia: 0,
+              averageContrast: 0,
+            },
+            colorOnlySignals: { total: 0, risky: 0 },
+          }),
+      shouldCalculateVni
+        ? collectVniDesignMetrics(page)
+        : Promise.resolve({
+            tapTargets: { total: 0, failing: 0, minWidth: 0, minHeight: 0 },
+            fontReadability: { sampled: 0, failing: 0, averageFontSize: 0, averageLineHeightRatio: 0 },
+            layoutStability: { cls: 0 },
+          }),
     ]);
 
     const enhancedScore = Math.round(
@@ -1133,6 +1152,7 @@ export class EnhancedAccessibilityScanner {
 // ===== Public API =====
 export interface EnhancedScanOptions {
   enableAiImageAnalysis?: boolean;
+  includeVNI?: boolean;
 }
 
 export async function runEnhancedAccessibilityScan(

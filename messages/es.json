@@ -2669,6 +2669,11 @@
       "loading": "Escaneando...",
       "success": "Escaneo completo"
     },
+    "vniToggle": {
+      "label": "Auditoría de Riesgo Profundo (VNI)",
+      "subtext": "Los resultados incluirán el estado VNI en el informe PDF.",
+      "tooltip": "Activar VNI incluye la Human-Risk Assessment y el estado 'Insolvent' en su informe PDF."
+    },
     "errors": {
       "invalidUrl": "Por favor ingresa una URL válida",
       "required": "Se requiere URL",

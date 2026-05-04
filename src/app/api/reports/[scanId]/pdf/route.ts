@@ -68,6 +68,7 @@ export async function GET(
 
     const resultJson = scan.resultJson && typeof scan.resultJson === "object" ? scan.resultJson as Record<string, unknown> : {};
     const rawJson = scan.raw && typeof scan.raw === "object" ? scan.raw as Record<string, unknown> : {};
+    const includeVNI = url.searchParams.get("includeVNI") !== "false";
     const mergedRaw: Record<string, unknown> = { ...rawJson, ...resultJson };
     if (!Array.isArray(mergedRaw.violations) && Array.isArray(rawJson.violations)) {
       mergedRaw.violations = rawJson.violations;
@@ -75,6 +76,18 @@ export async function GET(
     const rawDeepScan = (rawJson.vni as any)?.internal?.deepScan || (rawJson as any).deepScan;
     if (!(mergedRaw as any).deepScan && rawDeepScan) {
       (mergedRaw as any).deepScan = rawDeepScan;
+    }
+    if (!includeVNI) {
+      delete (mergedRaw as any).vni;
+      if ((mergedRaw as any).deepScan?.worstPage) {
+        delete (mergedRaw as any).deepScan.worstPage.vniScore;
+      }
+      if (Array.isArray((mergedRaw as any).deepScan?.pages)) {
+        (mergedRaw as any).deepScan.pages = (mergedRaw as any).deepScan.pages.map((page: any) => {
+          const { vniScore, ...rest } = page || {};
+          return rest;
+        });
+      }
     }
 
     // Transform + render
