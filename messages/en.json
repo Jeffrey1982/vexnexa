@@ -3733,6 +3733,11 @@
       "title": "Practical accessibility notes",
       "subtitle": "Guides, product thinking, and compliance context for teams shipping websites."
     },
+    "resourceSpotlight": {
+      "badge": "New resource",
+      "description": "A practical agency guide to replacing accessibility overlays with source-code monitoring, white-label reporting, and recurring accessibility services.",
+      "cta": "Read the resource"
+    },
     "postsPublished": "Published posts",
     "categoriesTracked": "Topics covered",
     "featuredLabel": "Featured",

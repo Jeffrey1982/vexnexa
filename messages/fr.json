@@ -3120,6 +3120,11 @@
       "title": "Notes pratiques sur l'accessibilité",
       "subtitle": "Guides, réflexion produit et contexte conformité pour les équipes qui livrent des sites web."
     },
+    "resourceSpotlight": {
+      "badge": "Nouvelle ressource",
+      "description": "Un guide pratique pour les agences qui remplacent les overlays d'accessibilité par du monitoring du code source, des rapports white-label et des services récurrents.",
+      "cta": "Lire la ressource"
+    },
     "postsPublished": "Articles publiés",
     "categoriesTracked": "Sujets couverts",
     "featuredLabel": "À la une",

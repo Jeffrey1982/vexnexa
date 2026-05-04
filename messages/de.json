@@ -3168,6 +3168,11 @@
       "title": "Praktische Hinweise zur Barrierefreiheit",
       "subtitle": "Leitfäden, Produktdenken und Compliance-Kontext für Teams, die Websites veröffentlichen."
     },
+    "resourceSpotlight": {
+      "badge": "Neue Ressource",
+      "description": "Ein praktischer Agenturleitfaden, um Accessibility Overlays durch Source-Code-Monitoring, White-Label-Berichte und wiederkehrende Accessibility-Services zu ersetzen.",
+      "cta": "Ressource lesen"
+    },
     "postsPublished": "Veröffentlichte Beiträge",
     "categoriesTracked": "Themenbereiche",
     "featuredLabel": "Empfohlen",

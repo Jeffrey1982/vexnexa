@@ -3021,6 +3021,11 @@
       "title": "Notas práticas de acessibilidade",
       "subtitle": "Guias, pensamento de produto e contexto de conformidade para equipes que publicam sites."
     },
+    "resourceSpotlight": {
+      "badge": "Novo recurso",
+      "description": "Um guia prático para agências substituírem accessibility overlays por monitoramento de código-fonte, relatórios white-label e serviços recorrentes de acessibilidade.",
+      "cta": "Ler o recurso"
+    },
     "postsPublished": "Posts publicados",
     "categoriesTracked": "Tópicos cobertos",
     "featuredLabel": "Em destaque",

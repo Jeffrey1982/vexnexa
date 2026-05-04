@@ -3162,6 +3162,11 @@
       "title": "Notas prácticas de accesibilidad",
       "subtitle": "Guías, ideas de producto y contexto de cumplimiento para equipos que publican sitios web."
     },
+    "resourceSpotlight": {
+      "badge": "Nuevo recurso",
+      "description": "Una guía práctica para agencias que quieren sustituir los overlays de accesibilidad por monitoreo de código fuente, informes white-label y servicios recurrentes.",
+      "cta": "Leer el recurso"
+    },
     "postsPublished": "Publicaciones",
     "categoriesTracked": "Temas cubiertos",
     "featuredLabel": "Destacado",

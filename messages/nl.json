@@ -3153,6 +3153,11 @@
       "title": "Praktische toegankelijkheidsnotities",
       "subtitle": "Gidsen, productinzichten en compliance-context voor teams die websites opleveren."
     },
+    "resourceSpotlight": {
+      "badge": "Nieuwe resource",
+      "description": "Een praktische agencygids om accessibility overlays te vervangen door broncode-monitoring, white-label rapportage en terugkerende toegankelijkheidsdiensten.",
+      "cta": "Lees de resource"
+    },
     "postsPublished": "Gepubliceerde posts",
     "categoriesTracked": "Onderwerpen",
     "featuredLabel": "Uitgelicht",

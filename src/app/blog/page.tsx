@@ -178,6 +178,26 @@ export default async function BlogPage() {
 
       <section className="container mx-auto px-4 py-14 lg:py-20">
         <div className="mx-auto max-w-6xl space-y-14">
+          <section className="rounded-lg border border-border bg-card p-6 shadow-sm lg:p-8">
+            <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <Badge variant="secondary">{t('resourceSpotlight.badge')}</Badge>
+                <h2 className="mt-4 max-w-3xl font-display text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
+                  The Digital Accessibility Pivot: Why Overlays are Failing in 2026
+                </h2>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground lg:text-base lg:leading-7">
+                  {t('resourceSpotlight.description')}
+                </p>
+              </div>
+              <Button asChild>
+                <Link href="/blog/the-digital-accessibility-pivot">
+                  {t('resourceSpotlight.cta')}
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
+          </section>
+
           {posts.length === 0 ? (
             <div className="mx-auto max-w-xl rounded-lg border border-border bg-card p-8 text-center shadow-sm">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">

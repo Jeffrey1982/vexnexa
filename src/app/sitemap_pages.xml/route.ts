@@ -17,6 +17,7 @@ export async function GET() {
     { url: `${baseUrl}/compliance`, priority: 0.75, changefreq: 'monthly' },
     { url: `${baseUrl}/partner-apply`, priority: 0.85, changefreq: 'weekly' },
     { url: `${baseUrl}/blog`, priority: 0.8, changefreq: 'weekly' },
+    { url: `${baseUrl}/blog/the-digital-accessibility-pivot`, priority: 0.8, changefreq: 'monthly' },
     { url: `${baseUrl}/changelog`, priority: 0.6, changefreq: 'weekly' },
     { url: `${baseUrl}/wcag-scan`, priority: 0.8, changefreq: 'weekly' },
     { url: `${baseUrl}/website-accessibility-checker`, priority: 0.8, changefreq: 'weekly' },
