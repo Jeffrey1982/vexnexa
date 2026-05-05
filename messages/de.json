@@ -540,6 +540,7 @@
           "eu": "Hosted in the EU (AWS Frankfurt)",
           "audit": "Audit-ready PDF & DOCX exports"
         },
+        "security": "Built on recognized tooling and providers: axe-core, Mollie, WCAG/EAA, and EU hosting.",
         "disclaimer": "VexNexa provides risk-mitigation tooling and audit-ready evidence. Final compliance certification remains the responsibility of your organisation and its accessibility advisors."
       },
       "features": {

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
+import { getBlogPublicPath } from '@/lib/blog-seo';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,8 +36,8 @@ export function BlogLanguageSelector({
     // Set the locale cookie
     document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; SameSite=Lax`;
 
-    // Redirect to the blog post in the new locale
-    router.push(`/blog/${baseSlug}-${locale}`);
+    // Redirect to the canonical SEO URL for the selected locale.
+    router.push(getBlogPublicPath(locale, baseSlug));
     router.refresh();
   };
 

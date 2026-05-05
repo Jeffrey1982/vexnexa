@@ -439,7 +439,7 @@
       },
       "q3": {
         "question": "Kan ik rapporten op maat exporteren voor klanten?",
-        "answer": "Ja. PDF- en DOCX-exports zijn beschikbaar bij betaalde abonnementen. Business- en Enterprise-abonnementen bevatten white-label rapporten met je eigen logo, kleuren en contactgegevens."
+        "answer": "Ja. Je kunt auditrapporten exporteren als PDF en DOCX. Business- en Enterprise-abonnementen bevatten white-label rapporten met je eigen logo, kleuren en contactgegevens."
       },
       "q4": {
         "question": "Hoe werkt continue monitoring?",
@@ -531,6 +531,7 @@
           "eu": "Gehost in de EU (AWS Frankfurt)",
           "audit": "Audit-klare PDF- & DOCX-exports"
         },
+        "security": "Gebouwd op bekende tooling en betaalproviders: axe-core, Mollie, WCAG/EAA en EU-hosting.",
         "disclaimer": "VexNexa levert risico-mitigerende tooling en audit-klare bewijsvoering. Eindverantwoordelijkheid voor compliance-certificering blijft bij je organisatie en haar toegankelijkheidsadviseurs."
       },
       "features": {

@@ -17,6 +17,7 @@ import { cookies } from 'next/headers'
 import type { Locale } from '@/i18n'
 import { getTranslations } from 'next-intl/server'
 import { prisma } from '@/lib/prisma'
+import { DIGITAL_ACCESSIBILITY_PIVOT_SLUG, getStaticBlogPost } from '@/lib/static-blog-posts'
 
 type BlogPostWithAuthor = BlogPost & {
   author: {
@@ -83,6 +84,7 @@ export default async function BlogPage() {
   const cookieStore = await cookies()
   const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en'
   const t = await getTranslations('blog')
+  const resourceSpotlight = getStaticBlogPost(DIGITAL_ACCESSIBILITY_PIVOT_SLUG, locale === 'de' ? 'en' : locale)
 
   let posts = await prisma.blogPost.findMany({
     where: {
@@ -183,7 +185,7 @@ export default async function BlogPage() {
               <div>
                 <Badge variant="secondary">{t('resourceSpotlight.badge')}</Badge>
                 <h2 className="mt-4 max-w-3xl font-display text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
-                  The Digital Accessibility Pivot: Why Overlays are Failing in 2026
+                  {resourceSpotlight?.title || 'The Digital Accessibility Pivot: Why Overlays are Failing in 2026'}
                 </h2>
                 <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground lg:text-base lg:leading-7">
                   {t('resourceSpotlight.description')}

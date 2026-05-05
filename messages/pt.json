@@ -399,6 +399,7 @@
           "eu": "Alojado na UE (AWS Frankfurt)",
           "audit": "Exportações PDF e DOCX prontas para auditoria"
         },
+        "security": "Criado com ferramentas e fornecedores reconhecidos: axe-core, Mollie, WCAG/EAA e alojamento na UE.",
         "disclaimer": "A VexNexa fornece ferramentas de mitigação de risco e evidência pronta para auditoria. A certificação final de conformidade continua a ser da responsabilidade da sua organização e dos seus consultores de acessibilidade."
       },
       "features": {

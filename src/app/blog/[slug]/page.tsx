@@ -7,39 +7,37 @@ import { prisma } from '@/lib/prisma'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { BlogContent } from '@/components/blog/BlogContent'
 import { SafeImage } from '@/components/SafeImage'
-import { cookies } from 'next/headers'
 import type { Locale } from '@/i18n'
 import { BlogLanguageSelector } from '@/components/blog/BlogLanguageSelector'
-
-// Helper to extract base slug (remove language suffix)
-function getBaseSlug(slug: string): string {
-  const suffixes = ['-en', '-nl', '-fr', '-es', '-pt'];
-  for (const suffix of suffixes) {
-    if (slug.endsWith(suffix)) {
-      return slug.slice(0, -suffix.length);
-    }
-  }
-  return slug;
-}
+import {
+  getBlogBaseSlug,
+  getBlogHreflangAlternates,
+  getBlogPublicUrl,
+  getLocaleFromSlug,
+  getOriginalBlogLocale,
+  getStoredBlogSlug,
+  isBlogSeoLocale,
+} from '@/lib/blog-seo'
 
 interface BlogPostPageProps {
   params: Promise<{
     slug: string
+    locale?: string
   }>
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale: routeLocale } = await params;
 
-  // Get user's locale from cookie
-  const cookieStore = await cookies();
-  const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+  const slugLocale = getLocaleFromSlug(slug);
+  const locale = (isBlogSeoLocale(routeLocale) ? routeLocale : slugLocale || 'nl') as Locale;
+  const baseSlug = getBlogBaseSlug(slug);
 
   // Try to find post with locale first, fallback to any post with this slug
   let post = await prisma.blogPost.findFirst({
     where: {
-      slug: slug,
-      locale: locale
+      slug: getStoredBlogSlug(baseSlug, locale),
+      locale
     }
   });
 
@@ -56,7 +54,19 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const canonicalUrl = `https://vexnexa.com/blog/${post.slug}`;
+  const allVersions = await prisma.blogPost.findMany({
+    where: { status: 'published' },
+    select: {
+      locale: true,
+      slug: true,
+      publishedAt: true,
+      createdAt: true,
+    }
+  });
+  const matchingVersions = allVersions.filter((version) => getBlogBaseSlug(version.slug) === baseSlug);
+  const originalLocale = getOriginalBlogLocale(matchingVersions.length > 0 ? matchingVersions : [post]);
+  const canonicalUrl = getBlogPublicUrl(originalLocale, baseSlug);
+  const languages = getBlogHreflangAlternates(matchingVersions.length > 0 ? matchingVersions : [post], baseSlug);
   
   return {
     title: post.metaTitle || post.title,
@@ -64,6 +74,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     keywords: post.metaKeywords,
     alternates: {
       canonical: canonicalUrl,
+      languages,
     },
     openGraph: {
       title: post.metaTitle || post.title,
@@ -72,7 +83,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publishedTime: post.publishedAt?.toISOString(),
       authors: ['Vexnexa Team'],
       images: post.coverImage ? [post.coverImage] : [],
-      url: canonicalUrl,
+      url: getBlogPublicUrl(post.locale || locale, baseSlug),
       locale: locale === 'en' ? 'en_US' : locale,
     },
     twitter: {
@@ -95,16 +106,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 export const revalidate = 3600;
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
+  const { slug, locale: routeLocale } = await params;
 
-  // Get user's locale from cookie
-  const cookieStore = await cookies();
-  const locale = (cookieStore.get('NEXT_LOCALE')?.value as Locale) || 'en';
+  const slugLocale = getLocaleFromSlug(slug);
+  const locale = (isBlogSeoLocale(routeLocale) ? routeLocale : slugLocale || 'nl') as Locale;
+  const baseSlug = getBlogBaseSlug(slug);
 
   // Try to find post with locale first, fallback to any post with this slug
   let post = await prisma.blogPost.findFirst({
     where: {
-      slug: slug,
+      slug: getStoredBlogSlug(baseSlug, locale),
       locale: locale
     },
     include: {
@@ -143,7 +154,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   });
 
   // Get base slug and find available language versions
-  const baseSlug = getBaseSlug(slug);
   const allVersions = await prisma.blogPost.findMany({
     where: {
       status: 'published',
@@ -156,8 +166,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   // Find all available locales for this post (by matching base slug)
   const availableLocales = allVersions
-    .filter((v) => getBaseSlug(v.slug) === baseSlug)
+    .filter((v) => getBlogBaseSlug(v.slug) === baseSlug)
     .map((v) => v.locale || 'en') // Default to 'en' if locale not set
+    .filter((loc) => isBlogSeoLocale(loc))
     .filter((loc, index, self) => self.indexOf(loc) === index); // Remove duplicates
 
   return (

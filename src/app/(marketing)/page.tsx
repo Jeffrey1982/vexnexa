@@ -30,8 +30,7 @@ import { EnterpriseHero } from "@/components/marketing/home/EnterpriseHero";
 import { VisibilityHook } from "@/components/marketing/home/VisibilityHook";
 import { EnterpriseTrustBar } from "@/components/marketing/home/EnterpriseTrustBar";
 import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatures";
-import { EfficiencyCalculator } from "@/components/marketing/home/EfficiencyCalculator";
-import { EnterprisePricingTeaser } from "@/components/marketing/home/EnterprisePricingTeaser";
+import { EnterpriseConversionPanel } from "@/components/marketing/home/EnterpriseConversionPanel";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -587,8 +586,7 @@ export default function HomePage() {
         <EnterpriseTrustBar />
         <VisibilityHook />
         <EnterpriseFeatures />
-        <EfficiencyCalculator />
-        <EnterprisePricingTeaser />
+        <EnterpriseConversionPanel />
 
         {/*
           FAQ kept for SEO + CRO; we render it on the dark surface with
