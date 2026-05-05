@@ -50,20 +50,33 @@ export function EnterpriseFeatures() {
       aria-labelledby="enterprise-features-heading"
     >
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            {t("eyebrow")}
-          </p>
-          <h2
-            id="enterprise-features-heading"
-            className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl"
-          >
-            {t("title")}
-          </h2>
-          <p className="mt-4 text-lg text-slate-600 dark:text-white/70">{t("subtitle")}</p>
-        </div>
+        <div className="mx-auto max-w-6xl">
+          {/* Section header — heading on the left, supporting CTA on the right
+              to balance the row instead of leaving empty space. */}
+          <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                {t("eyebrow")}
+              </p>
+              <h2
+                id="enterprise-features-heading"
+                className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl"
+              >
+                {t("title")}
+              </h2>
+              <p className="mt-4 text-lg text-slate-600 dark:text-white/70">{t("subtitle")}</p>
+            </div>
+            <div className="flex lg:justify-end">
+              <Link
+                href="/features"
+                className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 px-4 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/15"
+              >
+                {t("viewAll")} <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+          </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {items.map(({ key, Icon, titleKey, bodyKey, bullets }) => (
             <article
               key={key}
@@ -84,7 +97,7 @@ export function EnterpriseFeatures() {
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-white/70">{t(bodyKey)}</p>
 
-              <ul className="mt-5 space-y-2.5 text-sm text-slate-600 dark:text-white/65">
+              <ul className="mt-5 flex-1 space-y-2.5 text-sm text-slate-600 dark:text-white/65">
                 {bullets.map((b) => (
                   <li key={b} className="flex gap-2">
                     <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />
@@ -95,14 +108,6 @@ export function EnterpriseFeatures() {
             </article>
           ))}
         </div>
-
-        <div className="mt-10 flex justify-start">
-          <Link
-            href="/features"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
-          >
-            {t("viewAll")} <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
         </div>
       </div>
     </section>

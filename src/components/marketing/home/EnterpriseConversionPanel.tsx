@@ -51,10 +51,10 @@ export function EnterpriseConversionPanel() {
   });
 
   return (
-    <section className="relative bg-white py-14 dark:bg-[#0A0F1E] sm:py-18" aria-labelledby="enterprise-conversion-heading">
+    <section className="relative bg-white py-20 dark:bg-[#0A0F1E] sm:py-24" aria-labelledby="enterprise-conversion-heading">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
+          <div className="mb-10 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
               {calculator("eyebrow")} · {pricing("eyebrow")}
             </p>
@@ -63,8 +63,8 @@ export function EnterpriseConversionPanel() {
             </h2>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-            <article className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 shadow-xl dark:border-white/10 dark:from-white/[0.04] dark:to-white/[0.01] sm:p-7">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+            <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 shadow-xl dark:border-white/10 dark:from-white/[0.04] dark:to-white/[0.01] sm:p-7">
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
                 <Calculator className="h-3.5 w-3.5" aria-hidden />
                 {calculator("eyebrow")}
@@ -107,7 +107,8 @@ export function EnterpriseConversionPanel() {
                 </label>
               </div>
 
-              <div className="mt-6 rounded-xl border border-primary/25 bg-primary/[0.05] p-4">
+              <div className="mt-auto pt-6">
+              <div className="rounded-xl border border-primary/25 bg-primary/[0.05] p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">{calculator("resultEyebrow")}</p>
@@ -132,9 +133,10 @@ export function EnterpriseConversionPanel() {
                   </div>
                 </div>
               </div>
+              </div>
             </article>
 
-            <article className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 text-center shadow-xl dark:border-white/10 dark:from-white/[0.04] dark:to-white/[0.01] sm:p-7">
+            <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 text-center shadow-xl dark:border-white/10 dark:from-white/[0.04] dark:to-white/[0.01] sm:p-7">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{pricing("eyebrow")}</p>
               <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">{pricing("title")}</h3>
               <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-white/70">{pricing("subtitle")}</p>
@@ -175,7 +177,8 @@ export function EnterpriseConversionPanel() {
                 ))}
               </ul>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <div className="mt-auto pt-7">
+              <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
                 <Button size="lg" asChild className="h-12 rounded-xl bg-primary px-6 font-semibold text-primary-foreground hover:bg-primary/90">
                   <Link href="/pricing" onClick={() => trackEvent("pricing_cta_click", { location: "home_teaser_primary" })}>
                     {pricing("ctaPrimary")} <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
@@ -193,6 +196,7 @@ export function EnterpriseConversionPanel() {
                   <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
                   <span>{pricing("allocation")}</span>
                 </p>
+              </div>
               </div>
             </article>
           </div>

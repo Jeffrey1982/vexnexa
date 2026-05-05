@@ -589,16 +589,11 @@ export default function HomePage() {
         <EnterpriseConversionPanel />
 
         {/*
-          FAQ kept for SEO + CRO; we render it on the dark surface with
-          a wrapper that supplies the FAQ component's own light styles
-          a darker context. The FAQ component already uses semantic
-          neutrals so it inherits gracefully.
+          FAQ kept for SEO + CRO. The FAQ component now ships its own
+          balanced two-column section (heading + contact CTA on the left,
+          accordion items on the right), so no extra wrapper is needed.
         */}
-        <section className="bg-white py-16 dark:bg-[#0A0F1E]">
-          <div className="mx-auto max-w-3xl px-4">
-            <FAQ items={faqItems} />
-          </div>
-        </section>
+        <FAQ items={faqItems} />
       </div>
     </>
   );
