@@ -176,6 +176,179 @@ const checklist = [
   },
 ]
 
+const localizedSections: Record<Exclude<BlogSeoLocale, 'nl'>, ArticleSection[]> = {
+  en: [
+    {
+      heading: '2026 is the turning point',
+      paragraphs: [
+        'For years, digital accessibility was treated as a project checkpoint: run a WCAG audit before launch, fix a number of issues, and move on. In 2026 that approach is too fragile. Accessibility is becoming a compliance and governance discipline, not just a quality review.',
+        'ADA Title II now points public entities to WCAG 2.1 Level AA for web content and mobile apps, with compliance dates in 2026 and 2027 depending on entity size. In Europe, the European Accessibility Act has applied since 28 June 2025 to key products and services such as e-commerce, banking, e-books, communications, and parts of transport.',
+        'The practical lesson for higher education, public bodies, and semi-public organizations is clear: an audit is still necessary, but it is only the baseline. You also need monitoring, ownership, and evidence that accessibility is managed over time.',
+      ],
+      image: nlSections[0].image,
+    },
+    {
+      heading: 'What is changing legally, without the legal fog',
+      paragraphs: [
+        'Digital channels are now treated as gateways to education, public services, healthcare, transport, employment, and consumer services. If a login, payment step, enrolment form, or support journey is inaccessible, that is not merely a UX defect. It can block equal participation.',
+        'ADA Title II applies to U.S. state and local governments and their web and app services. The relevant technical standard is WCAG 2.1 Level AA. The EAA works differently, but the direction is similar: important digital services must be usable by people with disabilities, especially where users search, choose, order, sign, log in, pay, or communicate.',
+        'Regulators are also becoming more visible. In the Netherlands, ACM ConsuWijzer explains that webshops and communication services must be accessible and that problems can be reported. Broken journeys such as checkout, login, booking, and support are therefore especially risky.',
+      ],
+      image: nlSections[1].image,
+    },
+    {
+      heading: 'Why one-off audits fail in practice',
+      paragraphs: [
+        'The pattern is familiar: a large audit produces a thick report, teams fix a selection of findings, and six months later the same type of defects return. A new modal traps focus. A new form has unclear errors. A new PDF has no structure. A new component ships without an accessible name.',
+        'This usually happens because accessibility is not embedded in the release process. A one-off audit gives you a snapshot; it does not prove that the organization remains in control after new content, new suppliers, new developers, and new design components enter the system.',
+        'If a complaint or investigation arrives, you need more than last year’s report. You need to show what you know, what you prioritized, what you fixed, what remains, and how regressions are detected.',
+      ],
+      image: nlSections[2].image,
+    },
+    {
+      heading: 'What a modern audit looks like in 2026',
+      paragraphs: [
+        'A professional audit starts with scope: websites, apps, portals, documents, and the user journeys that matter most. In education, that might include enrolment, login, course information, exam accommodations, payments, timetables, and support.',
+        'The work combines automated scans with expert review. Automated tools find many technical patterns, but humans still need to test keyboard use, screen reader behaviour, magnification, mobile interaction, understandability, and journey logic.',
+        'The output should include a WCAG matrix, impact-based priorities, examples from real journeys, screenshots or selectors, guidance for reusable components, and where relevant a mapping to EN 301 549.',
+      ],
+      bullets: [
+        'Scope domains, apps, documents, and critical user journeys.',
+        'Combine automated testing with manual expert review.',
+        'Test keyboard, screen reader, zoom, and mobile interaction.',
+        'Prioritize by user impact, not just issue count.',
+      ],
+      image: nlSections[3].image,
+    },
+    {
+      heading: 'From audit to continuous monitoring',
+      paragraphs: [
+        'The audit is the baseline. After that, organizations need a layer that makes new issues visible. Think of security scanning or performance monitoring: you do not run one annual check and then ignore releases, dependencies, and incidents for the rest of the year.',
+        'An accessibility monitoring layer checks important pages and journeys periodically, detects regressions, tracks scores, and shows trends. It does not replace expert audits; it helps teams see problems earlier and act before users or regulators surface them.',
+        'Monitoring works best when it is connected to releases. Key templates are tested after deployment, product owners see recurring patterns, and compliance teams receive periodic evidence instead of isolated reports.',
+      ],
+      image: nlSections[4].image,
+    },
+    {
+      heading: 'Governance and evidence',
+      paragraphs: [
+        'Accessibility often fails because ownership is unclear. IT expects UX to watch it. UX expects development to fix it. Development expects compliance to prioritize it. Compliance does not see the backlog. Meanwhile, content teams keep publishing.',
+        'A mature approach defines ownership across policy, design systems, code, content, procurement, and incident handling. Not everyone needs to be a WCAG specialist, but everyone should know when accessibility matters and where signals go.',
+        'Evidence does not need to start heavy. A policy, an issue backlog, prioritization decisions, release checks, and periodic reports already show that the organization is acting reasonably and proportionally.',
+      ],
+      bullets: [
+        'Assign one coordinator for governance, not every fix.',
+        'Document exceptions and priorities with date and rationale.',
+        'Track accessibility issues in the same backlog as product work.',
+        'Report periodically to IT, UX, compliance, and leadership.',
+      ],
+      image: nlSections[5].image,
+    },
+  ],
+  fr: [],
+  es: [],
+  pt: [],
+}
+
+localizedSections.fr = localizedSections.en.map((section) => ({
+  ...section,
+  heading: section.heading
+    .replace('2026 is the turning point', '2026 est le point de bascule')
+    .replace('What is changing legally, without the legal fog', 'Ce qui change juridiquement, sans brouillard juridique')
+    .replace('Why one-off audits fail in practice', 'Pourquoi les audits ponctuels échouent en pratique')
+    .replace('What a modern audit looks like in 2026', 'À quoi ressemble un audit moderne en 2026')
+    .replace('From audit to continuous monitoring', 'De l’audit au monitoring continu')
+    .replace('Governance and evidence', 'Gouvernance et preuves'),
+  paragraphs: section.paragraphs.map((paragraph) =>
+    paragraph
+      .replace('For years, digital accessibility was treated as a project checkpoint: run a WCAG audit before launch, fix a number of issues, and move on. In 2026 that approach is too fragile. Accessibility is becoming a compliance and governance discipline, not just a quality review.', 'Pendant des années, l’accessibilité numérique a été traitée comme un point de contrôle projet : réaliser un audit WCAG avant la mise en ligne, corriger une partie des problèmes, puis passer à autre chose. En 2026, cette approche est trop fragile. L’accessibilité devient une discipline de conformité et de gouvernance, pas seulement une revue qualité.')
+      .replace('The practical lesson for higher education, public bodies, and semi-public organizations is clear: an audit is still necessary, but it is only the baseline. You also need monitoring, ownership, and evidence that accessibility is managed over time.', 'La leçon pratique pour l’enseignement supérieur, les organismes publics et les organisations parapubliques est claire : l’audit reste nécessaire, mais il ne constitue que la baseline. Il faut aussi du monitoring, des responsabilités claires et des preuves que l’accessibilité est pilotée dans le temps.')
+  ),
+}))
+
+localizedSections.es = localizedSections.en.map((section) => ({
+  ...section,
+  heading: section.heading
+    .replace('2026 is the turning point', '2026 es el punto de inflexión')
+    .replace('What is changing legally, without the legal fog', 'Qué cambia legalmente, sin niebla jurídica')
+    .replace('Why one-off audits fail in practice', 'Por qué las auditorías puntuales fallan en la práctica')
+    .replace('What a modern audit looks like in 2026', 'Cómo es una auditoría moderna en 2026')
+    .replace('From audit to continuous monitoring', 'De auditoría a monitorización continua')
+    .replace('Governance and evidence', 'Gobernanza y evidencia'),
+}))
+
+localizedSections.pt = localizedSections.en.map((section) => ({
+  ...section,
+  heading: section.heading
+    .replace('2026 is the turning point', '2026 é o ponto de viragem')
+    .replace('What is changing legally, without the legal fog', 'O que muda legalmente, sem nevoeiro jurídico')
+    .replace('Why one-off audits fail in practice', 'Porque auditorias pontuais falham na prática')
+    .replace('What a modern audit looks like in 2026', 'Como é uma auditoria moderna em 2026')
+    .replace('From audit to continuous monitoring', 'Da auditoria à monitorização contínua')
+    .replace('Governance and evidence', 'Governança e evidência'),
+}))
+
+function getChecklist(locale: BlogSeoLocale) {
+  if (locale === 'nl') return checklist
+
+  return [
+    {
+      phase:
+        locale === 'fr'
+          ? '0-3 mois : baseline et parcours critiques'
+          : locale === 'es'
+            ? '0-3 meses: línea base y journeys críticos'
+            : locale === 'pt'
+              ? '0-3 meses: baseline e jornadas críticas'
+              : '0-3 months: baseline and critical journeys',
+      items:
+        locale === 'fr'
+          ? ['Inventorier les sites, apps, portails et documents.', 'Auditer les parcours utilisateur essentiels.', 'Corriger d’abord login, formulaires, paiement et support.', 'Créer un backlog central avec responsable et priorité.']
+          : locale === 'es'
+            ? ['Inventariar sitios, apps, portales y documentos.', 'Auditar los journeys esenciales.', 'Corregir primero login, formularios, pago y soporte.', 'Crear un backlog central con responsable y prioridad.']
+            : locale === 'pt'
+              ? ['Inventariar sites, apps, portais e documentos.', 'Auditar as jornadas essenciais.', 'Corrigir primeiro login, formulários, pagamento e suporte.', 'Criar um backlog central com responsável e prioridade.']
+              : ['Inventory websites, apps, portals, and documents.', 'Audit the most important user journeys.', 'Fix blockers in login, forms, payments, and support first.', 'Create a central backlog with owner and priority.'],
+    },
+    {
+      phase:
+        locale === 'fr'
+          ? '3-6 mois : monitoring et composants'
+          : locale === 'es'
+            ? '3-6 meses: monitorización y componentes'
+            : locale === 'pt'
+              ? '3-6 meses: monitorização e componentes'
+              : '3-6 months: monitoring and components',
+      items:
+        locale === 'fr'
+          ? ['Mettre en place des scans périodiques et des contrôles de release.', 'Nettoyer la bibliothèque de composants.', 'Rendre le reporting visible pour IT, UX et compliance.', 'Formaliser les accords avec fournisseurs et équipes contenu.']
+          : locale === 'es'
+            ? ['Configurar scans periódicos y checks de release.', 'Limpiar la biblioteca de componentes.', 'Hacer visible el reporting para IT, UX y compliance.', 'Documentar acuerdos con proveedores y contenido.']
+            : locale === 'pt'
+              ? ['Configurar scans periódicos e checks de release.', 'Limpar a biblioteca de componentes.', 'Tornar o reporting visível para IT, UX e compliance.', 'Documentar acordos com fornecedores e conteúdo.']
+              : ['Set up periodic scans and release checks.', 'Clean up the component library.', 'Make reporting visible to IT, UX, and compliance.', 'Document agreements with suppliers and content teams.'],
+    },
+    {
+      phase:
+        locale === 'fr'
+          ? '6-12 mois : intégration et ré-audit'
+          : locale === 'es'
+            ? '6-12 meses: integración y re-auditoría'
+            : locale === 'pt'
+              ? '6-12 meses: integração e reauditoria'
+              : '6-12 months: embedding and re-audit',
+      items:
+        locale === 'fr'
+          ? ['Former designers, développeurs, rédacteurs et product owners.', 'Ajouter l’accessibilité à la Definition of Done.', 'Planifier des ré-audits ciblés.', 'Rapporter les progrès aux instances de gouvernance.']
+          : locale === 'es'
+            ? ['Formar a diseño, desarrollo, contenido y product owners.', 'Añadir accesibilidad a la Definition of Done.', 'Planificar re-auditorías específicas.', 'Reportar progreso a la gobernanza.']
+            : locale === 'pt'
+              ? ['Formar design, desenvolvimento, conteúdo e product owners.', 'Adicionar acessibilidade à Definition of Done.', 'Planear reauditorias direcionadas.', 'Reportar progresso à governança.']
+              : ['Train designers, developers, editors, and product owners.', 'Add accessibility to the Definition of Done.', 'Plan targeted re-audits on critical journeys.', 'Report progress to leadership and governance meetings.'],
+    },
+  ]
+}
+
 function translatedPost(locale: BlogSeoLocale): AuditMonitoringPost {
   const titles = {
     nl: 'Waarom éénmalige toegankelijkheidsaudits in 2026 niet meer genoeg zijn',
@@ -263,20 +436,7 @@ function translatedPost(locale: BlogSeoLocale): AuditMonitoringPost {
     badge: translations.badge,
     intro: translations.intro,
     readTime: translations.readTime,
-    sections: nlSections.map((section) => ({
-      ...section,
-      heading:
-        locale === 'en'
-          ? section.heading
-              .replace('2026 is het kantelpunt', '2026 is the turning point')
-              .replace('Wat juridisch verandert, zonder juridisch moeras', 'What is changing legally, without the legal swamp')
-              .replace('Waarom eenmalige audits in de praktijk falen', 'Why one-off audits fail in practice')
-              .replace('Hoe een professionele audit er in 2026 uitziet', 'What a modern audit looks like in 2026')
-              .replace('Van audit naar continuous monitoring', 'From audit to continuous monitoring')
-              .replace('Governance en bewijsvoering', 'Governance and evidence')
-          : section.heading,
-      paragraphs: section.paragraphs,
-    })),
+    sections: localizedSections[locale],
     checklistTitle:
       locale === 'en'
         ? 'A 12-month plan for audit, monitoring, and governance'
@@ -285,7 +445,7 @@ function translatedPost(locale: BlogSeoLocale): AuditMonitoringPost {
           : locale === 'es'
             ? 'Un plan de 12 meses para auditoría, monitorización y gobernanza'
             : 'Um plano de 12 meses para auditoria, monitorização e governança',
-    checklist,
+    checklist: getChecklist(locale),
     sourcesTitle:
       locale === 'en'
         ? 'Sources and further context'
