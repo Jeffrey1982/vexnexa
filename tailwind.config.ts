@@ -166,6 +166,13 @@ const config: Config = {
 			'glass': '0 8px 32px 0 rgba(15, 15, 15, 0.08)',
 			'neon': '0 0 5px rgba(45, 95, 63, 0.45), 0 0 20px rgba(45, 95, 63, 0.25)'
 		},
+		fontSize: {
+			xs: ['0.8125rem', { lineHeight: '1.6' }],
+			sm: ['0.9375rem', { lineHeight: '1.55' }],
+			base: ['1rem', { lineHeight: '1.6' }],
+			lg: ['1.125rem', { lineHeight: '1.55' }],
+			xl: ['1.25rem', { lineHeight: '1.5' }]
+		},
 		spacing: {
 			'18': '4.5rem',
 			'88': '22rem',
