@@ -1,13 +1,4 @@
 {
-  "faq": {
-    "eyebrow": "FAQ",
-    "title": "Frequently Asked Questions",
-    "contactCard": {
-      "title": "Didn't find what you were looking for?",
-      "body": "Our enterprise team answers compliance and integration questions directly.",
-      "cta": "Get in touch"
-    }
-  },
   "nav": {
     "features": "Features",
     "pricing": "Pricing",
@@ -1515,6 +1506,13 @@
     "cta": "Start free scan"
   },
   "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently Asked Questions",
+    "contactCard": {
+      "title": "Didn't find what you were looking for?",
+      "body": "Our enterprise team answers compliance and integration questions directly.",
+      "cta": "Get in touch"
+    },
     "q1": {
       "question": "Can you guarantee legal compliance?",
       "answer": "No tool can guarantee 100% legal compliance in all contexts. VexNexa detects and reports issues, assists remediation, and helps you adhere to WCAG and related standards. For legal risk assessment, consider an expert audit and ongoing governance process."
