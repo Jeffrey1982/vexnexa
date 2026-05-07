@@ -582,7 +582,7 @@ export default function HomePage() {
         Deep-Navy + Gold "Nasdaq-style" palette to the marketing landing.
         The dashboard, auth, and legal routes keep their existing brand.
       */}
-      <div className="vn-enterprise-theme bg-white text-slate-900 antialiased dark:bg-[#0A0F1E] dark:text-white">
+      <div className="vn-enterprise-theme bg-background text-foreground antialiased">
         <Hero />
         <EnterpriseTrustBar />
         <VisibilityHook />

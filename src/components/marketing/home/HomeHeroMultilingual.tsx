@@ -105,7 +105,7 @@ function DashboardMockup() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="6"
-                className="text-slate-700"
+                className="text-muted-foreground"
               />
               <circle
                 ref={ringRef}
@@ -179,9 +179,9 @@ function DashboardMockup() {
         <div className="rotate-3 transform rounded-lg bg-white p-4 shadow-xl">
           <div className="mb-2 h-2 w-16 rounded bg-blue-500"></div>
           <div className="space-y-1">
-            <div className="h-1 w-20 rounded bg-slate-300"></div>
-            <div className="h-1 w-24 rounded bg-slate-300"></div>
-            <div className="h-1 w-16 rounded bg-slate-300"></div>
+            <div className="h-1 w-20 rounded bg-border"></div>
+            <div className="h-1 w-24 rounded bg-border"></div>
+            <div className="h-1 w-16 rounded bg-border"></div>
           </div>
         </div>
       </div>

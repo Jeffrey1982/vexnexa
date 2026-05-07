@@ -68,8 +68,35 @@
   --focus-ring-offset: 2px;
 }
 
+/* Class-based dark mode (next-themes) — takes precedence */
+.dark {
+  --color-surface-base: #0E0E0E;
+  --color-surface-warm: #131313;
+  --color-surface-elevated: #1A1A1A;
+  --color-surface-sunken: #0A0A0A;
+  --color-ink-900: #F5F5F2;
+  --color-ink-700: #D4D4D0;
+  --color-ink-500: #A0A0A0;
+  --color-border-subtle: #2A2A2A;
+  --color-border-default: #3A3A3A;
+  --color-border-strong: #5A5A5A;
+  --color-brand-primary-light: #0A2418;
+  --color-brand-primary-dark: #9CC0A8;
+
+  /* Severity tokens — softer in dark */
+  --color-critical-bg: #2A1414;
+  --color-critical-fg: #F4A0A0;
+  --color-serious-bg: #2A1F0A;
+  --color-serious-fg: #E8B480;
+  --color-moderate-bg: #14241B;
+  --color-moderate-fg: #9CC0A8;
+  --color-minor-bg: #1A1A1A;
+  --color-minor-fg: #A0A0A0;
+}
+
+/* System-preference fallback (only applies when no .dark/.light class is set) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light):not(.dark) {
     --color-surface-base: #0E0E0E;
     --color-surface-warm: #131313;
     --color-surface-elevated: #1A1A1A;

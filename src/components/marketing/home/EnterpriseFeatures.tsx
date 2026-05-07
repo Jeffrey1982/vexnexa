@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useTranslations } from "next-intl";
 import { Eye, History, Building2, ArrowRight } from "lucide-react";
@@ -64,7 +64,7 @@ export function EnterpriseFeatures() {
 
   return (
     <section
-      className="relative bg-white dark:bg-[#0A0F1E] py-20 sm:py-24"
+      className="relative bg-background py-20 sm:py-24"
       aria-labelledby="enterprise-features-heading"
     >
       <div className="container mx-auto px-4">
@@ -78,7 +78,7 @@ export function EnterpriseFeatures() {
               </p>
               <h2
                 id="enterprise-features-heading"
-                className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl"
+                className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
               >
                 {t("title")}
               </h2>
@@ -102,7 +102,7 @@ export function EnterpriseFeatures() {
                 transitionDelay: visible ? `${i * 60}ms` : "0ms",
                 transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
               }}
-              className={`group relative flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-all duration-500 hover:border-primary/30 ${
+              className={`group relative flex flex-col rounded-2xl border border-border bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-all duration-500 hover:border-primary/30 ${
                 visible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-3"
@@ -118,7 +118,7 @@ export function EnterpriseFeatures() {
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
 
-              <h3 className="mt-5 font-display text-xl font-semibold text-slate-900 dark:text-white">
+              <h3 className="mt-5 font-display text-xl font-semibold text-foreground">
                 {t(titleKey)}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-white/70">{t(bodyKey)}</p>

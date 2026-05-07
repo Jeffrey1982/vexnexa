@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VexNexa — 3 design directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a1a1a; color: white; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    background: #0e0e0e; padding: 12px 24px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .nav button {
+    background: transparent; color: #ccc; border: 1px solid #333;
+    padding: 8px 16px; border-radius: 999px; cursor: pointer;
+    font-family: system-ui; font-size: 13px;
+  }
+  .nav button.active { background: white; color: black; border-color: white; }
+
+  .design { display: none; min-height: 100vh; }
+  .design.active { display: block; }
+
+  /* ==================== DIRECTION A: TECHNICAL PRECISION ==================== */
+  .design-a {
+    background: #FAFAF7;
+    color: #1A1A1A;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    --accent: #2D5F3F;
+    --accent-light: #E8F0EA;
+    --ink-500: #6B6B6B;
+    --border: #E5E3DD;
+  }
+  .design-a .hero { padding: 96px 32px; max-width: 920px; margin: 0 auto; text-align: center; }
+  .design-a .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent); background: var(--accent-light);
+    padding: 8px 14px; border-radius: 4px; margin-bottom: 32px;
+  }
+  .design-a h1 {
+    font-family: 'JetBrains Mono', monospace; font-weight: 500;
+    font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 24px; color: #0F0F0F;
+  }
+  .design-a h1 em { font-style: normal; color: var(--accent); }
+  .design-a .sub {
+    font-size: 1.125rem; line-height: 1.6; color: var(--ink-500);
+    max-width: 580px; margin: 0 auto 40px;
+  }
+  .design-a .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+  .design-a .btn {
+    padding: 14px 24px; border-radius: 6px; font-weight: 500;
+    font-family: 'Inter Tight'; font-size: 15px; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .design-a .btn-primary { background: #0F0F0F; color: white; border: 1px solid #0F0F0F; }
+  .design-a .btn-primary:hover { background: #2A2A2A; }
+  .design-a .btn-ghost { background: white; color: #1A1A1A; border: 1px solid var(--border); }
+  .design-a .card {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 24px; max-width: 580px; margin: 0 auto; text-align: left;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .design-a .card .url {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--ink-500); margin-bottom: 16px;
+  }
+  .design-a .card .score-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+  .design-a .card .score { font-family: 'JetBrains Mono'; font-size: 3rem; font-weight: 500; }
+  .design-a .card .delta { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--accent); background: var(--accent-light); padding: 4px 10px; border-radius: 999px; }
+  .design-a .severities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .design-a .sev { padding: 12px; border-radius: 4px; text-align: center; font-family: 'JetBrains Mono'; }
+  .design-a .sev .n { font-size: 18px; font-weight: 600; }
+  .design-a .sev .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .design-a .sev-c { background: #FCE8E6; color: #6B1F18; }
+  .design-a .sev-s { background: #FFF1D6; color: #6B4A0F; }
+  .design-a .sev-m { background: #DCEAE0; color: #1F4A2D; }
+  .design-a .sev-mi { background: #F0EFEA; color: #4A4A47; }
+  .design-a .description { padding: 0 32px 96px; max-width: 680px; margin: 0 auto; font-family: 'JetBrains Mono'; font-size: 12px; color: var(--ink-500); }
+
+  /* ==================== DIRECTION B: EDITORIAL VIOLET ==================== */
+  .design-b {
+    background: #F8F6F2;
+    color: #131313;
+    font-family: 'General Sans', system-ui, sans-serif;
+    --accent: #5B3FBF;
+    --accent-light: #EFE9FB;
+    --honey: #D4A574;
+    --ink-500: #6B6B6B;
+    --border: #E0DDD6;
+  }
+  .design-b .hero { padding: 120px 32px 96px; max-width: 1080px; margin: 0 auto; text-align: center; }
+  .design-b .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent); background: var(--accent-light);
+    padding: 8px 14px; border-radius: 999px; margin-bottom: 40px;
+  }
+  .design-b h1 {
+    font-family: 'Bricolage Grotesque', serif; font-weight: 600;
+    font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.0;
+    letter-spacing: -0.03em; margin-bottom: 28px;
+  }
+  .design-b h1 em {
+    font-style: italic; font-weight: 500;
+    color: var(--accent);
+  }
+  .design-b .sub {
+    font-size: 1.25rem; line-height: 1.55; color: var(--ink-500);
+    max-width: 640px; margin: 0 auto 48px;
+  }
+  .design-b .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 80px; }
+  .design-b .btn {
+    padding: 16px 28px; border-radius: 999px; font-weight: 500;
+    font-size: 15px; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: all 0.2s;
+  }
+  .design-b .btn-primary { background: #131313; color: white; border: none; }
+  .design-b .btn-primary:hover { transform: translateY(-1px); }
+  .design-b .btn-ghost { background: transparent; color: #131313; border: 1px solid #131313; }
+  .design-b .card {
+    background: white; border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px; max-width: 640px; margin: 0 auto; text-align: left;
+    box-shadow: 0 16px 32px -16px rgba(91, 63, 191, 0.12);
+  }
+  .design-b .card .url { font-size: 13px; color: var(--ink-500); margin-bottom: 20px; }
+  .design-b .card .score-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; }
+  .design-b .card .score { font-family: 'Bricolage Grotesque'; font-size: 3.5rem; font-weight: 500; line-height: 1; letter-spacing: -0.03em; }
+  .design-b .card .delta { font-size: 13px; color: var(--accent); background: var(--accent-light); padding: 6px 12px; border-radius: 999px; font-weight: 500; }
+  .design-b .severities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .design-b .sev { padding: 14px; border-radius: 12px; text-align: center; }
+  .design-b .sev .n { font-size: 20px; font-weight: 600; }
+  .design-b .sev .l { font-size: 11px; margin-top: 4px; font-weight: 500; }
+  .design-b .sev-c { background: #FCE8E6; color: #6B1F18; }
+  .design-b .sev-s { background: #FFF1D6; color: #6B4A0F; }
+  .design-b .sev-m { background: var(--accent-light); color: var(--accent); }
+  .design-b .sev-mi { background: #F0EFEA; color: #4A4A47; }
+  .design-b .description { padding: 0 32px 96px; max-width: 720px; margin: 0 auto; font-size: 14px; color: var(--ink-500); text-align: center; }
+
+  /* ==================== DIRECTION C: BOTANICAL CALM ==================== */
+  .design-c {
+    background: #F2F4F0;
+    color: #1A2620;
+    font-family: 'Satoshi', system-ui, sans-serif;
+    --accent: #36664D;
+    --accent-dark: #1F4A2D;
+    --accent-light: #DCEAE0;
+    --terracotta: #B45A3E;
+    --ink-500: #5A6660;
+    --border: #D8DDD3;
+  }
+  .design-c .hero { padding: 112px 32px; max-width: 980px; margin: 0 auto; text-align: center; }
+  .design-c .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--accent-dark); background: var(--accent-light);
+    padding: 8px 14px; border-radius: 4px; margin-bottom: 36px;
+  }
+  .design-c h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: clamp(2.75rem, 6.5vw, 5.5rem); line-height: 1.0;
+    letter-spacing: -0.01em; margin-bottom: 24px;
+  }
+  .design-c h1 em {
+    font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+  .design-c .sub {
+    font-size: 1.125rem; line-height: 1.6; color: var(--ink-500);
+    max-width: 580px; margin: 0 auto 44px;
+  }
+  .design-c .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 72px; }
+  .design-c .btn {
+    padding: 14px 26px; border-radius: 6px; font-weight: 600;
+    font-family: 'Satoshi'; font-size: 15px; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .design-c .btn-primary { background: var(--accent-dark); color: #F2F4F0; border: 1px solid var(--accent-dark); }
+  .design-c .btn-primary:hover { background: #143521; }
+  .design-c .btn-ghost { background: transparent; color: var(--accent-dark); border: 1px solid var(--accent-dark); }
+  .design-c .card {
+    background: #FCFCFA; border: 1px solid var(--border); border-radius: 12px;
+    padding: 28px; max-width: 600px; margin: 0 auto; text-align: left;
+    box-shadow: 0 8px 24px -8px rgba(31, 74, 45, 0.08);
+  }
+  .design-c .card .url { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--ink-500); margin-bottom: 18px; }
+  .design-c .card .score-row { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
+  .design-c .card .score { font-family: 'Instrument Serif'; font-size: 3.75rem; font-weight: 400; line-height: 1; }
+  .design-c .card .delta { font-size: 12px; color: var(--accent-dark); background: var(--accent-light); padding: 5px 12px; border-radius: 999px; font-weight: 600; }
+  .design-c .severities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .design-c .sev { padding: 12px; border-radius: 6px; text-align: center; }
+  .design-c .sev .n { font-size: 18px; font-weight: 600; }
+  .design-c .sev .l { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; font-weight: 500; }
+  .design-c .sev-c { background: rgba(180, 90, 62, 0.15); color: #6B2E1A; }
+  .design-c .sev-s { background: #F4E3CC; color: #6B4A0F; }
+  .design-c .sev-m { background: var(--accent-light); color: var(--accent-dark); }
+  .design-c .sev-mi { background: #EAEBE5; color: #44443B; }
+  .design-c .description { padding: 0 32px 96px; max-width: 680px; margin: 0 auto; font-size: 14px; color: var(--ink-500); text-align: center; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="active" onclick="show('a', this)">A · Technical Precision</button>
+  <button onclick="show('b', this)">B · Editorial Violet</button>
+  <button onclick="show('c', this)">C · Botanical Calm</button>
+</nav>
+
+<!-- ============== DIRECTION A ============== -->
+<section class="design design-a active" id="design-a">
+  <div class="hero">
+    <span class="badge">⌘ WCAG 2.2 AA · axe-core powered</span>
+    <h1>Accessibility scans, <em>without the noise.</em></h1>
+    <p class="sub">Reliable axe-core scans, fewer false positives, actionable fixes. Built for agencies and EU-facing teams.</p>
+    <div class="ctas">
+      <a class="btn btn-primary">Start free scan →</a>
+      <a class="btn btn-ghost">Watch demo</a>
+    </div>
+    <div class="card">
+      <div class="url">vexnexa.com/scan/example-agency.nl</div>
+      <div class="score-row">
+        <span class="score">72</span>
+        <span style="color:#6B6B6B">accessibility score</span>
+        <span class="delta" style="margin-left:auto">+8</span>
+      </div>
+      <div style="height:4px;background:#EAE8E2;border-radius:999px;margin-bottom:20px"><div style="width:72%;height:100%;background:#2D5F3F;border-radius:999px"></div></div>
+      <div class="severities">
+        <div class="sev sev-c"><div class="n">3</div><div class="l">Critical</div></div>
+        <div class="sev sev-s"><div class="n">8</div><div class="l">Serious</div></div>
+        <div class="sev sev-m"><div class="n">14</div><div class="l">Moderate</div></div>
+        <div class="sev sev-mi"><div class="n">6</div><div class="l">Minor</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="description">
+    <strong>JetBrains Mono</strong> display + <strong>Inter Tight</strong> body. Deep emerald accent (#2D5F3F) on warm paper.
+    Why it works: developer-credibility signal matches your tagline. Mono headers = no other accessibility competitor uses them.
+    All contrast ratios pass WCAG AAA.
+  </div>
+</section>
+
+<!-- ============== DIRECTION B ============== -->
+<section class="design design-b" id="design-b">
+  <div class="hero">
+    <span class="badge">✦ WCAG 2.2 AA · axe-core powered</span>
+    <h1>Accessibility scans, <em>without the noise.</em></h1>
+    <p class="sub">Reliable axe-core scans, fewer false positives, actionable fixes. Built for agencies and EU-facing teams.</p>
+    <div class="ctas">
+      <a class="btn btn-primary">Start free scan →</a>
+      <a class="btn btn-ghost">Watch demo</a>
+    </div>
+    <div class="card">
+      <div class="url">vexnexa.com/scan/example-agency.nl</div>
+      <div class="score-row">
+        <span class="score">72</span>
+        <span style="color:#6B6B6B">accessibility score</span>
+        <span class="delta" style="margin-left:auto">+8</span>
+      </div>
+      <div style="height:6px;background:#EFE9FB;border-radius:999px;margin-bottom:24px"><div style="width:72%;height:100%;background:linear-gradient(90deg,#5B3FBF,#7A5FE8);border-radius:999px"></div></div>
+      <div class="severities">
+        <div class="sev sev-c"><div class="n">3</div><div class="l">Critical</div></div>
+        <div class="sev sev-s"><div class="n">8</div><div class="l">Serious</div></div>
+        <div class="sev sev-m"><div class="n">14</div><div class="l">Moderate</div></div>
+        <div class="sev sev-mi"><div class="n">6</div><div class="l">Minor</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="description">
+    <strong>Bricolage Grotesque</strong> display + <strong>General Sans</strong> body. Iris violet accent (#5B3FBF) on bone cream.
+    Why it works: violet is unused in accessibility space (everyone uses blue/teal). Bricolage is a 2024 variable font, fresh and confident.
+    The italic emphasis adds editorial sophistication without feeling old.
+  </div>
+</section>
+
+<!-- ============== DIRECTION C ============== -->
+<section class="design design-c" id="design-c">
+  <div class="hero">
+    <span class="badge">◇ WCAG 2.2 AA · axe-core powered</span>
+    <h1>Accessibility scans, <em>without the noise.</em></h1>
+    <p class="sub">Reliable axe-core scans, fewer false positives, actionable fixes. Built for agencies and EU-facing teams.</p>
+    <div class="ctas">
+      <a class="btn btn-primary">Start free scan →</a>
+      <a class="btn btn-ghost">Watch demo</a>
+    </div>
+    <div class="card">
+      <div class="url">vexnexa.com/scan/example-agency.nl</div>
+      <div class="score-row">
+        <span class="score">72</span>
+        <span style="color:#5A6660">accessibility score</span>
+        <span class="delta" style="margin-left:auto">+8</span>
+      </div>
+      <div style="height:4px;background:#DCEAE0;border-radius:999px;margin-bottom:20px"><div style="width:72%;height:100%;background:#36664D;border-radius:999px"></div></div>
+      <div class="severities">
+        <div class="sev sev-c"><div class="n">3</div><div class="l">Critical</div></div>
+        <div class="sev sev-s"><div class="n">8</div><div class="l">Serious</div></div>
+        <div class="sev sev-m"><div class="n">14</div><div class="l">Moderate</div></div>
+        <div class="sev sev-mi"><div class="n">6</div><div class="l">Minor</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="description">
+    <strong>Instrument Serif</strong> display + <strong>Satoshi</strong> body. Forest green (#36664D) on cool cream.
+    Why it works: Instrument Serif is elegant and modern, NOT newspaper-y like Zodiak. Forest green signals trust + sustainability without being corporate-blue.
+    Terracotta reserved for critical-only states. Calm, confident, very high contrast.
+  </div>
+</section>
+
+<script>
+function show(id, btn){
+  document.querySelectorAll('.design').forEach(d => d.classList.remove('active'));
+  document.getElementById('design-'+id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>

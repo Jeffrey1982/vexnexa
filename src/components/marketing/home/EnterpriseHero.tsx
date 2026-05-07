@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { ArrowRight, ShieldAlert, FileCheck2, Eye } from "lucide-react";
@@ -27,7 +27,7 @@ export function EnterpriseHero() {
 
   return (
     <section
-      className="relative overflow-hidden bg-white dark:bg-[#0A0F1E] text-slate-900 dark:text-white"
+      className="relative overflow-hidden bg-background text-foreground"
       aria-labelledby="enterprise-hero-heading"
     >
       {/* Ambient gold glow */}
@@ -46,27 +46,27 @@ export function EnterpriseHero() {
 
           <h1
             id="enterprise-hero-heading"
-            className="mt-5 font-display text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl"
+            className="mt-5 font-display text-4xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
           >
             {t("title")}
           </h1>
 
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-700 dark:text-white/75 sm:text-xl">
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
             {t("subtitle")}
           </p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4 max-w-lg">
-            <div className="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] p-4">
+            <div className="flex items-start gap-3 rounded-xl border border-border bg-muted dark:bg-white/[0.03] p-4">
               <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
               <div>
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">{t("pillar1Title")}</p>
+                <p className="text-sm font-semibold text-foreground">{t("pillar1Title")}</p>
                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-white/60">{t("pillar1Body")}</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] p-4">
+            <div className="flex items-start gap-3 rounded-xl border border-border bg-muted dark:bg-white/[0.03] p-4">
               <FileCheck2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
               <div>
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">{t("pillar2Title")}</p>
+                <p className="text-sm font-semibold text-foreground">{t("pillar2Title")}</p>
                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-white/60">{t("pillar2Body")}</p>
               </div>
             </div>
@@ -92,7 +92,7 @@ export function EnterpriseHero() {
               size="lg"
               variant="outline"
               asChild
-              className="h-12 rounded-xl border-slate-200 dark:border-white/20 bg-slate-50 dark:bg-white/[0.04] px-7 font-semibold text-slate-900 dark:text-white hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-white/40"
+              className="h-12 rounded-xl border-border dark:border-white/20 bg-muted dark:bg-white/[0.04] px-7 font-semibold text-foreground hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-white/40"
             >
               <Link
                 href="/contact?intent=sample-pdf"
@@ -138,17 +138,17 @@ function VNIRankVisual() {
   return (
     <div className="relative">
       {/* Card */}
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.05] dark:to-white/[0.02] p-6 shadow-sm dark:shadow-2xl backdrop-blur-sm sm:p-7">
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.05] dark:to-white/[0.02] p-6 shadow-sm dark:shadow-2xl backdrop-blur-sm sm:p-7">
         <div className="flex items-center justify-between">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
             {t("title")}
           </p>
-          <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-black/40 px-2 py-0.5 text-[10px] font-medium text-slate-700 dark:text-white/70">
+          <span className="rounded-full border border-border bg-slate-100 dark:bg-black/40 px-2 py-0.5 text-[10px] font-medium text-muted-foreground dark:text-white/70">
             {t("liveLabel")}
           </span>
         </div>
 
-        <p className="mt-3 font-display text-xl font-semibold text-slate-900 dark:text-white">
+        <p className="mt-3 font-display text-xl font-semibold text-foreground">
           {t("subtitle")}
         </p>
 
@@ -160,14 +160,14 @@ function VNIRankVisual() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <p className="font-mono text-sm text-slate-900 dark:text-white truncate">example-enterprise.com</p>
+                <p className="font-mono text-sm text-foreground truncate">example-enterprise.com</p>
                 <span className="rounded-md bg-primary/25 dark:bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-900 dark:text-primary">
                   {t("ranks.compliant")}
                 </span>
               </div>
               <div className="mt-1 flex items-center gap-2">
                 <Stars filled={3} />
-                <span className="text-xs text-slate-700 dark:text-white/70">{t("ranks.compliant")} — 3 / 5</span>
+                <span className="text-xs text-muted-foreground dark:text-white/70">{t("ranks.compliant")} — 3 / 5</span>
               </div>
             </div>
           </div>
@@ -178,11 +178,11 @@ function VNIRankVisual() {
           {ranks.map((r) => (
             <li
               key={r.key}
-              className="flex items-center justify-between rounded-lg border border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.02] px-3 py-2"
+              className="flex items-center justify-between rounded-lg border border-border dark:border-white/[0.06] bg-muted dark:bg-white/[0.02] px-3 py-2"
             >
               <div className="flex items-center gap-2.5">
                 <Stars filled={r.stars} />
-                <span className="text-xs font-medium text-slate-700 dark:text-white/70">{r.label}</span>
+                <span className="text-xs font-medium text-muted-foreground dark:text-white/70">{r.label}</span>
               </div>
               <span className="text-[10px] font-medium uppercase tracking-wider text-primary">
                 {r.stars === 5 ? t("targetLabel") : ""}

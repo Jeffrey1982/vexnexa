@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useTranslations } from "next-intl";
 import { EyeOff, Eye, Sparkles, ScanLine, FileCheck2 } from "lucide-react";
@@ -27,7 +27,7 @@ export function VisibilityHook() {
 
   return (
     <section
-      className="relative bg-white dark:bg-[#0A0F1E] py-20 sm:py-24"
+      className="relative bg-background py-20 sm:py-24"
       aria-labelledby="visibility-hook-heading"
     >
       <div className="container mx-auto px-4">
@@ -90,7 +90,7 @@ export function VisibilityHook() {
               </p>
               <h2
                 id="visibility-hook-heading"
-                className="mt-3 font-display text-3xl font-bold leading-tight text-slate-900 dark:text-white sm:text-4xl"
+                className="mt-3 font-display text-3xl font-bold leading-tight text-foreground sm:text-4xl"
               >
                 {t("title")}
               </h2>
@@ -104,7 +104,7 @@ export function VisibilityHook() {
                 {stats.map(({ Icon, label, value }) => (
                   <li
                     key={label}
-                    className="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-3 dark:border-white/10 dark:bg-white/[0.03]"
+                    className="flex items-start gap-2.5 rounded-xl border border-border bg-muted px-3.5 py-3 dark:border-white/10 dark:bg-white/[0.03]"
                   >
                     <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary">
                       <Icon className="h-3.5 w-3.5" aria-hidden />

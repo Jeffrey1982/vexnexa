@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { ChevronDown, MessageSquare, ArrowRight } from "lucide-react";
@@ -29,7 +29,7 @@ export function FAQ({
 
   return (
     <section
-      className="bg-white py-20 dark:bg-[#0A0F1E] sm:py-24"
+      className="bg-background py-20 sm:py-24"
       aria-labelledby="faq-heading"
     >
       <div className="container mx-auto px-4">
@@ -43,7 +43,7 @@ export function FAQ({
               </p>
               <h2
                 id="faq-heading"
-                className="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl"
+                className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
               >
                 {title}
               </h2>
@@ -53,7 +53,7 @@ export function FAQ({
                 </p>
               )}
               <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5 dark:border-white/10 dark:bg-white/[0.03]">
-                <div className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                   <MessageSquare className="h-4 w-4 text-primary" aria-hidden />
                   Niet gevonden wat je zoekt?
                 </div>
@@ -75,7 +75,7 @@ export function FAQ({
               {items.map((item, index) => (
                 <div
                   key={index}
-                  className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-colors hover:border-primary/30 dark:border-white/10 dark:bg-white/[0.03]"
+                  className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-colors hover:border-primary/30"
                 >
                   <button
                     onClick={() => toggleItem(index)}
@@ -84,7 +84,7 @@ export function FAQ({
                     aria-controls={`faq-answer-${index}`}
                     id={`faq-question-${index}`}
                   >
-                    <span className="text-base font-semibold text-slate-900 dark:text-white sm:text-lg">
+                    <span className="text-base font-semibold text-foreground sm:text-lg">
                       {item.question}
                     </span>
                     <ChevronDown
