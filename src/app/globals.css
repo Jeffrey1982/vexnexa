@@ -42,7 +42,7 @@
     --secondary-foreground: 0 0% 6%;
 
     --muted: 60 18% 95%;
-    --muted-foreground: 0 0% 42%;
+    --muted-foreground: 0 0% 32%;
 
     /* Accent — soft emerald tint */
     --accent: 132 18% 92%;
@@ -373,6 +373,33 @@
   
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* ===== VNI tuning — VexNexa Index design-quality boosts ===== */
+
+  /* Floor body prose at 16px / 1.55 line-height (VNI engine samples
+     p, li, article, section, main, label with ≥20 chars text and
+     wants fontSize ≥16 + lineHeightRatio ≥1.35) */
+  p, li, article, section, main, label {
+    font-size: max(1rem, 1em);
+    line-height: 1.55;
+  }
+
+  /* Footer fine-print and helper labels often use text-xs (12px).
+     Bump those above the floor where they live in body content. */
+  p.text-xs, li.text-xs, label.text-xs {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.5;
+  }
+
+  /* Ensure all interactive icon-only triggers meet the 44×44 tap
+     target minimum (VNI samples rect.width/height of every a, button,
+     input, select, [role=button], [tabindex]). */
+  button[aria-label]:not([class*="px-"]):not([class*="w-"]),
+  a[aria-label]:not([class*="px-"]):not([class*="w-"]),
+  [role="button"][aria-label]:not([class*="px-"]):not([class*="w-"]) {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
   }
 }
 
