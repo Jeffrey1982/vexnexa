@@ -40,7 +40,7 @@ function generateReportHTML(result: ScanResult): string {
     critical: "#dc2626",
     serious: "#ea580c",
     moderate: "#eab308",
-    minor: "#2D5F3F",
+    minor: "#1F4A2D",
   };
 
   return `

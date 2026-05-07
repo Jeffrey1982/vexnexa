@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
     for (const [key, color] of Object.entries(colors)) {
       if (color && !hexColorRegex.test(color)) {
         return NextResponse.json(
-          { error: `Invalid ${key}. Must be a valid hex color code (e.g., #2D5F3F)` },
+          { error: `Invalid ${key}. Must be a valid hex color code (e.g., #1F4A2D)` },
           { status: 400 }
         );
       }
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
         companyName,
         logoUrl,
         faviconUrl,
-        primaryColor: primaryColor || "#2D5F3F",
+        primaryColor: primaryColor || "#1F4A2D",
         secondaryColor: secondaryColor || "#1F2937",
         accentColor: accentColor || "#10B981",
         supportEmail,
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         companyName,
         logoUrl,
         faviconUrl,
-        primaryColor: primaryColor || "#2D5F3F",
+        primaryColor: primaryColor || "#1F4A2D",
         secondaryColor: secondaryColor || "#1F2937",
         accentColor: accentColor || "#10B981",
         supportEmail,

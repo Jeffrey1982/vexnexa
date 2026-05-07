@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
       },
       brandName,
       brandLogo: whiteLabel?.logoUrl || undefined,
-      primaryColor: whiteLabel?.primaryColor || "#2D5F3F",
+      primaryColor: whiteLabel?.primaryColor || "#1F4A2D",
       footerText: whiteLabel?.footerText || undefined,
       supportEmail: whiteLabel?.supportEmail || undefined,
       showPoweredBy: whiteLabel?.showPoweredBy !== false,

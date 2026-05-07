@@ -85,7 +85,7 @@ export default function VerifiedClient(): JSX.Element {
               {checkingSession ? (
                 'Checking your session…'
               ) : (
-                <>Redirecting in <span className="font-semibold text-[#2D5F3F]">{secondsLeft}</span> seconds…</>
+                <>Redirecting in <span className="font-semibold text-[#1F4A2D]">{secondsLeft}</span> seconds…</>
               )}
             </p>
           </div>

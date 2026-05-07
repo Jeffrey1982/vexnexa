@@ -305,7 +305,7 @@ function ResetPasswordForm() {
             {/* --- Loading state --- */}
             {pageState === 'loading' && (
               <div className="text-center space-y-4 py-8">
-                <div className="w-12 h-12 border-4 border-[#2D5F3F]/30 border-t-[#2D5F3F] rounded-full animate-spin mx-auto"></div>
+                <div className="w-12 h-12 border-4 border-[#1F4A2D]/30 border-t-[#1F4A2D] rounded-full animate-spin mx-auto"></div>
                 <p className="text-sm text-[#5A5A5A] dark:text-[#C0C3C7]">Verifying your reset link...</p>
               </div>
             )}

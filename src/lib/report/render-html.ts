@@ -72,7 +72,7 @@ ${renderCTA(data, primary, s)}
 
 /** VexNexa report brand — PDF/HTML (matches product guidelines) */
 const BRAND_NAVY = "#1e3a8a";
-const BRAND_MINT = "#2D5F3F";
+const BRAND_MINT = "#1F4A2D";
 const GOLD = "#D97706";
 
 function esc(s: string | undefined | null): string {
@@ -1086,7 +1086,7 @@ function buildCSS(primary: string, _secondary: string, _accent: string, bg: stri
   --space-xs:4px;--space-sm:8px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:56px;
   --r:${radius};--rs:${radiusSm};--shadow:${shadow};--card-bg:${cardBg};--card-border:${cardBorder};
   --dark:${dark};--bg:${bg};--primary:${primary};
-  --vn-navy:#1e3a8a;--vn-mint:#2D5F3F;--vn-surface:#F8FAFC;
+  --vn-navy:#1e3a8a;--vn-mint:#1F4A2D;--vn-surface:#F8FAFC;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;
   --sev-critical:#DC2626;--sev-serious:#F97316;--sev-moderate:#FACC15;--sev-minor:#9CA3AF}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}

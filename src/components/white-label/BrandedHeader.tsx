@@ -50,7 +50,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                 <div
                   className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
                   style={{
-                    backgroundColor: settings?.primaryColor || '#2D5F3F'
+                    backgroundColor: settings?.primaryColor || '#1F4A2D'
                   }}
                 >
                   {companyName.charAt(0).toUpperCase()}
@@ -72,7 +72,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   color: settings?.secondaryColor || '#374151'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
@@ -87,7 +87,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   color: settings?.secondaryColor || '#374151'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
@@ -102,7 +102,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                   color: settings?.secondaryColor || '#374151'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor || '#374151';
@@ -122,7 +122,7 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
                 color: settings?.secondaryColor || '#374151'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.color = settings?.secondaryColor || '#374151';
@@ -159,14 +159,14 @@ export default function BrandedHeader({ showNavigation = true, className = '' }:
               }}
               className="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors"
               style={{
-                backgroundColor: settings?.primaryColor || '#2D5F3F'
+                backgroundColor: settings?.primaryColor || '#1F4A2D'
               }}
               onMouseEnter={(e) => {
-                const color = settings?.primaryColor || '#2D5F3F';
+                const color = settings?.primaryColor || '#1F4A2D';
                 e.currentTarget.style.backgroundColor = darkenColor(color, 0.1);
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = settings?.primaryColor || '#2D5F3F';
+                e.currentTarget.style.backgroundColor = settings?.primaryColor || '#1F4A2D';
               }}
             >
               {t('signOut')}

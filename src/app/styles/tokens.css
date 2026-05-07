@@ -1,7 +1,7 @@
 ﻿:root {
-  --color-brand-primary: #2D5F3F;
-  --color-brand-primary-dark: #1F4A2D;
-  --color-brand-primary-light: #E8F0EA;
+  --color-brand-primary: #1F4A2D;
+  --color-brand-primary-dark: #143521;
+  --color-brand-primary-light: #DCEAE0;
 
   --color-ink-900: #0F0F0F;
   --color-ink-700: #2A2A2A;
@@ -63,7 +63,7 @@
   --container-max: 1200px;
   --container-gutter: 24px;
 
-  --focus-ring-color: #2D5F3F;
+  --focus-ring-color: #1F4A2D;
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
 }

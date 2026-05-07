@@ -53,7 +53,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                 <div
                   className="h-6 w-6 rounded flex items-center justify-center text-white font-bold text-xs"
                   style={{
-                    backgroundColor: settings?.primaryColor || '#2D5F3F'
+                    backgroundColor: settings?.primaryColor || '#1F4A2D'
                   }}
                 >
                   {companyName.charAt(0).toUpperCase()}
@@ -96,7 +96,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -111,7 +111,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -126,7 +126,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -155,7 +155,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -170,7 +170,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                  e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -200,7 +200,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                    e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -217,7 +217,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                    e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -236,7 +236,7 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                     color: settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                    e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = settings?.secondaryColor ? `${settings.secondaryColor}CC` : '#6B7280';
@@ -277,14 +277,14 @@ export default function BrandedFooter({ className = '' }: BrandedFooterProps) {
                   rel="noopener noreferrer"
                   className="font-semibold transition-colors"
                   style={{
-                    color: settings?.primaryColor || '#2D5F3F'
+                    color: settings?.primaryColor || '#1F4A2D'
                   }}
                   onMouseEnter={(e) => {
-                    const color = settings?.primaryColor || '#2D5F3F';
+                    const color = settings?.primaryColor || '#1F4A2D';
                     e.currentTarget.style.color = darkenColor(color, 0.1);
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = settings?.primaryColor || '#2D5F3F';
+                    e.currentTarget.style.color = settings?.primaryColor || '#1F4A2D';
                   }}
                 >
                   VexNexa

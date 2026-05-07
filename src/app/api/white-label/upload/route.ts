@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       create: {
         userId: user.id,
         [fieldName]: dataUrl,
-        primaryColor: "#2D5F3F",
+        primaryColor: "#1F4A2D",
         secondaryColor: "#1F2937",
         accentColor: "#10B981",
         showPoweredBy: true

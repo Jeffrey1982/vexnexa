@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+﻿import type { Metadata, Viewport } from 'next'
 import { interTight, jetbrainsMono } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#2D5F3F',
+  themeColor: '#1F4A2D',
 }
 
 export default async function RootLayout({
@@ -116,12 +116,12 @@ export default async function RootLayout({
         <meta name="application-name" content="VexNexa" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#2D5F3F" />
+        <meta name="msapplication-TileColor" content="#1F4A2D" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#2D5F3F" />
-        <meta name="msapplication-navbutton-color" content="#2D5F3F" />
+        <meta name="theme-color" content="#1F4A2D" />
+        <meta name="msapplication-navbutton-color" content="#1F4A2D" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
       </head>

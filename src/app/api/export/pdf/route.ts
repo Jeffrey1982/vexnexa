@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     });
 
     const brandName = whiteLabel?.companyName || "VexNexa";
-    const primaryColor = whiteLabel?.primaryColor || "#2D5F3F";
+    const primaryColor = whiteLabel?.primaryColor || "#1F4A2D";
     const brandLogo = whiteLabel?.logoUrl || undefined;
     const footerText = whiteLabel?.footerText || undefined;
     const supportEmail = whiteLabel?.supportEmail || undefined;

@@ -15,7 +15,7 @@
   --color-border-strong: #C8C6BF;
 
   /* ===== Colors - Primary (Burnt Sienna) ===== */
-  --color-primary: #2D5F3F;
+  --color-primary: #1F4A2D;
   --color-primary-hover: #1F4A2D;
   --color-primary-active: #143521;
   --color-primary-foreground: #F5E6D3;
@@ -25,7 +25,7 @@
   --color-primary-300: #9CC0A8;
   --color-primary-400: #6B9A7E;
   --color-primary-500: #3F7A55;
-  --color-primary-600: #2D5F3F;
+  --color-primary-600: #1F4A2D;
   --color-primary-700: #1F4A2D;
   --color-primary-800: #143521;
   --color-primary-900: #0A2418;
@@ -122,18 +122,18 @@
   --shadow-md: 0 4px 6px -1px rgba(15, 15, 15, 0.1), 0 2px 4px -1px rgba(15, 15, 15, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(15, 15, 15, 0.1), 0 4px 6px -2px rgba(15, 15, 15, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(15, 15, 15, 0.12), 0 10px 10px -5px rgba(15, 15, 15, 0.06);
-  --shadow-primary-glow: 0 0 0 3px rgba(45, 95, 63, 0.25);
+  --shadow-primary-glow: 0 0 0 3px rgba(31, 74, 45, 0.25);
   --shadow-secondary-glow: 0 0 0 3px rgba(15, 15, 15, 0.16);
   --shadow-soft-sm: 0 2px 8px rgba(15, 15, 15, 0.08);
   --shadow-soft-md: 0 4px 16px rgba(15, 15, 15, 0.12);
   --shadow-soft-lg: 0 8px 24px rgba(15, 15, 15, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #2D5F3F 0%, #1F4A2D 100%);
-  --gradient-warm: linear-gradient(135deg, #C8C6BF 0%, #2D5F3F 100%);
-  --gradient-hero: linear-gradient(135deg, #0F0F0F 0%, #2D5F3F 100%);
+  --gradient-primary: linear-gradient(135deg, #1F4A2D 0%, #1F4A2D 100%);
+  --gradient-warm: linear-gradient(135deg, #C8C6BF 0%, #1F4A2D 100%);
+  --gradient-hero: linear-gradient(135deg, #0F0F0F 0%, #1F4A2D 100%);
   --gradient-subtle: linear-gradient(to bottom, #FAFAF7 0%, #F4F4EE 100%);
-  --gradient-mesh: linear-gradient(135deg, #0F0F0F 0%, #2D5F3F 50%, #C8C6BF 100%);
+  --gradient-mesh: linear-gradient(135deg, #0F0F0F 0%, #1F4A2D 50%, #C8C6BF 100%);
 
   /* ===== Spacing ===== */
   --spacing-18: 4.5rem;
@@ -309,8 +309,8 @@
 
 .bg-grid-subtle {
   background-image:
-    linear-gradient(to right, rgba(45, 95, 63, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(45, 95, 63, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(31, 74, 45, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 74, 45, 0.06) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 

@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     // Use white-label branding or fallback to VexNexa
     const brandName = whiteLabel?.companyName || 'VexNexa';
     const brandLogo = whiteLabel?.logoUrl;
-    const primaryColor = whiteLabel?.primaryColor || '#2D5F3F';
+    const primaryColor = whiteLabel?.primaryColor || '#1F4A2D';
     const secondaryColor = whiteLabel?.secondaryColor || '#1e40af';
 
     // Extract violations

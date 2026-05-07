@@ -35,7 +35,7 @@ export default function GlobalError({
           <button
             onClick={reset}
             style={{
-              background: '#2D5F3F',
+              background: '#1F4A2D',
               color: '#fff',
               border: 'none',
               padding: '0.75rem 1.5rem',
@@ -53,8 +53,8 @@ export default function GlobalError({
             }}
             style={{
               background: 'transparent',
-              color: '#2D5F3F',
-              border: '1px solid #2D5F3F',
+              color: '#1F4A2D',
+              border: '1px solid #1F4A2D',
               padding: '0.75rem 1.5rem',
               borderRadius: '0.5rem',
               fontSize: '1rem',

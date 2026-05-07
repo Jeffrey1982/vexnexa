@@ -134,6 +134,24 @@ export function EnterpriseFeatures() {
             </article>
           ))}
         </div>
+
+        {/* Product screenshot — supports AI alt-text validation and gives
+            a concrete view of what scan results look like. */}
+        <figure className="mt-14 overflow-hidden rounded-2xl border border-border bg-card shadow-soft-md">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/Screenshot1.png"
+            alt="VexNexa accessibility scan dashboard showing a 95/100 compliance score, a list of prioritized WCAG 2.2 violations grouped by severity, and per-issue remediation guidance for an example agency website."
+            className="h-auto w-full object-cover"
+            width={1600}
+            height={900}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption className="border-t border-border bg-muted/40 px-5 py-3 text-center text-sm text-muted-foreground">
+            {t("screenshotCaption")}
+          </figcaption>
+        </figure>
         </div>
       </div>
     </section>

@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 30,
-    borderBottom: '2pt solid #2D5F3F',
+    borderBottom: '2pt solid #1F4A2D',
     paddingBottom: 15,
   },
   brandName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2D5F3F',
+    color: '#1F4A2D',
     marginBottom: 5,
   },
   subtitle: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#2D5F3F',
+    color: '#1F4A2D',
     marginBottom: 10,
     borderBottom: '1pt solid #CCCCCC',
     paddingBottom: 5,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#2D5F3F',
+    backgroundColor: '#1F4A2D',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   complianceValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2D5F3F',
+    color: '#1F4A2D',
   },
   disclaimer: {
     marginTop: 30,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   trendScore: {
     fontSize: 10,
     fontWeight: 'bold',
-    color: '#2D5F3F',
+    color: '#1F4A2D',
   },
 });
 
@@ -237,7 +237,7 @@ export function AssurancePDFReport(props: AssuranceReportData) {
   // Determine score color
   const getScoreColor = (score: number): string => {
     if (score >= 90) return '#10B981'; // Green
-    if (score >= 75) return '#2D5F3F'; // Blue
+    if (score >= 75) return '#1F4A2D'; // Blue
     if (score >= 60) return '#F59E0B'; // Yellow
     if (score >= 40) return '#EF4444'; // Red
     return '#7F1D1D'; // Dark red

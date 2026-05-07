@@ -102,7 +102,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                         </tr>
                         <tr>
                             <td style="padding: 18px 32px 0 32px;">
-                                <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; color: #5A5A5A; line-height: 1.5; text-align: center;">If the button does not work, copy this link:<br><a href="${actionUrl}" style="color: #2D5F3F; text-decoration: none; word-break: break-all;">${actionUrl}</a></p>
+                                <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; color: #5A5A5A; line-height: 1.5; text-align: center;">If the button does not work, copy this link:<br><a href="${actionUrl}" style="color: #1F4A2D; text-decoration: none; word-break: break-all;">${actionUrl}</a></p>
                             </td>
                         </tr>
                         ` : ''}
@@ -114,7 +114,7 @@ function getMasterTemplate(data: BaseEmailTemplate): string {
                                     ${listItems.map(item => `
                                     <tr>
                                         <td style="padding: 0 0 10px 0;">
-                                            <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; color: #1E1E1E; line-height: 1.5;"><span style="color: #2D5F3F; font-weight: 500;">•</span> ${item}</p>
+                                            <p style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; color: #1E1E1E; line-height: 1.5;"><span style="color: #1F4A2D; font-weight: 500;">•</span> ${item}</p>
                                         </td>
                                     </tr>
                                     `).join('')}

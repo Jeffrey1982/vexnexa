@@ -20,7 +20,7 @@ import { trackEvent } from "@/lib/analytics-events";
  * • will-change only on actively animating elements.
  * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
  * • Background blur hidden on mobile to reduce GPU compositing cost.
- * • Accent palette: blue-500 (#2D5F3F) + slate-700 base.
+ * • Accent palette: blue-500 (#1F4A2D) + slate-700 base.
  */
 
 /* ── Circumference constant for score ring (r=34) ── */

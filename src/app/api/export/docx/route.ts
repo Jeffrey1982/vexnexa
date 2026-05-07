@@ -174,7 +174,7 @@ export async function POST(req: NextRequest) {
     });
 
     const brandName = whiteLabel?.companyName || "VexNexa";
-    const primaryColor = (whiteLabel?.primaryColor || "#2D5F3F").replace('#', '');
+    const primaryColor = (whiteLabel?.primaryColor || "#1F4A2D").replace('#', '');
     const footerText = whiteLabel?.footerText || undefined;
     const supportEmail = whiteLabel?.supportEmail || undefined;
     const showPoweredBy = whiteLabel?.showPoweredBy !== false;

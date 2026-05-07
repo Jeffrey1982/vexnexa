@@ -41,7 +41,7 @@ const config: Config = {
 				300: '#9CC0A8',
 				400: '#6B9A7E',
 				500: '#3F7A55',
-				600: '#2D5F3F',
+				600: '#1F4A2D',
 				700: '#1F4A2D',
 				800: '#143521',
 				900: '#0A2418'
@@ -87,33 +87,33 @@ const config: Config = {
 				foreground: 'hsl(var(--minor-foreground))'
 			},
 			gold: {
-				DEFAULT: '#2D5F3F',
+				DEFAULT: '#1F4A2D',
 				50: '#F2F8F4',
 				100: '#E8F0EA',
 				200: '#C8DDD0',
 				300: '#9CC0A8',
 				400: '#6B9A7E',
 				500: '#3F7A55',
-				600: '#2D5F3F',
+				600: '#1F4A2D',
 				700: '#1F4A2D',
 				800: '#143521',
 				900: '#0A2418'
 			},
 			blue: {
-				DEFAULT: '#2D5F3F',
+				DEFAULT: '#1F4A2D',
 				50: '#F2F8F4',
 				100: '#E8F0EA',
 				200: '#C8DDD0',
 				300: '#9CC0A8',
 				400: '#6B9A7E',
 				500: '#3F7A55',
-				600: '#2D5F3F',
+				600: '#1F4A2D',
 				700: '#1F4A2D',
 				800: '#143521',
 				900: '#0A2418'
 			},
 			brand: {
-				sienna: '#2D5F3F',
+				sienna: '#1F4A2D',
 				sand: '#C8C6BF'
 			},
 			graphite: {
@@ -160,11 +160,11 @@ const config: Config = {
 			'soft-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
 			'soft-md': '0 4px 16px rgba(0, 0, 0, 0.12)',
 			'soft-lg': '0 8px 24px rgba(0, 0, 0, 0.15)',
-			'glow-orange': '0 0 30px rgba(45, 95, 63, 0.35)',
-			'glow-gold': '0 0 30px rgba(45, 95, 63, 0.35)',
-			'glow-teal': '0 0 30px rgba(45, 95, 63, 0.45)',
+			'glow-orange': '0 0 30px rgba(31, 74, 45, 0.35)',
+			'glow-gold': '0 0 30px rgba(31, 74, 45, 0.35)',
+			'glow-teal': '0 0 30px rgba(31, 74, 45, 0.45)',
 			'glass': '0 8px 32px 0 rgba(15, 15, 15, 0.08)',
-			'neon': '0 0 5px rgba(45, 95, 63, 0.45), 0 0 20px rgba(45, 95, 63, 0.25)'
+			'neon': '0 0 5px rgba(31, 74, 45, 0.45), 0 0 20px rgba(31, 74, 45, 0.25)'
 		},
 		fontSize: {
 			xs: ['0.8125rem', { lineHeight: '1.6' }],
