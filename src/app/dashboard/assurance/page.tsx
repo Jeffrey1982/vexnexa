@@ -62,7 +62,7 @@ export default async function AssuranceDashboardPage() {
           </p>
         </div>
         <Link href="/dashboard/assurance/domains/new">
-          <Button className="bg-teal-600 hover:bg-teal-700">
+          <Button className="bg-primary-600 hover:bg-primary-700">
             <Plus className="w-4 h-4 mr-2" />
             Add Domain
           </Button>
@@ -143,7 +143,7 @@ export default async function AssuranceDashboardPage() {
                 Add your first domain to start monitoring accessibility compliance
               </p>
               <Link href="/dashboard/assurance/domains/new">
-                <Button className="mt-4 bg-teal-600 hover:bg-teal-700">
+                <Button className="mt-4 bg-primary-600 hover:bg-primary-700">
                   <Plus className="w-4 h-4 mr-2" />
                   Add Domain
                 </Button>

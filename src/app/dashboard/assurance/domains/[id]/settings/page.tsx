@@ -274,13 +274,13 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
                   {emailRecipients.map((email) => (
                     <div
                       key={email}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm"
                     >
                       {email}
                       <button
                         type="button"
                         onClick={() => handleRemoveEmail(email)}
-                        className="hover:text-teal-900"
+                        className="hover:text-primary-900"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -302,7 +302,7 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-teal-600 hover:bg-teal-700"
+                className="bg-primary-600 hover:bg-primary-700"
               >
                 {isSubmitting ? 'Saving...' : 'Save Changes'}
               </Button>

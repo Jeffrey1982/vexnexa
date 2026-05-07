@@ -114,7 +114,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
   }, [inputs, timeframe]);
 
   const benefitsData = [
-    { name: 'Revenue Increase', value: calculations.annualRevenueIncrease, color: '#0d9488' },
+    { name: 'Revenue Increase', value: calculations.annualRevenueIncrease, color: '#A0522D' },
     { name: 'SEO Benefits', value: calculations.annualSEORevenue, color: '#10b981' },
     { name: 'Brand Value', value: calculations.annualBrandValue, color: '#f59e0b' },
     { name: 'Legal Risk Reduction', value: calculations.annualLegalSavings, color: '#ef4444' },
@@ -439,7 +439,7 @@ export function ROICalculator({ className }: ROICalculatorProps) {
                   <Legend />
                   <Bar dataKey="benefits" fill="#10b981" name="Annual Benefits" />
                   <Bar dataKey="costs" fill="#ef4444" name="Annual Costs" />
-                  <Bar dataKey="cumulative" fill="#0d9488" name="Cumulative Net" />
+                  <Bar dataKey="cumulative" fill="#A0522D" name="Cumulative Net" />
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -102,7 +102,7 @@ export function DigitalAccessibilityPivotArticle({
                       <span>{row.overlays}</span>
                     </div>
                     <div className="flex gap-3 border-t border-border p-4 text-sm leading-6 text-muted-foreground md:border-l md:border-t-0">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-teal-600" aria-hidden="true" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-primary-600" aria-hidden="true" />
                       <span>{row.vexnexa}</span>
                     </div>
                   </div>

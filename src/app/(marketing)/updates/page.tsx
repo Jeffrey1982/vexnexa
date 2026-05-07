@@ -90,7 +90,7 @@ function StatusDot({ tone }: { tone: "ok" | "warning" }) {
     <span
       className={cn(
         "h-2.5 w-2.5 rounded-full",
-        tone === "ok" ? "bg-teal-600" : "bg-amber-500"
+        tone === "ok" ? "bg-primary-600" : "bg-amber-500"
       )}
       aria-hidden="true"
     />
@@ -240,7 +240,7 @@ export default async function UpdatesPage() {
               <div key={component.key} className="rounded-lg border border-border bg-card p-4">
                 <div className="flex items-center gap-2">
                   <StatusDot tone={component.tone} />
-                  <span className="text-sm font-medium text-teal-700">
+                  <span className="text-sm font-medium text-primary-700">
                     {t("components.operational")}
                   </span>
                 </div>
@@ -272,7 +272,7 @@ export default async function UpdatesPage() {
                   <CardHeader className="pb-3">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <CardTitle className="flex items-center gap-3 text-lg">
-                        <CheckCircle2 className="h-5 w-5 text-teal-600" aria-hidden="true" />
+                        <CheckCircle2 className="h-5 w-5 text-primary-600" aria-hidden="true" />
                         {issue.title}
                       </CardTitle>
                       <div className="flex flex-wrap gap-2">
@@ -333,7 +333,7 @@ export default async function UpdatesPage() {
               <ul className="space-y-3 text-sm leading-6 text-muted-foreground">
                 {policyRules.map((rule) => (
                   <li key={rule} className="flex gap-2">
-                    <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-teal-600" aria-hidden="true" />
+                    <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-primary-600" aria-hidden="true" />
                     <span>{rule}</span>
                   </li>
                 ))}

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VexNexa — Origineel Design Preview</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=zodiak@400,500,600,700&f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,600,700&f[]=supreme@400,500,600,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #080808; color: #fafafa; font-family: system-ui; padding: 2rem; }
+
+  .page-title { font-family: system-ui; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: #555; margin-bottom: 0.5rem; text-align: center; }
+  .page-sub { font-family: system-ui; font-size: 0.7rem; color: #333; text-align: center; margin-bottom: 3rem; }
+  .section-label { font-family: system-ui; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.3em; color: #444; margin-bottom: 1.5rem; border-bottom: 1px solid #1a1a1a; padding-bottom: 0.75rem; }
+
+  .combo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 4rem; }
+
+  .combo-card { border-radius: 1.25rem; overflow: hidden; border: 1px solid #1a1a1a; background: #0c0c0c; }
+  .combo-label { font-family: system-ui; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.2em; color: #333; padding: 0.6rem 1.5rem; background: #080808; border-bottom: 1px solid #141414; }
+
+  .combo-hero { padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+  .combo-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 50%; height: 180%; border-radius: 50%; opacity: 0.08; filter: blur(80px); }
+
+  .combo-hero .eyebrow { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.25em; font-weight: 600; margin-bottom: 1rem; }
+  .combo-hero h3 { font-size: 2rem; font-weight: 700; letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 0.75rem; }
+  .combo-hero p { font-size: 0.85rem; line-height: 1.65; margin-bottom: 1.5rem; }
+  .combo-hero .cta-row { display: flex; gap: 0.75rem; align-items: center; }
+  .combo-hero .cta-btn { padding: 0.65rem 1.5rem; border-radius: 0.75rem; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer; letter-spacing: -0.01em; }
+  .combo-hero .cta-link { font-size: 0.8rem; font-weight: 500; text-decoration: none; }
+
+  .combo-content { padding: 1.5rem 2rem; border-top: 1px solid #141414; }
+  .combo-content .stat-row { display: flex; gap: 2rem; margin-bottom: 1rem; }
+  .combo-content .stat-value { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; }
+  .combo-content .stat-label { font-size: 0.65rem; color: #555; margin-top: 0.1rem; letter-spacing: 0.02em; }
+  .combo-content .score-bar { height: 5px; border-radius: 3px; background: #1a1a1a; overflow: hidden; margin-top: 0.75rem; }
+  .combo-content .score-fill { height: 100%; border-radius: 3px; width: 87%; }
+  .combo-content .chip-row { display: flex; gap: 0.4rem; margin-top: 1rem; flex-wrap: wrap; }
+  .combo-content .chip { padding: 0.2rem 0.65rem; border-radius: 2rem; font-size: 0.65rem; font-weight: 500; }
+
+  /* ================================
+     A: Zodiak (serif!) + Supreme
+     × Warm Noir + Living Coral
+     ================================ */
+  .combo-a .combo-hero { background: #0e0c0a; }
+  .combo-a .combo-hero::before { background: #E8785A; }
+  .combo-a .eyebrow { color: #E8785A; font-family: 'Supreme', sans-serif; }
+  .combo-a h3 { font-family: 'Zodiak', serif; color: #FAF0E6; font-weight: 600; letter-spacing: -0.02em; }
+  .combo-a p { font-family: 'Supreme', sans-serif; color: #8C8078; }
+  .combo-a .cta-btn { background: #E8785A; color: #1a0f0a; font-family: 'Supreme', sans-serif; }
+  .combo-a .cta-link { color: #E8785A; font-family: 'Supreme', sans-serif; }
+  .combo-a .stat-value { font-family: 'Zodiak', serif; color: #E8785A; }
+  .combo-a .stat-label { font-family: 'Supreme', sans-serif; }
+  .combo-a .score-fill { background: linear-gradient(90deg, #E8785A, #F4A261); }
+  .combo-a .chip { background: #1f1510; color: #E8785A; border: 1px solid #2a1c14; font-family: 'Supreme', sans-serif; }
+
+  /* ================================
+     B: Clash Display + Satoshi
+     × Graphite + Electric Copper
+     ================================ */
+  .combo-b .combo-hero { background: #0c0b09; }
+  .combo-b .combo-hero::before { background: #C87941; }
+  .combo-b .eyebrow { color: #C87941; font-family: 'Satoshi', sans-serif; }
+  .combo-b h3 { font-family: 'Clash Display', sans-serif; color: #F5E6D3; font-weight: 600; }
+  .combo-b p { font-family: 'Satoshi', sans-serif; color: #7A7268; }
+  .combo-b .cta-btn { background: linear-gradient(135deg, #C87941, #A0522D); color: #fff; font-family: 'Clash Display', sans-serif; font-weight: 500; }
+  .combo-b .cta-link { color: #C87941; font-family: 'Satoshi', sans-serif; }
+  .combo-b .stat-value { font-family: 'Clash Display', sans-serif; color: #D4956B; }
+  .combo-b .stat-label { font-family: 'Satoshi', sans-serif; }
+  .combo-b .score-fill { background: linear-gradient(90deg, #A0522D, #C87941, #D4956B); }
+  .combo-b .chip { background: #1a1409; color: #C87941; border: 1px solid #2a2010; font-family: 'Satoshi', sans-serif; }
+
+  /* ================================
+     C: Syne + Outfit
+     × Deep Wine + Sage
+     ================================ */
+  .combo-c .combo-hero { background: #0e0a0b; }
+  .combo-c .combo-hero::before { background: #8B2252; }
+  .combo-c .eyebrow { color: #7CB49E; font-family: 'Outfit', sans-serif; }
+  .combo-c h3 { font-family: 'Syne', sans-serif; color: #F5E1EA; font-weight: 700; }
+  .combo-c p { font-family: 'Outfit', sans-serif; color: #8A7580; font-weight: 400; }
+  .combo-c .cta-btn { background: #8B2252; color: #F5E1EA; font-family: 'Syne', sans-serif; font-weight: 600; }
+  .combo-c .cta-link { color: #7CB49E; font-family: 'Outfit', sans-serif; }
+  .combo-c .stat-value { font-family: 'Syne', sans-serif; color: #D4789B; }
+  .combo-c .stat-label { font-family: 'Outfit', sans-serif; }
+  .combo-c .score-fill { background: linear-gradient(90deg, #8B2252, #D4789B); }
+  .combo-c .chip-wine { background: #1a0c12; color: #D4789B; border: 1px solid #2a1520; font-family: 'Outfit', sans-serif; }
+  .combo-c .chip-sage { background: #0c1a14; color: #7CB49E; border: 1px solid #152a20; font-family: 'Outfit', sans-serif; }
+
+  /* ================================
+     D: Clash Display + General Sans
+     × Midnight + Rose Gold
+     ================================ */
+  .combo-d .combo-hero { background: #0a0a0e; }
+  .combo-d .combo-hero::before { background: #B76E79; }
+  .combo-d .eyebrow { color: #B76E79; font-family: 'General Sans', sans-serif; }
+  .combo-d h3 { font-family: 'Clash Display', sans-serif; color: #F0E4E7; font-weight: 600; }
+  .combo-d p { font-family: 'General Sans', sans-serif; color: #7A7080; }
+  .combo-d .cta-btn { background: linear-gradient(135deg, #B76E79, #8E4A55); color: #fff; font-family: 'Clash Display', sans-serif; font-weight: 500; }
+  .combo-d .cta-link { color: #B76E79; font-family: 'General Sans', sans-serif; }
+  .combo-d .stat-value { font-family: 'Clash Display', sans-serif; color: #C9949D; }
+  .combo-d .stat-label { font-family: 'General Sans', sans-serif; }
+  .combo-d .score-fill { background: linear-gradient(90deg, #8E4A55, #B76E79, #C9949D); }
+  .combo-d .chip { background: #1a1015; color: #C9949D; border: 1px solid #2a1a22; font-family: 'General Sans', sans-serif; }
+
+  /* ================================
+     E: Zodiak + Outfit
+     × Obsidian + Burnt Sienna + Sand
+     ================================ */
+  .combo-e .combo-hero { background: #0b0a08; }
+  .combo-e .combo-hero::before { background: #A0522D; }
+  .combo-e .eyebrow { color: #D2B48C; font-family: 'Outfit', sans-serif; letter-spacing: 0.3em; }
+  .combo-e h3 { font-family: 'Zodiak', serif; color: #F5E6D3; font-weight: 600; font-size: 2.1rem; }
+  .combo-e p { font-family: 'Outfit', sans-serif; color: #8A7E70; font-weight: 400; }
+  .combo-e .cta-btn { background: #A0522D; color: #F5E6D3; font-family: 'Outfit', sans-serif; font-weight: 600; }
+  .combo-e .cta-link { color: #D2B48C; font-family: 'Outfit', sans-serif; }
+  .combo-e .stat-value { font-family: 'Zodiak', serif; color: #D2B48C; }
+  .combo-e .stat-label { font-family: 'Outfit', sans-serif; }
+  .combo-e .score-fill { background: linear-gradient(90deg, #8B4513, #A0522D, #D2B48C); }
+  .combo-e .chip { background: #15100a; color: #D2B48C; border: 1px solid #251c10; font-family: 'Outfit', sans-serif; }
+
+  /* ================================
+     F: Syne + Supreme
+     × Charcoal + Electric Chartreuse
+     ================================ */
+  .combo-f .combo-hero { background: #0a0b08; }
+  .combo-f .combo-hero::before { background: #B8D935; }
+  .combo-f .eyebrow { color: #B8D935; font-family: 'Supreme', sans-serif; }
+  .combo-f h3 { font-family: 'Syne', sans-serif; color: #F0F0E8; font-weight: 800; letter-spacing: -0.04em; }
+  .combo-f p { font-family: 'Supreme', sans-serif; color: #787870; }
+  .combo-f .cta-btn { background: #B8D935; color: #1a1e08; font-family: 'Syne', sans-serif; font-weight: 700; }
+  .combo-f .cta-link { color: #B8D935; font-family: 'Supreme', sans-serif; }
+  .combo-f .stat-value { font-family: 'Syne', sans-serif; color: #B8D935; }
+  .combo-f .stat-label { font-family: 'Supreme', sans-serif; }
+  .combo-f .score-fill { background: linear-gradient(90deg, #7A9118, #B8D935); }
+  .combo-f .chip { background: #141508; color: #B8D935; border: 1px solid #222508; font-family: 'Supreme', sans-serif; }
+
+  /* ======================== LIGHT MODE ======================== */
+  .light-section { margin-top: 2rem; }
+  .light-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 4rem; }
+  .light-card { border-radius: 1.25rem; overflow: hidden; border: 1px solid #e8e4e0; }
+
+  .light-hero { padding: 2rem; }
+  .light-hero .eyebrow { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.25em; font-weight: 600; margin-bottom: 0.75rem; }
+  .light-hero h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.5rem; }
+  .light-hero p { font-size: 0.82rem; line-height: 1.65; margin-bottom: 1.25rem; }
+  .light-hero .cta-btn { padding: 0.55rem 1.3rem; border-radius: 0.65rem; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer; }
+  .light-bottom { padding: 1rem 2rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .light-bottom .chip { padding: 0.2rem 0.6rem; border-radius: 2rem; font-size: 0.65rem; font-weight: 500; }
+
+  /* Light A: Coral on cream */
+  .light-a { background: #FFFBF7; }
+  .light-a .eyebrow { color: #C85A3A; font-family: 'Supreme', sans-serif; }
+  .light-a h3 { font-family: 'Zodiak', serif; color: #2A1810; }
+  .light-a p { font-family: 'Supreme', sans-serif; color: #8A7468; }
+  .light-a .cta-btn { background: #E8785A; color: #fff; font-family: 'Supreme', sans-serif; }
+  .light-a .light-bottom { background: #FFF5EE; border-top: 1px solid #F0E0D4; }
+  .light-a .chip { background: #FFF0E8; color: #A04828; border: 1px solid #F0D4C4; font-family: 'Supreme', sans-serif; }
+
+  /* Light B: Copper on warm white */
+  .light-b { background: #FEFCF8; }
+  .light-b .eyebrow { color: #A0522D; font-family: 'Satoshi', sans-serif; }
+  .light-b h3 { font-family: 'Clash Display', sans-serif; color: #1E1810; }
+  .light-b p { font-family: 'Satoshi', sans-serif; color: #7A6E5E; }
+  .light-b .cta-btn { background: linear-gradient(135deg, #C87941, #A0522D); color: #fff; font-family: 'Clash Display', sans-serif; }
+  .light-b .light-bottom { background: #FAF4EC; border-top: 1px solid #EDE4D8; }
+  .light-b .chip { background: #FAF0E4; color: #8B5E3C; border: 1px solid #E8D4BC; font-family: 'Satoshi', sans-serif; }
+
+  /* Light C: Wine + Sage on off-white */
+  .light-c { background: #FDFBF9; }
+  .light-c .eyebrow { color: #7CB49E; font-family: 'Outfit', sans-serif; }
+  .light-c h3 { font-family: 'Syne', sans-serif; color: #2A1018; }
+  .light-c p { font-family: 'Outfit', sans-serif; color: #7A6870; }
+  .light-c .cta-btn { background: #8B2252; color: #fff; font-family: 'Syne', sans-serif; }
+  .light-c .light-bottom { background: #FAF4F6; border-top: 1px solid #F0E0E6; }
+  .light-c .chip-w { background: #FAE8F0; color: #7A1E44; border: 1px solid #E8C8D4; font-family: 'Outfit', sans-serif; }
+  .light-c .chip-s { background: #E8FAF2; color: #3A7A5E; border: 1px solid #C4E8D8; font-family: 'Outfit', sans-serif; }
+
+  /* Light D: Rose Gold on pearl */
+  .light-d { background: #FDFBFA; }
+  .light-d .eyebrow { color: #8E4A55; font-family: 'General Sans', sans-serif; }
+  .light-d h3 { font-family: 'Clash Display', sans-serif; color: #1E1418; }
+  .light-d p { font-family: 'General Sans', sans-serif; color: #7A6870; }
+  .light-d .cta-btn { background: linear-gradient(135deg, #B76E79, #8E4A55); color: #fff; font-family: 'Clash Display', sans-serif; }
+  .light-d .light-bottom { background: #FAF5F6; border-top: 1px solid #F0E4E6; }
+  .light-d .chip { background: #FAE8EC; color: #7A3A48; border: 1px solid #E8C8D0; font-family: 'General Sans', sans-serif; }
+
+  /* Light E: Sienna on sand */
+  .light-e { background: #FEFCF6; }
+  .light-e .eyebrow { color: #A0522D; font-family: 'Outfit', sans-serif; }
+  .light-e h3 { font-family: 'Zodiak', serif; color: #2A1E10; }
+  .light-e p { font-family: 'Outfit', sans-serif; color: #7A6E5A; }
+  .light-e .cta-btn { background: #A0522D; color: #F5E6D3; font-family: 'Outfit', sans-serif; }
+  .light-e .light-bottom { background: #FAF4E8; border-top: 1px solid #EDE0CC; }
+  .light-e .chip { background: #FAF0E0; color: #7A4820; border: 1px solid #E8D4B4; font-family: 'Outfit', sans-serif; }
+
+  /* Light F: Chartreuse on cool white */
+  .light-f { background: #FBFCF6; }
+  .light-f .eyebrow { color: #6B8A18; font-family: 'Supreme', sans-serif; }
+  .light-f h3 { font-family: 'Syne', sans-serif; color: #1A1E08; }
+  .light-f p { font-family: 'Supreme', sans-serif; color: #6A6E5A; }
+  .light-f .cta-btn { background: #7A9118; color: #fff; font-family: 'Syne', sans-serif; }
+  .light-f .light-bottom { background: #F4F8E4; border-top: 1px solid #E4EAC8; }
+  .light-f .chip { background: #F0F8D8; color: #4A5A10; border: 1px solid #D8E8A8; font-family: 'Supreme', sans-serif; }
+
+  @media (max-width: 900px) {
+    .combo-grid { grid-template-columns: 1fr; }
+    .light-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">VexNexa — Origineel Design</h1>
+<p class="page-sub">Geen standaard SaaS kleuren. Geen Inter. Geen teal/indigo/violet.</p>
+
+<!-- ==================== DARK MODE COMBOS ==================== -->
+<p class="section-label">Dark Mode — Font + Kleur Combinaties</p>
+
+<div class="combo-grid">
+
+  <!-- A: Zodiak + Supreme × Coral -->
+  <div class="combo-card combo-a">
+    <div class="combo-label">A — Zodiak (serif) + Supreme × Warm Noir + Living Coral</div>
+    <div class="combo-hero">
+      <div class="eyebrow">Accessibility Platform</div>
+      <h3>Ontdek elke barrière. Los ze op. Bewijs het.</h3>
+      <p>AI-gestuurde toegankelijkheidsscans die uw website WCAG 2.2 compliant maken — van audit tot bewijs van conformiteit.</p>
+      <div class="cta-row">
+        <button class="cta-btn">Gratis scan starten</button>
+        <a href="#" class="cta-link">Bekijk demo &rarr;</a>
+      </div>
+    </div>
+    <div class="combo-content">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-value">87</div><div class="stat-label">VexNexa Index</div></div>
+        <div class="stat"><div class="stat-value">284</div><div class="stat-label">Pagina's gescand</div></div>
+        <div class="stat"><div class="stat-value">12</div><div class="stat-label">Issues gevonden</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill"></div></div>
+      <div class="chip-row">
+        <span class="chip">Contrast</span>
+        <span class="chip">Alt-tekst</span>
+        <span class="chip">Navigatie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- B: Clash Display + Satoshi × Copper -->
+  <div class="combo-card combo-b">
+    <div class="combo-label">B — Clash Display + Satoshi × Graphite + Electric Copper</div>
+    <div class="combo-hero">
+      <div class="eyebrow">Accessibility Platform</div>
+      <h3>Ontdek elke barrière. Los ze op. Bewijs het.</h3>
+      <p>AI-gestuurde toegankelijkheidsscans die uw website WCAG 2.2 compliant maken — van audit tot bewijs van conformiteit.</p>
+      <div class="cta-row">
+        <button class="cta-btn">Gratis scan starten</button>
+        <a href="#" class="cta-link">Bekijk demo &rarr;</a>
+      </div>
+    </div>
+    <div class="combo-content">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-value">87</div><div class="stat-label">VexNexa Index</div></div>
+        <div class="stat"><div class="stat-value">284</div><div class="stat-label">Pagina's gescand</div></div>
+        <div class="stat"><div class="stat-value">12</div><div class="stat-label">Issues gevonden</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill"></div></div>
+      <div class="chip-row">
+        <span class="chip">Contrast</span>
+        <span class="chip">Alt-tekst</span>
+        <span class="chip">Navigatie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- C: Syne + Outfit × Wine + Sage -->
+  <div class="combo-card combo-c">
+    <div class="combo-label">C — Syne + Outfit × Deep Wine + Sage Green</div>
+    <div class="combo-hero">
+      <div class="eyebrow">Accessibility Platform</div>
+      <h3>Ontdek elke barrière. Los ze op. Bewijs het.</h3>
+      <p>AI-gestuurde toegankelijkheidsscans die uw website WCAG 2.2 compliant maken — van audit tot bewijs van conformiteit.</p>
+      <div class="cta-row">
+        <button class="cta-btn">Gratis scan starten</button>
+        <a href="#" class="cta-link">Bekijk demo &rarr;</a>
+      </div>
+    </div>
+    <div class="combo-content">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-value">87</div><div class="stat-label">VexNexa Index</div></div>
+        <div class="stat"><div class="stat-value">284</div><div class="stat-label">Pagina's gescand</div></div>
+        <div class="stat"><div class="stat-value">12</div><div class="stat-label">Issues gevonden</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill"></div></div>
+      <div class="chip-row">
+        <span class="chip chip-wine">Kritiek: 3</span>
+        <span class="chip chip-sage">OK: 272</span>
+        <span class="chip chip-wine">Waarschuwing: 9</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- D: Clash Display + General Sans × Rose Gold -->
+  <div class="combo-card combo-d">
+    <div class="combo-label">D — Clash Display + General Sans × Midnight + Rose Gold</div>
+    <div class="combo-hero">
+      <div class="eyebrow">Accessibility Platform</div>
+      <h3>Ontdek elke barrière. Los ze op. Bewijs het.</h3>
+      <p>AI-gestuurde toegankelijkheidsscans die uw website WCAG 2.2 compliant maken — van audit tot bewijs van conformiteit.</p>
+      <div class="cta-row">
+        <button class="cta-btn">Gratis scan starten</button>
+        <a href="#" class="cta-link">Bekijk demo &rarr;</a>
+      </div>
+    </div>
+    <div class="combo-content">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-value">87</div><div class="stat-label">VexNexa Index</div></div>
+        <div class="stat"><div class="stat-value">284</div><div class="stat-label">Pagina's gescand</div></div>
+        <div class="stat"><div class="stat-value">12</div><div class="stat-label">Issues gevonden</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill"></div></div>
+      <div class="chip-row">
+        <span class="chip">Contrast</span>
+        <span class="chip">Alt-tekst</span>
+        <span class="chip">Navigatie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: Zodiak + Outfit × Sienna + Sand -->
+  <div class="combo-card combo-e">
+    <div class="combo-label">E — Zodiak (serif) + Outfit × Obsidian + Burnt Sienna + Sand</div>
+    <div class="combo-hero">
+      <div class="eyebrow">Accessibility Platform</div>
+      <h3>Ontdek elke barrière. Los ze op. Bewijs het.</h3>
+      <p>AI-gestuurde toegankelijkheidsscans die uw website WCAG 2.2 compliant maken — van audit tot bewijs van conformiteit.</p>
+      <div class="cta-row">
+        <button class="cta-btn">Gratis scan starten</button>
+        <a href="#" class="cta-link">Bekijk demo &rarr;</a>
+      </div>
+    </div>
+    <div class="combo-content">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-value">87</div><div class="stat-label">VexNexa Index</div></div>
+        <div class="stat"><div class="stat-value">284</div><div class="stat-label">Pagina's gescand</div></div>
+        <div class="stat"><div class="stat-value">12</div><div class="stat-label">Issues gevonden</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill"></div></div>
+      <div class="chip-row">
+        <span class="chip">Contrast</span>
+        <span class="chip">Alt-tekst</span>
+        <span class="chip">Navigatie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- F: Syne + Supreme × Charcoal + Chartreuse -->
+  <div class="combo-card combo-f">
+    <div class="combo-label">F — Syne + Supreme × Charcoal + Electric Chartreuse</div>
+    <div class="combo-hero">
+      <div class="eyebrow">Accessibility Platform</div>
+      <h3>Ontdek elke barrière. Los ze op. Bewijs het.</h3>
+      <p>AI-gestuurde toegankelijkheidsscans die uw website WCAG 2.2 compliant maken — van audit tot bewijs van conformiteit.</p>
+      <div class="cta-row">
+        <button class="cta-btn">Gratis scan starten</button>
+        <a href="#" class="cta-link">Bekijk demo &rarr;</a>
+      </div>
+    </div>
+    <div class="combo-content">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-value">87</div><div class="stat-label">VexNexa Index</div></div>
+        <div class="stat"><div class="stat-value">284</div><div class="stat-label">Pagina's gescand</div></div>
+        <div class="stat"><div class="stat-value">12</div><div class="stat-label">Issues gevonden</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill"></div></div>
+      <div class="chip-row">
+        <span class="chip">Contrast</span>
+        <span class="chip">Alt-tekst</span>
+        <span class="chip">Navigatie</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== LIGHT MODE ==================== -->
+<p class="section-label">Light Mode — Dezelfde combinaties</p>
+
+<div class="light-grid">
+  <div class="light-card light-a">
+    <div class="light-hero">
+      <div class="eyebrow">A — Zodiak + Coral</div>
+      <h3>Uw website scoort 87% op WCAG richtlijnen</h3>
+      <p>12 problemen gevonden op 284 pagina's. Prioriteit: 3 kritiek, 9 waarschuwingen.</p>
+      <button class="cta-btn">Bekijk rapport</button>
+    </div>
+    <div class="light-bottom">
+      <span class="chip">Contrast</span>
+      <span class="chip">Alt-tekst</span>
+      <span class="chip">Navigatie</span>
+      <span class="chip">ARIA</span>
+    </div>
+  </div>
+
+  <div class="light-card light-b">
+    <div class="light-hero">
+      <div class="eyebrow">B — Clash Display + Copper</div>
+      <h3>Uw website scoort 87% op WCAG richtlijnen</h3>
+      <p>12 problemen gevonden op 284 pagina's. Prioriteit: 3 kritiek, 9 waarschuwingen.</p>
+      <button class="cta-btn">Bekijk rapport</button>
+    </div>
+    <div class="light-bottom">
+      <span class="chip">Contrast</span>
+      <span class="chip">Alt-tekst</span>
+      <span class="chip">Navigatie</span>
+      <span class="chip">ARIA</span>
+    </div>
+  </div>
+
+  <div class="light-card light-c">
+    <div class="light-hero">
+      <div class="eyebrow">C — Syne + Wine/Sage</div>
+      <h3>Uw website scoort 87% op WCAG richtlijnen</h3>
+      <p>12 problemen gevonden op 284 pagina's. Prioriteit: 3 kritiek, 9 waarschuwingen.</p>
+      <button class="cta-btn">Bekijk rapport</button>
+    </div>
+    <div class="light-bottom">
+      <span class="chip chip-w">Kritiek</span>
+      <span class="chip chip-s">OK</span>
+      <span class="chip chip-w">Waarschuwing</span>
+      <span class="chip chip-s">ARIA</span>
+    </div>
+  </div>
+
+  <div class="light-card light-d">
+    <div class="light-hero">
+      <div class="eyebrow">D — Clash Display + Rose Gold</div>
+      <h3>Uw website scoort 87% op WCAG richtlijnen</h3>
+      <p>12 problemen gevonden op 284 pagina's. Prioriteit: 3 kritiek, 9 waarschuwingen.</p>
+      <button class="cta-btn">Bekijk rapport</button>
+    </div>
+    <div class="light-bottom">
+      <span class="chip">Contrast</span>
+      <span class="chip">Alt-tekst</span>
+      <span class="chip">Navigatie</span>
+      <span class="chip">ARIA</span>
+    </div>
+  </div>
+
+  <div class="light-card light-e">
+    <div class="light-hero">
+      <div class="eyebrow">E — Zodiak + Sienna/Sand</div>
+      <h3>Uw website scoort 87% op WCAG richtlijnen</h3>
+      <p>12 problemen gevonden op 284 pagina's. Prioriteit: 3 kritiek, 9 waarschuwingen.</p>
+      <button class="cta-btn">Bekijk rapport</button>
+    </div>
+    <div class="light-bottom">
+      <span class="chip">Contrast</span>
+      <span class="chip">Alt-tekst</span>
+      <span class="chip">Navigatie</span>
+      <span class="chip">ARIA</span>
+    </div>
+  </div>
+
+  <div class="light-card light-f">
+    <div class="light-hero">
+      <div class="eyebrow">F — Syne + Chartreuse</div>
+      <h3>Uw website scoort 87% op WCAG richtlijnen</h3>
+      <p>12 problemen gevonden op 284 pagina's. Prioriteit: 3 kritiek, 9 waarschuwingen.</p>
+      <button class="cta-btn">Bekijk rapport</button>
+    </div>
+    <div class="light-bottom">
+      <span class="chip">Contrast</span>
+      <span class="chip">Alt-tekst</span>
+      <span class="chip">Navigatie</span>
+      <span class="chip">ARIA</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

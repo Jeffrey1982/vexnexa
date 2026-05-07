@@ -121,7 +121,7 @@ function HeroSection() {
 
           <h1 className="font-sans text-4xl font-bold tracking-tight lg:text-6xl">
             {t("title")}{" "}
-            <span className="text-teal-700">{t("titleHighlight")}</span>
+            <span className="text-primary-700">{t("titleHighlight")}</span>
           </h1>
 
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
@@ -303,7 +303,7 @@ function PricingCards() {
               className={cn(
                 "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
                 billingCycle === "monthly"
-                  ? "bg-teal-600 text-white shadow-sm"
+                  ? "bg-primary-600 text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               )}
             >
@@ -314,13 +314,13 @@ function PricingCards() {
               className={cn(
                 "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
                 billingCycle === "yearly"
-                  ? "bg-teal-600 text-white shadow-sm"
+                  ? "bg-primary-600 text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               )}
             >
               {tp("billing.yearly")}
               {discountPercent > 0 && (
-                <Badge className="ml-2 bg-teal-600 text-xs text-white">
+                <Badge className="ml-2 bg-primary-600 text-xs text-white">
                   Save {discountPercent}%
                 </Badge>
               )}
@@ -344,15 +344,15 @@ function PricingCards() {
                 data-testid="plan-card"
                 data-plan={plan.key}
                 className={cn(
-                  "relative flex flex-col border-slate-200 bg-white text-slate-900 shadow-sm transition-all duration-300 hover:border-teal-500",
+                  "relative flex flex-col border-slate-200 bg-white text-slate-900 shadow-sm transition-all duration-300 hover:border-primary-500",
                   plan.highlighted &&
-                    "border-teal-600 shadow-xl ring-2 ring-teal-200",
-                  isPioneer && "bg-teal-50"
+                    "border-primary-600 shadow-xl ring-2 ring-primary-200",
+                  isPioneer && "bg-primary-50"
                 )}
               >
                 {plan.highlighted && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
-                    <Badge className="border-0 bg-teal-600 text-white shadow-sm hover:bg-teal-700">
+                    <Badge className="border-0 bg-primary-600 text-white shadow-sm hover:bg-primary-700">
                       <Star className="mr-1 h-3 w-3" />
                       {tp("mostPopular")}
                     </Badge>
@@ -360,7 +360,7 @@ function PricingCards() {
                 )}
                 {isPioneer && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
-                    <Badge className="border border-teal-200 bg-teal-50 text-teal-700 shadow-sm">
+                    <Badge className="border border-primary-200 bg-primary-50 text-primary-700 shadow-sm">
                       Pioneer Deal
                     </Badge>
                   </div>
@@ -370,7 +370,7 @@ function PricingCards() {
                   <div className="absolute -top-2 -right-2">
                     <Badge
                       variant="secondary"
-                      className="bg-teal-600 text-white text-xs px-2 py-1"
+                      className="bg-primary-600 text-white text-xs px-2 py-1"
                     >
                       {discountBadge}
                     </Badge>
@@ -414,7 +414,7 @@ function PricingCards() {
                   <div className="space-y-2.5 flex-1">
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start space-x-2">
-                        <Check className="h-4 w-4 text-teal-500 flex-shrink-0 mt-0.5" />
+                        <Check className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-slate-700">{feature}</span>
                       </div>
                     ))}
@@ -436,7 +436,7 @@ function PricingCards() {
                       "mt-auto w-full transition-all duration-200",
                       plan.key === "FREE"
                         ? "border-slate-300 text-slate-900 hover:bg-slate-100"
-                        : "bg-teal-600 text-white hover:bg-teal-700"
+                        : "bg-primary-600 text-white hover:bg-primary-700"
                     )}
                     variant={plan.ctaVariant}
                     size="lg"
@@ -631,14 +631,14 @@ function AuditServicesSection() {
         <div className="text-center mb-12">
           <Badge
             variant="outline"
-            className="mb-4 border-teal-200 bg-white text-teal-700"
+            className="mb-4 border-primary-200 bg-white text-primary-700"
           >
             <FileSearch className="w-3 h-3 mr-1" />
             {tp("audits.badge")}
           </Badge>
           <h2 className="mb-4 font-sans text-3xl font-bold text-slate-900 lg:text-5xl">
             {tp("audits.title")}{" "}
-            <span className="text-teal-700">{tp("audits.titleHighlight")}</span>
+            <span className="text-primary-700">{tp("audits.titleHighlight")}</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             {tp("audits.subtitle")}
@@ -649,7 +649,7 @@ function AuditServicesSection() {
           {audits.map((audit) => (
             <Card
               key={audit.productId}
-              className="flex h-full flex-col border-slate-200 bg-white shadow-sm transition-colors hover:border-teal-500"
+              className="flex h-full flex-col border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500"
             >
               <CardHeader className="min-h-36">
                 <CardTitle className="font-sans text-xl font-semibold leading-tight text-slate-900">
@@ -663,7 +663,7 @@ function AuditServicesSection() {
                 <div className="space-y-2">
                   {audit.features.map((feature, i) => (
                     <div key={i} className="flex items-start space-x-2">
-                      <Check className="h-4 w-4 text-teal-500 flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
                       <span className="text-sm text-slate-700">{feature}</span>
                     </div>
                   ))}
@@ -685,7 +685,7 @@ function AuditServicesSection() {
                   </div>
                   <DirectCheckoutButton
                     variant="default"
-                    buttonClassName="bg-teal-600 text-white hover:bg-teal-700"
+                    buttonClassName="bg-primary-600 text-white hover:bg-primary-700"
                     endpoint="/api/billing/create-audit-payment"
                     payload={{
                       productId: audit.productId,
@@ -756,7 +756,7 @@ function AuditBundlesSection() {
           </Badge>
           <h2 className="mb-4 font-sans text-3xl font-bold text-slate-900 lg:text-5xl">
             {tp("auditBundles.title")}{" "}
-            <span className="text-teal-700">
+            <span className="text-primary-700">
               {tp("auditBundles.titleHighlight")}
             </span>
           </h2>
@@ -769,7 +769,7 @@ function AuditBundlesSection() {
           {bundles.map((bundle) => (
             <Card
               key={bundle.productId}
-              className="flex flex-col border-slate-200 bg-white shadow-sm transition-colors hover:border-teal-500"
+              className="flex flex-col border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500"
             >
               <CardHeader>
                 <CardTitle className="font-sans text-lg font-semibold text-slate-900">
@@ -791,14 +791,14 @@ function AuditBundlesSection() {
                 <div className="space-y-2 flex-1">
                   {bundle.features.map((feature, i) => (
                     <div key={i} className="flex items-start space-x-2">
-                      <Check className="h-4 w-4 text-teal-500 flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
                       <span className="text-sm text-slate-700">{feature}</span>
                     </div>
                   ))}
                 </div>
                 <DirectCheckoutButton
                   variant="default"
-                  buttonClassName="bg-teal-600 text-white hover:bg-teal-700"
+                  buttonClassName="bg-primary-600 text-white hover:bg-primary-700"
                   endpoint="/api/billing/create-audit-payment"
                   payload={{ productId: bundle.productId }}
                   className="mt-4"
@@ -877,7 +877,7 @@ function AddOnsSection() {
           </Badge>
           <h2 className="mb-4 font-sans text-3xl font-bold text-slate-900 lg:text-5xl">
             {tp("addons.title")}{" "}
-            <span className="text-teal-700">
+            <span className="text-primary-700">
               {tp("addons.titleHighlight")}
             </span>
           </h2>
@@ -888,7 +888,7 @@ function AddOnsSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Extra Website Packs */}
-          <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-teal-500">
+          <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500">
             <CardHeader>
               <CardTitle className="font-sans text-xl font-semibold text-slate-900">
                 {tp("addons.websites.title")}
@@ -917,7 +917,7 @@ function AddOnsSection() {
                       </p>
                       <DirectCheckoutButton
                         variant="default"
-                        buttonClassName="bg-teal-600 text-white hover:bg-teal-700"
+                        buttonClassName="bg-primary-600 text-white hover:bg-primary-700"
                         endpoint="/api/billing/create-addon-payment"
                         payload={{ type: pack.type }}
                         className="mt-2"
@@ -932,7 +932,7 @@ function AddOnsSection() {
           </Card>
 
           {/* Page Volume Packs */}
-          <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-teal-500">
+          <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500">
             <CardHeader>
               <CardTitle className="font-sans text-xl font-semibold text-slate-900">
                 {tp("addons.pages.title")}
@@ -970,7 +970,7 @@ function AddOnsSection() {
                         </p>
                         <DirectCheckoutButton
                           variant="default"
-                          buttonClassName="bg-teal-600 text-white hover:bg-teal-700"
+                          buttonClassName="bg-primary-600 text-white hover:bg-primary-700"
                           endpoint="/api/billing/create-addon-payment"
                           payload={{ type: pack.type }}
                           className="mt-2"
@@ -983,8 +983,8 @@ function AddOnsSection() {
                 })}
               </div>
               <div className="mt-4 space-y-3">
-                <div className="rounded-lg border border-teal-200 bg-teal-50 p-3">
-                  <p className="text-xs text-teal-700">
+                <div className="rounded-lg border border-primary-200 bg-primary-50 p-3">
+                  <p className="text-xs text-primary-700">
                     <strong>Agency</strong>{" "}
                     {tp("addons.pages.businessNote")} &middot;{" "}
                     <strong>Enterprise</strong>{" "}
@@ -1005,7 +1005,7 @@ function AddOnsSection() {
                 <CardTitle className="font-sans text-xl font-semibold text-slate-900">
                   {tp("addons.assurance.title")}
                 </CardTitle>
-                <Badge className="bg-teal-600 text-white text-xs">
+                <Badge className="bg-primary-600 text-white text-xs">
                   {tp("addons.assurance.badge")}
                 </Badge>
               </div>
@@ -1017,7 +1017,7 @@ function AddOnsSection() {
               <div className="space-y-2 mb-4">
                 {assuranceFeatures.map((feature, i) => (
                   <div key={i} className="flex items-start space-x-2">
-                    <Check className="h-3.5 w-3.5 text-teal-500 flex-shrink-0 mt-0.5" />
+                    <Check className="h-3.5 w-3.5 text-primary-500 flex-shrink-0 mt-0.5" />
                     <span className="text-xs">{feature}</span>
                   </div>
                 ))}
@@ -1047,13 +1047,13 @@ function AddOnsSection() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between rounded-lg border border-teal-200 bg-teal-50 p-2">
+                <div className="flex items-center justify-between rounded-lg border border-primary-200 bg-primary-50 p-2">
                   <span className="text-sm">
                     {tp("addons.assurance.businessEnterprise")}
                   </span>
                   <Badge
                     variant="secondary"
-                    className="bg-teal-600 text-white text-xs"
+                    className="bg-primary-600 text-white text-xs"
                   >
                     {tp("addons.assurance.included")}
                   </Badge>
@@ -1151,7 +1151,7 @@ function ComplianceDisclaimerSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-teal-700 flex-shrink-0 mt-1" />
+            <AlertTriangle className="w-6 h-6 text-primary-700 flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-semibold text-lg mb-2">{t("title")}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -1160,14 +1160,14 @@ function ComplianceDisclaimerSection() {
               <div className="mt-4 flex flex-wrap gap-2">
                 <Link
                   href="/legal/terms"
-                  className="text-sm text-teal-700 hover:underline"
+                  className="text-sm text-primary-700 hover:underline"
                 >
                   {t("links.terms")}
                 </Link>
                 <span className="text-muted-foreground">&bull;</span>
                 <Link
                   href="/legal/privacy"
-                  className="text-sm text-teal-700 hover:underline"
+                  className="text-sm text-primary-700 hover:underline"
                 >
                   {t("links.privacy")}
                 </Link>
@@ -1257,7 +1257,7 @@ function PilotOfferBanner() {
     <section className="py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full bg-teal-50 px-4 py-1.5 text-sm font-semibold text-teal-700">
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-semibold text-primary-700">
             <Sparkles className="h-4 w-4" />
             {tPage("pilotBanner.badge")}
           </div>
@@ -1267,7 +1267,7 @@ function PilotOfferBanner() {
           <p className="text-muted-foreground max-w-xl mx-auto">
             {tPage("pilotBanner.subtitle")}
           </p>
-          <Button asChild className="bg-teal-600 text-white hover:bg-teal-700">
+          <Button asChild className="bg-primary-600 text-white hover:bg-primary-700">
             <Link href="/pricing#plans">
               {tPage("pilotBanner.cta")}{" "}
               <ArrowRight className="ml-2 h-4 w-4" />

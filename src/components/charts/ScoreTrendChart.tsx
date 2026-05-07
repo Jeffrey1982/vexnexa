@@ -79,10 +79,10 @@ export function ScoreTrendChart({
           <Line
             type="monotone"
             dataKey="score"
-            stroke="#0d9488"
+            stroke="#A0522D"
             strokeWidth={3}
-            dot={{ fill: "#0d9488", strokeWidth: 2, r: 4 }}
-            activeDot={{ r: 6, stroke: "#0d9488", strokeWidth: 2 }}
+            dot={{ fill: "#A0522D", strokeWidth: 2, r: 4 }}
+            activeDot={{ r: 6, stroke: "#A0522D", strokeWidth: 2 }}
             name="Accessibility Score"
           />
         </LineChart>

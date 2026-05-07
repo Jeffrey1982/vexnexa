@@ -451,7 +451,7 @@ export default function ModernRegistrationForm() {
   const renderStep2 = () => (
     <div data-registration-step="2" className="space-y-6 animate-in slide-in-from-right-5 duration-300">
       <div className="text-center space-y-2">
-        <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full mx-auto flex items-center justify-center mb-4">
+        <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-primary-600 rounded-full mx-auto flex items-center justify-center mb-4">
           <User className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold">Personal Information</h2>

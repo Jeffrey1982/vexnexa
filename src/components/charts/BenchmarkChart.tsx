@@ -34,7 +34,7 @@ export function BenchmarkChart({
     {
       name: "Industry Average",
       score: comparison.industryAvg,
-      fill: "#0d9488"
+      fill: "#A0522D"
     }
   ];
 

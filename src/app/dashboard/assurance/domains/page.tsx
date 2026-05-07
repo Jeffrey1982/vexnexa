@@ -48,7 +48,7 @@ export default async function AssuranceDomainsPage() {
         </div>
         {canAddMore && (
           <Link href="/dashboard/assurance/domains/new">
-            <Button className="bg-teal-600 hover:bg-teal-700">
+            <Button className="bg-primary-600 hover:bg-primary-700">
               <Plus className="w-4 h-4 mr-2" />
               Add Domain
             </Button>
@@ -67,7 +67,7 @@ export default async function AssuranceDomainsPage() {
                   Add your first domain to start automated accessibility monitoring
                 </p>
                 <Link href="/dashboard/assurance/domains/new">
-                  <Button className="mt-4 bg-teal-600 hover:bg-teal-700">
+                  <Button className="mt-4 bg-primary-600 hover:bg-primary-700">
                     <Plus className="w-4 h-4 mr-2" />
                     Add Domain
                   </Button>
@@ -170,7 +170,7 @@ export default async function AssuranceDomainsPage() {
                           variant="outline"
                           size="sm"
                           type="submit"
-                          className="bg-teal-50 hover:bg-teal-100 text-teal-700"
+                          className="bg-primary-50 hover:bg-primary-100 text-primary-700"
                         >
                           <Play className="w-4 h-4 mr-2" />
                           Scan Now

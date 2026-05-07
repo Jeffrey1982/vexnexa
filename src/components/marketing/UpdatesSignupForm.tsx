@@ -72,7 +72,7 @@ export function UpdatesSignupForm() {
         <p
           className={
             state === "success"
-              ? "flex items-start gap-2 text-sm text-teal-700"
+              ? "flex items-start gap-2 text-sm text-primary-700"
               : "flex items-start gap-2 text-sm text-destructive"
           }
         >

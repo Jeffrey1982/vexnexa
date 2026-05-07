@@ -278,8 +278,8 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
               <Radar
                 name="Compliance Score"
                 dataKey="score"
-                stroke="#0d9488"
-                fill="#0d9488"
+                stroke="#A0522D"
+                fill="#A0522D"
                 fillOpacity={0.3}
                 strokeWidth={2}
               />
@@ -329,7 +329,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
               <Line
                 type="monotone"
                 dataKey="WCAG 2.1"
-                stroke="#0d9488"
+                stroke="#A0522D"
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />

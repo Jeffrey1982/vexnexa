@@ -21,6 +21,6 @@ export const BRAND = {
   iconPng512: "/brand/vexnexa-favicon-512.png",
   /** Absolute URL for emails & JSON-LD (V mark; wordmark added in HTML where needed) */
   logoAbsolute: "https://vexnexa.com/brand/vexnexa-v-mark.png",
-  primaryColor: "#0d9488",
-  themeColor: "#0d9488",
+  primaryColor: "#A0522D",
+  themeColor: "#A0522D",
 } as const;

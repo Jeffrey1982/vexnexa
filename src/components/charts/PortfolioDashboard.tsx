@@ -300,7 +300,7 @@ export function PortfolioDashboard({ sites, className = "" }: PortfolioDashboard
               <Tooltip content={<CustomTooltip />} />
               <Legend />
 
-              <Bar dataKey="accessibility" fill="#0d9488" name="Accessibility" />
+              <Bar dataKey="accessibility" fill="#A0522D" name="Accessibility" />
               <Bar dataKey="performance" fill="#10B981" name="Performance" />
               <Bar dataKey="seo" fill="#F59E0B" name="SEO" />
             </BarChart>
