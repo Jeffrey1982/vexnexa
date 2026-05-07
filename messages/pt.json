@@ -3769,5 +3769,199 @@
     "termsOfService": "Termos de servi?o",
     "allRightsReserved": "Todos os direitos reservados.",
     "madeWithLove": "Criado nos Pa?ses Baixos."
+  },
+  "eaaCompliance": {
+    "meta": {
+      "title": "European Accessibility Act (EAA) — guia de conformidade para empresas",
+      "description": "A aplicação da EAA começou em 28 de junho de 2025. Guia claro: a quem se aplica, o padrão WCAG 2.1 AA, sanções e um roteiro em 5 passos.",
+      "ogTitle": "European Accessibility Act — o que muda para a sua empresa",
+      "ogDescription": "Quem deve cumprir, o que o padrão exige, como funcionam as sanções e um roteiro em 5 passos para a conformidade."
+    },
+    "breadcrumb": {
+      "home": "Início",
+      "compliance": "Conformidade",
+      "current": "EAA"
+    },
+    "hero": {
+      "badge": "Aplicação da EAA ativa desde 28 de junho de 2025",
+      "headline": "A European Accessibility Act, explicada para empresas.",
+      "subhead": "Se vende produtos ou serviços a consumidores na UE — e-commerce, banca, bilhética, telecomunicações, e-books e mais — a EAA aplica-se quase certamente. Eis o que exige, o que custa ignorá-la e como provar conformidade.",
+      "ctaPrimary": "Analisar o meu site gratuitamente",
+      "ctaSecondary": "Ler o guia completo"
+    },
+    "whatIs": {
+      "heading": "O que é a European Accessibility Act?",
+      "p1": "A European Accessibility Act (EAA) é legislação europeia que obriga uma vasta gama de produtos e serviços digitais a serem acessíveis a pessoas com deficiência. Foi adotada em 2019 como Diretiva (UE) 2019/882 e harmoniza as regras de acessibilidade em todos os 27 Estados-Membros, em vez do mosaico de leis nacionais que existia antes.",
+      "p2": "O objetivo é prático. Uma pessoa cega, com baixa visão, surda, com deficiência motora ou cognitiva deve poder comprar, usar serviços bancários, viajar, ler e comunicar online com a mesma autonomia que qualquer outra. Para as empresas, isso significa que sites, aplicações, checkouts, leitores de e-books, ATMs, quiosques de bilhética e canais de apoio ao cliente têm de cumprir um padrão de acessibilidade definido.",
+      "p3": "Os Estados-Membros tinham até junho de 2022 para transpor a diretiva para a lei nacional. A aplicação às empresas começou em 28 de junho de 2025 e cada Estado-Membro já designou a sua autoridade de fiscalização. Auditorias, procedimentos de queixa e regimes de sanções estão operacionais.",
+      "pullQuote": "Aplicação em vigor desde 28 de junho de 2025.",
+      "pullQuoteSource": "Diretiva (UE) 2019/882, artigo 31",
+      "citation": "Fonte: Diretiva (UE) 2019/882 do Parlamento Europeu e do Conselho relativa aos requisitos de acessibilidade dos produtos e serviços."
+    },
+    "whoMustComply": {
+      "heading": "A EAA aplica-se à sua empresa?",
+      "intro": "A EAA cobre uma lista definida de produtos e serviços destinados a consumidores na UE. As colunas abaixo são uma verificação rápida — use-as como orientação, não como parecer jurídico.",
+      "inScopeTitle": "Sim, tem de cumprir se oferecer:",
+      "inScope": [
+        "Sites e aplicações de e-commerce que vendem a consumidores na UE (independentemente de onde a empresa esteja registada)",
+        "Serviços bancários para consumidores, incluindo banca online e móvel",
+        "Transporte de passageiros: sites de reservas, apps de bilhética, máquinas inteligentes, informação ao viajante",
+        "Telecomunicações: operadores móveis, VoIP, mensagens para consumidores",
+        "Serviços de acesso a meios audiovisuais (plataformas de streaming, TV a pedido)",
+        "Livros eletrónicos, leitores e o software que os distribui",
+        "Terminais de autosserviço: ATMs, máquinas de bilhetes, terminais de pagamento, quiosques de check-in",
+        "Comunicações de emergência para o 112",
+        "Sistemas operativos, computadores e smartphones vendidos a consumidores"
+      ],
+      "exemptTitle": "Possivelmente fora do âmbito ou isento:",
+      "exempt": [
+        "Microempresas que prestam serviços — menos de 10 trabalhadores E volume de negócios ou balanço anual até €2 milhões",
+        "Conteúdos multimédia pré-gravados publicados antes de 28 de junho de 2025",
+        "Software de escritório e sites usados apenas para fins internos",
+        "Mapas e serviços de cartografia não usados para navegação",
+        "Conteúdos arquivados que não sejam atualizados ou retransmitidos depois de 28 de junho de 2025",
+        "Serviços B2B em que o cliente não é um consumidor"
+      ],
+      "footnote": "A isenção para microempresas só se aplica a prestadores de serviços, não a fabricantes de produtos. Mesmo quando se aplica, os reguladores incentivam a conformidade voluntária — e muitos grandes compradores já a exigem em concursos."
+    },
+    "penalties": {
+      "heading": "Sanções por incumprimento",
+      "p1": "A EAA não fixa uma multa europeia única. Cada Estado-Membro escreve o seu próprio regime sancionatório na lei nacional, e os intervalos variam muito. O denominador comum: as sanções têm de ser “eficazes, proporcionais e dissuasoras” — altas o suficiente para que cumprir seja o caminho mais barato.",
+      "p2": "A França foi o primeiro Estado-Membro a anunciar publicamente ações de fiscalização; a sua autoridade abriu processos poucos dias após o prazo de 28 de junho de 2025. Outros Estados-Membros seguiram com programas de auditoria e procedimentos formais de queixa. Na maioria dos países, a fiscalização começa com uma notificação formal e prazo para corrigir; violações não resolvidas escalam para coimas administrativas, divulgação pública do infrator ou retirada temporária do serviço do mercado.",
+      "subhead": "Como a fiscalização aparece por país (ilustrativo — confirmar com advogado local)",
+      "countries": [
+        {
+          "country": "Países Baixos",
+          "body": "O Implementatiewet toegankelijkheidsvoorschriften producten en diensten habilita autoridades de supervisão designadas — incluindo a Autoriteit Consument & Markt — a emitir advertências formais, instruções vinculativas e coimas administrativas."
+        },
+        {
+          "country": "Alemanha",
+          "body": "Sob o Barrierefreiheitsstärkungsgesetz (BFSG), as autoridades de fiscalização do mercado podem aplicar coimas por infração e ordenar a retirada do mercado de produtos não conformes."
+        },
+        {
+          "country": "França",
+          "body": "A fiscalização passa por autoridades especializadas (em particular DGCCRF e ARCOM), que podem emitir notificações formais, sanções pecuniárias diárias por incumprimento prolongado, e divulgar publicamente as sanções."
+        }
+      ],
+      "disclaimer": "Os tetos específicos das coimas variam por país, setor e gravidade. Esta página é um resumo informativo, não aconselhamento jurídico. Para uma resposta vinculativa, consulte um advogado nas jurisdições onde opera."
+    },
+    "wcagBaseline": {
+      "heading": "O padrão técnico: WCAG 2.1 nível AA",
+      "p1": "A EAA não diz quais linhas de código escrever. Remete para um padrão europeu harmonizado — EN 301 549 — que define os requisitos técnicos de acessibilidade para produtos e serviços digitais. EN 301 549 baseia-se diretamente nas Web Content Accessibility Guidelines (WCAG) 2.1 no nível de conformidade AA.",
+      "p2": "Na prática: se o seu site, aplicação ou documento estiver conforme com WCAG 2.1 AA, está a cumprir os requisitos técnicos centrais da EAA. As WCAG 2.2 (outubro de 2023) acrescentam nove critérios de sucesso a 2.1 — cumprir WCAG 2.2 AA cobre 2.1 AA com folga, sendo a meta mais segura a prazo.",
+      "failuresTitle": "Falhas WCAG comuns que a EAA espera que corrija",
+      "failures": [
+        "Contraste de cor insuficiente entre o texto e o fundo",
+        "Imagens e ícones sem texto alternativo significativo",
+        "Formulários sem rótulos programáticos ou com mensagens de erro pouco claras",
+        "Conteúdo que não pode ser percorrido ou operado apenas com o teclado",
+        "Páginas em que o foco desaparece ou salta de forma imprevisível",
+        "Títulos e landmarks usados como estilo visual em vez de estrutura",
+        "Vídeos sem legendas ou audiodescrição",
+        "PDF e documentos sem etiquetas para leitores de ecrã",
+        "Alvos de clique demasiado pequenos ou demasiado próximos (novo na WCAG 2.2)"
+      ]
+    },
+    "roadmap": {
+      "heading": "Cumprir a EAA em 5 passos",
+      "steps": [
+        {
+          "title": "Audite o site atual face à WCAG 2.1 AA",
+          "body": "Comece por uma medição de base de cada página, fluxo e documento públicos. Um scanner automatizado como o VexNexa apanha as questões de volume — contraste, alt, rótulos, mau uso de ARIA — e uma revisão manual com tecnologia de assistência cobre o que a automação não vê: carga cognitiva e lógica de teclado em componentes complexos."
+        },
+        {
+          "title": "Priorize primeiro problemas críticos e sérios",
+          "body": "Nem todos os problemas bloqueiam de igual forma. Agrupe as descobertas por gravidade e impacto no utilizador. Um rótulo em falta no botão de checkout bloqueia hoje compras a utilizadores de leitor de ecrã; uma pequena ordem de títulos num blog antigo pode esperar. Trate primeiro os bloqueadores nos percursos mais usados."
+        },
+        {
+          "title": "Corrija no código, não com overlays",
+          "body": "Os overlays de acessibilidade — aqueles widgets flutuantes que prometem conformidade instantânea — não trazem um site à conformidade EAA, e vários foram alvo de ações judiciais públicas. A única solução sustentável é corrigir o HTML, ARIA e design subjacentes. Inclua revisões de acessibilidade nos pull requests para apanhar regressões antes de irem para produção."
+        },
+        {
+          "title": "Implemente monitorização contínua",
+          "body": "Um site nunca está “concluído” em acessibilidade. Cada release pode introduzir regressões e as equipas de conteúdo publicam todas as semanas. A monitorização contínua corre scans agendados, alerta quando a pontuação cai e dá uma visão em tempo real em vez de um PDF de há seis meses."
+        },
+        {
+          "title": "Documente conformidade com relatórios datados",
+          "body": "Sob a EAA, podem pedir-lhe que demonstre conformidade — uma autoridade, um grande cliente em compras, ou um concurso público. Mantenha relatórios de auditoria datados, registos de remediação e uma declaração pública de acessibilidade. Quando vier a pergunta, a resposta já está pronta."
+        }
+      ],
+      "ctaCardTitle": "O VexNexa automatiza os passos 1, 4 e 5.",
+      "ctaCardBody": "Lance um scan hoje, agende monitorização contínua e exporte relatórios prontos para auditoria — sem construir uma única ferramenta interna.",
+      "ctaCardLink": "Inicie o seu scan gratuito"
+    },
+    "solution": {
+      "heading": "Como o VexNexa apoia a conformidade EAA",
+      "blocks": [
+        {
+          "title": "Monitorização contínua WCAG 2.2",
+          "body": "Agende scans diários, semanais ou após cada deploy e receba alerta por e-mail assim que aparecer uma regressão.",
+          "linkLabel": "Como funciona a monitorização",
+          "linkHref": "/eaa-compliance-monitoring"
+        },
+        {
+          "title": "Relatórios PDF e DOCX prontos para auditoria",
+          "body": "Exporte sumários executivos, relatórios técnicos completos e planos de remediação em formatos personalizados que auditores e clientes podem assinar.",
+          "linkLabel": "Ver um relatório de exemplo",
+          "linkHref": "/sample-report"
+        },
+        {
+          "title": "White-label para agências",
+          "body": "Revenda auditorias e monitorização contínua sob a sua própria marca — com o seu logotípo, cores e domínio.",
+          "linkLabel": "Explore o white-label",
+          "linkHref": "/white-label-accessibility-reports"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Perguntas frequentes sobre a EAA",
+      "items": [
+        {
+          "q": "A EAA aplica-se se a minha empresa não estiver na UE?",
+          "a": "Sim, se oferecer produtos ou serviços a consumidores na UE. A EAA aplica-se com base no local do cliente, não da sua sede. Uma empresa norte-americana, britânica ou asiática que vende a consumidores franceses ou neerlandeses entra no âmbito."
+        },
+        {
+          "q": "Qual a diferença entre WCAG 2.1 e WCAG 2.2?",
+          "a": "WCAG 2.2 é a versão mais recente (outubro de 2023) e acrescenta nove critérios em relação a 2.1. O padrão harmonizado da EAA, EN 301 549, refere atualmente WCAG 2.1 AA. Cumprir WCAG 2.2 AA satisfaz 2.1 AA, sendo a meta mais segura a prazo."
+        },
+        {
+          "q": "Os PDF e outros documentos estão cobertos?",
+          "a": "Sim. Documentos distribuídos como parte de um serviço coberto — faturas, extratos, condições, e-books, confirmações de bilhete — têm de cumprir os requisitos. Devem estar etiquetados para leitores de ecrã, ter ordem de leitura lógica e incluir texto alternativo significativo nas imagens."
+        },
+        {
+          "q": "E se eu for uma microempresa?",
+          "a": "Microempresas que prestam serviços (menos de 10 trabalhadores e volume de negócios ou balanço anual até €2 milhões) estão isentas das obrigações de serviço. A isenção não se aplica a fabricantes de produtos. Muitas microempresas isentas mesmo assim apontam a cumprir, porque os clientes corporativos exigem em compras."
+        },
+        {
+          "q": "Uma ferramenta pode garantir 100% de conformidade?",
+          "a": "Não — e qualquer fornecedor que prometa isso deve ser visto com cautela. O scan automatizado encontra cerca de 30–50% das questões WCAG: as deterministas como contraste, rótulos em falta e erros estruturais. O resto exige revisão manual, testes reais com tecnologias de assistência e julgamento humano em contexto."
+        },
+        {
+          "q": "Como difere a EAA do ADA dos EUA?",
+          "a": "O Americans with Disabilities Act é mais antigo, em alguns aspetos mais amplo, e foi largamente moldado por jurisprudência. A EAA é uma única peça legislativa da UE com padrão técnico definido (EN 301 549, baseado em WCAG 2.1 AA) e autoridades designadas em cada Estado-Membro. Quem serve clientes dos dois lados do Atlântico cobre a maior parte de ambos os regimes ao cumprir WCAG 2.2 AA."
+        },
+        {
+          "q": "Qual o prazo para serviços já existentes?",
+          "a": "Para terminais de autosserviço já em uso (ATMs, máquinas de bilhetes), há um período transitório até 28 de junho de 2030. Contratos de serviço assinados antes de 28 de junho de 2025 podem prosseguir nos termos existentes até ao fim do contrato, no máximo até 28 de junho de 2030. A partir daí, tudo o que está no âmbito tem de ser acessível."
+        },
+        {
+          "q": "Onde ler a diretiva oficial?",
+          "a": "O texto integral está publicado no EUR-Lex como Diretiva (UE) 2019/882. Cada Estado-Membro publica ainda a sua lei nacional de transposição — nos Países Baixos, o Implementatiewet toegankelijkheidsvoorschriften producten en diensten; na Alemanha, o Barrierefreiheitsstärkungsgesetz (BFSG); em França, os artigos correspondentes do Code de la consommation."
+        },
+        {
+          "q": "As aplicações móveis estão cobertas?",
+          "a": "Sim. As aplicações nativas iOS e Android para serviços cobertos — banca, e-commerce, bilhética, telecomunicações — estão sujeitas aos mesmos requisitos que os sites. EN 301 549 inclui capítulos específicos para software não-web e móvel."
+        },
+        {
+          "q": "É preciso uma declaração de acessibilidade pública?",
+          "a": "Uma declaração de acessibilidade pública e clara é fortemente recomendada, e em alguns Estados-Membros é obrigatória para certas categorias de serviço. Deve descrever o padrão que está a seguir (WCAG 2.1 ou 2.2 AA), as lacunas conhecidas, a data da última avaliação e como os utilizadores podem reportar problemas ou pedir uma alternativa acessível."
+        }
+      ]
+    },
+    "finalCta": {
+      "heading": "Audite hoje o seu site face à EAA.",
+      "subhead": "Scan gratuito, sem cartão de crédito. Resultados em menos de 60 segundos.",
+      "cta": "Inicie o seu scan gratuito"
+    }
   }
 }

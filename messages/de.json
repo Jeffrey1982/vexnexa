@@ -3916,5 +3916,199 @@
     "termsOfService": "Nutzungsbedingungen",
     "allRightsReserved": "Alle Rechte vorbehalten.",
     "madeWithLove": "Gebaut in den Niederlanden."
+  },
+  "eaaCompliance": {
+    "meta": {
+      "title": "European Accessibility Act (EAA) — Compliance-Leitfaden für Unternehmen",
+      "description": "EAA-Vollzug seit 28. Juni 2025. Klar erklärt: Wer betroffen ist, was WCAG 2.1 AA verlangt, welche Bußgelder drohen und ein 5-Schritte-Fahrplan zur Konformität.",
+      "ogTitle": "European Accessibility Act — was er für Ihr Unternehmen bedeutet",
+      "ogDescription": "Für wen die EAA gilt, was der Standard verlangt, wie Sanktionen funktionieren und ein 5-Schritte-Fahrplan zur Konformität."
+    },
+    "breadcrumb": {
+      "home": "Start",
+      "compliance": "Compliance",
+      "current": "EAA"
+    },
+    "hero": {
+      "badge": "EAA-Vollzug aktiv seit 28. Juni 2025",
+      "headline": "Der European Accessibility Act, erklärt für Unternehmen.",
+      "subhead": "Wenn Sie Produkte oder Dienstleistungen an Verbraucher in der EU verkaufen — Online-Shops, Banking, Ticketing, Telekommunikation, E-Books und mehr — dann gilt die EAA mit hoher Wahrscheinlichkeit auch für Sie. So sieht aus, was die Richtlinie verlangt, was es kostet sie zu ignorieren, und wie Sie Konformität belegen.",
+      "ctaPrimary": "Website kostenlos scannen",
+      "ctaSecondary": "Vollständigen Leitfaden lesen"
+    },
+    "whatIs": {
+      "heading": "Was ist der European Accessibility Act?",
+      "p1": "Der European Accessibility Act (EAA) ist eine EU-weite Gesetzgebung, die eine breite Palette digitaler Produkte und Dienstleistungen barrierefrei machen muss. Er wurde 2019 als Richtlinie (EU) 2019/882 verabschiedet und harmonisiert die Barrierefreiheitsregeln in allen 27 Mitgliedstaaten — anstelle des früheren Flickenteppichs aus nationalen Regelungen.",
+      "p2": "Das Ziel ist praktisch: Wer blind ist, sehbehindert, gehörlos, motorisch eingeschränkt oder kognitiv beeinträchtigt, soll genauso eigenständig online einkaufen, Bankgeschäfte erledigen, reisen, lesen und kommunizieren können wie alle anderen. Für Unternehmen bedeutet das: Websites, Apps, E-Commerce-Checkouts, E-Reader, Geldautomaten, Ticketkioske und Kundenservice-Kanäle müssen einen definierten Standard erfüllen.",
+      "p3": "Die Mitgliedstaaten hatten bis Juni 2022 Zeit, die Richtlinie in nationales Recht umzusetzen. Der Vollzug gegenüber Unternehmen begann am 28. Juni 2025. Jeder Mitgliedstaat hat inzwischen eine eigene Aufsichtsbehörde benannt; Prüfungen, Beschwerdeverfahren und Sanktionen sind operativ.",
+      "pullQuote": "Vollzug seit 28. Juni 2025.",
+      "pullQuoteSource": "Richtlinie (EU) 2019/882, Artikel 31",
+      "citation": "Quelle: Richtlinie (EU) 2019/882 des Europäischen Parlaments und des Rates über die Barrierefreiheitsanforderungen für Produkte und Dienstleistungen."
+    },
+    "whoMustComply": {
+      "heading": "Gilt die EAA für Ihr Unternehmen?",
+      "intro": "Die EAA deckt eine festgelegte Liste von Produkten und Dienstleistungen für Verbraucher in der EU ab. Die Spalten unten sind eine Schnellprüfung — als Orientierung, nicht als Rechtsberatung.",
+      "inScopeTitle": "Ja, Sie müssen Konformität herstellen, wenn Sie Folgendes anbieten:",
+      "inScope": [
+        "E-Commerce-Websites und Apps, die an Verbraucher in der EU verkaufen (unabhängig vom Sitz Ihres Unternehmens)",
+        "Verbraucher-Bankdienstleistungen, einschließlich Online- und Mobile-Banking",
+        "Personenverkehr: Buchungsseiten, Ticket-Apps, intelligente Ticketautomaten, Reiseinformationen",
+        "Telekommunikation: Mobilfunkanbieter, VoIP, Messaging-Dienste für Verbraucher",
+        "Audiovisuelle Mediendienste (Streaming-Plattformen, On-Demand-TV)",
+        "E-Books, E-Reader und die Software, die sie ausliefert",
+        "Selbstbedienungsterminals: Geldautomaten, Ticketautomaten, Bezahlterminals, Check-in-Kioske",
+        "Notrufkommunikation an 112",
+        "Betriebssysteme, Computer und Smartphones, die an Verbraucher verkauft werden"
+      ],
+      "exemptTitle": "Möglicherweise außerhalb des Anwendungsbereichs oder ausgenommen:",
+      "exempt": [
+        "Kleinstunternehmen, die Dienstleistungen anbieten — weniger als 10 Beschäftigte UND Jahresumsatz oder Bilanzsumme von höchstens €2 Millionen",
+        "Vor dem 28. Juni 2025 veröffentlichte aufgezeichnete Medieninhalte",
+        "Bürosoftware und Websites, die ausschließlich intern genutzt werden",
+        "Karten und Kartendienste, die nicht zur Navigation verwendet werden",
+        "Archivierte Inhalte, die nach dem 28. Juni 2025 weder aktualisiert noch erneut verbreitet werden",
+        "B2B-Dienstleistungen, bei denen der Kunde kein Verbraucher ist"
+      ],
+      "footnote": "Die Ausnahme für Kleinstunternehmen gilt nur für Dienstleister, nicht für Produkthersteller. Auch wo die Ausnahme greift, empfehlen Aufsichtsbehörden freiwillige Konformität — viele große Einkaufsabteilungen verlangen sie inzwischen vertraglich."
+    },
+    "penalties": {
+      "heading": "Sanktionen bei Verstößen",
+      "p1": "Die EAA legt keine einheitliche europäische Sanktion fest. Jeder Mitgliedstaat regelt seine Bußgelder selbst, und die Spannweite ist groß. Gemeinsam ist allen die Vorgabe, dass Sanktionen „wirksam, verhältnismäßig und abschreckend“ sein müssen — hoch genug, damit Konformität der günstigere Weg ist.",
+      "p2": "Frankreich war der erste Mitgliedstaat, der öffentlich Vollzugsmaßnahmen ankündigte; die französische Aufsicht eröffnete Verfahren innerhalb weniger Tage nach der Frist vom 28. Juni 2025. Andere Mitgliedstaaten folgten mit Prüfprogrammen und formellen Beschwerdeverfahren. In den meisten Ländern beginnt der Vollzug mit einer formellen Aufforderung samt Nachbesserungsfrist; nicht behobene Verstöße eskalieren zu Bußgeldern, öffentlicher Bekanntmachung des Unternehmens oder vorübergehender Marktuntersagung.",
+      "subhead": "Wie Vollzug pro Land aussieht (illustrativ — mit lokalem Anwalt verifizieren)",
+      "countries": [
+        {
+          "country": "Niederlande",
+          "body": "Das Implementatiewet toegankelijkheidsvoorschriften producten en diensten ermächtigt benannte Aufsichtsbehörden — darunter die Autoriteit Consument & Markt — zu förmlichen Verwarnungen, verbindlichen Anweisungen und Bußgeldern."
+        },
+        {
+          "country": "Deutschland",
+          "body": "Unter dem Barrierefreiheitsstärkungsgesetz (BFSG) können Marktaufsichtsbehörden Bußgelder pro Verstoß verhängen und nicht konforme Produkte vom Markt nehmen lassen."
+        },
+        {
+          "country": "Frankreich",
+          "body": "Der Vollzug läuft über spezialisierte Behörden (insbesondere DGCCRF und ARCOM), die formelle Aufforderungen, Tagesbußgelder bei fortgesetztem Verstoß und öffentlich bekannt gemachte Sanktionen verhängen können."
+        }
+      ],
+      "disclaimer": "Konkrete Bußgeldobergrenzen unterscheiden sich nach Land, Branche und Schwere des Verstoßes. Diese Seite ist eine verständliche Zusammenfassung, keine Rechtsberatung. Für eine verbindliche Aussage zu Ihrem Unternehmen wenden Sie sich an einen Anwalt in den betroffenen Jurisdiktionen."
+    },
+    "wcagBaseline": {
+      "heading": "Der technische Standard: WCAG 2.1 Stufe AA",
+      "p1": "Die EAA selbst gibt nicht vor, welche Codezeilen Sie schreiben müssen. Sie verweist auf einen harmonisierten europäischen Standard — EN 301 549 — der die technischen Barrierefreiheitsanforderungen für digitale Produkte und Dienstleistungen festlegt. EN 301 549 baut direkt auf den Web Content Accessibility Guidelines (WCAG) 2.1 in der Konformitätsstufe AA auf.",
+      "p2": "In der Praxis: Wenn Ihre Website, App oder Ihr Dokument WCAG 2.1 AA erfüllt, erfüllen Sie die technischen Kernanforderungen der EAA. WCAG 2.2 (Oktober 2023) ergänzt neun zusätzliche Erfolgskriterien zu 2.1 — wer WCAG 2.2 AA erfüllt, deckt 2.1 AA komplett ab und hat zusätzliche Reserve. Eine sichere, zukunftsfähige Wahl.",
+      "failuresTitle": "Häufige WCAG-Fehler, deren Behebung die EAA erwartet",
+      "failures": [
+        "Unzureichender Farbkontrast zwischen Text und Hintergrund",
+        "Bilder und Symbole ohne aussagekräftigen Alternativtext",
+        "Formulare ohne programmatische Beschriftungen oder mit unklaren Fehlermeldungen",
+        "Inhalte, die nicht allein per Tastatur bedient werden können",
+        "Seiten, auf denen der Fokus verschwindet oder unvorhersehbar springt",
+        "Überschriften und Landmarks, die zur Optik statt zur Struktur verwendet werden",
+        "Videos ohne Untertitel oder Audiodeskription",
+        "PDFs und Dokumente ohne Tags für Screenreader",
+        "Klickziele, die zu klein sind oder zu nah beieinander liegen (neu in WCAG 2.2)"
+      ]
+    },
+    "roadmap": {
+      "heading": "In 5 Schritten EAA-konform werden",
+      "steps": [
+        {
+          "title": "Auditieren Sie Ihre Website gegen WCAG 2.1 AA",
+          "body": "Beginnen Sie mit einer Bestandsaufnahme jeder öffentlich zugänglichen Seite, jedes Flows und Dokuments. Ein automatisierter Scanner wie VexNexa erfasst die Volumenprobleme — Kontrast, Alt-Text, Beschriftungen, ARIA-Missbrauch — und ein manueller Review mit assistiver Technologie deckt das ab, was Automatisierung nicht erkennt: kognitive Belastung und Tastaturlogik in komplexen Komponenten."
+        },
+        {
+          "title": "Priorisieren Sie kritische und schwerwiegende Probleme",
+          "body": "Nicht jedes Problem blockiert Nutzer gleichermaßen. Gruppieren Sie Befunde nach Schwere und Nutzerwirkung. Ein fehlendes Label am Bestellbutton blockiert heute Käufe für Screenreader-Nutzer; eine kleine Überschriftenreihenfolge auf einer tiefen Blogseite kann warten. Beheben Sie zuerst die Blocker in den wichtigsten User Journeys."
+        },
+        {
+          "title": "Beheben Sie im Code, nicht mit Overlays",
+          "body": "Barrierefreiheits-Overlays — die schwebenden Widgets, die sofortige Konformität versprechen — stellen keine EAA-Konformität her, und mehrere waren Gegenstand öffentlicher Klagen. Die einzige tragfähige Lösung ist die Korrektur des zugrunde liegenden HTML, der ARIA und des Designs. Verankern Sie Barrierefreiheits-Reviews in Ihren Pull Requests, damit Regressionen vor dem Deployment erkannt werden."
+        },
+        {
+          "title": "Richten Sie kontinuierliche Überwachung ein",
+          "body": "Eine Website ist mit Barrierefreiheit nie „fertig“. Jede Veröffentlichung kann Regressionen einführen, und Content-Teams legen wöchentlich neue Seiten an. Kontinuierliches Monitoring läuft nach Zeitplan, alarmiert bei abfallenden Scores und gibt Ihnen ein Live-Bild statt einer halbjahresalten PDF."
+        },
+        {
+          "title": "Dokumentieren Sie Konformität mit datierten Berichten",
+          "body": "Unter der EAA können Sie aufgefordert werden, Konformität nachzuweisen — von einer Aufsichtsbehörde, einem großen Einkauf oder einer öffentlichen Ausschreibung. Führen Sie datierte Auditberichte, Behebungsprotokolle und eine öffentliche Erklärung zur Barrierefreiheit. Wenn die Frage kommt, liegt die Antwort schon bereit."
+        }
+      ],
+      "ctaCardTitle": "VexNexa automatisiert Schritt 1, 4 und 5.",
+      "ctaCardBody": "Starten Sie heute einen Scan, planen Sie kontinuierliches Monitoring und exportieren Sie audit-fertige Berichte — ohne ein einziges internes Tool zu bauen.",
+      "ctaCardLink": "Kostenlosen Scan starten"
+    },
+    "solution": {
+      "heading": "Wie VexNexa die EAA-Konformität unterstützt",
+      "blocks": [
+        {
+          "title": "Kontinuierliches WCAG-2.2-Monitoring",
+          "body": "Planen Sie Scans täglich, wöchentlich oder nach jedem Deploy und erhalten Sie eine E-Mail-Warnung, sobald eine Regression auftaucht.",
+          "linkLabel": "So funktioniert das Monitoring",
+          "linkHref": "/eaa-compliance-monitoring"
+        },
+        {
+          "title": "Audit-fertige PDF- und DOCX-Berichte",
+          "body": "Exportieren Sie Management-Zusammenfassungen, technische Vollberichte und Behebungspläne in Markenformaten, die Auditoren und Kunden abzeichnen können.",
+          "linkLabel": "Beispielbericht ansehen",
+          "linkHref": "/sample-report"
+        },
+        {
+          "title": "White-Label für Agenturen",
+          "body": "Verkaufen Sie Barrierefreiheits-Audits und laufendes Monitoring unter Ihrer eigenen Marke — mit Ihrem Logo, Ihren Farben und Ihrer Domain.",
+          "linkLabel": "White-Label entdecken",
+          "linkHref": "/white-label-accessibility-reports"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Häufige Fragen zur EAA",
+      "items": [
+        {
+          "q": "Gilt die EAA auch, wenn mein Unternehmen nicht in der EU sitzt?",
+          "a": "Ja, sofern Sie Produkte oder Dienstleistungen für Verbraucher in der EU anbieten. Die EAA gilt am Standort des Kunden, nicht am Sitz des Unternehmens. Ein US-, britisches oder asiatisches Unternehmen, das an französische oder niederländische Verbraucher verkauft, fällt darunter."
+        },
+        {
+          "q": "Was ist der Unterschied zwischen WCAG 2.1 und WCAG 2.2?",
+          "a": "WCAG 2.2 ist die aktuellste Version (Oktober 2023) und ergänzt neun Erfolgskriterien gegenüber 2.1. Der harmonisierte EAA-Standard EN 301 549 verweist derzeit auf WCAG 2.1 AA als technische Basis. WCAG 2.2 AA deckt 2.1 AA automatisch ab und ist damit die zukunftsfähigere Wahl."
+        },
+        {
+          "q": "Sind PDFs und andere Dokumente erfasst?",
+          "a": "Ja. Dokumente, die Teil einer von der EAA erfassten Dienstleistung sind — Rechnungen, Ausszüge, AGB, E-Books, Ticketbestätigungen — müssen die Anforderungen erfüllen. Sie müssen für Screenreader getaggt sein, eine logische Lesereihenfolge haben und Bildern aussagekräftigen Alternativtext mitgeben."
+        },
+        {
+          "q": "Was, wenn ich ein Kleinstunternehmen bin?",
+          "a": "Kleinstunternehmen, die Dienstleistungen anbieten (weniger als 10 Beschäftigte und Jahresumsatz oder Bilanzsumme von höchstens €2 Mio.), sind von den Dienstleistungspflichten befreit. Für Produkthersteller gilt die Ausnahme nicht. Viele befreite Unternehmen streben dennoch Konformität an, weil ihre Geschäftskunden sie vertraglich verlangen."
+        },
+        {
+          "q": "Kann ein Tool 100% Konformität garantieren?",
+          "a": "Nein — wer das verspricht, ist mit Vorsicht zu genießen. Automatisches Scannen findet etwa 30–50% der WCAG-Probleme: die deterministischen wie Kontrast, fehlende Beschriftungen und Strukturfehler. Der Rest erfordert manuellen Review, echte Tests mit assistiver Technologie und menschliches Urteil im Kontext."
+        },
+        {
+          "q": "Wie unterscheidet sich die EAA vom US-amerikanischen ADA?",
+          "a": "Der Americans with Disabilities Act ist älter, in mancher Hinsicht breiter und stark durch Rechtsprechung geprägt. Die EAA ist ein einzelnes EU-Gesetz mit klar definiertem technischen Standard (EN 301 549, basierend auf WCAG 2.1 AA) und benannten Aufsichtsbehörden in jedem Mitgliedstaat. Wer beidseits des Atlantiks Kunden bedient, deckt mit WCAG 2.2 AA das meiste beider Regime ab."
+        },
+        {
+          "q": "Welche Frist gilt für bereits bestehende Dienste?",
+          "a": "Für Selbstbedienungsterminals, die bereits in Betrieb sind (etwa Geldautomaten und Ticketautomaten), gilt eine Übergangsfrist bis 28. Juni 2030. Vor dem 28. Juni 2025 geschlossene Dienstleistungsverträge dürfen unter den alten Bedingungen weiterlaufen, jedoch höchstens bis 28. Juni 2030. Danach muss alles im Anwendungsbereich barrierefrei sein."
+        },
+        {
+          "q": "Wo kann ich die offizielle Richtlinie lesen?",
+          "a": "Der vollständige Text steht auf EUR-Lex als Richtlinie (EU) 2019/882. Jeder Mitgliedstaat veröffentlicht zusätzlich sein eigenes Umsetzungsgesetz — in Deutschland das Barrierefreiheitsstärkungsgesetz (BFSG); in den Niederlanden das Implementatiewet toegankelijkheidsvoorschriften producten en diensten; in Frankreich die einschlägigen Artikel des Code de la consommation."
+        },
+        {
+          "q": "Sind mobile Apps erfasst?",
+          "a": "Ja. Native iOS- und Android-Apps für erfasste Dienste — Banking, E-Commerce, Ticketing, Telekommunikation — unterliegen denselben Anforderungen wie Websites. EN 301 549 enthält eigene Kapitel für Nicht-Web-Software und Mobile."
+        },
+        {
+          "q": "Brauche ich eine öffentliche Erklärung zur Barrierefreiheit?",
+          "a": "Eine klare, öffentliche Erklärung zur Barrierefreiheit ist dringend empfohlen und in einigen Mitgliedstaaten für bestimmte Dienstkategorien Pflicht. Geben Sie an, welchen Standard Sie anstreben (WCAG 2.1 oder 2.2 AA), bekannte Lücken, das Datum der letzten Prüfung und wie Nutzer Probleme melden oder eine barrierefreie Alternative anfordern können."
+        }
+      ]
+    },
+    "finalCta": {
+      "heading": "Prüfen Sie Ihre Website heute gegen die EAA.",
+      "subhead": "Kostenloser Scan, keine Kreditkarte. Ergebnis in unter 60 Sekunden.",
+      "cta": "Kostenlosen Scan starten"
+    }
   }
 }

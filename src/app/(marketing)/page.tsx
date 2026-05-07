@@ -26,7 +26,7 @@ import { Quote, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 // Legacy premium components retained for reference / non-landing pages.
 // The new "Nasdaq-style" enterprise landing uses the components below.
-import { EnterpriseHero } from "@/components/marketing/home/EnterpriseHero";
+import { Hero } from "@/components/marketing/home/Hero";
 import { VisibilityHook } from "@/components/marketing/home/VisibilityHook";
 import { EnterpriseTrustBar } from "@/components/marketing/home/EnterpriseTrustBar";
 import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatures";
@@ -582,7 +582,7 @@ export default function HomePage() {
         The dashboard, auth, and legal routes keep their existing brand.
       */}
       <div className="vn-enterprise-theme bg-white text-slate-900 antialiased dark:bg-[#0A0F1E] dark:text-white">
-        <EnterpriseHero />
+        <Hero />
         <EnterpriseTrustBar />
         <VisibilityHook />
         <EnterpriseFeatures />

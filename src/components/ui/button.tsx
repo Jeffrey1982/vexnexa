@@ -21,6 +21,10 @@ const buttonVariants = cva(
         link: "text-[var(--vn-primary)] underline-offset-4 hover:underline",
         gradient:
           "bg-gradient-to-r from-primary to-primary-700 text-primary-foreground shadow-elev3 hover:shadow-elev4 hover:-translate-y-px hover:from-primary/90 hover:to-primary-800",
+        rebrandPrimary:
+          "bg-[var(--color-ink-900)] text-white shadow-none hover:bg-[var(--color-ink-700)] focus-visible:ring-[var(--focus-ring-color)] focus-visible:ring-offset-[var(--focus-ring-offset)]",
+        rebrandSecondary:
+          "border border-[var(--color-border-default)] bg-white text-[var(--color-ink-900)] shadow-none hover:bg-[var(--color-surface-warm)] hover:border-[var(--color-border-strong)] focus-visible:ring-[var(--focus-ring-color)] focus-visible:ring-offset-[var(--focus-ring-offset)]",
       },
       size: {
         default: "h-10 px-4 py-2",

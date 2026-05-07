@@ -107,8 +107,10 @@
     "madeWithLove": "Gebouwd in Nederland."
   },
   "hero": {
-    "headline": "WCAG 2.2 zonder de ruis.",
+    "badge": "EAA-handhaving actief sinds juni 2025",
+    "headline": "WCAG-compliance, bewezen per scan.",
     "headline_accent": "White-label rapporten die echt verkopen.",
+    "subhead": "Continu monitoren, audit-ready rapporten, white-label voor agencies. Gebouwd voor de EU.",
     "subheadline": "Betrouwbare geautomatiseerde scans powered by axe-core. Minder false positives, actiebare fix-adviezen, en volledig branded PDF & Word rapporten. Gebouwd voor bureaus en EU-teams die de EAA serieus nemen.",
     "primary_cta": "Start gratis scan",
     "secondary_cta": "Bekijk live demo",
@@ -120,8 +122,16 @@
     "titleHighlight": "bij elke levering.",
     "subtitle": "White-label WCAG monitoring voor bureaus—vang regressies op, exporteer klantgerichte rapporten, en toon meetbare vooruitgang onder uw merk.",
     "freeTier": "Start gratis: 1 site, 100 pagina's/maand. Geen kaart. Upgrade voor monitoring, Word exports, en volledige white-label.",
-    "ctaPrimary": "Start gratis",
-    "ctaSecondary": "Bekijk voorbeeldrapport",
+    "ctaPrimary": "Scan jouw site",
+    "ctaSecondary": "Voorbeeldrapport",
+    "scanCardLabel": "Live scan-voorbeeld",
+    "scanCardScore": "/ 100",
+    "scanCardDelta": "+8 deze maand",
+    "severityCritical": "Kritiek",
+    "severitySerious": "Ernstig",
+    "severityModerate": "Matig",
+    "severityMinor": "Laag",
+    "trustLabel": "Vertrouwd door agencies en EU-bedrijven",
     "trust1": "WCAG 2.2 & EAA dekking",
     "trust2": "White-label PDF & DOCX rapporten",
     "trust3": "EU-gehost, GDPR compliant",
@@ -3901,5 +3911,199 @@
     "termsOfService": "Servicevoorwaarden",
     "allRightsReserved": "Alle rechten voorbehouden.",
     "madeWithLove": "Gebouwd in Nederland."
+  },
+  "eaaCompliance": {
+    "meta": {
+      "title": "European Accessibility Act (EAA) — Compliance-gids voor bedrijven",
+      "description": "De EAA-handhaving is op 28 juni 2025 gestart. Heldere uitleg: voor wie geldt de EAA, wat is WCAG 2.1 AA, welke boetes dreigen, en een stappenplan in 5 stappen.",
+      "ogTitle": "European Accessibility Act — wat het betekent voor jouw bedrijf",
+      "ogDescription": "Voor wie de EAA geldt, wat de standaard vereist, hoe boetes werken, en een 5-stappenplan om compliant te worden."
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "compliance": "Compliance",
+      "current": "EAA"
+    },
+    "hero": {
+      "badge": "EAA-handhaving actief sinds 28 juni 2025",
+      "headline": "De European Accessibility Act, uitgelegd voor bedrijven.",
+      "subhead": "Verkoop je producten of diensten aan consumenten in de EU — webshops, bankieren, ticketing, telecom, e-books en meer — dan geldt de EAA vrijwel zeker voor jou. Dit is wat de wet vereist, wat het kost om hem te negeren, en hoe je aantoont dat je voldoet.",
+      "ctaPrimary": "Scan je website gratis",
+      "ctaSecondary": "Lees de volledige gids"
+    },
+    "whatIs": {
+      "heading": "Wat is de European Accessibility Act?",
+      "p1": "De European Accessibility Act (EAA) is Europese wetgeving die eist dat een groot aantal digitale producten en diensten toegankelijk is voor mensen met een beperking. De wet is in 2019 vastgesteld als Richtlijn (EU) 2019/882 en harmoniseert de toegankelijkheidsregels in alle 27 lidstaten, in plaats van het versnipperde landschap van nationale wetten dat ervoor bestond.",
+      "p2": "Het doel is praktisch. Iemand die blind is, slechtziend, doof, motorisch beperkt of een cognitieve beperking heeft, moet net zo zelfstandig online kunnen winkelen, bankieren, reizen, lezen en communiceren als ieder ander. Voor bedrijven betekent dat: websites, apps, checkouts, e-readers, geldautomaten, ticketzuilen en klantcontactkanalen moeten voldoen aan een vastgestelde toegankelijkheidsstandaard.",
+      "p3": "Lidstaten hadden tot juni 2022 de tijd om de richtlijn in nationale wetgeving om te zetten. De handhaving richting bedrijven is gestart op 28 juni 2025. Elke lidstaat heeft inmiddels een eigen toezichthouder aangewezen. Audits, klachtenprocedures en boetekaders zijn allemaal operationeel.",
+      "pullQuote": "Handhaving gestart op 28 juni 2025.",
+      "pullQuoteSource": "Richtlijn (EU) 2019/882, artikel 31",
+      "citation": "Bron: Richtlijn (EU) 2019/882 van het Europees Parlement en de Raad betreffende de toegankelijkheidsvoorschriften voor producten en diensten."
+    },
+    "whoMustComply": {
+      "heading": "Geldt de EAA voor jouw bedrijf?",
+      "intro": "De EAA dekt een vastgestelde lijst van producten en diensten gericht op consumenten in de EU. De kolommen hieronder zijn een snelle check — zie ze als richtlijn, niet als juridisch advies.",
+      "inScopeTitle": "Ja, je moet voldoen als je dit aanbiedt:",
+      "inScope": [
+        "Webshops en apps die verkopen aan consumenten in de EU (ongeacht waar je bedrijf is gevestigd)",
+        "Consumentenbankieren, inclusief online en mobiel bankieren",
+        "Personenvervoer: boekingssites, ticket-apps, slimme kaartautomaten, reisinformatie",
+        "Telecom: mobiele aanbieders, VoIP, berichtendiensten voor consumenten",
+        "Audiovisuele mediadiensten (streamingplatforms, on-demand TV)",
+        "E-books, e-readers en de software die ze distribueert",
+        "Zelfbedieningsterminals: geldautomaten, kaartautomaten, betaalterminals, incheckzuilen",
+        "Noodcommunicatie naar 112",
+        "Besturingssystemen, computers en smartphones die aan consumenten worden verkocht"
+      ],
+      "exemptTitle": "Mogelijk buiten scope of vrijgesteld:",
+      "exempt": [
+        "Micro-ondernemingen die diensten leveren — minder dan 10 medewerkers én een jaaromzet of balanstotaal van €2 miljoen of minder",
+        "Vooraf opgenomen mediacontent gepubliceerd vóór 28 juni 2025",
+        "Kantoorsoftware en websites die uitsluitend intern worden gebruikt",
+        "Kaarten en kaartdiensten die niet voor navigatie worden gebruikt",
+        "Gearchiveerde content die na 28 juni 2025 niet meer wordt bijgewerkt of opnieuw uitgezonden",
+        "B2B-diensten waarbij de afnemer geen consument is"
+      ],
+      "footnote": "De vrijstelling voor micro-ondernemingen geldt alleen voor dienstverleners — niet voor productfabrikanten. Ook waar de vrijstelling van toepassing is, moedigen toezichthouders vrijwillige naleving aan, en grote zakelijke afnemers eisen het inmiddels vaak in hun inkoopvoorwaarden."
+    },
+    "penalties": {
+      "heading": "Boetes bij niet-naleving",
+      "p1": "De EAA legt geen enkele Europabrede boete op. Elke lidstaat schrijft zijn eigen boetekader in nationale wetgeving en de regels lopen sterk uiteen. Wat alle lidstaten gemeen hebben: boetes moeten “doeltreffend, evenredig en afschrikkend” zijn — hoog genoeg om naleving de goedkoopste route te maken.",
+      "p2": "Frankrijk was de eerste lidstaat die publiekelijk handhavingsacties aankondigde; de Franse toezichthouder opende procedures binnen enkele dagen na de deadline van 28 juni 2025. Andere lidstaten volgden met auditprogramma’s en formele klachtenprocedures. In de meeste landen begint handhaving met een formele waarschuwing en een herstelmogelijkheid; onopgeloste overtredingen lopen op naar bestuurlijke boetes, openbare bekendmaking van de overtreder of een tijdelijk verbod om de dienst aan te bieden.",
+      "subhead": "Hoe handhaving er per land uitziet (illustratief — verifieer met een lokaal jurist)",
+      "countries": [
+        {
+          "country": "Nederland",
+          "body": "De Implementatiewet toegankelijkheidsvoorschriften producten en diensten geeft aangewezen toezichthouders — waaronder de Autoriteit Consument & Markt — de bevoegdheid om formele waarschuwingen, bindende aanwijzingen en bestuurlijke boetes op te leggen."
+        },
+        {
+          "country": "Duitsland",
+          "body": "Onder het Barrierefreiheitsstärkungsgesetz (BFSG) kunnen markttoezichthouders boetes per overtreding opleggen en niet-conforme producten van de markt halen."
+        },
+        {
+          "country": "Frankrijk",
+          "body": "Handhaving loopt via gespecialiseerde toezichthouders (met name DGCCRF en ARCOM), die formele aanmaningen, dwangsommen per dag voortdurende overtreding en publiekelijk bekendgemaakte sancties kunnen opleggen."
+        }
+      ],
+      "disclaimer": "Specifieke boeteplafonds verschillen per land, sector en de ernst van de overtreding. Deze pagina is een heldere samenvatting, geen juridisch advies. Voor een definitief antwoord voor jouw bedrijf: raadpleeg een jurist in de jurisdictie(s) waar je opereert."
+    },
+    "wcagBaseline": {
+      "heading": "De technische standaard: WCAG 2.1 niveau AA",
+      "p1": "De EAA zelf schrijft niet voor welke regels code je moet gebruiken. Hij verwijst naar een geharmoniseerde Europese standaard: EN 301 549. Die standaard legt de technische toegankelijkheidseisen voor digitale producten en diensten vast en bouwt direct voort op de Web Content Accessibility Guidelines (WCAG) 2.1 op niveau AA.",
+      "p2": "Praktisch: voldoet je website, app of document aan WCAG 2.1 AA, dan voldoe je aan de technische kerneisen van de EAA. WCAG 2.2 (oktober 2023) voegt negen aanvullende succescriteria toe bovenop 2.1. Voldoen aan WCAG 2.2 AA dekt alles uit 2.1 AA én geeft je marge — een veilige, toekomstbestendige keuze.",
+      "failuresTitle": "Veelvoorkomende WCAG-fouten die de EAA verwacht dat je oplost",
+      "failures": [
+        "Onvoldoende kleurcontrast tussen tekst en achtergrond",
+        "Afbeeldingen en iconen zonder zinvolle alternatieve tekst",
+        "Formulieren zonder programmatische labels of met onduidelijke foutmeldingen",
+        "Content die niet met alleen het toetsenbord te bedienen is",
+        "Pagina’s waar de focus verdwijnt of onvoorspelbaar verspringt",
+        "Koppen en landmarks die voor opmaak worden gebruikt in plaats van structuur",
+        "Video’s zonder ondertiteling of audiodescriptie",
+        "PDF’s en documenten die niet zijn voorzien van tags voor schermlezers",
+        "Klikdoelen die te klein zijn of te dicht op elkaar staan (nieuw in WCAG 2.2)"
+      ]
+    },
+    "roadmap": {
+      "heading": "EAA-compliant worden in 5 stappen",
+      "steps": [
+        {
+          "title": "Audit je huidige site tegen WCAG 2.1 AA",
+          "body": "Begin met een nulmeting van elke publiek toegankelijke pagina, flow en document. Een geautomatiseerde scanner als VexNexa pakt het hoge-volume werk — contrast, alt-teksten, labels, ARIA-misbruik — en een handmatige review met hulpmiddelen vangt op wat automatisering niet ziet, zoals cognitieve belasting en toetsenbordlogica in complexe componenten."
+        },
+        {
+          "title": "Zet kritieke en serieuze issues bovenaan",
+          "body": "Niet elk issue raakt een gebruiker even hard. Groepeer je bevindingen op ernst en op gebruikersimpact. Een ontbrekend label op een afrekenknop blokkeert vandaag aankopen voor schermlezergebruikers; een kleine kop-volgorde op een diepe blogpagina kan wachten. Pak eerst de blokkades in je belangrijkste user journeys aan."
+        },
+        {
+          "title": "Los issues op in code, niet met een overlay",
+          "body": "Toegankelijkheidsoverlays — de zwevende widgets die instant compliance beloven — brengen een site niet in lijn met de EAA, en meerdere zijn onderwerp van publieke rechtszaken geweest. De enige duurzame oplossing is de onderliggende HTML, ARIA en design corrigeren. Bouw toegankelijkheidsreviews in als onderdeel van je pull requests, zodat regressies worden gevangen voordat ze live gaan."
+        },
+        {
+          "title": "Richt continue monitoring in",
+          "body": "Een site is nooit “klaar” met toegankelijkheid. Elke release kan regressies introduceren en contentteams voegen wekelijks pagina’s toe. Continue monitoring draait scans op een schema, alarmeert je als de score daalt en geeft je een live beeld in plaats van een halfjaar oud PDF."
+        },
+        {
+          "title": "Documenteer naleving met getekende rapportages",
+          "body": "Onder de EAA kan om bewijs worden gevraagd — door een toezichthouder, door een zakelijke afnemer in een inkooptraject, of door een aanbestedende dienst. Houd gedateerde auditrapporten, hersteloverzichten en een publieke toegankelijkheidsverklaring bij. Als de vraag komt, ligt het antwoord al klaar."
+        }
+      ],
+      "ctaCardTitle": "VexNexa automatiseert stap 1, 4 en 5.",
+      "ctaCardBody": "Start vandaag een scan, plan continue monitoring en exporteer audit-klare rapporten — zonder dat je intern één tool hoeft te bouwen.",
+      "ctaCardLink": "Start je gratis scan"
+    },
+    "solution": {
+      "heading": "Hoe VexNexa helpt bij EAA-naleving",
+      "blocks": [
+        {
+          "title": "Continue WCAG 2.2-monitoring",
+          "body": "Plan scans dagelijks, wekelijks of na elke deploy en ontvang een mailalert zodra een regressie verschijnt.",
+          "linkLabel": "Bekijk hoe monitoring werkt",
+          "linkHref": "/eaa-compliance-monitoring"
+        },
+        {
+          "title": "Audit-klare PDF- en DOCX-rapporten",
+          "body": "Exporteer management-samenvattingen, volledige technische rapporten en herstelplannen in branded formats die jouw auditors en klanten kunnen tekenen.",
+          "linkLabel": "Bekijk een voorbeeldrapport",
+          "linkHref": "/sample-report"
+        },
+        {
+          "title": "White-label voor bureaus",
+          "body": "Verkoop toegankelijkheidsaudits en doorlopende monitoring onder je eigen merk — met je eigen logo, kleuren en domein.",
+          "linkLabel": "Ontdek white-label",
+          "linkHref": "/white-label-accessibility-reports"
+        }
+      ]
+    },
+    "faq": {
+      "heading": "Veelgestelde vragen over de EAA",
+      "items": [
+        {
+          "q": "Geldt de EAA ook als mijn bedrijf niet in de EU is gevestigd?",
+          "a": "Ja, als je producten of diensten aanbiedt aan consumenten in de EU. De EAA werkt op basis van waar de klant zich bevindt, niet waar je hoofdkantoor staat. Een Amerikaans, Brits of Aziatisch bedrijf dat verkoopt aan Franse of Nederlandse consumenten valt onder de wet."
+        },
+        {
+          "q": "Wat is het verschil tussen WCAG 2.1 en WCAG 2.2?",
+          "a": "WCAG 2.2 is de meest recente versie (oktober 2023) en voegt negen succescriteria toe bovenop 2.1. De geharmoniseerde EAA-standaard, EN 301 549, verwijst momenteel naar WCAG 2.1 AA als technische basis. Voldoen aan WCAG 2.2 AA dekt automatisch WCAG 2.1 AA, dus 2.2 is een veilige, toekomstbestendige keuze."
+        },
+        {
+          "q": "Vallen PDF’s en andere documenten ook onder de EAA?",
+          "a": "Ja. Documenten die deel uitmaken van een dienst die onder de EAA valt — facturen, afschriften, voorwaarden, e-books, ticketbevestigingen — moeten voldoen aan de toegankelijkheidseisen. Ze moeten getagd zijn voor schermlezers, een logische leesvolgorde hebben en zinvolle alternatieve tekst bij afbeeldingen."
+        },
+        {
+          "q": "Wat als ik een micro-onderneming ben?",
+          "a": "Micro-ondernemingen die diensten leveren (minder dan 10 medewerkers en een jaaromzet of balanstotaal van €2 miljoen of minder) zijn vrijgesteld van de dienstverplichtingen. De vrijstelling geldt niet voor productfabrikanten. Veel vrijgestelde bedrijven mikken alsnog op naleving, omdat hun zakelijke afnemers het in inkoopvoorwaarden eisen."
+        },
+        {
+          "q": "Kan een tool 100% naleving garanderen?",
+          "a": "Nee — en een leverancier die dat wel belooft, zou je met argwaan moeten bekijken. Geautomatiseerd scannen vindt grofweg 30–50% van de WCAG-issues: de deterministische zaken zoals contrast, ontbrekende labels en structurele fouten. De rest vraagt om handmatige review, daadwerkelijk testen met hulpmiddelen en menselijke beoordeling van context."
+        },
+        {
+          "q": "Hoe verschilt de EAA van de Amerikaanse ADA?",
+          "a": "De Americans with Disabilities Act is ouder, op sommige punten breder, en de toepassing op websites is grotendeels gevormd door rechtspraak. De EAA is één stuk EU-wetgeving met een vastgestelde technische standaard (EN 301 549, gebaseerd op WCAG 2.1 AA) en aangewezen toezichthouders in elke lidstaat. Bedien je klanten aan beide kanten van de oceaan: voldoen aan WCAG 2.2 AA dekt het meeste van beide regimes."
+        },
+        {
+          "q": "Wat is de deadline voor diensten die al bestonden?",
+          "a": "Voor zelfbedieningsterminals die al in gebruik waren (zoals geldautomaten en kaartautomaten) loopt een overgangsperiode tot 28 juni 2030. Dienstcontracten die vóór 28 juni 2025 zijn afgesloten, mogen onder de oude voorwaarden doorlopen tot ze afgelopen zijn, maar uiterlijk tot 28 juni 2030. Daarna moet alles binnen scope toegankelijk zijn."
+        },
+        {
+          "q": "Waar kan ik de officiële richtlijn lezen?",
+          "a": "De volledige tekst staat op EUR-Lex als Richtlijn (EU) 2019/882. Elke lidstaat publiceert daarnaast zijn eigen omzettingswet — voor Nederland is dat de Implementatiewet toegankelijkheidsvoorschriften producten en diensten; voor Duitsland het Barrierefreiheitsstärkungsgesetz (BFSG); voor Frankrijk de relevante artikelen in de Code de la consommation."
+        },
+        {
+          "q": "Vallen mobiele apps onder de EAA?",
+          "a": "Ja. Native iOS- en Android-apps voor diensten die onder de EAA vallen — bankieren, e-commerce, ticketing, telecom — vallen onder dezelfde eisen als websites. EN 301 549 bevat aparte hoofdstukken voor niet-web-software en mobiel."
+        },
+        {
+          "q": "Heb ik een publieke toegankelijkheidsverklaring nodig?",
+          "a": "Een heldere, publieke toegankelijkheidsverklaring is sterk aan te raden en in sommige lidstaten verplicht voor bepaalde dienstcategorieën. Vermeld de standaard waar je naar streeft (WCAG 2.1 of 2.2 AA), bekende lacunes, de datum van de laatste beoordeling, en hoe gebruikers issues kunnen melden of een toegankelijk alternatief kunnen aanvragen."
+        }
+      ]
+    },
+    "finalCta": {
+      "heading": "Toets je site vandaag aan de EAA.",
+      "subhead": "Gratis scan, geen creditcard nodig. Resultaat in minder dan 60 seconden.",
+      "cta": "Start je gratis scan"
+    }
   }
 }

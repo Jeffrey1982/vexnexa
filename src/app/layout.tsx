@@ -7,6 +7,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { cookies } from 'next/headers'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import './design-system.css'
+import './styles/tokens.css'
 import './globals.css'
 
 const locales = ['en', 'nl', 'de', 'fr', 'es', 'pt'] as const
@@ -104,14 +105,6 @@ export default async function RootLayout({
         {/* Zodiak display font from Fontshare */}
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,600,700&display=swap" rel="stylesheet" />
-
-        {/* Early theme script — apply class before first paint to prevent white flash.
-            next-themes@0.4 injects its own script, but this ensures zero-delay coverage. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme:dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`,
-          }}
-        />
 
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
