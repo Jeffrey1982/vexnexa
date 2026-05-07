@@ -1135,6 +1135,13 @@
     "madeWithLove": "Built in the Netherlands."
   },
   "home": {
+    "latestBlog": {
+      "eyebrow": "Latest from the journal",
+      "title": "Accessibility news, written for builders.",
+      "subtitle": "Field notes on WCAG, EAA, and the craft of inclusive interfaces. Updated weekly.",
+      "viewAll": "View all posts",
+      "minRead": "min read"
+    },
     "headline": "WCAG 2.2 without the noise.",
     "headline_accent": "White-label reports that actually sell.",
     "subheadline": "Reliable automated scans powered by axe-core. Fewer false positives, actionable fix advice, and fully branded PDF & Word reports. Built for agencies and EU teams that take the EAA seriously.",

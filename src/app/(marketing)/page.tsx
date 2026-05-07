@@ -31,6 +31,7 @@ import { VisibilityHook } from "@/components/marketing/home/VisibilityHook";
 import { EnterpriseTrustBar } from "@/components/marketing/home/EnterpriseTrustBar";
 import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatures";
 import { EnterpriseConversionPanel } from "@/components/marketing/home/EnterpriseConversionPanel";
+import { LatestBlogSection } from "@/components/marketing/home/LatestBlogSection";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -587,6 +588,7 @@ export default function HomePage() {
         <VisibilityHook />
         <EnterpriseFeatures />
         <EnterpriseConversionPanel />
+        <LatestBlogSection />
 
         {/*
           FAQ kept for SEO + CRO. The FAQ component now ships its own

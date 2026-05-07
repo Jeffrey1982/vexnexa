@@ -19,16 +19,16 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="px-6 pb-10 pt-12 sm:pt-14"
+      className="px-6 pb-20 pt-20 sm:pt-28 lg:pt-32"
       style={{
         background:
           "linear-gradient(180deg, var(--color-surface-warm) 0%, var(--color-surface-base) 100%)",
       }}
     >
-      <div className="mx-auto flex w-full max-w-[var(--container-max)] flex-col items-center text-center">
+      <div className="mx-auto flex w-full max-w-3xl flex-col items-center text-center">
         <Badge
           variant="trust"
-          className="mb-5 inline-flex rounded-full px-2.5 py-1 text-xs font-medium"
+          className="mb-7 inline-flex rounded-full px-3 py-1.5 text-xs font-medium"
         >
           <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
           {t("badge")}
@@ -36,46 +36,47 @@ export function Hero() {
 
         <h1
           id="hero-heading"
-          className="mb-4 max-w-[540px] font-medium"
+          className="mb-6 font-display font-semibold"
           style={{
             color: "var(--color-ink-900)",
-            fontSize: "var(--font-size-hero)",
-            letterSpacing: "var(--tracking-hero)",
-            lineHeight: "var(--leading-tight)",
+            fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)",
+            letterSpacing: "-0.025em",
+            lineHeight: "1.05",
           }}
         >
           {t("headline")}
         </h1>
 
         <p
-          className="mb-7 max-w-[460px] text-base font-normal"
+          className="mb-10 max-w-2xl text-lg leading-relaxed sm:text-xl"
           style={{
             color: "var(--color-ink-500)",
-            lineHeight: "var(--leading-normal)",
           }}
         >
           {t("subhead")}
         </p>
 
-        <div className="mb-8 flex flex-col justify-center gap-2 sm:flex-row">
-          <Button asChild variant="rebrandPrimary" size="lg" className="min-h-11 rounded-md px-5">
+        <div className="mb-14 flex flex-col justify-center gap-3 sm:flex-row">
+          <Button asChild variant="rebrandPrimary" size="lg" className="min-h-12 rounded-lg px-7 text-base">
             <Link href="/auth/register">
               {t("ctaPrimary")}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>
-          <Button asChild variant="rebrandSecondary" size="lg" className="min-h-11 rounded-md px-5">
+          <Button asChild variant="rebrandSecondary" size="lg" className="min-h-12 rounded-lg px-7 text-base">
             <Link href="/sample-report">{t("ctaSecondary")}</Link>
           </Button>
         </div>
 
-        <HeroScanCard />
+        <div className="w-full max-w-xl">
+          <HeroScanCard />
+        </div>
 
         <p
-          className="mt-8 text-center font-mono text-xs"
+          className="mt-10 text-center font-mono text-xs uppercase"
           style={{
             color: "var(--color-ink-500)",
-            letterSpacing: "var(--tracking-mono)",
+            letterSpacing: "0.12em",
           }}
         >
           {t("trustLabel")}
@@ -90,11 +91,12 @@ function HeroScanCard() {
 
   return (
     <figure
-      className="w-full max-w-[540px] overflow-hidden text-left"
+      className="w-full overflow-hidden text-left"
       style={{
         background: "var(--color-surface-elevated)",
-        border: "0.5px solid var(--color-border-subtle)",
-        borderRadius: "var(--radius-lg)",
+        border: "1px solid var(--color-border-subtle)",
+        borderRadius: "12px",
+        boxShadow: "0 24px 48px -16px rgba(42, 30, 16, 0.12), 0 4px 12px -2px rgba(42, 30, 16, 0.06)",
       }}
     >
       <figcaption className="sr-only">Sample scan result preview</figcaption>
