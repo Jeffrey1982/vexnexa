@@ -1,14 +1,17 @@
-import { Inter } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 
-/** Body + headings — Inter (variable) for clean, modern readability */
-export const inter = Inter({
+/** Body text — Outfit: clean, modern, excellent readability */
+export const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-outfit',
   display: 'swap',
 })
 
-/** @deprecated Use `inter` — kept for layout compatibility */
-export const lexend = inter
+/** @deprecated Use `outfit` — kept for layout compatibility */
+export const inter = outfit
 
-/** @deprecated Use `inter` — kept for layout compatibility */
-export const spaceGrotesk = inter
+/** @deprecated Use `outfit` — kept for layout compatibility */
+export const lexend = outfit
+
+/** @deprecated Use `outfit` — kept for layout compatibility */
+export const spaceGrotesk = outfit

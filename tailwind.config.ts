@@ -11,14 +11,14 @@ const config: Config = {
 	extend: {
 		/* Semantic surfaces: background / muted / card — driven by globals.css :root & .dark */
 		fontFamily: {
-			sans: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			display: ['"Satoshi Variable"', 'Satoshi', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			inter: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			body: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			jakarta: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			dmsans: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			spacegrotesk: ['"Satoshi Variable"', 'Satoshi', 'var(--font-lexend)', 'system-ui', 'sans-serif'],
-			urbanist: ['"Lexend Variable"', 'var(--font-lexend)', 'system-ui', 'sans-serif']
+			sans: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
+			display: ['"Zodiak"', 'Georgia', '"Times New Roman"', 'serif'],
+			body: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
+			inter: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
+			jakarta: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
+			dmsans: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
+			spacegrotesk: ['"Zodiak"', 'Georgia', '"Times New Roman"', 'serif'],
+			urbanist: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif']
 		},
 		colors: {
 			background: 'hsl(var(--background))',
@@ -35,16 +35,16 @@ const config: Config = {
 			primary: {
 				DEFAULT: 'hsl(var(--primary))',
 				foreground: 'hsl(var(--primary-foreground))',
-				50: '#f0fdfa',
-				100: '#ccfbf1',
-				200: '#99f6e4',
-				300: '#5eead4',
-				400: '#2dd4bf',
-				500: '#14b8a6',
-				600: '#0d9488',
-				700: '#0f766e',
-				800: '#115e59',
-				900: '#134e4a'
+				50: '#FFF8F0',
+				100: '#FCECD8',
+				200: '#F4D4B0',
+				300: '#E8B480',
+				400: '#D4956B',
+				500: '#C8793F',
+				600: '#A0522D',
+				700: '#8B4513',
+				800: '#6B3410',
+				900: '#4A2408'
 			},
 			secondary: {
 				DEFAULT: 'hsl(var(--secondary))',
@@ -87,47 +87,47 @@ const config: Config = {
 				foreground: 'hsl(var(--minor-foreground))'
 			},
 			gold: {
-				DEFAULT: '#0d9488',
-				50: '#f0fdfa',
-				100: '#ccfbf1',
-				200: '#99f6e4',
-				300: '#5eead4',
-				400: '#2dd4bf',
-				500: '#14b8a6',
-				600: '#0d9488',
-				700: '#0f766e',
-				800: '#115e59',
-				900: '#134e4a'
+				DEFAULT: '#A0522D',
+				50: '#FFF8F0',
+				100: '#FCECD8',
+				200: '#F4D4B0',
+				300: '#E8B480',
+				400: '#D4956B',
+				500: '#C8793F',
+				600: '#A0522D',
+				700: '#8B4513',
+				800: '#6B3410',
+				900: '#4A2408'
 			},
 			blue: {
-				DEFAULT: '#0d9488',
-				50: '#f0fdfa',
-				100: '#ccfbf1',
-				200: '#99f6e4',
-				300: '#5eead4',
-				400: '#2dd4bf',
-				500: '#14b8a6',
-				600: '#0d9488',
-				700: '#0f766e',
-				800: '#115e59',
-				900: '#134e4a'
+				DEFAULT: '#A0522D',
+				50: '#FFF8F0',
+				100: '#FCECD8',
+				200: '#F4D4B0',
+				300: '#E8B480',
+				400: '#D4956B',
+				500: '#C8793F',
+				600: '#A0522D',
+				700: '#8B4513',
+				800: '#6B3410',
+				900: '#4A2408'
 			},
 			brand: {
-				teal: '#14b8a6',
-				blue: '#0d9488'
+				sienna: '#A0522D',
+				sand: '#D2B48C'
 			},
 			graphite: {
-				DEFAULT: '#1E1E1E',
-				50: '#F5F5F5',
-				100: '#E0E0E0',
-				200: '#C0C0C0',
-				300: '#A0A0A0',
-				400: '#606060',
-				500: '#1E1E1E', // Midnight Graphite
-				600: '#181818',
-				700: '#121212',
-				800: '#0C0C0C',
-				900: '#060606'
+				DEFAULT: '#2A1E10',
+				50: '#FEFCF6',
+				100: '#FAF4E8',
+				200: '#EDE0CC',
+				300: '#D4C4A8',
+				400: '#8A7E70',
+				500: '#2A1E10',
+				600: '#1A1610',
+				700: '#141210',
+				800: '#0b0a08',
+				900: '#060504'
 			},
 			border: 'hsl(var(--border))',
 			input: 'hsl(var(--input))',
@@ -160,11 +160,11 @@ const config: Config = {
 			'soft-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
 			'soft-md': '0 4px 16px rgba(0, 0, 0, 0.12)',
 			'soft-lg': '0 8px 24px rgba(0, 0, 0, 0.15)',
-			'glow-orange': '0 0 30px rgba(20, 184, 166, 0.35)',
-			'glow-gold': '0 0 30px rgba(20, 184, 166, 0.35)',
-			'glow-teal': '0 0 30px rgba(20, 184, 166, 0.45)',
-			'glass': '0 8px 32px 0 rgba(15, 23, 42, 0.08)',
-			'neon': '0 0 5px rgba(20, 184, 166, 0.45), 0 0 20px rgba(20, 184, 166, 0.25)'
+			'glow-orange': '0 0 30px rgba(160, 82, 45, 0.35)',
+			'glow-gold': '0 0 30px rgba(160, 82, 45, 0.35)',
+			'glow-teal': '0 0 30px rgba(160, 82, 45, 0.45)',
+			'glass': '0 8px 32px 0 rgba(42, 30, 16, 0.08)',
+			'neon': '0 0 5px rgba(160, 82, 45, 0.45), 0 0 20px rgba(160, 82, 45, 0.25)'
 		},
 		spacing: {
 			'18': '4.5rem',
