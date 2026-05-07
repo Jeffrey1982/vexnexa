@@ -455,7 +455,7 @@ function PricingCards() {
                       </>
                     )}
                   </Button>
-                  <p className="text-[10px] text-center text-slate-500 mt-2">
+                  <p className="text-[10px] text-center text-slate-700 mt-2">
                     {tp("noCreditCard")}
                   </p>
                 </CardContent>

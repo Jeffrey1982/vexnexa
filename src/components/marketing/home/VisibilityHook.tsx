@@ -117,7 +117,7 @@ export function VisibilityHook() {
                 ))}
               </ul>
 
-              <div className="mt-6 flex items-start gap-2 text-xs leading-relaxed text-slate-500 dark:text-white/55">
+              <div className="mt-6 flex items-start gap-2 text-xs leading-relaxed text-slate-700 dark:text-white/70">
                 <Eye className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
                 <span>{t("footnote")}</span>
               </div>
