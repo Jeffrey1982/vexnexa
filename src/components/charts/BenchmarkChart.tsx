@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   BarChart,
@@ -34,7 +34,7 @@ export function BenchmarkChart({
     {
       name: "Industry Average",
       score: comparison.industryAvg,
-      fill: "#A0522D"
+      fill: "#2D5F3F"
     }
   ];
 

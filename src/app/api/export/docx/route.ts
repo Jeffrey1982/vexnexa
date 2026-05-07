@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { 
   Document, 
@@ -174,7 +174,7 @@ export async function POST(req: NextRequest) {
     });
 
     const brandName = whiteLabel?.companyName || "VexNexa";
-    const primaryColor = (whiteLabel?.primaryColor || "#A0522D").replace('#', '');
+    const primaryColor = (whiteLabel?.primaryColor || "#2D5F3F").replace('#', '');
     const footerText = whiteLabel?.footerText || undefined;
     const supportEmail = whiteLabel?.supportEmail || undefined;
     const showPoweredBy = whiteLabel?.showPoweredBy !== false;

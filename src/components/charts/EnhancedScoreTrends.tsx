@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import {
@@ -285,7 +285,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
             <Line
               type="monotone"
               dataKey="score"
-              stroke="#A0522D"
+              stroke="#2D5F3F"
               strokeWidth={3}
               dot={(props) => {
                 const { payload } = props;
@@ -295,7 +295,7 @@ export function EnhancedScoreTrends({ data, className = "" }: EnhancedScoreTrend
                     cx={props.cx}
                     cy={props.cy}
                     r={4}
-                    fill="#A0522D"
+                    fill="#2D5F3F"
                     stroke="#ffffff"
                     strokeWidth={2}
                   />

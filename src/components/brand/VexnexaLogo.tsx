@@ -18,11 +18,11 @@ export default function VexnexaLogo({ size = 32, className }: VexnexaLogoProps) 
     >
       <span
         aria-hidden
-        className="font-display font-semibold tracking-tight"
+        className="font-mono font-medium"
         style={{
           fontSize: size,
           lineHeight: 1,
-          letterSpacing: "-0.03em",
+          letterSpacing: "-0.02em",
           color: "var(--vn-primary)",
         }}
       >

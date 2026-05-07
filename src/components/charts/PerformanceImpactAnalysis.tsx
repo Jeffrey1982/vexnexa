@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo } from "react";
 import {
@@ -121,7 +121,7 @@ export function PerformanceImpactAnalysis({ data, className = "" }: PerformanceI
   function getCategoryColor(category: string) {
     switch (category) {
       case "excellent": return "#10B981";
-      case "good": return "#A0522D";
+      case "good": return "#2D5F3F";
       case "needs-improvement": return "#F59E0B";
       case "poor": return "#EF4444";
       default: return "#6B7280";

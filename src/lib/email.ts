@@ -1,4 +1,4 @@
-import { Resend } from 'resend'
+﻿import { Resend } from 'resend'
 import { getSourceDisplayName } from './email-utils'
 import {
   getEmailVerificationTemplate,
@@ -126,8 +126,8 @@ export async function sendContactNotification(data: ContactEmailData) {
       subject: `${meta.subject} — ${name}${companyName ? ` (${companyName})` : ''}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="display: inline-block; background: #A0522D; color: white; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;">${escapeHtmlForEmail(intentBadge)}</div>
-          <h2 style="color: #A0522D; margin-top: 0;">New lead from ${escapeHtmlForEmail(name)}</h2>
+          <div style="display: inline-block; background: #2D5F3F; color: white; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;">${escapeHtmlForEmail(intentBadge)}</div>
+          <h2 style="color: #2D5F3F; margin-top: 0;">New lead from ${escapeHtmlForEmail(name)}</h2>
 
           <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0;">Lead details</h3>
@@ -181,7 +181,7 @@ Sent via vexnexa.com contact form.
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: #A0522D; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
+            <div style="display: inline-block; background: #2D5F3F; color: white; width: 60px; height: 60px; border-radius: 12px; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 16px;">V</div>
             <h1 style="color: #1F2937; font-size: 28px; margin: 0; font-weight: 700;">VexNexa</h1>
             <p style="color: #4B5563; margin: 8px 0 0 0; font-size: 16px;">AI-Vision accessibility for the EAA &amp; ADA era</p>
           </div>
@@ -192,7 +192,7 @@ Sent via vexnexa.com contact form.
             ${userOpener}
           </p>
 
-          <div style="background: #F8F9FA; border-left: 4px solid #A0522D; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+          <div style="background: #F8F9FA; border-left: 4px solid #2D5F3F; padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
             <p style="color: #1E1E1E; font-size: 16px; margin: 0; font-weight: 600;">
               ⚡ Expected response: ${escapeHtmlForEmail(meta.eta)}.
             </p>
@@ -210,7 +210,7 @@ Sent via vexnexa.com contact form.
           }
 
           <p style="color: #4B5563; font-size: 16px; line-height: 1.6; margin: 24px 0;">
-            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #A0522D; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
+            For urgent questions, you can also email us directly at <a href="mailto:info@vexnexa.com" style="color: #2D5F3F; text-decoration: none; font-weight: 600;">info@vexnexa.com</a>.
           </p>
 
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -221,7 +221,7 @@ Sent via vexnexa.com contact form.
           </p>
 
           <p style="color: #9CA3AF; font-size: 14px; text-align: center; margin-top: 30px;">
-            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #A0522D; text-decoration: none;">vexnexa.com</a><br>
+            <strong>VexNexa</strong> | <a href="https://vexnexa.com" style="color: #2D5F3F; text-decoration: none;">vexnexa.com</a><br>
             Privacy-first WCAG scanning • Provencialeweg 46B, 1506 MC Zaandam, Netherlands
           </p>
         </div>
@@ -323,7 +323,7 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
             <p><strong>Agency / company:</strong> ${e(companyName)}</p>
             <p><strong>Work email:</strong> ${e(email)}</p>
             ${phone ? `<p><strong>Phone:</strong> ${e(phone)}</p>` : ''}
-            <p><strong>Agency website:</strong> <a href="${e(website)}" style="color: #A0522D;">${e(website)}</a></p>
+            <p><strong>Agency website:</strong> <a href="${e(website)}" style="color: #2D5F3F;">${e(website)}</a></p>
             <p><strong>Client websites managed:</strong> ${e(clientSites)}</p>
             <p><strong>Services offered:</strong> ${e(servicesLine)}</p>
           </div>
@@ -615,11 +615,11 @@ export async function sendAdminEmail(data: AdminEmailData) {
           <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
             <p>Hello,</p>
 
-            <div style="background: #F8F9FA; padding: 20px; border-left: 4px solid #A0522D; border-radius: 4px; margin: 20px 0;">
+            <div style="background: #F8F9FA; padding: 20px; border-left: 4px solid #2D5F3F; border-radius: 4px; margin: 20px 0;">
               <p style="white-space: pre-wrap; margin: 0;">${message.replace(/\n/g, '<br>')}</p>
             </div>
 
-            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #A0522D;">info@vexnexa.com</a>.</p>
+            <p>For questions, you can reply directly to this email or contact us at <a href="mailto:info@vexnexa.com" style="color: #2D5F3F;">info@vexnexa.com</a>.</p>
 
             <p style="margin-top: 30px;">
               Best regards,<br>
@@ -631,7 +631,7 @@ export async function sendAdminEmail(data: AdminEmailData) {
           <div style="background: #f8f9fa; padding: 15px; text-align: center; border-radius: 0 0 8px 8px;">
             <p style="color: #6b7280; font-size: 12px; margin: 0;">
               VexNexa - WCAG accessibility scanning platform<br>
-              <a href="https://vexnexa.com" style="color: #A0522D; text-decoration: none;">vexnexa.com</a>
+              <a href="https://vexnexa.com" style="color: #2D5F3F; text-decoration: none;">vexnexa.com</a>
             </p>
           </div>
         </div>
@@ -720,7 +720,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Email:</td>
-                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #A0522D;">${email}</a></td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="mailto:${email}" style="color: #2D5F3F;">${email}</a></td>
                 </tr>
 
                 ${company ? `<tr>
@@ -737,7 +737,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
                 </tr>` : ''}
                 ${website ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Website:</td>
-                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #A0522D;" target="_blank">${website}</a></td>
+                  <td style="padding: 8px 0; color: #1F2937;"><a href="${website}" style="color: #2D5F3F;" target="_blank">${website}</a></td>
                 </tr>` : ''}
                 ${country ? `<tr>
                   <td style="padding: 8px 0; color: #6B7280; font-weight: 600;">Country:</td>
@@ -762,7 +762,7 @@ export async function sendNewUserNotification(data: NewUserNotificationData) {
               </p>
             </div>
 
-            <div style="background: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #A0522D;">
+            <div style="background: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #2D5F3F;">
               <h4 style="color: #1E1E1E; margin: 0 0 8px 0; font-size: 16px;">Plan Information</h4>
               <p style="margin: 4px 0; color: #1E1E1E;">
                 <strong>Plan:</strong> Free Forever

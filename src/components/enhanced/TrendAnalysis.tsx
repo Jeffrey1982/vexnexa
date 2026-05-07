@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
@@ -212,8 +212,8 @@ export function TrendAnalysis({ data, className }: TrendAnalysisProps) {
                   <Area
                     type="monotone"
                     dataKey="score"
-                    stroke="#A0522D"
-                    fill="#A0522D"
+                    stroke="#2D5F3F"
+                    fill="#2D5F3F"
                     fillOpacity={0.2}
                     strokeWidth={2}
                   />

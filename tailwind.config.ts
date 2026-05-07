@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+﻿import type { Config } from 'tailwindcss'
 
 const config: Config = {
     darkMode: ['class'],
@@ -11,14 +11,14 @@ const config: Config = {
 	extend: {
 		/* Semantic surfaces: background / muted / card — driven by globals.css :root & .dark */
 		fontFamily: {
-			sans: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
-			display: ['"Zodiak"', 'Georgia', '"Times New Roman"', 'serif'],
-			body: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
-			inter: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
-			jakarta: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
-			dmsans: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif'],
-			spacegrotesk: ['"Zodiak"', 'Georgia', '"Times New Roman"', 'serif'],
-			urbanist: ['var(--font-outfit)', '"Outfit"', 'system-ui', 'sans-serif']
+			sans: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
+			display: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
+			body: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
+			inter: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
+			jakarta: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
+			dmsans: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
+			spacegrotesk: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
+			urbanist: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif']
 		},
 		colors: {
 			background: 'hsl(var(--background))',
@@ -35,16 +35,16 @@ const config: Config = {
 			primary: {
 				DEFAULT: 'hsl(var(--primary))',
 				foreground: 'hsl(var(--primary-foreground))',
-				50: '#FFF8F0',
-				100: '#FCECD8',
-				200: '#F4D4B0',
-				300: '#E8B480',
-				400: '#D4956B',
-				500: '#C8793F',
-				600: '#A0522D',
-				700: '#8B4513',
-				800: '#6B3410',
-				900: '#4A2408'
+				50: '#F2F8F4',
+				100: '#E8F0EA',
+				200: '#C8DDD0',
+				300: '#9CC0A8',
+				400: '#6B9A7E',
+				500: '#3F7A55',
+				600: '#2D5F3F',
+				700: '#1F4A2D',
+				800: '#143521',
+				900: '#0A2418'
 			},
 			secondary: {
 				DEFAULT: 'hsl(var(--secondary))',
@@ -87,43 +87,43 @@ const config: Config = {
 				foreground: 'hsl(var(--minor-foreground))'
 			},
 			gold: {
-				DEFAULT: '#A0522D',
-				50: '#FFF8F0',
-				100: '#FCECD8',
-				200: '#F4D4B0',
-				300: '#E8B480',
-				400: '#D4956B',
-				500: '#C8793F',
-				600: '#A0522D',
-				700: '#8B4513',
-				800: '#6B3410',
-				900: '#4A2408'
+				DEFAULT: '#2D5F3F',
+				50: '#F2F8F4',
+				100: '#E8F0EA',
+				200: '#C8DDD0',
+				300: '#9CC0A8',
+				400: '#6B9A7E',
+				500: '#3F7A55',
+				600: '#2D5F3F',
+				700: '#1F4A2D',
+				800: '#143521',
+				900: '#0A2418'
 			},
 			blue: {
-				DEFAULT: '#A0522D',
-				50: '#FFF8F0',
-				100: '#FCECD8',
-				200: '#F4D4B0',
-				300: '#E8B480',
-				400: '#D4956B',
-				500: '#C8793F',
-				600: '#A0522D',
-				700: '#8B4513',
-				800: '#6B3410',
-				900: '#4A2408'
+				DEFAULT: '#2D5F3F',
+				50: '#F2F8F4',
+				100: '#E8F0EA',
+				200: '#C8DDD0',
+				300: '#9CC0A8',
+				400: '#6B9A7E',
+				500: '#3F7A55',
+				600: '#2D5F3F',
+				700: '#1F4A2D',
+				800: '#143521',
+				900: '#0A2418'
 			},
 			brand: {
-				sienna: '#A0522D',
-				sand: '#D2B48C'
+				sienna: '#2D5F3F',
+				sand: '#C8C6BF'
 			},
 			graphite: {
-				DEFAULT: '#2A1E10',
-				50: '#FEFCF6',
-				100: '#FAF4E8',
-				200: '#EDE0CC',
-				300: '#D4C4A8',
+				DEFAULT: '#0F0F0F',
+				50: '#FAFAF7',
+				100: '#F4F4EE',
+				200: '#E5E3DD',
+				300: '#C8C6BF',
 				400: '#8A7E70',
-				500: '#2A1E10',
+				500: '#0F0F0F',
 				600: '#1A1610',
 				700: '#141210',
 				800: '#0b0a08',
@@ -160,11 +160,11 @@ const config: Config = {
 			'soft-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
 			'soft-md': '0 4px 16px rgba(0, 0, 0, 0.12)',
 			'soft-lg': '0 8px 24px rgba(0, 0, 0, 0.15)',
-			'glow-orange': '0 0 30px rgba(160, 82, 45, 0.35)',
-			'glow-gold': '0 0 30px rgba(160, 82, 45, 0.35)',
-			'glow-teal': '0 0 30px rgba(160, 82, 45, 0.45)',
-			'glass': '0 8px 32px 0 rgba(42, 30, 16, 0.08)',
-			'neon': '0 0 5px rgba(160, 82, 45, 0.45), 0 0 20px rgba(160, 82, 45, 0.25)'
+			'glow-orange': '0 0 30px rgba(45, 95, 63, 0.35)',
+			'glow-gold': '0 0 30px rgba(45, 95, 63, 0.35)',
+			'glow-teal': '0 0 30px rgba(45, 95, 63, 0.45)',
+			'glass': '0 8px 32px 0 rgba(15, 15, 15, 0.08)',
+			'neon': '0 0 5px rgba(45, 95, 63, 0.45), 0 0 20px rgba(45, 95, 63, 0.25)'
 		},
 		spacing: {
 			'18': '4.5rem',

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { assertWithinLimits } from "@/lib/billing/entitlements";
 import { prisma } from "@/lib/prisma";
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       create: {
         userId: user.id,
         [fieldName]: dataUrl,
-        primaryColor: "#A0522D",
+        primaryColor: "#2D5F3F",
         secondaryColor: "#1F2937",
         accentColor: "#10B981",
         showPoweredBy: true

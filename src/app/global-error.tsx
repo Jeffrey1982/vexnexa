@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 /**
  * Global error boundary — catches unhandled errors in the entire app.
@@ -35,7 +35,7 @@ export default function GlobalError({
           <button
             onClick={reset}
             style={{
-              background: '#A0522D',
+              background: '#2D5F3F',
               color: '#fff',
               border: 'none',
               padding: '0.75rem 1.5rem',
@@ -53,8 +53,8 @@ export default function GlobalError({
             }}
             style={{
               background: 'transparent',
-              color: '#A0522D',
-              border: '1px solid #A0522D',
+              color: '#2D5F3F',
+              border: '1px solid #2D5F3F',
               padding: '0.75rem 1.5rem',
               borderRadius: '0.5rem',
               fontSize: '1rem',

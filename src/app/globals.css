@@ -1,4 +1,4 @@
-/* Syntax highlighting for code blocks - must be first */
+﻿/* Syntax highlighting for code blocks - must be first */
 @import 'highlight.js/styles/atom-one-dark.css';
 
 @tailwind base;
@@ -16,90 +16,90 @@
 @layer base {
   :root {
     /* Typography — Zodiak (serif display) + Outfit (body) */
-    --font-sans: var(--font-outfit), "Outfit", system-ui, -apple-system, sans-serif;
-    --font-display: "Zodiak", Georgia, "Times New Roman", serif;
+    --font-sans: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, sans-serif;
+    --font-display: "JetBrains Mono", ui-monospace, "Menlo", monospace;
 
-    /* Brand accents (HSL components — Burnt Sienna family) */
-    --brand-sienna: 20 57% 40%;
-    --brand-sand: 33 41% 69%;
+    /* Brand accents (HSL — Emerald Technical Precision) */
+    --brand-emerald: 145 37% 28%;
+    --brand-emerald-light: 132 18% 92%;
 
-    /* ── Light mode: Warm Sand surfaces ── */
-    --background: 40 50% 98%;
-    --surface: 35 40% 96%;
-    --foreground: 25 43% 11%;
+    /* ── Light mode: Warm paper surfaces ── */
+    --background: 60 14% 97%;
+    --surface: 60 18% 95%;
+    --foreground: 0 0% 6%;
 
-    --card: 38 45% 97%;
-    --card-foreground: 25 43% 11%;
-    --popover: 40 50% 98%;
-    --popover-foreground: 25 43% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
 
-    /* Primary — Burnt Sienna */
-    --primary: 20 57% 40%;
-    --primary-foreground: 40 50% 96%;
+    /* Primary — Deep Emerald */
+    --primary: 145 37% 28%;
+    --primary-foreground: 60 14% 97%;
 
-    /* Secondary — warm neutral */
-    --secondary: 33 20% 93%;
-    --secondary-foreground: 25 43% 11%;
+    /* Secondary — neutral surface */
+    --secondary: 60 18% 95%;
+    --secondary-foreground: 0 0% 6%;
 
-    --muted: 35 25% 95%;
-    --muted-foreground: 25 18% 44%;
+    --muted: 60 18% 95%;
+    --muted-foreground: 0 0% 42%;
 
-    /* Accent — Sand/Tan */
-    --accent: 33 41% 69%;
-    --accent-foreground: 25 43% 15%;
+    /* Accent — soft emerald tint */
+    --accent: 132 18% 92%;
+    --accent-foreground: 140 41% 21%;
 
-    --destructive: 0 65% 48%;
+    --destructive: 4 64% 41%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 32 25% 85%;
-    --input: 32 25% 85%;
-    --ring: 20 57% 40%;
+    --border: 45 12% 88%;
+    --input: 45 12% 88%;
+    --ring: 145 37% 28%;
 
-    --success: 152 56% 35%;
+    --success: 145 37% 28%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 33 90% 50%;
-    --warning-foreground: 25 43% 11%;
+    --warning: 33 80% 45%;
+    --warning-foreground: 0 0% 6%;
 
-    --critical: 0 65% 48%;
+    --critical: 4 64% 41%;
     --critical-foreground: 0 0% 100%;
-    --serious: 20 80% 50%;
+    --serious: 24 70% 45%;
     --serious-foreground: 0 0% 100%;
-    --moderate: 152 56% 35%;
+    --moderate: 145 37% 28%;
     --moderate-foreground: 0 0% 100%;
-    --minor: 32 20% 78%;
-    --minor-foreground: 25 43% 11%;
+    --minor: 45 12% 80%;
+    --minor-foreground: 0 0% 6%;
 
-    --chart-1: 20 57% 40%;
-    --chart-2: 33 41% 69%;
-    --chart-3: 25 18% 55%;
-    --chart-4: 25 43% 11%;
-    --chart-5: 32 25% 85%;
+    --chart-1: 145 37% 28%;
+    --chart-2: 132 18% 60%;
+    --chart-3: 0 0% 42%;
+    --chart-4: 0 0% 6%;
+    --chart-5: 45 12% 80%;
 
     --radius: 0.5rem;
 
-    --gradient-primary: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
-    --gradient-subtle: linear-gradient(135deg, #FEFCF6 0%, #FAF4E8 100%);
+    --gradient-primary: linear-gradient(135deg, #2D5F3F 0%, #1F4A2D 100%);
+    --gradient-subtle: linear-gradient(135deg, #FAFAF7 0%, #F4F4EE 100%);
     --shadow-elegant: 0 1px 3px 0 rgb(42 30 16 / 0.06), 0 1px 2px -1px rgb(42 30 16 / 0.04);
     --shadow-soft: 0 4px 14px -2px rgb(42 30 16 / 0.1);
 
-    --vn-bg: #0b0a08;
-    --vn-surface: #FEFCF6;
-    --vn-muted: #FAF4E8;
-    --vn-border: #EDE0CC;
-    --vn-text: #2A1E10;
-    --vn-text-muted: #7A6E5A;
-    --vn-primary: #A0522D;
-    --vn-primary-hover: #8B4513;
-    --vn-accent: #D2B48C;
-    --vn-teal: #D2B48C;
+    --vn-bg: #0E0E0E;
+    --vn-surface: #FAFAF7;
+    --vn-muted: #F4F4EE;
+    --vn-border: #E5E3DD;
+    --vn-text: #0F0F0F;
+    --vn-text-muted: #6B6B6B;
+    --vn-primary: #2D5F3F;
+    --vn-primary-hover: #1F4A2D;
+    --vn-accent: #E8F0EA;
+    --vn-teal: #E8F0EA;
 
-    --vn-primary-aaa-btn: #8B4513;
-    --vn-primary-aaa-btn-hover: #6B3410;
-    --vn-on-primary-aaa-btn: #F5E6D3;
+    --vn-primary-aaa-btn: #1F4A2D;
+    --vn-primary-aaa-btn-hover: #143521;
+    --vn-on-primary-aaa-btn: #FAFAF7;
 
-    --vn-disabled-bg: #EDE0CC;
-    --vn-disabled-fg: #8A7E70;
+    --vn-disabled-bg: #E5E3DD;
+    --vn-disabled-fg: #8A8A8A;
 
     --selected-bg: 33 50% 94%;
     --selected-border: 20 57% 40%;
@@ -109,81 +109,81 @@
   }
 
   .dark {
-    /* ── Dark mode: Warm Obsidian surfaces ── */
-    --background: 30 14% 3.5%;
-    --surface: 28 12% 7%;
-    --foreground: 33 40% 92%;
+    /* ── Dark mode: Deep neutral with emerald accent ── */
+    --background: 0 0% 5%;
+    --surface: 0 0% 7%;
+    --foreground: 60 5% 96%;
 
-    --card: 28 12% 7%;
-    --card-foreground: 33 40% 92%;
-    --popover: 28 12% 7%;
-    --popover-foreground: 33 40% 92%;
+    --card: 0 0% 7%;
+    --card-foreground: 60 5% 96%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 60 5% 96%;
 
-    --primary: 24 52% 52%;
-    --primary-foreground: 30 14% 5%;
+    --primary: 132 28% 55%;
+    --primary-foreground: 0 0% 5%;
 
-    --secondary: 28 10% 14%;
-    --secondary-foreground: 33 40% 92%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 60 5% 96%;
 
-    --muted: 28 10% 10%;
-    --muted-foreground: 30 10% 55%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 28 15% 18%;
-    --accent-foreground: 33 41% 75%;
+    --accent: 145 20% 14%;
+    --accent-foreground: 132 28% 75%;
 
-    --destructive: 0 60% 48%;
+    --destructive: 4 64% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 28 10% 15%;
-    --input: 28 10% 15%;
-    --ring: 24 52% 52%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 132 28% 55%;
 
-    --success: 152 56% 40%;
-    --success-foreground: 0 0% 100%;
+    --success: 132 28% 55%;
+    --success-foreground: 0 0% 5%;
 
-    --warning: 33 90% 50%;
-    --warning-foreground: 30 14% 5%;
+    --warning: 33 80% 55%;
+    --warning-foreground: 0 0% 5%;
 
-    --critical: 0 60% 48%;
+    --critical: 4 64% 50%;
     --critical-foreground: 0 0% 100%;
-    --serious: 20 80% 55%;
+    --serious: 24 70% 55%;
     --serious-foreground: 0 0% 100%;
-    --moderate: 152 56% 40%;
-    --moderate-foreground: 0 0% 100%;
-    --minor: 28 10% 35%;
-    --minor-foreground: 33 40% 92%;
+    --moderate: 132 28% 55%;
+    --moderate-foreground: 0 0% 5%;
+    --minor: 0 0% 30%;
+    --minor-foreground: 60 5% 96%;
 
-    --chart-1: 24 52% 55%;
-    --chart-2: 33 41% 69%;
-    --chart-3: 30 10% 55%;
-    --chart-4: 33 40% 92%;
-    --chart-5: 28 10% 15%;
+    --chart-1: 132 28% 55%;
+    --chart-2: 145 18% 70%;
+    --chart-3: 0 0% 55%;
+    --chart-4: 60 5% 96%;
+    --chart-5: 0 0% 20%;
 
-    --surface-0: #0b0a08;
-    --surface-1: #1a1610;
-    --surface-2: #141210;
-    --surface-3: #1a1610;
-    --surface-4: #251c10;
+    --surface-0: #0A0A0A;
+    --surface-1: #131313;
+    --surface-2: #1A1A1A;
+    --surface-3: #222222;
+    --surface-4: #2A2A2A;
 
-    --vn-bg: #0b0a08;
-    --vn-surface: #141210;
-    --vn-muted: #1a1610;
-    --vn-border: #251c10;
-    --vn-text: #F5E6D3;
-    --vn-text-muted: #8A7E70;
-    --vn-primary: #C8793F;
-    --vn-primary-hover: #D4956B;
-    --vn-accent: #D2B48C;
-    --vn-teal: #D2B48C;
+    --vn-bg: #0A0A0A;
+    --vn-surface: #131313;
+    --vn-muted: #1A1A1A;
+    --vn-border: #2A2A2A;
+    --vn-text: #F5F5F2;
+    --vn-text-muted: #A0A0A0;
+    --vn-primary: #6B9A7E;
+    --vn-primary-hover: #9CC0A8;
+    --vn-accent: #1F4A2D;
+    --vn-teal: #1F4A2D;
 
-    --vn-primary-aaa-btn: #C8793F;
-    --vn-primary-aaa-btn-hover: #A0522D;
-    --vn-on-primary-aaa-btn: #0b0a08;
+    --vn-primary-aaa-btn: #6B9A7E;
+    --vn-primary-aaa-btn-hover: #9CC0A8;
+    --vn-on-primary-aaa-btn: #0A0A0A;
 
-    --vn-disabled-bg: #251c10;
-    --vn-disabled-fg: #6A5E50;
+    --vn-disabled-bg: #2A2A2A;
+    --vn-disabled-fg: #6A6A6A;
 
-    --gradient-primary: linear-gradient(135deg, #C8793F 0%, #A0522D 100%);
+    --gradient-primary: linear-gradient(135deg, #3F7A55 0%, #2D5F3F 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(var(--background)) 100%);
 
     --shadow-elegant: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -197,7 +197,7 @@
   html {
     scroll-behavior: smooth;
     @apply bg-background;
-    font-family: var(--font-outfit), "Outfit", system-ui, -apple-system, sans-serif;
+    font-family: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, sans-serif;
   }
 
   body {
@@ -210,7 +210,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Zodiak", Georgia, "Times New Roman", serif;
+    font-family: "JetBrains Mono", Georgia, "Times New Roman", serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
@@ -274,13 +274,13 @@
   }
 
   p {
-    font-family: var(--font-outfit), "Outfit", system-ui, -apple-system, sans-serif;
+    font-family: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, sans-serif;
     font-size: 18px;
     line-height: 1.7;
   }
 
   :root {
-    --focus-color: #A0522D;
+    --focus-color: #2D5F3F;
     --focus-color-light: #F5E6D3;
   }
 
@@ -325,7 +325,7 @@
     top: 0.5rem;
     left: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: #8B4513;
+    background: #1F4A2D;
     color: #F5E6D3;
     text-decoration: none;
     font-weight: 600;

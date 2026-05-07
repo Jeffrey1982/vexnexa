@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo } from "react";
 import {
@@ -278,8 +278,8 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
               <Radar
                 name="Compliance Score"
                 dataKey="score"
-                stroke="#A0522D"
-                fill="#A0522D"
+                stroke="#2D5F3F"
+                fill="#2D5F3F"
                 fillOpacity={0.3}
                 strokeWidth={2}
               />
@@ -329,7 +329,7 @@ export function ComplianceLegalAssessment({ data, className = "" }: ComplianceLe
               <Line
                 type="monotone"
                 dataKey="WCAG 2.1"
-                stroke="#A0522D"
+                stroke="#2D5F3F"
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />

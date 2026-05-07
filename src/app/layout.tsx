@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { outfit } from './fonts'
+import { interTight, jetbrainsMono } from './fonts'
 import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#A0522D',
+  themeColor: '#2D5F3F',
 }
 
 export default async function RootLayout({
@@ -97,14 +97,10 @@ export default async function RootLayout({
   const messages = mergeMessages(fallbackMessages, localeMessages)
 
   return (
-    <html lang={locale} className={outfit.variable} suppressHydrationWarning>
+    <html lang={locale} className={`${interTight.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Browser color-scheme hint — ensures form controls, scrollbars render in correct mode */}
         <meta name="color-scheme" content="light dark" />
-
-        {/* Zodiak display font from Fontshare */}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,600,700&display=swap" rel="stylesheet" />
 
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
@@ -120,12 +116,12 @@ export default async function RootLayout({
         <meta name="application-name" content="VexNexa" />
 
         {/* Microsoft PWA Support */}
-        <meta name="msapplication-TileColor" content="#A0522D" />
+        <meta name="msapplication-TileColor" content="#2D5F3F" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Theme Color */}
-        <meta name="theme-color" content="#A0522D" />
-        <meta name="msapplication-navbutton-color" content="#A0522D" />
+        <meta name="theme-color" content="#2D5F3F" />
+        <meta name="msapplication-navbutton-color" content="#2D5F3F" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
       </head>

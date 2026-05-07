@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 // Create styles
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 30,
     padding: 30,
-    backgroundColor: '#A0522D',
+    backgroundColor: '#2D5F3F',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     marginBottom: 15,
     paddingLeft: 8,
-    borderLeft: '3pt solid #A0522D',
+    borderLeft: '3pt solid #2D5F3F',
   },
   impactGrid: {
     flexDirection: 'row',
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   },
   wcagBadge: {
     fontSize: 8,
-    color: '#A0522D',
+    color: '#2D5F3F',
     backgroundColor: '#F0FDFA',
     padding: '2 4',
     borderRadius: 4,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   footerLogo: {
     fontSize: 12,
     fontWeight: 600,
-    color: '#A0522D',
+    color: '#2D5F3F',
     marginBottom: 3,
   },
   footerText: {
@@ -372,7 +372,7 @@ interface CombinedPDFReportProps {
 export const CombinedPDFReport: React.FC<CombinedPDFReportProps> = ({
   reportData,
   brandName,
-  primaryColor = '#A0522D'
+  primaryColor = '#2D5F3F'
 }) => {
   const getScoreColor = (score: number) => {
     if (score >= 90) return '#10B981';

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useRef, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -160,7 +160,7 @@ function ConfirmClient() {
           <div className="flex flex-col items-center text-center">
             {pageState === 'loading' && (
               <>
-                <Loader2 className="w-12 h-12 text-[#A0522D] animate-spin" />
+                <Loader2 className="w-12 h-12 text-[#2D5F3F] animate-spin" />
                 <h1 className="mt-5 text-xl font-bold text-[#1E1E1E] dark:text-gray-50">
                   Verifying your email...
                 </h1>
@@ -225,7 +225,7 @@ export default function ConfirmPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E]">
-        <Loader2 className="w-12 h-12 text-[#A0522D] animate-spin" />
+        <Loader2 className="w-12 h-12 text-[#2D5F3F] animate-spin" />
       </div>
     }>
       <ConfirmClient />

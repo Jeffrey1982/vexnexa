@@ -1,4 +1,4 @@
-/**
+﻿/**
  * VexNexa Invoice PDF — generated with @react-pdf/renderer.
  *
  * Always VexNexa-branded (never white-label).
@@ -18,7 +18,7 @@ import type { InvoiceData } from './invoice-template';
 
 // ── Styles ─────────────────────────────────────────────
 
-const BRAND_TEAL = '#A0522D'; // VexNexa primary brand color
+const BRAND_TEAL = '#2D5F3F'; // VexNexa primary brand color
 const DARK = '#1E1E1E';
 const MUTED = '#5A5A5A';
 const LIGHT_BG = '#F8F9FA';

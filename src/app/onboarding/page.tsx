@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -208,7 +208,7 @@ export default function OnboardingPage() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -left-4 -top-4 h-72 w-72 animate-blob rounded-full bg-primary/10 mix-blend-multiply opacity-60 blur-xl filter"></div>
           <div className="absolute -top-4 -right-4 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#A0522D] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#2D5F3F] rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
         </div>
 
         <Card className="backdrop-blur-sm bg-white/90 dark:bg-[#1E1E1E]/90 shadow-2xl border border-[#C0C3C7]/20">
@@ -229,7 +229,7 @@ export default function OnboardingPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#A0522D]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#2D5F3F]">
                   <User className="w-4 h-4" />
                   Personal Information
                 </div>
@@ -267,7 +267,7 @@ export default function OnboardingPage() {
 
               {/* Professional Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#A0522D]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#2D5F3F]">
                   <Building className="w-4 h-4" />
                   Professional Information
                 </div>
@@ -303,7 +303,7 @@ export default function OnboardingPage() {
 
               {/* Contact Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#A0522D]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#2D5F3F]">
                   <Phone className="w-4 h-4" />
                   Contact Information (Optional)
                 </div>
@@ -354,7 +354,7 @@ export default function OnboardingPage() {
 
               {/* Billing Identity */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#A0522D]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#2D5F3F]">
                   <FileText className="w-4 h-4" />
                   Billing Identity (Optional)
                 </div>
@@ -621,7 +621,7 @@ export default function OnboardingPage() {
 
               {/* Preferences */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#A0522D]">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#2D5F3F]">
                   <Sparkles className="w-4 h-4" />
                   Communication Preferences
                 </div>
@@ -722,11 +722,11 @@ export default function OnboardingPage() {
             <div className="pt-4 border-t border-[#C0C3C7] dark:border-[#444]">
               <div className="flex items-center justify-center gap-6 text-xs text-[#5A5A5A] dark:text-[#C0C3C7]">
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3 h-3 text-[#A0522D]" />
+                  <Shield className="w-3 h-3 text-[#2D5F3F]" />
                   <span>Secure & Private</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-[#A0522D]" />
+                  <CheckCircle className="w-3 h-3 text-[#2D5F3F]" />
                   <span>GDPR Compliant</span>
                 </div>
                 <div className="flex items-center gap-1">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
@@ -96,7 +96,7 @@ function HeroScanCard() {
         background: "var(--color-surface-elevated)",
         border: "1px solid var(--color-border-subtle)",
         borderRadius: "12px",
-        boxShadow: "0 24px 48px -16px rgba(42, 30, 16, 0.12), 0 4px 12px -2px rgba(42, 30, 16, 0.06)",
+        boxShadow: "0 24px 48px -16px rgba(15, 15, 15, 0.12), 0 4px 12px -2px rgba(15, 15, 15, 0.06)",
       }}
     >
       <figcaption className="sr-only">Sample scan result preview</figcaption>

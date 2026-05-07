@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ import { trackEvent } from "@/lib/analytics-events";
  * • will-change only on actively animating elements.
  * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
  * • Background blur hidden on mobile to reduce GPU compositing cost.
- * • Accent palette: blue-500 (#A0522D) + slate-700 base.
+ * • Accent palette: blue-500 (#2D5F3F) + slate-700 base.
  * • WCAG AAA contrast: slate-100 text on zinc-900 background (≥7:1).
  */
 
@@ -127,8 +127,8 @@ function DashboardMockup() {
               />
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#C8793F" />
-                  <stop offset="100%" stopColor="#A0522D" />
+                  <stop offset="0%" stopColor="#3F7A55" />
+                  <stop offset="100%" stopColor="#2D5F3F" />
                 </linearGradient>
               </defs>
             </svg>

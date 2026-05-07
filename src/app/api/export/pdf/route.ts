@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { NextRequest, NextResponse } from "next/server";
 import { pdf } from "@react-pdf/renderer";
 import { prisma } from "@/lib/prisma";
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     });
 
     const brandName = whiteLabel?.companyName || "VexNexa";
-    const primaryColor = whiteLabel?.primaryColor || "#A0522D";
+    const primaryColor = whiteLabel?.primaryColor || "#2D5F3F";
     const brandLogo = whiteLabel?.logoUrl || undefined;
     const footerText = whiteLabel?.footerText || undefined;
     const supportEmail = whiteLabel?.supportEmail || undefined;

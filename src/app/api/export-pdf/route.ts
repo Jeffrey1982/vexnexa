@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import puppeteer from 'puppeteer';
 
 export const runtime = "nodejs";
@@ -40,7 +40,7 @@ function generateReportHTML(result: ScanResult): string {
     critical: "#dc2626",
     serious: "#ea580c",
     moderate: "#eab308",
-    minor: "#A0522D",
+    minor: "#2D5F3F",
   };
 
   return `

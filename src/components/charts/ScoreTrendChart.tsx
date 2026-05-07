@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   LineChart,
@@ -79,10 +79,10 @@ export function ScoreTrendChart({
           <Line
             type="monotone"
             dataKey="score"
-            stroke="#A0522D"
+            stroke="#2D5F3F"
             strokeWidth={3}
-            dot={{ fill: "#A0522D", strokeWidth: 2, r: 4 }}
-            activeDot={{ r: 6, stroke: "#A0522D", strokeWidth: 2 }}
+            dot={{ fill: "#2D5F3F", strokeWidth: 2, r: 4 }}
+            activeDot={{ r: 6, stroke: "#2D5F3F", strokeWidth: 2 }}
             name="Accessibility Score"
           />
         </LineChart>

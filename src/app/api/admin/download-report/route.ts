@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { NextRequest, NextResponse } from "next/server";
 import { pdf } from "@react-pdf/renderer";
 import { requireAdminAPI } from "@/lib/auth";
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
       },
       brandName,
       brandLogo: whiteLabel?.logoUrl || undefined,
-      primaryColor: whiteLabel?.primaryColor || "#A0522D",
+      primaryColor: whiteLabel?.primaryColor || "#2D5F3F",
       footerText: whiteLabel?.footerText || undefined,
       supportEmail: whiteLabel?.supportEmail || undefined,
       showPoweredBy: whiteLabel?.showPoweredBy !== false,

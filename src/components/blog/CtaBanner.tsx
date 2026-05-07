@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Search, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export function CtaBanner() {
   return (
-    <div className="my-8 rounded-xl border border-border/60 bg-gradient-to-r from-primary to-[#A0522D] p-8 shadow-lg">
+    <div className="my-8 rounded-xl border border-border/60 bg-gradient-to-r from-primary to-[#2D5F3F] p-8 shadow-lg">
       <div className="space-y-6 text-center">
         <div className="flex items-center justify-center gap-3">
           <div className="rounded-lg bg-white/20 p-3 backdrop-blur-sm">

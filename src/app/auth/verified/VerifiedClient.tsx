@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
@@ -85,7 +85,7 @@ export default function VerifiedClient(): JSX.Element {
               {checkingSession ? (
                 'Checking your session…'
               ) : (
-                <>Redirecting in <span className="font-semibold text-[#A0522D]">{secondsLeft}</span> seconds…</>
+                <>Redirecting in <span className="font-semibold text-[#2D5F3F]">{secondsLeft}</span> seconds…</>
               )}
             </p>
           </div>

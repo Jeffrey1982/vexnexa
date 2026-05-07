@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font, Image, PDFDownloadLink } from '@react-pdf/renderer';
 
 // Register fonts for better typography (commented out to avoid server-side issues)
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 30,
     padding: 30,
-    backgroundColor: '#A0522D',
+    backgroundColor: '#2D5F3F',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     marginBottom: 15,
     paddingLeft: 8,
-    borderLeft: '3pt solid #A0522D',
+    borderLeft: '3pt solid #2D5F3F',
   },
   impactGrid: {
     flexDirection: 'row',
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   footerLogo: {
     fontSize: 12,
     fontWeight: 600,
-    color: '#A0522D',
+    color: '#2D5F3F',
     marginBottom: 3,
   },
   footerText: {
@@ -267,7 +267,7 @@ export const PDFReport: React.FC<PDFReportProps> = ({
   scanData,
   brandName,
   brandLogo,
-  primaryColor = '#A0522D',
+  primaryColor = '#2D5F3F',
   footerText,
   supportEmail,
   showPoweredBy = true,

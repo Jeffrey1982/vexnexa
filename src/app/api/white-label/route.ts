@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
     for (const [key, color] of Object.entries(colors)) {
       if (color && !hexColorRegex.test(color)) {
         return NextResponse.json(
-          { error: `Invalid ${key}. Must be a valid hex color code (e.g., #A0522D)` },
+          { error: `Invalid ${key}. Must be a valid hex color code (e.g., #2D5F3F)` },
           { status: 400 }
         );
       }
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
         companyName,
         logoUrl,
         faviconUrl,
-        primaryColor: primaryColor || "#A0522D",
+        primaryColor: primaryColor || "#2D5F3F",
         secondaryColor: secondaryColor || "#1F2937",
         accentColor: accentColor || "#10B981",
         supportEmail,
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         companyName,
         logoUrl,
         faviconUrl,
-        primaryColor: primaryColor || "#A0522D",
+        primaryColor: primaryColor || "#2D5F3F",
         secondaryColor: secondaryColor || "#1F2937",
         accentColor: accentColor || "#10B981",
         supportEmail,

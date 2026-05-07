@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Central brand configuration for VexNexa.
  * Change these values to rebrand the entire application.
  */
@@ -21,6 +21,6 @@ export const BRAND = {
   iconPng512: "/brand/vexnexa-favicon-512.png",
   /** Absolute URL for emails & JSON-LD (V mark; wordmark added in HTML where needed) */
   logoAbsolute: "https://vexnexa.com/brand/vexnexa-v-mark.png",
-  primaryColor: "#A0522D",
-  themeColor: "#A0522D",
+  primaryColor: "#2D5F3F",
+  themeColor: "#2D5F3F",
 } as const;

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ import { trackEvent } from "@/lib/analytics-events";
  * • will-change only on actively animating elements.
  * • LCP-critical: H1 + subheadline render at full opacity immediately (no fade-in).
  * • Background blur hidden on mobile to reduce GPU compositing cost.
- * • Accent palette: blue-500 (#A0522D) + slate-700 base.
+ * • Accent palette: blue-500 (#2D5F3F) + slate-700 base.
  */
 
 /* ── Circumference constant for score ring (r=34) ── */
@@ -121,7 +121,7 @@ function DashboardMockup() {
             <circle
               ref={ringRef}
               cx="40" cy="40" r="34" fill="none"
-              stroke="#C8793F"
+              stroke="#3F7A55"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={RING_C}

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types";
 import { formatDate } from "@/lib/format";
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     // Use white-label branding or fallback to VexNexa
     const brandName = whiteLabel?.companyName || 'VexNexa';
     const brandLogo = whiteLabel?.logoUrl;
-    const primaryColor = whiteLabel?.primaryColor || '#A0522D';
+    const primaryColor = whiteLabel?.primaryColor || '#2D5F3F';
     const secondaryColor = whiteLabel?.secondaryColor || '#1e40af';
     const footerText = whiteLabel?.footerText || undefined;
     const supportEmail = whiteLabel?.supportEmail || undefined;

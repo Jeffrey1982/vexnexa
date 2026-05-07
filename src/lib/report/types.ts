@@ -1,4 +1,4 @@
-/** Report visual style */
+﻿/** Report visual style */
 export type ReportStyle = "premium" | "corporate";
 
 /** Theme configuration for the report */
@@ -352,9 +352,9 @@ export interface ReportData {
 
 /** Default theme */
 export const DEFAULT_THEME: ReportThemeConfig = {
-  primaryColor: "#A0522D",
+  primaryColor: "#2D5F3F",
   secondaryColor: "#0f172a",
-  accentColor: "#C8793F",
+  accentColor: "#3F7A55",
   backgroundColor: "#F8F9FA",
   darkColor: "#1E1E1E",
 };
@@ -370,7 +370,7 @@ export const DEFAULT_CTA: CTAConfig = {
 export const DEFAULT_WHITE_LABEL: WhiteLabelConfig = {
   showVexNexaBranding: false,
   logoUrl: "",
-  primaryColor: "#A0522D",
+  primaryColor: "#2D5F3F",
   footerText: "",
   companyNameOverride: "",
 };
