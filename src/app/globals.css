@@ -438,30 +438,35 @@
   }
   
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  
+
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
+    animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  
+
   .animate-scale-in {
-    animation: scaleIn 0.4s ease-out;
+    animation: scaleIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   }
   
-  /* Interactive elements */
+  /* Interactive elements — gated behind hover media query to prevent
+     touch devices from triggering hover on tap (Emil Kowalski) */
   .interactive-hover {
-    @apply transition-all duration-200 ease-out;
+    @apply transition-all duration-200;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  
+
+  .button-hover {
+    @apply transition-all duration-200;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
   .interactive-hover:hover {
     @apply transform -translate-y-0.5 shadow-soft;
   }
-  
-  .button-hover {
-    @apply transition-all duration-200 ease-out;
-  }
-  
+
   .button-hover:hover {
     @apply transform -translate-y-px shadow-soft;
   }

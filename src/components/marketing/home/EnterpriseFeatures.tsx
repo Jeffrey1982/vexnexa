@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Eye, History, Building2, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * EnterpriseFeatures — three pillars in mitigation framing.
@@ -19,6 +20,23 @@ import Link from "next/link";
  */
 export function EnterpriseFeatures() {
   const t = useTranslations("home.enterprise.features");
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); io.disconnect(); } },
+      { threshold: 0.15, rootMargin: "-60px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const items = [
     {
@@ -76,11 +94,19 @@ export function EnterpriseFeatures() {
             </div>
           </div>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {items.map(({ key, Icon, titleKey, bodyKey, bullets }) => (
+          <div ref={gridRef} className="mt-12 grid gap-6 lg:grid-cols-3">
+          {items.map(({ key, Icon, titleKey, bodyKey, bullets }, i) => (
             <article
               key={key}
-              className="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-colors hover:border-primary/30"
+              style={{
+                transitionDelay: visible ? `${i * 60}ms` : "0ms",
+                transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
+              }}
+              className={`group relative flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-gradient-to-b from-slate-50 to-white dark:from-white/[0.04] dark:to-white/[0.01] p-7 transition-all duration-500 hover:border-primary/30 ${
+                visible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-3"
+              }`}
             >
               {/* Top hairline in gold */}
               <span

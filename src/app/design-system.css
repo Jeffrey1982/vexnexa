@@ -148,6 +148,11 @@
   /* ===== Backdrop Blur ===== */
   --backdrop-blur-xs: 2px;
 
+  /* ===== Custom Easing Curves (Emil Kowalski) ===== */
+  --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-expo: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
   /* ===== Animation Durations ===== */
   --duration-fade-up: 0.6s;
   --duration-fade-in: 0.4s;
@@ -312,15 +317,15 @@
 /* ===== Animation Classes ===== */
 
 .animate-fade-up {
-  animation: fadeUp var(--duration-fade-up) ease-out;
+  animation: fadeUp var(--duration-fade-up) var(--ease-out-expo);
 }
 
 .animate-fade-in {
-  animation: fadeIn var(--duration-fade-in) ease-out;
+  animation: fadeIn var(--duration-fade-in) var(--ease-out-expo);
 }
 
 .animate-slide-in {
-  animation: slideIn var(--duration-slide-in) ease-out;
+  animation: slideIn var(--duration-slide-in) var(--ease-out-expo);
 }
 
 .animate-float {
