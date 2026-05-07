@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, MessageSquare, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface FAQItem {
@@ -16,11 +17,8 @@ interface FAQProps {
   description?: string;
 }
 
-export function FAQ({
-  items,
-  title = "Frequently Asked Questions",
-  description,
-}: FAQProps) {
+export function FAQ({ items, title, description }: FAQProps) {
+  const t = useTranslations("faq");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleItem = (index: number) => {
@@ -35,42 +33,38 @@ export function FAQ({
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:gap-14">
-            {/* Heading + supporting CTA — fills the left column so the
-                section no longer renders as a narrow centered list. */}
             <div className="lg:sticky lg:top-24 lg:self-start">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                FAQ
+                {t("eyebrow")}
               </p>
               <h2
                 id="faq-heading"
                 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
               >
-                {title}
+                {title ?? t("title")}
               </h2>
               {description && (
-                <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-white/70">
+                <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                   {description}
                 </p>
               )}
-              <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5 dark:border-white/10 dark:bg-white/[0.03]">
+              <div className="mt-6 rounded-2xl border border-border bg-muted/60 p-5">
                 <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                   <MessageSquare className="h-4 w-4 text-primary" aria-hidden />
-                  Niet gevonden wat je zoekt?
+                  {t("contactCard.title")}
                 </div>
-                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-white/65">
-                  Onze enterprise-experts beantwoorden compliance- en
-                  integratievragen direct.
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {t("contactCard.body")}
                 </p>
                 <Link
                   href="/contact"
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80"
                 >
-                  Neem contact op <ArrowRight className="h-4 w-4" aria-hidden />
+                  {t("contactCard.cta")} <ArrowRight className="h-4 w-4" aria-hidden />
                 </Link>
               </div>
             </div>
 
-            {/* Items */}
             <div className="space-y-3">
               {items.map((item, index) => (
                 <div
@@ -79,7 +73,7 @@ export function FAQ({
                 >
                   <button
                     onClick={() => toggleItem(index)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50/70 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:hover:bg-white/[0.05]"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                     aria-expanded={openIndex === index}
                     aria-controls={`faq-answer-${index}`}
                     id={`faq-question-${index}`}
@@ -104,7 +98,7 @@ export function FAQ({
                     role="region"
                     aria-labelledby={`faq-question-${index}`}
                   >
-                    <div className="border-t border-slate-200 px-5 py-4 text-sm leading-relaxed text-slate-600 dark:border-white/10 dark:text-white/70">
+                    <div className="border-t border-border px-5 py-4 text-sm leading-relaxed text-muted-foreground">
                       {item.answer}
                     </div>
                   </div>

@@ -82,7 +82,7 @@ export function EnterpriseFeatures() {
               >
                 {t("title")}
               </h2>
-              <p className="mt-4 text-lg text-slate-600 dark:text-white/70">{t("subtitle")}</p>
+              <p className="mt-4 text-lg text-muted-foreground">{t("subtitle")}</p>
             </div>
             <div className="flex lg:justify-end">
               <Link
@@ -121,9 +121,9 @@ export function EnterpriseFeatures() {
               <h3 className="mt-5 font-display text-xl font-semibold text-foreground">
                 {t(titleKey)}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-white/70">{t(bodyKey)}</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t(bodyKey)}</p>
 
-              <ul className="mt-5 flex-1 space-y-2.5 text-sm text-slate-600 dark:text-white/65">
+              <ul className="mt-5 flex-1 space-y-2.5 text-sm text-muted-foreground">
                 {bullets.map((b) => (
                   <li key={b} className="flex gap-2">
                     <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden />

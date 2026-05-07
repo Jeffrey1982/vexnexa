@@ -60,14 +60,14 @@ export function EnterpriseHero() {
               <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
               <div>
                 <p className="text-sm font-semibold text-foreground">{t("pillar1Title")}</p>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-white/60">{t("pillar1Body")}</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t("pillar1Body")}</p>
               </div>
             </div>
             <div className="flex items-start gap-3 rounded-xl border border-border bg-muted dark:bg-white/[0.03] p-4">
               <FileCheck2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
               <div>
                 <p className="text-sm font-semibold text-foreground">{t("pillar2Title")}</p>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-white/60">{t("pillar2Body")}</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t("pillar2Body")}</p>
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@ export function EnterpriseHero() {
             </Button>
           </div>
 
-          <p className="mt-4 text-xs text-slate-500 dark:text-white/50">{t("noCard")}</p>
+          <p className="mt-4 text-xs text-muted-foreground">{t("noCard")}</p>
         </div>
 
         {/* VNI Rank visual */}
@@ -191,7 +191,7 @@ function VNIRankVisual() {
           ))}
         </ul>
 
-        <p className="mt-5 text-xs leading-relaxed text-slate-500 dark:text-white/50">
+        <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
           {t("disclaimer")}
         </p>
       </div>

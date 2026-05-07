@@ -1,4 +1,13 @@
 {
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Veelgestelde vragen",
+    "contactCard": {
+      "title": "Niet gevonden wat je zoekt?",
+      "body": "Onze enterprise-experts beantwoorden compliance- en integratievragen direct.",
+      "cta": "Neem contact op"
+    }
+  },
   "nav": {
     "features": "Functies",
     "pricing": "Prijzen",
@@ -573,6 +582,7 @@
       },
       "calculator": {
         "eyebrow": "Efficiency-calculator",
+        "sectionTitle": "Minder auditwerk, duidelijkere prijzen.",
         "title": "Tot ~80% minder tijd dan een handmatige audit.",
         "subtitle": "Indicatieve tijd- en kostenreductie ten opzichte van een volledig handmatige WCAG-audit. Pas de invoer aan je portfolio aan.",
         "pagesLabel": "Pagina's te auditen per maand",

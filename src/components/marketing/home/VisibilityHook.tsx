@@ -94,7 +94,7 @@ export function VisibilityHook() {
               >
                 {t("title")}
               </h2>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-white/70">
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
                 {t("body")}
               </p>
 
@@ -111,7 +111,7 @@ export function VisibilityHook() {
                     </span>
                     <div className="min-w-0">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">{label}</p>
-                      <p className="mt-0.5 text-xs leading-5 text-slate-600 dark:text-white/70">{value}</p>
+                      <p className="mt-0.5 text-xs leading-5 text-muted-foreground">{value}</p>
                     </div>
                   </li>
                 ))}

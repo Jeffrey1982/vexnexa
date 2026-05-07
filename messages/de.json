@@ -1,4 +1,13 @@
 {
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Häufig gestellte Fragen",
+    "contactCard": {
+      "title": "Nicht gefunden, was Sie suchen?",
+      "body": "Unser Enterprise-Team beantwortet Compliance- und Integrationsfragen direkt.",
+      "cta": "Kontakt aufnehmen"
+    }
+  },
   "nav": {
     "features": "Features",
     "pricing": "Pricing",

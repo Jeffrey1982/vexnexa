@@ -56,7 +56,7 @@ export function EnterprisePricingTeaser() {
           >
             {t("title")}
           </h2>
-          <p className="mt-4 text-base text-slate-600 dark:text-white/70 sm:text-lg">{t("subtitle")}</p>
+          <p className="mt-4 text-base text-muted-foreground sm:text-lg">{t("subtitle")}</p>
 
           {/* VAT toggle */}
           <div
@@ -75,7 +75,7 @@ export function EnterprisePricingTeaser() {
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                 vatInclusive
                   ? "bg-primary text-primary-foreground"
-                  : "text-slate-600 dark:text-white/70 hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {t("vatIncl")}
@@ -91,7 +91,7 @@ export function EnterprisePricingTeaser() {
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                 !vatInclusive
                   ? "bg-primary text-primary-foreground"
-                  : "text-slate-600 dark:text-white/70 hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {t("vatExcl")}
@@ -103,9 +103,9 @@ export function EnterprisePricingTeaser() {
             <span className="font-display text-5xl font-bold text-foreground tabular-nums">
               {fmt.format(displayPrice)}
             </span>
-            <span className="text-sm text-slate-500 dark:text-white/60">{t("perMonth")}</span>
+            <span className="text-sm text-muted-foreground">{t("perMonth")}</span>
           </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-white/50">
+          <p className="mt-1 text-xs text-muted-foreground">
             {vatInclusive ? t("vatNoticeIncl") : t("vatNoticeExcl")}
           </p>
 
@@ -164,7 +164,7 @@ export function EnterprisePricingTeaser() {
 
           {/* 20% allocation transparency line */}
           <div className="mt-8 rounded-xl border border-primary/25 bg-primary/[0.05] px-5 py-4 text-left">
-            <p className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground dark:text-white/80">
+            <p className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
               <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
               <span>{t("allocation")}</span>
             </p>

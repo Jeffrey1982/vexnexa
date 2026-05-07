@@ -59,12 +59,12 @@ export function EnterpriseConversionPanel() {
               {calculator("eyebrow")} · {pricing("eyebrow")}
             </p>
             <h2 id="enterprise-conversion-heading" className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Minder auditwerk, duidelijkere prijzen.
+              {calculator("sectionTitle")}
             </h2>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
-            <article className="flex h-full flex-col rounded-2xl border border-border bg-gradient-to-br from-slate-50 to-white p-6 shadow-xl dark:border-white/10 dark:from-white/[0.04] dark:to-white/[0.01] sm:p-7">
+            <article className="flex h-full flex-col rounded-2xl border border-border bg-gradient-to-br from-muted to-card p-6 shadow-xl sm:p-7">
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
                 <Calculator className="h-3.5 w-3.5" aria-hidden />
                 {calculator("eyebrow")}
@@ -72,11 +72,11 @@ export function EnterpriseConversionPanel() {
               <h3 className="mt-4 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">
                 {calculator("title")}
               </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-white/70">{calculator("subtitle")}</p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{calculator("subtitle")}</p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <label className="block text-sm">
-                  <span className="font-medium text-muted-foreground dark:text-white/80">{calculator("pagesLabel")}</span>
+                  <span className="font-medium text-muted-foreground">{calculator("pagesLabel")}</span>
                   <input
                     type="number"
                     min={1}
@@ -86,13 +86,13 @@ export function EnterpriseConversionPanel() {
                     onChange={(e) => setPages(parseInt(e.target.value, 10) || 0)}
                     className="mt-2 block w-full rounded-lg border border-border bg-card px-3 py-2.5 text-base font-semibold text-foreground outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/30"
                   />
-                  <span className="mt-1 block text-xs text-slate-500 dark:text-white/50">{calculator("pagesHint")}</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">{calculator("pagesHint")}</span>
                 </label>
 
                 <label className="block text-sm">
-                  <span className="font-medium text-muted-foreground dark:text-white/80">{calculator("rateLabel")}</span>
+                  <span className="font-medium text-muted-foreground">{calculator("rateLabel")}</span>
                   <div className="mt-2 flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2.5 focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/30">
-                    <span className="text-base font-semibold text-slate-500 dark:text-white/60">€</span>
+                    <span className="text-base font-semibold text-muted-foreground">€</span>
                     <input
                       type="number"
                       min={0}
@@ -103,7 +103,7 @@ export function EnterpriseConversionPanel() {
                       className="block w-full bg-transparent text-base font-semibold text-foreground outline-none"
                     />
                   </div>
-                  <span className="mt-1 block text-xs text-slate-500 dark:text-white/50">{calculator("rateHint")}</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">{calculator("rateHint")}</span>
                 </label>
               </div>
 
@@ -114,12 +114,12 @@ export function EnterpriseConversionPanel() {
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">{calculator("resultEyebrow")}</p>
                     <div className="mt-2 flex items-baseline gap-2">
                       <span className="font-display text-5xl font-bold text-primary tabular-nums">{result.pctSaved}%</span>
-                      <span className="max-w-44 text-xs font-medium leading-5 text-slate-600 dark:text-white/70">{calculator("timeSaved")}</span>
+                      <span className="max-w-44 text-xs font-medium leading-5 text-muted-foreground">{calculator("timeSaved")}</span>
                     </div>
                   </div>
                   <div className="grid gap-2 text-sm sm:min-w-64">
                     <div className="flex items-center justify-between gap-3 rounded-lg bg-card px-3 py-2">
-                      <span className="flex items-center gap-2 text-slate-600 dark:text-white/65">
+                      <span className="flex items-center gap-2 text-muted-foreground">
                         <Clock className="h-4 w-4" aria-hidden /> {calculator("manualLabel")}
                       </span>
                       <span className="font-mono tabular-nums">{fmtHours.format(Math.round(result.manualHours))} {calculator("hoursShort")}</span>
@@ -136,10 +136,10 @@ export function EnterpriseConversionPanel() {
               </div>
             </article>
 
-            <article className="flex h-full flex-col rounded-2xl border border-border bg-gradient-to-br from-white to-slate-50 p-6 text-center shadow-xl dark:border-white/10 dark:from-white/[0.04] dark:to-white/[0.01] sm:p-7">
+            <article className="flex h-full flex-col rounded-2xl border border-border bg-gradient-to-br from-card to-muted p-6 text-center shadow-xl sm:p-7">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{pricing("eyebrow")}</p>
               <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{pricing("title")}</h3>
-              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-white/70">{pricing("subtitle")}</p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{pricing("subtitle")}</p>
 
               <div className="mt-6 inline-flex items-center gap-1 rounded-full border border-border bg-card p-1" role="tablist" aria-label={pricing("vatToggleLabel")}>
                 <button
@@ -147,7 +147,7 @@ export function EnterpriseConversionPanel() {
                   role="tab"
                   aria-selected={vatInclusive}
                   onClick={() => setVatInclusive(true)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${vatInclusive ? "bg-primary text-primary-foreground" : "text-slate-600 hover:text-foreground/70 dark:hover:text-white"}`}
+                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${vatInclusive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
                 >
                   {pricing("vatIncl")}
                 </button>
@@ -156,17 +156,17 @@ export function EnterpriseConversionPanel() {
                   role="tab"
                   aria-selected={!vatInclusive}
                   onClick={() => setVatInclusive(false)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${!vatInclusive ? "bg-primary text-primary-foreground" : "text-slate-600 hover:text-foreground/70 dark:hover:text-white"}`}
+                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${!vatInclusive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
                 >
                   {pricing("vatExcl")}
                 </button>
               </div>
 
               <div className="mt-5 flex items-baseline justify-center gap-2">
-                <span className="font-display text-5xl font-bold text-slate-900 tabular-nums dark:text-white">{fmtPrice.format(displayPrice)}</span>
-                <span className="text-sm text-slate-500 dark:text-white/60">{pricing("perMonth")}</span>
+                <span className="font-display text-5xl font-bold text-foreground tabular-nums">{fmtPrice.format(displayPrice)}</span>
+                <span className="text-sm text-muted-foreground">{pricing("perMonth")}</span>
               </div>
-              <p className="mt-1 text-xs text-slate-500 dark:text-white/50">{vatInclusive ? pricing("vatNoticeIncl") : pricing("vatNoticeExcl")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{vatInclusive ? pricing("vatNoticeIncl") : pricing("vatNoticeExcl")}</p>
 
               <ul className="mx-auto mt-6 grid max-w-md gap-2 text-left text-sm text-muted-foreground sm:grid-cols-2">
                 {["audit", "portfolio", "aiVision", "history"].map((key) => (
@@ -192,7 +192,7 @@ export function EnterpriseConversionPanel() {
               </div>
 
               <div className="mt-6 rounded-xl border border-primary/25 bg-primary/[0.05] px-4 py-3 text-left">
-                <p className="flex items-start gap-2 text-xs leading-6 text-muted-foreground dark:text-white/80">
+                <p className="flex items-start gap-2 text-xs leading-6 text-muted-foreground">
                   <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
                   <span>{pricing("allocation")}</span>
                 </p>

@@ -1,4 +1,13 @@
 {
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions fréquentes",
+    "contactCard": {
+      "title": "Vous n'avez pas trouvé ce que vous cherchiez ?",
+      "body": "Notre équipe répond directement aux questions de conformité et d'intégration.",
+      "cta": "Nous contacter"
+    }
+  },
   "nav": {
     "features": "Fonctionnalités",
     "pricing": "Tarifs",

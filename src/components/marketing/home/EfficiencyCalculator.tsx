@@ -75,13 +75,13 @@ export function EfficiencyCalculator() {
               >
                 {t("title")}
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600 dark:text-white/70">
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
                 {t("subtitle")}
               </p>
 
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
                 <label className="block text-sm">
-                  <span className="font-medium text-muted-foreground dark:text-white/80">{t("pagesLabel")}</span>
+                  <span className="font-medium text-muted-foreground">{t("pagesLabel")}</span>
                   <input
                     type="number"
                     min={1}
@@ -92,15 +92,15 @@ export function EfficiencyCalculator() {
                     className="mt-2 block w-full rounded-lg border border-border dark:border-white/15 bg-muted dark:bg-white/[0.04] px-3 py-2.5 text-base font-semibold text-foreground outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/30"
                     aria-describedby="pages-hint"
                   />
-                  <span id="pages-hint" className="mt-1 block text-xs text-slate-500 dark:text-white/50">
+                  <span id="pages-hint" className="mt-1 block text-xs text-muted-foreground">
                     {t("pagesHint")}
                   </span>
                 </label>
 
                 <label className="block text-sm">
-                  <span className="font-medium text-muted-foreground dark:text-white/80">{t("rateLabel")}</span>
+                  <span className="font-medium text-muted-foreground">{t("rateLabel")}</span>
                   <div className="mt-2 flex items-center gap-2 rounded-lg border border-border dark:border-white/15 bg-muted dark:bg-white/[0.04] px-3 py-2.5 focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/30">
-                    <span className="text-base font-semibold text-slate-500 dark:text-white/60">€</span>
+                    <span className="text-base font-semibold text-muted-foreground">€</span>
                     <input
                       type="number"
                       min={0}
@@ -112,7 +112,7 @@ export function EfficiencyCalculator() {
                       aria-describedby="rate-hint"
                     />
                   </div>
-                  <span id="rate-hint" className="mt-1 block text-xs text-slate-500 dark:text-white/50">
+                  <span id="rate-hint" className="mt-1 block text-xs text-muted-foreground">
                     {t("rateHint")}
                   </span>
                 </label>
@@ -129,20 +129,20 @@ export function EfficiencyCalculator() {
                 <span className="font-display text-5xl font-bold text-primary tabular-nums">
                   {result.pctSaved}%
                 </span>
-                <span className="text-sm font-medium text-slate-600 dark:text-white/70">{t("timeSaved")}</span>
+                <span className="text-sm font-medium text-muted-foreground">{t("timeSaved")}</span>
               </div>
 
-              <ul className="mt-6 space-y-3 text-sm text-muted-foreground dark:text-white/80">
+              <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-center justify-between gap-3 rounded-lg bg-muted dark:bg-white/[0.03] px-3 py-2">
-                  <span className="flex items-center gap-2 text-slate-600 dark:text-white/65">
-                    <Clock className="h-4 w-4 text-slate-500 dark:text-white/50" aria-hidden /> {t("manualLabel")}
+                  <span className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="h-4 w-4 text-muted-foreground" aria-hidden /> {t("manualLabel")}
                   </span>
                   <span className="font-mono tabular-nums">
                     {fmtHours.format(Math.round(result.manualHours))} {t("hoursShort")}
                   </span>
                 </li>
                 <li className="flex items-center justify-between gap-3 rounded-lg bg-muted dark:bg-white/[0.03] px-3 py-2">
-                  <span className="flex items-center gap-2 text-slate-600 dark:text-white/65">
+                  <span className="flex items-center gap-2 text-muted-foreground">
                     <Sparkles className="h-4 w-4 text-primary" aria-hidden /> {t("vnLabel")}
                   </span>
                   <span className="font-mono tabular-nums">

@@ -1,4 +1,13 @@
 {
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Preguntas frecuentes",
+    "contactCard": {
+      "title": "¿No encontraste lo que buscabas?",
+      "body": "Nuestro equipo enterprise responde directamente a preguntas de cumplimiento e integración.",
+      "cta": "Contactar"
+    }
+  },
   "nav": {
     "features": "Características",
     "pricing": "Precios",

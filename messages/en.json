@@ -1,4 +1,13 @@
 {
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently Asked Questions",
+    "contactCard": {
+      "title": "Didn't find what you were looking for?",
+      "body": "Our enterprise team answers compliance and integration questions directly.",
+      "cta": "Get in touch"
+    }
+  },
   "nav": {
     "features": "Features",
     "pricing": "Pricing",
@@ -1429,6 +1438,7 @@
       },
       "calculator": {
         "eyebrow": "Efficiency calculator",
+        "sectionTitle": "Less audit work, clearer pricing.",
         "title": "Up to ~80% less time than a manual audit.",
         "subtitle": "Indicative time and cost reduction versus a fully manual WCAG audit. Adjust the inputs to your portfolio.",
         "pagesLabel": "Pages to audit per month",
