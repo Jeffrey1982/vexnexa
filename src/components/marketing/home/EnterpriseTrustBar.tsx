@@ -21,17 +21,17 @@ function BrandBadge({
   }[tone];
 
   return (
-    <li className="min-w-0 rounded-2xl border border-border bg-card p-4 shadow-sm">
-      <div className="flex items-center gap-3">
+    <li className="min-w-0 rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <div className="flex items-center gap-4">
         <span
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-sm font-black tracking-tight ${toneClass}`}
+          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border text-lg font-black tracking-tight ${toneClass}`}
           aria-hidden
         >
           {mark}
         </span>
         <div className="min-w-0">
-          <p className="truncate text-sm font-bold text-foreground">{name}</p>
-          <p className="mt-0.5 text-xs leading-5 text-slate-500 dark:text-white/55">{detail}</p>
+          <p className="truncate text-base font-bold text-foreground">{name}</p>
+          <p className="mt-1 text-sm leading-5 text-muted-foreground">{detail}</p>
         </div>
       </div>
     </li>
@@ -43,53 +43,53 @@ export function EnterpriseTrustBar() {
 
   return (
     <section
-      className="relative border-y border-border bg-muted py-10"
+      className="relative border-y border-border bg-muted py-14"
       aria-labelledby="enterprise-trustbar-heading"
     >
       <div className="container mx-auto px-4">
         <p
           id="enterprise-trustbar-heading"
-          className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-white/45"
+          className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground"
         >
           {t("eyebrow")}
         </p>
 
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <BrandBadge mark="a" name="axe-core" detail={t("items.wcag")} tone="teal" />
           <BrandBadge mark="M" name="Mollie" detail={t("items.pci")} tone="blue" />
           <BrandBadge mark="AA" name="WCAG / EAA" detail={t("items.eaa")} tone="slate" />
-          <li className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground">
-                <Database className="h-4 w-4" aria-hidden />
+          <li className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex items-center gap-4">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-muted-foreground">
+                <Database className="h-6 w-6" aria-hidden />
               </span>
               <div>
-                <p className="text-sm font-bold text-foreground">AWS EU</p>
-                <p className="mt-0.5 text-xs leading-5 text-slate-500 dark:text-white/55">{t("items.eu")}</p>
+                <p className="text-base font-bold text-foreground">AWS EU</p>
+                <p className="mt-1 text-sm leading-5 text-muted-foreground">{t("items.eu")}</p>
               </div>
             </div>
           </li>
-          <li className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/[0.06] text-primary">
-                <FileCheck2 className="h-4 w-4" aria-hidden />
+          <li className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex items-center gap-4">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
+                <FileCheck2 className="h-6 w-6" aria-hidden />
               </span>
               <div>
-                <p className="text-sm font-bold text-foreground">PDF / DOCX</p>
-                <p className="mt-0.5 text-xs leading-5 text-slate-500 dark:text-white/55">{t("items.audit")}</p>
+                <p className="text-base font-bold text-foreground">PDF / DOCX</p>
+                <p className="mt-1 text-sm leading-5 text-muted-foreground">{t("items.audit")}</p>
               </div>
             </div>
           </li>
         </ul>
 
-        <div className="mx-auto mt-5 flex max-w-4xl flex-col items-center justify-center gap-3 text-center text-[11px] leading-relaxed text-slate-600 dark:text-white/60 sm:flex-row">
-          <span className="inline-flex items-center gap-1.5">
-            <ShieldCheck className="h-3.5 w-3.5 text-primary" aria-hidden />
+        <div className="mx-auto mt-8 flex max-w-4xl flex-col items-center justify-center gap-3 text-center text-sm leading-relaxed text-muted-foreground sm:flex-row">
+          <span className="inline-flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-primary" aria-hidden />
             {t("security")}
           </span>
           <span className="hidden h-1 w-1 rounded-full bg-border sm:block" aria-hidden />
-          <span className="inline-flex items-center gap-1.5">
-            <Lock className="h-3.5 w-3.5 text-primary" aria-hidden />
+          <span className="inline-flex items-center gap-2">
+            <Lock className="h-4 w-4 text-primary" aria-hidden />
             {t("disclaimer")}
           </span>
         </div>
