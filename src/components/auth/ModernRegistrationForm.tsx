@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -671,9 +671,9 @@ export default function ModernRegistrationForm() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
                 <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400" />
               </div>
-              <CardTitle className="text-2xl font-bold">
+              <h1 className="font-display font-semibold leading-tight tracking-tight text-2xl">
                 {t('success.title')}
-              </CardTitle>
+              </h1>
               <CardDescription className="text-base pt-2">
                 {t('success.accountCreated')}
               </CardDescription>
@@ -728,7 +728,7 @@ export default function ModernRegistrationForm() {
               <div className="text-center text-sm text-muted-foreground">
                 <Link
                   href="/auth/login"
-                  className="text-primary hover:underline inline-flex items-center gap-1"
+                  className="text-primary underline underline-offset-2 hover:no-underline inline-flex items-center gap-1"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   {t('success.backToLogin')}
@@ -746,7 +746,7 @@ export default function ModernRegistrationForm() {
       <div className="container flex flex-col items-center justify-center max-w-4xl mx-auto">
         <Card className="w-full max-w-2xl">
           <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
+            <h1 className="font-display font-semibold leading-tight tracking-tight text-2xl">Create Account</h1>
             <CardDescription>
               Join VexNexa and start improving accessibility today
             </CardDescription>
@@ -791,7 +791,7 @@ export default function ModernRegistrationForm() {
             
             <div className="mt-4 text-center text-sm text-muted-foreground">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-primary hover:underline">
+              <Link href="/auth/login" className="text-primary underline underline-offset-2 hover:no-underline">
                 Sign in
               </Link>
             </div>

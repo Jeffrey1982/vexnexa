@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -121,10 +121,10 @@ export default function CompliancePage() {
               <CardTitle className="text-base">Policy pages</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-2 text-sm">
-              <Link href="/legal/privacy" className="text-primary hover:underline">Privacy policy</Link>
-              <Link href="/legal/security" className="text-primary hover:underline">Security policy</Link>
-              <Link href="/legal/terms" className="text-primary hover:underline">Terms of service</Link>
-              <Link href="/legal/sla" className="text-primary hover:underline">SLA</Link>
+              <Link href="/legal/privacy" className="text-primary underline underline-offset-2 hover:no-underline">Privacy policy</Link>
+              <Link href="/legal/security" className="text-primary underline underline-offset-2 hover:no-underline">Security policy</Link>
+              <Link href="/legal/terms" className="text-primary underline underline-offset-2 hover:no-underline">Terms of service</Link>
+              <Link href="/legal/sla" className="text-primary underline underline-offset-2 hover:no-underline">SLA</Link>
             </CardContent>
           </Card>
         </aside>

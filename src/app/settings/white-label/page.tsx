@@ -459,7 +459,7 @@ export default function WhiteLabelPage() {
                 <Alert>
                   <Info className="w-4 h-4" />
                   <AlertDescription>
-                    Customize your VexNexa experience with white-label branding. <Link href="/contact" className="text-primary hover:underline font-medium">Contact Support <ExternalLink className="w-3 h-3 inline" /></Link>
+                    Customize your VexNexa experience with white-label branding. <Link href="/contact" className="text-primary underline underline-offset-2 hover:no-underline font-medium">Contact Support <ExternalLink className="w-3 h-3 inline" /></Link>
                   </AlertDescription>
                 </Alert>
               </div>

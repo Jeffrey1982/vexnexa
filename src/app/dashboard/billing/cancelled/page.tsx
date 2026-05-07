@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -108,7 +108,7 @@ export default function BillingCancelledPage(): JSX.Element {
           {/* Support */}
           <p className="mt-8 text-xs text-muted-foreground">
             Having trouble? Contact us at{" "}
-            <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+            <a href="mailto:info@vexnexa.com" className="text-primary underline underline-offset-2 hover:no-underline">
               info@vexnexa.com
             </a>
           </p>

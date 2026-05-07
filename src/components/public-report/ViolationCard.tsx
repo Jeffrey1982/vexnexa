@@ -1,4 +1,4 @@
-interface ViolationCardProps {
+﻿interface ViolationCardProps {
   violation: {
     id: string;
     impact: string;
@@ -52,7 +52,7 @@ export function ViolationCard({ violation }: ViolationCardProps) {
           href={violation.helpUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-xs text-primary hover:underline mt-2"
+          className="inline-flex items-center gap-1 text-xs text-primary underline underline-offset-2 hover:no-underline mt-2"
         >
           Learn how to fix this &rarr;
         </a>

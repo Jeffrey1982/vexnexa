@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -169,7 +169,7 @@ export default async function TermsPage() {
                 <strong>Adres:</strong> {t('section1.address')} <br />
                 <strong>KvK-nummer:</strong> {t('section1.kvk')} &nbsp; <strong>Vestigingsnummer:</strong> {t('section1.establishment')} <br />
                 <strong>E-mail:</strong>{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
+                <a className="text-primary underline underline-offset-2 hover:no-underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </p>
             </div>
           </section>
@@ -197,7 +197,7 @@ export default async function TermsPage() {
               <li>{t('section2.accountSecurity.0')}</li>
               <li>
                 {t('section2.accountSecurity.1')}{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
+                <a className="text-primary underline underline-offset-2 hover:no-underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </li>
               <li>{t('section2.accountSecurity.2')}</li>
             </ul>
@@ -309,7 +309,7 @@ export default async function TermsPage() {
             <h3>{t('section6.noticesTitle')}</h3>
             <p>
               {t('section6.notices')}{' '}
-              <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>.
+              <a className="text-primary underline underline-offset-2 hover:no-underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>.
             </p>
           </section>
 
@@ -342,7 +342,7 @@ export default async function TermsPage() {
             <h2>{t('section8.title')}</h2>
             <p>
               {t('section8.content')}{' '}
-              <Link className="text-primary hover:underline" href="/legal/privacy">{t('footer.privacyLink')}</Link>.
+              <Link className="text-primary underline underline-offset-2 hover:no-underline" href="/legal/privacy">{t('footer.privacyLink')}</Link>.
             </p>
           </section>
 
@@ -379,7 +379,7 @@ export default async function TermsPage() {
             <ol>
               <li>
                 {t('section10.disputes.0')}{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
+                <a className="text-primary underline underline-offset-2 hover:no-underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </li>
               <li>{t('section10.disputes.1')}</li>
               <li>{t('section10.disputes.2')}</li>
@@ -414,7 +414,7 @@ export default async function TermsPage() {
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
                 {t('section12.email')}{' '}
-                <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
+                <a className="text-primary underline underline-offset-2 hover:no-underline" href="mailto:info@vexnexa.com">{t('section1.email')}</a>
               </p>
             </div>
           </section>

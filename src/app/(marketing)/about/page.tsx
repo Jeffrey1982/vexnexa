@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 
@@ -446,7 +446,7 @@ export default async function AboutPage() {
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 {t('footerDisclaimer.questions')}{' '}
-                <a href={`mailto:${t('footerDisclaimer.email')}`} className="text-primary hover:underline">
+                <a href={`mailto:${t('footerDisclaimer.email')}`} className="text-primary underline underline-offset-2 hover:no-underline">
                   {t('footerDisclaimer.email')}
                 </a>
                 .

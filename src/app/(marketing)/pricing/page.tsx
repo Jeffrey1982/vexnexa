@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import type { ComponentProps, ReactNode } from "react";
@@ -399,7 +399,7 @@ function PricingCards() {
                             ({priceDisplay.subtext})
                           </p>
                         )}
-                        <p className="mt-0.5 text-[10px] uppercase tracking-wide text-slate-500">
+                        <p className="mt-0.5 text-[10px] uppercase tracking-wide text-slate-700">
                           incl. VAT
                         </p>
                       </>
@@ -421,10 +421,10 @@ function PricingCards() {
                     {plan.limitations.map((limitation, i) => (
                       <div
                         key={i}
-                        className="flex items-start space-x-2 opacity-60"
+                        className="flex items-start space-x-2"
                       >
-                        <X className="h-4 w-4 text-slate-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-slate-500">
+                        <X className="h-4 w-4 text-slate-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span className="text-sm text-slate-700">
                           {limitation}
                         </span>
                       </div>
@@ -679,7 +679,7 @@ function AuditServicesSection() {
                         {tp("audits.oneTime")}
                       </span>
                     </div>
-                    <p className="text-[10px] uppercase tracking-wide text-slate-500 mt-1">
+                    <p className="text-[10px] uppercase tracking-wide text-slate-700 mt-1">
                       incl. VAT
                     </p>
                   </div>
@@ -784,7 +784,7 @@ function AuditBundlesSection() {
                   <span className="text-slate-600 text-sm">
                     {tp("addons.perMonth")}
                   </span>
-                  <p className="text-[10px] uppercase tracking-wide text-slate-500 mt-0.5">
+                  <p className="text-[10px] uppercase tracking-wide text-slate-700 mt-0.5">
                     incl. VAT
                   </p>
                 </div>
@@ -1261,9 +1261,9 @@ function PilotOfferBanner() {
             <Sparkles className="h-4 w-4" />
             {tPage("pilotBanner.badge")}
           </div>
-          <h3 className="font-sans text-2xl font-bold text-slate-900">
+          <h2 className="font-sans text-2xl font-bold text-slate-900">
             {tPage("pilotBanner.title")}
-          </h3>
+          </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             {tPage("pilotBanner.subtitle")}
           </p>

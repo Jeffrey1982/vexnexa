@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -231,7 +231,7 @@ export default async function SLAPage() {
               <p className="font-medium">{t('contact.supportContact.title')}</p>
               <p className="text-sm text-muted-foreground">
                 <Mail className="inline h-4 w-4 mr-1" aria-hidden="true" />
-                E-mail: <a className="text-primary hover:underline" href="mailto:info@vexnexa.com">{t('contact.supportContact.email')}</a>
+                E-mail: <a className="text-primary underline underline-offset-2 hover:no-underline" href="mailto:info@vexnexa.com">{t('contact.supportContact.email')}</a>
               </p>
               <p className="text-sm text-muted-foreground">
                 {t('contact.supportContact.dashboardForm')}

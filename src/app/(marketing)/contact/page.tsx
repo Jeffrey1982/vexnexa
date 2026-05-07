@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -313,7 +313,7 @@ function ContactPageContent() {
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-2">
                   <r.icon className="h-5 w-5 text-primary" aria-hidden="true" />
                 </div>
-                <h3 className="font-semibold font-display text-sm">{r.title}</h3>
+                <h2 className="font-semibold font-display text-sm">{r.title}</h2>
                 <p className="text-sm text-muted-foreground">{r.description}</p>
               </CardContent>
             </Card>
@@ -376,7 +376,7 @@ function ContactPageContent() {
               <div className="pt-6">
                 <p className="text-sm text-muted-foreground">
                   {t('form.directContact')}{" "}
-                  <a href="mailto:info@vexnexa.com" className="text-primary hover:underline">
+                  <a href="mailto:info@vexnexa.com" className="text-primary underline underline-offset-2 hover:no-underline">
                     info@vexnexa.com
                   </a>
                   .
@@ -399,7 +399,7 @@ function ContactPageContent() {
                 <CardTitle className="font-display">{t('form.cardTitle')}</CardTitle>
                 <CardDescription>
                   {t('form.cardDescription')}{" "}
-                  <Link href="/legal/privacy" className="text-primary hover:underline">
+                  <Link href="/legal/privacy" className="text-primary underline underline-offset-2 hover:no-underline">
                     {t('form.privacyPolicy')}
                   </Link>
                   .
@@ -587,7 +587,7 @@ function ContactPageContent() {
                       />
                       <Label htmlFor="consent" className="leading-relaxed">
                         {t('form.consent.label')}{" "}
-                        <Link href="/legal/privacy" className="text-primary hover:underline">
+                        <Link href="/legal/privacy" className="text-primary underline underline-offset-2 hover:no-underline">
                           {t('form.consent.privacyPolicy')}
                         </Link>
                         .

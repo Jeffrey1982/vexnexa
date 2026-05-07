@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -647,7 +647,7 @@ export default function ModernRegistrationForm() {
             
             <div className="mt-4 text-center text-sm text-muted-foreground">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-primary hover:underline">
+              <Link href="/auth/login" className="text-primary underline underline-offset-2 hover:no-underline">
                 Sign in
               </Link>
             </div>

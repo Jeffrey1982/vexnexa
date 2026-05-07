@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -232,13 +232,13 @@ export default function GetStartedPage() {
           <div className="text-center mt-12">
             <p className="text-muted-foreground mb-4">
               {t('footer.notReady')}{" "}
-              <Link href="/features" className="text-primary hover:underline">
+              <Link href="/features" className="text-primary underline underline-offset-2 hover:no-underline">
                 {t('footer.learnMore')}
               </Link>
             </p>
             <p className="text-sm text-muted-foreground">
               {t('footer.haveAccount')}{" "}
-              <Link href="/auth/login" className="text-primary hover:underline">
+              <Link href="/auth/login" className="text-primary underline underline-offset-2 hover:no-underline">
                 {t('footer.signIn')}
               </Link>
             </p>

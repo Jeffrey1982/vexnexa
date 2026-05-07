@@ -189,7 +189,7 @@ export default async function UpdatesPage() {
   ];
 
   return (
-    <main className="bg-background">
+    <div className="bg-background">
       <section className="border-b border-border/60 bg-[linear-gradient(180deg,hsl(var(--muted))_0%,hsl(var(--background))_100%)]">
         <div className="container mx-auto grid gap-10 px-4 py-14 lg:grid-cols-[1fr_380px] lg:py-20">
           <div className="max-w-4xl">
@@ -215,7 +215,7 @@ export default async function UpdatesPage() {
             </div>
           </div>
 
-          <aside className="rounded-lg border border-border bg-background p-6 shadow-sm">
+          <div className="rounded-lg border border-border bg-background p-6 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <Bell className="h-5 w-5" aria-hidden="true" />
@@ -228,7 +228,7 @@ export default async function UpdatesPage() {
             <div className="mt-5">
               <UpdatesSignupForm />
             </div>
-          </aside>
+          </div>
         </div>
       </section>
 
@@ -321,7 +321,7 @@ export default async function UpdatesPage() {
           </section>
         </div>
 
-        <aside className="space-y-6">
+        <div className="space-y-6">
           <Card className="rounded-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-lg">
@@ -357,7 +357,7 @@ export default async function UpdatesPage() {
               ))}
             </CardContent>
           </Card>
-        </aside>
+        </div>
       </section>
 
       <section className="border-y border-border/60 bg-muted/40">
@@ -388,6 +388,6 @@ export default async function UpdatesPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

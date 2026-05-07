@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -144,9 +144,9 @@ export default function MethodologyPage() {
               <CardTitle className="text-base">Useful links</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-2 text-sm">
-              <Link href="/legal/security" className="text-primary hover:underline">Security policy</Link>
-              <Link href="/legal/privacy" className="text-primary hover:underline">Privacy policy</Link>
-              <Link href="/wcag-compliance-report" className="text-primary hover:underline">WCAG report format</Link>
+              <Link href="/legal/security" className="text-primary underline underline-offset-2 hover:no-underline">Security policy</Link>
+              <Link href="/legal/privacy" className="text-primary underline underline-offset-2 hover:no-underline">Privacy policy</Link>
+              <Link href="/wcag-compliance-report" className="text-primary underline underline-offset-2 hover:no-underline">WCAG report format</Link>
             </CardContent>
           </Card>
         </aside>

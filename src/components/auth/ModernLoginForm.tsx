@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -205,7 +205,7 @@ export default function ModernLoginForm() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-background p-4">
+    <main id="main-content" tabIndex={-1} className="relative flex min-h-screen items-center justify-center bg-background p-4">
       <div className="relative w-full max-w-md">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -left-4 -top-4 h-72 w-72 animate-blob rounded-full bg-primary/10 mix-blend-multiply opacity-60 blur-xl filter"></div>
@@ -218,9 +218,9 @@ export default function ModernLoginForm() {
             <div className="mx-auto mb-4">
               <VexnexaLogo size={56} />
             </div>
-            <CardTitle className="text-2xl font-bold font-display text-[#1E1E1E] dark:text-white">
+            <h1 className="text-2xl font-bold font-display leading-tight tracking-tight text-[#1E1E1E] dark:text-white">
               Welcome Back
-            </CardTitle>
+            </h1>
             <CardDescription className="text-base text-[#5A5A5A] dark:text-[#C0C3C7]">
               Sign in to VexNexa
             </CardDescription>
@@ -313,7 +313,7 @@ export default function ModernLoginForm() {
               <div className="text-sm">
                 <a
                   href="/auth/forgot-password"
-                  className="font-medium text-primary transition-colors hover:text-primary/80"
+                  className="font-medium text-primary underline underline-offset-2 transition-colors hover:text-primary/80"
                 >
                   Forgot password?
                 </a>
@@ -413,6 +413,6 @@ export default function ModernLoginForm() {
           animation-delay: 4s;
         }
       `}</style>
-    </div>
+    </main>
   )
 }

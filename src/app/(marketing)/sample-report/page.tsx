@@ -217,7 +217,7 @@ export default function SampleReportPage() {
             <Card className="border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
               <CardContent className="p-8 text-center space-y-4">
                 <Download className="h-10 w-10 text-primary mx-auto" />
-                <h3 className="text-xl font-bold font-display">{t('downloadTitle')}</h3>
+                <h2 className="text-xl font-bold font-display">{t('downloadTitle')}</h2>
                 <p className="text-muted-foreground max-w-lg mx-auto text-sm">
                   {t('downloadSubtitle')}
                 </p>
@@ -270,7 +270,7 @@ export default function SampleReportPage() {
                 [
                   { label: t('severity.critical'), count: severityCounts.critical, color: "text-red-600" },
                   { label: t('severity.serious'), count: severityCounts.serious, color: "text-orange-600" },
-                  { label: t('severity.moderate'), count: severityCounts.moderate, color: "text-yellow-600" },
+                  { label: t('severity.moderate'), count: severityCounts.moderate, color: "text-yellow-700" },
                   { label: t('severity.minor'), count: severityCounts.minor, color: "text-blue-600" },
                 ] as const
               ).map((s) => (

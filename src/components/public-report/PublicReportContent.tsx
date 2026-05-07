@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { getFaviconFromUrl } from '@/lib/format';
 import { ScoreRing } from './ScoreRing';
 import { ImpactBar } from './ImpactBar';
@@ -319,7 +319,7 @@ export function PublicReportContent({ report, history, normalizedDomain, isCanon
             improving web accessibility. Last updated: {scanDate}.
           </p>
           <p className="text-xs text-gray-400 dark:text-muted-foreground mt-2">
-            Scanned by <Link href="/" className="text-primary hover:underline">VexNexa</Link>
+            Scanned by <Link href="/" className="text-primary underline underline-offset-2 hover:no-underline">VexNexa</Link>
           </p>
         </div>
       </section>
