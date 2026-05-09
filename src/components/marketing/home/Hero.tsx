@@ -1,8 +1,6 @@
-﻿"use client";
-
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -13,8 +11,8 @@ const severities = [
   { key: "Minor", count: 6, token: "minor", label: "severityMinor" },
 ] as const;
 
-export function Hero() {
-  const t = useTranslations("hero");
+export async function Hero() {
+  const t = await getTranslations("hero");
 
   return (
     <section
@@ -69,7 +67,17 @@ export function Hero() {
         </div>
 
         <div className="w-full max-w-xl">
-          <HeroScanCard />
+          <HeroScanCard
+            scanCardScore={t("scanCardScore")}
+            scanCardDelta={t("scanCardDelta")}
+            scanCardLabel={t("scanCardLabel")}
+            severityLabels={{
+              severityCritical: t("severityCritical"),
+              severitySerious: t("severitySerious"),
+              severityModerate: t("severityModerate"),
+              severityMinor: t("severityMinor"),
+            }}
+          />
         </div>
 
         <p
@@ -86,9 +94,17 @@ export function Hero() {
   );
 }
 
-function HeroScanCard() {
-  const t = useTranslations("hero");
-
+function HeroScanCard({
+  scanCardScore,
+  scanCardDelta,
+  scanCardLabel,
+  severityLabels,
+}: {
+  scanCardScore: string;
+  scanCardDelta: string;
+  scanCardLabel: string;
+  severityLabels: Record<string, string>;
+}) {
   return (
     <figure
       className="w-full overflow-hidden text-left"
@@ -150,7 +166,7 @@ function HeroScanCard() {
               72
             </span>
             <span className="text-sm" style={{ color: "var(--color-ink-500)" }}>
-              {t("scanCardScore")}
+              {scanCardScore}
             </span>
           </div>
           <span
@@ -160,7 +176,7 @@ function HeroScanCard() {
               color: "var(--color-brand-primary-dark)",
             }}
           >
-            {t("scanCardDelta")}
+            {scanCardDelta}
           </span>
         </div>
 
@@ -175,7 +191,7 @@ function HeroScanCard() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4" aria-label={t("scanCardLabel")}>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4" aria-label={scanCardLabel}>
           {severities.map((severity) => (
             <div
               key={severity.key}
@@ -186,7 +202,7 @@ function HeroScanCard() {
               }}
             >
               <p className="text-lg font-medium leading-tight">{severity.count}</p>
-              <p className="mt-1 text-xs font-medium leading-tight">{t(severity.label)}</p>
+              <p className="mt-1 text-xs font-medium leading-tight">{severityLabels[severity.label]}</p>
             </div>
           ))}
         </div>

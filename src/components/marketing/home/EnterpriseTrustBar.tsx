@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Database, FileCheck2, Lock, ShieldCheck, Code2, CreditCard, BadgeCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -10,8 +8,8 @@ type Item = {
   detail: string;
 };
 
-export function EnterpriseTrustBar() {
-  const t = useTranslations("home.enterprise.trustBar");
+export async function EnterpriseTrustBar() {
+  const t = await getTranslations("home.enterprise.trustBar");
 
   const items: Item[] = [
     { icon: Code2, name: "axe-core", detail: t("items.wcag") },
