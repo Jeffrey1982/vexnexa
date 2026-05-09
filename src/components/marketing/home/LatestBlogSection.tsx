@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BookOpenText, Clock3 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -141,7 +142,7 @@ export function LatestBlogSection() {
                     className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-primary)] focus-visible:ring-offset-2 rounded-lg"
                   >
                     <div
-                      className="mb-5 aspect-[16/10] w-full overflow-hidden rounded-lg"
+                      className="relative mb-5 aspect-[16/10] w-full overflow-hidden rounded-lg"
                       style={{
                         background: post.coverImage
                           ? `linear-gradient(135deg, var(--color-brand-primary-light) 0%, var(--color-surface-sunken) 100%)`
@@ -150,11 +151,13 @@ export function LatestBlogSection() {
                       }}
                     >
                       {post.coverImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={post.coverImage}
                           alt=""
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          loading="lazy"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center">
