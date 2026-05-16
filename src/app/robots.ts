@@ -30,13 +30,6 @@ export default function robots(): MetadataRoute.Robots {
           '/get-started',
           '/reset-password',
           '/unauthorized',
-          // Legacy Shopify URLs
-          '/products/',
-          '/collections/',
-          '/cart',
-          '/checkout',
-          '/blogs/',
-          '/account',
         ],
         allow: [
           '/',
