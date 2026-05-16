@@ -487,26 +487,32 @@ export function getStaticBlogPost(slug: string, locale: BlogSeoLocale = 'nl') {
 }
 
 export function getStaticBlogAlternates(slug: string) {
-  return Object.fromEntries(
+  const alternates = Object.fromEntries(
     BLOG_SEO_LOCALES.map((locale) => [locale, getBlogPublicUrl(locale, slug)])
   )
+
+  return {
+    ...alternates,
+    'x-default': getBlogPublicUrl('nl', slug),
+  }
 }
 
 export function getStaticBlogMetadata(slug: string, locale: BlogSeoLocale = 'nl'): Metadata {
   const post = getStaticBlogPost(slug, locale)
   if (!post) return {}
+  const canonicalUrl = getBlogPublicUrl(locale, slug)
 
   return {
     title: post.metaTitle,
     description: post.metaDescription,
     alternates: {
-      canonical: getBlogPublicUrl('nl', slug),
+      canonical: canonicalUrl,
       languages: getStaticBlogAlternates(slug),
     },
     openGraph: {
       title: post.title,
       description: post.metaDescription,
-      url: getBlogPublicUrl(locale, slug),
+      url: canonicalUrl,
       type: 'article',
     },
     twitter: {

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getLatestPublicReport, getPublicReportHistory } from '@/lib/public-reports';
+import { getLatestPublicReport, getPublicReportHistory, isPublicReportIndexable } from '@/lib/public-reports';
 import { slugToDomain, getPublicReportUrl } from '@/lib/domain-utils';
 import { PublicReportContent } from '@/components/public-report/PublicReportContent';
 
@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const scoreText = report.score !== null ? `Score: ${report.score}/100. ` : '';
   const issueText = report.issues_total > 0 ? `${report.issues_total} issues found. ` : 'No issues found. ';
+  const reportCanIndex = isPublicReportIndexable(report);
 
   return {
     title: `${normalizedDomain} Accessibility Report | VexNexa`,
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: `Automated accessibility scan results for ${normalizedDomain}. ${scoreText}View the full report.`,
       creator: '@vexnexa',
     },
-    robots: report.allow_indexing
+    robots: reportCanIndex
       ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-snippet': -1 as const, 'max-image-preview': 'large' as const } }
       : { index: false, follow: true },
   };

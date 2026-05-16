@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Play, Loader2, CheckCircle, XCircle } from 'lucide-react';
 
 export function TriggerSeoIngestion() {
@@ -75,7 +76,7 @@ export function TriggerSeoIngestion() {
                     Success! All SEO data has been ingested.
                   </p>
                   <p className="text-xs text-green-700 mt-1">
-                    Visit the <a href="/admin/seo" className="underline">SEO Health dashboard</a> to view your data.
+                    Visit the <Link href="/admin/seo" className="underline">SEO Health dashboard</Link> to view your data.
                   </p>
                 </div>
               </>

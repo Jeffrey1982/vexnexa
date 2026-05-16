@@ -1,24 +1,16 @@
 import { NextResponse } from 'next/server'
 
 // Configuration
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 const LOCALES = ['en', 'nl', 'de', 'fr', 'es'] as const
-const LAST_MODIFIED = '2025-12-23' // Stable constant to avoid changing on each request
+const LAST_MODIFIED = '2026-05-16'
 
 // Explicit list of content slugs (SEO/content pages intended to rank)
-// Add more slugs here as content is created
-const CONTENT_SLUGS = [
-  'how-to-test-website-accessibility',
-  // TODO: Add more content page slugs here as they are created:
-  // 'wcag-compliance-guide',
-  // 'accessibility-best-practices',
-  // etc.
-]
+// Keep this empty until the route exists; the sitemap index only references live sitemaps.
+const CONTENT_SLUGS: string[] = []
 
 interface SitemapUrl {
   url: string
-  priority: number
-  changefreq: string
 }
 
 export async function GET() {
@@ -29,8 +21,6 @@ export async function GET() {
     for (const locale of LOCALES) {
       contentPages.push({
         url: `${BASE_URL}/${locale}/${slug}`,
-        priority: 0.8,
-        changefreq: 'weekly',
       })
     }
   }
@@ -40,8 +30,6 @@ export async function GET() {
 ${contentPages.map(page => `  <url>
     <loc>${page.url}</loc>
     <lastmod>${LAST_MODIFIED}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
   </url>`).join('\n')}
 </urlset>`
 

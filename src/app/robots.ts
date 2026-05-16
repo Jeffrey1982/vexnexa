@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 
   return {
     rules: [
@@ -19,6 +19,17 @@ export default function robots(): MetadataRoute.Robots {
           '/settings/*',
           '/auth/*',
           '/onboarding',
+          '/sites',
+          '/sites/*',
+          '/teams',
+          '/analytics',
+          '/advanced-analytics',
+          '/checkout',
+          '/checkout/*',
+          '/newsletter/*',
+          '/get-started',
+          '/reset-password',
+          '/unauthorized',
           // Legacy Shopify URLs
           '/products/',
           '/collections/',
@@ -33,6 +44,10 @@ export default function robots(): MetadataRoute.Robots {
           '/pricing',
           '/about',
           '/contact',
+          '/updates',
+          '/methodology',
+          '/compliance',
+          '/eaa-compliance',
           '/blog',
           '/blog/*',
           '/changelog',
@@ -44,7 +59,10 @@ export default function robots(): MetadataRoute.Robots {
           '/wcag-compliance-report',
           '/for-agencies',
           '/eaa-compliance-monitoring',
+          '/partner-apply',
+          '/pilot-partner-program',
           '/sample-report',
+          '/legal/cookies',
           '/report/*',
         ],
       },

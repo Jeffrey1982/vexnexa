@@ -1,26 +1,18 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+  const sitemapPaths = [
+    '/sitemap_pages.xml',
+    '/sitemap_blog.xml',
+    '/sitemap_reports.xml',
+  ]
 
   const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${baseUrl}/sitemap_pages.xml</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${baseUrl}/sitemap_content.xml</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${baseUrl}/sitemap_blog.xml</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${baseUrl}/sitemap_reports.xml</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-  </sitemap>
+${sitemapPaths.map((path) => `  <sitemap>
+    <loc>${baseUrl}${path}</loc>
+  </sitemap>`).join('\n')}
 </sitemapindex>`
 
   return new NextResponse(sitemapIndex, {

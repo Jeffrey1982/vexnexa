@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, Code2, Gauge, ShieldAlert, ShieldCheck, XCirc
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { BlogSeoLocale } from '@/lib/blog-seo'
+import { getBlogPublicUrl } from '@/lib/blog-seo'
 import {
   DIGITAL_ACCESSIBILITY_PIVOT_SLUG,
   getStaticBlogPost,
@@ -19,6 +20,8 @@ export function DigitalAccessibilityPivotArticle({
   const post = getStaticBlogPost(DIGITAL_ACCESSIBILITY_PIVOT_SLUG, locale)
 
   if (!post) return null
+
+  const publicUrl = getBlogPublicUrl(locale, DIGITAL_ACCESSIBILITY_PIVOT_SLUG)
 
   return (
     <main className="bg-background">
@@ -177,6 +180,32 @@ export function DigitalAccessibilityPivotArticle({
           </aside>
         </div>
       </article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: post.title,
+            description: post.metaDescription,
+            author: {
+              '@type': 'Organization',
+              name: 'VexNexa',
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'VexNexa',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://vexnexa.com/brand/vexnexa-v-mark.png',
+              },
+            },
+            datePublished: '2026-05-16',
+            dateModified: '2026-05-16',
+            mainEntityOfPage: publicUrl,
+          }),
+        }}
+      />
     </main>
   )
 }

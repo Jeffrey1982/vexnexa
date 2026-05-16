@@ -468,25 +468,31 @@ export function getAuditMonitoringPost(locale: BlogSeoLocale = 'nl') {
 }
 
 export function getAuditMonitoringAlternates() {
-  return Object.fromEntries(
+  const alternates = Object.fromEntries(
     BLOG_SEO_LOCALES.map((locale) => [locale, getBlogPublicUrl(locale, AUDIT_MONITORING_2026_SLUG)])
   )
+
+  return {
+    ...alternates,
+    'x-default': getBlogPublicUrl('nl', AUDIT_MONITORING_2026_SLUG),
+  }
 }
 
 export function getAuditMonitoringMetadata(locale: BlogSeoLocale = 'nl'): Metadata {
   const post = getAuditMonitoringPost(locale)
+  const canonicalUrl = getBlogPublicUrl(locale, AUDIT_MONITORING_2026_SLUG)
 
   return {
     title: post.metaTitle,
     description: post.metaDescription,
     alternates: {
-      canonical: getBlogPublicUrl('nl', AUDIT_MONITORING_2026_SLUG),
+      canonical: canonicalUrl,
       languages: getAuditMonitoringAlternates(),
     },
     openGraph: {
       title: post.title,
       description: post.metaDescription,
-      url: getBlogPublicUrl(locale, AUDIT_MONITORING_2026_SLUG),
+      url: canonicalUrl,
       type: 'article',
     },
     twitter: {

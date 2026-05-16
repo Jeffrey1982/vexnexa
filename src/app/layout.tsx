@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import ClientLayout from '@/components/ClientLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { NextIntlClientProvider } from 'next-intl'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import './design-system.css'
 import './styles/tokens.css'
@@ -12,6 +12,7 @@ import './globals.css'
 
 const locales = ['en', 'nl', 'de', 'fr', 'es', 'pt'] as const
 type Locale = (typeof locales)[number]
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com'
 
 function isLocale(value: string | undefined): value is Locale {
   return locales.includes(value as Locale)
@@ -46,6 +47,7 @@ function mergeMessages(
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'VexNexa - Accessibility Testing Platform',
   description: 'Professional accessibility testing and compliance monitoring platform for websites',
   keywords: ['accessibility', 'WCAG', 'testing', 'compliance', 'monitoring', 'a11y'],
@@ -90,8 +92,14 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
+  const headerStore = await headers()
+  const pathLocale = headerStore.get('x-vn-locale') ?? undefined
   const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value
-  const locale: Locale = isLocale(cookieLocale) ? cookieLocale : 'en'
+  const locale: Locale = isLocale(pathLocale)
+    ? pathLocale
+    : isLocale(cookieLocale)
+      ? cookieLocale
+      : 'en'
   const fallbackMessages = (await import('../../messages/en.json')).default
   const localeMessages = (await import(`../../messages/${locale}.json`)).default
   const messages = mergeMessages(fallbackMessages, localeMessages)

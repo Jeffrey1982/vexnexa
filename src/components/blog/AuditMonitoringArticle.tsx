@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink, ImageIcon } from 'lu
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { BlogSeoLocale } from '@/lib/blog-seo'
+import { getBlogPublicUrl } from '@/lib/blog-seo'
 import { AUDIT_MONITORING_2026_SLUG, auditMonitoringSources, getAuditMonitoringPost } from '@/lib/audit-monitoring-static-post'
 
 type AuditMonitoringArticleProps = {
@@ -11,6 +12,7 @@ type AuditMonitoringArticleProps = {
 
 export function AuditMonitoringArticle({ locale = 'nl' }: AuditMonitoringArticleProps) {
   const post = getAuditMonitoringPost(locale)
+  const publicUrl = getBlogPublicUrl(locale, AUDIT_MONITORING_2026_SLUG)
 
   return (
     <main className="bg-background">
@@ -165,7 +167,9 @@ export function AuditMonitoringArticle({ locale = 'nl' }: AuditMonitoringArticle
                 url: 'https://vexnexa.com/brand/vexnexa-v-mark.png',
               },
             },
-            mainEntityOfPage: `https://vexnexa.com/blog/${AUDIT_MONITORING_2026_SLUG}`,
+            datePublished: '2026-05-16',
+            dateModified: '2026-05-16',
+            mainEntityOfPage: publicUrl,
           }),
         }}
       />

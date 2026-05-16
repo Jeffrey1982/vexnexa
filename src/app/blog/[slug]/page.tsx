@@ -14,7 +14,6 @@ import {
   getBlogHreflangAlternates,
   getBlogPublicUrl,
   getLocaleFromSlug,
-  getOriginalBlogLocale,
   getStoredBlogSlug,
   isBlogSeoLocale,
 } from '@/lib/blog-seo'
@@ -64,8 +63,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   });
   const matchingVersions = allVersions.filter((version) => getBlogBaseSlug(version.slug) === baseSlug);
-  const originalLocale = getOriginalBlogLocale(matchingVersions.length > 0 ? matchingVersions : [post]);
-  const canonicalUrl = getBlogPublicUrl(originalLocale, baseSlug);
+  const canonicalUrl = getBlogPublicUrl(locale, baseSlug);
   const languages = getBlogHreflangAlternates(matchingVersions.length > 0 ? matchingVersions : [post], baseSlug);
   
   return {
@@ -83,7 +81,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publishedTime: post.publishedAt?.toISOString(),
       authors: ['Vexnexa Team'],
       images: post.coverImage ? [post.coverImage] : [],
-      url: getBlogPublicUrl(post.locale || locale, baseSlug),
+      url: canonicalUrl,
       locale: locale === 'en' ? 'en_US' : locale,
     },
     twitter: {
@@ -170,6 +168,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .map((v) => v.locale || 'en') // Default to 'en' if locale not set
     .filter((loc) => isBlogSeoLocale(loc))
     .filter((loc, index, self) => self.indexOf(loc) === index); // Remove duplicates
+  const publicUrl = getBlogPublicUrl(post.locale || locale, baseSlug)
 
   return (
     <div className="min-h-screen">
@@ -251,7 +250,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="max-w-3xl mx-auto space-y-8">
             <ShareButtons
               title={post.title}
-              url={`https://vexnexa.com/blog/${post.slug}`}
+              url={publicUrl}
             />
 
             {/* Tags */}
@@ -317,7 +316,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             },
             "datePublished": post.publishedAt?.toISOString() || "",
             "dateModified": post.updatedAt?.toISOString() || post.publishedAt?.toISOString() || "",
-            "mainEntityOfPage": `https://vexnexa.com/blog/${post.slug}`,
+            "mainEntityOfPage": publicUrl,
             "keywords": (post.tags || []).join(", "),
             "articleSection": post.category || ""
           })

@@ -18,6 +18,7 @@ export async function GET(request: Request) {
       take: limit,
       select: {
         slug: true,
+        locale: true,
         title: true,
         excerpt: true,
         publishedAt: true,
@@ -34,6 +35,7 @@ export async function GET(request: Request) {
         take: limit,
         select: {
           slug: true,
+          locale: true,
           title: true,
           excerpt: true,
           publishedAt: true,

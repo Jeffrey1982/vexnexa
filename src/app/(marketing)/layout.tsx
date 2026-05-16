@@ -27,9 +27,6 @@ export const metadata: Metadata = {
     description: 'Scan websites for WCAG 2.2 issues, catch regressions, and deliver branded reports. Built for agencies and EU-facing teams.',
     creator: '@vexnexa',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com',
-  },
   robots: {
     index: true,
     follow: true,

@@ -42,8 +42,15 @@ export interface PublicReport {
 
 // ── Quality thresholds ───────────────────────────────────
 
-const MIN_SCORE_FOR_INDEXING = 0; // Allow all valid scores
-const MIN_ISSUES_FOR_CONTENT = 0; // Even 0 issues is valid (great score)
+const MIN_INDEXABLE_ISSUES = 3;
+const MIN_INDEXABLE_TOP_VIOLATIONS = 3;
+
+function toNumber(value: unknown): number {
+  if (typeof value === 'number') return value;
+  if (typeof value === 'bigint') return Number(value);
+  if (typeof value === 'string') return Number(value) || 0;
+  return 0;
+}
 
 /**
  * Check whether a completed scan is eligible for public display.
@@ -71,14 +78,32 @@ export function isScanEligibleForPublicReport(scan: PublishableScan): boolean {
 export function shouldAllowIndexing(scan: PublishableScan): boolean {
   if (!isScanEligibleForPublicReport(scan)) return false;
 
-  // Must have a real score
-  if (scan.score === null || scan.score === undefined) return false;
+  const topViolationCount = Array.isArray(scan.raw?.violations) ? scan.raw.violations.length : 0;
+  const nonMinorImpactCount = scan.impactCritical + scan.impactSerious + scan.impactModerate;
+  const issueCount = scan.issues ?? 0;
 
-  // Must have some meaningful data
-  const hasIssueData = scan.issues !== null && scan.issues !== undefined;
-  const hasImpactData = (scan.impactCritical + scan.impactSerious + scan.impactModerate + scan.impactMinor) >= 0;
+  return (
+    issueCount >= MIN_INDEXABLE_ISSUES &&
+    topViolationCount >= MIN_INDEXABLE_TOP_VIOLATIONS &&
+    nonMinorImpactCount > 0
+  );
+}
 
-  return hasIssueData && hasImpactData;
+export function isPublicReportIndexable(report: any): boolean {
+  const topViolationCount = Array.isArray(report?.top_violations)
+    ? report.top_violations.length
+    : 0;
+  const nonMinorImpactCount =
+    toNumber(report?.impact_critical) +
+    toNumber(report?.impact_serious) +
+    toNumber(report?.impact_moderate);
+
+  return Boolean(
+    report?.allow_indexing &&
+    toNumber(report?.issues_total) >= MIN_INDEXABLE_ISSUES &&
+    topViolationCount >= MIN_INDEXABLE_TOP_VIOLATIONS &&
+    nonMinorImpactCount > 0
+  );
 }
 
 /**
@@ -311,6 +336,13 @@ export async function getIndexablePublicDomains(): Promise<{ normalized_domain: 
           WHERE r.site_id = s.id
             AND r.is_public = true
             AND r.allow_indexing = true
+            AND COALESCE(r.issues_total, 0) >= ${MIN_INDEXABLE_ISSUES}
+            AND (
+              COALESCE(r.impact_critical, 0) +
+              COALESCE(r.impact_serious, 0) +
+              COALESCE(r.impact_moderate, 0)
+            ) > 0
+            AND COALESCE(jsonb_array_length(r.top_violations), 0) >= ${MIN_INDEXABLE_TOP_VIOLATIONS}
         )
       ORDER BY s.last_scanned_at DESC
       LIMIT 5000

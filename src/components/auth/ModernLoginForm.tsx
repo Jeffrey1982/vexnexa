@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { useState, useEffect, useMemo, useRef } from 'react'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -311,12 +312,12 @@ export default function ModernLoginForm() {
 
             <div className="text-center space-y-4">
               <div className="text-sm">
-                <a
+                <Link
                   href="/auth/forgot-password"
                   className="font-medium text-primary underline underline-offset-2 transition-colors hover:text-primary/80"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               {/* OAuth Section */}

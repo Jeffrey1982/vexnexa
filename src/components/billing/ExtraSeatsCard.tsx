@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -210,9 +211,9 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
             <Info className="h-4 w-4" />
             <AlertDescription>
               Upgrade to a paid plan to purchase extra seats.
-              <a href="/pricing" className="ml-2 underline font-medium">
+              <Link href="/pricing" className="ml-2 underline font-medium">
                 View plans →
-              </a>
+              </Link>
             </AlertDescription>
           </Alert>
         ) : (

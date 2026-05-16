@@ -3,8 +3,17 @@ import { getIndexablePublicDomains } from '@/lib/public-reports'
 
 export const dynamic = 'force-dynamic'
 
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 
   let domains: { normalized_domain: string; updated_at: string }[] = []
 
@@ -17,10 +26,8 @@ export async function GET() {
   const urlset = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${domains.map(d => `  <url>
-    <loc>${baseUrl}/report/${encodeURIComponent(d.normalized_domain)}</loc>
+    <loc>${escapeXml(`${baseUrl}/report/${encodeURIComponent(d.normalized_domain)}`)}</loc>
     <lastmod>${new Date(d.updated_at).toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
   </url>`).join('\n')}
 </urlset>`
 

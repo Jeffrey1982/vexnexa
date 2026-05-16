@@ -2,9 +2,18 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { BLOG_SEO_LOCALES, getBlogBaseSlug, getBlogPublicUrl, isBlogSeoLocale } from '@/lib/blog-seo'
 import { DIGITAL_ACCESSIBILITY_PIVOT_SLUG } from '@/lib/static-blog-posts'
+import { AUDIT_MONITORING_2026_SLUG } from '@/lib/audit-monitoring-static-post'
 
 // Configuration
-const BASE_URL: string = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+const BASE_URL: string = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+const STATIC_BLOG_SLUGS = [
+  DIGITAL_ACCESSIBILITY_PIVOT_SLUG,
+  AUDIT_MONITORING_2026_SLUG,
+] as const
+const STATIC_BLOG_LASTMOD: Record<(typeof STATIC_BLOG_SLUGS)[number], string> = {
+  [DIGITAL_ACCESSIBILITY_PIVOT_SLUG]: '2026-05-16',
+  [AUDIT_MONITORING_2026_SLUG]: '2026-05-16',
+}
 
 function escapeXml(str: string): string {
   return str
@@ -31,6 +40,7 @@ export async function GET(): Promise<NextResponse> {
 
     const cmsUrlNodes = posts
       .filter((post) => isBlogSeoLocale(post.locale))
+      .filter((post) => !STATIC_BLOG_SLUGS.includes(getBlogBaseSlug(post.slug) as (typeof STATIC_BLOG_SLUGS)[number]))
       .map((post) => {
         const loc: string = escapeXml(
           getBlogPublicUrl(post.locale, getBlogBaseSlug(post.slug)).replace('https://vexnexa.com', BASE_URL)
@@ -38,16 +48,18 @@ export async function GET(): Promise<NextResponse> {
         const lastmod: string = (post.updatedAt || post.publishedAt || new Date())
           .toISOString()
           .split('T')[0]
-        return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+        return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`
       })
 
-    const staticUrlNodes = BLOG_SEO_LOCALES.map((locale) => {
-      const loc = escapeXml(
-        getBlogPublicUrl(locale, DIGITAL_ACCESSIBILITY_PIVOT_SLUG).replace('https://vexnexa.com', BASE_URL)
-      )
+    const staticUrlNodes = STATIC_BLOG_SLUGS.flatMap((slug) =>
+      BLOG_SEO_LOCALES.map((locale) => {
+        const loc = escapeXml(
+          getBlogPublicUrl(locale, slug).replace('https://vexnexa.com', BASE_URL)
+        )
 
-      return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`
-    })
+        return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${STATIC_BLOG_LASTMOD[slug]}</lastmod>\n  </url>`
+      })
+    )
 
     const urlNodes = [...staticUrlNodes, ...cmsUrlNodes].join('\n')
 

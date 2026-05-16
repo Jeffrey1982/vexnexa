@@ -13,7 +13,7 @@ export default function CookiesPage() {
             </h1>
 
             <div className="text-muted-foreground mb-6">
-              <p className="mb-4">Last updated: {new Date().toLocaleDateString('en-US')}</p>
+              <p className="mb-4">Last updated: May 16, 2026</p>
             </div>
 
             <div className="prose prose-lg max-w-none">
@@ -181,7 +181,7 @@ export default function CookiesPage() {
                 </p>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                   <p className="mb-2"><strong>Email:</strong> <a href="mailto:info@vexnexa.com" className="text-blue-600 hover:text-blue-800">info@vexnexa.com</a></p>
-                  <p className="mb-2"><strong>Website:</strong> <a href="/contact" className="text-blue-600 hover:text-blue-800">Contact form</a></p>
+                  <p className="mb-2"><strong>Website:</strong> <Link href="/contact" className="text-blue-600 hover:text-blue-800">Contact form</Link></p>
                   <p className="mb-2"><strong>Address:</strong> Provencialeweg 46B, 1506 MC Zaandam, Netherlands</p>
                   <p className="mb-2"><strong>Chamber of Commerce:</strong> 94848262</p>
                   <p><strong>Establishment Number:</strong> 000060294744</p>

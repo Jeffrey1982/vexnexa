@@ -66,11 +66,6 @@ function JsonLd(): React.ReactElement {
       priceCurrency: "EUR",
       description: "Free trial scan available",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.7",
-      ratingCount: "82",
-    },
   };
 
   return (

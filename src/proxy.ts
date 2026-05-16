@@ -5,6 +5,43 @@ import { apiLimiter, authLimiter } from '@/lib/rate-limit'
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl
   const pathname = url.pathname
+  const hostname = request.headers.get('host')?.split(':')[0]?.toLowerCase()
+  const requestHeaders = new Headers(request.headers)
+  const pathLocale = pathname.match(/^\/(en|nl|de|fr|es|pt)(?:\/|$)/)?.[1]
+
+  if (pathLocale) {
+    requestHeaders.set('x-vn-locale', pathLocale)
+  }
+
+  if (hostname === 'www.vexnexa.com') {
+    const redirectUrl = url.clone()
+    redirectUrl.hostname = 'vexnexa.com'
+    return NextResponse.redirect(redirectUrl, 301)
+  }
+
+  const legacyBlogMatch = pathname.match(/^\/blog\/([^/]+)$/)
+  const legacyBlogLocale = legacyBlogMatch?.[1]?.match(/-(en|nl|de|fr|es|pt)$/)?.[1]
+
+  if (legacyBlogMatch && legacyBlogLocale) {
+    const baseSlug = legacyBlogMatch[1].slice(0, -(legacyBlogLocale.length + 1))
+    const redirectUrl = url.clone()
+    redirectUrl.pathname = legacyBlogLocale === 'nl'
+      ? `/blog/${baseSlug}`
+      : `/${legacyBlogLocale}/${baseSlug}`
+    return NextResponse.redirect(redirectUrl, 301)
+  }
+
+  const dutchStaticBlogSlugs = [
+    'the-digital-accessibility-pivot',
+    'waarom-eenmalige-toegankelijkheidsaudits-2026',
+  ]
+  const dutchLocalizedBlogMatch = pathname.match(/^\/nl\/([^/]+)$/)
+
+  if (dutchLocalizedBlogMatch && dutchStaticBlogSlugs.includes(dutchLocalizedBlogMatch[1])) {
+    const redirectUrl = url.clone()
+    redirectUrl.pathname = `/blog/${dutchLocalizedBlogMatch[1]}`
+    return NextResponse.redirect(redirectUrl, 301)
+  }
 
   if (pathname === '/sw.js') {
     const response = NextResponse.next()
@@ -78,7 +115,7 @@ export async function proxy(request: NextRequest) {
   // Required so that session cookies set by /auth/callback (server-side)
   // are visible to the browser client on the next page load (e.g. /auth/reset-password).
   let response = NextResponse.next({
-    request: { headers: request.headers },
+    request: { headers: requestHeaders },
   })
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -95,7 +132,7 @@ export async function proxy(request: NextRequest) {
             request.cookies.set(name, value)
           )
           response = NextResponse.next({
-            request: { headers: request.headers },
+            request: { headers: requestHeaders },
           })
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
@@ -110,6 +147,29 @@ export async function proxy(request: NextRequest) {
 
   // Prevent indexing of ALL API routes
   if (pathname.startsWith('/api/')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  }
+
+  const noindexPrefixes = [
+    '/admin',
+    '/advanced-analytics',
+    '/analytics',
+    '/auth',
+    '/checkout',
+    '/dashboard',
+    '/newsletter',
+    '/onboarding',
+    '/scans',
+    '/settings',
+    '/sites',
+    '/teams',
+  ] as const
+  const noindexExactPaths = new Set(['/get-started', '/reset-password', '/unauthorized'])
+
+  if (
+    noindexExactPaths.has(pathname) ||
+    noindexPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))
+  ) {
     response.headers.set('X-Robots-Tag', 'noindex, nofollow')
   }
 

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { adminFetch } from "@/lib/adminFetch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,7 +55,7 @@ export default async function MessagesPage({ searchParams }: PageProps) {
           <CardContent className="pt-6 pb-6 text-center">
             <p className="text-muted-foreground text-sm">
               Select a ticket from the{" "}
-              <a href="/admin/support/tickets" className="text-[var(--vn-primary)] hover:underline">Tickets</a>{" "}
+              <Link href="/admin/support/tickets" className="text-[var(--vn-primary)] hover:underline">Tickets</Link>{" "}
               page to view its message thread.
             </p>
           </CardContent>
@@ -94,9 +95,9 @@ export default async function MessagesPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      <a href="/admin/support/tickets" className="inline-block text-sm text-[var(--vn-primary)] hover:underline">
+      <Link href="/admin/support/tickets" className="inline-block text-sm text-[var(--vn-primary)] hover:underline">
         ← Back to Tickets
-      </a>
+      </Link>
 
       <Card className="rounded-2xl">
         <CardHeader className="pb-3">

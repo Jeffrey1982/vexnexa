@@ -46,13 +46,18 @@ export function getBlogPublicUrl(locale: string, baseSlug: string): string {
 }
 
 export function getBlogHreflangAlternates(versions: Array<{ locale: string | null }>, baseSlug: string) {
-  return versions.reduce<Record<string, string>>((alternates, version) => {
+  const alternates = versions.reduce<Record<string, string>>((alternates, version) => {
     const locale = version.locale || "en";
     if (!isBlogSeoLocale(locale)) return alternates;
 
     alternates[locale] = getBlogPublicUrl(locale, baseSlug);
     return alternates;
   }, {});
+
+  const defaultUrl = alternates.nl || alternates.en || Object.values(alternates)[0];
+  if (defaultUrl) alternates["x-default"] = defaultUrl;
+
+  return alternates;
 }
 
 export function getOriginalBlogLocale(versions: Array<{ locale: string | null; publishedAt?: Date | null; createdAt?: Date | null }>) {

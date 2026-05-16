@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, BookOpenText, Clock3 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
+import { getBlogBaseSlug, getBlogPublicPath } from "@/lib/blog-seo";
 
 type LatestPost = {
   slug: string;
+  locale: string | null;
   title: string;
   excerpt: string | null;
   publishedAt: string | null;
@@ -137,7 +139,7 @@ export function LatestBlogSection() {
             : posts.map((post) => (
                 <article key={post.slug} className="group flex flex-col">
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={getBlogPublicPath(post.locale || locale, getBlogBaseSlug(post.slug))}
                     className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-primary)] focus-visible:ring-offset-2 rounded-lg"
                   >
                     <div

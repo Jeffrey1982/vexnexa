@@ -1,45 +1,53 @@
 import { NextResponse } from 'next/server'
 
-// Build-time constant to avoid changing lastmod on each request
-const LAST_MODIFIED = new Date().toISOString()
+const PUBLIC_PAGE_LASTMOD = '2026-05-16'
+
+const PAGE_PATHS = [
+  '/',
+  '/features',
+  '/pricing',
+  '/about',
+  '/contact',
+  '/updates',
+  '/methodology',
+  '/compliance',
+  '/eaa-compliance',
+  '/eaa-compliance-monitoring',
+  '/for-agencies',
+  '/partner-apply',
+  '/pilot-partner-program',
+  '/blog',
+  '/changelog',
+  '/wcag-scan',
+  '/website-accessibility-checker',
+  '/white-label-accessibility-reports',
+  '/accessibility-monitoring-agencies',
+  '/wcag-compliance-report',
+  '/sample-report',
+  '/legal/privacy',
+  '/legal/security',
+  '/legal/sla',
+  '/legal/terms',
+  '/legal/cookies',
+] as const
+
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vexnexa.com'
-
-  const pages = [
-    { url: baseUrl, priority: 1.0, changefreq: 'weekly' },
-    { url: `${baseUrl}/features`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/pricing`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/about`, priority: 0.7, changefreq: 'monthly' },
-    { url: `${baseUrl}/contact`, priority: 0.7, changefreq: 'monthly' },
-    { url: `${baseUrl}/updates`, priority: 0.75, changefreq: 'weekly' },
-    { url: `${baseUrl}/methodology`, priority: 0.75, changefreq: 'monthly' },
-    { url: `${baseUrl}/compliance`, priority: 0.75, changefreq: 'monthly' },
-    { url: `${baseUrl}/partner-apply`, priority: 0.85, changefreq: 'weekly' },
-    { url: `${baseUrl}/blog`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/blog/the-digital-accessibility-pivot`, priority: 0.8, changefreq: 'monthly' },
-    { url: `${baseUrl}/changelog`, priority: 0.6, changefreq: 'weekly' },
-    { url: `${baseUrl}/wcag-scan`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/website-accessibility-checker`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/white-label-accessibility-reports`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/accessibility-monitoring-agencies`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/wcag-compliance-report`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/for-agencies`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/eaa-compliance-monitoring`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/sample-report`, priority: 0.8, changefreq: 'monthly' },
-    { url: `${baseUrl}/legal/privacy`, priority: 0.3, changefreq: 'monthly' },
-    { url: `${baseUrl}/legal/security`, priority: 0.3, changefreq: 'monthly' },
-    { url: `${baseUrl}/legal/sla`, priority: 0.3, changefreq: 'monthly' },
-    { url: `${baseUrl}/legal/terms`, priority: 0.3, changefreq: 'monthly' },
-  ]
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 
   const urlset = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(page => `  <url>
-    <loc>${page.url}</loc>
-    <lastmod>${LAST_MODIFIED}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
+${PAGE_PATHS.map(path => `  <url>
+    <loc>${escapeXml(`${baseUrl}${path === '/' ? '' : path}`)}</loc>
+    <lastmod>${PUBLIC_PAGE_LASTMOD}</lastmod>
   </url>`).join('\n')}
 </urlset>`
 
