@@ -84,8 +84,8 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <nav
       className={cn(
-        "sticky top-0 z-50 border-b border-[#D9DED6] bg-[#F8F7F2]/88 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,background-color] duration-300",
-        scrolled && "bg-[#F8F7F2]/94 shadow-[0_12px_34px_-24px_rgba(13,18,16,0.45)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.45)]",
+        "sticky top-0 z-50 border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-base)]/88 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,background-color] duration-300",
+        scrolled && "bg-[var(--color-surface-base)]/94 shadow-[0_12px_34px_-24px_rgba(13,18,16,0.45)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.45)]",
         className
       )}
       aria-label="Main navigation"
@@ -113,10 +113,10 @@ export function Navbar({ className }: NavbarProps) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-[#1F4A2D] after:transition-all after:duration-200",
+                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-[var(--color-brand-primary-dark)] after:transition-all after:duration-200",
                     active
-                      ? "text-[#0D1210] after:w-full"
-                      : "text-[#58645D] after:w-0 hover:text-[#0D1210] hover:after:w-full"
+                      ? "text-[var(--color-ink-900)] after:w-full"
+                      : "text-[var(--color-ink-500)] after:w-0 hover:text-[var(--color-ink-900)] hover:after:w-full"
                   )}
                 >
                   {item.name}
@@ -151,7 +151,7 @@ export function Navbar({ className }: NavbarProps) {
                   asChild
                   variant="ghost"
                   size="sm"
-                  className="font-medium text-sm text-[#0D1210] hover:bg-[#ECEEE6]"
+                  className="font-medium text-sm text-[var(--color-ink-900)] hover:bg-[var(--color-surface-warm)]"
                 >
                   <Link href="/auth/login">{t('login')}</Link>
                 </Button>
@@ -159,7 +159,7 @@ export function Navbar({ className }: NavbarProps) {
                   asChild
                   variant="default"
                   size="sm"
-                  className="bg-[#0D1210] font-medium text-sm text-[#F8F7F2] hover:bg-[#1F4A2D]"
+                  className="bg-[var(--color-ink-900)] font-medium text-sm text-[var(--color-surface-base)] hover:bg-[var(--color-brand-primary)] dark:hover:bg-[var(--color-brand-primary-dark)]"
                   onClick={() => handleCtaClick("navbar_primary")}
                 >
                   <Link href="/auth/register">{t('signup')}</Link>
@@ -172,7 +172,7 @@ export function Navbar({ className }: NavbarProps) {
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="hover:bg-[#E7EEE8] hover:text-[#1F4A2D] transition-all duration-200">
+              <Button variant="ghost" size="icon" className="hover:bg-[var(--color-surface-warm)] hover:text-[var(--color-brand-primary-dark)] transition-all duration-200">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
