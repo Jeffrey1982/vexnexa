@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Navbar } from "@/components/marketing/Navbar";
 import { Footer } from "@/components/marketing/Footer";
 import { CookieBanner } from "@/components/marketing/CookieBanner";
-import { SkipLink } from "@/components/marketing/SkipLink";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
@@ -47,7 +46,6 @@ export default function MarketingLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <SkipLink />
       <Navbar />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         {children}

@@ -139,8 +139,7 @@ export async function requireAdmin() {
 
   try {
     user = await requireAuth();
-  } catch (error) {
-    console.warn('[requireAdmin] Auth failed, redirecting to login:', error instanceof Error ? error.message : 'unknown');
+  } catch {
     redirect('/auth/login?redirect=/admin');
   }
 
@@ -157,7 +156,6 @@ export async function requireAdmin() {
     redirect('/unauthorized');
   }
 
-  console.log(`[requireAdmin] Admin access granted for: ${user.email}`);
   return user;
 }
 
