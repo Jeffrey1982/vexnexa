@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X, Twitter } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -52,7 +52,6 @@ export function Navbar({ className }: NavbarProps) {
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
     { name: t('sampleReport'), href: "/sample-report" },
-    { name: t('updates'), href: "/updates" },
     { name: t('contact'), href: "/contact" },
   ];
 
@@ -85,24 +84,24 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <nav
       className={cn(
-        "sticky top-0 z-50 border-b border-border/40 bg-background/75 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,background-color] duration-300",
-        scrolled && "shadow-[0_8px_30px_-12px_rgba(10,37,64,0.18)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.45)]",
+        "sticky top-0 z-50 border-b border-[#D9DED6] bg-[#F8F7F2]/88 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,background-color] duration-300",
+        scrolled && "bg-[#F8F7F2]/94 shadow-[0_12px_34px_-24px_rgba(13,18,16,0.45)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.45)]",
         className
       )}
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex h-[4.25rem] items-center justify-between md:h-20">
+        <div className="flex h-[4.25rem] items-center justify-between md:h-[4.75rem]">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center rounded-lg outline-none ring-offset-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
-            <VexnexaLogo size={46} />
+            <VexnexaLogo size={40} />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center space-x-5 md:flex lg:space-x-8">
+          <div className="hidden items-center space-x-5 md:flex lg:space-x-7">
             {navigationItems.map((item) => {
               const active =
                 item.href === "/"
@@ -114,10 +113,10 @@ export function Navbar({ className }: NavbarProps) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-primary after:transition-all after:duration-200",
+                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-[#1F4A2D] after:transition-all after:duration-200",
                     active
-                      ? "text-foreground after:w-full"
-                      : "text-muted-foreground after:w-0 hover:text-foreground hover:after:w-full"
+                      ? "text-[#0D1210] after:w-full"
+                      : "text-[#58645D] after:w-0 hover:text-[#0D1210] hover:after:w-full"
                   )}
                 >
                   {item.name}
@@ -127,27 +126,10 @@ export function Navbar({ className }: NavbarProps) {
           </div>
 
           {/* Desktop Right Section: Social + Language + Auth */}
-          <div className="hidden md:flex items-center gap-6">
-            {/* Social Icons */}
-            <div className="flex items-center gap-2">
-              <a
-                href="https://twitter.com/vexnexa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-9 w-9 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary flex items-center justify-center transition-all duration-200"
-                aria-label="Visit VexNexa on Twitter"
-              >
-                <Twitter className="w-4 h-4" aria-hidden="true" />
-              </a>
-            </div>
-
-            {/* Language Selector */}
+          <div className="hidden md:flex items-center gap-3 lg:gap-4">
             <LanguageSelector />
-
-            {/* Theme Toggle */}
             <ThemeToggle />
 
-            {/* Auth Buttons */}
             <div className="flex items-center space-x-3">
             {isLoading ? (
               <div className="w-20 h-8 bg-muted rounded animate-pulse"></div>
@@ -167,9 +149,9 @@ export function Navbar({ className }: NavbarProps) {
               <>
                 <Button
                   asChild
-                  variant="secondary"
+                  variant="ghost"
                   size="sm"
-                  className="font-medium text-sm"
+                  className="font-medium text-sm text-[#0D1210] hover:bg-[#ECEEE6]"
                 >
                   <Link href="/auth/login">{t('login')}</Link>
                 </Button>
@@ -177,7 +159,7 @@ export function Navbar({ className }: NavbarProps) {
                   asChild
                   variant="default"
                   size="sm"
-                  className="font-medium text-sm"
+                  className="bg-[#0D1210] font-medium text-sm text-[#F8F7F2] hover:bg-[#1F4A2D]"
                   onClick={() => handleCtaClick("navbar_primary")}
                 >
                   <Link href="/auth/register">{t('signup')}</Link>
@@ -190,7 +172,7 @@ export function Navbar({ className }: NavbarProps) {
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="hover:bg-primary/5 hover:text-primary transition-all duration-200">
+              <Button variant="ghost" size="icon" className="hover:bg-[#E7EEE8] hover:text-[#1F4A2D] transition-all duration-200">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
@@ -287,21 +269,6 @@ export function Navbar({ className }: NavbarProps) {
                   <ThemeToggle />
                 </div>
 
-                {/* Social Icons - Mobile */}
-                <div className="pt-4 pb-2">
-                  <p className="text-sm font-medium text-muted-foreground mb-3">{t('followUs')}</p>
-                  <div className="flex items-center gap-3">
-                    <a
-                      href="https://twitter.com/vexnexa"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-10 w-10 rounded-xl bg-muted hover:bg-primary text-muted-foreground hover:text-white flex items-center justify-center transition-all duration-200 hover:shadow-elev2"
-                      aria-label="Visit VexNexa on Twitter"
-                    >
-                      <Twitter className="w-5 h-5" aria-hidden="true" />
-                    </a>
-                  </div>
-                </div>
               </div>
             </SheetContent>
           </Sheet>

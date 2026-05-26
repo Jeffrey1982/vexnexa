@@ -88,13 +88,13 @@ export function Hero() {
           </div>
 
           <div className="mt-10 hidden max-w-xl gap-3 sm:grid sm:grid-cols-3">
-            <ProofPill icon={FileCheck2} label="WCAG 2.2 AA" value="Audit evidence" />
-            <ProofPill icon={Sparkles} label="AI vision" value="Context checks" />
-            <ProofPill icon={CheckCircle2} label="+8" value="This month" />
+            <ProofPill icon={FileCheck2} label="WCAG 2.2 AA" value="Report evidence" />
+            <ProofPill icon={Sparkles} label="Visual checks" value="Context beyond tags" />
+            <ProofPill icon={CheckCircle2} label="+8" value="Regression delta" />
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative min-w-0">
           <ProductPreview />
         </div>
       </div>
@@ -126,7 +126,7 @@ function ProductPreview() {
   const t = useTranslations("hero");
 
   return (
-    <figure className="relative mx-auto w-full max-w-3xl lg:mx-0">
+    <figure className="relative mx-auto w-full max-w-full lg:mx-0 lg:max-w-3xl">
       <figcaption className="sr-only">
         VexNexa report and scan result preview
       </figcaption>
@@ -200,14 +200,14 @@ function ProductPreview() {
             </div>
           </div>
 
-          <div className="relative min-h-[360px] bg-[#ECEBE3] p-3 sm:min-h-[440px]">
+          <div className="relative min-h-[300px] bg-[#ECEBE3] p-3 sm:min-h-[440px]">
             <Image
               src="/Screenshot1.png"
               alt="VexNexa accessibility report preview with compliance score, WCAG standard, and issue summary"
               fill
               priority
               sizes="(min-width: 1024px) 46vw, 92vw"
-              className="object-cover object-top"
+              className="object-cover object-top sm:object-cover"
             />
             <div
               className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#FDFCF8] to-transparent"
