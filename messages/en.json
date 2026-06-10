@@ -12,6 +12,8 @@
     "getStarted": "Get Started",
     "changelog": "Changelog",
     "language": "Language",
+    "theme": "Theme",
+    "tagline": "WCAG scans that provide real insights",
     "followUs": "Follow us",
     "forAgencies": "For Agencies",
     "sampleReport": "Sample Report",
@@ -31,7 +33,19 @@
     "severitySerious": "Serious",
     "severityModerate": "Moderate",
     "severityMinor": "Minor",
-    "trustLabel": "Trusted by agencies and EU businesses"
+    "trustLabel": "Trusted by agencies and EU businesses",
+    "proofPill1Label": "WCAG 2.2 AA",
+    "proofPill1Value": "Report evidence",
+    "proofPill2Label": "Visual checks",
+    "proofPill2Value": "Context beyond tags",
+    "proofPill3Label": "+8",
+    "proofPill3Value": "Regression delta",
+    "auditBadge": "Audit-ready PDF",
+    "liveLabel": "Live",
+    "urlLabel": "Website URL",
+    "urlPlaceholder": "https://your-website.com",
+    "urlHint": "Free scan · No credit card needed",
+    "urlInvalid": "Enter a valid website URL, e.g. https://example.com"
   },
   "common": {
     "startFreeScan": "Start free scan",
@@ -1386,7 +1400,13 @@
         "eyebrow": "Visibility",
         "title": "You can't fix what you can't see.",
         "body": "VexNexa uncovers approximately 30% of accessibility barriers that traditional rule-based automation misses — interaction logic, perceptual ambiguity, and context-dependent failures that need vision-level understanding.",
-        "footnote": "Industry observation across published WCAG audits; actual coverage gain varies by site complexity."
+        "footnote": "Industry observation across published WCAG audits; actual coverage gain varies by site complexity.",
+        "stat1Label": "AI-Vision",
+        "stat1Value": "Logic + visual context",
+        "stat2Label": "Ambiguity",
+        "stat2Value": "What axe-core misses",
+        "stat3Label": "Audit-ready",
+        "stat3Value": "Evidence per finding"
       },
       "trustBar": {
         "eyebrow": "Built for enterprise risk and audit teams",

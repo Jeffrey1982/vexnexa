@@ -13,6 +13,7 @@ import DashboardNav from "@/components/dashboard/DashboardNav";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { normalizeUrl } from "@/lib/url";
+import { consumePendingScanUrl } from "@/lib/pending-scan";
 
 export default function NewSitePage() {
   const [user, setUser] = useState<any>(null);
@@ -26,6 +27,12 @@ export default function NewSitePage() {
     getUser();
   }, [supabase]);
   const [url, setUrl] = useState("");
+
+  // Prefill with the URL captured on the marketing hero before signup
+  useEffect(() => {
+    const pending = consumePendingScanUrl();
+    if (pending) setUrl(pending);
+  }, []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();

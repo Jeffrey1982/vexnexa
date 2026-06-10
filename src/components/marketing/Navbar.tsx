@@ -185,7 +185,7 @@ export function Navbar({ className }: NavbarProps) {
                   </Link>
                 </SheetTitle>
                 <SheetDescription className="text-left pt-2">
-                  WCAG scans that provide real insights
+                  {t('tagline')}
                 </SheetDescription>
               </SheetHeader>
               
@@ -265,7 +265,7 @@ export function Navbar({ className }: NavbarProps) {
 
                 {/* Theme Toggle - Mobile */}
                 <div className="pt-4 pb-2 border-b border-border/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-3">Theme</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-3">{t('theme')}</p>
                   <ThemeToggle />
                 </div>
 

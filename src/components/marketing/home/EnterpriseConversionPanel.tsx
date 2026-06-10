@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ArrowDownToLine, ArrowRight, Calculator, Check, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics-events";
+import { PLAN_PRICES } from "@/lib/billing/pricing-config";
 
 const MANUAL_MIN_PER_PAGE = 30;
 const VEXNEXA_MIN_PER_PAGE = 6;
@@ -16,7 +17,6 @@ export function EnterpriseConversionPanel() {
   const pricing = useTranslations("home.enterprise.pricingTeaser");
   const [pages, setPages] = useState<number>(1000);
   const [rate, setRate] = useState<number>(85);
-  const [vatInclusive, setVatInclusive] = useState<boolean>(true);
 
   const result = useMemo(() => {
     const safePages = Math.max(0, Math.min(100000, Number.isFinite(pages) ? pages : 0));
@@ -40,9 +40,8 @@ export function EnterpriseConversionPanel() {
     [locale],
   );
 
-  const PRO_INC_VAT = 99;
-  const PRO_EX_VAT = Math.round((PRO_INC_VAT / 1.21) * 100) / 100;
-  const displayPrice = vatInclusive ? PRO_INC_VAT : PRO_EX_VAT;
+  // Fixed VAT-inclusive price — single source of truth in pricing-config
+  const displayPrice = PLAN_PRICES.PRO.monthly;
   const fmtPrice = new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "EUR",
@@ -141,32 +140,11 @@ export function EnterpriseConversionPanel() {
               <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{pricing("title")}</h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{pricing("subtitle")}</p>
 
-              <div className="mt-6 inline-flex items-center gap-1 rounded-full border border-border bg-card p-1" role="tablist" aria-label={pricing("vatToggleLabel")}>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={vatInclusive}
-                  onClick={() => setVatInclusive(true)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${vatInclusive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  {pricing("vatIncl")}
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={!vatInclusive}
-                  onClick={() => setVatInclusive(false)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${!vatInclusive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
-                >
-                  {pricing("vatExcl")}
-                </button>
-              </div>
-
-              <div className="mt-5 flex items-baseline justify-center gap-2">
+              <div className="mt-6 flex items-baseline justify-center gap-2">
                 <span className="font-display text-5xl font-bold text-foreground tabular-nums">{fmtPrice.format(displayPrice)}</span>
                 <span className="text-sm text-muted-foreground">{pricing("perMonth")}</span>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">{vatInclusive ? pricing("vatNoticeIncl") : pricing("vatNoticeExcl")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{pricing("vatNoticeIncl")}</p>
 
               <ul className="mx-auto mt-6 grid max-w-md gap-2 text-left text-sm text-muted-foreground sm:grid-cols-2">
                 {["audit", "portfolio", "aiVision", "history"].map((key) => (

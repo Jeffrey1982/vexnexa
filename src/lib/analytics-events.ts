@@ -28,6 +28,7 @@ export type FunnelEvent =
   | 'pilot_partner_contact_click'
   | 'pilot_banner_click'
   | 'hero_cta_click'
+  | 'hero_scan_submit'
   | 'pricing_vat_toggle'
   | 'cta_click';
 

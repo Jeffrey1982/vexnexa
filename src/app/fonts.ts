@@ -14,14 +14,3 @@ export const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-/** @deprecated Use `interTight` — kept for layout compatibility */
-export const outfit = interTight
-
-/** @deprecated Use `interTight` — kept for layout compatibility */
-export const inter = interTight
-
-/** @deprecated Use `interTight` — kept for layout compatibility */
-export const lexend = interTight
-
-/** @deprecated Use `interTight` — kept for layout compatibility */
-export const spaceGrotesk = interTight

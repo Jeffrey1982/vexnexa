@@ -20,9 +20,9 @@ export function VisibilityHook() {
   const t = useTranslations("home.enterprise.visibility");
 
   const stats = [
-    { Icon: ScanLine, label: "AI-Vision", value: "Logica + visuele context" },
-    { Icon: Sparkles, label: "Ambiguïteit", value: "Wat axe-core mist" },
-    { Icon: FileCheck2, label: "Audit-ready", value: "Bewijs per bevinding" },
+    { Icon: ScanLine, label: t("stat1Label"), value: t("stat1Value") },
+    { Icon: Sparkles, label: t("stat2Label"), value: t("stat2Value") },
+    { Icon: FileCheck2, label: t("stat3Label"), value: t("stat3Value") },
   ];
 
   return (

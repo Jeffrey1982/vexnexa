@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { TouchButton } from "@/components/ui/touch-button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, AlertCircle, Sparkles, Info } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { normalizeUrl } from "@/lib/url";
+import { consumePendingScanUrl } from "@/lib/pending-scan";
 import { cn } from "@/lib/utils";
 
 export function NewScanForm() {
@@ -18,6 +19,12 @@ export function NewScanForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+
+  // Prefill with the URL captured on the marketing hero before signup
+  useEffect(() => {
+    const pending = consumePendingScanUrl();
+    if (pending) setUrl(pending);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +101,7 @@ export function NewScanForm() {
         <TouchButton
           type="submit"
           disabled={!url.trim() || isLoading}
-          className="h-10 sm:h-11 px-4 sm:px-6 text-sm sm:text-base w-full sm:w-auto bg-[#FF7A00] hover:bg-[#FF7A00]/90"
+          className="h-10 sm:h-11 px-4 sm:px-6 text-sm sm:text-base w-full sm:w-auto bg-primary hover:bg-primary/90"
         >
           {isLoading ? (
             <>
@@ -118,13 +125,13 @@ export function NewScanForm() {
           onClick={() => setIncludeVNI((value) => !value)}
           disabled={isLoading}
           aria-pressed={includeVNI}
-          className="group flex w-full max-w-md items-center justify-between gap-4 rounded-xl border border-[#FF8C00]/30 bg-background px-4 py-3 text-left shadow-sm transition-all hover:border-[#FF8C00]/60 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:min-w-[420px]"
+          className="group flex w-full max-w-md items-center justify-between gap-4 rounded-xl border border-primary/30 bg-background px-4 py-3 text-left shadow-sm transition-all hover:border-primary/60 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:min-w-[420px]"
         >
           <span className="min-w-0">
             <span className="flex items-center gap-2 text-sm font-semibold text-foreground sm:text-base">
               {tScan("vniToggle.label")}
               <span
-                className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-[#FF8C00]/40 bg-[#FF8C00]/10 text-[10px] font-bold text-[#FF8C00]"
+                className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-[10px] font-bold text-primary"
                 title={tScan("vniToggle.tooltip")}
                 aria-label={tScan("vniToggle.tooltip")}
               >
@@ -139,7 +146,7 @@ export function NewScanForm() {
           <span
             className={cn(
               "relative inline-flex h-7 w-14 flex-none items-center rounded-full border border-transparent transition-colors",
-              includeVNI ? "bg-[#FF8C00]" : "bg-input"
+              includeVNI ? "bg-primary" : "bg-input"
             )}
             aria-hidden="true"
           >

@@ -14,11 +14,11 @@
   --color-border: #E5E3DD;
   --color-border-strong: #C8C6BF;
 
-  /* ===== Colors - Primary (Burnt Sienna) ===== */
+  /* ===== Colors - Primary (Deep Emerald) ===== */
   --color-primary: #1F4A2D;
-  --color-primary-hover: #1F4A2D;
-  --color-primary-active: #143521;
-  --color-primary-foreground: #F5E6D3;
+  --color-primary-hover: #143521;
+  --color-primary-active: #0A2418;
+  --color-primary-foreground: #FAFAF7;
   --color-primary-50: #F2F8F4;
   --color-primary-100: #E8F0EA;
   --color-primary-200: #C8DDD0;
@@ -34,7 +34,7 @@
   --color-secondary: #0F0F0F;
   --color-secondary-hover: #2A2A2A;
   --color-secondary-active: #050505;
-  --color-secondary-foreground: #F5E6D3;
+  --color-secondary-foreground: #FAFAF7;
   --color-secondary-50: #FAFAF7;
   --color-secondary-100: #F4F4EE;
   --color-secondary-200: #E5E3DD;
@@ -95,7 +95,7 @@
   --color-destructive-900: #4A1010;
 
   /* ===== Typography ===== */
-  --font-display: 'JetBrains Mono', Georgia, 'Times New Roman', serif;
+  --font-display: var(--font-inter-tight), 'Inter Tight', system-ui, -apple-system, sans-serif;
   --font-body: var(--font-inter-tight), 'Inter Tight', system-ui, -apple-system, sans-serif;
 
   --font-size-display-xl: 4.5rem;
@@ -129,7 +129,7 @@
   --shadow-soft-lg: 0 8px 24px rgba(15, 15, 15, 0.15);
 
   /* ===== Gradients ===== */
-  --gradient-primary: linear-gradient(135deg, #1F4A2D 0%, #1F4A2D 100%);
+  --gradient-primary: linear-gradient(135deg, #1F4A2D 0%, #143521 100%);
   --gradient-warm: linear-gradient(135deg, #C8C6BF 0%, #1F4A2D 100%);
   --gradient-hero: linear-gradient(135deg, #0F0F0F 0%, #1F4A2D 100%);
   --gradient-subtle: linear-gradient(to bottom, #FAFAF7 0%, #F4F4EE 100%);

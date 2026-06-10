@@ -12,13 +12,9 @@ const config: Config = {
 		/* Semantic surfaces: background / muted / card — driven by globals.css :root & .dark */
 		fontFamily: {
 			sans: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
-			display: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
+			display: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
 			body: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
-			inter: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
-			jakarta: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
-			dmsans: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif'],
-			spacegrotesk: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
-			urbanist: ['var(--font-inter-tight)', '"Inter Tight"', 'system-ui', 'sans-serif']
+			mono: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', 'ui-monospace', 'monospace']
 		},
 		colors: {
 			background: 'hsl(var(--background))',

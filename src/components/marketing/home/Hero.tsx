@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   CheckCircle2,
@@ -12,6 +14,9 @@ import {
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { normalizeUrl } from "@/lib/url";
+import { setPendingScanUrl } from "@/lib/pending-scan";
+import { trackEvent } from "@/lib/analytics-events";
 
 const severities = [
   { key: "Critical", count: 3, token: "critical", label: "severityCritical" },
@@ -22,6 +27,21 @@ const severities = [
 
 export function Hero() {
   const t = useTranslations("hero");
+  const router = useRouter();
+  const [url, setUrl] = useState("");
+  const [error, setError] = useState("");
+
+  const handleScanSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const normalized = normalizeUrl(url);
+    if (!normalized) {
+      setError(t("urlInvalid"));
+      return;
+    }
+    setPendingScanUrl(normalized);
+    trackEvent("hero_scan_submit", { location: "hero" });
+    router.push("/auth/register");
+  };
 
   return (
     <section
@@ -60,31 +80,64 @@ export function Hero() {
             {t("subhead")}
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <form
+            onSubmit={handleScanSubmit}
+            className="mt-9 flex flex-col gap-3 sm:flex-row"
+            noValidate
+          >
+            <div className="flex-1 sm:max-w-sm">
+              <label htmlFor="hero-scan-url" className="sr-only">
+                {t("urlLabel")}
+              </label>
+              <input
+                id="hero-scan-url"
+                type="text"
+                inputMode="url"
+                autoComplete="url"
+                value={url}
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                  if (error) setError("");
+                }}
+                placeholder={t("urlPlaceholder")}
+                aria-describedby={error ? "hero-scan-error" : undefined}
+                aria-invalid={error ? true : undefined}
+                className="min-h-12 w-full rounded-lg border border-[var(--color-hero-border)] bg-[var(--color-hero-panel)] px-4 text-base text-[var(--color-hero-text)] shadow-sm outline-none transition placeholder:text-[var(--color-hero-muted)] focus:border-[var(--color-brand-primary)]"
+              />
+            </div>
             <Button
-              asChild
+              type="submit"
               size="lg"
               className="min-h-12 rounded-lg bg-[var(--color-hero-text)] px-7 text-base text-[var(--color-hero-panel)] shadow-[0_18px_40px_-22px_rgba(13,18,16,0.85)] hover:bg-[var(--color-brand-primary)] dark:hover:bg-[var(--color-brand-primary-dark)]"
             >
-              <Link href="/auth/register">
-                {t("ctaPrimary")}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+              {t("ctaPrimary")}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="min-h-12 rounded-lg border-[var(--color-hero-border)] bg-[var(--color-hero-panel)]/80 px-7 text-base text-[var(--color-hero-text)] hover:border-[var(--color-brand-primary)] hover:bg-[var(--color-hero-panel-muted)]"
+          </form>
+          <div aria-live="assertive" aria-atomic="true">
+            {error && (
+              <p
+                id="hero-scan-error"
+                className="mt-2 text-sm font-medium text-[var(--color-destructive)]"
+              >
+                {error}
+              </p>
+            )}
+          </div>
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[var(--color-hero-muted)]">
+            <span>{t("urlHint")}</span>
+            <Link
+              href="/sample-report"
+              className="font-semibold text-[var(--color-hero-accent-fg)] underline underline-offset-4 hover:opacity-80"
             >
-              <Link href="/sample-report">{t("ctaSecondary")}</Link>
-            </Button>
+              {t("ctaSecondary")}
+            </Link>
           </div>
 
-          <div className="mt-10 hidden max-w-xl gap-3 sm:grid sm:grid-cols-3">
-            <ProofPill icon={FileCheck2} label="WCAG 2.2 AA" value="Report evidence" />
-            <ProofPill icon={Sparkles} label="Visual checks" value="Context beyond tags" />
-            <ProofPill icon={CheckCircle2} label="+8" value="Regression delta" />
+          <div className="mt-10 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
+            <ProofPill icon={FileCheck2} label={t("proofPill1Label")} value={t("proofPill1Value")} />
+            <ProofPill icon={Sparkles} label={t("proofPill2Label")} value={t("proofPill2Value")} />
+            <ProofPill icon={CheckCircle2} label={t("proofPill3Label")} value={t("proofPill3Value")} />
           </div>
         </div>
 
@@ -126,7 +179,7 @@ function ProductPreview() {
       </figcaption>
 
       <div className="absolute -left-4 top-8 z-10 hidden rounded-lg border border-[var(--color-hero-border)] bg-[var(--color-hero-note-bg)] px-3 py-2 text-xs font-semibold text-[var(--color-hero-note-fg)] shadow-lg sm:block">
-        Audit-ready PDF
+        {t("auditBadge")}
       </div>
 
       <div
@@ -144,7 +197,7 @@ function ProductPreview() {
           </p>
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-hero-accent-fg)]">
             <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-            Live
+            {t("liveLabel")}
           </span>
         </div>
 

@@ -15,9 +15,10 @@
 
 @layer base {
   :root {
-    /* Typography — Zodiak (serif display) + Outfit (body) */
+    /* Typography — Inter Tight (headings + body), JetBrains Mono (accents only) */
     --font-sans: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, sans-serif;
-    --font-display: "JetBrains Mono", ui-monospace, "Menlo", monospace;
+    --font-display: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, sans-serif;
+    --font-mono-accent: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, "Menlo", monospace;
 
     /* Brand accents (HSL — Deep Emerald Technical Precision) */
     --brand-emerald: 140 41% 21%;
@@ -78,7 +79,7 @@
 
     --radius: 0.5rem;
 
-    --gradient-primary: linear-gradient(135deg, #1F4A2D 0%, #1F4A2D 100%);
+    --gradient-primary: linear-gradient(135deg, #1F4A2D 0%, #143521 100%);
     --gradient-subtle: linear-gradient(135deg, #FAFAF7 0%, #F4F4EE 100%);
     --shadow-elegant: 0 1px 3px 0 rgb(42 30 16 / 0.06), 0 1px 2px -1px rgb(42 30 16 / 0.04);
     --shadow-soft: 0 4px 14px -2px rgb(42 30 16 / 0.1);
@@ -90,7 +91,7 @@
     --vn-text: #0F0F0F;
     --vn-text-muted: #6B6B6B;
     --vn-primary: #1F4A2D;
-    --vn-primary-hover: #1F4A2D;
+    --vn-primary-hover: #143521;
     --vn-accent: #E8F0EA;
     --vn-teal: #E8F0EA;
 
@@ -210,7 +211,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "JetBrains Mono", Georgia, "Times New Roman", serif;
+    font-family: var(--font-inter-tight), "Inter Tight", system-ui, -apple-system, sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
@@ -281,7 +282,7 @@
 
   :root {
     --focus-color: #1F4A2D;
-    --focus-color-light: #F5E6D3;
+    --focus-color-light: #9CC0A8;
   }
 
   /* Global focus-visible indicator */
@@ -326,7 +327,7 @@
     left: 0.5rem;
     padding: 0.75rem 1.5rem;
     background: #1F4A2D;
-    color: #F5E6D3;
+    color: #FAFAF7;
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
