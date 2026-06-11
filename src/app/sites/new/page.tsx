@@ -9,8 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ArrowLeft, Globe, Loader2, Play } from "lucide-react";
 import Link from "next/link";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { normalizeUrl } from "@/lib/url";
 import { consumePendingScanUrl } from "@/lib/pending-scan";
@@ -77,7 +75,6 @@ export default function NewSitePage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1 py-8">
         <div className="container mx-auto px-4 max-w-2xl">
         {/* Header */}
@@ -193,7 +190,6 @@ export default function NewSitePage() {
         </Card>
         </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

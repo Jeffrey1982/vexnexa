@@ -8,812 +8,582 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
 import { ScoreBadge } from "@/components/ScoreBadge";
-import { StatCard } from "@/components/StatCard";
-import { SeverityBadge } from "@/components/SeverityBadge";
 import { IssuesByImpactChart } from "@/components/IssuesByImpactChart";
-import { TrendMini } from "@/components/TrendMini";
-import { formatDate, formatDateShort, getFaviconFromUrl } from "@/lib/format";
-import { computeIssueStats, Violation } from "@/lib/axe-types";
-import { Search, Plus, Activity, AlertTriangle, TrendingUp, Users, Shield, FileText, Clock } from "lucide-react";
-import Link from "next/link";
+import { ScoreTrendChart } from "@/components/dashboard/ScoreTrendChart";
+import { ExportButtons } from "@/components/ExportButtons";
 import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
+import { formatDate, formatDateShort, getFaviconFromUrl } from "@/lib/format";
+import { getCurrentUsage } from "@/lib/billing/entitlements";
+import { ENTITLEMENTS } from "@/lib/billing/plans";
 import { cn } from "@/lib/utils";
+import {
+  Activity,
+  AlertTriangle,
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle2,
+  FileText,
+  Globe,
+  Plus,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
-import { ProgressAnimations } from "@/components/enhanced/ProgressAnimations";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { ROICalculator } from "@/components/enhanced/ROICalculator";
-import { ExportButtons } from "@/components/ExportButtons";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getEntitlements } from "@/lib/billing/entitlements";
-import { ENTITLEMENTS } from "@/lib/billing/plans";
+
+interface OverviewData {
+  recentScans: Awaited<ReturnType<typeof getRecentScans>>;
+  trendData: Array<{ date: string; score: number }>;
+  avgScore: number;
+  scoreDelta: number;
+  openIssues: { total: number; critical: number; serious: number; moderate: number; minor: number };
+  siteCount: number;
+  usage: { pages: number; sites: number; period: string };
+}
 
 async function getRecentScans(userId: string) {
-  try {
-    const scans = await prisma.scan.findMany({
-      where: {
-        site: {
-          userId: userId,
-        },
-      },
-      include: {
-        site: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 10,
-    });
-
-    // Serialize dates to strings for client components
-    return scans.map(scan => {
-      const { site, ...scanData } = scan;
-      return {
-        ...scanData,
-        createdAt: scan.createdAt.toISOString(),
-        site: {
-          id: site.id,
-          url: site.url,
-          userId: site.userId,
-          portfolioId: site.portfolioId,
-          createdAt: site.createdAt.toISOString(),
-        }
-      };
-    });
-  } catch (error) {
-    console.error("Failed to fetch scans:", error);
-    return [];
-  }
+  const scans = await prisma.scan.findMany({
+    where: { site: { userId } },
+    include: { site: { select: { id: true, url: true } } },
+    orderBy: { createdAt: "desc" },
+    take: 8,
+  });
+  return scans.map((scan) => ({
+    id: scan.id,
+    status: scan.status,
+    score: scan.score,
+    issues: scan.issues,
+    createdAt: scan.createdAt.toISOString(),
+    hasVni: Boolean(
+      (scan.resultJson as any)?.vni || (scan.raw as any)?.vni
+    ),
+    site: { id: scan.site.id, url: scan.site.url },
+  }));
 }
 
-async function getDashboardStats(userId: string) {
-  try {
-    const lastTenScans = await prisma.scan.findMany({
-      where: {
-        status: "COMPLETED",
-        score: { not: null },
-        site: {
-          userId: userId,
-        },
+async function getOverviewData(userId: string): Promise<OverviewData> {
+  const [recentScans, completedScans, latestPerSite, siteCount, usage] = await Promise.all([
+    getRecentScans(userId),
+    prisma.scan.findMany({
+      where: { status: "COMPLETED", score: { not: null }, site: { userId } },
+      orderBy: { createdAt: "desc" },
+      take: 12,
+      select: { score: true, createdAt: true },
+    }),
+    // Most recent completed scan per site — the issues that are open *right now*
+    prisma.scan.findMany({
+      where: { status: "COMPLETED", site: { userId } },
+      orderBy: { createdAt: "desc" },
+      distinct: ["siteId"],
+      select: {
+        impactCritical: true,
+        impactSerious: true,
+        impactModerate: true,
+        impactMinor: true,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 10,
-    });
+    }),
+    prisma.site.count({ where: { userId } }),
+    getCurrentUsage(userId),
+  ]);
 
-    const avgScore = lastTenScans.length > 0 
-      ? Math.round(lastTenScans.reduce((sum, scan) => sum + (scan.score || 0), 0) / lastTenScans.length)
+  const trendData = completedScans
+    .slice()
+    .reverse()
+    .map((scan) => ({ date: formatDateShort(scan.createdAt), score: scan.score ?? 0 }));
+
+  const avgScore =
+    completedScans.length > 0
+      ? Math.round(completedScans.reduce((sum, s) => sum + (s.score ?? 0), 0) / completedScans.length)
       : 0;
 
-    // Get trend data for mini chart
-    const trendData = lastTenScans.slice().reverse().map((scan) => ({
-      date: formatDateShort(scan.createdAt),
-      score: scan.score || 0,
-    }));
+  const scoreDelta =
+    completedScans.length >= 2
+      ? (completedScans[0].score ?? 0) - (completedScans[1].score ?? 0)
+      : 0;
 
-    // Aggregate impact statistics from recent scans
-    const allViolations: Violation[] = [];
-    lastTenScans.forEach((scan) => {
-      if (scan.raw && typeof scan.raw === 'object' && 'violations' in scan.raw) {
-        const violations = (scan.raw as any).violations || [];
-        allViolations.push(...violations);
-      }
-    });
+  const openIssues = latestPerSite.reduce(
+    (acc, s) => {
+      acc.critical += s.impactCritical;
+      acc.serious += s.impactSerious;
+      acc.moderate += s.impactModerate;
+      acc.minor += s.impactMinor;
+      acc.total += s.impactCritical + s.impactSerious + s.impactModerate + s.impactMinor;
+      return acc;
+    },
+    { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }
+  );
 
-    const impactStats = computeIssueStats(allViolations);
-
-    return {
-      avgScore,
-      trendData,
-      impactStats,
-    };
-  } catch (error) {
-    console.error("Failed to fetch dashboard stats:", error);
-    return {
-      avgScore: 0,
-      trendData: [],
-      impactStats: { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 },
-    };
-  }
+  return { recentScans, trendData, avgScore, scoreDelta, openIssues, siteCount, usage };
 }
 
-function getStatusColor(status: string) {
-  switch (status) {
-    case "done":
-      return "bg-green-100 text-green-800";
-    case "running":
-      return "bg-blue-100 text-blue-800";
-    case "failed":
-      return "bg-red-100 text-red-800";
-    case "queued":
-    default:
-      return "bg-yellow-100 text-yellow-800";
-  }
-}
-
-function EmptyState() {
+function StatusBadge({ status, label }: { status: string; label: string }) {
   return (
-    <Card className="text-center py-12">
-      <CardContent>
-        <Activity className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-        <h3 className="text-lg font-semibold mb-2">No scans yet</h3>
-        <p className="text-muted-foreground mb-4">
-          Get started by scanning your first website for accessibility issues.
-        </p>
+    <Badge
+      variant={status === "COMPLETED" ? "default" : "outline"}
+      className={cn(
+        "text-xs",
+        status === "COMPLETED" && "bg-success text-success-foreground",
+        status === "FAILED" && "bg-critical text-critical-foreground border-transparent",
+        status === "PROCESSING" && "bg-primary text-primary-foreground border-transparent animate-pulse"
+      )}
+    >
+      {label}
+    </Badge>
+  );
+}
+
+function KpiCard({
+  title,
+  value,
+  subtitle,
+  icon: Icon,
+  tone = "default",
+  delta,
+}: {
+  title: string;
+  value: string | number;
+  subtitle?: string;
+  icon: React.ComponentType<{ className?: string }>;
+  tone?: "default" | "critical" | "success";
+  delta?: number;
+}) {
+  return (
+    <Card
+      className={cn(
+        "relative overflow-hidden",
+        tone === "critical" && "border-critical/25 bg-critical/5",
+        tone === "success" && "border-success/25 bg-success/5"
+      )}
+    >
+      <CardContent className="p-5">
+        <div className="flex items-center justify-between pb-2">
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <span
+            className={cn(
+              "flex h-8 w-8 items-center justify-center rounded-lg",
+              tone === "critical" ? "bg-critical/10 text-critical" : "bg-primary/10 text-primary"
+            )}
+          >
+            <Icon className="h-4 w-4" />
+          </span>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-3xl font-bold font-display tracking-tight text-foreground">
+            {typeof value === "number" ? value.toLocaleString() : value}
+          </span>
+          {delta !== undefined && delta !== 0 && (
+            <span
+              className={cn(
+                "inline-flex items-center gap-0.5 text-xs font-semibold",
+                delta > 0 ? "text-success" : "text-critical"
+              )}
+            >
+              {delta > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+              {delta > 0 ? "+" : ""}
+              {delta}
+            </span>
+          )}
+        </div>
+        {subtitle && <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>}
       </CardContent>
     </Card>
   );
 }
 
-function scanIncludesVni(scan: any) {
-  const raw = scan?.raw && typeof scan.raw === "object" ? scan.raw : null;
-  const resultJson = scan?.resultJson && typeof scan.resultJson === "object" ? scan.resultJson : null;
-  return Boolean(resultJson?.vni || raw?.vni);
-}
-
 export default async function DashboardPage() {
-  // Get translations
-  const t = await getTranslations('dashboard');
-  const tCommon = await getTranslations('common');
+  const t = await getTranslations("dashboard");
+  const tCommon = await getTranslations("common");
 
-  // Require authentication to access dashboard
   let user;
   try {
     user = await requireAuth();
-  } catch (error) {
+  } catch {
     redirect("/auth/login?redirect=/dashboard");
   }
 
-  // Try to get data from database, fallback to empty data if user doesn't exist in DB
-  let scans: any[] = [];
-  let stats: any = {
-    totalScans: 0,
-    avgScore: 0,
-    totalIssues: 0,
-    criticalIssues: 0,
-    totalSites: 0,
-    hasScans: false,
+  let data: OverviewData = {
+    recentScans: [],
     trendData: [],
-    impactStats: { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }
+    avgScore: 0,
+    scoreDelta: 0,
+    openIssues: { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 },
+    siteCount: 0,
+    usage: { pages: 0, sites: 0, period: "" },
   };
-
   try {
-    [scans, stats] = await Promise.all([
-      getRecentScans(user.id),
-      getDashboardStats(user.id),
-    ]);
+    data = await getOverviewData(user.id);
   } catch (error) {
-    console.log("User not found in database, using empty data:", error);
-    // Keep default empty data for new users who only exist in Supabase
+    console.error("Dashboard overview data failed, rendering empty state:", error);
   }
 
-  // Check if user has white label access
-  const userEntitlements = getEntitlements(user.plan as keyof typeof ENTITLEMENTS);
-  const hasWhiteLabelAccess = userEntitlements.whiteLabel;
+  const entitlements =
+    ENTITLEMENTS[(user.plan ?? "FREE") as keyof typeof ENTITLEMENTS] ?? ENTITLEMENTS.FREE;
+  const hasScans = data.recentScans.length > 0;
+  const pagesPct = entitlements.pagesPerMonth
+    ? Math.min(100, Math.round((data.usage.pages / entitlements.pagesPerMonth) * 100))
+    : 0;
+  const sitesPct = entitlements.sites
+    ? Math.min(100, Math.round((data.siteCount / entitlements.sites) * 100))
+    : 0;
+  const nearLimit = pagesPct >= 80 || sitesPct >= 80;
+
+  const onboardingSteps = [
+    {
+      done: data.siteCount > 0 || hasScans,
+      title: t("overview.onboarding.step1"),
+      description: t("overview.onboarding.step1Desc"),
+      icon: Search,
+    },
+    {
+      done: data.recentScans.some((s) => s.status === "COMPLETED"),
+      title: t("overview.onboarding.step2"),
+      description: t("overview.onboarding.step2Desc"),
+      icon: FileText,
+    },
+    {
+      done: false,
+      title: t("overview.onboarding.step3"),
+      description: t("overview.onboarding.step3Desc"),
+      icon: ShieldCheck,
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
-      <main id="main-content" className="flex-1" tabIndex={-1}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
-
-
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight">{t('title')}</h1>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 sm:mt-2">
-            {t('subtitle')}
-          </p>
-        </div>
-        <div className="self-end sm:self-auto">
-          <ThemeToggle />
-        </div>
-      </div>
-
-      {/* New Scan Card */}
-      <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-        <CardHeader className="pb-3 sm:pb-4">
-          <CardTitle className="flex items-center gap-2 font-display text-lg sm:text-xl">
-            <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-            {t('newScan.title')}
-          </CardTitle>
-          <CardDescription className="text-sm sm:text-base">
-            {t('newScan.description')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <NewScanForm />
-        </CardContent>
-      </Card>
-
-      {/* Enhanced Dashboard with Tabs */}
-      <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
-        <div className="overflow-x-auto">
-          <TabsList className={`grid w-full min-w-max ${hasWhiteLabelAccess ? 'grid-cols-7' : 'grid-cols-6'} md:min-w-0`}>
-            <TabsTrigger value="overview" className="text-xs sm:text-sm">{t('tabs.overview')}</TabsTrigger>
-            <TabsTrigger value="analytics" className="text-xs sm:text-sm">{t('tabs.analytics')}</TabsTrigger>
-            <TabsTrigger value="monitoring" className="text-xs sm:text-sm">{t('tabs.monitoring')}</TabsTrigger>
-            <TabsTrigger value="teams" className="text-xs sm:text-sm">{t('tabs.teams')}</TabsTrigger>
-            <TabsTrigger value="reports" className="text-xs sm:text-sm">{t('tabs.reports')}</TabsTrigger>
-            <TabsTrigger value="tools" className="text-xs sm:text-sm">{t('tabs.tools')}</TabsTrigger>
-            {hasWhiteLabelAccess && (
-              <TabsTrigger value="white-label" className="text-xs sm:text-sm">{t('tabs.whiteLabel')}</TabsTrigger>
-            )}
-          </TabsList>
-        </div>
-
-        <TabsContent value="overview" className="space-y-6">
-          {/* Animated Stats Cards */}
-          <ProgressAnimations
-            score={stats.avgScore || 0}
-            issues={stats.impactStats || { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }}
-          />
-
-          {/* Simple Stats Card as fallback */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Activity className="w-5 h-5 text-primary" />
-                {t('stats.title')}
-              </CardTitle>
-              <CardDescription>
-                {t('stats.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">{t('stats.averageScore')}</p>
-                  <p className="text-3xl font-bold text-primary">{stats.avgScore}</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">{t('stats.totalIssues')}</p>
-                  <p className="text-3xl font-bold text-foreground">{stats.impactStats.total}</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">{t('stats.critical')}</p>
-                  <p className="text-3xl font-bold text-red-600 dark:text-red-400">{stats.impactStats.critical}</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">{t('stats.serious')}</p>
-                  <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">{stats.impactStats.serious}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="teams" className="space-y-6">
-          {/* {t('teams.title')} Features */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-display text-xl">
-                <Users className="w-5 h-5 text-primary" />
-                Team Collaboration
-              </CardTitle>
-              <CardDescription className="text-base">
-                {t('teams.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8">
-                <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">{t('teams.available')}</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  {t('teams.availableDescription')}
-                </p>
-                <Link href="/teams">
-                  <Button className="mb-4 bg-[#FF7A00] hover:bg-[#FF7A00]/90">
-                    <Plus className="w-4 h-4 mr-2" />
-                    {t('teams.goToTeams')}
-                  </Button>
-                </Link>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-6 max-w-2xl mx-auto">
-                  <div className="text-center p-3 sm:p-4 border rounded-lg">
-                    <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-xs sm:text-sm">{t('teams.roleBasedAccess.title')}</h4>
-                    <p className="text-xs text-muted-foreground">{t('teams.roleBasedAccess.description')}</p>
-                  </div>
-                  <div className="text-center p-3 sm:p-4 border rounded-lg">
-                    <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-xs sm:text-sm">{t('teams.issueTracking.title')}</h4>
-                    <p className="text-xs text-muted-foreground">{t('teams.issueTracking.description')}</p>
-                  </div>
-                  <div className="text-center p-3 sm:p-4 border rounded-lg">
-                    <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mx-auto mb-2" />
-                    <h4 className="font-semibold text-xs sm:text-sm">{t('teams.sharedWorkspaces.title')}</h4>
-                    <p className="text-xs text-muted-foreground">{t('teams.sharedWorkspaces.description')}</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="space-y-6">
-          {/* Issues by Impact Chart */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-display">
-                <AlertTriangle className="w-5 h-5 text-primary" />
-                {t('analytics.issuesByImpact.title')}
-              </CardTitle>
-              <CardDescription>
-                {t('analytics.issuesByImpact.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pb-2">
-              <IssuesByImpactChart stats={stats.impactStats} className="h-64" />
-            </CardContent>
-          </Card>
-
-          {/* Trend Analysis */}
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('analytics.trendAnalysis.title')}</CardTitle>
-              <CardDescription>{t('analytics.trendAnalysis.description')}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64 flex items-center justify-center text-muted-foreground">
-                <div className="text-center">
-                  <TrendingUp className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p>{t('analytics.trendAnalysis.noData')}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="monitoring" className="space-y-6">
-          {/* Monitoring Overview */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-primary" />
-                {t('monitoring.title')}
-              </CardTitle>
-              <CardDescription>
-                {t('monitoring.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {/* Monitoring Status */}
-                <div className="text-center py-8 border rounded-lg bg-muted/30">
-                  <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">{t('monitoring.comingSoon')}</h3>
-                  <p className="text-muted-foreground mb-4 max-w-md mx-auto">
-                    {t('monitoring.comingSoonDescription')}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-                    <Button asChild variant="outline" className="border-[#FF7A00] text-[#FF7A00] hover:bg-[#FF7A00] hover:text-white">
-                      <Link href="/settings/notifications">
-                        <Activity className="w-4 h-4 mr-2" />
-                        {t('monitoring.configureNotifications')}
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" className="border-[#FF7A00] text-[#FF7A00] hover:bg-[#FF7A00] hover:text-white">
-                      <Link href="/settings/billing">
-                        <TrendingUp className="w-4 h-4 mr-2" />
-                        {t('monitoring.upgradePlan')}
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Monitoring Features Preview */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 border rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Clock className="w-5 h-5 text-blue-600" />
-                      <h4 className="font-semibold">{t('monitoring.scheduledScans.title')}</h4>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {t('monitoring.scheduledScans.description')}
-                    </p>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="w-5 h-5 text-orange-600" />
-                      <h4 className="font-semibold">{t('monitoring.instantAlerts.title')}</h4>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {t('monitoring.instantAlerts.description')}
-                    </p>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <TrendingUp className="w-5 h-5 text-green-600" />
-                      <h4 className="font-semibold">{t('monitoring.trendTracking.title')}</h4>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {t('monitoring.trendTracking.description')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="reports" className="space-y-6">
-          {/* Recent {t('reports.title')} */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-display text-xl">
-                <FileText className="w-5 h-5 text-primary" />
-                Scan Reports
-              </CardTitle>
-              <CardDescription className="text-base">
-                {t('reports.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {scans.length === 0 ? (
-                <div className="text-center py-8">
-                  <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">{t('reports.noReports')}</h3>
-                  <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                    {t('reports.noReportsDescription')}
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {t('reports.selectScan')}
-                  </p>
-                  <div className="grid gap-3">
-                    {scans.slice(0, 10).map((scan) => (
-                      <div key={scan.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                          <SiteImage
-                            src={getFaviconFromUrl(scan.site.url)}
-                            alt=""
-                            width={20}
-                            height={20}
-                            className="rounded flex-shrink-0"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="font-medium text-sm truncate">
-                              {new URL(scan.site.url).hostname}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {formatDate(scan.createdAt)} • {scan.issues || 0} {tCommon('issues')}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          {scan.score !== null && (
-                            <ScoreBadge score={scan.score} size="sm" />
-                          )}
-                          {scan.status === 'done' ? (
-                            <ExportButtons scanId={scan.id} includeVNI={scanIncludesVni(scan)} className="flex-shrink-0" />
-                          ) : (
-                            <Badge variant="outline" className="text-xs">
-                              {scan.status}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="tools" className="space-y-6">
-          {/* ROI Calculator */}
-          <ROICalculator />
-
-          {/* Additional Tools */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
-                {t('tools.title')}
-              </CardTitle>
-              <CardDescription>
-                {t('tools.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 border rounded-lg hover:border-primary transition-colors">
-                  <h4 className="font-semibold mb-2">{t('tools.wcagGuidelines.title')}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {t('tools.wcagGuidelines.description')}
-                  </p>
-                </div>
-                <div className="p-4 border rounded-lg hover:border-primary transition-colors">
-                  <h4 className="font-semibold mb-2">{t('tools.quickFixes.title')}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {t('tools.quickFixes.description')}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* White Label Tab - Only for Business Plan Users */}
-        {hasWhiteLabelAccess && (
-          <TabsContent value="white-label" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="font-display text-xl flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">WL</span>
-                  </div>
-                  {t('whiteLabel.title')}
-                </CardTitle>
-                <CardDescription className="text-base">
-                  {t('whiteLabel.description')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Quick Access Links */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  <Link href="/settings/white-label" className="group sm:col-span-2 lg:col-span-1">
-                    <div className="border rounded-lg p-3 sm:p-4 hover:border-blue-500 transition-colors">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                          <span className="text-blue-600 font-semibold text-sm sm:text-base">⚙️</span>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-blue-600">{t('whiteLabel.fullSettings')}</h3>
-                          <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.fullSettingsDescription')}</p>
-                        </div>
-                      </div>
-                      <p className="text-xs text-muted-foreground">{t('whiteLabel.fullSettingsDetails')}</p>
-                    </div>
-                  </Link>
-
-                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50 dark:bg-slate-800 dark:border-gray-700">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                        <span className="text-green-600 font-semibold text-sm sm:text-base">📱</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-foreground">{t('whiteLabel.livePreview')}</h3>
-                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.livePreviewDescription')}</p>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{t('whiteLabel.livePreviewDetails')}</p>
-                  </div>
-
-                  <div className="border rounded-lg p-3 sm:p-4 bg-gray-50 dark:bg-slate-800 dark:border-gray-700">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                        <span className="text-purple-600 font-semibold text-sm sm:text-base">📈</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-sm sm:text-base text-foreground">{t('whiteLabel.customReports')}</h3>
-                        <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">{t('whiteLabel.customReportsDescription')}</p>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{t('whiteLabel.customReportsDetails')}</p>
-                  </div>
-                </div>
-
-                {/* White Label Features Overview */}
-                <div className="border rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
-                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">🎨 {t('whiteLabel.featuresTitle')}</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-foreground">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.logo')}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.colors')}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.contact')}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.removeBranding')}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.footerText')}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.subdomain')}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-blue-500">📞</span>
-                        <span>{t('whiteLabel.features.customDomain')}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-500">✓</span>
-                        <span>{t('whiteLabel.features.brandedReports')}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Call to Action */}
-                <div className="text-center">
-                  <Link
-                    href="/settings/white-label"
-                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-                  >
-                    🎨 {t('whiteLabel.customize')}
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-      </Tabs>
-      
-
-      {/* Recent Scans */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-display text-lg sm:text-xl">{t('recentScans.title')}</CardTitle>
-          <CardDescription className="text-sm sm:text-base">
-            {t('recentScans.description')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {scans.length === 0 ? (
-            <EmptyState />
-          ) : (
-            <>
-              {/* Mobile Card Layout */}
-              <div className="block sm:hidden space-y-3">
-                {scans.map((scan) => (
-                  <Link key={scan.id} href={`/scans/${scan.id}`}>
-                    <Card className="p-4 hover:bg-muted/50 transition-colors">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                          <SiteImage
-                            src={getFaviconFromUrl(scan.site.url)}
-                            alt=""
-                            width={16}
-                            height={16}
-                            className="rounded flex-shrink-0"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="font-medium text-sm truncate text-foreground">
-                              {new URL(scan.site.url).hostname}
-                            </div>
-                            <div className="text-xs text-muted-foreground truncate">
-                              {scan.site.url}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 ml-2">
-                          {scan.score !== null ? (
-                            <ScoreBadge score={scan.score} size="sm" />
-                          ) : (
-                            <span className="text-muted-foreground text-sm">-</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-3">
-                          <Badge
-                            variant={scan.status === 'done' ? 'default' : 'outline'}
-                            className={cn(
-                              "text-xs",
-                              scan.status === 'done' && 'bg-success text-success-foreground',
-                              scan.status === 'failed' && 'bg-critical text-critical-foreground',
-                              scan.status === 'running' && 'bg-primary text-primary-foreground'
-                            )}
-                          >
-                            {scan.status}
-                          </Badge>
-                          <span className="text-muted-foreground">
-                            {scan.issues || 0} {tCommon('issues')}
-                          </span>
-                        </div>
-                        <span className="text-muted-foreground">
-                          {formatDateShort(scan.createdAt)}
-                        </span>
-                      </div>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-
-              {/* Desktop Table Layout */}
-              <div className="hidden sm:block rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{t('recentScans.tableHeaders.site')}</TableHead>
-                      <TableHead className="hidden lg:table-cell">{t('recentScans.tableHeaders.url')}</TableHead>
-                      <TableHead>{t('recentScans.tableHeaders.score')}</TableHead>
-                      <TableHead>{t('recentScans.tableHeaders.status')}</TableHead>
-                      <TableHead>{t('recentScans.tableHeaders.issues')}</TableHead>
-                      <TableHead>{t('recentScans.tableHeaders.date')}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {scans.map((scan) => (
-                      <TableRow key={scan.id} className="cursor-pointer hover:bg-muted/50">
-                        <TableCell>
-                          <Link href={`/scans/${scan.id}`} className="flex items-center gap-2">
-                            <SiteImage
-                              src={getFaviconFromUrl(scan.site.url)}
-                              alt=""
-                              width={16}
-                              height={16}
-                              className="rounded"
-                            />
-                            <span className="font-medium truncate max-w-32 text-foreground">
-                              {new URL(scan.site.url).hostname}
-                            </span>
-                          </Link>
-                        </TableCell>
-                        <TableCell className="hidden lg:table-cell">
-                          <Link href={`/scans/${scan.id}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 truncate max-w-48 block">
-                            {scan.site.url}
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link href={`/scans/${scan.id}`}>
-                            {scan.score !== null ? (
-                              <ScoreBadge score={scan.score} size="sm" />
-                            ) : (
-                              <span className="text-muted-foreground">-</span>
-                            )}
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link href={`/scans/${scan.id}`}>
-                            <Badge
-                              variant={scan.status === 'done' ? 'default' : 'outline'}
-                              className={cn(
-                                scan.status === 'done' && 'bg-success text-success-foreground',
-                                scan.status === 'failed' && 'bg-critical text-critical-foreground',
-                                scan.status === 'running' && 'bg-primary text-primary-foreground'
-                              )}
-                            >
-                              {scan.status}
-                            </Badge>
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link href={`/scans/${scan.id}`}>
-                            <span className="font-medium text-foreground">{scan.issues || 0}</span>
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Link href={`/scans/${scan.id}`} className="text-muted-foreground text-sm">
-                            {formatDate(scan.createdAt)}
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </>
+    <main id="main-content" tabIndex={-1}>
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 lg:py-8 space-y-6">
+        {/* Greeting */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold font-display tracking-tight text-foreground">
+              {user.firstName
+                ? t("overview.greeting", { name: user.firstName })
+                : t("overview.greetingFallback")}
+            </h1>
+            <p className="mt-1 text-sm sm:text-base text-muted-foreground">
+              {t("overview.subtitle")}
+            </p>
+          </div>
+          {hasScans && (
+            <Link href="/scans">
+              <Button variant="outline" size="sm" className="gap-1.5">
+                {t("overview.recentScans.viewAll")}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Button>
+            </Link>
           )}
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* New scan — always front and center */}
+        <Card className="border-primary/20 bg-gradient-to-r from-primary/5 via-primary/[0.03] to-transparent">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 font-display text-lg sm:text-xl">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Plus className="h-4 w-4" />
+              </span>
+              {t("newScan.title")}
+            </CardTitle>
+            <CardDescription className="text-sm sm:text-base">
+              {t("newScan.description")}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <NewScanForm />
+          </CardContent>
+        </Card>
+
+        {!hasScans ? (
+          /* Onboarding for new users */
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-display text-lg sm:text-xl">
+                <Sparkles className="h-5 w-5 text-primary" />
+                {t("overview.onboarding.title")}
+              </CardTitle>
+              <CardDescription>{t("overview.onboarding.description")}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ol className="grid gap-4 sm:grid-cols-3">
+                {onboardingSteps.map((step, i) => {
+                  const Icon = step.icon;
+                  return (
+                    <li
+                      key={i}
+                      className={cn(
+                        "relative rounded-xl border p-4",
+                        step.done ? "border-success/30 bg-success/5" : "border-border"
+                      )}
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        {step.done ? (
+                          <CheckCircle2 className="h-5 w-5 text-success" />
+                        ) : (
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary">
+                            {i + 1}
+                          </span>
+                        )}
+                        <Icon className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                      <h3 className="text-sm font-semibold text-foreground">{step.title}</h3>
+                      <p className="mt-1 text-xs text-muted-foreground">{step.description}</p>
+                    </li>
+                  );
+                })}
+              </ol>
+            </CardContent>
+          </Card>
+        ) : (
+          <>
+            {/* KPI row */}
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+              <KpiCard
+                title={t("stats.averageScore")}
+                value={data.avgScore}
+                subtitle={t("overview.kpi.avgScoreSub")}
+                icon={Activity}
+                delta={data.scoreDelta}
+              />
+              <KpiCard
+                title={t("stats.critical")}
+                value={data.openIssues.critical}
+                subtitle={t("overview.kpi.criticalSub")}
+                icon={AlertTriangle}
+                tone={data.openIssues.critical > 0 ? "critical" : "success"}
+              />
+              <KpiCard
+                title={t("overview.kpi.openIssues")}
+                value={data.openIssues.total}
+                subtitle={t("overview.kpi.openIssuesSub")}
+                icon={FileText}
+              />
+              <KpiCard
+                title={t("overview.kpi.sites")}
+                value={data.siteCount}
+                subtitle={t("overview.kpi.sitesSub", {
+                  used: data.siteCount,
+                  limit: entitlements.sites,
+                })}
+                icon={Globe}
+              />
+            </div>
+
+            {/* Charts */}
+            <div className="grid gap-4 lg:grid-cols-3">
+              <Card className="lg:col-span-2">
+                <CardHeader className="pb-2">
+                  <CardTitle className="font-display text-base sm:text-lg">
+                    {t("overview.charts.trendTitle")}
+                  </CardTitle>
+                  <CardDescription>{t("overview.charts.trendDescription")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {data.trendData.length >= 2 ? (
+                    <ScoreTrendChart data={data.trendData} />
+                  ) : (
+                    <div className="flex h-[240px] items-center justify-center text-sm text-muted-foreground">
+                      {t("overview.charts.trendEmpty")}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="font-display text-base sm:text-lg">
+                    {t("overview.charts.impactTitle")}
+                  </CardTitle>
+                  <CardDescription>{t("overview.charts.impactDescription")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <IssuesByImpactChart stats={data.openIssues} className="h-[240px]" />
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Recent scans + plan usage */}
+            <div className="grid gap-4 lg:grid-cols-3 items-start">
+              <Card className="lg:col-span-2">
+                <CardHeader>
+                  <CardTitle className="font-display text-base sm:text-lg">
+                    {t("recentScans.title")}
+                  </CardTitle>
+                  <CardDescription>{t("recentScans.description")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Mobile cards */}
+                  <div className="block sm:hidden space-y-3">
+                    {data.recentScans.map((scan) => (
+                      <Link key={scan.id} href={`/scans/${scan.id}`} className="block">
+                        <div className="rounded-xl border p-4 hover:bg-muted/50 transition-colors">
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <SiteImage
+                                src={getFaviconFromUrl(scan.site.url)}
+                                alt=""
+                                width={16}
+                                height={16}
+                                className="rounded shrink-0"
+                              />
+                              <span className="truncate text-sm font-medium text-foreground">
+                                {new URL(scan.site.url).hostname}
+                              </span>
+                            </div>
+                            {scan.score !== null && <ScoreBadge score={scan.score} size="sm" />}
+                          </div>
+                          <div className="flex items-center justify-between text-xs text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <StatusBadge
+                                status={scan.status}
+                                label={t(`status.${scan.status}` as any)}
+                              />
+                              <span>
+                                {scan.issues ?? 0} {tCommon("issues")}
+                              </span>
+                            </div>
+                            <span>{formatDateShort(scan.createdAt)}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Desktop table */}
+                  <div className="hidden sm:block rounded-lg border overflow-hidden">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>{t("recentScans.tableHeaders.site")}</TableHead>
+                          <TableHead>{t("recentScans.tableHeaders.score")}</TableHead>
+                          <TableHead>{t("recentScans.tableHeaders.status")}</TableHead>
+                          <TableHead>{t("recentScans.tableHeaders.issues")}</TableHead>
+                          <TableHead>{t("recentScans.tableHeaders.date")}</TableHead>
+                          <TableHead className="text-right">
+                            {t("overview.recentScans.report")}
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {data.recentScans.map((scan) => (
+                          <TableRow key={scan.id} className="hover:bg-muted/50">
+                            <TableCell>
+                              <Link
+                                href={`/scans/${scan.id}`}
+                                className="flex items-center gap-2 font-medium text-foreground hover:text-primary transition-colors"
+                              >
+                                <SiteImage
+                                  src={getFaviconFromUrl(scan.site.url)}
+                                  alt=""
+                                  width={16}
+                                  height={16}
+                                  className="rounded"
+                                />
+                                <span className="truncate max-w-44">
+                                  {new URL(scan.site.url).hostname}
+                                </span>
+                                <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
+                              </Link>
+                            </TableCell>
+                            <TableCell>
+                              {scan.score !== null ? (
+                                <ScoreBadge score={scan.score} size="sm" />
+                              ) : (
+                                <span className="text-muted-foreground">—</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <StatusBadge
+                                status={scan.status}
+                                label={t(`status.${scan.status}` as any)}
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium">{scan.issues ?? 0}</TableCell>
+                            <TableCell className="text-sm text-muted-foreground">
+                              {formatDate(scan.createdAt)}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {scan.status === "COMPLETED" && (
+                                <ExportButtons
+                                  scanId={scan.id}
+                                  includeVNI={scan.hasVni}
+                                  showLanguageSelector={false}
+                                  className="justify-end"
+                                />
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Plan usage — upgrade prompt appears exactly when limits near */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-display text-base sm:text-lg">
+                    {t("overview.usage.title")}
+                  </CardTitle>
+                  <CardDescription>{t("overview.usage.description")}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-5">
+                  <div>
+                    <div className="mb-1.5 flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{t("overview.usage.pages")}</span>
+                      <span className="font-medium text-foreground">
+                        {t("overview.usage.of", {
+                          used: data.usage.pages.toLocaleString(),
+                          limit: entitlements.pagesPerMonth.toLocaleString(),
+                        })}
+                      </span>
+                    </div>
+                    <Progress
+                      value={pagesPct}
+                      className={cn("h-2", pagesPct >= 80 && "[&>div]:bg-warning")}
+                    />
+                  </div>
+                  <div>
+                    <div className="mb-1.5 flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{t("overview.usage.sites")}</span>
+                      <span className="font-medium text-foreground">
+                        {t("overview.usage.of", {
+                          used: data.siteCount.toLocaleString(),
+                          limit: entitlements.sites.toLocaleString(),
+                        })}
+                      </span>
+                    </div>
+                    <Progress
+                      value={sitesPct}
+                      className={cn("h-2", sitesPct >= 80 && "[&>div]:bg-warning")}
+                    />
+                  </div>
+
+                  {nearLimit && (
+                    <div className="rounded-xl border border-warning/30 bg-warning/5 p-4">
+                      <p className="text-sm font-semibold text-foreground">
+                        {t("overview.usage.upgradeTitle")}
+                      </p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {t("overview.usage.upgradeBody")}
+                      </p>
+                      <Link href="/settings/billing" className="mt-3 block">
+                        <Button size="sm" className="w-full">
+                          {t("overview.usage.upgradeCta")}
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </>
+        )}
       </div>
-      </main>
-      <DashboardFooter />
-    </div>
+    </main>
   );
-}// Force deployment Wed, Sep 24, 2025  6:21:38 PM
+}

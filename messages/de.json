@@ -1450,7 +1450,55 @@
       "done": "done",
       "running": "running",
       "failed": "failed",
-      "queued": "queued"
+      "queued": "queued",
+      "COMPLETED": "Abgeschlossen",
+      "PROCESSING": "Läuft",
+      "PENDING": "In Warteschlange",
+      "FAILED": "Fehlgeschlagen"
+    },
+    "overview": {
+      "greeting": "Willkommen zurück, {name}",
+      "greetingFallback": "Willkommen zurück",
+      "subtitle": "So schneiden Ihre Websites bei der Barrierefreiheit ab.",
+      "kpi": {
+        "avgScoreSub": "über Ihre letzten Scans",
+        "criticalSub": "erfordern sofortige Aufmerksamkeit",
+        "openIssues": "Offene Probleme",
+        "openIssuesSub": "aus dem letzten Scan pro Website",
+        "sites": "Websites",
+        "sitesSub": "{used} von {limit} in Ihrem Plan"
+      },
+      "charts": {
+        "trendTitle": "Score-Trend",
+        "trendDescription": "Ihr durchschnittlicher Barrierefreiheits-Score der letzten Scans",
+        "trendEmpty": "Führen Sie mindestens zwei Scans durch, um Ihren Trend zu sehen",
+        "impactTitle": "Probleme nach Schweregrad",
+        "impactDescription": "Aktuell offene Probleme nach Auswirkung"
+      },
+      "usage": {
+        "title": "Plan-Nutzung",
+        "description": "Ihre Nutzung im aktuellen Abrechnungszeitraum",
+        "pages": "Gescannte Seiten",
+        "sites": "Websites",
+        "of": "{used} von {limit}",
+        "upgradeTitle": "Sie nähern sich Ihrem Plan-Limit",
+        "upgradeBody": "Upgraden Sie für mehr Seiten und Websites — sofort wirksam, ohne Unterbrechung.",
+        "upgradeCta": "Upgrade-Optionen ansehen"
+      },
+      "onboarding": {
+        "title": "In drei Schritten konform",
+        "description": "Ihr erster Barrierefreiheitsbericht ist in wenigen Minuten fertig",
+        "step1": "Ersten Scan starten",
+        "step1Desc": "Geben Sie oben Ihre Website-URL ein und starten Sie einen Scan.",
+        "step2": "Bericht prüfen",
+        "step2Desc": "Probleme nach Schweregrad sortiert, mit konkreten Lösungshinweisen.",
+        "step3": "Exportieren & teilen",
+        "step3Desc": "Laden Sie einen ansprechend gestalteten PDF-Bericht in Ihrem Branding herunter."
+      },
+      "recentScans": {
+        "viewAll": "Alle Scans anzeigen",
+        "report": "Bericht"
+      }
     }
   },
   "about": {
@@ -4118,6 +4166,39 @@
       "heading": "Prüfen Sie Ihre Website heute gegen die EAA.",
       "subhead": "Kostenloser Scan, keine Kreditkarte. Ergebnis in unter 60 Sekunden.",
       "cta": "Kostenlosen Scan starten"
+    }
+  },
+  "dashboardShell": {
+    "mainNavLabel": "Hauptnavigation",
+    "groups": {
+      "workspace": "Arbeitsbereich",
+      "monitoring": "Monitoring",
+      "organization": "Organisation",
+      "settings": "Einstellungen",
+      "admin": "Verwaltung"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "scans": "Scans",
+      "sites": "Websites",
+      "assurance": "Assurance",
+      "teams": "Teams",
+      "support": "Support",
+      "billing": "Abrechnung",
+      "notifications": "Benachrichtigungen",
+      "whiteLabel": "White Label",
+      "admin": "Admin-Bereich",
+      "supportAdmin": "Support-Verwaltung",
+      "home": "Zurück zur Website"
+    },
+    "signOut": "Abmelden",
+    "openMenu": "Navigationsmenü öffnen",
+    "closeMenu": "Navigationsmenü schließen",
+    "poweredBy": "Bereitgestellt von",
+    "footer": {
+      "privacy": "Datenschutz",
+      "terms": "AGB",
+      "contact": "Kontakt"
     }
   }
 }

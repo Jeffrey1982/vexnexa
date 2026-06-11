@@ -8,8 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import {
   CreditCard,
@@ -350,7 +348,6 @@ export default function BillingPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={authUser} />
       <div className="flex-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -700,7 +697,6 @@ export default function BillingPage() {
       </div>
       </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

@@ -1450,7 +1450,55 @@
       "done": "completado",
       "running": "en ejecución",
       "failed": "fallido",
-      "queued": "en cola"
+      "queued": "en cola",
+      "COMPLETED": "Completado",
+      "PROCESSING": "En curso",
+      "PENDING": "En cola",
+      "FAILED": "Fallido"
+    },
+    "overview": {
+      "greeting": "Bienvenido de nuevo, {name}",
+      "greetingFallback": "Bienvenido de nuevo",
+      "subtitle": "Así rinden tus sitios web en accesibilidad.",
+      "kpi": {
+        "avgScoreSub": "en tus análisis recientes",
+        "criticalSub": "requieren atención inmediata",
+        "openIssues": "Problemas abiertos",
+        "openIssuesSub": "del último análisis por sitio",
+        "sites": "Sitios web",
+        "sitesSub": "{used} de {limit} en tu plan"
+      },
+      "charts": {
+        "trendTitle": "Tendencia de puntuación",
+        "trendDescription": "Tu puntuación media de accesibilidad en análisis recientes",
+        "trendEmpty": "Realiza al menos dos análisis para ver tu tendencia",
+        "impactTitle": "Problemas por gravedad",
+        "impactDescription": "Problemas abiertos actualmente por nivel de impacto"
+      },
+      "usage": {
+        "title": "Uso del plan",
+        "description": "Tu consumo en el período de facturación actual",
+        "pages": "Páginas analizadas",
+        "sites": "Sitios web",
+        "of": "{used} de {limit}",
+        "upgradeTitle": "Te acercas al límite de tu plan",
+        "upgradeBody": "Mejora tu plan para más páginas y sitios — efecto inmediato, sin interrupciones.",
+        "upgradeCta": "Ver opciones de mejora"
+      },
+      "onboarding": {
+        "title": "Cumple la normativa en tres pasos",
+        "description": "Tu primer informe de accesibilidad estará listo en minutos",
+        "step1": "Ejecuta tu primer análisis",
+        "step1Desc": "Introduce la URL de tu sitio arriba e inicia un análisis.",
+        "step2": "Revisa tu informe",
+        "step2Desc": "Problemas ordenados por gravedad, con soluciones concretas.",
+        "step3": "Exporta y comparte",
+        "step3Desc": "Descarga un elegante informe PDF con tu marca para tu equipo o clientes."
+      },
+      "recentScans": {
+        "viewAll": "Ver todos los análisis",
+        "report": "Informe"
+      }
     }
   },
   "about": {
@@ -4112,6 +4160,39 @@
       "heading": "Audita hoy tu sitio frente a la EAA.",
       "subhead": "Scan gratis, sin tarjeta. Resultados en menos de 60 segundos.",
       "cta": "Empieza tu scan gratis"
+    }
+  },
+  "dashboardShell": {
+    "mainNavLabel": "Navegación principal",
+    "groups": {
+      "workspace": "Espacio de trabajo",
+      "monitoring": "Monitorización",
+      "organization": "Organización",
+      "settings": "Configuración",
+      "admin": "Administración"
+    },
+    "nav": {
+      "dashboard": "Panel",
+      "scans": "Análisis",
+      "sites": "Sitios web",
+      "assurance": "Assurance",
+      "teams": "Equipos",
+      "support": "Soporte",
+      "billing": "Facturación",
+      "notifications": "Notificaciones",
+      "whiteLabel": "Marca blanca",
+      "admin": "Panel de administración",
+      "supportAdmin": "Gestión de soporte",
+      "home": "Volver al sitio web"
+    },
+    "signOut": "Cerrar sesión",
+    "openMenu": "Abrir menú de navegación",
+    "closeMenu": "Cerrar menú de navegación",
+    "poweredBy": "Con tecnología de",
+    "footer": {
+      "privacy": "Privacidad",
+      "terms": "Términos",
+      "contact": "Contacto"
     }
   }
 }

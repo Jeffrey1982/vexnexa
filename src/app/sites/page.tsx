@@ -4,8 +4,6 @@ export const revalidate = 0;
 
 import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -69,7 +67,6 @@ export default async function SitesPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
@@ -184,7 +181,6 @@ export default async function SitesPage() {
           )}
         </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

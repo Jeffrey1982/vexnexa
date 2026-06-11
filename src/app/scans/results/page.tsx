@@ -8,8 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ArrowLeft, Download, Globe, AlertTriangle, CheckCircle, AlertCircle, Info, Loader2 } from "lucide-react";
 import Link from "next/link";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { openPdf } from "@/lib/pdf/open-pdf";
 import { shouldUseInlinePdfOpen } from "@/lib/device";
@@ -180,7 +178,6 @@ function ScanResultsContent() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
           {/* Header */}
@@ -376,7 +373,6 @@ function ScanResultsContent() {
           </Card>
         </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

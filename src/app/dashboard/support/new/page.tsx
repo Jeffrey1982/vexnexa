@@ -13,8 +13,6 @@ import { ArrowLeft, Send } from "lucide-react";
 import Link from "next/link";
 import { createTicket } from "@/app/actions/support-tickets";
 import { TicketCategory, TicketPriority } from "@prisma/client";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { useEffect } from "react";
 
@@ -66,7 +64,6 @@ export default function NewTicketPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-3xl">
         {/* Header */}
@@ -196,7 +193,6 @@ export default function NewTicketPage() {
         </Card>
       </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

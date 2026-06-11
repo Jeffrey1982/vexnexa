@@ -1472,7 +1472,55 @@
       "done": "klaar",
       "running": "bezig",
       "failed": "mislukt",
-      "queued": "in de wachtrij"
+      "queued": "in de wachtrij",
+      "COMPLETED": "Voltooid",
+      "PROCESSING": "Bezig",
+      "PENDING": "In wachtrij",
+      "FAILED": "Mislukt"
+    },
+    "overview": {
+      "greeting": "Welkom terug, {name}",
+      "greetingFallback": "Welkom terug",
+      "subtitle": "Zo presteren je websites op toegankelijkheid.",
+      "kpi": {
+        "avgScoreSub": "over je recente scans",
+        "criticalSub": "vragen directe aandacht",
+        "openIssues": "Open issues",
+        "openIssuesSub": "uit je laatste scan per website",
+        "sites": "Websites",
+        "sitesSub": "{used} van {limit} in je plan"
+      },
+      "charts": {
+        "trendTitle": "Score-trend",
+        "trendDescription": "Je gemiddelde toegankelijkheidsscore over recente scans",
+        "trendEmpty": "Voer minstens twee scans uit om je trend te zien",
+        "impactTitle": "Issues per ernst",
+        "impactDescription": "Openstaande issues per impactniveau"
+      },
+      "usage": {
+        "title": "Plangebruik",
+        "description": "Je verbruik in de huidige factuurperiode",
+        "pages": "Gescande pagina's",
+        "sites": "Websites",
+        "of": "{used} van {limit}",
+        "upgradeTitle": "Je nadert je planlimiet",
+        "upgradeBody": "Upgrade je plan voor meer pagina's en websites — direct actief, zonder onderbreking.",
+        "upgradeCta": "Bekijk upgrademogelijkheden"
+      },
+      "onboarding": {
+        "title": "In drie stappen compliant",
+        "description": "Je eerste toegankelijkheidsrapport staat binnen enkele minuten klaar",
+        "step1": "Voer je eerste scan uit",
+        "step1Desc": "Vul hierboven je website-URL in en start een scan.",
+        "step2": "Bekijk je rapport",
+        "step2Desc": "Issues gesorteerd op ernst, met concrete oplossingen.",
+        "step3": "Exporteer & deel",
+        "step3Desc": "Download een prachtig PDF-rapport in jouw huisstijl voor je team of klanten."
+      },
+      "recentScans": {
+        "viewAll": "Alle scans bekijken",
+        "report": "Rapport"
+      }
     }
   },
   "about": {
@@ -4134,6 +4182,39 @@
       "heading": "Toets je site vandaag aan de EAA.",
       "subhead": "Gratis scan, geen creditcard nodig. Resultaat in minder dan 60 seconden.",
       "cta": "Start je gratis scan"
+    }
+  },
+  "dashboardShell": {
+    "mainNavLabel": "Hoofdnavigatie",
+    "groups": {
+      "workspace": "Werkruimte",
+      "monitoring": "Monitoring",
+      "organization": "Organisatie",
+      "settings": "Instellingen",
+      "admin": "Beheer"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "scans": "Scans",
+      "sites": "Websites",
+      "assurance": "Assurance",
+      "teams": "Teams",
+      "support": "Support",
+      "billing": "Facturatie",
+      "notifications": "Notificaties",
+      "whiteLabel": "White label",
+      "admin": "Beheerpaneel",
+      "supportAdmin": "Support-beheer",
+      "home": "Terug naar website"
+    },
+    "signOut": "Uitloggen",
+    "openMenu": "Navigatiemenu openen",
+    "closeMenu": "Navigatiemenu sluiten",
+    "poweredBy": "Mogelijk gemaakt door",
+    "footer": {
+      "privacy": "Privacy",
+      "terms": "Voorwaarden",
+      "contact": "Contact"
     }
   }
 }

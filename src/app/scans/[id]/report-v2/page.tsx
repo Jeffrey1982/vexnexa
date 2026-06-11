@@ -4,7 +4,6 @@ import { requireAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { transformScanToReport, renderReportHTML, resolveReportLabels } from "@/lib/report";
 import type { ReportStyle } from "@/lib/report";
-import DashboardNav from "@/components/dashboard/DashboardNav";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 import { ReportV2Toolbar } from "@/components/report/ReportV2Toolbar";
@@ -71,7 +70,6 @@ export default async function ReportV2Page({ params, searchParams }: PageProps) 
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-5xl mx-auto">

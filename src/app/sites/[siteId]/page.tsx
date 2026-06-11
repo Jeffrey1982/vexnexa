@@ -5,8 +5,6 @@ import Link from "next/link";
 import StartCrawlButton from "./StartCrawlButton";
 import PagesTable from "./PagesTable";
 import { useState, useEffect } from "react";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 
 export default function SitePage() {
@@ -78,7 +76,6 @@ export default function SitePage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="max-w-6xl mx-auto">
@@ -562,7 +559,6 @@ export default function SitePage() {
       </div>
       </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

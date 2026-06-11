@@ -12,8 +12,6 @@ import {
   Globe,
   Bell,
 } from "lucide-react";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 import { useSearchParams } from "next/navigation";
 
@@ -76,7 +74,6 @@ export default function BillingSuccessPage(): JSX.Element {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={authUser} />
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="max-w-lg w-full text-center">
           {/* Success Icon */}
@@ -171,7 +168,6 @@ export default function BillingSuccessPage(): JSX.Element {
           </div>
         </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

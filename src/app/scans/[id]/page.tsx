@@ -20,8 +20,6 @@ import { Clock, Globe, Share, AlertTriangle, CheckCircle, Target, TrendingUp, Za
 import { SiteImage } from "@/components/SiteImage";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { ScanProcessingStatus } from "@/components/dashboard/ScanProcessingStatus";
 import { InteractiveHeatmap } from "@/components/enhanced/InteractiveHeatmap";
 import { requireAuth } from "@/lib/auth";
@@ -234,13 +232,11 @@ export default async function ScanDetailPage({ params }: PageProps) {
   if (scan.status === "PENDING" || scan.status === "PROCESSING") {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <DashboardNav user={user} />
         <div className="flex-1">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-3xl">
             <ScanProcessingStatus scanId={scan.id} initialStatus={scan.status} url={siteUrl} />
           </div>
         </div>
-        <DashboardFooter />
       </div>
     );
   }
@@ -295,7 +291,6 @@ export default async function ScanDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={user} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 space-y-4 sm:space-y-6 lg:space-y-8">
           {/* Breadcrumb */}
@@ -920,7 +915,6 @@ export default async function ScanDetailPage({ params }: PageProps) {
       </div>
       </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

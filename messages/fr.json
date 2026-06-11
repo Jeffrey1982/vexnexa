@@ -1408,7 +1408,55 @@
       "done": "terminé",
       "running": "en cours",
       "failed": "échoué",
-      "queued": "en file d'attente"
+      "queued": "en file d'attente",
+      "COMPLETED": "Terminé",
+      "PROCESSING": "En cours",
+      "PENDING": "En attente",
+      "FAILED": "Échoué"
+    },
+    "overview": {
+      "greeting": "Bon retour, {name}",
+      "greetingFallback": "Bon retour",
+      "subtitle": "Voici les performances de vos sites en matière d'accessibilité.",
+      "kpi": {
+        "avgScoreSub": "sur vos analyses récentes",
+        "criticalSub": "nécessitent une attention immédiate",
+        "openIssues": "Problèmes ouverts",
+        "openIssuesSub": "de la dernière analyse par site",
+        "sites": "Sites web",
+        "sitesSub": "{used} sur {limit} dans votre forfait"
+      },
+      "charts": {
+        "trendTitle": "Tendance du score",
+        "trendDescription": "Votre score d'accessibilité moyen sur les analyses récentes",
+        "trendEmpty": "Effectuez au moins deux analyses pour voir votre tendance",
+        "impactTitle": "Problèmes par gravité",
+        "impactDescription": "Problèmes actuellement ouverts par niveau d'impact"
+      },
+      "usage": {
+        "title": "Utilisation du forfait",
+        "description": "Votre consommation sur la période de facturation en cours",
+        "pages": "Pages analysées",
+        "sites": "Sites web",
+        "of": "{used} sur {limit}",
+        "upgradeTitle": "Vous approchez de la limite de votre forfait",
+        "upgradeBody": "Passez à un forfait supérieur pour plus de pages et de sites — effet immédiat, sans interruption.",
+        "upgradeCta": "Voir les options de mise à niveau"
+      },
+      "onboarding": {
+        "title": "Conforme en trois étapes",
+        "description": "Votre premier rapport d'accessibilité est prêt en quelques minutes",
+        "step1": "Lancez votre première analyse",
+        "step1Desc": "Saisissez l'URL de votre site ci-dessus et lancez une analyse.",
+        "step2": "Consultez votre rapport",
+        "step2Desc": "Problèmes triés par gravité, avec des correctifs concrets.",
+        "step3": "Exportez et partagez",
+        "step3Desc": "Téléchargez un rapport PDF élégant à vos couleurs pour votre équipe ou vos clients."
+      },
+      "recentScans": {
+        "viewAll": "Voir toutes les analyses",
+        "report": "Rapport"
+      }
     }
   },
   "about": {
@@ -4070,6 +4118,39 @@
       "heading": "Auditez votre site face à l’EAA dès aujourd’hui.",
       "subhead": "Scan gratuit, sans carte bancaire. Résultat en moins de 60 secondes.",
       "cta": "Lancer mon scan gratuit"
+    }
+  },
+  "dashboardShell": {
+    "mainNavLabel": "Navigation principale",
+    "groups": {
+      "workspace": "Espace de travail",
+      "monitoring": "Surveillance",
+      "organization": "Organisation",
+      "settings": "Paramètres",
+      "admin": "Administration"
+    },
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "scans": "Analyses",
+      "sites": "Sites web",
+      "assurance": "Assurance",
+      "teams": "Équipes",
+      "support": "Support",
+      "billing": "Facturation",
+      "notifications": "Notifications",
+      "whiteLabel": "Marque blanche",
+      "admin": "Panneau d'administration",
+      "supportAdmin": "Gestion du support",
+      "home": "Retour au site"
+    },
+    "signOut": "Se déconnecter",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "poweredBy": "Propulsé par",
+    "footer": {
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "contact": "Contact"
     }
   }
 }

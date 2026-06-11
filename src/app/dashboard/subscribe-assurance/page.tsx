@@ -19,8 +19,6 @@ import {
   CreditCard,
   X,
 } from "lucide-react";
-import DashboardNav from "@/components/dashboard/DashboardNav";
-import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import { createClient } from "@/lib/supabase/client-new";
 
 type BillingCycle = "monthly" | "semiannual" | "annual";
@@ -281,7 +279,6 @@ export default function SubscribeAssurancePage(): JSX.Element {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={authUser} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Back Link */}
@@ -697,7 +694,6 @@ export default function SubscribeAssurancePage(): JSX.Element {
           </div>
         </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

@@ -10,8 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Paintbrush, Upload, Globe, User, Loader2, RotateCcw, ExternalLink, Info, AlertTriangle } from 'lucide-react';
-import DashboardNav from '@/components/dashboard/DashboardNav';
-import DashboardFooter from '@/components/dashboard/DashboardFooter';
 
 interface WhiteLabelSettings {
   id?: string;
@@ -175,7 +173,6 @@ export default function WhiteLabelPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <DashboardNav user={authUser} />
         <div className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-5xl mx-auto animate-pulse space-y-6">
             <div className="h-8 bg-muted rounded w-1/3"></div>
@@ -185,7 +182,6 @@ export default function WhiteLabelPage() {
             </div>
           </div>
         </div>
-        <DashboardFooter />
       </div>
     );
   }
@@ -193,7 +189,6 @@ export default function WhiteLabelPage() {
   if (!hasAccess) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <DashboardNav user={authUser} />
         <div className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-lg mx-auto text-center">
             <Card>
@@ -215,14 +210,12 @@ export default function WhiteLabelPage() {
             </Card>
           </div>
         </div>
-        <DashboardFooter />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={authUser} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
@@ -467,7 +460,6 @@ export default function WhiteLabelPage() {
           </div>
         </div>
       </div>
-      <DashboardFooter />
     </div>
   );
 }

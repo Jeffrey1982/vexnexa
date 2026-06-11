@@ -15,8 +15,6 @@ import {
   Shield,
   CheckCircle
 } from 'lucide-react'
-import DashboardNav from '@/components/dashboard/DashboardNav'
-import DashboardFooter from '@/components/dashboard/DashboardFooter'
 import { createClient } from '@/lib/supabase/client-new'
 
 interface NotificationSettings {
@@ -128,7 +126,6 @@ export default function NotificationSettingsPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <DashboardNav user={authUser} />
       <div className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-2xl mx-auto">
@@ -307,7 +304,6 @@ export default function NotificationSettingsPage() {
           </div>
         </div>
       </div>
-      <DashboardFooter />
     </div>
   )
 }

@@ -1309,7 +1309,55 @@
       "done": "concluído",
       "running": "em execução",
       "failed": "falhado",
-      "queued": "em fila"
+      "queued": "em fila",
+      "COMPLETED": "Concluído",
+      "PROCESSING": "Em curso",
+      "PENDING": "Em fila",
+      "FAILED": "Falhou"
+    },
+    "overview": {
+      "greeting": "Bem-vindo de volta, {name}",
+      "greetingFallback": "Bem-vindo de volta",
+      "subtitle": "Veja o desempenho dos seus websites em acessibilidade.",
+      "kpi": {
+        "avgScoreSub": "nas suas análises recentes",
+        "criticalSub": "exigem atenção imediata",
+        "openIssues": "Problemas abertos",
+        "openIssuesSub": "da última análise por website",
+        "sites": "Websites",
+        "sitesSub": "{used} de {limit} no seu plano"
+      },
+      "charts": {
+        "trendTitle": "Tendência da pontuação",
+        "trendDescription": "A sua pontuação média de acessibilidade nas análises recentes",
+        "trendEmpty": "Execute pelo menos duas análises para ver a sua tendência",
+        "impactTitle": "Problemas por gravidade",
+        "impactDescription": "Problemas atualmente abertos por nível de impacto"
+      },
+      "usage": {
+        "title": "Utilização do plano",
+        "description": "O seu consumo no período de faturação atual",
+        "pages": "Páginas analisadas",
+        "sites": "Websites",
+        "of": "{used} de {limit}",
+        "upgradeTitle": "Está perto do limite do seu plano",
+        "upgradeBody": "Atualize o seu plano para mais páginas e websites — efeito imediato, sem interrupções.",
+        "upgradeCta": "Ver opções de atualização"
+      },
+      "onboarding": {
+        "title": "Em conformidade em três passos",
+        "description": "O seu primeiro relatório de acessibilidade fica pronto em minutos",
+        "step1": "Execute a sua primeira análise",
+        "step1Desc": "Introduza o URL do seu website acima e inicie uma análise.",
+        "step2": "Reveja o seu relatório",
+        "step2Desc": "Problemas ordenados por gravidade, com correções concretas.",
+        "step3": "Exporte e partilhe",
+        "step3Desc": "Descarregue um elegante relatório PDF com a sua marca para a sua equipa ou clientes."
+      },
+      "recentScans": {
+        "viewAll": "Ver todas as análises",
+        "report": "Relatório"
+      }
     }
   },
   "about": {
@@ -3971,6 +4019,39 @@
       "heading": "Audite hoje o seu site face à EAA.",
       "subhead": "Scan gratuito, sem cartão de crédito. Resultados em menos de 60 segundos.",
       "cta": "Inicie o seu scan gratuito"
+    }
+  },
+  "dashboardShell": {
+    "mainNavLabel": "Navegação principal",
+    "groups": {
+      "workspace": "Espaço de trabalho",
+      "monitoring": "Monitorização",
+      "organization": "Organização",
+      "settings": "Definições",
+      "admin": "Administração"
+    },
+    "nav": {
+      "dashboard": "Painel",
+      "scans": "Análises",
+      "sites": "Websites",
+      "assurance": "Assurance",
+      "teams": "Equipas",
+      "support": "Suporte",
+      "billing": "Faturação",
+      "notifications": "Notificações",
+      "whiteLabel": "Marca branca",
+      "admin": "Painel de administração",
+      "supportAdmin": "Gestão de suporte",
+      "home": "Voltar ao website"
+    },
+    "signOut": "Terminar sessão",
+    "openMenu": "Abrir menu de navegação",
+    "closeMenu": "Fechar menu de navegação",
+    "poweredBy": "Disponibilizado por",
+    "footer": {
+      "privacy": "Privacidade",
+      "terms": "Termos",
+      "contact": "Contacto"
     }
   }
 }

@@ -2587,7 +2587,55 @@
       "done": "done",
       "running": "running",
       "failed": "failed",
-      "queued": "queued"
+      "queued": "queued",
+      "COMPLETED": "Completed",
+      "PROCESSING": "Running",
+      "PENDING": "Queued",
+      "FAILED": "Failed"
+    },
+    "overview": {
+      "greeting": "Welcome back, {name}",
+      "greetingFallback": "Welcome back",
+      "subtitle": "Here's how your websites are performing on accessibility.",
+      "kpi": {
+        "avgScoreSub": "across your recent scans",
+        "criticalSub": "need immediate attention",
+        "openIssues": "Open issues",
+        "openIssuesSub": "from your latest scan per website",
+        "sites": "Websites",
+        "sitesSub": "{used} of {limit} in your plan"
+      },
+      "charts": {
+        "trendTitle": "Score trend",
+        "trendDescription": "Your average accessibility score over recent scans",
+        "trendEmpty": "Run at least two scans to see your trend",
+        "impactTitle": "Issues by severity",
+        "impactDescription": "Currently open issues by impact level"
+      },
+      "usage": {
+        "title": "Plan usage",
+        "description": "Your usage in the current billing period",
+        "pages": "Pages scanned",
+        "sites": "Websites",
+        "of": "{used} of {limit}",
+        "upgradeTitle": "You're close to your plan limit",
+        "upgradeBody": "Upgrade your plan for more pages and websites — effective immediately, no downtime.",
+        "upgradeCta": "View upgrade options"
+      },
+      "onboarding": {
+        "title": "Get compliant in three steps",
+        "description": "Your first accessibility report is minutes away",
+        "step1": "Run your first scan",
+        "step1Desc": "Enter your website URL above and start a scan.",
+        "step2": "Review your report",
+        "step2Desc": "Issues are sorted by severity with concrete fix guidance.",
+        "step3": "Export & share",
+        "step3Desc": "Download a beautifully branded PDF report for your team or clients."
+      },
+      "recentScans": {
+        "viewAll": "View all scans",
+        "report": "Report"
+      }
     }
   },
   "about": {
@@ -4220,6 +4268,39 @@
       "heading": "Audit your site against the EAA today.",
       "subhead": "Free scan, no credit card. Results in under 60 seconds.",
       "cta": "Start your free scan"
+    }
+  },
+  "dashboardShell": {
+    "mainNavLabel": "Main navigation",
+    "groups": {
+      "workspace": "Workspace",
+      "monitoring": "Monitoring",
+      "organization": "Organization",
+      "settings": "Settings",
+      "admin": "Admin"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "scans": "Scans",
+      "sites": "Websites",
+      "assurance": "Assurance",
+      "teams": "Teams",
+      "support": "Support",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "whiteLabel": "White label",
+      "admin": "Admin panel",
+      "supportAdmin": "Support admin",
+      "home": "Back to website"
+    },
+    "signOut": "Sign out",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "poweredBy": "Powered by",
+    "footer": {
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact"
     }
   }
 }
