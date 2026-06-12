@@ -1382,7 +1382,7 @@ describe("Deep scan PDF section rendering", () => {
     const html = renderReportHTML(getReport({ raw: { aiContentChecks: [] } }));
 
     expect(html).toContain("AI-Powered Content Intelligence");
-    expect(html).toContain("AI Vision analysis is being processed or no images were found on the scanned pages.");
+    expect(html).toContain("AI-Vision analysis is being processed or no images were found on the scanned pages.");
   });
 
   it("renders Performance with fallback Visual Load Time when metrics are missing", () => {

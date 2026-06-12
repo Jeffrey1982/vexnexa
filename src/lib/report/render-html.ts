@@ -398,7 +398,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
   <header class="report-header report-header-light">
     ${renderBrandBlock(d, primary, false)}
     <div class="header-meta">
-      <span class="header-pill" style="color:${esc(ink)};border-color:${esc(primary)}">${esc(d.labels.reportTitle)}</span>
+      <span class="header-pill" style="color:${esc(ink)};border-color:${esc(primary)}">${fmtDate(d.scanDate, d.labels.locale)}</span>
     </div>
   </header>
   <div class="cover-main cover-main-light">
@@ -412,7 +412,7 @@ function renderCover(d: ReportData, primary: string, s: ReportStyle): string {
       <div class="cover-chip-row">
         ${sevChip(d.riskLevel === "Low" ? "minor" : d.riskLevel === "Moderate" ? "moderate" : d.riskLevel === "High" ? "serious" : "critical", d)}
         <span class="cover-pill-ok" style="border-color:${esc(primary)};color:${esc(ink)}">${esc(d.complianceLevel)}</span>
-        <span class="cover-pill-eaa ${d.eaaReady ? "eaa-yes" : "eaa-warn"}">EAA 2025 · ${d.eaaReady ? "On track" : "Needs work"}</span>
+        <span class="cover-pill-eaa ${d.eaaReady ? "eaa-yes" : "eaa-warn"}">EAA · ${d.eaaReady ? "On track" : "Needs work"}</span>
       </div>
       <div class="cover-meta-grid cover-meta-light">
         <div class="cover-meta-cell"><span class="cover-meta-label">${esc(d.labels.standard)}</span><span class="cover-meta-value" style="color:${esc(primary)}">${esc(d.complianceLevel)}</span></div>
@@ -505,9 +505,9 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
     { label: d.labels.critical, value: d.issueBreakdown.critical, color: "#DC2626" },
     { label: d.labels.serious, value: d.issueBreakdown.serious, color: "#EA580C" },
     { label: d.labels.moderate, value: d.issueBreakdown.moderate, color: "#D97706" },
-    { label: d.labels.minor, value: d.issueBreakdown.minor, color: "#1F4A2D" },
+    { label: d.labels.minor, value: d.issueBreakdown.minor, color: "#64748B" },
     { label: d.labels.wcagChecksPassed, value: `${d.compliancePercentage}%`, color: "#16A34A" },
-    { label: d.labels.estimatedFixTime, value: d.estimatedFixTime, color: "#7C3AED" },
+    { label: d.labels.estimatedFixTime, value: d.estimatedFixTime, color: "#0F172A" },
   ];
 
   const coverageNote = `<div class="coverage-note"><strong>${esc(d.labels.note)}:</strong> ${esc(d.labels.automatedTestingNote)}</div>`;
@@ -542,7 +542,7 @@ function renderExecutiveSummary(d: ReportData, primary: string, s: ReportStyle):
   </header>
   <div class="exec-hero-panel">
     <div class="exec-hero-scorecol">
-      <div class="exec-mega-score" style="color:${primaryScoreColor}">${d.vni ? `${d.vni.tier}` : hs.value}</div>
+      <div class="exec-mega-score${d.vni ? " exec-mega-score-text" : ""}" style="color:${primaryScoreColor}">${d.vni ? `${d.vni.tier}` : hs.value}</div>
       <div class="exec-mega-sub"><span class="exec-mega-of">${d.vni ? "" : "/100"}</span> <span class="exec-grade-pill" style="border-color:${primaryScoreColor};color:${esc(ink)}">${d.vni ? `${"★★★★★".slice(0, d.vni.stars)}` : `${esc(d.labels.grade)} ${hs.grade}`}</span></div>
       <p class="exec-mega-label">${d.vni ? d.labels.vniIndex : hs.label}</p>
       <div class="exec-mega-bar"><div class="exec-mega-bar-fill" style="width:${d.vni ? vniBand(d.vni.score) : Math.min(100, hs.value)}%;background:linear-gradient(90deg,#FDE68A 0%,${GOLD} 100%)"></div></div>
@@ -617,7 +617,7 @@ function renderVisualBreakdown(d: ReportData, primary: string, s: ReportStyle): 
       <table class="status-table">
         <tr><td>WCAG 2.1 Level AA</td><td><span class="status-dot" style="background:${aaClr}"></span>${complianceStatusLabel(d, d.wcagAAStatus)}</td></tr>
         <tr><td>WCAG 2.1 Level AAA</td><td><span class="status-dot" style="background:${aaaClr}"></span>${complianceStatusLabel(d, d.wcagAAAStatus)}</td></tr>
-        <tr><td>EAA 2025 Readiness</td><td><span class="status-dot" style="background:${d.eaaReady ? "#16A34A" : "#D97706"}"></span>${readinessLabel(d)}</td></tr>
+        <tr><td>EAA Readiness</td><td><span class="status-dot" style="background:${d.eaaReady ? "#16A34A" : "#D97706"}"></span>${readinessLabel(d)}</td></tr>
       </table>
     </div>
     <div class="breakdown-card">
@@ -675,22 +675,22 @@ function renderAiVisionAudit(d: ReportData, primary: string, s: ReportStyle): st
   const pageTitle = d.pageTitle || d.domain;
   if (!d.aiVisionAudit.length) {
     return pageSection("AI-Powered Content Intelligence", primary, s, `
-  <p class="section-intro">AI-powered image analysis using Gemini 1.5 Flash validates alt-text accuracy against visual content.</p>
-  <div class="empty-state"><p>AI Vision analysis is being processed or no images were found on the scanned pages.</p></div>
+  <p class="section-intro">AI-powered image analysis with VexNexa AI-Vision validates alt-text accuracy against visual content.</p>
+  <div class="empty-state"><p>AI-Vision analysis is being processed or no images were found on the scanned pages.</p></div>
   `, "ai-vision-audit");
   }
 
   return pageSection("AI-Powered Content Intelligence", primary, s, `
-  <p class="section-intro">AI-powered image analysis using Gemini 1.5 Flash validates alt-text accuracy against visual content. This table shows images analyzed during the scan with AI confidence scores and compliance assessments.</p>
+  <p class="section-intro">AI-powered image analysis with VexNexa AI-Vision validates alt-text accuracy against visual content. This table shows images analyzed during the scan with AI confidence scores and compliance assessments.</p>
   <table class="ai-table">
     <thead><tr><th>Page URL</th><th>Image</th><th>Detected by AI (Description)</th><th>Original Alt-Text</th><th>Compliance Match Score</th></tr></thead>
     <tbody>
       ${d.aiVisionAudit.map((item) => `<tr class="${item.matchesAltText === false ? 'ai-row-mismatch' : ''}">
         <td>${esc(pageTitle)}</td>
-        <td>${item.imageUrl ? `<span class="ai-url">${esc(item.imageUrl).slice(0, 60)}...</span>` : "Image"}</td>
-        <td>${esc(item.aiDescription || item.recommendation || "Gemini analysis completed.")}</td>
+        <td>${item.imageUrl ? `<span class="ai-url">${esc(item.imageUrl.length > 60 ? `${item.imageUrl.slice(0, 60)}…` : item.imageUrl)}</span>` : "Image"}</td>
+        <td>${esc(item.aiDescription || item.recommendation || "AI analysis completed.")}</td>
         <td>${esc(item.altText || "No alt text")}</td>
-        <td><strong class="${item.matchesAltText === false ? 'ai-score-mismatch' : 'ai-score-match'}">${typeof item.confidence === "number" ? `${Math.round(item.confidence)}%` : item.matchesAltText === false ? "0%" : "100%"}</strong></td>
+        <td><strong class="${item.matchesAltText === false ? 'ai-score-mismatch' : 'ai-score-match'}">${typeof item.confidence === "number" ? `${Math.round(item.confidence <= 1 ? item.confidence * 100 : item.confidence)}%` : item.matchesAltText === false ? "0%" : "100%"}</strong></td>
       </tr>`).join("")}
     </tbody>
   </table>
@@ -951,7 +951,7 @@ function renderAuditCard(iss: ReportIssue, num: number, primary: string, domain:
         <p>${esc(iss.estimatedFixTime)} &middot; ${iss.affectedElements} element${iss.affectedElements !== 1 ? "s" : ""} affected</p>
       </div>
       <div class="ac-section">
-        <div class="ac-label">${esc(d.labels.impact)}</div>
+        <div class="ac-label">${esc(d.labels.findings)}</div>
         <p>${esc(iss.explanation)}</p>
       </div>
     </div>
@@ -1047,20 +1047,33 @@ function renderCTA(d: ReportData, primary: string, s: ReportStyle): string {
   const wl = d.whiteLabelConfig;
   const cta = d.ctaConfig;
 
+  const brandName = d.reportBranding?.companyName || wl.companyNameOverride || "VexNexa";
+  const heading = d.labels.locale === "nl" ? "Volgende stappen" : d.labels.locale === "fr" ? "Prochaines etapes" : "Next Steps";
+  const lead = d.labels.locale === "nl"
+    ? `Op basis van deze beoordeling raden we aan de ${d.issueBreakdown.critical > 0 ? "kritieke en ernstige" : "geidentificeerde"} bevindingen te prioriteren om toegankelijkheidsrisico te verlagen en de gebruikerservaring te verbeteren.`
+    : d.labels.locale === "fr"
+    ? `Sur la base de cette evaluation, nous recommandons de prioriser les constats ${d.issueBreakdown.critical > 0 ? "critiques et serieux" : "identifies"} afin de reduire le risque d accessibilite et d ameliorer l experience utilisateur.`
+    : `Based on this assessment, we recommend prioritising the ${d.issueBreakdown.critical > 0 ? "critical and serious" : "identified"} findings to reduce accessibility risk and improve user experience.`;
+  const bullets = d.labels.locale === "nl"
+    ? ["Gedetailleerde herstelroadmap", "Doorlopende compliance-monitoring", "Auditklare documentatie", "Training voor ontwikkelaars over toegankelijkheidsstandaarden"]
+    : d.labels.locale === "fr"
+    ? ["Feuille de route de correction detaillee", "Surveillance continue de la conformite", "Documentation prete pour audit", "Formation des developpeurs aux standards d accessibilite"]
+    : ["Detailed remediation roadmap", "Ongoing compliance monitoring", "Audit-ready documentation", "Developer training on accessibility standards"];
+
   return `<section class="page cta-page">
-  <div class="cta-2col">
-    <div class="cta-left">
-      <h2 style="color:${primary}">${d.labels.locale === "nl" ? "Volgende stappen" : d.labels.locale === "fr" ? "Prochaines etapes" : "Next Steps"}</h2>
-      <p>${d.labels.locale === "nl" ? `Op basis van deze beoordeling raden we aan de ${d.issueBreakdown.critical > 0 ? "kritieke en ernstige" : "geidentificeerde"} bevindingen te prioriteren om toegankelijkheidsrisico te verlagen en de gebruikerservaring te verbeteren.` : d.labels.locale === "fr" ? `Sur la base de cette evaluation, nous recommandons de prioriser les constats ${d.issueBreakdown.critical > 0 ? "critiques et serieux" : "identifies"} afin de reduire le risque d accessibilite et d ameliorer l experience utilisateur.` : `Based on this assessment, we recommend prioritising the ${d.issueBreakdown.critical > 0 ? "critical and serious" : "identified"} findings to reduce accessibility risk and improve user experience.`}</p>
-      <ul class="cta-bullets">
-        ${(d.labels.locale === "nl" ? ["Gedetailleerde herstelroadmap", "Doorlopende compliance-monitoring", "Auditklare documentatie", "Training voor ontwikkelaars over toegankelijkheidsstandaarden"] : d.labels.locale === "fr" ? ["Feuille de route de correction detaillee", "Surveillance continue de la conformite", "Documentation prete pour audit", "Formation des developpeurs aux standards d accessibilite"] : ["Detailed remediation roadmap", "Ongoing compliance monitoring", "Audit-ready documentation", "Developer training on accessibility standards"]).map((item) => `<li>${esc(item)}</li>`).join("\\n        ")}
-      </ul>
-      ${cta.supportEmail ? `<p class="cta-contact">${d.labels.locale === "nl" ? "Contact" : d.labels.locale === "fr" ? "Contact" : "Contact"}: <a href="mailto:${esc(cta.supportEmail)}">${esc(cta.supportEmail)}</a></p>` : ""}
+  <div class="cta-panel">
+    <div class="cta-panel-accent" style="background:linear-gradient(90deg,${esc(primary)} 0%,${BRAND_NAVY} 100%)" aria-hidden="true"></div>
+    <p class="cta-eyebrow">${esc(brandName)}</p>
+    <h2 class="cta-heading">${esc(heading)}</h2>
+    <p class="cta-lead">${esc(lead)}</p>
+    <div class="cta-checklist">
+      ${bullets.map((item) => `<div class="cta-check-item"><span class="cta-check-dot" style="background:${esc(primary)}">&#10003;</span><span>${esc(item)}</span></div>`).join("")}
     </div>
-    <div class="cta-right">
+    <div class="cta-actions">
       ${cta.ctaUrl ? `<a href="${esc(cta.ctaUrl)}" class="cta-button" style="background:${primary}">${esc(cta.ctaText || (d.labels.locale === "nl" ? "Aan de slag" : d.labels.locale === "fr" ? "Commencer" : "Get Started"))}</a>` : ""}
-      ${wl.footerText ? `<p class="cta-footer-text">${esc(wl.footerText)}</p>` : ""}
+      ${cta.supportEmail ? `<p class="cta-contact">${d.labels.locale === "nl" ? "Vragen over dit rapport?" : d.labels.locale === "fr" ? "Des questions sur ce rapport ?" : "Questions about this report?"} <a href="mailto:${esc(cta.supportEmail)}">${esc(cta.supportEmail)}</a></p>` : ""}
     </div>
+    ${wl.footerText ? `<p class="cta-footer-text">${esc(wl.footerText)}</p>` : ""}
   </div>
 </section>`;
 }
@@ -1118,7 +1131,7 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
   .cover-meta-grid{grid-template-columns:repeat(2,1fr)}
   .metrics-grid{grid-template-columns:repeat(2,1fr)}
   .breakdown-grid{grid-template-columns:1fr}
-  .cta-2col{grid-template-columns:1fr}
+  .cta-checklist{grid-template-columns:1fr}
   .ac-grid{grid-template-columns:1fr}
   .brand-logo{max-height:32px;max-width:160px}
   .exec-health-row{flex-direction:column;align-items:stretch}
@@ -1144,7 +1157,7 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
   .cover-meta-grid{grid-template-columns:repeat(2,1fr);gap:var(--space-sm) var(--space-md)}
   .metrics-grid{grid-template-columns:repeat(2,1fr);gap:var(--space-md)}
   .breakdown-grid{grid-template-columns:1fr;gap:var(--space-md)}
-  .cta-2col{grid-template-columns:1fr}
+  .cta-checklist{grid-template-columns:1fr}
   .evidence-table{font-size:10px}
   .evidence-table th,.evidence-table td{padding:var(--space-sm) var(--space-sm)}
   .evidence-table th:first-child{width:6%}
@@ -1331,6 +1344,7 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
   box-shadow:0 8px 40px rgba(10,37,64,.06);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .exec-hero-scorecol{flex:0 0 200px;text-align:left}
 .exec-mega-score{font-size:88px;font-weight:900;line-height:0.95;letter-spacing:-0.04em;font-variant-numeric:tabular-nums}
+.exec-mega-score-text{font-size:52px;line-height:1.05;letter-spacing:-0.02em}
 .exec-mega-sub{display:flex;align-items:center;gap:var(--space-sm);margin-top:var(--space-xs);flex-wrap:wrap}
 .exec-mega-of{font-size:18px;font-weight:600;color:#94A3B8}
 .exec-grade-pill{font-size:12px;font-weight:800;padding:4px 12px;border:2px solid;border-radius:999px;background:#fff}
@@ -1632,15 +1646,21 @@ body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;
    CTA
    ═══════════════════════════════════════════════════ */
 .cta-page{display:flex;align-items:center;justify-content:center}
-.cta-2col{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-xl);align-items:start;max-width:700px;width:100%}
-.cta-left h2{font-size:22px;font-weight:${titleWeight};margin-bottom:var(--space-sm)}
-.cta-left p{font-size:13px;color:#4B5563;line-height:1.6;margin-bottom:var(--space-md)}
-.cta-trust,.cta-bullets{list-style:none;padding:0;margin:0 0 var(--space-md)}
-.cta-trust li,.cta-bullets li{font-size:12px;color:#374151;padding:var(--space-xs) 0;padding-left:var(--space-md);position:relative}
-.cta-trust li::before,.cta-bullets li::before{content:"\\2713";position:absolute;left:0;color:var(--primary);font-weight:700}
-.cta-contact{font-size:12px;color:#6B7280}.cta-contact a{color:var(--primary)}
-.cta-right{display:flex;flex-direction:column;align-items:center;gap:var(--space-md)}
-.cta-footer-text{font-size:11px;color:#D1D5DB;margin-top:var(--space-md);text-align:center}
+.cta-panel{max-width:620px;width:100%;background:#fff;border:1px solid #E2E8F0;border-radius:20px;padding:var(--space-2xl) var(--space-2xl) var(--space-xl);
+  box-shadow:0 8px 40px rgba(10,37,64,.07);position:relative;overflow:hidden;text-align:center;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cta-panel-accent{position:absolute;top:0;left:0;right:0;height:4px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cta-eyebrow{font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:#64748B;margin-bottom:var(--space-sm)}
+.cta-heading{font-size:26px;font-weight:${titleWeight};letter-spacing:-0.02em;color:var(--dark);margin-bottom:var(--space-md)}
+.cta-lead{font-size:13px;color:#475569;line-height:1.7;margin:0 auto var(--space-xl);max-width:46ch}
+.cta-checklist{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-bottom:var(--space-xl);text-align:left}
+.cta-check-item{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#334155;line-height:1.5;
+  background:var(--vn-surface);border:1px solid #E2E8F0;border-radius:12px;padding:12px 14px}
+.cta-check-dot{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;color:#fff;
+  font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cta-actions{display:flex;flex-direction:column;align-items:center;gap:var(--space-md)}
+.cta-contact{font-size:12px;color:#6B7280}.cta-contact a{color:var(--primary);font-weight:600}
+.cta-footer-text{font-size:11px;color:#94A3B8;margin-top:var(--space-lg);text-align:center}
 
 .cta-button{display:inline-block;padding:var(--space-md) var(--space-xl);color:white;border-radius:var(--r);font-size:14px;font-weight:700;
   text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.12);-webkit-print-color-adjust:exact;print-color-adjust:exact}
