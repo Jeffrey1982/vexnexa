@@ -59,14 +59,9 @@ export default function robots(): MetadataRoute.Robots {
           '/report/*',
         ],
       },
-      {
-        userAgent: 'GPTBot',
-        disallow: '/',
-      },
-      {
-        userAgent: 'ChatGPT-User',
-        disallow: '/',
-      },
+      // AI crawlers are allowed on public marketing/blog content so VexNexa
+      // can be discovered and cited in AI search answers (ChatGPT, Perplexity).
+      // App/dashboard routes stay covered by the wildcard disallow rules above.
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,

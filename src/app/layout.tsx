@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'VexNexa - Accessibility Testing Platform',
     description: 'Professional accessibility testing and compliance monitoring platform for websites',
   },
