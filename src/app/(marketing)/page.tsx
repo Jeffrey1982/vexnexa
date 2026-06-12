@@ -14,12 +14,14 @@ export const metadata: Metadata = {
       'Continuous WCAG monitoring, accessibility regression alerts, and branded reports for agencies and EU-facing teams.',
     url: 'https://vexnexa.com',
     type: 'website',
+    images: ['/opengraph-image'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VexNexa - White-Label WCAG Monitoring',
     description:
       'Continuous WCAG monitoring, accessibility regression alerts, and branded reports for agencies and EU-facing teams.',
+    images: ['/opengraph-image'],
   },
 }
 

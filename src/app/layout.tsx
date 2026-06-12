@@ -72,11 +72,13 @@ export const metadata: Metadata = {
     description: 'Professional accessibility testing and compliance monitoring platform for websites',
     type: 'website',
     locale: 'en_US',
+    images: ['/opengraph-image'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VexNexa - Accessibility Testing Platform',
     description: 'Professional accessibility testing and compliance monitoring platform for websites',
+    images: ['/opengraph-image'],
   },
 }
 

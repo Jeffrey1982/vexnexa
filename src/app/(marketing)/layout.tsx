@@ -19,12 +19,14 @@ export const metadata: Metadata = {
     siteName: 'VexNexa',
     type: 'website',
     locale: 'en_US',
+    images: ['/opengraph-image'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VexNexa — White-Label WCAG Monitoring for Agencies & EU-Facing Teams',
     description: 'Scan websites for WCAG 2.2 issues, catch regressions, and deliver branded reports. Built for agencies and EU-facing teams.',
     creator: '@vexnexa',
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,
