@@ -64,7 +64,7 @@
     "followUs": "Suivez-nous",
     "forAgencies": "Pour les Agences",
     "sampleReport": "Rapport d'Exemple",
-    "updates": "Updates",
+    "updates": "Mises à jour",
     "eaaMonitoring": "Surveillance EAA",
     "tagline": "Des scans WCAG qui apportent de vraies informations",
     "theme": "Thème"
@@ -115,10 +115,10 @@
       "pricing": "Tarifs",
       "changelog": "Journal des Modifications",
       "documentation": "Documentation",
-      "dashboard": "Dashboard"
+      "dashboard": "Tableau de bord"
     },
     "support": {
-      "title": "Support",
+      "title": "Assistance",
       "contact": "Contact",
       "about": "? propos",
       "blog": "Blog"
@@ -128,23 +128,23 @@
       "privacy": "Politique de Confidentialité",
       "terms": "Conditions d'Utilisation",
       "security": "Sécurité",
-      "sla": "SLA & Support"
+      "sla": "SLA & assistance"
     },
     "copyright": "Tous droits réservés.",
     "solutions": {
       "title": "Solutions",
-      "forAgencies": "For Agencies",
-      "eaaMonitoring": "EAA Monitoring",
-      "whiteLabelReports": "White-Label Reports",
-      "sampleReport": "Sample Report",
-      "wcagScanner": "WCAG Scanner",
-      "pilotPartner": "Pilot Partner Program",
-      "agencyMonitoring": "Agency Monitoring"
+      "forAgencies": "Pour les agences",
+      "eaaMonitoring": "Surveillance EAA",
+      "whiteLabelReports": "Rapports en marque blanche",
+      "sampleReport": "Exemple de rapport",
+      "wcagScanner": "Scanner WCAG",
+      "pilotPartner": "Programme Pilot Partner",
+      "agencyMonitoring": "Surveillance pour agences"
     },
-    "disclaimer": "Public content scanning • No storage of personal data",
+    "disclaimer": "Analyse de contenu public • Aucun stockage de données personnelles",
     "description": "Surveillance, rapports et workflows de correction d?accessibilit? pour les ?quipes modernes.",
     "overview": "Vue d?ensemble",
-    "scans": "Scans",
+    "scans": "Analyses",
     "sites": "Sites",
     "teams": "?quipes",
     "settings": "Param?tres",
@@ -349,9 +349,9 @@
     },
     "socialProof": {
       "title": "Des agences dans toute l'Europe nous font confiance",
-      "logo1": "Agency Partner",
-      "logo2": "Digital Studio",
-      "logo3": "Web Team",
+      "logo1": "Partenaire agence",
+      "logo2": "Studio digital",
+      "logo3": "Équipe web",
       "logo4": "Compliance Co."
     },
     "trustStrip": {
@@ -442,7 +442,7 @@
       "subtitle": "Obtenez un accès niveau Business, un support direct et contribuez à façonner VexNexa — tout en offrant l'accessibilité à vos clients dès le premier jour.",
       "standardsIntro": "Livrez des rapports en marque blanche fondés sur les mêmes référentiels que ceux des équipes d'accessibilité les plus exigeantes.",
       "standardsAria": "Références aux normes d'accessibilité",
-      "standardsPoweredBy": "Powered by",
+      "standardsPoweredBy": "Propulsé par",
       "standardsAxeCaption": "Moteur de tests",
       "standardsWcagCaption": "WCAG 2.2 AA",
       "standardsEnCaption": "Cadre UE",
@@ -534,7 +534,7 @@
         "title": "VexNexa Index (VNI)",
         "subtitle": "Un classement de conformité de 1 à 5 étoiles pour chaque domaine de votre portefeuille.",
         "liveLabel": "Scan du portefeuille",
-        "priorityBadge": "High-Priority Action Required",
+        "priorityBadge": "Priorité élevée : action requise",
         "priorityCopy": "Les domaines classés Insolvent (1 étoile) sont signalés pour examen immédiat. Il s'agit d'un signal d'audit interne, pas d'un verdict juridique.",
         "ranks": {
           "insolvent": "Insolvent — 1 étoile",
@@ -3446,15 +3446,15 @@
     "ctaPricing": "View pricing"
   },
   "agencyCTAStrip": {
-    "badge": "For agencies",
-    "title": "Managing multiple client sites?",
-    "subtitle": "Use VexNexa for repeatable scans, branded reports, and ongoing accessibility monitoring.",
-    "trust1": "White-label report workflows",
-    "trust2": "Ongoing monitoring support",
-    "trust3": "Clear issue prioritisation",
-    "trust4": "Built for agencies and EU-facing teams",
-    "ctaPrimary": "Start your free scan",
-    "ctaSecondary": "Contact us about agency use"
+    "badge": "Pour les agences",
+    "title": "Vous gérez plusieurs sites clients ?",
+    "subtitle": "Utilisez VexNexa pour des scans répétables, des rapports personnalisés et une surveillance continue de l'accessibilité.",
+    "trust1": "Flux de rapports en marque blanche",
+    "trust2": "Prise en charge de la surveillance continue",
+    "trust3": "Priorisation claire des problèmes",
+    "trust4": "Conçu pour les agences et les équipes orientées UE",
+    "ctaPrimary": "Lancez votre scan gratuit",
+    "ctaSecondary": "Contactez-nous pour l'usage en agence"
   },
   "getStarted": {
     "header": {
@@ -3576,7 +3576,7 @@
           "vexnexa": "4 niveaux de gravit? + score d?impact pond?r?"
         },
         "reporting": {
-          "label": "Reporting",
+          "label": "Rapports",
           "basic": "Capture ou copier-coller",
           "vexnexa": "PDF et DOCX avec d?tails complets"
         },
@@ -3586,7 +3586,7 @@
           "vexnexa": "Historique du score + suivi des r?gressions"
         },
         "branding": {
-          "label": "Branding",
+          "label": "Image de marque",
           "basic": "Logo tiers sur la sortie",
           "vexnexa": "Marque blanche avec votre marque"
         }
@@ -4112,14 +4112,14 @@
     "description": "Surveillance, rapports et workflows de correction d?accessibilit? pour les ?quipes modernes.",
     "dashboard": "Tableau de bord",
     "overview": "Vue d?ensemble",
-    "scans": "Scans",
+    "scans": "Analyses",
     "sites": "Sites",
     "teams": "?quipes",
     "settings": "Param?tres",
     "billing": "Facturation",
     "notifications": "Notifications",
     "whiteLabel": "Marque blanche",
-    "support": "Support",
+    "support": "Assistance",
     "contact": "Contact",
     "privacyPolicy": "Politique de confidentialit?",
     "termsOfService": "Conditions d?utilisation",
@@ -4335,7 +4335,7 @@
       "sites": "Sites web",
       "assurance": "Assurance",
       "teams": "Équipes",
-      "support": "Support",
+      "support": "Assistance",
       "billing": "Facturation",
       "notifications": "Notifications",
       "whiteLabel": "Marque blanche",

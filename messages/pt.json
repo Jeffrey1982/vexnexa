@@ -1,6 +1,6 @@
 {
   "faq": {
-    "eyebrow": "FAQ",
+    "eyebrow": "Perguntas frequentes",
     "title": "Perguntas frequentes",
     "contactCard": {
       "title": "Não encontrou o que procurava?",
@@ -64,7 +64,7 @@
     "followUs": "Siga-nos",
     "forAgencies": "Para Agências",
     "sampleReport": "Relatório de Amostra",
-    "updates": "Updates",
+    "updates": "Atualizações",
     "eaaMonitoring": "Monitoramento EAA",
     "tagline": "Análises WCAG que fornecem informações reais",
     "theme": "Tema"
@@ -115,7 +115,7 @@
       "pricing": "Preços",
       "changelog": "Registo de alterações",
       "documentation": "Documentação",
-      "dashboard": "Dashboard"
+      "dashboard": "Painel"
     },
     "support": {
       "title": "Suporte",
@@ -132,19 +132,19 @@
     },
     "copyright": "Todos os direitos reservados.",
     "solutions": {
-      "title": "Solutions",
-      "forAgencies": "For Agencies",
-      "eaaMonitoring": "EAA Monitoring",
-      "whiteLabelReports": "White-Label Reports",
-      "sampleReport": "Sample Report",
-      "wcagScanner": "WCAG Scanner",
-      "pilotPartner": "Pilot Partner Program",
-      "agencyMonitoring": "Agency Monitoring"
+      "title": "Soluções",
+      "forAgencies": "Para agências",
+      "eaaMonitoring": "Monitorização EAA",
+      "whiteLabelReports": "Relatórios white-label",
+      "sampleReport": "Relatório de exemplo",
+      "wcagScanner": "Scanner WCAG",
+      "pilotPartner": "Programa Pilot Partner",
+      "agencyMonitoring": "Monitorização para agências"
     },
-    "disclaimer": "Public content scanning • No storage of personal data",
+    "disclaimer": "Análise de conteúdo público • Sem armazenamento de dados pessoais",
     "description": "Monitoriza??o, relat?rios e fluxos de corre??o de acessibilidade para equipas modernas.",
     "overview": "Vis?o geral",
-    "scans": "Scans",
+    "scans": "Análises",
     "sites": "Sites",
     "teams": "Equipas",
     "settings": "Defini??es",
@@ -347,7 +347,7 @@
       "subtitle": "Obtenha acesso nível Business, suporte direto e ajude a moldar VexNexa — enquanto entrega acessibilidade aos seus clientes desde o primeiro dia.",
       "standardsIntro": "Entregue relatórios white-label com os mesmos padrões usados pelas principais equipas de acessibilidade no mundo.",
       "standardsAria": "Referências a normas de acessibilidade",
-      "standardsPoweredBy": "Powered by",
+      "standardsPoweredBy": "Com tecnologia de",
       "standardsAxeCaption": "Motor de testes",
       "standardsWcagCaption": "WCAG 2.2 AA",
       "standardsEnCaption": "Quadro UE",
@@ -445,7 +445,7 @@
         "title": "VexNexa Index (VNI)",
         "subtitle": "Uma classificação de conformidade de 1 a 5 estrelas para cada domínio do seu portefólio.",
         "liveLabel": "Scan do portefólio",
-        "priorityBadge": "High-Priority Action Required",
+        "priorityBadge": "Prioridade alta: ação necessária",
         "priorityCopy": "Os domínios classificados como Insolvent (1 estrela) são sinalizados para revisão imediata. É um sinal de auditoria interna, não um veredicto jurídico.",
         "ranks": {
           "insolvent": "Insolvent — 1 estrela",
@@ -3357,15 +3357,15 @@
     "ctaPricing": "View pricing"
   },
   "agencyCTAStrip": {
-    "badge": "For agencies",
-    "title": "Managing multiple client sites?",
-    "subtitle": "Use VexNexa for repeatable scans, branded reports, and ongoing accessibility monitoring.",
-    "trust1": "White-label report workflows",
-    "trust2": "Ongoing monitoring support",
-    "trust3": "Clear issue prioritisation",
-    "trust4": "Built for agencies and EU-facing teams",
-    "ctaPrimary": "Start your free scan",
-    "ctaSecondary": "Contact us about agency use"
+    "badge": "Para agências",
+    "title": "Gere vários sites de clientes?",
+    "subtitle": "Use a VexNexa para análises repetíveis, relatórios com a sua marca e monitorização contínua de acessibilidade.",
+    "trust1": "Fluxos de relatórios white-label",
+    "trust2": "Suporte de monitorização contínua",
+    "trust3": "Priorização clara de problemas",
+    "trust4": "Concebido para agências e equipas orientadas para a UE",
+    "ctaPrimary": "Inicie a sua análise gratuita",
+    "ctaSecondary": "Contacte-nos sobre o uso para agências"
   },
   "getStarted": {
     "header": {
@@ -3497,7 +3497,7 @@
           "vexnexa": "Hist?rico de pontua??o + regress?es"
         },
         "branding": {
-          "label": "Branding",
+          "label": "Marca",
           "basic": "Logo de terceiro no output",
           "vexnexa": "Marca branca com a sua marca"
         }
@@ -4023,7 +4023,7 @@
     "description": "Monitoriza??o, relat?rios e fluxos de corre??o de acessibilidade para equipas modernas.",
     "dashboard": "Painel",
     "overview": "Vis?o geral",
-    "scans": "Scans",
+    "scans": "Análises",
     "sites": "Sites",
     "teams": "Equipas",
     "settings": "Defini??es",
@@ -4243,7 +4243,7 @@
     "nav": {
       "dashboard": "Painel",
       "scans": "Análises",
-      "sites": "Websites",
+      "sites": "Sites",
       "assurance": "Assurance",
       "teams": "Equipas",
       "support": "Suporte",

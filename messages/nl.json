@@ -1,6 +1,6 @@
 {
   "faq": {
-    "eyebrow": "FAQ",
+    "eyebrow": "Veelgestelde vragen",
     "title": "Veelgestelde vragen",
     "contactCard": {
       "title": "Niet gevonden wat je zoekt?",
@@ -67,7 +67,7 @@
     "forAgencies": "Voor Bureaus",
     "sampleReport": "Voorbeeld Rapport",
     "updates": "Updates",
-    "eaaMonitoring": "EAA Monitoring"
+    "eaaMonitoring": "EAA-monitoring"
   },
   "footer": {
     "brand": {
@@ -80,16 +80,16 @@
         "placeholder": "Vul uw e-mailadres in",
         "subscribe": "Abonneren",
         "success": "Bedankt voor uw aanmelding!",
-        "confirmTitle": "Confirmation email sent!",
-        "confirmDescription": "Check your inbox and click the link to complete your subscription.",
-        "successTitle": "Thanks for subscribing!",
-        "successDescription": "We'll keep you updated with new features and tips.",
-        "alreadyTitle": "This email address is already subscribed",
-        "alreadyDescription": "Thanks for your interest!",
-        "errorTitle": "Something went wrong",
-        "errorDescription": "Please try again later."
+        "confirmTitle": "Bevestigingsmail verzonden!",
+        "confirmDescription": "Controleer je inbox en klik op de link om je inschrijving te voltooien.",
+        "successTitle": "Bedankt voor je inschrijving!",
+        "successDescription": "We houden je op de hoogte van nieuwe functies en tips.",
+        "alreadyTitle": "Dit e-mailadres is al ingeschreven",
+        "alreadyDescription": "Bedankt voor je interesse!",
+        "errorTitle": "Er ging iets mis",
+        "errorDescription": "Probeer het later opnieuw."
       },
-      "twitter": "Visit VexNexa on Twitter"
+      "twitter": "Bezoek VexNexa op Twitter"
     },
     "dashboard": "Dashboard",
     "brandedFooter": {
@@ -132,16 +132,16 @@
     },
     "copyright": "Alle rechten voorbehouden.",
     "solutions": {
-      "title": "Solutions",
-      "forAgencies": "For Agencies",
-      "eaaMonitoring": "EAA Monitoring",
-      "whiteLabelReports": "White-Label Reports",
-      "sampleReport": "Sample Report",
-      "wcagScanner": "WCAG Scanner",
-      "pilotPartner": "Pilot Partner Program",
-      "agencyMonitoring": "Agency Monitoring"
+      "title": "Oplossingen",
+      "forAgencies": "Voor agencies",
+      "eaaMonitoring": "EAA-monitoring",
+      "whiteLabelReports": "White-label rapporten",
+      "sampleReport": "Voorbeeldrapport",
+      "wcagScanner": "WCAG-scanner",
+      "pilotPartner": "Pilot Partner-programma",
+      "agencyMonitoring": "Agency-monitoring"
     },
-    "disclaimer": "Public content scanning • No storage of personal data",
+    "disclaimer": "Scannen van openbare content • Geen opslag van persoonsgegevens",
     "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",
     "overview": "Overzicht",
     "scans": "Scans",
@@ -189,7 +189,7 @@
     "proofPill2Value": "Context voorbij tags",
     "proofPill3Label": "+8",
     "proofPill3Value": "Regressie-delta",
-    "auditBadge": "Audit-ready PDF",
+    "auditBadge": "Auditklare PDF",
     "liveLabel": "Live",
     "urlLabel": "Website-URL",
     "urlPlaceholder": "https://jouw-website.nl",
@@ -392,9 +392,9 @@
     },
     "socialProof": {
       "title": "Vertrouwd door agencies in heel Europa",
-      "logo1": "Agency Partner",
-      "logo2": "Digital Studio",
-      "logo3": "Web Team",
+      "logo1": "Agency-partner",
+      "logo2": "Digital studio",
+      "logo3": "Webteam",
       "logo4": "Compliance Co."
     },
     "trustStrip": {
@@ -485,7 +485,7 @@
       "subtitle": "Krijg toegang op Business-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
       "standardsIntro": "Lever whitelabelrapporten aangedreven door dezelfde normen die toonaangevende toegankelijkheidsteams wereldwijd gebruiken.",
       "standardsAria": "Referenties naar toegankelijkheidsnormen",
-      "standardsPoweredBy": "Powered by",
+      "standardsPoweredBy": "Mogelijk gemaakt door",
       "standardsAxeCaption": "Testengine",
       "standardsWcagCaption": "WCAG 2.2 AA",
       "standardsEnCaption": "EU-kader",
@@ -533,7 +533,7 @@
     "primary_cta": "Start gratis scan",
     "secondary_cta": "Bekijk live demo",
     "trust_eu_hosted": "Alleen EU-gehost",
-    "trust_gdpr": "GDPR compliant",
+    "trust_gdpr": "AVG-conform",
     "trust_no_card": "Geen creditcard vereist",
     "eyebrow": "WCAG 2.2 · White-label · EU-ready",
     "title": "Bewijs toegankelijkheid",
@@ -577,7 +577,7 @@
         "title": "VexNexa Index (VNI)",
         "subtitle": "Een 1-tot-5-sterren compliance-rang voor elk domein in je portfolio.",
         "liveLabel": "Portfolio-scan",
-        "priorityBadge": "High-Priority Action Required",
+        "priorityBadge": "Hoge prioriteit: actie vereist",
         "priorityCopy": "Domeinen die als Insolvent (1 ster) worden geclassificeerd worden gemarkeerd voor onmiddellijke review. Dit is een intern-audit signaal, geen juridisch oordeel.",
         "ranks": {
           "insolvent": "Insolvent — 1 ster",
@@ -1669,8 +1669,8 @@
       "subtitle": "We maken toegankelijkheid werkbaar voor drukke teams. Minder ruis, meer echte verbeteringen met duidelijke prioriteiten en concrete fixes.",
       "badges": {
         "euHosting": "EU-hosting",
-        "axeCore": "axe-core ruleset",
-        "pdfWordExport": "PDF/Word export"
+        "axeCore": "axe-core regelset",
+        "pdfWordExport": "PDF/Word-export"
       },
       "cta": {
         "startFreeScan": "Start gratis scan",
@@ -1706,7 +1706,7 @@
           "description": "EU-hosting (bijv. eu-central), TLS overal, dataminimalisatie. Je data blijft van jou."
         },
         "teamworkFeatures": {
-          "title": "Teamwork features",
+          "title": "Samenwerkingsfuncties",
           "description": "Deelbare links, exports naar PDF/Word, duidelijke progressie. Iedereen blijft aangehaakt."
         }
       }
@@ -1716,7 +1716,7 @@
       "subtitle": "Van onduidelijkheid naar actieplan in drie stappen",
       "steps": {
         "scan": {
-          "title": "Scan",
+          "title": "Scannen",
           "description": "Voer een URL in. De engine controleert tegen WCAG 2.2 AA en markeert direct de echte issues."
         },
         "understand": {
@@ -1851,7 +1851,7 @@
     "title": "Wijzigingslog",
     "subtitle": "Blijf op de hoogte van alle nieuwe features, verbeteringen en bugfixes. We werken voortdurend aan het verbeteren van je accessibility scanning ervaring.",
     "betaLaunch": {
-      "title": "Beta Launch",
+      "title": "Bètalancering",
       "version": "v0.1.0",
       "date": "December 2024",
       "newFeatures": "✨ Nieuwe features",
@@ -1865,12 +1865,12 @@
     },
     "upcoming": {
       "crawling": {
-        "title": "Site-wide Crawling",
+        "title": "Site-brede crawling",
         "badge": "Binnenkort",
         "description": "Scan complete websites in één keer. Krijg een overzicht van accessibility issues over je hele site en prioriteer fixes op basis van impact."
       },
       "teamFeatures": {
-        "title": "Team Features",
+        "title": "Teamfuncties",
         "badge": "In ontwikkeling",
         "features": [
           "Team accounts met meerdere gebruikers",
@@ -2899,7 +2899,7 @@
   "scanForm": {
     "placeholder": "Voer website URL in om te scannen...",
     "button": {
-      "idle": "Start Scan",
+      "idle": "Scan starten",
       "loading": "Bezig met scannen...",
       "success": "Scan voltooid"
     },
@@ -3489,15 +3489,15 @@
     "ctaPricing": "View pricing"
   },
   "agencyCTAStrip": {
-    "badge": "For agencies",
-    "title": "Managing multiple client sites?",
-    "subtitle": "Use VexNexa for repeatable scans, branded reports, and ongoing accessibility monitoring.",
-    "trust1": "White-label report workflows",
-    "trust2": "Ongoing monitoring support",
-    "trust3": "Clear issue prioritisation",
-    "trust4": "Built for agencies and EU-facing teams",
-    "ctaPrimary": "Start your free scan",
-    "ctaSecondary": "Contact us about agency use"
+    "badge": "Voor agencies",
+    "title": "Beheer je meerdere klantsites?",
+    "subtitle": "Gebruik VexNexa voor herhaalbare scans, branded rapporten en doorlopende toegankelijkheidsmonitoring.",
+    "trust1": "White-label rapportworkflows",
+    "trust2": "Ondersteuning voor doorlopende monitoring",
+    "trust3": "Duidelijke prioritering van problemen",
+    "trust4": "Gebouwd voor agencies en EU-gerichte teams",
+    "ctaPrimary": "Start je gratis scan",
+    "ctaSecondary": "Neem contact op over agency-gebruik"
   },
   "getStarted": {
     "header": {
@@ -3629,7 +3629,7 @@
           "vexnexa": "Scorehistorie + regressietracking"
         },
         "branding": {
-          "label": "Branding",
+          "label": "Huisstijl",
           "basic": "Logo van derde partij op output",
           "vexnexa": "White-label met je eigen merk"
         }
@@ -3989,7 +3989,7 @@
   },
   "scanReport": {
     "quality": {
-      "realWorldTitle": "Real-World Experience",
+      "realWorldTitle": "Praktijkervaring",
       "realWorldDescription": "Technische toegankelijkheid is maar de helft van het verhaal. Deze metrics tonen hoe de pagina voelt op mobiele apparaten, oudere hardware en tragere netwerken.",
       "performanceScore": "Prestatiescore",
       "pageWeight": "Paginagewicht",
@@ -4042,7 +4042,7 @@
       "imageAltText": "Alt-tekst",
       "aiAssessment": "Gemini-beoordeling",
       "confidence": "Zekerheid",
-      "performanceParadox": "Performance Paradox",
+      "performanceParadox": "Performance-paradox",
       "pageWeight": "Paginagewicht",
       "visualLoadTime": "Visuele laadtijd",
       "domComplexity": "DOM-complexiteit",

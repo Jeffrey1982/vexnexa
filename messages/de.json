@@ -49,19 +49,19 @@
     }
   },
   "nav": {
-    "features": "Features",
-    "pricing": "Pricing",
+    "features": "Funktionen",
+    "pricing": "Preise",
     "blog": "Blog",
-    "contact": "Contact",
-    "login": "Login",
-    "signup": "Start Free",
-    "signOut": "Sign Out",
+    "contact": "Kontakt",
+    "login": "Anmelden",
+    "signup": "Kostenlos starten",
+    "signOut": "Abmelden",
     "dashboard": "Dashboard",
-    "about": "About",
-    "getStarted": "Get Started",
+    "about": "Über uns",
+    "getStarted": "Loslegen",
     "changelog": "Changelog",
-    "language": "Language",
-    "followUs": "Follow us",
+    "language": "Sprache",
+    "followUs": "Folgen Sie uns",
     "forAgencies": "Für Agenturen",
     "sampleReport": "Beispielbericht",
     "updates": "Updates",
@@ -110,11 +110,11 @@
       "signOut": "Abmelden"
     },
     "product": {
-      "title": "Product",
-      "features": "Features",
-      "pricing": "Pricing",
+      "title": "Produkt",
+      "features": "Funktionen",
+      "pricing": "Preise",
       "changelog": "Changelog",
-      "documentation": "Documentation",
+      "documentation": "Dokumentation",
       "dashboard": "Dashboard"
     },
     "support": {
@@ -124,24 +124,24 @@
       "blog": "Blog"
     },
     "legal": {
-      "title": "Legal",
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "security": "Security",
+      "title": "Rechtliches",
+      "privacy": "Datenschutzerklärung",
+      "terms": "Nutzungsbedingungen",
+      "security": "Sicherheit",
       "sla": "SLA & Support"
     },
     "copyright": "Alle Rechte vorbehalten.",
     "solutions": {
-      "title": "Solutions",
-      "forAgencies": "For Agencies",
-      "eaaMonitoring": "EAA Monitoring",
-      "whiteLabelReports": "White-Label Reports",
-      "sampleReport": "Sample Report",
-      "wcagScanner": "WCAG Scanner",
-      "pilotPartner": "Pilot Partner Program",
-      "agencyMonitoring": "Agency Monitoring"
+      "title": "Lösungen",
+      "forAgencies": "Für Agenturen",
+      "eaaMonitoring": "EAA-Monitoring",
+      "whiteLabelReports": "White-Label-Berichte",
+      "sampleReport": "Beispielbericht",
+      "wcagScanner": "WCAG-Scanner",
+      "pilotPartner": "Pilot-Partner-Programm",
+      "agencyMonitoring": "Agentur-Monitoring"
     },
-    "disclaimer": "Public content scanning • No storage of personal data",
+    "disclaimer": "Scannen öffentlicher Inhalte • Keine Speicherung personenbezogener Daten",
     "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
     "overview": "?bersicht",
     "scans": "Scans",
@@ -385,9 +385,9 @@
     },
     "socialProof": {
       "title": "Vertraut von Agenturen in ganz Europa",
-      "logo1": "Agency Partner",
-      "logo2": "Digital Studio",
-      "logo3": "Web Team",
+      "logo1": "Agenturpartner",
+      "logo2": "Digital-Studio",
+      "logo3": "Webteam",
       "logo4": "Compliance Co."
     },
     "trustStrip": {
@@ -494,7 +494,7 @@
       "subtitle": "Erhalten Sie Business-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
       "standardsIntro": "Liefern Sie White-Label-Berichte auf Basis derselben Standards, die führende Barrierefreiheitsteams weltweit nutzen.",
       "standardsAria": "Hinweise zu Barrierefreiheitsstandards",
-      "standardsPoweredBy": "Powered by",
+      "standardsPoweredBy": "Unterstützt von",
       "standardsAxeCaption": "Test-Engine",
       "standardsWcagCaption": "WCAG 2.2 AA",
       "standardsEnCaption": "EU-Rahmen",
@@ -571,38 +571,38 @@
     },
     "enterprise": {
       "hero": {
-        "eyebrow": "AI-Vision Accessibility · EAA & ADA Era",
-        "title": "Beyond Compliance. The Global Standard for Digital Inclusion.",
-        "subtitle": "Standard scanners find code errors. VexNexa uses AI-Vision to solve the Human Experience gap. Professional-grade insights for the EAA & ADA era.",
-        "pillar1Title": "Significant Risk Mitigation",
-        "pillar1Body": "Surface barriers that rule-based engines miss — before they become exposure.",
-        "pillar2Title": "Audit-Ready Reporting",
-        "pillar2Body": "Time-stamped, exportable evidence that aligns with internal-audit and procurement.",
-        "ctaPrimary": "Book an Enterprise Walkthrough",
-        "ctaSecondary": "View a Sample Report",
-        "noCard": "No credit card required to preview a sample report."
+        "eyebrow": "AI-Vision-Barrierefreiheit · EAA- & ADA-Ära",
+        "title": "Mehr als Compliance. Der globale Standard für digitale Inklusion.",
+        "subtitle": "Standard-Scanner finden Codefehler. VexNexa nutzt AI-Vision, um die Lücke in der menschlichen Erfahrung zu schließen. Professionelle Einblicke für die EAA- & ADA-Ära.",
+        "pillar1Title": "Erhebliche Risikominderung",
+        "pillar1Body": "Decken Sie Barrieren auf, die regelbasierte Engines übersehen — bevor sie zum Risiko werden.",
+        "pillar2Title": "Auditfertige Berichterstattung",
+        "pillar2Body": "Zeitgestempelte, exportierbare Nachweise im Einklang mit interner Prüfung und Beschaffung.",
+        "ctaPrimary": "Enterprise-Rundgang buchen",
+        "ctaSecondary": "Beispielbericht ansehen",
+        "noCard": "Keine Kreditkarte erforderlich, um einen Beispielbericht anzusehen."
       },
       "vni": {
         "title": "VexNexa Index (VNI)",
-        "subtitle": "A 1-to-5 star compliance rank for every domain in your portfolio.",
-        "liveLabel": "Portfolio scan",
-        "priorityBadge": "High-Priority Action Required",
-        "priorityCopy": "Domains rated Insolvent (1 star) are flagged for immediate review. This is an internal-audit signal, not a legal verdict.",
+        "subtitle": "Ein Compliance-Rang von 1 bis 5 Sternen für jede Domain in Ihrem Portfolio.",
+        "liveLabel": "Portfolio-Scan",
+        "priorityBadge": "Hohe Priorität: Maßnahmen erforderlich",
+        "priorityCopy": "Domains mit der Bewertung Insolvent (1 Stern) werden zur sofortigen Überprüfung markiert. Dies ist ein internes Prüfsignal, kein rechtliches Urteil.",
         "ranks": {
-          "insolvent": "Insolvent — 1 star",
-          "foundational": "Foundational — 2 stars",
+          "insolvent": "Insolvent — 1 Stern",
+          "foundational": "Grundlegend — 2 Sterne",
           "compliant": "Elite — 3 Sterne",
-          "auditReady": "Audit-Ready — 4 stars",
-          "leading": "Industry-Leading — 5 stars"
+          "auditReady": "Auditfertig — 4 Sterne",
+          "leading": "Branchenführend — 5 Sterne"
         },
-        "targetLabel": "Target",
-        "disclaimer": "VNI ratings are derived from automated AI-Vision findings combined with WCAG 2.2 rule coverage. They are an indicative risk signal, not a legal certification."
+        "targetLabel": "Ziel",
+        "disclaimer": "VNI-Bewertungen leiten sich aus automatisierten AI-Vision-Befunden in Kombination mit der WCAG-2.2-Regelabdeckung ab. Sie sind ein indikatives Risikosignal, keine rechtliche Zertifizierung."
       },
       "visibility": {
-        "eyebrow": "Visibility",
-        "title": "You can't fix what you can't see.",
-        "body": "VexNexa uncovers approximately 30% of accessibility barriers that traditional rule-based automation misses — interaction logic, perceptual ambiguity, and context-dependent failures that need vision-level understanding.",
-        "footnote": "Industry observation across published WCAG audits; actual coverage gain varies by site complexity.",
+        "eyebrow": "Sichtbarkeit",
+        "title": "Sie können nicht beheben, was Sie nicht sehen.",
+        "body": "VexNexa deckt etwa 30% der Barrieren auf, die traditionelle regelbasierte Automatisierung übersieht — Interaktionslogik, wahrnehmungsbezogene Mehrdeutigkeit und kontextabhängige Fehler, die ein Verständnis auf Vision-Ebene erfordern.",
+        "footnote": "Branchenbeobachtung aus veröffentlichten WCAG-Prüfungen; der tatsächliche Abdeckungsgewinn variiert je nach Komplexität der Website.",
         "stat1Label": "AI-Vision",
         "stat1Value": "Logik + visueller Kontext",
         "stat2Label": "Mehrdeutigkeit",
@@ -611,81 +611,81 @@
         "stat3Value": "Nachweis pro Befund"
       },
       "trustBar": {
-        "eyebrow": "Built for enterprise risk and audit teams",
+        "eyebrow": "Entwickelt für Enterprise-Risiko- und Prüfteams",
         "items": {
-          "wcag": "WCAG 2.2 AA scan engine",
-          "eaa": "EAA & ADA-aligned reporting",
-          "pci": "PCI-DSS via Mollie B.V.",
-          "eu": "Hosted in the EU (AWS Frankfurt)",
-          "audit": "Audit-ready PDF & DOCX exports"
+          "wcag": "WCAG 2.2 AA Scan-Engine",
+          "eaa": "EAA- & ADA-konforme Berichterstattung",
+          "pci": "PCI-DSS über Mollie B.V.",
+          "eu": "Gehostet in der EU (AWS Frankfurt)",
+          "audit": "Auditfertige PDF- & DOCX-Exporte"
         },
-        "security": "Built on recognized tooling and providers: axe-core, Mollie, WCAG/EAA, and EU hosting.",
-        "disclaimer": "VexNexa provides risk-mitigation tooling and audit-ready evidence. Final compliance certification remains the responsibility of your organisation and its accessibility advisors."
+        "security": "Aufgebaut auf anerkannten Tools und Anbietern: axe-core, Mollie, WCAG/EAA und EU-Hosting.",
+        "disclaimer": "VexNexa bietet Tools zur Risikominderung und auditfertige Nachweise. Die endgültige Compliance-Zertifizierung bleibt in der Verantwortung Ihrer Organisation und ihrer Barrierefreiheitsberater."
       },
       "features": {
-        "eyebrow": "Three pillars · Mitigation over guarantee",
-        "title": "Enterprise-grade accessibility intelligence.",
-        "subtitle": "Three capabilities that move you from rule-based scanning to a defensible compliance program.",
-        "viewAll": "Explore the full feature set",
+        "eyebrow": "Drei Säulen · Minderung statt Garantie",
+        "title": "Barrierefreiheits-Intelligenz auf Enterprise-Niveau.",
+        "subtitle": "Drei Funktionen, die Sie vom regelbasierten Scannen zu einem belastbaren Compliance-Programm bringen.",
+        "viewAll": "Den vollständigen Funktionsumfang entdecken",
         "aiVision": {
-          "title": "AI-Vision Context Analysis",
-          "body": "We analyse interaction logic and visual context — not just markup tags. The result: findings that match how a real user actually experiences the page.",
-          "b1": "Logic-aware: analyses flows, not single elements",
-          "b2": "Detects perceptual ambiguity invisible to axe-core",
-          "b3": "Reduces false positives on enterprise-scale codebases"
+          "title": "AI-Vision-Kontextanalyse",
+          "body": "Wir analysieren Interaktionslogik und visuellen Kontext — nicht nur Markup-Tags. Das Ergebnis: Befunde, die dem entsprechen, wie ein echter Nutzer die Seite tatsächlich erlebt.",
+          "b1": "Logikbewusst: analysiert Abläufe, nicht einzelne Elemente",
+          "b2": "Erkennt wahrnehmungsbezogene Mehrdeutigkeit, die axe-core übersieht",
+          "b3": "Reduziert Fehlalarme in Codebasen auf Enterprise-Ebene"
         },
         "history": {
-          "title": "Historical Compliance Tracking",
-          "body": "Time-stamped scan history per domain shows progress for internal-audit, procurement reviews, and board-level reporting.",
-          "b1": "Per-domain trend lines on every WCAG criterion",
-          "b2": "Regression alerts when a deploy lowers your VNI rank",
-          "b3": "Exportable evidence aligned with internal audit standards"
+          "title": "Historische Compliance-Verfolgung",
+          "body": "Zeitgestempelter Scan-Verlauf pro Domain zeigt den Fortschritt für interne Prüfungen, Beschaffungsbewertungen und Berichte auf Vorstandsebene.",
+          "b1": "Trendlinien pro Domain für jedes WCAG-Kriterium",
+          "b2": "Regressionswarnungen, wenn ein Deploy Ihren VNI-Rang senkt",
+          "b3": "Exportierbare Nachweise im Einklang mit internen Prüfstandards"
         },
         "portfolio": {
-          "title": "Enterprise Portfolio View",
-          "body": "Manage hundreds of domains in one dashboard. Roll up risk by business unit, region, or brand — and route remediation to the right team.",
-          "b1": "Roll-up risk by BU, region, or brand",
-          "b2": "Role-based access with audit-grade activity logs",
-          "b3": "API and webhooks for SIEM and ticketing integration"
+          "title": "Enterprise-Portfolio-Ansicht",
+          "body": "Verwalten Sie Hunderte von Domains in einem Dashboard. Bündeln Sie Risiken nach Geschäftsbereich, Region oder Marke — und leiten Sie die Behebung an das richtige Team weiter.",
+          "b1": "Risiko nach Geschäftsbereich, Region oder Marke bündeln",
+          "b2": "Rollenbasierter Zugriff mit prüfungssicheren Aktivitätsprotokollen",
+          "b3": "API und Webhooks für SIEM- und Ticketing-Integration"
         },
         "screenshotCaption": "Beispiel-VexNexa-Scanbericht — tatsächliches Layout, Schweregrad-Gruppierung und Behebungsanleitung."
       },
       "calculator": {
-        "eyebrow": "Efficiency calculator",
-        "title": "Up to ~80% less time than a manual audit.",
-        "subtitle": "Indicative time and cost reduction versus a fully manual WCAG audit. Adjust the inputs to your portfolio.",
-        "pagesLabel": "Pages to audit per month",
-        "pagesHint": "Total across all domains.",
-        "rateLabel": "Internal hourly rate",
-        "rateHint": "Used to estimate cost reduction.",
-        "resultEyebrow": "Indicative reduction",
-        "timeSaved": "less effort than a fully manual audit",
-        "manualLabel": "Manual audit",
+        "eyebrow": "Effizienzrechner",
+        "title": "Bis zu ~80% weniger Zeit als eine manuelle Prüfung.",
+        "subtitle": "Indikative Zeit- und Kostenreduzierung gegenüber einer vollständig manuellen WCAG-Prüfung. Passen Sie die Eingaben an Ihr Portfolio an.",
+        "pagesLabel": "Zu prüfende Seiten pro Monat",
+        "pagesHint": "Gesamt über alle Domains.",
+        "rateLabel": "Interner Stundensatz",
+        "rateHint": "Wird zur Schätzung der Kostensenkung verwendet.",
+        "resultEyebrow": "Indikative Reduzierung",
+        "timeSaved": "weniger Aufwand als eine vollständig manuelle Prüfung",
+        "manualLabel": "Manuelle Prüfung",
         "vnLabel": "VexNexa AI-Vision",
-        "savedLabel": "Reduction",
-        "hoursShort": "h",
-        "disclaimer": "Baseline of 30 min per page (manual) versus 6 min per page (VexNexa, including human review) is an industry-rounded estimate. Actual savings vary by site complexity.",
+        "savedLabel": "Reduzierung",
+        "hoursShort": "Std.",
+        "disclaimer": "Eine Basis von 30 Min. pro Seite (manuell) gegenüber 6 Min. pro Seite (VexNexa, inkl. menschlicher Prüfung) ist eine branchenübliche Schätzung. Die tatsächliche Ersparnis variiert je nach Komplexität der Website.",
         "sectionTitle": "Weniger Auditarbeit, klarere Preise."
       },
       "pricingTeaser": {
-        "eyebrow": "Transparent enterprise pricing",
-        "title": "Per-domain pricing. No hidden surcharges.",
-        "subtitle": "Choose how you want prices displayed. The toggle reflects how Dutch VAT (21%) is applied — every line item is fully itemised on your invoice.",
-        "vatToggleLabel": "VAT display toggle",
-        "vatIncl": "Incl. 21% BTW (VAT)",
-        "vatExcl": "Excl. 21% BTW (VAT)",
-        "perMonth": "/ month",
-        "vatNoticeIncl": "Pro plan, billed monthly. All prices include 21% Dutch VAT.",
-        "vatNoticeExcl": "Pro plan, billed monthly. 21% VAT is added at checkout for Dutch customers.",
+        "eyebrow": "Transparente Enterprise-Preise",
+        "title": "Preis pro Domain. Keine versteckten Aufschläge.",
+        "subtitle": "Wählen Sie, wie die Preise angezeigt werden. Der Schalter zeigt, wie die niederländische MwSt. (21%) angewendet wird — jeder Posten ist auf Ihrer Rechnung vollständig aufgeschlüsselt.",
+        "vatToggleLabel": "MwSt.-Anzeigeschalter",
+        "vatIncl": "Inkl. 21% MwSt.",
+        "vatExcl": "Zzgl. 21% MwSt.",
+        "perMonth": "/ Monat",
+        "vatNoticeIncl": "Pro-Plan, monatlich abgerechnet. Alle Preise enthalten 21% niederländische MwSt.",
+        "vatNoticeExcl": "Pro-Plan, monatlich abgerechnet. 21% MwSt. wird beim Checkout für niederländische Kunden hinzugefügt.",
         "included": {
-          "audit": "Audit-ready PDF & DOCX exports",
-          "portfolio": "Enterprise portfolio view",
-          "aiVision": "AI-Vision context analysis",
-          "history": "Historical compliance tracking"
+          "audit": "Auditfertige PDF- & DOCX-Exporte",
+          "portfolio": "Enterprise-Portfolio-Ansicht",
+          "aiVision": "AI-Vision-Kontextanalyse",
+          "history": "Historische Compliance-Verfolgung"
         },
-        "ctaPrimary": "View Full Pricing",
-        "ctaSecondary": "Talk to Enterprise Sales",
-        "allocation": "20% of every subscription is directly allocated to continuous AI-model training and real-time legislation research, so your digital accessibility automatically evolves with the strictest global standards."
+        "ctaPrimary": "Vollständige Preise ansehen",
+        "ctaSecondary": "Mit dem Enterprise-Vertrieb sprechen",
+        "allocation": "20% jedes Abonnements fließen direkt in kontinuierliches KI-Modelltraining und Echtzeit-Gesetzesrecherche, sodass sich Ihre digitale Barrierefreiheit automatisch mit den strengsten globalen Standards weiterentwickelt."
       }
     },
     "latestBlog": {
@@ -1430,35 +1430,35 @@
     }
   },
   "cookie": {
-    "message": "We use cookies to improve your experience on our site. By continuing, you agree to our use of cookies.",
-    "accept": "Accept",
-    "decline": "Decline",
-    "customize": "Customize",
-    "learnMore": "Learn more"
+    "message": "Wir verwenden Cookies, um Ihre Erfahrung auf unserer Website zu verbessern. Wenn Sie fortfahren, stimmen Sie unserer Verwendung von Cookies zu.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "customize": "Anpassen",
+    "learnMore": "Mehr erfahren"
   },
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "retry": "Try again",
-    "cancel": "Cancel",
-    "save": "Save",
-    "delete": "Delete",
-    "edit": "Edit",
-    "close": "Close",
-    "next": "Next",
-    "previous": "Previous",
-    "search": "Search",
-    "filter": "Filter",
-    "sort": "Sort",
-    "export": "Export",
-    "print": "Print",
-    "share": "Share",
-    "copy": "Copy",
-    "copied": "Copied!",
-    "viewMore": "View more",
-    "viewLess": "View less",
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "export": "Exportieren",
+    "print": "Drucken",
+    "share": "Teilen",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "viewMore": "Mehr anzeigen",
+    "viewLess": "Weniger anzeigen",
     "learnMore": "Learn more",
-    "issues": "issues",
+    "issues": "Probleme",
     "bookDemo": "Demo buchen",
     "contactUs": "Kontakt aufnehmen",
     "getStarted": "Loslegen",
@@ -1665,141 +1665,141 @@
   },
   "about": {
     "metadata": {
-      "title": "About VexNexa - WCAG Accessibility Scans",
-      "description": "VexNexa: WCAG scans without noise — clear priorities, concrete fixes, and measurable quality. EU hosting, axe-core ruleset.",
-      "ogTitle": "About VexNexa - WCAG Accessibility Scans",
-      "ogDescription": "Accessibility without noise — clear priorities, concrete fixes, measurable quality. EU hosting, axe-core ruleset.",
-      "twitterTitle": "About VexNexa - WCAG Accessibility Scans",
-      "twitterDescription": "Accessibility without noise — clear priorities, concrete fixes, measurable quality."
+      "title": "Über VexNexa - WCAG-Barrierefreiheitsscans",
+      "description": "VexNexa: WCAG-Scans ohne Rauschen — klare Prioritäten, konkrete Korrekturen und messbare Qualität. EU-Hosting, axe-core-Regelsatz.",
+      "ogTitle": "Über VexNexa - WCAG-Barrierefreiheitsscans",
+      "ogDescription": "Barrierefreiheit ohne Rauschen — klare Prioritäten, konkrete Korrekturen, messbare Qualität. EU-Hosting, axe-core-Regelsatz.",
+      "twitterTitle": "Über VexNexa - WCAG-Barrierefreiheitsscans",
+      "twitterDescription": "Barrierefreiheit ohne Rauschen — klare Prioritäten, konkrete Korrekturen, messbare Qualität."
     },
-    "skipLink": "Skip to main content",
+    "skipLink": "Zum Hauptinhalt springen",
     "hero": {
-      "title": "About VexNexa — part of VexNexa",
-      "subtitle": "We make accessibility workable for busy teams. Less noise, more real improvements with clear priorities and concrete fixes.",
+      "title": "Über VexNexa — Teil von VexNexa",
+      "subtitle": "Wir machen Barrierefreiheit für vielbeschäftigte Teams praktikabel. Weniger Rauschen, mehr echte Verbesserungen mit klaren Prioritäten und konkreten Korrekturen.",
       "badges": {
-        "euHosting": "EU hosting",
-        "axeCore": "axe-core ruleset",
-        "pdfWordExport": "PDF/Word export"
+        "euHosting": "EU-Hosting",
+        "axeCore": "axe-core-Regelsatz",
+        "pdfWordExport": "PDF/Word-Export"
       },
       "cta": {
-        "startFreeScan": "Start free scan",
-        "startFreeScanAriaLabel": "Start your first free WCAG scan",
-        "viewPricing": "View pricing",
-        "viewPricingAriaLabel": "View pricing plans"
+        "startFreeScan": "Kostenlosen Scan starten",
+        "startFreeScanAriaLabel": "Starten Sie Ihren ersten kostenlosen WCAG-Scan",
+        "viewPricing": "Preise ansehen",
+        "viewPricingAriaLabel": "Preispläne ansehen"
       }
     },
     "whyWeExist": {
-      "title": "Why we exist",
-      "paragraph1": "Teams often drown in reports full of noise: technical jargon, vague references, and little guidance. Meanwhile, the pressure grows: stricter legislation, users with diverse needs, and the simple fact that accessible sites perform better.",
-      "paragraph2": "VexNexa turns that around. We show exactly what's wrong, what has priority, and how to fix it — so the team can start today.",
-      "paragraph3": "Accessibility doesn't have to feel complex. It should be practical, understandable, and action-oriented."
+      "title": "Warum es uns gibt",
+      "paragraph1": "Teams ertrinken oft in Berichten voller Rauschen: Fachjargon, vage Verweise und wenig Orientierung. Gleichzeitig wächst der Druck: strengere Gesetze, Nutzer mit unterschiedlichen Bedürfnissen und die einfache Tatsache, dass barrierefreie Websites besser abschneiden.",
+      "paragraph2": "VexNexa dreht das um. Wir zeigen genau, was falsch ist, was Priorität hat und wie Sie es beheben — damit das Team heute beginnen kann.",
+      "paragraph3": "Barrierefreiheit muss sich nicht komplex anfühlen. Sie sollte praktisch, verständlich und handlungsorientiert sein."
     },
     "whatMakesUsDifferent": {
-      "title": "What makes us different",
-      "subtitle": "Five reasons why teams choose VexNexa",
+      "title": "Was uns anders macht",
+      "subtitle": "Fünf Gründe, warum Teams sich für VexNexa entscheiden",
       "features": {
         "vexnexaQuality": {
-          "title": "VexNexa quality",
-          "description": "Rule sets tuned to axe-core + our filtering. Less noise, more real issues with user impact."
+          "title": "VexNexa-Qualität",
+          "description": "Regelsätze abgestimmt auf axe-core + unsere Filterung. Weniger Rauschen, mehr echte Probleme mit Nutzerauswirkung."
         },
         "actionableReports": {
-          "title": "Action-oriented reports",
-          "description": "No jargon — concrete steps, code examples, and context per issue."
+          "title": "Handlungsorientierte Berichte",
+          "description": "Kein Fachjargon — konkrete Schritte, Codebeispiele und Kontext pro Problem."
         },
         "smartPrioritization": {
-          "title": "Smart prioritization",
-          "description": "Critical, Serious, Moderate, Minor — start where the impact is greatest."
+          "title": "Intelligente Priorisierung",
+          "description": "Kritisch, Schwerwiegend, Mittel, Gering — beginnen Sie dort, wo die Auswirkung am größten ist."
         },
         "transparentSecure": {
-          "title": "Transparent & secure",
-          "description": "EU hosting (e.g., eu-central), TLS everywhere, data minimization. Your data stays yours."
+          "title": "Transparent & sicher",
+          "description": "EU-Hosting (z. B. eu-central), TLS überall, Datenminimierung. Ihre Daten bleiben Ihre."
         },
         "teamworkFeatures": {
-          "title": "Teamwork features",
-          "description": "Shareable links, exports to PDF/Word, clear progress tracking. Everyone stays engaged."
+          "title": "Funktionen für Teamarbeit",
+          "description": "Teilbare Links, Exporte nach PDF/Word, klare Fortschrittsverfolgung. Alle bleiben eingebunden."
         }
       }
     },
     "howItWorks": {
-      "title": "How it works",
-      "subtitle": "From confusion to action plan in three steps",
+      "title": "So funktioniert es",
+      "subtitle": "Von Verwirrung zum Aktionsplan in drei Schritten",
       "steps": {
         "scan": {
-          "title": "Scan",
-          "description": "Enter a URL. The engine checks against WCAG 2.2 AA and immediately highlights the real issues."
+          "title": "Scannen",
+          "description": "Geben Sie eine URL ein. Die Engine prüft gegen WCAG 2.2 AA und hebt sofort die echten Probleme hervor."
         },
         "understand": {
-          "title": "Understand",
-          "description": "Clear report with priorities, explanation, impact, and examples — ready for your backlog."
+          "title": "Verstehen",
+          "description": "Klarer Bericht mit Prioritäten, Erklärung, Auswirkung und Beispielen — bereit für Ihr Backlog."
         },
         "improve": {
-          "title": "Improve",
-          "description": "Export, share, and fix systematically. Track progress and see the effect on users."
+          "title": "Verbessern",
+          "description": "Exportieren, teilen und systematisch beheben. Verfolgen Sie den Fortschritt und sehen Sie die Wirkung auf die Nutzer."
         }
       }
     },
     "results": {
-      "title": "Results that matter",
-      "subtitle": "What teams achieve with VexNexa",
+      "title": "Ergebnisse, die zählen",
+      "subtitle": "Was Teams mit VexNexa erreichen",
       "kpis": {
         "lessTime": {
           "value": "75%",
-          "label": "Less time on scans",
-          "description": "Focused reporting and priorities"
+          "label": "Weniger Zeit für Scans",
+          "description": "Gezielte Berichterstattung und Prioritäten"
         },
         "lessFalsePositives": {
           "value": "60%",
-          "label": "Fewer false positives",
-          "description": "Smarter filtering, less noise"
+          "label": "Weniger Fehlalarme",
+          "description": "Intelligenteres Filtern, weniger Rauschen"
         },
         "conversionPotential": {
           "value": "25%",
-          "label": "Conversion potential",
-          "description": "Accessible sites perform better"
+          "label": "Conversion-Potenzial",
+          "description": "Barrierefreie Websites schneiden besser ab"
         }
       },
-      "disclaimer": "* Indicative; results vary per site and implementation."
+      "disclaimer": "* Indikativ; die Ergebnisse variieren je nach Website und Implementierung."
     },
     "securityTrust": {
-      "title": "Security & trust",
+      "title": "Sicherheit & Vertrauen",
       "euDataPrivacy": {
-        "title": "EU data & privacy",
+        "title": "EU-Daten & Datenschutz",
         "items": {
-          "hosting": "Hosting in EU region (e.g., eu-central)",
-          "tls": "TLS everywhere, strong password hashing",
-          "dataMinimization": "Data minimization + automatic cleanup"
+          "hosting": "Hosting in der EU-Region (z. B. eu-central)",
+          "tls": "TLS überall, starkes Passwort-Hashing",
+          "dataMinimization": "Datenminimierung + automatische Bereinigung"
         }
       },
       "transparencyControl": {
-        "title": "Transparency & control",
+        "title": "Transparenz & Kontrolle",
         "items": {
-          "ownership": "You remain owner of your data",
-          "exports": "Full exports and audit trails",
-          "updates": "Regular updates with new WCAG/axe rules"
+          "ownership": "Sie bleiben Eigentümer Ihrer Daten",
+          "exports": "Vollständige Exporte und Audit-Trails",
+          "updates": "Regelmäßige Updates mit neuen WCAG/axe-Regeln"
         }
       }
     },
     "valuesTeam": {
-      "title": "Our values & team",
+      "title": "Unsere Werte & unser Team",
       "values": {
         "quality": {
-          "title": "Quality",
-          "description": "No shortcuts — only working solutions"
+          "title": "Qualität",
+          "description": "Keine Abkürzungen — nur funktionierende Lösungen"
         },
         "clarity": {
-          "title": "Clarity",
-          "description": "Complex matters explained simply"
+          "title": "Klarheit",
+          "description": "Komplexe Sachverhalte einfach erklärt"
         },
         "respect": {
-          "title": "Respect",
-          "description": "For all users and their needs"
+          "title": "Respekt",
+          "description": "Für alle Nutzer und ihre Bedürfnisse"
         },
         "responsibility": {
-          "title": "Responsibility",
-          "description": "Accessibility is everyone's task"
+          "title": "Verantwortung",
+          "description": "Barrierefreiheit ist die Aufgabe aller"
         }
       },
-      "quote": "Accessibility is not a checkbox — it's product craftsmanship. It's about respect for all people who want to use your product.",
+      "quote": "Barrierefreiheit ist kein Kontrollkästchen — sie ist Produkthandwerk. Es geht um Respekt für alle Menschen, die Ihr Produkt nutzen möchten.",
       "founder": {
         "heading": "Who's behind VexNexa",
         "name": "Jeffrey",
@@ -1808,62 +1808,62 @@
       }
     },
     "faq": {
-      "title": "Frequently asked questions",
+      "title": "Häufig gestellte Fragen",
       "questions": {
         "q1": {
-          "question": "Does a scan mean full WCAG compliance?",
-          "answer": "No. Automated checks cover the automatically testable criteria. Manual testing remains necessary. VexNexa does catch most common issues."
+          "question": "Bedeutet ein Scan vollständige WCAG-Compliance?",
+          "answer": "Nein. Automatisierte Prüfungen decken die automatisch testbaren Kriterien ab. Manuelle Tests bleiben notwendig. VexNexa erkennt jedoch die meisten häufigen Probleme."
         },
         "q2": {
-          "question": "Can I scan multiple pages or sites?",
-          "answer": "Yes. Depending on your plan, you can include multiple pages per scan. Site-wide crawling (beta) automatically finds subpages."
+          "question": "Kann ich mehrere Seiten oder Websites scannen?",
+          "answer": "Ja. Je nach Plan können Sie mehrere Seiten pro Scan einbeziehen. Das website-weite Crawling (Beta) findet Unterseiten automatisch."
         },
         "q3": {
-          "question": "Can I share reports with team or clients?",
-          "answer": "Absolutely. Each report has a shareable link and export to PDF/Word — handy for presentations and audits."
+          "question": "Kann ich Berichte mit dem Team oder mit Kunden teilen?",
+          "answer": "Absolut. Jeder Bericht hat einen teilbaren Link und einen Export nach PDF/Word — praktisch für Präsentationen und Prüfungen."
         },
         "q4": {
-          "question": "What about privacy and data security?",
-          "answer": "We only scan publicly accessible content and don't store personal data. EU hosting, TLS, and data minimization."
+          "question": "Wie steht es um Datenschutz und Datensicherheit?",
+          "answer": "Wir scannen nur öffentlich zugängliche Inhalte und speichern keine personenbezogenen Daten. EU-Hosting, TLS und Datenminimierung."
         },
         "q5": {
-          "question": "Why does VexNexa invoice?",
-          "answer": "VexNexa is an independent SaaS product built and operated from the Netherlands. All contracts, invoicing, and support are handled directly by VexNexa B.V."
+          "question": "Warum stellt VexNexa Rechnungen aus?",
+          "answer": "VexNexa ist ein unabhängiges SaaS-Produkt, das aus den Niederlanden entwickelt und betrieben wird. Alle Verträge, Rechnungen und der Support werden direkt von VexNexa B.V. abgewickelt."
         },
         "q6": {
-          "question": "Can I try VexNexa for free?",
-          "answer": "Yes. Create a free account to run your first scan. No credit card needed. Upgrade to a paid plan for continuous monitoring and advanced features."
+          "question": "Kann ich VexNexa kostenlos ausprobieren?",
+          "answer": "Ja. Erstellen Sie ein kostenloses Konto, um Ihren ersten Scan durchzuführen. Keine Kreditkarte erforderlich. Upgraden Sie auf einen kostenpflichtigen Plan für kontinuierliches Monitoring und erweiterte Funktionen."
         }
       }
     },
     "finalCta": {
-      "title": "Make your site more accessible today",
-      "subtitle": "Start with a free scan and see immediately which improvements have the most impact. No meetings required.",
+      "title": "Machen Sie Ihre Website heute zugänglicher",
+      "subtitle": "Beginnen Sie mit einem kostenlosen Scan und sehen Sie sofort, welche Verbesserungen die größte Wirkung haben. Keine Termine erforderlich.",
       "cta": {
-        "startFreeScan": "Start free scan",
-        "startFreeScanAriaLabel": "Start your first free WCAG scan",
-        "viewPricing": "View pricing",
-        "viewPricingAriaLabel": "View pricing plans"
+        "startFreeScan": "Kostenlosen Scan starten",
+        "startFreeScanAriaLabel": "Starten Sie Ihren ersten kostenlosen WCAG-Scan",
+        "viewPricing": "Preise ansehen",
+        "viewPricingAriaLabel": "Preispläne ansehen"
       }
     },
     "footerDisclaimer": {
-      "billing": "VexNexa is an independent SaaS product built and operated from the Netherlands. All invoicing and support are handled by VexNexa B.V.",
-      "questions": "Questions? Email",
+      "billing": "VexNexa ist ein unabhängiges SaaS-Produkt, das aus den Niederlanden entwickelt und betrieben wird. Alle Rechnungen und der Support werden von VexNexa B.V. abgewickelt.",
+      "questions": "Fragen? E-Mail an",
       "email": "info@vexnexa.com"
     }
   },
   "changelog": {
     "metadata": {
       "title": "Changelog - VexNexa",
-      "description": "All updates, new features and improvements to VexNexa accessibility scanner."
+      "description": "Alle Updates, neuen Funktionen und Verbesserungen am VexNexa-Barrierefreiheitsscanner."
     },
     "title": "Changelog",
-    "subtitle": "Stay up to date with all new features, improvements and bug fixes. We're constantly working to improve your accessibility scanning experience.",
+    "subtitle": "Bleiben Sie über alle neuen Funktionen, Verbesserungen und Fehlerbehebungen auf dem Laufenden. Wir arbeiten ständig daran, Ihr Scan-Erlebnis zu verbessern.",
     "betaLaunch": {
-      "title": "Beta Launch",
+      "title": "Beta-Start",
       "version": "v0.1.0",
-      "date": "December 2024",
-      "newFeatures": "✨ New features",
+      "date": "Dezember 2024",
+      "newFeatures": "✨ Neue Funktionen",
       "features": [
         "Axe-core powered accessibility scanning",
         "PDF and Word export functionality",
@@ -1874,12 +1874,12 @@
     },
     "upcoming": {
       "crawling": {
-        "title": "Site-wide Crawling",
+        "title": "Website-weites Crawling",
         "badge": "Beta",
-        "description": "Scan complete websites at once. Get an overview of accessibility issues across your entire site and prioritize fixes based on impact."
+        "description": "Scannen Sie komplette Websites auf einmal. Erhalten Sie einen Überblick über Barrierefreiheitsprobleme auf Ihrer gesamten Website und priorisieren Sie Korrekturen nach Auswirkung."
       },
       "teamFeatures": {
-        "title": "Team Features",
+        "title": "Teamfunktionen",
         "badge": "Live",
         "features": [
           "Team accounts with multiple users",
@@ -1889,7 +1889,7 @@
         ]
       }
     },
-    "cta": "Start free scan"
+    "cta": "Kostenlosen Scan starten"
   },
   "newsletter": {
     "confirmed": {
@@ -2219,15 +2219,15 @@
   },
   "demo": {
     "metadata": {
-      "title": "Schedule a Demo - VexNexa",
-      "description": "Discover how VexNexa can help your team with WCAG compliance and accessibility."
+      "title": "Demo vereinbaren - VexNexa",
+      "description": "Entdecken Sie, wie VexNexa Ihrem Team bei WCAG-Compliance und Barrierefreiheit helfen kann."
     },
-    "backLink": "Back to about",
-    "title": "Schedule a",
-    "titleHighlight": "personal demo",
-    "subtitle": "Discover how VexNexa can help your team with WCAG compliance and accessibility",
+    "backLink": "Zurück zu Über uns",
+    "title": "Vereinbaren Sie eine",
+    "titleHighlight": "persönliche Demo",
+    "subtitle": "Entdecken Sie, wie VexNexa Ihrem Team bei WCAG-Compliance und Barrierefreiheit helfen kann",
     "whatYouGet": {
-      "title": "What you get in 15 minutes:",
+      "title": "Was Sie in 15 Minuten erhalten:",
       "items": [
         "Live demo of the VexNexa platform",
         "Insight into automated WCAG scanning",
@@ -2237,7 +2237,7 @@
       ]
     },
     "whoIsThisFor": {
-      "title": "Who is this for?",
+      "title": "Für wen ist das?",
       "items": [
         "Development teams (5+ developers)",
         "Digital agencies with multiple clients",
@@ -2247,12 +2247,12 @@
       ]
     },
     "cta": {
-      "title": "Ready to get started?",
-      "subtitle": "Or start directly with a free scan of your website",
-      "scheduleDemo": "Schedule a demo",
-      "startFreeScan": "Start free scan"
+      "title": "Bereit loszulegen?",
+      "subtitle": "Oder starten Sie direkt mit einem kostenlosen Scan Ihrer Website",
+      "scheduleDemo": "Demo vereinbaren",
+      "startFreeScan": "Kostenlosen Scan starten"
     },
-    "additionalInfo": "No obligations • Demo lasts ~15 minutes • We aim to respond within 1 business day"
+    "additionalInfo": "Keine Verpflichtungen • Demo dauert ~15 Minuten • Wir antworten in der Regel innerhalb von 1 Werktag"
   },
   "legal": {
     "common": {
@@ -2906,11 +2906,11 @@
     }
   },
   "scanForm": {
-    "placeholder": "Enter website URL to scan...",
+    "placeholder": "Website-URL zum Scannen eingeben...",
     "button": {
-      "idle": "Start Scan",
-      "loading": "Scanning...",
-      "success": "Scan Complete"
+      "idle": "Scan starten",
+      "loading": "Wird gescannt...",
+      "success": "Scan abgeschlossen"
     },
     "vniToggle": {
       "label": "Tiefe Risiko-Prüfung (VNI)",
@@ -2918,23 +2918,23 @@
       "tooltip": "Wenn VNI aktiviert ist, enthält Ihr PDF-Bericht die Human-Risk Assessment und den Status 'Insolvent'."
     },
     "errors": {
-      "invalidUrl": "Please enter a valid URL",
-      "required": "URL is required",
-      "failed": "Scan failed. Please try again."
+      "invalidUrl": "Bitte geben Sie eine gültige URL ein",
+      "required": "URL ist erforderlich",
+      "failed": "Scan fehlgeschlagen. Bitte versuchen Sie es erneut."
     }
   },
   "upgradeModal": {
     "limitReached": {
-      "title": "Scan Limit Reached",
-      "description": "You've reached your free scan limit for this week. Upgrade to continue scanning.",
-      "upgradeButton": "Upgrade Now",
-      "cancelButton": "Maybe Later"
+      "title": "Scan-Limit erreicht",
+      "description": "Sie haben Ihr kostenloses Scan-Limit für diese Woche erreicht. Upgraden Sie, um weiter zu scannen.",
+      "upgradeButton": "Jetzt upgraden",
+      "cancelButton": "Vielleicht später"
     },
     "upgradeRequired": {
-      "title": "Upgrade Required",
-      "description": "This feature requires a paid plan. Upgrade to unlock advanced scanning capabilities.",
-      "upgradeButton": "View Plans",
-      "cancelButton": "Cancel"
+      "title": "Upgrade erforderlich",
+      "description": "Diese Funktion erfordert einen kostenpflichtigen Plan. Upgraden Sie, um erweiterte Scan-Funktionen freizuschalten.",
+      "upgradeButton": "Pläne ansehen",
+      "cancelButton": "Abbrechen"
     },
     "trialExpired": {
       "title": "Trial Period Ended",
@@ -3498,15 +3498,15 @@
     "ctaPricing": "View pricing"
   },
   "agencyCTAStrip": {
-    "badge": "For agencies",
-    "title": "Managing multiple client sites?",
-    "subtitle": "Use VexNexa for repeatable scans, branded reports, and ongoing accessibility monitoring.",
-    "trust1": "White-label report workflows",
-    "trust2": "Ongoing monitoring support",
-    "trust3": "Clear issue prioritisation",
-    "trust4": "Built for agencies and EU-facing teams",
-    "ctaPrimary": "Start your free scan",
-    "ctaSecondary": "Contact us about agency use"
+    "badge": "Für Agenturen",
+    "title": "Verwalten Sie mehrere Kundenwebsites?",
+    "subtitle": "Nutzen Sie VexNexa für wiederholbare Scans, gebrandete Berichte und kontinuierliches Barrierefreiheits-Monitoring.",
+    "trust1": "White-Label-Berichts-Workflows",
+    "trust2": "Unterstützung für kontinuierliches Monitoring",
+    "trust3": "Klare Priorisierung von Problemen",
+    "trust4": "Entwickelt für Agenturen und EU-orientierte Teams",
+    "ctaPrimary": "Kostenlosen Scan starten",
+    "ctaSecondary": "Kontakt zur Agenturnutzung aufnehmen"
   },
   "getStarted": {
     "header": {
@@ -3628,7 +3628,7 @@
           "vexnexa": "4 Schweregrade + gewichteter Impact Score"
         },
         "reporting": {
-          "label": "Reporting",
+          "label": "Berichterstattung",
           "basic": "Screenshot oder Copy/Paste",
           "vexnexa": "PDF und DOCX mit vollst?ndigen Details"
         },
@@ -3732,7 +3732,7 @@
     },
     "reportStructure": {
       "executiveSummary": {
-        "title": "Executive Summary",
+        "title": "Zusammenfassung",
         "description": "Health Score, Note (A bis F), Risikostufe und verst?ndliche ?bersicht. F?r nichttechnische Leser, die die Kernaussage brauchen, nicht den Code."
       },
       "severityBreakdown": {
@@ -3783,7 +3783,7 @@
     },
     "audience": {
       "compliance": {
-        "title": "Compliance Officers",
+        "title": "Compliance-Beauftragte",
         "useCase": "F?ge WCAG-Dokumentation internen Audits und regulatorischen Unterlagen hinzu. Die WCAG-Matrix liefert Nachweise auf Kriteriumsebene."
       },
       "agency": {
@@ -3998,7 +3998,7 @@
   },
   "scanReport": {
     "quality": {
-      "realWorldTitle": "Real-World Experience",
+      "realWorldTitle": "Praxiserfahrung",
       "realWorldDescription": "Technische Barrierefreiheit ist nur die halbe Geschichte. Diese Metriken zeigen, wie sich die Seite auf Mobilgeräten, älterer Hardware und langsameren Netzwerken anfühlt.",
       "performanceScore": "Performance-Score",
       "pageWeight": "Seitengewicht",
