@@ -1162,7 +1162,7 @@
   },
   "contact": {
     "metadata": {
-      "title": "Contact - VexNexa WCAG Scanner",
+      "title": "Contact - VexNexa WCAG-scanner",
       "description": "Neem contact op met VexNexa voor vragen over toegankelijkheidsscans, WCAG-compliance of maatwerk oplossingen.",
       "keywords": "contact, support, toegankelijkheidshulp, WCAG vragen, enterprise"
     },
@@ -1980,7 +1980,7 @@
   },
   "features": {
     "metadata": {
-      "title": "Features - VexNexa",
+      "title": "Functies - VexNexa",
       "description": "Ontdek alle features van VexNexa: Dashboard, scan details, PDF export, prioriteiten en komende integraties."
     },
     "hero": {
@@ -1996,19 +1996,19 @@
       "title": "Issue Prioriteiten",
       "subtitle": "Wij categoriseren alle accessibility issues volgens WCAG-impact levels",
       "critical": {
-        "title": "Critical",
+        "title": "Kritiek",
         "description": "Blokkeert toegang volledig. Direct actie vereist."
       },
       "serious": {
-        "title": "Serious",
+        "title": "Ernstig",
         "description": "Significante barrières. Hoge prioriteit."
       },
       "moderate": {
-        "title": "Moderate",
+        "title": "Gemiddeld",
         "description": "Hindert gebruik. Medium prioriteit."
       },
       "minor": {
-        "title": "Minor",
+        "title": "Klein",
         "description": "Kleine verbeterpunten. Lage prioriteit."
       }
     },
@@ -2036,7 +2036,7 @@
         ]
       },
       "export": {
-        "title": "PDF & Word Export",
+        "title": "PDF- & Word-export",
         "description": "Deel rapporten met stakeholders via professionele exports.",
         "benefits": [
           "PDF rapporten in één klik",
@@ -2060,12 +2060,12 @@
       "title": "Binnenkort Beschikbaar",
       "subtitle": "We werken hard aan nieuwe features om je workflow nog beter te maken",
       "crawling": {
-        "title": "Site-wide Crawling",
+        "title": "Site-brede crawling",
         "status": "Beta",
         "description": "Scan hele websites automatisch en krijg een compleet overzicht."
       },
       "monitoring": {
-        "title": "Alerts & Monitoring",
+        "title": "Alerts & monitoring",
         "status": "Q1 2024",
         "description": "Automatische meldingen bij nieuwe issues of score-wijzigingen."
       },
@@ -2075,7 +2075,7 @@
         "description": "Export issues direct naar je project management tools."
       },
       "team": {
-        "title": "Team Collaboration",
+        "title": "Teamsamenwerking",
         "status": "Q2 2024",
         "description": "Nodig teamleden uit en deel scans binnen je organisatie."
       },

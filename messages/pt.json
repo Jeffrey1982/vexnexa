@@ -1075,7 +1075,7 @@
       "privacyPolicy": "política de privacidade",
       "labels": {
         "name": "Nome *",
-        "email": "Email *",
+        "email": "E-mail *",
         "message": "Mensagem *",
         "company": "Nome da empresa"
       },

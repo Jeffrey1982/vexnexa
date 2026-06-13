@@ -1171,11 +1171,11 @@
   },
   "contact": {
     "metadata": {
-      "title": "Contact - VexNexa WCAG Scanner",
-      "description": "Contact VexNexa for questions about accessibility scanning, WCAG compliance or custom solutions.",
-      "keywords": "contact, support, accessibility help, WCAG questions, enterprise"
+      "title": "Kontakt - VexNexa WCAG-Scanner",
+      "description": "Kontaktieren Sie VexNexa bei Fragen zu Barrierefreiheits-Scanning, WCAG-Compliance oder maßgeschneiderten Lösungen.",
+      "keywords": "Kontakt, Support, Hilfe zur Barrierefreiheit, WCAG-Fragen, Enterprise"
     },
-    "skipLink": "Skip to main content",
+    "skipLink": "Zum Hauptinhalt springen",
     "hero": {
       "title": "Lassen Sie uns",
       "titleHighlight": "sprechen",
@@ -1184,97 +1184,97 @@
     "methods": {
       "email": {
         "title": "E-mail Support",
-        "description": "For general questions and support",
-        "detail": "We aim to respond within 1 business day",
+        "description": "Für allgemeine Fragen und Support",
+        "detail": "Wir antworten in der Regel innerhalb von 1 Werktag",
         "actionLabel": "info@vexnexa.com"
       },
       "sales": {
-        "title": "Enterprise & Higher Limits",
-        "description": "For larger teams or custom requirements",
-        "detail": "We aim to respond within 1 business day",
-        "actionLabel": "Request information"
+        "title": "Enterprise & höhere Limits",
+        "description": "Für größere Teams oder spezielle Anforderungen",
+        "detail": "Wir antworten in der Regel innerhalb von 1 Werktag",
+        "actionLabel": "Informationen anfordern"
       },
       "location": {
-        "title": "Made in the Netherlands",
-        "description": "Privacy-first, GDPR compliant",
-        "detail": "Data stored in Europe",
-        "actionLabel": "Amsterdam, Netherlands"
+        "title": "Hergestellt in den Niederlanden",
+        "description": "Privacy-first, DSGVO-konform",
+        "detail": "Daten in Europa gespeichert",
+        "actionLabel": "Amsterdam, Niederlande"
       }
     },
     "form": {
-      "title": "Send us a message",
-      "subtitle": "Fill in the form and we will contact you as soon as possible. For urgent questions you can also email directly.",
+      "title": "Senden Sie uns eine Nachricht",
+      "subtitle": "Füllen Sie das Formular aus und wir melden uns so schnell wie möglich. Bei dringenden Fragen können Sie uns auch direkt eine E-Mail senden.",
       "benefits": [
         "We aim to respond within 1 business day",
         "Demos and guided onboarding available",
         "Support in Dutch",
         "Privacy-first: your data is stored securely"
       ],
-      "directContact": "Prefer direct contact? Email",
-      "cardTitle": "Contact form",
-      "cardDescription": "We treat your data confidentially according to our",
-      "privacyPolicy": "privacy policy",
+      "directContact": "Lieber direkter Kontakt? E-Mail",
+      "cardTitle": "Kontaktformular",
+      "cardDescription": "Wir behandeln Ihre Daten vertraulich gemäß unserer",
+      "privacyPolicy": "Datenschutzerklärung",
       "labels": {
         "name": "Name *",
         "email": "E-mail *",
-        "message": "Message *",
-        "company": "Company name"
+        "message": "Nachricht *",
+        "company": "Firmenname"
       },
       "placeholders": {
-        "name": "Your first and last name",
-        "email": "you@email.com",
-        "message": "Tell us how we can help you…"
+        "name": "Ihr Vor- und Nachname",
+        "email": "sie@email.com",
+        "message": "Sagen Sie uns, wie wir Ihnen helfen können…"
       },
       "consent": {
-        "label": "I give permission to use my data to respond to my message, in accordance with the",
-        "privacyPolicy": "privacy policy"
+        "label": "Ich erteile die Erlaubnis, meine Daten zur Beantwortung meiner Nachricht zu verwenden, in Übereinstimmung mit der",
+        "privacyPolicy": "Datenschutzerklärung"
       },
       "submit": {
-        "idle": "Send message",
-        "sending": "Sending…"
+        "idle": "Nachricht senden",
+        "sending": "Wird gesendet…"
       },
       "errors": {
-        "name": "Enter your name.",
-        "email": "Enter a valid email address.",
-        "message": "Write at least 10 characters.",
-        "consent": "Give permission to respond to your message.",
-        "spam": "Spam detected."
+        "name": "Geben Sie Ihren Namen ein.",
+        "email": "Geben Sie eine gültige E-Mail-Adresse ein.",
+        "message": "Schreiben Sie mindestens 10 Zeichen.",
+        "consent": "Erteilen Sie die Erlaubnis, auf Ihre Nachricht zu antworten.",
+        "spam": "Spam erkannt."
       },
       "toast": {
-        "successTitle": "Message sent!",
-        "successDescription": "We aim to respond within 1 business day.",
-        "errorTitle": "Something went wrong",
-        "errorDescription": "Try again later or send an email to info@vexnexa.com"
+        "successTitle": "Nachricht gesendet!",
+        "successDescription": "Wir antworten in der Regel innerhalb von 1 Werktag.",
+        "errorTitle": "Etwas ist schiefgelaufen",
+        "errorDescription": "Versuchen Sie es später erneut oder senden Sie eine E-Mail an info@vexnexa.com"
       }
     },
     "faq": {
-      "title": "Frequently asked questions",
-      "subtitle": "Quick answers to the most common questions",
+      "title": "Häufig gestellte Fragen",
+      "subtitle": "Schnelle Antworten auf die häufigsten Fragen",
       "q1": {
-        "question": "How quickly will I get a response?",
-        "answer": "We aim to respond within 1 business day. For enterprise or sales inquiries we prioritise faster turnaround."
+        "question": "Wie schnell erhalte ich eine Antwort?",
+        "answer": "Wir antworten in der Regel innerhalb von 1 Werktag. Bei Enterprise- oder Vertriebsanfragen priorisieren wir eine schnellere Bearbeitung."
       },
       "q2": {
-        "question": "Can you give a custom demo?",
-        "answer": "Certainly. We'd be happy to give a personal demo using your own website as an example. Schedule a 30-minute call via the form or the 'Schedule a call' button."
+        "question": "Können Sie eine maßgeschneiderte Demo geben?",
+        "answer": "Sicher. Wir geben Ihnen gerne eine persönliche Demo anhand Ihrer eigenen Website. Vereinbaren Sie ein 30-minütiges Gespräch über das Formular oder die Schaltfläche 'Gespräch vereinbaren'."
       },
       "q3": {
-        "question": "Do you offer training or consultancy?",
-        "answer": "We can provide guided onboarding and platform walkthroughs. For ongoing consultancy or custom accessibility audits, contact us to discuss your needs."
+        "question": "Bieten Sie Schulungen oder Beratung an?",
+        "answer": "Wir bieten geführtes Onboarding und Plattform-Rundgänge. Für laufende Beratung oder maßgeschneiderte Barrierefreiheitsprüfungen kontaktieren Sie uns, um Ihre Anforderungen zu besprechen."
       },
       "q4": {
-        "question": "How does enterprise support work?",
-        "answer": "Enterprise gets dedicated support, SSO, and custom branding. Contact us for details."
+        "question": "Wie funktioniert der Enterprise-Support?",
+        "answer": "Enterprise erhält dedizierten Support, SSO und individuelles Branding. Kontaktieren Sie uns für Details."
       },
       "q5": {
-        "question": "Do I need to book a demo?",
-        "answer": "No! You can start scanning immediately after signup. Just register and begin - no meetings required."
+        "question": "Muss ich eine Demo buchen?",
+        "answer": "Nein! Sie können direkt nach der Anmeldung mit dem Scannen beginnen. Einfach registrieren und loslegen — keine Termine nötig."
       }
     },
     "cta": {
-      "title": "Prefer to try it first?",
-      "subtitle": "Start directly with a free scan of your website. Registration required, results within seconds.",
-      "button": "Start free scan"
+      "title": "Lieber zuerst selbst ausprobieren?",
+      "subtitle": "Starten Sie direkt mit einem kostenlosen Scan Ihrer Website. Registrierung erforderlich, Ergebnisse in Sekunden.",
+      "button": "Kostenlosen Scan starten"
     },
     "pageHero": {
       "title": "Sprechen Sie mit uns ?ber Berichte, Monitoring oder",
@@ -1989,44 +1989,44 @@
   },
   "features": {
     "metadata": {
-      "title": "Features - VexNexa",
-      "description": "WCAG 2.2 scanning, white-label PDF/DOCX reports, continuous monitoring, team collaboration, and multi-site management. Built for agencies and compliance teams."
+      "title": "Funktionen - VexNexa",
+      "description": "WCAG-2.2-Scanning, White-Label-PDF/DOCX-Berichte, kontinuierliches Monitoring, Teamzusammenarbeit und Multi-Site-Verwaltung. Entwickelt für Agenturen und Compliance-Teams."
     },
     "hero": {
       "badge": "Alle Funktionen",
       "title": "Alles, was Sie f?r",
       "titleHighlight": "WCAG-Konformit?t brauchen",
       "subtitle": "Dashboard, gebrandete Exporte, Teamarbeit, kontinuierliches Monitoring und umsetzbare WCAG-Berichte.",
-      "cta": "Start free scan",
+      "cta": "Kostenlosen Scan starten",
       "ctaPrimary": "Kostenlosen Scan starten",
       "ctaSecondary": "Beispielbericht ansehen"
     },
     "priorities": {
-      "title": "Issue Priorities",
-      "subtitle": "We categorize all accessibility issues according to WCAG impact levels",
+      "title": "Problemprioritäten",
+      "subtitle": "Wir kategorisieren alle Barrierefreiheitsprobleme nach WCAG-Auswirkungsstufen",
       "critical": {
-        "title": "Critical",
-        "description": "Completely blocks access. Immediate action required."
+        "title": "Kritisch",
+        "description": "Blockiert den Zugang vollständig. Sofortiges Handeln erforderlich."
       },
       "serious": {
-        "title": "Serious",
-        "description": "Significant barriers. High priority."
+        "title": "Schwerwiegend",
+        "description": "Erhebliche Barrieren. Hohe Priorität."
       },
       "moderate": {
-        "title": "Moderate",
-        "description": "Hinders use. Medium priority."
+        "title": "Mittel",
+        "description": "Beeinträchtigt die Nutzung. Mittlere Priorität."
       },
       "minor": {
-        "title": "Minor",
-        "description": "Small improvements. Low priority."
+        "title": "Gering",
+        "description": "Kleine Verbesserungen. Niedrige Priorität."
       }
     },
     "current": {
-      "title": "Available Features",
-      "subtitle": "Everything you can use now to make your website more accessible",
+      "title": "Verfügbare Funktionen",
+      "subtitle": "Alles, was Sie jetzt nutzen können, um Ihre Website zugänglicher zu machen",
       "dashboard": {
-        "title": "Clear Dashboard",
-        "description": "View all your scans in one overview with scores, trends and quick wins.",
+        "title": "Übersichtliches Dashboard",
+        "description": "Sehen Sie alle Ihre Scans in einer Übersicht mit Werten, Trends und Quick Wins.",
         "benefits": [
           "All scans in one place",
           "Score trends over time",
@@ -2035,8 +2035,8 @@
         ]
       },
       "scanResults": {
-        "title": "Detailed Scan Results",
-        "description": "Deep insight into every accessibility issue with concrete examples.",
+        "title": "Detaillierte Scan-Ergebnisse",
+        "description": "Tiefer Einblick in jedes Barrierefreiheitsproblem mit konkreten Beispielen.",
         "benefits": [
           "Per-element analysis",
           "WCAG 2.2 guidelines",
@@ -2045,8 +2045,8 @@
         ]
       },
       "export": {
-        "title": "PDF & Word Export",
-        "description": "Share reports with stakeholders via professional exports.",
+        "title": "PDF- & Word-Export",
+        "description": "Teilen Sie Berichte mit Stakeholdern über professionelle Exporte.",
         "benefits": [
           "PDF reports in one click",
           "Word documents for editing",
@@ -2055,8 +2055,8 @@
         ]
       },
       "axeCore": {
-        "title": "Real Axe-Core Scans",
-        "description": "The same engine that professionals use worldwide.",
+        "title": "Echte Axe-Core-Scans",
+        "description": "Dieselbe Engine, die Profis weltweit nutzen.",
         "benefits": [
           "Industry-standard analyses",
           "Regular updates",
@@ -2066,34 +2066,34 @@
       }
     },
     "upcoming": {
-      "title": "Platform Roadmap",
-      "subtitle": "New capabilities we are actively building and shipping",
+      "title": "Plattform-Roadmap",
+      "subtitle": "Neue Funktionen, die wir aktiv entwickeln und ausliefern",
       "crawling": {
-        "title": "Site-wide Crawling",
+        "title": "Website-weites Crawling",
         "status": "Beta",
-        "description": "Automatically scan entire websites and get a complete overview."
+        "description": "Scannen Sie automatisch ganze Websites und erhalten Sie einen vollständigen Überblick."
       },
       "monitoring": {
         "title": "Alerts & Monitoring",
         "status": "Live",
-        "description": "Automatic notifications for new issues or score changes."
+        "description": "Automatische Benachrichtigungen bei neuen Problemen oder Wertänderungen."
       },
       "integrations": {
-        "title": "Jira & Linear Integrations",
+        "title": "Jira- & Linear-Integrationen",
         "status": "Beta",
-        "description": "Export issues directly to your project management tools."
+        "description": "Exportieren Sie Probleme direkt in Ihre Projektmanagement-Tools."
       },
       "team": {
-        "title": "Team Collaboration",
+        "title": "Teamzusammenarbeit",
         "status": "Live",
-        "description": "Invite team members and share scans within your organization."
+        "description": "Laden Sie Teammitglieder ein und teilen Sie Scans innerhalb Ihrer Organisation."
       },
-      "noMissUpdates": "Don't miss updates of new features",
-      "viewChangelog": "View Changelog"
+      "noMissUpdates": "Verpassen Sie keine Updates zu neuen Funktionen",
+      "viewChangelog": "Changelog ansehen"
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "subtitle": "Answers to the most common questions about VexNexa",
+      "title": "Häufig gestellte Fragen",
+      "subtitle": "Antworten auf die häufigsten Fragen zu VexNexa",
       "privacy": {
         "question": "Wie geht VexNexa mit der Privatsphäre um?",
         "answer": "Wir scannen nur öffentlich zugängliche Inhalte und speichern keine persönlichen Daten. Unsere Scans sind vollständig DSGVO-konform und wir teilen keine Daten mit Dritten."
@@ -2122,10 +2122,10 @@
       "contactUs": "Kontaktieren Sie uns"
     },
     "cta": {
-      "title": "Ready to get started?",
-      "subtitle": "Start scanning your site today. Free account required, no credit card needed.",
-      "startScan": "Start free scan",
-      "viewPricing": "View pricing"
+      "title": "Bereit loszulegen?",
+      "subtitle": "Beginnen Sie noch heute mit dem Scannen Ihrer Website. Kostenloses Konto erforderlich, keine Kreditkarte nötig.",
+      "startScan": "Kostenlosen Scan starten",
+      "viewPricing": "Preise ansehen"
     },
     "finalCTA": {
       "ctaContact": "Kontakt aufnehmen",
