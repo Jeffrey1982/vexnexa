@@ -6,6 +6,46 @@
       "title": "Niet gevonden wat je zoekt?",
       "body": "Onze enterprise-experts beantwoorden compliance- en integratievragen direct.",
       "cta": "Neem contact op"
+    },
+    "q1": {
+      "answer": "Geen enkele tool kan in alle contexten 100% wettelijke compliance garanderen. VexNexa detecteert en rapporteert problemen, ondersteunt herstel en helpt je te voldoen aan WCAG en gerelateerde standaarden. Overweeg voor juridische risicobeoordeling een expertaudit en een doorlopend governanceproces.",
+      "question": "Kunnen jullie wettelijke compliance garanderen?"
+    },
+    "q10": {
+      "answer": "Ja! Ons gratis plan is voor altijd gratis voor 1 website en tot 100 pagina's per maand. Geen creditcard vereist. Je krijgt volledige WCAG 2.2-scanning, PDF-rapporten en 1 maand scangeschiedenis. Upgrade alleen wanneer je meer websites, pagina's of geavanceerde functies zoals monitoring en Word-exports nodig hebt.",
+      "question": "Is er echt een gratis plan?"
+    },
+    "q2": {
+      "answer": "Elk plan bevat een maandelijkse paginascanlimiet. Een 'pagina' is één gescande URL. Als je dezelfde pagina meerdere keren per maand scant, telt elke scan mee voor je limiet. Wanneer je je limiet nadert, ontvang je een melding.",
+      "question": "Hoe werken paginalimieten?"
+    },
+    "q3": {
+      "answer": "Gratis plan: de service wordt geblokkeerd bij de limiet. Upgrade naar een betaald plan om te blijven scannen. Betaalde plannen: de service gaat door, maar je ontvangt meldingen om te upgraden als je je limieten consequent overschrijdt.",
+      "question": "Wat als ik mijn plan overschrijd?"
+    },
+    "q4": {
+      "answer": "Pro-plannen ondersteunen tot 5 teamleden. Business-plannen ondersteunen tot 15 leden met rolgebaseerde toegang. SSO is beschikbaar op Business- en Enterprise-plannen. Neem contact op voor Enterprise-functies.",
+      "question": "Ondersteunen jullie teams/SSO?"
+    },
+    "q5": {
+      "answer": "PDF-export is beschikbaar op alle betaalde plannen. Word-export is beschikbaar op Pro- en Business-plannen. Alle exports bevatten je scanresultaten, geprioriteerde problemen, codefragmenten en hersteladviezen.",
+      "question": "Kan ik rapporten exporteren?"
+    },
+    "q6": {
+      "answer": "Met doorlopende monitoring kun je automatische scans inplannen (dagelijks, wekelijks of maandelijks). Je ontvangt e-mailmeldingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro- en Business-plannen.",
+      "question": "Wat wordt er doorlopend gemonitord?"
+    },
+    "q7": {
+      "answer": "Nee! VexNexa is 100% self-service. Meld je aan, voer je URL in en ontvang je toegankelijkheidsrapport binnen minuten. We bieden geen demo's of salesgesprekken.",
+      "question": "Moet ik een demo inplannen?"
+    },
+    "q8": {
+      "answer": "Nee. We scannen je codestructuur en geven je WCAG-overtredingen om correct op te lossen. We injecteren nooit widgets of scripts op je site. Overlays zijn controversieel binnen de toegankelijkheidsgemeenschap — wij analyseren je daadwerkelijke code.",
+      "question": "Is VexNexa een toegankelijkheidsoverlay?"
+    },
+    "q9": {
+      "answer": "Nee. Echte toegankelijkheid vereist correcte codewijzigingen. We laten je precies zien wat er mis is en hoe je het oplost, maar je moet de wijzigingen zelf doorvoeren. Geautomatiseerde 'fixes' pakken de onderliggende oorzaken niet aan.",
+      "question": "Kan VexNexa problemen automatisch oplossen?"
     }
   },
   "nav": {
@@ -598,7 +638,8 @@
           "b1": "Risico-aggregatie per BU, regio of merk",
           "b2": "Rol-gebaseerde toegang met audit-grade activity-logs",
           "b3": "API en webhooks voor SIEM- en ticketing-integratie"
-        }
+        },
+        "screenshotCaption": "Voorbeeld VexNexa-scanrapport — werkelijke lay-out, ernstgroepering en hersteladvies."
       },
       "calculator": {
         "eyebrow": "Efficiency-calculator",
@@ -637,6 +678,13 @@
         "ctaSecondary": "Spreek met enterprise sales",
         "allocation": "20% van elke investering wordt direct gealloceerd aan continue AI-model training en real-time wetgevingsresearch, waardoor uw digitale toegankelijkheid automatisch mee-evolueert met de strengste wereldwijde standaarden."
       }
+    },
+    "latestBlog": {
+      "eyebrow": "Laatste uit het journaal",
+      "minRead": "min leestijd",
+      "subtitle": "Praktijknotities over WCAG, EAA en het vak van inclusieve interfaces. Wekelijks bijgewerkt.",
+      "title": "Toegankelijkheidsnieuws, geschreven voor bouwers.",
+      "viewAll": "Bekijk alle artikelen"
     }
   },
   "pricing": {
@@ -706,7 +754,10 @@
           "advancedReports": "Geavanceerde rapporten",
           "scheduling": "Planning",
           "integrations": "Slack & Jira integratie",
-          "prioritySupport": "Prioriteitsondersteuning"
+          "prioritySupport": "Prioriteitsondersteuning",
+          "history": "{count} maanden geschiedenis",
+          "support": "Prioriteitssupport",
+          "whiteLabel": "White-label rapporten"
         }
       },
       "business": {
@@ -721,7 +772,12 @@
           "whiteLabel": "White label rapporten",
           "advancedScheduling": "Geavanceerde planning",
           "allIntegrations": "Alle integraties",
-          "prioritySupport": "Prioriteitsondersteuning (4u reactie)"
+          "prioritySupport": "Prioriteitsondersteuning (4u reactie)",
+          "assurance": "Assurance inbegrepen",
+          "auditDiscount": "20% korting op audits",
+          "history": "{count} maanden geschiedenis",
+          "integrations": "Alle integraties",
+          "support": "4u prioriteitssupport"
         }
       },
       "enterprise": {
@@ -738,7 +794,14 @@
           "sso": "SSO/SAML",
           "dedicatedSupport": "Toegewijde support",
           "sla": "SLA garantie",
-          "onPremise": "On-premise optie"
+          "onPremise": "On-premise optie",
+          "accountManager": "Toegewijde accountmanager",
+          "allFeatures": "Alle functies inbegrepen",
+          "assurance": "Assurance inbegrepen",
+          "auditDiscount": "30% korting op audits",
+          "customBilling": "Aangepaste facturering",
+          "history": "{count} maanden geschiedenis",
+          "sites": "{count} websites"
         },
         "note": "Perfect voor grote organisaties. Neem contact op voor aangepaste prijzen."
       }
@@ -1064,6 +1127,37 @@
       "perMonth": "/maand",
       "perYear": "/jaar",
       "perMonthSubtext": "{price}/maand"
+    },
+    "addons": {
+      "assurance": {
+        "badge": "Monitoring",
+        "description": "Geautomatiseerde compliance-monitoring & alerts",
+        "features": {
+          "alerts": "Alerts bij scoredaling",
+          "audit": "Auditlogarchief",
+          "eaa": "EAA-gereedheid volgen",
+          "graph": "Historische compliancegrafiek",
+          "scans": "Wekelijkse geautomatiseerde scans"
+        },
+        "title": "Assurance"
+      },
+      "description": "Voeg extra websites, scancapaciteit of doorlopende monitoring toe aan elk plan",
+      "pages": {
+        "100k": "+100.000 pagina's/maand",
+        "250k": "+250.000 pagina's/maand",
+        "25k": "+25.000 pagina's/maand",
+        "description": "Verhoog de maandelijkse scancapaciteit met volumepakketten.",
+        "title": "Paginavolumepakketten"
+      },
+      "subtitle": "Schaal mee terwijl je groeit",
+      "title": "Flexibele add-ons",
+      "websites": {
+        "description": "Meer websites nodig? Voeg ze toe aan elk plan.",
+        "site1": "+1 website",
+        "sites10": "+10 websites",
+        "sites5": "+5 websites",
+        "title": "Extra websites"
+      }
     }
   },
   "contact": {
@@ -1355,7 +1449,19 @@
     "viewMore": "Meer weergeven",
     "viewLess": "Minder weergeven",
     "learnMore": "Meer informatie",
-    "issues": "problemen"
+    "issues": "problemen",
+    "bookDemo": "Demo boeken",
+    "contactUs": "Neem contact op",
+    "getStarted": "Aan de slag",
+    "getStartedFree": "Gratis aan de slag",
+    "readMore": "Lees meer",
+    "seeFeatures": "Bekijk functies",
+    "startFreeScan": "Start gratis scan",
+    "startTrial": "Start proefperiode",
+    "tryNow": "Probeer nu",
+    "viewAll": "Bekijk alles",
+    "viewDemo": "Bekijk demo",
+    "viewPricing": "Bekijk prijzen"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -1684,7 +1790,13 @@
           "description": "Toegankelijkheid is ieders taak"
         }
       },
-      "quote": "Toegankelijkheid is geen vinkje — het is productvakmanschap. Het gaat over respect voor alle mensen die je product willen gebruiken."
+      "quote": "Toegankelijkheid is geen vinkje — het is productvakmanschap. Het gaat over respect voor alle mensen die je product willen gebruiken.",
+      "founder": {
+        "bio": "Praktische toegankelijkheidstools bouwen voor teams die resultaat willen, geen ruis. Gevestigd in Nederland.",
+        "heading": "Wie zit er achter VexNexa",
+        "name": "Jeffrey",
+        "role": "Oprichter & Ontwikkelaar"
+      }
     },
     "faq": {
       "title": "Veelgestelde vragen",
@@ -2077,7 +2189,24 @@
       "severityRanked": "Probleemlijsten op ernst gesorteerd",
       "remediationGuidance": "Duidelijk hersteladvies",
       "slackJiraIntegration": "Ondersteuning voor Slack- en Jira-workflows"
-    }
+    },
+    "automation": {
+      "description": "Plan regelmatige scans in en ontvang alerts wanneer nieuwe problemen worden gedetecteerd",
+      "title": "Geautomatiseerd testen"
+    },
+    "monitoring": {
+      "description": "Volg wijzigingen in de tijd en voorkom toegankelijkheidsregressies",
+      "title": "Doorlopende monitoring"
+    },
+    "reports": {
+      "description": "Exporteer professionele PDF/DOCX-rapporten met je eigen huisstijl",
+      "title": "Gedetailleerde rapporten"
+    },
+    "team": {
+      "description": "Deel scans, wijs taken toe en volg de voortgang van herstel",
+      "title": "Teamsamenwerking"
+    },
+    "title": "Alles wat je nodig hebt voor toegankelijkheidscompliance"
   },
   "demo": {
     "metadata": {
@@ -2943,7 +3072,8 @@
       "noPaymentMethod": "Geen betaalmethode gevonden. Ga eerst naar 'Betaalmethode instellen'.",
       "paymentExpired": "Je betaalmethode is verlopen. Klik op 'Betaalmethode instellen' om deze bij te werken.",
       "setupPayment": "Betaalmethode instellen",
-      "failed": "Aanvraag mislukt. Probeer het opnieuw."
+      "failed": "Aanvraag mislukt. Probeer het opnieuw.",
+      "freePlanUser": "Upgrade naar een betaald plan om add-ons te kopen."
     },
     "success": {
       "activated": "Add-on geactiveerd! De betaling wordt automatisch maandelijks verwerkt.",
@@ -3160,7 +3290,10 @@
       "settingsSaved": "Settings saved",
       "subscriptionCanceled": "Subscription canceled",
       "alertResolved": "Alert marked as resolved"
-    }
+    },
+    "description": "Blijf compliant met geautomatiseerde monitoring en alerts",
+    "subtitle": "Doorlopende monitoring en compliance",
+    "title": "Accessibility Assurance"
   },
   "forAgencies": {
     "hero": {
@@ -3260,6 +3393,20 @@
       "ctaPrimary": "Start je gratis scan",
       "ctaSecondary": "Bekijk voorbeeldrapport",
       "ctaTertiary": "Neem contact op"
+    },
+    "cta": {
+      "button": "Start gratis proefperiode",
+      "subtitle": "Sluit je aan bij agencies die VexNexa gebruiken om toegankelijkheidsexpertise efficiënt en winstgevend te leveren.",
+      "title": "Klaar om je toegankelijkheidsdiensten op te schalen?"
+    },
+    "features": {
+      "api": "API-toegang voor integraties",
+      "clientReporting": "Rapportage klaar voor klanten",
+      "monitoring": "Geautomatiseerde monitoring",
+      "multiSite": "Beheer van meerdere sites",
+      "teamCollaboration": "Tools voor teamsamenwerking",
+      "title": "Speciaal gebouwd voor agencies",
+      "whiteLabel": "Volledige white-label rapporten"
     }
   },
   "blog": {
@@ -3781,7 +3928,8 @@
       "compliance": {
         "title": "Compliance- en juridische teams",
         "description": "Genereer gestructureerde rapporten om je toegankelijkheidspositie te documenteren voor audits en inkoop."
-      }
+      },
+      "title": "Gebouwd voor teams die toegankelijke producten uitbrengen"
     },
     "relatedSolutions": {
       "title": "Ontdek meer toegankelijkheidsworkflows",
@@ -3797,6 +3945,12 @@
         "title": "Doorlopende monitoring",
         "description": "Plan terugkerende scans en volg toegankelijkheidstrends door de tijd."
       }
+    },
+    "finalCTA": {
+      "ctaPrimary": "Start je gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport",
+      "subtitle": "Ontvang bruikbare WCAG-overtredingsrapporten binnen minuten. Geen creditcard nodig voor je eerste scan.",
+      "title": "Klaar om je site te scannen?"
     }
   },
   "checkout": {
@@ -4240,6 +4394,109 @@
       "privacy": "Privacy",
       "terms": "Voorwaarden",
       "contact": "Contact"
+    }
+  },
+  "benefits": {
+    "categories": {
+      "aria": {
+        "description": "Geavanceerde validatie van ARIA-patronen en rolverificatie",
+        "title": "ARIA-semantiek"
+      },
+      "cognitive": {
+        "description": "Meet contentcomplexiteit, leesbaarheid en cognitieve toegankelijkheid",
+        "title": "Cognitieve belasting"
+      },
+      "contrast": {
+        "description": "WCAG AAA-contrastcontrole met visuele simulaties",
+        "title": "Geavanceerd contrast"
+      },
+      "forms": {
+        "description": "Volledige formuliervalidatie inclusief labels, instructies en foutafhandeling",
+        "title": "Formuliertoegankelijkheid"
+      },
+      "keyboard": {
+        "description": "Volledige toetsenbordtoegankelijkheidstest inclusief focusbeheer en tabvolgorde",
+        "title": "Toetsenbordnavigatie"
+      },
+      "landmarks": {
+        "description": "Correcte landmarkstructuur voor schermlezernavigatie",
+        "title": "ARIA-landmarks"
+      },
+      "multimedia": {
+        "description": "Video- en audiotoegankelijkheid met controle van ondertiteling en transcript",
+        "title": "Multimedia"
+      },
+      "structure": {
+        "description": "Semantische HTML-validatie en correcte koppenhiërarchie",
+        "title": "Documentstructuur"
+      }
+    },
+    "subtitle": "Ga verder dan basis-WCAG-checks met 8 extra testcategorieën",
+    "title": "Uitgebreide toegankelijkheidstests"
+  },
+  "cta": {
+    "button": "Gratis aan de slag",
+    "noCard": "Geen creditcard vereist",
+    "subtitle": "Sluit je aan bij teams die VexNexa al gebruiken voor WCAG-compliance",
+    "title": "Begin vandaag met toegankelijkheid verbeteren"
+  },
+  "ctaBand": {
+    "cta": "Start gratis scan",
+    "title": "Controleer je site nu"
+  },
+  "featuresSection": {
+    "cta": "Start gratis scan",
+    "features": {
+      "category1": "8 extra scancategorieën naast WCAG",
+      "category2": "Test van toetsenbordnavigatie",
+      "category3": "Compatibiliteitscontroles voor schermlezers",
+      "category4": "Analyse van mobiele toegankelijkheid",
+      "category5": "Beoordeling van cognitieve toegankelijkheid",
+      "category6": "Veiligheid van beweging en animatie",
+      "category7": "Geavanceerde kleurzichttest",
+      "category8": "Analyse van prestatie-impact"
+    },
+    "imageAlt": "VexNexa scandetailrapport met toegankelijkheidsproblemen, prioritering en hersteltips",
+    "subtitle": "Geen technische kennis nodig. Onze rapporten zijn eenvoudig en duidelijk, zodat je team direct problemen kan oplossen.",
+    "title": "Van scan naar actie in",
+    "titleHighlight": "minuten"
+  },
+  "pillars": {
+    "actionable": {
+      "description": "Technische taal die ontwikkelaars begrijpen. Inzichten op codeniveau. WCAG-referenties. Geen vage 'compliancescores' zonder context.",
+      "title": "Ontwikkelaarsvriendelijke rapporten"
+    },
+    "compliant": {
+      "description": "Volledig platform in het Engels, Nederlands en Frans. Niet alleen vertaalde helpdocumenten — de hele interface.",
+      "title": "Meertalig platform"
+    },
+    "continuous": {
+      "description": "Andere tools laten je demo's uitzitten. Wij geven je directe resultaten en transparante prijzen. Upgrade met één klik.",
+      "title": "Direct & self-service"
+    },
+    "deeper": {
+      "description": "We scannen je codestructuur. We injecteren geen controversiële overlay-scripts waar de toegankelijkheidsgemeenschap voor waarschuwt.",
+      "title": "Geen overlay-widgets"
+    },
+    "subtitle": "Gebouwd voor ontwikkelaars, agencies en teams die code uitbrengen",
+    "title": "Waarom VexNexa?"
+  },
+  "valuePillars": {
+    "actionable": {
+      "description": "Geprioriteerde problemen, codefragmenten en hersteltips.",
+      "title": "Bruikbare rapporten"
+    },
+    "deeper": {
+      "description": "Toetsenbord, cognitief, structuur, contrast, formulieren, landmarks, multimedia, ARIA-semantiek.",
+      "title": "Diepere dekking"
+    },
+    "monitoring": {
+      "description": "Plan scans, volg regressies, waarschuw je team.",
+      "title": "Doorlopende monitoring"
+    },
+    "teamReady": {
+      "description": "Projecten, rollen, Slack/Jira-integratie, API.",
+      "title": "Klaar voor teams"
     }
   }
 }

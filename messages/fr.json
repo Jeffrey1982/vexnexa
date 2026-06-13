@@ -6,6 +6,46 @@
       "title": "Vous n'avez pas trouvé ce que vous cherchiez ?",
       "body": "Notre équipe répond directement aux questions de conformité et d'intégration.",
       "cta": "Nous contacter"
+    },
+    "q1": {
+      "answer": "Aucun outil ne peut garantir une conformité légale à 100% dans tous les contextes. VexNexa détecte et signale les problèmes, facilite la correction et vous aide à respecter les WCAG et les normes associées. Pour l'évaluation des risques juridiques, envisagez un audit d'expert et un processus de gouvernance continu.",
+      "question": "Pouvez-vous garantir la conformité légale ?"
+    },
+    "q10": {
+      "answer": "Oui ! Notre plan gratuit est gratuit à vie pour 1 site web et jusqu'à 100 pages par mois. Aucune carte de crédit requise. Vous bénéficiez d'un scan WCAG 2.2 complet, de rapports PDF et d'un mois d'historique de scans. Ne passez à un forfait supérieur que lorsque vous avez besoin de plus de sites, de pages ou de fonctionnalités avancées comme la surveillance et les exports Word.",
+      "question": "Y a-t-il vraiment un plan gratuit ?"
+    },
+    "q2": {
+      "answer": "Chaque plan inclut une limite mensuelle de scans de pages. Une « page » correspond à une URL scannée. Si vous scannez la même page plusieurs fois dans le mois, chaque scan compte dans votre limite. Lorsque vous approchez de votre limite, vous recevez une notification.",
+      "question": "Comment fonctionnent les limites de pages ?"
+    },
+    "q3": {
+      "answer": "Plan gratuit : le service est bloqué à la limite. Passez à un plan payant pour continuer à scanner. Plans payants : le service continue, mais vous recevez des notifications pour passer à un plan supérieur si vous dépassez constamment vos limites.",
+      "question": "Que se passe-t-il si je dépasse mon plan ?"
+    },
+    "q4": {
+      "answer": "Les plans Pro prennent en charge jusqu'à 5 membres d'équipe. Les plans Business prennent en charge jusqu'à 15 membres avec accès basé sur les rôles. Le SSO est disponible sur les plans Business et Enterprise. Contactez-nous pour les fonctionnalités Enterprise.",
+      "question": "Prenez-vous en charge les équipes/SSO ?"
+    },
+    "q5": {
+      "answer": "L'export PDF est disponible sur tous les plans payants. L'export Word est disponible sur les plans Pro et Business. Tous les exports incluent vos résultats de scan, les problèmes priorisés, les extraits de code et les recommandations de correction.",
+      "question": "Puis-je exporter des rapports ?"
+    },
+    "q6": {
+      "answer": "La surveillance continue vous permet de planifier des scans automatiques (quotidiens, hebdomadaires ou mensuels). Vous recevez des alertes par e-mail lorsque les scores baissent ou que de nouveaux problèmes sont détectés. Cette fonctionnalité est disponible sur les plans Pro et Business.",
+      "question": "Qu'est-ce qui est surveillé en continu ?"
+    },
+    "q7": {
+      "answer": "Non ! VexNexa est 100% en libre-service. Inscrivez-vous, saisissez votre URL et obtenez votre rapport d'accessibilité en quelques minutes. Nous ne proposons ni démos ni appels commerciaux.",
+      "question": "Dois-je planifier une démo ?"
+    },
+    "q8": {
+      "answer": "Non. Nous scannons la structure de votre code et vous fournissons les violations WCAG à corriger correctement. Nous n'injectons jamais de widgets ou de scripts dans votre site. Les overlays sont controversés dans la communauté de l'accessibilité — nous analysons plutôt votre code réel.",
+      "question": "VexNexa est-il un overlay d'accessibilité ?"
+    },
+    "q9": {
+      "answer": "Non. Une véritable accessibilité nécessite des modifications de code appropriées. Nous vous montrons exactement ce qui ne va pas et comment le corriger, mais vous devez effectuer les modifications vous-même. Les « corrections » automatisées ne traitent pas les causes profondes.",
+      "question": "VexNexa peut-il corriger automatiquement les problèmes ?"
     }
   },
   "nav": {
@@ -25,7 +65,9 @@
     "forAgencies": "Pour les Agences",
     "sampleReport": "Rapport d'Exemple",
     "updates": "Updates",
-    "eaaMonitoring": "Surveillance EAA"
+    "eaaMonitoring": "Surveillance EAA",
+    "tagline": "Des scans WCAG qui apportent de vraies informations",
+    "theme": "Thème"
   },
   "footer": {
     "brand": {
@@ -508,7 +550,13 @@
         "eyebrow": "Visibilité",
         "title": "On ne peut pas corriger ce que l'on ne voit pas.",
         "body": "VexNexa révèle environ 30 % des obstacles à l'accessibilité que l'automatisation traditionnelle basée sur des règles ne détecte pas — logique d'interaction, ambiguïté perceptive et défaillances dépendantes du contexte qui requièrent une compréhension de niveau visuel.",
-        "footnote": "Observation sectorielle issue d'audits WCAG publiés ; le gain réel varie selon la complexité du site."
+        "footnote": "Observation sectorielle issue d'audits WCAG publiés ; le gain réel varie selon la complexité du site.",
+        "stat1Label": "AI-Vision",
+        "stat1Value": "Logique + contexte visuel",
+        "stat2Label": "Ambiguïté",
+        "stat2Value": "Ce qu'axe-core manque",
+        "stat3Label": "Prêt pour audit",
+        "stat3Value": "Preuves par constat"
       },
       "trustBar": {
         "eyebrow": "Conçu pour les équipes risque et audit en entreprise",
@@ -547,7 +595,8 @@
           "b1": "Agrégation du risque par BU, région ou marque",
           "b2": "Accès basé sur les rôles avec journaux d'activité d'audit",
           "b3": "API et webhooks pour intégration SIEM et ticketing"
-        }
+        },
+        "screenshotCaption": "Exemple de rapport de scan VexNexa — mise en page réelle, regroupement par gravité et conseils de correction."
       },
       "calculator": {
         "eyebrow": "Calculateur d'efficacité",
@@ -563,7 +612,8 @@
         "vnLabel": "VexNexa IA-Vision",
         "savedLabel": "Réduction",
         "hoursShort": "h",
-        "disclaimer": "Base de 30 min par page (manuel) contre 6 min par page (VexNexa, revue humaine incluse), estimation arrondie au niveau du secteur. Les économies réelles varient selon la complexité du site."
+        "disclaimer": "Base de 30 min par page (manuel) contre 6 min par page (VexNexa, revue humaine incluse), estimation arrondie au niveau du secteur. Les économies réelles varient selon la complexité du site.",
+        "sectionTitle": "Moins de travail d'audit, des tarifs plus clairs."
       },
       "pricingTeaser": {
         "eyebrow": "Tarification entreprise transparente",
@@ -585,6 +635,13 @@
         "ctaSecondary": "Parler à l'équipe entreprise",
         "allocation": "20 % de chaque investissement est directement alloué à l'entraînement continu des modèles IA et à la veille juridique en temps réel, afin que votre accessibilité numérique évolue automatiquement avec les standards mondiaux les plus stricts."
       }
+    },
+    "latestBlog": {
+      "eyebrow": "Dernières nouvelles du journal",
+      "minRead": "min de lecture",
+      "subtitle": "Notes de terrain sur les WCAG, l'EAA et l'art des interfaces inclusives. Mis à jour chaque semaine.",
+      "title": "Actualités sur l'accessibilité, écrites pour les créateurs.",
+      "viewAll": "Voir tous les articles"
     }
   },
   "pricing": {
@@ -643,7 +700,10 @@
           "advancedReports": "Rapports avancés",
           "scheduling": "Planification",
           "integrations": "Intégration Slack & Jira",
-          "prioritySupport": "Support prioritaire"
+          "prioritySupport": "Support prioritaire",
+          "history": "{count} mois d'historique",
+          "support": "Support prioritaire",
+          "whiteLabel": "Rapports en marque blanche"
         }
       },
       "business": {
@@ -658,7 +718,12 @@
           "whiteLabel": "Rapports en marque blanche",
           "advancedScheduling": "Planification avancée",
           "allIntegrations": "Toutes les intégrations",
-          "prioritySupport": "Support prioritaire (réponse en 4h)"
+          "prioritySupport": "Support prioritaire (réponse en 4h)",
+          "assurance": "Assurance incluse",
+          "auditDiscount": "20% de réduction sur les audits",
+          "history": "{count} mois d'historique",
+          "integrations": "Toutes les intégrations",
+          "support": "Support prioritaire 4h"
         }
       },
       "enterprise": {
@@ -674,9 +739,17 @@
           "sso": "SSO/SAML",
           "dedicatedSupport": "Support dédié",
           "sla": "Garantie SLA",
-          "onPremise": "Option sur site"
+          "onPremise": "Option sur site",
+          "accountManager": "Gestionnaire de compte dédié",
+          "allFeatures": "Toutes les fonctionnalités incluses",
+          "assurance": "Assurance incluse",
+          "auditDiscount": "30% de réduction sur les audits",
+          "customBilling": "Facturation personnalisée",
+          "history": "{count} mois d'historique",
+          "sites": "{count} sites web"
         },
-        "note": "Parfait pour les grandes organisations. Contactez-nous pour un tarif personnalisé."
+        "note": "Parfait pour les grandes organisations. Contactez-nous pour un tarif personnalisé.",
+        "priceFrom": "À partir de 270 €/mois"
       }
     },
     "loading": "Chargement...",
@@ -1000,6 +1073,48 @@
       "perMonth": "/mois",
       "perYear": "/an",
       "perMonthSubtext": "{price}/mois"
+    },
+    "addons": {
+      "assurance": {
+        "badge": "Surveillance",
+        "description": "Surveillance de conformité automatisée & alertes",
+        "features": {
+          "alerts": "Alertes de baisse de score",
+          "audit": "Archive du journal d'audit",
+          "eaa": "Suivi de la préparation à l'EAA",
+          "graph": "Graphique de conformité historique",
+          "scans": "Scans automatisés hebdomadaires"
+        },
+        "title": "Assurance"
+      },
+      "description": "Ajoutez des sites web supplémentaires, de la capacité de scan ou une surveillance continue à n'importe quel plan",
+      "pages": {
+        "100k": "+100 000 pages/mois",
+        "250k": "+250 000 pages/mois",
+        "25k": "+25 000 pages/mois",
+        "description": "Augmentez la capacité de scan mensuelle avec des packs de volume.",
+        "title": "Packs de volume de pages"
+      },
+      "subtitle": "Évoluez à mesure que vous grandissez",
+      "title": "Modules complémentaires flexibles",
+      "websites": {
+        "description": "Besoin de plus de sites web ? Ajoutez-les à n'importe quel plan.",
+        "site1": "+1 site web",
+        "sites10": "+10 sites web",
+        "sites5": "+5 sites web",
+        "title": "Sites web supplémentaires"
+      }
+    },
+    "billing": {
+      "annual": "Annuel",
+      "hint": "La facturation annuelle fait économiser 10%",
+      "monthly": "Mensuel",
+      "save10": "Économisez 10%",
+      "save5": "Économisez 5%",
+      "save8": "Économisez jusqu'à 8%",
+      "saveUpTo17": "Économisez jusqu'à 17%",
+      "semiannual": "6 mois",
+      "switchToSave": "Passez à l'annuel et économisez"
     }
   },
   "contact": {
@@ -1291,7 +1406,19 @@
     "viewMore": "Voir plus",
     "viewLess": "Voir moins",
     "learnMore": "En savoir plus",
-    "issues": "problèmes"
+    "issues": "problèmes",
+    "bookDemo": "Réserver une démo",
+    "contactUs": "Nous contacter",
+    "getStarted": "Commencer",
+    "getStartedFree": "Commencer gratuitement",
+    "readMore": "Lire la suite",
+    "seeFeatures": "Voir les fonctionnalités",
+    "startFreeScan": "Lancer un scan gratuit",
+    "startTrial": "Démarrer l'essai",
+    "tryNow": "Essayer maintenant",
+    "viewAll": "Tout voir",
+    "viewDemo": "Voir la démo",
+    "viewPricing": "Voir les tarifs"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -1620,7 +1747,13 @@
           "description": "L'accessibilité est la tâche de chacun"
         }
       },
-      "quote": "L'accessibilité n'est pas une case à cocher — c'est l'artisanat du produit. Il s'agit de respect pour toutes les personnes qui veulent utiliser votre produit."
+      "quote": "L'accessibilité n'est pas une case à cocher — c'est l'artisanat du produit. Il s'agit de respect pour toutes les personnes qui veulent utiliser votre produit.",
+      "founder": {
+        "bio": "Créer des outils d'accessibilité concrets pour les équipes qui veulent des résultats, pas du bruit. Basé aux Pays-Bas.",
+        "heading": "Qui se cache derrière VexNexa",
+        "name": "Jeffrey",
+        "role": "Fondateur & Développeur"
+      }
     },
     "faq": {
       "title": "Questions fréquemment posées",
@@ -2013,7 +2146,24 @@
       "severityRanked": "Listes de probl?mes class?es par gravit?",
       "remediationGuidance": "Conseils de correction clairs",
       "slackJiraIntegration": "Support des workflows Slack et Jira"
-    }
+    },
+    "automation": {
+      "description": "Planifiez des scans réguliers et recevez des alertes lorsque de nouveaux problèmes sont détectés",
+      "title": "Tests automatisés"
+    },
+    "monitoring": {
+      "description": "Suivez les changements dans le temps et évitez les régressions d'accessibilité",
+      "title": "Surveillance continue"
+    },
+    "reports": {
+      "description": "Exportez des rapports PDF/DOCX professionnels à votre image de marque",
+      "title": "Rapports détaillés"
+    },
+    "team": {
+      "description": "Partagez des scans, attribuez des tâches et suivez la progression des corrections",
+      "title": "Collaboration d'équipe"
+    },
+    "title": "Tout ce dont vous avez besoin pour la conformité en accessibilité"
   },
   "demo": {
     "metadata": {
@@ -2879,7 +3029,8 @@
       "noPaymentMethod": "Aucun mode de paiement trouvé. Veuillez d'abord configurer votre mode de paiement.",
       "paymentExpired": "Votre mode de paiement a expiré. Cliquez sur 'Configurer le mode de paiement' pour le mettre à jour.",
       "setupPayment": "Configurer le mode de paiement",
-      "failed": "Échec du traitement de la demande. Veuillez réessayer."
+      "failed": "Échec du traitement de la demande. Veuillez réessayer.",
+      "freePlanUser": "Passez à un plan payant pour acheter des modules complémentaires."
     },
     "success": {
       "activated": "Module activé! Le paiement sera traité automatiquement chaque mois.",
@@ -3096,7 +3247,10 @@
       "settingsSaved": "Settings saved",
       "subscriptionCanceled": "Subscription canceled",
       "alertResolved": "Alert marked as resolved"
-    }
+    },
+    "description": "Restez conforme grâce à la surveillance automatisée et aux alertes",
+    "subtitle": "Surveillance continue et conformité",
+    "title": "Accessibility Assurance"
   },
   "forAgencies": {
     "hero": {
@@ -3196,6 +3350,20 @@
       "ctaPrimary": "Lancer une analyse gratuite",
       "ctaSecondary": "Voir un exemple de rapport",
       "ctaTertiary": "Nous contacter"
+    },
+    "cta": {
+      "button": "Démarrer l'essai gratuit",
+      "subtitle": "Rejoignez les agences qui utilisent VexNexa pour offrir une expertise en accessibilité de manière efficace et rentable.",
+      "title": "Prêt à faire évoluer vos services d'accessibilité ?"
+    },
+    "features": {
+      "api": "Accès API pour les intégrations",
+      "clientReporting": "Rapports prêts pour les clients",
+      "monitoring": "Surveillance automatisée",
+      "multiSite": "Gestion multi-sites",
+      "teamCollaboration": "Outils de collaboration d'équipe",
+      "title": "Conçu spécialement pour les agences",
+      "whiteLabel": "Rapports en marque blanche complets"
     }
   },
   "blog": {
@@ -3717,7 +3885,8 @@
       "compliance": {
         "title": "?quipes conformit? et juridique",
         "description": "G?n?rez des rapports structur?s pour documenter votre posture d?accessibilit? lors d?audits et d?achats."
-      }
+      },
+      "title": "Conçu pour les équipes qui livrent des produits accessibles"
     },
     "relatedSolutions": {
       "title": "Explorer d?autres workflows d?accessibilit?",
@@ -3733,6 +3902,12 @@
         "title": "Surveillance continue",
         "description": "Planifiez des scans r?currents et suivez les tendances d?accessibilit? dans le temps."
       }
+    },
+    "finalCTA": {
+      "ctaPrimary": "Lancer votre scan gratuit",
+      "ctaSecondary": "Voir un exemple de rapport",
+      "subtitle": "Obtenez des rapports de violations WCAG exploitables en quelques minutes. Aucune carte de crédit requise pour votre premier scan.",
+      "title": "Prêt à scanner votre site ?"
     }
   },
   "checkout": {
@@ -4176,6 +4351,136 @@
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "contact": "Contact"
+    }
+  },
+  "benefits": {
+    "categories": {
+      "aria": {
+        "description": "Validation avancée des modèles ARIA et vérification des rôles",
+        "title": "Sémantique ARIA"
+      },
+      "cognitive": {
+        "description": "Mesure la complexité du contenu, la lisibilité et l'accessibilité cognitive",
+        "title": "Charge cognitive"
+      },
+      "contrast": {
+        "description": "Vérification du contraste WCAG AAA avec simulations visuelles",
+        "title": "Contraste avancé"
+      },
+      "forms": {
+        "description": "Validation complète des formulaires, y compris les étiquettes, instructions et gestion des erreurs",
+        "title": "Accessibilité des formulaires"
+      },
+      "keyboard": {
+        "description": "Test complet de l'accessibilité au clavier, y compris la gestion du focus et l'ordre de tabulation",
+        "title": "Navigation au clavier"
+      },
+      "landmarks": {
+        "description": "Structure de repères correcte pour la navigation au lecteur d'écran",
+        "title": "Repères ARIA"
+      },
+      "multimedia": {
+        "description": "Accessibilité vidéo et audio avec vérification des sous-titres et transcriptions",
+        "title": "Multimédia"
+      },
+      "structure": {
+        "description": "Validation HTML sémantique et hiérarchie de titres correcte",
+        "title": "Structure du document"
+      }
+    },
+    "subtitle": "Allez au-delà des vérifications WCAG de base avec 8 catégories de tests supplémentaires",
+    "title": "Tests d'accessibilité complets"
+  },
+  "cta": {
+    "button": "Commencer gratuitement",
+    "noCard": "Aucune carte de crédit requise",
+    "subtitle": "Rejoignez les équipes qui utilisent déjà VexNexa pour la conformité WCAG",
+    "title": "Commencez à améliorer l'accessibilité dès aujourd'hui"
+  },
+  "ctaBand": {
+    "cta": "Lancer un scan gratuit",
+    "title": "Vérifiez votre site maintenant"
+  },
+  "featuresSection": {
+    "cta": "Lancer un scan gratuit",
+    "features": {
+      "category1": "8 catégories de scan supplémentaires au-delà des WCAG",
+      "category2": "Test de navigation au clavier",
+      "category3": "Vérifications de compatibilité avec les lecteurs d'écran",
+      "category4": "Analyse de l'accessibilité mobile",
+      "category5": "Évaluation de l'accessibilité cognitive",
+      "category6": "Sécurité des mouvements et animations",
+      "category7": "Test avancé de la vision des couleurs",
+      "category8": "Analyse de l'impact sur les performances"
+    },
+    "imageAlt": "Rapport détaillé de scan VexNexa montrant les problèmes d'accessibilité avec priorisation et conseils de correction",
+    "subtitle": "Aucune compétence technique requise. Nos rapports sont simples et clairs pour que votre équipe puisse commencer à corriger immédiatement.",
+    "title": "Du scan à l'action en",
+    "titleHighlight": "minutes"
+  },
+  "hero": {
+    "auditBadge": "PDF prêt pour audit",
+    "badge": "Application de l'EAA active depuis juin 2025",
+    "ctaPrimary": "Scanner votre site",
+    "ctaSecondary": "Voir un exemple de rapport",
+    "headline": "Conformité WCAG, prouvée à chaque scan.",
+    "liveLabel": "En direct",
+    "proofPill1Label": "WCAG 2.2 AA",
+    "proofPill1Value": "Preuves dans le rapport",
+    "proofPill2Label": "Vérifications visuelles",
+    "proofPill2Value": "Contexte au-delà des balises",
+    "proofPill3Label": "+8",
+    "proofPill3Value": "Delta de régression",
+    "scanCardDelta": "+8 ce mois-ci",
+    "scanCardLabel": "Aperçu du scan en direct",
+    "scanCardScore": "/ 100",
+    "severityCritical": "Critique",
+    "severityMinor": "Mineur",
+    "severityModerate": "Modéré",
+    "severitySerious": "Grave",
+    "subhead": "Surveillance continue, rapports prêts pour audit, marque blanche pour les agences. Conçu pour l'UE.",
+    "trustLabel": "Approuvé par les agences et les entreprises de l'UE",
+    "urlHint": "Scan gratuit · Aucune carte de crédit nécessaire",
+    "urlInvalid": "Saisissez une URL de site web valide, p. ex. https://exemple.com",
+    "urlLabel": "URL du site web",
+    "urlPlaceholder": "https://votre-site.com"
+  },
+  "pillars": {
+    "actionable": {
+      "description": "Un langage technique que les développeurs comprennent. Des informations au niveau du code. Des références WCAG. Pas de vagues « scores de conformité » sans contexte.",
+      "title": "Rapports adaptés aux développeurs"
+    },
+    "compliant": {
+      "description": "Plateforme complète en anglais, néerlandais et français. Pas seulement des documents d'aide traduits — toute l'interface.",
+      "title": "Plateforme multilingue"
+    },
+    "continuous": {
+      "description": "D'autres outils vous obligent à suivre des démos. Nous vous offrons des résultats instantanés et des tarifs transparents. Mise à niveau en un clic.",
+      "title": "Instantané & en libre-service"
+    },
+    "deeper": {
+      "description": "Nous scannons la structure de votre code. Nous n'injectons pas de scripts d'overlay controversés contre lesquels la communauté de l'accessibilité met en garde.",
+      "title": "Pas de widgets overlay"
+    },
+    "subtitle": "Conçu pour les développeurs, les agences et les équipes qui livrent du code",
+    "title": "Pourquoi VexNexa ?"
+  },
+  "valuePillars": {
+    "actionable": {
+      "description": "Problèmes priorisés, extraits de code et conseils de correction.",
+      "title": "Rapports exploitables"
+    },
+    "deeper": {
+      "description": "Clavier, cognitif, structure, contraste, formulaires, repères, multimédia, sémantique ARIA.",
+      "title": "Couverture plus approfondie"
+    },
+    "monitoring": {
+      "description": "Planifiez des scans, suivez les régressions, alertez votre équipe.",
+      "title": "Surveillance continue"
+    },
+    "teamReady": {
+      "description": "Projets, rôles, intégration Slack/Jira, API.",
+      "title": "Prêt pour les équipes"
     }
   }
 }
