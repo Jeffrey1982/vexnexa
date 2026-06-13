@@ -43,6 +43,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 301)
   }
 
+  if (/^\/(?:en|nl|de|fr|es|pt)\/?$/.test(pathname)) {
+    const redirectUrl = url.clone()
+    redirectUrl.pathname = '/'
+    return NextResponse.redirect(redirectUrl, 301)
+  }
+
   if (pathname === '/sw.js') {
     const response = NextResponse.next()
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
@@ -53,15 +59,24 @@ export async function proxy(request: NextRequest) {
     return response
   }
 
-  // Legacy Shopify URL patterns
+  // Legacy Shopify URL patterns. These pages belonged to the old hardware shop
+  // and have no relevant replacement in the current accessibility product.
   const SHOPIFY_PATTERNS = [
+    /^\/(?:en|nl|de|fr|es|pt)\/products\//,
+    /^\/(?:en|nl|de|fr|es|pt)\/collections\//,
+    /^\/(?:en|nl|de|fr|es|pt)\/cart\/?$/,
+    /^\/(?:en|nl|de|fr|es|pt)\/checkout(?:\/|$)/,
+    /^\/(?:en|nl|de|fr|es|pt)\/blogs\//,
+    /^\/(?:en|nl|de|fr|es|pt)\/account(?:\/|$)/,
+    /^\/(?:en|nl|de|fr|es|pt)\/search(?:\/|$)/,
     /^\/products\//,
     /^\/collections\//,
     /^\/cart\/?$/,
-    /^\/checkout/,
+    /^\/checkout(?:\/|$)/,
     /^\/blogs\//,
-    /^\/account/,
-    /^\/search/,
+    /^\/account(?:\/|$)/,
+    /^\/search(?:\/|$)/,
+    /^\/customer_authentication\//,
   ] as const
 
   // Check if URL matches legacy Shopify pattern
