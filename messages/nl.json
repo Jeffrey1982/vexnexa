@@ -680,7 +680,7 @@
           "site": "website",
           "user": "gebruiker",
           "pdf": "PDF-export",
-          "history": "Geschiedenis van {count} maanden",
+          "history": "{count, plural, one {Geschiedenis van 1 maand} other {Geschiedenis van # maanden}}",
           "support": "E-mailsupport"
         },
         "limitations": {
@@ -1038,7 +1038,32 @@
         "subtitle": "Nieuw bij VexNexa? Start met alle Business-functies — white-label rapporten, 10 websites en prioriteitsondersteuning — voor slechts €59,99 in je eerste maand. Geen verplichtingen. Altijd opzegbaar.",
         "cta": "Claim je pilotplek"
       },
-      "noCreditCard": "Geen creditcard vereist · Altijd opzegbaar"
+      "noCreditCard": "Geen creditcard vereist · Altijd opzegbaar",
+      "cta": {
+        "free": "Start gratis",
+        "pro": "Kies Pro",
+        "business": "Kies Agency",
+        "pioneer": "Kies Pioneer",
+        "enterprise": "Neem contact op"
+      },
+      "pioneerDeal": "Pioneer Deal",
+      "saveBadge": "Bespaar {percent}%",
+      "allPricesInclVat": "Alle prijzen zijn incl. btw",
+      "inclVatShort": "incl. btw",
+      "pioneer": {
+        "description": "Pioneer-partnertoegang met premium VNI-rapportage en white-label workflows.",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pagina's/maand",
+          "users": "{count} gebruikers",
+          "vni": "VNI-scans en PDF/DOCX-rapporten",
+          "whiteLabel": "White-label rapporten",
+          "support": "Prioriteit support en SLA"
+        }
+      },
+      "perMonth": "/maand",
+      "perYear": "/jaar",
+      "perMonthSubtext": "{price}/maand"
     }
   },
   "contact": {

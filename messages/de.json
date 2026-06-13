@@ -658,7 +658,7 @@
           "site": "Website",
           "user": "Benutzer",
           "pdf": "PDF-Export",
-          "history": "Verlauf ?ber {count} Monate",
+          "history": "{count, plural, one {Verlauf über 1 Monat} other {Verlauf über # Monate}}",
           "support": "E-Mail-Support"
         },
         "limitations": {
@@ -1016,7 +1016,32 @@
         "subtitle": "Neu bei VexNexa? Starten Sie mit allen Business-Funktionen — White-Label-Berichte, 10 Websites und Prioritäts-Support — für nur 59,99 € im ersten Monat. Keine Bindung. Jederzeit kündbar.",
         "cta": "Pilotplatz sichern"
       },
-      "noCreditCard": "Keine Kreditkarte erforderlich · Jederzeit kündbar"
+      "noCreditCard": "Keine Kreditkarte erforderlich · Jederzeit kündbar",
+      "cta": {
+        "free": "Kostenlos starten",
+        "pro": "Pro wählen",
+        "business": "Agency wählen",
+        "pioneer": "Pioneer wählen",
+        "enterprise": "Vertrieb kontaktieren"
+      },
+      "pioneerDeal": "Pioneer Deal",
+      "saveBadge": "Spare {percent}%",
+      "allPricesInclVat": "Alle Preise inkl. MwSt.",
+      "inclVatShort": "inkl. MwSt.",
+      "pioneer": {
+        "description": "Pioneer-Partnerzugang mit Premium-VNI-Reporting und White-Label-Workflows.",
+        "features": {
+          "sites": "{count} Websites",
+          "pages": "{count} Seiten/Monat",
+          "users": "{count} Nutzer",
+          "vni": "VNI-Scans und PDF/DOCX-Berichte",
+          "whiteLabel": "White-Label-Berichte",
+          "support": "Prioritäts-Support und SLA"
+        }
+      },
+      "perMonth": "/Monat",
+      "perYear": "/Jahr",
+      "perMonthSubtext": "{price}/Monat"
     }
   },
   "contact": {

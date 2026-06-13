@@ -517,7 +517,7 @@
           "site": "site",
           "user": "utilizador",
           "pdf": "Exporta??o PDF",
-          "history": "Hist?rico de {count} meses",
+          "history": "{count, plural, one {Histórico de 1 mês} other {Histórico de # meses}}",
           "support": "Suporte por e-mail"
         },
         "limitations": {
@@ -875,7 +875,32 @@
         "subtitle": "Novo na VexNexa? Comece com todos os recursos Business — relatórios de marca branca, 10 sites e suporte prioritário — por apenas €59,99 no primeiro mês. Sem compromisso. Cancele a qualquer momento.",
         "cta": "Reserve sua vaga piloto"
       },
-      "noCreditCard": "Nenhum cartão de crédito necessário · Cancele a qualquer momento"
+      "noCreditCard": "Nenhum cartão de crédito necessário · Cancele a qualquer momento",
+      "cta": {
+        "free": "Começar grátis",
+        "pro": "Escolher Pro",
+        "business": "Escolher Agency",
+        "pioneer": "Escolher Pioneer",
+        "enterprise": "Contactar vendas"
+      },
+      "pioneerDeal": "Oferta Pioneer",
+      "saveBadge": "Poupe {percent}%",
+      "allPricesInclVat": "Todos os preços incluem IVA",
+      "inclVatShort": "IVA incluído",
+      "pioneer": {
+        "description": "Acesso de parceiro Pioneer com relatórios VNI premium e fluxos white-label.",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} páginas/mês",
+          "users": "{count} utilizadores",
+          "vni": "Scans VNI e relatórios PDF/DOCX",
+          "whiteLabel": "Relatórios white-label",
+          "support": "Suporte prioritário e SLA"
+        }
+      },
+      "perMonth": "/mês",
+      "perYear": "/ano",
+      "perMonthSubtext": "{price}/mês"
     }
   },
   "contact": {

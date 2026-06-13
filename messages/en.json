@@ -119,7 +119,7 @@
           "pages": "pages/month",
           "user": "user",
           "pdf": "PDF export",
-          "history": "{count}-month history",
+          "history": "{count, plural, one {1-month history} other {#-month history}}",
           "support": "Email support",
           "sites": "{count} website",
           "users": "{count} user",
@@ -528,7 +528,32 @@
         "subtitle": "New to VexNexa? Start with full Business features — white-label reports, 10 websites, and priority support — for just €59.99 your first month. No lock-in. Cancel anytime.",
         "cta": "Claim your pilot spot"
       },
-      "noCreditCard": "No credit card required · Cancel anytime"
+      "noCreditCard": "No credit card required · Cancel anytime",
+      "cta": {
+        "free": "Start Free",
+        "pro": "Get Pro",
+        "business": "Get Agency",
+        "pioneer": "Get Pioneer",
+        "enterprise": "Contact Sales"
+      },
+      "pioneerDeal": "Pioneer Deal",
+      "saveBadge": "Save {percent}%",
+      "allPricesInclVat": "All prices include VAT",
+      "inclVatShort": "incl. VAT",
+      "pioneer": {
+        "description": "Pioneer partner access with premium VNI reporting and white-label workflows.",
+        "features": {
+          "sites": "{count} websites",
+          "pages": "{count} pages/month",
+          "users": "{count} users",
+          "vni": "VNI scans and PDF/DOCX reports",
+          "whiteLabel": "White-label reports",
+          "support": "Priority support and SLA"
+        }
+      },
+      "perMonth": "/month",
+      "perYear": "/year",
+      "perMonthSubtext": "{price}/month"
     }
   },
   "features": {

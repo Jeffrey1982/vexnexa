@@ -37,7 +37,6 @@ import {
   type BillingCycle,
   formatEuro,
   getDiscountBadge,
-  getCTAText,
   planIncludesAssurance,
   WEBSITE_PACK_PRICES,
   PAGE_PACK_PRICES,
@@ -132,7 +131,7 @@ function HeroSection() {
 
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="secondary" className="text-sm">
-              All prices include VAT
+              {t("badges.vat")}
             </Badge>
             <Badge variant="secondary" className="text-sm">
               {t("badges.noSetup")}
@@ -175,11 +174,11 @@ function PricingCards() {
       const perMonth = getMonthlyEquivalent(planKey);
       return {
         mainPrice: formatEuro(price),
-        period: "/year",
-        subtext: `${formatEuro(perMonth)}/month`,
+        period: tp("perYear"),
+        subtext: tp("perMonthSubtext", { price: formatEuro(perMonth) }),
       };
     }
-    return { mainPrice: formatEuro(price), period: "/month" };
+    return { mainPrice: formatEuro(price), period: tp("perMonth") };
   };
 
   const plans: Array<{
@@ -259,15 +258,17 @@ function PricingCards() {
     {
       key: "PIONEER" as PlanKey,
       name: PLAN_DISPLAY_NAMES.PIONEER,
-      description: "Pioneer partner access with premium VNI reporting and white-label workflows.",
+      description: tp("pioneer.description"),
       highlighted: false,
       features: [
-        `${ENTITLEMENTS.PIONEER.sites} websites`,
-        `${ENTITLEMENTS.PIONEER.pagesPerMonth.toLocaleString()} pages per month`,
-        `${ENTITLEMENTS.PIONEER.users} users`,
-        "VNI scans and PDF/DOCX reports",
-        "White-label reports",
-        "Priority support and SLA",
+        tp("pioneer.features.sites", { count: ENTITLEMENTS.PIONEER.sites }),
+        tp("pioneer.features.pages", {
+          count: ENTITLEMENTS.PIONEER.pagesPerMonth.toLocaleString(),
+        }),
+        tp("pioneer.features.users", { count: ENTITLEMENTS.PIONEER.users }),
+        tp("pioneer.features.vni"),
+        tp("pioneer.features.whiteLabel"),
+        tp("pioneer.features.support"),
       ],
       limitations: [],
       ctaVariant: "default",
@@ -321,13 +322,13 @@ function PricingCards() {
               {tp("billing.yearly")}
               {discountPercent > 0 && (
                 <Badge className="ml-2 bg-primary-600 text-xs text-white">
-                  Save {discountPercent}%
+                  {tp("saveBadge", { percent: discountPercent })}
                 </Badge>
               )}
             </button>
           </div>
           <p className="text-xs text-slate-600">
-            All prices include VAT
+            {tp("allPricesInclVat")}
           </p>
         </div>
 
@@ -335,7 +336,7 @@ function PricingCards() {
           {plans.map((plan) => {
             const priceDisplay = fmtPrice(plan.key, billingCycle);
             const discountBadge = getDiscountBadge(billingCycle, plan.key);
-            const ctaText = getCTAText(billingCycle, plan.key);
+            const ctaText = tp(`cta.${plan.key.toLowerCase()}`);
             const isPioneer = plan.key === "PIONEER";
 
             return (
@@ -361,7 +362,7 @@ function PricingCards() {
                 {isPioneer && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
                     <Badge className="border border-primary-200 bg-primary-50 text-primary-700 shadow-sm">
-                      Pioneer Deal
+                      {tp("pioneerDeal")}
                     </Badge>
                   </div>
                 )}
@@ -400,7 +401,7 @@ function PricingCards() {
                           </p>
                         )}
                         <p className="mt-0.5 text-[10px] uppercase tracking-wide text-slate-700">
-                          incl. VAT
+                          {tp("inclVatShort")}
                         </p>
                       </>
                     )}
@@ -435,7 +436,7 @@ function PricingCards() {
                     className={cn(
                       "mt-auto w-full transition-all duration-200",
                       plan.key === "FREE"
-                        ? "border-slate-300 text-slate-900 hover:bg-slate-100"
+                        ? "border-slate-300 bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-300 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
                         : "bg-primary-600 text-white hover:bg-primary-700"
                     )}
                     variant={plan.ctaVariant}
@@ -490,9 +491,9 @@ function PricingCards() {
                   ))}
                 </div>
               </div>
-              <Button size="lg" variant="outline" asChild className="shrink-0 border-slate-300 text-slate-900 hover:bg-slate-100">
+              <Button size="lg" variant="outline" asChild className="shrink-0 border-slate-300 bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-300 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
                 <Link href="/contact?subject=enterprise">
-                  Contact Sales
+                  {tp("cta.enterprise")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
