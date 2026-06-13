@@ -120,7 +120,7 @@ function HeroSection() {
 
           <h1 className="font-sans text-4xl font-bold tracking-tight lg:text-6xl">
             {t("title")}{" "}
-            <span className="text-primary-700">{t("titleHighlight")}</span>
+            <span className="text-primary">{t("titleHighlight")}</span>
           </h1>
 
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto">
@@ -287,7 +287,7 @@ function PricingCards() {
   const discountPercent = getYearlyDiscountPercent("PRO");
 
   return (
-    <section id="plans" className="bg-slate-50 py-20">
+    <section id="plans" className="bg-muted/30 py-20">
       <div className="container mx-auto px-4">
         {error && (
           <Alert className="mb-8 max-w-md mx-auto" variant="destructive">
@@ -298,14 +298,14 @@ function PricingCards() {
 
         {/* Billing Cycle Toggle */}
         <div className="flex flex-col items-center mb-12 space-y-3">
-          <div className="inline-flex items-center rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+          <div className="inline-flex items-center rounded-lg border border-border bg-card p-1 shadow-sm">
             <button
               onClick={() => setBillingCycle("monthly")}
               className={cn(
                 "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
                 billingCycle === "monthly"
                   ? "bg-primary-600 text-white shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               {tp("billing.monthly")}
@@ -316,7 +316,7 @@ function PricingCards() {
                 "px-6 py-2.5 rounded-md text-sm font-medium transition-all duration-200 relative",
                 billingCycle === "yearly"
                   ? "bg-primary-600 text-white shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               {tp("billing.yearly")}
@@ -327,7 +327,7 @@ function PricingCards() {
               )}
             </button>
           </div>
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-muted-foreground">
             {tp("allPricesInclVat")}
           </p>
         </div>
@@ -345,10 +345,10 @@ function PricingCards() {
                 data-testid="plan-card"
                 data-plan={plan.key}
                 className={cn(
-                  "relative flex flex-col border-slate-200 bg-white text-slate-900 shadow-sm transition-all duration-300 hover:border-primary-500",
+                  "relative flex flex-col border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:border-primary-500",
                   plan.highlighted &&
-                    "border-primary-600 shadow-xl ring-2 ring-primary-200",
-                  isPioneer && "bg-primary-50"
+                    "border-primary-600 shadow-xl ring-2 ring-primary-200 dark:ring-primary/30",
+                  isPioneer && "bg-accent"
                 )}
               >
                 {plan.highlighted && (
@@ -361,7 +361,7 @@ function PricingCards() {
                 )}
                 {isPioneer && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
-                    <Badge className="border border-primary-200 bg-primary-50 text-primary-700 shadow-sm">
+                    <Badge className="border border-primary/30 bg-accent text-accent-foreground shadow-sm">
                       {tp("pioneerDeal")}
                     </Badge>
                   </div>
@@ -379,34 +379,34 @@ function PricingCards() {
                 )}
 
                 <CardHeader className="text-center pb-6">
-                  <CardTitle className="font-sans text-xl font-semibold text-slate-900">
+                  <CardTitle className="font-sans text-xl font-semibold text-foreground">
                     {plan.name}
                   </CardTitle>
                   <div className="mt-3">
                     {plan.key === "FREE" ? (
-                      <p className="font-sans text-3xl font-bold tracking-tight text-slate-900">
+                      <p className="font-sans text-3xl font-bold tracking-tight text-foreground">
                         {tp("freeForeverPrice")}
                       </p>
                     ) : (
                       <>
-                        <span className="font-sans text-3xl font-bold text-slate-900">
+                        <span className="font-sans text-3xl font-bold text-foreground">
                           {priceDisplay.mainPrice}
                         </span>
-                        <span className="ml-1 align-baseline text-lg font-medium text-slate-600">
+                        <span className="ml-1 align-baseline text-lg font-medium text-muted-foreground">
                           {priceDisplay.period}
                         </span>
                         {priceDisplay.subtext && (
-                          <p className="mt-1 text-xs text-slate-600">
+                          <p className="mt-1 text-xs text-muted-foreground">
                             ({priceDisplay.subtext})
                           </p>
                         )}
-                        <p className="mt-0.5 text-[10px] uppercase tracking-wide text-slate-700">
+                        <p className="mt-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
                           {tp("inclVatShort")}
                         </p>
                       </>
                     )}
                   </div>
-                  <p className="text-slate-600 mt-2 text-xs">
+                  <p className="text-muted-foreground mt-2 text-xs">
                     {plan.description}
                   </p>
                 </CardHeader>
@@ -416,7 +416,7 @@ function PricingCards() {
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start space-x-2">
                         <Check className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-slate-700">{feature}</span>
+                        <span className="text-sm text-muted-foreground">{feature}</span>
                       </div>
                     ))}
                     {plan.limitations.map((limitation, i) => (
@@ -424,8 +424,8 @@ function PricingCards() {
                         key={i}
                         className="flex items-start space-x-2"
                       >
-                        <X className="h-4 w-4 text-slate-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                        <span className="text-sm text-slate-700">
+                        <X className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span className="text-sm text-muted-foreground">
                           {limitation}
                         </span>
                       </div>
@@ -436,7 +436,7 @@ function PricingCards() {
                     className={cn(
                       "mt-auto w-full transition-all duration-200",
                       plan.key === "FREE"
-                        ? "border-slate-300 bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-300 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                        ? "border border-border bg-card text-foreground hover:bg-muted"
                         : "bg-primary-600 text-white hover:bg-primary-700"
                     )}
                     variant={plan.ctaVariant}
@@ -456,7 +456,7 @@ function PricingCards() {
                       </>
                     )}
                   </Button>
-                  <p className="text-[10px] text-center text-slate-700 mt-2">
+                  <p className="text-[10px] text-center text-muted-foreground mt-2">
                     {tp("noCreditCard")}
                   </p>
                 </CardContent>
@@ -467,13 +467,13 @@ function PricingCards() {
 
         {/* Enterprise block */}
         <div className="max-w-5xl mx-auto mt-12">
-          <Card className="border-dashed border-slate-300 bg-white">
+          <Card className="border-dashed border-border bg-card">
             <CardContent className="flex flex-col md:flex-row items-center justify-between gap-6 py-8">
               <div className="space-y-2 text-center md:text-left">
-                <h3 className="font-sans text-xl font-bold text-slate-900">
+                <h3 className="font-sans text-xl font-bold text-foreground">
                   {PLAN_DISPLAY_NAMES.ENTERPRISE}
                 </h3>
-                <p className="text-slate-600 text-sm max-w-lg">
+                <p className="text-muted-foreground text-sm max-w-lg">
                   {tp("enterprise.description")}
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
@@ -485,13 +485,13 @@ function PricingCards() {
                     tp("enterprise.features.sla"),
                     tp("enterprise.features.accountManager"),
                   ].map((f, i) => (
-                    <Badge key={i} variant="secondary" className="bg-slate-100 text-xs text-slate-700">
+                    <Badge key={i} variant="secondary" className="bg-muted text-xs text-muted-foreground">
                       {f}
                     </Badge>
                   ))}
                 </div>
               </div>
-              <Button size="lg" variant="outline" asChild className="shrink-0 border-slate-300 bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-300 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
+              <Button size="lg" variant="outline" asChild className="shrink-0 border border-border bg-card text-foreground hover:bg-muted">
                 <Link href="/contact?subject=enterprise">
                   {tp("cta.enterprise")}
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -627,21 +627,21 @@ function AuditServicesSection() {
   ];
 
   return (
-    <section id="audits" className="border-y border-slate-200 bg-slate-50 py-20">
+    <section id="audits" className="border-y border-border bg-muted/30 py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge
             variant="outline"
-            className="mb-4 border-primary-200 bg-white text-primary-700"
+            className="mb-4 border-primary/30 bg-card text-primary"
           >
             <FileSearch className="w-3 h-3 mr-1" />
             {tp("audits.badge")}
           </Badge>
-          <h2 className="mb-4 font-sans text-3xl font-bold text-slate-900 lg:text-5xl">
+          <h2 className="mb-4 font-sans text-3xl font-bold text-foreground lg:text-5xl">
             {tp("audits.title")}{" "}
-            <span className="text-primary-700">{tp("audits.titleHighlight")}</span>
+            <span className="text-primary">{tp("audits.titleHighlight")}</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             {tp("audits.subtitle")}
           </p>
         </div>
@@ -650,13 +650,13 @@ function AuditServicesSection() {
           {audits.map((audit) => (
             <Card
               key={audit.productId}
-              className="flex h-full flex-col border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500"
+              className="flex h-full flex-col border-border bg-card shadow-sm transition-colors hover:border-primary-500"
             >
               <CardHeader className="min-h-36">
-                <CardTitle className="font-sans text-xl font-semibold leading-tight text-slate-900">
+                <CardTitle className="font-sans text-xl font-semibold leading-tight text-foreground">
                   {audit.label}
                 </CardTitle>
-                <p className="text-slate-600 text-sm">
+                <p className="text-muted-foreground text-sm">
                   {audit.description}
                 </p>
               </CardHeader>
@@ -665,7 +665,7 @@ function AuditServicesSection() {
                   {audit.features.map((feature, i) => (
                     <div key={i} className="flex items-start space-x-2">
                       <Check className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-slate-700">{feature}</span>
+                      <span className="text-sm text-muted-foreground">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -673,14 +673,14 @@ function AuditServicesSection() {
                 <div className="mt-8 space-y-4">
                   <div>
                     <div className="flex items-baseline gap-1">
-                      <span className="font-sans text-3xl font-bold text-slate-900">
+                      <span className="font-sans text-3xl font-bold text-foreground">
                         {formatEuro(audit.price)}
                       </span>
-                      <span className="text-slate-600 text-sm">
+                      <span className="text-muted-foreground text-sm">
                         {tp("audits.oneTime")}
                       </span>
                     </div>
-                    <p className="text-[10px] uppercase tracking-wide text-slate-700 mt-1">
+                    <p className="text-[10px] uppercase tracking-wide text-muted-foreground mt-1">
                       incl. VAT
                     </p>
                   </div>
@@ -755,13 +755,13 @@ function AuditBundlesSection() {
             <ShieldCheck className="w-3 h-3 mr-1" />
             {tp("auditBundles.badge")}
           </Badge>
-          <h2 className="mb-4 font-sans text-3xl font-bold text-slate-900 lg:text-5xl">
+          <h2 className="mb-4 font-sans text-3xl font-bold text-foreground lg:text-5xl">
             {tp("auditBundles.title")}{" "}
-            <span className="text-primary-700">
+            <span className="text-primary">
               {tp("auditBundles.titleHighlight")}
             </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             {tp("auditBundles.subtitle")}
           </p>
         </div>
@@ -770,22 +770,22 @@ function AuditBundlesSection() {
           {bundles.map((bundle) => (
             <Card
               key={bundle.productId}
-              className="flex flex-col border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500"
+              className="flex flex-col border-border bg-card shadow-sm transition-colors hover:border-primary-500"
             >
               <CardHeader>
-                <CardTitle className="font-sans text-lg font-semibold text-slate-900">
+                <CardTitle className="font-sans text-lg font-semibold text-foreground">
                   {bundle.label}
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col">
                 <div className="mb-4">
-                  <span className="font-sans text-2xl font-bold text-slate-900">
+                  <span className="font-sans text-2xl font-bold text-foreground">
                     {formatEuro(bundle.price)}
                   </span>
-                  <span className="text-slate-600 text-sm">
+                  <span className="text-muted-foreground text-sm">
                     {tp("addons.perMonth")}
                   </span>
-                  <p className="text-[10px] uppercase tracking-wide text-slate-700 mt-0.5">
+                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground mt-0.5">
                     incl. VAT
                   </p>
                 </div>
@@ -793,7 +793,7 @@ function AuditBundlesSection() {
                   {bundle.features.map((feature, i) => (
                     <div key={i} className="flex items-start space-x-2">
                       <Check className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-slate-700">{feature}</span>
+                      <span className="text-sm text-muted-foreground">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -867,7 +867,7 @@ function AddOnsSection() {
   ];
 
   return (
-    <section id="packs" className="bg-slate-50 py-20">
+    <section id="packs" className="bg-muted/30 py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge
@@ -876,22 +876,22 @@ function AddOnsSection() {
           >
             {tp("addons.badge")}
           </Badge>
-          <h2 className="mb-4 font-sans text-3xl font-bold text-slate-900 lg:text-5xl">
+          <h2 className="mb-4 font-sans text-3xl font-bold text-foreground lg:text-5xl">
             {tp("addons.title")}{" "}
-            <span className="text-primary-700">
+            <span className="text-primary">
               {tp("addons.titleHighlight")}
             </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             {tp("addons.subtitle")}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Extra Website Packs */}
-          <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500">
+          <Card className="border-border bg-card shadow-sm transition-colors hover:border-primary-500">
             <CardHeader>
-              <CardTitle className="font-sans text-xl font-semibold text-slate-900">
+              <CardTitle className="font-sans text-xl font-semibold text-foreground">
                 {tp("addons.websites.title")}
               </CardTitle>
               <p className="text-muted-foreground text-sm">
@@ -933,9 +933,9 @@ function AddOnsSection() {
           </Card>
 
           {/* Page Volume Packs */}
-          <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-primary-500">
+          <Card className="border-border bg-card shadow-sm transition-colors hover:border-primary-500">
             <CardHeader>
-              <CardTitle className="font-sans text-xl font-semibold text-slate-900">
+              <CardTitle className="font-sans text-xl font-semibold text-foreground">
                 {tp("addons.pages.title")}
               </CardTitle>
               <p className="text-muted-foreground text-sm">
@@ -984,8 +984,8 @@ function AddOnsSection() {
                 })}
               </div>
               <div className="mt-4 space-y-3">
-                <div className="rounded-lg border border-primary-200 bg-primary-50 p-3">
-                  <p className="text-xs text-primary-700">
+                <div className="rounded-lg border border-primary/30 bg-accent p-3">
+                  <p className="text-xs text-primary">
                     <strong>Agency</strong>{" "}
                     {tp("addons.pages.businessNote")} &middot;{" "}
                     <strong>Enterprise</strong>{" "}
@@ -1003,7 +1003,7 @@ function AddOnsSection() {
           <Card className="bg-card">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="font-sans text-xl font-semibold text-slate-900">
+                <CardTitle className="font-sans text-xl font-semibold text-foreground">
                   {tp("addons.assurance.title")}
                 </CardTitle>
                 <Badge className="bg-primary-600 text-white text-xs">
@@ -1048,7 +1048,7 @@ function AddOnsSection() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between rounded-lg border border-primary-200 bg-primary-50 p-2">
+                <div className="flex items-center justify-between rounded-lg border border-primary/30 bg-accent p-2">
                   <span className="text-sm">
                     {tp("addons.assurance.businessEnterprise")}
                   </span>
@@ -1152,7 +1152,7 @@ function ComplianceDisclaimerSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-primary-700 flex-shrink-0 mt-1" />
+            <AlertTriangle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-semibold text-lg mb-2">{t("title")}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -1161,14 +1161,14 @@ function ComplianceDisclaimerSection() {
               <div className="mt-4 flex flex-wrap gap-2">
                 <Link
                   href="/legal/terms"
-                  className="text-sm text-primary-700 hover:underline"
+                  className="text-sm text-primary hover:underline"
                 >
                   {t("links.terms")}
                 </Link>
                 <span className="text-muted-foreground">&bull;</span>
                 <Link
                   href="/legal/privacy"
-                  className="text-sm text-primary-700 hover:underline"
+                  className="text-sm text-primary hover:underline"
                 >
                   {t("links.privacy")}
                 </Link>
@@ -1216,7 +1216,7 @@ function CTASection() {
   const t = useTranslations("pricing.cta");
 
   return (
-    <section className="bg-slate-900 py-20 text-white">
+    <section className="bg-primary-700 py-20 text-white">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="font-sans text-3xl font-bold lg:text-4xl">
@@ -1240,7 +1240,7 @@ function CTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white bg-transparent text-white hover:bg-white hover:text-slate-900"
+              className="border-white bg-transparent text-white hover:bg-card hover:text-primary"
               asChild
             >
               <Link href="/pricing#overflow">{t("needMore")}</Link>
@@ -1257,12 +1257,12 @@ function PilotOfferBanner() {
   return (
     <section className="py-8">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-semibold text-primary-700">
+        <div className="max-w-3xl mx-auto rounded-2xl border border-border bg-card p-8 text-center shadow-sm space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-accent-foreground">
             <Sparkles className="h-4 w-4" />
             {tPage("pilotBanner.badge")}
           </div>
-          <h2 className="font-sans text-2xl font-bold text-slate-900">
+          <h2 className="font-sans text-2xl font-bold text-foreground">
             {tPage("pilotBanner.title")}
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
