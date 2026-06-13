@@ -966,7 +966,7 @@
         "perMonth": "/mois",
         "exclVat": "HT",
         "inclVat": "TTC",
-        "perPage": "≈ €{price}/page",
+        "perPage": "env. €{price}/page",
         "needHigher": "Besoin de plus de capacité ?",
         "contactEnterprise": "pour un volume entreprise."
       },
@@ -980,7 +980,7 @@
         "quick": {
           "description": "Scan rapide des pages les plus importantes",
           "features": {
-            "pages": "Top 10 pages",
+            "pages": "10 pages principales",
             "wcag": "Vérification WCAG 2.2",
             "report": "Rapport sous 48h"
           }
@@ -1304,32 +1304,32 @@
         "timeout": "L?inscription a pris trop de temps. Veuillez r?essayer dans un instant."
       },
       "success": {
-        "title": "Account created successfully!",
-        "accountCreated": "Please check your email to verify your account.",
-        "checkInbox": "We sent a confirmation link to:",
-        "spamHint": "Don't see it? Check your spam folder, or resend the email below.",
-        "resendEmail": "Resend confirmation email",
-        "resendCooldown": "Resend available in {countdown}",
-        "resendSent": "Confirmation email sent. Please check your inbox.",
-        "resendError": "We couldn't resend the email right now. Please try again in a moment.",
-        "backToLogin": "Back to sign in"
+        "title": "Compte cree avec succes !",
+        "accountCreated": "Veuillez consulter vos e-mails pour verifier votre compte.",
+        "checkInbox": "Nous avons envoye un lien de confirmation a :",
+        "spamHint": "Vous ne le voyez pas ? Verifiez vos spams ou renvoyez l'e-mail ci-dessous.",
+        "resendEmail": "Renvoyer l'e-mail de confirmation",
+        "resendCooldown": "Nouvel envoi disponible dans {countdown}",
+        "resendSent": "E-mail de confirmation envoye. Veuillez verifier votre boite de reception.",
+        "resendError": "Nous ne pouvons pas renvoyer l'e-mail pour le moment. Veuillez reessayer dans un instant.",
+        "backToLogin": "Retour a la connexion"
       },
       "steps": {
         "account": {
-          "title": "Account",
-          "description": "Create your login credentials"
+          "title": "Compte",
+          "description": "Creez vos identifiants de connexion"
         },
         "personal": {
-          "title": "Personal",
-          "description": "Tell us a bit about yourself"
+          "title": "Personnel",
+          "description": "Parlez-nous un peu de vous"
         },
         "contact": {
           "title": "Contact",
-          "description": "How we can reach you"
+          "description": "Comment nous pouvons vous joindre"
         },
         "preferences": {
           "title": "Preferences",
-          "description": "Customize your experience"
+          "description": "Personnalisez votre experience"
         }
       },
       "validation": {
@@ -2553,7 +2553,7 @@
       },
       "section5": {
         "title": "5. Disponibilité & Support",
-        "slaTitle": "SLA & Maintenance",
+        "slaTitle": "SLA et maintenance",
         "sla": [
           "Nous visons une haute disponibilité, mais 100% de disponibilité n'est pas garanti",
           "Nous annonçons la maintenance planifiée lorsque possible à l'avance",
@@ -2765,14 +2765,14 @@
       }
     },
     "sla": {
-      "title": "SLA & Support",
+      "title": "SLA et support",
       "description": "Notre accord de niveau de service et informations de support pour tous les utilisateurs VexNexa.",
       "lastUpdated": "8 décembre 2024",
       "version": "v1.0",
       "keyPoints": {
         "title": "Points Clés",
         "description": "Nos engagements envers vous",
-        "uptime": "Uptime",
+        "uptime": "Disponibilite",
         "uptimeDesc": "Garantie de disponibilité de 99,9% sur tous les plans payants",
         "support": "Support",
         "supportDesc": "Réponse sous 4 heures pour les utilisateurs du plan Business",
@@ -3012,7 +3012,7 @@
       "title": "Packs de Scans",
       "description": "Augmentez votre limite mensuelle de scans avec des packs supplémentaires",
       "usage": "Utilisation ({period})",
-      "basePlan": "Base (plan):",
+      "basePlan": "Base (offre) :",
       "extraPackages": "Packs supplémentaires:",
       "warning80": "Vous avez déjà utilisé {percent}% de vos scans. Envisagez un pack supplémentaire.",
       "warning95": "Vous êtes presque à votre limite de scans ({percent}%)! Achetez des scans supplémentaires pour continuer.",
@@ -3041,212 +3041,212 @@
   "assurance": {
     "product": {
       "name": "Accessibility Assurance",
-      "tagline": "Automated monitoring & assurance for accessibility compliance",
-      "description": "Low-cost subscription service for schools, governments, and public institutions. Monitor accessibility scores over time with automated scans and reports."
+      "tagline": "Surveillance automatisée & assurance pour la conformité en accessibilité",
+      "description": "Service par abonnement à faible coût pour les écoles, les administrations et les institutions publiques. Surveillez les scores d'accessibilité dans le temps grâce à des scans et rapports automatisés."
     },
     "report": {
-      "title": "Accessibility Monitoring Report",
-      "subtitle": "Automated Accessibility Assessment",
-      "domain": "Domain",
-      "label": "Site Name",
-      "currentScore": "Current Score",
-      "threshold": "Threshold",
-      "trend": "Score Trend (Last 8 Scans)",
-      "trendShort": "Trend",
-      "wcagCompliance": "WCAG Compliance",
+      "title": "Rapport de surveillance de l'accessibilité",
+      "subtitle": "Évaluation automatisée de l'accessibilité",
+      "domain": "Domaine",
+      "label": "Nom du site",
+      "currentScore": "Score actuel",
+      "threshold": "Seuil",
+      "trend": "Tendance du score (8 derniers scans)",
+      "trendShort": "Tendance",
+      "wcagCompliance": "Conformité WCAG",
       "wcagAA": "WCAG 2.1 AA",
       "wcagAAA": "WCAG 2.1 AAA",
-      "generatedAt": "Generated",
-      "monitoredBy": "Monitored by VexNexa Accessibility Assurance",
+      "generatedAt": "Généré",
+      "monitoredBy": "Surveillé par VexNexa Accessibility Assurance",
       "scoreStatus": {
         "excellent": "Excellent",
-        "good": "Good",
-        "fair": "Fair",
-        "poor": "Poor",
-        "critical": "Critical"
+        "good": "Bon",
+        "fair": "Passable",
+        "poor": "Faible",
+        "critical": "Critique"
       },
       "thresholdStatus": {
-        "aboveThreshold": "Above Threshold",
-        "belowThreshold": "Below Threshold",
-        "meetingTarget": "Meeting Target"
+        "aboveThreshold": "Au-dessus du seuil",
+        "belowThreshold": "Sous le seuil",
+        "meetingTarget": "Objectif atteint"
       },
       "disclaimer": {
-        "title": "Important Notice",
-        "text": "This report reflects automated accessibility checks and does not constitute a formal WCAG compliance audit. Results are for monitoring purposes only and should not be considered as legal compliance certification. For comprehensive accessibility evaluation, please consult with qualified accessibility experts.",
-        "limitation": "Automated testing has inherent limitations and cannot detect all accessibility issues. Manual testing and user feedback are essential for complete accessibility assurance."
+        "title": "Avis important",
+        "text": "Ce rapport reflète des contrôles d'accessibilité automatisés et ne constitue pas un audit formel de conformité WCAG. Les résultats sont uniquement à des fins de surveillance et ne doivent pas être considérés comme une certification légale de conformité. Pour une évaluation complète de l'accessibilité, veuillez consulter des experts qualifiés en accessibilité.",
+        "limitation": "Les tests automatisés ont des limites inhérentes et ne peuvent pas détecter tous les problèmes d'accessibilité. Les tests manuels et les retours des utilisateurs sont essentiels pour une assurance d'accessibilité complète."
       },
       "summary": {
-        "title": "Summary",
-        "scanDate": "Scan Date",
-        "issuesFound": "Issues Found",
-        "critical": "Critical",
-        "serious": "Serious",
-        "moderate": "Moderate",
-        "minor": "Minor"
+        "title": "Résumé",
+        "scanDate": "Date du scan",
+        "issuesFound": "Problèmes trouvés",
+        "critical": "Critique",
+        "serious": "Grave",
+        "moderate": "Modéré",
+        "minor": "Mineur"
       }
     },
     "email": {
-      "reportSubject": "Accessibility Report: {domain}",
-      "alertSubject": "Accessibility Alert: {domain}",
-      "welcomeSubject": "Welcome to Accessibility Assurance",
+      "reportSubject": "Rapport d'accessibilité : {domain}",
+      "alertSubject": "Alerte d'accessibilité : {domain}",
+      "welcomeSubject": "Bienvenue dans Accessibility Assurance",
       "report": {
-        "greeting": "Your scheduled accessibility report is ready",
-        "body": "We've completed an automated accessibility scan for {domain}. The current score is {score} out of 100.",
-        "viewReport": "View Full Report",
-        "dashboard": "Go to Dashboard"
+        "greeting": "Votre rapport d'accessibilité planifié est prêt",
+        "body": "Nous avons terminé un scan d'accessibilité automatisé pour {domain}. Le score actuel est de {score} sur 100.",
+        "viewReport": "Voir le rapport complet",
+        "dashboard": "Aller au tableau de bord"
       },
       "alert": {
         "regression": {
-          "title": "Score Dropped Below Threshold",
-          "body": "The accessibility score for {domain} has dropped to {score}, which is below your threshold of {threshold}."
+          "title": "Score tombé sous le seuil",
+          "body": "Le score d'accessibilité de {domain} est tombé à {score}, sous votre seuil de {threshold}."
         },
         "scoreChange": {
-          "title": "Significant Score Decrease",
-          "body": "The accessibility score for {domain} decreased from {previousScore} to {currentScore} (−{change} points)."
+          "title": "Baisse de score significative",
+          "body": "Le score d'accessibilité de {domain} est passé de {previousScore} à {currentScore} (−{change} points)."
         },
         "criticalIssues": {
-          "title": "Critical Issues Detected",
-          "body": "New critical accessibility issues have been detected on {domain}."
+          "title": "Problèmes critiques détectés",
+          "body": "De nouveaux problèmes d'accessibilité critiques ont été détectés sur {domain}."
         }
       },
       "welcome": {
-        "headline": "Welcome to Accessibility Assurance",
-        "body": "Thank you for subscribing to VexNexa Accessibility Assurance. Your {tier} plan is now active with monitoring for up to {domains} {domainPlural}.",
+        "headline": "Bienvenue dans Accessibility Assurance",
+        "body": "Merci de vous être abonné à VexNexa Accessibility Assurance. Votre plan {tier} est désormais actif avec une surveillance pouvant aller jusqu'à {domains} {domainPlural}.",
         "features": {
-          "title": "What's included:",
-          "automated": "Automated weekly or bi-weekly scans",
-          "reports": "Professional PDF reports in your language",
-          "alerts": "Instant alerts for score regressions",
-          "multilingual": "Support for 5 languages (EN, NL, FR, ES, PT)"
+          "title": "Ce qui est inclus :",
+          "automated": "Scans automatisés hebdomadaires ou bimensuels",
+          "reports": "Rapports PDF professionnels dans votre langue",
+          "alerts": "Alertes instantanées en cas de régression du score",
+          "multilingual": "Prise en charge de 5 langues (EN, NL, FR, ES, PT)"
         },
         "nextSteps": {
-          "title": "Next steps:",
-          "addDomain": "Add your first domain to monitor",
-          "configure": "Configure scan frequency and thresholds",
-          "setRecipients": "Add email recipients for reports"
+          "title": "Prochaines étapes :",
+          "addDomain": "Ajoutez votre premier domaine à surveiller",
+          "configure": "Configurez la fréquence de scan et les seuils",
+          "setRecipients": "Ajoutez des destinataires e-mail pour les rapports"
         }
       }
     },
     "dashboard": {
-      "overview": "Overview",
-      "domains": "Monitored Domains",
-      "reports": "Reports",
-      "alerts": "Alerts",
-      "settings": "Settings",
-      "subscription": "Subscription",
-      "addDomain": "Add Domain",
-      "noDomains": "No monitored domains yet",
-      "noDomainsDescription": "Add your first domain to start monitoring accessibility scores.",
-      "domainLimit": "Domain limit reached",
-      "domainLimitDescription": "Upgrade your plan to monitor more domains."
+      "overview": "Vue d'ensemble",
+      "domains": "Domaines surveillés",
+      "reports": "Rapports",
+      "alerts": "Alertes",
+      "settings": "Paramètres",
+      "subscription": "Abonnement",
+      "addDomain": "Ajouter un domaine",
+      "noDomains": "Aucun domaine surveillé pour l'instant",
+      "noDomainsDescription": "Ajoutez votre premier domaine pour commencer à surveiller les scores d'accessibilité.",
+      "domainLimit": "Limite de domaines atteinte",
+      "domainLimitDescription": "Passez à un plan supérieur pour surveiller plus de domaines."
     },
     "domain": {
-      "domain": "Domain",
-      "label": "Site Name",
-      "optional": "optional",
-      "scanFrequency": "Scan Frequency",
-      "weekly": "Weekly",
-      "biweekly": "Bi-weekly (Every 2 Weeks)",
-      "scoreThreshold": "Score Threshold",
-      "thresholdDescription": "Alert when score drops below this value",
-      "language": "Report Language",
-      "emailRecipients": "Email Recipients",
-      "emailRecipientsDescription": "Up to 5 email addresses (one per line)",
-      "addRecipient": "Add Recipient",
-      "dayOfWeek": "Scan Day",
-      "timeOfDay": "Scan Time",
-      "monday": "Monday",
-      "tuesday": "Tuesday",
-      "wednesday": "Wednesday",
-      "thursday": "Thursday",
-      "friday": "Friday",
-      "saturday": "Saturday",
-      "sunday": "Sunday",
-      "active": "Active",
-      "inactive": "Inactive",
-      "lastScan": "Last Scan",
-      "nextScan": "Next Scan",
-      "currentScore": "Current Score",
-      "status": "Status",
+      "domain": "Domaine",
+      "label": "Nom du site",
+      "optional": "facultatif",
+      "scanFrequency": "Fréquence de scan",
+      "weekly": "Hebdomadaire",
+      "biweekly": "Bimensuel (toutes les 2 semaines)",
+      "scoreThreshold": "Seuil de score",
+      "thresholdDescription": "Alerter lorsque le score passe sous cette valeur",
+      "language": "Langue du rapport",
+      "emailRecipients": "Destinataires e-mail",
+      "emailRecipientsDescription": "Jusqu'à 5 adresses e-mail (une par ligne)",
+      "addRecipient": "Ajouter un destinataire",
+      "dayOfWeek": "Jour du scan",
+      "timeOfDay": "Heure du scan",
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "lastScan": "Dernier scan",
+      "nextScan": "Prochain scan",
+      "currentScore": "Score actuel",
+      "status": "Statut",
       "actions": "Actions",
-      "edit": "Edit",
-      "delete": "Delete",
-      "scan": "Scan Now",
-      "viewDetails": "View Details",
-      "statistics": "Statistics",
-      "averageScore": "Average Score",
-      "minScore": "Minimum Score",
-      "maxScore": "Maximum Score",
-      "totalScans": "Total Scans",
-      "regressions": "Regressions",
-      "trend": "Trend",
-      "improving": "Improving",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "scan": "Scanner maintenant",
+      "viewDetails": "Voir les détails",
+      "statistics": "Statistiques",
+      "averageScore": "Score moyen",
+      "minScore": "Score minimal",
+      "maxScore": "Score maximal",
+      "totalScans": "Total des scans",
+      "regressions": "Régressions",
+      "trend": "Tendance",
+      "improving": "En amélioration",
       "stable": "Stable",
-      "declining": "Declining"
+      "declining": "En baisse"
     },
     "alerts": {
-      "title": "Alerts",
-      "unresolved": "Unresolved",
-      "resolved": "Resolved",
-      "noAlerts": "No alerts",
+      "title": "Alertes",
+      "unresolved": "Non résolu",
+      "resolved": "Résolu",
+      "noAlerts": "Aucune alerte",
       "severity": {
-        "critical": "Critical",
-        "high": "High",
-        "medium": "Medium",
-        "low": "Low"
+        "critical": "Critique",
+        "high": "Élevé",
+        "medium": "Moyen",
+        "low": "Faible"
       },
       "type": {
-        "regression": "Regression",
-        "scoreChange": "Score Change",
-        "criticalIssues": "Critical Issues",
-        "scanFailed": "Scan Failed"
+        "regression": "Régression",
+        "scoreChange": "Changement de score",
+        "criticalIssues": "Problèmes critiques",
+        "scanFailed": "Échec du scan"
       },
-      "markResolved": "Mark as Resolved",
-      "viewScan": "View Scan"
+      "markResolved": "Marquer comme résolu",
+      "viewScan": "Voir le scan"
     },
     "subscription": {
       "tier": {
-        "basic": "Basic",
+        "basic": "Basique",
         "pro": "Pro",
-        "publicSector": "Public Sector"
+        "publicSector": "Secteur public"
       },
-      "status": "Status",
-      "domains": "Domains",
-      "maxDomains": "Max Domains",
-      "scanFrequency": "Scan Frequency",
-      "changeTier": "Change Plan",
-      "cancel": "Cancel Subscription",
-      "upgrade": "Upgrade",
-      "manageSubscription": "Manage Subscription"
+      "status": "Statut",
+      "domains": "Domaines",
+      "maxDomains": "Domaines max.",
+      "scanFrequency": "Fréquence de scan",
+      "changeTier": "Changer de plan",
+      "cancel": "Annuler l'abonnement",
+      "upgrade": "Mettre à niveau",
+      "manageSubscription": "Gérer l'abonnement"
     },
     "actions": {
-      "save": "Save",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "confirm": "Confirm",
-      "add": "Add",
-      "edit": "Edit",
-      "close": "Close",
-      "download": "Download",
-      "view": "View",
-      "back": "Back"
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "delete": "Supprimer",
+      "confirm": "Confirmer",
+      "add": "Ajouter",
+      "edit": "Modifier",
+      "close": "Fermer",
+      "download": "Télécharger",
+      "view": "Voir",
+      "back": "Retour"
     },
     "validation": {
-      "domainRequired": "Domain is required",
-      "invalidDomain": "Invalid domain format",
-      "invalidEmail": "Invalid email address",
-      "maxRecipients": "Maximum 5 recipients allowed",
-      "thresholdRange": "Threshold must be between 60 and 100",
-      "thresholdFixed": "Threshold is fixed at 90 for your plan"
+      "domainRequired": "Le domaine est requis",
+      "invalidDomain": "Format de domaine invalide",
+      "invalidEmail": "Adresse e-mail invalide",
+      "maxRecipients": "5 destinataires maximum autorisés",
+      "thresholdRange": "Le seuil doit être compris entre 60 et 100",
+      "thresholdFixed": "Le seuil est fixé à 90 pour votre plan"
     },
     "messages": {
-      "domainAdded": "Domain added successfully",
-      "domainUpdated": "Domain settings updated",
-      "domainDeleted": "Domain removed",
-      "scanTriggered": "Scan started",
-      "settingsSaved": "Settings saved",
-      "subscriptionCanceled": "Subscription canceled",
-      "alertResolved": "Alert marked as resolved"
+      "domainAdded": "Domaine ajouté avec succès",
+      "domainUpdated": "Paramètres du domaine mis à jour",
+      "domainDeleted": "Domaine supprimé",
+      "scanTriggered": "Scan lancé",
+      "settingsSaved": "Paramètres enregistrés",
+      "subscriptionCanceled": "Abonnement annulé",
+      "alertResolved": "Alerte marquée comme résolue"
     },
     "description": "Restez conforme grâce à la surveillance automatisée et aux alertes",
     "subtitle": "Surveillance continue et conformité",
@@ -3419,31 +3419,31 @@
     "exportTitle": "Exporter en PDF ou DOCX — avec votre branding",
     "exportSubtitle": "Les plans Business et Enterprise incluent les exports en marque blanche. Remplacez la marque VexNexa par votre propre logo, nom d'entreprise, couleurs et texte de pied de page. Les rapports s'exportent en PDF partageable ou DOCX modifiable.",
     "exportLearnMore": "En savoir plus sur les rapports en marque blanche",
-    "reportLabel": "Accessibility Report",
-    "scannedInfo": "Scanned: March 24, 2025 · WCAG 2.2 AA · axe-core engine",
+    "reportLabel": "Rapport d'accessibilite",
+    "scannedInfo": "Analyse : 24 mars 2025 - WCAG 2.2 AA - moteur axe-core",
     "severity": {
-      "critical": "Critical",
-      "serious": "Serious",
-      "moderate": "Moderate",
-      "minor": "Minor"
+      "critical": "Critique",
+      "serious": "Serieux",
+      "moderate": "Modere",
+      "minor": "Mineur"
     },
-    "checkHeading": "Heading hierarchy correct",
-    "checkAria": "ARIA landmarks present",
-    "checkKeyboard": "Keyboard navigation incomplete",
-    "topPriority": "Top Priority Issues",
-    "fullReportTitle": "Full reports also include",
+    "checkHeading": "Hierarchie des titres correcte",
+    "checkAria": "Repères ARIA présents",
+    "checkKeyboard": "Navigation au clavier incomplete",
+    "topPriority": "Problemes prioritaires",
+    "fullReportTitle": "Les rapports complets incluent aussi",
     "fullReportItems": {
-      "matrix": "WCAG compliance matrix (pass/fail per criterion)",
-      "charts": "Severity breakdown charts",
-      "complete": "Complete issue list with all affected elements",
-      "guidance": "Remediation guidance with code examples",
-      "config": "Scan configuration and methodology",
-      "eaa": "EAA 2025 readiness indicator"
+      "matrix": "Matrice de conformite WCAG (reussi/echoue par critere)",
+      "charts": "Graphiques de repartition par severite",
+      "complete": "Liste complete des problemes avec tous les elements concernes",
+      "guidance": "Conseils de correction avec exemples de code",
+      "config": "Configuration de l'analyse et methodologie",
+      "eaa": "Indicateur de preparation EAA 2025"
     },
-    "ctaTitle": "See your own site's report",
-    "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
-    "ctaButton": "Start your free scan",
-    "ctaPricing": "View pricing"
+    "ctaTitle": "Voir le rapport de votre propre site",
+    "ctaSubtitle": "Creez un compte gratuit et analysez votre site web. Obtenez votre propre rapport d'accessibilite en quelques minutes.",
+    "ctaButton": "Lancer votre analyse gratuite",
+    "ctaPricing": "Voir les tarifs"
   },
   "agencyCTAStrip": {
     "badge": "Pour les agences",
@@ -3913,34 +3913,34 @@
   "checkout": {
     "return": {
       "processing": {
-        "title": "Processing your payment…",
-        "subtitle": "This usually takes a few seconds. Please don't close this page."
+        "title": "Traitement de votre paiement...",
+        "subtitle": "Cela prend generalement quelques secondes. Ne fermez pas cette page."
       },
       "success": {
-        "title": "Payment successful!",
-        "subtitle": "Redirecting you to your dashboard…"
+        "title": "Paiement reussi !",
+        "subtitle": "Redirection vers votre tableau de bord..."
       },
       "canceled": {
-        "title": "Payment canceled",
-        "subtitle": "No charge was made. You can pick a plan whenever you are ready."
+        "title": "Paiement annule",
+        "subtitle": "Aucun montant n'a ete preleve. Vous pouvez choisir une offre quand vous etes pret."
       },
       "expired": {
-        "title": "Payment link expired",
-        "subtitle": "The checkout session timed out. Please start again."
+        "title": "Lien de paiement expire",
+        "subtitle": "La session de paiement a expire. Veuillez recommencer."
       },
       "failed": {
-        "title": "Payment could not be completed",
-        "subtitle": "Please try again or use a different payment method."
+        "title": "Le paiement n'a pas pu etre finalise",
+        "subtitle": "Veuillez reessayer ou utiliser un autre moyen de paiement."
       },
       "error": {
-        "title": "We couldn't verify your payment",
-        "subtitle": "If you were charged, contact support and include this payment id."
+        "title": "Nous n'avons pas pu verifier votre paiement",
+        "subtitle": "Si un montant vous a ete facture, contactez le support en indiquant cet identifiant de paiement."
       },
       "action": {
-        "dashboard": "Go to dashboard",
-        "pricing": "Back to pricing",
-        "tryAgain": "Try again",
-        "contactSupport": "Contact support"
+        "dashboard": "Aller au tableau de bord",
+        "pricing": "Retour aux tarifs",
+        "tryAgain": "Reessayer",
+        "contactSupport": "Contacter le support"
       }
     }
   },

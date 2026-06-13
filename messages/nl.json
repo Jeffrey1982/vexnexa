@@ -722,7 +722,7 @@
           "sites": "{count} website",
           "pages": "pagina's/maand",
           "users": "{count} gebruiker",
-          "pdfExport": "PDF export",
+          "pdfExport": "PDF-export",
           "basicReports": "Basis rapporten",
           "emailSupport": "E-mail support",
           "site": "website",
@@ -750,7 +750,7 @@
           "sites": "{count} websites",
           "pages": "{count} pagina's/maand",
           "users": "{count} gebruikers",
-          "exports": "PDF + Word export",
+          "exports": "PDF- en Word-export",
           "advancedReports": "Geavanceerde rapporten",
           "scheduling": "Planning",
           "integrations": "Slack & Jira integratie",
@@ -821,7 +821,7 @@
       },
       "resources": {
         "extraPages": "Extra Pagina's",
-        "extraSites": "Extra Websites",
+        "extraSites": "Extra websites",
         "extraUsers": "Extra Gebruikers"
       },
       "alert": {
@@ -830,7 +830,7 @@
       }
     },
     "compliance": {
-      "title": "Compliance Disclaimer",
+      "title": "Compliance-disclaimer",
       "warning": "Geen tool kan 100% juridische naleving garanderen in alle contexten.",
       "description": "VexNexa detecteert en rapporteert problemen, helpt bij herstel en ondersteunt je bij het naleven van WCAG en gerelateerde standaarden. Voor juridische risicobeoordeling is het aan te raden een expertaudit en doorlopend governanceproces in te stellen. Onze scanner is een tool om je nalevingsinspanningen te ondersteunen, geen juridische garantie.",
       "links": {
@@ -844,7 +844,7 @@
       "columns": {
         "feature": "Functie",
         "vexnexa": "VexNexa",
-        "overlay": "Overlay Widgets",
+        "overlay": "Overlaywidgets",
         "generic": "Generieke Scanners"
       },
       "features": {
@@ -944,7 +944,7 @@
           "sites": "{count} websites",
           "pages": "{count} pagina's/maand",
           "users": "{count} gebruikers",
-          "exports": "PDF + Word export",
+          "exports": "PDF- en Word-export",
           "whiteLabel": "White-label rapporten",
           "history": "{count} maanden geschiedenis",
           "integrations": "Slack & Jira integraties",
@@ -1015,9 +1015,9 @@
             "graph": "Historische compliance grafiek"
           },
           "included": "Inbegrepen",
-          "businessEnterprise": "Business & Enterprise"
+          "businessEnterprise": "Business en Enterprise"
         },
-        "perMonth": "/mo",
+        "perMonth": "/mnd",
         "exclVat": "excl. BTW",
         "inclVat": "incl. BTW",
         "perPage": "≈ €{price}/pagina",
@@ -1027,7 +1027,7 @@
       "audits": {
         "badge": "EAA Audit Diensten",
         "title": "Handmatige",
-        "titleHighlight": "Accessibility Audits",
+        "titleHighlight": "toegankelijkheidsaudits",
         "subtitle": "Laat je website professioneel auditen door onze experts",
         "oneTime": "eenmalig",
         "cta": "Audit aanvragen",
@@ -1035,7 +1035,7 @@
           "description": "Snelle scan van de belangrijkste pagina's",
           "features": {
             "pages": "Top 10 pagina's",
-            "wcag": "WCAG 2.2 check",
+            "wcag": "WCAG 2.2-controle",
             "report": "Rapport binnen 48u"
           }
         },
@@ -1044,7 +1044,7 @@
           "features": {
             "pages": "Alle pagina's",
             "wcag": "WCAG 2.2 + EAA",
-            "code": "Code review",
+            "code": "Codereview",
             "report": "Rapport + roadmap"
           }
         },
@@ -1053,7 +1053,7 @@
           "features": {
             "pages": "Volledige site",
             "wcag": "WCAG 2.2 + EAA + VPAT",
-            "legal": "Legal review",
+            "legal": "Juridische review",
             "implementation": "Implementatiebegeleiding"
           }
         }
@@ -1081,16 +1081,16 @@
         "business": {
           "features": {
             "audits": "2 volledige audits/kwartaal",
-            "code": "Code review",
+            "code": "Codereview",
             "implementation": "Implementatiebegeleiding",
-            "contact": "Dedicated contact"
+            "contact": "Toegewijd contact"
           }
         },
         "enterprise": {
           "features": {
             "audits": "Onbeperkt audits",
-            "vpat": "VPAT + compliance docs",
-            "legal": "Legal support",
+            "vpat": "VPAT + compliancedocumenten",
+            "legal": "Juridische ondersteuning",
             "manager": "Accountmanager"
           }
         }
@@ -1109,7 +1109,7 @@
         "pioneer": "Kies Pioneer",
         "enterprise": "Neem contact op"
       },
-      "pioneerDeal": "Pioneer Deal",
+      "pioneerDeal": "Pioneer-deal",
       "saveBadge": "Bespaar {percent}%",
       "allPricesInclVat": "Alle prijzen zijn incl. btw",
       "inclVatShort": "incl. btw",
@@ -1347,32 +1347,32 @@
         "timeout": "Registreren duurde te lang. Probeer het zo opnieuw."
       },
       "success": {
-        "title": "Account created successfully!",
-        "accountCreated": "Please check your email to verify your account.",
-        "checkInbox": "We sent a confirmation link to:",
-        "spamHint": "Don't see it? Check your spam folder, or resend the email below.",
-        "resendEmail": "Resend confirmation email",
-        "resendCooldown": "Resend available in {countdown}",
-        "resendSent": "Confirmation email sent. Please check your inbox.",
-        "resendError": "We couldn't resend the email right now. Please try again in a moment.",
-        "backToLogin": "Back to sign in"
+        "title": "Account succesvol aangemaakt!",
+        "accountCreated": "Controleer je e-mail om je account te verifieren.",
+        "checkInbox": "We hebben een bevestigingslink gestuurd naar:",
+        "spamHint": "Zie je hem niet? Controleer je spammap of verstuur de e-mail hieronder opnieuw.",
+        "resendEmail": "Bevestigingsmail opnieuw verzenden",
+        "resendCooldown": "Opnieuw verzenden beschikbaar over {countdown}",
+        "resendSent": "Bevestigingsmail verzonden. Controleer je inbox.",
+        "resendError": "We kunnen de e-mail nu niet opnieuw verzenden. Probeer het zo opnieuw.",
+        "backToLogin": "Terug naar inloggen"
       },
       "steps": {
         "account": {
           "title": "Account",
-          "description": "Create your login credentials"
+          "description": "Maak je inloggegevens aan"
         },
         "personal": {
-          "title": "Personal",
-          "description": "Tell us a bit about yourself"
+          "title": "Persoonlijk",
+          "description": "Vertel ons iets over jezelf"
         },
         "contact": {
           "title": "Contact",
-          "description": "How we can reach you"
+          "description": "Hoe we je kunnen bereiken"
         },
         "preferences": {
-          "title": "Preferences",
-          "description": "Customize your experience"
+          "title": "Voorkeuren",
+          "description": "Pas je ervaring aan"
         }
       },
       "validation": {
@@ -1479,7 +1479,7 @@
       "teams": "Teams",
       "reports": "Rapporten",
       "tools": "Hulpmiddelen",
-      "whiteLabel": "White Label"
+      "whiteLabel": "White label"
     },
     "stats": {
       "title": "Snel Overzicht",
@@ -1570,7 +1570,7 @@
       "livePreviewDescription": "Zie uw aanpassingen",
       "livePreviewDetails": "Uw site toont al uw branding!",
       "customReports": "Aangepaste Rapporten",
-      "customReportsDescription": "Branded PDF exports",
+      "customReportsDescription": "PDF-exports met branding",
       "customReportsDetails": "Beschikbaar - Genereer rapporten met uw branding",
       "featuresTitle": "Uw White Label Functies",
       "features": {
@@ -1616,7 +1616,7 @@
       "kpi": {
         "avgScoreSub": "over je recente scans",
         "criticalSub": "vragen directe aandacht",
-        "openIssues": "Open issues",
+        "openIssues": "Open problemen",
         "openIssuesSub": "uit je laatste scan per website",
         "sites": "Websites",
         "sitesSub": "{used} van {limit} in je plan"
@@ -2252,7 +2252,7 @@
       "lastUpdated": "Laatst bijgewerkt",
       "onThisPage": "Op deze pagina",
       "quickNavigation": "Snel naar een sectie",
-      "needHelp": "Need help?",
+      "needHelp": "Hulp nodig?",
       "responseTime": "We reageren meestal binnen 1 werkdag",
       "contactUs": "Neem contact op"
     },
@@ -2712,7 +2712,7 @@
         "encryptionDesc": "Industriestandaard versleuteling voor data at rest en in transit",
         "storage": "Veilige Opslag",
         "storageDesc": "Versleutelde databases met beperkte toegangscontroles",
-        "incident": "Incident Response",
+        "incident": "Incidentrespons",
         "incidentDesc": "Notificatie binnen 72 uur bij security incidents"
       },
       "sections": {
@@ -2727,7 +2727,7 @@
         "title": "Gegevensverwerking",
         "content": "VexNexa scant publiek toegankelijke webpagina's. We slaan scanresultaten en metadata tijdelijk op om onze dienst te leveren. We verzamelen of slaan geen persoonsgegevens op van de websites die we scannen.",
         "privacyByDesign": {
-          "title": "Privacy by Design",
+          "title": "Privacy by design",
           "content": "We scannen alleen publiek toegankelijke content en proberen geen beveiligde gebieden te openen of persoonsinformatie te extraheren."
         }
       },
@@ -2819,14 +2819,14 @@
         "uptimeDesc": "99.9% uptime garantie op alle betaalde plannen",
         "support": "Support",
         "supportDesc": "Reactie binnen 4 uur voor Business plan gebruikers",
-        "monitoring": "24/7 Monitoring",
+        "monitoring": "24/7-monitoring",
         "monitoringDesc": "Continue monitoring met directe incident response"
       },
       "sections": {
         "agreement": "Service Level Agreement",
-        "support": "Support Levels",
-        "incidents": "Incident Response",
-        "contact": "Contact Support"
+        "support": "Supportniveaus",
+        "incidents": "Incidentrespons",
+        "contact": "Neem contact op met support"
       },
       "agreement": {
         "title": "Service Level Agreement",
@@ -2836,39 +2836,39 @@
         "scanProcessing": "Scan Verwerking: Scans voltooien doorgaans binnen 5-15 minuten voor standaard pagina's"
       },
       "supportLevels": {
-        "title": "Support Levels",
+        "title": "Supportniveaus",
         "starter": {
-          "title": "Starter Plan",
+          "title": "Starter-abonnement",
           "email": "E-mail support",
           "responseTime": "Reactietijd: Binnen 2 werkdagen",
           "documentation": "Toegang tot documentatie en gidsen"
         },
         "pro": {
-          "title": "Pro Plan",
+          "title": "Pro-abonnement",
           "priorityEmail": "Prioriteit e-mail support",
           "responseTime": "Reactietijd: Binnen 1 werkdag",
           "advancedDocumentation": "Toegang tot geavanceerde documentatie",
           "checkInCalls": "Kwartaallijk check-in gesprekken (optioneel)"
         },
         "business": {
-          "title": "Business Plan",
+          "title": "Business-abonnement",
           "prioritySupport": "Prioriteit support via e-mail en chat",
           "responseTime": "Reactietijd: Binnen 4 uur tijdens kantooruren",
-          "accountManager": "Dedicated account manager",
+          "accountManager": "Toegewijde accountmanager",
           "monthlyCalls": "Maandelijkse check-in gesprekken",
           "priorityFeatures": "Prioriteit feature requests"
         },
         "enterprise": {
-          "title": "Enterprise Plan",
+          "title": "Enterprise-abonnement",
           "support247": "24/7 support via telefoon, e-mail en chat",
           "responseTime": "Reactietijd: Binnen 1 uur voor kritieke issues",
-          "accountTeam": "Dedicated account team",
+          "accountTeam": "Toegewijd accountteam",
           "customSla": "Custom SLA beschikbaar",
           "onCallSupport": "On-call support voor noodsituaties"
         }
       },
       "incidentResponse": {
-        "title": "Incident Response",
+        "title": "Incidentrespons",
         "content": "We monitoren onze systemen 24/7 en reageren op incidenten volgens ernst:",
         "critical": "Kritiek: Service plat - Directe reactie",
         "high": "Hoog: Grote functionaliteit beperkt - Reactie binnen 2 uur",
@@ -2876,9 +2876,9 @@
         "low": "Laag: Cosmetische of kleine problemen - Reactie binnen 3 werkdagen"
       },
       "contact": {
-        "title": "Contact Support",
+        "title": "Neem contact op met support",
         "supportContact": {
-          "title": "Support Contact",
+          "title": "Supportcontact",
           "email": "info@vexnexa.com",
           "dashboardForm": "Of via het contactformulier in je dashboard"
         },
@@ -2981,7 +2981,7 @@
       "title": "Start je eerste scan",
       "description": "We analyseren je website op toegankelijkheidsproblemen en bieden uitvoerbare aanbevelingen",
       "url": {
-        "label": "Website URL",
+        "label": "Website-URL",
         "required": "*",
         "placeholder": "https://voorbeeld.nl",
         "help": "Voer de volledige URL in van de pagina die je wilt scannen"
@@ -3038,7 +3038,7 @@
   },
   "addons": {
     "seats": {
-      "title": "Team & Seats",
+      "title": "Team en seats",
       "description": "Beheer team seats voor samenwerking",
       "baseSeats": "Basis seats",
       "extraSeats": "Extra seats",
@@ -3084,212 +3084,212 @@
   "assurance": {
     "product": {
       "name": "Accessibility Assurance",
-      "tagline": "Automated monitoring & assurance for accessibility compliance",
-      "description": "Low-cost subscription service for schools, governments, and public institutions. Monitor accessibility scores over time with automated scans and reports."
+      "tagline": "Geautomatiseerde monitoring & assurance voor toegankelijkheidscompliance",
+      "description": "Voordelige abonnementsdienst voor scholen, overheden en publieke instellingen. Monitor toegankelijkheidsscores in de tijd met geautomatiseerde scans en rapporten."
     },
     "report": {
-      "title": "Accessibility Monitoring Report",
-      "subtitle": "Automated Accessibility Assessment",
-      "domain": "Domain",
-      "label": "Site Name",
-      "currentScore": "Current Score",
-      "threshold": "Threshold",
-      "trend": "Score Trend (Last 8 Scans)",
+      "title": "Toegankelijkheidsmonitoringrapport",
+      "subtitle": "Geautomatiseerde toegankelijkheidsbeoordeling",
+      "domain": "Domein",
+      "label": "Sitenaam",
+      "currentScore": "Huidige score",
+      "threshold": "Drempel",
+      "trend": "Scoretrend (laatste 8 scans)",
       "trendShort": "Trend",
-      "wcagCompliance": "WCAG Compliance",
+      "wcagCompliance": "WCAG-compliance",
       "wcagAA": "WCAG 2.1 AA",
       "wcagAAA": "WCAG 2.1 AAA",
-      "generatedAt": "Generated",
-      "monitoredBy": "Monitored by VexNexa Accessibility Assurance",
+      "generatedAt": "Gegenereerd",
+      "monitoredBy": "Gemonitord door VexNexa Accessibility Assurance",
       "scoreStatus": {
-        "excellent": "Excellent",
-        "good": "Good",
-        "fair": "Fair",
-        "poor": "Poor",
-        "critical": "Critical"
+        "excellent": "Uitstekend",
+        "good": "Goed",
+        "fair": "Redelijk",
+        "poor": "Zwak",
+        "critical": "Kritiek"
       },
       "thresholdStatus": {
-        "aboveThreshold": "Above Threshold",
-        "belowThreshold": "Below Threshold",
-        "meetingTarget": "Meeting Target"
+        "aboveThreshold": "Boven drempel",
+        "belowThreshold": "Onder drempel",
+        "meetingTarget": "Voldoet aan doel"
       },
       "disclaimer": {
-        "title": "Important Notice",
-        "text": "This report reflects automated accessibility checks and does not constitute a formal WCAG compliance audit. Results are for monitoring purposes only and should not be considered as legal compliance certification. For comprehensive accessibility evaluation, please consult with qualified accessibility experts.",
-        "limitation": "Automated testing has inherent limitations and cannot detect all accessibility issues. Manual testing and user feedback are essential for complete accessibility assurance."
+        "title": "Belangrijke kennisgeving",
+        "text": "Dit rapport weerspiegelt geautomatiseerde toegankelijkheidscontroles en vormt geen formele WCAG-complianceaudit. De resultaten zijn uitsluitend voor monitoringdoeleinden en mogen niet worden beschouwd als wettelijke compliancecertificering. Raadpleeg voor een volledige toegankelijkheidsevaluatie gekwalificeerde toegankelijkheidsexperts.",
+        "limitation": "Geautomatiseerd testen heeft inherente beperkingen en kan niet alle toegankelijkheidsproblemen detecteren. Handmatig testen en feedback van gebruikers zijn essentieel voor volledige toegankelijkheidsassurance."
       },
       "summary": {
-        "title": "Summary",
-        "scanDate": "Scan Date",
-        "issuesFound": "Issues Found",
-        "critical": "Critical",
-        "serious": "Serious",
-        "moderate": "Moderate",
-        "minor": "Minor"
+        "title": "Samenvatting",
+        "scanDate": "Scandatum",
+        "issuesFound": "Gevonden problemen",
+        "critical": "Kritiek",
+        "serious": "Ernstig",
+        "moderate": "Gemiddeld",
+        "minor": "Klein"
       }
     },
     "email": {
-      "reportSubject": "Accessibility Report: {domain}",
-      "alertSubject": "Accessibility Alert: {domain}",
-      "welcomeSubject": "Welcome to Accessibility Assurance",
+      "reportSubject": "Toegankelijkheidsrapport: {domain}",
+      "alertSubject": "Toegankelijkheidsmelding: {domain}",
+      "welcomeSubject": "Welkom bij Accessibility Assurance",
       "report": {
-        "greeting": "Your scheduled accessibility report is ready",
-        "body": "We've completed an automated accessibility scan for {domain}. The current score is {score} out of 100.",
-        "viewReport": "View Full Report",
-        "dashboard": "Go to Dashboard"
+        "greeting": "Je geplande toegankelijkheidsrapport is klaar",
+        "body": "We hebben een geautomatiseerde toegankelijkheidsscan voltooid voor {domain}. De huidige score is {score} van de 100.",
+        "viewReport": "Volledig rapport bekijken",
+        "dashboard": "Naar dashboard"
       },
       "alert": {
         "regression": {
-          "title": "Score Dropped Below Threshold",
-          "body": "The accessibility score for {domain} has dropped to {score}, which is below your threshold of {threshold}."
+          "title": "Score onder drempel gedaald",
+          "body": "De toegankelijkheidsscore voor {domain} is gedaald naar {score}, onder je drempel van {threshold}."
         },
         "scoreChange": {
-          "title": "Significant Score Decrease",
-          "body": "The accessibility score for {domain} decreased from {previousScore} to {currentScore} (−{change} points)."
+          "title": "Aanzienlijke scoredaling",
+          "body": "De toegankelijkheidsscore voor {domain} daalde van {previousScore} naar {currentScore} (−{change} punten)."
         },
         "criticalIssues": {
-          "title": "Critical Issues Detected",
-          "body": "New critical accessibility issues have been detected on {domain}."
+          "title": "Kritieke problemen gedetecteerd",
+          "body": "Er zijn nieuwe kritieke toegankelijkheidsproblemen gedetecteerd op {domain}."
         }
       },
       "welcome": {
-        "headline": "Welcome to Accessibility Assurance",
-        "body": "Thank you for subscribing to VexNexa Accessibility Assurance. Your {tier} plan is now active with monitoring for up to {domains} {domainPlural}.",
+        "headline": "Welkom bij Accessibility Assurance",
+        "body": "Bedankt voor je inschrijving bij VexNexa Accessibility Assurance. Je {tier}-plan is nu actief met monitoring voor maximaal {domains} {domainPlural}.",
         "features": {
-          "title": "What's included:",
-          "automated": "Automated weekly or bi-weekly scans",
-          "reports": "Professional PDF reports in your language",
-          "alerts": "Instant alerts for score regressions",
-          "multilingual": "Support for 5 languages (EN, NL, FR, ES, PT)"
+          "title": "Wat is inbegrepen:",
+          "automated": "Geautomatiseerde wekelijkse of tweewekelijkse scans",
+          "reports": "Professionele PDF-rapporten in jouw taal",
+          "alerts": "Directe meldingen bij scoreregressies",
+          "multilingual": "Ondersteuning voor 5 talen (EN, NL, FR, ES, PT)"
         },
         "nextSteps": {
-          "title": "Next steps:",
-          "addDomain": "Add your first domain to monitor",
-          "configure": "Configure scan frequency and thresholds",
-          "setRecipients": "Add email recipients for reports"
+          "title": "Volgende stappen:",
+          "addDomain": "Voeg je eerste domein toe om te monitoren",
+          "configure": "Configureer scanfrequentie en drempels",
+          "setRecipients": "Voeg e-mailontvangers toe voor rapporten"
         }
       }
     },
     "dashboard": {
-      "overview": "Overview",
-      "domains": "Monitored Domains",
-      "reports": "Reports",
-      "alerts": "Alerts",
-      "settings": "Settings",
-      "subscription": "Subscription",
-      "addDomain": "Add Domain",
-      "noDomains": "No monitored domains yet",
-      "noDomainsDescription": "Add your first domain to start monitoring accessibility scores.",
-      "domainLimit": "Domain limit reached",
-      "domainLimitDescription": "Upgrade your plan to monitor more domains."
+      "overview": "Overzicht",
+      "domains": "Gemonitorde domeinen",
+      "reports": "Rapporten",
+      "alerts": "Meldingen",
+      "settings": "Instellingen",
+      "subscription": "Abonnement",
+      "addDomain": "Domein toevoegen",
+      "noDomains": "Nog geen gemonitorde domeinen",
+      "noDomainsDescription": "Voeg je eerste domein toe om toegankelijkheidsscores te gaan monitoren.",
+      "domainLimit": "Domeinlimiet bereikt",
+      "domainLimitDescription": "Upgrade je plan om meer domeinen te monitoren."
     },
     "domain": {
-      "domain": "Domain",
-      "label": "Site Name",
-      "optional": "optional",
-      "scanFrequency": "Scan Frequency",
-      "weekly": "Weekly",
-      "biweekly": "Bi-weekly (Every 2 Weeks)",
-      "scoreThreshold": "Score Threshold",
-      "thresholdDescription": "Alert when score drops below this value",
-      "language": "Report Language",
-      "emailRecipients": "Email Recipients",
-      "emailRecipientsDescription": "Up to 5 email addresses (one per line)",
-      "addRecipient": "Add Recipient",
-      "dayOfWeek": "Scan Day",
-      "timeOfDay": "Scan Time",
-      "monday": "Monday",
-      "tuesday": "Tuesday",
-      "wednesday": "Wednesday",
-      "thursday": "Thursday",
-      "friday": "Friday",
-      "saturday": "Saturday",
-      "sunday": "Sunday",
-      "active": "Active",
-      "inactive": "Inactive",
-      "lastScan": "Last Scan",
-      "nextScan": "Next Scan",
-      "currentScore": "Current Score",
+      "domain": "Domein",
+      "label": "Sitenaam",
+      "optional": "optioneel",
+      "scanFrequency": "Scanfrequentie",
+      "weekly": "Wekelijks",
+      "biweekly": "Tweewekelijks (elke 2 weken)",
+      "scoreThreshold": "Scoredrempel",
+      "thresholdDescription": "Waarschuw wanneer de score onder deze waarde zakt",
+      "language": "Rapporttaal",
+      "emailRecipients": "E-mailontvangers",
+      "emailRecipientsDescription": "Maximaal 5 e-mailadressen (één per regel)",
+      "addRecipient": "Ontvanger toevoegen",
+      "dayOfWeek": "Scandag",
+      "timeOfDay": "Scantijd",
+      "monday": "Maandag",
+      "tuesday": "Dinsdag",
+      "wednesday": "Woensdag",
+      "thursday": "Donderdag",
+      "friday": "Vrijdag",
+      "saturday": "Zaterdag",
+      "sunday": "Zondag",
+      "active": "Actief",
+      "inactive": "Inactief",
+      "lastScan": "Laatste scan",
+      "nextScan": "Volgende scan",
+      "currentScore": "Huidige score",
       "status": "Status",
-      "actions": "Actions",
-      "edit": "Edit",
-      "delete": "Delete",
-      "scan": "Scan Now",
-      "viewDetails": "View Details",
-      "statistics": "Statistics",
-      "averageScore": "Average Score",
-      "minScore": "Minimum Score",
-      "maxScore": "Maximum Score",
-      "totalScans": "Total Scans",
-      "regressions": "Regressions",
+      "actions": "Acties",
+      "edit": "Bewerken",
+      "delete": "Verwijderen",
+      "scan": "Nu scannen",
+      "viewDetails": "Details bekijken",
+      "statistics": "Statistieken",
+      "averageScore": "Gemiddelde score",
+      "minScore": "Minimale score",
+      "maxScore": "Maximale score",
+      "totalScans": "Totaal aantal scans",
+      "regressions": "Regressies",
       "trend": "Trend",
-      "improving": "Improving",
-      "stable": "Stable",
-      "declining": "Declining"
+      "improving": "Verbeterend",
+      "stable": "Stabiel",
+      "declining": "Dalend"
     },
     "alerts": {
-      "title": "Alerts",
-      "unresolved": "Unresolved",
-      "resolved": "Resolved",
-      "noAlerts": "No alerts",
+      "title": "Meldingen",
+      "unresolved": "Onopgelost",
+      "resolved": "Opgelost",
+      "noAlerts": "Geen meldingen",
       "severity": {
-        "critical": "Critical",
-        "high": "High",
-        "medium": "Medium",
-        "low": "Low"
+        "critical": "Kritiek",
+        "high": "Hoog",
+        "medium": "Gemiddeld",
+        "low": "Laag"
       },
       "type": {
-        "regression": "Regression",
-        "scoreChange": "Score Change",
-        "criticalIssues": "Critical Issues",
-        "scanFailed": "Scan Failed"
+        "regression": "Regressie",
+        "scoreChange": "Scorewijziging",
+        "criticalIssues": "Kritieke problemen",
+        "scanFailed": "Scan mislukt"
       },
-      "markResolved": "Mark as Resolved",
-      "viewScan": "View Scan"
+      "markResolved": "Markeren als opgelost",
+      "viewScan": "Scan bekijken"
     },
     "subscription": {
       "tier": {
-        "basic": "Basic",
+        "basic": "Basis",
         "pro": "Pro",
-        "publicSector": "Public Sector"
+        "publicSector": "Publieke sector"
       },
       "status": "Status",
-      "domains": "Domains",
-      "maxDomains": "Max Domains",
-      "scanFrequency": "Scan Frequency",
-      "changeTier": "Change Plan",
-      "cancel": "Cancel Subscription",
-      "upgrade": "Upgrade",
-      "manageSubscription": "Manage Subscription"
+      "domains": "Domeinen",
+      "maxDomains": "Max. domeinen",
+      "scanFrequency": "Scanfrequentie",
+      "changeTier": "Plan wijzigen",
+      "cancel": "Abonnement opzeggen",
+      "upgrade": "Upgraden",
+      "manageSubscription": "Abonnement beheren"
     },
     "actions": {
-      "save": "Save",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "confirm": "Confirm",
-      "add": "Add",
-      "edit": "Edit",
-      "close": "Close",
-      "download": "Download",
-      "view": "View",
-      "back": "Back"
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "delete": "Verwijderen",
+      "confirm": "Bevestigen",
+      "add": "Toevoegen",
+      "edit": "Bewerken",
+      "close": "Sluiten",
+      "download": "Downloaden",
+      "view": "Bekijken",
+      "back": "Terug"
     },
     "validation": {
-      "domainRequired": "Domain is required",
-      "invalidDomain": "Invalid domain format",
-      "invalidEmail": "Invalid email address",
-      "maxRecipients": "Maximum 5 recipients allowed",
-      "thresholdRange": "Threshold must be between 60 and 100",
-      "thresholdFixed": "Threshold is fixed at 90 for your plan"
+      "domainRequired": "Domein is vereist",
+      "invalidDomain": "Ongeldig domeinformaat",
+      "invalidEmail": "Ongeldig e-mailadres",
+      "maxRecipients": "Maximaal 5 ontvangers toegestaan",
+      "thresholdRange": "De drempel moet tussen 60 en 100 liggen",
+      "thresholdFixed": "De drempel is vast ingesteld op 90 voor jouw plan"
     },
     "messages": {
-      "domainAdded": "Domain added successfully",
-      "domainUpdated": "Domain settings updated",
-      "domainDeleted": "Domain removed",
-      "scanTriggered": "Scan started",
-      "settingsSaved": "Settings saved",
-      "subscriptionCanceled": "Subscription canceled",
-      "alertResolved": "Alert marked as resolved"
+      "domainAdded": "Domein succesvol toegevoegd",
+      "domainUpdated": "Domeininstellingen bijgewerkt",
+      "domainDeleted": "Domein verwijderd",
+      "scanTriggered": "Scan gestart",
+      "settingsSaved": "Instellingen opgeslagen",
+      "subscriptionCanceled": "Abonnement opgezegd",
+      "alertResolved": "Melding gemarkeerd als opgelost"
     },
     "description": "Blijf compliant met geautomatiseerde monitoring en alerts",
     "subtitle": "Doorlopende monitoring en compliance",
@@ -3462,31 +3462,31 @@
     "exportTitle": "Exporteer als PDF of DOCX — met je branding",
     "exportSubtitle": "Business- en Enterprise-abonnementen bevatten white-label exports. Vervang het VexNexa-merk door je eigen logo, bedrijfsnaam, kleuren en voettekst. Rapporten exporteren als deelbare PDF of bewerkbaar DOCX.",
     "exportLearnMore": "Meer over white-label rapporten",
-    "reportLabel": "Accessibility Report",
-    "scannedInfo": "Scanned: March 24, 2025 · WCAG 2.2 AA · axe-core engine",
+    "reportLabel": "Toegankelijkheidsrapport",
+    "scannedInfo": "Gescand: 24 maart 2025 - WCAG 2.2 AA - axe-core-engine",
     "severity": {
-      "critical": "Critical",
-      "serious": "Serious",
-      "moderate": "Moderate",
-      "minor": "Minor"
+      "critical": "Kritiek",
+      "serious": "Ernstig",
+      "moderate": "Matig",
+      "minor": "Klein"
     },
-    "checkHeading": "Heading hierarchy correct",
-    "checkAria": "ARIA landmarks present",
-    "checkKeyboard": "Keyboard navigation incomplete",
-    "topPriority": "Top Priority Issues",
-    "fullReportTitle": "Full reports also include",
+    "checkHeading": "Koppenstructuur correct",
+    "checkAria": "ARIA-landmarks aanwezig",
+    "checkKeyboard": "Toetsenbordnavigatie onvolledig",
+    "topPriority": "Issues met hoogste prioriteit",
+    "fullReportTitle": "Volledige rapporten bevatten ook",
     "fullReportItems": {
-      "matrix": "WCAG compliance matrix (pass/fail per criterion)",
-      "charts": "Severity breakdown charts",
-      "complete": "Complete issue list with all affected elements",
-      "guidance": "Remediation guidance with code examples",
-      "config": "Scan configuration and methodology",
-      "eaa": "EAA 2025 readiness indicator"
+      "matrix": "WCAG-compliancematrix (geslaagd/gefaald per criterium)",
+      "charts": "Grafieken met verdeling naar ernst",
+      "complete": "Volledige issuelijst met alle getroffen elementen",
+      "guidance": "Hersteladvies met codevoorbeelden",
+      "config": "Scanconfiguratie en methodologie",
+      "eaa": "Indicator voor EAA 2025-gereedheid"
     },
-    "ctaTitle": "See your own site's report",
-    "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
-    "ctaButton": "Start your free scan",
-    "ctaPricing": "View pricing"
+    "ctaTitle": "Bekijk het rapport van je eigen site",
+    "ctaSubtitle": "Maak een gratis account aan en scan je website. Ontvang binnen enkele minuten je eigen toegankelijkheidsrapport.",
+    "ctaButton": "Start je gratis scan",
+    "ctaPricing": "Bekijk prijzen"
   },
   "agencyCTAStrip": {
     "badge": "Voor agencies",
@@ -3956,34 +3956,34 @@
   "checkout": {
     "return": {
       "processing": {
-        "title": "Processing your payment…",
-        "subtitle": "This usually takes a few seconds. Please don't close this page."
+        "title": "Je betaling wordt verwerkt...",
+        "subtitle": "Dit duurt meestal enkele seconden. Sluit deze pagina niet."
       },
       "success": {
-        "title": "Payment successful!",
-        "subtitle": "Redirecting you to your dashboard…"
+        "title": "Betaling geslaagd!",
+        "subtitle": "Je wordt doorgestuurd naar je dashboard..."
       },
       "canceled": {
-        "title": "Payment canceled",
-        "subtitle": "No charge was made. You can pick a plan whenever you are ready."
+        "title": "Betaling geannuleerd",
+        "subtitle": "Er is niets in rekening gebracht. Je kunt een abonnement kiezen wanneer je er klaar voor bent."
       },
       "expired": {
-        "title": "Payment link expired",
-        "subtitle": "The checkout session timed out. Please start again."
+        "title": "Betaallink verlopen",
+        "subtitle": "De checkoutsessie is verlopen. Begin opnieuw."
       },
       "failed": {
-        "title": "Payment could not be completed",
-        "subtitle": "Please try again or use a different payment method."
+        "title": "Betaling kon niet worden voltooid",
+        "subtitle": "Probeer het opnieuw of gebruik een andere betaalmethode."
       },
       "error": {
-        "title": "We couldn't verify your payment",
-        "subtitle": "If you were charged, contact support and include this payment id."
+        "title": "We konden je betaling niet verifieren",
+        "subtitle": "Als er kosten in rekening zijn gebracht, neem dan contact op met support en vermeld deze betalings-ID."
       },
       "action": {
-        "dashboard": "Go to dashboard",
-        "pricing": "Back to pricing",
-        "tryAgain": "Try again",
-        "contactSupport": "Contact support"
+        "dashboard": "Ga naar dashboard",
+        "pricing": "Terug naar prijzen",
+        "tryAgain": "Opnieuw proberen",
+        "contactSupport": "Neem contact op met support"
       }
     }
   },
@@ -4052,11 +4052,11 @@
   },
   "updates": {
     "metadata": {
-      "title": "Status & Updates - VexNexa",
+      "title": "Status en updates - VexNexa",
       "description": "Volg VexNexa product-updates, bekende problemen, opgeloste fixes en betrouwbaarheidsnotities."
     },
     "hero": {
-      "badge": "Status & Updates",
+      "badge": "Status en updates",
       "title": "Product-updates, bekende problemen en opgeloste fixes",
       "subtitle": "Een openbare plek voor VexNexa betrouwbaarheidsnotities. Als iets klanten raakt, erkennen we het, volgen we het en tonen we wanneer het is opgelost.",
       "reportIssueCta": "Probleem melden",

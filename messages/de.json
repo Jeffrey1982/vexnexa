@@ -128,7 +128,7 @@
       "privacy": "Datenschutzerklärung",
       "terms": "Nutzungsbedingungen",
       "security": "Sicherheit",
-      "sla": "SLA & Support"
+      "sla": "SLA und Support"
     },
     "copyright": "Alle Rechte vorbehalten.",
     "solutions": {
@@ -712,13 +712,13 @@
       }
     },
     "billing": {
-      "monthly": "Monthly",
-      "semiannual": "6 Months",
-      "annual": "Annual",
-      "save5": "Save 5%",
-      "save8": "Save up to 8%",
-      "save10": "Save 10%",
-      "saveUpTo17": "Save up to 17%",
+      "monthly": "Monatlich",
+      "semiannual": "6 Monate",
+      "annual": "Jaehrlich",
+      "save5": "5 % sparen",
+      "save8": "Bis zu 8 % sparen",
+      "save10": "10 % sparen",
+      "saveUpTo17": "Bis zu 17 % sparen",
       "hint": "Long-term billing saves up to 17%",
       "switchToSave": "Switch to long-term and save more"
     },
@@ -726,14 +726,14 @@
       "starter": {
         "name": "Starter",
         "description": "For small websites and personal use",
-        "cta": "Start with Starter",
+        "cta": "Mit Starter beginnen",
         "features": {
-          "sites": "{count} website",
+          "sites": "{count} Website",
           "pages": "Seiten/Monat",
-          "users": "{count} user",
-          "pdfExport": "PDF export",
-          "basicReports": "Basic reports",
-          "emailSupport": "Email support",
+          "users": "{count} Nutzer",
+          "pdfExport": "PDF-Export",
+          "basicReports": "Basisberichte",
+          "emailSupport": "E-Mail-Support",
           "site": "Website",
           "user": "Benutzer",
           "pdf": "PDF-Export",
@@ -741,9 +741,9 @@
           "support": "E-Mail-Support"
         },
         "limitations": {
-          "noWord": "No Word export",
-          "noScheduling": "No scheduling",
-          "limitedIntegrations": "Limited integrations",
+          "noWord": "Kein Word-Export",
+          "noScheduling": "Keine Planung",
+          "limitedIntegrations": "Begrenzte Integrationen",
           "noWordExports": "Keine Word-Exporte",
           "noCrawling": "Kein Crawling",
           "noIntegrations": "Keine Integrationen",
@@ -753,17 +753,17 @@
       "pro": {
         "name": "Pro",
         "description": "For professionals who scan regularly",
-        "cta": "Try Pro",
-        "popular": "Popular",
+        "cta": "Pro testen",
+        "popular": "Beliebt",
         "features": {
-          "sites": "{count} websites",
-          "pages": "{count} pages/month",
-          "users": "{count} users",
-          "exports": "PDF + Word export",
-          "advancedReports": "Advanced reports",
-          "scheduling": "Scheduling",
+          "sites": "{count} Websites",
+          "pages": "{count} Seiten/Monat",
+          "users": "{count} Nutzer",
+          "exports": "PDF- und Word-Export",
+          "advancedReports": "Erweiterte Berichte",
+          "scheduling": "Planung",
           "integrations": "Slack & Jira integration",
-          "prioritySupport": "Priority support",
+          "prioritySupport": "Priorisierter Support",
           "history": "{count} Monate Verlauf",
           "support": "Prioritätssupport",
           "whiteLabel": "White-Label-Berichte"
@@ -772,16 +772,16 @@
       "business": {
         "name": "Business",
         "description": "For teams and enterprise use",
-        "cta": "Start with Business",
+        "cta": "Mit Business starten",
         "features": {
-          "sites": "{count} websites",
-          "pages": "{count} pages/month",
-          "users": "{count} users",
-          "allExports": "All exports (PDF + Word)",
+          "sites": "{count} Websites",
+          "pages": "{count} Seiten/Monat",
+          "users": "{count} Nutzer",
+          "allExports": "Alle Exporte (PDF + Word)",
           "whiteLabel": "White label reports",
-          "advancedScheduling": "Advanced scheduling",
-          "allIntegrations": "All integrations",
-          "prioritySupport": "Priority support",
+          "advancedScheduling": "Erweiterte Planung",
+          "allIntegrations": "Alle Integrationen",
+          "prioritySupport": "Priorisierter Support",
           "assurance": "Assurance inbegriffen",
           "auditDiscount": "20% Rabatt auf Audits",
           "history": "{count} Monate Verlauf",
@@ -791,19 +791,19 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Custom",
-        "priceFrom": "Starting from €270/month",
+        "price": "Individuell",
+        "priceFrom": "Ab €270/Monat",
         "description": "Unlimited scanning for large organizations",
-        "cta": "Contact us",
+        "cta": "Kontakt aufnehmen",
         "features": {
-          "unlimitedSites": "Unlimited websites",
-          "unlimitedPages": "Unlimited pages",
-          "unlimitedUsers": "Unlimited users",
-          "customIntegrations": "Custom integrations",
+          "unlimitedSites": "Unbegrenzte Websites",
+          "unlimitedPages": "Unbegrenzte Seiten",
+          "unlimitedUsers": "Unbegrenzte Nutzer",
+          "customIntegrations": "Individuelle Integrationen",
           "sso": "SSO/SAML",
-          "dedicatedSupport": "Dedicated support",
-          "sla": "SLA guarantee",
-          "onPremise": "Custom deployment options",
+          "dedicatedSupport": "Dedizierter Support",
+          "sla": "SLA-Garantie",
+          "onPremise": "Individuelle Deployment-Optionen",
           "accountManager": "Dedizierter Account-Manager",
           "allFeatures": "Alle Funktionen inbegriffen",
           "assurance": "Assurance inbegriffen",
@@ -812,295 +812,295 @@
           "history": "{count} Monate Verlauf",
           "sites": "{count} Websites"
         },
-        "note": "Perfect for large organizations. Contact us for custom pricing."
+        "note": "Perfekt fuer grosse Organisationen. Kontaktiere uns fuer individuelle Preise."
       }
     },
-    "loading": "Loading...",
+    "loading": "Wird geladen...",
     "footer": {
-      "note": "All plans include VAT. Cancel anytime.",
-      "contact": "Questions? Contact us."
+      "note": "Alle Tarife enthalten MwSt. Jederzeit kuendbar.",
+      "contact": "Fragen? Kontaktiere uns."
     },
     "overflow": {
-      "title": "Overflow Pricing",
-      "subtitle": "When you exceed your plan limits, we charge small amounts instead of blocking you",
+      "title": "Overflow-Preise",
+      "subtitle": "Wenn du deine Tariflimits ueberschreitest, berechnen wir kleine Betraege, statt dich zu blockieren",
       "table": {
-        "resource": "Resource",
-        "price": "Overflow Price",
-        "description": "Description"
+        "resource": "Ressource",
+        "price": "Overflow-Preis",
+        "description": "Beschreibung"
       },
       "resources": {
-        "extraPages": "Extra Pages",
-        "extraSites": "Extra Websites",
-        "extraUsers": "Extra Users"
+        "extraPages": "Zusaetzliche Seiten",
+        "extraSites": "Zusaetzliche Websites",
+        "extraUsers": "Zusaetzliche Nutzer"
       },
       "alert": {
-        "title": "How it works:",
-        "description": "When you consistently exceed your plan limits, we'll notify you and recommend upgrading. Small overages are automatically billed monthly. You're always in control."
+        "title": "So funktioniert es:",
+        "description": "Wenn du deine Tariflimits regelmaessig ueberschreitest, benachrichtigen wir dich und empfehlen ein Upgrade. Kleine Ueberschreitungen werden monatlich automatisch abgerechnet. Du behaeltst immer die Kontrolle."
       }
     },
     "compliance": {
-      "title": "Compliance Disclaimer",
-      "warning": "No tool can guarantee 100% legal compliance in all contexts.",
-      "description": "VexNexa detects and reports issues, assists remediation, and helps you adhere to WCAG and related standards. For legal risk assessment, consider an expert audit and ongoing governance process. Our scanner is a tool to assist your compliance efforts, not a legal guarantee.",
+      "title": "Compliance-Hinweis",
+      "warning": "Kein Tool kann in allen Kontexten 100 % rechtliche Konformitaet garantieren.",
+      "description": "VexNexa erkennt und berichtet Probleme, unterstuetzt die Behebung und hilft dir, WCAG und verwandte Standards einzuhalten. Fuer eine Bewertung rechtlicher Risiken solltest du ein Expert Audit und einen laufenden Governance-Prozess in Betracht ziehen. Unser Scanner ist ein Werkzeug zur Unterstuetzung deiner Compliance-Bemuehungen, keine rechtliche Garantie.",
       "links": {
-        "terms": "Terms of Service",
-        "privacy": "Privacy Policy"
+        "terms": "Nutzungsbedingungen",
+        "privacy": "Datenschutzerklaerung"
       }
     },
     "comparison": {
-      "title": "How VexNexa Compares",
-      "subtitle": "Comparing our approach to overlay widgets and generic accessibility scanners",
+      "title": "So vergleicht sich VexNexa",
+      "subtitle": "Vergleich unseres Ansatzes mit Overlay-Widgets und generischen Barrierefreiheitsscannern",
       "columns": {
-        "feature": "Feature",
+        "feature": "Funktion",
         "vexnexa": "VexNexa",
-        "overlay": "Overlay Widgets",
-        "generic": "Generic Scanners"
+        "overlay": "Overlay-Widgets",
+        "generic": "Generische Scanner"
       },
       "features": {
         "coverage": {
-          "name": "Coverage Depth",
-          "vexnexa": "WCAG + 8 extra categories",
-          "overlay": "Superficial fixes only",
-          "generic": "Basic WCAG checks"
+          "name": "Tiefe der Abdeckung",
+          "vexnexa": "WCAG + 8 zusaetzliche Kategorien",
+          "overlay": "Nur oberflaechliche Korrekturen",
+          "generic": "Grundlegende WCAG-Pruefungen"
         },
         "actionability": {
-          "name": "Actionability",
-          "vexnexa": "Code snippets + remediation tips",
-          "overlay": "No developer guidance",
-          "generic": "Generic error messages"
+          "name": "Umsetzbarkeit",
+          "vexnexa": "Code-Snippets + Behebungstipps",
+          "overlay": "Keine Entwickleranleitung",
+          "generic": "Generische Fehlermeldungen"
         },
         "team": {
-          "name": "Team Features",
+          "name": "Teamfunktionen",
           "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "monitoring": {
-          "name": "Continuous Monitoring",
+          "name": "Kontinuierliches Monitoring",
           "vexnexa": true,
           "overlay": false,
           "generic": false
         },
         "api": {
-          "name": "API Access",
+          "name": "API-Zugriff",
           "vexnexa": true,
           "overlay": false,
-          "generic": "Limited"
+          "generic": "Begrenzt"
         },
         "falsePositives": {
           "name": "False Positives",
-          "vexnexa": "Low",
+          "vexnexa": "Niedrig",
           "overlay": "N/A",
-          "generic": "High"
+          "generic": "Hoch"
         },
         "legal": {
-          "name": "Legal Stance",
-          "vexnexa": "Tool assists compliance",
-          "overlay": "Claims to fix issues",
-          "generic": "No legal claims"
+          "name": "Rechtliche Einordnung",
+          "vexnexa": "Tool unterstuetzt Compliance",
+          "overlay": "Behauptet, Probleme zu beheben",
+          "generic": "Keine rechtlichen Zusagen"
         },
         "cost": {
-          "name": "Cost Scaling",
-          "vexnexa": "Transparent overflow pricing",
-          "overlay": "Per-page fees",
-          "generic": "Fixed tiers only"
+          "name": "Kosten-Skalierung",
+          "vexnexa": "Transparente Overflow-Preise",
+          "overlay": "Gebuehren pro Seite",
+          "generic": "Nur feste Stufen"
         }
       },
-      "disclaimer": "Overlay widgets inject JavaScript that attempts to modify your site on the client side. While they may help some users, they don't fix underlying code issues and can create new accessibility problems. Generic scanners often miss context-specific issues. VexNexa provides deeper automated coverage and actionable guidance for developers."
+      "disclaimer": "Overlay-Widgets fuegen JavaScript ein, das versucht, deine Website clientseitig zu veraendern. Sie koennen einigen Nutzern helfen, beheben aber keine zugrunde liegenden Codeprobleme und koennen neue Barrierefreiheitsprobleme verursachen. Generische Scanner uebersehen oft kontextspezifische Probleme. VexNexa bietet tiefere automatisierte Abdeckung und umsetzbare Hinweise fuer Entwickler."
     },
     "cta": {
-      "title": "Start scanning today",
+      "title": "Starte noch heute mit dem Scannen",
       "subtitle": "Start with a free trial. Upgrade when you need continuous monitoring, branded reports, or multi-site management.",
-      "startTrial": "Start free scan",
-      "needMore": "Need higher limits?",
-      "contactUs": "Contact us"
+      "startTrial": "Kostenlosen Scan starten",
+      "needMore": "Brauchst du hoehere Limits?",
+      "contactUs": "Kontakt aufnehmen"
     },
     "page": {
       "billing": {
-        "monthly": "Monthly",
-        "yearly": "Yearly",
-        "save15": "Save 15%"
+        "monthly": "Monatlich",
+        "yearly": "Jaehrlich",
+        "save15": "15 % sparen"
       },
-      "mostPopular": "Most Popular",
+      "mostPopular": "Am beliebtesten",
       "freeForeverPrice": "Für immer kostenlos",
-      "needCustom": "Need a custom solution?",
-      "contactSales": "Contact our sales team",
-      "vatExcl": "excl. VAT · {country} {vatPercent}%",
-      "vatIncl": "incl. {vatPercent}% VAT ({country})",
-      "pricesExcl": "Prices shown excl. VAT. VAT calculated at checkout.",
-      "pricesIncl": "Prices incl. {vatPercent}% VAT ({country})",
+      "needCustom": "Brauchst du eine individuelle Loesung?",
+      "contactSales": "Kontaktiere unser Sales-Team",
+      "vatExcl": "zzgl. MwSt. - {country} {vatPercent}%",
+      "vatIncl": "inkl. {vatPercent}% MwSt. ({country})",
+      "pricesExcl": "Preise zzgl. MwSt. Die MwSt. wird im Checkout berechnet.",
+      "pricesIncl": "Preise inkl. {vatPercent}% MwSt. ({country})",
       "starter": {
         "name": "Starter",
-        "description": "For individuals & small sites",
+        "description": "Fuer Einzelpersonen und kleine Websites",
         "features": {
-          "site": "{count} website",
-          "pages": "{count} pages/month",
-          "user": "{count} user",
-          "pdf": "PDF export",
-          "history": "{count}-month history",
-          "support": "Email support"
+          "site": "{count} Website",
+          "pages": "{count} Seiten/Monat",
+          "user": "{count} Nutzer",
+          "pdf": "PDF-Export",
+          "history": "{count} Monate Verlauf",
+          "support": "E-Mail-Support"
         },
         "limitations": {
-          "noWord": "No Word export",
-          "noScheduling": "No scheduling",
-          "noIntegrations": "No integrations"
+          "noWord": "Kein Word-Export",
+          "noScheduling": "Keine Planung",
+          "noIntegrations": "Keine Integrationen"
         }
       },
       "pro": {
         "name": "Pro",
-        "description": "For teams & growing businesses",
+        "description": "Fuer Teams und wachsende Unternehmen",
         "features": {
-          "sites": "{count} websites",
-          "pages": "{count} pages/month",
-          "users": "{count} users",
-          "exports": "PDF + Word export",
-          "whiteLabel": "White-label reports",
-          "history": "{count}-month history",
-          "integrations": "Slack & Jira integrations",
-          "support": "Priority support"
+          "sites": "{count} Websites",
+          "pages": "{count} Seiten/Monat",
+          "users": "{count} Nutzer",
+          "exports": "PDF- und Word-Export",
+          "whiteLabel": "White-Label-Berichte",
+          "history": "{count} Monate Verlauf",
+          "integrations": "Slack- und Jira-Integrationen",
+          "support": "Priorisierter Support"
         }
       },
       "business": {
         "name": "Business",
-        "description": "For agencies & enterprises",
+        "description": "Fuer Agenturen und Unternehmen",
         "features": {
-          "sites": "{count} websites",
-          "pages": "{count} pages/month",
-          "users": "{count} users",
-          "whiteLabel": "White-label reports",
-          "integrations": "All integrations",
-          "history": "{count}-month history",
-          "assurance": "Assurance included",
-          "auditDiscount": "20% discount on audits",
-          "support": "4h priority support"
+          "sites": "{count} Websites",
+          "pages": "{count} Seiten/Monat",
+          "users": "{count} Nutzer",
+          "whiteLabel": "White-Label-Berichte",
+          "integrations": "Alle Integrationen",
+          "history": "{count} Monate Verlauf",
+          "assurance": "Assurance enthalten",
+          "auditDiscount": "20 % Rabatt auf Audits",
+          "support": "4 Std. priorisierter Support"
         }
       },
       "enterprise": {
         "name": "Enterprise",
-        "description": "Custom solutions at scale",
+        "description": "Massgeschneiderte Loesungen im grossen Massstab",
         "features": {
-          "sites": "{count} websites",
-          "unlimitedUsers": "Unlimited users",
-          "allFeatures": "All features included",
-          "assurance": "Assurance included",
-          "auditDiscount": "30% discount on audits",
-          "sla": "SLA guarantee",
-          "accountManager": "Dedicated account manager",
-          "history": "{count}-month history",
-          "customBilling": "Custom billing"
+          "sites": "{count} Websites",
+          "unlimitedUsers": "Unbegrenzte Nutzer",
+          "allFeatures": "Alle Funktionen enthalten",
+          "assurance": "Assurance enthalten",
+          "auditDiscount": "30 % Rabatt auf Audits",
+          "sla": "SLA-Garantie",
+          "accountManager": "Dedizierter Account Manager",
+          "history": "{count} Monate Verlauf",
+          "customBilling": "Individuelle Abrechnung"
         }
       },
       "addons": {
-        "badge": "Flexible Add-Ons",
-        "title": "Scale as you",
-        "titleHighlight": "grow",
-        "subtitle": "Add extra websites, scanning capacity, or continuous monitoring to any plan",
+        "badge": "Flexible Add-ons",
+        "title": "Skaliere, wenn du",
+        "titleHighlight": "waechst",
+        "subtitle": "Fuege jedem Tarif zusaetzliche Websites, Scan-Kapazitaet oder kontinuierliches Monitoring hinzu",
         "websites": {
-          "title": "Extra Websites",
-          "description": "Need more websites? Add them to any plan.",
-          "site1": "+1 website",
-          "sites5": "+5 websites",
-          "sites10": "+10 websites"
+          "title": "Zusaetzliche Websites",
+          "description": "Brauchst du mehr Websites? Fuege sie jedem Tarif hinzu.",
+          "site1": "+1 Website",
+          "sites5": "+5 Websites",
+          "sites10": "+10 Websites"
         },
         "pages": {
-          "title": "Page Volume Packs",
-          "description": "Increase monthly scanning capacity with volume packs.",
-          "25k": "+25,000 pages/month",
-          "100k": "+100,000 pages/month",
-          "250k": "+250,000 pages/month",
-          "businessNote": "Business includes 25,000 pages/month",
-          "enterpriseNote": "Enterprise includes 100,000 pages/month",
-          "contactSales": "Contact sales"
+          "title": "Seitenvolumen-Pakete",
+          "description": "Erhoehe die monatliche Scan-Kapazitaet mit Volumenpaketen.",
+          "25k": "+25.000 Seiten/Monat",
+          "100k": "+100.000 Seiten/Monat",
+          "250k": "+250.000 Seiten/Monat",
+          "businessNote": "Business enthaelt 25.000 Seiten/Monat",
+          "enterpriseNote": "Enterprise enthaelt 100.000 Seiten/Monat",
+          "contactSales": "Sales kontaktieren"
         },
         "assurance": {
           "title": "Assurance",
           "badge": "Monitoring",
-          "description": "Automated compliance monitoring & alerts",
+          "description": "Automatisiertes Compliance-Monitoring und Benachrichtigungen",
           "features": {
-            "scans": "Weekly automated scans",
-            "alerts": "Score drop alerts",
-            "audit": "Audit log archive",
-            "eaa": "EAA readiness tracking",
-            "graph": "Historical compliance graph"
+            "scans": "Woechentliche automatisierte Scans",
+            "alerts": "Warnungen bei Score-Rueckgang",
+            "audit": "Audit-Log-Archiv",
+            "eaa": "EAA-Bereitschaft verfolgen",
+            "graph": "Historischer Compliance-Graph"
           },
-          "included": "Included",
-          "businessEnterprise": "Business & Enterprise"
+          "included": "Enthalten",
+          "businessEnterprise": "Business und Enterprise"
         },
-        "perMonth": "/mo",
-        "exclVat": "excl. VAT",
-        "inclVat": "incl. VAT",
-        "perPage": "≈ €{price}/page",
-        "needHigher": "Need higher capacity?",
-        "contactEnterprise": "for enterprise volume."
+        "perMonth": "/Monat",
+        "exclVat": "zzgl. MwSt.",
+        "inclVat": "inkl. MwSt.",
+        "perPage": "ca. €{price}/Seite",
+        "needHigher": "Brauchst du mehr Kapazitaet?",
+        "contactEnterprise": "fuer Enterprise-Volumen."
       },
       "audits": {
-        "badge": "EAA Audit Services",
-        "title": "Manual",
-        "titleHighlight": "Accessibility Audits",
-        "subtitle": "Have your website professionally audited by our experts",
-        "oneTime": "one-time",
-        "cta": "Request audit",
+        "badge": "EAA-Audit-Services",
+        "title": "Manuelle",
+        "titleHighlight": "Barrierefreiheits-Audits",
+        "subtitle": "Lass deine Website professionell von unseren Experten auditieren",
+        "oneTime": "einmalig",
+        "cta": "Audit anfragen",
         "quick": {
-          "description": "Quick scan of the most important pages",
+          "description": "Schnellscan der wichtigsten Seiten",
           "features": {
-            "pages": "Top 10 pages",
-            "wcag": "WCAG 2.2 check",
-            "report": "Report within 48h"
+            "pages": "Top 10 Seiten",
+            "wcag": "WCAG-2.2-Pruefung",
+            "report": "Bericht innerhalb von 48 Std."
           }
         },
         "full": {
-          "description": "Complete site audit with in-depth analysis",
+          "description": "Vollstaendiger Website-Audit mit fundierter Analyse",
           "features": {
-            "pages": "All pages",
+            "pages": "Alle Seiten",
             "wcag": "WCAG 2.2 + EAA",
-            "code": "Code review",
-            "report": "Report + roadmap"
+            "code": "Code-Review",
+            "report": "Bericht + Roadmap"
           }
         },
         "enterprise": {
-          "description": "Enterprise-grade audit with compliance advice",
+          "description": "Enterprise-Audit mit Compliance-Beratung",
           "features": {
-            "pages": "Full site",
+            "pages": "Vollstaendige Website",
             "wcag": "WCAG 2.2 + EAA + VPAT",
-            "legal": "Legal review",
-            "implementation": "Implementation guidance"
+            "legal": "Rechtliche Pruefung",
+            "implementation": "Implementierungsberatung"
           }
         }
       },
       "auditBundles": {
-        "badge": "Audit + Monitoring Bundles",
-        "title": "Continuous",
-        "titleHighlight": "audit bundles",
-        "subtitle": "Combine automated monitoring with manual audits",
-        "cta": "Choose bundle",
+        "badge": "Audit- und Monitoring-Pakete",
+        "title": "Kontinuierliche",
+        "titleHighlight": "Audit-Pakete",
+        "subtitle": "Kombiniere automatisiertes Monitoring mit manuellen Audits",
+        "cta": "Paket waehlen",
         "starter": {
           "features": {
-            "audits": "1 quickscan/quarter",
-            "report": "Basic report",
-            "support": "Email support"
+            "audits": "1 Quickscan/Quartal",
+            "report": "Basisbericht",
+            "support": "E-Mail-Support"
           }
         },
         "pro": {
           "features": {
-            "audits": "1 full audit/quarter",
-            "report": "Detailed report + roadmap",
-            "support": "Priority support"
+            "audits": "1 vollstaendiger Audit/Quartal",
+            "report": "Detaillierter Bericht + Roadmap",
+            "support": "Priorisierter Support"
           }
         },
         "business": {
           "features": {
-            "audits": "2 full audits/quarter",
-            "code": "Code review",
-            "implementation": "Implementation guidance",
-            "contact": "Dedicated contact"
+            "audits": "2 vollstaendige Audits/Quartal",
+            "code": "Code-Review",
+            "implementation": "Implementierungsberatung",
+            "contact": "Dedizierter Kontakt"
           }
         },
         "enterprise": {
           "features": {
-            "audits": "Unlimited audits",
-            "vpat": "VPAT + compliance docs",
-            "legal": "Legal support",
-            "manager": "Account manager"
+            "audits": "Unbegrenzte Audits",
+            "vpat": "VPAT + Compliance-Dokumente",
+            "legal": "Rechtliche Unterstuetzung",
+            "manager": "Account Manager"
           }
         }
       },
@@ -1118,7 +1118,7 @@
         "pioneer": "Pioneer wählen",
         "enterprise": "Vertrieb kontaktieren"
       },
-      "pioneerDeal": "Pioneer Deal",
+      "pioneerDeal": "Pioneer-Angebot",
       "saveBadge": "Spare {percent}%",
       "allPricesInclVat": "Alle Preise inkl. MwSt.",
       "inclVatShort": "inkl. MwSt.",
@@ -1297,91 +1297,91 @@
     }
   },
   "auth": {
-    "loading": "Loading...",
+    "loading": "Wird geladen...",
     "login": {
-      "title": "Welcome back",
-      "subtitle": "Sign in to your account to continue",
-      "emailLabel": "Email",
-      "emailPlaceholder": "you@example.com",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "signInButton": "Sign in",
-      "signingIn": "Signing in...",
-      "forgotPassword": "Forgot password?",
-      "noAccount": "Don't have an account?",
-      "signUp": "Sign up",
-      "or": "Or continue with",
+      "title": "Willkommen zurueck",
+      "subtitle": "Melde dich bei deinem Konto an, um fortzufahren",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "du@example.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "Gib dein Passwort ein",
+      "showPassword": "Passwort anzeigen",
+      "hidePassword": "Passwort ausblenden",
+      "signInButton": "Anmelden",
+      "signingIn": "Anmeldung laeuft...",
+      "forgotPassword": "Passwort vergessen?",
+      "noAccount": "Noch kein Konto?",
+      "signUp": "Registrieren",
+      "or": "Oder weiter mit",
       "errors": {
-        "emailRequired": "Please enter both email and password",
-        "invalidEmail": "Please enter a valid email address",
-        "oauthError": "An error occurred while signing in with your social account.",
-        "sessionError": "Could not create session. Please try again.",
-        "unexpectedError": "An unexpected error occurred. Please try again later.",
-        "genericError": "An error occurred while signing in."
+        "emailRequired": "Bitte gib E-Mail-Adresse und Passwort ein",
+        "invalidEmail": "Bitte gib eine gueltige E-Mail-Adresse ein",
+        "oauthError": "Bei der Anmeldung mit deinem Social-Konto ist ein Fehler aufgetreten.",
+        "sessionError": "Sitzung konnte nicht erstellt werden. Bitte versuche es erneut.",
+        "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es spaeter erneut.",
+        "genericError": "Bei der Anmeldung ist ein Fehler aufgetreten."
       },
       "features": {
-        "secure": "Secure authentication",
-        "fast": "Lightning fast scans",
-        "support": "Email support included"
+        "secure": "Sichere Authentifizierung",
+        "fast": "Blitzschnelle Scans",
+        "support": "E-Mail-Support inklusive"
       }
     },
     "register": {
-      "title": "Create your account",
-      "subtitle": "Start scanning for accessibility issues today",
-      "nameLabel": "Full name",
-      "namePlaceholder": "John Doe",
-      "emailLabel": "Email",
-      "emailPlaceholder": "you@example.com",
-      "passwordLabel": "Password",
-      "passwordPlaceholder": "At least 8 characters",
-      "confirmPasswordLabel": "Confirm password",
-      "confirmPasswordPlaceholder": "Re-enter your password",
-      "createAccountButton": "Create account",
-      "creatingAccount": "Creating account...",
-      "haveAccount": "Already have an account?",
-      "signIn": "Sign in",
-      "or": "Or continue with",
-      "terms": "By creating an account, you agree to our",
-      "termsLink": "Terms of Service",
-      "and": "and",
-      "privacyLink": "Privacy Policy",
+      "title": "Erstelle dein Konto",
+      "subtitle": "Beginne noch heute mit dem Scannen nach Barrierefreiheitsproblemen",
+      "nameLabel": "Vollstaendiger Name",
+      "namePlaceholder": "Max Mustermann",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "du@example.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "Mindestens 8 Zeichen",
+      "confirmPasswordLabel": "Passwort bestaetigen",
+      "confirmPasswordPlaceholder": "Gib dein Passwort erneut ein",
+      "createAccountButton": "Konto erstellen",
+      "creatingAccount": "Konto wird erstellt...",
+      "haveAccount": "Hast du bereits ein Konto?",
+      "signIn": "Anmelden",
+      "or": "Oder weiter mit",
+      "terms": "Mit der Erstellung eines Kontos stimmst du unseren",
+      "termsLink": "Nutzungsbedingungen",
+      "and": "und",
+      "privacyLink": "Datenschutzerklaerung",
       "errors": {
-        "allFieldsRequired": "Please fill in all fields",
-        "invalidEmail": "Please enter a valid email address",
-        "passwordLength": "Password must be at least 8 characters",
-        "passwordsMatch": "Passwords must match",
+        "allFieldsRequired": "Bitte fuelle alle Felder aus",
+        "invalidEmail": "Bitte gib eine gueltige E-Mail-Adresse ein",
+        "passwordLength": "Das Passwort muss mindestens 8 Zeichen lang sein",
+        "passwordsMatch": "Die Passwoerter muessen uebereinstimmen",
         "tooManyRequests": "Zu viele Registrierungsversuche. Bitte warte kurz und versuche es erneut.",
         "timeout": "Die Registrierung hat zu lange gedauert. Bitte versuche es gleich erneut."
       },
       "success": {
-        "title": "Account created successfully!",
-        "accountCreated": "Please check your email to verify your account.",
-        "checkInbox": "We sent a confirmation link to:",
-        "spamHint": "Don't see it? Check your spam folder, or resend the email below.",
-        "resendEmail": "Resend confirmation email",
-        "resendCooldown": "Resend available in {countdown}",
-        "resendSent": "Confirmation email sent. Please check your inbox.",
-        "resendError": "We couldn't resend the email right now. Please try again in a moment.",
-        "backToLogin": "Back to sign in"
+        "title": "Konto erfolgreich erstellt!",
+        "accountCreated": "Bitte pruefe deine E-Mails, um dein Konto zu bestaetigen.",
+        "checkInbox": "Wir haben einen Bestaetigungslink gesendet an:",
+        "spamHint": "Nicht gefunden? Pruefe deinen Spam-Ordner oder sende die E-Mail unten erneut.",
+        "resendEmail": "Bestaetigungs-E-Mail erneut senden",
+        "resendCooldown": "Erneutes Senden verfuegbar in {countdown}",
+        "resendSent": "Bestaetigungs-E-Mail gesendet. Bitte pruefe dein Postfach.",
+        "resendError": "Wir konnten die E-Mail gerade nicht erneut senden. Bitte versuche es gleich noch einmal.",
+        "backToLogin": "Zurueck zur Anmeldung"
       },
       "steps": {
         "account": {
-          "title": "Account",
-          "description": "Create your login credentials"
+          "title": "Konto",
+          "description": "Erstelle deine Zugangsdaten"
         },
         "personal": {
-          "title": "Personal",
-          "description": "Tell us a bit about yourself"
+          "title": "Persoenlich",
+          "description": "Erzaehle uns kurz etwas ueber dich"
         },
         "contact": {
-          "title": "Contact",
-          "description": "How we can reach you"
+          "title": "Kontakt",
+          "description": "Wie wir dich erreichen koennen"
         },
         "preferences": {
-          "title": "Preferences",
-          "description": "Customize your experience"
+          "title": "Einstellungen",
+          "description": "Passe dein Erlebnis an"
         }
       },
       "validation": {
@@ -1399,33 +1399,33 @@
       }
     },
     "forgotPassword": {
-      "title": "Reset your password",
-      "subtitle": "Enter your email and we'll send you a reset link",
-      "emailLabel": "Email",
-      "emailPlaceholder": "you@example.com",
-      "sendButton": "Send reset link",
-      "sending": "Sending...",
-      "backToLogin": "Back to login",
-      "success": "Check your email for a reset link!",
+      "title": "Passwort zuruecksetzen",
+      "subtitle": "Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zuruecksetzen",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "du@example.com",
+      "sendButton": "Link zum Zuruecksetzen senden",
+      "sending": "Wird gesendet...",
+      "backToLogin": "Zurueck zur Anmeldung",
+      "success": "Pruefe deine E-Mails auf den Link zum Zuruecksetzen!",
       "errors": {
-        "emailRequired": "Please enter your email",
-        "invalidEmail": "Please enter a valid email address"
+        "emailRequired": "Bitte gib deine E-Mail-Adresse ein",
+        "invalidEmail": "Bitte gib eine gueltige E-Mail-Adresse ein"
       }
     },
     "resetPassword": {
-      "title": "Set new password",
-      "subtitle": "Enter your new password below",
-      "passwordLabel": "New password",
-      "passwordPlaceholder": "At least 8 characters",
-      "confirmPasswordLabel": "Confirm new password",
-      "confirmPasswordPlaceholder": "Re-enter your password",
-      "resetButton": "Reset password",
-      "resetting": "Resetting...",
-      "success": "Password reset successfully!",
+      "title": "Neues Passwort festlegen",
+      "subtitle": "Gib unten dein neues Passwort ein",
+      "passwordLabel": "Neues Passwort",
+      "passwordPlaceholder": "Mindestens 8 Zeichen",
+      "confirmPasswordLabel": "Neues Passwort bestaetigen",
+      "confirmPasswordPlaceholder": "Gib dein Passwort erneut ein",
+      "resetButton": "Passwort zuruecksetzen",
+      "resetting": "Wird zurueckgesetzt...",
+      "success": "Passwort erfolgreich zurueckgesetzt!",
       "errors": {
-        "allFieldsRequired": "Please fill in all fields",
-        "passwordLength": "Password must be at least 8 characters",
-        "passwordsMatch": "Passwords must match"
+        "allFieldsRequired": "Bitte fuelle alle Felder aus",
+        "passwordLength": "Das Passwort muss mindestens 8 Zeichen lang sein",
+        "passwordsMatch": "Die Passwoerter muessen uebereinstimmen"
       }
     }
   },
@@ -1474,145 +1474,145 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "subtitle": "Monitor your website accessibility scans and improvements",
+    "subtitle": "Ueberwache die Barrierefreiheits-Scans und Verbesserungen deiner Website",
     "newScan": {
-      "title": "New Accessibility Scan",
-      "description": "Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories",
-      "enhancedTitle": "✨ New: 100% Enhanced Scanning",
-      "enhancedDescription": "WCAG + 8 extra categories: keyboard navigation, screen reader tests, mobile accessibility, cognitive analysis and more."
+      "title": "Neuer Barrierefreiheits-Scan",
+      "description": "Gib eine URL fuer einen umfassenden Barrierefreiheits-Scan mit 8 zusaetzlichen Kategorien ein",
+      "enhancedTitle": "Neu: Erweiterter Scan",
+      "enhancedDescription": "WCAG + 8 zusaetzliche Kategorien: Tastaturnavigation, Screenreader-Tests, mobile Barrierefreiheit, kognitive Analyse und mehr."
     },
     "tabs": {
-      "overview": "Overview",
-      "analytics": "Analytics",
+      "overview": "Uebersicht",
+      "analytics": "Analysen",
       "monitoring": "Monitoring",
       "teams": "Teams",
-      "reports": "Reports",
-      "tools": "Tools",
+      "reports": "Berichte",
+      "tools": "Werkzeuge",
       "whiteLabel": "White Label"
     },
     "stats": {
-      "title": "Quick Overview",
-      "description": "Your accessibility metrics at a glance",
-      "averageScore": "Average Score",
-      "totalIssues": "Total Issues",
-      "critical": "Critical",
-      "serious": "Serious",
-      "moderate": "Moderate",
-      "minor": "Minor"
+      "title": "Kurzuebersicht",
+      "description": "Deine Barrierefreiheitskennzahlen auf einen Blick",
+      "averageScore": "Durchschnittlicher Score",
+      "totalIssues": "Probleme gesamt",
+      "critical": "Kritisch",
+      "serious": "Schwerwiegend",
+      "moderate": "Mittel",
+      "minor": "Gering"
     },
     "teams": {
-      "title": "Team Collaboration",
-      "description": "Collaborate with your team on accessibility projects and share insights",
-      "available": "Team Features Available",
-      "availableDescription": "Invite team members, assign roles, track issues, and collaborate on accessibility improvements.",
-      "goToTeams": "Go to Teams",
+      "title": "Teamzusammenarbeit",
+      "description": "Arbeite mit deinem Team an Barrierefreiheitsprojekten zusammen und teile Erkenntnisse",
+      "available": "Teamfunktionen verfuegbar",
+      "availableDescription": "Lade Teammitglieder ein, weise Rollen zu, verfolge Probleme und arbeite gemeinsam an Verbesserungen der Barrierefreiheit.",
+      "goToTeams": "Zu Teams",
       "roleBasedAccess": {
-        "title": "Role-Based Access",
-        "description": "Admin, Editor, Viewer permissions"
+        "title": "Rollenbasierter Zugriff",
+        "description": "Berechtigungen fuer Admin, Editor und Viewer"
       },
       "issueTracking": {
-        "title": "Issue Tracking",
-        "description": "Assign and track accessibility issues"
+        "title": "Problemverfolgung",
+        "description": "Barrierefreiheitsprobleme zuweisen und verfolgen"
       },
       "sharedWorkspaces": {
-        "title": "Shared Workspaces",
-        "description": "Collaborate on multiple sites"
+        "title": "Geteilte Arbeitsbereiche",
+        "description": "An mehreren Websites zusammenarbeiten"
       }
     },
     "analytics": {
       "issuesByImpact": {
-        "title": "Issues by Impact Level",
-        "description": "Distribution of accessibility issues across severity levels"
+        "title": "Probleme nach Auswirkungsgrad",
+        "description": "Verdeling van Barrierefreiheitsproblemen ueber Schweregrade"
       },
       "trendAnalysis": {
-        "title": "Trend Analysis",
-        "description": "Track your accessibility improvements over time",
-        "noData": "Run more scans to see trends"
+        "title": "Trendanalyse",
+        "description": "Verfolge deine Verbesserungen der Barrierefreiheit im Zeitverlauf",
+        "noData": "Fuehre weitere Scans aus, um Trends zu sehen"
       }
     },
     "monitoring": {
-      "title": "Continuous Monitoring",
-      "description": "Track accessibility changes and get notified of regressions",
-      "comingSoon": "Monitoring Available",
-      "comingSoonDescription": "Automated monitoring tracks your websites and alerts you when accessibility scores drop or new issues are detected.",
-      "configureNotifications": "Configure Notifications",
-      "upgradePlan": "Upgrade Plan",
+      "title": "Kontinuierliches Monitoring",
+      "description": "Verfolge Aenderungen der Barrierefreiheit und erhalte Benachrichtigungen bei Regressionen",
+      "comingSoon": "Monitoring verfuegbar",
+      "comingSoonDescription": "Automatisiertes Monitoring verfolgt deine Websites und warnt dich, wenn Barrierefreiheitswerte sinken oder neue Probleme erkannt werden.",
+      "configureNotifications": "Benachrichtigungen konfigurieren",
+      "upgradePlan": "Tarif upgraden",
       "scheduledScans": {
-        "title": "Scheduled Scans",
-        "description": "Automatically scan your sites daily, weekly, or monthly"
+        "title": "Geplante Scans",
+        "description": "Scanne deine Websites automatisch taeglich, woechentlich oder monatlich"
       },
       "instantAlerts": {
-        "title": "Instant Alerts",
-        "description": "Get email notifications when scores drop or issues increase"
+        "title": "Sofortige Warnungen",
+        "description": "Erhalte E-Mail-Benachrichtigungen, wenn Scores sinken oder Probleme zunehmen"
       },
       "trendTracking": {
-        "title": "Trend Tracking",
-        "description": "View historical data and track improvements over time"
+        "title": "Trendverfolgung",
+        "description": "Sieh historische Daten und verfolge Verbesserungen im Zeitverlauf"
       }
     },
     "reports": {
-      "title": "Scan Reports",
-      "description": "Download detailed accessibility reports for your scans",
-      "noReports": "No Reports Available",
-      "noReportsDescription": "Run your first accessibility scan to generate downloadable reports.",
-      "selectScan": "Select a scan to download its detailed accessibility report:"
+      "title": "Scan-Berichte",
+      "description": "Lade detaillierte Barrierefreiheitsberichte fuer deine Scans herunter",
+      "noReports": "Keine Berichte verfuegbar",
+      "noReportsDescription": "Fuehre deinen ersten Barrierefreiheits-Scan aus, um herunterladbare Berichte zu erstellen.",
+      "selectScan": "Waehle einen Scan aus, um den detaillierten Barrierefreiheitsbericht herunterzuladen:"
     },
     "tools": {
-      "title": "Accessibility Resources",
-      "description": "Tools and guides to help improve your website accessibility",
+      "title": "Barrierefreiheitsressourcen",
+      "description": "Tools und Leitfaeden zur Verbesserung der Barrierefreiheit deiner Website",
       "wcagGuidelines": {
-        "title": "WCAG Guidelines",
-        "description": "Learn about WCAG 2.1 AA compliance requirements"
+        "title": "WCAG-Richtlinien",
+        "description": "Erfahre mehr ueber die Anforderungen fuer WCAG-2.1-AA-Konformitaet"
       },
       "quickFixes": {
-        "title": "Quick Fixes",
-        "description": "Common accessibility issues and how to fix them"
+        "title": "Schnelle Korrekturen",
+        "description": "Haeufige Barrierefreiheitsprobleme und wie du sie behebst"
       }
     },
     "whiteLabel": {
-      "title": "White Label Management",
-      "description": "Customize your brand appearance, logo, colors, and contact information for your Business plan.",
-      "fullSettings": "Full Settings",
-      "fullSettingsDescription": "Complete white-label configuration",
-      "fullSettingsDetails": "Logo, colors, contact info, domain settings",
-      "livePreview": "Live Preview",
-      "livePreviewDescription": "See your customizations",
-      "livePreviewDetails": "Your site already shows your branding!",
-      "customReports": "Custom Reports",
-      "customReportsDescription": "Branded PDF exports",
-      "customReportsDetails": "Available - Generate reports with your branding",
-      "featuresTitle": "Your White Label Features",
+      "title": "White-Label-Verwaltung",
+      "description": "Passe Markenauftritt, Logo, Farben und Kontaktinformationen fuer deinen Business-Tarif an.",
+      "fullSettings": "Vollstaendige Einstellungen",
+      "fullSettingsDescription": "Vollstaendige White-Label-Konfiguration",
+      "fullSettingsDetails": "Logo, Farben, Kontaktinformationen, Domain-Einstellungen",
+      "livePreview": "Live-Vorschau",
+      "livePreviewDescription": "Sieh deine Anpassungen",
+      "livePreviewDetails": "Deine Website zeigt bereits dein Branding!",
+      "customReports": "Individuelle Berichte",
+      "customReportsDescription": "PDF-Exporte mit Branding",
+      "customReportsDetails": "Verfuegbar - Erstelle Berichte mit deinem Branding",
+      "featuresTitle": "Deine White-Label-Funktionen",
       "features": {
-        "logo": "Custom company logo & favicon",
-        "colors": "Brand colors (primary, secondary, accent)",
-        "contact": "Custom contact information",
-        "removeBranding": "Remove \"Powered by VexNexa\"",
-        "footerText": "Custom footer text",
-        "subdomain": "Subdomain (yourcompany.vexnexa.com)",
-        "customDomain": "Custom domain (contact support)",
-        "brandedReports": "Branded PDF reports"
+        "logo": "Individuelles Firmenlogo und Favicon",
+        "colors": "Markenfarben (primaer, sekundaer, Akzent)",
+        "contact": "Individuelle Kontaktinformationen",
+        "removeBranding": "\"Powered by VexNexa\" entfernen",
+        "footerText": "Individueller Footer-Text",
+        "subdomain": "Subdomain (deinefirma.vexnexa.com)",
+        "customDomain": "Eigene Domain (Support kontaktieren)",
+        "brandedReports": "PDF-Berichte mit Branding"
       },
-      "customize": "Customize Your Brand"
+      "customize": "Deine Marke anpassen"
     },
     "recentScans": {
-      "title": "Recent Scans",
-      "description": "Your latest accessibility scans and their results",
-      "empty": "No scans yet",
-      "emptyDescription": "Get started by scanning your first website for accessibility issues.",
+      "title": "Aktuelle Scans",
+      "description": "Deine neuesten Barrierefreiheits-Scans und ihre Ergebnisse",
+      "empty": "Noch keine Scans",
+      "emptyDescription": "Beginne, indem du deine erste Website auf Barrierefreiheitsprobleme scannst.",
       "tableHeaders": {
-        "site": "Site",
+        "site": "Website",
         "url": "URL",
         "score": "Score",
         "status": "Status",
-        "issues": "Issues",
-        "date": "Date"
+        "issues": "Probleme",
+        "date": "Datum"
       }
     },
     "status": {
-      "done": "done",
-      "running": "running",
-      "failed": "failed",
-      "queued": "queued",
+      "done": "erledigt",
+      "running": "laeuft",
+      "failed": "fehlgeschlagen",
+      "queued": "in Warteschlange",
       "COMPLETED": "Abgeschlossen",
       "PROCESSING": "Läuft",
       "PENDING": "In Warteschlange",
@@ -1893,11 +1893,11 @@
   },
   "newsletter": {
     "confirmed": {
-      "title": "Subscription confirmed! 🎉",
-      "subtitle": "You're now subscribed to the VexNexa newsletter",
-      "emailSent": "Welcome email sent",
-      "checkInbox": "Check your inbox for your welcome message with all the details.",
-      "whatToExpect": "What can you expect?",
+      "title": "Anmeldung bestaetigt!",
+      "subtitle": "Du hast dich jetzt fuer den VexNexa-Newsletter angemeldet",
+      "emailSent": "Willkommens-E-Mail gesendet",
+      "checkInbox": "Pruefe dein Postfach auf deine Willkommensnachricht mit allen Details.",
+      "whatToExpect": "Was kannst du erwarten?",
       "expectations": [
         {
           "icon": "🚀",
@@ -1916,44 +1916,44 @@
           "text": "Max. 2 emails/month"
         }
       ],
-      "startScan": "Start your first scan",
-      "backToHome": "Back to homepage",
-      "gdprNote": "GDPR compliant: You can always unsubscribe via the link in every newsletter, or by sending an email to info@vexnexa.com."
+      "startScan": "Ersten Scan starten",
+      "backToHome": "Zurueck zur Startseite",
+      "gdprNote": "DSGVO-konform: Du kannst dich jederzeit ueber den Link in jedem Newsletter abmelden oder eine E-Mail an info@vexnexa.com senden."
     },
     "unsubscribed": {
-      "title": "Unsubscribed",
-      "subtitle": "You won't receive newsletters from VexNexa anymore",
-      "confirmationSent": "Unsubscription confirmed",
-      "confirmationMessage": "You'll receive a confirmation email of your unsubscription.",
-      "whatThisMeans": "What does this mean?",
+      "title": "Abgemeldet",
+      "subtitle": "Du erhaeltst keine Newsletter von VexNexa mehr",
+      "confirmationSent": "Abmeldung bestaetigt",
+      "confirmationMessage": "Du erhaeltst eine Bestaetigungs-E-Mail fuer deine Abmeldung.",
+      "whatThisMeans": "Was bedeutet das?",
       "details": [
         "You won't receive marketing emails anymore",
         "Transactional emails (like account confirmations) you'll still receive",
         "Your data is kept according to our privacy policy",
         "You can always resubscribe"
       ],
-      "accidentalTitle": "Unsubscribed by accident?",
-      "accidentalMessage": "No problem! You can resubscribe via our homepage.",
-      "resubscribe": "Resubscribe",
+      "accidentalTitle": "Aus Versehen abgemeldet?",
+      "accidentalMessage": "Kein Problem! Du kannst dich ueber unsere Startseite erneut anmelden.",
+      "resubscribe": "Erneut abonnieren",
       "feedbackTitle": "Feedback:",
-      "feedbackMessage": "We'd like to know why you unsubscribed.",
-      "shareFeedback": "Share your feedback",
+      "feedbackMessage": "Wir moechten gerne wissen, warum du dich abgemeldet hast.",
+      "shareFeedback": "Feedback teilen",
       "accidentalNote": "<strong>Versehentlich abgemeldet?</strong> Du kannst dich jederzeit erneut anmelden.",
       "backToHome": "Zur Startseite",
       "feedbackNote": "Meinung ge?ndert oder Feedback? <a href=\"/contact\" class=\"underline\">Kontaktiere uns</a>."
     },
     "invalid": {
       "title": {
-        "token": "Invalid link",
-        "unsubscribed": "Account unsubscribed",
-        "default": "Link problem"
+        "token": "Ungueltiger Link",
+        "unsubscribed": "Konto abgemeldet",
+        "default": "Linkproblem"
       },
       "description": {
-        "token": "This confirmation link is not valid or has expired",
-        "unsubscribed": "This email address has already been unsubscribed from our newsletter",
-        "default": "There's a problem with this newsletter link"
+        "token": "Dieser Bestaetigungslink ist ungueltig oder abgelaufen",
+        "unsubscribed": "Diese E-Mail-Adresse wurde bereits von unserem Newsletter abgemeldet",
+        "default": "Mit diesem Newsletter-Link gibt es ein Problem"
       },
-      "possibleCauses": "Possible causes:",
+      "possibleCauses": "Moegliche Ursachen:",
       "causes": {
         "token": [
           "The link may have expired (links are valid for 7 days)",
@@ -1969,16 +1969,16 @@
           "The link is no longer valid"
         ]
       },
-      "whatToDoTitle": "What can you do?",
+      "whatToDoTitle": "Was kannst du tun?",
       "whatToDo": {
-        "token": "Try to resubscribe for a new confirmation link.",
-        "unsubscribed": "If you want to resubscribe, go to our homepage.",
-        "default": "Contact our support team for help."
+        "token": "Versuche, dich erneut zu abonnieren, um einen neuen Bestaetigungslink zu erhalten.",
+        "unsubscribed": "Wenn du dich erneut anmelden moechtest, gehe zu unserer Startseite.",
+        "default": "Kontaktiere unser Support-Team fuer Hilfe."
       },
-      "resubscribe": "Resubscribe",
-      "subscribeNewsletter": "Subscribe to newsletter",
-      "contactSupport": "Contact support",
-      "loading": "Loading...",
+      "resubscribe": "Erneut abonnieren",
+      "subscribeNewsletter": "Newsletter abonnieren",
+      "contactSupport": "Support kontaktieren",
+      "loading": "Wird geladen...",
       "buttons": {
         "tryAgain": "Erneut versuchen",
         "subscribeNewsletter": "Erneut abonnieren",
@@ -2256,14 +2256,14 @@
   },
   "legal": {
     "common": {
-      "skipToContent": "Skip to main content",
-      "backToHome": "Back to homepage",
-      "lastUpdated": "Last updated",
-      "onThisPage": "On this page",
-      "quickNavigation": "Quick navigation to sections",
-      "needHelp": "Need help?",
-      "responseTime": "We typically respond within 1 business day",
-      "contactUs": "Contact us"
+      "skipToContent": "Zum Hauptinhalt springen",
+      "backToHome": "Zurueck zur Startseite",
+      "lastUpdated": "Zuletzt aktualisiert",
+      "onThisPage": "Auf dieser Seite",
+      "quickNavigation": "Schnellnavigation zu Abschnitten",
+      "needHelp": "Brauchst du Hilfe?",
+      "responseTime": "Wir antworten in der Regel innerhalb eines Werktags",
+      "contactUs": "Kontakt aufnehmen"
     },
     "privacy": {
       "title": "Datenschutzerklärung",
@@ -2817,7 +2817,7 @@
       }
     },
     "sla": {
-      "title": "SLA & Support",
+      "title": "SLA und Support",
       "description": "Unsere Service-Level-Vereinbarung und Support-Informationen für alle VexNexa-Benutzer.",
       "lastUpdated": "8. Dezember 2024",
       "version": "v1.0",
@@ -2828,17 +2828,17 @@
         "uptimeDesc": "99,9% Uptime-Garantie auf alle kostenpflichtigen Pläne",
         "support": "Support",
         "supportDesc": "Antwort innerhalb von 4 Stunden für Business-Plan-Benutzer",
-        "monitoring": "24/7 Monitoring",
+        "monitoring": "24/7-Monitoring",
         "monitoringDesc": "Kontinuierliche Überwachung mit sofortiger Incident-Response"
       },
       "sections": {
-        "agreement": "Service Level Agreement",
+        "agreement": "Service-Level-Agreement",
         "support": "Support-Levels",
         "incidents": "Incident Response",
         "contact": "Support kontaktieren"
       },
       "agreement": {
-        "title": "Service Level Agreement",
+        "title": "Service-Level-Agreement",
         "content": "VexNexa verpflichtet sich, einen zuverlässigen Service mit den folgenden Verfügbarkeitszielen bereitzustellen:",
         "uptime": "Uptime: 99,9% Uptime auf allen kostenpflichtigen Plänen (ausgenommen geplante Wartung)",
         "scheduledMaintenance": "Geplante Wartung: Mindestens 48 Stunden im Voraus angekündigt",
@@ -2946,359 +2946,359 @@
   "modernAuth": {
     "login": {
       "steps": {
-        "credentials": "Sign In",
-        "verify": "Verify"
+        "credentials": "Anmelden",
+        "verify": "Verifizieren"
       },
-      "socialLogin": "Sign in with {provider}",
+      "socialLogin": "Mit {provider} anmelden",
       "securityTips": {
-        "title": "Security Tips",
-        "tip1": "Never share your password",
-        "tip2": "Use a strong, unique password",
-        "tip3": "Enable two-factor authentication"
+        "title": "Sicherheitstipps",
+        "tip1": "Teile dein Passwort niemals",
+        "tip2": "Verwende ein starkes, einzigartiges Passwort",
+        "tip3": "Aktiviere die Zwei-Faktor-Authentifizierung"
       }
     },
     "register": {
       "steps": {
-        "account": "Create Account",
-        "details": "Your Details",
-        "confirm": "Confirm"
+        "account": "Konto erstellen",
+        "details": "Deine Angaben",
+        "confirm": "Bestaetigen"
       },
-      "socialRegister": "Sign up with {provider}",
+      "socialRegister": "Mit {provider} registrieren",
       "passwordRequirements": {
-        "title": "Password Requirements",
-        "length": "At least 8 characters",
-        "uppercase": "One uppercase letter",
-        "lowercase": "One lowercase letter",
-        "number": "One number"
+        "title": "Passwortanforderungen",
+        "length": "Mindestens 8 Zeichen",
+        "uppercase": "Ein Grossbuchstabe",
+        "lowercase": "Ein Kleinbuchstabe",
+        "number": "Eine Zahl"
       },
       "benefits": {
-        "title": "What you get",
+        "title": "Was du bekommst",
         "freeScan": "Free trial scan included",
-        "reports": "Detailed accessibility reports",
-        "tracking": "Track improvements over time",
-        "support": "Email support"
+        "reports": "Detaillierte Barrierefreiheitsberichte",
+        "tracking": "Verbesserungen im Zeitverlauf verfolgen",
+        "support": "E-Mail-Support"
       }
     }
   },
   "getStartedPage": {
     "hero": {
-      "badge": "Quick start",
-      "title": "Get started with your first scan",
-      "subtitle": "Enter your website URL and we'll run a comprehensive accessibility scan"
+      "badge": "Schnellstart",
+      "title": "Starte mit deinem ersten Scan",
+      "subtitle": "Gib die URL deiner Website ein und wir fuehren einen umfassenden Barrierefreiheits-Scan aus"
     },
     "form": {
-      "title": "Start your first scan",
-      "description": "We'll analyze your website for accessibility issues and provide actionable recommendations",
+      "title": "Starte deinen ersten Scan",
+      "description": "Wir analysieren deine Website auf Barrierefreiheitsprobleme und liefern umsetzbare Empfehlungen",
       "url": {
-        "label": "Website URL",
+        "label": "Website-URL",
         "required": "*",
         "placeholder": "https://example.com",
-        "help": "Enter the full URL of the page you want to scan"
+        "help": "Gib die vollstaendige URL der Seite ein, die du scannen moechtest"
       },
       "frequency": {
-        "label": "Scan frequency",
+        "label": "Scan-Haeufigkeit",
         "options": {
-          "once": "One-time scan",
-          "weekly": "Weekly",
-          "monthly": "Monthly"
+          "once": "Einmaliger Scan",
+          "weekly": "Woechentlich",
+          "monthly": "Monatlich"
         },
         "help": {
-          "once": "Run a single scan now",
-          "recurring": "Automatically scan your site {frequency}"
+          "once": "Jetzt einen einzelnen Scan ausfuehren",
+          "recurring": "Deine Website automatisch {frequency} scannen"
         }
       },
       "notify": {
-        "label": "Email me when the scan is complete",
-        "help": "You'll receive a notification with a link to view your results"
+        "label": "Schick mir eine E-Mail, wenn der Scan abgeschlossen ist",
+        "help": "Du erhaeltst eine Benachrichtigung mit einem Link zu deinen Ergebnissen"
       },
       "submit": {
-        "default": "Start accessibility scan",
-        "loading": "Starting scan..."
+        "default": "Barrierefreiheits-Scan starten",
+        "loading": "Scan wird gestartet..."
       },
       "errors": {
-        "required": "Please enter a URL",
-        "invalid": "Please enter a valid URL",
-        "generic": "Something went wrong"
+        "required": "Bitte gib eine URL ein",
+        "invalid": "Bitte gib eine gueltige URL ein",
+        "generic": "Etwas ist schiefgelaufen"
       }
     },
     "whatHappensNext": {
-      "title": "What happens next?",
+      "title": "Was passiert als Naechstes?",
       "steps": {
         "scan": {
-          "title": "Scan runs automatically",
-          "description": "Our scanner analyzes your page for WCAG compliance + 8 additional accessibility categories"
+          "title": "Scan laeuft automatisch",
+          "description": "Unser Scanner analysiert deine Seite auf WCAG-Konformitaet plus 8 zusaetzliche Barrierefreiheitskategorien"
         },
         "report": {
-          "title": "View your detailed report",
-          "description": "See prioritized issues with code snippets, screenshots, and clear remediation steps"
+          "title": "Detaillierten Bericht ansehen",
+          "description": "Sieh priorisierte Probleme mit Code-Snippets, Screenshots und klaren Behebungsschritten"
         },
         "improve": {
-          "title": "Fix top issues → re-scan → improve",
-          "description": "Work through issues by priority, re-scan to track progress, and share reports with your team"
+          "title": "Top-Probleme beheben -> erneut scannen -> verbessern",
+          "description": "Arbeite Probleme nach Prioritaet ab, scanne erneut, um Fortschritte zu verfolgen, und teile Berichte mit deinem Team"
         }
       }
     },
     "footer": {
-      "notReady": "Not ready to scan yet?",
-      "learnMore": "Learn more about our features",
-      "hasAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "notReady": "Noch nicht bereit fuer einen Scan?",
+      "learnMore": "Mehr ueber unsere Funktionen erfahren",
+      "hasAccount": "Hast du bereits ein Konto?",
+      "signIn": "Anmelden"
     }
   },
   "addons": {
     "seats": {
-      "title": "Team & Seats",
-      "description": "Manage team seats for collaboration",
-      "baseSeats": "Base seats",
-      "extraSeats": "Extra seats",
-      "total": "Total",
-      "inUse": "In use",
-      "priceInfo": "Extra seats cost <strong>€{price} per seat per month</strong>. You can add and remove seats whenever you want.",
-      "addSeat": "Add seat",
-      "removeSeat": "Remove seat",
-      "monthlyCost": "Monthly cost",
-      "upgradePrompt": "Upgrade to a paid plan to purchase extra seats.",
-      "viewPlans": "View plans →"
+      "title": "Team und Seats",
+      "description": "Team-Seats fuer die Zusammenarbeit verwalten",
+      "baseSeats": "Basis-Seats",
+      "extraSeats": "Zusaetzliche Seats",
+      "total": "Gesamt",
+      "inUse": "In Verwendung",
+      "priceInfo": "Zusaetzliche Seats kosten <strong>€{price} pro Seat und Monat</strong>. Du kannst Seats jederzeit hinzufuegen und entfernen.",
+      "addSeat": "Seat hinzufuegen",
+      "removeSeat": "Seat entfernen",
+      "monthlyCost": "Monatliche Kosten",
+      "upgradePrompt": "Wechsle zu einem kostenpflichtigen Tarif, um zusaetzliche Seats zu kaufen.",
+      "viewPlans": "Tarife ansehen ->"
     },
     "scans": {
-      "title": "Scan Packages",
-      "description": "Increase your monthly scan limit with extra packages",
-      "usage": "Usage ({period})",
-      "basePlan": "Base (plan):",
-      "extraPackages": "Extra packages:",
-      "warning80": "You've already used {percent}% of your scans. Consider an extra package.",
-      "warning95": "You're almost at your scan limit ({percent}%)! Buy extra scans to continue.",
-      "activePackages": "Active packages",
-      "availablePackages": "Available packages",
-      "perMonth": "/month",
-      "buy": "Buy",
-      "active": "Active",
-      "upgradePrompt": "Upgrade to a paid plan to purchase extra scan packages.",
-      "alreadyActive": "You already have this scan package active. Choose another package or cancel the existing one first."
+      "title": "Scan-Pakete",
+      "description": "Erhoehe dein monatliches Scan-Limit mit Zusatzpaketen",
+      "usage": "Nutzung ({period})",
+      "basePlan": "Basis (Tarif):",
+      "extraPackages": "Zusatzpakete:",
+      "warning80": "Du hast bereits {percent}% deiner Scans genutzt. Ziehe ein Zusatzpaket in Betracht.",
+      "warning95": "Du bist fast an deinem Scan-Limit ({percent}%)! Kaufe zusaetzliche Scans, um fortzufahren.",
+      "activePackages": "Aktive Pakete",
+      "availablePackages": "Verfuegbare Pakete",
+      "perMonth": "/Monat",
+      "buy": "Kaufen",
+      "active": "Aktiv",
+      "upgradePrompt": "Wechsle zu einem kostenpflichtigen Tarif, um zusaetzliche Scan-Pakete zu kaufen.",
+      "alreadyActive": "Dieses Scan-Paket ist bereits aktiv. Waehle ein anderes Paket oder kuendige zuerst das bestehende."
     },
     "errors": {
       "trialUser": "Upgrade to a paid plan to purchase add-ons.",
-      "noPaymentMethod": "No payment method found. Please set up your payment method first.",
-      "paymentExpired": "Your payment method has expired. Click 'Set up payment method' to update it.",
-      "setupPayment": "Set up payment method",
-      "failed": "Failed to process request. Please try again.",
+      "noPaymentMethod": "Keine Zahlungsmethode gefunden. Bitte richte zuerst deine Zahlungsmethode ein.",
+      "paymentExpired": "Deine Zahlungsmethode ist abgelaufen. Klicke auf 'Zahlungsmethode einrichten', um sie zu aktualisieren.",
+      "setupPayment": "Zahlungsmethode einrichten",
+      "failed": "Anfrage konnte nicht verarbeitet werden. Bitte versuche es erneut.",
       "freePlanUser": "Upgraden Sie auf einen kostenpflichtigen Plan, um Add-ons zu kaufen."
     },
     "success": {
-      "activated": "Add-on activated! Payment will be processed automatically every month.",
-      "updated": "Number of seats updated",
-      "canceled": "Add-on canceled. Access remains until end of billing period."
+      "activated": "Add-on aktiviert! Die Zahlung wird jeden Monat automatisch verarbeitet.",
+      "updated": "Anzahl der Seats aktualisiert",
+      "canceled": "Add-on gekuendigt. Der Zugriff bleibt bis zum Ende des Abrechnungszeitraums erhalten."
     }
   },
   "assurance": {
     "product": {
       "name": "Accessibility Assurance",
-      "tagline": "Automated monitoring & assurance for accessibility compliance",
-      "description": "Low-cost subscription service for schools, governments, and public institutions. Monitor accessibility scores over time with automated scans and reports."
+      "tagline": "Automatisiertes Monitoring & Assurance für Barrierefreiheits-Compliance",
+      "description": "Kostengünstiger Abonnementdienst für Schulen, Behörden und öffentliche Einrichtungen. Überwachen Sie Barrierefreiheitswerte im Zeitverlauf mit automatisierten Scans und Berichten."
     },
     "report": {
-      "title": "Accessibility Monitoring Report",
-      "subtitle": "Automated Accessibility Assessment",
+      "title": "Barrierefreiheits-Überwachungsbericht",
+      "subtitle": "Automatisierte Barrierefreiheitsbewertung",
       "domain": "Domain",
-      "label": "Site Name",
-      "currentScore": "Current Score",
-      "threshold": "Threshold",
-      "trend": "Score Trend (Last 8 Scans)",
+      "label": "Website-Name",
+      "currentScore": "Aktueller Wert",
+      "threshold": "Schwellenwert",
+      "trend": "Werttrend (letzte 8 Scans)",
       "trendShort": "Trend",
-      "wcagCompliance": "WCAG Compliance",
+      "wcagCompliance": "WCAG-Compliance",
       "wcagAA": "WCAG 2.1 AA",
       "wcagAAA": "WCAG 2.1 AAA",
-      "generatedAt": "Generated",
-      "monitoredBy": "Monitored by VexNexa Accessibility Assurance",
+      "generatedAt": "Erstellt",
+      "monitoredBy": "Überwacht von VexNexa Accessibility Assurance",
       "scoreStatus": {
-        "excellent": "Excellent",
-        "good": "Good",
-        "fair": "Fair",
-        "poor": "Poor",
-        "critical": "Critical"
+        "excellent": "Ausgezeichnet",
+        "good": "Gut",
+        "fair": "Ausreichend",
+        "poor": "Schwach",
+        "critical": "Kritisch"
       },
       "thresholdStatus": {
-        "aboveThreshold": "Above Threshold",
-        "belowThreshold": "Below Threshold",
-        "meetingTarget": "Meeting Target"
+        "aboveThreshold": "Über Schwelle",
+        "belowThreshold": "Unter Schwelle",
+        "meetingTarget": "Ziel erreicht"
       },
       "disclaimer": {
-        "title": "Important Notice",
-        "text": "This report reflects automated accessibility checks and does not constitute a formal WCAG compliance audit. Results are for monitoring purposes only and should not be considered as legal compliance certification. For comprehensive accessibility evaluation, please consult with qualified accessibility experts.",
-        "limitation": "Automated testing has inherent limitations and cannot detect all accessibility issues. Manual testing and user feedback are essential for complete accessibility assurance."
+        "title": "Wichtiger Hinweis",
+        "text": "Dieser Bericht spiegelt automatisierte Barrierefreiheitsprüfungen wider und stellt keine formelle WCAG-Compliance-Prüfung dar. Die Ergebnisse dienen nur zu Überwachungszwecken und sollten nicht als rechtliche Compliance-Zertifizierung betrachtet werden. Für eine umfassende Barrierefreiheitsbewertung wenden Sie sich bitte an qualifizierte Barrierefreiheitsexperten.",
+        "limitation": "Automatisierte Tests haben inhärente Grenzen und können nicht alle Barrierefreiheitsprobleme erkennen. Manuelle Tests und Nutzerfeedback sind für eine vollständige Barrierefreiheits-Assurance unerlässlich."
       },
       "summary": {
-        "title": "Summary",
-        "scanDate": "Scan Date",
-        "issuesFound": "Issues Found",
-        "critical": "Critical",
-        "serious": "Serious",
-        "moderate": "Moderate",
-        "minor": "Minor"
+        "title": "Zusammenfassung",
+        "scanDate": "Scan-Datum",
+        "issuesFound": "Gefundene Probleme",
+        "critical": "Kritisch",
+        "serious": "Schwerwiegend",
+        "moderate": "Mittel",
+        "minor": "Gering"
       }
     },
     "email": {
-      "reportSubject": "Accessibility Report: {domain}",
-      "alertSubject": "Accessibility Alert: {domain}",
-      "welcomeSubject": "Welcome to Accessibility Assurance",
+      "reportSubject": "Barrierefreiheitsbericht: {domain}",
+      "alertSubject": "Barrierefreiheitswarnung: {domain}",
+      "welcomeSubject": "Willkommen bei Accessibility Assurance",
       "report": {
-        "greeting": "Your scheduled accessibility report is ready",
-        "body": "We've completed an automated accessibility scan for {domain}. The current score is {score} out of 100.",
-        "viewReport": "View Full Report",
-        "dashboard": "Go to Dashboard"
+        "greeting": "Ihr geplanter Barrierefreiheitsbericht ist fertig",
+        "body": "Wir haben einen automatisierten Barrierefreiheitsscan für {domain} abgeschlossen. Der aktuelle Wert ist {score} von 100.",
+        "viewReport": "Vollständigen Bericht ansehen",
+        "dashboard": "Zum Dashboard"
       },
       "alert": {
         "regression": {
-          "title": "Score Dropped Below Threshold",
-          "body": "The accessibility score for {domain} has dropped to {score}, which is below your threshold of {threshold}."
+          "title": "Wert unter Schwelle gefallen",
+          "body": "Der Barrierefreiheitswert für {domain} ist auf {score} gefallen, unter Ihre Schwelle von {threshold}."
         },
         "scoreChange": {
-          "title": "Significant Score Decrease",
-          "body": "The accessibility score for {domain} decreased from {previousScore} to {currentScore} (−{change} points)."
+          "title": "Erheblicher Wertrückgang",
+          "body": "Der Barrierefreiheitswert für {domain} sank von {previousScore} auf {currentScore} (−{change} Punkte)."
         },
         "criticalIssues": {
-          "title": "Critical Issues Detected",
-          "body": "New critical accessibility issues have been detected on {domain}."
+          "title": "Kritische Probleme erkannt",
+          "body": "Auf {domain} wurden neue kritische Barrierefreiheitsprobleme erkannt."
         }
       },
       "welcome": {
-        "headline": "Welcome to Accessibility Assurance",
-        "body": "Thank you for subscribing to VexNexa Accessibility Assurance. Your {tier} plan is now active with monitoring for up to {domains} {domainPlural}.",
+        "headline": "Willkommen bei Accessibility Assurance",
+        "body": "Vielen Dank für Ihr Abonnement von VexNexa Accessibility Assurance. Ihr {tier}-Plan ist jetzt aktiv mit Überwachung für bis zu {domains} {domainPlural}.",
         "features": {
-          "title": "What's included:",
-          "automated": "Automated weekly or bi-weekly scans",
-          "reports": "Professional PDF reports in your language",
-          "alerts": "Instant alerts for score regressions",
-          "multilingual": "Support for 5 languages (EN, NL, FR, ES, PT)"
+          "title": "Was enthalten ist:",
+          "automated": "Automatisierte wöchentliche oder zweiwöchentliche Scans",
+          "reports": "Professionelle PDF-Berichte in Ihrer Sprache",
+          "alerts": "Sofortige Warnungen bei Wertrückgängen",
+          "multilingual": "Unterstützung für 5 Sprachen (EN, NL, FR, ES, PT)"
         },
         "nextSteps": {
-          "title": "Next steps:",
-          "addDomain": "Add your first domain to monitor",
-          "configure": "Configure scan frequency and thresholds",
-          "setRecipients": "Add email recipients for reports"
+          "title": "Nächste Schritte:",
+          "addDomain": "Fügen Sie Ihre erste zu überwachende Domain hinzu",
+          "configure": "Konfigurieren Sie Scan-Häufigkeit und Schwellenwerte",
+          "setRecipients": "Fügen Sie E-Mail-Empfänger für Berichte hinzu"
         }
       }
     },
     "dashboard": {
-      "overview": "Overview",
-      "domains": "Monitored Domains",
-      "reports": "Reports",
-      "alerts": "Alerts",
-      "settings": "Settings",
-      "subscription": "Subscription",
-      "addDomain": "Add Domain",
-      "noDomains": "No monitored domains yet",
-      "noDomainsDescription": "Add your first domain to start monitoring accessibility scores.",
-      "domainLimit": "Domain limit reached",
-      "domainLimitDescription": "Upgrade your plan to monitor more domains."
+      "overview": "Übersicht",
+      "domains": "Überwachte Domains",
+      "reports": "Berichte",
+      "alerts": "Warnungen",
+      "settings": "Einstellungen",
+      "subscription": "Abonnement",
+      "addDomain": "Domain hinzufügen",
+      "noDomains": "Noch keine überwachten Domains",
+      "noDomainsDescription": "Fügen Sie Ihre erste Domain hinzu, um Barrierefreiheitswerte zu überwachen.",
+      "domainLimit": "Domain-Limit erreicht",
+      "domainLimitDescription": "Upgraden Sie Ihren Plan, um mehr Domains zu überwachen."
     },
     "domain": {
       "domain": "Domain",
-      "label": "Site Name",
+      "label": "Website-Name",
       "optional": "optional",
-      "scanFrequency": "Scan Frequency",
-      "weekly": "Weekly",
-      "biweekly": "Bi-weekly (Every 2 Weeks)",
-      "scoreThreshold": "Score Threshold",
-      "thresholdDescription": "Alert when score drops below this value",
-      "language": "Report Language",
-      "emailRecipients": "Email Recipients",
-      "emailRecipientsDescription": "Up to 5 email addresses (one per line)",
-      "addRecipient": "Add Recipient",
-      "dayOfWeek": "Scan Day",
-      "timeOfDay": "Scan Time",
-      "monday": "Monday",
-      "tuesday": "Tuesday",
-      "wednesday": "Wednesday",
-      "thursday": "Thursday",
-      "friday": "Friday",
-      "saturday": "Saturday",
-      "sunday": "Sunday",
-      "active": "Active",
-      "inactive": "Inactive",
-      "lastScan": "Last Scan",
-      "nextScan": "Next Scan",
-      "currentScore": "Current Score",
+      "scanFrequency": "Scan-Häufigkeit",
+      "weekly": "Wöchentlich",
+      "biweekly": "Zweiwöchentlich (alle 2 Wochen)",
+      "scoreThreshold": "Wertschwelle",
+      "thresholdDescription": "Warnen, wenn der Wert unter diesen Wert fällt",
+      "language": "Berichtssprache",
+      "emailRecipients": "E-Mail-Empfänger",
+      "emailRecipientsDescription": "Bis zu 5 E-Mail-Adressen (eine pro Zeile)",
+      "addRecipient": "Empfänger hinzufügen",
+      "dayOfWeek": "Scan-Tag",
+      "timeOfDay": "Scan-Zeit",
+      "monday": "Montag",
+      "tuesday": "Dienstag",
+      "wednesday": "Mittwoch",
+      "thursday": "Donnerstag",
+      "friday": "Freitag",
+      "saturday": "Samstag",
+      "sunday": "Sonntag",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "lastScan": "Letzter Scan",
+      "nextScan": "Nächster Scan",
+      "currentScore": "Aktueller Wert",
       "status": "Status",
-      "actions": "Actions",
-      "edit": "Edit",
-      "delete": "Delete",
-      "scan": "Scan Now",
-      "viewDetails": "View Details",
-      "statistics": "Statistics",
-      "averageScore": "Average Score",
-      "minScore": "Minimum Score",
-      "maxScore": "Maximum Score",
-      "totalScans": "Total Scans",
-      "regressions": "Regressions",
+      "actions": "Aktionen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "scan": "Jetzt scannen",
+      "viewDetails": "Details ansehen",
+      "statistics": "Statistiken",
+      "averageScore": "Durchschnittlicher Wert",
+      "minScore": "Mindestwert",
+      "maxScore": "Höchstwert",
+      "totalScans": "Scans insgesamt",
+      "regressions": "Regressionen",
       "trend": "Trend",
-      "improving": "Improving",
-      "stable": "Stable",
-      "declining": "Declining"
+      "improving": "Verbessernd",
+      "stable": "Stabil",
+      "declining": "Rückläufig"
     },
     "alerts": {
-      "title": "Alerts",
-      "unresolved": "Unresolved",
-      "resolved": "Resolved",
-      "noAlerts": "No alerts",
+      "title": "Warnungen",
+      "unresolved": "Ungelöst",
+      "resolved": "Gelöst",
+      "noAlerts": "Keine Warnungen",
       "severity": {
-        "critical": "Critical",
-        "high": "High",
-        "medium": "Medium",
-        "low": "Low"
+        "critical": "Kritisch",
+        "high": "Hoch",
+        "medium": "Mittel",
+        "low": "Niedrig"
       },
       "type": {
         "regression": "Regression",
-        "scoreChange": "Score Change",
-        "criticalIssues": "Critical Issues",
-        "scanFailed": "Scan Failed"
+        "scoreChange": "Wertänderung",
+        "criticalIssues": "Kritische Probleme",
+        "scanFailed": "Scan fehlgeschlagen"
       },
-      "markResolved": "Mark as Resolved",
-      "viewScan": "View Scan"
+      "markResolved": "Als gelöst markieren",
+      "viewScan": "Scan ansehen"
     },
     "subscription": {
       "tier": {
-        "basic": "Basic",
+        "basic": "Basis",
         "pro": "Pro",
-        "publicSector": "Public Sector"
+        "publicSector": "Öffentlicher Sektor"
       },
       "status": "Status",
       "domains": "Domains",
-      "maxDomains": "Max Domains",
-      "scanFrequency": "Scan Frequency",
-      "changeTier": "Change Plan",
-      "cancel": "Cancel Subscription",
-      "upgrade": "Upgrade",
-      "manageSubscription": "Manage Subscription"
+      "maxDomains": "Max. Domains",
+      "scanFrequency": "Scan-Häufigkeit",
+      "changeTier": "Plan ändern",
+      "cancel": "Abonnement kündigen",
+      "upgrade": "Upgraden",
+      "manageSubscription": "Abonnement verwalten"
     },
     "actions": {
-      "save": "Save",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "confirm": "Confirm",
-      "add": "Add",
-      "edit": "Edit",
-      "close": "Close",
-      "download": "Download",
-      "view": "View",
-      "back": "Back"
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "confirm": "Bestätigen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "close": "Schließen",
+      "download": "Herunterladen",
+      "view": "Ansehen",
+      "back": "Zurück"
     },
     "validation": {
-      "domainRequired": "Domain is required",
-      "invalidDomain": "Invalid domain format",
-      "invalidEmail": "Invalid email address",
-      "maxRecipients": "Maximum 5 recipients allowed",
-      "thresholdRange": "Threshold must be between 60 and 100",
-      "thresholdFixed": "Threshold is fixed at 90 for your plan"
+      "domainRequired": "Domain ist erforderlich",
+      "invalidDomain": "Ungültiges Domain-Format",
+      "invalidEmail": "Ungültige E-Mail-Adresse",
+      "maxRecipients": "Maximal 5 Empfänger erlaubt",
+      "thresholdRange": "Die Schwelle muss zwischen 60 und 100 liegen",
+      "thresholdFixed": "Die Schwelle ist für Ihren Plan fest auf 90 eingestellt"
     },
     "messages": {
-      "domainAdded": "Domain added successfully",
-      "domainUpdated": "Domain settings updated",
-      "domainDeleted": "Domain removed",
-      "scanTriggered": "Scan started",
-      "settingsSaved": "Settings saved",
-      "subscriptionCanceled": "Subscription canceled",
-      "alertResolved": "Alert marked as resolved"
+      "domainAdded": "Domain erfolgreich hinzugefügt",
+      "domainUpdated": "Domain-Einstellungen aktualisiert",
+      "domainDeleted": "Domain entfernt",
+      "scanTriggered": "Scan gestartet",
+      "settingsSaved": "Einstellungen gespeichert",
+      "subscriptionCanceled": "Abonnement gekündigt",
+      "alertResolved": "Warnung als gelöst markiert"
     },
     "description": "Bleiben Sie konform mit automatisiertem Monitoring und Warnmeldungen",
     "subtitle": "Kontinuierliches Monitoring und Compliance",
@@ -3471,31 +3471,31 @@
     "exportTitle": "Als PDF oder DOCX exportieren — mit Ihrer Branding",
     "exportSubtitle": "Business- und Enterprise-Pläne enthalten White-Label-Exports. Ersetzen Sie die VexNexa-Marke durch Ihr eigenes Logo, Firmennamen, Farben und Fußzeilentext. Berichte exportieren als teilbare PDF oder bearbeitbare DOCX.",
     "exportLearnMore": "Mehr über White-Label-Berichte",
-    "reportLabel": "Accessibility Report",
-    "scannedInfo": "Scanned: March 24, 2025 · WCAG 2.2 AA · axe-core engine",
+    "reportLabel": "Barrierefreiheitsbericht",
+    "scannedInfo": "Gescannt: 24. Maerz 2025 - WCAG 2.2 AA - axe-core-Engine",
     "severity": {
-      "critical": "Critical",
-      "serious": "Serious",
-      "moderate": "Moderate",
-      "minor": "Minor"
+      "critical": "Kritisch",
+      "serious": "Schwerwiegend",
+      "moderate": "Mittel",
+      "minor": "Gering"
     },
-    "checkHeading": "Heading hierarchy correct",
-    "checkAria": "ARIA landmarks present",
-    "checkKeyboard": "Keyboard navigation incomplete",
-    "topPriority": "Top Priority Issues",
-    "fullReportTitle": "Full reports also include",
+    "checkHeading": "Ueberschriftenhierarchie korrekt",
+    "checkAria": "ARIA-Landmarks vorhanden",
+    "checkKeyboard": "Tastaturnavigation unvollstaendig",
+    "topPriority": "Probleme mit hoechster Prioritaet",
+    "fullReportTitle": "Vollstaendige Berichte enthalten auch",
     "fullReportItems": {
-      "matrix": "WCAG compliance matrix (pass/fail per criterion)",
-      "charts": "Severity breakdown charts",
-      "complete": "Complete issue list with all affected elements",
-      "guidance": "Remediation guidance with code examples",
-      "config": "Scan configuration and methodology",
-      "eaa": "EAA 2025 readiness indicator"
+      "matrix": "WCAG-Konformitaetsmatrix (bestanden/nicht bestanden pro Kriterium)",
+      "charts": "Diagramme zur Verteilung nach Schweregrad",
+      "complete": "Vollstaendige Problemliste mit allen betroffenen Elementen",
+      "guidance": "Behebungsanleitung mit Codebeispielen",
+      "config": "Scan-Konfiguration und Methodik",
+      "eaa": "Indikator fuer EAA-2025-Bereitschaft"
     },
-    "ctaTitle": "See your own site's report",
-    "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
-    "ctaButton": "Start your free scan",
-    "ctaPricing": "View pricing"
+    "ctaTitle": "Sieh dir den Bericht deiner eigenen Website an",
+    "ctaSubtitle": "Erstelle ein kostenloses Konto und scanne deine Website. Erhalte dein eigenes Barrierefreiheitsbericht in wenigen Minuten.",
+    "ctaButton": "Kostenlosen Scan starten",
+    "ctaPricing": "Preise ansehen"
   },
   "agencyCTAStrip": {
     "badge": "Für Agenturen",
@@ -3965,34 +3965,34 @@
   "checkout": {
     "return": {
       "processing": {
-        "title": "Processing your payment…",
-        "subtitle": "This usually takes a few seconds. Please don't close this page."
+        "title": "Deine Zahlung wird verarbeitet...",
+        "subtitle": "Das dauert normalerweise nur wenige Sekunden. Bitte schliesse diese Seite nicht."
       },
       "success": {
-        "title": "Payment successful!",
-        "subtitle": "Redirecting you to your dashboard…"
+        "title": "Zahlung erfolgreich!",
+        "subtitle": "Du wirst zu deinem Dashboard weitergeleitet..."
       },
       "canceled": {
-        "title": "Payment canceled",
-        "subtitle": "No charge was made. You can pick a plan whenever you are ready."
+        "title": "Zahlung abgebrochen",
+        "subtitle": "Es wurde nichts berechnet. Du kannst jederzeit einen Tarif auswaehlen, wenn du bereit bist."
       },
       "expired": {
-        "title": "Payment link expired",
-        "subtitle": "The checkout session timed out. Please start again."
+        "title": "Zahlungslink abgelaufen",
+        "subtitle": "Die Checkout-Sitzung ist abgelaufen. Bitte starte erneut."
       },
       "failed": {
-        "title": "Payment could not be completed",
-        "subtitle": "Please try again or use a different payment method."
+        "title": "Zahlung konnte nicht abgeschlossen werden",
+        "subtitle": "Bitte versuche es erneut oder nutze eine andere Zahlungsmethode."
       },
       "error": {
-        "title": "We couldn't verify your payment",
-        "subtitle": "If you were charged, contact support and include this payment id."
+        "title": "Wir konnten deine Zahlung nicht verifizieren",
+        "subtitle": "Falls dir etwas berechnet wurde, kontaktiere den Support und gib diese Zahlungs-ID an."
       },
       "action": {
-        "dashboard": "Go to dashboard",
-        "pricing": "Back to pricing",
-        "tryAgain": "Try again",
-        "contactSupport": "Contact support"
+        "dashboard": "Zum Dashboard",
+        "pricing": "Zurueck zu den Preisen",
+        "tryAgain": "Erneut versuchen",
+        "contactSupport": "Support kontaktieren"
       }
     }
   },
@@ -4061,41 +4061,41 @@
   },
   "updates": {
     "metadata": {
-      "title": "Status & Updates - VexNexa",
-      "description": "Follow VexNexa product updates, known issues, resolved fixes and reliability notes."
+      "title": "Status und Updates - VexNexa",
+      "description": "Folge VexNexa-Produktupdates, bekannten Problemen, behobenen Fehlern und Zuverlaessigkeitshinweisen."
     },
     "hero": {
-      "badge": "Status & Updates",
-      "title": "Product updates, known issues and resolved fixes",
-      "subtitle": "A public place for VexNexa reliability notes. If something affects customers, we acknowledge it, track it, and show when it has been resolved.",
-      "reportIssueCta": "Report an issue",
-      "methodologyCta": "Read our methodology"
+      "badge": "Status und Updates",
+      "title": "Produktupdates, bekannte Probleme und behobene Fehler",
+      "subtitle": "Ein oeffentlicher Ort fuer Zuverlaessigkeitshinweise zu VexNexa. Wenn etwas Kunden betrifft, bestaetigen wir es, verfolgen es und zeigen, wann es behoben wurde.",
+      "reportIssueCta": "Problem melden",
+      "methodologyCta": "Methodik lesen"
     },
     "aside": {
-      "title": "Stay informed",
-      "subtitle": "Get public status and release notes."
+      "title": "Informiert bleiben",
+      "subtitle": "Oeffentlichen Status und Versionshinweise abrufen."
     },
     "components": {
-      "publicWebsite": "Public website",
-      "accessibilityScanner": "Accessibility scanner",
-      "reportsAndExports": "Reports and exports",
-      "billingAndCheckout": "Billing and checkout",
-      "emailDelivery": "Email delivery",
-      "operational": "Operational"
+      "publicWebsite": "Oeffentliche Website",
+      "accessibilityScanner": "Barrierefreiheitsscanner",
+      "reportsAndExports": "Berichte und Exporte",
+      "billingAndCheckout": "Abrechnung und Checkout",
+      "emailDelivery": "E-Mail-Zustellung",
+      "operational": "Betriebsbereit"
     },
     "knownIssues": {
-      "title": "Known issues",
-      "subtitle": "Curated public issues that may affect customers or pilot partners.",
-      "currentBadge": "Current",
-      "lastChecked": "Last checked",
-      "fallbackTitle": "No active public issues",
-      "fallbackStatus": "Clear",
-      "fallbackSeverity": "Informational",
-      "fallbackBody": "There are currently no known user-facing issues that require a public workaround."
+      "title": "Bekannte Probleme",
+      "subtitle": "Ausgewaehlte oeffentliche Probleme, die Kunden oder Pilotpartner betreffen koennen.",
+      "currentBadge": "Aktuell",
+      "lastChecked": "Zuletzt geprueft",
+      "fallbackTitle": "Keine aktiven oeffentlichen Probleme",
+      "fallbackStatus": "Keine Probleme",
+      "fallbackSeverity": "Informativ",
+      "fallbackBody": "Derzeit gibt es keine bekannten nutzerseitigen Probleme, die einen oeffentlichen Workaround erfordern."
     },
     "recentFixes": {
-      "title": "Recent fixes",
-      "subtitle": "Public notes for visible bugs and quality improvements after they are resolved.",
+      "title": "Aktuelle Fehlerbehebungen",
+      "subtitle": "Oeffentliche Hinweise zu sichtbaren Fehlern und Qualitaetsverbesserungen, nachdem sie behoben wurden.",
       "items": [
         {
           "title": "Service worker no longer handles external assets",
@@ -4115,8 +4115,8 @@
       ]
     },
     "productUpdates": {
-      "title": "Product updates",
-      "subtitle": "Not every update is an incident. This section tracks product progress that matters for customers.",
+      "title": "Produktupdates",
+      "subtitle": "Nicht jedes Update ist ein Vorfall. Dieser Abschnitt verfolgt Produktfortschritt, der fuer Kunden wichtig ist.",
       "items": [
         {
           "title": "Sample report expanded",
@@ -4133,7 +4133,7 @@
       ]
     },
     "policy": {
-      "title": "What we publish",
+      "title": "Was wir veroeffentlichen",
       "rules": [
         "We publish user-facing bugs that can affect scans, reports, login, billing or delivery.",
         "We do not publish exploit details, customer data, credentials or internal infrastructure details.",
@@ -4142,23 +4142,23 @@
       ]
     },
     "issueStates": {
-      "title": "Issue states",
-      "investigating": "Investigating",
-      "fixInProgress": "Fix in progress",
-      "monitoring": "Monitoring",
-      "resolved": "Resolved"
+      "title": "Problemstatus",
+      "investigating": "Wird untersucht",
+      "fixInProgress": "Behebung laeuft",
+      "monitoring": "Wird ueberwacht",
+      "resolved": "Behoben"
     },
     "statusLabels": {
-      "Investigating": "Investigating",
-      "Fix in progress": "Fix in progress",
-      "Monitoring": "Monitoring",
-      "Resolved": "Resolved",
-      "Fixed": "Fixed",
-      "Released": "Released",
-      "Clear": "Clear",
-      "Informational": "Informational"
+      "Investigating": "Wird untersucht",
+      "Fix in progress": "Behebung laeuft",
+      "Monitoring": "Wird ueberwacht",
+      "Resolved": "Behoben",
+      "Fixed": "Behoben",
+      "Released": "Veroeffentlicht",
+      "Clear": "Keine Probleme",
+      "Informational": "Informativ"
     },
-    "dateRecently": "Recently"
+    "dateRecently": "Kuerzlich"
   },
   "dashboardFooter": {
     "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
