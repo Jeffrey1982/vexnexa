@@ -7,6 +7,7 @@ import { requireAuth } from "@/lib/auth";
 import {
   addPageUsage,
   addSiteUsage,
+  assertCanCreateSite,
   assertWithinLimits,
   consumeWeeklyFreeScan,
   hasWeeklyFreeScanAvailable,
@@ -657,35 +658,7 @@ export async function POST(req: Request) {
     });
 
     if (!site) {
-      const userWithPlan = await prisma.user.findUnique({
-        where: { id: user.id },
-        select: { plan: true },
-      });
-
-      const currentSiteCount = await prisma.site.count({
-        where: { userId: user.id },
-      });
-
-      const { ENTITLEMENTS } = await import("@/lib/billing/plans");
-      const plan = (userWithPlan?.plan || "FREE") as keyof typeof ENTITLEMENTS;
-      const siteLimit = ENTITLEMENTS[plan].sites;
-
-      if (currentSiteCount >= siteLimit && !useWeeklyFreeScan) {
-        const hasWeekly = await hasWeeklyFreeScanAvailable(user.id);
-        if (hasWeekly) {
-          useWeeklyFreeScan = true;
-        }
-      }
-
-      const maxSitesAllowed = useWeeklyFreeScan ? siteLimit + 1 : siteLimit;
-
-      if (currentSiteCount >= maxSitesAllowed) {
-        const e: any = new Error(`Site limit reached for ${plan} plan (${siteLimit} sites). Upgrade to add more websites.`);
-        e.code = "SITE_LIMIT_REACHED";
-        e.limit = siteLimit;
-        e.current = currentSiteCount;
-        throw e;
-      }
+      await assertCanCreateSite(user.id);
 
       site = await prisma.site.create({
         data: { userId: user.id, url: siteUrl },

@@ -68,6 +68,23 @@ export async function getTotalEntitlements(userId: string): Promise<Record<strin
   }
 }
 
+export async function assertCanCreateSite(userId: string): Promise<void> {
+  const [entitlements, currentSiteCount] = await Promise.all([
+    getTotalEntitlements(userId),
+    prisma.site.count({ where: { userId } }),
+  ])
+
+  if (currentSiteCount >= entitlements.sites) {
+    const e: any = new Error(
+      `Site limit reached (${entitlements.sites} sites). Upgrade your plan or add website capacity to continue.`,
+    )
+    e.code = "SITE_LIMIT_REACHED"
+    e.limit = entitlements.sites
+    e.current = currentSiteCount
+    throw e
+  }
+}
+
 function getIsoWeekPeriod(now: Date): string {
   const date: Date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
   const day: number = date.getUTCDay() || 7

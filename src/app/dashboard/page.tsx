@@ -16,7 +16,7 @@ import { ExportButtons } from "@/components/ExportButtons";
 import { SiteImage } from "@/components/SiteImage";
 import { NewScanForm } from "./NewScanForm";
 import { formatDate, formatDateShort, getFaviconFromUrl } from "@/lib/format";
-import { getCurrentUsage } from "@/lib/billing/entitlements";
+import { getCurrentUsage, getTotalEntitlements } from "@/lib/billing/entitlements";
 import { ENTITLEMENTS } from "@/lib/billing/plans";
 import { cn } from "@/lib/utils";
 import {
@@ -46,6 +46,7 @@ interface OverviewData {
   openIssues: { total: number; critical: number; serious: number; moderate: number; minor: number };
   siteCount: number;
   usage: { pages: number; sites: number; period: string };
+  entitlements: Awaited<ReturnType<typeof getTotalEntitlements>>;
 }
 
 async function getRecentScans(userId: string) {
@@ -69,7 +70,7 @@ async function getRecentScans(userId: string) {
 }
 
 async function getOverviewData(userId: string): Promise<OverviewData> {
-  const [recentScans, completedScans, latestPerSite, siteCount, usage] = await Promise.all([
+  const [recentScans, completedScans, latestPerSite, siteCount, usage, entitlements] = await Promise.all([
     getRecentScans(userId),
     prisma.scan.findMany({
       where: { status: "COMPLETED", score: { not: null }, site: { userId } },
@@ -91,6 +92,7 @@ async function getOverviewData(userId: string): Promise<OverviewData> {
     }),
     prisma.site.count({ where: { userId } }),
     getCurrentUsage(userId),
+    getTotalEntitlements(userId),
   ]);
 
   const trendData = completedScans
@@ -120,7 +122,7 @@ async function getOverviewData(userId: string): Promise<OverviewData> {
     { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }
   );
 
-  return { recentScans, trendData, avgScore, scoreDelta, openIssues, siteCount, usage };
+  return { recentScans, trendData, avgScore, scoreDelta, openIssues, siteCount, usage, entitlements };
 }
 
 function StatusBadge({ status, label }: { status: string; label: string }) {
@@ -208,6 +210,8 @@ export default async function DashboardPage() {
     redirect("/auth/login?redirect=/dashboard");
   }
 
+  const baseEntitlements =
+    ENTITLEMENTS[(user.plan ?? "FREE") as keyof typeof ENTITLEMENTS] ?? ENTITLEMENTS.FREE;
   let data: OverviewData = {
     recentScans: [],
     trendData: [],
@@ -216,6 +220,7 @@ export default async function DashboardPage() {
     openIssues: { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 },
     siteCount: 0,
     usage: { pages: 0, sites: 0, period: "" },
+    entitlements: baseEntitlements,
   };
   try {
     data = await getOverviewData(user.id);
@@ -223,8 +228,7 @@ export default async function DashboardPage() {
     console.error("Dashboard overview data failed, rendering empty state:", error);
   }
 
-  const entitlements =
-    ENTITLEMENTS[(user.plan ?? "FREE") as keyof typeof ENTITLEMENTS] ?? ENTITLEMENTS.FREE;
+  const entitlements = data.entitlements;
   const hasScans = data.recentScans.length > 0;
   const pagesPct = entitlements.pagesPerMonth
     ? Math.min(100, Math.round((data.usage.pages / entitlements.pagesPerMonth) * 100))

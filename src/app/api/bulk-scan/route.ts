@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
-import { assertWithinLimits, addSiteUsage } from "@/lib/billing/entitlements";
+import { assertCanCreateSite, assertWithinLimits, addSiteUsage } from "@/lib/billing/entitlements";
 import { startCrawl } from "@/lib/crawler";
 
 export const runtime = "nodejs";
@@ -46,29 +46,7 @@ export async function POST(req: Request) {
     });
 
     if (!site) {
-      // Check site limit before creating new site
-      const userWithPlan = await prisma.user.findUnique({
-        where: { id: user.id },
-        select: { plan: true }
-      });
-
-      const currentSiteCount = await prisma.site.count({
-        where: { userId: user.id }
-      });
-
-      const { ENTITLEMENTS } = await import("@/lib/billing/plans");
-      const plan = (userWithPlan?.plan || "FREE") as keyof typeof ENTITLEMENTS;
-      const siteLimit = ENTITLEMENTS[plan].sites;
-
-      if (currentSiteCount >= siteLimit) {
-        const e: any = new Error(
-          `Site limit reached for ${plan} plan (${siteLimit} sites). Upgrade to add more websites.`
-        );
-        e.code = "SITE_LIMIT_REACHED";
-        e.limit = siteLimit;
-        e.current = currentSiteCount;
-        throw e;
-      }
+      await assertCanCreateSite(user.id);
 
       site = await prisma.site.create({
         data: {
