@@ -491,7 +491,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
                       <p className="text-2xl font-bold font-display text-minor">{stats.minor}</p>
                     </div>
                   </div>
-                  <IssuesByImpactChart stats={stats} className="h-48" />
+                  <IssuesByImpactChart stats={stats} className="h-[220px]" />
                 </CardContent>
               </Card>
 
