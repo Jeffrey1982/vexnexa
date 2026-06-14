@@ -1635,7 +1635,13 @@
         "trendDescription": "Ihr durchschnittlicher Barrierefreiheits-Score der letzten Scans",
         "trendEmpty": "Führen Sie mindestens zwei Scans durch, um Ihren Trend zu sehen",
         "impactTitle": "Probleme nach Schweregrad",
-        "impactDescription": "Aktuell offene Probleme nach Auswirkung"
+        "impactDescription": "Aktuell offene Probleme nach Auswirkung",
+        "severity": {
+          "critical": "Kritisch",
+          "serious": "Schwerwiegend",
+          "moderate": "Mittel",
+          "minor": "Gering"
+        }
       },
       "usage": {
         "title": "Plan-Nutzung",

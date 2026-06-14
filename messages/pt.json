@@ -1494,7 +1494,13 @@
         "trendDescription": "A sua pontuação média de acessibilidade nas análises recentes",
         "trendEmpty": "Execute pelo menos duas análises para ver a sua tendência",
         "impactTitle": "Problemas por gravidade",
-        "impactDescription": "Problemas atualmente abertos por nível de impacto"
+        "impactDescription": "Problemas atualmente abertos por nível de impacto",
+        "severity": {
+          "critical": "Crítico",
+          "serious": "Grave",
+          "moderate": "Moderado",
+          "minor": "Menor"
+        }
       },
       "usage": {
         "title": "Utilização do plano",

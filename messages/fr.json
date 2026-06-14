@@ -1583,7 +1583,13 @@
         "trendDescription": "Votre score d'accessibilité moyen sur les analyses récentes",
         "trendEmpty": "Effectuez au moins deux analyses pour voir votre tendance",
         "impactTitle": "Problèmes par gravité",
-        "impactDescription": "Problèmes actuellement ouverts par niveau d'impact"
+        "impactDescription": "Problèmes actuellement ouverts par niveau d'impact",
+        "severity": {
+          "critical": "Critique",
+          "serious": "Grave",
+          "moderate": "Modéré",
+          "minor": "Mineur"
+        }
       },
       "usage": {
         "title": "Utilisation du forfait",

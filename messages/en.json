@@ -2635,7 +2635,13 @@
         "trendDescription": "Your average accessibility score over recent scans",
         "trendEmpty": "Run at least two scans to see your trend",
         "impactTitle": "Issues by severity",
-        "impactDescription": "Currently open issues by impact level"
+        "impactDescription": "Currently open issues by impact level",
+        "severity": {
+          "critical": "Critical",
+          "serious": "Serious",
+          "moderate": "Moderate",
+          "minor": "Minor"
+        }
       },
       "usage": {
         "title": "Plan usage",

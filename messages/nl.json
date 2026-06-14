@@ -1626,7 +1626,13 @@
         "trendDescription": "Je gemiddelde toegankelijkheidsscore over recente scans",
         "trendEmpty": "Voer minstens twee scans uit om je trend te zien",
         "impactTitle": "Issues per ernst",
-        "impactDescription": "Openstaande issues per impactniveau"
+        "impactDescription": "Openstaande issues per impactniveau",
+        "severity": {
+          "critical": "Kritiek",
+          "serious": "Ernstig",
+          "moderate": "Gemiddeld",
+          "minor": "Klein"
+        }
       },
       "usage": {
         "title": "Plangebruik",
