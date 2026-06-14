@@ -1424,7 +1424,7 @@ describe("DOCX WCAG Matrix — alignment and layout", () => {
   it("uses a dedicated wcagMatrixRow function (not generic tableRow)", () => {
     expect(docxRoute).toContain("function wcagMatrixRow(");
     // The WCAG table should call wcagMatrixRow, not tableRow
-    expect(docxRoute).toContain('wcagMatrixRow(["Success Criterion"');
+    expect(docxRoute).toContain("wcagMatrixRow([labels.successCriterion");
   });
 
   it("sets Success Criterion column (index 0) to AlignmentType.LEFT", () => {

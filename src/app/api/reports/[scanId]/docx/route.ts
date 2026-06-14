@@ -8,21 +8,21 @@ import {
   fetchImageAsBuffer,
   getStoredWhiteLabel,
   computeLogoDimensions,
+  resolveReportLabels,
 } from "@/lib/report";
+import {
+  formatReportDate,
+  getDocxCopy,
+  localizeMaturity,
+  localizeRating,
+  localizeRiskLevel,
+  localizeSeverity,
+  localizeWcagStatus,
+} from "@/lib/report/docx-copy";
+import { assertWithinLimits } from "@/lib/billing/entitlements";
 import type { ReportData, ReportIssue, Severity, WcagMatrixRow, TopPriorityFix } from "@/lib/report/types";
 import {
-  EAA_IMPORTANT_NOTE_BODY,
-  EAA_IMPORTANT_NOTE_TITLE,
-  EAA_LEARN_MORE_LABEL,
   EAA_LEARN_MORE_URL,
-  EAA_LEGAL_NOTICE_SHORT,
-  EAA_READINESS_INTRO,
-  EAA_RECOMMENDATION_CLOSING,
-  EAA_SCAN_COVERS_BODY,
-  EAA_SCAN_COVERS_HEADING,
-  EAA_STANDARDS_BODY,
-  EAA_STANDARDS_HEADING,
-  formatEaaContextLine,
 } from "@/lib/report/eaa-readiness-copy";
 import {
   Document,
@@ -72,11 +72,10 @@ function softBreakUrl(url: string): string {
 
 export const runtime = "nodejs";
 
-function severityLabel(s: Severity): string {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
+export function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
+  const labels = data.labels;
+  const copy = getDocxCopy(labels.locale);
+  const localizedRisk = localizeRiskLevel(labels.locale, data.riskLevel);
   const primary = data.whiteLabelConfig.primaryColor || data.themeConfig.primaryColor;
   const primaryHex = primary.replace("#", "");
 
@@ -141,7 +140,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
       alignment: AlignmentType.LEFT,
       spacing: { after: 120 },
       children: [
-        new TextRun({ text: "Accessibility Compliance Report", bold: true, size: 56, color: "1E1E1E" }),
+        new TextRun({ text: labels.reportTitle, bold: true, size: 56, color: "1E1E1E" }),
       ],
     })
   );
@@ -152,8 +151,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
       alignment: AlignmentType.LEFT,
       spacing: { after: 100 },
       children: [
-        new TextRun({ text: `Score: ${data.score}/100`, bold: true, size: 40, color: data.score >= 80 ? "16A34A" : data.score >= 60 ? "D97706" : "DC2626" }),
-        new TextRun({ text: `  •  Grade ${scoreGrade(data.score)}`, bold: true, size: 40, color: "374151" }),
+        new TextRun({ text: copy.scoreGrade(data.score, scoreGrade(data.score)), bold: true, size: 40, color: data.score >= 80 ? "16A34A" : data.score >= 60 ? "D97706" : "DC2626" }),
       ],
     })
   );
@@ -164,14 +162,14 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
       alignment: AlignmentType.LEFT,
       spacing: { after: 100 },
       children: [
-        new TextRun({ text: `${data.complianceLevel}  •  Risk: ${data.riskLevel}  •  EAA 2025: ${data.eaaReady ? "Ready" : "Needs Work"}`, size: 22, color: "6B7280" }),
+        new TextRun({ text: copy.meta(data.complianceLevel, localizedRisk, data.eaaReady ? labels.onTrack : labels.needsWork), size: 22, color: "6B7280" }),
       ],
     })
   );
 
   // Date + footer
   const footerRuns: TextRun[] = [
-    new TextRun({ text: `Report generated ${fmtDate(data.scanDate)}`, size: 20, color: "9CA3AF" }),
+    new TextRun({ text: copy.reportGenerated(formatReportDate(data.scanDate, labels.locale)), size: 20, color: "9CA3AF" }),
   ];
   if (data.whiteLabelConfig.footerText) {
     footerRuns.push(new TextRun({ text: `  •  ${data.whiteLabelConfig.footerText}`, size: 20, color: "9CA3AF" }));
@@ -187,7 +185,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   // ── Table of Contents (Word auto-generates from heading styles) ──
   children.push(
-    new TableOfContents("Table of Contents", {
+    new TableOfContents(labels.tableOfContents, {
       hyperlink: true,
       headingStyleRange: "1-3",
     }) as unknown as Paragraph,
@@ -199,27 +197,27 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   const hsHex = hs.value >= 80 ? "16A34A" : hs.value >= 60 ? "D97706" : "DC2626";
 
   children.push(
-    heading("Executive Summary"),
+    heading(labels.executiveSummary),
     // Health Score badge
     new Paragraph({
       spacing: { after: 120 },
       children: [
-        new TextRun({ text: `Health Score: `, bold: true, size: 24, color: "374151" }),
+        new TextRun({ text: `${labels.healthScore}: `, bold: true, size: 24, color: "374151" }),
         new TextRun({ text: `${hs.value}/100`, bold: true, size: 36, color: hsHex }),
-        new TextRun({ text: `  (Grade ${hs.grade} — ${hs.label})`, size: 22, color: "6B7280" }),
+        new TextRun({ text: `  (${labels.grade} ${hs.grade} - ${localizeRating(labels, hs.label)})`, size: 22, color: "6B7280" }),
       ],
     }),
-    para(`The Health Score is derived from the number and severity of detected issues, normalized by pages analyzed. A higher score indicates fewer and less severe accessibility barriers.`),
-    para(`Your website ${data.domain} achieved a health score of ${hs.value}/100 (Grade ${hs.grade}). ${data.issueBreakdown.critical > 0 ? `There are ${data.issueBreakdown.critical} critical issues requiring immediate attention.` : "No critical issues were detected."}`),
+    para(copy.healthScoreExplanation),
+    para(copy.healthSummary(data.domain, hs.value, hs.grade, data.issueBreakdown.critical)),
     spacer(),
-    subheading("Severity Distribution"),
+    subheading(labels.severityDistribution),
   );
 
   // Severity distribution table
   const sevTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     rows: [
-      tableRow(["Critical", "Serious", "Moderate", "Minor", "Total"], true),
+      tableRow([labels.critical, labels.serious, labels.moderate, labels.minor, labels.totalIssues], true),
       tableRow([
         String(data.issueBreakdown.critical),
         String(data.issueBreakdown.serious),
@@ -233,23 +231,23 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   children.push(
     spacer(),
-    subheading("Accessibility Risk Summary"),
-    para(`${data.riskLevel} Risk — ${data.riskSummary}`),
+    subheading(labels.riskLevel),
+    para(copy.riskSummary(localizedRisk, data.riskSummary)),
     spacer(),
-    subheading("Estimated Remediation"),
-    para(`Based on ${data.issueBreakdown.total} identified issues, the estimated developer effort is ${data.estimatedFixTime}.`),
+    subheading(labels.estimatedFixTime),
+    para(copy.estimatedRemediation(data.issueBreakdown.total, data.estimatedFixTime)),
     spacer(),
   );
 
   // Top Priority Fixes (Task 1)
   if (data.topPriorityFixes && data.topPriorityFixes.length > 0) {
-    children.push(subheading("Top Priority Fixes"));
+    children.push(subheading(labels.topPriorityFixes));
     const tpfTable = new Table({
       width: { size: 100, type: WidthType.PERCENTAGE },
       rows: [
-        tableRow(["#", "Issue", "Severity", "Elements", "Impact"], true),
+        tableRow(["#", labels.issue, labels.severity, labels.elements, labels.impact], true),
         ...data.topPriorityFixes.map((f: TopPriorityFix) =>
-          tableRow([String(f.rank), f.title, f.severity.toUpperCase(), String(f.affectedElements), String(f.weightedImpact)])
+          tableRow([String(f.rank), f.title, localizeSeverity(labels, f.severity), String(f.affectedElements), String(f.weightedImpact)])
         ),
       ],
     });
@@ -258,12 +256,12 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   }
 
   // Key Metrics
-  children.push(subheading("Key Metrics"));
+  children.push(subheading(labels.keyMetrics));
   const metricsTable = new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     rows: [
       tableRow(
-        ["Health Score", "Total Issues", "Critical", "Serious", "Moderate", "Minor", "WCAG Checks Passed", "Est. Fix"],
+        [labels.healthScore, labels.totalIssues, labels.critical, labels.serious, labels.moderate, labels.minor, labels.wcagChecksPassed, labels.estimatedShort],
         true
       ),
       tableRow([
@@ -286,8 +284,8 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     new Paragraph({
       spacing: { after: 80 },
       children: [
-        new TextRun({ text: "Note: ", bold: true, size: 20, color: "92400E" }),
-        new TextRun({ text: "Automated testing does not cover all WCAG requirements. Manual review is recommended.", size: 20, color: "92400E", italics: true }),
+        new TextRun({ text: `${labels.note}: `, bold: true, size: 20, color: "92400E" }),
+        new TextRun({ text: copy.coverageNote, size: 20, color: "92400E", italics: true }),
       ],
     }),
     new Paragraph({ children: [], pageBreakBefore: true })
@@ -295,17 +293,17 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   // ── Visual Breakdown ──
   children.push(
-    heading("Visual Breakdown"),
-    subheading("Severity Distribution"),
-    para(`Critical: ${data.issueBreakdown.critical}  |  Serious: ${data.issueBreakdown.serious}  |  Moderate: ${data.issueBreakdown.moderate}  |  Minor: ${data.issueBreakdown.minor}`),
+    heading(labels.visualBreakdown),
+    subheading(labels.severityDistribution),
+    para(copy.distribution(data.issueBreakdown.critical, data.issueBreakdown.serious, data.issueBreakdown.moderate, data.issueBreakdown.minor)),
     spacer(),
-    subheading("WCAG Level Status"),
-    para(`WCAG 2.2 Level AA: ${data.wcagAAStatus === "pass" ? "Compliant" : data.wcagAAStatus === "partial" ? "Partial" : "Non-compliant"} (${data.compliancePercentage}%)`),
-    para(`WCAG 2.2 Level AAA: ${data.wcagAAAStatus === "pass" ? "Compliant" : data.wcagAAAStatus === "partial" ? "Partial" : "Non-compliant"}`),
-    para(`EAA 2025 Readiness: ${data.eaaReady ? "Ready" : "Needs Work"}`),
+    subheading(labels.wcagLevelStatus),
+    para(copy.wcagStatus("WCAG 2.2 Level AA", data.wcagAAStatus === "pass" ? labels.statusCompliant : data.wcagAAStatus === "partial" ? labels.statusPartial : labels.statusNonCompliant, data.compliancePercentage)),
+    para(copy.wcagStatus("WCAG 2.2 Level AAA", data.wcagAAAStatus === "pass" ? labels.statusCompliant : data.wcagAAAStatus === "partial" ? labels.statusPartial : labels.statusNonCompliant)),
+    para(copy.wcagStatus("EAA 2025", data.eaaReady ? labels.onTrack : labels.needsWork)),
     spacer(),
-    subheading("Accessibility Maturity Level"),
-    para(`Current level: ${data.maturityLevel}`),
+    subheading(labels.accessibilityMaturityLevel),
+    para(copy.currentMaturity(localizeMaturity(labels, data.maturityLevel))),
     new Paragraph({ children: [], pageBreakBefore: true })
   );
 
@@ -317,23 +315,23 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
     const notTested = data.wcagMatrix.filter((r: WcagMatrixRow) => r.status === "Not Tested");
 
     children.push(
-      heading("WCAG 2.2 Compliance Matrix"),
+      heading(labels.wcagComplianceMatrix),
       // Legend
       new Paragraph({
         spacing: { after: 40 },
         children: [
-          new TextRun({ text: "Legend: ", bold: true, size: 20, color: "374151" }),
-          new TextRun({ text: "Pass", bold: true, size: 18, color: "16A34A" }),
-          new TextRun({ text: " — No violations detected  |  ", size: 18, color: "6B7280" }),
-          new TextRun({ text: "Fail", bold: true, size: 18, color: "DC2626" }),
-          new TextRun({ text: " — Automated violations detected  |  ", size: 18, color: "6B7280" }),
-          new TextRun({ text: "Needs Manual Review", bold: true, size: 18, color: "EA580C" }),
-          new TextRun({ text: " — Cannot be fully verified automatically  |  ", size: 18, color: "6B7280" }),
-          new TextRun({ text: "Not Tested", bold: true, size: 18, color: "9CA3AF" }),
-          new TextRun({ text: " — Outside scan scope", size: 18, color: "6B7280" }),
+          new TextRun({ text: `${copy.legend.prefix} `, bold: true, size: 20, color: "374151" }),
+          new TextRun({ text: labels.statusPass, bold: true, size: 18, color: "16A34A" }),
+          new TextRun({ text: ` - ${copy.legend.pass}  |  `, size: 18, color: "6B7280" }),
+          new TextRun({ text: labels.statusFail, bold: true, size: 18, color: "DC2626" }),
+          new TextRun({ text: ` - ${copy.legend.fail}  |  `, size: 18, color: "6B7280" }),
+          new TextRun({ text: labels.statusNeedsManualReview, bold: true, size: 18, color: "EA580C" }),
+          new TextRun({ text: ` - ${copy.legend.manual}  |  `, size: 18, color: "6B7280" }),
+          new TextRun({ text: labels.statusNotTested, bold: true, size: 18, color: "9CA3AF" }),
+          new TextRun({ text: ` - ${copy.legend.notTested}`, size: 18, color: "6B7280" }),
         ],
       }),
-      para(`Tested against ${data.wcagMatrix.length} WCAG 2.2 success criteria. ${passing.length} Pass, ${failing.length} Fail, ${manualReview.length} Needs Manual Review, ${notTested.length} Not Tested.`),
+      para(copy.testedSummary(data.wcagMatrix.length, passing.length, failing.length, manualReview.length, notTested.length)),
       spacer(),
     );
 
@@ -343,9 +341,9 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
       width: { size: DOCX_TABLE_WIDTH, type: WidthType.DXA },
       layout: TableLayoutType.FIXED,
       rows: [
-        wcagMatrixRow(["Success Criterion", "Level", "Status", "Findings"], true),
+        wcagMatrixRow([labels.successCriterion, labels.level, labels.status, labels.findings], true),
         ...matrixRows.map((row: WcagMatrixRow) =>
-          wcagMatrixRow([row.criterion, row.level, row.status, row.relatedFindings > 0 ? String(row.relatedFindings) : "—"])
+          wcagMatrixRow([row.criterion, row.level, localizeWcagStatus(labels, row.status), row.relatedFindings > 0 ? String(row.relatedFindings) : "-"])
         ),
       ],
     });
@@ -354,10 +352,10 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   }
 
   // ── Priority Issues (with Enterprise Evidence Tables) ──
-  children.push(heading("Audit Findings"));
+  children.push(heading(labels.auditFindings));
 
   if (data.priorityIssues.length === 0) {
-    children.push(para("No accessibility issues were detected. Excellent work!"));
+    children.push(para(labels.noIssuesDetected));
   } else {
     const DOCX_EVIDENCE_CHUNK = 50;
     const evBorders = { top: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, bottom: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, left: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" }, right: { style: BorderStyle.SINGLE, size: 1, color: "E5E7EB" } };
@@ -368,9 +366,9 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         tableHeader: true,
         children: [
           new TableCell({ width: { size: DOCX_COL_HASH, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "#", bold: true, size: 18 })] })] }),
-          new TableCell({ width: { size: DOCX_COL_URL, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "Page / URL", bold: true, size: 18 })] })] }),
-          new TableCell({ width: { size: DOCX_COL_SEL, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "Selector", bold: true, size: 18 })] })] }),
-          new TableCell({ width: { size: DOCX_COL_HTML, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: "HTML Snippet", bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_URL, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: labels.pageUrl, bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_SEL, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: labels.selector, bold: true, size: 18 })] })] }),
+          new TableCell({ width: { size: DOCX_COL_HTML, type: WidthType.DXA }, shading: evShading, borders: evBorders, margins: DOCX_CELL_MARGINS, children: [new Paragraph({ children: [new TextRun({ text: labels.htmlSnippet, bold: true, size: 18 })] })] }),
         ],
       });
     }
@@ -383,14 +381,14 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
           spacing: { before: 200, after: 100 },
           children: [
             new TextRun({ text: `#${idx + 1}  `, bold: true, size: 22, color: primaryHex }),
-            new TextRun({ text: `[${severityLabel(issue.severity).toUpperCase()}]  `, bold: true, size: 20, color: sevColor(issue.severity) }),
+            new TextRun({ text: `[${localizeSeverity(labels, issue.severity).toUpperCase()}]  `, bold: true, size: 20, color: sevColor(issue.severity) }),
             new TextRun({ text: issue.title, bold: true, size: 22 }),
           ],
         }),
-        labeledPara("What's happening", issue.explanation),
-        labeledPara("Business impact", issue.impact),
-        labeledPara("How to fix", issue.recommendation),
-        para(`${issue.affectedElements} element(s) affected  •  Est. ${issue.estimatedFixTime}${issue.wcagCriteria.length > 0 ? `  •  ${issue.wcagCriteria.join(", ")}` : ""}`, "9CA3AF"),
+        labeledPara(labels.whatsHappening, issue.explanation),
+        labeledPara(labels.businessImpact, issue.impact),
+        labeledPara(labels.howToFix, issue.recommendation),
+        para(copy.affectedCount(issue.affectedElements, issue.estimatedFixTime, issue.wcagCriteria.join(", ")), "9CA3AF"),
       );
 
       // Evidence tables — chunked for large lists, header row repeats on page breaks
@@ -404,7 +402,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
           children.push(
             new Paragraph({
               spacing: { before: 80, after: 40 },
-              children: [new TextRun({ text: `Affected Elements${chunkLabel}:`, bold: true, size: 20, color: "6B7280" })],
+              children: [new TextRun({ text: `${labels.affectedElements}${chunkLabel}:`, bold: true, size: 20, color: "6B7280" })],
             })
           );
           const evidenceTable = new Table({
@@ -432,7 +430,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
         new Paragraph({
           spacing: { after: 40 },
           children: [
-            new TextRun({ text: "Rule: ", bold: true, size: 18, color: "9CA3AF" }),
+            new TextRun({ text: `${labels.rule}: `, bold: true, size: 18, color: "9CA3AF" }),
             new TextRun({ text: issue.id, size: 18, font: "Consolas", color: "9CA3AF" }),
           ],
         })
@@ -441,22 +439,18 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   }
 
   // ── EAA Readiness (after findings, before scan configuration) ──
-  const eaaCtx = formatEaaContextLine({
-    domain: data.domain,
-    score: data.score,
-    totalIssues: data.issueBreakdown.total,
-  });
+  const eaaCtx = `${labels.domain}: ${data.domain}  |  ${labels.score}: ${data.score}/100  |  ${labels.totalIssues}: ${data.issueBreakdown.total}`;
   children.push(
-    heading("EAA Readiness"),
+    heading(labels.eaaReadiness),
     ...(eaaCtx
       ? [para(eaaCtx)]
       : [
           new Paragraph({
             spacing: { after: 80 },
             children: [
-              new TextRun({ text: "Automated scan — ", bold: true, size: 20, color: "6B7280" }),
+              new TextRun({ text: `${copy.automatedScan} - `, bold: true, size: 20, color: "6B7280" }),
               new TextRun({
-                text: "Indicators only; not a conformity assessment.",
+                text: copy.indicatorsOnly,
                 size: 20,
                 color: "6B7280",
                 italics: true,
@@ -464,22 +458,22 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
             ],
           }),
         ]),
-    para(EAA_READINESS_INTRO),
+    para(copy.eaaIntro),
     spacer(),
-    subheading(EAA_STANDARDS_HEADING),
-    para(EAA_STANDARDS_BODY),
+    subheading(copy.relevantStandards),
+    para(copy.standardsBody),
     spacer(),
-    subheading(EAA_SCAN_COVERS_HEADING),
-    para(EAA_SCAN_COVERS_BODY),
+    subheading(copy.scanCovers),
+    para(copy.scanCoversBody),
     spacer(),
-    subheading(EAA_IMPORTANT_NOTE_TITLE),
-    para(EAA_IMPORTANT_NOTE_BODY),
+    subheading(copy.importantNote),
+    para(copy.importantNoteBody),
     spacer(),
-    para(EAA_RECOMMENDATION_CLOSING),
+    para(copy.recommendationClosing),
     new Paragraph({
       spacing: { after: 120 },
       children: [
-        new TextRun({ text: `${EAA_LEARN_MORE_LABEL}: `, size: 20, color: "374151" }),
+        new TextRun({ text: `${copy.learnMore}: `, size: 20, color: "374151" }),
         new TextRun({ text: EAA_LEARN_MORE_URL, size: 20, color: "2563EB" }),
       ],
     }),
@@ -490,19 +484,26 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
   if (data.scanConfig) {
     const sc = data.scanConfig;
     children.push(
-      heading("Scan Configuration"),
+      heading(labels.scanConfiguration),
     );
     const scanConfigTable = new Table({
       width: { size: 100, type: WidthType.PERCENTAGE },
       rows: [
-        configRow("Domain Scanned", sc.domain),
-        configRow("Pages Analyzed", String(sc.pagesAnalyzed)),
-        configRow("Crawl Depth", sc.crawlDepth),
-        configRow("Scan Date/Time", fmtDate(sc.scanDateTime)),
-        configRow("User Agent", sc.userAgent),
-        configRow("Viewport", sc.viewport),
-        configRow("Standards Tested", sc.standardsTested.join(", ")),
-        configRow("Engine", `${sc.engineName} v${sc.engineVersion}`),
+        configRow(labels.domainScanned, sc.domain),
+        configRow(labels.pagesAnalyzed, String(sc.pagesAnalyzed)),
+        configRow(
+          labels.crawlDepth,
+          sc.crawlDepth === "Single page"
+            ? labels.singlePage
+            : sc.crawlDepth === "Multi-page"
+              ? labels.multiPage
+              : sc.crawlDepth,
+        ),
+        configRow(labels.scanDateTime, formatReportDate(sc.scanDateTime, labels.locale)),
+        configRow(labels.userAgent, sc.userAgent),
+        configRow(labels.viewport, sc.viewport),
+        configRow(labels.standardsTested, sc.standardsTested.join(", ")),
+        configRow(labels.engine, `${sc.engineName} v${sc.engineVersion}`),
       ],
     });
     children.push(scanConfigTable as unknown as Paragraph);
@@ -511,22 +512,20 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
 
   // ── Compliance & Legal ──
   children.push(
-    heading("Compliance & Legal"),
-    subheading("Legal notice"),
-    para(EAA_LEGAL_NOTICE_SHORT),
-    para(
-      "For how automated scanning relates to the European Accessibility Act (EAA), EN 301 549, and WCAG, see the EAA Readiness section above. Automated indicators (including internal readiness labels) are not legal compliance certification."
-    ),
+    heading(labels.complianceLegal),
+    subheading(labels.legalNotice),
+    para(copy.legalNoticeBody),
+    para(labels.complianceLegalAutomated),
     spacer(),
-    subheading("Continuous Monitoring Recommendation"),
-    para("Accessibility is not a one-time fix. We recommend automated weekly scans, quarterly manual audits, developer training on WCAG fundamentals, and accessibility testing as part of CI/CD pipeline."),
+    subheading(labels.continuousMonitoringRecommendation),
+    para(labels.continuousMonitoringCopy),
     spacer(),
-    subheading("Audit Traceability"),
-    para(`Scan ID: ${data.scanId}`),
-    para(`Scan Date: ${fmtDate(data.scanDate)}`),
-    para(`Engine: ${data.engineName} v${data.engineVersion}`),
-    para(`Standard: ${data.complianceLevel}`),
-    para(`Domain: ${data.domain}`),
+    subheading(labels.auditTraceability),
+    para(`${labels.scan} ID: ${data.scanId}`),
+    para(`${labels.scanDate}: ${formatReportDate(data.scanDate, labels.locale)}`),
+    para(`${labels.engine}: ${data.engineName} v${data.engineVersion}`),
+    para(`${labels.standard}: ${data.complianceLevel}`),
+    para(`${labels.domain}: ${data.domain}`),
   );
 
   // ── Footer ──
@@ -552,7 +551,7 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
               children: [
                 new TextRun({ text: data.domain, size: 16, color: "9CA3AF" }),
                 new TextRun({ text: "\t" }),
-                new TextRun({ text: fmtDate(data.scanDate), size: 16, color: "9CA3AF" }),
+                new TextRun({ text: formatReportDate(data.scanDate, labels.locale), size: 16, color: "9CA3AF" }),
               ],
             }),
           ],
@@ -567,13 +566,13 @@ function buildDocx(data: ReportData, logoBuffer?: Buffer | null): Document {
                 { type: TabStopType.RIGHT, position: TabStopPosition.MAX },
               ],
               children: [
-                new TextRun({ text: `Generated by ${brandName}`, size: 14, color: "B0B5BD" }),
+                new TextRun({ text: copy.generatedBy(brandName), size: 14, color: "B0B5BD" }),
                 new TextRun({ text: "\t" }),
-                new TextRun({ text: "Report v1.0", size: 14, color: "B0B5BD" }),
+                new TextRun({ text: labels.reportVersion, size: 14, color: "B0B5BD" }),
                 new TextRun({ text: "\t" }),
-                new TextRun({ text: "Page ", size: 14, color: "B0B5BD" }),
+                new TextRun({ text: `${copy.page} `, size: 14, color: "B0B5BD" }),
                 new TextRun({ children: [PageNumber.CURRENT], size: 14, color: "B0B5BD" }),
-                new TextRun({ text: " of ", size: 14, color: "B0B5BD" }),
+                new TextRun({ text: ` ${copy.of} `, size: 14, color: "B0B5BD" }),
                 new TextRun({ children: [PageNumber.TOTAL_PAGES], size: 14, color: "B0B5BD" }),
               ],
             }),
@@ -715,14 +714,6 @@ function scoreGrade(score: number): string {
   return "F";
 }
 
-function fmtDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-  } catch {
-    return iso;
-  }
-}
-
 function sevColor(s: Severity): string {
   switch (s) {
     case "critical": return "DC2626";
@@ -760,8 +751,17 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    await assertWithinLimits({
+      userId: user.id,
+      action: "export_word",
+    });
+
     // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);
+    const labels = resolveReportLabels(
+      req.headers.get("accept-language"),
+      url.searchParams.get("language"),
+    );
     const qp = extractQueryOverrides(url);
     const storedWL = await getStoredWhiteLabel(user.id);
     const resolved = resolveWhiteLabelConfig(qp, storedWL);
@@ -791,13 +791,14 @@ export async function GET(
       resolved.themeConfig,
       resolved.whiteLabelConfig,
       resolved.ctaConfig,
-      resolved.reportStyle
+      resolved.reportStyle,
+      labels
     );
 
     const doc = buildDocx(reportData, logoBuffer);
     const arrayBuf = await Packer.toBuffer(doc);
 
-    const filename = `accessibility-report-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.docx`;
+    const filename = `accessibility-report-${labels.locale}-${scan.site.url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-")}-${new Date().toISOString().slice(0, 10)}.docx`;
 
     return new Response(new Uint8Array(arrayBuf), {
       headers: {
@@ -807,6 +808,16 @@ export async function GET(
       },
     });
   } catch (error: unknown) {
+    if ((error as { code?: string })?.code === "UPGRADE_REQUIRED") {
+      return NextResponse.json(
+        {
+          error: error instanceof Error ? error.message : "Word export is not available for this plan.",
+          code: "UPGRADE_REQUIRED",
+          feature: (error as { feature?: string }).feature,
+        },
+        { status: 402 },
+      );
+    }
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("[reports/docx] Error:", message);
     return NextResponse.json({ error: message }, { status: 500 });

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { Download } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import {
   PdfLanguageSelector,
   PDF_LOCALES,
@@ -58,6 +58,7 @@ export function ReportV2Toolbar({ scanId, currentLocale, currentStyle }: Props) 
     if (currentStyle === "corporate") params.set("reportStyle", "corporate");
     return `/api/reports/${scanId}/pdf?${params.toString()}`;
   })();
+  const docxHref = `/api/reports/${scanId}/docx?language=${encodeURIComponent(pdfLocale)}`;
 
   const handleLocaleChange = (next: PdfLocale) => {
     setPdfLocale(next);
@@ -100,6 +101,16 @@ export function ReportV2Toolbar({ scanId, currentLocale, currentStyle }: Props) 
       >
         <Download className="w-4 h-4" />
         Download PDF
+      </a>
+
+      <a
+        href={docxHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 rounded-xl border border-[var(--vn-border)] bg-background px-4 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
+      >
+        <FileText className="w-4 h-4" />
+        Download Word
       </a>
     </div>
   );

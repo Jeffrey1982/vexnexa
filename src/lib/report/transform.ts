@@ -167,12 +167,52 @@ const RULE_TRANSLATIONS: Record<string, Record<string, Partial<typeof RULE_EXPLA
 
 function translatedRule(id: string, locale: string | undefined) {
   const base = RULE_EXPLANATIONS[id];
+  if (!base) return undefined;
+  if (!locale || locale === "en") return base;
   const translated = RULE_TRANSLATIONS[locale || ""]?.[id];
-  return translated ? { ...base, ...translated } : base;
+  return translated ? { ...base, ...translated } : undefined;
 }
 
+const GENERIC_ISSUE_COPY: Record<string, {
+  title: string;
+  explanation: string;
+  impact: string;
+  recommendation: string;
+}> = {
+  nl: {
+    title: "Toegankelijkheidsprobleem",
+    explanation: "Er is een toegankelijkheidsprobleem op deze pagina gevonden.",
+    impact: "Gebruikers met een beperking kunnen drempels ervaren bij het gebruik van de getroffen elementen.",
+    recommendation: "Controleer de getroffen elementen en pas de juiste WCAG-oplossing toe.",
+  },
+  de: {
+    title: "Problem mit der Barrierefreiheit",
+    explanation: "Auf dieser Seite wurde ein Problem mit der Barrierefreiheit erkannt.",
+    impact: "Menschen mit Behinderungen können bei der Nutzung der betroffenen Elemente auf Barrieren stoßen.",
+    recommendation: "Prüfen Sie die betroffenen Elemente und setzen Sie die passende WCAG-Lösung um.",
+  },
+  fr: {
+    title: "Problème d'accessibilité",
+    explanation: "Un problème d'accessibilité a été détecté sur cette page.",
+    impact: "Les utilisateurs en situation de handicap peuvent rencontrer des obstacles avec les éléments affectés.",
+    recommendation: "Examinez les éléments affectés et appliquez la correction WCAG appropriée.",
+  },
+  es: {
+    title: "Problema de accesibilidad",
+    explanation: "Se ha detectado un problema de accesibilidad en esta página.",
+    impact: "Las personas con discapacidad pueden encontrar barreras al utilizar los elementos afectados.",
+    recommendation: "Revise los elementos afectados y aplique la corrección WCAG adecuada.",
+  },
+  pt: {
+    title: "Problema de acessibilidade",
+    explanation: "Foi detetado um problema de acessibilidade nesta página.",
+    impact: "As pessoas com deficiência podem encontrar barreiras ao utilizar os elementos afetados.",
+    recommendation: "Reveja os elementos afetados e aplique a correção WCAG adequada.",
+  },
+};
+
 /** Estimate fix time based on severity and element count */
-function estimateFixTime(severity: Severity, elementCount: number): string {
+function estimateFixTime(severity: Severity, elementCount: number, locale: string = "en"): string {
   const baseMinutes: Record<Severity, number> = {
     critical: 30,
     serious: 20,
@@ -182,18 +222,36 @@ function estimateFixTime(severity: Severity, elementCount: number): string {
   const totalMinutes: number = baseMinutes[severity] + Math.ceil(elementCount * 2);
   if (totalMinutes < 60) return `${totalMinutes} min`;
   const hours: number = Math.round(totalMinutes / 60);
+  const hourLabels: Record<string, [string, string]> = {
+    nl: ["~1 uur", `~${hours} uur`],
+    de: ["~1 Stunde", `~${hours} Stunden`],
+    fr: ["~1 heure", `~${hours} heures`],
+    es: ["~1 hora", `~${hours} horas`],
+    pt: ["~1 hora", `~${hours} horas`],
+  };
+  const localized = hourLabels[locale];
+  if (localized) return hours === 1 ? localized[0] : localized[1];
   return hours === 1 ? "~1 hour" : `~${hours} hours`;
 }
 
 /** Estimate total remediation time */
-function estimateTotalFixTime(breakdown: IssueBreakdown): string {
+function estimateTotalFixTime(breakdown: IssueBreakdown, locale: string = "en"): string {
   const totalHours: number = Math.ceil(
     (breakdown.critical * 2 + breakdown.serious * 1.5 + breakdown.moderate * 0.5 + breakdown.minor * 0.15)
   );
-  if (totalHours <= 1) return "< 1 hour";
-  if (totalHours <= 8) return `${totalHours} hours`;
+  const units: Record<string, { lessHour: string; hours: string; day: string; days: string }> = {
+    nl: { lessHour: "< 1 uur", hours: "uur", day: "~1 dag", days: "dagen" },
+    de: { lessHour: "< 1 Stunde", hours: "Stunden", day: "~1 Tag", days: "Tage" },
+    fr: { lessHour: "< 1 heure", hours: "heures", day: "~1 jour", days: "jours" },
+    es: { lessHour: "< 1 hora", hours: "horas", day: "~1 día", days: "días" },
+    pt: { lessHour: "< 1 hora", hours: "horas", day: "~1 dia", days: "dias" },
+  };
+  const unit = units[locale];
+  if (totalHours <= 1) return unit?.lessHour ?? "< 1 hour";
+  if (totalHours <= 8) return `${totalHours} ${unit?.hours ?? "hours"}`;
   const days: number = Math.ceil(totalHours / 8);
-  return days === 1 ? "~1 day" : `~${days} days`;
+  if (days === 1) return unit?.day ?? "~1 day";
+  return `~${days} ${unit?.days ?? "days"}`;
 }
 
 /** Determine risk level from score — canonical enterprise scale */
@@ -248,6 +306,30 @@ function determineRiskSummaryForLocale(riskLevel: RiskLevel, locale?: string): s
       case "Moderate": return "Plusieurs écarts d'accessibilité ont été identifiés et peuvent affecter les utilisateurs de technologies d'assistance. Une correction ciblée sous 30 jours est recommandée.";
       case "High": return "Des obstacles d'accessibilité importants ont été détectés et peuvent empêcher certains utilisateurs d'accomplir des tâches clés. Une correction priorisée est fortement recommandée.";
       case "Critical": return "Des obstacles critiques ont été détectés et peuvent affecter les parcours utilisateurs clés et les fonctionnalités principales. Une correction rapide est fortement recommandée.";
+    }
+  }
+  if (locale === "de") {
+    switch (riskLevel) {
+      case "Low": return "Die bewerteten Seiten zeigen gute Barrierefreiheitspraktiken mit wenigen erkannten Hindernissen. Eine kontinuierliche Überwachung wird empfohlen.";
+      case "Moderate": return "Mehrere Barrierefreiheitslücken können Nutzer assistiver Technologien beeinträchtigen. Eine gezielte Behebung innerhalb von 30 Tagen wird empfohlen.";
+      case "High": return "Erhebliche Barrieren können Nutzer daran hindern, wichtige Aufgaben abzuschließen. Eine priorisierte Behebung wird dringend empfohlen.";
+      case "Critical": return "Kritische Barrieren können zentrale Nutzerwege und Kernfunktionen beeinträchtigen. Eine schnelle Behebung wird dringend empfohlen.";
+    }
+  }
+  if (locale === "es") {
+    switch (riskLevel) {
+      case "Low": return "Las páginas evaluadas muestran buenas prácticas de accesibilidad con pocas barreras detectadas. Se recomienda una monitorización continua.";
+      case "Moderate": return "Se identificaron varias brechas que pueden afectar a usuarios de tecnologías de asistencia. Se recomienda corregirlas en un plazo de 30 días.";
+      case "High": return "Se detectaron barreras importantes que pueden impedir completar tareas clave. Se recomienda firmemente una corrección priorizada.";
+      case "Critical": return "Se detectaron barreras críticas que pueden afectar a recorridos y funciones esenciales. Se recomienda una corrección inmediata.";
+    }
+  }
+  if (locale === "pt") {
+    switch (riskLevel) {
+      case "Low": return "As páginas avaliadas demonstram boas práticas de acessibilidade, com poucas barreiras detetadas. Recomenda-se monitorização contínua.";
+      case "Moderate": return "Foram identificadas várias lacunas que podem afetar utilizadores de tecnologias de apoio. Recomenda-se correção direcionada em 30 dias.";
+      case "High": return "Foram detetadas barreiras significativas que podem impedir tarefas essenciais. Recomenda-se fortemente uma correção prioritária.";
+      case "Critical": return "Foram detetadas barreiras críticas que podem afetar percursos e funcionalidades essenciais. Recomenda-se correção imediata.";
     }
   }
   return determineRiskSummary(riskLevel);
@@ -687,12 +769,12 @@ export function transformScanToReport(
       return {
         id: v.id,
         severity,
-        title: known?.title ?? v.help ?? v.id,
-        explanation: known?.explanation ?? v.description ?? (reportLabels.locale === "nl" ? "Er is een toegankelijkheidsprobleem op deze pagina gevonden." : reportLabels.locale === "fr" ? "Un problème d'accessibilité a été détecté sur cette page." : "An accessibility issue was detected on this page."),
-        impact: known?.impact ?? (reportLabels.locale === "nl" ? "Gebruikers met een beperking kunnen drempels ervaren bij het gebruik van de getroffen elementen." : reportLabels.locale === "fr" ? "Les utilisateurs en situation de handicap peuvent rencontrer des obstacles avec les éléments affectés." : "Users with disabilities may encounter barriers when interacting with affected elements."),
-        recommendation: known?.recommendation ?? (reportLabels.locale === "nl" ? "Controleer de getroffen elementen en pas de juiste WCAG-oplossing toe." : reportLabels.locale === "fr" ? "Examinez les éléments affectés et appliquez la correction WCAG appropriée." : "Review the affected elements and apply the appropriate WCAG fix."),
+        title: known?.title ?? GENERIC_ISSUE_COPY[reportLabels.locale]?.title ?? v.help ?? v.id,
+        explanation: known?.explanation ?? (reportLabels.locale === "en" ? v.description : GENERIC_ISSUE_COPY[reportLabels.locale]?.explanation) ?? v.description ?? "An accessibility issue was detected on this page.",
+        impact: known?.impact ?? GENERIC_ISSUE_COPY[reportLabels.locale]?.impact ?? "Users with disabilities may encounter barriers when interacting with affected elements.",
+        recommendation: known?.recommendation ?? GENERIC_ISSUE_COPY[reportLabels.locale]?.recommendation ?? "Review the affected elements and apply the appropriate WCAG fix.",
         affectedElements: elementCount,
-        estimatedFixTime: estimateFixTime(severity, elementCount),
+        estimatedFixTime: estimateFixTime(severity, elementCount, reportLabels.locale),
         wcagCriteria: extractWcagCriteria(v.tags ?? []),
         affectedElementDetails: elementDetails,
       };
@@ -768,7 +850,7 @@ export function transformScanToReport(
     priorityIssues,
     legalRisk: determineRiskSummaryForLocale(riskLevel, reportLabels.locale),
     riskSummary: determineRiskSummaryForLocale(riskLevel, reportLabels.locale),
-    estimatedFixTime: estimateTotalFixTime(breakdown),
+    estimatedFixTime: estimateTotalFixTime(breakdown, reportLabels.locale),
     engineName: "axe-core",
     engineVersion: "4.10",
     themeConfig: theme,
