@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { PLAN_NAMES, formatPrice, ENTITLEMENTS, PRICES } from "@/lib/billing/plans";
 import { ExtraSeatsCard } from "@/components/billing/ExtraSeatsCard";
+import { WebsiteCapacityCard } from "@/components/billing/WebsiteCapacityCard";
 import { PLAN_PRICES, formatEurPrice, type BillingInterval } from "@/lib/billing/pricing-config";
 
 import { AddOnType } from "@prisma/client";
@@ -99,10 +100,12 @@ interface EntitlementsData {
   base: {
     pagesPerMonth: number;
     users: number;
+    sites: number;
   };
   addOns: {
     pagesPerMonth: number;
     users: number;
+    sites: number;
   };
 }
 
@@ -543,6 +546,17 @@ export default function BillingPage() {
               </div>
             </CardContent>
           </Card>
+        )}
+
+        {/* Extra Seats - Show to everyone */}
+        {entitlements && actualUsage && (
+          <WebsiteCapacityCard
+            baseSites={entitlements.base.sites}
+            extraSites={entitlements.addOns.sites}
+            usedSites={actualUsage.sites}
+            addOns={addOns}
+            onRefresh={loadUserData}
+          />
         )}
 
         {/* Extra Seats - Show to everyone */}

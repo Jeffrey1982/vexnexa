@@ -86,13 +86,16 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: "Add-on cancelled. Access remains until the end of the billing period."
+      message: "Add-on cancelled. Your capacity has been updated."
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error("Cancel add-on error:", error)
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to cancel add-on" },
-      { status: 500 }
+      {
+        error: error instanceof Error ? error.message : "Failed to cancel add-on",
+        code: error?.code,
+      },
+      { status: error?.code === "CAPACITY_IN_USE" ? 409 : 500 }
     )
   }
 }

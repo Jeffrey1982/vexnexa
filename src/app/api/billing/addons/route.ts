@@ -3,6 +3,16 @@ import { requireAuth } from "@/lib/auth"
 import { getUserAddOns, purchaseAddOn } from "@/lib/billing/addon-flows"
 import { AddOnType } from "@prisma/client"
 
+const PURCHASABLE_ADD_ONS = new Set<AddOnType>([
+  AddOnType.EXTRA_SEAT,
+  AddOnType.EXTRA_WEBSITE_1,
+  AddOnType.EXTRA_WEBSITE_5,
+  AddOnType.EXTRA_WEBSITE_10,
+  AddOnType.PAGE_PACK_25K,
+  AddOnType.PAGE_PACK_100K,
+  AddOnType.PAGE_PACK_250K,
+])
+
 /**
  * GET /api/billing/addons
  * Get all add-ons for current user
@@ -35,7 +45,7 @@ export async function POST(req: NextRequest) {
     const { type, quantity } = await req.json()
 
     // Validate type
-    if (!type || !Object.values(AddOnType).includes(type)) {
+    if (!type || !PURCHASABLE_ADD_ONS.has(type as AddOnType)) {
       return NextResponse.json(
         { error: "Invalid add-on type" },
         { status: 400 }

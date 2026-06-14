@@ -1,7 +1,8 @@
 import { mollie, appUrl, formatMollieAmount } from "../mollie"
 import { prisma } from "../prisma"
 import { AddOnType } from "@prisma/client"
-import { getAddOnPricing, ADDON_NAMES } from "./addons"
+import { getAddOnPricing, ADDON_NAMES, calculateExtraWebsites } from "./addons"
+import { ENTITLEMENTS } from "./plans"
 import { determineTax, type TaxRegime } from "./tax"
 import { deriveVatBreakdown } from "./pricing-config"
 
@@ -288,6 +289,29 @@ export async function cancelAddOn(addOnId: string) {
 
   if (!addOn.mollieSubscriptionId || !addOn.user.mollieCustomerId) {
     throw new Error("Missing Mollie subscription data")
+  }
+
+  if (getAddOnPricing(addOn.type).websites > 0) {
+    const [activeAddOns, currentSiteCount] = await Promise.all([
+      prisma.addOn.findMany({
+        where: { userId: addOn.userId, status: "active", id: { not: addOn.id } },
+        select: { type: true, quantity: true, status: true },
+      }),
+      prisma.site.count({ where: { userId: addOn.userId } }),
+    ])
+    const plan = addOn.user.plan as keyof typeof ENTITLEMENTS
+    const remainingSiteLimit =
+      ENTITLEMENTS[plan].sites + calculateExtraWebsites(activeAddOns)
+
+    if (currentSiteCount > remainingSiteLimit) {
+      const error: any = new Error(
+        `This website capacity is in use. Remove ${currentSiteCount - remainingSiteLimit} site(s) before cancelling.`,
+      )
+      error.code = "CAPACITY_IN_USE"
+      error.current = currentSiteCount
+      error.limitAfterCancellation = remainingSiteLimit
+      throw error
+    }
   }
 
   // Cancel at Mollie
