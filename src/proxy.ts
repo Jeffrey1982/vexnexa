@@ -56,11 +56,16 @@ export async function proxy(request: NextRequest) {
     const seg = localeMatch[1]
     const rest = localeMatch[2] || '/'
     if (seg === 'en') {
-      const redirectUrl = url.clone()
-      redirectUrl.pathname = rest
-      return NextResponse.redirect(redirectUrl, 301)
+      // Canonicalise the default locale for the home + marketing pages only.
+      // Leave /en/<blog-slug> untouched so English blog posts keep their own
+      // URL (they are served at /en/<slug> via app/[locale]/[slug]).
+      if (rest === '/' || isMarketingPath(rest)) {
+        const redirectUrl = url.clone()
+        redirectUrl.pathname = rest
+        return NextResponse.redirect(redirectUrl, 301)
+      }
     }
-    if (isMarketingPath(rest)) {
+    if (seg !== 'en' && isMarketingPath(rest)) {
       requestHeaders.set('x-vn-locale', seg)
       requestHeaders.set('x-vn-path', rest)
       rewriteUrl = url.clone()
