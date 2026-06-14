@@ -25,9 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: "https://vexnexa.com/updates",
-    },
+
     robots: { index: true, follow: true },
   };
 }

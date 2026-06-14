@@ -23,10 +23,7 @@ export const metadata: Metadata = {
     title: 'Privacy Policy - VexNexa',
     description: 'Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com/legal/privacy',
-    languages: { 'nl-NL': 'https://vexnexa.com/legal/privacy' },
-  },
+
   robots: { index: true, follow: true },
 }
 

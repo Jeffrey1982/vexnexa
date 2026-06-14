@@ -26,7 +26,6 @@ export const metadata: Metadata = {
       "Continuous WCAG monitoring to support EAA readiness. Track issues, catch regressions, build evidence of improvement.",
     url: "https://vexnexa.com/eaa-compliance-monitoring",
   },
-  alternates: { canonical: "https://vexnexa.com/eaa-compliance-monitoring" },
 };
 
 export default function EaaComplianceMonitoringPage() {

@@ -5,9 +5,6 @@ export const metadata: Metadata = {
   title: 'White-Label WCAG Monitoring for Agencies & EU Teams',
   description:
     'Scan websites for WCAG 2.2 issues, catch accessibility regressions, and deliver branded reports with continuous monitoring for agencies and EU-facing teams.',
-  alternates: {
-    canonical: 'https://vexnexa.com',
-  },
   openGraph: {
     title: 'VexNexa - White-Label WCAG Monitoring for Agencies & EU Teams',
     description:

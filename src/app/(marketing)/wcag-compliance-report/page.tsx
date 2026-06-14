@@ -41,9 +41,6 @@ export const metadata: Metadata = {
     url: "https://vexnexa.com/wcag-compliance-report",
     type: "website",
   },
-  alternates: {
-    canonical: "https://vexnexa.com/wcag-compliance-report",
-  },
 };
 
 /* ═══════════════════════════════════════════════════════════

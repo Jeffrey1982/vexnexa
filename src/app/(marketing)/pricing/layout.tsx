@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     url: 'https://vexnexa.com/pricing',
     type: 'website',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com/pricing',
-  },
 }
 
 export default function PricingLayout({

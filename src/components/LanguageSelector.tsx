@@ -4,6 +4,7 @@ import * as React from "react";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { isMarketingPath } from "@/lib/marketing-seo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,18 +35,33 @@ export function LanguageSelector() {
   const handleLanguageChange = (language: Language) => {
     setCurrentLanguage(language);
 
-    if (typeof window !== "undefined") {
-      try { localStorage.setItem("preferred-language", language.code); } catch {}
-      document.cookie = `NEXT_LOCALE=${language.code}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    if (typeof window === "undefined") return;
+    try { localStorage.setItem("preferred-language", language.code); } catch {}
+    document.cookie = `NEXT_LOCALE=${language.code}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+
+    // On marketing pages, navigate to the locale-prefixed URL so each language
+    // has a real, indexable address (en = un-prefixed). Elsewhere (dashboard,
+    // blog) keep the cookie-based reload.
+    const { pathname, search, hash } = window.location;
+    const basePath = pathname.replace(/^\/(en|nl|de|fr|es|pt)(?=\/|$)/, "") || "/";
+    if (isMarketingPath(basePath)) {
+      const target =
+        language.code === "en"
+          ? basePath
+          : `/${language.code}${basePath === "/" ? "" : basePath}`;
+      window.location.href = `${target}${search}${hash}`;
+    } else {
       window.location.reload();
     }
   };
 
   React.useEffect(() => {
     try {
+      const pathMatch = window.location.pathname.match(/^\/(en|nl|de|fr|es|pt)(?=\/|$)/);
       const cookieMatch = document.cookie.match(/NEXT_LOCALE=([^;]+)/);
       const cookieLocale = cookieMatch ? cookieMatch[1] : null;
-      const savedLanguage = cookieLocale || localStorage.getItem("preferred-language");
+      const savedLanguage =
+        (pathMatch ? pathMatch[1] : null) || cookieLocale || localStorage.getItem("preferred-language");
       if (savedLanguage) {
         const language = languages.find(lang => lang.code === savedLanguage);
         if (language) {

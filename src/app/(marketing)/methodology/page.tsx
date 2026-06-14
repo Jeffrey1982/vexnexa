@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   title: "Accessibility Scan Methodology - VexNexa",
   description:
     "How VexNexa runs accessibility scans, maps WCAG findings, stores evidence, and separates automated checks from manual review.",
-  alternates: {
-    canonical: "https://vexnexa.com/methodology",
-  },
   robots: { index: true, follow: true },
 };
 

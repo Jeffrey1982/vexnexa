@@ -41,9 +41,7 @@ export const metadata: Metadata = {
     url: "https://vexnexa.com/wcag-scan",
     type: "website",
   },
-  alternates: {
-    canonical: "https://vexnexa.com/wcag-scan",
-  },
+
 };
 
 /* ═══════════════════════════════════════════════════════════

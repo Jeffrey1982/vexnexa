@@ -40,9 +40,6 @@ export const metadata: Metadata = {
     url: "https://vexnexa.com/white-label-accessibility-reports",
     type: "website",
   },
-  alternates: {
-    canonical: "https://vexnexa.com/white-label-accessibility-reports",
-  },
 };
 
 /* ═══════════════════════════════════════════════════════════

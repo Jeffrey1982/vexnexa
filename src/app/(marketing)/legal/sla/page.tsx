@@ -33,10 +33,6 @@ export const metadata: Metadata = {
     description:
       'Service Level Agreement en support informatie van VexNexa: uptime garanties, response times en support levels.',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com/legal/sla',
-    languages: { 'nl-NL': 'https://vexnexa.com/legal/sla' },
-  },
   robots: { index: true, follow: true },
 }
 

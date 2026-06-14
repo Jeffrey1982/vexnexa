@@ -27,9 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: t('twitterTitle'),
       description: t('twitterDescription'),
     },
-    alternates: {
-      canonical: 'https://vexnexa.com/about',
-    },
+
   }
 }
 

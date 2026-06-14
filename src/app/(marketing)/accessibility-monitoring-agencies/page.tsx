@@ -41,9 +41,6 @@ export const metadata: Metadata = {
     url: "https://vexnexa.com/accessibility-monitoring-agencies",
     type: "website",
   },
-  alternates: {
-    canonical: "https://vexnexa.com/accessibility-monitoring-agencies",
-  },
 };
 
 /* ═══════════════════════════════════════════════════════════

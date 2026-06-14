@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   title: "Compliance & Trust - VexNexa",
   description:
     "VexNexa compliance overview for WCAG, EAA readiness, security, privacy and responsible accessibility reporting.",
-  alternates: {
-    canonical: "https://vexnexa.com/compliance",
-  },
   robots: { index: true, follow: true },
 };
 

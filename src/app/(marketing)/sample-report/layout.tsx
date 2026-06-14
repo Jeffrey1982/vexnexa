@@ -10,7 +10,6 @@ export const metadata: Metadata = {
       "Browse a realistic WCAG report with prioritised issues, fix guidance, and scores. White-label available on Business and Enterprise plans.",
     url: "https://vexnexa.com/sample-report",
   },
-  alternates: { canonical: "https://vexnexa.com/sample-report" },
 };
 
 export default function SampleReportLayout({

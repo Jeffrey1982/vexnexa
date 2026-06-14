@@ -10,7 +10,6 @@ export const metadata: Metadata = {
       "Questions about plans, white-label reporting, or how VexNexa fits your workflow? We'll help you get to the right setup quickly.",
     url: "https://vexnexa.com/contact",
   },
-  alternates: { canonical: "https://vexnexa.com/contact" },
 };
 
 export default function ContactLayout({

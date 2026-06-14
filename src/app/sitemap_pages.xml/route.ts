@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { MARKETING_LOCALES, isMarketingPath, localizedUrl } from '@/lib/marketing-seo'
 
 const PUBLIC_PAGE_LASTMOD = '2026-05-16'
 
@@ -43,12 +44,35 @@ function escapeXml(str: string): string {
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
 
-  const urlset = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PAGE_PATHS.map(path => `  <url>
+  const entries = PAGE_PATHS.map((path) => {
+    if (isMarketingPath(path)) {
+      // hreflang alternates shared by every locale variant of this page
+      const alternates = [
+        ...MARKETING_LOCALES.map(
+          (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${escapeXml(localizedUrl(l, path))}"/>`
+        ),
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(localizedUrl('en', path))}"/>`,
+      ].join('\n')
+
+      return MARKETING_LOCALES.map(
+        (l) => `  <url>
+    <loc>${escapeXml(localizedUrl(l, path))}</loc>
+    <lastmod>${PUBLIC_PAGE_LASTMOD}</lastmod>
+${alternates}
+  </url>`
+      ).join('\n')
+    }
+
+    // Non locale-routed page (blog index, changelog, cookies) — single entry.
+    return `  <url>
     <loc>${escapeXml(`${baseUrl}${path === '/' ? '' : path}`)}</loc>
     <lastmod>${PUBLIC_PAGE_LASTMOD}</lastmod>
-  </url>`).join('\n')}
+  </url>`
+  })
+
+  const urlset = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries.join('\n')}
 </urlset>`
 
   return new NextResponse(urlset, {

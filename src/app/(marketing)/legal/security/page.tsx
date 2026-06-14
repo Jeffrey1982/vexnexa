@@ -33,10 +33,6 @@ export const metadata: Metadata = {
     description:
       'Security and privacy information from VexNexa: data handling, encryption, retention beleid en incident response.',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com/legal/security',
-    languages: { 'nl-NL': 'https://vexnexa.com/legal/security' },
-  },
   robots: { index: true, follow: true },
 }
 

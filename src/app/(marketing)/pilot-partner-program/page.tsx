@@ -30,7 +30,6 @@ export const metadata: Metadata = {
       "Join a limited pilot group to explore WCAG monitoring, branded reporting, and accessibility workflows with direct VexNexa support.",
     url: "https://vexnexa.com/pilot-partner-program",
   },
-  alternates: { canonical: "https://vexnexa.com/pilot-partner-program" },
 };
 
 const audiences: {

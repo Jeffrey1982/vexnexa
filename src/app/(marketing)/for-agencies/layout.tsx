@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     url: 'https://vexnexa.com/for-agencies',
     type: 'website',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com/for-agencies',
-  },
 }
 
 export default function ForAgenciesLayout({

@@ -41,18 +41,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title: t("ogTitle"),
       description: t("ogDescription"),
     },
-    alternates: {
-      canonical: PAGE_URL,
-      languages: {
-        en: PAGE_URL,
-        nl: PAGE_URL,
-        de: PAGE_URL,
-        fr: PAGE_URL,
-        es: PAGE_URL,
-        pt: PAGE_URL,
-        "x-default": PAGE_URL,
-      },
-    },
   };
 }
 

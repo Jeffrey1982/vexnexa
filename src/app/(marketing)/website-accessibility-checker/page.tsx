@@ -39,9 +39,6 @@ export const metadata: Metadata = {
     url: "https://vexnexa.com/website-accessibility-checker",
     type: "website",
   },
-  alternates: {
-    canonical: "https://vexnexa.com/website-accessibility-checker",
-  },
 };
 
 /* ═══════════════════════════════════════════════════════════

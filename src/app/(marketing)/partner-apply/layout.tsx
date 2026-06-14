@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       "Claim your spot: Business-level access, white-label client reports, and direct product input. Manually reviewed within 24 hours.",
     url: "https://vexnexa.com/partner-apply",
   },
-  alternates: { canonical: "https://vexnexa.com/partner-apply" },
+
   robots: { index: true, follow: true },
 };
 

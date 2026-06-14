@@ -32,10 +32,6 @@ export const metadata: Metadata = {
     description:
       'Read VexNexa terms of service: usage terms, payments, liability and service conditions.',
   },
-  alternates: {
-    canonical: 'https://vexnexa.com/legal/terms',
-    languages: { 'nl-NL': 'https://vexnexa.com/legal/terms' },
-  },
   robots: { index: true, follow: true },
 }
 

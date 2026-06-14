@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       "WCAG 2.2 scanning, white-label reports, continuous monitoring, and multi-site management for agencies and compliance teams.",
     url: "https://vexnexa.com/features",
   },
-  alternates: { canonical: "https://vexnexa.com/features" },
+
 };
 
 

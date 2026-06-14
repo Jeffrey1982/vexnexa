@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { apiLimiter, authLimiter } from '@/lib/rate-limit'
+import { isMarketingPath } from '@/lib/marketing-seo'
 
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl
@@ -43,11 +44,36 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 301)
   }
 
-  if (/^\/(?:en|nl|de|fr|es|pt)\/?$/.test(pathname)) {
-    const redirectUrl = url.clone()
-    redirectUrl.pathname = '/'
-    return NextResponse.redirect(redirectUrl, 301)
+  // ── Locale-prefixed marketing routing ──
+  // The default locale (en) is served at un-prefixed paths; /en/* is
+  // canonicalised back to them. Other locales are served at
+  // /{locale}/<marketing-path> via an internal rewrite so search engines get a
+  // distinct, indexable URL per language. x-vn-locale/x-vn-path drive the
+  // language rendering and the canonical/hreflang tags in the marketing layout.
+  let rewriteUrl: URL | null = null
+  const localeMatch = pathname.match(/^\/(en|nl|de|fr|es|pt)(\/.*)?$/)
+  if (localeMatch) {
+    const seg = localeMatch[1]
+    const rest = localeMatch[2] || '/'
+    if (seg === 'en') {
+      const redirectUrl = url.clone()
+      redirectUrl.pathname = rest
+      return NextResponse.redirect(redirectUrl, 301)
+    }
+    if (isMarketingPath(rest)) {
+      requestHeaders.set('x-vn-locale', seg)
+      requestHeaders.set('x-vn-path', rest)
+      rewriteUrl = url.clone()
+      rewriteUrl.pathname = rest
+    }
+  } else if (isMarketingPath(pathname)) {
+    requestHeaders.set('x-vn-path', pathname)
   }
+
+  const buildResponse = () =>
+    rewriteUrl
+      ? NextResponse.rewrite(rewriteUrl, { request: { headers: requestHeaders } })
+      : NextResponse.next({ request: { headers: requestHeaders } })
 
   if (pathname === '/sw.js') {
     const response = NextResponse.next()
@@ -129,9 +155,7 @@ export async function proxy(request: NextRequest) {
   // ── Supabase session refresh ──
   // Required so that session cookies set by /auth/callback (server-side)
   // are visible to the browser client on the next page load (e.g. /auth/reset-password).
-  let response = NextResponse.next({
-    request: { headers: requestHeaders },
-  })
+  let response = buildResponse()
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -146,9 +170,7 @@ export async function proxy(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           )
-          response = NextResponse.next({
-            request: { headers: requestHeaders },
-          })
+          response = buildResponse()
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
           )
