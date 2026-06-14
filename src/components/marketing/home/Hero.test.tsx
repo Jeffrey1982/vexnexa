@@ -20,6 +20,17 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+  }),
+}));
+
 function renderHero() {
   const container = document.createElement("div");
   document.body.appendChild(container);
@@ -57,7 +68,7 @@ describe("Hero", () => {
     const { container, root } = renderHero();
 
     expect(container.querySelectorAll("h1")).toHaveLength(1);
-    expect(container.querySelector('a[href="/auth/register"]')?.textContent).toContain("Scan your site");
+    expect(container.querySelector('button[type="submit"]')?.textContent).toContain("Scan your site");
     expect(container.querySelector('a[href="/sample-report"]')?.textContent).toContain(
       "View sample report"
     );
