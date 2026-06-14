@@ -10,10 +10,12 @@ import { useTranslations } from "next-intl";
 import { normalizeUrl } from "@/lib/url";
 import { consumePendingScanUrl } from "@/lib/pending-scan";
 import { cn } from "@/lib/utils";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 export function NewScanForm() {
   const t = useTranslations("dashboard.newScan");
   const tScan = useTranslations("scanForm");
+  const tError = useTranslations("apiErrors");
   const [url, setUrl] = useState("");
   const [includeVNI, setIncludeVNI] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +33,7 @@ export function NewScanForm() {
 
     const normalizedUrl = normalizeUrl(url);
     if (!normalizedUrl) {
-      setError("Please enter a valid website URL.");
+      setError(tError("invalidUrl"));
       return;
     }
 
@@ -63,7 +65,8 @@ export function NewScanForm() {
 
       if (!response.ok) {
         console.error("[NewScanForm] Request failed with status:", response.status, "data:", data);
-        throw new Error(data.error || `Failed to start scan (${response.status})`);
+        setError(localizeApiError(tError, data, "scanFailed"));
+        return;
       }
 
       if (data.scanId) {
@@ -71,11 +74,11 @@ export function NewScanForm() {
         router.push(`/scans/${data.scanId}`);
       } else {
         console.error("[NewScanForm] No scan ID in response:", data);
-        throw new Error("No scan ID returned");
+        setError(tError("scanFailed"));
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("[NewScanForm] Scan request failed:", err);
-      setError(err.message || "An unknown error occurred");
+      setError(tError("network"));
     } finally {
       setIsLoading(false);
     }

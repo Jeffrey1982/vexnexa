@@ -2952,7 +2952,7 @@
     "success": {
       "activated": "Complemento ativado! O pagamento será processado automaticamente todos os meses.",
       "updated": "Número de lugares atualizado",
-      "canceled": "Complemento cancelado. O acesso permanece até ao fim do período de faturação."
+      "canceled": "Complemento cancelado. A sua capacidade foi atualizada."
     }
   },
   "assurance": {
@@ -4372,5 +4372,39 @@
       "description": "Projetos, funções, integração Slack/Jira, API.",
       "title": "Pronto para equipas"
     }
+  },
+  "apiErrors": {
+    "generic": "Algo correu mal. Tente novamente.",
+    "network": "Não foi possível estabelecer ligação. Verifique a sua Internet e tente novamente.",
+    "invalidInput": "Verifique os dados introduzidos e tente novamente.",
+    "invalidUrl": "Introduza um URL de website válido.",
+    "unauthorized": "Inicie sessão novamente para continuar.",
+    "forbidden": "Não tem permissão para realizar esta ação.",
+    "sessionExpired": "A sua sessão expirou. Inicie sessão novamente.",
+    "notFound": "O item pedido não foi encontrado.",
+    "alreadyExists": "Este item já existe.",
+    "rateLimit": "Demasiados pedidos. Aguarde um momento e tente novamente.",
+    "serviceUnavailable": "Este serviço está temporariamente indisponível. Tente mais tarde.",
+    "scanFailed": "Não foi possível iniciar a análise. Tente novamente.",
+    "scanStatusFailed": "Não foi possível obter o estado da análise. Tente novamente.",
+    "siteLimitReached": "Limite de sites atingido ({limit} sites). Adicione capacidade ou remova um site.",
+    "pageLimitReached": "Atingiu o limite mensal de páginas. Adicione capacidade ou aguarde o próximo período de faturação.",
+    "planLimitReached": "Atingiu o limite do seu plano. Aumente a capacidade para continuar.",
+    "upgradeRequired": "Esta funcionalidade não está incluída no seu plano atual.",
+    "subscriptionInactive": "A sua subscrição não está ativa. Verifique as definições de faturação.",
+    "noPaymentMethod": "Configure um método de pagamento antes de comprar um complemento.",
+    "paymentExpired": "O seu método de pagamento já não é válido. Atualize-o em Faturação.",
+    "alreadyActive": "Este complemento já está ativo.",
+    "capacityInUse": "Esta capacidade está em uso. Remova sites antes de cancelar o pacote.",
+    "purchaseFailed": "Não foi possível concluir a compra. Tente novamente.",
+    "cancellationFailed": "Não foi possível concluir o cancelamento. Tente novamente.",
+    "loadFailed": "Não foi possível carregar as informações. Tente novamente.",
+    "saveFailed": "Não foi possível guardar as alterações. Tente novamente.",
+    "createFailed": "Não foi possível criar o item. Tente novamente.",
+    "updateFailed": "Não foi possível atualizar o item. Tente novamente.",
+    "deleteFailed": "Não foi possível eliminar o item. Tente novamente.",
+    "sendFailed": "Não foi possível enviar a mensagem. Tente novamente.",
+    "checkoutFailed": "Não foi possível iniciar o pagamento. Tente novamente.",
+    "authFailed": "A autenticação falhou. Tente novamente."
   }
 }

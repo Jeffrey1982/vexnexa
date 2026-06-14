@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 interface CreateTeamDialogProps {
   open: boolean;
@@ -25,6 +27,7 @@ export function CreateTeamDialog({
   onOpenChange,
   onTeamCreated,
 }: CreateTeamDialogProps) {
+  const tError = useTranslations("apiErrors");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -54,10 +57,10 @@ export function CreateTeamDialog({
         setDescription("");
       } else {
         const errorData = await response.json();
-        setError(errorData.error || "Failed to create team");
+        setError(localizeApiError(tError, errorData, "createFailed"));
       }
-    } catch (err) {
-      setError("Failed to create team");
+    } catch {
+      setError(tError("network"));
     } finally {
       setLoading(false);
     }

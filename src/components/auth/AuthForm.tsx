@@ -17,6 +17,7 @@ interface AuthFormProps {
 
 export default function AuthForm({ mode }: AuthFormProps) {
   const t = useTranslations(mode === 'login' ? 'auth.login' : 'auth.register')
+  const tApiError = useTranslations('apiErrors')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -55,8 +56,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
         router.push('/dashboard')
         router.refresh()
       }
-    } catch (error: any) {
-      setError(error.message)
+    } catch {
+      setError(tApiError('authFailed'))
     } finally {
       setLoading(false)
     }

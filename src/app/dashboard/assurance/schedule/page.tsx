@@ -40,6 +40,8 @@ import {
   Globe,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { localizeApiError } from '@/lib/localized-api-error';
 
 // ── Types ──
 
@@ -143,6 +145,7 @@ function getRunStatusIcon(status: string) {
 
 export default function AssuranceSchedulePage() {
   const { toast } = useToast();
+  const tError = useTranslations('apiErrors');
 
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [sites, setSites] = useState<Site[]>([]);
@@ -158,18 +161,22 @@ export default function AssuranceSchedulePage() {
       if (data.success) {
         setSchedules(data.schedules);
       } else {
-        throw new Error(data.error);
+        toast({
+          variant: 'destructive',
+          title: tError('loadFailed'),
+          description: localizeApiError(tError, data, 'loadFailed'),
+        });
       }
-    } catch (error: unknown) {
+    } catch {
       toast({
         variant: 'destructive',
-        title: 'Failed to load schedules',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        title: tError('loadFailed'),
+        description: tError('network'),
       });
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, [tError, toast]);
 
   // Fetch user's sites
   const fetchSites = useCallback(async () => {
@@ -198,17 +205,24 @@ export default function AssuranceSchedulePage() {
         body: JSON.stringify({ isEnabled: !schedule.isEnabled }),
       });
       const data = await res.json();
-      if (!data.success) throw new Error(data.error);
+      if (!data.success) {
+        toast({
+          variant: 'destructive',
+          title: tError('updateFailed'),
+          description: localizeApiError(tError, data, 'updateFailed'),
+        });
+        return;
+      }
       toast({
         title: schedule.isEnabled ? 'Schedule paused' : 'Schedule enabled',
         description: schedule.site.url,
       });
       fetchSchedules();
-    } catch (error: unknown) {
+    } catch {
       toast({
         variant: 'destructive',
-        title: 'Failed to update schedule',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        title: tError('updateFailed'),
+        description: tError('network'),
       });
     }
   };
@@ -219,14 +233,21 @@ export default function AssuranceSchedulePage() {
     try {
       const res = await fetch(`/api/schedules/${schedule.id}`, { method: 'DELETE' });
       const data = await res.json();
-      if (!data.success) throw new Error(data.error);
+      if (!data.success) {
+        toast({
+          variant: 'destructive',
+          title: tError('deleteFailed'),
+          description: localizeApiError(tError, data, 'deleteFailed'),
+        });
+        return;
+      }
       toast({ title: 'Schedule deleted' });
       fetchSchedules();
-    } catch (error: unknown) {
+    } catch {
       toast({
         variant: 'destructive',
-        title: 'Failed to delete',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        title: tError('deleteFailed'),
+        description: tError('network'),
       });
     }
   };
@@ -421,6 +442,7 @@ interface CreateScheduleDialogProps {
 
 function CreateScheduleDialog({ open, onOpenChange, sites, onSuccess }: CreateScheduleDialogProps) {
   const { toast } = useToast();
+  const tError = useTranslations('apiErrors');
   const [loading, setLoading] = useState(false);
 
   const [siteId, setSiteId] = useState('');
@@ -483,7 +505,7 @@ function CreateScheduleDialog({ open, onOpenChange, sites, onSuccess }: CreateSc
 
   const handleSubmit = async () => {
     if (!siteId) {
-      toast({ variant: 'destructive', title: 'Select a site' });
+      toast({ variant: 'destructive', title: tError('invalidInput') });
       return;
     }
 
@@ -507,15 +529,22 @@ function CreateScheduleDialog({ open, onOpenChange, sites, onSuccess }: CreateSc
       });
 
       const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to create schedule');
+      if (!res.ok || !data.success) {
+        toast({
+          variant: 'destructive',
+          title: tError('createFailed'),
+          description: localizeApiError(tError, data, 'createFailed'),
+        });
+        return;
+      }
 
       toast({ title: 'Schedule created!', description: `Next run: ${formatDateTime(data.schedule.nextRunAt)}` });
       onSuccess();
-    } catch (error: unknown) {
+    } catch {
       toast({
         variant: 'destructive',
-        title: 'Failed to create schedule',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        title: tError('createFailed'),
+        description: tError('network'),
       });
     } finally {
       setLoading(false);

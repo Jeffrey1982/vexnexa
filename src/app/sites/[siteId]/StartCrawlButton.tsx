@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { localizeApiError } from '@/lib/localized-api-error';
 
 interface StartCrawlButtonProps {
   siteId: string;
 }
 
 export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
+  const tError = useTranslations('apiErrors');
   const [isLoading, setIsLoading] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [maxPages, setMaxPages] = useState(50);
@@ -30,23 +33,15 @@ export default function StartCrawlButton({ siteId }: StartCrawlButtonProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        // Handle billing errors specifically
-        if (response.status === 402) {
-          if (data.code === "UPGRADE_REQUIRED") {
-            throw new Error(`Upgrade Required: ${data.error}`);
-          }
-        }
-        if (response.status === 429 && data.code === "LIMIT_REACHED") {
-          throw new Error(`Limit Reached: ${data.error}`);
-        }
-        throw new Error(data.error || 'Failed to start crawl');
+        alert(localizeApiError(tError, data, 'scanFailed'));
+        return;
       }
 
       // Refresh the page to show the new crawl status
       window.location.reload();
     } catch (error) {
       console.error('Failed to start crawl:', error);
-      alert(error instanceof Error ? error.message : 'Failed to start crawl');
+      alert(tError('network'));
     } finally {
       setIsLoading(false);
     }

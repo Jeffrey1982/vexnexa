@@ -3041,7 +3041,7 @@
     "success": {
       "activated": "Module activé! Le paiement sera traité automatiquement chaque mois.",
       "updated": "Nombre de places mis à jour",
-      "canceled": "Module annulé. L'accès reste jusqu'à la fin de la période de facturation."
+      "canceled": "Module complémentaire annulé. Votre capacité a été mise à jour."
     }
   },
   "assurance": {
@@ -4488,5 +4488,39 @@
       "description": "Projets, rôles, intégration Slack/Jira, API.",
       "title": "Prêt pour les équipes"
     }
+  },
+  "apiErrors": {
+    "generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "network": "Connexion impossible. Vérifiez votre connexion Internet et réessayez.",
+    "invalidInput": "Vérifiez les informations saisies et réessayez.",
+    "invalidUrl": "Saisissez une URL de site web valide.",
+    "unauthorized": "Reconnectez-vous pour continuer.",
+    "forbidden": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "sessionExpired": "Votre session a expiré. Reconnectez-vous.",
+    "notFound": "L'élément demandé est introuvable.",
+    "alreadyExists": "Cet élément existe déjà.",
+    "rateLimit": "Trop de requêtes. Patientez un instant et réessayez.",
+    "serviceUnavailable": "Ce service est temporairement indisponible. Réessayez plus tard.",
+    "scanFailed": "L'analyse n'a pas pu démarrer. Veuillez réessayer.",
+    "scanStatusFailed": "L'état de l'analyse n'a pas pu être récupéré. Veuillez réessayer.",
+    "siteLimitReached": "Limite de sites atteinte ({limit} sites). Ajoutez de la capacité ou supprimez un site.",
+    "pageLimitReached": "Votre limite mensuelle de pages est atteinte. Ajoutez de la capacité ou attendez la prochaine période de facturation.",
+    "planLimitReached": "La limite de votre forfait est atteinte. Augmentez votre capacité pour continuer.",
+    "upgradeRequired": "Cette fonctionnalité n'est pas incluse dans votre forfait actuel.",
+    "subscriptionInactive": "Votre abonnement n'est pas actif. Vérifiez vos paramètres de facturation.",
+    "noPaymentMethod": "Configurez un moyen de paiement avant d'acheter un module complémentaire.",
+    "paymentExpired": "Votre moyen de paiement n'est plus valide. Mettez-le à jour dans Facturation.",
+    "alreadyActive": "Ce module complémentaire est déjà actif.",
+    "capacityInUse": "Cette capacité est utilisée. Supprimez des sites avant d'annuler le forfait.",
+    "purchaseFailed": "L'achat n'a pas pu être finalisé. Veuillez réessayer.",
+    "cancellationFailed": "L'annulation n'a pas pu être finalisée. Veuillez réessayer.",
+    "loadFailed": "Les informations n'ont pas pu être chargées. Veuillez réessayer.",
+    "saveFailed": "Vos modifications n'ont pas pu être enregistrées. Veuillez réessayer.",
+    "createFailed": "L'élément n'a pas pu être créé. Veuillez réessayer.",
+    "updateFailed": "L'élément n'a pas pu être mis à jour. Veuillez réessayer.",
+    "deleteFailed": "L'élément n'a pas pu être supprimé. Veuillez réessayer.",
+    "sendFailed": "Le message n'a pas pu être envoyé. Veuillez réessayer.",
+    "checkoutFailed": "Le paiement n'a pas pu être démarré. Veuillez réessayer.",
+    "authFailed": "L'authentification a échoué. Veuillez réessayer."
   }
 }

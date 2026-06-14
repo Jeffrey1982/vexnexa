@@ -6,6 +6,8 @@ import { AlertCircle, Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 type ScanStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED" | "queued" | "running" | "done" | "failed";
 
@@ -25,6 +27,7 @@ interface ScanProcessingStatusProps {
 }
 
 export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcessingStatusProps) {
+  const tError = useTranslations("apiErrors");
   const router = useRouter();
   const [status, setStatus] = useState<ScanStatus>(initialStatus);
   const [error, setError] = useState<string | null>(null);
@@ -60,11 +63,13 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
         const payload = await response.json();
 
         if (!response.ok) {
-          throw new Error(payload.error || "Failed to check scan status");
+          if (!cancelled) {
+            setError(localizeApiError(tError, payload, "scanStatusFailed"));
+          }
+          return;
         }
 
         const nextStatus = payload.data?.status as ScanStatus | undefined;
-        const nextError = payload.data?.error as string | null | undefined;
         const nextProgress = payload.data?.resultJson?.scanProgress as ScanProgress | undefined;
 
         if (cancelled || !nextStatus) return;
@@ -77,11 +82,11 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
         }
 
         if (nextStatus === "FAILED" || nextStatus === "failed") {
-          setError(nextError || "The scan failed while processing. Please try again.");
+          setError(tError("scanFailed"));
         }
-      } catch (pollError) {
+      } catch {
         if (!cancelled) {
-          setError(pollError instanceof Error ? pollError.message : "Failed to check scan status");
+          setError(tError("network"));
         }
       }
     };
@@ -93,7 +98,7 @@ export function ScanProcessingStatus({ scanId, initialStatus, url }: ScanProcess
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [router, scanId]);
+  }, [router, scanId, tError]);
 
   return (
     <Card className="border-l-4 border-l-primary">

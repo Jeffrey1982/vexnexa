@@ -11,6 +11,7 @@ import {
   detectInitialPdfLocale,
   type PdfLocale,
 } from "@/components/PdfLanguageSelector";
+import { useTranslations } from "next-intl";
 
 interface ExportButtonsProps {
   scanId: string;
@@ -29,6 +30,7 @@ export function ExportButtons({
   includeVNI = true,
   showLanguageSelector = true,
 }: ExportButtonsProps) {
+  const tError = useTranslations("apiErrors");
   const [exportingPdf, setExportingPdf] = useState(false);
   const [pdfLocale, setPdfLocale] = useState<PdfLocale>(detectInitialPdfLocale());
 
@@ -70,7 +72,7 @@ export function ExportButtons({
       }
     } catch (error) {
       console.error("PDF export failed:", error);
-      alert("Failed to export PDF. Please try again.");
+      alert(tError("loadFailed"));
     } finally {
       setExportingPdf(false);
     }

@@ -16,6 +16,8 @@ import {
   CheckCircle
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client-new'
+import { useTranslations } from 'next-intl'
+import { localizeApiError } from '@/lib/localized-api-error'
 
 interface NotificationSettings {
   marketingEmails: boolean
@@ -27,6 +29,7 @@ interface NotificationSettings {
 }
 
 export default function NotificationSettingsPage() {
+  const tError = useTranslations('apiErrors')
   const [authUser, setAuthUser] = useState<any>(null)
   const supabase = createClient()
 
@@ -86,13 +89,19 @@ export default function NotificationSettingsPage() {
           description: "Your notification preferences have been updated.",
         })
       } else {
-        throw new Error('Failed to save settings')
+        const data = await response.json().catch(() => ({}))
+        toast({
+          variant: "destructive",
+          title: tError("saveFailed"),
+          description: localizeApiError(tError, data, "saveFailed"),
+        })
+        return
       }
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
-        title: "Error saving",
-        description: "Please try again later.",
+        title: tError("saveFailed"),
+        description: tError("network"),
       })
     } finally {
       setSaving(false)

@@ -4,10 +4,13 @@ import { useState } from "react";
 import { AlertCircle, CheckCircle2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 type SignupState = "idle" | "loading" | "success" | "error";
 
 export function UpdatesSignupForm() {
+  const tError = useTranslations("apiErrors");
   const [email, setEmail] = useState("");
   const [state, setState] = useState<SignupState>("idle");
   const [message, setMessage] = useState("");
@@ -32,15 +35,17 @@ export function UpdatesSignupForm() {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(result.error || "We could not subscribe this email right now.");
+        setState("error");
+        setMessage(localizeApiError(tError, result, "sendFailed"));
+        return;
       }
 
       setState("success");
       setMessage("Check your inbox to confirm Status & Updates.");
       setEmail("");
-    } catch (error) {
+    } catch {
       setState("error");
-      setMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+      setMessage(tError("network"));
     }
   };
 

@@ -28,10 +28,13 @@ import {
   AlertCircle,
   Loader2
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { localizeApiError } from '@/lib/localized-api-error'
 
 type BillingType = 'individual' | 'business'
 
 export default function OnboardingPage() {
+  const tError = useTranslations('apiErrors')
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
@@ -108,7 +111,7 @@ export default function OnboardingPage() {
 
     // Validation
     if (!formData.firstName || !formData.lastName) {
-      setError('First name and last name are required')
+      setError(tError('invalidInput'))
       setLoading(false)
       return
     }
@@ -116,7 +119,7 @@ export default function OnboardingPage() {
     // Name validation
     const nameRegex = /^[a-zA-Z\s'-]+$/
     if (!nameRegex.test(formData.firstName) || !nameRegex.test(formData.lastName)) {
-      setError('Names should only contain letters, spaces, hyphens, and apostrophes')
+      setError(tError('invalidInput'))
       setLoading(false)
       return
     }
@@ -137,7 +140,10 @@ export default function OnboardingPage() {
         }
       })
 
-      if (updateError) throw updateError
+      if (updateError) {
+        setError(tError('saveFailed'))
+        return
+      }
 
       // Update database via API
       const response = await fetch('/api/user/profile', {
@@ -161,12 +167,13 @@ export default function OnboardingPage() {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.error || 'Failed to update profile')
+        setError(localizeApiError(tError, errorData, 'saveFailed'))
+        return
       }
 
       // Save billing profile if country is set
       if (formData.country) {
-        await fetch('/api/billing/profile', {
+        const billingResponse = await fetch('/api/billing/profile', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -184,13 +191,18 @@ export default function OnboardingPage() {
             addressRegion: formData.addressRegion || undefined,
           }),
         })
+        if (!billingResponse.ok) {
+          const billingError = await billingResponse.json().catch(() => ({}))
+          setError(localizeApiError(tError, billingError, 'saveFailed'))
+          return
+        }
       }
 
       // Redirect to dashboard with welcome
       router.push('/dashboard?welcome=true')
       router.refresh()
-    } catch (error: any) {
-      setError(error.message || 'Failed to complete profile')
+    } catch {
+      setError(tError('network'))
     } finally {
       setLoading(false)
     }

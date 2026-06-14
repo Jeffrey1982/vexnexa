@@ -10,8 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { ArrowLeft, Plus, X, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { localizeApiError } from '@/lib/localized-api-error';
 
 export default function DomainSettingsPage({ params }: { params: { id: string } }) {
+  const tError = useTranslations('apiErrors');
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +34,12 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
   const fetchDomain = useCallback(async () => {
     try {
       const response = await fetch(`/api/assurance/domains/${params.id}`);
-      if (!response.ok) throw new Error('Failed to fetch domain');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        setError(localizeApiError(tError, errorData, 'loadFailed'));
+        setIsLoading(false);
+        return;
+      }
 
       const data = await response.json();
       setFormData({
@@ -43,11 +51,11 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
       });
       setEmailRecipients(data.emailRecipients || []);
       setIsLoading(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load domain');
+    } catch {
+      setError(tError('network'));
       setIsLoading(false);
     }
-  }, [params.id]);
+  }, [params.id, tError]);
 
   useEffect(() => {
     fetchDomain();
@@ -56,15 +64,15 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
   const handleAddEmail = () => {
     if (!currentEmail) return;
     if (emailRecipients.length >= 5) {
-      setError('Maximum 5 email recipients allowed');
+      setError(tError('invalidInput'));
       return;
     }
     if (!currentEmail.includes('@')) {
-      setError('Please enter a valid email address');
+      setError(tError('invalidInput'));
       return;
     }
     if (emailRecipients.includes(currentEmail)) {
-      setError('Email already added');
+      setError(tError('alreadyExists'));
       return;
     }
     setEmailRecipients([...emailRecipients, currentEmail]);
@@ -94,20 +102,22 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to update domain');
+        setError(localizeApiError(tError, data, 'updateFailed'));
+        setIsSubmitting(false);
+        return;
       }
 
       router.push(`/dashboard/assurance/domains/${params.id}`);
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch {
+      setError(tError('network'));
       setIsSubmitting(false);
     }
   };
 
   const handleDelete = async () => {
     if (deleteConfirm !== 'DELETE') {
-      setError('Please type DELETE to confirm');
+      setError(tError('invalidInput'));
       return;
     }
 
@@ -119,13 +129,15 @@ export default function DomainSettingsPage({ params }: { params: { id: string } 
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Failed to delete domain');
+        setError(localizeApiError(tError, data, 'deleteFailed'));
+        setIsSubmitting(false);
+        return;
       }
 
       router.push('/dashboard/assurance/domains');
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch {
+      setError(tError('network'));
       setIsSubmitting(false);
     }
   };

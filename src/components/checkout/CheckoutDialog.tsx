@@ -39,6 +39,8 @@ import {
   type BillingInterval,
 } from "@/lib/billing/pricing-config";
 import { validateCompanyName } from "@/lib/billing/validation";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 // ── Types ──
 
@@ -62,6 +64,7 @@ export function CheckoutDialog({
   planKey,
   billingCycle,
 }: CheckoutDialogProps): JSX.Element {
+  const tError = useTranslations("apiErrors");
   // ── State ──
   const [purchaseAs, setPurchaseAs] = useState<PurchaseAs>("individual");
   const [companyFields, setCompanyFields] = useState<CompanyFields>({
@@ -169,17 +172,17 @@ export function CheckoutDialog({
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to create payment");
+        setServerError(localizeApiError(tError, data, "checkoutFailed"));
+        setSubmitting(false);
+        return;
       }
 
       window.location.href = data.checkoutUrl;
-    } catch (err) {
-      setServerError(
-        err instanceof Error ? err.message : "Something went wrong. Please try again."
-      );
+    } catch {
+      setServerError(tError("network"));
       setSubmitting(false);
     }
-  }, [planKey, billingCycle, purchaseAs, companyFields]);
+  }, [planKey, billingCycle, purchaseAs, companyFields, tError]);
 
   const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Annual";
   const nextBillingLabel = billingCycle === "monthly" ? "/month" : "/year";

@@ -3084,7 +3084,7 @@
     "success": {
       "activated": "Add-on geactiveerd! De betaling wordt automatisch maandelijks verwerkt.",
       "updated": "Aantal seats bijgewerkt",
-      "canceled": "Add-on geannuleerd. Toegang blijft tot einde van de betaalperiode."
+      "canceled": "Add-on geannuleerd. Je capaciteit is bijgewerkt."
     }
   },
   "assurance": {
@@ -4504,5 +4504,39 @@
       "description": "Projecten, rollen, Slack/Jira-integratie, API.",
       "title": "Klaar voor teams"
     }
+  },
+  "apiErrors": {
+    "generic": "Er ging iets mis. Probeer het opnieuw.",
+    "network": "Kan geen verbinding maken. Controleer je internetverbinding en probeer het opnieuw.",
+    "invalidInput": "Controleer de ingevoerde gegevens en probeer het opnieuw.",
+    "invalidUrl": "Vul een geldige website-URL in.",
+    "unauthorized": "Log opnieuw in om verder te gaan.",
+    "forbidden": "Je hebt geen toestemming om deze actie uit te voeren.",
+    "sessionExpired": "Je sessie is verlopen. Log opnieuw in.",
+    "notFound": "Het opgevraagde onderdeel is niet gevonden.",
+    "alreadyExists": "Dit onderdeel bestaat al.",
+    "rateLimit": "Te veel verzoeken. Wacht even en probeer het opnieuw.",
+    "serviceUnavailable": "Deze dienst is tijdelijk niet beschikbaar. Probeer het later opnieuw.",
+    "scanFailed": "De scan kon niet worden gestart. Probeer het opnieuw.",
+    "scanStatusFailed": "De scanstatus kon niet worden opgehaald. Probeer het opnieuw.",
+    "siteLimitReached": "Sitelimiet bereikt ({limit} sites). Voeg websitecapaciteit toe of verwijder een site om door te gaan.",
+    "pageLimitReached": "Je maandelijkse paginalimiet is bereikt. Voeg capaciteit toe of wacht op de volgende factuurperiode.",
+    "planLimitReached": "Je planlimiet is bereikt. Verhoog je capaciteit om door te gaan.",
+    "upgradeRequired": "Deze functie is niet inbegrepen in je huidige plan.",
+    "subscriptionInactive": "Je abonnement is niet actief. Controleer je factureringsinstellingen.",
+    "noPaymentMethod": "Stel eerst een betaalmethode in voordat je een add-on koopt.",
+    "paymentExpired": "Je betaalmethode is niet meer geldig. Werk deze bij onder Facturering.",
+    "alreadyActive": "Deze add-on is al actief.",
+    "capacityInUse": "Deze capaciteit is in gebruik. Verwijder eerst sites voordat je het pakket annuleert.",
+    "purchaseFailed": "De aankoop kon niet worden voltooid. Probeer het opnieuw.",
+    "cancellationFailed": "De annulering kon niet worden voltooid. Probeer het opnieuw.",
+    "loadFailed": "De informatie kon niet worden geladen. Probeer het opnieuw.",
+    "saveFailed": "Je wijzigingen konden niet worden opgeslagen. Probeer het opnieuw.",
+    "createFailed": "Het onderdeel kon niet worden aangemaakt. Probeer het opnieuw.",
+    "updateFailed": "Het onderdeel kon niet worden bijgewerkt. Probeer het opnieuw.",
+    "deleteFailed": "Het onderdeel kon niet worden verwijderd. Probeer het opnieuw.",
+    "sendFailed": "Het bericht kon niet worden verzonden. Probeer het opnieuw.",
+    "checkoutFailed": "De checkout kon niet worden gestart. Probeer het opnieuw.",
+    "authFailed": "Inloggen is mislukt. Probeer het opnieuw."
   }
 }

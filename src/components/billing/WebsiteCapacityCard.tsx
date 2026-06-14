@@ -3,7 +3,9 @@
 import { useState } from "react"
 import { AddOnType } from "@prisma/client"
 import { CheckCircle, Globe, Loader2, ShoppingCart, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { ADDON_NAMES, ADDON_PRICING } from "@/lib/billing/addons"
+import { localizeApiError } from "@/lib/localized-api-error"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,6 +38,8 @@ export function WebsiteCapacityCard({
   addOns,
   onRefresh,
 }: WebsiteCapacityCardProps) {
+  const tError = useTranslations("apiErrors")
+  const tSuccess = useTranslations("addons.success")
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -71,17 +75,14 @@ export function WebsiteCapacityCard({
           window.location.href = data.redirectUrl
           return
         }
-        throw new Error(data.error || "Website package purchase failed")
+        setError(localizeApiError(tError, data, "purchaseFailed"))
+        return
       }
 
-      setSuccess(data.message)
+      setSuccess(tSuccess("activated"))
       refreshAfterFeedback()
-    } catch (purchaseError) {
-      setError(
-        purchaseError instanceof Error
-          ? purchaseError.message
-          : "Website package purchase failed",
-      )
+    } catch {
+      setError(tError("network"))
     } finally {
       setLoading(null)
     }
@@ -103,17 +104,14 @@ export function WebsiteCapacityCard({
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Website package cancellation failed")
+        setError(localizeApiError(tError, data, "cancellationFailed"))
+        return
       }
 
-      setSuccess(data.message)
+      setSuccess(tSuccess("canceled"))
       refreshAfterFeedback()
-    } catch (cancelError) {
-      setError(
-        cancelError instanceof Error
-          ? cancelError.message
-          : "Website package cancellation failed",
-      )
+    } catch {
+      setError(tError("network"))
     } finally {
       setLoading(null)
     }

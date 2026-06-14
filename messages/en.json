@@ -3856,7 +3856,7 @@
     "success": {
       "activated": "Add-on activated! Payment will be processed automatically every month.",
       "updated": "Number of seats updated",
-      "canceled": "Add-on canceled. Access remains until end of billing period."
+      "canceled": "Add-on canceled. Your capacity has been updated."
     }
   },
   "blog": {
@@ -4333,5 +4333,39 @@
       "terms": "Terms",
       "contact": "Contact"
     }
+  },
+  "apiErrors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Could not connect. Check your internet connection and try again.",
+    "invalidInput": "Check the entered information and try again.",
+    "invalidUrl": "Enter a valid website URL.",
+    "unauthorized": "Sign in again to continue.",
+    "forbidden": "You do not have permission to perform this action.",
+    "sessionExpired": "Your session has expired. Sign in again.",
+    "notFound": "The requested item could not be found.",
+    "alreadyExists": "This item already exists.",
+    "rateLimit": "Too many requests. Wait a moment and try again.",
+    "serviceUnavailable": "This service is temporarily unavailable. Try again later.",
+    "scanFailed": "The scan could not be started. Please try again.",
+    "scanStatusFailed": "The scan status could not be retrieved. Please try again.",
+    "siteLimitReached": "Site limit reached ({limit} sites). Add website capacity or remove a site to continue.",
+    "pageLimitReached": "Your monthly page limit has been reached. Add capacity or wait until the next billing period.",
+    "planLimitReached": "Your plan limit has been reached. Increase your capacity to continue.",
+    "upgradeRequired": "Your current plan does not include this feature.",
+    "subscriptionInactive": "Your subscription is not active. Check your billing settings.",
+    "noPaymentMethod": "Set up a payment method before purchasing an add-on.",
+    "paymentExpired": "Your payment method is no longer valid. Update it in Billing.",
+    "alreadyActive": "This add-on is already active.",
+    "capacityInUse": "This capacity is in use. Remove sites before cancelling the package.",
+    "purchaseFailed": "The purchase could not be completed. Please try again.",
+    "cancellationFailed": "The cancellation could not be completed. Please try again.",
+    "loadFailed": "The information could not be loaded. Please try again.",
+    "saveFailed": "Your changes could not be saved. Please try again.",
+    "createFailed": "The item could not be created. Please try again.",
+    "updateFailed": "The item could not be updated. Please try again.",
+    "deleteFailed": "The item could not be deleted. Please try again.",
+    "sendFailed": "The message could not be sent. Please try again.",
+    "checkoutFailed": "Checkout could not be started. Please try again.",
+    "authFailed": "Authentication failed. Please try again."
   }
 }

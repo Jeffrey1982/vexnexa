@@ -15,8 +15,10 @@ import { createTicket } from "@/app/actions/support-tickets";
 import { TicketCategory, TicketPriority } from "@prisma/client";
 import { createClient } from "@/lib/supabase/client-new";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function NewTicketPage() {
+  const tError = useTranslations("apiErrors");
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const supabase = createClient();
@@ -45,10 +47,14 @@ export default function NewTicketPage() {
 
     try {
       if (!formData.subject.trim()) {
-        throw new Error('Subject is required');
+        setError(tError("invalidInput"));
+        setIsSubmitting(false);
+        return;
       }
       if (!formData.initialMessage.trim()) {
-        throw new Error('Message is required');
+        setError(tError("invalidInput"));
+        setIsSubmitting(false);
+        return;
       }
 
       const result = await createTicket(formData);
@@ -56,8 +62,8 @@ export default function NewTicketPage() {
       if (result.success) {
         router.push(`/dashboard/support/${result.ticketId}`);
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to create ticket');
+    } catch {
+      setError(tError("createFailed"));
       setIsSubmitting(false);
     }
   };

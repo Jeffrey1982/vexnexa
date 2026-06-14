@@ -69,6 +69,7 @@ interface RegistrationData {
 
 export default function ModernRegistrationForm() {
   const t = useTranslations('auth.register')
+  const tApiError = useTranslations('apiErrors')
   
   const steps = [
     { 
@@ -136,8 +137,8 @@ export default function ModernRegistrationForm() {
       })
 
       if (error) throw error
-    } catch (error: any) {
-      setError(error.message)
+    } catch {
+      setError(tApiError('authFailed'))
       setLoading(false)
     }
   }
@@ -295,7 +296,7 @@ export default function ModernRegistrationForm() {
         setError(t('errors.timeout'))
       } else {
         console.error('[Signup] failure_reason=', error.message)
-        setError(error.message)
+        setError(tApiError('authFailed'))
       }
     } finally {
       setLoading(false)

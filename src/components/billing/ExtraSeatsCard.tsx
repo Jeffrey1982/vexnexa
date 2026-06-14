@@ -9,6 +9,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Users, Plus, Minus, Loader2, CheckCircle, Info } from "lucide-react"
 import { AddOnType } from "@prisma/client"
 import { ADDON_PRICING } from "@/lib/billing/addons"
+import { localizeApiError } from "@/lib/localized-api-error"
+import { useTranslations } from "next-intl"
 
 interface ExtraSeatsCardProps {
   baseSeats: number
@@ -26,6 +28,8 @@ interface ExtraSeatsCardProps {
 }
 
 export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRefresh, isTrial = false }: ExtraSeatsCardProps) {
+  const tError = useTranslations("apiErrors")
+  const tSuccess = useTranslations("addons.success")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -50,12 +54,14 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
 
         const data = await response.json()
         if (!response.ok) {
-          const error: any = new Error(data.error || "Failed to add seat")
-          error.code = data.code
-          error.redirectUrl = data.redirectUrl
-          throw error
+          if (data.redirectUrl) {
+            window.location.href = data.redirectUrl
+            return
+          }
+          setError(localizeApiError(tError, data, "purchaseFailed"))
+          return
         }
-        setSuccess(data.message)
+        setSuccess(tSuccess("updated"))
       } else {
         // Create new add-on
         const response = await fetch("/api/billing/addons", {
@@ -66,26 +72,22 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
 
         const data = await response.json()
         if (!response.ok) {
-          const error: any = new Error(data.error || "Failed to add seat")
-          error.code = data.code
-          error.redirectUrl = data.redirectUrl
-          throw error
+          if (data.redirectUrl) {
+            window.location.href = data.redirectUrl
+            return
+          }
+          setError(localizeApiError(tError, data, "purchaseFailed"))
+          return
         }
-        setSuccess(data.message)
+        setSuccess(tSuccess("activated"))
       }
 
       setTimeout(() => {
         onRefresh()
         setSuccess(null)
       }, 2000)
-    } catch (err: any) {
-      // Show error message (error codes will be in the message itself for translation)
-      setError(err?.message || "Failed to add seat")
-
-      // Auto-redirect if needed
-      if (err?.redirectUrl) {
-        setTimeout(() => window.location.href = err.redirectUrl, 2000)
-      }
+    } catch {
+      setError(tError("network"))
     } finally {
       setLoading(false)
     }
@@ -109,15 +111,18 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         })
 
         const data = await response.json()
-        if (!response.ok) throw new Error(data.error || "Failed to cancel seats")
-        setSuccess(data.message)
+        if (!response.ok) {
+          setError(localizeApiError(tError, data, "cancellationFailed"))
+          return
+        }
+        setSuccess(tSuccess("canceled"))
 
         setTimeout(() => {
           onRefresh()
           setSuccess(null)
         }, 2000)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to remove seat")
+      } catch {
+        setError(tError("network"))
       } finally {
         setLoading(false)
       }
@@ -135,15 +140,18 @@ export function ExtraSeatsCard({ baseSeats, extraSeats, usedSeats, addOns, onRef
         })
 
         const data = await response.json()
-        if (!response.ok) throw new Error(data.error || "Failed to remove seat")
-        setSuccess(data.message)
+        if (!response.ok) {
+          setError(localizeApiError(tError, data, "updateFailed"))
+          return
+        }
+        setSuccess(tSuccess("updated"))
 
         setTimeout(() => {
           onRefresh()
           setSuccess(null)
         }, 2000)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to remove seat")
+      } catch {
+        setError(tError("network"))
       } finally {
         setLoading(false)
       }

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Trash2, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { localizeApiError } from '@/lib/localized-api-error';
 
 interface DeleteSiteButtonProps {
   siteId: string;
@@ -10,6 +12,7 @@ interface DeleteSiteButtonProps {
 }
 
 export function DeleteSiteButton({ siteId, siteName }: DeleteSiteButtonProps) {
+  const tError = useTranslations('apiErrors');
   const [confirming, setConfirming] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
   const router = useRouter();
@@ -30,11 +33,11 @@ export function DeleteSiteButton({ siteId, siteName }: DeleteSiteButtonProps) {
         router.refresh();
       } else {
         const data = await res.json().catch(() => ({}));
-        alert(data.error || 'Failed to delete site');
+        alert(localizeApiError(tError, data, 'deleteFailed'));
         setConfirming(false);
       }
     } catch {
-      alert('Network error — please try again');
+      alert(tError('network'));
       setConfirming(false);
     } finally {
       setDeleting(false);

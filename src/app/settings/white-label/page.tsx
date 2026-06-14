@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Paintbrush, Upload, Globe, User, Loader2, RotateCcw, ExternalLink, Info, AlertTriangle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { localizeApiError } from '@/lib/localized-api-error';
 
 interface WhiteLabelSettings {
   id?: string;
@@ -29,6 +31,7 @@ interface WhiteLabelSettings {
 }
 
 export default function WhiteLabelPage() {
+  const tError = useTranslations('apiErrors');
   const [authUser, setAuthUser] = useState<any>(null);
   const [settings, setSettings] = useState<WhiteLabelSettings>({
     primaryColor: '#1F4A2D',
@@ -98,7 +101,7 @@ export default function WhiteLabelPage() {
   const handleSave = async () => {
     const validation = validateSettings();
     if (!validation.valid) {
-      alert('Please fix the following errors:\n\n' + validation.errors.join('\n'));
+      alert(tError('invalidInput'));
       return;
     }
     try {
@@ -113,13 +116,11 @@ export default function WhiteLabelPage() {
         setSettings(data.whiteLabel);
         alert('White label settings saved successfully!');
       } else {
-        alert(data.code === 'UPGRADE_REQUIRED'
-          ? 'White labeling is only available for Business plan users. Please upgrade your plan.'
-          : (data.error || 'Failed to save settings'));
+        alert(localizeApiError(tError, data, 'saveFailed'));
       }
     } catch (error) {
       console.error('Error saving settings:', error);
-      alert('An error occurred while saving settings');
+      alert(tError('network'));
     } finally {
       setIsSaving(false);
     }
@@ -129,27 +130,27 @@ export default function WhiteLabelPage() {
     try {
       setIsUploading(prev => ({ ...prev, [type]: true }));
       const maxSize = 2 * 1024 * 1024;
-      if (file.size > maxSize) { alert(`File too large. Maximum size is 2MB.`); return; }
+      if (file.size > maxSize) { alert(tError('invalidInput')); return; }
       const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'];
-      if (!validTypes.includes(file.type)) { alert('Invalid file type. Only JPEG, PNG, WebP, and SVG files are allowed.'); return; }
+      if (!validTypes.includes(file.type)) { alert(tError('invalidInput')); return; }
       const formData = new FormData();
       formData.append('file', file);
       formData.append('type', type);
       const response = await fetch('/api/white-label/upload', { method: 'POST', body: formData });
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
-        alert(response.status === 413 ? 'File too large for server.' : 'Upload failed.');
+        alert(response.status === 413 ? tError('invalidInput') : tError('saveFailed'));
         return;
       }
       const data = await response.json();
       if (data.success) {
         setSettings(prev => ({ ...prev, [type === 'logo' ? 'logoUrl' : 'faviconUrl']: data.url }));
       } else {
-        alert(data.error || 'Upload failed');
+        alert(localizeApiError(tError, data, 'saveFailed'));
       }
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Upload failed. Please try again.');
+      alert(tError('network'));
     } finally {
       setIsUploading(prev => ({ ...prev, [type]: false }));
     }
@@ -165,7 +166,7 @@ export default function WhiteLabelPage() {
         }
       } catch (error) {
         console.error('Reset error:', error);
-        alert('Failed to reset settings');
+        alert(tError('network'));
       }
     }
   };

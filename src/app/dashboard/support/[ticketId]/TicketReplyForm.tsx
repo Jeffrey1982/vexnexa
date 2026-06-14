@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Send } from "lucide-react";
 import { addMessageToTicket } from "@/app/actions/support-tickets";
+import { useTranslations } from "next-intl";
 
 export function TicketReplyForm({ ticketId }: { ticketId: string }) {
+  const tError = useTranslations("apiErrors");
   const router = useRouter();
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,14 +24,16 @@ export function TicketReplyForm({ ticketId }: { ticketId: string }) {
 
     try {
       if (!message.trim()) {
-        throw new Error('Message cannot be empty');
+        setError(tError("invalidInput"));
+        setIsSubmitting(false);
+        return;
       }
 
       await addMessageToTicket(ticketId, message, 'USER');
       setMessage('');
       router.refresh();
-    } catch (err: any) {
-      setError(err.message || 'Failed to send message');
+    } catch {
+      setError(tError("sendFailed"));
     } finally {
       setIsSubmitting(false);
     }

@@ -17,6 +17,8 @@ import {
   detectInitialPdfLocale,
   type PdfLocale,
 } from "@/components/PdfLanguageSelector";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 interface ScanResult {
   scanId: string;
@@ -50,6 +52,7 @@ const impactIcons = {
 };
 
 function ScanResultsContent() {
+  const tError = useTranslations("apiErrors");
   const [result, setResult] = useState<ScanResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -79,18 +82,18 @@ function ScanResultsContent() {
           if (data.ok) {
             setResult(data.result);
           } else {
-            setError(data.error || 'Failed to load scan results');
+            setError(localizeApiError(tError, data, "loadFailed"));
           }
         })
-        .catch(err => {
-          setError('Failed to load scan results');
+        .catch(() => {
+          setError(tError("network"));
         })
         .finally(() => setLoading(false));
     } else {
-      setError('No scan ID provided');
+      setError(tError("invalidInput"));
       setLoading(false);
     }
-  }, [searchParams]);
+  }, [searchParams, tError]);
 
   const handleExportPDF = async () => {
     if (!result) return;
@@ -106,9 +109,8 @@ function ScanResultsContent() {
           description: "Use Share \u2192 Save to Files to download.",
         });
       }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Failed to generate PDF";
-      setError(msg);
+    } catch {
+      setError(tError("loadFailed"));
     } finally {
       setExportLoading(false);
     }

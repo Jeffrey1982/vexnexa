@@ -3093,7 +3093,7 @@
     "success": {
       "activated": "¡Complemento activado! El pago se procesará automáticamente cada mes.",
       "updated": "Número de asientos actualizado",
-      "canceled": "Complemento cancelado. El acceso permanece hasta el final del período de facturación."
+      "canceled": "Complemento cancelado. Tu capacidad se ha actualizado."
     }
   },
   "assurance": {
@@ -4513,5 +4513,39 @@
       "description": "Proyectos, roles, integración con Slack/Jira, API.",
       "title": "Listo para equipos"
     }
+  },
+  "apiErrors": {
+    "generic": "Algo salió mal. Inténtalo de nuevo.",
+    "network": "No se pudo conectar. Comprueba tu conexión a Internet e inténtalo de nuevo.",
+    "invalidInput": "Comprueba los datos introducidos e inténtalo de nuevo.",
+    "invalidUrl": "Introduce una URL de sitio web válida.",
+    "unauthorized": "Vuelve a iniciar sesión para continuar.",
+    "forbidden": "No tienes permiso para realizar esta acción.",
+    "sessionExpired": "Tu sesión ha caducado. Vuelve a iniciar sesión.",
+    "notFound": "No se encontró el elemento solicitado.",
+    "alreadyExists": "Este elemento ya existe.",
+    "rateLimit": "Demasiadas solicitudes. Espera un momento e inténtalo de nuevo.",
+    "serviceUnavailable": "Este servicio no está disponible temporalmente. Inténtalo más tarde.",
+    "scanFailed": "No se pudo iniciar el análisis. Inténtalo de nuevo.",
+    "scanStatusFailed": "No se pudo obtener el estado del análisis. Inténtalo de nuevo.",
+    "siteLimitReached": "Se alcanzó el límite de sitios ({limit} sitios). Añade capacidad o elimina un sitio.",
+    "pageLimitReached": "Has alcanzado el límite mensual de páginas. Añade capacidad o espera al siguiente periodo de facturación.",
+    "planLimitReached": "Has alcanzado el límite de tu plan. Aumenta tu capacidad para continuar.",
+    "upgradeRequired": "Esta función no está incluida en tu plan actual.",
+    "subscriptionInactive": "Tu suscripción no está activa. Revisa la configuración de facturación.",
+    "noPaymentMethod": "Configura un método de pago antes de comprar un complemento.",
+    "paymentExpired": "Tu método de pago ya no es válido. Actualízalo en Facturación.",
+    "alreadyActive": "Este complemento ya está activo.",
+    "capacityInUse": "Esta capacidad está en uso. Elimina sitios antes de cancelar el paquete.",
+    "purchaseFailed": "No se pudo completar la compra. Inténtalo de nuevo.",
+    "cancellationFailed": "No se pudo completar la cancelación. Inténtalo de nuevo.",
+    "loadFailed": "No se pudo cargar la información. Inténtalo de nuevo.",
+    "saveFailed": "No se pudieron guardar los cambios. Inténtalo de nuevo.",
+    "createFailed": "No se pudo crear el elemento. Inténtalo de nuevo.",
+    "updateFailed": "No se pudo actualizar el elemento. Inténtalo de nuevo.",
+    "deleteFailed": "No se pudo eliminar el elemento. Inténtalo de nuevo.",
+    "sendFailed": "No se pudo enviar el mensaje. Inténtalo de nuevo.",
+    "checkoutFailed": "No se pudo iniciar el pago. Inténtalo de nuevo.",
+    "authFailed": "La autenticación ha fallado. Inténtalo de nuevo."
   }
 }

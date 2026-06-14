@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus, FileCheck, AlertCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 interface Site {
   id: string;
@@ -35,6 +37,7 @@ export default function AuditManager({
   templates,
   onAuditCreated
 }: AuditManagerProps) {
+  const tError = useTranslations("apiErrors");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -78,7 +81,7 @@ export default function AuditManager({
     setError(null);
 
     if (!formData.siteId || !formData.name || !formData.templateId) {
-      setError("Site, name, and template are required");
+      setError(tError("invalidInput"));
       return;
     }
 
@@ -108,10 +111,10 @@ export default function AuditManager({
           onAuditCreated(data.audit.id);
         }
       } else {
-        setError(data.error || "Failed to create audit");
+        setError(localizeApiError(tError, data, "createFailed"));
       }
-    } catch (e: any) {
-      setError(e.message || "Failed to create audit");
+    } catch {
+      setError(tError("network"));
     } finally {
       setLoading(false);
     }

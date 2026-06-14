@@ -3093,7 +3093,7 @@
     "success": {
       "activated": "Add-on aktiviert! Die Zahlung wird jeden Monat automatisch verarbeitet.",
       "updated": "Anzahl der Seats aktualisiert",
-      "canceled": "Add-on gekuendigt. Der Zugriff bleibt bis zum Ende des Abrechnungszeitraums erhalten."
+      "canceled": "Add-on gekuendigt. Ihre Kapazitaet wurde aktualisiert."
     }
   },
   "assurance": {
@@ -4513,5 +4513,39 @@
       "description": "Projekte, Rollen, Slack/Jira-Integration, API.",
       "title": "Teamfähig"
     }
+  },
+  "apiErrors": {
+    "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "network": "Verbindung nicht möglich. Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+    "invalidInput": "Prüfen Sie die eingegebenen Daten und versuchen Sie es erneut.",
+    "invalidUrl": "Geben Sie eine gültige Website-URL ein.",
+    "unauthorized": "Melden Sie sich erneut an, um fortzufahren.",
+    "forbidden": "Sie sind nicht berechtigt, diese Aktion auszuführen.",
+    "sessionExpired": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an.",
+    "notFound": "Das angeforderte Element wurde nicht gefunden.",
+    "alreadyExists": "Dieses Element ist bereits vorhanden.",
+    "rateLimit": "Zu viele Anfragen. Warten Sie kurz und versuchen Sie es erneut.",
+    "serviceUnavailable": "Dieser Dienst ist vorübergehend nicht verfügbar. Versuchen Sie es später erneut.",
+    "scanFailed": "Der Scan konnte nicht gestartet werden. Bitte versuchen Sie es erneut.",
+    "scanStatusFailed": "Der Scanstatus konnte nicht abgerufen werden. Bitte versuchen Sie es erneut.",
+    "siteLimitReached": "Website-Limit erreicht ({limit} Websites). Fügen Sie Kapazität hinzu oder entfernen Sie eine Website.",
+    "pageLimitReached": "Ihr monatliches Seitenlimit ist erreicht. Fügen Sie Kapazität hinzu oder warten Sie bis zum nächsten Abrechnungszeitraum.",
+    "planLimitReached": "Ihr Planlimit ist erreicht. Erhöhen Sie Ihre Kapazität, um fortzufahren.",
+    "upgradeRequired": "Diese Funktion ist in Ihrem aktuellen Tarif nicht enthalten.",
+    "subscriptionInactive": "Ihr Abonnement ist nicht aktiv. Prüfen Sie Ihre Abrechnungseinstellungen.",
+    "noPaymentMethod": "Richten Sie vor dem Kauf eines Add-ons eine Zahlungsmethode ein.",
+    "paymentExpired": "Ihre Zahlungsmethode ist nicht mehr gültig. Aktualisieren Sie sie unter Abrechnung.",
+    "alreadyActive": "Dieses Add-on ist bereits aktiv.",
+    "capacityInUse": "Diese Kapazität wird verwendet. Entfernen Sie Websites, bevor Sie das Paket kündigen.",
+    "purchaseFailed": "Der Kauf konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+    "cancellationFailed": "Die Kündigung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+    "loadFailed": "Die Informationen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+    "saveFailed": "Ihre Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+    "createFailed": "Das Element konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+    "updateFailed": "Das Element konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "deleteFailed": "Das Element konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+    "sendFailed": "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+    "checkoutFailed": "Der Checkout konnte nicht gestartet werden. Bitte versuchen Sie es erneut.",
+    "authFailed": "Die Authentifizierung ist fehlgeschlagen. Bitte versuchen Sie es erneut."
   }
 }

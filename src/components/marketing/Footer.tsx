@@ -61,7 +61,7 @@ export function Footer({ className }: FooterProps) {
         toast({
           variant: "destructive",
           title: t('brand.newsletter.errorTitle'),
-          description: result.error || t('brand.newsletter.errorDescription'),
+          description: t('brand.newsletter.errorDescription'),
         });
       }
     } catch (error) {

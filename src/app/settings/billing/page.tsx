@@ -33,6 +33,8 @@ import { WebsiteCapacityCard } from "@/components/billing/WebsiteCapacityCard";
 import { PLAN_PRICES, formatEurPrice, type BillingInterval } from "@/lib/billing/pricing-config";
 
 import { AddOnType } from "@prisma/client";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 interface UserData {
   id: string;
@@ -149,6 +151,7 @@ function FeatureRow({ label, included }: { label: string; included: boolean }) {
 }
 
 export default function BillingPage() {
+  const tError = useTranslations("apiErrors");
   const [authUser, setAuthUser] = useState<any>(null);
   const supabase = createClient();
 
@@ -183,7 +186,9 @@ export default function BillingPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to load billing data");
+        setError(localizeApiError(tError, data, "loadFailed"));
+        setLoading(false);
+        return;
       }
 
       setUser({
@@ -215,8 +220,8 @@ export default function BillingPage() {
       }
 
       setLoading(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load billing data");
+    } catch {
+      setError(tError("network"));
       setLoading(false);
     }
   };
@@ -237,15 +242,16 @@ export default function BillingPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to cancel subscription");
+        setError(localizeApiError(tError, data, "cancellationFailed"));
+        return;
       }
 
       setSuccess("Subscription cancelled successfully");
       // Refresh all billing data from server
       await loadUserData();
 
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to cancel subscription");
+    } catch {
+      setError(tError("network"));
     }
 
     setActionLoading(null);
@@ -274,7 +280,8 @@ export default function BillingPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to change plan");
+        setError(localizeApiError(tError, data, "updateFailed"));
+        return;
       }
 
       if (data.needCheckout) {
@@ -290,8 +297,8 @@ export default function BillingPage() {
         await loadUserData();
       }
 
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to change plan");
+    } catch {
+      setError(tError("network"));
     }
 
     setActionLoading(null);
@@ -309,14 +316,15 @@ export default function BillingPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to reset payment method");
+        setError(localizeApiError(tError, data, "saveFailed"));
+        return;
       }
 
       // Redirect to payment setup
       window.location.href = data.url;
 
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to reset payment method");
+    } catch {
+      setError(tError("network"));
     }
 
     setActionLoading(null);

@@ -9,6 +9,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Zap, ShoppingCart, Loader2, CheckCircle, X, AlertTriangle } from "lucide-react"
 import { AddOnType } from "@prisma/client"
 import { ADDON_PRICING, ADDON_NAMES } from "@/lib/billing/addons"
+import { localizeApiError } from "@/lib/localized-api-error"
+import { useTranslations } from "next-intl"
 
 interface ScanPackagesCardProps {
   baseScans: number
@@ -50,6 +52,8 @@ export function ScanPackagesCard({
   onRefresh,
   isTrial = false
 }: ScanPackagesCardProps) {
+  const tError = useTranslations("apiErrors")
+  const tSuccess = useTranslations("addons.success")
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -76,19 +80,18 @@ export function ScanPackagesCard({
       })
 
       const data = await response.json()
-      if (!response.ok) throw new Error(data.error || "Purchase failed")
-      setSuccess(data.message)
+      if (!response.ok) {
+        setError(localizeApiError(tError, data, "purchaseFailed"))
+        return
+      }
+      setSuccess(tSuccess("activated"))
 
       setTimeout(() => {
         onRefresh()
         setSuccess(null)
       }, 2000)
-    } catch (err: any) {
-      setError(err?.message || "Purchase failed")
-
-      if (err?.redirectUrl) {
-        setTimeout(() => window.location.href = err.redirectUrl, 2000)
-      }
+    } catch {
+      setError(tError("network"))
     } finally {
       setLoading(null)
     }
@@ -108,15 +111,18 @@ export function ScanPackagesCard({
       })
 
       const data = await response.json()
-      if (!response.ok) throw new Error(data.error || "Cancellation failed")
-      setSuccess(data.message)
+      if (!response.ok) {
+        setError(localizeApiError(tError, data, "cancellationFailed"))
+        return
+      }
+      setSuccess(tSuccess("canceled"))
 
       setTimeout(() => {
         onRefresh()
         setSuccess(null)
       }, 2000)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Cancellation failed")
+    } catch {
+      setError(tError("network"))
     } finally {
       setLoading(null)
     }

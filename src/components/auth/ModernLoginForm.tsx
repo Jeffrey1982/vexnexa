@@ -37,6 +37,7 @@ const GoogleIcon = () => (
 
 export default function ModernLoginForm() {
   const t = useTranslations('auth.login')
+  const tApiError = useTranslations('apiErrors')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -165,8 +166,8 @@ export default function ModernLoginForm() {
 
       router.push(redirect)
       router.refresh()
-    } catch (error: any) {
-      setError(error.message)
+    } catch {
+      setError(tApiError('authFailed'))
     } finally {
       setLoading(false)
     }
@@ -187,8 +188,8 @@ export default function ModernLoginForm() {
       })
 
       if (error) throw error
-    } catch (error: any) {
-      setError(error.message)
+    } catch {
+      setError(tApiError('authFailed'))
       setLoading(false)
     }
   }

@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { CopyButton } from "@/components/CopyButton";
 import { useToast } from "@/hooks/use-toast";
 import { AlertTriangle, CheckCircle2, Clock, FileWarning, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 type IssueStatus = "OPEN" | "IN_PROGRESS" | "RESOLVED" | "ACCEPTED_RISK" | "FALSE_POSITIVE" | "CLOSED";
 
@@ -65,6 +67,7 @@ function statusIcon(status: IssueStatus) {
 }
 
 export function IssueLifecyclePanel({ scanId, initialIssues }: IssueLifecyclePanelProps) {
+  const tError = useTranslations("apiErrors");
   const [issues, setIssues] = useState<IssueRecord[]>(initialIssues);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [reasonDrafts, setReasonDrafts] = useState<Record<string, string>>({});
@@ -87,14 +90,21 @@ export function IssueLifecyclePanel({ scanId, initialIssues }: IssueLifecyclePan
         body: JSON.stringify(updates),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Issue update failed");
+      if (!response.ok) {
+        toast({
+          variant: "destructive",
+          title: tError("updateFailed"),
+          description: localizeApiError(tError, data, "updateFailed"),
+        });
+        return;
+      }
       setIssues((current) => current.map((issue) => (issue.id === issueId ? { ...issue, ...data.issue } : issue)));
       toast({ title: "Issue updated" });
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
-        title: "Could not update issue",
-        description: error instanceof Error ? error.message : "Unknown error",
+        title: tError("updateFailed"),
+        description: tError("network"),
       });
     } finally {
       setSavingId(null);

@@ -27,6 +27,7 @@ import { useTranslations } from "next-intl";
 
 export default function GetStartedPage() {
   const t = useTranslations('getStarted');
+  const tError = useTranslations('apiErrors');
   const router = useRouter();
   const [url, setUrl] = useState("");
   const [frequency, setFrequency] = useState("once");
@@ -57,7 +58,7 @@ export default function GetStartedPage() {
 
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : tError("generic"));
     } finally {
       setIsLoading(false);
     }

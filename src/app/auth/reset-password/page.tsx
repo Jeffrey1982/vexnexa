@@ -26,6 +26,7 @@ type PageState = 'loading' | 'ready' | 'invalid_link' | 'error' | 'pwa_standalon
 
 function ResetPasswordForm() {
   const t = useTranslations('auth.resetPassword')
+  const tApiError = useTranslations('apiErrors')
   const searchParams = useSearchParams()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -224,8 +225,8 @@ function ResetPasswordForm() {
       setTimeout(() => {
         router.push('/dashboard')
       }, 2000)
-    } catch (error: any) {
-      setError(error.message)
+    } catch {
+      setError(tApiError('authFailed'))
     } finally {
       setLoading(false)
     }

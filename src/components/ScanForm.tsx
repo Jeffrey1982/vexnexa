@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { normalizeUrl } from "@/lib/url";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 export default function ScanForm() {
   const t = useTranslations("scanForm");
+  const tError = useTranslations("apiErrors");
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<any>(null);
@@ -18,7 +20,7 @@ export default function ScanForm() {
 
     const normalizedUrl = normalizeUrl(url);
     if (!normalizedUrl) {
-      setError("Please enter a valid website URL.");
+      setError(tError("invalidUrl"));
       return;
     }
 
@@ -41,13 +43,14 @@ export default function ScanForm() {
 
       if (!r.ok || !data.ok) {
         console.error("[ScanForm] Request failed:", data);
-        throw new Error(data.error || t("errors.failed"));
+        setError(localizeApiError(tError, data, "scanFailed"));
+        return;
       }
 
       setRes(data);
-    } catch (err: any) {
+    } catch (err) {
       console.error("[ScanForm] Error:", err);
-      setError(err.message ?? t("errors.failed"));
+      setError(tError("network"));
     } finally {
       setLoading(false);
     }

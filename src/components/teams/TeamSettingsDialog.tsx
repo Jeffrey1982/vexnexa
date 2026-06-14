@@ -23,6 +23,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Loader2, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 
 interface Team {
   id: string;
@@ -51,6 +53,7 @@ export function TeamSettingsDialog({
   onTeamUpdated,
   onTeamDeleted,
 }: TeamSettingsDialogProps) {
+  const tError = useTranslations("apiErrors");
   const [name, setName] = useState(team.name);
   const [description, setDescription] = useState(team.description || "");
   const [loading, setLoading] = useState(false);
@@ -80,10 +83,10 @@ export function TeamSettingsDialog({
         onTeamUpdated(data.team);
       } else {
         const errorData = await response.json();
-        setError(errorData.error || "Failed to update team");
+        setError(localizeApiError(tError, errorData, "updateFailed"));
       }
-    } catch (err) {
-      setError("Failed to update team");
+    } catch {
+      setError(tError("network"));
     } finally {
       setLoading(false);
     }
@@ -101,10 +104,10 @@ export function TeamSettingsDialog({
         onTeamDeleted(team.id);
       } else {
         const errorData = await response.json();
-        setError(errorData.error || "Failed to delete team");
+        setError(localizeApiError(tError, errorData, "deleteFailed"));
       }
-    } catch (err) {
-      setError("Failed to delete team");
+    } catch {
+      setError(tError("network"));
     } finally {
       setDeleteLoading(false);
       setShowDeleteDialog(false);

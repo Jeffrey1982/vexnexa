@@ -9,8 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Plus, X } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { localizeApiError } from '@/lib/localized-api-error';
 
 export default function NewDomainPage() {
+  const tError = useTranslations('apiErrors');
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -28,15 +31,15 @@ export default function NewDomainPage() {
   const handleAddEmail = () => {
     if (!currentEmail) return;
     if (emailRecipients.length >= 5) {
-      setError('Maximum 5 email recipients allowed');
+      setError(tError('invalidInput'));
       return;
     }
     if (!currentEmail.includes('@')) {
-      setError('Please enter a valid email address');
+      setError(tError('invalidInput'));
       return;
     }
     if (emailRecipients.includes(currentEmail)) {
-      setError('Email already added');
+      setError(tError('alreadyExists'));
       return;
     }
     setEmailRecipients([...emailRecipients, currentEmail]);
@@ -66,13 +69,15 @@ export default function NewDomainPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to add domain');
+        setError(localizeApiError(tError, data, 'createFailed'));
+        setIsSubmitting(false);
+        return;
       }
 
       router.push('/dashboard/assurance/domains');
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch {
+      setError(tError('network'));
       setIsSubmitting(false);
     }
   };

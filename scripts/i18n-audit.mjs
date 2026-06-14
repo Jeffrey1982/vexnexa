@@ -148,6 +148,50 @@ function collectTranslationCalls() {
   return [...new Map(refs.map((ref) => [ref.key, ref])).values()];
 }
 
+function collectRawUserFacingErrors() {
+  const findings = [];
+  const patterns = [
+    /\bsetError\(\s*(?:data|result|errorData|responseData)\.error\b/g,
+    /\bsetError\(\s*(?:error|err|e)\.message\b/g,
+    /\balert\(\s*(?:data|result|errorData|responseData)\.error\b/g,
+    /\bdescription:\s*(?:error|err|e)\s+instanceof\s+Error\s*\?\s*(?:error|err|e)\.message\b/g,
+    /\bthrow\s+new\s+Error\(\s*(?:data|result|errorData|responseData)\.error\b/g,
+  ];
+
+  for (const file of walkFiles(path.join(root, "src"))) {
+    const relativeFile = path.relative(root, file).replaceAll("\\", "/");
+    if (
+      relativeFile.startsWith("src/app/api/") ||
+      relativeFile.startsWith("src/app/admin/") ||
+      relativeFile.startsWith("src/components/admin/") ||
+      relativeFile === "src/lib/axe-source.ts"
+    ) {
+      continue;
+    }
+
+    const source = fs.readFileSync(file, "utf8");
+    const sourceFile = ts.createSourceFile(
+      file,
+      source,
+      ts.ScriptTarget.Latest,
+      true,
+      /\.(tsx|jsx)$/.test(file) ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+    );
+
+    for (const pattern of patterns) {
+      for (const match of source.matchAll(pattern)) {
+        findings.push({
+          file: relativeFile,
+          line: getLine(sourceFile, match.index ?? 0),
+          expression: match[0],
+        });
+      }
+    }
+  }
+
+  return findings;
+}
+
 const messages = Object.fromEntries(
   locales.map((locale) => [
     locale,
@@ -186,6 +230,7 @@ const summary = {
   ),
   referencedKeys: referencedKeys.length,
   missingReferencedKeys: [],
+  rawUserFacingErrors: collectRawUserFacingErrors(),
 };
 
 for (const ref of referencedKeys) {
@@ -200,6 +245,9 @@ for (const ref of referencedKeys) {
 
 console.log(JSON.stringify(summary, null, 2));
 
-if (summary.missingReferencedKeys.length > 0) {
+if (
+  summary.missingReferencedKeys.length > 0 ||
+  summary.rawUserFacingErrors.length > 0
+) {
   process.exitCode = 1;
 }

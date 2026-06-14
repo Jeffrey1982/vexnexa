@@ -55,6 +55,7 @@ import {
 } from "@/lib/billing/pricing-config";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 import { useTranslations } from "next-intl";
+import { localizeApiError } from "@/lib/localized-api-error";
 import { CheckoutDialog } from "@/components/checkout/CheckoutDialog";
 
 // JSON-LD for pricing
@@ -526,6 +527,7 @@ function DirectCheckoutButton(props: {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const tCommon = useTranslations("common");
+  const tError = useTranslations("apiErrors");
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -545,17 +547,21 @@ function DirectCheckoutButton(props: {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || "Checkout failed");
+        setError(localizeApiError(tError, data, "checkoutFailed"));
+        setLoading(false);
+        return;
       }
 
       const checkoutUrl = data.checkoutUrl || data.url;
       if (!checkoutUrl) {
-        throw new Error("Checkout URL missing");
+        setError(tError("checkoutFailed"));
+        setLoading(false);
+        return;
       }
 
       window.location.href = checkoutUrl;
-    } catch (checkoutError) {
-      setError(checkoutError instanceof Error ? checkoutError.message : "Checkout failed");
+    } catch {
+      setError(tError("network"));
       setLoading(false);
     }
   };

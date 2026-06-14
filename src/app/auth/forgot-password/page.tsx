@@ -22,6 +22,7 @@ import {
 
 export default function ForgotPasswordPage() {
   const t = useTranslations('auth.forgotPassword')
+  const tApiError = useTranslations('apiErrors')
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
@@ -46,7 +47,7 @@ export default function ForgotPasswordPage() {
         if (isRateLimitError(error)) {
           console.warn('[ForgotPassword] auth_recover_rate_limited')
           startCooldown()
-          setError('Too many requests. Please wait a few minutes before trying again.')
+          setError(tApiError('rateLimit'))
           return
         }
         throw error
@@ -55,13 +56,13 @@ export default function ForgotPasswordPage() {
       // Start cooldown on success too (prevent spamming)
       startCooldown()
       setMessage(t('success'))
-    } catch (error: any) {
-      console.error('[ForgotPassword] failure_reason=', error.message)
-      setError(error.message)
+    } catch (error) {
+      console.error('[ForgotPassword] failure_reason=', error)
+      setError(tApiError('authFailed'))
     } finally {
       setLoading(false)
     }
-  }, [email, isCoolingDown, startCooldown, supabase, t])
+  }, [email, isCoolingDown, startCooldown, supabase, t, tApiError])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] dark:bg-[#1E1E1E] p-4">

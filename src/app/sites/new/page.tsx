@@ -12,8 +12,11 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client-new";
 import { normalizeUrl } from "@/lib/url";
 import { consumePendingScanUrl } from "@/lib/pending-scan";
+import { localizeApiError } from "@/lib/localized-api-error";
+import { useTranslations } from "next-intl";
 
 export default function NewSitePage() {
+  const tError = useTranslations("apiErrors");
   const [user, setUser] = useState<any>(null);
   const supabase = createClient();
 
@@ -40,7 +43,7 @@ export default function NewSitePage() {
 
     const validUrl = normalizeUrl(url);
     if (!validUrl) {
-      setError("Please enter a valid website URL.");
+      setError(tError("invalidUrl"));
       return;
     }
 
@@ -64,10 +67,10 @@ export default function NewSitePage() {
         // Redirect to scan detail page (same as dashboard)
         router.push(`/scans/${result.scanId}`);
       } else {
-        setError(result.error || 'Scan failed');
+        setError(localizeApiError(tError, result, "scanFailed"));
       }
-    } catch (err: any) {
-      setError(err.message || 'Network error occurred');
+    } catch {
+      setError(tError("network"));
     } finally {
       setLoading(false);
     }
