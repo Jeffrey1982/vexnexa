@@ -2453,7 +2453,7 @@
         "limitsTitle": "Limites & Excedente (apenas planos pagos)",
         "limits": [
           "Teste/Grátis: limite estrito — o serviço é bloqueado ao exceder. Uma atualização é necessária para acesso continuado.",
-          "Planos pagos — taxas de excedente (todos os valores incluem 21% de IVA): quando os limites são excedidos, scans adicionais são faturados automaticamente a €0,002 por página, €2,00 por site adicional por mês e €1,00 por utilizador adicional por mês.",
+          "Planos pagos — taxas de excedente (todos os valores incluem 21% de IVA): quando os limites são excedidos, scans adicionais são faturados automaticamente a €0,002 por página, €9,95 por site adicional por mês e €1,00 por utilizador adicional por mês.",
           "Avisos seguem aos 80% e 100% do seu limite",
           "Para excedentes consistentes, recomendamos atualizar para um plano superior"
         ],

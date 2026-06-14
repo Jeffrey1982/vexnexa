@@ -1,6 +1,7 @@
 import { AddOnType } from "@prisma/client"
+import { WEBSITE_PACK_PRICES } from "../pricing"
 
-// Add-on pricing configuration (EUR, excl. VAT — same as plan prices)
+// Add-on pricing configuration (EUR, incl. VAT, same as plan prices)
 export const ADDON_PRICING: Record<AddOnType, {
   pricePerUnit: number;
   currency: string;
@@ -42,9 +43,9 @@ export const ADDON_PRICING: Record<AddOnType, {
     scans: 1500,
     websites: 0,
   },
-  // New website packs (excl. VAT)
+  // Website packs use the shared public and checkout price source.
   EXTRA_WEBSITE_1: {
-    pricePerUnit: 18.00,
+    pricePerUnit: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1,
     currency: "EUR",
     interval: "1 month",
     description: "+1 extra website",
@@ -52,7 +53,7 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 1,
   },
   EXTRA_WEBSITE_5: {
-    pricePerUnit: 72.00,
+    pricePerUnit: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5,
     currency: "EUR",
     interval: "1 month",
     description: "+5 extra websites",
@@ -60,7 +61,7 @@ export const ADDON_PRICING: Record<AddOnType, {
     websites: 5,
   },
   EXTRA_WEBSITE_10: {
-    pricePerUnit: 120.00,
+    pricePerUnit: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10,
     currency: "EUR",
     interval: "1 month",
     description: "+10 extra websites",

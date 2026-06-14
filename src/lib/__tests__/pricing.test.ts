@@ -9,9 +9,23 @@ import {
   AUDIT_PRICES,
   AUDIT_BUNDLE_PRICES,
   EXTRA_SERVICES_PRICES,
+  WEBSITE_PACK_PRICES,
 } from '../pricing'
 
 describe('pricing', () => {
+  describe('website capacity packs', () => {
+    it('applies a meaningful volume discount', () => {
+      expect(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1).toBe(9.95)
+      expect(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5).toBe(39.95)
+      expect(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10).toBe(69.95)
+
+      expect(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5 / 5)
+        .toBeLessThan(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1)
+      expect(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10 / 10)
+        .toBeLessThan(WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5 / 5)
+    })
+  })
+
   describe('calculatePrice (VAT-inclusive)', () => {
     it('returns monthly base price for monthly cycle', () => {
       expect(calculatePrice('STARTER', 'monthly')).toBe(19.00)

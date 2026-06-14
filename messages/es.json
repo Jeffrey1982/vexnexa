@@ -2594,7 +2594,7 @@
         "limitsTitle": "Límites y Exceso (solo planes de pago)",
         "limits": [
           "Prueba/Gratis: límite duro — el servicio se bloquea al exceder. Se requiere actualización para acceso continuado.",
-          "Planes de pago — tarifas de exceso (todos los importes incluyen 21% IVA): cuando se exceden los límites, los escaneos adicionales se cobran automáticamente a €0,002 por página, €2,00 por sitio adicional por mes y €1,00 por usuario adicional por mes.",
+          "Planes de pago — tarifas de exceso (todos los importes incluyen 21% IVA): cuando se exceden los límites, los escaneos adicionales se cobran automáticamente a €0,002 por página, €9,95 por sitio adicional por mes y €1,00 por usuario adicional por mes.",
           "Las advertencias siguen al 80% y 100% de tu límite",
           "Para excesos consistentes, recomendamos actualizar a un plan superior"
         ],

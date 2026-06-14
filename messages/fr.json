@@ -2542,7 +2542,7 @@
         "limitsTitle": "Limites & Dépassement (uniquement plans payants)",
         "limits": [
           "Essai/Gratuit : limite stricte — le service est bloqué lors du dépassement. Une mise à niveau est requise pour un accès continu.",
-          "Plans payants — tarifs de dépassement (tous les montants incluent 21% de TVA) : lorsque les limites sont dépassées, les scans supplémentaires sont facturés automatiquement à 0,002€ par page, 2,00€ par site supplémentaire par mois et 1,00€ par utilisateur supplémentaire par mois.",
+          "Plans payants — tarifs de dépassement (tous les montants incluent 21% de TVA) : lorsque les limites sont dépassées, les scans supplémentaires sont facturés automatiquement à 0,002€ par page, 9,95€ par site supplémentaire par mois et 1,00€ par utilisateur supplémentaire par mois.",
           "Les avertissements suivent à 80% et 100% de votre limite",
           "Pour les dépassements constants, nous recommandons une mise à niveau vers un plan supérieur"
         ],

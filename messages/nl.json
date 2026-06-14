@@ -2585,7 +2585,7 @@
         "limitsTitle": "Limieten & Overage (alleen betaalde plannen)",
         "limits": [
           "Trial/Gratis: harde limiet — de dienst wordt geblokkeerd bij overschrijding. Een upgrade is vereist voor verdere toegang.",
-          "Betaalde plannen — overage-tarieven (alle bedragen zijn inclusief 21% BTW): bij overschrijding van limieten worden extra scans automatisch in rekening gebracht tegen €0,002 per pagina, €2,00 per extra site per maand, en €1,00 per extra gebruiker per maand.",
+          "Betaalde plannen — overage-tarieven (alle bedragen zijn inclusief 21% BTW): bij overschrijding van limieten worden extra scans automatisch in rekening gebracht tegen €0,002 per pagina, €9,95 per extra site per maand, en €1,00 per extra gebruiker per maand.",
           "Waarschuwingen volgen bij 80% en 100% van je limiet",
           "Bij structurele overschrijdingen adviseren we een upgrade naar een hoger plan"
         ],

@@ -2594,7 +2594,7 @@
         "limitsTitle": "Grenzen & Overage (nur kostenpflichtige Pläne)",
         "limits": [
           "Test/Kostenlos: harte Grenze — Dienst wird bei Überschreitung gesperrt. Ein Upgrade ist für weiteren Zugang erforderlich.",
-          "Kostenpflichtige Pläne — Overage-Sätze (alle Beträge inklusive 21% MwSt.): Bei Überschreitung der Grenzen werden zusätzliche Scans automatisch mit €0,002 pro Seite, €2,00 pro zusätzlicher Website pro Monat und €1,00 pro zusätzlichem Benutzer pro Monat berechnet.",
+          "Kostenpflichtige Pläne — Overage-Sätze (alle Beträge inklusive 21% MwSt.): Bei Überschreitung der Grenzen werden zusätzliche Scans automatisch mit €0,002 pro Seite, €9,95 pro zusätzlicher Website pro Monat und €1,00 pro zusätzlichem Benutzer pro Monat berechnet.",
           "Warnungen folgen bei 80% und 100% Ihrer Grenze",
           "Bei konsistenten Überschreitungen empfehlen wir ein Upgrade auf einen höheren Plan"
         ],

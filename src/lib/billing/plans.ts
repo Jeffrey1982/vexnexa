@@ -20,7 +20,7 @@ export const PRICES = {
 // Overflow pricing - charges when plan limits are exceeded
 export const OVERFLOW_PRICING = {
   extraPage: { amount: 0.002, currency: "EUR", unit: "page/month", description: "Extra pages above plan" },
-  extraSite: { amount: 2.0, currency: "EUR", unit: "site/month", description: "Extra websites above plan" },
+  extraSite: { amount: 9.95, currency: "EUR", unit: "site/month", description: "Extra websites above plan" },
   extraUser: { amount: 1.0, currency: "EUR", unit: "user/month", description: "Extra users above plan" },
 } as const;
 

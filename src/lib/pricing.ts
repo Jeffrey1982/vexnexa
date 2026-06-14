@@ -51,9 +51,9 @@ export const ANNUAL_PRICES: Record<PlanKey, number> = {
 
 /* ─── Extra Website Pack prices (monthly, incl. VAT) ─── */
 export const WEBSITE_PACK_PRICES = {
-  EXTRA_WEBSITE_1: 18.0,
-  EXTRA_WEBSITE_5: 72.0,
-  EXTRA_WEBSITE_10: 120.0,
+  EXTRA_WEBSITE_1: 9.95,
+  EXTRA_WEBSITE_5: 39.95,
+  EXTRA_WEBSITE_10: 69.95,
 } as const;
 
 /* ─── Page Volume Pack prices (monthly, incl. VAT) ─── */

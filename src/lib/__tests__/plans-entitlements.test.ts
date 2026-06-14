@@ -106,7 +106,7 @@ describe('formatPrice', () => {
 describe('OVERFLOW_PRICING', () => {
   it('charges for extra pages, sites, and users', () => {
     expect(OVERFLOW_PRICING.extraPage.amount).toBeGreaterThan(0)
-    expect(OVERFLOW_PRICING.extraSite.amount).toBeGreaterThan(0)
+    expect(OVERFLOW_PRICING.extraSite.amount).toBe(9.95)
     expect(OVERFLOW_PRICING.extraUser.amount).toBeGreaterThan(0)
   })
 })

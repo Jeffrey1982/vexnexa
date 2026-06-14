@@ -3364,7 +3364,7 @@
         "limitsTitle": "Limits & Overage (paid plans only)",
         "limits": [
           "Trial/Free: hard limit — service is blocked upon exceeding. An upgrade is required for continued access.",
-          "Paid plans — overage rates (all amounts include 21% VAT): when limits are exceeded, extra scans are automatically charged at €0.002 per page, €2.00 per extra site per month, and €1.00 per extra user per month.",
+          "Paid plans — overage rates (all amounts include 21% VAT): when limits are exceeded, extra scans are automatically charged at €0.002 per page, €9.95 per extra site per month, and €1.00 per extra user per month.",
           "Warnings follow at 80% and 100% of your limit",
           "For consistent overages, we recommend upgrading to a higher plan"
         ],
