@@ -168,6 +168,12 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/eaa-compliance-monitoring" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.eaaMonitoring')}
                   </Link>
+                  <Link href="/digitale-toegankelijkheid-audit" className="text-muted-foreground hover:text-primary transition-colors">
+                    Digitale toegankelijkheid audit
+                  </Link>
+                  <Link href="/toegankelijkheid-webshop-eaa" className="text-muted-foreground hover:text-primary transition-colors">
+                    Toegankelijkheid webshop
+                  </Link>
                   <Link href="/white-label-accessibility-reports" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.whiteLabelReports')}
                   </Link>
@@ -177,11 +183,20 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.wcagScanner')}
                   </Link>
+                  <Link href="/website-toegankelijkheid-testen" className="text-muted-foreground hover:text-primary transition-colors">
+                    Website toegankelijkheid testen
+                  </Link>
                   <Link href="/pilot-partner-program" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.pilotPartner')}
                   </Link>
                   <Link href="/accessibility-monitoring-agencies" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.agencyMonitoring')}
+                  </Link>
+                  <Link href="/accessibility-overlay-alternative" className="text-muted-foreground hover:text-primary transition-colors">
+                    Overlay alternative
+                  </Link>
+                  <Link href="/accessibility-regression-testing" className="text-muted-foreground hover:text-primary transition-colors">
+                    Regression testing
                   </Link>
                 </div>
               </div>

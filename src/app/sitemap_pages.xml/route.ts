@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { MARKETING_LOCALES, isMarketingPath, localizedUrl } from '@/lib/marketing-seo'
 
-const PUBLIC_PAGE_LASTMOD = '2026-05-16'
+const PUBLIC_PAGE_LASTMOD = '2026-06-23'
 
 const PAGE_PATHS = [
   '/',
@@ -14,6 +14,11 @@ const PAGE_PATHS = [
   '/compliance',
   '/eaa-compliance',
   '/eaa-compliance-monitoring',
+  '/digitale-toegankelijkheid-audit',
+  '/toegankelijkheid-webshop-eaa',
+  '/website-toegankelijkheid-testen',
+  '/accessibility-overlay-alternative',
+  '/accessibility-regression-testing',
   '/for-agencies',
   '/government-accessibility',
   '/partner-apply',
