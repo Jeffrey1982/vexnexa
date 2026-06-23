@@ -139,7 +139,8 @@
       "sampleReport": "Exemple de rapport",
       "wcagScanner": "Scanner WCAG",
       "pilotPartner": "Programme Pilot Partner",
-      "agencyMonitoring": "Surveillance pour agences"
+      "agencyMonitoring": "Surveillance pour agences",
+      "government": "Secteur public"
     },
     "disclaimer": "Analyse de contenu public • Aucun stockage de données personnelles",
     "description": "Surveillance, rapports et workflows de correction d?accessibilit? pour les ?quipes modernes.",
@@ -4522,5 +4523,59 @@
     "sendFailed": "Le message n'a pas pu être envoyé. Veuillez réessayer.",
     "checkoutFailed": "Le paiement n'a pas pu être démarré. Veuillez réessayer.",
     "authFailed": "L'authentification a échoué. Veuillez réessayer."
+  },
+  "governmentPage": {
+    "meta": {
+      "title": "Surveillance d'accessibilité WCAG pour le secteur public",
+      "description": "Surveillance WCAG 2.2 continue pour les administrations, collectivités et institutions publiques. Gardez chaque domaine conforme à l'EAA et votre déclaration d'accessibilité à jour."
+    },
+    "hero": {
+      "badge": "Secteur public · EAA & WCAG 2.2",
+      "title": "Surveillance d'accessibilité pour le secteur public",
+      "subtitle": "Les organismes publics sont légalement tenus d'être numériquement accessibles. VexNexa surveille en continu chaque domaine, maintient votre déclaration d'accessibilité à jour et fournit des preuves prêtes pour audit.",
+      "ctaPrimary": "Lancer un scan gratuit",
+      "ctaSecondary": "Voir un exemple de rapport"
+    },
+    "obligation": {
+      "eyebrow": "Pourquoi c'est important",
+      "title": "Une obligation légale, pas une option",
+      "p1": "Les sites et applications du secteur public doivent respecter WCAG 2.1 AA (EN 301 549) et publier une déclaration d'accessibilité. Avec l'European Accessibility Act en vigueur, les contrôles et l'application ne font qu'augmenter.",
+      "p2": "Le plus difficile n'est pas l'audit ponctuel — c'est de rester conforme alors que contenus, gabarits et sous-domaines changent chaque semaine. C'est exactement ce que résout la surveillance continue."
+    },
+    "capabilities": {
+      "title": "Conçu pour les équipes du secteur public",
+      "subtitle": "Tout ce qu'il faut pour prouver et maintenir l'accessibilité numérique.",
+      "c1Title": "Surveillez chaque domaine et sous-domaine",
+      "c1Body": "Site principal, portails citoyens, formulaires de signalement, serveurs de documents — suivez-les tous dans un seul tableau de bord, y compris les sous-domaines de prestataires faciles à oublier.",
+      "c2Title": "Gardez votre déclaration d'accessibilité à jour",
+      "c2Body": "Les scans automatisés révèlent les nouvelles barrières en quelques jours, pour que votre déclaration reflète la réalité plutôt que l'audit de l'an dernier.",
+      "c3Title": "Des preuves prêtes pour audit",
+      "c3Body": "Rapports PDF/DOCX horodatés avec WCAG 2.2, répartition par gravité et conseils de correction — prêts pour l'audit interne, les questions du conseil et le registre d'accessibilité."
+    },
+    "how": {
+      "title": "Du scan à la conformité en trois étapes",
+      "s1Title": "Cartographiez votre périmètre",
+      "s1Body": "Ajoutez chaque domaine et sous-domaine, y compris les portails de prestataires externes.",
+      "s2Title": "Surveillez automatiquement",
+      "s2Body": "Les scans WCAG 2.2 planifiés signalent les régressions dès qu'une mise en production ou un changement de contenu introduit une barrière.",
+      "s3Title": "Rapportez et corrigez",
+      "s3Body": "Des constats priorisés avec des conseils au niveau du code orientent la correction vers la bonne équipe."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": "Quelle norme s'applique aux sites publics ?",
+      "a1": "Les sites du secteur public doivent respecter WCAG 2.1 AA via la norme harmonisée EN 301 549 et publier une déclaration d'accessibilité. L'EAA renforce cela à l'échelle de l'UE.",
+      "q2": "Pouvez-vous surveiller plusieurs domaines et sous-domaines ?",
+      "a2": "Oui. Ajoutez votre site principal ainsi que chaque portail et sous-domaine de prestataire. Chacun est scanné selon un calendrier et suivi séparément dans un seul tableau de bord.",
+      "q3": "Cela remplace-t-il un audit manuel ?",
+      "a3": "Non — la surveillance automatisée couvre les critères testables en continu et signale rapidement les régressions. Combinez-la à une revue manuelle périodique pour une conformité complète.",
+      "q4": "Nos données sont-elles stockées dans l'UE ?",
+      "a4": "Oui. VexNexa est hébergé dans l'UE (AWS Francfort) et n'analyse que du contenu accessible au public. Aucune donnée personnelle n'est stockée."
+    },
+    "cta": {
+      "title": "Rendez vos services publics accessibles à tous",
+      "subtitle": "Commencez par un scan gratuit et voyez exactement où vous en êtes. Aucun rendez-vous nécessaire.",
+      "button": "Lancer un scan gratuit"
+    }
   }
 }

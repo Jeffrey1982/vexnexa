@@ -162,6 +162,9 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/for-agencies" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.forAgencies')}
                   </Link>
+                  <Link href="/government-accessibility" className="text-muted-foreground hover:text-primary transition-colors">
+                    {t('solutions.government')}
+                  </Link>
                   <Link href="/eaa-compliance-monitoring" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.eaaMonitoring')}
                   </Link>

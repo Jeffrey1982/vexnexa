@@ -1141,7 +1141,8 @@
       "sampleReport": "Sample Report",
       "wcagScanner": "WCAG Scanner",
       "pilotPartner": "Pilot Partner Program",
-      "agencyMonitoring": "Agency Monitoring"
+      "agencyMonitoring": "Agency Monitoring",
+      "government": "Government & Public Sector"
     },
     "support": {
       "title": "Support",
@@ -4367,5 +4368,59 @@
     "sendFailed": "The message could not be sent. Please try again.",
     "checkoutFailed": "Checkout could not be started. Please try again.",
     "authFailed": "Authentication failed. Please try again."
+  },
+  "governmentPage": {
+    "meta": {
+      "title": "WCAG Accessibility Monitoring for Government & Public Sector",
+      "description": "Continuous WCAG 2.2 monitoring for governments, municipalities and public institutions. Keep every domain compliant with the EAA and your accessibility statement up to date."
+    },
+    "hero": {
+      "badge": "Public sector · EAA & WCAG 2.2",
+      "title": "Accessibility monitoring for government & public sector",
+      "subtitle": "Public bodies are legally required to be digitally accessible. VexNexa continuously monitors every domain, keeps your accessibility statement current, and delivers audit-ready evidence.",
+      "ctaPrimary": "Start free scan",
+      "ctaSecondary": "View sample report"
+    },
+    "obligation": {
+      "eyebrow": "Why it matters",
+      "title": "A legal obligation, not a nice-to-have",
+      "p1": "Public sector websites and apps must meet WCAG 2.1 AA (EN 301 549) and publish an accessibility statement. With the European Accessibility Act now in force, scrutiny and enforcement only increase.",
+      "p2": "The hard part isn't a one-off audit — it's staying compliant as content, templates and subdomains change every week. That's exactly what continuous monitoring solves."
+    },
+    "capabilities": {
+      "title": "Built for public sector teams",
+      "subtitle": "Everything you need to prove and maintain digital accessibility.",
+      "c1Title": "Monitor every domain & subdomain",
+      "c1Body": "Main site, citizen portals, reporting forms, document servers — track them all in one dashboard, including supplier subdomains that are easy to forget.",
+      "c2Title": "Keep your accessibility statement current",
+      "c2Body": "Automated scans surface new barriers within days, so your published statement reflects reality instead of last year's audit.",
+      "c3Title": "Audit-ready evidence",
+      "c3Body": "Time-stamped PDF/DOCX reports with WCAG 2.2, severity breakdown and remediation guidance — ready for internal audit, council questions and the accessibility register."
+    },
+    "how": {
+      "title": "From scan to compliance in three steps",
+      "s1Title": "Map your landscape",
+      "s1Body": "Add every domain and subdomain, including portals from external suppliers.",
+      "s2Title": "Monitor automatically",
+      "s2Body": "Scheduled WCAG 2.2 scans flag regressions the moment a release or content change introduces a barrier.",
+      "s3Title": "Report & remediate",
+      "s3Body": "Prioritised findings with code-level guidance route remediation to the right team."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": "Which standard applies to government websites?",
+      "a1": "Public sector sites must meet WCAG 2.1 AA via the harmonised EN 301 549 standard, and publish an accessibility statement. The EAA reinforces this across the EU.",
+      "q2": "Can you monitor multiple domains and subdomains?",
+      "a2": "Yes. Add your main site plus every portal and supplier subdomain. Each is scanned on a schedule and tracked separately in one dashboard.",
+      "q3": "Does this replace a manual audit?",
+      "a3": "No — automated monitoring covers the testable criteria continuously and flags regressions fast. Combine it with periodic manual review for full conformance.",
+      "q4": "Is our data stored in the EU?",
+      "a4": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and only scans publicly accessible content. No personal data is stored."
+    },
+    "cta": {
+      "title": "Make your public services accessible to everyone",
+      "subtitle": "Start with a free scan and see exactly where you stand. No meetings required.",
+      "button": "Start free scan"
+    }
   }
 }

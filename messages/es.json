@@ -139,7 +139,8 @@
       "sampleReport": "Informe de ejemplo",
       "wcagScanner": "Escáner WCAG",
       "pilotPartner": "Programa Pilot Partner",
-      "agencyMonitoring": "Monitorización para agencias"
+      "agencyMonitoring": "Monitorización para agencias",
+      "government": "Sector público"
     },
     "disclaimer": "Análisis de contenido público • Sin almacenamiento de datos personales",
     "description": "Monitorizaci?n, informes y flujos de correcci?n de accesibilidad para equipos modernos.",
@@ -4547,5 +4548,59 @@
     "sendFailed": "No se pudo enviar el mensaje. Inténtalo de nuevo.",
     "checkoutFailed": "No se pudo iniciar el pago. Inténtalo de nuevo.",
     "authFailed": "La autenticación ha fallado. Inténtalo de nuevo."
+  },
+  "governmentPage": {
+    "meta": {
+      "title": "Monitorización de accesibilidad WCAG para el sector público",
+      "description": "Monitorización WCAG 2.2 continua para administraciones, ayuntamientos e instituciones públicas. Mantén cada dominio conforme a la EAA y tu declaración de accesibilidad al día."
+    },
+    "hero": {
+      "badge": "Sector público · EAA y WCAG 2.2",
+      "title": "Monitorización de accesibilidad para el sector público",
+      "subtitle": "Los organismos públicos están legalmente obligados a ser digitalmente accesibles. VexNexa monitoriza continuamente cada dominio, mantiene tu declaración de accesibilidad al día y aporta evidencia lista para auditoría.",
+      "ctaPrimary": "Iniciar escaneo gratuito",
+      "ctaSecondary": "Ver informe de ejemplo"
+    },
+    "obligation": {
+      "eyebrow": "Por qué importa",
+      "title": "Una obligación legal, no un extra",
+      "p1": "Los sitios y apps del sector público deben cumplir WCAG 2.1 AA (EN 301 549) y publicar una declaración de accesibilidad. Con la European Accessibility Act en vigor, la supervisión y la aplicación solo aumentan.",
+      "p2": "Lo difícil no es la auditoría puntual, sino seguir siendo conforme mientras el contenido, las plantillas y los subdominios cambian cada semana. Eso es justo lo que resuelve la monitorización continua."
+    },
+    "capabilities": {
+      "title": "Diseñado para equipos del sector público",
+      "subtitle": "Todo lo que necesitas para demostrar y mantener la accesibilidad digital.",
+      "c1Title": "Monitoriza cada dominio y subdominio",
+      "c1Body": "Sitio principal, portales ciudadanos, formularios, servidores de documentos: contrólalos todos en un panel, incluidos los subdominios de proveedores fáciles de olvidar.",
+      "c2Title": "Mantén tu declaración de accesibilidad al día",
+      "c2Body": "Los escaneos automatizados detectan nuevas barreras en días, para que tu declaración refleje la realidad y no la auditoría del año pasado.",
+      "c3Title": "Evidencia lista para auditoría",
+      "c3Body": "Informes PDF/DOCX con marca de tiempo, WCAG 2.2, desglose por gravedad y guía de corrección, listos para auditoría interna, preguntas del pleno y el registro de accesibilidad."
+    },
+    "how": {
+      "title": "Del escaneo al cumplimiento en tres pasos",
+      "s1Title": "Mapea tu panorama",
+      "s1Body": "Añade cada dominio y subdominio, incluidos los portales de proveedores externos.",
+      "s2Title": "Monitoriza automáticamente",
+      "s2Body": "Los escaneos WCAG 2.2 programados señalan regresiones en cuanto una versión o cambio de contenido introduce una barrera.",
+      "s3Title": "Informa y corrige",
+      "s3Body": "Los hallazgos priorizados con guía a nivel de código dirigen la corrección al equipo adecuado."
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "q1": "¿Qué norma se aplica a los sitios públicos?",
+      "a1": "Los sitios del sector público deben cumplir WCAG 2.1 AA mediante la norma armonizada EN 301 549 y publicar una declaración de accesibilidad. La EAA lo refuerza en toda la UE.",
+      "q2": "¿Pueden monitorizar varios dominios y subdominios?",
+      "a2": "Sí. Añade tu sitio principal y cada portal y subdominio de proveedor. Cada uno se escanea según un calendario y se controla por separado en un panel.",
+      "q3": "¿Sustituye esto a una auditoría manual?",
+      "a3": "No: la monitorización automatizada cubre los criterios comprobables de forma continua y señala regresiones rápido. Combínala con revisión manual periódica para la conformidad total.",
+      "q4": "¿Se almacenan nuestros datos en la UE?",
+      "a4": "Sí. VexNexa se aloja en la UE (AWS Frankfurt) y solo escanea contenido de acceso público. No se almacenan datos personales."
+    },
+    "cta": {
+      "title": "Haz que tus servicios públicos sean accesibles para todos",
+      "subtitle": "Empieza con un escaneo gratuito y ve exactamente dónde estás. Sin reuniones.",
+      "button": "Iniciar escaneo gratuito"
+    }
   }
 }

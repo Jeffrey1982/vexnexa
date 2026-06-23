@@ -139,7 +139,8 @@
       "sampleReport": "Voorbeeldrapport",
       "wcagScanner": "WCAG-scanner",
       "pilotPartner": "Pilot Partner-programma",
-      "agencyMonitoring": "Agency-monitoring"
+      "agencyMonitoring": "Agency-monitoring",
+      "government": "Overheid & gemeenten"
     },
     "disclaimer": "Scannen van openbare content • Geen opslag van persoonsgegevens",
     "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",
@@ -4538,5 +4539,59 @@
     "sendFailed": "Het bericht kon niet worden verzonden. Probeer het opnieuw.",
     "checkoutFailed": "De checkout kon niet worden gestart. Probeer het opnieuw.",
     "authFailed": "Inloggen is mislukt. Probeer het opnieuw."
+  },
+  "governmentPage": {
+    "meta": {
+      "title": "WCAG-toegankelijkheidsmonitoring voor overheid en gemeenten",
+      "description": "Doorlopende WCAG 2.2-monitoring voor overheden, gemeenten en publieke instellingen. Houd elk domein compliant met de EAA en je toegankelijkheidsverklaring actueel."
+    },
+    "hero": {
+      "badge": "Publieke sector · EAA & WCAG 2.2",
+      "title": "Toegankelijkheidsmonitoring voor overheid en gemeenten",
+      "subtitle": "Overheidsorganisaties zijn wettelijk verplicht digitaal toegankelijk te zijn. VexNexa monitort doorlopend elk domein, houdt je toegankelijkheidsverklaring actueel en levert auditklaar bewijs.",
+      "ctaPrimary": "Start gratis scan",
+      "ctaSecondary": "Bekijk voorbeeldrapport"
+    },
+    "obligation": {
+      "eyebrow": "Waarom het telt",
+      "title": "Een wettelijke verplichting, geen extraatje",
+      "p1": "Websites en apps van de overheid moeten voldoen aan WCAG 2.1 AA (EN 301 549) en een toegankelijkheidsverklaring publiceren. Nu de European Accessibility Act van kracht is, neemt het toezicht alleen maar toe.",
+      "p2": "Het lastige is niet een eenmalige audit — het is compliant blíjven terwijl content, templates en subdomeinen elke week veranderen. Precies dat lost doorlopende monitoring op."
+    },
+    "capabilities": {
+      "title": "Gebouwd voor teams in de publieke sector",
+      "subtitle": "Alles wat je nodig hebt om digitale toegankelijkheid aan te tonen en te behouden.",
+      "c1Title": "Monitor elk domein en subdomein",
+      "c1Body": "Hoofdsite, inwonersportalen, meldingsformulieren, documentservers — volg ze allemaal in één dashboard, inclusief leveranciers-subdomeinen die snel vergeten worden.",
+      "c2Title": "Houd je toegankelijkheidsverklaring actueel",
+      "c2Body": "Geautomatiseerde scans brengen nieuwe barrières binnen dagen aan het licht, zodat je verklaring de werkelijkheid weerspiegelt in plaats van de audit van vorig jaar.",
+      "c3Title": "Auditklaar bewijs",
+      "c3Body": "Tijdgestempelde PDF/DOCX-rapporten met WCAG 2.2, ernstverdeling en hersteladvies — klaar voor interne audit, raadsvragen en het toegankelijkheidsregister."
+    },
+    "how": {
+      "title": "Van scan naar compliance in drie stappen",
+      "s1Title": "Breng je landschap in kaart",
+      "s1Body": "Voeg elk domein en subdomein toe, inclusief portalen van externe leveranciers.",
+      "s2Title": "Monitor automatisch",
+      "s2Body": "Geplande WCAG 2.2-scans signaleren regressies zodra een release of contentwijziging een barrière introduceert.",
+      "s3Title": "Rapporteer en herstel",
+      "s3Body": "Geprioriteerde bevindingen met advies op codeniveau sturen het herstel naar het juiste team."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "q1": "Welke norm geldt voor overheidswebsites?",
+      "a1": "Overheidssites moeten voldoen aan WCAG 2.1 AA via de geharmoniseerde norm EN 301 549, en een toegankelijkheidsverklaring publiceren. De EAA versterkt dit EU-breed.",
+      "q2": "Kunnen jullie meerdere domeinen en subdomeinen monitoren?",
+      "a2": "Ja. Voeg je hoofdsite toe plus elk portaal en leveranciers-subdomein. Elk wordt volgens schema gescand en apart bijgehouden in één dashboard.",
+      "q3": "Vervangt dit een handmatige audit?",
+      "a3": "Nee — geautomatiseerde monitoring dekt doorlopend de toetsbare criteria en signaleert regressies snel. Combineer het met periodieke handmatige controle voor volledige conformiteit.",
+      "q4": "Worden onze gegevens in de EU opgeslagen?",
+      "a4": "Ja. VexNexa wordt gehost in de EU (AWS Frankfurt) en scant alleen openbaar toegankelijke content. Er worden geen persoonsgegevens opgeslagen."
+    },
+    "cta": {
+      "title": "Maak je publieke dienstverlening voor iedereen toegankelijk",
+      "subtitle": "Begin met een gratis scan en zie precies waar je staat. Geen afspraken nodig.",
+      "button": "Start gratis scan"
+    }
   }
 }

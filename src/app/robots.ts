@@ -51,6 +51,7 @@ export default function robots(): MetadataRoute.Robots {
           '/accessibility-monitoring-agencies',
           '/wcag-compliance-report',
           '/for-agencies',
+          '/government-accessibility',
           '/eaa-compliance-monitoring',
           '/partner-apply',
           '/pilot-partner-program',

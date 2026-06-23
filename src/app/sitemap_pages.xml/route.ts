@@ -15,6 +15,7 @@ const PAGE_PATHS = [
   '/eaa-compliance',
   '/eaa-compliance-monitoring',
   '/for-agencies',
+  '/government-accessibility',
   '/partner-apply',
   '/pilot-partner-program',
   '/blog',

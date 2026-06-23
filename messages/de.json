@@ -139,7 +139,8 @@
       "sampleReport": "Beispielbericht",
       "wcagScanner": "WCAG-Scanner",
       "pilotPartner": "Pilot-Partner-Programm",
-      "agencyMonitoring": "Agentur-Monitoring"
+      "agencyMonitoring": "Agentur-Monitoring",
+      "government": "Behörden & öffentlicher Sektor"
     },
     "disclaimer": "Scannen öffentlicher Inhalte • Keine Speicherung personenbezogener Daten",
     "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
@@ -4547,5 +4548,59 @@
     "sendFailed": "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
     "checkoutFailed": "Der Checkout konnte nicht gestartet werden. Bitte versuchen Sie es erneut.",
     "authFailed": "Die Authentifizierung ist fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "governmentPage": {
+    "meta": {
+      "title": "WCAG-Barrierefreiheits-Monitoring für Behörden & öffentlichen Sektor",
+      "description": "Kontinuierliches WCAG-2.2-Monitoring für Behörden, Kommunen und öffentliche Einrichtungen. Halten Sie jede Domain EAA-konform und Ihre Barrierefreiheitserklärung aktuell."
+    },
+    "hero": {
+      "badge": "Öffentlicher Sektor · EAA & WCAG 2.2",
+      "title": "Barrierefreiheits-Monitoring für Behörden & öffentlichen Sektor",
+      "subtitle": "Öffentliche Stellen sind gesetzlich zur digitalen Barrierefreiheit verpflichtet. VexNexa überwacht kontinuierlich jede Domain, hält Ihre Barrierefreiheitserklärung aktuell und liefert auditfertige Nachweise.",
+      "ctaPrimary": "Kostenlosen Scan starten",
+      "ctaSecondary": "Beispielbericht ansehen"
+    },
+    "obligation": {
+      "eyebrow": "Warum es wichtig ist",
+      "title": "Eine gesetzliche Pflicht, kein Nice-to-have",
+      "p1": "Websites und Apps des öffentlichen Sektors müssen WCAG 2.1 AA (EN 301 549) erfüllen und eine Barrierefreiheitserklärung veröffentlichen. Mit dem geltenden European Accessibility Act nehmen Kontrolle und Durchsetzung weiter zu.",
+      "p2": "Das Schwierige ist nicht die einmalige Prüfung — sondern konform zu bleiben, während sich Inhalte, Templates und Subdomains jede Woche ändern. Genau das löst kontinuierliches Monitoring."
+    },
+    "capabilities": {
+      "title": "Entwickelt für Teams im öffentlichen Sektor",
+      "subtitle": "Alles, was Sie brauchen, um digitale Barrierefreiheit nachzuweisen und zu erhalten.",
+      "c1Title": "Jede Domain & Subdomain überwachen",
+      "c1Body": "Hauptseite, Bürgerportale, Meldeformulare, Dokumentenserver — verfolgen Sie alle in einem Dashboard, einschließlich leicht vergessener Lieferanten-Subdomains.",
+      "c2Title": "Barrierefreiheitserklärung aktuell halten",
+      "c2Body": "Automatisierte Scans decken neue Barrieren innerhalb von Tagen auf, sodass Ihre Erklärung die Realität widerspiegelt statt der Prüfung vom letzten Jahr.",
+      "c3Title": "Auditfertige Nachweise",
+      "c3Body": "Zeitgestempelte PDF/DOCX-Berichte mit WCAG 2.2, Schweregrad-Aufschlüsselung und Behebungshinweisen — bereit für interne Prüfung, Ratsanfragen und das Barrierefreiheitsregister."
+    },
+    "how": {
+      "title": "Vom Scan zur Konformität in drei Schritten",
+      "s1Title": "Landschaft erfassen",
+      "s1Body": "Fügen Sie jede Domain und Subdomain hinzu, einschließlich Portalen externer Lieferanten.",
+      "s2Title": "Automatisch überwachen",
+      "s2Body": "Geplante WCAG-2.2-Scans melden Regressionen, sobald ein Release oder eine Inhaltsänderung eine Barriere einführt.",
+      "s3Title": "Berichten & beheben",
+      "s3Body": "Priorisierte Befunde mit Hinweisen auf Codeebene leiten die Behebung an das richtige Team."
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "q1": "Welche Norm gilt für Behördenwebsites?",
+      "a1": "Websites des öffentlichen Sektors müssen WCAG 2.1 AA über die harmonisierte Norm EN 301 549 erfüllen und eine Barrierefreiheitserklärung veröffentlichen. Die EAA verstärkt dies EU-weit.",
+      "q2": "Können Sie mehrere Domains und Subdomains überwachen?",
+      "a2": "Ja. Fügen Sie Ihre Hauptseite sowie jedes Portal und jede Lieferanten-Subdomain hinzu. Jede wird planmäßig gescannt und separat in einem Dashboard verfolgt.",
+      "q3": "Ersetzt dies eine manuelle Prüfung?",
+      "a3": "Nein — automatisiertes Monitoring deckt die testbaren Kriterien kontinuierlich ab und meldet Regressionen schnell. Kombinieren Sie es mit periodischer manueller Prüfung für volle Konformität.",
+      "q4": "Werden unsere Daten in der EU gespeichert?",
+      "a4": "Ja. VexNexa wird in der EU gehostet (AWS Frankfurt) und scannt nur öffentlich zugängliche Inhalte. Es werden keine personenbezogenen Daten gespeichert."
+    },
+    "cta": {
+      "title": "Machen Sie Ihre öffentlichen Dienste für alle zugänglich",
+      "subtitle": "Beginnen Sie mit einem kostenlosen Scan und sehen Sie genau, wo Sie stehen. Keine Termine nötig.",
+      "button": "Kostenlosen Scan starten"
+    }
   }
 }
