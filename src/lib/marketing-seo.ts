@@ -84,6 +84,112 @@ export function ogLocale(locale: MarketingLocale): string {
   return map[locale];
 }
 
+/** Public social profiles for the Organization `sameAs`. */
+export const SOCIAL_PROFILES = ["https://twitter.com/vexnexa", "https://x.com/vexnexa"];
+export const ORG_LOGO = `${SITE_URL}/brand/vexnexa-v-mark.png`;
+export const CONTACT_EMAIL = "info@vexnexa.com";
+
+/** Human-readable breadcrumb labels for known top-level segments. */
+const BREADCRUMB_LABELS: Record<string, string> = {
+  about: "About",
+  pricing: "Pricing",
+  features: "Features",
+  contact: "Contact",
+  compliance: "Compliance",
+  "eaa-compliance": "EAA Compliance",
+  "eaa-compliance-monitoring": "EAA Compliance Monitoring",
+  "for-agencies": "For Agencies",
+  methodology: "Methodology",
+  "pilot-partner-program": "Pilot Partner Program",
+  "partner-apply": "Partner Application",
+  "sample-report": "Sample Report",
+  "wcag-scan": "WCAG Scan",
+  "wcag-compliance-report": "WCAG Compliance Report",
+  "website-accessibility-checker": "Website Accessibility Checker",
+  "white-label-accessibility-reports": "White-Label Reports",
+  "accessibility-monitoring-agencies": "Accessibility Monitoring for Agencies",
+  updates: "Updates",
+  legal: "Legal",
+  privacy: "Privacy Policy",
+  security: "Security",
+  sla: "SLA & Support",
+  terms: "Terms of Service",
+};
+
+function segmentLabel(seg: string): string {
+  return (
+    BREADCRUMB_LABELS[seg] ||
+    seg.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+  );
+}
+
+/**
+ * BreadcrumbList items (Home → … → page) for a marketing path in the active
+ * locale. Returns null for the home page (no breadcrumb needed).
+ */
+export function breadcrumbItems(path: string, locale: MarketingLocale) {
+  const p = normalizePath(path);
+  if (p === "/") return null;
+
+  const segments = p.slice(1).split("/");
+  const items = [{ name: "Home", url: localizedUrl(locale, "/") }];
+  let acc = "";
+  for (const seg of segments) {
+    acc += `/${seg}`;
+    items.push({ name: segmentLabel(seg), url: localizedUrl(locale, acc) });
+  }
+  return items;
+}
+
+/**
+ * Sitewide structured data (@graph) for marketing pages: Organization entity,
+ * WebSite, and a per-page BreadcrumbList. Reinforces the brand entity on every
+ * indexable page and adds breadcrumb trails in search results.
+ */
+export function marketingStructuredData(path: string, locale: MarketingLocale) {
+  const graph: Record<string, unknown>[] = [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "VexNexa",
+      url: SITE_URL,
+      logo: ORG_LOGO,
+      description:
+        "White-label WCAG monitoring for agencies and EU-facing teams. Scan websites, catch regressions, deliver branded reports.",
+      sameAs: SOCIAL_PROFILES,
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: CONTACT_EMAIL,
+        url: `${SITE_URL}/contact`,
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "VexNexa",
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      inLanguage: [...MARKETING_LOCALES],
+    },
+  ];
+
+  const crumbs = breadcrumbItems(path, locale);
+  if (crumbs) {
+    graph.push({
+      "@type": "BreadcrumbList",
+      itemListElement: crumbs.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        item: c.url,
+      })),
+    });
+  }
+
+  return { "@context": "https://schema.org", "@graph": graph };
+}
+
 /**
  * Build Next.js `alternates` (self-referencing canonical + hreflang languages
  * incl. x-default) for an un-prefixed marketing path in the active locale.

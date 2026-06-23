@@ -16,32 +16,11 @@ import { LatestBlogSection } from "@/components/marketing/home/LatestBlogSection
 
 // JSON-LD structured data
 function JsonLd() {
+  // Organization + WebSite are emitted sitewide by the marketing layout.
+  // The homepage adds the product-specific SoftwareApplication entity.
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://vexnexa.com/#organization",
-        name: "VexNexa",
-        description: "White-label WCAG monitoring for agencies and EU-facing teams. Scan websites, catch regressions, deliver branded reports.",
-        url: "https://vexnexa.com",
-        logo: "https://vexnexa.com/brand/vexnexa-v-mark.png",
-        contactPoint: {
-          "@type": "ContactPoint",
-          contactType: "customer service",
-          url: "https://vexnexa.com/contact",
-        },
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://vexnexa.com/#website",
-        name: "VexNexa",
-        url: "https://vexnexa.com",
-        publisher: {
-          "@id": "https://vexnexa.com/#organization",
-        },
-        inLanguage: ["en", "nl", "de", "fr", "es", "pt"],
-      },
       {
         "@type": "SoftwareApplication",
         "@id": "https://vexnexa.com/#software",

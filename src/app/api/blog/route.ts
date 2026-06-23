@@ -155,6 +155,12 @@ export async function POST(req: Request) {
       }
     });
 
+    if (post.status === "published") {
+      const { getBlogBaseSlug, getBlogPublicUrl } = await import("@/lib/blog-seo");
+      const { pingIndexNow } = await import("@/lib/indexnow");
+      await pingIndexNow([getBlogPublicUrl(post.locale || "nl", getBlogBaseSlug(post.slug))]);
+    }
+
     return NextResponse.json({ ok: true, post });
   } catch (e: any) {
     console.error("Failed to create blog post:", e);

@@ -9,6 +9,7 @@ import {
   buildAlternates,
   isMarketingLocale,
   localizedUrl,
+  marketingStructuredData,
   ogLocale,
 } from "@/lib/marketing-seo";
 
@@ -60,13 +61,23 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function MarketingLayout({
+export default async function MarketingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const h = await headers();
+  const headerLocale = h.get('x-vn-locale');
+  const locale = isMarketingLocale(headerLocale) ? headerLocale : DEFAULT_MARKETING_LOCALE;
+  const path = h.get('x-vn-path') || '/';
+  const structuredData = marketingStructuredData(path, locale);
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Navbar />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         {children}
