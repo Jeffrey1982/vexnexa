@@ -245,6 +245,19 @@ export async function publishScanReport(scan: PublishableScan): Promise<PublicRe
 
     console.log(`[PublicReport] Published report ${reportId} for ${normalizedDomain} (score: ${scan.score}, indexable: ${allowIndexing})`);
 
+    // Notify IndexNow so the (newly created/updated) public report page is
+    // discovered quickly. Only for indexable reports to avoid submitting
+    // thin/noindex pages. Best-effort — never blocks publication.
+    if (allowIndexing) {
+      try {
+        const { getPublicReportUrl } = await import('@/lib/domain-utils');
+        const { pingIndexNow } = await import('@/lib/indexnow');
+        await pingIndexNow([getPublicReportUrl(normalizedDomain)]);
+      } catch (err) {
+        console.warn('[PublicReport] IndexNow ping failed:', err instanceof Error ? err.message : err);
+      }
+    }
+
     return newReport[0] as PublicReport;
   } catch (error) {
     console.error('[PublicReport] Error publishing scan report:', error instanceof Error ? error.message : error);
