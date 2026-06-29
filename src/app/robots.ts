@@ -41,6 +41,7 @@ export default function robots(): MetadataRoute.Robots {
           '/methodology',
           '/compliance',
           '/eaa-compliance',
+          '/bfsg-compliance',
           '/blog',
           '/blog/*',
           '/changelog',

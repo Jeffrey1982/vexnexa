@@ -140,7 +140,8 @@
       "wcagScanner": "WCAG-Scanner",
       "pilotPartner": "Pilot-Partner-Programm",
       "agencyMonitoring": "Agentur-Monitoring",
-      "government": "Behörden & öffentlicher Sektor"
+      "government": "Behörden & öffentlicher Sektor",
+      "bfsg": "BFSG-Konformität"
     },
     "disclaimer": "Scannen öffentlicher Inhalte • Keine Speicherung personenbezogener Daten",
     "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
@@ -4599,6 +4600,60 @@
     },
     "cta": {
       "title": "Machen Sie Ihre öffentlichen Dienste für alle zugänglich",
+      "subtitle": "Beginnen Sie mit einem kostenlosen Scan und sehen Sie genau, wo Sie stehen. Keine Termine nötig.",
+      "button": "Kostenlosen Scan starten"
+    }
+  },
+  "bfsgPage": {
+    "meta": {
+      "title": "BFSG-Konformität prüfen und überwachen",
+      "description": "Das Barrierefreiheitsstärkungsgesetz (BFSG) gilt seit Juni 2025. Prüfen und überwachen Sie die BFSG-/WCAG-Konformität Ihrer Website kontinuierlich und sichern Sie auditfertige Nachweise."
+    },
+    "hero": {
+      "badge": "BFSG · seit Juni 2025 in Kraft",
+      "title": "BFSG-Konformität für Ihre Website — geprüft und überwacht",
+      "subtitle": "Das Barrierefreiheitsstärkungsgesetz (BFSG) verpflichtet viele Unternehmen, ihre digitalen Angebote barrierefrei zu gestalten. VexNexa prüft Ihre Website kontinuierlich nach WCAG / EN 301 549, hält Ihre Barrierefreiheitserklärung aktuell und liefert auditfertige Nachweise.",
+      "ctaPrimary": "Kostenlosen Scan starten",
+      "ctaSecondary": "Beispielbericht ansehen"
+    },
+    "obligation": {
+      "eyebrow": "Warum es wichtig ist",
+      "title": "Das BFSG ist Pflicht — und wird durchgesetzt",
+      "p1": "Seit dem 28. Juni 2025 verpflichtet das Barrierefreiheitsstärkungsgesetz (BFSG) verbrauchergerichtete digitale Produkte und Dienste in Deutschland — Online-Shops, Banking, Ticketing im Verkehr, E-Books, Telekommunikation — zur Barrierefreiheit nach WCAG 2.1 AA über EN 301 549. Marktüberwachungsbehörden können prüfen und Bußgelder verhängen.",
+      "p2": "Das Schwierige ist nicht die einmalige Prüfung — sondern konform zu bleiben, während sich Shop, Inhalte und Templates ändern. Kontinuierliches Monitoring erkennt neue Barrieren innerhalb von Tagen statt erst bei der nächsten Prüfung."
+    },
+    "capabilities": {
+      "title": "Entwickelt für BFSG-Konformität",
+      "subtitle": "Alles, was Sie brauchen, um BFSG-Konformität zu erreichen und zu halten.",
+      "c1Title": "Kontinuierliche BFSG-Überwachung",
+      "c1Body": "Geplante WCAG-2.1/2.2-Scans erfassen Ihre gesamte Website und melden Regressionen, sobald ein Release oder eine Inhaltsänderung eine Barriere einführt.",
+      "c2Title": "Barrierefreiheitserklärung aktuell halten",
+      "c2Body": "Automatisierte Scans decken neue Probleme schnell auf, sodass Ihre veröffentlichte Barrierefreiheitserklärung der Realität entspricht — genau das erwartet das BFSG.",
+      "c3Title": "Auditfertige Nachweise",
+      "c3Body": "Zeitgestempelte PDF/DOCX-Berichte mit WCAG-Schweregrad-Aufschlüsselung und Behebungshinweisen — bereit für Marktüberwachung, Kunden und interne Prüfung."
+    },
+    "how": {
+      "title": "Vom Scan zur BFSG-Konformität in drei Schritten",
+      "s1Title": "Website hinzufügen",
+      "s1Body": "Geben Sie Ihre Domain (sowie Subdomains oder Shopsysteme) ein, um zu starten.",
+      "s2Title": "Automatisch überwachen",
+      "s2Body": "Geplante Scans prüfen WCAG / EN 301 549 und warnen Sie, sobald eine Barriere auftritt.",
+      "s3Title": "Berichten & beheben",
+      "s3Body": "Priorisierte Befunde mit Hinweisen auf Codeebene leiten die Behebung an das richtige Team."
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "q1": "Wer ist vom BFSG betroffen?",
+      "a1": "Unternehmen mit verbrauchergerichteten digitalen Produkten oder Diensten in Deutschland — E-Commerce, Banking, Verkehrs-Ticketing, E-Books, Telekommunikation und mehr. Kleinstunternehmen (unter 10 Beschäftigte und unter 2 Mio. € Umsatz) sind bei Dienstleistungen ausgenommen.",
+      "q2": "Seit wann gilt das BFSG?",
+      "a2": "Das BFSG gilt seit dem 28. Juni 2025 und setzt den European Accessibility Act in deutsches Recht um.",
+      "q3": "Ersetzt das eine manuelle Prüfung?",
+      "a3": "Nein — automatisiertes Monitoring deckt die testbaren Kriterien kontinuierlich ab und meldet Regressionen schnell. Kombinieren Sie es mit periodischer manueller Prüfung für volle Konformität.",
+      "q4": "Werden unsere Daten in der EU gespeichert?",
+      "a4": "Ja. VexNexa wird in der EU gehostet (AWS Frankfurt) und scannt nur öffentlich zugängliche Inhalte. Es werden keine personenbezogenen Daten gespeichert."
+    },
+    "cta": {
+      "title": "Machen Sie Ihre Website BFSG-konform",
       "subtitle": "Beginnen Sie mit einem kostenlosen Scan und sehen Sie genau, wo Sie stehen. Keine Termine nötig.",
       "button": "Kostenlosen Scan starten"
     }

@@ -14,6 +14,7 @@ const PAGE_PATHS = [
   '/compliance',
   '/eaa-compliance',
   '/eaa-compliance-monitoring',
+  '/bfsg-compliance',
   '/digitale-toegankelijkheid-audit',
   '/toegankelijkheid-webshop-eaa',
   '/website-toegankelijkheid-testen',

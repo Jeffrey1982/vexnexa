@@ -168,6 +168,9 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/eaa-compliance-monitoring" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.eaaMonitoring')}
                   </Link>
+                  <Link href="/bfsg-compliance" className="text-muted-foreground hover:text-primary transition-colors">
+                    {t('solutions.bfsg')}
+                  </Link>
                   <Link href="/digitale-toegankelijkheid-audit" className="text-muted-foreground hover:text-primary transition-colors">
                     Digitale toegankelijkheid audit
                   </Link>

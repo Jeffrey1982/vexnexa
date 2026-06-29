@@ -26,6 +26,7 @@ export const MARKETING_PATHS: ReadonlySet<string> = new Set([
   "/",
   "/about",
   "/accessibility-monitoring-agencies",
+  "/bfsg-compliance",
   "/accessibility-overlay-alternative",
   "/accessibility-regression-testing",
   "/compliance",
@@ -98,6 +99,7 @@ export const CONTACT_EMAIL = "info@vexnexa.com";
 /** Human-readable breadcrumb labels for known top-level segments. */
 const BREADCRUMB_LABELS: Record<string, string> = {
   about: "About",
+  "bfsg-compliance": "BFSG Compliance",
   pricing: "Pricing",
   features: "Features",
   contact: "Contact",

@@ -1,5 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export const locales = ['en', 'nl', 'de', 'fr', 'es', 'pt'] as const;
 export type Locale = (typeof locales)[number];
@@ -39,10 +39,19 @@ function mergeMessages(
 }
 
 export default getRequestConfig(async () => {
-  // Get locale from cookie, fallback to default
+  // Locale-prefixed marketing routes (e.g. /de/...) carry the locale in the
+  // x-vn-locale header (set by the proxy). Prefer it so server-side
+  // translations — including generateMetadata title/description — match the
+  // URL. Fall back to the NEXT_LOCALE cookie, then the default.
+  const headerStore = await headers();
+  const headerLocale = headerStore.get('x-vn-locale') ?? undefined;
   const cookieStore = await cookies();
   const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = isLocale(cookieLocale) ? cookieLocale : defaultLocale;
+  const locale = isLocale(headerLocale)
+    ? headerLocale
+    : isLocale(cookieLocale)
+      ? cookieLocale
+      : defaultLocale;
   const fallbackMessages = (await import('../messages/en.json')).default;
   const localeMessages = (await import(`../messages/${locale}.json`)).default;
 

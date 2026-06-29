@@ -140,7 +140,8 @@
       "wcagScanner": "Scanner WCAG",
       "pilotPartner": "Programme Pilot Partner",
       "agencyMonitoring": "Surveillance pour agences",
-      "government": "Secteur public"
+      "government": "Secteur public",
+      "bfsg": "German Accessibility Act (BFSG)"
     },
     "disclaimer": "Analyse de contenu public • Aucun stockage de données personnelles",
     "description": "Surveillance, rapports et workflows de correction d?accessibilit? pour les ?quipes modernes.",
@@ -4576,6 +4577,60 @@
       "title": "Rendez vos services publics accessibles à tous",
       "subtitle": "Commencez par un scan gratuit et voyez exactement où vous en êtes. Aucun rendez-vous nécessaire.",
       "button": "Lancer un scan gratuit"
+    }
+  },
+  "bfsgPage": {
+    "meta": {
+      "title": "German Accessibility Act (BFSG) Compliance — Check & Monitor",
+      "description": "The German Accessibility Act (BFSG) is in force since June 2025. Check and continuously monitor your website's BFSG/WCAG compliance and keep audit-ready evidence."
+    },
+    "hero": {
+      "badge": "BFSG · Germany's Accessibility Act · in force since June 2025",
+      "title": "BFSG compliance for your website — checked and monitored",
+      "subtitle": "Germany's Accessibility Reinforcement Act (BFSG) requires many businesses to make their digital services accessible. VexNexa continuously checks your site against WCAG / EN 301 549, keeps your accessibility statement current, and delivers audit-ready evidence.",
+      "ctaPrimary": "Start free scan",
+      "ctaSecondary": "View sample report"
+    },
+    "obligation": {
+      "eyebrow": "Why it matters",
+      "title": "The BFSG is mandatory — and enforced",
+      "p1": "Since 28 June 2025, the BFSG (Barrierefreiheitsstärkungsgesetz) requires consumer-facing digital products and services in Germany — online shops, banking, transport ticketing, e-books, telecom — to be accessible to WCAG 2.1 AA via EN 301 549. Market surveillance authorities can investigate and impose penalties.",
+      "p2": "The hard part isn't a one-off check — it's staying compliant as your shop, content and templates change. Continuous monitoring catches new barriers within days instead of at the next audit."
+    },
+    "capabilities": {
+      "title": "Built for BFSG compliance",
+      "subtitle": "Everything you need to reach and keep BFSG conformance.",
+      "c1Title": "Continuous BFSG monitoring",
+      "c1Body": "Scheduled WCAG 2.1/2.2 scans track your whole site and flag regressions the moment a release or content change introduces a barrier.",
+      "c2Title": "Keep your accessibility statement current",
+      "c2Body": "Automated scans surface new issues fast, so your published accessibility statement reflects reality — exactly what the BFSG expects.",
+      "c3Title": "Audit-ready evidence",
+      "c3Body": "Time-stamped PDF/DOCX reports with WCAG severity breakdown and remediation guidance — ready for market surveillance, customers and internal audit."
+    },
+    "how": {
+      "title": "From scan to BFSG conformance in three steps",
+      "s1Title": "Add your website",
+      "s1Body": "Enter your domain (and any subdomains or shop systems) to start.",
+      "s2Title": "Monitor automatically",
+      "s2Body": "Scheduled scans check WCAG / EN 301 549 and alert you when a barrier appears.",
+      "s3Title": "Report & remediate",
+      "s3Body": "Prioritised findings with code-level guidance route fixes to the right team."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": "Who must comply with the BFSG?",
+      "a1": "Businesses offering consumer-facing digital products or services in Germany — e-commerce, banking, transport ticketing, e-books, telecom and more. Micro-enterprises (under 10 staff and under €2M turnover) are exempt for services.",
+      "q2": "Since when does the BFSG apply?",
+      "a2": "The BFSG has applied since 28 June 2025, implementing the European Accessibility Act in German law.",
+      "q3": "Does this replace a manual audit?",
+      "a3": "No — automated monitoring continuously covers the testable criteria and flags regressions fast. Combine it with periodic manual review for full conformance.",
+      "q4": "Is our data stored in the EU?",
+      "a4": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and only scans publicly accessible content. No personal data is stored."
+    },
+    "cta": {
+      "title": "Make your website BFSG-compliant",
+      "subtitle": "Start with a free scan and see exactly where you stand. No meetings required.",
+      "button": "Start free scan"
     }
   }
 }
