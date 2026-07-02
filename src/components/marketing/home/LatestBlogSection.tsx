@@ -1,21 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, BookOpenText, Clock3 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { getBlogBaseSlug, getBlogPublicPath } from "@/lib/blog-seo";
-
-type LatestPost = {
-  slug: string;
-  locale: string | null;
-  title: string;
-  excerpt: string | null;
-  publishedAt: string | null;
-  category: string | null;
-  coverImage: string | null;
-  authorName: string | null;
-};
 
 type LatestBlogCopy = {
   eyebrow: string;
@@ -256,35 +244,11 @@ function readingMinutes(text: string | null) {
 export function LatestBlogSection() {
   const locale = useLocale();
   const copy = latestBlogCopy[locale] ?? latestBlogCopy.en;
-  const [posts, setPosts] = useState<LatestPost[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch(`/api/blog/latest?locale=${locale}&limit=3`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (!cancelled) {
-          setPosts(data.posts ?? []);
-          setLoading(false);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [locale]);
-
-  const visiblePosts =
-    !loading && posts.some((post) => post.locale === locale)
-      ? posts
-      : copy.posts.map((post) => ({
-          ...post,
-          locale,
-          authorName: "VexNexa",
-        }));
+  const visiblePosts = copy.posts.map((post) => ({
+    ...post,
+    locale,
+    authorName: "VexNexa",
+  }));
 
   return (
     <section
@@ -339,28 +303,7 @@ export function LatestBlogSection() {
         </div>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-          {loading
-            ? Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div
-                    className="mb-5 aspect-[16/10] w-full rounded-lg"
-                    style={{ background: "var(--color-surface-sunken)" }}
-                  />
-                  <div
-                    className="mb-3 h-3 w-24 rounded"
-                    style={{ background: "var(--color-surface-sunken)" }}
-                  />
-                  <div
-                    className="mb-2 h-5 w-full rounded"
-                    style={{ background: "var(--color-surface-sunken)" }}
-                  />
-                  <div
-                    className="h-5 w-3/4 rounded"
-                    style={{ background: "var(--color-surface-sunken)" }}
-                  />
-                </div>
-              ))
-            : visiblePosts.map((post) => (
+          {visiblePosts.map((post) => (
                 <article key={post.slug} className="group flex flex-col">
                   <Link
                     href={getBlogPublicPath(post.locale || locale, getBlogBaseSlug(post.slug))}

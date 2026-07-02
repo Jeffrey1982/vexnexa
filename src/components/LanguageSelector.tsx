@@ -4,44 +4,62 @@ import * as React from "react";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { isMarketingPath } from "@/lib/marketing-seo";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  INDEXABLE_MARKETING_LOCALES,
+  isMarketingPath,
+  type MarketingLocale,
+} from "@/lib/marketing-seo";
 
 interface Language {
-  code: string;
+  code: MarketingLocale;
   name: string;
   nativeName: string;
-  flag: string;
+  shortLabel: string;
 }
 
 const languages: Language[] = [
-  { code: "en", name: "English", nativeName: "English", flag: "🇬🇧" },
-  { code: "nl", name: "Dutch", nativeName: "Nederlands", flag: "🇳🇱" },
-  { code: "de", name: "German", nativeName: "Deutsch", flag: "🇩🇪" },
-  { code: "fr", name: "French", nativeName: "Français", flag: "🇫🇷" },
-  { code: "es", name: "Spanish", nativeName: "Español", flag: "🇪🇸" },
-  { code: "pt", name: "Portuguese", nativeName: "Português", flag: "🇵🇹" },
+  { code: "en", name: "English", nativeName: "English", shortLabel: "EN" },
+  { code: "nl", name: "Dutch", nativeName: "Nederlands", shortLabel: "NL" },
+  { code: "de", name: "German", nativeName: "Deutsch", shortLabel: "DE" },
+  { code: "fr", name: "French", nativeName: "Francais", shortLabel: "FR" },
+  { code: "es", name: "Spanish", nativeName: "Espanol", shortLabel: "ES" },
+  { code: "pt", name: "Portuguese", nativeName: "Portugues", shortLabel: "PT" },
 ];
 
-export function LanguageSelector() {
+type LanguageSelectorProps = {
+  marketingOnly?: boolean;
+};
+
+export function LanguageSelector({ marketingOnly = false }: LanguageSelectorProps) {
   const t = useTranslations("nav");
-  const [currentLanguage, setCurrentLanguage] = React.useState<Language>(languages[0]); // English is first
+  const availableLanguages = React.useMemo(
+    () =>
+      marketingOnly
+        ? languages.filter((language) =>
+            INDEXABLE_MARKETING_LOCALES.includes(
+              language.code as (typeof INDEXABLE_MARKETING_LOCALES)[number]
+            )
+          )
+        : languages,
+    [marketingOnly]
+  );
+  const [currentLanguage, setCurrentLanguage] = React.useState<Language>(availableLanguages[0] ?? languages[0]);
 
   const handleLanguageChange = (language: Language) => {
     setCurrentLanguage(language);
 
     if (typeof window === "undefined") return;
-    try { localStorage.setItem("preferred-language", language.code); } catch {}
+    try {
+      localStorage.setItem("preferred-language", language.code);
+    } catch {}
     document.cookie = `NEXT_LOCALE=${language.code}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
 
-    // On marketing pages, navigate to the locale-prefixed URL so each language
-    // has a real, indexable address (en = un-prefixed). Elsewhere (dashboard,
-    // blog) keep the cookie-based reload.
     const { pathname, search, hash } = window.location;
     const basePath = pathname.replace(/^\/(en|nl|de|fr|es|pt)(?=\/|$)/, "") || "/";
     if (isMarketingPath(basePath)) {
@@ -63,7 +81,9 @@ export function LanguageSelector() {
       const savedLanguage =
         (pathMatch ? pathMatch[1] : null) || cookieLocale || localStorage.getItem("preferred-language");
       if (savedLanguage) {
-        const language = languages.find(lang => lang.code === savedLanguage);
+        const language =
+          availableLanguages.find((lang) => lang.code === savedLanguage) ??
+          languages.find((lang) => lang.code === savedLanguage);
         if (language) {
           setCurrentLanguage(language);
         }
@@ -71,7 +91,7 @@ export function LanguageSelector() {
     } catch {
       // localStorage unavailable
     }
-  }, []);
+  }, [availableLanguages]);
 
   return (
     <DropdownMenu>
@@ -79,21 +99,25 @@ export function LanguageSelector() {
         <Button
           variant="ghost"
           size="sm"
-          className="text-2xl px-2"
+          className="px-2"
           aria-label={t("language")}
           title={currentLanguage.nativeName}
         >
-          {currentLanguage.flag}
+          <span className="font-mono text-xs font-semibold tracking-normal">
+            {currentLanguage.shortLabel}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        {languages.map((language) => (
+        {availableLanguages.map((language) => (
           <DropdownMenuItem
             key={language.code}
             onClick={() => handleLanguageChange(language)}
             className="cursor-pointer"
           >
-            <span className="mr-2 text-lg">{language.flag}</span>
+            <span className="mr-2 w-6 font-mono text-xs font-semibold text-muted-foreground">
+              {language.shortLabel}
+            </span>
             <span className="flex-1">{language.nativeName}</span>
             {currentLanguage.code === language.code && (
               <Check className="h-4 w-4 text-primary" />

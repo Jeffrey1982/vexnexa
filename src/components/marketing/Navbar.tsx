@@ -25,17 +25,17 @@ import VexnexaLogo from "@/components/brand/VexnexaLogo";
 
 interface NavbarProps {
   className?: string;
+  marketingLanguagesOnly?: boolean;
 }
 
-export function Navbar({ className }: NavbarProps) {
+export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProps) {
   const t = useTranslations('nav');
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   const onScroll = useCallback(() => {
     setScrolled(window.scrollY > 6);
@@ -57,26 +57,53 @@ export function Navbar({ className }: NavbarProps) {
   ];
 
   useEffect(() => {
+    let cancelled = false;
+    let subscription: { unsubscribe: () => void } | undefined;
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
     const getUser = async () => {
+      const supabase = createClient();
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        setUser(user);
+        if (!cancelled) setUser(user);
       } catch (error) {
         console.error('Error getting user:', error);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
+
+      const { data } = supabase.auth.onAuthStateChange((event, session) => {
+        if (cancelled) return;
+        setUser(session?.user ?? null);
+        setIsLoading(false);
+      });
+      subscription = data.subscription;
     };
 
-    getUser();
+    const scheduleAuthCheck = () => {
+      if (cancelled) return;
+      setIsLoading(true);
+      void getUser();
+    };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(scheduleAuthCheck, { timeout: 2500 });
+    } else {
+      timeoutId = globalThis.setTimeout(scheduleAuthCheck, 1200);
+    }
 
-    return () => subscription.unsubscribe();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      cancelled = true;
+      subscription?.unsubscribe();
+      if (idleId !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) {
+        globalThis.clearTimeout(timeoutId);
+      }
+    };
+  }, []);
 
   const handleCtaClick = (location: string) => {
     trackEvent("cta_click", { location });
@@ -128,7 +155,7 @@ export function Navbar({ className }: NavbarProps) {
 
           {/* Desktop Right Section: Social + Language + Auth */}
           <div className="hidden md:flex items-center gap-3 lg:gap-4">
-            <LanguageSelector />
+            <LanguageSelector marketingOnly={marketingLanguagesOnly} />
             <ThemeToggle />
 
             <div className="flex items-center space-x-3">
@@ -261,7 +288,7 @@ export function Navbar({ className }: NavbarProps) {
                 {/* Language Selector - Mobile */}
                 <div className="pt-4 pb-2 border-b border-border/20">
                   <p className="text-sm font-medium text-muted-foreground mb-3">{t('language')}</p>
-                  <LanguageSelector />
+                  <LanguageSelector marketingOnly={marketingLanguagesOnly} />
                 </div>
 
                 {/* Theme Toggle - Mobile */}
