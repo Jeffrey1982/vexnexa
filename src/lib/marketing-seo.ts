@@ -34,7 +34,8 @@ export const MARKETING_PATHS: ReadonlySet<string> = new Set([
   "/audits",
   "/compliance",
   "/contact",
-  "/demo",
+  // "/demo" intentionally omitted — it permanently redirects to /sample-report,
+  // so it should not get locale variants or hreflang alternates.
   "/digitale-toegankelijkheid-audit",
   "/eaa-compliance",
   "/eaa-compliance-monitoring",
