@@ -51,13 +51,36 @@ export async function getOrCreateLeadWorkspace(user: UserLike): Promise<LeadWork
 export async function getLeadOverviewRows(workspaceId: string) {
   const { data, error } = await supabaseAdmin
     .from("leads")
-    .select("id, status, score, created_at, organizations(name, normalized_domain, country_code)")
+    .select("id, status, score, created_at, organizations(id, name, normalized_domain, country_code, source_type)")
     .eq("workspace_id", workspaceId)
     .order("created_at", { ascending: false })
     .limit(100);
 
   if (error) throw error;
-  return data ?? [];
+  const rows = data ?? [];
+  const organizationIds = rows.map((row: any) => row.organizations?.id).filter(Boolean);
+  if (organizationIds.length === 0) return rows;
+
+  const { data: scans, error: scansError } = await supabaseAdmin
+    .from("website_scans")
+    .select("organization_id, status, accessibility_score, critical_issues, serious_issues, moderate_issues, minor_issues, created_at")
+    .eq("workspace_id", workspaceId)
+    .in("organization_id", organizationIds)
+    .order("created_at", { ascending: false });
+
+  if (scansError) throw scansError;
+
+  const latestScanByOrg = new Map<string, any>();
+  for (const scan of scans ?? []) {
+    if (!latestScanByOrg.has(scan.organization_id)) {
+      latestScanByOrg.set(scan.organization_id, scan);
+    }
+  }
+
+  return rows.map((row: any) => ({
+    ...row,
+    latest_scan: row.organizations?.id ? latestScanByOrg.get(row.organizations.id) ?? null : null,
+  }));
 }
 
 export async function getLeadDetail(workspaceId: string, leadId: string) {

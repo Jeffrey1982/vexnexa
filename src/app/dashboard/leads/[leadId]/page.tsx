@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ShieldAlert, ShieldCheck } from "lucide-react";
+import { Activity, ShieldAlert, ShieldCheck } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +21,21 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       {children}
     </section>
   );
+}
+
+function totalScanIssues(scan: any) {
+  return (
+    (scan.critical_issues ?? 0) +
+    (scan.serious_issues ?? 0) +
+    (scan.moderate_issues ?? 0) +
+    (scan.minor_issues ?? 0)
+  );
+}
+
+function sourceLabel(source?: string | null) {
+  if (source === "free_scan_lead") return "Free scan";
+  if (source === "csv_import") return "CSV import";
+  return source ?? "-";
 }
 
 export default async function LeadDetailPage({
@@ -97,7 +112,7 @@ export default async function LeadDetailPage({
               <div><dt className="text-muted-foreground">Website</dt><dd>{org.website_url}</dd></div>
               <div><dt className="text-muted-foreground">Country</dt><dd>{org.country_code ?? "-"}</dd></div>
               <div><dt className="text-muted-foreground">Industry</dt><dd>{org.industry ?? "-"}</dd></div>
-              <div><dt className="text-muted-foreground">Source</dt><dd>{org.source_type}</dd></div>
+              <div><dt className="text-muted-foreground">Source</dt><dd>{sourceLabel(org.source_type)}</dd></div>
             </dl>
           </Section>
 
@@ -138,8 +153,35 @@ export default async function LeadDetailPage({
             )}
           </Section>
 
-          <Section title="Website scans placeholder">
-            <p className="text-sm text-muted-foreground">Website scanning is deferred. {detail.scans.length} scan records exist for future display.</p>
+          <Section title="Website scans">
+            {detail.scans.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No scan records yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {detail.scans.map((scan: any) => (
+                  <div key={scan.id} className="rounded-md border p-3 text-sm">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <p className="flex items-center gap-2 font-medium">
+                        <Activity className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                        {scan.status}
+                      </p>
+                      <Badge variant="secondary">{formatDate(scan.created_at)}</Badge>
+                    </div>
+                    <dl className="mt-3 grid gap-2 sm:grid-cols-3">
+                      <div><dt className="text-muted-foreground">Score</dt><dd>{scan.accessibility_score ?? "-"}/100</dd></div>
+                      <div><dt className="text-muted-foreground">Issues</dt><dd>{totalScanIssues(scan)}</dd></div>
+                      <div><dt className="text-muted-foreground">URL</dt><dd className="truncate font-mono text-xs">{scan.final_url ?? scan.requested_url}</dd></div>
+                    </dl>
+                    <div className="mt-3 grid grid-cols-2 gap-2 text-xs sm:grid-cols-4">
+                      <span className="rounded-md bg-red-50 px-2 py-1 text-red-800">Critical {scan.critical_issues}</span>
+                      <span className="rounded-md bg-orange-50 px-2 py-1 text-orange-800">Serious {scan.serious_issues}</span>
+                      <span className="rounded-md bg-amber-50 px-2 py-1 text-amber-800">Moderate {scan.moderate_issues}</span>
+                      <span className="rounded-md bg-slate-100 px-2 py-1 text-slate-800">Minor {scan.minor_issues}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </Section>
 
           <Section title="Email drafts placeholder">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Upload } from "lucide-react";
+import { Activity, Upload } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -11,6 +11,22 @@ export const dynamic = "force-dynamic";
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(value));
+}
+
+function sourceLabel(source?: string | null) {
+  if (source === "free_scan_lead") return "Free scan";
+  if (source === "csv_import") return "CSV";
+  return source ?? "-";
+}
+
+function issueCount(scan: any) {
+  if (!scan) return null;
+  return (
+    (scan.critical_issues ?? 0) +
+    (scan.serious_issues ?? 0) +
+    (scan.moderate_issues ?? 0) +
+    (scan.minor_issues ?? 0)
+  );
 }
 
 export default async function LeadsOverviewPage() {
@@ -62,8 +78,10 @@ export default async function LeadsOverviewPage() {
                   <TableHead>Organization</TableHead>
                   <TableHead>Domain</TableHead>
                   <TableHead>Country</TableHead>
+                  <TableHead>Source</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Score</TableHead>
+                  <TableHead>Latest scan</TableHead>
                   <TableHead>Outreach eligibility</TableHead>
                   <TableHead>Created</TableHead>
                 </TableRow>
@@ -71,8 +89,8 @@ export default async function LeadsOverviewPage() {
               <TableBody>
                 {rows.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
-                      No leads imported yet.
+                    <TableCell colSpan={9} className="h-24 text-center text-muted-foreground">
+                      No leads captured yet.
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -87,8 +105,20 @@ export default async function LeadsOverviewPage() {
                         </TableCell>
                         <TableCell className="font-mono text-xs">{org?.normalized_domain}</TableCell>
                         <TableCell>{org?.country_code ?? "-"}</TableCell>
+                        <TableCell><Badge variant="outline">{sourceLabel(org?.source_type)}</Badge></TableCell>
                         <TableCell><Badge variant="outline">{row.status}</Badge></TableCell>
                         <TableCell>{row.score}</TableCell>
+                        <TableCell>
+                          {row.latest_scan ? (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Activity className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                              <span>{row.latest_scan.accessibility_score ?? "-"} score</span>
+                              <span className="text-muted-foreground">/ {issueCount(row.latest_scan)} issues</span>
+                            </div>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
+                        </TableCell>
                         <TableCell>
                           <Badge variant="secondary">
                             {row.status === "opted_in" || row.status === "existing_customer" ? "Verify evidence" : "Blocked"}
