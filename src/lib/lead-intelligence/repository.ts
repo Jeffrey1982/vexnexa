@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { normalizeDomain, normalizeEmail } from "./domain-normalization";
 
 export type LeadWorkspace = {
   id: string;
@@ -157,4 +158,152 @@ export async function getAuditEvents(workspaceId: string) {
 
   if (error) throw error;
   return data ?? [];
+}
+
+type FreeScanLeadCaptureInput = {
+  email: string;
+  url: string;
+  phase: "done" | "error" | "rate_limited";
+  locale: "en" | "nl";
+  clientIp: string;
+  result?: {
+    score: number;
+    totalIssues: number;
+    impactCritical: number;
+    impactSerious: number;
+    impactModerate: number;
+    impactMinor: number;
+  };
+};
+
+export type FreeScanLeadCaptureResult =
+  | { stored: true; workspaceId: string; organizationId: string; leadId: string; scanId: string }
+  | { stored: false; reason: "not_configured" };
+
+function leadCaptureWorkspaceId(): string | null {
+  return process.env.LEAD_CAPTURE_WORKSPACE_ID?.trim() || null;
+}
+
+function freeScanLeadExplanation(input: FreeScanLeadCaptureInput): string {
+  if (input.phase !== "done" || !input.result) {
+    return "Free-scan lead captured without a completed scan. Manual follow-up required. Outreach requires separate consent or customer evidence.";
+  }
+
+  return `Free scan captured with score ${input.result.score}/100 and ${input.result.totalIssues} reported issues. Outreach requires separate consent or customer evidence.`;
+}
+
+export async function recordFreeScanLeadCapture(
+  input: FreeScanLeadCaptureInput,
+): Promise<FreeScanLeadCaptureResult> {
+  const workspaceId = leadCaptureWorkspaceId();
+  if (!workspaceId) {
+    return { stored: false, reason: "not_configured" };
+  }
+
+  const normalizedDomain = normalizeDomain(input.url);
+  const normalizedEmail = normalizeEmail(input.email);
+  const now = new Date().toISOString();
+
+  const { data: organization, error: orgError } = await supabaseAdmin
+    .from("organizations")
+    .upsert(
+      {
+        workspace_id: workspaceId,
+        name: normalizedDomain,
+        website_url: input.url,
+        normalized_domain: normalizedDomain,
+        source_type: "free_scan_lead",
+        source_url: input.url,
+        updated_at: now,
+      },
+      { onConflict: "workspace_id,normalized_domain" },
+    )
+    .select("id")
+    .single();
+
+  if (orgError) throw orgError;
+
+  const { data: lead, error: leadError } = await supabaseAdmin
+    .from("leads")
+    .upsert(
+      {
+        workspace_id: workspaceId,
+        organization_id: organization.id,
+        status: "permission_required",
+        score: input.result?.score ?? 0,
+        score_explanation: freeScanLeadExplanation(input),
+        updated_at: now,
+      },
+      { onConflict: "workspace_id,organization_id" },
+    )
+    .select("id")
+    .single();
+
+  if (leadError) throw leadError;
+
+  const { error: contactError } = await supabaseAdmin.from("contacts").upsert(
+    {
+      workspace_id: workspaceId,
+      organization_id: organization.id,
+      email: normalizedEmail,
+      source_type: "free_scan_lead",
+      source_url: input.url,
+      is_personal_data: true,
+      updated_at: now,
+    },
+    { onConflict: "organization_id,email" },
+  );
+
+  if (contactError) throw contactError;
+
+  const status = input.phase === "done" && input.result ? "completed" : "failed";
+  const { data: scan, error: scanError } = await supabaseAdmin
+    .from("website_scans")
+    .insert({
+      workspace_id: workspaceId,
+      organization_id: organization.id,
+      requested_url: input.url,
+      final_url: input.phase === "done" ? input.url : null,
+      status,
+      accessibility_score: input.result?.score ?? null,
+      critical_issues: input.result?.impactCritical ?? 0,
+      serious_issues: input.result?.impactSerious ?? 0,
+      moderate_issues: input.result?.impactModerate ?? 0,
+      minor_issues: input.result?.impactMinor ?? 0,
+      started_at: now,
+      completed_at: now,
+    })
+    .select("id")
+    .single();
+
+  if (scanError) throw scanError;
+
+  const { error: auditError } = await supabaseAdmin.from("audit_events").insert({
+    workspace_id: workspaceId,
+    actor_user_id: null,
+    event_type: "free_scan_lead_captured",
+    entity_type: "lead",
+    entity_id: lead.id,
+    metadata: {
+      organization_id: organization.id,
+      website_scan_id: scan.id,
+      email: normalizedEmail,
+      url: input.url,
+      phase: input.phase,
+      locale: input.locale,
+      client_ip: input.clientIp,
+      score: input.result?.score ?? null,
+      total_issues: input.result?.totalIssues ?? null,
+    },
+  });
+
+  if (auditError) throw auditError;
+
+  return {
+    stored: true,
+    workspaceId,
+    organizationId: organization.id,
+    leadId: lead.id,
+    scanId: scan.id,
+  };
 }

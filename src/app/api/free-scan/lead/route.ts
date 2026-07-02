@@ -4,6 +4,7 @@ import { checkRateLimit, FREE_SCAN_LEAD_LIMIT } from "@/lib/rate-limit";
 import { normalizeUrl } from "@/lib/url";
 import { validatePublicUrl } from "@/lib/scan-url-validation";
 import { sendFreeScanLeadEmails } from "@/lib/email";
+import { recordFreeScanLeadCapture } from "@/lib/lead-intelligence/repository";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,11 +76,13 @@ export async function POST(req: NextRequest) {
     req.headers.get("x-real-ip") ||
     "unknown";
 
+  const storedPhase = phase === "done" && !result ? "error" : phase;
+
   try {
     const sendResult = await sendFreeScanLeadEmails({
       email,
       url: fullPageUrl,
-      phase: phase === "done" && !result ? "error" : phase,
+      phase: storedPhase,
       locale,
       clientIp,
       result,
@@ -98,6 +101,19 @@ export async function POST(req: NextRequest) {
       { ok: false, error: "Email could not be sent. Please try again." },
       { status: 502 }
     );
+  }
+
+  try {
+    await recordFreeScanLeadCapture({
+      email,
+      url: fullPageUrl,
+      phase: storedPhase,
+      locale,
+      clientIp,
+      result,
+    });
+  } catch (error) {
+    console.error("[free-scan-lead] Persistence failed:", error);
   }
 
   return NextResponse.json({ ok: true });
