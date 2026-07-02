@@ -26,21 +26,19 @@ via `generateMetadata` + i18n keys). No action needed beyond:
   `MARKETING_PATHS`, generating locale variants and hreflang for a redirecting
   URL. Removed.
 
-### ⚠ Biggest duplicate-content risk: untranslated locale variants
+### ✔ Resolved (2026-07-02): untranslated locale variants
 
-Every path in `MARKETING_PATHS` is expanded to 6 locale URLs in the sitemap
-and hreflang set, but several pages have **hardcoded English body copy**
-(e.g. `/pilot-partner-program`, `/audits`, parts of `/wcag-scan`,
-`/sample-report`). That means `/de/pilot-partner-program`,
-`/fr/pilot-partner-program`, etc. serve identical English content on separate
-URLs that are declared as translations. Google generally tolerates this when
-hreflang is consistent, but it dilutes crawl budget and can look like
-doorway duplication at this scale (~30 paths × 6 locales).
+Previously every path in `MARKETING_PATHS` was expanded to 6 locale URLs in
+the sitemap and hreflang set while several pages only have English body
+copy — ~30 paths × 6 locales of near-duplicate "translations".
 
-**Recommendation (not implemented, needs a product decision):** maintain a
-per-page list of actually-translated locales and only emit sitemap entries +
-hreflang for those; or noindex untranslated locale variants until the copy
-exists.
+**Implemented:** `INDEXABLE_MARKETING_LOCALES = ["en", "nl"]` in
+`src/lib/marketing-seo.ts`. Only EN/NL appear in hreflang and
+`sitemap_pages.xml`; de/fr/es/pt pages still render (language switcher
+keeps working) but are `noindex` with a canonical to the EN URL. The
+post-deploy smoke test enforces this policy on every production deploy.
+When a locale's marketing copy is actually finished, add it to
+`INDEXABLE_MARKETING_LOCALES` to re-enable indexing.
 
 ## 3. Thin / near-duplicate page review
 
@@ -60,9 +58,9 @@ exists.
 ## 4. Status codes / redirects (Task 6)
 
 - `/demo` → **308 permanent redirect** to `/sample-report` (Next
-  `permanentRedirect`). Equivalent to 301 for SEO. One internal link to
-  `/demo` remains in the unused legacy component `HomeHeroMultilingual.tsx`
-  (not rendered anywhere); no live page links to `/demo`.
+  `permanentRedirect`). Equivalent to 301 for SEO. No internal links to
+  `/demo` remain (the legacy components that referenced it were removed
+  in the 2026-07-02 dead-code cleanup).
 - No redirect chains found among marketing routes.
 - No 404s in the sitemap: every `PAGE_PATHS` entry in
   `src/app/sitemap_pages.xml/route.ts` maps to an existing route (including
