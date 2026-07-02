@@ -272,6 +272,24 @@ export async function getFreeScanLeadCaptureDigestStats({
   };
 }
 
+export async function getLeadCaptureStorageHealth() {
+  const workspaceId = leadCaptureWorkspaceId();
+  if (!workspaceId) {
+    return { configured: false, reachable: false };
+  }
+
+  const { error } = await supabaseAdmin
+    .from("lead_workspaces")
+    .select("id", { head: true })
+    .eq("id", workspaceId)
+    .limit(1);
+
+  return {
+    configured: true,
+    reachable: !error,
+  };
+}
+
 function freeScanLeadExplanation(input: FreeScanLeadCaptureInput): string {
   if (input.phase !== "done" || !input.result) {
     return "Free-scan lead captured without a completed scan. Manual follow-up required. Outreach requires separate consent or customer evidence.";
