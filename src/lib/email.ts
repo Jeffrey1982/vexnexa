@@ -731,6 +731,14 @@ export interface WeeklyDigestData {
   scansCompleted: number
   scansCompletedDelta: string
   scansFailed: number
+  freeScanLeads: number
+  freeScanLeadsDelta: string
+  recentFreeScanLeads: Array<{
+    domain: string
+    score: number | null
+    issues: number | null
+    createdAt: string
+  }>
   partnerApps: number
   partnerAppsDelta: string
   contactMessages: number
@@ -804,17 +812,27 @@ export async function sendWeeklyDigestEmail(data: WeeklyDigestData) {
        }`
     : '<p style="color: #9CA3AF; font-size: 13px; margin-top: 24px;">No Search Console data available (GSC ingest not configured or empty).</p>'
 
+  const freeScanLeadsHtml = data.recentFreeScanLeads.length
+    ? `<h3 style="color: #1F2937; margin: 24px 0 8px 0;">Free-scan leads</h3>
+       <ul style="color: #374151; line-height: 1.7; padding-left: 20px; margin: 0;">
+         ${data.recentFreeScanLeads
+           .map((lead) => `<li><strong>${e(lead.domain)}</strong> · score ${lead.score ?? 'n/a'} · ${lead.issues ?? 'n/a'} issues</li>`)
+           .join('')}
+       </ul>`
+    : ''
+
   const failedNote =
     data.scansFailed > 0
       ? `<p style="color: #B45309; font-size: 14px; margin-top: 12px;">⚠️ ${data.scansFailed} scan(s) failed this week — worth a look at the function logs.</p>`
       : ''
 
-  const subject = `📈 VexNexa week digest — ${data.newUsers} signups, ${data.scansCompleted} scans, ${data.partnerApps} pilot application${data.partnerApps === 1 ? '' : 's'}`
+  const subject = `📈 VexNexa week digest — ${data.newUsers} signups, ${data.scansCompleted} scans, ${data.freeScanLeads} free-scan leads`
 
   const text = `VexNexa week digest (${fmt(data.periodStart)} → ${fmt(data.periodEnd)})
 
 New signups: ${data.newUsers} (${data.newUsersDelta} vs prior week)
 Scans completed: ${data.scansCompleted} (${data.scansCompletedDelta})${data.scansFailed ? ` — ${data.scansFailed} failed` : ''}
+Free-scan leads: ${data.freeScanLeads} (${data.freeScanLeadsDelta})
 Pilot applications: ${data.partnerApps} (${data.partnerAppsDelta})
 Contact messages: ${data.contactMessages} (${data.contactMessagesDelta})
 ${
@@ -824,6 +842,7 @@ Top queries: ${data.gsc.topQueries.map((q) => `${q.query} (${q.clicks})`).join('
     : '\nNo Search Console data available.'
 }
 ${data.recentApplications.length ? `\nPilot applications:\n${data.recentApplications.map((a) => `- ${a.companyName} (${a.clientSites}) — ${a.website} · ${a.status}`).join('\n')}` : ''}
+${data.recentFreeScanLeads.length ? `\nFree-scan leads:\n${data.recentFreeScanLeads.map((lead) => `- ${lead.domain}: score ${lead.score ?? 'n/a'}, ${lead.issues ?? 'n/a'} issues`).join('\n')}` : ''}
 ${data.recentUsers.length ? `\nNew signups:\n${data.recentUsers.map((u) => `- ${u.email} · ${u.plan}`).join('\n')}` : ''}`
 
   return resend.emails.send({
@@ -838,10 +857,12 @@ ${data.recentUsers.length ? `\nNew signups:\n${data.recentUsers.map((u) => `- ${
         <table style="border-collapse: collapse; margin-top: 12px;">
           ${row('New signups', data.newUsers, data.newUsersDelta)}
           ${row('Scans completed', data.scansCompleted, data.scansCompletedDelta)}
+          ${row('Free-scan leads', data.freeScanLeads, data.freeScanLeadsDelta)}
           ${row('Pilot applications', data.partnerApps, data.partnerAppsDelta)}
           ${row('Contact messages', data.contactMessages, data.contactMessagesDelta)}
         </table>
         ${failedNote}
+        ${freeScanLeadsHtml}
         ${applicationsHtml}
         ${usersHtml}
         ${gscHtml}

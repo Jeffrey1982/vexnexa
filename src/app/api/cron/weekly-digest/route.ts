@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { withCronAuth } from "@/lib/cron-auth";
 import { sendWeeklyDigestEmail, type WeeklyDigestData } from "@/lib/email";
+import { getFreeScanLeadCaptureDigestStats } from "@/lib/lead-intelligence/repository";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -69,6 +70,11 @@ async function handler(_request: NextRequest) {
 
   // GSC lives in raw tables written by the ingest cron; tolerate absence.
   let gsc: WeeklyDigestData["gsc"] = null;
+  let freeScanStats: Awaited<ReturnType<typeof getFreeScanLeadCaptureDigestStats>> = {
+    freeScanLeads: 0,
+    freeScanLeadsPrev: 0,
+    recentFreeScanLeads: [],
+  };
   try {
     const [current] = await prisma.$queryRaw<
       Array<{ clicks: bigint | null; impressions: bigint | null }>
@@ -95,6 +101,12 @@ async function handler(_request: NextRequest) {
     console.warn("[weekly-digest] GSC data unavailable (table missing or empty):", gscError);
   }
 
+  try {
+    freeScanStats = await getFreeScanLeadCaptureDigestStats({ weekAgo, twoWeeksAgo });
+  } catch (leadError) {
+    console.warn("[weekly-digest] Free-scan lead data unavailable:", leadError);
+  }
+
   const digest: WeeklyDigestData = {
     periodStart: weekAgo,
     periodEnd: now,
@@ -103,6 +115,9 @@ async function handler(_request: NextRequest) {
     scansCompleted,
     scansCompletedDelta: delta(scansCompleted, scansCompletedPrev),
     scansFailed,
+    freeScanLeads: freeScanStats.freeScanLeads,
+    freeScanLeadsDelta: delta(freeScanStats.freeScanLeads, freeScanStats.freeScanLeadsPrev),
+    recentFreeScanLeads: freeScanStats.recentFreeScanLeads,
     partnerApps,
     partnerAppsDelta: delta(partnerApps, partnerAppsPrev),
     contactMessages,
@@ -125,6 +140,7 @@ async function handler(_request: NextRequest) {
   console.log("[weekly-digest] Sent:", {
     newUsers,
     scansCompleted,
+    freeScanLeads: freeScanStats.freeScanLeads,
     partnerApps,
     contactMessages,
     gsc: !!gsc,

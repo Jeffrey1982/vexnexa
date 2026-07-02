@@ -207,6 +207,71 @@ function leadCaptureWorkspaceId(): string | null {
   return process.env.LEAD_CAPTURE_WORKSPACE_ID?.trim() || null;
 }
 
+export async function getFreeScanLeadCaptureDigestStats({
+  weekAgo,
+  twoWeeksAgo,
+}: {
+  weekAgo: Date;
+  twoWeeksAgo: Date;
+}) {
+  const workspaceId = leadCaptureWorkspaceId();
+  if (!workspaceId) {
+    return {
+      freeScanLeads: 0,
+      freeScanLeadsPrev: 0,
+      recentFreeScanLeads: [] as Array<{
+        domain: string;
+        score: number | null;
+        issues: number | null;
+        createdAt: string;
+      }>,
+    };
+  }
+
+  const [current, previous, recent] = await Promise.all([
+    supabaseAdmin
+      .from("organizations")
+      .select("id", { count: "exact", head: true })
+      .eq("workspace_id", workspaceId)
+      .eq("source_type", "free_scan_lead")
+      .gte("created_at", weekAgo.toISOString()),
+    supabaseAdmin
+      .from("organizations")
+      .select("id", { count: "exact", head: true })
+      .eq("workspace_id", workspaceId)
+      .eq("source_type", "free_scan_lead")
+      .gte("created_at", twoWeeksAgo.toISOString())
+      .lt("created_at", weekAgo.toISOString()),
+    supabaseAdmin
+      .from("website_scans")
+      .select("created_at, accessibility_score, critical_issues, serious_issues, moderate_issues, minor_issues, organizations!inner(normalized_domain, source_type)")
+      .eq("workspace_id", workspaceId)
+      .eq("organizations.source_type", "free_scan_lead")
+      .gte("created_at", weekAgo.toISOString())
+      .order("created_at", { ascending: false })
+      .limit(8),
+  ]);
+
+  for (const result of [current, previous, recent]) {
+    if (result.error) throw result.error;
+  }
+
+  return {
+    freeScanLeads: current.count ?? 0,
+    freeScanLeadsPrev: previous.count ?? 0,
+    recentFreeScanLeads: (recent.data ?? []).map((scan: any) => ({
+      domain: scan.organizations?.normalized_domain ?? "unknown",
+      score: scan.accessibility_score ?? null,
+      issues:
+        (scan.critical_issues ?? 0) +
+        (scan.serious_issues ?? 0) +
+        (scan.moderate_issues ?? 0) +
+        (scan.minor_issues ?? 0),
+      createdAt: scan.created_at,
+    })),
+  };
+}
+
 function freeScanLeadExplanation(input: FreeScanLeadCaptureInput): string {
   if (input.phase !== "done" || !input.result) {
     return "Free-scan lead captured without a completed scan. Manual follow-up required. Outreach requires separate consent or customer evidence.";
