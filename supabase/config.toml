@@ -113,15 +113,6 @@ content_path = "./supabase/templates/email_change.html"
 enable_signup = true
 # If enabled, users need to confirm their phone number before signing in.
 enable_confirmations = true
-# Template for sending a confirmation message. Variables within double curly braces are replaced dynamically.
-confirmation_template = "Your confirmation code is {{ .Code }} ."
-# Template for sending a recovery message. Variables within double curly braces are replaced dynamically.
-recovery_template = "Your recovery code is {{ .Code }} ."
-
-# Use pre-defined map of claims
-[auth.jwt]
-default_group_name = "authenticated"
-admin_group_name = "service_role"
 
 # Hook to call when a user signs up. Used to a profile when a new user signs up via oAuth.
 [auth.hook.custom_access_token]
@@ -249,14 +240,3 @@ vector_port = 54328
 # Configure one of the supported backends: `postgres`, `bigquery`.
 backend = "postgres"
 
-# Experimental features may be deprecated any time
-[experimental]
-# Configures Postgres storage-engine with S3 as the data source
-[experimental.s3]
-enabled = false
-# AWS credentials
-access_key_id = "env(SUPABASE_S3_ACCESS_KEY_ID)"
-secret_access_key = "env(SUPABASE_S3_SECRET_ACCESS_KEY)"
-# AWS S3 bucket config
-region = "env(SUPABASE_S3_REGION)"
-bucket = "env(SUPABASE_S3_BUCKET)"

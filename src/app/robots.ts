@@ -42,6 +42,8 @@ export default function robots(): MetadataRoute.Robots {
           '/compliance',
           '/eaa-compliance',
           '/bfsg-compliance',
+          '/accessibe-alternative',
+          '/siteimprove-alternative',
           '/blog',
           '/blog/*',
           '/changelog',

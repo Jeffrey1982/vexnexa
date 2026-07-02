@@ -141,7 +141,9 @@
       "pilotPartner": "Pilot-Partner-Programm",
       "agencyMonitoring": "Agentur-Monitoring",
       "government": "Behörden & öffentlicher Sektor",
-      "bfsg": "BFSG-Konformität"
+      "bfsg": "BFSG-Konformität",
+      "accessibeAlt": "accessiBe alternative",
+      "siteimproveAlt": "Siteimprove alternative"
     },
     "disclaimer": "Scannen öffentlicher Inhalte • Keine Speicherung personenbezogener Daten",
     "description": "Barrierefreiheitsmonitoring, Berichte und Behebungsworkflows f?r moderne Teams.",
@@ -4656,6 +4658,80 @@
       "title": "Machen Sie Ihre Website BFSG-konform",
       "subtitle": "Beginnen Sie mit einem kostenlosen Scan und sehen Sie genau, wo Sie stehen. Keine Termine nötig.",
       "button": "Kostenlosen Scan starten"
+    }
+  },
+  "comparison": {
+    "shared": {
+      "strengthsTitle": "What you get with VexNexa",
+      "s1Title": "Real WCAG 2.2 code scanning — not an overlay",
+      "s1Body": "We analyse your actual markup and flag the issues to fix at the source. No widgets or scripts are injected into your site.",
+      "s2Title": "Transparent, self-serve pricing",
+      "s2Body": "Start free; paid plans from €34.95/month incl. VAT. Upgrade in a click — no enterprise sales process.",
+      "s3Title": "White-label reports for agencies",
+      "s3Body": "Deliver branded PDF/DOCX reports to clients under your own logo and colours.",
+      "s4Title": "AI-Vision beyond rule-based checks",
+      "s4Body": "Catches context and interaction issues that rule-only scanners tend to miss.",
+      "s5Title": "EU-hosted & privacy-first",
+      "s5Body": "Hosted in the EU (AWS Frankfurt). We only scan public content and store no personal data.",
+      "s6Title": "Continuous monitoring & alerts",
+      "s6Body": "Scheduled scans flag new barriers the moment a release introduces them.",
+      "ctaTitle": "See VexNexa on your own site",
+      "ctaSubtitle": "Run a free scan and compare the report yourself. No credit card required.",
+      "ctaButton": "Start free scan",
+      "ctaSecondary": "View sample report",
+      "reasonsTitle": "Why teams choose VexNexa"
+    },
+    "accessibe": {
+      "meta": {
+        "title": "accessiBe Alternative — Real WCAG Scanning, No Overlay",
+        "description": "Looking for an accessiBe alternative? VexNexa scans your code for WCAG 2.2 issues to fix at the source — no overlay widget. White-label reports, EU-hosted, start free."
+      },
+      "hero": {
+        "badge": "VexNexa vs. overlays",
+        "title": "A genuine accessiBe alternative",
+        "subtitle": "accessiBe is an accessibility overlay. VexNexa takes the opposite approach: we scan your real code so you can fix WCAG issues properly — the method the accessibility community recommends."
+      },
+      "intro": "Overlay widgets add an extra script on top of your site. Many accessibility experts and assistive-technology users have raised concerns that overlays don't deliver true conformance and can get in the way. VexNexa instead reports the actual WCAG violations in your code, with guidance to fix them at the source.",
+      "r1Title": "Fix the root cause, not a band-aid",
+      "r1Body": "Get the real WCAG 2.2 violations with code-level guidance — durable conformance, not a layer on top.",
+      "r2Title": "Nothing injected into your site",
+      "r2Body": "No third-party script on your pages. Your performance, security and UX stay yours.",
+      "r3Title": "Evidence you can defend",
+      "r3Body": "Audit-ready PDF/DOCX reports for compliance, procurement and EAA readiness.",
+      "faq": {
+        "q1": "Is VexNexa an overlay like accessiBe?",
+        "a1": "No. VexNexa never injects a widget or script. We scan your code and report the WCAG issues to fix at the source.",
+        "q2": "Can any tool make my site compliant automatically?",
+        "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
+        "q3": "Do you offer white-label reports?",
+        "a3": "Yes — Business and Agency plans export branded PDF/DOCX reports under your own logo."
+      }
+    },
+    "siteimprove": {
+      "meta": {
+        "title": "Siteimprove Alternative — Affordable WCAG Monitoring",
+        "description": "A lighter, more affordable Siteimprove alternative for WCAG monitoring. Self-serve, white-label reports, EU-hosted, transparent pricing — start free."
+      },
+      "hero": {
+        "badge": "VexNexa vs. enterprise suites",
+        "title": "A focused Siteimprove alternative",
+        "subtitle": "Siteimprove is a broad enterprise suite. VexNexa is a focused, self-serve WCAG monitor with white-label reports and transparent pricing — ideal for agencies and growing teams."
+      },
+      "intro": "You don't always need a full enterprise platform — and its sales process — to stay WCAG-compliant. VexNexa gives you continuous monitoring, audit-ready reports and white-label exports at a transparent price you can start today.",
+      "r1Title": "Transparent pricing, no sales calls",
+      "r1Body": "Start free; paid plans from €34.95/month incl. VAT. Upgrade in a click whenever you're ready.",
+      "r2Title": "White-label for agencies",
+      "r2Body": "Deliver client-ready reports under your own brand — built for agency workflows.",
+      "r3Title": "Set up in minutes",
+      "r3Body": "Self-serve from day one: enter a URL, get an audit-ready report, schedule monitoring.",
+      "faq": {
+        "q1": "Is VexNexa a full enterprise platform?",
+        "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
+        "q2": "Can I white-label the reports?",
+        "a2": "Yes — Business and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "q3": "Is my data stored in the EU?",
+        "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
+      }
     }
   }
 }

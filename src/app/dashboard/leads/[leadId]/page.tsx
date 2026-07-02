@@ -1,0 +1,158 @@
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { ShieldAlert, ShieldCheck } from "lucide-react";
+import { requireAuth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { getLeadDetail, getOrCreateLeadWorkspace } from "@/lib/lead-intelligence/repository";
+import { canSendCommercialEmail } from "@/lib/lead-intelligence/outreach-eligibility";
+
+export const dynamic = "force-dynamic";
+
+function formatDate(value?: string | null) {
+  if (!value) return "-";
+  return new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="rounded-lg border bg-card p-5">
+      <h2 className="mb-4 text-lg font-semibold text-foreground">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+export default async function LeadDetailPage({
+  params,
+}: {
+  params: Promise<{ leadId: string }>;
+}) {
+  let user;
+  try {
+    user = await requireAuth();
+  } catch {
+    redirect("/auth/login?redirect=/dashboard/leads");
+  }
+
+  const { leadId } = await params;
+  let detail;
+  try {
+    const workspace = await getOrCreateLeadWorkspace(user);
+    detail = await getLeadDetail(workspace.id, leadId);
+  } catch (error) {
+    console.error("Lead detail unavailable:", error);
+    notFound();
+  }
+
+  const lead: any = detail.lead;
+  const org = lead.organizations;
+  const primaryContact: any | undefined = detail.contacts[0];
+  const decision = primaryContact
+    ? canSendCommercialEmail({
+        contactEmail: primaryContact.email,
+        organizationDomain: org.normalized_domain,
+        leadStatus: lead.status,
+        consentEvents: detail.consents.map((event: any) => ({
+          consentType: event.consent_type,
+          status: event.status,
+          evidence: event.evidence,
+          expiresAt: event.expires_at,
+        })),
+        suppressedEmails: detail.suppressions.map((entry: any) => entry.normalized_email).filter(Boolean),
+        suppressedDomains: detail.suppressions.map((entry: any) => entry.normalized_domain).filter(Boolean),
+      })
+    : { allowed: false, reason: "No contact is recorded for this lead." };
+
+  return (
+    <main id="main-content" tabIndex={-1}>
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-medium text-emerald-700">Lead detail</p>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">{org.name}</h1>
+            <p className="mt-2 font-mono text-sm text-muted-foreground">{org.normalized_domain}</p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/dashboard/leads">Back to leads</Link>
+          </Button>
+        </div>
+
+        <div className={`mb-6 rounded-lg border p-5 ${decision.allowed ? "border-emerald-200 bg-emerald-50" : "border-amber-200 bg-amber-50"}`}>
+          <div className="flex items-start gap-3">
+            {decision.allowed ? <ShieldCheck className="mt-0.5 h-5 w-5 text-emerald-800" /> : <ShieldAlert className="mt-0.5 h-5 w-5 text-amber-800" />}
+            <div>
+              <h2 className="font-semibold text-foreground">
+                Outreach is {decision.allowed ? "allowed with recorded evidence" : "blocked"}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">{decision.reason}</p>
+              <p className="mt-2 text-xs text-muted-foreground">No active send-email function exists in Phase 1.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          <Section title="Organization">
+            <dl className="grid gap-3 text-sm sm:grid-cols-2">
+              <div><dt className="text-muted-foreground">Website</dt><dd>{org.website_url}</dd></div>
+              <div><dt className="text-muted-foreground">Country</dt><dd>{org.country_code ?? "-"}</dd></div>
+              <div><dt className="text-muted-foreground">Industry</dt><dd>{org.industry ?? "-"}</dd></div>
+              <div><dt className="text-muted-foreground">Source</dt><dd>{org.source_type}</dd></div>
+            </dl>
+          </Section>
+
+          <Section title="Lead status and score">
+            <dl className="grid gap-3 text-sm sm:grid-cols-2">
+              <div><dt className="text-muted-foreground">Status</dt><dd><Badge variant="outline">{lead.status}</Badge></dd></div>
+              <div><dt className="text-muted-foreground">Score</dt><dd>{lead.score}/100</dd></div>
+              <div className="sm:col-span-2"><dt className="text-muted-foreground">Explanation</dt><dd>{lead.score_explanation ?? "-"}</dd></div>
+            </dl>
+          </Section>
+
+          <Section title="Contacts">
+            <div className="space-y-3">
+              {detail.contacts.length === 0 ? <p className="text-sm text-muted-foreground">No contacts recorded.</p> : detail.contacts.map((contact: any) => (
+                <div key={contact.id} className="rounded-md border p-3 text-sm">
+                  <p className="font-medium">{[contact.first_name, contact.last_name].filter(Boolean).join(" ") || contact.email}</p>
+                  <p className="font-mono text-xs text-muted-foreground">{contact.email}</p>
+                  <p className="text-xs text-muted-foreground">{contact.job_title ?? "No job title"} · Personal data: {contact.is_personal_data ? "yes" : "no"}</p>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Consent events">
+            <div className="space-y-3">
+              {detail.consents.length === 0 ? <p className="text-sm text-muted-foreground">No consent or customer relationship evidence recorded.</p> : detail.consents.map((event: any) => (
+                <div key={event.id} className="rounded-md border p-3 text-sm">
+                  <p className="font-medium">{event.consent_type} · {event.status}</p>
+                  <p className="text-xs text-muted-foreground">Lawful basis: {event.lawful_basis} · Occurred: {formatDate(event.occurred_at)} · Expires: {formatDate(event.expires_at)}</p>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Suppression status">
+            {detail.suppressions.length === 0 ? <p className="text-sm text-muted-foreground">No matching suppression entry found.</p> : (
+              <ul className="space-y-2 text-sm">{detail.suppressions.map((entry: any) => <li key={entry.id}>{entry.reason} · {entry.normalized_email ?? entry.normalized_domain}</li>)}</ul>
+            )}
+          </Section>
+
+          <Section title="Website scans placeholder">
+            <p className="text-sm text-muted-foreground">Website scanning is deferred. {detail.scans.length} scan records exist for future display.</p>
+          </Section>
+
+          <Section title="Email drafts placeholder">
+            <p className="text-sm text-muted-foreground">Draft generation and sending are deferred. {detail.drafts.length} draft records exist for future review.</p>
+          </Section>
+
+          <Section title="Audit history">
+            {detail.auditEvents.length === 0 ? <p className="text-sm text-muted-foreground">No audit events recorded for this lead yet.</p> : (
+              <ul className="space-y-2 text-sm">{detail.auditEvents.map((event: any) => <li key={event.id}>{formatDate(event.created_at)} · {event.event_type}</li>)}</ul>
+            )}
+          </Section>
+        </div>
+      </div>
+    </main>
+  );
+}

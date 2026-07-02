@@ -66,6 +66,7 @@ function PricingJsonLd() {
     name: "VexNexa WCAG Monitoring",
     description:
       "White-label WCAG monitoring for agencies and EU-facing teams. Scan, report, and monitor accessibility.",
+    image: "https://vexnexa.com/heroImage.webp",
     brand: {
       "@type": "Brand",
       name: "VexNexa",
@@ -74,8 +75,46 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Pro Plan",
+        url: "https://vexnexa.com/pricing",
         price: "34.95",
         priceCurrency: "EUR",
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: {
+            "@type": "MonetaryAmount",
+            value: "0",
+            currency: "EUR",
+          },
+          shippingDestination: {
+            "@type": "DefinedRegion",
+            addressCountry: "NL",
+          },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: {
+              "@type": "QuantitativeValue",
+              minValue: 0,
+              maxValue: 0,
+              unitCode: "DAY",
+            },
+            transitTime: {
+              "@type": "QuantitativeValue",
+              minValue: 0,
+              maxValue: 0,
+              unitCode: "DAY",
+            },
+          },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "NL",
+          returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+          merchantReturnDays: 14,
+          returnFees: "https://schema.org/FreeReturn",
+          returnMethod: "https://schema.org/ReturnByMail",
+        },
         priceSpecification: {
           "@type": "UnitPriceSpecification",
           price: "34.95",
@@ -87,8 +126,46 @@ function PricingJsonLd() {
       {
         "@type": "Offer",
         name: "Agency Plan",
+        url: "https://vexnexa.com/pricing",
         price: "99.95",
         priceCurrency: "EUR",
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: {
+            "@type": "MonetaryAmount",
+            value: "0",
+            currency: "EUR",
+          },
+          shippingDestination: {
+            "@type": "DefinedRegion",
+            addressCountry: "NL",
+          },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: {
+              "@type": "QuantitativeValue",
+              minValue: 0,
+              maxValue: 0,
+              unitCode: "DAY",
+            },
+            transitTime: {
+              "@type": "QuantitativeValue",
+              minValue: 0,
+              maxValue: 0,
+              unitCode: "DAY",
+            },
+          },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "NL",
+          returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+          merchantReturnDays: 14,
+          returnFees: "https://schema.org/FreeReturn",
+          returnMethod: "https://schema.org/ReturnByMail",
+        },
         priceSpecification: {
           "@type": "UnitPriceSpecification",
           price: "99.95",

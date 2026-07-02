@@ -1,0 +1,3 @@
+company_name,website_url,country_code,industry,source_url,contact_email
+Example Accessibility BV,https://www.example.com/,NL,Digital services,https://example.com/about,hello@example.com
+Public Sector Demo,https://subdomain.example.org/path?ref=directory,BE,Government,https://directory.example.org/public-sector,accessibility@example.org

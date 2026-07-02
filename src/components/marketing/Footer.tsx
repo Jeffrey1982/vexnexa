@@ -195,6 +195,12 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/accessibility-monitoring-agencies" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.agencyMonitoring')}
                   </Link>
+                  <Link href="/accessibe-alternative" className="text-muted-foreground hover:text-primary transition-colors">
+                    {t('solutions.accessibeAlt')}
+                  </Link>
+                  <Link href="/siteimprove-alternative" className="text-muted-foreground hover:text-primary transition-colors">
+                    {t('solutions.siteimproveAlt')}
+                  </Link>
                   <Link href="/accessibility-overlay-alternative" className="text-muted-foreground hover:text-primary transition-colors">
                     Overlay alternative
                   </Link>
