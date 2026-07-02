@@ -57,6 +57,21 @@ export type PartnerApplyState =
       programFull?: boolean;
     };
 
+function assertResendDelivered(result: unknown, label: string) {
+  if (!result || typeof result !== 'object') {
+    throw new Error(`${label} was not sent: Resend returned no result`);
+  }
+
+  const response = result as { data?: { id?: string | null } | null; error?: unknown };
+  if (response.error) {
+    throw new Error(`${label} was not sent: ${JSON.stringify(response.error)}`);
+  }
+
+  if (!response.data?.id) {
+    throw new Error(`${label} was not sent: Resend returned no message id`);
+  }
+}
+
 export async function submitPartnerApplication(
   _prev: PartnerApplyState,
   formData: FormData
@@ -146,8 +161,11 @@ export async function submitPartnerApplication(
     };
   }
 
+  let adminEmailError: unknown = null;
+  let confirmationEmailError: unknown = null;
+
   try {
-    await sendPilotPartnerApplicationEmail({
+    const adminEmail = await sendPilotPartnerApplicationEmail({
       fullName: d.companyName,
       companyName: d.companyName,
       email: d.email,
@@ -157,17 +175,39 @@ export async function submitPartnerApplication(
       services: [],
       motivation: ''
     });
+
+    assertResendDelivered(adminEmail, 'Pilot partner admin notification');
   } catch (e) {
     console.error('Partner application email error:', e);
+    adminEmailError = e;
   }
 
   try {
-    await sendPilotPartnerConfirmationEmail({
+    const confirmationEmail = await sendPilotPartnerConfirmationEmail({
       email: d.email,
       companyName: d.companyName
     });
+
+    assertResendDelivered(confirmationEmail, 'Pilot partner confirmation email');
   } catch (e) {
     console.error('Partner application confirmation email error:', e);
+    confirmationEmailError = e;
+  }
+
+  if (confirmationEmailError) {
+    return {
+      ok: false,
+      error:
+        'Your application was saved, but the confirmation email could not be sent. Please check your email address or email info@vexnexa.com directly.'
+    };
+  }
+
+  if (adminEmailError) {
+    return {
+      ok: false,
+      error:
+        'Your application was saved and your confirmation email was sent, but the internal notification failed. Please email info@vexnexa.com directly so we can follow up immediately.'
+    };
   }
 
   revalidatePath('/partner-apply');
