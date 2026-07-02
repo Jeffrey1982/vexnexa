@@ -4,11 +4,7 @@ import { useTranslations } from "next-intl";
 import { PenLine } from "lucide-react";
 
 /**
- * FounderNote — short first-person note near the bottom of the homepage.
- *
- * TODO(founder): the body copy in messages/en.json and messages/nl.json
- * (home.founderNote.body / .signature) is placeholder text — replace it
- * with your own words and confirm the name/signature.
+ * Short first-person note near the bottom of the homepage.
  */
 export function FounderNote() {
   const t = useTranslations("home.founderNote");

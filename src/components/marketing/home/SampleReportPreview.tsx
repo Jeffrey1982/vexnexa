@@ -4,17 +4,11 @@ import { useTranslations } from "next-intl";
 import { CheckCircle2 } from "lucide-react";
 
 /**
- * SampleReportPreview — HTML mock of a report cover with a realistic
- * mid-range result (72/100, 31 issues). Replaces the old Screenshot1.png,
- * which showed a perfect 100/100 scan and contradicted the 72/100 hero
- * preview while undermining the product's value.
- *
- * TODO(founder): once a real mid-range client report exists, consider
- * replacing this mock with an actual screenshot — keep the score and
- * issue counts consistent with the hero preview (72/100, 3/8/14/6).
+ * HTML preview of a realistic mid-range report cover.
+ * Keep this example aligned with the hero scan card.
  */
 
-// Single source for the example data — must match the hero scan card.
+// Single source for the example data. Must match the hero scan card.
 export const SAMPLE_REPORT = {
   domain: "example-agency.nl",
   standard: "WCAG 2.2 AA",
@@ -46,7 +40,7 @@ export function SampleReportPreview({ compact = false }: { compact?: boolean }) 
   return (
     <div
       role="img"
-      aria-label={`VexNexa ${t("chip")} — ${SAMPLE_REPORT.domain}, ${SAMPLE_REPORT.standard}, ${t("scoreLabel")} ${SAMPLE_REPORT.score}/100, ${t("issuesSummary")}`}
+      aria-label={`VexNexa ${t("chip")} - ${SAMPLE_REPORT.domain}, ${SAMPLE_REPORT.standard}, ${t("scoreLabel")} ${SAMPLE_REPORT.score}/100, ${t("issuesSummary")}`}
       className={`flex h-full w-full flex-col bg-[var(--color-hero-panel)] ${compact ? "p-4" : "p-6 sm:p-8"}`}
     >
       {/* Report header */}
