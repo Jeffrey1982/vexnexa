@@ -723,6 +723,83 @@ Timestamp: ${new Date().toISOString()}`
   return visitorResult
 }
 
+/**
+ * Weekly blog-cadence notification: drafts ready for review, a manual
+ * writing prompt (no Gemini key), an exhausted topic list, or an error.
+ */
+export async function sendBlogDraftNotification(data: {
+  mode: 'drafted' | 'manual' | 'exhausted' | 'error'
+  topicEn?: string
+  topicNl?: string
+  angle?: string
+  slug?: string
+  editUrl: string
+  error?: string
+}) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping blog draft notification')
+    return null
+  }
+
+  const from = (process.env.RESEND_ADMIN_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'VexNexa <updates@vexnexa.com>').trim()
+  const to = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
+  const e = (s: string | undefined) => escapeHtmlForEmail(s ?? '')
+
+  let subject: string
+  let bodyHtml: string
+
+  switch (data.mode) {
+    case 'drafted':
+      subject = `✍️ Blog drafts ready for review — ${data.topicEn ?? data.slug}`
+      bodyHtml = `
+        <p style="color: #374151; line-height: 1.6;">This week's blog post has been drafted in <strong>EN and NL</strong> and saved as drafts:</p>
+        <ul style="color: #374151; line-height: 1.7;">
+          <li><strong>EN:</strong> ${e(data.topicEn)}</li>
+          <li><strong>NL:</strong> ${e(data.topicNl)}</li>
+          <li><strong>Slug:</strong> ${e(data.slug)}</li>
+        </ul>
+        <p style="color: #374151; line-height: 1.6;">Review, edit where needed, and publish:</p>
+        <p><a href="${e(data.editUrl)}" style="display: inline-block; background: #1F4A2D; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Open blog admin</a></p>
+        <p style="color: #6B7280; font-size: 13px;">Nothing is published automatically — these stay drafts until you publish them.</p>`
+      break
+    case 'manual':
+      subject = `✍️ Blog topic of the week (no AI key set) — ${data.topicEn ?? data.slug}`
+      bodyHtml = `
+        <p style="color: #374151; line-height: 1.6;">GOOGLE_GEMINI_API_KEY is not configured, so no draft was generated. This week's suggested topic:</p>
+        <ul style="color: #374151; line-height: 1.7;">
+          <li><strong>EN:</strong> ${e(data.topicEn)}</li>
+          <li><strong>NL:</strong> ${e(data.topicNl)}</li>
+          <li><strong>Angle:</strong> ${e(data.angle)}</li>
+          <li><strong>Suggested slug:</strong> ${e(data.slug)}</li>
+        </ul>
+        <p><a href="${e(data.editUrl)}" style="color: #1F4A2D;">Write it in the blog admin</a> — or add the Gemini key in Vercel to get automatic drafts.</p>`
+      break
+    case 'exhausted':
+      subject = '✍️ Blog topic list exhausted — add new topics'
+      bodyHtml = `
+        <p style="color: #374151; line-height: 1.6;">Every topic in the curated list has been drafted or published. Add new topics to <code>src/app/api/cron/blog-draft/route.ts</code> to keep the weekly cadence going.</p>
+        <p><a href="${e(data.editUrl)}" style="color: #1F4A2D;">Open blog admin</a></p>`
+      break
+    default:
+      subject = '⚠️ Weekly blog draft failed'
+      bodyHtml = `
+        <p style="color: #374151; line-height: 1.6;">The weekly blog draft cron hit an error for topic <strong>${e(data.topicEn ?? data.slug)}</strong>:</p>
+        <p style="color: #B91C1C; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 12px;">${e(data.error)}</p>
+        <p style="color: #6B7280; font-size: 13px;">Check the Vercel function logs for /api/cron/blog-draft.</p>`
+  }
+
+  return resend.emails.send({
+    from,
+    to: [to],
+    subject,
+    html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;"><h2 style="color: #1F4A2D;">${e(subject.replace(/^[^\w]+\s*/, ''))}</h2>${bodyHtml}</div>`,
+    text: bodyHtml
+      .replace(/<[^>]+>/g, '')
+      .replace(/\n\s+/g, '\n')
+      .trim()
+  })
+}
+
 export interface WeeklyDigestData {
   periodStart: Date
   periodEnd: Date
