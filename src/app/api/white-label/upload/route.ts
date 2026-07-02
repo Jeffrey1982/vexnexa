@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     // Check authentication and white label permissions
     const user = await requireAuth();
     
-    // Check if user has white label access (Business plan only)
+    // Check if user has white label access (Agency plan only)
     if (user.plan !== "BUSINESS") {
       return NextResponse.json(
         { 

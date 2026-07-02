@@ -24,15 +24,15 @@
       "question": "O que acontece se exceder o meu plano?"
     },
     "q4": {
-      "answer": "Os planos Pro suportam até 5 membros de equipa. Os planos Business suportam até 15 membros com acesso baseado em funções. O SSO está disponível nos planos Business e Enterprise. Contacte-nos para funcionalidades Enterprise.",
+      "answer": "Os planos Pro suportam até 5 membros de equipa. Os planos Agency suportam até 15 membros com acesso baseado em funções. O SSO está disponível nos planos Agency e Enterprise. Contacte-nos para funcionalidades Enterprise.",
       "question": "Suportam equipas/SSO?"
     },
     "q5": {
-      "answer": "A exportação para PDF está disponível em todos os planos pagos. A exportação para Word está disponível nos planos Pro e Business. Todas as exportações incluem os seus resultados de análise, problemas priorizados, excertos de código e recomendações de correção.",
+      "answer": "A exportação para PDF está disponível em todos os planos pagos. A exportação para Word está disponível nos planos Pro e Agency. Todas as exportações incluem os seus resultados de análise, problemas priorizados, excertos de código e recomendações de correção.",
       "question": "Posso exportar relatórios?"
     },
     "q6": {
-      "answer": "A monitorização contínua permite agendar análises automáticas (diárias, semanais ou mensais). Receberá alertas por e-mail quando as pontuações descerem ou forem detetados novos problemas. Esta funcionalidade está disponível nos planos Pro e Business.",
+      "answer": "A monitorização contínua permite agendar análises automáticas (diárias, semanais ou mensais). Receberá alertas por e-mail quando as pontuações descerem ou forem detetados novos problemas. Esta funcionalidade está disponível nos planos Pro e Agency.",
       "question": "O que é monitorizado continuamente?"
     },
     "q7": {
@@ -348,7 +348,7 @@
     "pilotBanner": {
       "badge": "Vagas limitadas",
       "title": "Junte-se ao Programa de Parceiros Piloto",
-      "subtitle": "Obtenha acesso nível Business, suporte direto e ajude a moldar VexNexa — enquanto entrega acessibilidade aos seus clientes desde o primeiro dia.",
+      "subtitle": "Obtenha acesso nível Agency, suporte direto e ajude a moldar VexNexa — enquanto entrega acessibilidade aos seus clientes desde o primeiro dia.",
       "standardsIntro": "Entregue relatórios white-label com os mesmos padrões usados pelas principais equipas de acessibilidade no mundo.",
       "standardsAria": "Referências a normas de acessibilidade",
       "standardsPoweredBy": "Com tecnologia de",
@@ -362,7 +362,7 @@
     "pricingTeaser": {
       "eyebrow": "Preços transparentes",
       "title": "Planos que acompanham o seu portefólio",
-      "subtitle": "Desde um nível gratuito generoso até Business com exportações white-label e suporte prioritário—faça upgrade apenas quando o fluxo o exigir.",
+      "subtitle": "Desde um nível gratuito generoso até Agency com exportações white-label e suporte prioritário—faça upgrade apenas quando o fluxo o exigir.",
       "hint": "Preços com IVA incluído · Cancele quando quiser",
       "ctaPrimary": "Ver preços",
       "ctaSecondary": "Falar com vendas"
@@ -378,7 +378,7 @@
       },
       "q3": {
         "question": "Posso exportar relatórios personalizados para clientes?",
-        "answer": "Sim. Exportações PDF e DOCX estão disponíveis em planos pagos. Planos Business e Enterprise incluem relatórios de marca branca com seu próprio logo, cores e detalhes de contato."
+        "answer": "Sim. Exportações PDF e DOCX estão disponíveis em planos pagos. Planos Agency e Enterprise incluem relatórios de marca branca com seu próprio logo, cores e detalhes de contato."
       },
       "q4": {
         "question": "Como funciona o monitoramento contínuo?",
@@ -390,7 +390,7 @@
       },
       "q6": {
         "question": "Que suporte está disponível?",
-        "answer": "Todos os usuários recebem suporte por e-mail. Tentamos responder em 1 dia útil. Planos Business e Enterprise incluem suporte prioritário com tempos de resposta mais rápidos."
+        "answer": "Todos os usuários recebem suporte por e-mail. Tentamos responder em 1 dia útil. Planos Agency e Enterprise incluem suporte prioritário com tempos de resposta mais rápidos."
       }
     },
     "finalCta": {
@@ -633,9 +633,9 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "Para equipas e uso empresarial",
-        "cta": "Começar com Business",
+        "cta": "Começar com Agency",
         "features": {
           "sites": "{count} sites",
           "pages": "{count} páginas/mês",
@@ -824,7 +824,7 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "Para agências e empresas",
         "features": {
           "sites": "{count} sites",
@@ -871,7 +871,7 @@
           "25k": "+25.000 páginas/mês",
           "100k": "+100.000 páginas/mês",
           "250k": "+250.000 páginas/mês",
-          "businessNote": "Business inclui 25.000 páginas/mês",
+          "businessNote": "inclui 25.000 páginas/mês",
           "enterpriseNote": "Enterprise inclui 100.000 páginas/mês",
           "contactSales": "Contactar vendas"
         },
@@ -887,7 +887,7 @@
             "graph": "Gráfico histórico de conformidade"
           },
           "included": "Incluído",
-          "businessEnterprise": "Business e Enterprise"
+          "businessEnterprise": "Agency e Enterprise"
         },
         "perMonth": "/mês",
         "exclVat": "s/ IVA",
@@ -969,8 +969,8 @@
       },
       "pilotBanner": {
         "badge": "Piloto para Agências",
-        "title": "Primeiro mês do plano Business no preço Pro",
-        "subtitle": "Novo na VexNexa? Comece com todos os recursos Business — relatórios de marca branca, 10 sites e suporte prioritário — por apenas €59,99 no primeiro mês. Sem compromisso. Cancele a qualquer momento.",
+        "title": "Primeiro mês do plano Agency no preço Pro",
+        "subtitle": "Para as primeiras 10 agências: todos os recursos Agency — relatórios de marca branca, 10 sites e suporte prioritário — pelo preço Pro (€34,95/mês) durante os primeiros 3 meses. Além de linha direta com o fundador e voz no roadmap.",
         "cta": "Reserve sua vaga piloto"
       },
       "noCreditCard": "Nenhum cartão de crédito necessário · Cancele a qualquer momento",
@@ -1434,7 +1434,7 @@
     },
     "whiteLabel": {
       "title": "Gestão de marca branca",
-      "description": "Personalize a aparência da sua marca, logótipo, cores e informações de contacto para o seu plano Business.",
+      "description": "Personalize a aparência da sua marca, logótipo, cores e informações de contacto para o seu plano Agency.",
       "fullSettings": "Configurações completas",
       "fullSettingsDescription": "Configuração completa de marca branca",
       "fullSettingsDetails": "Logótipo, cores, informações de contacto, configurações de domínio",
@@ -2696,7 +2696,7 @@
         "uptime": "Tempo de atividade",
         "uptimeDesc": "Garantia de 99.9% de tempo de atividade em todos os planos pagos",
         "support": "Suporte",
-        "supportDesc": "Resposta dentro de 4 horas para utilizadores do plano Business",
+        "supportDesc": "Resposta dentro de 4 horas para utilizadores do plano Agency",
         "monitoring": "Monitorização 24/7",
         "monitoringDesc": "Monitorização contínua com resposta imediata a incidentes"
       },
@@ -2729,7 +2729,7 @@
           "checkInCalls": "Chamadas trimestrais de acompanhamento (opcional)"
         },
         "business": {
-          "title": "Plano Business",
+          "title": "Plano Agency",
           "prioritySupport": "Suporte prioritário por e-mail e chat",
           "responseTime": "Tempo de resposta: Dentro de 4 horas durante o horário comercial",
           "accountManager": "Gestor de conta dedicado",
@@ -3227,7 +3227,7 @@
       }
     },
     "included": {
-      "title": "Incluído nos planos Business e Enterprise",
+      "title": "Incluído nos planos Agency e Enterprise",
       "i1": "Relatórios PDF e DOCX de marca branca",
       "i2": "Logo, cores e texto de rodapé personalizados",
       "i3": "Painel multi-site",
@@ -3261,7 +3261,7 @@
     "pilotBanner": {
       "badge": "Vagas limitadas",
       "title": "Junte-se ao Programa de Parceiros Piloto",
-      "subtitle": "Obtenha acesso nível Business, suporte direto e ajude a moldar VexNexa — enquanto oferece acessibilidade aos seus clientes desde o primeiro dia.",
+      "subtitle": "Obtenha acesso nível Agency, suporte direto e ajude a moldar VexNexa — enquanto oferece acessibilidade aos seus clientes desde o primeiro dia.",
       "ctaPrimary": "Saiba mais",
       "ctaSecondary": "Inscreva-se agora"
     },
@@ -3323,7 +3323,7 @@
     "badge": "Relatório de Exemplo",
     "title": "Como ? um relat?rio de acessibilidade da VexNexa",
     "titleHighlight": "na pr?tica",
-    "subtitle": "Este é um relatório de exemplo baseado em dados de análise realistas. Planos Business e Enterprise podem colocar em marca branca com seu próprio logo, cores e nome da empresa.",
+    "subtitle": "Este é um relatório de exemplo baseado em dados de análise realistas. Planos Agency e Enterprise podem colocar em marca branca com seu próprio logo, cores e nome da empresa.",
     "ctaPrimary": "Analise seu próprio site",
     "ctaSecondary": "Saiba mais sobre marca branca",
     "executiveSummary": "Resumo Executivo",
@@ -3338,7 +3338,7 @@
     "downloadWhiteLabel": "Solicitar exemplo de marca branca",
     "downloadNote": "Enviaremos um relatório de exemplo personalizado em 1 dia útil.",
     "exportTitle": "Exportar como PDF ou DOCX — com sua marca",
-    "exportSubtitle": "Planos Business e Enterprise incluem exportações de marca branca. Substitua a marca VexNexa por seu próprio logo, nome da empresa, cores e texto de rodapé. Relatórios exportam como PDF compartilhável ou DOCX editável.",
+    "exportSubtitle": "Planos Agency e Enterprise incluem exportações de marca branca. Substitua a marca VexNexa por seu próprio logo, nome da empresa, cores e texto de rodapé. Relatórios exportam como PDF compartilhável ou DOCX editável.",
     "exportLearnMore": "Saiba mais sobre relatórios de marca branca",
     "reportLabel": "Relatorio de acessibilidade",
     "scannedInfo": "Analisado: 24 de marco de 2025 - WCAG 2.2 AA - motor axe-core",
@@ -3693,7 +3693,7 @@
       },
       "q6": {
         "question": "Os relat?rios incluem marca branca?",
-        "answer": "Sim. Os planos Business e Enterprise incluem marca branca completa com logo, cores e informa??o de contacto."
+        "answer": "Sim. Os planos Agency e Enterprise incluem marca branca completa com logo, cores e informa??o de contacto."
       },
       "title": "Relat?rios de conformidade - FAQ"
     },
@@ -4563,7 +4563,7 @@
         "q2": "Can any tool make my site compliant automatically?",
         "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
         "q3": "Do you offer white-label reports?",
-        "a3": "Yes — Business and Agency plans export branded PDF/DOCX reports under your own logo."
+        "a3": "Yes — Pro and Agency plans export branded PDF/DOCX reports under your own logo."
       }
     },
     "siteimprove": {
@@ -4587,7 +4587,7 @@
         "q1": "Is VexNexa a full enterprise platform?",
         "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
         "q2": "Can I white-label the reports?",
-        "a2": "Yes — Business and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "a2": "Yes — Pro and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
         "q3": "Is my data stored in the EU?",
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }

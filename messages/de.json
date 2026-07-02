@@ -24,15 +24,15 @@
       "question": "Was passiert, wenn ich mein Limit überschreite?"
     },
     "q4": {
-      "answer": "Pro-Pläne unterstützen bis zu 5 Teammitglieder. Business-Pläne unterstützen bis zu 15 Mitglieder mit rollenbasiertem Zugriff. SSO ist in Business- und Enterprise-Plänen verfügbar. Kontaktieren Sie uns für Enterprise-Funktionen.",
+      "answer": "Pro-Pläne unterstützen bis zu 5 Teammitglieder. Agency-Pläne unterstützen bis zu 15 Mitglieder mit rollenbasiertem Zugriff. SSO ist in Agency- und Enterprise-Plänen verfügbar. Kontaktieren Sie uns für Enterprise-Funktionen.",
       "question": "Unterstützen Sie Teams/SSO?"
     },
     "q5": {
-      "answer": "PDF-Export ist in allen kostenpflichtigen Plänen verfügbar. Word-Export ist in Pro- und Business-Plänen verfügbar. Alle Exporte enthalten Ihre Scan-Ergebnisse, priorisierte Probleme, Codeausschnitte und Behebungsempfehlungen.",
+      "answer": "PDF-Export ist in allen kostenpflichtigen Plänen verfügbar. Word-Export ist in Pro- und Agency-Plänen verfügbar. Alle Exporte enthalten Ihre Scan-Ergebnisse, priorisierte Probleme, Codeausschnitte und Behebungsempfehlungen.",
       "question": "Kann ich Berichte exportieren?"
     },
     "q6": {
-      "answer": "Mit kontinuierlichem Monitoring können Sie automatische Scans planen (täglich, wöchentlich oder monatlich). Sie erhalten E-Mail-Benachrichtigungen, wenn Werte sinken oder neue Probleme erkannt werden. Diese Funktion ist in Pro- und Business-Plänen verfügbar.",
+      "answer": "Mit kontinuierlichem Monitoring können Sie automatische Scans planen (täglich, wöchentlich oder monatlich). Sie erhalten E-Mail-Benachrichtigungen, wenn Werte sinken oder neue Probleme erkannt werden. Diese Funktion ist in Pro- und Agency-Plänen verfügbar.",
       "question": "Was wird kontinuierlich überwacht?"
     },
     "q7": {
@@ -281,15 +281,15 @@
       },
       "q4": {
         "question": "Do you support teams/SSO?",
-        "answer": "Pro plans support up to 5 team members. Business plans support up to 15 members with role-based access. SSO is available on Business and Enterprise plans. Contact us for Enterprise features."
+        "answer": "Pro plans support up to 5 team members. Agency plans support up to 15 members with role-based access. SSO is available on Agency and Enterprise plans. Contact us for Enterprise features."
       },
       "q5": {
         "question": "Can I export reports?",
-        "answer": "PDF export is available on all paid plans. Word export is available on Pro and Business plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
+        "answer": "PDF export is available on all paid plans. Word export is available on Pro and Agency plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
       },
       "q6": {
         "question": "What's monitored continuously?",
-        "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans."
+        "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Agency plans."
       },
       "q7": {
         "question": "Do I need to schedule a demo?",
@@ -495,7 +495,7 @@
     "pilotBanner": {
       "badge": "Begrenzte Plätze",
       "title": "Werden Sie Pilotpartner",
-      "subtitle": "Erhalten Sie Business-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
+      "subtitle": "Erhalten Sie Agency-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
       "standardsIntro": "Liefern Sie White-Label-Berichte auf Basis derselben Standards, die führende Barrierefreiheitsteams weltweit nutzen.",
       "standardsAria": "Hinweise zu Barrierefreiheitsstandards",
       "standardsPoweredBy": "Unterstützt von",
@@ -509,7 +509,7 @@
     "pricingTeaser": {
       "eyebrow": "Transparente Preise",
       "title": "Pläne, die mit Ihrem Portfolio wachsen",
-      "subtitle": "Von einem großzügigen Free-Tier bis Business mit White-Label-Exporten und Priority-Support—upgraden Sie nur, wenn Ihr Workflow es braucht.",
+      "subtitle": "Von einem großzügigen Free-Tier bis Agency mit White-Label-Exporten und Priority-Support—upgraden Sie nur, wenn Ihr Workflow es braucht.",
       "hint": "Alle Preise inkl. MwSt. · Jederzeit kündbar",
       "ctaPrimary": "Preise ansehen",
       "ctaSecondary": "Vertrieb kontaktieren"
@@ -525,7 +525,7 @@
       },
       "q3": {
         "question": "Kann ich markenspezifische Berichte für Kunden exportieren?",
-        "answer": "Ja. PDF- und DOCX-Exporte sind in kostenpflichtigen Plänen verfügbar. Business- und Enterprise-Pläne enthalten White-Label-Berichte mit Ihrem eigenen Logo, Farben und Kontaktdaten."
+        "answer": "Ja. PDF- und DOCX-Exporte sind in kostenpflichtigen Plänen verfügbar. Agency- und Enterprise-Pläne enthalten White-Label-Berichte mit Ihrem eigenen Logo, Farben und Kontaktdaten."
       },
       "q4": {
         "question": "Wie funktioniert das kontinuierliche Monitoring?",
@@ -537,7 +537,7 @@
       },
       "q6": {
         "question": "Welcher Support ist verfügbar?",
-        "answer": "Alle Nutzer erhalten E-Mail-Support. Wir antworten in der Regel innerhalb eines Werktages. Business- und Enterprise-Pläne beinhalten Prioritäts-Support mit kürzeren Reaktionszeiten."
+        "answer": "Alle Nutzer erhalten E-Mail-Support. Wir antworten in der Regel innerhalb eines Werktages. Agency- und Enterprise-Pläne beinhalten Prioritäts-Support mit kürzeren Reaktionszeiten."
       }
     },
     "headline": "WCAG 2.2 ohne den Lärm.",
@@ -774,9 +774,9 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "For teams and enterprise use",
-        "cta": "Mit Business starten",
+        "cta": "Mit Agency starten",
         "features": {
           "sites": "{count} Websites",
           "pages": "{count} Seiten/Monat",
@@ -965,7 +965,7 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "Fuer Agenturen und Unternehmen",
         "features": {
           "sites": "{count} Websites",
@@ -1012,7 +1012,7 @@
           "25k": "+25.000 Seiten/Monat",
           "100k": "+100.000 Seiten/Monat",
           "250k": "+250.000 Seiten/Monat",
-          "businessNote": "Business enthaelt 25.000 Seiten/Monat",
+          "businessNote": "enthaelt 25.000 Seiten/Monat",
           "enterpriseNote": "Enterprise enthaelt 100.000 Seiten/Monat",
           "contactSales": "Sales kontaktieren"
         },
@@ -1028,7 +1028,7 @@
             "graph": "Historischer Compliance-Graph"
           },
           "included": "Enthalten",
-          "businessEnterprise": "Business und Enterprise"
+          "businessEnterprise": "Agency und Enterprise"
         },
         "perMonth": "/Monat",
         "exclVat": "zzgl. MwSt.",
@@ -1110,8 +1110,8 @@
       },
       "pilotBanner": {
         "badge": "Agentur-Pilot",
-        "title": "Erster Monat Business-Plan zum Pro-Preis",
-        "subtitle": "Neu bei VexNexa? Starten Sie mit allen Business-Funktionen — White-Label-Berichte, 10 Websites und Prioritäts-Support — für nur 59,99 € im ersten Monat. Keine Bindung. Jederzeit kündbar.",
+        "title": "Erster Monat Agency-Plan zum Pro-Preis",
+        "subtitle": "Für die ersten 10 Agenturen: alle Agency-Funktionen — White-Label-Berichte, 10 Websites und Prioritäts-Support — zum Pro-Preis (34,95 €/Monat) in den ersten 3 Monaten. Plus ein direkter Draht zum Gründer und Mitsprache bei der Roadmap.",
         "cta": "Pilotplatz sichern"
       },
       "noCreditCard": "Keine Kreditkarte erforderlich · Jederzeit kündbar",
@@ -1575,7 +1575,7 @@
     },
     "whiteLabel": {
       "title": "White-Label-Verwaltung",
-      "description": "Passe Markenauftritt, Logo, Farben und Kontaktinformationen fuer deinen Business-Tarif an.",
+      "description": "Passe Markenauftritt, Logo, Farben und Kontaktinformationen fuer deinen Agency-Tarif an.",
       "fullSettings": "Vollstaendige Einstellungen",
       "fullSettingsDescription": "Vollstaendige White-Label-Konfiguration",
       "fullSettingsDetails": "Logo, Farben, Kontaktinformationen, Domain-Einstellungen",
@@ -2126,7 +2126,7 @@
       },
       "support": {
         "question": "Welchen Support erhalte ich?",
-        "answer": "Alle Benutzer erhalten E-Mail-Support. Wir streben an, innerhalb von 1 Werktag zu antworten. Business- und Enterprise-Pläne enthalten Prioritäts-Support mit schnelleren Reaktionszeiten."
+        "answer": "Alle Benutzer erhalten E-Mail-Support. Wir streben an, innerhalb von 1 Werktag zu antworten. Agency- und Enterprise-Pläne enthalten Prioritäts-Support mit schnelleren Reaktionszeiten."
       },
       "moreQuestions": "Haben Sie weitere Fragen?",
       "contactUs": "Kontaktieren Sie uns"
@@ -2837,7 +2837,7 @@
         "uptime": "Uptime",
         "uptimeDesc": "99,9% Uptime-Garantie auf alle kostenpflichtigen Pläne",
         "support": "Support",
-        "supportDesc": "Antwort innerhalb von 4 Stunden für Business-Plan-Benutzer",
+        "supportDesc": "Antwort innerhalb von 4 Stunden für Agency-Plan-Benutzer",
         "monitoring": "24/7-Monitoring",
         "monitoringDesc": "Kontinuierliche Überwachung mit sofortiger Incident-Response"
       },
@@ -2870,7 +2870,7 @@
           "checkInCalls": "Quartalsweise Check-in-Anrufe (optional)"
         },
         "business": {
-          "title": "Business-Plan",
+          "title": "Agency-Plan",
           "prioritySupport": "Prioritäts-Support über E-Mail und Chat",
           "responseTime": "Antwortzeit: Innerhalb von 4 Stunden während der Geschäftszeiten",
           "accountManager": "Dedicated Account Manager",
@@ -3368,7 +3368,7 @@
       }
     },
     "included": {
-      "title": "Im Business- und Enterprise-Plan enthalten",
+      "title": "Im Agency- und Enterprise-Plan enthalten",
       "i1": "White-Label-PDF- und DOCX-Berichte",
       "i2": "Eigenes Logo, Farben und Fußzeilentext",
       "i3": "Multi-Site-Dashboard",
@@ -3402,7 +3402,7 @@
     "pilotBanner": {
       "badge": "Begrenzte Plätze",
       "title": "Werden Sie Pilotpartner",
-      "subtitle": "Erhalten Sie Business-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
+      "subtitle": "Erhalten Sie Agency-Level-Zugang, direkten Support und gestalten Sie VexNexa mit — während Sie Ihren Kunden ab dem ersten Tag Barrierefreiheit bieten.",
       "ctaPrimary": "Mehr erfahren",
       "ctaSecondary": "Jetzt bewerben"
     },
@@ -3464,7 +3464,7 @@
     "badge": "Beispielbericht",
     "title": "Wie ein VexNexa-Barrierefreiheitsbericht",
     "titleHighlight": "aussieht",
-    "subtitle": "Dies ist ein Beispielbericht basierend auf realistischen Scandaten. Business- und Enterprise-Pläne können dies mit Ihrem eigenen Logo, Farben und Firmennamen als White-Label versehen.",
+    "subtitle": "Dies ist ein Beispielbericht basierend auf realistischen Scandaten. Agency- und Enterprise-Pläne können dies mit Ihrem eigenen Logo, Farben und Firmennamen als White-Label versehen.",
     "ctaPrimary": "Eigene Website scannen",
     "ctaSecondary": "Mehr über White-Label",
     "executiveSummary": "Zusammenfassung",
@@ -3479,7 +3479,7 @@
     "downloadWhiteLabel": "White-Label-Beispiel anfordern",
     "downloadNote": "Wir senden Ihnen innerhalb von 1 Werktag einen personalisierten Beispielbericht.",
     "exportTitle": "Als PDF oder DOCX exportieren — mit Ihrer Branding",
-    "exportSubtitle": "Business- und Enterprise-Pläne enthalten White-Label-Exports. Ersetzen Sie die VexNexa-Marke durch Ihr eigenes Logo, Firmennamen, Farben und Fußzeilentext. Berichte exportieren als teilbare PDF oder bearbeitbare DOCX.",
+    "exportSubtitle": "Agency- und Enterprise-Pläne enthalten White-Label-Exports. Ersetzen Sie die VexNexa-Marke durch Ihr eigenes Logo, Firmennamen, Farben und Fußzeilentext. Berichte exportieren als teilbare PDF oder bearbeitbare DOCX.",
     "exportLearnMore": "Mehr über White-Label-Berichte",
     "reportLabel": "Barrierefreiheitsbericht",
     "scannedInfo": "Gescannt: 24. Maerz 2025 - WCAG 2.2 AA - axe-core-Engine",
@@ -3834,7 +3834,7 @@
       },
       "q6": {
         "question": "Enthalten Berichte White-Label-Branding?",
-        "answer": "Ja. Business- und Enterprise-Pl?ne enthalten vollst?ndiges White-Label-Branding mit Logo, Farben und Kontaktinformationen."
+        "answer": "Ja. Agency- und Enterprise-Pl?ne enthalten vollst?ndiges White-Label-Branding mit Logo, Farben und Kontaktinformationen."
       },
       "title": "Compliance-Berichte - FAQ"
     },
@@ -4704,7 +4704,7 @@
         "q2": "Can any tool make my site compliant automatically?",
         "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
         "q3": "Do you offer white-label reports?",
-        "a3": "Yes — Business and Agency plans export branded PDF/DOCX reports under your own logo."
+        "a3": "Yes — Pro and Agency plans export branded PDF/DOCX reports under your own logo."
       }
     },
     "siteimprove": {
@@ -4728,7 +4728,7 @@
         "q1": "Is VexNexa a full enterprise platform?",
         "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
         "q2": "Can I white-label the reports?",
-        "a2": "Yes — Business and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "a2": "Yes — Pro and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
         "q3": "Is my data stored in the EU?",
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }

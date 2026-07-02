@@ -124,3 +124,16 @@ Files:
   redirecting URL no longer gets hreflang/locale variants)
 - `SEO-NOTES.md` (status-code / sitemap / structured-data sections)
 - `CHANGES.md` (this file)
+
+## Follow-up — Business→Agency rename in the remaining locales
+
+Task 2's rename covered EN/NL and code; this follow-up finishes the
+secondary locales and aligns their pilot-banner offer with Task 3.
+
+Files:
+- `messages/de.json`, `messages/es.json`, `messages/fr.json`,
+  `messages/pt.json` (plan name "Business" → "Agency" everywhere it
+  refers to the plan; pricing pilot banner updated to the 3-months-at-
+  Pro-price offer; page-pack note label fix)
+- `src/app/api/white-label/route.ts`,
+  `src/app/api/white-label/upload/route.ts` (stale comments)
