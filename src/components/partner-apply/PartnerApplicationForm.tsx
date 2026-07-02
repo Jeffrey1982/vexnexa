@@ -4,17 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { PartnerApplyState } from "@/app/actions/partner-application";
-
-const SERVICE_OPTIONS = [
-  { value: "web_development", label: "Web Development" },
-  { value: "digital_marketing", label: "Digital Marketing" },
-  { value: "seo", label: "SEO" },
-  { value: "accessibility_consulting", label: "Accessibility Consulting" },
-  { value: "other", label: "Other" },
-] as const;
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
@@ -75,20 +66,7 @@ export function PartnerApplicationForm({
       ) : null}
 
       <div className="space-y-2">
-        <Label htmlFor="fullName">Full name</Label>
-        <Input
-          id="fullName"
-          name="fullName"
-          required
-          autoComplete="name"
-          aria-invalid={!!fe?.fullName}
-          aria-describedby={fe?.fullName ? "fullName-error" : undefined}
-        />
-        <FieldError id="fullName-error" message={fe?.fullName} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="companyName">Agency / company name</Label>
+        <Label htmlFor="companyName">Agency name</Label>
         <Input
           id="companyName"
           name="companyName"
@@ -98,35 +76,6 @@ export function PartnerApplicationForm({
           aria-describedby={fe?.companyName ? "companyName-error" : undefined}
         />
         <FieldError id="companyName-error" message={fe?.companyName} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="email">Work email</Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          aria-invalid={!!fe?.email}
-          aria-describedby={fe?.email ? "email-error" : undefined}
-        />
-        <FieldError id="email-error" message={fe?.email} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="phone">
-          Phone number <span className="font-normal text-muted-foreground">(optional)</span>
-        </Label>
-        <Input
-          id="phone"
-          name="phone"
-          type="tel"
-          autoComplete="tel"
-          aria-invalid={!!fe?.phone}
-          aria-describedby={fe?.phone ? "phone-error" : undefined}
-        />
-        <FieldError id="phone-error" message={fe?.phone} />
       </div>
 
       <div className="space-y-2">
@@ -143,6 +92,20 @@ export function PartnerApplicationForm({
           aria-describedby={fe?.agencyWebsite ? "agencyWebsite-error" : undefined}
         />
         <FieldError id="agencyWebsite-error" message={fe?.agencyWebsite} />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="email">Work email</Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          aria-invalid={!!fe?.email}
+          aria-describedby={fe?.email ? "email-error" : undefined}
+        />
+        <FieldError id="email-error" message={fe?.email} />
       </div>
 
       <div className="space-y-2">
@@ -169,45 +132,6 @@ export function PartnerApplicationForm({
           <option value="50+">50+</option>
         </select>
         <FieldError id="clientSites-error" message={fe?.clientSites} />
-      </div>
-
-      <fieldset className="space-y-3">
-        <legend className="text-sm font-medium leading-none">What services do you offer?</legend>
-        <p id="services-hint" className="text-xs text-muted-foreground">
-          Select all that apply.
-        </p>
-        <ul className="grid gap-3 sm:grid-cols-2" aria-describedby="services-hint">
-          {SERVICE_OPTIONS.map((opt) => (
-            <li key={opt.value} className="flex items-center gap-2">
-              <input
-                id={`service-${opt.value}`}
-                name="services"
-                type="checkbox"
-                value={opt.value}
-                className="h-4 w-4 rounded border-input text-primary focus-visible:ring-2 focus-visible:ring-ring"
-              />
-              <Label htmlFor={`service-${opt.value}`} className="font-normal">
-                {opt.label}
-              </Label>
-            </li>
-          ))}
-        </ul>
-        <FieldError id="services-error" message={fe?.services} />
-      </fieldset>
-
-      <div className="space-y-2">
-        <Label htmlFor="motivation">Why do you want to join the Pilot Partner Program?</Label>
-        <Textarea
-          id="motivation"
-          name="motivation"
-          required
-          rows={5}
-          placeholder="2–3 sentences: your clients, goals, and what you hope to get from the pilot."
-          className="min-h-[120px] resize-y"
-          aria-invalid={!!fe?.motivation}
-          aria-describedby={fe?.motivation ? "motivation-error" : undefined}
-        />
-        <FieldError id="motivation-error" message={fe?.motivation} />
       </div>
 
       <div className="space-y-3 pt-2">

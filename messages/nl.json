@@ -95,6 +95,7 @@
     "tagline": "WCAG-scans die echt inzicht geven",
     "followUs": "Volg ons",
     "forAgencies": "Voor Bureaus",
+    "pilotProgram": "Pilotprogramma",
     "sampleReport": "Voorbeeld Rapport",
     "updates": "Updates",
     "eaaMonitoring": "EAA-monitoring"
@@ -236,6 +237,13 @@
     "mockupAria": "Gestileerde voorbeeld van het VexNexa scan dashboard met een white-label rapport samenvatting kaart."
   },
   "home": {
+    "pilotProgram": {
+      "badge": "Agency Pilotprogramma",
+      "title": "Eerste 10 bureaus: 3 maanden Agency voor de Pro-prijs",
+      "subtitle": "Krijg het volledige Agency-abonnement — white-label rapporten, 10 klantsites, prioriteitsondersteuning — voor €34,95/mnd tijdens je eerste 3 maanden. Plus een directe lijn met de oprichter en inspraak op de roadmap.",
+      "cta": "Meld je aan voor de pilot",
+      "ctaSecondary": "Hoe de pilot werkt"
+    },
     "hero": {
       "eyebrow": "WCAG 2.2 · White-label · EU",
       "title": "Toon toegankelijkheid",

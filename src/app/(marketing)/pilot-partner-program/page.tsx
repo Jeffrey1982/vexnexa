@@ -133,7 +133,7 @@ const processSteps: { step: string; title: string; description: string }[] = [
     step: "1",
     title: "Apply",
     description:
-      "Tell us about your team, how many sites you manage, and what you're looking for. Takes under two minutes.",
+      "Four fields: agency name, website, email, and how many client sites you manage. Takes under a minute.",
   },
   {
     step: "2",
@@ -180,9 +180,10 @@ export default function PilotPartnerProgramPage(): JSX.Element {
             </h1>
 
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Get access to practical accessibility monitoring and reporting
-              workflows while helping shape how VexNexa supports agencies,
-              institutions, and EU-facing teams.
+              The first 10 agencies get 3 months of the Agency plan for the Pro
+              price (€34.95/mo instead of €99.95/mo), a direct line to the
+              founder, and input on the roadmap — while delivering white-label
+              accessibility reports to their clients from day one.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -208,8 +209,8 @@ export default function PilotPartnerProgramPage(): JSX.Element {
             </div>
 
             <p className="text-sm text-muted-foreground pt-2">
-              Limited pilot spots. Best fit for agencies, institutions, and
-              teams managing live websites. Start with one site — no long-term commitment.
+              Limited to 10 pilot spots. Best fit for agencies managing live
+              client websites. Start with one site — no long-term commitment.
             </p>
           </div>
         </div>

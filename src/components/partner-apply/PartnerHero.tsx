@@ -29,8 +29,8 @@ export function PartnerHero({ remaining }: { remaining: number }) {
           </p>
         ) : (
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Only <span className="font-semibold text-foreground">{remaining}</span> spots remaining • Get full
-            Agency access, white-label reports under your brand, and direct influence on our roadmap
+            Only <span className="font-semibold text-foreground">{remaining}</span> spots remaining • 3 months of
+            the Agency plan for the Pro price, white-label reports under your brand, and a direct line to the founder
           </p>
         )}
         <div className="mt-6 flex flex-col items-center gap-2">

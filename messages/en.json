@@ -16,6 +16,7 @@
     "tagline": "WCAG scans that provide real insights",
     "followUs": "Follow us",
     "forAgencies": "For Agencies",
+    "pilotProgram": "Pilot Program",
     "sampleReport": "Sample Report",
     "updates": "Updates",
     "eaaMonitoring": "EAA Monitoring"
@@ -1217,6 +1218,13 @@
     "madeWithLove": "Built in the Netherlands."
   },
   "home": {
+    "pilotProgram": {
+      "badge": "Agency Pilot Program",
+      "title": "First 10 agencies: 3 months of Agency for the Pro price",
+      "subtitle": "Get the full Agency plan — white-label reports, 10 client sites, priority support — for €34.95/mo during your first 3 months. Plus a direct line to the founder and input on the roadmap.",
+      "cta": "Apply for the pilot",
+      "ctaSecondary": "How the pilot works"
+    },
     "latestBlog": {
       "eyebrow": "Latest from the journal",
       "title": "Accessibility news, written for builders.",

@@ -9,14 +9,6 @@ import { sendPilotPartnerApplicationEmail } from '@/lib/email';
 import { getMaxPilotSpots } from '@/lib/pilot-partner';
 import type { Prisma } from '@prisma/client';
 
-const SERVICE_VALUES = [
-  'web_development',
-  'digital_marketing',
-  'seo',
-  'accessibility_consulting',
-  'other'
-] as const;
-
 const CLIENT_SITE_VALUES = ['1-5', '6-20', '21-50', '50+'] as const;
 
 function normalizeWebsiteUrl(raw: string): string {
@@ -32,17 +24,17 @@ function getClientIp(h: Headers): string {
   return first || h.get('x-real-ip') || h.get('cf-connecting-ip') || 'unknown';
 }
 
+// Kept deliberately short: agency name, website, email, client sites.
+// Everything else is asked during the review call, not on the form.
 const PartnerApplySchema = z.object({
   pilot_partner_application: z.literal('1'),
   hp_website: z.string().max(200).optional(),
-  fullName: z.string().trim().min(2, 'Please enter your full name').max(120),
   companyName: z
     .string()
     .trim()
     .min(2, 'Please enter your agency or company name')
     .max(200),
   email: z.string().trim().email('Please enter a valid work email').max(254),
-  phone: z.string().trim().max(40).optional(),
   agencyWebsite: z
     .string()
     .trim()
@@ -52,16 +44,7 @@ const PartnerApplySchema = z.object({
     .pipe(z.string().url('Please enter a valid website URL')),
   clientSites: z.enum(CLIENT_SITE_VALUES, {
     message: 'Please select how many client websites you manage'
-  }),
-  motivation: z
-    .string()
-    .trim()
-    .min(20, 'Please share a bit more (2–3 sentences)')
-    .max(2000, 'Please shorten your answer'),
-  services: z
-    .array(z.enum(SERVICE_VALUES))
-    .min(1, 'Select at least one service you offer')
-    .max(SERVICE_VALUES.length)
+  })
 });
 
 export type PartnerApplyState =
@@ -94,19 +77,13 @@ export async function submitPartnerApplication(
     };
   }
 
-  const servicesRaw = formData.getAll('services').filter((v): v is string => typeof v === 'string');
-
   const raw = {
     pilot_partner_application: formData.get('pilot_partner_application'),
     hp_website: formData.get('hp_website') ?? undefined,
-    fullName: formData.get('fullName'),
     companyName: formData.get('companyName'),
     email: formData.get('email'),
-    phone: formData.get('phone'),
     agencyWebsite: formData.get('agencyWebsite'),
-    clientSites: formData.get('clientSites'),
-    motivation: formData.get('motivation'),
-    services: servicesRaw
+    clientSites: formData.get('clientSites')
   };
 
   const parsed = PartnerApplySchema.safeParse(raw);
@@ -126,7 +103,6 @@ export async function submitPartnerApplication(
   }
 
   const d = parsed.data;
-  const phoneVal = d.phone?.trim() ? d.phone.trim() : null;
 
   const maxSpots = getMaxPilotSpots();
   let approvedCount = 0;
@@ -147,16 +123,18 @@ export async function submitPartnerApplication(
   }
 
   try {
+    // The shortened form no longer collects these; the DB columns are
+    // required, so store explicit empty values until a migration drops them.
     await prisma.partnerApplication.create({
       data: {
-        fullName: d.fullName,
+        fullName: d.companyName,
         companyName: d.companyName,
         email: d.email,
-        phone: phoneVal,
+        phone: null,
         website: d.agencyWebsite,
         clientSites: d.clientSites,
-        services: d.services as unknown as Prisma.InputJsonValue,
-        motivation: d.motivation,
+        services: [] as unknown as Prisma.InputJsonValue,
+        motivation: '',
         status: 'PENDING',
       },
     });
@@ -170,14 +148,14 @@ export async function submitPartnerApplication(
 
   try {
     await sendPilotPartnerApplicationEmail({
-      fullName: d.fullName,
+      fullName: d.companyName,
       companyName: d.companyName,
       email: d.email,
-      phone: phoneVal,
+      phone: null,
       website: d.agencyWebsite,
       clientSites: d.clientSites,
-      services: [...d.services],
-      motivation: d.motivation
+      services: [],
+      motivation: ''
     });
   } catch (e) {
     console.error('Partner application email error:', e);

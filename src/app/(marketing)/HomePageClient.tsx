@@ -8,6 +8,7 @@ import { FAQ } from "@/components/marketing/FAQ";
 import { trackEvent } from "@/lib/analytics-events";
 import { useTranslations } from "next-intl";
 import { Hero } from "@/components/marketing/home/Hero";
+import { PilotProgramBanner } from "@/components/marketing/home/PilotProgramBanner";
 import { VisibilityHook } from "@/components/marketing/home/VisibilityHook";
 import { EnterpriseTrustBar } from "@/components/marketing/home/EnterpriseTrustBar";
 import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatures";
@@ -133,6 +134,7 @@ export default function HomePageClient() {
       <JsonLd />
       <div className="vn-enterprise-theme bg-background text-foreground antialiased">
         <Hero />
+        <PilotProgramBanner />
         <EnterpriseTrustBar />
         <VisibilityHook />
         <EnterpriseFeatures />

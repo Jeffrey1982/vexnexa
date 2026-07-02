@@ -12,11 +12,11 @@ import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
 const initialState: PartnerApplyState = { ok: false };
 
 const VALUE_POINTS = [
+  "3 months of the Agency plan for the Pro price (€34.95/mo instead of €99.95/mo)",
   "White-label reports under your own brand",
-  "Full Agency plan included during the pilot (normally €99.95/mo)",
-  "Priority support + dedicated success manager",
-  "Early access to new features + direct roadmap input",
-  "30% discount on all future audits and services",
+  "A direct line to the founder",
+  "Direct input on the roadmap",
+  "Hands-on setup support from your first scan",
 ] as const;
 
 function PartnerApplySuccess() {

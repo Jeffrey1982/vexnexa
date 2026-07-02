@@ -49,6 +49,7 @@ export function Navbar({ className }: NavbarProps) {
 
   const navigationItems = [
     { name: t('forAgencies'), href: "/for-agencies" },
+    { name: t('pilotProgram'), href: "/pilot-partner-program" },
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
     { name: t('sampleReport'), href: "/sample-report" },
