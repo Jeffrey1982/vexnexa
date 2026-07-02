@@ -172,10 +172,10 @@ export function Footer({ className }: FooterProps) {
                     {t('solutions.bfsg')}
                   </Link>
                   <Link href="/digitale-toegankelijkheid-audit" className="text-muted-foreground hover:text-primary transition-colors">
-                    Digitale toegankelijkheid audit
+                    {t('solutions.dutchAudit')}
                   </Link>
                   <Link href="/toegankelijkheid-webshop-eaa" className="text-muted-foreground hover:text-primary transition-colors">
-                    Toegankelijkheid webshop
+                    {t('solutions.dutchWebshop')}
                   </Link>
                   <Link href="/white-label-accessibility-reports" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.whiteLabelReports')}
@@ -187,7 +187,7 @@ export function Footer({ className }: FooterProps) {
                     {t('solutions.wcagScanner')}
                   </Link>
                   <Link href="/website-toegankelijkheid-testen" className="text-muted-foreground hover:text-primary transition-colors">
-                    Website toegankelijkheid testen
+                    {t('solutions.dutchTesting')}
                   </Link>
                   <Link href="/pilot-partner-program" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.pilotPartner')}
@@ -202,10 +202,10 @@ export function Footer({ className }: FooterProps) {
                     {t('solutions.siteimproveAlt')}
                   </Link>
                   <Link href="/accessibility-overlay-alternative" className="text-muted-foreground hover:text-primary transition-colors">
-                    Overlay alternative
+                    {t('solutions.overlayAlternative')}
                   </Link>
                   <Link href="/accessibility-regression-testing" className="text-muted-foreground hover:text-primary transition-colors">
-                    Regression testing
+                    {t('solutions.regressionTesting')}
                   </Link>
                 </div>
               </div>

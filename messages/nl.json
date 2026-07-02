@@ -183,9 +183,14 @@
       "pilotPartner": "Pilot Partner-programma",
       "agencyMonitoring": "Agency-monitoring",
       "government": "Overheid & gemeenten",
-      "bfsg": "German Accessibility Act (BFSG)",
-      "accessibeAlt": "accessiBe alternative",
-      "siteimproveAlt": "Siteimprove alternative"
+      "bfsg": "Duitse toegankelijkheidswet (BFSG)",
+      "accessibeAlt": "accessiBe-alternatief",
+      "siteimproveAlt": "Siteimprove-alternatief",
+      "dutchAudit": "Digitale toegankelijkheid audit",
+      "dutchWebshop": "Toegankelijkheid webshop",
+      "dutchTesting": "Website toegankelijkheid testen",
+      "overlayAlternative": "Overlay-alternatief",
+      "regressionTesting": "Regressietesten"
     },
     "disclaimer": "Scannen van openbare content • Geen opslag van persoonsgegevens",
     "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",

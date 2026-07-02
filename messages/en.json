@@ -1196,7 +1196,12 @@
       "government": "Government & Public Sector",
       "bfsg": "German Accessibility Act (BFSG)",
       "accessibeAlt": "accessiBe alternative",
-      "siteimproveAlt": "Siteimprove alternative"
+      "siteimproveAlt": "Siteimprove alternative",
+      "dutchAudit": "Digitale toegankelijkheid audit",
+      "dutchWebshop": "Toegankelijkheid webshop",
+      "dutchTesting": "Website toegankelijkheid testen",
+      "overlayAlternative": "Overlay alternative",
+      "regressionTesting": "Regression testing"
     },
     "support": {
       "title": "Support",
