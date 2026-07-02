@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { apiLimiter, authLimiter } from '@/lib/rate-limit'
-import { isMarketingPath } from '@/lib/marketing-seo'
+import { isIndexableMarketingLocale, isMarketingPath } from '@/lib/marketing-seo'
 
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl
@@ -189,6 +189,15 @@ export async function proxy(request: NextRequest) {
 
   // Prevent indexing of ALL API routes
   if (pathname.startsWith('/api/')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  }
+
+  const localeStrippedPath = pathLocale ? pathname.replace(`/${pathLocale}`, '') || '/' : pathname
+  if (
+    pathLocale &&
+    !isIndexableMarketingLocale(pathLocale) &&
+    isMarketingPath(localeStrippedPath)
+  ) {
     response.headers.set('X-Robots-Tag', 'noindex, nofollow')
   }
 

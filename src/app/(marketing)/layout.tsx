@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import {
   DEFAULT_MARKETING_LOCALE,
   buildAlternates,
+  isIndexableMarketingLocale,
   isMarketingLocale,
   localizedUrl,
   marketingStructuredData,
@@ -21,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const headerLocale = h.get('x-vn-locale');
   const locale = isMarketingLocale(headerLocale) ? headerLocale : DEFAULT_MARKETING_LOCALE;
   const path = h.get('x-vn-path') || '/';
+  const isIndexableLocale = isIndexableMarketingLocale(locale);
 
   return {
     title: {
@@ -47,11 +49,11 @@ export async function generateMetadata(): Promise<Metadata> {
       images: ['/opengraph-image'],
     },
     robots: {
-      index: true,
-      follow: true,
+      index: isIndexableLocale,
+      follow: isIndexableLocale,
       googleBot: {
-        index: true,
-        follow: true,
+        index: isIndexableLocale,
+        follow: isIndexableLocale,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,

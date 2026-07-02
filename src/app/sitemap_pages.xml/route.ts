@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { MARKETING_LOCALES, isMarketingPath, localizedUrl } from '@/lib/marketing-seo'
+import { INDEXABLE_MARKETING_LOCALES, isMarketingPath, localizedUrl } from '@/lib/marketing-seo'
 
 const PUBLIC_PAGE_LASTMOD = '2026-06-23'
 
@@ -58,13 +58,13 @@ export async function GET() {
     if (isMarketingPath(path)) {
       // hreflang alternates shared by every locale variant of this page
       const alternates = [
-        ...MARKETING_LOCALES.map(
+        ...INDEXABLE_MARKETING_LOCALES.map(
           (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${escapeXml(localizedUrl(l, path))}"/>`
         ),
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(localizedUrl('en', path))}"/>`,
       ].join('\n')
 
-      return MARKETING_LOCALES.map(
+      return INDEXABLE_MARKETING_LOCALES.map(
         (l) => `  <url>
     <loc>${escapeXml(localizedUrl(l, path))}</loc>
     <lastmod>${PUBLIC_PAGE_LASTMOD}</lastmod>

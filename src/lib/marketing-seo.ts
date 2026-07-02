@@ -2,7 +2,7 @@
  * Multilingual SEO helpers for the marketing site.
  *
  * Marketing pages are served at un-prefixed paths for the default locale (en)
- * and at locale-prefixed paths for the others (e.g. /nl/pricing, /de/features).
+ * and at locale-prefixed paths for Dutch (e.g. /nl/pricing).
  * The proxy (middleware) rewrites prefixed paths to the un-prefixed route and
  * sets the `x-vn-locale` / `x-vn-path` headers so the page renders in the right
  * language. This module centralises the URL math + hreflang/canonical building.
@@ -12,10 +12,18 @@ export const SITE_URL = "https://vexnexa.com";
 
 export const MARKETING_LOCALES = ["en", "nl", "de", "fr", "es", "pt"] as const;
 export type MarketingLocale = (typeof MARKETING_LOCALES)[number];
-export const DEFAULT_MARKETING_LOCALE: MarketingLocale = "en";
+export const INDEXABLE_MARKETING_LOCALES = ["en", "nl"] as const;
+export type IndexableMarketingLocale = (typeof INDEXABLE_MARKETING_LOCALES)[number];
+export const DEFAULT_MARKETING_LOCALE: IndexableMarketingLocale = "en";
 
 export function isMarketingLocale(value: string | undefined | null): value is MarketingLocale {
   return !!value && (MARKETING_LOCALES as readonly string[]).includes(value);
+}
+
+export function isIndexableMarketingLocale(
+  value: string | undefined | null
+): value is IndexableMarketingLocale {
+  return !!value && (INDEXABLE_MARKETING_LOCALES as readonly string[]).includes(value);
 }
 
 /**
@@ -94,6 +102,10 @@ export function ogLocale(locale: MarketingLocale): string {
     pt: "pt_PT",
   };
   return map[locale];
+}
+
+export function canonicalMarketingLocale(locale: MarketingLocale): IndexableMarketingLocale {
+  return isIndexableMarketingLocale(locale) ? locale : DEFAULT_MARKETING_LOCALE;
 }
 
 /** Public social profiles for the Organization `sameAs`. */
@@ -192,7 +204,7 @@ export function marketingStructuredData(path: string, locale: MarketingLocale) {
       name: "VexNexa",
       url: SITE_URL,
       publisher: { "@id": `${SITE_URL}/#organization` },
-      inLanguage: [...MARKETING_LOCALES],
+      inLanguage: [...INDEXABLE_MARKETING_LOCALES],
     },
   ];
 
@@ -218,13 +230,13 @@ export function marketingStructuredData(path: string, locale: MarketingLocale) {
  */
 export function buildAlternates(path: string, locale: MarketingLocale) {
   const languages: Record<string, string> = {};
-  for (const l of MARKETING_LOCALES) {
+  for (const l of INDEXABLE_MARKETING_LOCALES) {
     languages[l] = localizedUrl(l, path);
   }
   languages["x-default"] = localizedUrl(DEFAULT_MARKETING_LOCALE, path);
 
   return {
-    canonical: localizedUrl(locale, path),
+    canonical: localizedUrl(canonicalMarketingLocale(locale), path),
     languages,
   };
 }
