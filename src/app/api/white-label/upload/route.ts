@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     if (user.plan !== "BUSINESS") {
       return NextResponse.json(
         { 
-          error: "White labeling is only available for Business plan users",
+          error: "White labeling is only available for Agency plan users",
           code: "UPGRADE_REQUIRED",
           feature: "whiteLabel" 
         },

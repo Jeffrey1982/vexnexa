@@ -7,6 +7,7 @@ const PAGE_PATHS = [
   '/',
   '/features',
   '/pricing',
+  '/audits',
   '/about',
   '/contact',
   '/updates',

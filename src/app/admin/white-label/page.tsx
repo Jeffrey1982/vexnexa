@@ -124,7 +124,7 @@ export default async function AdminWhiteLabelPage() {
               <div className="text-center py-12 text-muted-foreground">
                 <Palette className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
                 <div className="font-medium">No white-label configurations yet</div>
-                <div className="text-sm">Customers will need Business plans to enable white-labeling</div>
+                <div className="text-sm">Customers will need Agency plans to enable white-labeling</div>
               </div>
             ) : (
               <div className="overflow-x-auto">

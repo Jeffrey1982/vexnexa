@@ -187,9 +187,9 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "For agencies & enterprises",
-        "cta": "Start with Business",
+        "cta": "Start with Agency",
         "features": {
           "sites": "{count} websites",
           "pages": "{count} pages/month",
@@ -409,7 +409,7 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "For agencies & enterprises",
         "features": {
           "sites": "{count} websites",
@@ -456,8 +456,8 @@
           "25k": "+25,000 pages/month",
           "100k": "+100,000 pages/month",
           "250k": "+250,000 pages/month",
-          "businessNote": "Business includes 25,000 pages/month",
-          "enterpriseNote": "Enterprise includes 100,000 pages/month",
+          "businessNote": "includes 25,000 pages/month",
+          "enterpriseNote": "includes 100,000 pages/month",
           "contactSales": "Contact sales"
         },
         "assurance": {
@@ -472,8 +472,9 @@
             "graph": "Historical compliance graph"
           },
           "included": "Included",
-          "businessEnterprise": "Business & Enterprise"
+          "businessEnterprise": "Agency & Enterprise"
         },
+        "accordionTrigger": "Add-ons — extra websites, page volume & Assurance monitoring",
         "perMonth": "/mo",
         "exclVat": "excl. VAT",
         "inclVat": "incl. VAT",
@@ -513,8 +514,16 @@
             "legal": "Legal review",
             "implementation": "Implementation guidance"
           }
-        }
+        },
+        "backToPricing": "← Back to pricing",
+        "monitoringNote": "Prefer continuous automated monitoring? Our subscription plans scan your sites on a schedule.",
+        "viewPlans": "View plans"
       },
+      "auditsLink": {
+        "title": "Need a manual expert audit?",
+        "cta": "View audit services"
+      },
+      "bestForAgencies": "Best for agencies",
       "auditBundles": {
         "badge": "Audit + Monitoring Bundles",
         "title": "Continuous",
@@ -554,8 +563,8 @@
       },
       "pilotBanner": {
         "badge": "Agency Pilot",
-        "title": "First month Business plan at Pro price",
-        "subtitle": "New to VexNexa? Start with full Business features — white-label reports, 10 websites, and priority support — for just €59.99 your first month. No lock-in. Cancel anytime.",
+        "title": "3 months of the Agency plan at the Pro price",
+        "subtitle": "First 10 agencies: get full Agency features — white-label reports, 10 websites, and priority support — for the Pro price (€34.95/mo) during your first 3 months. Plus a direct line to the founder and input on the roadmap.",
         "cta": "Claim your pilot spot"
       },
       "noCreditCard": "No credit card required · Cancel anytime",
@@ -739,7 +748,7 @@
       },
       "support": {
         "question": "What kind of support do I get?",
-        "answer": "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times."
+        "answer": "All users get email support. We aim to respond within 1 business day. Agency and Enterprise plans include priority support with faster response times."
       },
       "moreQuestions": "Have other questions?",
       "contactUs": "Contact us"
@@ -978,7 +987,7 @@
       "eaa": "EAA 2025 readiness indicator"
     },
     "exportTitle": "Export with your own branding",
-    "exportSubtitle": "Business and Enterprise plans include white-label PDF and Word reports. Add your logo, brand colours, and company details to every export.",
+    "exportSubtitle": "Agency and Enterprise plans include white-label PDF and Word reports. Add your logo, brand colours, and company details to every export.",
     "exportLearnMore": "Learn about white-label reports",
     "ctaTitle": "See your own site's report",
     "ctaSubtitle": "Create a free account and scan your website. Get your own accessibility report in minutes.",
@@ -1069,7 +1078,7 @@
       "button": "Start free trial"
     },
     "included": {
-      "title": "Included on Business and Enterprise plans",
+      "title": "Included on Agency and Enterprise plans",
       "i1": "White-label PDF and DOCX reports",
       "i2": "Custom logo, colours, and footer text",
       "i3": "Multi-site dashboard",
@@ -1103,7 +1112,7 @@
     "pilotBanner": {
       "badge": "Limited spots",
       "title": "Join the Pilot Partner Program",
-      "subtitle": "Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
+      "subtitle": "Get Agency-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
       "ctaPrimary": "Learn more",
       "ctaSecondary": "Apply now"
     },
@@ -1337,7 +1346,7 @@
     "pilotBanner": {
       "badge": "Limited spots",
       "title": "Join the Pilot Partner Program",
-      "subtitle": "Get Business-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
+      "subtitle": "Get Agency-level access, direct support, and help shape VexNexa — while delivering accessibility to your clients from day one.",
       "standardsIntro": "Deliver white-label reports powered by the same standards used by leading accessibility teams worldwide.",
       "standardsAria": "Accessibility standards references",
       "standardsPoweredBy": "Powered by",
@@ -1351,7 +1360,7 @@
     "pricingTeaser": {
       "eyebrow": "Transparent pricing",
       "title": "Plans that scale with your portfolio",
-      "subtitle": "From a generous free tier to Business with white-label exports and priority support—upgrade only when your workflow needs it.",
+      "subtitle": "From a generous free tier to Agency with white-label exports and priority support—upgrade only when your workflow needs it.",
       "hint": "All listed prices include VAT · Cancel anytime",
       "ctaPrimary": "View pricing",
       "ctaSecondary": "Talk to sales"
@@ -1367,7 +1376,7 @@
       },
       "q3": {
         "question": "Can I export branded reports for clients?",
-        "answer": "Yes. You can export audit reports as PDF and DOCX. Business and Enterprise plans include white-label reports with your own logo, colours, and contact details."
+        "answer": "Yes. You can export audit reports as PDF and DOCX. Agency and Enterprise plans include white-label reports with your own logo, colours, and contact details."
       },
       "q4": {
         "question": "How does continuous monitoring work?",
@@ -1379,7 +1388,7 @@
       },
       "q6": {
         "question": "What support is available?",
-        "answer": "All users get email support. We aim to respond within 1 business day. Business and Enterprise plans include priority support with faster response times."
+        "answer": "All users get email support. We aim to respond within 1 business day. Agency and Enterprise plans include priority support with faster response times."
       }
     },
     "finalCta": {
@@ -1607,15 +1616,15 @@
     },
     "q4": {
       "question": "Do you support teams/SSO?",
-      "answer": "Pro plans support up to 5 team members. Business plans support up to 15 members with role-based access. SSO is available on Business and Enterprise plans. Contact us for Enterprise features."
+      "answer": "Pro plans support up to 5 team members. Agency plans support up to 15 members with role-based access. SSO is available on Agency and Enterprise plans. Contact us for Enterprise features."
     },
     "q5": {
       "question": "Can I export reports?",
-      "answer": "PDF export is available on all paid plans. Word export is available on Pro and Business plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
+      "answer": "PDF export is available on all paid plans. Word export is available on Pro and Agency plans. All exports include your scan results, prioritized issues, code snippets, and remediation recommendations."
     },
     "q6": {
       "question": "What's monitored continuously?",
-      "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Business plans."
+      "answer": "Continuous monitoring allows you to schedule automatic scans (daily, weekly, or monthly). You'll receive email alerts when scores drop or new issues are detected. This feature is available on Pro and Agency plans."
     },
     "q7": {
       "question": "Do I need to schedule a demo?",
@@ -2149,7 +2158,7 @@
       },
       "q6": {
         "question": "Do reports include white-label branding?",
-        "answer": "Yes. You can export audit reports as PDF and DOCX. Business and Enterprise plans include white-label reports with your own logo, colors, and contact details."
+        "answer": "Yes. You can export audit reports as PDF and DOCX. Agency and Enterprise plans include white-label reports with your own logo, colors, and contact details."
       }
     },
     "finalCTA": {
@@ -2605,7 +2614,7 @@
     },
     "whiteLabel": {
       "title": "White Label Management",
-      "description": "Customize your brand appearance, logo, colors, and contact information for your Business plan.",
+      "description": "Customize your brand appearance, logo, colors, and contact information for your Agency plan.",
       "fullSettings": "Full Settings",
       "fullSettingsDescription": "Complete white-label configuration",
       "fullSettingsDetails": "Logo, colors, contact info, domain settings",
@@ -3637,7 +3646,7 @@
         "uptime": "Uptime",
         "uptimeDesc": "99.9% uptime guarantee on all paid plans",
         "support": "Support",
-        "supportDesc": "Response within 4 hours for Business plan users",
+        "supportDesc": "Response within 4 hours for Agency plan users",
         "monitoring": "24/7 Monitoring",
         "monitoringDesc": "Continuous monitoring with immediate incident response"
       },
@@ -3670,7 +3679,7 @@
           "checkInCalls": "Quarterly check-in calls (optional)"
         },
         "business": {
-          "title": "Business Plan",
+          "title": "Agency Plan",
           "prioritySupport": "Priority support via email and chat",
           "responseTime": "Response time: Within 4 hours during business hours",
           "accountManager": "Dedicated account manager",
@@ -4554,7 +4563,7 @@
         "q2": "Can any tool make my site compliant automatically?",
         "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
         "q3": "Do you offer white-label reports?",
-        "a3": "Yes — Business and Agency plans export branded PDF/DOCX reports under your own logo."
+        "a3": "Yes — Pro and Agency plans export branded PDF/DOCX reports under your own logo."
       }
     },
     "siteimprove": {
@@ -4578,7 +4587,7 @@
         "q1": "Is VexNexa a full enterprise platform?",
         "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
         "q2": "Can I white-label the reports?",
-        "a2": "Yes — Business and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "a2": "Yes — Pro and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
         "q3": "Is my data stored in the EU?",
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }

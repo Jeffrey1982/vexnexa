@@ -24,15 +24,15 @@
       "question": "Wat als ik mijn plan overschrijd?"
     },
     "q4": {
-      "answer": "Pro-plannen ondersteunen tot 5 teamleden. Business-plannen ondersteunen tot 15 leden met rolgebaseerde toegang. SSO is beschikbaar op Business- en Enterprise-plannen. Neem contact op voor Enterprise-functies.",
+      "answer": "Pro-plannen ondersteunen tot 5 teamleden. Agency-plannen ondersteunen tot 15 leden met rolgebaseerde toegang. SSO is beschikbaar op Agency- en Enterprise-plannen. Neem contact op voor Enterprise-functies.",
       "question": "Ondersteunen jullie teams/SSO?"
     },
     "q5": {
-      "answer": "PDF-export is beschikbaar op alle betaalde plannen. Word-export is beschikbaar op Pro- en Business-plannen. Alle exports bevatten je scanresultaten, geprioriteerde problemen, codefragmenten en hersteladviezen.",
+      "answer": "PDF-export is beschikbaar op alle betaalde plannen. Word-export is beschikbaar op Pro- en Agency-plannen. Alle exports bevatten je scanresultaten, geprioriteerde problemen, codefragmenten en hersteladviezen.",
       "question": "Kan ik rapporten exporteren?"
     },
     "q6": {
-      "answer": "Met doorlopende monitoring kun je automatische scans inplannen (dagelijks, wekelijks of maandelijks). Je ontvangt e-mailmeldingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro- en Business-plannen.",
+      "answer": "Met doorlopende monitoring kun je automatische scans inplannen (dagelijks, wekelijks of maandelijks). Je ontvangt e-mailmeldingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro- en Agency-plannen.",
       "question": "Wat wordt er doorlopend gemonitord?"
     },
     "q7": {
@@ -326,15 +326,15 @@
       },
       "q4": {
         "question": "Ondersteunen jullie teams/SSO?",
-        "answer": "Pro-plannen ondersteunen tot 5 teamleden. Business-plannen ondersteunen tot 15 leden met rolgebaseerde toegang. SSO is beschikbaar op Business en Enterprise-plannen. Neem contact op voor Enterprise-functies."
+        "answer": "Pro-plannen ondersteunen tot 5 teamleden. Agency-plannen ondersteunen tot 15 leden met rolgebaseerde toegang. SSO is beschikbaar op Agency- en Enterprise-plannen. Neem contact op voor Enterprise-functies."
       },
       "q5": {
         "question": "Kan ik rapporten exporteren?",
-        "answer": "PDF-export is beschikbaar op alle betaalde plannen. Word-export is beschikbaar op Pro en Business-plannen. Alle exports bevatten uw scanresultaten, geprioriteerde problemen, codefragmenten en hersteladvies."
+        "answer": "PDF-export is beschikbaar op alle betaalde plannen. Word-export is beschikbaar op Pro- en Agency-plannen. Alle exports bevatten uw scanresultaten, geprioriteerde problemen, codefragmenten en hersteladvies."
       },
       "q6": {
         "question": "Wat wordt continu gemonitord?",
-        "answer": "Continue monitoring stelt u in staat automatische scans te plannen (dagelijks, wekelijks of maandelijks). U ontvangt e-mailwaarschuwingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro en Business-plannen."
+        "answer": "Continue monitoring stelt u in staat automatische scans te plannen (dagelijks, wekelijks of maandelijks). U ontvangt e-mailwaarschuwingen wanneer scores dalen of nieuwe problemen worden gedetecteerd. Deze functie is beschikbaar op Pro- en Agency-plannen."
       },
       "q7": {
         "question": "Moet ik een demo inplannen?",
@@ -516,7 +516,7 @@
     "pilotBanner": {
       "badge": "Beperkt aantal plekken",
       "title": "Word pilotpartner",
-      "subtitle": "Krijg toegang op Business-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
+      "subtitle": "Krijg toegang op Agency-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
       "standardsIntro": "Lever whitelabelrapporten aangedreven door dezelfde normen die toonaangevende toegankelijkheidsteams wereldwijd gebruiken.",
       "standardsAria": "Referenties naar toegankelijkheidsnormen",
       "standardsPoweredBy": "Mogelijk gemaakt door",
@@ -530,7 +530,7 @@
     "pricingTeaser": {
       "eyebrow": "Transparante prijzen",
       "title": "Plannen die meegroeien met je portfolio",
-      "subtitle": "Van een ruim gratis niveau tot Business met white-label exports en prioriteit support—upgrade alleen wanneer je workflow het vraagt.",
+      "subtitle": "Van een ruim gratis niveau tot Agency met white-label exports en prioriteit support—upgrade alleen wanneer je workflow het vraagt.",
       "hint": "Alle getoonde prijzen incl. BTW · Altijd opzegbaar",
       "ctaPrimary": "Bekijk prijzen",
       "ctaSecondary": "Neem contact op"
@@ -546,7 +546,7 @@
       },
       "q3": {
         "question": "Kan ik rapporten op maat exporteren voor klanten?",
-        "answer": "Ja. Je kunt auditrapporten exporteren als PDF en DOCX. Business- en Enterprise-abonnementen bevatten white-label rapporten met je eigen logo, kleuren en contactgegevens."
+        "answer": "Ja. Je kunt auditrapporten exporteren als PDF en DOCX. Agency- en Enterprise-abonnementen bevatten white-label rapporten met je eigen logo, kleuren en contactgegevens."
       },
       "q4": {
         "question": "Hoe werkt continue monitoring?",
@@ -558,7 +558,7 @@
       },
       "q6": {
         "question": "Welke ondersteuning is beschikbaar?",
-        "answer": "Alle gebruikers krijgen e-mailondersteuning. We streven ernaar binnen 1 werkdag te reageren. Business- en Enterprise-abonnementen bevatten prioriteitsondersteuning met snellere reactietijden."
+        "answer": "Alle gebruikers krijgen e-mailondersteuning. We streven ernaar binnen 1 werkdag te reageren. Agency- en Enterprise-abonnementen bevatten prioriteitsondersteuning met snellere reactietijden."
       }
     },
     "headline": "WCAG 2.2 zonder de ruis.",
@@ -795,9 +795,9 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "Voor teams en zakelijk gebruik",
-        "cta": "Start met Business",
+        "cta": "Start met Agency",
         "features": {
           "sites": "{count} websites",
           "pages": "{count} pagina's/maand",
@@ -986,7 +986,7 @@
         }
       },
       "business": {
-        "name": "Business",
+        "name": "Agency",
         "description": "Voor bureaus en ondernemingen",
         "features": {
           "sites": "{count} websites",
@@ -1033,8 +1033,8 @@
           "25k": "+25.000 pagina's/maand",
           "100k": "+100.000 pagina's/maand",
           "250k": "+250.000 pagina's/maand",
-          "businessNote": "Business bevat 25.000 pagina's/maand",
-          "enterpriseNote": "Enterprise bevat 100.000 pagina's/maand",
+          "businessNote": "bevat 25.000 pagina's/maand",
+          "enterpriseNote": "bevat 100.000 pagina's/maand",
           "contactSales": "Neem contact op met sales"
         },
         "assurance": {
@@ -1049,8 +1049,9 @@
             "graph": "Historische compliance grafiek"
           },
           "included": "Inbegrepen",
-          "businessEnterprise": "Business en Enterprise"
+          "businessEnterprise": "Agency en Enterprise"
         },
+        "accordionTrigger": "Add-ons — extra websites, paginavolume & Assurance-monitoring",
         "perMonth": "/mnd",
         "exclVat": "excl. BTW",
         "inclVat": "incl. BTW",
@@ -1090,8 +1091,16 @@
             "legal": "Juridische review",
             "implementation": "Implementatiebegeleiding"
           }
-        }
+        },
+        "backToPricing": "← Terug naar prijzen",
+        "monitoringNote": "Liever continue geautomatiseerde monitoring? Onze abonnementen scannen je sites volgens schema.",
+        "viewPlans": "Bekijk abonnementen"
       },
+      "auditsLink": {
+        "title": "Een handmatige expert-audit nodig?",
+        "cta": "Bekijk auditdiensten"
+      },
+      "bestForAgencies": "Beste keuze voor bureaus",
       "auditBundles": {
         "badge": "Audit + Monitoring Bundels",
         "title": "Doorlopende",
@@ -1131,8 +1140,8 @@
       },
       "pilotBanner": {
         "badge": "Agency Pilot",
-        "title": "Eerste maand Business-abonnement voor Pro-prijs",
-        "subtitle": "Nieuw bij VexNexa? Start met alle Business-functies — white-label rapporten, 10 websites en prioriteitsondersteuning — voor slechts €59,99 in je eerste maand. Geen verplichtingen. Altijd opzegbaar.",
+        "title": "3 maanden het Agency-abonnement voor de Pro-prijs",
+        "subtitle": "Voor de eerste 10 bureaus: alle Agency-functies — white-label rapporten, 10 websites en prioriteitsondersteuning — voor de Pro-prijs (€34,95/mnd) tijdens je eerste 3 maanden. Plus een directe lijn met de oprichter en inspraak op de roadmap.",
         "cta": "Claim je pilotplek"
       },
       "noCreditCard": "Geen creditcard vereist · Altijd opzegbaar",
@@ -1596,7 +1605,7 @@
     },
     "whiteLabel": {
       "title": "White Label Beheer",
-      "description": "Pas uw merkuitstraling, logo, kleuren en contactgegevens aan voor uw Business-abonnement.",
+      "description": "Pas uw merkuitstraling, logo, kleuren en contactgegevens aan voor uw Agency-abonnement.",
       "fullSettings": "Volledige Instellingen",
       "fullSettingsDescription": "Volledige white-label configuratie",
       "fullSettingsDetails": "Logo, kleuren, contactinfo, domeininstellingen",
@@ -2858,7 +2867,7 @@
         "uptime": "Uptime",
         "uptimeDesc": "99.9% uptime garantie op alle betaalde plannen",
         "support": "Support",
-        "supportDesc": "Reactie binnen 4 uur voor Business plan gebruikers",
+        "supportDesc": "Reactie binnen 4 uur voor Agency-abonnement gebruikers",
         "monitoring": "24/7-monitoring",
         "monitoringDesc": "Continue monitoring met directe incident response"
       },
@@ -2891,7 +2900,7 @@
           "checkInCalls": "Kwartaallijk check-in gesprekken (optioneel)"
         },
         "business": {
-          "title": "Business-abonnement",
+          "title": "Agency-abonnement",
           "prioritySupport": "Prioriteit support via e-mail en chat",
           "responseTime": "Reactietijd: Binnen 4 uur tijdens kantooruren",
           "accountManager": "Toegewijde accountmanager",
@@ -3389,7 +3398,7 @@
       }
     },
     "included": {
-      "title": "Inbegrepen bij Business- en Enterprise-abonnementen",
+      "title": "Inbegrepen bij Agency- en Enterprise-abonnementen",
       "i1": "White-label PDF- en DOCX-rapporten",
       "i2": "Eigen logo, kleuren en voettekst",
       "i3": "Multi-site dashboard",
@@ -3423,7 +3432,7 @@
     "pilotBanner": {
       "badge": "Beperkt aantal plekken",
       "title": "Word pilotpartner",
-      "subtitle": "Krijg toegang op Business-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
+      "subtitle": "Krijg toegang op Agency-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
       "ctaPrimary": "Meer informatie",
       "ctaSecondary": "Nu aanmelden"
     },
@@ -3485,7 +3494,7 @@
     "badge": "Voorbeeldrapport",
     "title": "Hoe een VexNexa toegankelijkheidsrapport",
     "titleHighlight": "eruitziet",
-    "subtitle": "Dit is een voorbeeldrapport gebaseerd op realistische scandata. Business- en Enterprise-abonnementen kunnen dit white-labelen met je eigen logo, kleuren en bedrijfsnaam.",
+    "subtitle": "Dit is een voorbeeldrapport gebaseerd op realistische scandata. Agency- en Enterprise-abonnementen kunnen dit white-labelen met je eigen logo, kleuren en bedrijfsnaam.",
     "ctaPrimary": "Scan je eigen site",
     "ctaSecondary": "Meer over white-label",
     "executiveSummary": "Samenvatting",
@@ -3500,7 +3509,7 @@
     "downloadWhiteLabel": "Vraag white-label voorbeeld aan",
     "downloadNote": "We sturen je binnen 1 werkdag een persoonlijk voorbeeldrapport.",
     "exportTitle": "Exporteer als PDF of DOCX — met je branding",
-    "exportSubtitle": "Business- en Enterprise-abonnementen bevatten white-label exports. Vervang het VexNexa-merk door je eigen logo, bedrijfsnaam, kleuren en voettekst. Rapporten exporteren als deelbare PDF of bewerkbaar DOCX.",
+    "exportSubtitle": "Agency- en Enterprise-abonnementen bevatten white-label exports. Vervang het VexNexa-merk door je eigen logo, bedrijfsnaam, kleuren en voettekst. Rapporten exporteren als deelbare PDF of bewerkbaar DOCX.",
     "exportLearnMore": "Meer over white-label rapporten",
     "reportLabel": "Toegankelijkheidsrapport",
     "scannedInfo": "Gescand: 24 maart 2025 - WCAG 2.2 AA - axe-core-engine",
@@ -3855,7 +3864,7 @@
       },
       "q6": {
         "question": "Bevatten rapporten white-label branding?",
-        "answer": "Ja. Business- en Enterprise-plannen bevatten volledige white-label branding met je bedrijfslogo, kleuren en contactinformatie."
+        "answer": "Ja. Agency- en Enterprise-plannen bevatten volledige white-label branding met je bedrijfslogo, kleuren en contactinformatie."
       },
       "title": "Compliance-rapporten - FAQ"
     },
@@ -4725,7 +4734,7 @@
         "q2": "Can any tool make my site compliant automatically?",
         "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
         "q3": "Do you offer white-label reports?",
-        "a3": "Yes — Business and Agency plans export branded PDF/DOCX reports under your own logo."
+        "a3": "Yes — Pro and Agency plans export branded PDF/DOCX reports under your own logo."
       }
     },
     "siteimprove": {
@@ -4749,7 +4758,7 @@
         "q1": "Is VexNexa a full enterprise platform?",
         "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
         "q2": "Can I white-label the reports?",
-        "a2": "Yes — Business and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "a2": "Yes — Pro and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
         "q3": "Is my data stored in the EU?",
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }

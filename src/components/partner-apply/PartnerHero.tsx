@@ -30,7 +30,7 @@ export function PartnerHero({ remaining }: { remaining: number }) {
         ) : (
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Only <span className="font-semibold text-foreground">{remaining}</span> spots remaining • Get full
-            Business access, white-label reports under your brand, and direct influence on our roadmap
+            Agency access, white-label reports under your brand, and direct influence on our roadmap
           </p>
         )}
         <div className="mt-6 flex flex-col items-center gap-2">

@@ -13,7 +13,7 @@ const initialState: PartnerApplyState = { ok: false };
 
 const VALUE_POINTS = [
   "White-label reports under your own brand",
-  "Full Business Plan included during the pilot (€129/mo value)",
+  "Full Agency plan included during the pilot (normally €99.95/mo)",
   "Priority support + dedicated success manager",
   "Early access to new features + direct roadmap input",
   "30% discount on all future audits and services",

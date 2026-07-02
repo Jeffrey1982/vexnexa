@@ -197,7 +197,7 @@ export default function WhiteLabelPage() {
                 <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
                 <h1 className="text-2xl font-bold text-foreground mb-3">Upgrade Required</h1>
                 <p className="text-muted-foreground mb-6">
-                  White labeling is only available for Business plan users. Upgrade your plan to customize your brand.
+                  White labeling is only available for Agency plan users. Upgrade your plan to customize your brand.
                 </p>
                 <div className="flex gap-3 justify-center">
                   <Link href="/pricing">

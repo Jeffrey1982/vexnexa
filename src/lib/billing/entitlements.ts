@@ -167,7 +167,7 @@ export async function assertWithinLimits(opts: {
     throw e
   }
   if (opts.action === "white_label" && !ent.whiteLabel) {
-    const e: any = new Error("Upgrade required: White labelling is only available on Business plans.")
+    const e: any = new Error("Upgrade required: White labelling is only available on Agency plans.")
     e.code = "UPGRADE_REQUIRED"; e.feature = "whiteLabel"
     throw e
   }

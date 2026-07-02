@@ -157,7 +157,7 @@ export default async function AdminDashboard() {
           <Card>
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Business Plans</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Agency Plans</CardTitle>
                 <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-400/10">
                   <Crown className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 </div>
