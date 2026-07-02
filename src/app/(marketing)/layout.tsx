@@ -28,7 +28,6 @@ export async function generateMetadata(): Promise<Metadata> {
       template: '%s | VexNexa',
     },
     description: 'Scan websites for WCAG 2.2 issues, catch accessibility regressions, and deliver branded reports. Continuous monitoring for agencies, compliance teams, and EU-facing businesses.',
-    keywords: 'WCAG monitoring, accessibility scanner, white-label accessibility reports, EAA compliance, WCAG 2.2, agency accessibility tool, continuous monitoring, accessibility audit',
     authors: [{ name: 'VexNexa' }],
     alternates: buildAlternates(path, locale),
     openGraph: {

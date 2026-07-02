@@ -10,13 +10,6 @@ export const metadata: Metadata = {
   title: 'Terms of Service - VexNexa',
   description:
     'Read VexNexa terms of service: usage terms, payments, liability and service conditions.',
-  keywords: [
-    'algemene voorwaarden',
-    'terms of service',
-    'usage terms',
-    'service conditions',
-    'liability',
-  ],
   openGraph: {
     title: 'Terms of Service - VexNexa',
     description:

@@ -1240,6 +1240,24 @@
       "issue3": "Links without a discernible name",
       "poweredBy": "Powered by axe-core"
     },
+    "dutchMarket": {
+      "eyebrow": "Nederland",
+      "title": "Voor Nederlandse bedrijven",
+      "subtitle": "VexNexa is built in the Netherlands. These Dutch-language guides cover accessibility audits, testing, and EAA obligations for webshops.",
+      "cta": "Lees verder",
+      "audit": {
+        "title": "Digitale toegankelijkheid audit",
+        "description": "Laat je website toetsen op WCAG 2.2 AA en EAA-risico's, met een auditrapport en herstelprioriteiten."
+      },
+      "testen": {
+        "title": "Website toegankelijkheid testen",
+        "description": "Test je site op contrast, alt-teksten, formulieren en keyboard-problemen — met duidelijke prioriteiten."
+      },
+      "webshop": {
+        "title": "Toegankelijkheid webshop & EAA",
+        "description": "Bereid je webshop voor op de European Accessibility Act: checkout, productpagina's en klantflows."
+      }
+    },
     "founderNote": {
       "eyebrow": "A note from the founder",
       "body": "I started VexNexa after seeing the same thing at every agency I spoke to: clients are starting to ask about accessibility, but audits are slow, expensive, and impossible to resell. VexNexa turns WCAG monitoring into something an agency can deliver under its own brand — scan, report, repeat. If you run an agency, I'd genuinely like to hear what you need.",

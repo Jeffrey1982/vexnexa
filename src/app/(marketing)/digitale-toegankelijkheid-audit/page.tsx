@@ -13,14 +13,6 @@ export const metadata: Metadata = {
   title: "Digitale Toegankelijkheid Audit voor WCAG en EAA",
   description:
     "Laat je website toetsen op WCAG 2.2 AA, EAA-risico's en praktische toegankelijkheidsproblemen. Inclusief scan, auditrapport en prioriteiten voor herstel.",
-  keywords: [
-    "digitale toegankelijkheid audit",
-    "toegankelijkheidsaudit website",
-    "WCAG audit",
-    "website toegankelijkheid audit",
-    "EAA audit",
-    "WCAG 2.2 AA audit",
-  ],
   openGraph: {
     title: "Digitale Toegankelijkheid Audit voor WCAG en EAA",
     description:

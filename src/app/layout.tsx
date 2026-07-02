@@ -50,7 +50,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'VexNexa - Accessibility Testing Platform',
   description: 'Professional accessibility testing and compliance monitoring platform for websites',
-  keywords: ['accessibility', 'WCAG', 'testing', 'compliance', 'monitoring', 'a11y'],
   authors: [{ name: 'Vexnexa' }],
   creator: 'Vexnexa',
   publisher: 'Vexnexa',

@@ -19,16 +19,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
-    keywords: [
-      "European Accessibility Act",
-      "EAA compliance",
-      "EAA handhaving Nederland",
-      "WCAG 2.2 audit EU",
-      "EAA deadline webshop",
-      "EAA boete niet-naleving",
-      "EN 301 549",
-      "WCAG 2.1 AA",
-    ],
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDescription"),

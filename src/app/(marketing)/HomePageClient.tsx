@@ -15,6 +15,7 @@ import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatur
 import { EnterpriseConversionPanel } from "@/components/marketing/home/EnterpriseConversionPanel";
 import { LatestBlogSection } from "@/components/marketing/home/LatestBlogSection";
 import { FounderNote } from "@/components/marketing/home/FounderNote";
+import { DutchMarketSection } from "@/components/marketing/home/DutchMarketSection";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -140,6 +141,7 @@ export default function HomePageClient() {
         <VisibilityHook />
         <EnterpriseFeatures />
         <EnterpriseConversionPanel />
+        <DutchMarketSection />
         <LatestBlogSection />
 
         {/* FAQ kept for SEO + CRO */}

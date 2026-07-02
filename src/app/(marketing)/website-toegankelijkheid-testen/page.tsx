@@ -13,14 +13,6 @@ export const metadata: Metadata = {
   title: "Website Toegankelijkheid Testen met WCAG Checker",
   description:
     "Test je website op toegankelijkheid, WCAG 2.2 AA issues, contrast, alt-tekst, formulieren en keyboard-problemen. Krijg prioriteiten en rapportage.",
-  keywords: [
-    "website toegankelijkheid testen",
-    "toegankelijkheid website checker",
-    "WCAG test website",
-    "website toegankelijk maken",
-    "toegankelijkheid scan",
-    "digitale toegankelijkheid testen",
-  ],
   openGraph: {
     title: "Website Toegankelijkheid Testen met WCAG Checker",
     description:

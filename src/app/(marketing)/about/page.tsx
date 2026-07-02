@@ -8,13 +8,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t('title'),
     description: t('description'),
-    keywords: [
-      'VexNexa',
-      'WCAG',
-      'accessibility',
-      'website scan',
-      'EU hosting',
-    ],
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),

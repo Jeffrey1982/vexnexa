@@ -13,13 +13,6 @@ export const metadata: Metadata = {
   title: "Accessibility Overlay Alternative for Real WCAG Fixes",
   description:
     "A practical alternative to accessibility overlays: scan, monitor, report and fix WCAG issues at the source instead of adding a surface-level widget.",
-  keywords: [
-    "accessibility overlay alternative",
-    "accessibility widget alternative",
-    "WCAG overlay alternative",
-    "fix accessibility at source",
-    "accessibility overlay compliance",
-  ],
   openGraph: {
     title: "Accessibility Overlay Alternative for Real WCAG Fixes",
     description:

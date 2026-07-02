@@ -13,14 +13,6 @@ export const metadata: Metadata = {
   title: "Toegankelijkheid Webshop en EAA Compliance",
   description:
     "Bereid je webshop voor op de European Accessibility Act. Scan checkout, productpagina's, formulieren en klantflows op WCAG- en EAA-risico's.",
-  keywords: [
-    "toegankelijkheid webshop",
-    "EAA webshop",
-    "European Accessibility Act webshop",
-    "webshop toegankelijk maken",
-    "ecommerce accessibility audit",
-    "WCAG webshop",
-  ],
   openGraph: {
     title: "Toegankelijkheid Webshop en EAA Compliance",
     description:

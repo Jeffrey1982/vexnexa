@@ -10,14 +10,6 @@ export const metadata: Metadata = {
   title: 'SLA & Support - VexNexa',
   description:
     'Service Level Agreement en support informatie van VexNexa: uptime garanties, response times en support levels.',
-  keywords: [
-    'SLA',
-    'service level agreement',
-    'support',
-    'uptime',
-    'response time',
-    'beschikbaarheid',
-  ],
   openGraph: {
     title: 'SLA & Support - VexNexa',
     description:

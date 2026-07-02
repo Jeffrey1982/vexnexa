@@ -13,13 +13,6 @@ export const metadata: Metadata = {
   title: "Accessibility Regression Testing and WCAG Monitoring",
   description:
     "Catch WCAG regressions before they become compliance issues. Monitor releases, content changes and client sites with scheduled accessibility scans.",
-  keywords: [
-    "accessibility regression testing",
-    "WCAG regression testing",
-    "accessibility monitoring",
-    "continuous accessibility monitoring",
-    "automated accessibility testing",
-  ],
   openGraph: {
     title: "Accessibility Regression Testing and WCAG Monitoring",
     description:

@@ -10,14 +10,6 @@ export const metadata: Metadata = {
   title: 'Security & Privacy - VexNexa',
   description:
     'Security and privacy information from VexNexa: data handling, encryption, retention beleid en incident response.',
-  keywords: [
-    'security',
-    'security',
-    'privacy',
-    'data protection',
-    'encryption',
-    'GDPR',
-  ],
   openGraph: {
     title: 'Security & Privacy - VexNexa',
     description:

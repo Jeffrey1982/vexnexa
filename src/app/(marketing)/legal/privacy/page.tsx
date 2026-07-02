@@ -9,7 +9,6 @@ import { getTranslations } from 'next-intl/server'
 export const metadata: Metadata = {
   title: 'Privacy Policy - VexNexa',
   description: 'Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.',
-  keywords: ['privacy policy','privacy policy','GDPR','AVG','data protection','cookies','data protection'],
   openGraph: {
     title: 'Privacy Policy - VexNexa',
     description: 'Read our privacy policy: how VexNexa handles your data, cookies and privacy. GDPR compliant.',
