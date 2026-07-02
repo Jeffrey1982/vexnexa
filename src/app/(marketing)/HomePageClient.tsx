@@ -14,6 +14,7 @@ import { EnterpriseTrustBar } from "@/components/marketing/home/EnterpriseTrustB
 import { EnterpriseFeatures } from "@/components/marketing/home/EnterpriseFeatures";
 import { EnterpriseConversionPanel } from "@/components/marketing/home/EnterpriseConversionPanel";
 import { LatestBlogSection } from "@/components/marketing/home/LatestBlogSection";
+import { FounderNote } from "@/components/marketing/home/FounderNote";
 
 // JSON-LD structured data
 function JsonLd() {
@@ -143,6 +144,8 @@ export default function HomePageClient() {
 
         {/* FAQ kept for SEO + CRO */}
         <FAQ items={faqItems} />
+
+        <FounderNote />
 
         <FinalCTASection />
       </div>

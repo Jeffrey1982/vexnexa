@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -17,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { normalizeUrl } from "@/lib/url";
 import { setPendingScanUrl } from "@/lib/pending-scan";
 import { trackEvent } from "@/lib/analytics-events";
+import { SampleReportPreview } from "./SampleReportPreview";
 
 const severities = [
   { key: "Critical", count: 3, token: "critical", label: "severityCritical" },
@@ -251,18 +251,7 @@ function ProductPreview() {
           </div>
 
           <div className="relative min-h-[300px] bg-[var(--color-hero-panel-sunken)] p-3 sm:min-h-[440px]">
-            <Image
-              src="/Screenshot1.png"
-              alt="VexNexa accessibility report preview with compliance score, WCAG standard, and issue summary"
-              fill
-              priority
-              sizes="(min-width: 1024px) 46vw, 92vw"
-              className="object-cover object-top sm:object-cover"
-            />
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[var(--color-hero-panel)] to-transparent"
-              aria-hidden="true"
-            />
+            <SampleReportPreview />
           </div>
         </div>
       </div>

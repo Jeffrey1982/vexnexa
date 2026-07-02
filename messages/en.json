@@ -23,8 +23,8 @@
   },
   "hero": {
     "badge": "EAA enforcement active since June 2025",
-    "headline": "WCAG-compliance, proven per scan.",
-    "subhead": "Continuous monitoring, audit-ready reports, white-label for agencies. Built for the EU.",
+    "headline": "White-label WCAG reports for your clients, on autopilot.",
+    "subhead": "Scan client sites continuously, catch regressions before the client does, and deliver branded audit-ready reports. Built for EU agencies. EAA enforcement is active — your clients will ask.",
     "ctaPrimary": "Scan your site",
     "ctaSecondary": "View sample report",
     "scanCardLabel": "Live scan preview",
@@ -34,7 +34,7 @@
     "severitySerious": "Serious",
     "severityModerate": "Moderate",
     "severityMinor": "Minor",
-    "trustLabel": "Trusted by agencies and EU businesses",
+    "trustLabel": "Built on trusted technology — axe-core · WCAG 2.2 · EU hosting",
     "proofPill1Label": "WCAG 2.2 AA",
     "proofPill1Value": "Report evidence",
     "proofPill2Label": "Visual checks",
@@ -1225,6 +1225,26 @@
       "cta": "Apply for the pilot",
       "ctaSecondary": "How the pilot works"
     },
+    "reportPreview": {
+      "chip": "Compliance report",
+      "auditLabel": "Automated accessibility audit",
+      "scannedDomain": "Scanned domain",
+      "standardLabel": "Standard",
+      "riskLabel": "Risk level",
+      "riskValue": "Needs attention",
+      "pagesLabel": "Pages analyzed",
+      "scoreLabel": "Accessibility score",
+      "issuesSummary": "31 issues detected across 10 pages",
+      "issue1": "Insufficient colour contrast",
+      "issue2": "Images missing alt text",
+      "issue3": "Links without a discernible name",
+      "poweredBy": "Powered by axe-core"
+    },
+    "founderNote": {
+      "eyebrow": "A note from the founder",
+      "body": "I started VexNexa after seeing the same thing at every agency I spoke to: clients are starting to ask about accessibility, but audits are slow, expensive, and impossible to resell. VexNexa turns WCAG monitoring into something an agency can deliver under its own brand — scan, report, repeat. If you run an agency, I'd genuinely like to hear what you need.",
+      "signature": "Jeffrey — founder, VexNexa"
+    },
     "latestBlog": {
       "eyebrow": "Latest from the journal",
       "title": "Accessibility news, written for builders.",
@@ -1485,7 +1505,7 @@
         "stat3Value": "Evidence per finding"
       },
       "trustBar": {
-        "eyebrow": "Built for enterprise risk and audit teams",
+        "eyebrow": "Built on trusted technology",
         "items": {
           "wcag": "WCAG 2.2 AA scan engine",
           "eaa": "EAA & ADA-aligned reporting",
@@ -1498,30 +1518,30 @@
       },
       "features": {
         "eyebrow": "Three pillars · Mitigation over guarantee",
-        "title": "Enterprise-grade accessibility intelligence.",
-        "subtitle": "Three capabilities that move you from rule-based scanning to a defensible compliance program.",
-        "screenshotCaption": "Sample VexNexa scan report — actual layout, severity grouping, and remediation guidance.",
+        "title": "Accessibility tooling built for client work.",
+        "subtitle": "Three capabilities that turn one-off scans into a repeatable service you deliver to clients.",
+        "screenshotCaption": "Sample VexNexa report preview — severity grouping and remediation guidance. Click to view the full sample report.",
         "viewAll": "Explore the full feature set",
         "aiVision": {
           "title": "AI-Vision Context Analysis",
           "body": "We analyse interaction logic and visual context — not just markup tags. The result: findings that match how a real user actually experiences the page.",
           "b1": "Logic-aware: analyses flows, not single elements",
           "b2": "Detects perceptual ambiguity invisible to axe-core",
-          "b3": "Reduces false positives on enterprise-scale codebases"
+          "b3": "Reduces false positives on large client codebases"
         },
         "history": {
           "title": "Historical Compliance Tracking",
-          "body": "Time-stamped scan history per domain shows progress for internal-audit, procurement reviews, and board-level reporting.",
-          "b1": "Per-domain trend lines on every WCAG criterion",
-          "b2": "Regression alerts when a deploy lowers your VNI rank",
-          "b3": "Exportable evidence aligned with internal audit standards"
+          "body": "Time-stamped scan history per client site proves progress between deliveries — evidence you can hand straight to your client.",
+          "b1": "Per-site trend lines on every WCAG criterion",
+          "b2": "Regression alerts when a deploy lowers a client's score",
+          "b3": "Exportable evidence ready to attach to client reports"
         },
         "portfolio": {
-          "title": "Enterprise Portfolio View",
-          "body": "Manage hundreds of domains in one dashboard. Roll up risk by business unit, region, or brand — and route remediation to the right team.",
-          "b1": "Roll-up risk by BU, region, or brand",
-          "b2": "Role-based access with audit-grade activity logs",
-          "b3": "API and webhooks for SIEM and ticketing integration"
+          "title": "Client Portfolio Dashboard",
+          "body": "Manage all your client sites in one dashboard. See at a glance which client needs attention, and route fixes to the right person.",
+          "b1": "Every client site in one view, with per-site scores",
+          "b2": "Role-based access for your whole team",
+          "b3": "API and webhooks to plug into your delivery workflow"
         }
       },
       "calculator": {

@@ -194,9 +194,9 @@
   },
   "hero": {
     "badge": "EAA-handhaving actief sinds juni 2025",
-    "headline": "WCAG-compliance, bewezen per scan.",
+    "headline": "White-label WCAG-rapporten voor jouw klanten, op de automatische piloot.",
     "headline_accent": "White-label rapporten die echt verkopen.",
-    "subhead": "Continu monitoren, audit-ready rapporten, white-label voor agencies. Gebouwd voor de EU.",
+    "subhead": "Scan klantsites continu, vang regressies af vóór je klant het merkt en lever branded, audit-klare rapporten. Gebouwd voor EU-bureaus. De EAA wordt gehandhaafd — je klanten gaan ernaar vragen.",
     "subheadline": "Betrouwbare geautomatiseerde scans powered by axe-core. Minder false positives, actiebare fix-adviezen, en volledig branded PDF & Word rapporten. Gebouwd voor bureaus en EU-teams die de EAA serieus nemen.",
     "primary_cta": "Start gratis scan",
     "secondary_cta": "Bekijk live demo",
@@ -217,7 +217,7 @@
     "severitySerious": "Ernstig",
     "severityModerate": "Matig",
     "severityMinor": "Laag",
-    "trustLabel": "Vertrouwd door agencies en EU-bedrijven",
+    "trustLabel": "Gebouwd op vertrouwde technologie — axe-core · WCAG 2.2 · EU-hosting",
     "proofPill1Label": "WCAG 2.2 AA",
     "proofPill1Value": "Bewijs in elk rapport",
     "proofPill2Label": "Visuele checks",
@@ -243,6 +243,26 @@
       "subtitle": "Krijg het volledige Agency-abonnement — white-label rapporten, 10 klantsites, prioriteitsondersteuning — voor €34,95/mnd tijdens je eerste 3 maanden. Plus een directe lijn met de oprichter en inspraak op de roadmap.",
       "cta": "Meld je aan voor de pilot",
       "ctaSecondary": "Hoe de pilot werkt"
+    },
+    "reportPreview": {
+      "chip": "Compliancerapport",
+      "auditLabel": "Geautomatiseerde toegankelijkheidsaudit",
+      "scannedDomain": "Gescand domein",
+      "standardLabel": "Standaard",
+      "riskLabel": "Risiconiveau",
+      "riskValue": "Aandacht nodig",
+      "pagesLabel": "Pagina's geanalyseerd",
+      "scoreLabel": "Toegankelijkheidsscore",
+      "issuesSummary": "31 problemen gevonden op 10 pagina's",
+      "issue1": "Onvoldoende kleurcontrast",
+      "issue2": "Afbeeldingen zonder alt-tekst",
+      "issue3": "Links zonder herkenbare naam",
+      "poweredBy": "Powered by axe-core"
+    },
+    "founderNote": {
+      "eyebrow": "Een notitie van de oprichter",
+      "body": "Ik ben VexNexa gestart nadat ik bij elk bureau hetzelfde zag: klanten beginnen naar toegankelijkheid te vragen, maar audits zijn traag, duur en niet door te verkopen. VexNexa maakt van WCAG-monitoring iets dat een bureau onder eigen merk kan leveren — scannen, rapporteren, herhalen. Run je een bureau? Dan hoor ik oprecht graag wat je nodig hebt.",
+      "signature": "Jeffrey — oprichter, VexNexa"
     },
     "hero": {
       "eyebrow": "WCAG 2.2 · White-label · EU",
@@ -644,7 +664,7 @@
         "stat3Value": "Bewijs per bevinding"
       },
       "trustBar": {
-        "eyebrow": "Gebouwd voor enterprise risk- en audit-teams",
+        "eyebrow": "Gebouwd op vertrouwde technologie",
         "items": {
           "wcag": "WCAG 2.2 AA scan-engine",
           "eaa": "EAA & ADA-uitgelijnde rapportage",
@@ -657,31 +677,31 @@
       },
       "features": {
         "eyebrow": "Drie pijlers · Mitigatie boven garantie",
-        "title": "Enterprise-grade toegankelijkheidsintelligentie.",
-        "subtitle": "Drie capaciteiten die je verplaatsen van regel-gebaseerd scannen naar een verdedigbaar compliance-programma.",
+        "title": "Toegankelijkheidstooling gebouwd voor klantwerk.",
+        "subtitle": "Drie capaciteiten die losse scans veranderen in een herhaalbare dienst voor je klanten.",
         "viewAll": "Bekijk de volledige feature-set",
         "aiVision": {
           "title": "AI-Vision context-analyse",
           "body": "We analyseren interactielogica en visuele context — niet alleen markup-tags. Het resultaat: bevindingen die overeenkomen met hoe een echte gebruiker de pagina daadwerkelijk ervaart.",
           "b1": "Logica-bewust: analyseert flows, niet losse elementen",
           "b2": "Detecteert perceptuele ambiguïteit die axe-core niet ziet",
-          "b3": "Vermindert vals-positieven op enterprise-codebases"
+          "b3": "Vermindert vals-positieven op grote klant-codebases"
         },
         "history": {
           "title": "Historische compliance-tracking",
-          "body": "Tijdgestempelde scan-historie per domein toont voortgang voor interne audit, inkoop-reviews en bestuurs-rapportage.",
-          "b1": "Trendlijnen per WCAG-criterium per domein",
-          "b2": "Regressie-alerts wanneer een deploy je VNI-rang verlaagt",
-          "b3": "Exporteerbaar bewijs in lijn met interne audit-standaarden"
+          "body": "Tijdgestempelde scan-historie per klantsite bewijst voortgang tussen opleveringen — bewijs dat je direct aan je klant kunt overhandigen.",
+          "b1": "Trendlijnen per WCAG-criterium per site",
+          "b2": "Regressie-alerts wanneer een deploy de score van een klant verlaagt",
+          "b3": "Exporteerbaar bewijs, klaar om aan klantrapporten toe te voegen"
         },
         "portfolio": {
-          "title": "Enterprise portfolio-view",
-          "body": "Beheer honderden domeinen in één dashboard. Aggregeer risico per business unit, regio of merk — en stuur remediation naar het juiste team.",
-          "b1": "Risico-aggregatie per BU, regio of merk",
-          "b2": "Rol-gebaseerde toegang met audit-grade activity-logs",
-          "b3": "API en webhooks voor SIEM- en ticketing-integratie"
+          "title": "Klantportfolio-dashboard",
+          "body": "Beheer al je klantsites in één dashboard. Zie in één oogopslag welke klant aandacht nodig heeft en stuur fixes naar de juiste persoon.",
+          "b1": "Elke klantsite in één overzicht, met score per site",
+          "b2": "Rol-gebaseerde toegang voor je hele team",
+          "b3": "API en webhooks die aansluiten op je opleverworkflow"
         },
-        "screenshotCaption": "Voorbeeld VexNexa-scanrapport — werkelijke lay-out, ernstgroepering en hersteladvies."
+        "screenshotCaption": "Voorbeeld VexNexa-rapportpreview — ernstgroepering en hersteladvies. Klik voor het volledige voorbeeldrapport."
       },
       "calculator": {
         "eyebrow": "Efficiency-calculator",
