@@ -76,7 +76,18 @@
     "errorTitle": "Scan mislukt",
     "errorGeneric": "We konden deze pagina niet scannen. Controleer de URL of probeer het over een paar minuten opnieuw.",
     "tryAgain": "Probeer opnieuw",
-    "disclaimer": "Geautomatiseerde scans dekken een aanzienlijk deel van de toetsbare WCAG-criteria. Volledige conformiteit kan handmatige expertreview vereisen."
+    "disclaimer": "Geautomatiseerde scans dekken een aanzienlijk deel van de toetsbare WCAG-criteria. Volledige conformiteit kan handmatige expertreview vereisen.",
+    "emailCapture": {
+      "titleResults": "Liever dit resultaat in je inbox?",
+      "titleFallback": "Laat je e-mail achter — we sturen je het rapport",
+      "emailLabel": "E-mailadres",
+      "placeholder": "jij@bedrijf.nl",
+      "cta": "Stuur maar op",
+      "successReport": "Verzonden! Check je inbox voor de scansamenvatting.",
+      "successFollowUp": "Gelukt! We sturen je het rapport — meestal binnen één werkdag.",
+      "error": "Dat ging niet goed. Controleer het e-mailadres en probeer opnieuw.",
+      "privacy": "Eén e-mail met je resultaat. Geen nieuwsbrief, geen spam."
+    }
   },
   "nav": {
     "features": "Functies",

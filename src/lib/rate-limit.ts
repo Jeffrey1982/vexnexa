@@ -118,6 +118,11 @@ export const freeScanLimiter = rateLimit({
   windowMs: 24 * 60 * 60 * 1000 // 24 hours
 })
 
+export const freeScanLeadLimiter = rateLimit({
+  maxRequests: 5, // 5 lead-capture emails per day per IP
+  windowMs: 24 * 60 * 60 * 1000 // 24 hours
+})
+
 /**
  * Keyed rate limit for server actions / non-Request contexts (same store as HTTP limiters).
  */

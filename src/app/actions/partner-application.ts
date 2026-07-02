@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { checkKeyedRateLimit } from '@/lib/rate-limit';
-import { sendPilotPartnerApplicationEmail } from '@/lib/email';
+import { sendPilotPartnerApplicationEmail, sendPilotPartnerConfirmationEmail } from '@/lib/email';
 import { getMaxPilotSpots } from '@/lib/pilot-partner';
 import type { Prisma } from '@prisma/client';
 
@@ -159,6 +159,15 @@ export async function submitPartnerApplication(
     });
   } catch (e) {
     console.error('Partner application email error:', e);
+  }
+
+  try {
+    await sendPilotPartnerConfirmationEmail({
+      email: d.email,
+      companyName: d.companyName
+    });
+  } catch (e) {
+    console.error('Partner application confirmation email error:', e);
   }
 
   revalidatePath('/partner-apply');

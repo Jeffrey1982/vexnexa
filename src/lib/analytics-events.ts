@@ -12,6 +12,7 @@ export type FunnelEvent =
   | 'free_scan_started'
   | 'free_scan_completed'
   | 'free_scan_register_click'
+  | 'free_scan_lead_submit'
   | 'signup_started'
   | 'signup_completed'
   | 'pricing_cta_click'

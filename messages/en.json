@@ -76,7 +76,18 @@
     "errorTitle": "Scan failed",
     "errorGeneric": "We could not scan this page. Check the URL, or try again in a few minutes.",
     "tryAgain": "Try again",
-    "disclaimer": "Automated scans cover a significant portion of testable WCAG criteria. Full conformance may require manual expert review."
+    "disclaimer": "Automated scans cover a significant portion of testable WCAG criteria. Full conformance may require manual expert review.",
+    "emailCapture": {
+      "titleResults": "Prefer this result in your inbox?",
+      "titleFallback": "Leave your email — we'll send you the report",
+      "emailLabel": "Email address",
+      "placeholder": "you@company.com",
+      "cta": "Send it to me",
+      "successReport": "Sent! Check your inbox for the scan summary.",
+      "successFollowUp": "Got it! We'll send your report — usually within one business day.",
+      "error": "That didn't work. Check the email address and try again.",
+      "privacy": "One email with your result. No newsletter, no spam."
+    }
   },
   "common": {
     "startFreeScan": "Start free scan",

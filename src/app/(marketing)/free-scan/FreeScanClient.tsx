@@ -3,14 +3,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   AlertTriangle,
   ArrowRight,
+  CheckCircle2,
   ExternalLink,
   FileText,
   Loader2,
   Lock,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,6 +48,107 @@ type ScanState =
   | { phase: "done"; result: FreeScanResult }
   | { phase: "rateLimited" }
   | { phase: "error"; message: string };
+
+/**
+ * Email capture — every visitor who typed a URL is a lead. On results it
+ * mails the partial report; on error/rate-limit it promises a follow-up
+ * (the founder is notified for manual delivery).
+ */
+function EmailCapture({
+  phase,
+  url,
+  result,
+}: {
+  phase: "done" | "error" | "rate_limited";
+  url: string;
+  result?: FreeScanResult;
+}) {
+  const t = useTranslations("freeScan.emailCapture");
+  const locale = useLocale();
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || status === "sending") return;
+    setStatus("sending");
+    trackEvent("free_scan_lead_submit", { phase });
+    try {
+      const res = await fetch("/api/free-scan/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          url,
+          phase,
+          locale: locale === "nl" ? "nl" : "en",
+          result: result
+            ? {
+                score: result.score,
+                totalIssues: result.totalIssues,
+                impactCritical: result.impactCritical,
+                impactSerious: result.impactSerious,
+                impactModerate: result.impactModerate,
+                impactMinor: result.impactMinor,
+              }
+            : undefined,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      setStatus(res.ok && data?.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "sent") {
+    return (
+      <p className="flex items-center justify-center gap-2 rounded-lg border border-border bg-muted/60 px-4 py-3 text-sm font-medium" role="status">
+        <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden="true" />
+        {phase === "done" ? t("successReport") : t("successFollowUp")}
+      </p>
+    );
+  }
+
+  return (
+    <div className="rounded-lg border border-border bg-muted/40 p-4">
+      <p className="flex items-center gap-2 text-sm font-semibold">
+        <Mail className="h-4 w-4 text-primary" aria-hidden="true" />
+        {phase === "done" ? t("titleResults") : t("titleFallback")}
+      </p>
+      <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-2 sm:flex-row" noValidate>
+        <label htmlFor={`lead-email-${phase}`} className="sr-only">
+          {t("emailLabel")}
+        </label>
+        <input
+          id={`lead-email-${phase}`}
+          type="email"
+          autoComplete="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (status === "error") setStatus("idle");
+          }}
+          placeholder={t("placeholder")}
+          className="min-h-10 flex-1 rounded-lg border border-border bg-background px-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary"
+        />
+        <Button type="submit" disabled={status === "sending"}>
+          {status === "sending" ? (
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+          ) : (
+            t("cta")
+          )}
+        </Button>
+      </form>
+      <div aria-live="polite">
+        {status === "error" && (
+          <p className="mt-2 text-xs font-medium text-destructive">{t("error")}</p>
+        )}
+      </div>
+      <p className="mt-2 text-xs text-muted-foreground">{t("privacy")}</p>
+    </div>
+  );
+}
 
 const IMPACT_STYLES: Record<ExampleFinding["impact"], string> = {
   critical: "bg-destructive/10 text-destructive border-destructive/30",
@@ -110,6 +213,13 @@ export function FreeScanClient() {
     router.replace(`/free-scan?url=${encodeURIComponent(normalized)}`);
     runScan(normalized);
   };
+
+  const currentUrl =
+    state.phase === "done"
+      ? state.result.url
+      : state.phase === "scanning"
+        ? state.url
+        : normalizeUrl(urlParam || inputUrl) || "";
 
   const handleRegisterClick = (location: string) => {
     const url =
@@ -198,6 +308,11 @@ export function FreeScanClient() {
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
+                {currentUrl && (
+                  <div className="mx-auto max-w-md text-left">
+                    <EmailCapture phase="rate_limited" url={currentUrl} />
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}
@@ -218,6 +333,11 @@ export function FreeScanClient() {
                     </Link>
                   </Button>
                 </div>
+                {currentUrl && (
+                  <div className="mx-auto max-w-md text-left">
+                    <EmailCapture phase="error" url={currentUrl} />
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}
@@ -331,6 +451,8 @@ export function FreeScanClient() {
                   <p className="text-xs text-muted-foreground">{t("gateHint")}</p>
                 </CardContent>
               </Card>
+
+              <EmailCapture phase="done" url={state.result.url} result={state.result} />
 
               <p className="text-center text-xs text-muted-foreground">{t("disclaimer")}</p>
             </>

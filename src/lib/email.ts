@@ -362,6 +362,248 @@ ${motivation}
   })
 }
 
+/**
+ * Confirmation to the pilot applicant — previously only info@ was notified
+ * and the "reply within 24 hours" promise depended on a manual email.
+ */
+export async function sendPilotPartnerConfirmationEmail(data: {
+  email: string
+  companyName: string
+}) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping pilot confirmation email')
+    return null
+  }
+
+  const from = (process.env.RESEND_FROM_EMAIL || 'VexNexa <updates@vexnexa.com>').trim()
+  const company = escapeHtmlForEmail(data.companyName.trim().slice(0, 120))
+  const sampleUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'}/sample-report`
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <h2 style="color: #1F4A2D;">We received your Pilot Partner application</h2>
+      <p style="color: #374151; line-height: 1.6;">
+        Thanks, <strong>${company}</strong> — your application is in. We review every
+        application personally and reply within <strong>24 hours</strong> (usually faster).
+      </p>
+      <p style="color: #374151; line-height: 1.6;">
+        A quick reminder of what the pilot includes: <strong>3 months of the Agency plan
+        for the Pro price (€34.95/mo)</strong>, white-label reports under your own brand,
+        a direct line to the founder, and input on the roadmap.
+      </p>
+      <p style="margin: 28px 0;">
+        <a href="${sampleUrl}" style="display: inline-block; background: #1F4A2D; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+          View a sample white-label report
+        </a>
+      </p>
+      <p style="color: #6B7280; font-size: 13px;">
+        Questions in the meantime? Just reply to this email.
+      </p>
+    </div>
+  `
+  const text = `We received your Pilot Partner application
+
+Thanks, ${data.companyName} — your application is in. We review every application personally and reply within 24 hours (usually faster).
+
+The pilot includes: 3 months of the Agency plan for the Pro price (€34.95/mo), white-label reports under your own brand, a direct line to the founder, and input on the roadmap.
+
+View a sample white-label report: ${sampleUrl}
+
+Questions in the meantime? Just reply to this email.`
+
+  return resend.emails.send({
+    from,
+    to: [data.email],
+    replyTo: 'info@vexnexa.com',
+    subject: 'Your VexNexa Pilot Partner application is in — reply within 24h',
+    html,
+    text
+  })
+}
+
+export interface FreeScanLeadData {
+  email: string
+  url: string
+  phase: 'done' | 'error' | 'rate_limited'
+  locale: 'en' | 'nl'
+  clientIp: string
+  result?: {
+    score: number
+    totalIssues: number
+    impactCritical: number
+    impactSerious: number
+    impactModerate: number
+    impactMinor: number
+  }
+}
+
+/**
+ * Free-scan lead capture: mails the visitor their partial result (or a
+ * we'll-get-back-to-you note when the scan failed) and notifies info@ so
+ * every captured lead lands in the founder inbox for follow-up.
+ */
+export async function sendFreeScanLeadEmails(data: FreeScanLeadData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping free-scan lead emails')
+    return null
+  }
+
+  const from = (process.env.RESEND_FROM_EMAIL || 'VexNexa <updates@vexnexa.com>').trim()
+  const adminTo = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+  const registerUrl = `${appUrl}/auth/register?utm_source=email&utm_medium=email&utm_campaign=free_scan_report`
+
+  let host = data.url
+  try {
+    host = new URL(data.url).hostname
+  } catch {
+    // keep raw url
+  }
+  const eUrl = escapeHtmlForEmail(data.url)
+  const nl = data.locale === 'nl'
+  const r = data.result
+
+  let subject: string
+  let bodyHtml: string
+  let bodyText: string
+
+  if (data.phase === 'done' && r) {
+    subject = nl
+      ? `Je gratis toegankelijkheidsscan — ${host}: ${r.score}/100`
+      : `Your free accessibility scan — ${host}: ${r.score}/100`
+
+    const severityRows = [
+      [nl ? 'Kritiek' : 'Critical', r.impactCritical],
+      [nl ? 'Ernstig' : 'Serious', r.impactSerious],
+      [nl ? 'Gemiddeld' : 'Moderate', r.impactModerate],
+      [nl ? 'Klein' : 'Minor', r.impactMinor],
+    ] as const
+
+    bodyHtml = `
+      <p style="color: #374151; line-height: 1.6;">
+        ${nl
+          ? `Dit is het gedeeltelijke resultaat van je gratis WCAG 2.2-scan van <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a>:`
+          : `Here is the partial result of your free WCAG 2.2 scan of <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a>:`}
+      </p>
+      <div style="background: #F8F9FA; border-radius: 8px; padding: 20px; margin: 20px 0;">
+        <p style="font-size: 32px; font-weight: bold; color: #1F2937; margin: 0;">${r.score}<span style="font-size:16px; color:#6B7280;"> / 100</span></p>
+        <p style="color: #6B7280; margin: 6px 0 14px 0;">${
+          nl ? `${r.totalIssues} problemen gevonden` : `${r.totalIssues} issues found`
+        }</p>
+        <table style="border-collapse: collapse;">
+          ${severityRows
+            .map(
+              ([label, count]) =>
+                `<tr><td style="padding: 2px 16px 2px 0; color: #374151;">${label}</td><td style="padding: 2px 0; font-weight: bold; color: #1F2937;">${count}</td></tr>`
+            )
+            .join('')}
+        </table>
+      </div>
+      <p style="color: #374151; line-height: 1.6;">
+        ${nl
+          ? 'Maak een gratis account aan om alle problemen, herstelrichtlijnen en de PDF-export te zien.'
+          : 'Create a free account to see all issues, remediation guidance, and export the PDF.'}
+      </p>
+      <p style="margin: 24px 0;">
+        <a href="${registerUrl}" style="display: inline-block; background: #1F4A2D; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+          ${nl ? 'Bekijk het volledige rapport' : 'See the full report'}
+        </a>
+      </p>`
+
+    bodyText = nl
+      ? `Gedeeltelijk resultaat van je gratis WCAG 2.2-scan van ${data.url}:
+
+Score: ${r.score}/100 — ${r.totalIssues} problemen gevonden
+Kritiek: ${r.impactCritical} · Ernstig: ${r.impactSerious} · Gemiddeld: ${r.impactModerate} · Klein: ${r.impactMinor}
+
+Maak een gratis account aan om alle problemen, herstelrichtlijnen en de PDF-export te zien:
+${registerUrl}`
+      : `Partial result of your free WCAG 2.2 scan of ${data.url}:
+
+Score: ${r.score}/100 — ${r.totalIssues} issues found
+Critical: ${r.impactCritical} · Serious: ${r.impactSerious} · Moderate: ${r.impactModerate} · Minor: ${r.impactMinor}
+
+Create a free account to see all issues, remediation guidance, and export the PDF:
+${registerUrl}`
+  } else {
+    subject = nl
+      ? `We hebben je scanaanvraag voor ${host} ontvangen`
+      : `We received your scan request for ${host}`
+
+    bodyHtml = `
+      <p style="color: #374151; line-height: 1.6;">
+        ${nl
+          ? `De automatische scan van <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a> kon zojuist niet worden afgerond. We voeren de scan handmatig uit en sturen je het rapport — meestal binnen één werkdag. Je hoeft niets te doen.`
+          : `The automatic scan of <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a> could not finish just now. We will run the scan and send you the report — usually within one business day. No action needed.`}
+      </p>
+      <p style="color: #6B7280; font-size: 13px;">
+        ${nl ? 'Vragen? Beantwoord deze e-mail gewoon.' : 'Questions? Just reply to this email.'}
+      </p>`
+
+    bodyText = nl
+      ? `De automatische scan van ${data.url} kon zojuist niet worden afgerond. We voeren de scan handmatig uit en sturen je het rapport — meestal binnen één werkdag. Je hoeft niets te doen.`
+      : `The automatic scan of ${data.url} could not finish just now. We will run the scan and send you the report — usually within one business day. No action needed.`
+  }
+
+  const visitorResult = await resend.emails.send({
+    from,
+    to: [data.email],
+    replyTo: 'info@vexnexa.com',
+    subject,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #1F4A2D;">${escapeHtmlForEmail(subject)}</h2>
+        ${bodyHtml}
+        <hr style="margin: 28px 0; border: none; border-top: 1px solid #E5E7EB;">
+        <p style="color: #9CA3AF; font-size: 13px;">VexNexa · vexnexa.com · ${
+          nl ? 'WCAG-scans, gebouwd in Nederland' : 'WCAG scanning, made in the Netherlands'
+        }</p>
+      </div>`,
+    text: `${subject}
+
+${bodyText}
+
+VexNexa · vexnexa.com`
+  })
+
+  try {
+    await resend.emails.send({
+      from,
+      to: [adminTo],
+      subject: `🔥 Free-scan lead — ${host} (${data.phase})`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #1F4A2D;">New free-scan lead</h2>
+          <p><strong>Email:</strong> ${escapeHtmlForEmail(data.email)}</p>
+          <p><strong>Scanned URL:</strong> <a href="${eUrl}">${eUrl}</a></p>
+          <p><strong>Phase:</strong> ${data.phase}${
+            data.phase !== 'done' ? ' — <strong style="color:#D45A00;">manual follow-up promised within 1 business day</strong>' : ''
+          }</p>
+          ${
+            r
+              ? `<p><strong>Result:</strong> ${r.score}/100 — ${r.totalIssues} issues (${r.impactCritical} critical / ${r.impactSerious} serious / ${r.impactModerate} moderate / ${r.impactMinor} minor)</p>`
+              : ''
+          }
+          <p><strong>Locale:</strong> ${data.locale}</p>
+          <p><strong>IP:</strong> ${escapeHtmlForEmail(data.clientIp)}</p>
+          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+        </div>`,
+      text: `New free-scan lead
+
+Email: ${data.email}
+Scanned URL: ${data.url}
+Phase: ${data.phase}${data.phase !== 'done' ? ' — manual follow-up promised within 1 business day' : ''}
+${r ? `Result: ${r.score}/100 — ${r.totalIssues} issues (${r.impactCritical}/${r.impactSerious}/${r.impactModerate}/${r.impactMinor})\n` : ''}Locale: ${data.locale}
+IP: ${data.clientIp}
+Timestamp: ${new Date().toISOString()}`
+    })
+  } catch (adminError) {
+    console.error('[free-scan-lead] Admin notification failed (non-blocking):', adminError)
+  }
+
+  return visitorResult
+}
+
 export interface TeamInvitationData {
   inviterName: string
   teamName: string
