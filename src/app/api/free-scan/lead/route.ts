@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { freeScanLeadLimiter } from "@/lib/rate-limit";
+import { checkRateLimit, FREE_SCAN_LEAD_LIMIT } from "@/lib/rate-limit";
 import { normalizeUrl } from "@/lib/url";
 import { validatePublicUrl } from "@/lib/scan-url-validation";
 import { sendFreeScanLeadEmails } from "@/lib/email";
@@ -34,7 +34,7 @@ const LeadSchema = z.object({
  * clamped server-side; the email templates are fully server-controlled.
  */
 export async function POST(req: NextRequest) {
-  const limit = freeScanLeadLimiter(req);
+  const limit = await checkRateLimit(req, FREE_SCAN_LEAD_LIMIT);
   if (!limit.success) {
     return NextResponse.json(
       { ok: false, error: "Too many requests. Try again later." },

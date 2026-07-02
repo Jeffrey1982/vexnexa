@@ -1,5 +1,5 @@
 ﻿import { NextRequest, NextResponse } from 'next/server'
-import { newsletterLimiter } from '@/lib/rate-limit'
+import { checkRateLimit, NEWSLETTER_LIMIT } from '@/lib/rate-limit'
 import { Resend } from 'resend'
 import { z } from 'zod'
 import { randomBytes } from 'crypto'
@@ -88,7 +88,7 @@ function getConfirmationCopy(source: string | undefined, friendlySource: string)
 
 export async function POST(request: NextRequest) {
   try {
-    const rateLimitResult = newsletterLimiter(request)
+    const rateLimitResult = await checkRateLimit(request, NEWSLETTER_LIMIT)
     if (!rateLimitResult.success) {
       return NextResponse.json(
         {

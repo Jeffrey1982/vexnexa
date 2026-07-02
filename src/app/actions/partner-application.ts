@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
-import { checkKeyedRateLimit } from '@/lib/rate-limit';
+import { checkKeyedRateLimitDistributed } from '@/lib/rate-limit';
 import { sendPilotPartnerApplicationEmail, sendPilotPartnerConfirmationEmail } from '@/lib/email';
 import { getMaxPilotSpots } from '@/lib/pilot-partner';
 import type { Prisma } from '@prisma/client';
@@ -69,7 +69,7 @@ export async function submitPartnerApplication(
     return { ok: true };
   }
 
-  const rate = checkKeyedRateLimit(`partner-apply:${ip}`, 3, 60 * 60 * 1000);
+  const rate = await checkKeyedRateLimitDistributed(`partner-apply:${ip}`, 3, 60 * 60 * 1000);
   if (!rate.success) {
     return {
       ok: false,

@@ -1,0 +1,65 @@
+name: Post-deploy smoke test
+
+# Vercel reports deploys back to GitHub as deployment_status events.
+# When a production deploy succeeds, hit the live site and fail loudly
+# (GitHub emails the repo owner) if a critical page or API is broken.
+on:
+  deployment_status:
+
+jobs:
+  smoke:
+    name: Production smoke test
+    if: >
+      github.event.deployment_status.state == 'success' &&
+      (contains(github.event.deployment.environment, 'Production') ||
+       contains(github.event.deployment.environment, 'production'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check critical pages and APIs
+        env:
+          BASE_URL: https://vexnexa.com
+        run: |
+          set -euo pipefail
+          fail=0
+
+          check() {
+            local path="$1" expect_body="${2:-}"
+            local url="${BASE_URL}${path}"
+            local body status
+            body=$(curl -sS --max-time 30 -w '\n%{http_code}' "$url") || { echo "❌ $path — request failed"; fail=1; return; }
+            status=$(echo "$body" | tail -n1)
+            body=$(echo "$body" | sed '$d')
+            if [ "$status" != "200" ]; then
+              echo "❌ $path — HTTP $status (expected 200)"; fail=1; return
+            fi
+            if [ -n "$expect_body" ] && ! echo "$body" | grep -q "$expect_body"; then
+              echo "❌ $path — HTTP 200 but marker '$expect_body' not found"; fail=1; return
+            fi
+            echo "✅ $path"
+          }
+
+          check "/" "on autopilot"
+          check "/pricing" "Agency"
+          check "/free-scan"
+          check "/audits"
+          check "/pilot-partner-program"
+          check "/partner-apply"
+          check "/api/health" '"ok":true'
+          check "/robots.txt" "sitemap"
+          check "/sitemap.xml" "sitemapindex"
+          check "/sitemap_pages.xml" "/audits"
+
+          # Lead endpoint must be alive and validating (400 on bad input,
+          # not 404/500)
+          lead_status=$(curl -sS --max-time 30 -o /dev/null -w '%{http_code}' \
+            -X POST "${BASE_URL}/api/free-scan/lead" \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"not-an-email"}')
+          if [ "$lead_status" = "400" ]; then
+            echo "✅ /api/free-scan/lead (validation active)"
+          else
+            echo "❌ /api/free-scan/lead — HTTP $lead_status (expected 400)"; fail=1
+          fi
+
+          exit $fail

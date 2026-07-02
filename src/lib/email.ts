@@ -421,6 +421,57 @@ Questions in the meantime? Just reply to this email.`
   })
 }
 
+/**
+ * Alert from the daily scan-health canary — the scanner is broken in
+ * production and free-scan visitors are hitting errors right now.
+ */
+export async function sendScanHealthAlertEmail(data: {
+  url: string
+  error: string
+  durationMs: number
+}) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping scan-health alert')
+    return null
+  }
+
+  const from = (process.env.RESEND_ADMIN_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'VexNexa <updates@vexnexa.com>').trim()
+  const to = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
+
+  return resend.emails.send({
+    from,
+    to: [to],
+    subject: '🚨 Scanner health check FAILED — free scans are likely broken',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #DC2626;">Scanner health check failed</h2>
+        <p style="color: #374151; line-height: 1.6;">
+          The daily canary scan could not complete. Anonymous free scans and
+          user scans are probably failing in production right now.
+        </p>
+        <div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 16px; margin: 16px 0;">
+          <p style="margin: 0 0 8px 0;"><strong>Target:</strong> ${escapeHtmlForEmail(data.url)}</p>
+          <p style="margin: 0 0 8px 0;"><strong>Error:</strong> ${escapeHtmlForEmail(data.error)}</p>
+          <p style="margin: 0;"><strong>Duration:</strong> ${Math.round(data.durationMs / 1000)}s</p>
+        </div>
+        <p style="color: #6B7280; font-size: 13px;">
+          Check the Vercel function logs for /api/free-scan and /api/scan.
+          Common causes: @sparticuz/chromium version drift, runtime upgrade,
+          or function memory/timeout limits.
+        </p>
+      </div>`,
+    text: `Scanner health check FAILED
+
+The daily canary scan could not complete. Free scans are probably failing in production right now.
+
+Target: ${data.url}
+Error: ${data.error}
+Duration: ${Math.round(data.durationMs / 1000)}s
+
+Check the Vercel function logs for /api/free-scan and /api/scan.`
+  })
+}
+
 export interface FreeScanLeadData {
   email: string
   url: string

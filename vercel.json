@@ -18,6 +18,12 @@
     "src/app/api/scan*/route.*": {
       "maxDuration": 60
     },
+    "src/app/api/free-scan/route.*": {
+      "maxDuration": 90
+    },
+    "src/app/api/cron/scan-health/route.*": {
+      "maxDuration": 120
+    },
     "src/app/api/white-label/upload/route.*": {
       "maxDuration": 30
     },
@@ -89,6 +95,10 @@
     {
       "path": "/api/cron/assurance-schedules",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/scan-health",
+      "schedule": "0 7 * * *"
     }
   ]
 }

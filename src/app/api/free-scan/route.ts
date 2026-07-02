@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { EnhancedAccessibilityScanner } from "@/lib/scanner-enhanced";
-import { freeScanLimiter } from "@/lib/rate-limit";
+import { checkRateLimit, FREE_SCAN_LIMIT } from "@/lib/rate-limit";
 import { normalizeUrl } from "@/lib/url";
 import { validatePublicUrl } from "@/lib/scan-url-validation";
 
@@ -22,10 +22,10 @@ const SEVERITY_ORDER: Record<string, number> = {
  * Anonymous single-page scan for the marketing funnel.
  * No account, no persistence — returns a partial result (score, severity
  * counts, a few example findings). The full report is gated behind signup.
- * Rate limited per IP via freeScanLimiter (3 scans / 24h).
+ * Rate limited per IP via FREE_SCAN_LIMIT (3 scans / 24h, Upstash-backed).
  */
 export async function POST(req: NextRequest) {
-  const limit = freeScanLimiter(req);
+  const limit = await checkRateLimit(req, FREE_SCAN_LIMIT);
   if (!limit.success) {
     return NextResponse.json(
       {

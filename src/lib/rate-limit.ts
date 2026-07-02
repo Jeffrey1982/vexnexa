@@ -113,15 +113,126 @@ export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000 // 15 minutes
 })
 
-export const freeScanLimiter = rateLimit({
-  maxRequests: 3, // 3 anonymous scans per day per IP
-  windowMs: 24 * 60 * 60 * 1000 // 24 hours
-})
+// Free-scan and lead-capture limits moved to the distributed NamedLimit
+// configs below (FREE_SCAN_LIMIT / FREE_SCAN_LEAD_LIMIT) — public abuse
+// surfaces must not rely on per-instance memory.
 
-export const freeScanLeadLimiter = rateLimit({
+/* ─────────────────────────────────────────────────────────────────────────
+ * Distributed rate limiting (Upstash Redis REST)
+ *
+ * The in-memory store above is per-lambda-instance on Vercel, so limits on
+ * public endpoints are effectively unenforced under scale-out. The helpers
+ * below use Upstash when UPSTASH_REDIS_REST_URL/TOKEN are set and fall back
+ * to the in-memory store otherwise (local dev, missing config, Redis down).
+ * ──────────────────────────────────────────────────────────────────────── */
+
+export interface NamedLimit {
+  name: string
+  maxRequests: number
+  windowMs: number
+}
+
+export const FREE_SCAN_LIMIT: NamedLimit = {
+  name: 'free-scan',
+  maxRequests: 3, // 3 anonymous scans per day per IP
+  windowMs: 24 * 60 * 60 * 1000
+}
+
+export const FREE_SCAN_LEAD_LIMIT: NamedLimit = {
+  name: 'free-scan-lead',
   maxRequests: 5, // 5 lead-capture emails per day per IP
-  windowMs: 24 * 60 * 60 * 1000 // 24 hours
-})
+  windowMs: 24 * 60 * 60 * 1000
+}
+
+export const NEWSLETTER_LIMIT: NamedLimit = {
+  name: 'newsletter',
+  maxRequests: 5, // 5 signups per day per IP
+  windowMs: 24 * 60 * 60 * 1000
+}
+
+/**
+ * Fixed-window counter in Upstash via the REST pipeline API.
+ * Returns null when Upstash is not configured or unreachable.
+ */
+async function upstashRateLimit(
+  key: string,
+  maxRequests: number,
+  windowMs: number
+): Promise<RateLimitResult | null> {
+  const url = process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  if (!url || !token) return null
+
+  try {
+    const redisKey = `rl:${key}`
+    const res = await fetch(`${url}/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      cache: 'no-store',
+      body: JSON.stringify([
+        ['INCR', redisKey],
+        // NX: only set the expiry on first increment of the window (Redis >= 7)
+        ['PEXPIRE', redisKey, String(windowMs), 'NX'],
+        ['PTTL', redisKey]
+      ]),
+      signal: AbortSignal.timeout(3000)
+    })
+
+    if (!res.ok) {
+      console.error(`[rate-limit] Upstash HTTP ${res.status}; falling back to in-memory`)
+      return null
+    }
+
+    const results = (await res.json()) as Array<{ result?: unknown; error?: string }>
+    const count = Number(results?.[0]?.result)
+    const ttl = Number(results?.[2]?.result)
+    if (!Number.isFinite(count)) {
+      console.error('[rate-limit] Unexpected Upstash response; falling back to in-memory')
+      return null
+    }
+
+    const resetTime = Date.now() + (Number.isFinite(ttl) && ttl > 0 ? ttl : windowMs)
+    return {
+      success: count <= maxRequests,
+      remaining: Math.max(0, maxRequests - count),
+      resetTime,
+      limit: maxRequests
+    }
+  } catch (error) {
+    console.error('[rate-limit] Upstash unreachable; falling back to in-memory:', error)
+    return null
+  }
+}
+
+/**
+ * Distributed per-IP rate limit for a request. Uses Upstash when configured,
+ * in-memory otherwise.
+ */
+export async function checkRateLimit(
+  req: NextRequest,
+  limit: NamedLimit
+): Promise<RateLimitResult> {
+  const key = `${limit.name}:${getDefaultIdentifier(req)}`
+  const redis = await upstashRateLimit(key, limit.maxRequests, limit.windowMs)
+  if (redis) return redis
+  return checkKeyedRateLimit(key, limit.maxRequests, limit.windowMs)
+}
+
+/**
+ * Distributed keyed rate limit for server actions / non-Request contexts.
+ */
+export async function checkKeyedRateLimitDistributed(
+  key: string,
+  maxRequests: number,
+  windowMs: number
+): Promise<RateLimitResult> {
+  const redis = await upstashRateLimit(key, maxRequests, windowMs)
+  if (redis) return redis
+  return checkKeyedRateLimit(key, maxRequests, windowMs)
+}
 
 /**
  * Keyed rate limit for server actions / non-Request contexts (same store as HTTP limiters).
