@@ -25,8 +25,10 @@ export function isMarketingLocale(value: string | undefined | null): value is Ma
 export const MARKETING_PATHS: ReadonlySet<string> = new Set([
   "/",
   "/about",
+  "/accessibe-alternative",
   "/accessibility-monitoring-agencies",
   "/bfsg-compliance",
+  "/siteimprove-alternative",
   "/accessibility-overlay-alternative",
   "/accessibility-regression-testing",
   "/compliance",
@@ -36,6 +38,7 @@ export const MARKETING_PATHS: ReadonlySet<string> = new Set([
   "/eaa-compliance",
   "/eaa-compliance-monitoring",
   "/features",
+  "/free-scan",
   "/government-accessibility",
   "/for-agencies",
   "/get-started",
@@ -99,6 +102,8 @@ export const CONTACT_EMAIL = "info@vexnexa.com";
 /** Human-readable breadcrumb labels for known top-level segments. */
 const BREADCRUMB_LABELS: Record<string, string> = {
   about: "About",
+  "accessibe-alternative": "accessiBe Alternative",
+  "siteimprove-alternative": "Siteimprove Alternative",
   "bfsg-compliance": "BFSG Compliance",
   pricing: "Pricing",
   features: "Features",

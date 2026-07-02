@@ -40,7 +40,7 @@ export function Hero() {
     }
     setPendingScanUrl(normalized);
     trackEvent("hero_scan_submit", { location: "hero" });
-    router.push("/auth/register");
+    router.push(`/free-scan?url=${encodeURIComponent(normalized)}`);
   };
 
   return (

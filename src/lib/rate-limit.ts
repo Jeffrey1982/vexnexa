@@ -113,6 +113,11 @@ export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000 // 15 minutes
 })
 
+export const freeScanLimiter = rateLimit({
+  maxRequests: 3, // 3 anonymous scans per day per IP
+  windowMs: 24 * 60 * 60 * 1000 // 24 hours
+})
+
 /**
  * Keyed rate limit for server actions / non-Request contexts (same store as HTTP limiters).
  */

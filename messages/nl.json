@@ -48,6 +48,36 @@
       "question": "Kan VexNexa problemen automatisch oplossen?"
     }
   },
+  "freeScan": {
+    "badge": "Gratis scan · Geen account nodig",
+    "title": "Gratis toegankelijkheidsscan",
+    "urlLabel": "Website-URL",
+    "urlPlaceholder": "https://jouw-website.nl",
+    "urlHint": "3 gratis scans per dag · Geen account of creditcard nodig",
+    "urlInvalid": "Voer een geldige website-URL in, bijv. https://voorbeeld.nl",
+    "scanCta": "Scan je site",
+    "scanning": "Bezig met scannen van {url}…",
+    "scanningHint": "Dit duurt meestal 15–60 seconden. We toetsen de pagina aan WCAG 2.2 AA.",
+    "of100": "/ 100",
+    "issuesFound": "{count, plural, one {# probleem gevonden} other {# problemen gevonden}}",
+    "severityCritical": "Kritiek",
+    "severitySerious": "Ernstig",
+    "severityModerate": "Gemiddeld",
+    "severityMinor": "Klein",
+    "examplesTitle": "Voorbeeldbevindingen",
+    "learnMore": "Hoe los je dit op",
+    "moreIssues": "{count, plural, one {nog # probleem in het volledige rapport} other {nog # problemen in het volledige rapport}}",
+    "gateTitle": "Bekijk het volledige rapport",
+    "gateBody": "Maak een gratis account aan om alle problemen, herstelrichtlijnen en de PDF-export te zien.",
+    "gateCta": "Maak een gratis account",
+    "gateHint": "Geen creditcard nodig · Voor altijd gratis voor 1 website",
+    "rateLimitTitle": "Dagelijkse limiet gratis scans bereikt",
+    "rateLimitBody": "Je hebt je 3 gratis anonieme scans voor vandaag gebruikt. Maak een gratis account aan om te blijven scannen — het blijft gratis.",
+    "errorTitle": "Scan mislukt",
+    "errorGeneric": "We konden deze pagina niet scannen. Controleer de URL of probeer het over een paar minuten opnieuw.",
+    "tryAgain": "Probeer opnieuw",
+    "disclaimer": "Geautomatiseerde scans dekken een aanzienlijk deel van de toetsbare WCAG-criteria. Volledige conformiteit kan handmatige expertreview vereisen."
+  },
   "nav": {
     "features": "Functies",
     "pricing": "Prijzen",
@@ -141,7 +171,9 @@
       "pilotPartner": "Pilot Partner-programma",
       "agencyMonitoring": "Agency-monitoring",
       "government": "Overheid & gemeenten",
-      "bfsg": "German Accessibility Act (BFSG)"
+      "bfsg": "German Accessibility Act (BFSG)",
+      "accessibeAlt": "accessiBe alternative",
+      "siteimproveAlt": "Siteimprove alternative"
     },
     "disclaimer": "Scannen van openbare content • Geen opslag van persoonsgegevens",
     "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",
@@ -510,7 +542,7 @@
       },
       "q2": {
         "question": "Heb ik een account nodig om te scannen?",
-        "answer": "Ja, een gratis account is vereist. Hiermee kunnen we je resultaten opslaan, exports aanbieden en verbeteringen bijhouden. Geen creditcard nodig om te beginnen."
+        "answer": "Nee. Je kunt direct vanaf de homepage een gratis scan uitvoeren — zonder account en zonder creditcard. Je ziet je toegankelijkheidsscore, het aantal problemen per ernst en voorbeeldbevindingen. Met een gratis account ontgrendel je het volledige rapport met alle problemen, herstelrichtlijnen en PDF-export."
       },
       "q3": {
         "question": "Kan ik rapporten op maat exporteren voor klanten?",
@@ -4647,6 +4679,80 @@
       "title": "Make your website BFSG-compliant",
       "subtitle": "Start with a free scan and see exactly where you stand. No meetings required.",
       "button": "Start free scan"
+    }
+  },
+  "comparison": {
+    "shared": {
+      "strengthsTitle": "What you get with VexNexa",
+      "s1Title": "Real WCAG 2.2 code scanning — not an overlay",
+      "s1Body": "We analyse your actual markup and flag the issues to fix at the source. No widgets or scripts are injected into your site.",
+      "s2Title": "Transparent, self-serve pricing",
+      "s2Body": "Start free; paid plans from €34.95/month incl. VAT. Upgrade in a click — no enterprise sales process.",
+      "s3Title": "White-label reports for agencies",
+      "s3Body": "Deliver branded PDF/DOCX reports to clients under your own logo and colours.",
+      "s4Title": "AI-Vision beyond rule-based checks",
+      "s4Body": "Catches context and interaction issues that rule-only scanners tend to miss.",
+      "s5Title": "EU-hosted & privacy-first",
+      "s5Body": "Hosted in the EU (AWS Frankfurt). We only scan public content and store no personal data.",
+      "s6Title": "Continuous monitoring & alerts",
+      "s6Body": "Scheduled scans flag new barriers the moment a release introduces them.",
+      "ctaTitle": "See VexNexa on your own site",
+      "ctaSubtitle": "Run a free scan and compare the report yourself. No credit card required.",
+      "ctaButton": "Start free scan",
+      "ctaSecondary": "View sample report",
+      "reasonsTitle": "Why teams choose VexNexa"
+    },
+    "accessibe": {
+      "meta": {
+        "title": "accessiBe Alternative — Real WCAG Scanning, No Overlay",
+        "description": "Looking for an accessiBe alternative? VexNexa scans your code for WCAG 2.2 issues to fix at the source — no overlay widget. White-label reports, EU-hosted, start free."
+      },
+      "hero": {
+        "badge": "VexNexa vs. overlays",
+        "title": "A genuine accessiBe alternative",
+        "subtitle": "accessiBe is an accessibility overlay. VexNexa takes the opposite approach: we scan your real code so you can fix WCAG issues properly — the method the accessibility community recommends."
+      },
+      "intro": "Overlay widgets add an extra script on top of your site. Many accessibility experts and assistive-technology users have raised concerns that overlays don't deliver true conformance and can get in the way. VexNexa instead reports the actual WCAG violations in your code, with guidance to fix them at the source.",
+      "r1Title": "Fix the root cause, not a band-aid",
+      "r1Body": "Get the real WCAG 2.2 violations with code-level guidance — durable conformance, not a layer on top.",
+      "r2Title": "Nothing injected into your site",
+      "r2Body": "No third-party script on your pages. Your performance, security and UX stay yours.",
+      "r3Title": "Evidence you can defend",
+      "r3Body": "Audit-ready PDF/DOCX reports for compliance, procurement and EAA readiness.",
+      "faq": {
+        "q1": "Is VexNexa an overlay like accessiBe?",
+        "a1": "No. VexNexa never injects a widget or script. We scan your code and report the WCAG issues to fix at the source.",
+        "q2": "Can any tool make my site compliant automatically?",
+        "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
+        "q3": "Do you offer white-label reports?",
+        "a3": "Yes — Business and Agency plans export branded PDF/DOCX reports under your own logo."
+      }
+    },
+    "siteimprove": {
+      "meta": {
+        "title": "Siteimprove Alternative — Affordable WCAG Monitoring",
+        "description": "A lighter, more affordable Siteimprove alternative for WCAG monitoring. Self-serve, white-label reports, EU-hosted, transparent pricing — start free."
+      },
+      "hero": {
+        "badge": "VexNexa vs. enterprise suites",
+        "title": "A focused Siteimprove alternative",
+        "subtitle": "Siteimprove is a broad enterprise suite. VexNexa is a focused, self-serve WCAG monitor with white-label reports and transparent pricing — ideal for agencies and growing teams."
+      },
+      "intro": "You don't always need a full enterprise platform — and its sales process — to stay WCAG-compliant. VexNexa gives you continuous monitoring, audit-ready reports and white-label exports at a transparent price you can start today.",
+      "r1Title": "Transparent pricing, no sales calls",
+      "r1Body": "Start free; paid plans from €34.95/month incl. VAT. Upgrade in a click whenever you're ready.",
+      "r2Title": "White-label for agencies",
+      "r2Body": "Deliver client-ready reports under your own brand — built for agency workflows.",
+      "r3Title": "Set up in minutes",
+      "r3Body": "Self-serve from day one: enter a URL, get an audit-ready report, schedule monitoring.",
+      "faq": {
+        "q1": "Is VexNexa a full enterprise platform?",
+        "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
+        "q2": "Can I white-label the reports?",
+        "a2": "Yes — Business and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "q3": "Is my data stored in the EU?",
+        "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
+      }
     }
   }
 }

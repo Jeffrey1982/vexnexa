@@ -10,6 +10,8 @@ export type FunnelEvent =
   | 'sample_report_view'
   | 'sample_report_cta_click'
   | 'free_scan_started'
+  | 'free_scan_completed'
+  | 'free_scan_register_click'
   | 'signup_started'
   | 'signup_completed'
   | 'pricing_cta_click'
