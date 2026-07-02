@@ -55,7 +55,7 @@ export function ComparisonContent({ competitor, otherHref, otherLabel }: Compari
             <p className="mt-6 text-lg text-muted-foreground lg:text-xl">{c("hero.subtitle")}</p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Button size="lg" asChild>
-                <Link href="/auth/register">
+                <Link href="/free-scan">
                   {t("shared.ctaButton")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -140,7 +140,7 @@ export function ComparisonContent({ competitor, otherHref, otherLabel }: Compari
             <h2 className="font-display text-3xl font-bold tracking-tight">{t("shared.ctaTitle")}</h2>
             <p className="text-lg opacity-90">{t("shared.ctaSubtitle")}</p>
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/auth/register">
+              <Link href="/free-scan">
                 {t("shared.ctaButton")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

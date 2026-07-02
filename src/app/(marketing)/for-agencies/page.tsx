@@ -55,7 +55,7 @@ export default function ForAgenciesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <TrackedCTA
-                href="/auth/register"
+                href="/free-scan"
                 event="agencies_page_cta_click"
                 eventProps={{ location: "hero" }}
                 size="lg"
@@ -247,7 +247,7 @@ export default function ForAgenciesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <TrackedCTA
-                href="/auth/register"
+                href="/free-scan"
                 event="agencies_page_cta_click"
                 eventProps={{ location: "footer" }}
                 size="lg"

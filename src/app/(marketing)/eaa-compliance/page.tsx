@@ -213,7 +213,7 @@ export default async function EaaCompliancePage() {
               size="lg"
               className="min-h-11 rounded-md px-5"
             >
-              <Link href="/auth/register">
+              <Link href="/free-scan">
                 {t("hero.ctaPrimary")}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
@@ -635,7 +635,7 @@ export default async function EaaCompliancePage() {
               size="lg"
               className="min-h-11 shrink-0 rounded-md px-5"
             >
-              <Link href="/auth/register">
+              <Link href="/free-scan">
                 {t("roadmap.ctaCardLink")}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
@@ -770,7 +770,7 @@ export default async function EaaCompliancePage() {
             size="lg"
             className="min-h-12 rounded-md px-6"
           >
-            <Link href="/auth/register">
+            <Link href="/free-scan">
               {t("finalCta.cta")}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>

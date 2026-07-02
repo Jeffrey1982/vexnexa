@@ -91,7 +91,7 @@ export default async function WebsiteAccessibilityTestPage() {
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">{c.intro}</p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild size="lg">
-                <Link href="/auth/register">{c.primary}<ArrowRight className="ml-2 h-5 w-5" /></Link>
+                <Link href="/free-scan">{c.primary}<ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href="/digitale-toegankelijkheid-audit">{c.secondary}</Link>

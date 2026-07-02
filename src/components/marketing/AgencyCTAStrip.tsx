@@ -47,7 +47,7 @@ export function AgencyCTAStrip({ location }: AgencyCTAStripProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <TrackedCTA
-              href="/auth/register"
+              href="/free-scan"
               event="agency_offer_cta_click"
               eventProps={{ location }}
               size="lg"

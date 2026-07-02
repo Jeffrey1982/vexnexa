@@ -52,7 +52,7 @@ export function GovernmentContent() {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Button size="lg" asChild>
-                <Link href="/auth/register">
+                <Link href="/free-scan">
                   {t("hero.ctaPrimary")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -152,7 +152,7 @@ export function GovernmentContent() {
             <h2 className="font-display text-3xl font-bold tracking-tight">{t("cta.title")}</h2>
             <p className="text-lg opacity-90">{t("cta.subtitle")}</p>
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/auth/register">
+              <Link href="/free-scan">
                 {t("cta.button")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

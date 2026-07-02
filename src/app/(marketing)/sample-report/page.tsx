@@ -479,7 +479,7 @@ export default function SampleReportPage() {
                 asChild
               >
                 <Link
-                  href="/auth/register"
+                  href="/free-scan"
                   onClick={() => trackEvent("sample_report_cta_click", { location: "footer" })}
                 >
                   {t('ctaButton')} <Zap className="ml-2 h-5 w-5" />

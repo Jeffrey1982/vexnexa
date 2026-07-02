@@ -290,7 +290,7 @@ export function HomeHeroPremium() {
                   asChild
                 >
                   <Link
-                    href="/auth/register"
+                    href="/free-scan"
                     onClick={() => trackEvent("homepage_cta_primary_click", { location: "hero" })}
                   >
                     {t("primary_cta")}

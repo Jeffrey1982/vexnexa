@@ -993,7 +993,7 @@ function CTASection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
               <Link
-                href="/auth/register"
+                href="/free-scan"
                 onClick={() =>
                   trackEvent("pricing_cta_click", { location: "footer" })
                 }

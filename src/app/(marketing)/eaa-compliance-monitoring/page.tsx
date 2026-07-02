@@ -222,7 +222,7 @@ export default function EaaComplianceMonitoringPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <TrackedCTA
-                href="/auth/register"
+                href="/free-scan"
                 event="eaa_page_cta_click"
                 eventProps={{ location: "footer" }}
                 size="lg"

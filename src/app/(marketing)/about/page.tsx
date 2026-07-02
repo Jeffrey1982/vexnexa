@@ -127,7 +127,7 @@ export default async function AboutPage() {
               {/* CTAs */}
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="/auth/register"
+                  href="/free-scan"
                   className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-primary-foreground gradient-primary shadow-elegant hover:shadow-soft transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   aria-label={t('hero.cta.startFreeScanAriaLabel')}
                 >
@@ -408,7 +408,7 @@ export default async function AboutPage() {
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    href="/auth/register"
+                    href="/free-scan"
                     className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold text-primary bg-card hover:bg-secondary shadow-elegant hover:shadow-soft transition-all ring-1 ring-border/50 focus:outline-none focus:ring-2 focus:ring-card focus:ring-offset-2 focus:ring-offset-primary"
                     aria-label={t('finalCta.cta.startFreeScanAriaLabel')}
                   >

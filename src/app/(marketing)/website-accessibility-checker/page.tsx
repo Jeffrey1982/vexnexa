@@ -108,7 +108,7 @@ function HeroSection(): React.ReactElement {
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
               asChild
             >
-              <Link href="/auth/register">
+              <Link href="/free-scan">
                 {t('hero.ctaPrimary')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -456,7 +456,7 @@ function FinalCTASection(): React.ReactElement {
             className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
             asChild
           >
-            <Link href="/auth/register">
+            <Link href="/free-scan">
               {t('finalCTA.ctaPrimary')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>

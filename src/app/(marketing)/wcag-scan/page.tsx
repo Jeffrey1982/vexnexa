@@ -107,7 +107,7 @@ function HeroSection(): React.ReactElement {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <TrackedCTA
-              href="/auth/register"
+              href="/free-scan"
               event="wcag_scan_cta_click"
               eventProps={{ location: "hero" }}
               size="lg"
@@ -543,7 +543,7 @@ function FinalCTASection(): React.ReactElement {
               className="gradient-primary text-white border-0 shadow-soft px-8 py-6 text-base"
               asChild
             >
-              <Link href="/auth/register">
+              <Link href="/free-scan">
                 Scan Your Site Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

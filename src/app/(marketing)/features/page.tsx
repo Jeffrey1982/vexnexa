@@ -136,7 +136,7 @@ export default function FeaturesPage(): React.ReactElement {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
-                href="/auth/register"
+                href="/free-scan"
                 event="features_cta_click"
                 eventProps={{ location: "hero" }}
                 size="lg"
@@ -218,7 +218,7 @@ export default function FeaturesPage(): React.ReactElement {
           </div>
           <div className="text-center mt-12">
             <TrackedCTA
-              href="/auth/register"
+              href="/free-scan"
               event="features_cta_click"
               eventProps={{ location: "workflow" }}
               size="lg"
@@ -290,7 +290,7 @@ export default function FeaturesPage(): React.ReactElement {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <TrackedCTA
-                href="/auth/register"
+                href="/free-scan"
                 event="features_cta_click"
                 eventProps={{ location: "footer" }}
                 size="lg"
