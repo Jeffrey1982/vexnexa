@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { Activity, ShieldAlert, ShieldCheck } from "lucide-react";
+import { Activity, MailCheck, ShieldAlert, ShieldCheck } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +36,14 @@ function sourceLabel(source?: string | null) {
   if (source === "free_scan_lead") return "Free scan";
   if (source === "csv_import") return "CSV import";
   return source ?? "-";
+}
+
+function draftStatusLabel(status?: string | null) {
+  if (!status) return "Draft";
+  return status
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 export default async function LeadDetailPage({
@@ -130,7 +138,7 @@ export default async function LeadDetailPage({
                 <div key={contact.id} className="rounded-md border p-3 text-sm">
                   <p className="font-medium">{[contact.first_name, contact.last_name].filter(Boolean).join(" ") || contact.email}</p>
                   <p className="font-mono text-xs text-muted-foreground">{contact.email}</p>
-                  <p className="text-xs text-muted-foreground">{contact.job_title ?? "No job title"} · Personal data: {contact.is_personal_data ? "yes" : "no"}</p>
+                  <p className="text-xs text-muted-foreground">{contact.job_title ?? "No job title"} - Personal data: {contact.is_personal_data ? "yes" : "no"}</p>
                 </div>
               ))}
             </div>
@@ -140,8 +148,8 @@ export default async function LeadDetailPage({
             <div className="space-y-3">
               {detail.consents.length === 0 ? <p className="text-sm text-muted-foreground">No consent or customer relationship evidence recorded.</p> : detail.consents.map((event: any) => (
                 <div key={event.id} className="rounded-md border p-3 text-sm">
-                  <p className="font-medium">{event.consent_type} · {event.status}</p>
-                  <p className="text-xs text-muted-foreground">Lawful basis: {event.lawful_basis} · Occurred: {formatDate(event.occurred_at)} · Expires: {formatDate(event.expires_at)}</p>
+                  <p className="font-medium">{event.consent_type} - {event.status}</p>
+                  <p className="text-xs text-muted-foreground">Lawful basis: {event.lawful_basis} - Occurred: {formatDate(event.occurred_at)} - Expires: {formatDate(event.expires_at)}</p>
                 </div>
               ))}
             </div>
@@ -149,7 +157,7 @@ export default async function LeadDetailPage({
 
           <Section title="Suppression status">
             {detail.suppressions.length === 0 ? <p className="text-sm text-muted-foreground">No matching suppression entry found.</p> : (
-              <ul className="space-y-2 text-sm">{detail.suppressions.map((entry: any) => <li key={entry.id}>{entry.reason} · {entry.normalized_email ?? entry.normalized_domain}</li>)}</ul>
+              <ul className="space-y-2 text-sm">{detail.suppressions.map((entry: any) => <li key={entry.id}>{entry.reason} - {entry.normalized_email ?? entry.normalized_domain}</li>)}</ul>
             )}
           </Section>
 
@@ -184,13 +192,43 @@ export default async function LeadDetailPage({
             )}
           </Section>
 
-          <Section title="Email drafts placeholder">
-            <p className="text-sm text-muted-foreground">Draft generation and sending are deferred. {detail.drafts.length} draft records exist for future review.</p>
+          <Section title="Email drafts">
+            {detail.drafts.length === 0 ? (
+              <div className="rounded-md border border-dashed p-4 text-sm">
+                <div className="flex items-start gap-3">
+                  <MailCheck className="mt-0.5 h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                  <div>
+                    <p className="font-medium text-foreground">No draft generated</p>
+                    <p className="mt-1 text-muted-foreground">
+                      Phase 1 keeps outreach manual. Create a draft only after consent or existing-customer evidence is recorded.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {detail.drafts.map((draft: any) => (
+                  <div key={draft.id} className="rounded-md border p-3 text-sm">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <p className="flex items-center gap-2 font-medium">
+                        <MailCheck className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                        {draft.subject}
+                      </p>
+                      <Badge variant="outline">{draftStatusLabel(draft.status)}</Badge>
+                    </div>
+                    <p className="mt-2 line-clamp-3 text-muted-foreground">{draft.body_text}</p>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Created: {formatDate(draft.created_at)} - Approved: {formatDate(draft.approved_at)} - Sent: {formatDate(draft.sent_at)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </Section>
 
           <Section title="Audit history">
             {detail.auditEvents.length === 0 ? <p className="text-sm text-muted-foreground">No audit events recorded for this lead yet.</p> : (
-              <ul className="space-y-2 text-sm">{detail.auditEvents.map((event: any) => <li key={event.id}>{formatDate(event.created_at)} · {event.event_type}</li>)}</ul>
+              <ul className="space-y-2 text-sm">{detail.auditEvents.map((event: any) => <li key={event.id}>{formatDate(event.created_at)} - {event.event_type}</li>)}</ul>
             )}
           </Section>
         </div>
