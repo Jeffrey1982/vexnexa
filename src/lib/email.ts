@@ -617,6 +617,74 @@ ${bodyText}
 VexNexa · vexnexa.com`
   })
 
+  // D+3 follow-up (only after a successful scan): a short personal note
+  // from the founder with the pilot offer. Scheduled via Resend so it needs
+  // no cron or database. Recipients can opt out by replying "stop"
+  // (List-Unsubscribe header included).
+  if (data.phase === 'done' && r) {
+    try {
+      const followUpAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()
+      const pilotUrl = `${appUrl}/pilot-partner-program?utm_source=email&utm_medium=email&utm_campaign=free_scan_followup`
+      const followUpSubject = nl
+        ? `Al stappen gezet met ${host}? (score was ${r.score}/100)`
+        : `Made progress on ${host} yet? (score was ${r.score}/100)`
+
+      const followUpText = nl
+        ? `Hoi,
+
+Drie dagen geleden scande je ${host} — score ${r.score}/100 met ${r.totalIssues} gevonden problemen. Ik ben benieuwd: heb je er al iets mee kunnen doen?
+
+Twee dingen die kunnen helpen:
+
+1. Met een gratis account zie je alle problemen met herstelrichtlijnen en PDF-export: ${registerUrl}
+
+2. Run je een bureau met meerdere klantsites? De eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd), met een directe lijn naar mij: ${pilotUrl}
+
+Vragen? Beantwoord gewoon deze mail — je krijgt mij persoonlijk.
+
+Jeffrey
+Oprichter, VexNexa
+
+PS: Geen mails meer? Beantwoord met "stop".`
+        : `Hi,
+
+Three days ago you scanned ${host} — score ${r.score}/100 with ${r.totalIssues} issues found. Curious: have you been able to act on it yet?
+
+Two things that might help:
+
+1. A free account shows every issue with remediation guidance and PDF export: ${registerUrl}
+
+2. Running an agency with multiple client sites? The first 10 agencies get 3 months of the Agency plan for the Pro price (€34.95/mo), with a direct line to me: ${pilotUrl}
+
+Questions? Just reply to this email — it reaches me personally.
+
+Jeffrey
+Founder, VexNexa
+
+PS: Don't want these emails? Reply "stop".`
+
+      await resend.emails.send({
+        from,
+        to: [data.email],
+        replyTo: 'info@vexnexa.com',
+        subject: followUpSubject,
+        text: followUpText,
+        html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #374151; line-height: 1.7; white-space: pre-wrap;">${followUpText
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(registerUrl, `<a href="${registerUrl}" style="color:#1F4A2D;">${registerUrl}</a>`)
+          .replace(pilotUrl, `<a href="${pilotUrl}" style="color:#1F4A2D;">${pilotUrl}</a>`)}</div>`,
+        scheduledAt: followUpAt,
+        headers: {
+          'List-Unsubscribe': '<mailto:info@vexnexa.com?subject=unsubscribe>'
+        }
+      })
+    } catch (followUpError) {
+      console.error('[free-scan-lead] Follow-up scheduling failed (non-blocking):', followUpError)
+    }
+  }
+
   try {
     await resend.emails.send({
       from,
@@ -653,6 +721,134 @@ Timestamp: ${new Date().toISOString()}`
   }
 
   return visitorResult
+}
+
+export interface WeeklyDigestData {
+  periodStart: Date
+  periodEnd: Date
+  newUsers: number
+  newUsersDelta: string
+  scansCompleted: number
+  scansCompletedDelta: string
+  scansFailed: number
+  partnerApps: number
+  partnerAppsDelta: string
+  contactMessages: number
+  contactMessagesDelta: string
+  recentApplications: Array<{
+    companyName: string
+    website: string
+    clientSites: string
+    status: string
+  }>
+  recentUsers: Array<{ email: string; plan: string }>
+  gsc: {
+    clicks: number
+    clicksPrev: number
+    impressions: number
+    impressionsPrev: number
+    topQueries: Array<{ query: string; clicks: number }>
+  } | null
+}
+
+/** Monday-morning founder digest — the week's numbers in one email. */
+export async function sendWeeklyDigestEmail(data: WeeklyDigestData) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured, skipping weekly digest')
+    return null
+  }
+
+  const from = (process.env.RESEND_ADMIN_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'VexNexa <updates@vexnexa.com>').trim()
+  const to = (process.env.BILLING_SUPPORT_EMAIL || 'info@vexnexa.com').trim()
+  const fmt = (d: Date) => d.toISOString().slice(0, 10)
+  const e = (s: string) => escapeHtmlForEmail(s)
+
+  const row = (label: string, value: string | number, deltaText?: string) =>
+    `<tr>
+       <td style="padding: 8px 16px 8px 0; color: #374151;">${label}</td>
+       <td style="padding: 8px 0; font-weight: bold; color: #1F2937;">${value}</td>
+       <td style="padding: 8px 0 8px 12px; color: #6B7280; font-size: 13px;">${deltaText ? `${e(deltaText)} vs prior week` : ''}</td>
+     </tr>`
+
+  const applicationsHtml = data.recentApplications.length
+    ? `<h3 style="color: #1F2937; margin: 24px 0 8px 0;">Pilot applications</h3>
+       <ul style="color: #374151; line-height: 1.7; padding-left: 20px; margin: 0;">
+         ${data.recentApplications
+           .map(
+             (a) =>
+               `<li><strong>${e(a.companyName)}</strong> (${e(a.clientSites)} client sites) — <a href="${e(a.website)}">${e(a.website)}</a> · ${e(a.status)}</li>`
+           )
+           .join('')}
+       </ul>`
+    : ''
+
+  const usersHtml = data.recentUsers.length
+    ? `<h3 style="color: #1F2937; margin: 24px 0 8px 0;">New signups</h3>
+       <ul style="color: #374151; line-height: 1.7; padding-left: 20px; margin: 0;">
+         ${data.recentUsers.map((u) => `<li>${e(u.email)} · ${e(u.plan)}</li>`).join('')}
+       </ul>`
+    : ''
+
+  const gscHtml = data.gsc
+    ? `<h3 style="color: #1F2937; margin: 24px 0 8px 0;">Google Search (7 days)</h3>
+       <table style="border-collapse: collapse;">
+         ${row('Clicks', data.gsc.clicks, `${data.gsc.clicks - data.gsc.clicksPrev >= 0 ? '+' : ''}${data.gsc.clicks - data.gsc.clicksPrev}`)}
+         ${row('Impressions', data.gsc.impressions, `${data.gsc.impressions - data.gsc.impressionsPrev >= 0 ? '+' : ''}${data.gsc.impressions - data.gsc.impressionsPrev}`)}
+       </table>
+       ${
+         data.gsc.topQueries.length
+           ? `<p style="color: #6B7280; font-size: 13px; margin: 8px 0 0 0;">Top queries: ${data.gsc.topQueries
+               .map((q) => `${e(q.query)} (${q.clicks})`)
+               .join(' · ')}</p>`
+           : ''
+       }`
+    : '<p style="color: #9CA3AF; font-size: 13px; margin-top: 24px;">No Search Console data available (GSC ingest not configured or empty).</p>'
+
+  const failedNote =
+    data.scansFailed > 0
+      ? `<p style="color: #B45309; font-size: 14px; margin-top: 12px;">⚠️ ${data.scansFailed} scan(s) failed this week — worth a look at the function logs.</p>`
+      : ''
+
+  const subject = `📈 VexNexa week digest — ${data.newUsers} signups, ${data.scansCompleted} scans, ${data.partnerApps} pilot application${data.partnerApps === 1 ? '' : 's'}`
+
+  const text = `VexNexa week digest (${fmt(data.periodStart)} → ${fmt(data.periodEnd)})
+
+New signups: ${data.newUsers} (${data.newUsersDelta} vs prior week)
+Scans completed: ${data.scansCompleted} (${data.scansCompletedDelta})${data.scansFailed ? ` — ${data.scansFailed} failed` : ''}
+Pilot applications: ${data.partnerApps} (${data.partnerAppsDelta})
+Contact messages: ${data.contactMessages} (${data.contactMessagesDelta})
+${
+  data.gsc
+    ? `\nGoogle Search: ${data.gsc.clicks} clicks (prev ${data.gsc.clicksPrev}), ${data.gsc.impressions} impressions (prev ${data.gsc.impressionsPrev})
+Top queries: ${data.gsc.topQueries.map((q) => `${q.query} (${q.clicks})`).join(', ') || '—'}`
+    : '\nNo Search Console data available.'
+}
+${data.recentApplications.length ? `\nPilot applications:\n${data.recentApplications.map((a) => `- ${a.companyName} (${a.clientSites}) — ${a.website} · ${a.status}`).join('\n')}` : ''}
+${data.recentUsers.length ? `\nNew signups:\n${data.recentUsers.map((u) => `- ${u.email} · ${u.plan}`).join('\n')}` : ''}`
+
+  return resend.emails.send({
+    from,
+    to: [to],
+    subject,
+    text,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #1F4A2D; margin-bottom: 4px;">Week digest</h2>
+        <p style="color: #6B7280; font-size: 13px; margin-top: 0;">${fmt(data.periodStart)} → ${fmt(data.periodEnd)}</p>
+        <table style="border-collapse: collapse; margin-top: 12px;">
+          ${row('New signups', data.newUsers, data.newUsersDelta)}
+          ${row('Scans completed', data.scansCompleted, data.scansCompletedDelta)}
+          ${row('Pilot applications', data.partnerApps, data.partnerAppsDelta)}
+          ${row('Contact messages', data.contactMessages, data.contactMessagesDelta)}
+        </table>
+        ${failedNote}
+        ${applicationsHtml}
+        ${usersHtml}
+        ${gscHtml}
+        <hr style="margin: 28px 0; border: none; border-top: 1px solid #E5E7EB;">
+        <p style="color: #9CA3AF; font-size: 12px;">Sent every Monday by /api/cron/weekly-digest.</p>
+      </div>`
+  })
 }
 
 export interface TeamInvitationData {
