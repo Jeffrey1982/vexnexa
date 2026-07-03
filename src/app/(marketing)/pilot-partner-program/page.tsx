@@ -1,13 +1,11 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ArrowRight,
   Check,
   Building2,
   Globe,
-  Users,
   FileText,
   RefreshCw,
   MessageCircle,
@@ -17,152 +15,48 @@ import {
   Shield,
   AlertTriangle,
   Eye,
+  Users,
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 
-export const metadata: Metadata = {
-  title: "Pilot Partner Program | Accessibility Monitoring & Reporting",
-  description:
-    "Apply to become a VexNexa pilot partner and explore accessibility monitoring, reporting, and white-label workflows for agencies, institutions, and EU-facing teams.",
-  openGraph: {
-    title: "VexNexa Pilot Partner Program — Accessibility Monitoring & Reporting",
-    description:
-      "Join a limited pilot group to explore WCAG monitoring, branded reporting, and accessibility workflows with direct VexNexa support.",
-    url: "https://vexnexa.com/pilot-partner-program",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("pilotPage.meta");
+  const title = t("title");
+  const description = t("description");
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://vexnexa.com/pilot-partner-program",
+    },
+  };
+}
 
-const audiences: {
-  icon: typeof Building2;
-  title: string;
-  description: string;
-}[] = [
-  {
-    icon: Building2,
-    title: "Agencies and digital partners",
-    description:
-      "You manage client websites and need a repeatable way to scan, report, and monitor accessibility. The pilot gives you a real workflow to test with your team and clients.",
-  },
-  {
-    icon: Globe,
-    title: "Institutions and public-facing teams",
-    description:
-      "You run websites that serve a broad audience — education, government, healthcare, nonprofits. The pilot helps you understand your accessibility baseline and track improvements over time.",
-  },
-  {
-    icon: Shield,
-    title: "EU-facing companies managing compliance",
-    description:
-      "You need ongoing accessibility oversight for EAA readiness or internal policy. The pilot gives you monitoring, evidence of improvement, and clear issue prioritisation.",
-  },
-];
+export default async function PilotPartnerProgramPage() {
+  const t = await getTranslations("pilotPage");
 
-const benefits: { icon: typeof FileText; title: string; description: string }[] = [
-  {
-    icon: Eye,
-    title: "Scan and reporting workflows",
-    description:
-      "Run WCAG 2.2 scans on real sites and generate structured reports with severity-ranked issues and actionable guidance.",
-  },
-  {
-    icon: FileText,
-    title: "Branded deliverables",
-    description:
-      "Export white-label PDF and DOCX reports under your own logo — ready to share with clients, stakeholders, or leadership.",
-  },
-  {
-    icon: RefreshCw,
-    title: "Ongoing monitoring",
-    description:
-      "Set up recurring scans to catch regressions after redesigns, content changes, or new releases. Track scores over time.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Direct feedback loop",
-    description:
-      "Share what works, what doesn't, and what you'd like to see. Pilot partners have a direct line to the product team.",
-  },
-  {
-    icon: Rocket,
-    title: "Early input on improvements",
-    description:
-      "Your feedback shapes upcoming features. Pilot partners influence the roadmap based on real-world usage.",
-  },
-  {
-    icon: Users,
-    title: "Setup support",
-    description:
-      "We help you get started — from your first scan to recurring monitoring — so you're productive from day one.",
-  },
-];
+  const audiences = [
+    { icon: Building2, key: "a1" },
+    { icon: Globe, key: "a2" },
+    { icon: Shield, key: "a3" },
+  ] as const;
 
-const expectations: { title: string; description: string }[] = [
-  {
-    title: "Honest product feedback",
-    description:
-      "Tell us what works, what's confusing, and what's missing. We value direct, practical input.",
-  },
-  {
-    title: "A short feedback check-in",
-    description:
-      "After your initial use, we'll schedule a brief check-in to learn from your experience.",
-  },
-  {
-    title: "Optional collaboration reference",
-    description:
-      "If the pilot is useful, we may ask if we can reference the collaboration — only with your explicit approval.",
-  },
-  {
-    title: "Optional case study or logo mention",
-    description:
-      "Never assumed. Only pursued if you're comfortable and see mutual value in sharing.",
-  },
-];
+  const benefits = [
+    { icon: Eye, key: "b1" },
+    { icon: FileText, key: "b2" },
+    { icon: RefreshCw, key: "b3" },
+    { icon: MessageCircle, key: "b4" },
+    { icon: Rocket, key: "b5" },
+    { icon: Users, key: "b6" },
+  ] as const;
 
-const agencyBenefits: string[] = [
-  "Run scans on client websites and get a structured WCAG 2.2 report in minutes",
-  "Export branded PDF and DOCX reports with your agency logo and colours",
-  "Prioritise issues by severity so clients know where to start",
-  "Schedule recurring scans to monitor accessibility over time",
-  "Manage multiple client sites from a single dashboard",
-  "Explore white-label delivery workflows for client-facing reports",
-];
+  const expectations = ["e1", "e2", "e3", "e4"] as const;
+  const agencyPoints = ["p1", "p2", "p3", "p4", "p5", "p6"] as const;
+  const processSteps = ["s1", "s2", "s3", "s4"] as const;
+  const notes = ["n1", "n2", "n3", "n4"] as const;
 
-const processSteps: { step: string; title: string; description: string }[] = [
-  {
-    step: "1",
-    title: "Apply",
-    description:
-      "Four fields: agency name, website, email, and how many client sites you manage. Takes under a minute.",
-  },
-  {
-    step: "2",
-    title: "We review fit",
-    description:
-      "We look at whether VexNexa is a practical fit for your workflow and reach out with next steps.",
-  },
-  {
-    step: "3",
-    title: "Get access and onboarding",
-    description:
-      "Once accepted, you'll scan a live site, review your first report, and configure monitoring — with hands-on support.",
-  },
-  {
-    step: "4",
-    title: "Use it on a real site",
-    description:
-      "Run the pilot on real client or organisational sites. Share feedback as you go.",
-  },
-];
-
-const importantNotes: string[] = [
-  "Automated scans provide valuable coverage but do not replace a full manual audit. Depending on your requirements, additional testing may still be needed.",
-  "Pilot availability is limited. VexNexa may prioritise applications that represent a strong fit for the current feature set.",
-  "The pilot is a real product experience — not a beta test. You'll use the same tools and workflows available to paying customers.",
-  "Public references, logo use, or case studies are never assumed. Any collaboration of that kind requires your explicit approval.",
-];
-
-export default function PilotPartnerProgramPage(): JSX.Element {
   return (
     <>
       {/* Hero */}
@@ -171,19 +65,16 @@ export default function PilotPartnerProgramPage(): JSX.Element {
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium text-primary">
               <Handshake className="h-4 w-4" aria-hidden="true" />
-              Limited pilot program
+              {t("hero.badge")}
             </div>
 
             <h1 className="text-4xl lg:text-6xl font-bold font-display tracking-tight">
-              Become a VexNexa{" "}
-              <span className="text-primary">pilot partner</span>
+              {t("hero.title")}{" "}
+              <span className="text-primary">{t("hero.titleHighlight")}</span>
             </h1>
 
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              The first 10 agencies get 3 months of the Agency plan for the Pro
-              price (€34.95/mo instead of €99.95/mo), a direct line to the
-              founder, and input on the roadmap — while delivering white-label
-              accessibility reports to their clients from day one.
+              {t("hero.subtitle")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -194,7 +85,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 size="lg"
                 className="gradient-primary text-white"
               >
-                Apply for pilot access
+                {t("hero.ctaApply")}
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </TrackedCTA>
               <TrackedCTA
@@ -204,14 +95,11 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 size="lg"
                 variant="outline"
               >
-                View sample report
+                {t("hero.ctaSample")}
               </TrackedCTA>
             </div>
 
-            <p className="text-sm text-muted-foreground pt-2">
-              Limited to 10 pilot spots. Best fit for agencies managing live
-              client websites. Start with one site — no long-term commitment.
-            </p>
+            <p className="text-sm text-muted-foreground pt-2">{t("hero.note")}</p>
           </div>
         </div>
       </section>
@@ -221,24 +109,25 @@ export default function PilotPartnerProgramPage(): JSX.Element {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              Who this is for
+              {t("audiences.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The pilot is designed for teams that manage real websites and want
-              a practical accessibility workflow — not a one-time scan.
+              {t("audiences.subtitle")}
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
-            {audiences.map((a, i) => (
-              <Card key={i} className="h-full border-0 shadow-elegant">
+            {audiences.map((a) => (
+              <Card key={a.key} className="h-full border-0 shadow-elegant">
                 <CardContent className="p-8 space-y-4">
                   <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <a.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-semibold font-display">{a.title}</h3>
+                  <h3 className="text-lg font-semibold font-display">
+                    {t(`audiences.${a.key}.title`)}
+                  </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    {a.description}
+                    {t(`audiences.${a.key}.description`)}
                   </p>
                 </CardContent>
               </Card>
@@ -252,24 +141,25 @@ export default function PilotPartnerProgramPage(): JSX.Element {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              What pilot partners get
+              {t("benefits.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Start with one live site, run your first scan, and see the
-              full reporting workflow — with direct support from the VexNexa team.
+              {t("benefits.subtitle")}
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((b, i) => (
-              <Card key={i} className="h-full border-0 shadow-elegant">
+            {benefits.map((b) => (
+              <Card key={b.key} className="h-full border-0 shadow-elegant">
                 <CardContent className="p-8 space-y-4">
                   <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <b.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-semibold font-display">{b.title}</h3>
+                  <h3 className="text-lg font-semibold font-display">
+                    {t(`benefits.${b.key}.title`)}
+                  </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    {b.description}
+                    {t(`benefits.${b.key}.description`)}
                   </p>
                 </CardContent>
               </Card>
@@ -283,26 +173,27 @@ export default function PilotPartnerProgramPage(): JSX.Element {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              What we ask in return
+              {t("expectations.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              This is a collaborative partnership. We value your time and
-              feedback — no obligations beyond honest input.
+              {t("expectations.subtitle")}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6">
-            {expectations.map((e, i) => (
-              <Card key={i} className="h-full border-0 shadow-elegant">
+            {expectations.map((key) => (
+              <Card key={key} className="h-full border-0 shadow-elegant">
                 <CardContent className="p-6 space-y-2">
                   <div className="flex items-start gap-3">
                     <div className="mt-0.5 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Check className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="font-semibold font-display">{e.title}</h3>
+                      <h3 className="font-semibold font-display">
+                        {t(`expectations.${key}.title`)}
+                      </h3>
                       <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                        {e.description}
+                        {t(`expectations.${key}.description`)}
                       </p>
                     </div>
                   </div>
@@ -320,16 +211,13 @@ export default function PilotPartnerProgramPage(): JSX.Element {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 text-primary text-sm font-semibold uppercase tracking-wider">
                 <Building2 className="h-4 w-4" aria-hidden="true" />
-                For agencies
+                {t("agency.eyebrow")}
               </div>
               <h2 className="text-3xl lg:text-4xl font-bold font-display">
-                Why this works well for agencies
+                {t("agency.title")}
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                If you manage client websites, the pilot gives you a real
-                workflow to test — from scanning and reporting to ongoing
-                monitoring. See how VexNexa fits your existing process before
-                committing.
+                {t("agency.body")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <TrackedCTA
@@ -338,7 +226,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                   eventProps={{ location: "agency_section" }}
                   className="gradient-primary text-white"
                 >
-                  Apply as an agency partner
+                  {t("agency.ctaApply")}
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </TrackedCTA>
                 <TrackedCTA
@@ -347,19 +235,16 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                   eventProps={{ location: "agency_section" }}
                   variant="outline"
                 >
-                  Learn more about agency use
+                  {t("agency.ctaLearn")}
                 </TrackedCTA>
               </div>
             </div>
 
             <div className="space-y-3">
-              {agencyBenefits.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-muted"
-                >
+              {agencyPoints.map((key) => (
+                <div key={key} className="flex items-start gap-3 p-4 rounded-xl bg-muted">
                   <Check className="h-5 w-5 text-success mt-0.5 flex-shrink-0" aria-hidden="true" />
-                  <span className="text-sm leading-relaxed">{item}</span>
+                  <span className="text-sm leading-relaxed">{t(`agency.${key}`)}</span>
                 </div>
               ))}
             </div>
@@ -372,25 +257,26 @@ export default function PilotPartnerProgramPage(): JSX.Element {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
-              What to expect
+              {t("process.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The process is straightforward. Apply, get set up, and start using
-              VexNexa on a real site.
+              {t("process.subtitle")}
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processSteps.map((s, i) => (
-              <div key={i} className="relative">
+            {processSteps.map((key, i) => (
+              <div key={key} className="relative">
                 <Card className="h-full border-0 shadow-elegant">
                   <CardContent className="p-6 space-y-3">
                     <div className="h-10 w-10 rounded-full gradient-primary text-white flex items-center justify-center font-bold text-lg font-display">
-                      {s.step}
+                      {i + 1}
                     </div>
-                    <h3 className="font-semibold font-display">{s.title}</h3>
+                    <h3 className="font-semibold font-display">
+                      {t(`process.${key}.title`)}
+                    </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {s.description}
+                      {t(`process.${key}.description`)}
                     </p>
                   </CardContent>
                 </Card>
@@ -406,20 +292,15 @@ export default function PilotPartnerProgramPage(): JSX.Element {
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
               <AlertTriangle className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
-              <h2 className="text-2xl font-bold font-display">
-                Important notes
-              </h2>
+              <h2 className="text-2xl font-bold font-display">{t("notes.title")}</h2>
             </div>
 
             <div className="space-y-4">
-              {importantNotes.map((note, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 p-4 rounded-xl border bg-card"
-                >
+              {notes.map((key) => (
+                <div key={key} className="flex items-start gap-3 p-4 rounded-xl border bg-card">
                   <ClipboardCheck className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    {note}
+                    {t(`notes.${key}`)}
                   </p>
                 </div>
               ))}
@@ -433,12 +314,9 @@ export default function PilotPartnerProgramPage(): JSX.Element {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              Interested in becoming a pilot partner?
+              {t("finalCta.title")}
             </h2>
-            <p className="text-lg opacity-90 max-w-2xl mx-auto">
-              Tell us about your team and what you're looking for. We review
-              every application and aim to respond within 1 business day.
-            </p>
+            <p className="text-lg opacity-90 max-w-2xl mx-auto">{t("finalCta.subtitle")}</p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
@@ -448,7 +326,7 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 size="lg"
                 className="bg-background text-primary hover:bg-muted"
               >
-                Apply for pilot access
+                {t("finalCta.ctaApply")}
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </TrackedCTA>
               <TrackedCTA
@@ -459,17 +337,17 @@ export default function PilotPartnerProgramPage(): JSX.Element {
                 variant="outline"
                 className="text-primary hover:bg-primary/5"
               >
-                View sample report
+                {t("finalCta.ctaSample")}
               </TrackedCTA>
               <TrackedCTA
-                href="/partner-apply"
+                href="/contact?from=pilot-question"
                 event="pilot_partner_contact_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
                 variant="outline"
                 className="text-primary hover:bg-primary/5"
               >
-                Ask a question
+                {t("finalCta.ctaQuestion")}
               </TrackedCTA>
             </div>
           </div>

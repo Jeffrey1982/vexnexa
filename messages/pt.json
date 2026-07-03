@@ -67,7 +67,8 @@
     "updates": "Atualizações",
     "eaaMonitoring": "Monitoramento EAA",
     "tagline": "Análises WCAG que fornecem informações reais",
-    "theme": "Tema"
+    "theme": "Tema",
+    "pilotProgram": "Programa piloto"
   },
   "footer": {
     "brand": {
@@ -143,7 +144,12 @@
       "government": "Setor público",
       "bfsg": "German Accessibility Act (BFSG)",
       "accessibeAlt": "accessiBe alternative",
-      "siteimproveAlt": "Siteimprove alternative"
+      "siteimproveAlt": "Siteimprove alternative",
+      "dutchAudit": "Audit für digitale Barrierefreiheit",
+      "dutchWebshop": "Barrierefreier Webshop",
+      "dutchTesting": "Website-Barrierefreiheit testen",
+      "overlayAlternative": "Overlay-Alternative",
+      "regressionTesting": "Regressionstests"
     },
     "disclaimer": "Análise de conteúdo público • Sem armazenamento de dados pessoais",
     "description": "Monitoriza??o, relat?rios e fluxos de corre??o de acessibilidade para equipas modernas.",
@@ -557,6 +563,51 @@
       "subtitle": "Notas de campo sobre WCAG, EAA e a arte das interfaces inclusivas. Atualizado semanalmente.",
       "title": "Notícias de acessibilidade, escritas para criadores.",
       "viewAll": "Ver todos os artigos"
+    },
+    "pilotProgram": {
+      "badge": "Agentur-Pilotprogramm",
+      "title": "Die ersten 10 Agenturen: 3 Monate Agency zum Pro-Preis",
+      "subtitle": "Erhalte den vollständigen Agency-Tarif — White-Label-Berichte, 10 Kundenseiten, Priority Support — in den ersten 3 Monaten für 34,95 €/Monat. Dazu direkter Kontakt zum Gründer und Einfluss auf die Roadmap.",
+      "cta": "Für den Pilot bewerben",
+      "ctaSecondary": "So funktioniert der Pilot"
+    },
+    "reportPreview": {
+      "chip": "Compliance-Bericht",
+      "auditLabel": "Automatisiertes Barrierefreiheits-Audit",
+      "scannedDomain": "Gescannte Domain",
+      "standardLabel": "Standard",
+      "riskLabel": "Risikostufe",
+      "riskValue": "Braucht Aufmerksamkeit",
+      "pagesLabel": "Analysierte Seiten",
+      "scoreLabel": "Barrierefreiheits-Score",
+      "issuesSummary": "31 Probleme auf 10 Seiten erkannt",
+      "issue1": "Unzureichender Farbkontrast",
+      "issue2": "Bilder ohne Alt-Text",
+      "issue3": "Links ohne erkennbaren Namen",
+      "poweredBy": "Bereitgestellt von axe-core"
+    },
+    "dutchMarket": {
+      "eyebrow": "Niederlande",
+      "title": "Für niederländische Unternehmen",
+      "subtitle": "VexNexa wird in den Niederlanden entwickelt. Diese niederländischsprachigen Leitfäden behandeln Audits, Tests und EAA-Pflichten für Webshops.",
+      "cta": "Weiterlesen",
+      "audit": {
+        "title": "Audit für digitale Barrierefreiheit",
+        "description": "Prüfe deine Website auf WCAG 2.2 AA und EAA-Risiken, inklusive Auditbericht und Prioritäten zur Behebung."
+      },
+      "testen": {
+        "title": "Website-Barrierefreiheit testen",
+        "description": "Teste deine Website auf Kontrast, Alt-Texte, Formulare und Tastaturprobleme — mit klaren Prioritäten."
+      },
+      "webshop": {
+        "title": "Barrierefreier Webshop & EAA",
+        "description": "Bereite deinen Webshop auf den European Accessibility Act vor: Checkout, Produktseiten und Kundenflows."
+      }
+    },
+    "founderNote": {
+      "eyebrow": "Eine Notiz vom Gründer",
+      "body": "Ich habe VexNexa gestartet, weil ich von Agenturen immer wieder dasselbe hörte: Kunden brauchen Nachweise zur Barrierefreiheit, aber Audits sind langsam, teuer und schwer als wiederholbarer Service anzubieten. VexNexa macht WCAG-Monitoring unter deiner eigenen Marke praktikabel: scannen, berichten, verbessern, wiederholen. Wenn du eine Agentur führst, möchte ich wirklich hören, was es deinem Team leichter machen würde.",
+      "signature": "Jeffrey, Gründer von VexNexa"
     }
   },
   "pricing": {
@@ -894,7 +945,8 @@
         "inclVat": "c/ IVA",
         "perPage": "≈ €{price}/página",
         "needHigher": "Precisa de mais capacidade?",
-        "contactEnterprise": "para volume empresarial."
+        "contactEnterprise": "para volume empresarial.",
+        "accordionTrigger": "Add-ons — zusätzliche Websites, Seitenvolumen & Assurance-Monitoring"
       },
       "audits": {
         "badge": "Serviços de auditoria EAA",
@@ -928,7 +980,10 @@
             "legal": "Revisão jurídica",
             "implementation": "Orientação de implementação"
           }
-        }
+        },
+        "backToPricing": "← Zurück zu den Preisen",
+        "monitoringNote": "Lieber kontinuierliches automatisiertes Monitoring? Unsere Abos scannen deine Websites nach Zeitplan.",
+        "viewPlans": "Tarife ansehen"
       },
       "auditBundles": {
         "badge": "Pacotes de auditoria + monitorização",
@@ -998,7 +1053,12 @@
       },
       "perMonth": "/mês",
       "perYear": "/ano",
-      "perMonthSubtext": "{price}/mês"
+      "perMonthSubtext": "{price}/mês",
+      "auditsLink": {
+        "title": "Brauchst du ein manuelles Expertenaudit?",
+        "cta": "Audit-Services ansehen"
+      },
+      "bestForAgencies": "Am besten für Agenturen"
     },
     "addons": {
       "assurance": {
@@ -4591,6 +4651,243 @@
         "q3": "Is my data stored in the EU?",
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }
+    }
+  },
+  "freeScan": {
+    "badge": "Análise gratuita · Sem conta",
+    "title": "Análise gratuita de acessibilidade",
+    "urlLabel": "URL do site",
+    "urlPlaceholder": "https://your-website.com",
+    "urlHint": "3 análises gratuitas por dia · Sem conta nem cartão",
+    "urlInvalid": "Introduza um URL válido, por exemplo https://example.com",
+    "scanCta": "Analisar site",
+    "scanning": "A analisar {url}…",
+    "scanningHint": "Normalmente demora 15–60 segundos. Verificamos a página com WCAG 2.2 AA.",
+    "issuesFound": "{count, plural, one {# problema encontrado} other {# problemas encontrados}}",
+    "severityCritical": "Crítico",
+    "severitySerious": "Grave",
+    "severityModerate": "Moderado",
+    "severityMinor": "Menor",
+    "examplesTitle": "Exemplos de conclusões",
+    "learnMore": "Como corrigir isto",
+    "moreIssues": "{count, plural, one {# problema adicional no relatório completo} other {# problemas adicionais no relatório completo}}",
+    "gateTitle": "Ver relatório completo",
+    "gateBody": "Crie uma conta gratuita para ver todos os problemas, orientações de correção e exportar o PDF.",
+    "gateCta": "Criar conta gratuita",
+    "gateHint": "Sem cartão · Gratuito para sempre para 1 site",
+    "rateLimitTitle": "Limite diário de análises gratuitas atingido",
+    "rateLimitBody": "Já usou as suas 3 análises anónimas gratuitas de hoje. Crie uma conta gratuita para continuar — continua a ser grátis.",
+    "errorTitle": "A análise falhou",
+    "errorGeneric": "Não conseguimos analisar esta página. Verifique o URL ou tente novamente dentro de alguns minutos.",
+    "tryAgain": "Tentar novamente",
+    "disclaimer": "As análises automatizadas cobrem uma parte significativa dos critérios WCAG testáveis. A conformidade total pode exigir revisão manual especializada.",
+    "emailCapture": {
+      "titleResults": "Prefere receber este resultado no email?",
+      "titleFallback": "Deixe o seu email — enviaremos o relatório",
+      "emailLabel": "Endereço de email",
+      "placeholder": "you@company.com",
+      "cta": "Enviar-me",
+      "successReport": "Enviado! Verifique a caixa de entrada para o resumo da análise.",
+      "successFollowUp": "Recebido! Enviaremos o relatório — normalmente no prazo de um dia útil.",
+      "error": "Não funcionou. Verifique o email e tente novamente.",
+      "privacy": "Um email com o resultado. Sem newsletter, sem spam."
+    },
+    "of100": "/ 100"
+  },
+  "pilotPage": {
+    "meta": {
+      "title": "Pilot Partnerprogramm | Barrierefreiheits-Monitoring & Reporting",
+      "description": "Bewirb dich als VexNexa-Pilotpartner: Die ersten 10 Agenturen erhalten 3 Monate Agency zum Pro-Preis, direkten Kontakt zum Gründer und Einfluss auf die Roadmap."
+    },
+    "hero": {
+      "badge": "Limitiertes Pilotprogramm",
+      "title": "Werde VexNexa",
+      "titleHighlight": "Pilotpartner",
+      "subtitle": "Die ersten 10 Agenturen erhalten 3 Monate Agency zum Pro-Preis (34,95 €/Monat statt 99,95 €/Monat), direkten Kontakt zum Gründer und Einfluss auf die Roadmap — und liefern ihren Kunden vom ersten Tag an White-Label-Barrierefreiheitsberichte.",
+      "ctaApply": "Pilotzugang beantragen",
+      "ctaSample": "Beispielbericht ansehen",
+      "note": "Auf 10 Pilotplätze begrenzt. Ideal für Agenturen mit aktiven Kundenwebsites. Starte mit einer Website — ohne langfristige Verpflichtung."
+    },
+    "audiences": {
+      "title": "Für wen das gedacht ist",
+      "subtitle": "Der Pilot ist für Teams gedacht, die echte Websites betreuen und einen praktischen Barrierefreiheits-Workflow wollen — keinen einmaligen Scan.",
+      "a1": {
+        "title": "Agenturen und Digitalpartner",
+        "description": "Du betreust Kundenwebsites und brauchst einen wiederholbaren Weg zum Scannen, Berichten und Monitoren von Barrierefreiheit. Der Pilot gibt dir einen echten Workflow für Team und Kunden."
+      },
+      "a2": {
+        "title": "Institutionen und öffentliche Teams",
+        "description": "Du betreibst Websites für ein breites Publikum — Bildung, Verwaltung, Gesundheitswesen oder gemeinnützige Organisationen. Der Pilot hilft dir, die Ausgangslage zu verstehen und Verbesserungen zu verfolgen."
+      },
+      "a3": {
+        "title": "EU-orientierte Unternehmen mit Compliance-Aufgaben",
+        "description": "Du brauchst laufende Barrierefreiheitsaufsicht für EAA-Bereitschaft oder interne Richtlinien. Der Pilot liefert Monitoring, Verbesserungsnachweise und klare Priorisierung."
+      }
+    },
+    "benefits": {
+      "title": "Was Pilotpartner erhalten",
+      "subtitle": "Starte mit einer Live-Website, führe den ersten Scan aus und erlebe den gesamten Reporting-Workflow — mit direkter Unterstützung von VexNexa.",
+      "b1": {
+        "title": "Scan- und Reporting-Workflows",
+        "description": "Führe WCAG 2.2 Scans auf echten Websites aus und erstelle strukturierte Berichte mit nach Schweregrad sortierten Problemen und konkreten Handlungshinweisen."
+      },
+      "b2": {
+        "title": "Gebrandete Ergebnisse",
+        "description": "Exportiere White-Label-PDF- und DOCX-Berichte mit deinem Logo — bereit für Kunden, Stakeholder oder Leitung."
+      },
+      "b3": {
+        "title": "Laufendes Monitoring",
+        "description": "Richte wiederkehrende Scans ein, um Regressionen nach Redesigns, Inhaltsänderungen oder Releases zu erkennen. Verfolge Scores über die Zeit."
+      },
+      "b4": {
+        "title": "Direkter Feedbackkanal",
+        "description": "Teile, was funktioniert, was unklar ist und was du brauchst. Pilotpartner haben direkten Kontakt zum Gründer."
+      },
+      "b5": {
+        "title": "Früher Einfluss auf Verbesserungen",
+        "description": "Dein Feedback prägt kommende Funktionen. Pilotpartner beeinflussen die Roadmap anhand echter Nutzung."
+      },
+      "b6": {
+        "title": "Setup-Unterstützung",
+        "description": "Wir helfen dir beim Start — vom ersten Scan bis zum wiederkehrenden Monitoring — damit du ab Tag eins produktiv bist."
+      }
+    },
+    "expectations": {
+      "title": "Was wir dafür erwarten",
+      "subtitle": "Das ist eine kollaborative Partnerschaft. Wir schätzen deine Zeit und dein Feedback — ohne Verpflichtungen außer ehrlichem Input.",
+      "e1": {
+        "title": "Ehrliches Produktfeedback",
+        "description": "Sag uns, was funktioniert, was verwirrend ist und was fehlt. Wir schätzen direkten, praktischen Input."
+      },
+      "e2": {
+        "title": "Kurzer Feedback-Check-in",
+        "description": "Nach der ersten Nutzung planen wir ein kurzes Gespräch, um aus deiner Erfahrung zu lernen."
+      },
+      "e3": {
+        "title": "Optionale Referenz",
+        "description": "Wenn der Pilot nützlich ist, fragen wir eventuell, ob wir die Zusammenarbeit erwähnen dürfen — nur mit deiner ausdrücklichen Zustimmung."
+      },
+      "e4": {
+        "title": "Optionale Case Study oder Logo-Nennung",
+        "description": "Nie automatisch. Nur wenn du dich wohlfühlst und einen gemeinsamen Nutzen siehst."
+      }
+    },
+    "agency": {
+      "eyebrow": "Für Agenturen",
+      "title": "Warum das gut für Agenturen funktioniert",
+      "body": "Wenn du Kundenwebsites betreust, gibt dir der Pilot einen echten Workflow zum Testen — vom Scannen und Reporting bis zum laufenden Monitoring. Prüfe, wie VexNexa in deinen Prozess passt, bevor du dich festlegst.",
+      "ctaApply": "Als Agenturpartner bewerben",
+      "ctaLearn": "Mehr über Agenturnutzung",
+      "p1": "Scans auf Kundenwebsites durchführen und in Minuten einen strukturierten WCAG 2.2 Bericht erhalten",
+      "p2": "Gebrandete PDF- und DOCX-Berichte mit Agenturlogo und Farben exportieren",
+      "p3": "Probleme nach Schweregrad priorisieren, damit Kunden wissen, wo sie beginnen sollen",
+      "p4": "Wiederkehrende Scans planen, um Barrierefreiheit über Zeit zu monitoren",
+      "p5": "Mehrere Kundenseiten in einem Dashboard verwalten",
+      "p6": "White-Label-Workflows für kundenorientierte Berichte erkunden"
+    },
+    "process": {
+      "title": "Was dich erwartet",
+      "subtitle": "Der Ablauf ist einfach. Bewerben, einrichten lassen und VexNexa auf einer echten Website nutzen.",
+      "s1": {
+        "title": "Bewerben",
+        "description": "Vier Felder: Agenturname, Website, E-Mail und Anzahl betreuter Kundenseiten. Dauert unter einer Minute."
+      },
+      "s2": {
+        "title": "Wir prüfen die Passung",
+        "description": "Wir prüfen, ob VexNexa praktisch zu deinem Workflow passt, und melden uns mit den nächsten Schritten."
+      },
+      "s3": {
+        "title": "Zugang und Onboarding",
+        "description": "Nach Annahme scannst du eine Live-Website, prüfst den ersten Bericht und richtest Monitoring ein — mit praktischer Unterstützung."
+      },
+      "s4": {
+        "title": "Auf echter Website nutzen",
+        "description": "Nutze den Pilot auf echten Kunden- oder Organisationsseiten. Gib unterwegs Feedback."
+      }
+    },
+    "notes": {
+      "title": "Wichtige Hinweise",
+      "n1": "Automatisierte Scans liefern wertvolle Abdeckung, ersetzen aber kein vollständiges manuelles Audit. Je nach Anforderungen können zusätzliche Tests nötig sein.",
+      "n2": "Pilotplätze sind begrenzt. VexNexa kann Bewerbungen priorisieren, die besonders gut zum aktuellen Funktionsumfang passen.",
+      "n3": "Der Pilot ist eine echte Produkterfahrung — kein Betatest. Du nutzt dieselben Tools und Workflows wie zahlende Kunden.",
+      "n4": "Öffentliche Referenzen, Logo-Nutzung oder Case Studies werden nie vorausgesetzt. Jede solche Zusammenarbeit braucht deine ausdrückliche Zustimmung."
+    },
+    "finalCta": {
+      "title": "Interessiert, Pilotpartner zu werden?",
+      "subtitle": "Erzähl uns von deiner Agentur. Wir prüfen jede Bewerbung und antworten in der Regel innerhalb eines Werktags.",
+      "ctaApply": "Pilotzugang beantragen",
+      "ctaSample": "Beispielbericht ansehen",
+      "ctaQuestion": "Frage stellen"
+    }
+  },
+  "partnerApply": {
+    "hero": {
+      "badge": "Pilot nur für Mitglieder",
+      "title": "Tritt dem exklusiven Pilot Partnerprogramm bei",
+      "subtitleFull": "Alle Pilotplätze sind derzeit vergeben. Trage dich in die Warteliste ein, um als Erste:r informiert zu werden, wenn Kapazität frei wird.",
+      "subtitle": "Nur noch {remaining} Plätze frei • 3 Monate Agency zum Pro-Preis, White-Label-Berichte unter deiner Marke und direkter Kontakt zum Gründer",
+      "ctaClaim": "Meinen Platz sichern",
+      "ctaWaitlist": "Warteliste beitreten",
+      "standardsIntro": "Du lieferst professionelle White-Label-Barrierefreiheitsberichte, unterstützt von axe-core® und ausgerichtet an WCAG 2.2 & EN 301 549",
+      "standardsFootnote": "Nur als Referenz. VexNexa wird nicht von W3C oder Deque unterstützt."
+    },
+    "counter": {
+      "full": "Programm ist voll –",
+      "joinWaitlist": "Warteliste beitreten",
+      "left": "Nur noch {count, plural, one {# Platz} other {# Plätze}} frei"
+    },
+    "value": {
+      "v1": "3 Monate Agency zum Pro-Preis (34,95 €/Monat statt 99,95 €/Monat)",
+      "v2": "White-Label-Berichte unter deiner eigenen Marke",
+      "v3": "Direkter Kontakt zum Gründer",
+      "v4": "Direkter Einfluss auf die Roadmap",
+      "v5": "Praktische Setup-Unterstützung ab dem ersten Scan",
+      "reviewNote": "Alle Bewerbungen werden innerhalb von 24 Stunden manuell geprüft."
+    },
+    "standards": {
+      "heading": "Auf führenden Branchenstandards aufgebaut",
+      "subheading": "Als Pilotpartner erhalten deine Kunden Berichte, die auf derselben Technologie basieren, der führende Accessibility-Teams weltweit vertrauen."
+    },
+    "formSection": {
+      "titleFull": "Pilotprogramm ist ausgelastet",
+      "title": "Sichere deinen Platz – nur noch {remaining} frei",
+      "subtitleFull": "Wir nehmen derzeit keine neuen Bewerbungen an.",
+      "subtitle": "Kurzes Qualifizierungsformular — wir lesen jede Bewerbung persönlich."
+    },
+    "form": {
+      "agencyName": "Agenturname",
+      "website": "Agenturwebsite",
+      "email": "Geschäftliche E-Mail",
+      "clientSites": "Wie viele Kundenwebsites betreust du derzeit?",
+      "selectRange": "Bereich auswählen",
+      "reviewNotice": "Deine Bewerbung wird innerhalb von 24 Stunden geprüft. Wir respektieren deinen Posteingang.",
+      "submit": "Meinen Platz sichern – nur noch {remaining, plural, one {# Platz} other {# Plätze}} frei",
+      "sending": "Wird gesendet…",
+      "privacy": "Deine Daten sind sicher. Wir hassen Spam genauso wie du."
+    },
+    "errors": {
+      "companyName": "Bitte gib den Namen deiner Agentur oder Firma ein",
+      "email": "Bitte gib eine gültige geschäftliche E-Mail ein",
+      "agencyWebsite": "Bitte gib eine gültige Website-URL ein",
+      "clientSites": "Bitte wähle aus, wie viele Kundenwebsites du betreust",
+      "fixFields": "Bitte korrigiere die markierten Felder und versuche es erneut.",
+      "rateLimited": "Zu viele Bewerbungen aus diesem Netzwerk. Bitte versuche es in einer Stunde erneut oder schreibe an info@vexnexa.com.",
+      "programFull": "Das Pilot Partnerprogramm ist derzeit voll. Trage dich in die Warteliste ein; wir melden uns, wenn ein Platz frei wird.",
+      "saveFailed": "Wir konnten deine Bewerbung nicht speichern. Bitte versuche es erneut oder schreibe an info@vexnexa.com.",
+      "confirmationFailed": "Deine Bewerbung wurde gespeichert, aber die Bestätigungs-E-Mail konnte nicht gesendet werden. Bitte prüfe deine E-Mail-Adresse oder schreibe direkt an info@vexnexa.com.",
+      "adminNotifyFailed": "Deine Bewerbung wurde gespeichert und die Bestätigungs-E-Mail gesendet, aber die interne Benachrichtigung ist fehlgeschlagen. Bitte schreibe direkt an info@vexnexa.com, damit wir sofort nachfassen können."
+    },
+    "success": {
+      "title": "Danke! Deine Pilotpartner-Bewerbung ist eingegangen.",
+      "body": "Wir melden uns innerhalb von 24 Stunden, um die nächsten Schritte zu besprechen.",
+      "ctaSample": "White-Label-Beispielbericht ansehen",
+      "ctaWhiteLabel": "White-Label-Möglichkeiten erkunden"
+    },
+    "waitlist": {
+      "title": "Programm ist voll",
+      "body": "Die Pilotpartnerplätze sind vergeben. Trage dich in die Warteliste ein; wir kontaktieren dich, wenn ein Platz frei wird.",
+      "cta": "Warteliste beitreten",
+      "orEmail": "Oder per E-Mail"
     }
   }
 }

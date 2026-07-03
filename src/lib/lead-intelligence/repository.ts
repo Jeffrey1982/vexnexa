@@ -187,7 +187,7 @@ type FreeScanLeadCaptureInput = {
   email: string;
   url: string;
   phase: "done" | "error" | "rate_limited";
-  locale: "en" | "nl";
+  locale: "en" | "nl" | "de" | "fr" | "es" | "pt";
   clientIp: string;
   result?: {
     score: number;

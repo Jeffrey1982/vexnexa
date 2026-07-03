@@ -1,20 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import type { PartnerApplyState } from "@/app/actions/partner-application";
-
-function FieldError({ id, message }: { id: string; message?: string }) {
-  if (!message) return null;
-  return (
-    <p id={id} className="mt-1 text-sm text-destructive" role="alert">
-      {message}
-    </p>
-  );
-}
 
 type PartnerApplicationFormProps = {
   formAction: (payload: FormData) => void;
@@ -29,7 +21,30 @@ export function PartnerApplicationForm({
   pending,
   remaining,
 }: PartnerApplicationFormProps) {
+  const t = useTranslations("partnerApply");
   const fe = state.ok ? undefined : state.fieldErrors;
+
+  // Field errors arrive as key names within partnerApply.errors so they
+  // render in the visitor's language.
+  const fieldError = (field: string): string | undefined => {
+    const key = fe?.[field];
+    return key ? t(`errors.${key}` as Parameters<typeof t>[0]) : undefined;
+  };
+
+  const errorFor = (field: string, id: string) => {
+    const message = fieldError(field);
+    if (!message) return null;
+    return (
+      <p id={id} className="mt-1 text-sm text-destructive" role="alert">
+        {message}
+      </p>
+    );
+  };
+
+  const serverError =
+    !state.ok && state.errorKey
+      ? t(`errors.${state.errorKey}` as Parameters<typeof t>[0])
+      : null;
 
   return (
     <form action={formAction} className="relative mx-auto max-w-xl space-y-6" noValidate>
@@ -47,26 +62,26 @@ export function PartnerApplicationForm({
         />
       </div>
 
-      {!state.ok && state.error ? (
+      {serverError ? (
         <div
           className={
-            state.programFull
+            !state.ok && state.programFull
               ? "rounded-lg border border-orange-500/30 bg-orange-500/5 px-4 py-3 text-sm text-orange-800 dark:text-orange-200"
               : "rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
           }
           role="alert"
         >
-          <p>{state.error}</p>
-          {state.programFull ? (
+          <p>{serverError}</p>
+          {!state.ok && state.programFull ? (
             <Button variant="outline" size="sm" className="mt-3" asChild>
-              <Link href="/contact?from=pilot-waitlist">Join the waitlist</Link>
+              <Link href="/contact?from=pilot-waitlist">{t("waitlist.cta")}</Link>
             </Button>
           ) : null}
         </div>
       ) : null}
 
       <div className="space-y-2">
-        <Label htmlFor="companyName">Agency name</Label>
+        <Label htmlFor="companyName">{t("form.agencyName")}</Label>
         <Input
           id="companyName"
           name="companyName"
@@ -75,11 +90,11 @@ export function PartnerApplicationForm({
           aria-invalid={!!fe?.companyName}
           aria-describedby={fe?.companyName ? "companyName-error" : undefined}
         />
-        <FieldError id="companyName-error" message={fe?.companyName} />
+        {errorFor("companyName", "companyName-error")}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="agencyWebsite">Agency website</Label>
+        <Label htmlFor="agencyWebsite">{t("form.website")}</Label>
         <Input
           id="agencyWebsite"
           name="agencyWebsite"
@@ -91,11 +106,11 @@ export function PartnerApplicationForm({
           aria-invalid={!!fe?.agencyWebsite}
           aria-describedby={fe?.agencyWebsite ? "agencyWebsite-error" : undefined}
         />
-        <FieldError id="agencyWebsite-error" message={fe?.agencyWebsite} />
+        {errorFor("agencyWebsite", "agencyWebsite-error")}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">Work email</Label>
+        <Label htmlFor="email">{t("form.email")}</Label>
         <Input
           id="email"
           name="email"
@@ -105,11 +120,11 @@ export function PartnerApplicationForm({
           aria-invalid={!!fe?.email}
           aria-describedby={fe?.email ? "email-error" : undefined}
         />
-        <FieldError id="email-error" message={fe?.email} />
+        {errorFor("email", "email-error")}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="clientSites">How many client websites do you currently manage?</Label>
+        <Label htmlFor="clientSites">{t("form.clientSites")}</Label>
         <select
           id="clientSites"
           name="clientSites"
@@ -124,14 +139,14 @@ export function PartnerApplicationForm({
           aria-describedby={fe?.clientSites ? "clientSites-error" : undefined}
         >
           <option value="" disabled>
-            Select a range
+            {t("form.selectRange")}
           </option>
           <option value="1-5">1–5</option>
           <option value="6-20">6–20</option>
           <option value="21-50">21–50</option>
           <option value="50+">50+</option>
         </select>
-        <FieldError id="clientSites-error" message={fe?.clientSites} />
+        {errorFor("clientSites", "clientSites-error")}
       </div>
 
       <div className="space-y-3 pt-2">
@@ -139,10 +154,7 @@ export function PartnerApplicationForm({
           <span className="select-none text-base leading-none" aria-hidden="true">
             ✅
           </span>
-          <span>
-            Your application will be reviewed within{" "}
-            <strong className="font-medium text-foreground">24 hours</strong>. We respect your inbox.
-          </span>
+          <span>{t("form.reviewNotice")}</span>
         </p>
         <Button
           type="submit"
@@ -150,13 +162,9 @@ export function PartnerApplicationForm({
           className="h-14 w-full text-base font-semibold gradient-primary md:text-lg"
           disabled={pending}
         >
-          {pending
-            ? "Sending…"
-            : `Claim My Spot Now – Only ${remaining} Spot${remaining === 1 ? "" : "s"} Left`}
+          {pending ? t("form.sending") : t("form.submit", { remaining })}
         </Button>
-        <p className="text-center text-xs text-muted-foreground">
-          Your data is safe. We hate spam as much as you do.
-        </p>
+        <p className="text-center text-xs text-muted-foreground">{t("form.privacy")}</p>
       </div>
     </form>
   );

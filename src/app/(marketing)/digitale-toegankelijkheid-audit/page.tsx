@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2, ClipboardCheck, FileText, ScanSearch, ShieldC
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { localizedUrl } from "@/lib/marketing-seo";
+import { localizedUrl, resolveMarketingLocale, type MarketingLocale } from "@/lib/marketing-seo";
 
 const path = "/digitale-toegankelijkheid-audit";
 
@@ -77,8 +77,8 @@ const copy = {
   },
 };
 
-function JsonLd({ locale }: { locale: "nl" | "en" }) {
-  const c = copy[locale];
+function JsonLd({ locale }: { locale: MarketingLocale }) {
+  const c = locale === "nl" ? copy.nl : copy.en;
   return (
     <script
       type="application/ld+json"
@@ -100,8 +100,8 @@ function JsonLd({ locale }: { locale: "nl" | "en" }) {
 
 export default async function AccessibilityAuditPage() {
   const h = await headers();
-  const locale = h.get("x-vn-locale") === "nl" ? "nl" : "en";
-  const c = copy[locale];
+  const locale = resolveMarketingLocale(h.get("x-vn-locale"));
+  const c = locale === "nl" ? copy.nl : copy.en;
 
   return (
     <>

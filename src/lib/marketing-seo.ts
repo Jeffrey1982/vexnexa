@@ -12,12 +12,16 @@ export const SITE_URL = "https://vexnexa.com";
 
 export const MARKETING_LOCALES = ["en", "nl", "de", "fr", "es", "pt"] as const;
 export type MarketingLocale = (typeof MARKETING_LOCALES)[number];
-export const INDEXABLE_MARKETING_LOCALES = ["en", "nl"] as const;
+export const INDEXABLE_MARKETING_LOCALES = ["en", "nl", "de", "fr", "es", "pt"] as const;
 export type IndexableMarketingLocale = (typeof INDEXABLE_MARKETING_LOCALES)[number];
 export const DEFAULT_MARKETING_LOCALE: IndexableMarketingLocale = "en";
 
 export function isMarketingLocale(value: string | undefined | null): value is MarketingLocale {
   return !!value && (MARKETING_LOCALES as readonly string[]).includes(value);
+}
+
+export function resolveMarketingLocale(value: string | undefined | null): MarketingLocale {
+  return isMarketingLocale(value) ? value : DEFAULT_MARKETING_LOCALE;
 }
 
 export function isIndexableMarketingLocale(

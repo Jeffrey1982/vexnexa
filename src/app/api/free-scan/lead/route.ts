@@ -15,7 +15,7 @@ const LeadSchema = z.object({
   email: z.string().trim().email().max(254),
   url: z.string().trim().min(1).max(2000),
   phase: z.enum(["done", "error", "rate_limited"]),
-  locale: z.enum(["en", "nl"]).default("en"),
+  locale: z.enum(["en", "nl", "de", "fr", "es", "pt"]).default("en"),
   result: z
     .object({
       score: z.coerce.number().int().min(0).max(100),

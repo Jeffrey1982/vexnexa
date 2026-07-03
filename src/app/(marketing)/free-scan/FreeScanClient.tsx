@@ -81,7 +81,7 @@ function EmailCapture({
           email: email.trim(),
           url,
           phase,
-          locale: locale === "nl" ? "nl" : "en",
+          locale: ["en", "nl", "de", "fr", "es", "pt"].includes(locale) ? locale : "en",
           result: result
             ? {
                 score: result.score,

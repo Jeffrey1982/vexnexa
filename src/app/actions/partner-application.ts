@@ -47,11 +47,16 @@ const PartnerApplySchema = z.object({
   })
 });
 
+/**
+ * Errors are returned as key names within the `partnerApply.errors` i18n
+ * namespace so the client renders them in the visitor's language.
+ */
 export type PartnerApplyState =
   | { ok: true }
   | {
       ok: false;
-      error?: string;
+      errorKey?: string;
+      /** Field name → error key within partnerApply.errors */
       fieldErrors?: Record<string, string>;
       /** True when capacity (approved partners) has been reached */
       programFull?: boolean;
@@ -86,10 +91,7 @@ export async function submitPartnerApplication(
 
   const rate = await checkKeyedRateLimitDistributed(`partner-apply:${ip}`, 3, 60 * 60 * 1000);
   if (!rate.success) {
-    return {
-      ok: false,
-      error: 'Too many applications from this network. Please try again in an hour or email info@vexnexa.com.'
-    };
+    return { ok: false, errorKey: 'rateLimited' };
   }
 
   const raw = {
@@ -103,18 +105,16 @@ export async function submitPartnerApplication(
 
   const parsed = PartnerApplySchema.safeParse(raw);
   if (!parsed.success) {
+    // Field name doubles as the error key in partnerApply.errors — every
+    // field has exactly one user-facing validation message.
     const fieldErrors: Record<string, string> = {};
     for (const issue of parsed.error.issues) {
       const path = issue.path[0];
       if (typeof path === 'string' && !fieldErrors[path]) {
-        fieldErrors[path] = issue.message;
+        fieldErrors[path] = path;
       }
     }
-    return {
-      ok: false,
-      error: 'Please fix the highlighted fields and try again.',
-      fieldErrors
-    };
+    return { ok: false, errorKey: 'fixFields', fieldErrors };
   }
 
   const d = parsed.data;
@@ -129,12 +129,7 @@ export async function submitPartnerApplication(
     console.error('Partner application capacity check failed:', e);
   }
   if (approvedCount >= maxSpots) {
-    return {
-      ok: false,
-      error:
-        'The Pilot Partner program is currently full. Join the waitlist and we will reach out if a spot opens.',
-      programFull: true,
-    };
+    return { ok: false, errorKey: 'programFull', programFull: true };
   }
 
   try {
@@ -155,10 +150,7 @@ export async function submitPartnerApplication(
     });
   } catch (e) {
     console.error('Partner application DB error:', e);
-    return {
-      ok: false,
-      error: 'We could not save your application. Please try again or email info@vexnexa.com.'
-    };
+    return { ok: false, errorKey: 'saveFailed' };
   }
 
   let adminEmailError: unknown = null;
@@ -195,19 +187,11 @@ export async function submitPartnerApplication(
   }
 
   if (confirmationEmailError) {
-    return {
-      ok: false,
-      error:
-        'Your application was saved, but the confirmation email could not be sent. Please check your email address or email info@vexnexa.com directly.'
-    };
+    return { ok: false, errorKey: 'confirmationFailed' };
   }
 
   if (adminEmailError) {
-    return {
-      ok: false,
-      error:
-        'Your application was saved and your confirmation email was sent, but the internal notification failed. Please email info@vexnexa.com directly so we can follow up immediately.'
-    };
+    return { ok: false, errorKey: 'adminNotifyFailed' };
   }
 
   revalidatePath('/partner-apply');

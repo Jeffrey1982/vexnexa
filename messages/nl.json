@@ -4701,30 +4701,30 @@
   "bfsgPage": {
     "meta": {
       "title": "German Accessibility Act (BFSG) Compliance — Check & Monitor",
-      "description": "The German Accessibility Act (BFSG) is in force since June 2025. Check and continuously monitor your website's BFSG/WCAG compliance and keep audit-ready evidence."
+      "description": "De Duitse toegankelijkheidswet (BFSG) geldt sinds juni 2025. Controleer en monitor continu de BFSG/WCAG-naleving van je website en bewaar audit-klaar bewijs."
     },
     "hero": {
       "badge": "BFSG · Germany's Accessibility Act · in force since June 2025",
-      "title": "BFSG compliance for your website — checked and monitored",
-      "subtitle": "Germany's Accessibility Reinforcement Act (BFSG) requires many businesses to make their digital services accessible. VexNexa continuously checks your site against WCAG / EN 301 549, keeps your accessibility statement current, and delivers audit-ready evidence.",
+      "title": "BFSG-naleving voor je website — gecontroleerd en gemonitord",
+      "subtitle": "De Duitse toegankelijkheidswet (BFSG) verplicht veel bedrijven om hun digitale diensten toegankelijk te maken. VexNexa toetst je site continu aan WCAG / EN 301 549, houdt je toegankelijkheidsverklaring actueel en levert audit-klaar bewijs.",
       "ctaPrimary": "Start free scan",
       "ctaSecondary": "View sample report"
     },
     "obligation": {
       "eyebrow": "Why it matters",
       "title": "The BFSG is mandatory — and enforced",
-      "p1": "Since 28 June 2025, the BFSG (Barrierefreiheitsstärkungsgesetz) requires consumer-facing digital products and services in Germany — online shops, banking, transport ticketing, e-books, telecom — to be accessible to WCAG 2.1 AA via EN 301 549. Market surveillance authorities can investigate and impose penalties.",
-      "p2": "The hard part isn't a one-off check — it's staying compliant as your shop, content and templates change. Continuous monitoring catches new barriers within days instead of at the next audit."
+      "p1": "Sinds 28 juni 2025 verplicht de BFSG (Barrierefreiheitsstärkungsgesetz) consumentgerichte digitale producten en diensten in Duitsland — webshops, bankieren, vervoerstickets, e-books, telecom — om toegankelijk te zijn volgens WCAG 2.1 AA via EN 301 549. Markttoezichthouders kunnen onderzoeken instellen en boetes opleggen.",
+      "p2": "Het lastige is niet de eenmalige check — het is compliant blijven terwijl je shop, content en templates veranderen. Continue monitoring vangt nieuwe drempels binnen dagen op in plaats van bij de volgende audit."
     },
     "capabilities": {
       "title": "Built for BFSG compliance",
       "subtitle": "Everything you need to reach and keep BFSG conformance.",
       "c1Title": "Continuous BFSG monitoring",
-      "c1Body": "Scheduled WCAG 2.1/2.2 scans track your whole site and flag regressions the moment a release or content change introduces a barrier.",
+      "c1Body": "Geplande WCAG 2.1/2.2-scans volgen je hele site en signaleren regressies zodra een release of contentwijziging een drempel introduceert.",
       "c2Title": "Keep your accessibility statement current",
       "c2Body": "Automated scans surface new issues fast, so your published accessibility statement reflects reality — exactly what the BFSG expects.",
       "c3Title": "Audit-ready evidence",
-      "c3Body": "Time-stamped PDF/DOCX reports with WCAG severity breakdown and remediation guidance — ready for market surveillance, customers and internal audit."
+      "c3Body": "Tijdgestempelde PDF/DOCX-rapporten met WCAG-ernstindeling en hersteladvies — klaar voor markttoezicht, klanten en interne audit."
     },
     "how": {
       "title": "From scan to BFSG conformance in three steps",
@@ -4738,17 +4738,17 @@
     "faq": {
       "title": "Frequently asked questions",
       "q1": "Who must comply with the BFSG?",
-      "a1": "Businesses offering consumer-facing digital products or services in Germany — e-commerce, banking, transport ticketing, e-books, telecom and more. Micro-enterprises (under 10 staff and under €2M turnover) are exempt for services.",
+      "a1": "Bedrijven die consumentgerichte digitale producten of diensten aanbieden in Duitsland — e-commerce, bankieren, vervoerstickets, e-books, telecom en meer. Micro-ondernemingen (minder dan 10 medewerkers en minder dan €2 mln omzet) zijn vrijgesteld voor diensten.",
       "q2": "Since when does the BFSG apply?",
       "a2": "The BFSG has applied since 28 June 2025, implementing the European Accessibility Act in German law.",
       "q3": "Does this replace a manual audit?",
-      "a3": "No — automated monitoring continuously covers the testable criteria and flags regressions fast. Combine it with periodic manual review for full conformance.",
+      "a3": "Nee — geautomatiseerde monitoring dekt continu de toetsbare criteria en signaleert regressies snel. Combineer het met periodieke handmatige review voor volledige conformiteit.",
       "q4": "Is our data stored in the EU?",
       "a4": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and only scans publicly accessible content. No personal data is stored."
     },
     "cta": {
       "title": "Make your website BFSG-compliant",
-      "subtitle": "Start with a free scan and see exactly where you stand. No meetings required.",
+      "subtitle": "Start met een gratis scan en zie precies waar je staat. Geen afspraken nodig.",
       "button": "Start free scan"
     }
   },
@@ -4756,7 +4756,7 @@
     "shared": {
       "strengthsTitle": "What you get with VexNexa",
       "s1Title": "Real WCAG 2.2 code scanning — not an overlay",
-      "s1Body": "We analyse your actual markup and flag the issues to fix at the source. No widgets or scripts are injected into your site.",
+      "s1Body": "We analyseren je daadwerkelijke markup en rapporteren de problemen om bij de bron op te lossen. Er worden geen widgets of scripts in je site geïnjecteerd.",
       "s2Title": "Transparent, self-serve pricing",
       "s2Body": "Start free; paid plans from €34.95/month incl. VAT. Upgrade in a click — no enterprise sales process.",
       "s3Title": "White-label reports for agencies",
@@ -4776,25 +4776,25 @@
     "accessibe": {
       "meta": {
         "title": "accessiBe Alternative — Real WCAG Scanning, No Overlay",
-        "description": "Looking for an accessiBe alternative? VexNexa scans your code for WCAG 2.2 issues to fix at the source — no overlay widget. White-label reports, EU-hosted, start free."
+        "description": "Op zoek naar een accessiBe-alternatief? VexNexa scant je code op WCAG 2.2-problemen om bij de bron op te lossen — geen overlay-widget. White-label rapporten, EU-gehost, gratis starten."
       },
       "hero": {
         "badge": "VexNexa vs. overlays",
         "title": "A genuine accessiBe alternative",
-        "subtitle": "accessiBe is an accessibility overlay. VexNexa takes the opposite approach: we scan your real code so you can fix WCAG issues properly — the method the accessibility community recommends."
+        "subtitle": "accessiBe is een toegankelijkheidsoverlay. VexNexa kiest de omgekeerde aanpak: we scannen je echte code zodat je WCAG-problemen goed kunt oplossen — de methode die de toegankelijkheidsgemeenschap aanbeveelt."
       },
-      "intro": "Overlay widgets add an extra script on top of your site. Many accessibility experts and assistive-technology users have raised concerns that overlays don't deliver true conformance and can get in the way. VexNexa instead reports the actual WCAG violations in your code, with guidance to fix them at the source.",
+      "intro": "Overlay-widgets voegen een extra script toe bovenop je site. Veel toegankelijkheidsexperts en gebruikers van hulptechnologie hebben zorgen geuit dat overlays geen echte conformiteit leveren en in de weg kunnen zitten. VexNexa rapporteert juist de daadwerkelijke WCAG-schendingen in je code, met advies om ze bij de bron op te lossen.",
       "r1Title": "Fix the root cause, not a band-aid",
       "r1Body": "Get the real WCAG 2.2 violations with code-level guidance — durable conformance, not a layer on top.",
       "r2Title": "Nothing injected into your site",
-      "r2Body": "No third-party script on your pages. Your performance, security and UX stay yours.",
+      "r2Body": "Geen third-party script op je pagina's. Je performance, beveiliging en UX blijven van jou.",
       "r3Title": "Evidence you can defend",
       "r3Body": "Audit-ready PDF/DOCX reports for compliance, procurement and EAA readiness.",
       "faq": {
         "q1": "Is VexNexa an overlay like accessiBe?",
-        "a1": "No. VexNexa never injects a widget or script. We scan your code and report the WCAG issues to fix at the source.",
+        "a1": "Nee. VexNexa injecteert nooit een widget of script. We scannen je code en rapporteren de WCAG-problemen om bij de bron op te lossen.",
         "q2": "Can any tool make my site compliant automatically?",
-        "a2": "No tool — overlay or scanner — can guarantee full compliance automatically. VexNexa shows exactly what to fix; real accessibility comes from correcting the code.",
+        "a2": "Geen enkele tool — overlay of scanner — kan volledige naleving automatisch garanderen. VexNexa laat precies zien wat je moet oplossen; echte toegankelijkheid komt van het corrigeren van de code.",
         "q3": "Do you offer white-label reports?",
         "a3": "Yes — Pro and Agency plans export branded PDF/DOCX reports under your own logo."
       }
@@ -4807,9 +4807,9 @@
       "hero": {
         "badge": "VexNexa vs. enterprise suites",
         "title": "A focused Siteimprove alternative",
-        "subtitle": "Siteimprove is a broad enterprise suite. VexNexa is a focused, self-serve WCAG monitor with white-label reports and transparent pricing — ideal for agencies and growing teams."
+        "subtitle": "Siteimprove is een brede enterprise-suite. VexNexa is een gerichte self-service WCAG-monitor met white-label rapporten en transparante prijzen — ideaal voor bureaus en groeiende teams."
       },
-      "intro": "You don't always need a full enterprise platform — and its sales process — to stay WCAG-compliant. VexNexa gives you continuous monitoring, audit-ready reports and white-label exports at a transparent price you can start today.",
+      "intro": "Je hebt niet altijd een volledig enterprise-platform — en het bijbehorende salestraject — nodig om WCAG-compliant te blijven. VexNexa geeft je continue monitoring, audit-klare rapporten en white-label exports tegen een transparante prijs waarmee je vandaag kunt starten.",
       "r1Title": "Transparent pricing, no sales calls",
       "r1Body": "Start free; paid plans from €34.95/month incl. VAT. Upgrade in a click whenever you're ready.",
       "r2Title": "White-label for agencies",
@@ -4818,12 +4818,208 @@
       "r3Body": "Self-serve from day one: enter a URL, get an audit-ready report, schedule monitoring.",
       "faq": {
         "q1": "Is VexNexa a full enterprise platform?",
-        "a1": "VexNexa is focused on WCAG scanning, monitoring and reporting. It's lighter and faster to adopt than a broad enterprise suite, with transparent self-serve pricing.",
+        "a1": "VexNexa richt zich op WCAG-scannen, monitoren en rapporteren. Het is lichter en sneller in gebruik te nemen dan een brede enterprise-suite, met transparante self-service prijzen.",
         "q2": "Can I white-label the reports?",
-        "a2": "Yes — Pro and Agency plans let you brand PDF/DOCX reports with your own logo and colours.",
+        "a2": "Ja — met Pro- en Agency-abonnementen voorzie je PDF/DOCX-rapporten van je eigen logo en kleuren.",
         "q3": "Is my data stored in the EU?",
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }
+    }
+  },
+  "pilotPage": {
+    "meta": {
+      "title": "Pilot Partner-programma | Toegankelijkheidsmonitoring & rapportage",
+      "description": "Meld je aan als VexNexa-pilotpartner: de eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs, een directe lijn met de oprichter en inspraak op de roadmap."
+    },
+    "hero": {
+      "badge": "Beperkt pilotprogramma",
+      "title": "Word VexNexa-",
+      "titleHighlight": "pilotpartner",
+      "subtitle": "De eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd in plaats van €99,95/mnd), een directe lijn met de oprichter en inspraak op de roadmap — terwijl je vanaf dag één white-label toegankelijkheidsrapporten aan je klanten levert.",
+      "ctaApply": "Meld je aan voor de pilot",
+      "ctaSample": "Bekijk voorbeeldrapport",
+      "note": "Beperkt tot 10 pilotplekken. Meest geschikt voor bureaus met live klantsites. Begin met één site — geen langetermijnverplichting."
+    },
+    "audiences": {
+      "title": "Voor wie dit is",
+      "subtitle": "De pilot is ontworpen voor teams die echte websites beheren en een praktische toegankelijkheidsworkflow willen — geen eenmalige scan.",
+      "a1": {
+        "title": "Bureaus en digitale partners",
+        "description": "Je beheert klantwebsites en hebt een herhaalbare manier nodig om toegankelijkheid te scannen, rapporteren en monitoren. De pilot geeft je een echte workflow om met je team en klanten te testen."
+      },
+      "a2": {
+        "title": "Instellingen en publieksgerichte teams",
+        "description": "Je beheert websites voor een breed publiek — onderwijs, overheid, zorg, non-profits. De pilot helpt je je toegankelijkheidsbasis te begrijpen en verbeteringen door de tijd te volgen."
+      },
+      "a3": {
+        "title": "EU-gerichte bedrijven met compliance-verantwoordelijkheid",
+        "description": "Je hebt doorlopend toezicht op toegankelijkheid nodig voor EAA-gereedheid of intern beleid. De pilot geeft je monitoring, bewijs van verbetering en duidelijke prioritering."
+      }
+    },
+    "benefits": {
+      "title": "Wat pilotpartners krijgen",
+      "subtitle": "Begin met één live site, draai je eerste scan en zie de volledige rapportageworkflow — met directe ondersteuning van het VexNexa-team.",
+      "b1": {
+        "title": "Scan- en rapportageworkflows",
+        "description": "Draai WCAG 2.2-scans op echte sites en genereer gestructureerde rapporten met op ernst gerangschikte problemen en bruikbaar advies."
+      },
+      "b2": {
+        "title": "Branded deliverables",
+        "description": "Exporteer white-label PDF- en DOCX-rapporten onder je eigen logo — klaar om te delen met klanten, stakeholders of management."
+      },
+      "b3": {
+        "title": "Doorlopende monitoring",
+        "description": "Stel terugkerende scans in om regressies op te vangen na redesigns, contentwijzigingen of nieuwe releases. Volg scores door de tijd."
+      },
+      "b4": {
+        "title": "Directe feedbackloop",
+        "description": "Deel wat werkt, wat niet, en wat je zou willen zien. Pilotpartners hebben een directe lijn met de oprichter."
+      },
+      "b5": {
+        "title": "Vroege inspraak op verbeteringen",
+        "description": "Jouw feedback bepaalt komende features. Pilotpartners beïnvloeden de roadmap op basis van echt gebruik."
+      },
+      "b6": {
+        "title": "Hulp bij de setup",
+        "description": "We helpen je op weg — van je eerste scan tot terugkerende monitoring — zodat je vanaf dag één productief bent."
+      }
+    },
+    "expectations": {
+      "title": "Wat we terugvragen",
+      "subtitle": "Dit is een samenwerkingspartnerschap. We waarderen je tijd en feedback — geen verplichtingen behalve eerlijke input.",
+      "e1": {
+        "title": "Eerlijke productfeedback",
+        "description": "Vertel ons wat werkt, wat verwarrend is en wat er mist. We waarderen directe, praktische input."
+      },
+      "e2": {
+        "title": "Een kort feedbackmoment",
+        "description": "Na je eerste gebruik plannen we een kort gesprek om van je ervaring te leren."
+      },
+      "e3": {
+        "title": "Optionele samenwerkingsreferentie",
+        "description": "Als de pilot nuttig is, vragen we mogelijk of we de samenwerking mogen noemen — alleen met jouw expliciete toestemming."
+      },
+      "e4": {
+        "title": "Optionele casestudy of logovermelding",
+        "description": "Nooit vanzelfsprekend. Alleen als jij je er prettig bij voelt en er wederzijdse waarde in ziet."
+      }
+    },
+    "agency": {
+      "eyebrow": "Voor bureaus",
+      "title": "Waarom dit goed werkt voor bureaus",
+      "body": "Beheer je klantwebsites, dan geeft de pilot je een echte workflow om te testen — van scannen en rapporteren tot doorlopende monitoring. Zie hoe VexNexa in je bestaande proces past voordat je je committeert.",
+      "ctaApply": "Meld je aan als bureaupartner",
+      "ctaLearn": "Meer over gebruik door bureaus",
+      "p1": "Draai scans op klantwebsites en krijg binnen minuten een gestructureerd WCAG 2.2-rapport",
+      "p2": "Exporteer branded PDF- en DOCX-rapporten met het logo en de kleuren van je bureau",
+      "p3": "Prioriteer problemen op ernst zodat klanten weten waar te beginnen",
+      "p4": "Plan terugkerende scans om toegankelijkheid door de tijd te monitoren",
+      "p5": "Beheer meerdere klantsites vanuit één dashboard",
+      "p6": "Verken white-label opleverworkflows voor klantgerichte rapporten"
+    },
+    "process": {
+      "title": "Wat je kunt verwachten",
+      "subtitle": "Het proces is eenvoudig. Meld je aan, word ingericht en gebruik VexNexa op een echte site.",
+      "s1": {
+        "title": "Aanmelden",
+        "description": "Vier velden: bureaunaam, website, e-mail en hoeveel klantsites je beheert. Duurt nog geen minuut."
+      },
+      "s2": {
+        "title": "Wij beoordelen de match",
+        "description": "We kijken of VexNexa praktisch in je workflow past en nemen contact op met vervolgstappen."
+      },
+      "s3": {
+        "title": "Toegang en onboarding",
+        "description": "Na acceptatie scan je een live site, bekijk je je eerste rapport en richt je monitoring in — met hands-on ondersteuning."
+      },
+      "s4": {
+        "title": "Gebruik het op een echte site",
+        "description": "Draai de pilot op echte klant- of organisatiesites. Deel onderweg je feedback."
+      }
+    },
+    "notes": {
+      "title": "Belangrijke opmerkingen",
+      "n1": "Geautomatiseerde scans bieden waardevolle dekking maar vervangen geen volledige handmatige audit. Afhankelijk van je eisen kan aanvullend testen nodig zijn.",
+      "n2": "De pilotbeschikbaarheid is beperkt. VexNexa kan aanmeldingen voorrang geven die goed passen bij de huidige featureset.",
+      "n3": "De pilot is een echte productervaring — geen bètatest. Je gebruikt dezelfde tools en workflows als betalende klanten.",
+      "n4": "Publieke referenties, logogebruik of casestudy's zijn nooit vanzelfsprekend. Zulke samenwerking vereist jouw expliciete toestemming."
+    },
+    "finalCta": {
+      "title": "Interesse om pilotpartner te worden?",
+      "subtitle": "Vertel ons over je bureau. We beoordelen elke aanmelding en streven ernaar binnen 1 werkdag te reageren.",
+      "ctaApply": "Meld je aan voor de pilot",
+      "ctaSample": "Bekijk voorbeeldrapport",
+      "ctaQuestion": "Stel een vraag"
+    }
+  },
+  "partnerApply": {
+    "hero": {
+      "badge": "Exclusieve pilot",
+      "title": "Doe mee met het exclusieve Pilot Partner-programma",
+      "subtitleFull": "Alle pilotplekken zijn momenteel gevuld. Zet je op de wachtlijst en sta vooraan als er capaciteit vrijkomt.",
+      "subtitle": "Nog maar {remaining} plekken • 3 maanden het Agency-abonnement voor de Pro-prijs, white-label rapporten onder jouw merk en een directe lijn met de oprichter",
+      "ctaClaim": "Claim nu mijn plek",
+      "ctaWaitlist": "Zet me op de wachtlijst",
+      "standardsIntro": "Je levert professionele white-label toegankelijkheidsrapporten powered by axe-core® en in lijn met WCAG 2.2 & EN 301 549",
+      "standardsFootnote": "Alleen ter referentie. VexNexa wordt niet onderschreven door W3C of Deque."
+    },
+    "counter": {
+      "full": "Programma is vol –",
+      "joinWaitlist": "Zet me op de wachtlijst",
+      "left": "Nog maar {count, plural, one {# plek} other {# plekken}} beschikbaar"
+    },
+    "value": {
+      "v1": "3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd in plaats van €99,95/mnd)",
+      "v2": "White-label rapporten onder je eigen merk",
+      "v3": "Een directe lijn met de oprichter",
+      "v4": "Directe inspraak op de roadmap",
+      "v5": "Hands-on hulp bij de setup vanaf je eerste scan",
+      "reviewNote": "Alle aanmeldingen worden binnen 24 uur handmatig beoordeeld."
+    },
+    "standards": {
+      "heading": "Gebouwd op toonaangevende standaarden",
+      "subheading": "Als pilotpartner ontvangen je klanten rapporten op basis van dezelfde technologie die toonaangevende toegankelijkheidsteams wereldwijd vertrouwen."
+    },
+    "formSection": {
+      "titleFull": "Pilotprogramma zit vol",
+      "title": "Verzeker je plek – nog maar {remaining} beschikbaar",
+      "subtitleFull": "We nemen op dit moment geen nieuwe aanmeldingen aan.",
+      "subtitle": "Kort kwalificatieformulier — we lezen elke aanmelding persoonlijk."
+    },
+    "form": {
+      "agencyName": "Bureaunaam",
+      "website": "Website van je bureau",
+      "email": "Zakelijk e-mailadres",
+      "clientSites": "Hoeveel klantwebsites beheer je op dit moment?",
+      "selectRange": "Kies een bereik",
+      "reviewNotice": "Je aanmelding wordt binnen 24 uur beoordeeld. We respecteren je inbox.",
+      "submit": "Claim nu mijn plek – nog maar {remaining, plural, one {# plek} other {# plekken}}",
+      "sending": "Versturen…",
+      "privacy": "Je gegevens zijn veilig. Wij haten spam net zo erg als jij."
+    },
+    "errors": {
+      "companyName": "Vul de naam van je bureau of bedrijf in",
+      "email": "Vul een geldig zakelijk e-mailadres in",
+      "agencyWebsite": "Vul een geldige website-URL in",
+      "clientSites": "Kies hoeveel klantwebsites je beheert",
+      "fixFields": "Corrigeer de gemarkeerde velden en probeer opnieuw.",
+      "rateLimited": "Te veel aanmeldingen vanaf dit netwerk. Probeer het over een uur opnieuw of mail info@vexnexa.com.",
+      "programFull": "Het Pilot Partner-programma zit momenteel vol. Zet je op de wachtlijst en we nemen contact op als er een plek vrijkomt.",
+      "saveFailed": "We konden je aanmelding niet opslaan. Probeer het opnieuw of mail info@vexnexa.com.",
+      "confirmationFailed": "Je aanmelding is opgeslagen, maar de bevestigingsmail kon niet worden verzonden. Controleer je e-mailadres of mail direct naar info@vexnexa.com.",
+      "adminNotifyFailed": "Je aanmelding is opgeslagen en je bevestigingsmail is verzonden, maar de interne melding is mislukt. Mail direct naar info@vexnexa.com zodat we meteen kunnen opvolgen."
+    },
+    "success": {
+      "title": "Bedankt! Je Pilot Partner-aanmelding is ontvangen.",
+      "body": "We nemen binnen 24 uur contact met je op over de vervolgstappen.",
+      "ctaSample": "Bekijk voorbeeld white-label rapport",
+      "ctaWhiteLabel": "Verken white-label mogelijkheden"
+    },
+    "waitlist": {
+      "title": "Programma is vol",
+      "body": "De pilotplekken zijn vergeven. Zet je op de wachtlijst en we nemen contact op zodra er een plek vrijkomt.",
+      "cta": "Zet me op de wachtlijst",
+      "orEmail": "Of mail"
     }
   }
 }

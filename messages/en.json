@@ -4654,5 +4654,201 @@
         "a3": "Yes. VexNexa is hosted in the EU (AWS Frankfurt) and stores no personal data."
       }
     }
+  },
+  "pilotPage": {
+    "meta": {
+      "title": "Pilot Partner Program | Accessibility Monitoring & Reporting",
+      "description": "Apply to become a VexNexa pilot partner: the first 10 agencies get 3 months of the Agency plan for the Pro price, a direct line to the founder, and input on the roadmap."
+    },
+    "hero": {
+      "badge": "Limited pilot program",
+      "title": "Become a VexNexa",
+      "titleHighlight": "pilot partner",
+      "subtitle": "The first 10 agencies get 3 months of the Agency plan for the Pro price (€34.95/mo instead of €99.95/mo), a direct line to the founder, and input on the roadmap — while delivering white-label accessibility reports to their clients from day one.",
+      "ctaApply": "Apply for pilot access",
+      "ctaSample": "View sample report",
+      "note": "Limited to 10 pilot spots. Best fit for agencies managing live client websites. Start with one site — no long-term commitment."
+    },
+    "audiences": {
+      "title": "Who this is for",
+      "subtitle": "The pilot is designed for teams that manage real websites and want a practical accessibility workflow — not a one-time scan.",
+      "a1": {
+        "title": "Agencies and digital partners",
+        "description": "You manage client websites and need a repeatable way to scan, report, and monitor accessibility. The pilot gives you a real workflow to test with your team and clients."
+      },
+      "a2": {
+        "title": "Institutions and public-facing teams",
+        "description": "You run websites that serve a broad audience — education, government, healthcare, nonprofits. The pilot helps you understand your accessibility baseline and track improvements over time."
+      },
+      "a3": {
+        "title": "EU-facing companies managing compliance",
+        "description": "You need ongoing accessibility oversight for EAA readiness or internal policy. The pilot gives you monitoring, evidence of improvement, and clear issue prioritisation."
+      }
+    },
+    "benefits": {
+      "title": "What pilot partners get",
+      "subtitle": "Start with one live site, run your first scan, and see the full reporting workflow — with direct support from the VexNexa team.",
+      "b1": {
+        "title": "Scan and reporting workflows",
+        "description": "Run WCAG 2.2 scans on real sites and generate structured reports with severity-ranked issues and actionable guidance."
+      },
+      "b2": {
+        "title": "Branded deliverables",
+        "description": "Export white-label PDF and DOCX reports under your own logo — ready to share with clients, stakeholders, or leadership."
+      },
+      "b3": {
+        "title": "Ongoing monitoring",
+        "description": "Set up recurring scans to catch regressions after redesigns, content changes, or new releases. Track scores over time."
+      },
+      "b4": {
+        "title": "Direct feedback loop",
+        "description": "Share what works, what doesn't, and what you'd like to see. Pilot partners have a direct line to the founder."
+      },
+      "b5": {
+        "title": "Early input on improvements",
+        "description": "Your feedback shapes upcoming features. Pilot partners influence the roadmap based on real-world usage."
+      },
+      "b6": {
+        "title": "Setup support",
+        "description": "We help you get started — from your first scan to recurring monitoring — so you're productive from day one."
+      }
+    },
+    "expectations": {
+      "title": "What we ask in return",
+      "subtitle": "This is a collaborative partnership. We value your time and feedback — no obligations beyond honest input.",
+      "e1": {
+        "title": "Honest product feedback",
+        "description": "Tell us what works, what's confusing, and what's missing. We value direct, practical input."
+      },
+      "e2": {
+        "title": "A short feedback check-in",
+        "description": "After your initial use, we'll schedule a brief check-in to learn from your experience."
+      },
+      "e3": {
+        "title": "Optional collaboration reference",
+        "description": "If the pilot is useful, we may ask if we can reference the collaboration — only with your explicit approval."
+      },
+      "e4": {
+        "title": "Optional case study or logo mention",
+        "description": "Never assumed. Only pursued if you're comfortable and see mutual value in sharing."
+      }
+    },
+    "agency": {
+      "eyebrow": "For agencies",
+      "title": "Why this works well for agencies",
+      "body": "If you manage client websites, the pilot gives you a real workflow to test — from scanning and reporting to ongoing monitoring. See how VexNexa fits your existing process before committing.",
+      "ctaApply": "Apply as an agency partner",
+      "ctaLearn": "Learn more about agency use",
+      "p1": "Run scans on client websites and get a structured WCAG 2.2 report in minutes",
+      "p2": "Export branded PDF and DOCX reports with your agency logo and colours",
+      "p3": "Prioritise issues by severity so clients know where to start",
+      "p4": "Schedule recurring scans to monitor accessibility over time",
+      "p5": "Manage multiple client sites from a single dashboard",
+      "p6": "Explore white-label delivery workflows for client-facing reports"
+    },
+    "process": {
+      "title": "What to expect",
+      "subtitle": "The process is straightforward. Apply, get set up, and start using VexNexa on a real site.",
+      "s1": {
+        "title": "Apply",
+        "description": "Four fields: agency name, website, email, and how many client sites you manage. Takes under a minute."
+      },
+      "s2": {
+        "title": "We review fit",
+        "description": "We look at whether VexNexa is a practical fit for your workflow and reach out with next steps."
+      },
+      "s3": {
+        "title": "Get access and onboarding",
+        "description": "Once accepted, you'll scan a live site, review your first report, and configure monitoring — with hands-on support."
+      },
+      "s4": {
+        "title": "Use it on a real site",
+        "description": "Run the pilot on real client or organisational sites. Share feedback as you go."
+      }
+    },
+    "notes": {
+      "title": "Important notes",
+      "n1": "Automated scans provide valuable coverage but do not replace a full manual audit. Depending on your requirements, additional testing may still be needed.",
+      "n2": "Pilot availability is limited. VexNexa may prioritise applications that represent a strong fit for the current feature set.",
+      "n3": "The pilot is a real product experience — not a beta test. You'll use the same tools and workflows available to paying customers.",
+      "n4": "Public references, logo use, or case studies are never assumed. Any collaboration of that kind requires your explicit approval."
+    },
+    "finalCta": {
+      "title": "Interested in becoming a pilot partner?",
+      "subtitle": "Tell us about your agency. We review every application and aim to respond within 1 business day.",
+      "ctaApply": "Apply for pilot access",
+      "ctaSample": "View sample report",
+      "ctaQuestion": "Ask a question"
+    }
+  },
+  "partnerApply": {
+    "hero": {
+      "badge": "Members-only pilot",
+      "title": "Join the Exclusive Pilot Partner Program",
+      "subtitleFull": "All pilot seats are currently filled. Join the waitlist to be first in line when capacity opens.",
+      "subtitle": "Only {remaining} spots remaining • 3 months of the Agency plan for the Pro price, white-label reports under your brand, and a direct line to the founder",
+      "ctaClaim": "Claim My Spot Now",
+      "ctaWaitlist": "Join the waitlist",
+      "standardsIntro": "You'll deliver professional white-label accessibility reports powered by axe-core® and aligned with WCAG 2.2 & EN 301 549",
+      "standardsFootnote": "For reference only. VexNexa is not endorsed by W3C or Deque."
+    },
+    "counter": {
+      "full": "Program is full –",
+      "joinWaitlist": "Join the waitlist",
+      "left": "Only {count, plural, one {# spot} other {# spots}} left"
+    },
+    "value": {
+      "v1": "3 months of the Agency plan for the Pro price (€34.95/mo instead of €99.95/mo)",
+      "v2": "White-label reports under your own brand",
+      "v3": "A direct line to the founder",
+      "v4": "Direct input on the roadmap",
+      "v5": "Hands-on setup support from your first scan",
+      "reviewNote": "All applications are manually reviewed within 24 hours."
+    },
+    "standards": {
+      "heading": "Built on Industry-Leading Standards",
+      "subheading": "As a Pilot Partner, your clients will receive reports powered by the same technology trusted by leading accessibility teams worldwide."
+    },
+    "formSection": {
+      "titleFull": "Pilot program at capacity",
+      "title": "Secure Your Spot – Only {remaining} Remaining",
+      "subtitleFull": "We are not accepting new applications right now.",
+      "subtitle": "Short qualifying form — we read every application personally."
+    },
+    "form": {
+      "agencyName": "Agency name",
+      "website": "Agency website",
+      "email": "Work email",
+      "clientSites": "How many client websites do you currently manage?",
+      "selectRange": "Select a range",
+      "reviewNotice": "Your application will be reviewed within 24 hours. We respect your inbox.",
+      "submit": "Claim My Spot Now – Only {remaining, plural, one {# Spot} other {# Spots}} Left",
+      "sending": "Sending…",
+      "privacy": "Your data is safe. We hate spam as much as you do."
+    },
+    "errors": {
+      "companyName": "Please enter your agency or company name",
+      "email": "Please enter a valid work email",
+      "agencyWebsite": "Please enter a valid website URL",
+      "clientSites": "Please select how many client websites you manage",
+      "fixFields": "Please fix the highlighted fields and try again.",
+      "rateLimited": "Too many applications from this network. Please try again in an hour or email info@vexnexa.com.",
+      "programFull": "The Pilot Partner program is currently full. Join the waitlist and we will reach out if a spot opens.",
+      "saveFailed": "We could not save your application. Please try again or email info@vexnexa.com.",
+      "confirmationFailed": "Your application was saved, but the confirmation email could not be sent. Please check your email address or email info@vexnexa.com directly.",
+      "adminNotifyFailed": "Your application was saved and your confirmation email was sent, but the internal notification failed. Please email info@vexnexa.com directly so we can follow up immediately."
+    },
+    "success": {
+      "title": "Thank you! Your Pilot Partner application has been received.",
+      "body": "We will contact you within 24 hours to discuss the next steps.",
+      "ctaSample": "View sample white-label report",
+      "ctaWhiteLabel": "Explore white-label possibilities"
+    },
+    "waitlist": {
+      "title": "Program is full",
+      "body": "Pilot partner seats are allocated. Join the waitlist and we will contact you if a spot becomes available.",
+      "cta": "Join the waitlist",
+      "orEmail": "Or email"
+    }
   }
 }
