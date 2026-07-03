@@ -5030,5 +5030,194 @@
       "cta": "Warteliste beitreten",
       "orEmail": "Oder per E-Mail"
     }
+  },
+  "seoPages": {
+    "overlayAlternative": {
+      "meta": {
+        "title": "Accessibility-Overlay-Alternative für echte WCAG-Fixes",
+        "description": "Eine praktische Alternative zu Accessibility-Overlays: scannen, überwachen, berichten und WCAG-Probleme an der Quelle beheben statt eine oberflächliche Widget-Schicht hinzuzufügen.",
+        "ogDescription": "Gehen Sie über Overlays hinaus mit WCAG-Scans, Monitoring, Reporting und Remediation-Workflows auf Quellcode-Ebene."
+      },
+      "badge": "Mehr als oberflächliche Widgets",
+      "title": "Eine Accessibility-Overlay-Alternative, die Probleme an der Quelle behebt",
+      "intro": "Ein Widget kann Besucherpräferenzen anbieten, löst aber oft keine strukturellen WCAG-Probleme in HTML, Interaktionen, Inhalten oder Komponenten. VexNexa konzentriert sich auf Erkennung, Nachweise, Priorisierung und Behebung an der Quelle.",
+      "primary": "Ansatz vergleichen",
+      "secondary": "WCAG-Scan ansehen",
+      "cards": [
+        {
+          "title": "Echte Seite scannen",
+          "description": "Finden Sie Probleme in Markup, Formularen, Kontrast, Labels, Überschriften und ARIA, statt nur visuelle Präferenzen anzubieten."
+        },
+        {
+          "title": "Regressionen überwachen",
+          "description": "Sehen Sie, wann neue Inhalte, Releases oder Skripte Barrierefreiheitsprobleme erneut einführen."
+        },
+        {
+          "title": "Behebbare Arbeit berichten",
+          "description": "Geben Sie Entwicklern und Stakeholdern klare Befunde mit WCAG-Kontext und Priorität."
+        }
+      ],
+      "comparisonTitle": "Overlay versus Workflow an der Quelle",
+      "comparison": [
+        {
+          "title": "Overlay",
+          "description": "Legt meist eine zusätzliche Schicht über bestehende Barrierefreiheitsprobleme."
+        },
+        {
+          "title": "VexNexa",
+          "description": "Macht Probleme sichtbar, damit Teams sie nachhaltig beheben können."
+        }
+      ]
+    },
+    "regressionTesting": {
+      "meta": {
+        "title": "Accessibility Regression Testing und WCAG-Monitoring",
+        "description": "Fangen Sie WCAG-Regressionen ab, bevor sie zu Compliance-Problemen werden. Überwachen Sie Releases, Inhaltsänderungen und Kundenseiten mit geplanten Barrierefreiheitsscans.",
+        "ogDescription": "Geplante WCAG-Scans, Alerts und Berichte für Teams, die Barrierefreiheit Release für Release stabil halten müssen."
+      },
+      "badge": "Kontinuierliches WCAG-Monitoring",
+      "title": "Accessibility Regression Testing für Teams, die Compliance nicht driften lassen können",
+      "intro": "Jedes Release, jede Kampagne, jedes Plugin und jede Inhaltsänderung kann neue Barrierefreiheitsprobleme verursachen. VexNexa überwacht wichtige Seiten und zeigt, was sich verändert hat.",
+      "primary": "Regressionen überwachen",
+      "secondary": "Für Agenturen",
+      "cards": [
+        {
+          "title": "Geplante Scans",
+          "description": "Scannen Sie wichtige Templates, Domains und Kundenwebsites regelmäßig nach Zeitplan."
+        },
+        {
+          "title": "Regressionsalarme",
+          "description": "Erhalten Sie Signale, wenn Scores fallen oder neue kritische WCAG-Probleme auftauchen."
+        },
+        {
+          "title": "Trendberichte",
+          "description": "Zeigen Sie Stakeholdern, ob Barrierefreiheit besser wird, stabil bleibt oder zurückfällt."
+        }
+      ],
+      "workflowTitle": "Vom einmaligen Audit zur laufenden Qualitätskontrolle",
+      "workflow": [
+        "Baseline festlegen",
+        "Neue Probleme erkennen",
+        "Prioritäten teilen",
+        "Behebung nachweisen"
+      ]
+    },
+    "accessibilityAudit": {
+      "meta": {
+        "title": "Digitales Barrierefreiheits-Audit für WCAG und EAA",
+        "description": "Lassen Sie Ihre Website auf WCAG 2.2 AA, EAA-Risiken und praktische Barrierefreiheitsprobleme prüfen. Inklusive Scan, Auditbericht und Prioritäten zur Behebung.",
+        "ogDescription": "Kombinieren Sie automatisierte WCAG-Scans mit praktischer Auditberichterstattung für Teams, die Barrierefreiheit nachweisbar verbessern müssen."
+      },
+      "badge": "WCAG 2.2 AA Audit",
+      "title": "Digitale Barrierefreiheits-Audits für Websites, die klare WCAG-Nachweise brauchen",
+      "intro": "VexNexa hilft Teams, Barrierefreiheitsprobleme zu finden, zu priorisieren und zu berichten. Statt einer flachen Fehlerliste erhalten Sie WCAG-Kriterien, Schweregrad, Nachweise und praktische Hinweise zur Behebung.",
+      "primary": "Audit starten",
+      "secondary": "Beispielbericht ansehen",
+      "sections": [
+        {
+          "title": "Automatisierter Scan",
+          "description": "Erkennen Sie häufige WCAG-Probleme wie Kontrast, Alt-Text, Formularlabels, Überschriftenstruktur und ARIA-Fehler."
+        },
+        {
+          "title": "Manuelle Priorisierung",
+          "description": "Verwandeln Sie technische Befunde in klare Behebungsprioritäten für Design, Content und Entwicklung."
+        },
+        {
+          "title": "Berichte als Nachweis",
+          "description": "Exportieren Sie Befunde für Stakeholder, Kunden, Beschaffung und interne Compliance-Prüfungen."
+        }
+      ],
+      "useCasesTitle": "Geeignet für",
+      "useCases": [
+        "E-Commerce-Teams, die sich auf den European Accessibility Act vorbereiten",
+        "Agenturen, die WCAG-Berichte für Kunden liefern",
+        "SaaS- und Produktteams, die Regressionen verhindern wollen",
+        "Websites des öffentlichen Sektors mit WCAG-Pflichten"
+      ],
+      "faqTitle": "Häufige Fragen zu Barrierefreiheits-Audits",
+      "faq": [
+        {
+          "question": "Was ist ein digitales Barrierefreiheits-Audit?",
+          "answer": "Ein Audit bewertet, ob eine Website für Menschen mit Behinderungen nutzbar ist, und ordnet Befunde WCAG-Kriterien wie WCAG 2.1/2.2 AA zu."
+        },
+        {
+          "question": "Reicht ein automatisierter WCAG-Scan?",
+          "answer": "Nein. Scans sind hilfreich für erkennbare Muster, aber Kontext, Tastaturverhalten, Interaktionen und Labelqualität benötigen oft menschliche Beurteilung."
+        },
+        {
+          "question": "Was erhalte ich?",
+          "answer": "Eine priorisierte Problemliste mit Schweregrad, betroffenen Elementen, WCAG-Referenzen und konkreten Behebungshinweisen."
+        }
+      ]
+    },
+    "webshopEaa": {
+      "meta": {
+        "title": "Webshop-Barrierefreiheit und EAA-Compliance",
+        "description": "Bereiten Sie Ihren Webshop auf den European Accessibility Act vor. Scannen Sie Checkout, Produktseiten, Formulare und Kundenflows auf WCAG- und EAA-Risiken.",
+        "ogDescription": "Finden Sie Barrierefreiheitsprobleme in Produktseiten, Checkout, Formularen und Kundenflows, bevor sie Umsatz oder Compliance beeinflussen."
+      },
+      "badge": "EAA für E-Commerce",
+      "title": "Bereiten Sie Ihren Webshop auf Barrierefreiheit und EAA-Compliance vor",
+      "intro": "Der European Accessibility Act macht digitale Barrierefreiheit für viele E-Commerce-Dienste konkret. VexNexa hilft, Produktseiten, Checkout, Formulare und Kundenreisen auf WCAG-Risiken zu überwachen.",
+      "primary": "Webshop prüfen",
+      "secondary": "EAA-Monitoring ansehen",
+      "cards": [
+        {
+          "title": "Produktseiten",
+          "description": "Prüfen Sie Bilder, Varianten, Buttons, Preisinformationen, Überschriften und Produktinhalte."
+        },
+        {
+          "title": "Checkout und Formulare",
+          "description": "Finden Sie Labels, Fehlermeldungen, Fokusprobleme und Blocker in Zahlungs- und Account-Flows."
+        },
+        {
+          "title": "Kontinuierliches Monitoring",
+          "description": "Verhindern Sie, dass Kampagnen, Apps oder Theme-Updates Barrierefreiheitsprobleme erneut einführen."
+        }
+      ],
+      "proofTitle": "Eine Chance für Compliance und Conversion",
+      "proof": "Barrierefreie Webshops sind für mehr Kunden leichter nutzbar. Dieselben Verbesserungen, die WCAG unterstützen, etwa klare Labels, gute Struktur und verständliche Fehler, helfen oft auch Conversion, Qualität und organischer Sichtbarkeit.",
+      "checklist": [
+        "WCAG 2.2 AA Scans pro wichtigem Template",
+        "Prioritäten für Checkout- und Zahlungsflows",
+        "Berichte für Compliance und Management",
+        "Alerts bei neuen Regressionen"
+      ]
+    },
+    "websiteTesting": {
+      "meta": {
+        "title": "Website-Barrierefreiheit mit WCAG-Checker testen",
+        "description": "Testen Sie Ihre Website auf Barrierefreiheit, WCAG 2.2 AA-Probleme, Kontrast, Alt-Texte, Formulare und Tastaturprobleme. Erhalten Sie Prioritäten und Reporting.",
+        "ogDescription": "Finden Sie WCAG-Probleme mit klaren Prioritäten, Elementkontext und Reporting für Teams."
+      },
+      "badge": "WCAG-Website-Test",
+      "title": "Website-Barrierefreiheit testen, ohne sich in flachen Fehlerlisten zu verlieren",
+      "intro": "Testen Sie Ihre Website auf häufige Barrierefreiheitsprobleme und erhalten Sie einen klaren Blick darauf, was zuerst behoben werden sollte. VexNexa verbindet Scans mit WCAG-Kontext, Schweregrad und Reporting.",
+      "primary": "Website testen",
+      "secondary": "Audit-Workflow ansehen",
+      "cards": [
+        {
+          "title": "WCAG-Scan",
+          "description": "Prüfen Sie erkennbare WCAG 2.1 und WCAG 2.2 Probleme wie Kontrast, Labels, Überschriften und ARIA."
+        },
+        {
+          "title": "Prioritäten",
+          "description": "Sehen Sie, welche Probleme für Nutzer, Compliance und Behebungsarbeit kritisch sind."
+        },
+        {
+          "title": "Reporting",
+          "description": "Teilen Sie Befunde mit Entwicklern, Kunden oder Compliance-Stakeholdern."
+        }
+      ],
+      "testsTitle": "Was sollten Sie zuerst testen?",
+      "tests": [
+        "Kontrast und Lesbarkeit",
+        "Alt-Texte und Bilder",
+        "Formularlabels und Fehler",
+        "Tastaturfokus und Navigation",
+        "Überschriften und Seitenstruktur",
+        "ARIA und interaktive Komponenten"
+      ]
+    }
   }
 }

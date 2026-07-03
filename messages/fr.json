@@ -5005,5 +5005,194 @@
       "cta": "Warteliste beitreten",
       "orEmail": "Oder per E-Mail"
     }
+  },
+  "seoPages": {
+    "overlayAlternative": {
+      "meta": {
+        "title": "Alternative aux overlays d'accessibilité pour de vraies corrections WCAG",
+        "description": "Une alternative pratique aux overlays d'accessibilité : scanner, surveiller, documenter et corriger les problèmes WCAG à la source au lieu d'ajouter un widget superficiel.",
+        "ogDescription": "Dépassez les overlays avec des scans WCAG, du monitoring, des rapports et des workflows de correction au niveau source."
+      },
+      "badge": "Au-delà des widgets superficiels",
+      "title": "Une alternative aux overlays d'accessibilité centrée sur la correction à la source",
+      "intro": "Un widget peut proposer des préférences aux visiteurs, mais il ne corrige souvent pas les problèmes WCAG structurels dans le HTML, les interactions, le contenu ou les composants. VexNexa se concentre sur la détection, la preuve, la priorisation et la correction à la source.",
+      "primary": "Comparer votre approche",
+      "secondary": "Voir le scan WCAG",
+      "cards": [
+        {
+          "title": "Scanner la vraie page",
+          "description": "Trouvez les problèmes dans le balisage, les formulaires, le contraste, les labels, les titres et ARIA au lieu de seulement proposer des préférences visuelles."
+        },
+        {
+          "title": "Surveiller les régressions",
+          "description": "Voyez quand de nouveaux contenus, releases ou scripts réintroduisent des problèmes d'accessibilité."
+        },
+        {
+          "title": "Rapporter le travail corrigeable",
+          "description": "Donnez aux développeurs et parties prenantes des constats clairs avec contexte WCAG et priorité."
+        }
+      ],
+      "comparisonTitle": "Overlay versus workflow à la source",
+      "comparison": [
+        {
+          "title": "Overlay",
+          "description": "Ajoute généralement une couche au-dessus de problèmes d'accessibilité existants."
+        },
+        {
+          "title": "VexNexa",
+          "description": "Rend les problèmes visibles pour que les équipes puissent les corriger durablement."
+        }
+      ]
+    },
+    "regressionTesting": {
+      "meta": {
+        "title": "Tests de régression d'accessibilité et monitoring WCAG",
+        "description": "Détectez les régressions WCAG avant qu'elles ne deviennent des problèmes de conformité. Surveillez les releases, changements de contenu et sites clients avec des scans planifiés.",
+        "ogDescription": "Scans WCAG planifiés, alertes et rapports pour les équipes qui doivent empêcher l'accessibilité de se dégrader release après release."
+      },
+      "badge": "Monitoring WCAG continu",
+      "title": "Tests de régression d'accessibilité pour les équipes qui ne peuvent pas laisser dériver la conformité",
+      "intro": "Chaque release, campagne, plugin ou changement de contenu peut introduire de nouveaux problèmes d'accessibilité. VexNexa surveille les pages clés et montre ce qui a changé.",
+      "primary": "Surveiller les régressions",
+      "secondary": "Pour agences",
+      "cards": [
+        {
+          "title": "Scans planifiés",
+          "description": "Scannez régulièrement les templates importants, domaines et sites clients."
+        },
+        {
+          "title": "Alertes de régression",
+          "description": "Recevez des signaux lorsque les scores baissent ou que de nouveaux problèmes WCAG critiques apparaissent."
+        },
+        {
+          "title": "Rapports de tendance",
+          "description": "Montrez aux parties prenantes si l'accessibilité s'améliore, reste stable ou recule."
+        }
+      ],
+      "workflowTitle": "De l'audit ponctuel au contrôle qualité continu",
+      "workflow": [
+        "Établir une référence",
+        "Détecter les nouveaux problèmes",
+        "Partager les priorités",
+        "Prouver la correction"
+      ]
+    },
+    "accessibilityAudit": {
+      "meta": {
+        "title": "Audit d'accessibilité numérique pour WCAG et EAA",
+        "description": "Faites contrôler votre site selon WCAG 2.2 AA, les risques EAA et les problèmes pratiques d'accessibilité. Inclut scan, rapport d'audit et priorités de correction.",
+        "ogDescription": "Combinez scans WCAG automatisés et rapports d'audit pratiques pour améliorer l'accessibilité avec preuve."
+      },
+      "badge": "Audit WCAG 2.2 AA",
+      "title": "Audits d'accessibilité numérique pour les sites qui ont besoin de preuves WCAG claires",
+      "intro": "VexNexa aide les équipes à trouver, prioriser et documenter les problèmes d'accessibilité. Au lieu d'une simple liste d'erreurs, vous obtenez critères WCAG, gravité, preuves et conseils pratiques de correction.",
+      "primary": "Démarrer un audit",
+      "secondary": "Voir un rapport exemple",
+      "sections": [
+        {
+          "title": "Scan automatisé",
+          "description": "Détectez les problèmes WCAG courants comme contraste, texte alternatif, labels de formulaire, structure des titres et erreurs ARIA."
+        },
+        {
+          "title": "Priorisation manuelle",
+          "description": "Transformez les constats techniques en priorités claires pour design, contenu et développement."
+        },
+        {
+          "title": "Rapports prêts comme preuves",
+          "description": "Exportez les constats pour parties prenantes, clients, achats et revues de conformité internes."
+        }
+      ],
+      "useCasesTitle": "Conçu pour",
+      "useCases": [
+        "Équipes e-commerce préparant l'European Accessibility Act",
+        "Agences livrant des rapports WCAG à leurs clients",
+        "Équipes SaaS et produit évitant les régressions",
+        "Sites du secteur public avec obligations WCAG"
+      ],
+      "faqTitle": "Questions fréquentes sur les audits d'accessibilité",
+      "faq": [
+        {
+          "question": "Qu'est-ce qu'un audit d'accessibilité numérique ?",
+          "answer": "Un audit évalue si un site est utilisable par les personnes en situation de handicap et relie les constats aux critères WCAG comme WCAG 2.1/2.2 AA."
+        },
+        {
+          "question": "Un scan WCAG automatisé suffit-il ?",
+          "answer": "Non. Les scans sont utiles pour les motifs détectables, mais le contexte, le clavier, les interactions et la qualité des labels nécessitent souvent un jugement humain."
+        },
+        {
+          "question": "Que vais-je recevoir ?",
+          "answer": "Une liste priorisée de problèmes avec gravité, éléments concernés, références WCAG et conseils de correction exploitables."
+        }
+      ]
+    },
+    "webshopEaa": {
+      "meta": {
+        "title": "Accessibilité webshop et conformité EAA",
+        "description": "Préparez votre webshop à l'European Accessibility Act. Scannez checkout, pages produit, formulaires et parcours clients pour les risques WCAG et EAA.",
+        "ogDescription": "Trouvez les problèmes d'accessibilité dans les pages produit, checkout, formulaires et parcours clients avant qu'ils n'affectent revenus ou conformité."
+      },
+      "badge": "EAA pour e-commerce",
+      "title": "Préparez votre webshop à l'accessibilité et à la conformité EAA",
+      "intro": "L'European Accessibility Act rend l'accessibilité numérique concrète pour de nombreux services e-commerce. VexNexa aide à surveiller pages produit, checkout, formulaires et parcours clients pour les risques WCAG.",
+      "primary": "Vérifier mon webshop",
+      "secondary": "Voir le monitoring EAA",
+      "cards": [
+        {
+          "title": "Pages produit",
+          "description": "Vérifiez images, variantes, boutons, informations de prix, titres et contenu produit."
+        },
+        {
+          "title": "Checkout et formulaires",
+          "description": "Trouvez labels, messages d'erreur, problèmes de focus et blocages dans les parcours paiement et compte."
+        },
+        {
+          "title": "Monitoring continu",
+          "description": "Évitez que campagnes, apps ou mises à jour de thème réintroduisent des problèmes d'accessibilité."
+        }
+      ],
+      "proofTitle": "Une opportunité de conformité et de conversion",
+      "proof": "Les webshops accessibles sont plus faciles à utiliser pour davantage de clients. Les mêmes améliorations qui soutiennent WCAG, comme des labels clairs, une bonne structure et des erreurs compréhensibles, aident souvent conversion, qualité et visibilité organique.",
+      "checklist": [
+        "Scans WCAG 2.2 AA par template clé",
+        "Priorités pour checkout et paiement",
+        "Rapports pour conformité et management",
+        "Alertes lors de nouvelles régressions"
+      ]
+    },
+    "websiteTesting": {
+      "meta": {
+        "title": "Tester l'accessibilité d'un site avec un vérificateur WCAG",
+        "description": "Testez votre site pour l'accessibilité, WCAG 2.2 AA, contraste, textes alternatifs, formulaires et problèmes clavier. Obtenez priorités et rapports.",
+        "ogDescription": "Trouvez les problèmes WCAG avec priorités claires, contexte des éléments et rapports pour équipes."
+      },
+      "badge": "Test WCAG de site web",
+      "title": "Tester l'accessibilité d'un site sans se perdre dans des listes d'erreurs plates",
+      "intro": "Testez votre site pour les problèmes d'accessibilité courants et voyez clairement quoi corriger en premier. VexNexa relie les scans au contexte WCAG, à la gravité et au reporting.",
+      "primary": "Tester mon site",
+      "secondary": "Voir le workflow d'audit",
+      "cards": [
+        {
+          "title": "Scan WCAG",
+          "description": "Vérifiez les problèmes WCAG 2.1 et WCAG 2.2 détectables comme contraste, labels, titres et ARIA."
+        },
+        {
+          "title": "Priorités",
+          "description": "Voyez quels problèmes sont critiques pour les utilisateurs, la conformité et la correction."
+        },
+        {
+          "title": "Reporting",
+          "description": "Partagez les constats avec développeurs, clients ou parties prenantes conformité."
+        }
+      ],
+      "testsTitle": "Que tester en premier ?",
+      "tests": [
+        "Contraste et lisibilité",
+        "Textes alternatifs et images",
+        "Labels de formulaire et erreurs",
+        "Focus clavier et navigation",
+        "Titres et structure de page",
+        "ARIA et composants interactifs"
+      ]
+    }
   }
 }

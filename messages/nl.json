@@ -5021,5 +5021,194 @@
       "cta": "Zet me op de wachtlijst",
       "orEmail": "Of mail"
     }
+  },
+  "seoPages": {
+    "overlayAlternative": {
+      "meta": {
+        "title": "Accessibility Overlay Alternatief voor Echte WCAG-fixes",
+        "description": "Een praktisch alternatief voor accessibility overlays: scan, monitor, rapporteer en herstel WCAG-problemen bij de bron in plaats van een oppervlakkige widget toe te voegen.",
+        "ogDescription": "Ga verder dan overlays met WCAG-scans, monitoring, rapportage en herstelworkflows op bronniveau."
+      },
+      "badge": "Geen overlay als schijnoplossing",
+      "title": "Een accessibility overlay alternatief dat problemen bij de bron laat oplossen",
+      "intro": "Een widget kan bezoekers opties geven, maar lost vaak geen structurele WCAG-problemen op in HTML, interacties, content of componenten. VexNexa richt zich op detectie, bewijs, prioritering en herstel bij de bron.",
+      "primary": "Vergelijk je aanpak",
+      "secondary": "Bekijk WCAG scan",
+      "cards": [
+        {
+          "title": "Scan de echte pagina",
+          "description": "Vind issues in markup, formulieren, contrast, labels, headings en ARIA in plaats van alleen visuele voorkeuren aan te bieden."
+        },
+        {
+          "title": "Monitor regressies",
+          "description": "Zie wanneer nieuwe content, releases of scripts toegankelijkheidsproblemen opnieuw introduceren."
+        },
+        {
+          "title": "Rapporteer herstelbaar werk",
+          "description": "Geef developers en stakeholders duidelijke bevindingen met WCAG-context en prioriteit."
+        }
+      ],
+      "comparisonTitle": "Overlay versus bronaanpak",
+      "comparison": [
+        {
+          "title": "Overlay",
+          "description": "Past meestal een extra laag toe bovenop bestaande problemen."
+        },
+        {
+          "title": "VexNexa",
+          "description": "Maakt problemen zichtbaar zodat teams ze duurzaam kunnen oplossen."
+        }
+      ]
+    },
+    "regressionTesting": {
+      "meta": {
+        "title": "Accessibility Regression Testing en WCAG-monitoring",
+        "description": "Vang WCAG-regressies op voordat ze complianceproblemen worden. Monitor releases, contentwijzigingen en klantwebsites met geplande toegankelijkheidsscans.",
+        "ogDescription": "Geplande WCAG-scans, alerts en rapporten voor teams die toegankelijkheid release na release willen bewaken."
+      },
+      "badge": "Continuous WCAG monitoring",
+      "title": "Accessibility regression testing voor teams die toegankelijkheid niet willen laten afglijden",
+      "intro": "Elke release, campagne, plugin of contentwijziging kan nieuwe toegankelijkheidsproblemen veroorzaken. VexNexa monitort belangrijke pagina's en laat zien wat verandert.",
+      "primary": "Monitor regressies",
+      "secondary": "Voor agencies",
+      "cards": [
+        {
+          "title": "Scheduled scans",
+          "description": "Scan belangrijke templates, domeinen en klantwebsites op vaste momenten."
+        },
+        {
+          "title": "Alerts bij verslechtering",
+          "description": "Krijg signalen wanneer scores dalen of nieuwe kritieke WCAG-issues verschijnen."
+        },
+        {
+          "title": "Trendrapportage",
+          "description": "Laat stakeholders zien of toegankelijkheid verbetert, stabiel blijft of achteruitgaat."
+        }
+      ],
+      "workflowTitle": "Van eenmalige audit naar doorlopende kwaliteitscontrole",
+      "workflow": [
+        "Baseline vastleggen",
+        "Nieuwe issues detecteren",
+        "Prioriteiten delen",
+        "Herstel aantonen"
+      ]
+    },
+    "accessibilityAudit": {
+      "meta": {
+        "title": "Digitale Toegankelijkheid Audit voor WCAG en EAA",
+        "description": "Laat je website toetsen op WCAG 2.2 AA, EAA-risico's en praktische toegankelijkheidsproblemen. Inclusief scan, auditrapport en prioriteiten voor herstel.",
+        "ogDescription": "Combineer automatische WCAG-scans met praktische auditrapportage voor teams die toegankelijkheid aantoonbaar willen verbeteren."
+      },
+      "badge": "WCAG 2.2 AA audit",
+      "title": "Digitale toegankelijkheid audit voor websites die aantoonbaar beter moeten worden",
+      "intro": "VexNexa helpt teams toegankelijkheidsproblemen vinden, prioriteren en rapporteren. Je krijgt geen losse foutlijst, maar een duidelijk auditbeeld met WCAG-criteria, ernst, bewijs en hersteladvies.",
+      "primary": "Start een audit",
+      "secondary": "Bekijk voorbeeldrapport",
+      "sections": [
+        {
+          "title": "Automatische scan",
+          "description": "Detecteer veelvoorkomende WCAG-problemen zoals contrast, alt-tekst, labels, headings en ARIA-fouten."
+        },
+        {
+          "title": "Handmatige prioritering",
+          "description": "Zet technische issues om naar begrijpelijke herstelprioriteiten voor design, content en development."
+        },
+        {
+          "title": "Rapportage als bewijs",
+          "description": "Exporteer bevindingen voor stakeholders, klanten, aanbestedingen of interne compliance-overleggen."
+        }
+      ],
+      "useCasesTitle": "Geschikt voor",
+      "useCases": [
+        "Webshops die onder de European Accessibility Act vallen",
+        "Agencies die WCAG-rapporten voor klanten leveren",
+        "SaaS- en productteams die regressies willen voorkomen",
+        "Overheids- en semi-publieke websites met WCAG-verplichtingen"
+      ],
+      "faqTitle": "Veel gezochte vragen rond toegankelijkheidsaudits",
+      "faq": [
+        {
+          "question": "Wat is een digitale toegankelijkheid audit?",
+          "answer": "Een audit toetst of een website bruikbaar is voor mensen met beperkingen en vergelijkt bevindingen met WCAG-criteria zoals WCAG 2.1/2.2 AA."
+        },
+        {
+          "question": "Is een automatische WCAG-scan genoeg?",
+          "answer": "Nee. Scans zijn sterk voor detecteerbare patronen, maar context, toetsenbordgedrag, interacties en de kwaliteit van labels vragen vaak menselijke beoordeling."
+        },
+        {
+          "question": "Welke output krijg ik?",
+          "answer": "Een prioriteitenlijst met issue-type, ernst, getroffen elementen, WCAG-referenties en hersteladvies dat teams direct kunnen gebruiken."
+        }
+      ]
+    },
+    "webshopEaa": {
+      "meta": {
+        "title": "Toegankelijkheid Webshop en EAA Compliance",
+        "description": "Bereid je webshop voor op de European Accessibility Act. Scan checkout, productpagina's, formulieren en klantflows op WCAG- en EAA-risico's.",
+        "ogDescription": "Vind toegankelijkheidsproblemen in productpagina's, checkout, formulieren en klantflows voordat ze omzet of compliance raken."
+      },
+      "badge": "EAA voor e-commerce",
+      "title": "Maak je webshop beter toegankelijk voor klanten en EAA-compliance",
+      "intro": "De European Accessibility Act maakt digitale toegankelijkheid concreet voor veel e-commerce diensten. VexNexa helpt productpagina's, checkout, formulieren en klantflows monitoren op WCAG-risico's.",
+      "primary": "Check mijn webshop",
+      "secondary": "Bekijk EAA monitoring",
+      "cards": [
+        {
+          "title": "Productpagina's",
+          "description": "Controleer afbeeldingen, varianten, knoppen, prijsinformatie, headings en productcontent."
+        },
+        {
+          "title": "Checkout en formulieren",
+          "description": "Vind labels, foutmeldingen, focusproblemen en blokkades in betaal- en accountflows."
+        },
+        {
+          "title": "Doorlopende monitoring",
+          "description": "Voorkom dat nieuwe campagnes, apps of thema-updates opnieuw toegankelijkheidsproblemen introduceren."
+        }
+      ],
+      "proofTitle": "Waarom dit SEO- en business-kans tegelijk is",
+      "proof": "Toegankelijke webshops zijn beter bruikbaar voor meer klanten. Dezelfde verbeteringen die WCAG ondersteunen, zoals duidelijke labels, goede structuur en begrijpelijke foutmeldingen, helpen vaak ook conversie, kwaliteit en vindbaarheid.",
+      "checklist": [
+        "WCAG 2.2 AA scan per belangrijke template",
+        "Prioriteiten voor checkout en betaalflow",
+        "Rapportage voor compliance en management",
+        "Alerts bij nieuwe regressies"
+      ]
+    },
+    "websiteTesting": {
+      "meta": {
+        "title": "Website Toegankelijkheid Testen met WCAG Checker",
+        "description": "Test je website op toegankelijkheid, WCAG 2.2 AA issues, contrast, alt-tekst, formulieren en keyboard-problemen. Krijg prioriteiten en rapportage.",
+        "ogDescription": "Vind WCAG-problemen met duidelijke prioriteiten, element-context en rapportage voor teams."
+      },
+      "badge": "WCAG website test",
+      "title": "Website toegankelijkheid testen zonder te verdwalen in losse foutmeldingen",
+      "intro": "Test je website op veelvoorkomende toegankelijkheidsproblemen en krijg een duidelijk beeld van wat eerst opgelost moet worden. VexNexa koppelt scans aan WCAG-context, ernst en rapportage.",
+      "primary": "Test mijn website",
+      "secondary": "Bekijk audit-aanpak",
+      "cards": [
+        {
+          "title": "WCAG scan",
+          "description": "Controleer op detecteerbare WCAG 2.1 en WCAG 2.2 issues zoals contrast, labels, headings en ARIA."
+        },
+        {
+          "title": "Prioriteiten",
+          "description": "Zie welke problemen kritisch zijn voor gebruikers, compliance en herstelwerk."
+        },
+        {
+          "title": "Rapportage",
+          "description": "Deel bevindingen met developers, klanten of compliance stakeholders."
+        }
+      ],
+      "testsTitle": "Wat moet je minimaal testen?",
+      "tests": [
+        "Contrast en leesbaarheid",
+        "Alt-tekst en afbeeldingen",
+        "Form labels en foutmeldingen",
+        "Keyboard focus en navigatie",
+        "Headings en paginastructuur",
+        "ARIA en interactieve componenten"
+      ]
+    }
   }
 }
