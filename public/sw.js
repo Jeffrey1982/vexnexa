@@ -8,6 +8,15 @@ const STATIC_CACHE_URLS = [
   // Removed auth pages from cache to prevent redirect conflicts
 ];
 
+// Brand assets (logo lockups/marks, favicon, PWA icons, manifest) have stable
+// filenames, so cache-first would keep serving a stale version after a rebrand.
+// These are fetched network-first instead — fresh whenever online, cache only
+// as an offline fallback.
+const BRAND_ASSET_RE = /^\/(?:favicon\.(?:svg|ico)|apple-touch-icon\.png|android-chrome-\d+x\d+\.png|vexnexa-[a-z-]+\.svg|manifest\.json)$/i;
+function isBrandAsset(pathname) {
+  return BRAND_ASSET_RE.test(pathname) || pathname.startsWith('/brand/');
+}
+
 // API requests are NEVER cached or intercepted by the service worker.
 // They always go straight to the network (including POST webhooks).
 
@@ -94,6 +103,13 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'google-analytics.com'
   ) {
     return; // Let browser handle Google resources directly
+  }
+
+  // Brand assets must never go stale behind the cache — always try network
+  // first so a rebrand shows up immediately, cache only as offline fallback.
+  if (isBrandAsset(url.pathname)) {
+    event.respondWith(networkFirstAsset(request));
+    return;
   }
 
   // Handle different types of requests
@@ -220,6 +236,29 @@ async function networkFirstStrategy(request) {
       status: 200
     }
   );
+}
+
+// Network-first strategy for brand assets: fresh when online, cache offline.
+async function networkFirstAsset(request) {
+  try {
+    const fetchRequest = new Request(request, { redirect: 'follow' });
+    const networkResponse = await fetch(fetchRequest);
+    if (
+      networkResponse.ok &&
+      request.method === 'GET' &&
+      networkResponse.type !== 'opaqueredirect'
+    ) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    throw error;
+  }
 }
 
 // Cache-first strategy: try cache, fallback to network
