@@ -114,7 +114,7 @@ export function canonicalMarketingLocale(locale: MarketingLocale): IndexableMark
 
 /** Public social profiles for the Organization `sameAs`. */
 export const SOCIAL_PROFILES = ["https://twitter.com/vexnexa", "https://x.com/vexnexa"];
-export const ORG_LOGO = `${SITE_URL}/brand/vexnexa-v-mark.png`;
+export const ORG_LOGO = `${SITE_URL}/brand/vexnexa-lockup.png`;
 export const CONTACT_EMAIL = "info@vexnexa.com";
 
 /** Human-readable breadcrumb labels for known top-level segments. */

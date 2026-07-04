@@ -3,24 +3,24 @@
  * Change these values to rebrand the entire application.
  */
 
-/** Width ÷ height of `vexnexa-v-mark.png` (tight-cropped to the glyph; update if asset changes). */
-export const BRAND_MARK_ASPECT = 497 / 383
+/** Width ÷ height of the square glyph tile (`vexnexa-mark.svg`, viewBox 100 × 100). */
+export const BRAND_MARK_ASPECT = 1
 
 export const BRAND = {
   name: "VexNexa",
   tagline: "Developer-friendly WCAG scanning",
-  /** Horizontal split: V mark + “VexNexa” wordmark in `VexnexaLogo` */
-  logo: "/brand/vexnexa-v-mark.png",
-  logoMark: "/brand/vexnexa-v-mark.png",
-  /** @deprecated Full lockup PNGs — prefer split logo in UI */
-  logoLockupLight: "/brand/vexnexa-logo-lockup-light.png",
-  logoLockupDark: "/brand/vexnexa-logo-lockup-dark.png",
-  icon: "/brand/vexnexa-favicon-32.png",
-  logoPng: "/brand/vexnexa-v-mark.png",
-  iconPng192: "/brand/vexnexa-favicon-192.png",
-  iconPng512: "/brand/vexnexa-favicon-512.png",
-  /** Absolute URL for emails & JSON-LD (V mark; wordmark added in HTML where needed) */
-  logoAbsolute: "https://vexnexa.com/brand/vexnexa-v-mark.png",
+  /** Square glyph tile (mark only) */
+  logo: "/vexnexa-mark.svg",
+  logoMark: "/vexnexa-mark.svg",
+  /** Full mark + wordmark lockups, chosen by background */
+  logoLockupLight: "/vexnexa-lockup.svg",
+  logoLockupDark: "/vexnexa-lockup-dark.svg",
+  icon: "/favicon.svg",
+  logoPng: "/brand/vexnexa-lockup.png",
+  iconPng192: "/android-chrome-192x192.png",
+  iconPng512: "/android-chrome-512x512.png",
+  /** Absolute URL for emails & JSON-LD (full lockup PNG — SVG isn't reliable there) */
+  logoAbsolute: "https://vexnexa.com/brand/vexnexa-lockup.png",
   primaryColor: "#1F4A2D",
   themeColor: "#1F4A2D",
 } as const;

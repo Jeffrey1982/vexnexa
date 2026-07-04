@@ -197,7 +197,7 @@ export function DigitalAccessibilityPivotArticle({
               name: 'VexNexa',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://vexnexa.com/brand/vexnexa-v-mark.png',
+                url: 'https://vexnexa.com/brand/vexnexa-lockup.png',
               },
             },
             datePublished: '2026-05-16',

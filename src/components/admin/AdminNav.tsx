@@ -144,7 +144,7 @@ export function AdminNav({ user }: AdminNavProps) {
           <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/admin" className="flex items-center gap-3 group">
               <div className="bg-white rounded-lg p-1.5 shadow-md transition-transform group-hover:scale-105">
-                <VexnexaLogo size={36} />
+                <VexnexaLogo size={36} variant="onLight" />
               </div>
               <div className="hidden sm:block">
                 <div className="text-sm font-semibold tracking-tight text-white">

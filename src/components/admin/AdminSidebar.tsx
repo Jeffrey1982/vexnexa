@@ -166,7 +166,7 @@ export function AdminSidebar() {
     <div className="relative z-10 flex h-full flex-col">
       <div className="border-b border-white/10 p-4">
         <div className="flex items-center gap-3">
-          <VexnexaLogo size={42} className="[&_span]:!text-white" />
+          <VexnexaLogo size={42} variant="onDark" />
           <div className="min-w-0">
             <div className="font-bold text-lg text-white">Admin</div>
             <div className="text-xs text-slate-300">Control Center</div>
