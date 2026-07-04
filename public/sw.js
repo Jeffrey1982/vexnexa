@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v15-same-origin-cache';
+const CACHE_NAME = 'vexnexa-v16-rebrand-cache';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
