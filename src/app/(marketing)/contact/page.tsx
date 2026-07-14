@@ -125,7 +125,7 @@ function ContactPageContent() {
     walkthrough: {
       title: "Plan your Enterprise Walkthrough",
       subtitle:
-        "30-minute guided demo of the AI-Vision platform, VNI portfolio view, and audit-ready reporting. We respond within one business day to schedule.",
+        "30-minute guided demo of the AI-Vision platform, the VexNexa Index (VNI) portfolio view, and audit-ready reporting. We respond within one business day to schedule.",
       cta: "Request walkthrough",
     },
     "sample-pdf": {

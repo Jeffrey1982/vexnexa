@@ -562,22 +562,6 @@
         "ctaSecondary": "Beispielbericht ansehen",
         "noCard": "Keine Kreditkarte erforderlich, um einen Beispielbericht anzusehen."
       },
-      "vni": {
-        "title": "VexNexa Index (VNI)",
-        "subtitle": "Ein Compliance-Rang von 1 bis 5 Sternen für jede Domain in Ihrem Portfolio.",
-        "liveLabel": "Portfolio-Scan",
-        "priorityBadge": "Hohe Priorität: Maßnahmen erforderlich",
-        "priorityCopy": "Domains mit der Bewertung Insolvent (1 Stern) werden zur sofortigen Überprüfung markiert. Dies ist ein internes Prüfsignal, kein rechtliches Urteil.",
-        "ranks": {
-          "insolvent": "Insolvent — 1 Stern",
-          "foundational": "Grundlegend — 2 Sterne",
-          "compliant": "Elite — 3 Sterne",
-          "auditReady": "Auditfertig — 4 Sterne",
-          "leading": "Branchenführend — 5 Sterne"
-        },
-        "targetLabel": "Ziel",
-        "disclaimer": "VNI-Bewertungen leiten sich aus automatisierten AI-Vision-Befunden in Kombination mit der WCAG-2.2-Regelabdeckung ab. Sie sind ein indikatives Risikosignal, keine rechtliche Zertifizierung."
-      },
       "visibility": {
         "eyebrow": "Sichtbarkeit",
         "title": "Sie können nicht beheben, was Sie nicht sehen.",
@@ -618,7 +602,7 @@
           "title": "Historische Compliance-Verfolgung",
           "body": "Zeitgestempelter Scan-Verlauf pro Domain zeigt den Fortschritt für interne Prüfungen, Beschaffungsbewertungen und Berichte auf Vorstandsebene.",
           "b1": "Trendlinien pro Domain für jedes WCAG-Kriterium",
-          "b2": "Regressionswarnungen, wenn ein Deploy Ihren VNI-Rang senkt",
+          "b2": "Regressionswarnungen, wenn ein Deploy die Bewertung eines Kunden senkt",
           "b3": "Exportierbare Nachweise im Einklang mit internen Prüfstandards"
         },
         "portfolio": {
@@ -1149,12 +1133,12 @@
       "allPricesInclVat": "Alle Preise inkl. MwSt.",
       "inclVatShort": "inkl. MwSt.",
       "pioneer": {
-        "description": "Pioneer-Partnerzugang mit Premium-VNI-Reporting und White-Label-Workflows.",
+        "description": "Pioneer-Partnerzugang mit Premium-VexNexa Index-Reporting und White-Label-Workflows.",
         "features": {
           "sites": "{count} Websites",
           "pages": "{count} Seiten/Monat",
           "users": "{count} Nutzer",
-          "vni": "VNI-Scans und PDF/DOCX-Berichte",
+          "vni": "VexNexa Index-Scans und PDF/DOCX-Berichte",
           "whiteLabel": "White-Label-Berichte",
           "support": "Prioritäts-Support und SLA"
         }

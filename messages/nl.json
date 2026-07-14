@@ -632,22 +632,6 @@
         "ctaSecondary": "Bekijk een voorbeeldrapport",
         "noCard": "Geen creditcard nodig om een voorbeeldrapport in te zien."
       },
-      "vni": {
-        "title": "VexNexa Index (VNI)",
-        "subtitle": "Een 1-tot-5-sterren compliance-rang voor elk domein in je portfolio.",
-        "liveLabel": "Portfolio-scan",
-        "priorityBadge": "Hoge prioriteit: actie vereist",
-        "priorityCopy": "Domeinen die als Insolvent (1 ster) worden geclassificeerd worden gemarkeerd voor onmiddellijke review. Dit is een intern-audit signaal, geen juridisch oordeel.",
-        "ranks": {
-          "insolvent": "Insolvent — 1 ster",
-          "foundational": "Foundational — 2 sterren",
-          "compliant": "Elite — 3 sterren",
-          "auditReady": "Audit-Ready — 4 sterren",
-          "leading": "Industry-Leading — 5 sterren"
-        },
-        "targetLabel": "Doel",
-        "disclaimer": "VNI-ratings zijn afgeleid van geautomatiseerde AI-Vision-bevindingen gecombineerd met WCAG 2.2-regeldekking. Het is een indicatief risicosignaal, geen juridische certificering."
-      },
       "visibility": {
         "eyebrow": "Zichtbaarheid",
         "title": "Je kunt niet repareren wat je niet ziet.",
@@ -1186,12 +1170,12 @@
       "allPricesInclVat": "Alle prijzen zijn incl. btw",
       "inclVatShort": "incl. btw",
       "pioneer": {
-        "description": "Pioneer-partnertoegang met premium VNI-rapportage en white-label workflows.",
+        "description": "Pioneer-partnertoegang met premium VexNexa Index-rapportage en white-label workflows.",
         "features": {
           "sites": "{count} websites",
           "pages": "{count} pagina's/maand",
           "users": "{count} gebruikers",
-          "vni": "VNI-scans en PDF/DOCX-rapporten",
+          "vni": "VexNexa Index-scans en PDF/DOCX-rapporten",
           "whiteLabel": "White-label rapporten",
           "support": "Prioriteit support en SLA"
         }

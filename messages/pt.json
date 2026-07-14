@@ -421,22 +421,6 @@
         "ctaSecondary": "Ver um relatório de exemplo",
         "noCard": "Não é necessário cartão de crédito para visualizar um relatório de exemplo."
       },
-      "vni": {
-        "title": "VexNexa Index (VNI)",
-        "subtitle": "Uma classificação de conformidade de 1 a 5 estrelas para cada domínio do seu portefólio.",
-        "liveLabel": "Scan do portefólio",
-        "priorityBadge": "Prioridade alta: ação necessária",
-        "priorityCopy": "Os domínios classificados como Insolvent (1 estrela) são sinalizados para revisão imediata. É um sinal de auditoria interna, não um veredicto jurídico.",
-        "ranks": {
-          "insolvent": "Insolvent — 1 estrela",
-          "foundational": "Foundational — 2 estrelas",
-          "compliant": "Elite — 3 estrelas",
-          "auditReady": "Audit-Ready — 4 estrelas",
-          "leading": "Industry-Leading — 5 estrelas"
-        },
-        "targetLabel": "Objetivo",
-        "disclaimer": "As classificações VNI derivam de constatações automáticas de IA-Vision combinadas com a cobertura de regras WCAG 2.2. São um sinal indicativo de risco, não uma certificação jurídica."
-      },
       "visibility": {
         "eyebrow": "Visibilidade",
         "title": "Não se pode corrigir o que não se vê.",
@@ -477,7 +461,7 @@
           "title": "Acompanhamento histórico de conformidade",
           "body": "Histórico de scans com carimbo de data/hora por domínio para demonstrar progresso à auditoria interna, compras e direção.",
           "b1": "Linhas de tendência por critério WCAG e por domínio",
-          "b2": "Alertas de regressão quando um deploy reduz o seu VNI",
+          "b2": "Alertas de regressão quando um deploy reduz a pontuação de um cliente",
           "b3": "Evidência exportável alinhada com normas de auditoria interna"
         },
         "portfolio": {
@@ -1008,12 +992,12 @@
       "allPricesInclVat": "Todos os preços incluem IVA",
       "inclVatShort": "IVA incluído",
       "pioneer": {
-        "description": "Acesso de parceiro Pioneer com relatórios VNI premium e fluxos white-label.",
+        "description": "Acesso de parceiro Pioneer com relatórios VexNexa Index premium e fluxos white-label.",
         "features": {
           "sites": "{count} sites",
           "pages": "{count} páginas/mês",
           "users": "{count} utilizadores",
-          "vni": "Scans VNI e relatórios PDF/DOCX",
+          "vni": "Scans VexNexa Index e relatórios PDF/DOCX",
           "whiteLabel": "Relatórios white-label",
           "support": "Suporte prioritário e SLA"
         }

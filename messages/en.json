@@ -586,12 +586,12 @@
       "allPricesInclVat": "All prices include VAT",
       "inclVatShort": "incl. VAT",
       "pioneer": {
-        "description": "Pioneer partner access with premium VNI reporting and white-label workflows.",
+        "description": "Pioneer partner access with premium VexNexa Index reporting and white-label workflows.",
         "features": {
           "sites": "{count} websites",
           "pages": "{count} pages/month",
           "users": "{count} users",
-          "vni": "VNI scans and PDF/DOCX reports",
+          "vni": "VexNexa Index scans and PDF/DOCX reports",
           "whiteLabel": "White-label reports",
           "support": "Priority support and SLA"
         }
@@ -1482,22 +1482,6 @@
         "ctaPrimary": "Book an Enterprise Walkthrough",
         "ctaSecondary": "View a Sample Report",
         "noCard": "No credit card required to preview a sample report."
-      },
-      "vni": {
-        "title": "VexNexa Index (VNI)",
-        "subtitle": "A 1-to-5 star compliance rank for every domain in your portfolio.",
-        "liveLabel": "Portfolio scan",
-        "priorityBadge": "High-Priority Action Required",
-        "priorityCopy": "Domains rated Insolvent (1 star) are flagged for immediate review. This is an internal-audit signal, not a legal verdict.",
-        "ranks": {
-          "insolvent": "Insolvent — 1 star",
-          "foundational": "Foundational — 2 stars",
-          "compliant": "Elite — 3 stars",
-          "auditReady": "Audit-Ready — 4 stars",
-          "leading": "Industry-Leading — 5 stars"
-        },
-        "targetLabel": "Target",
-        "disclaimer": "VNI ratings are derived from automated AI-Vision findings combined with WCAG 2.2 rule coverage. They are an indicative risk signal, not a legal certification."
       },
       "visibility": {
         "eyebrow": "Visibility",
