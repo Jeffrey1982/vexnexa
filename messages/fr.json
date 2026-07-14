@@ -971,7 +971,8 @@
           "description": "Besoin de plus de sites ? Ajoutez-les à n'importe quel plan.",
           "site1": "+1 site web",
           "sites5": "+5 sites web",
-          "sites10": "+10 sites web"
+          "sites10": "+10 sites web",
+          "upgradeNote": "Plus de {agencySites} sites ? Le plan Agency en inclut {agencySites} — souvent moins cher que d'empiler des packs."
         },
         "pages": {
           "title": "Packs de volume de pages",
@@ -1048,13 +1049,6 @@
         "titleHighlight": "continus",
         "subtitle": "Combinez la surveillance automatisée avec des audits manuels",
         "cta": "Choisir un forfait",
-        "starter": {
-          "features": {
-            "audits": "1 scan rapide/trimestre",
-            "report": "Rapport basique",
-            "support": "Support par email"
-          }
-        },
         "pro": {
           "features": {
             "audits": "1 audit complet/trimestre",
@@ -1072,7 +1066,7 @@
         },
         "enterprise": {
           "features": {
-            "audits": "Audits illimités",
+            "audits": "Jusqu'à 4 audits complets par an",
             "vpat": "VPAT + documents de conformité",
             "legal": "Support juridique",
             "manager": "Responsable de compte"

@@ -96,10 +96,14 @@ describe('pricing', () => {
     })
 
     it('has audit bundle prices', () => {
-      expect(AUDIT_BUNDLE_PRICES.STARTER.price).toBe(49.00)
       expect(AUDIT_BUNDLE_PRICES.PRO.price).toBe(119.00)
       expect(AUDIT_BUNDLE_PRICES.BUSINESS.price).toBe(279.00)
       expect(AUDIT_BUNDLE_PRICES.ENTERPRISE.price).toBe(599.00)
+    })
+
+    it('offers exactly three one-time audits and three bundles', () => {
+      expect(Object.keys(AUDIT_PRICES)).toEqual(['QUICK', 'FULL', 'ENTERPRISE'])
+      expect(Object.keys(AUDIT_BUNDLE_PRICES)).toEqual(['PRO', 'BUSINESS', 'ENTERPRISE'])
     })
 
     it('has extra services prices', () => {

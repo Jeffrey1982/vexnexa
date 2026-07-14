@@ -41,6 +41,7 @@ import {
   type PlanKey,
   type BillingCycle,
   formatEuro,
+  formatEuroFlexible,
   getDiscountBadge,
   WEBSITE_PACK_PRICES,
   PAGE_PACK_PRICES,
@@ -651,6 +652,11 @@ function AddOnsAccordionContent() {
               </div>
             ))}
           </div>
+          <p className="mt-4 text-xs text-muted-foreground">
+            {tp("addons.websites.upgradeNote", {
+              agencySites: ENTITLEMENTS.BUSINESS.sites,
+            })}
+          </p>
         </CardContent>
       </Card>
 
@@ -810,7 +816,7 @@ function OverflowAccordionContent() {
                 {t("resources.extraPages")}
               </TableCell>
               <TableCell>
-                {OVERFLOW_PRICING.extraPage.amount}/
+                {formatEuroFlexible(OVERFLOW_PRICING.extraPage.amount)}/
                 {OVERFLOW_PRICING.extraPage.unit}
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
@@ -822,7 +828,7 @@ function OverflowAccordionContent() {
                 {t("resources.extraSites")}
               </TableCell>
               <TableCell>
-                {OVERFLOW_PRICING.extraSite.amount}/
+                {formatEuroFlexible(OVERFLOW_PRICING.extraSite.amount)}/
                 {OVERFLOW_PRICING.extraSite.unit}
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
@@ -834,7 +840,7 @@ function OverflowAccordionContent() {
                 {t("resources.extraUsers")}
               </TableCell>
               <TableCell>
-                {OVERFLOW_PRICING.extraUser.amount}/
+                {formatEuroFlexible(OVERFLOW_PRICING.extraUser.amount)}/
                 {OVERFLOW_PRICING.extraUser.unit}
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">

@@ -1034,7 +1034,8 @@
           "description": "Brauchst du mehr Websites? Fuege sie jedem Tarif hinzu.",
           "site1": "+1 Website",
           "sites5": "+5 Websites",
-          "sites10": "+10 Websites"
+          "sites10": "+10 Websites",
+          "upgradeNote": "Mehr als {agencySites} Sites? Der Agency-Plan enthält {agencySites} — meist günstiger als einzelne Pakete zu stapeln."
         },
         "pages": {
           "title": "Seitenvolumen-Pakete",
@@ -1111,13 +1112,6 @@
         "titleHighlight": "Audit-Pakete",
         "subtitle": "Kombiniere automatisiertes Monitoring mit manuellen Audits",
         "cta": "Paket waehlen",
-        "starter": {
-          "features": {
-            "audits": "1 Quickscan/Quartal",
-            "report": "Basisbericht",
-            "support": "E-Mail-Support"
-          }
-        },
         "pro": {
           "features": {
             "audits": "1 vollstaendiger Audit/Quartal",
@@ -1135,7 +1129,7 @@
         },
         "enterprise": {
           "features": {
-            "audits": "Unbegrenzte Audits",
+            "audits": "Bis zu 4 vollständige Audits pro Jahr",
             "vpat": "VPAT + Compliance-Dokumente",
             "legal": "Rechtliche Unterstuetzung",
             "manager": "Account Manager"

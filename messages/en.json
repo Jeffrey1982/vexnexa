@@ -460,7 +460,8 @@
           "description": "Need more websites? Add them to any plan.",
           "site1": "+1 website",
           "sites5": "+5 websites",
-          "sites10": "+10 websites"
+          "sites10": "+10 websites",
+          "upgradeNote": "Managing {agencySites}+ sites? The Agency plan includes {agencySites} — usually cheaper than stacking packs."
         },
         "pages": {
           "title": "Page Volume Packs",
@@ -542,13 +543,6 @@
         "titleHighlight": "audit bundles",
         "subtitle": "Combine automated monitoring with manual audits",
         "cta": "Choose bundle",
-        "starter": {
-          "features": {
-            "audits": "1 quickscan/quarter",
-            "report": "Basic report",
-            "support": "Email support"
-          }
-        },
         "pro": {
           "features": {
             "audits": "1 full audit/quarter",
@@ -566,7 +560,7 @@
         },
         "enterprise": {
           "features": {
-            "audits": "Unlimited audits",
+            "audits": "Up to 4 full audits per year",
             "vpat": "VPAT + compliance docs",
             "legal": "Legal support",
             "manager": "Account manager"

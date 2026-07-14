@@ -1066,7 +1066,8 @@
           "description": "Meer websites nodig? Voeg ze toe aan elk plan.",
           "site1": "+1 website",
           "sites5": "+5 websites",
-          "sites10": "+10 websites"
+          "sites10": "+10 websites",
+          "upgradeNote": "{agencySites}+ sites nodig? Het Agency-plan bevat er {agencySites} — meestal goedkoper dan losse packs stapelen."
         },
         "pages": {
           "title": "Paginavolume packs",
@@ -1148,13 +1149,6 @@
         "titleHighlight": "audit bundels",
         "subtitle": "Combineer geautomatiseerde monitoring met handmatige audits",
         "cta": "Bundel kiezen",
-        "starter": {
-          "features": {
-            "audits": "1 quickscan/kwartaal",
-            "report": "Basis rapport",
-            "support": "E-mail support"
-          }
-        },
         "pro": {
           "features": {
             "audits": "1 volledige audit/kwartaal",
@@ -1172,7 +1166,7 @@
         },
         "enterprise": {
           "features": {
-            "audits": "Onbeperkt audits",
+            "audits": "Tot 4 volledige audits per jaar",
             "vpat": "VPAT + compliancedocumenten",
             "legal": "Juridische ondersteuning",
             "manager": "Accountmanager"

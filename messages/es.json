@@ -1034,7 +1034,8 @@
           "description": "¿Necesitas más sitios web? Añádelos a cualquier plan.",
           "site1": "+1 sitio web",
           "sites5": "+5 sitios web",
-          "sites10": "+10 sitios web"
+          "sites10": "+10 sitios web",
+          "upgradeNote": "¿Más de {agencySites} sitios? El plan Agency incluye {agencySites} — normalmente más barato que acumular packs."
         },
         "pages": {
           "title": "Paquetes de volumen de páginas",
@@ -1111,13 +1112,6 @@
         "titleHighlight": "auditoría continua",
         "subtitle": "Combina monitoreo automatizado con auditorías manuales",
         "cta": "Elegir paquete",
-        "starter": {
-          "features": {
-            "audits": "1 escaneo rápido/trimestre",
-            "report": "Informe básico",
-            "support": "Soporte por email"
-          }
-        },
         "pro": {
           "features": {
             "audits": "1 auditoría completa/trimestre",
@@ -1135,7 +1129,7 @@
         },
         "enterprise": {
           "features": {
-            "audits": "Auditorías ilimitadas",
+            "audits": "Hasta 4 auditorías completas al año",
             "vpat": "VPAT + documentos de cumplimiento",
             "legal": "Soporte legal",
             "manager": "Gestor de cuenta"
