@@ -82,7 +82,7 @@ export const AUDIT_PRICES = {
 export const AUDIT_BUNDLE_PRICES = {
   STARTER: { productId: "vexnexa-starter-audit-monthly", price: 49.0, label: "Starter Audit bundel" },
   PRO: { productId: "vexnexa-pro-audit-monthly", price: 119.0, label: "Pro Audit bundel" },
-  BUSINESS: { productId: "vexnexa-business-audit-monthly", price: 279.0, label: "Business Audit bundel" },
+  BUSINESS: { productId: "vexnexa-business-audit-monthly", price: 279.0, label: "Agency Audit bundel" },
   ENTERPRISE: { productId: "vexnexa-enterprise-audit-monthly", price: 599.0, label: "Enterprise Audit bundel" },
 } as const;
 

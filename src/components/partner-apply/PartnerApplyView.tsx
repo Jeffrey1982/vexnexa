@@ -2,13 +2,19 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { submitPartnerApplication, type PartnerApplyState } from "@/app/actions/partner-application";
 import { PartnerHero } from "@/components/partner-apply/PartnerHero";
 import { PartnerApplicationForm } from "@/components/partner-apply/PartnerApplicationForm";
 import { StandardsTrustBar } from "@/components/marketing/StandardsTrustBar";
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  PLAN_PRICES,
+  getFoundingAgencyPrice,
+} from "@/lib/billing/pricing-config";
 
 const initialState: PartnerApplyState = { ok: false };
 
@@ -52,7 +58,7 @@ function PartnerApplyWaitlist() {
         {t("body")}
       </p>
       <Button className="mt-6 gradient-primary" size="lg" asChild>
-        <Link href="/contact?from=pilot-waitlist">{t("cta")}</Link>
+        <Link href="/contact?from=founding-waitlist">{t("cta")}</Link>
       </Button>
       <p className="mt-4 text-xs text-muted-foreground">
         {t("orEmail")}{" "}
@@ -66,8 +72,22 @@ function PartnerApplyWaitlist() {
 
 export function PartnerApplyView({ remaining }: { remaining: number }) {
   const t = useTranslations("partnerApply");
+  const locale = useLocale();
   const [state, formAction, pending] = useActionState(submitPartnerApplication, initialState);
   const isFull = remaining <= 0;
+
+  const fmt = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const offerParams = {
+    freeMonths: FOUNDING_FREE_MONTHS,
+    discountPercent: FOUNDING_DISCOUNT_PERCENT,
+    agencyPrice: fmt.format(PLAN_PRICES.BUSINESS.monthly),
+    foundingPrice: fmt.format(getFoundingAgencyPrice("monthly")),
+  };
 
   if (state.ok) {
     return <PartnerApplySuccess />;
@@ -80,7 +100,7 @@ export function PartnerApplyView({ remaining }: { remaining: number }) {
       <section className="border-b border-border/40 bg-muted py-12 md:py-16" aria-labelledby="partner-value-heading">
         <div className="container mx-auto px-4">
           <h2 id="partner-value-heading" className="sr-only">
-            Pilot partner benefits
+            Founding agency benefits
           </h2>
           <ul className="mx-auto grid max-w-4xl gap-3 md:grid-cols-2 md:gap-x-10 md:gap-y-4">
             {VALUE_KEYS.map((key) => (
@@ -88,11 +108,23 @@ export function PartnerApplyView({ remaining }: { remaining: number }) {
                 <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
                   <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />
                 </span>
-                <span>{t(`value.${key}`)}</span>
+                <span>{t(`value.${key}`, offerParams)}</span>
               </li>
             ))}
           </ul>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-muted-foreground">
+            {t.rich("value.commitmentsNote", {
+              link: (chunks) => (
+                <Link
+                  href="/founding-agencies"
+                  className="text-primary underline-offset-4 hover:underline"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-muted-foreground">
             {t("value.reviewNote")}
           </p>
         </div>

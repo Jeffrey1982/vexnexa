@@ -12,6 +12,11 @@ import {
   getPlainTextVersion,
   type BaseEmailTemplate
 } from './email-templates'
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  FOUNDING_MAX_SPOTS,
+} from './billing/pricing-config'
 
 // Initialize Resend only if API key is available
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
@@ -308,13 +313,13 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
     .join(', ')
 
   const safeCompany = companyName.replace(/[\r\n]/g, ' ').trim().slice(0, 120) || 'Unknown company'
-  const subject = `🚀 New Pilot Partner Application – ${safeCompany}`
+  const subject = `🚀 New Founding Agency Application – ${safeCompany}`
 
   const e = (s: string) => escapeHtmlForEmail(s)
 
   const html = `
         <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto;">
-          <h2 style="color: #D45A00; margin-bottom: 8px;">New Pilot Partner application</h2>
+          <h2 style="color: #D45A00; margin-bottom: 8px;">New Founding Agency application</h2>
           <p style="color: #4B5563; font-size: 14px; margin-top: 0;">Submitted via vexnexa.com/partner-apply</p>
 
           <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -329,7 +334,7 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
           </div>
 
           <div style="background: #ffffff; padding: 20px; border: 1px solid #C0C3C7; border-radius: 8px;">
-            <h3 style="margin-top: 0; color: #1F2937;">Why join the pilot?</h3>
+            <h3 style="margin-top: 0; color: #1F2937;">Why join the program?</h3>
             <p style="white-space: pre-wrap; color: #374151; line-height: 1.6;">${e(motivation)}</p>
           </div>
 
@@ -340,7 +345,7 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
       `
 
   const text = `
-New Pilot Partner application (vexnexa.com/partner-apply)
+New Founding Agency application (vexnexa.com/partner-apply)
 
 Name: ${fullName}
 Agency / company: ${companyName}
@@ -349,7 +354,7 @@ ${phone ? `Phone: ${phone}\n` : ''}Agency website: ${website}
 Client websites managed: ${clientSites}
 Services offered: ${servicesLine}
 
-Why join the pilot?
+Why join the program?
 ${motivation}
 `.trim()
 
@@ -363,15 +368,15 @@ ${motivation}
 }
 
 /**
- * Confirmation to the pilot applicant — previously only info@ was notified
- * and the "reply within 24 hours" promise depended on a manual email.
+ * Confirmation to the founding agency applicant — previously only info@ was
+ * notified and the "reply within 24 hours" promise depended on a manual email.
  */
 export async function sendPilotPartnerConfirmationEmail(data: {
   email: string
   companyName: string
 }) {
   if (!resend) {
-    console.warn('RESEND_API_KEY not configured, skipping pilot confirmation email')
+    console.warn('RESEND_API_KEY not configured, skipping founding agency confirmation email')
     return null
   }
 
@@ -381,15 +386,17 @@ export async function sendPilotPartnerConfirmationEmail(data: {
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-      <h2 style="color: #1F4A2D;">We received your Pilot Partner application</h2>
+      <h2 style="color: #1F4A2D;">We received your Founding Agency application</h2>
       <p style="color: #374151; line-height: 1.6;">
         Thanks, <strong>${company}</strong> — your application is in. We review every
         application personally and reply within <strong>24 hours</strong> (usually faster).
       </p>
       <p style="color: #374151; line-height: 1.6;">
-        A quick reminder of what the pilot includes: <strong>3 months of the Agency plan
-        for the Pro price (€34.95/mo)</strong>, white-label reports under your own brand,
-        a direct line to the founder, and input on the roadmap.
+        A quick reminder of what the program includes: <strong>${FOUNDING_FREE_MONTHS} months of the
+        Agency plan for free</strong>, then a permanent ${FOUNDING_DISCOUNT_PERCENT}% founding discount,
+        white-label reports under your own brand, a direct line to the founder, and input on the
+        roadmap. In return we ask for real usage, a testimonial, one case-study interview, and
+        monthly feedback.
       </p>
       <p style="margin: 28px 0;">
         <a href="${sampleUrl}" style="display: inline-block; background: #1F4A2D; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
@@ -401,11 +408,11 @@ export async function sendPilotPartnerConfirmationEmail(data: {
       </p>
     </div>
   `
-  const text = `We received your Pilot Partner application
+  const text = `We received your Founding Agency application
 
 Thanks, ${data.companyName} — your application is in. We review every application personally and reply within 24 hours (usually faster).
 
-The pilot includes: 3 months of the Agency plan for the Pro price (€34.95/mo), white-label reports under your own brand, a direct line to the founder, and input on the roadmap.
+The program includes: ${FOUNDING_FREE_MONTHS} months of the Agency plan for free, then a permanent ${FOUNDING_DISCOUNT_PERCENT}% founding discount, white-label reports under your own brand, a direct line to the founder, and input on the roadmap. In return we ask for real usage, a testimonial, one case-study interview, and monthly feedback.
 
 View a sample white-label report: ${sampleUrl}
 
@@ -415,7 +422,7 @@ Questions in the meantime? Just reply to this email.`
     from,
     to: [data.email],
     replyTo: 'info@vexnexa.com',
-    subject: 'Your VexNexa Pilot Partner application is in — reply within 24h',
+    subject: 'Your VexNexa Founding Agency application is in — reply within 24h',
     html,
     text
   })
@@ -618,13 +625,13 @@ VexNexa · vexnexa.com`
   })
 
   // D+3 follow-up (only after a successful scan): a short personal note
-  // from the founder with the pilot offer. Scheduled via Resend so it needs
-  // no cron or database. Recipients can opt out by replying "stop"
+  // from the founder with the founding agency offer. Scheduled via Resend so
+  // it needs no cron or database. Recipients can opt out by replying "stop"
   // (List-Unsubscribe header included).
   if (data.phase === 'done' && r) {
     try {
       const followUpAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()
-      const pilotUrl = `${appUrl}/pilot-partner-program?utm_source=email&utm_medium=email&utm_campaign=free_scan_followup`
+      const foundingUrl = `${appUrl}/founding-agencies?utm_source=email&utm_medium=email&utm_campaign=free_scan_followup`
       const followUpSubject = nl
         ? `Al stappen gezet met ${host}? (score was ${r.score}/100)`
         : `Made progress on ${host} yet? (score was ${r.score}/100)`
@@ -638,7 +645,7 @@ Twee dingen die kunnen helpen:
 
 1. Met een gratis account zie je alle problemen met herstelrichtlijnen en PDF-export: ${registerUrl}
 
-2. Run je een bureau met meerdere klantsites? De eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd), met een directe lijn naar mij: ${pilotUrl}
+2. Run je een bureau met meerdere klantsites? De eerste ${FOUNDING_MAX_SPOTS} bureaus krijgen ${FOUNDING_FREE_MONTHS} maanden het Agency-abonnement gratis, daarna permanent ${FOUNDING_DISCOUNT_PERCENT}% founding-korting — met een directe lijn naar mij: ${foundingUrl}
 
 Vragen? Beantwoord gewoon deze mail — je krijgt mij persoonlijk.
 
@@ -654,7 +661,7 @@ Two things that might help:
 
 1. A free account shows every issue with remediation guidance and PDF export: ${registerUrl}
 
-2. Running an agency with multiple client sites? The first 10 agencies get 3 months of the Agency plan for the Pro price (€34.95/mo), with a direct line to me: ${pilotUrl}
+2. Running an agency with multiple client sites? The first ${FOUNDING_MAX_SPOTS} agencies get ${FOUNDING_FREE_MONTHS} months of the Agency plan for free, then a permanent ${FOUNDING_DISCOUNT_PERCENT}% founding discount — with a direct line to me: ${foundingUrl}
 
 Questions? Just reply to this email — it reaches me personally.
 
@@ -674,7 +681,7 @@ PS: Don't want these emails? Reply "stop".`
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
           .replace(registerUrl, `<a href="${registerUrl}" style="color:#1F4A2D;">${registerUrl}</a>`)
-          .replace(pilotUrl, `<a href="${pilotUrl}" style="color:#1F4A2D;">${pilotUrl}</a>`)}</div>`,
+          .replace(foundingUrl, `<a href="${foundingUrl}" style="color:#1F4A2D;">${foundingUrl}</a>`)}</div>`,
         scheduledAt: followUpAt,
         headers: {
           'List-Unsubscribe': '<mailto:info@vexnexa.com?subject=unsubscribe>'

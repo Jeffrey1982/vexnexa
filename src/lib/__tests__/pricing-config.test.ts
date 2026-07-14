@@ -15,6 +15,11 @@ import {
   getYearlyDiscountPercent,
   deriveVatBreakdown,
   buildPaymentMetadata,
+  FOUNDING_DISCOUNT,
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  FOUNDING_MAX_SPOTS,
+  getFoundingAgencyPrice,
 } from '../billing/pricing-config'
 
 describe('pricing-config', () => {
@@ -85,15 +90,15 @@ describe('pricing-config', () => {
   })
 
   describe('isSelfServePlan', () => {
-    it('returns true for PRO, BUSINESS, and PIONEER', () => {
+    it('returns true for PRO and BUSINESS', () => {
       expect(isSelfServePlan('PRO')).toBe(true)
       expect(isSelfServePlan('BUSINESS')).toBe(true)
-      expect(isSelfServePlan('PIONEER')).toBe(true)
     })
 
-    it('returns false for FREE, STARTER, and ENTERPRISE', () => {
+    it('returns false for FREE, STARTER, PIONEER, and ENTERPRISE', () => {
       expect(isSelfServePlan('FREE')).toBe(false)
       expect(isSelfServePlan('STARTER')).toBe(false)
+      expect(isSelfServePlan('PIONEER')).toBe(false)
       expect(isSelfServePlan('ENTERPRISE')).toBe(false)
     })
   })
@@ -224,12 +229,37 @@ describe('pricing-config', () => {
   })
 
   describe('plan list constants', () => {
-    it('SELF_SERVE_PLANS contains PRO, BUSINESS, and PIONEER', () => {
-      expect(SELF_SERVE_PLANS).toEqual(['PRO', 'BUSINESS', 'PIONEER'])
+    it('SELF_SERVE_PLANS contains PRO and BUSINESS only (PIONEER closed)', () => {
+      expect(SELF_SERVE_PLANS).toEqual(['PRO', 'BUSINESS'])
     })
 
-    it('PUBLIC_PLANS contains FREE, PRO, BUSINESS, and PIONEER', () => {
-      expect(PUBLIC_PLANS).toEqual(['FREE', 'PRO', 'BUSINESS', 'PIONEER'])
+    it('PUBLIC_PLANS contains FREE, PRO, and BUSINESS only (PIONEER hidden)', () => {
+      expect(PUBLIC_PLANS).toEqual(['FREE', 'PRO', 'BUSINESS'])
+    })
+  })
+
+  describe('Founding Agency Program', () => {
+    it('has the agreed program constants', () => {
+      expect(FOUNDING_DISCOUNT).toBe(0.3)
+      expect(FOUNDING_DISCOUNT_PERCENT).toBe(30)
+      expect(FOUNDING_FREE_MONTHS).toBe(12)
+      expect(FOUNDING_MAX_SPOTS).toBe(10)
+    })
+
+    it('derives the founding Agency price from the Agency plan price', () => {
+      expect(getFoundingAgencyPrice('monthly')).toBeCloseTo(
+        PLAN_PRICES.BUSINESS.monthly * 0.7,
+        2
+      )
+      expect(getFoundingAgencyPrice('yearly')).toBeCloseTo(
+        PLAN_PRICES.BUSINESS.yearly * 0.7,
+        2
+      )
+    })
+
+    it('rounds the founding price to cents', () => {
+      const monthly = getFoundingAgencyPrice('monthly')
+      expect(Math.round(monthly * 100) / 100).toBe(monthly)
     })
   })
 })

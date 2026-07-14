@@ -49,7 +49,7 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
 
   const navigationItems = [
     { name: t('forAgencies'), href: "/for-agencies" },
-    { name: t('pilotProgram'), href: "/pilot-partner-program" },
+    { name: t('foundingAgencies'), href: "/founding-agencies" },
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
     { name: t('sampleReport'), href: "/sample-report" },

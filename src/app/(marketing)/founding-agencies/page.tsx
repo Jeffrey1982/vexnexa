@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ArrowRight,
@@ -14,28 +14,60 @@ import {
   Rocket,
   Shield,
   AlertTriangle,
-  Eye,
+  BadgePercent,
   Users,
 } from "lucide-react";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
+import { getPilotPartnerRemaining } from "@/lib/pilot-partner";
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  FOUNDING_MAX_SPOTS,
+  PLAN_PRICES,
+  getFoundingAgencyPrice,
+} from "@/lib/billing/pricing-config";
+
+function formatEur(amount: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+}
+
+async function getOfferParams() {
+  const locale = await getLocale();
+  return {
+    spots: FOUNDING_MAX_SPOTS,
+    freeMonths: FOUNDING_FREE_MONTHS,
+    afterMonth: FOUNDING_FREE_MONTHS + 1,
+    discountPercent: FOUNDING_DISCOUNT_PERCENT,
+    agencyPrice: formatEur(PLAN_PRICES.BUSINESS.monthly, locale),
+    foundingPrice: formatEur(getFoundingAgencyPrice("monthly"), locale),
+  };
+}
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("pilotPage.meta");
-  const title = t("title");
-  const description = t("description");
+  const t = await getTranslations("foundingPage.meta");
+  const params = await getOfferParams();
+  const title = t("title", params);
+  const description = t("description", params);
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      url: "https://vexnexa.com/pilot-partner-program",
+      url: "https://vexnexa.com/founding-agencies",
     },
   };
 }
 
-export default async function PilotPartnerProgramPage() {
-  const t = await getTranslations("pilotPage");
+export default async function FoundingAgenciesPage() {
+  const t = await getTranslations("foundingPage");
+  const params = await getOfferParams();
+  const { remaining } = await getPilotPartnerRemaining();
 
   const audiences = [
     { icon: Building2, key: "a1" },
@@ -44,11 +76,11 @@ export default async function PilotPartnerProgramPage() {
   ] as const;
 
   const benefits = [
-    { icon: Eye, key: "b1" },
-    { icon: FileText, key: "b2" },
-    { icon: RefreshCw, key: "b3" },
-    { icon: MessageCircle, key: "b4" },
-    { icon: Rocket, key: "b5" },
+    { icon: Rocket, key: "b1" },
+    { icon: BadgePercent, key: "b2" },
+    { icon: FileText, key: "b3" },
+    { icon: RefreshCw, key: "b4" },
+    { icon: MessageCircle, key: "b5" },
     { icon: Users, key: "b6" },
   ] as const;
 
@@ -74,13 +106,17 @@ export default async function PilotPartnerProgramPage() {
             </h1>
 
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              {t("hero.subtitle")}
+              {t("hero.subtitle", params)}
+            </p>
+
+            <p className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+              {t("hero.spotsLeft", { remaining, spots: FOUNDING_MAX_SPOTS })}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <TrackedCTA
                 href="/partner-apply"
-                event="pilot_partner_apply_click"
+                event="founding_agency_apply_click"
                 eventProps={{ location: "hero" }}
                 size="lg"
                 className="gradient-primary text-white"
@@ -90,7 +126,7 @@ export default async function PilotPartnerProgramPage() {
               </TrackedCTA>
               <TrackedCTA
                 href="/sample-report"
-                event="pilot_partner_sample_report_click"
+                event="founding_agency_sample_report_click"
                 eventProps={{ location: "hero" }}
                 size="lg"
                 variant="outline"
@@ -104,8 +140,44 @@ export default async function PilotPartnerProgramPage() {
         </div>
       </section>
 
+      {/* Price anchor — what the deal is worth */}
+      <section className="border-y border-border/40 bg-muted py-12 lg:py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <h2 className="text-2xl lg:text-3xl font-bold font-display">
+              {t("priceAnchor.title")}
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <Card className="border-0 shadow-elegant">
+                <CardContent className="p-8 space-y-2">
+                  <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                    {t("priceAnchor.normalLabel")}
+                  </p>
+                  <p className="font-display text-3xl font-bold text-foreground">
+                    {t("priceAnchor.normalPrice", params)}
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="border-primary/40 border shadow-elegant">
+                <CardContent className="p-8 space-y-2">
+                  <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+                    {t("priceAnchor.foundingLabel")}
+                  </p>
+                  <p className="font-display text-3xl font-bold text-primary">
+                    {t("priceAnchor.year1", params)}
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t("priceAnchor.after", params)}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Who this is for */}
-      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
+      <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -136,8 +208,8 @@ export default async function PilotPartnerProgramPage() {
         </div>
       </section>
 
-      {/* What pilot partners get */}
-      <section className="py-16 lg:py-24">
+      {/* What founding agencies get */}
+      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -156,10 +228,10 @@ export default async function PilotPartnerProgramPage() {
                     <b.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                   </div>
                   <h3 className="text-lg font-semibold font-display">
-                    {t(`benefits.${b.key}.title`)}
+                    {t(`benefits.${b.key}.title`, params)}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    {t(`benefits.${b.key}.description`)}
+                    {t(`benefits.${b.key}.description`, params)}
                   </p>
                 </CardContent>
               </Card>
@@ -169,7 +241,7 @@ export default async function PilotPartnerProgramPage() {
       </section>
 
       {/* What we ask in return */}
-      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
+      <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -201,11 +273,15 @@ export default async function PilotPartnerProgramPage() {
               </Card>
             ))}
           </div>
+
+          <p className="max-w-3xl mx-auto mt-8 text-center text-sm text-muted-foreground leading-relaxed">
+            {t("expectations.inactivityNote")}
+          </p>
         </div>
       </section>
 
       {/* Why this works well for agencies */}
-      <section className="py-16 lg:py-24">
+      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -222,7 +298,7 @@ export default async function PilotPartnerProgramPage() {
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <TrackedCTA
                   href="/partner-apply"
-                  event="pilot_partner_apply_click"
+                  event="founding_agency_apply_click"
                   eventProps={{ location: "agency_section" }}
                   className="gradient-primary text-white"
                 >
@@ -231,7 +307,7 @@ export default async function PilotPartnerProgramPage() {
                 </TrackedCTA>
                 <TrackedCTA
                   href="/for-agencies"
-                  event="pilot_partner_contact_click"
+                  event="founding_agency_contact_click"
                   eventProps={{ location: "agency_section" }}
                   variant="outline"
                 >
@@ -242,7 +318,7 @@ export default async function PilotPartnerProgramPage() {
 
             <div className="space-y-3">
               {agencyPoints.map((key) => (
-                <div key={key} className="flex items-start gap-3 p-4 rounded-xl bg-muted">
+                <div key={key} className="flex items-start gap-3 p-4 rounded-xl bg-background">
                   <Check className="h-5 w-5 text-success mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <span className="text-sm leading-relaxed">{t(`agency.${key}`)}</span>
                 </div>
@@ -252,8 +328,8 @@ export default async function PilotPartnerProgramPage() {
         </div>
       </section>
 
-      {/* What to expect from the pilot */}
-      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
+      {/* What to expect */}
+      <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">
@@ -287,7 +363,7 @@ export default async function PilotPartnerProgramPage() {
       </section>
 
       {/* Important notes */}
-      <section className="py-16 lg:py-24">
+      <section className="border-y border-border/40 bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
@@ -300,7 +376,7 @@ export default async function PilotPartnerProgramPage() {
                 <div key={key} className="flex items-start gap-3 p-4 rounded-xl border bg-card">
                   <ClipboardCheck className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" aria-hidden="true" />
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    {t(`notes.${key}`)}
+                    {t(`notes.${key}`, params)}
                   </p>
                 </div>
               ))}
@@ -314,14 +390,14 @@ export default async function PilotPartnerProgramPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              {t("finalCta.title")}
+              {t("finalCta.title", params)}
             </h2>
             <p className="text-lg opacity-90 max-w-2xl mx-auto">{t("finalCta.subtitle")}</p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
                 href="/partner-apply"
-                event="pilot_partner_apply_click"
+                event="founding_agency_apply_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
                 className="bg-background text-primary hover:bg-muted"
@@ -331,7 +407,7 @@ export default async function PilotPartnerProgramPage() {
               </TrackedCTA>
               <TrackedCTA
                 href="/sample-report"
-                event="pilot_partner_sample_report_click"
+                event="founding_agency_sample_report_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
                 variant="outline"
@@ -340,8 +416,8 @@ export default async function PilotPartnerProgramPage() {
                 {t("finalCta.ctaSample")}
               </TrackedCTA>
               <TrackedCTA
-                href="/contact?from=pilot-question"
-                event="pilot_partner_contact_click"
+                href="/contact?from=founding-question"
+                event="founding_agency_contact_click"
                 eventProps={{ location: "final_cta" }}
                 size="lg"
                 variant="outline"

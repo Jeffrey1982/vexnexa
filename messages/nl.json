@@ -106,10 +106,10 @@
     "tagline": "WCAG-scans die echt inzicht geven",
     "followUs": "Volg ons",
     "forAgencies": "Voor Bureaus",
-    "pilotProgram": "Pilotprogramma",
     "sampleReport": "Voorbeeld Rapport",
     "updates": "Updates",
-    "eaaMonitoring": "EAA-monitoring"
+    "eaaMonitoring": "EAA-monitoring",
+    "foundingAgencies": "Founding-programma"
   },
   "footer": {
     "brand": {
@@ -180,7 +180,6 @@
       "whiteLabelReports": "White-label rapporten",
       "sampleReport": "Voorbeeldrapport",
       "wcagScanner": "WCAG-scanner",
-      "pilotPartner": "Pilot Partner-programma",
       "agencyMonitoring": "Agency-monitoring",
       "government": "Overheid & gemeenten",
       "bfsg": "Duitse toegankelijkheidswet (BFSG)",
@@ -190,7 +189,8 @@
       "dutchWebshop": "Toegankelijkheid webshop",
       "dutchTesting": "Website toegankelijkheid testen",
       "overlayAlternative": "Overlay-alternatief",
-      "regressionTesting": "Regressietesten"
+      "regressionTesting": "Regressietesten",
+      "foundingAgencies": "Founding Agency-programma"
     },
     "disclaimer": "Scannen van openbare content • Geen opslag van persoonsgegevens",
     "description": "Toegankelijkheidsmonitoring, rapportage en herstelworkflows voor moderne teams.",
@@ -253,13 +253,6 @@
     "mockupAria": "Gestileerde voorbeeld van het VexNexa scan dashboard met een white-label rapport samenvatting kaart."
   },
   "home": {
-    "pilotProgram": {
-      "badge": "Agency Pilotprogramma",
-      "title": "Eerste 10 bureaus: 3 maanden Agency voor de Pro-prijs",
-      "subtitle": "Krijg het volledige Agency-abonnement — white-label rapporten, 10 klantsites, prioriteitsondersteuning — voor €34,95/mnd tijdens je eerste 3 maanden. Plus een directe lijn met de oprichter en inspraak op de roadmap.",
-      "cta": "Meld je aan voor de pilot",
-      "ctaSecondary": "Hoe de pilot werkt"
-    },
     "reportPreview": {
       "chip": "Compliancerapport",
       "auditLabel": "Geautomatiseerde toegankelijkheidsaudit",
@@ -356,22 +349,6 @@
       "subtitle": "Maak je gratis account aan. Voer je eerste scan uit. Zie resultaten in minuten. Upgrade wanneer je monitoring, rapporten en multi-site beheer nodig hebt.",
       "ctaPrimary": "Start je gratis scan",
       "ctaSecondary": "Bekijk tarieven"
-    },
-    "testimonials": {
-      "title": "Wat pilotpartners zeggen",
-      "subtitle": "Vroege feedback van agencies die VexNexa testen in hun workflows.",
-      "t1": {
-        "quote": "VexNexa bespaarde ons uren per klant. De white-label rapporten zien eruit alsof we ze zelf hebben gebouwd.",
-        "attribution": "Pilotpartner — Digitaal bureau, Nederland"
-      },
-      "t2": {
-        "quote": "We hebben eindelijk een herhaalbare toegankelijkheidsworkflow. Scannen, rapporteren, monitoren — klaar.",
-        "attribution": "Pilotpartner — Webstudio, Duitsland"
-      },
-      "t3": {
-        "quote": "De prioritering overtuigde ons. We weten precies wat we eerst moeten oplossen voor elke klant.",
-        "attribution": "Pilotpartner — Complianceteam, België"
-      }
     },
     "faq": {
       "q1": {
@@ -575,20 +552,6 @@
         "description": "Exporteer rapporten op maat. Plan terugkerende scans. Ontvang meldingen bij scorewijzigingen. Bouw een continu verbeterproces."
       }
     },
-    "pilotBanner": {
-      "badge": "Beperkt aantal plekken",
-      "title": "Word pilotpartner",
-      "subtitle": "Krijg toegang op Agency-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
-      "standardsIntro": "Lever whitelabelrapporten aangedreven door dezelfde normen die toonaangevende toegankelijkheidsteams wereldwijd gebruiken.",
-      "standardsAria": "Referenties naar toegankelijkheidsnormen",
-      "standardsPoweredBy": "Mogelijk gemaakt door",
-      "standardsAxeCaption": "Testengine",
-      "standardsWcagCaption": "WCAG 2.2 AA",
-      "standardsEnCaption": "EU-kader",
-      "standardsFootnote": "Alleen ter referentie. VexNexa wordt niet onderschreven door W3C of Deque.",
-      "ctaPrimary": "Meer informatie",
-      "ctaSecondary": "Nu aanmelden"
-    },
     "pricingTeaser": {
       "eyebrow": "Transparante prijzen",
       "title": "Plannen die meegroeien met je portfolio",
@@ -781,6 +744,22 @@
       "subtitle": "Praktijknotities over WCAG, EAA en het vak van inclusieve interfaces. Wekelijks bijgewerkt.",
       "title": "Toegankelijkheidsnieuws, geschreven voor bouwers.",
       "viewAll": "Bekijk alle artikelen"
+    },
+    "foundingProgram": {
+      "badge": "Founding Agency-programma",
+      "title": "Eerste {spots} bureaus: {freeMonths} maanden Agency, gratis",
+      "subtitle": "Krijg het volledige Agency-abonnement — white-label rapporten, {sites} klantsites, prioriteitsondersteuning — {freeMonths} maanden gratis, daarna permanent {discountPercent}% founding-korting zolang je blijft. Het Agency-abonnement kost normaal {agencyPrice}/mnd; founding-bureaus betalen {foundingPrice}/mnd na het gratis jaar.",
+      "cta": "Meld je aan als founding-bureau",
+      "ctaSecondary": "Hoe het programma werkt"
+    },
+    "partnerStandards": {
+      "standardsIntro": "Lever whitelabelrapporten aangedreven door dezelfde normen die toonaangevende toegankelijkheidsteams wereldwijd gebruiken.",
+      "standardsAria": "Referenties naar toegankelijkheidsnormen",
+      "standardsPoweredBy": "Mogelijk gemaakt door",
+      "standardsAxeCaption": "Testengine",
+      "standardsWcagCaption": "WCAG 2.2 AA",
+      "standardsEnCaption": "EU-kader",
+      "standardsFootnote": "Alleen ter referentie. VexNexa wordt niet onderschreven door W3C of Deque."
     }
   },
   "pricing": {
@@ -1200,12 +1179,6 @@
           }
         }
       },
-      "pilotBanner": {
-        "badge": "Agency Pilot",
-        "title": "3 maanden het Agency-abonnement voor de Pro-prijs",
-        "subtitle": "Voor de eerste 10 bureaus: alle Agency-functies — white-label rapporten, 10 websites en prioriteitsondersteuning — voor de Pro-prijs (€34,95/mnd) tijdens je eerste 3 maanden. Plus een directe lijn met de oprichter en inspraak op de roadmap.",
-        "cta": "Claim je pilotplek"
-      },
       "noCreditCard": "Geen creditcard vereist · Altijd opzegbaar",
       "cta": {
         "free": "Start gratis",
@@ -1231,7 +1204,13 @@
       },
       "perMonth": "/maand",
       "perYear": "/jaar",
-      "perMonthSubtext": "{price}/maand"
+      "perMonthSubtext": "{price}/maand",
+      "foundingBanner": {
+        "badge": "Founding Agency-programma",
+        "title": "Eerste {spots} bureaus: {freeMonths} maanden Agency, gratis",
+        "subtitle": "Word founding-bureau en krijg het volledige Agency-abonnement — normaal {agencyPrice}/mnd — {freeMonths} maanden gratis, daarna permanent {discountPercent}% founding-korting ({foundingPrice}/mnd) zolang je blijft. In ruil vragen we echt gebruik, eerlijke feedback en een case study.",
+        "cta": "Bekijk het founding-programma"
+      }
     },
     "addons": {
       "assurance": {
@@ -3491,13 +3470,6 @@
         "description": "Doorlopende monitoring als maandelijkse dienst voor je klanten."
       }
     },
-    "pilotBanner": {
-      "badge": "Beperkt aantal plekken",
-      "title": "Word pilotpartner",
-      "subtitle": "Krijg toegang op Agency-niveau, directe ondersteuning en help VexNexa vormgeven — terwijl je vanaf dag één toegankelijkheid levert aan je klanten.",
-      "ctaPrimary": "Meer informatie",
-      "ctaSecondary": "Nu aanmelden"
-    },
     "finalCta": {
       "title": "Begin met het leveren van toegankelijkheid aan je klanten",
       "subtitle": "Maak een gratis account aan, scan je eerste klantsite en ontdek hoe VexNexa in je workflow past.",
@@ -3518,6 +3490,13 @@
       "teamCollaboration": "Tools voor teamsamenwerking",
       "title": "Speciaal gebouwd voor agencies",
       "whiteLabel": "Volledige white-label rapporten"
+    },
+    "foundingBanner": {
+      "badge": "Founding Agency-programma",
+      "title": "Word founding-bureau",
+      "subtitle": "De eerste {spots} bureaus krijgen {freeMonths} maanden het Agency-abonnement gratis, daarna permanent {discountPercent}% founding-korting — terwijl ze vanaf dag één toegankelijkheid aan hun klanten leveren.",
+      "ctaPrimary": "Meer informatie",
+      "ctaSecondary": "Meld je aan"
     }
   },
   "blog": {
@@ -4187,7 +4166,7 @@
     },
     "knownIssues": {
       "title": "Bekende problemen",
-      "subtitle": "Geselecteerde openbare problemen die klanten of pilot-partners kunnen raken.",
+      "subtitle": "Geselecteerde publieke issues die klanten of founding-bureaus kunnen raken.",
       "currentBadge": "Actueel",
       "lastChecked": "Laatst gecontroleerd",
       "fallbackTitle": "Geen actieve openbare problemen",
@@ -4230,7 +4209,7 @@
         },
         {
           "title": "Openbaar communicatiekanaal gelanceerd",
-          "body": "Bekende problemen en belangrijke fixes hebben nu één openbare plek voor klanten en pilot-partners."
+          "body": "Bekende issues en noemenswaardige fixes hebben nu één publieke plek voor klanten en founding-bureaus."
         }
       ]
     },
@@ -4826,139 +4805,13 @@
       }
     }
   },
-  "pilotPage": {
-    "meta": {
-      "title": "Pilot Partner-programma | Toegankelijkheidsmonitoring & rapportage",
-      "description": "Meld je aan als VexNexa-pilotpartner: de eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs, een directe lijn met de oprichter en inspraak op de roadmap."
-    },
-    "hero": {
-      "badge": "Beperkt pilotprogramma",
-      "title": "Word VexNexa-",
-      "titleHighlight": "pilotpartner",
-      "subtitle": "De eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd in plaats van €99,95/mnd), een directe lijn met de oprichter en inspraak op de roadmap — terwijl je vanaf dag één white-label toegankelijkheidsrapporten aan je klanten levert.",
-      "ctaApply": "Meld je aan voor de pilot",
-      "ctaSample": "Bekijk voorbeeldrapport",
-      "note": "Beperkt tot 10 pilotplekken. Meest geschikt voor bureaus met live klantsites. Begin met één site — geen langetermijnverplichting."
-    },
-    "audiences": {
-      "title": "Voor wie dit is",
-      "subtitle": "De pilot is ontworpen voor teams die echte websites beheren en een praktische toegankelijkheidsworkflow willen — geen eenmalige scan.",
-      "a1": {
-        "title": "Bureaus en digitale partners",
-        "description": "Je beheert klantwebsites en hebt een herhaalbare manier nodig om toegankelijkheid te scannen, rapporteren en monitoren. De pilot geeft je een echte workflow om met je team en klanten te testen."
-      },
-      "a2": {
-        "title": "Instellingen en publieksgerichte teams",
-        "description": "Je beheert websites voor een breed publiek — onderwijs, overheid, zorg, non-profits. De pilot helpt je je toegankelijkheidsbasis te begrijpen en verbeteringen door de tijd te volgen."
-      },
-      "a3": {
-        "title": "EU-gerichte bedrijven met compliance-verantwoordelijkheid",
-        "description": "Je hebt doorlopend toezicht op toegankelijkheid nodig voor EAA-gereedheid of intern beleid. De pilot geeft je monitoring, bewijs van verbetering en duidelijke prioritering."
-      }
-    },
-    "benefits": {
-      "title": "Wat pilotpartners krijgen",
-      "subtitle": "Begin met één live site, draai je eerste scan en zie de volledige rapportageworkflow — met directe ondersteuning van het VexNexa-team.",
-      "b1": {
-        "title": "Scan- en rapportageworkflows",
-        "description": "Draai WCAG 2.2-scans op echte sites en genereer gestructureerde rapporten met op ernst gerangschikte problemen en bruikbaar advies."
-      },
-      "b2": {
-        "title": "Branded deliverables",
-        "description": "Exporteer white-label PDF- en DOCX-rapporten onder je eigen logo — klaar om te delen met klanten, stakeholders of management."
-      },
-      "b3": {
-        "title": "Doorlopende monitoring",
-        "description": "Stel terugkerende scans in om regressies op te vangen na redesigns, contentwijzigingen of nieuwe releases. Volg scores door de tijd."
-      },
-      "b4": {
-        "title": "Directe feedbackloop",
-        "description": "Deel wat werkt, wat niet, en wat je zou willen zien. Pilotpartners hebben een directe lijn met de oprichter."
-      },
-      "b5": {
-        "title": "Vroege inspraak op verbeteringen",
-        "description": "Jouw feedback bepaalt komende features. Pilotpartners beïnvloeden de roadmap op basis van echt gebruik."
-      },
-      "b6": {
-        "title": "Hulp bij de setup",
-        "description": "We helpen je op weg — van je eerste scan tot terugkerende monitoring — zodat je vanaf dag één productief bent."
-      }
-    },
-    "expectations": {
-      "title": "Wat we terugvragen",
-      "subtitle": "Dit is een samenwerkingspartnerschap. We waarderen je tijd en feedback — geen verplichtingen behalve eerlijke input.",
-      "e1": {
-        "title": "Eerlijke productfeedback",
-        "description": "Vertel ons wat werkt, wat verwarrend is en wat er mist. We waarderen directe, praktische input."
-      },
-      "e2": {
-        "title": "Een kort feedbackmoment",
-        "description": "Na je eerste gebruik plannen we een kort gesprek om van je ervaring te leren."
-      },
-      "e3": {
-        "title": "Optionele samenwerkingsreferentie",
-        "description": "Als de pilot nuttig is, vragen we mogelijk of we de samenwerking mogen noemen — alleen met jouw expliciete toestemming."
-      },
-      "e4": {
-        "title": "Optionele casestudy of logovermelding",
-        "description": "Nooit vanzelfsprekend. Alleen als jij je er prettig bij voelt en er wederzijdse waarde in ziet."
-      }
-    },
-    "agency": {
-      "eyebrow": "Voor bureaus",
-      "title": "Waarom dit goed werkt voor bureaus",
-      "body": "Beheer je klantwebsites, dan geeft de pilot je een echte workflow om te testen — van scannen en rapporteren tot doorlopende monitoring. Zie hoe VexNexa in je bestaande proces past voordat je je committeert.",
-      "ctaApply": "Meld je aan als bureaupartner",
-      "ctaLearn": "Meer over gebruik door bureaus",
-      "p1": "Draai scans op klantwebsites en krijg binnen minuten een gestructureerd WCAG 2.2-rapport",
-      "p2": "Exporteer branded PDF- en DOCX-rapporten met het logo en de kleuren van je bureau",
-      "p3": "Prioriteer problemen op ernst zodat klanten weten waar te beginnen",
-      "p4": "Plan terugkerende scans om toegankelijkheid door de tijd te monitoren",
-      "p5": "Beheer meerdere klantsites vanuit één dashboard",
-      "p6": "Verken white-label opleverworkflows voor klantgerichte rapporten"
-    },
-    "process": {
-      "title": "Wat je kunt verwachten",
-      "subtitle": "Het proces is eenvoudig. Meld je aan, word ingericht en gebruik VexNexa op een echte site.",
-      "s1": {
-        "title": "Aanmelden",
-        "description": "Vier velden: bureaunaam, website, e-mail en hoeveel klantsites je beheert. Duurt nog geen minuut."
-      },
-      "s2": {
-        "title": "Wij beoordelen de match",
-        "description": "We kijken of VexNexa praktisch in je workflow past en nemen contact op met vervolgstappen."
-      },
-      "s3": {
-        "title": "Toegang en onboarding",
-        "description": "Na acceptatie scan je een live site, bekijk je je eerste rapport en richt je monitoring in — met hands-on ondersteuning."
-      },
-      "s4": {
-        "title": "Gebruik het op een echte site",
-        "description": "Draai de pilot op echte klant- of organisatiesites. Deel onderweg je feedback."
-      }
-    },
-    "notes": {
-      "title": "Belangrijke opmerkingen",
-      "n1": "Geautomatiseerde scans bieden waardevolle dekking maar vervangen geen volledige handmatige audit. Afhankelijk van je eisen kan aanvullend testen nodig zijn.",
-      "n2": "De pilotbeschikbaarheid is beperkt. VexNexa kan aanmeldingen voorrang geven die goed passen bij de huidige featureset.",
-      "n3": "De pilot is een echte productervaring — geen bètatest. Je gebruikt dezelfde tools en workflows als betalende klanten.",
-      "n4": "Publieke referenties, logogebruik of casestudy's zijn nooit vanzelfsprekend. Zulke samenwerking vereist jouw expliciete toestemming."
-    },
-    "finalCta": {
-      "title": "Interesse om pilotpartner te worden?",
-      "subtitle": "Vertel ons over je bureau. We beoordelen elke aanmelding en streven ernaar binnen 1 werkdag te reageren.",
-      "ctaApply": "Meld je aan voor de pilot",
-      "ctaSample": "Bekijk voorbeeldrapport",
-      "ctaQuestion": "Stel een vraag"
-    }
-  },
   "partnerApply": {
     "hero": {
-      "badge": "Exclusieve pilot",
-      "title": "Doe mee met het exclusieve Pilot Partner-programma",
-      "subtitleFull": "Alle pilotplekken zijn momenteel gevuld. Zet je op de wachtlijst en sta vooraan als er capaciteit vrijkomt.",
-      "subtitle": "Nog maar {remaining} plekken • 3 maanden het Agency-abonnement voor de Pro-prijs, white-label rapporten onder jouw merk en een directe lijn met de oprichter",
-      "ctaClaim": "Claim nu mijn plek",
+      "badge": "Founding Agency-programma",
+      "title": "Meld je aan voor het Founding Agency-programma",
+      "subtitleFull": "Alle founding-plekken zijn momenteel bezet. Zet je op de wachtlijst en sta vooraan als er een plek vrijkomt.",
+      "subtitle": "Nog {remaining} plekken • {freeMonths} maanden het Agency-abonnement gratis, daarna permanent {discountPercent}% founding-korting, white-label rapporten onder je eigen merk en een directe lijn met de oprichter",
+      "ctaClaim": "Claim je founding-plek",
       "ctaWaitlist": "Zet me op de wachtlijst",
       "standardsIntro": "Je levert professionele white-label toegankelijkheidsrapporten powered by axe-core® en in lijn met WCAG 2.2 & EN 301 549",
       "standardsFootnote": "Alleen ter referentie. VexNexa wordt niet onderschreven door W3C of Deque."
@@ -4969,20 +4822,21 @@
       "left": "Nog maar {count, plural, one {# plek} other {# plekken}} beschikbaar"
     },
     "value": {
-      "v1": "3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd in plaats van €99,95/mnd)",
-      "v2": "White-label rapporten onder je eigen merk",
-      "v3": "Een directe lijn met de oprichter",
-      "v4": "Directe inspraak op de roadmap",
-      "v5": "Hands-on hulp bij de setup vanaf je eerste scan",
-      "reviewNote": "Alle aanmeldingen worden binnen 24 uur handmatig beoordeeld."
+      "v1": "{freeMonths} maanden het Agency-abonnement gratis (normaal {agencyPrice}/mnd)",
+      "v2": "Permanent {discountPercent}% founding-korting na het gratis jaar ({foundingPrice}/mnd)",
+      "v3": "White-label rapporten onder je eigen merk",
+      "v4": "Directe lijn met de oprichter en inspraak op de roadmap",
+      "v5": "Persoonlijke hulp bij de start, vanaf je eerste scan",
+      "reviewNote": "Alle aanmeldingen worden binnen 24 uur handmatig beoordeeld.",
+      "commitmentsNote": "In ruil vragen we echt gebruik (minimaal 2 klantrapporten per maand), een testimonial na 3 maanden, één case study-interview en maandelijkse feedback. <link>Bekijk de volledige programmavoorwaarden</link>."
     },
     "standards": {
       "heading": "Gebouwd op toonaangevende standaarden",
-      "subheading": "Als pilotpartner ontvangen je klanten rapporten op basis van dezelfde technologie die toonaangevende toegankelijkheidsteams wereldwijd vertrouwen."
+      "subheading": "Als founding-bureau ontvangen je klanten rapporten op basis van dezelfde technologie die toonaangevende toegankelijkheidsteams wereldwijd vertrouwen."
     },
     "formSection": {
-      "titleFull": "Pilotprogramma zit vol",
-      "title": "Verzeker je plek – nog maar {remaining} beschikbaar",
+      "titleFull": "Founding-programma zit vol",
+      "title": "Verzeker je founding-plek — nog {remaining} beschikbaar",
       "subtitleFull": "We nemen op dit moment geen nieuwe aanmeldingen aan.",
       "subtitle": "Kort kwalificatieformulier — we lezen elke aanmelding persoonlijk."
     },
@@ -4993,7 +4847,7 @@
       "clientSites": "Hoeveel klantwebsites beheer je op dit moment?",
       "selectRange": "Kies een bereik",
       "reviewNotice": "Je aanmelding wordt binnen 24 uur beoordeeld. We respecteren je inbox.",
-      "submit": "Claim nu mijn plek – nog maar {remaining, plural, one {# plek} other {# plekken}}",
+      "submit": "Meld je nu aan – nog {remaining, plural, one {# plek} other {# plekken}} over",
       "sending": "Versturen…",
       "privacy": "Je gegevens zijn veilig. Wij haten spam net zo erg als jij."
     },
@@ -5004,20 +4858,20 @@
       "clientSites": "Kies hoeveel klantwebsites je beheert",
       "fixFields": "Corrigeer de gemarkeerde velden en probeer opnieuw.",
       "rateLimited": "Te veel aanmeldingen vanaf dit netwerk. Probeer het over een uur opnieuw of mail info@vexnexa.com.",
-      "programFull": "Het Pilot Partner-programma zit momenteel vol. Zet je op de wachtlijst en we nemen contact op als er een plek vrijkomt.",
+      "programFull": "Het Founding Agency-programma zit momenteel vol. Zet je op de wachtlijst, dan nemen we contact op als er een plek vrijkomt.",
       "saveFailed": "We konden je aanmelding niet opslaan. Probeer het opnieuw of mail info@vexnexa.com.",
       "confirmationFailed": "Je aanmelding is opgeslagen, maar de bevestigingsmail kon niet worden verzonden. Controleer je e-mailadres of mail direct naar info@vexnexa.com.",
       "adminNotifyFailed": "Je aanmelding is opgeslagen en je bevestigingsmail is verzonden, maar de interne melding is mislukt. Mail direct naar info@vexnexa.com zodat we meteen kunnen opvolgen."
     },
     "success": {
-      "title": "Bedankt! Je Pilot Partner-aanmelding is ontvangen.",
+      "title": "Bedankt! Je Founding Agency-aanmelding is ontvangen.",
       "body": "We nemen binnen 24 uur contact met je op over de vervolgstappen.",
       "ctaSample": "Bekijk voorbeeld white-label rapport",
       "ctaWhiteLabel": "Verken white-label mogelijkheden"
     },
     "waitlist": {
       "title": "Programma is vol",
-      "body": "De pilotplekken zijn vergeven. Zet je op de wachtlijst en we nemen contact op zodra er een plek vrijkomt.",
+      "body": "Alle founding-plekken zijn vergeven. Zet je op de wachtlijst, dan nemen we contact op zodra er een plek vrijkomt.",
       "cta": "Zet me op de wachtlijst",
       "orEmail": "Of mail"
     }
@@ -5209,6 +5063,142 @@
         "Headings en paginastructuur",
         "ARIA en interactieve componenten"
       ]
+    }
+  },
+  "foundingPage": {
+    "meta": {
+      "title": "Founding Agency-programma | {freeMonths} maanden Agency gratis",
+      "description": "De eerste {spots} bureaus krijgen {freeMonths} maanden het VexNexa Agency-abonnement gratis, daarna permanent {discountPercent}% founding-korting — in ruil voor echt gebruik, eerlijke feedback en een case study."
+    },
+    "hero": {
+      "badge": "Founding Agency-programma",
+      "title": "Word een VexNexa",
+      "titleHighlight": "founding-bureau",
+      "subtitle": "De eerste {spots} bureaus krijgen het volledige Agency-abonnement {freeMonths} maanden gratis, daarna permanent {discountPercent}% founding-korting zolang het abonnement actief blijft — terwijl ze vanaf dag één white-label toegankelijkheidsrapporten aan hun klanten leveren.",
+      "ctaApply": "Meld je aan als founding-bureau",
+      "ctaSample": "Bekijk voorbeeldrapport",
+      "note": "Het meest geschikt voor bureaus die live klantwebsites beheren. We beoordelen elke aanmelding persoonlijk.",
+      "spotsLeft": "{remaining} van {spots} founding-plekken over"
+    },
+    "priceAnchor": {
+      "title": "Wat de deal waard is",
+      "normalLabel": "Normale Agency-prijs",
+      "normalPrice": "{agencyPrice}/mnd",
+      "foundingLabel": "Founding-bureaus",
+      "year1": "Gratis de eerste {freeMonths} maanden",
+      "after": "Daarna {foundingPrice}/mnd — een permanente founding-korting van {discountPercent}% zolang je abonnement actief blijft"
+    },
+    "audiences": {
+      "title": "Voor wie dit is",
+      "subtitle": "Het programma is gebouwd voor bureaus met eindklanten — teams die websites opleveren en toegankelijkheid als herhaalbare, factureerbare dienst willen aanbieden.",
+      "a1": {
+        "title": "Bureaus en digitale partners",
+        "description": "Je beheert klantwebsites en hebt een herhaalbare manier nodig om toegankelijkheid te scannen, rapporteren en monitoren — onder je eigen merk."
+      },
+      "a2": {
+        "title": "Webstudio's met een klantportfolio",
+        "description": "Je onderhoudt meerdere live sites en wilt monitoring en rapportages onder eigen merk aanbieden als doorlopende dienst, niet als eenmalige scan."
+      },
+      "a3": {
+        "title": "Consultancies die EAA-compliance begeleiden",
+        "description": "Je begeleidt klanten naar EAA-gereedheid en hebt doorlopende monitoring, bewijs van verbetering en duidelijke prioritering nodig om dat te onderbouwen."
+      }
+    },
+    "benefits": {
+      "title": "Wat founding-bureaus krijgen",
+      "subtitle": "Het volledige Agency-abonnement vanaf dag één — het eerste jaar gratis, daarna permanent met korting, met directe ondersteuning van het VexNexa-team.",
+      "b1": {
+        "title": "{freeMonths} maanden Agency, gratis",
+        "description": "Het complete Agency-abonnement — normaal {agencyPrice}/mnd — zonder kosten in je eerste {freeMonths} maanden. Alle functies, geen beperkingen."
+      },
+      "b2": {
+        "title": "Permanent {discountPercent}% founding-korting",
+        "description": "Vanaf maand {afterMonth} betaal je {foundingPrice}/mnd in plaats van {agencyPrice}/mnd — zolang je abonnement actief blijft."
+      },
+      "b3": {
+        "title": "Rapporten onder eigen merk",
+        "description": "Exporteer white-label PDF- en DOCX-rapporten met je eigen logo — klaar om te delen met klanten, stakeholders of management."
+      },
+      "b4": {
+        "title": "Doorlopende monitoring",
+        "description": "Stel terugkerende scans in om regressies te vangen na redesigns, contentwijzigingen of nieuwe releases. Volg scores door de tijd."
+      },
+      "b5": {
+        "title": "Directe lijn met de oprichter",
+        "description": "Deel wat werkt, wat niet werkt en wat je graag wilt zien. Jouw feedback bepaalt de roadmap op basis van echt gebruik."
+      },
+      "b6": {
+        "title": "Persoonlijke onboarding",
+        "description": "We helpen je op weg — van je eerste scan tot terugkerende monitoring — zodat je vanaf dag één productief bent."
+      }
+    },
+    "expectations": {
+      "title": "Wat we terugvragen",
+      "subtitle": "Geen kleine lettertjes — dit is de hele deal. Een gratis jaar en een permanente korting, in ruil voor vier concrete afspraken:",
+      "e1": {
+        "title": "Actief gebruik",
+        "description": "Genereer minimaal 2 klantrapporten per maand. Dat niveau van echt gebruik maakt het programma voor beide kanten waardevol."
+      },
+      "e2": {
+        "title": "Testimonial en logo-toestemming",
+        "description": "Na 3 maanden een korte testimonial en toestemming om je logo op onze site te tonen. Jij keurt de definitieve tekst goed."
+      },
+      "e3": {
+        "title": "Eén case study-interview",
+        "description": "Eén interview van ongeveer 30 minuten, ergens in het eerste jaar, over hoe je VexNexa met je klanten gebruikt."
+      },
+      "e4": {
+        "title": "Maandelijkse feedback",
+        "description": "Een kort formulier of een snel gesprek, één keer per maand, over wat werkt en wat niet."
+      },
+      "inactivityNote": "Wordt het programma langere tijd niet gebruikt, dan nemen we eerst contact met je op. Blijft het daarna inactief, dan vervalt de founding-status zodat de plek naar een ander bureau kan — we nemen altijd eerst contact op voordat er iets verandert."
+    },
+    "agency": {
+      "eyebrow": "Voor bureaus",
+      "title": "Waarom dit goed werkt voor bureaus",
+      "body": "Beheer je klantwebsites, dan geeft het gratis jaar je een echte workflow om op te bouwen — van scannen en rapporteren tot doorlopende monitoring — zonder softwarekosten terwijl je de dienst ontwikkelt. Tegen de tijd dat het founding-tarief ingaat, kan toegankelijkheidsmonitoring al een factureerbare dienst zijn.",
+      "ctaApply": "Meld je aan als founding-bureau",
+      "ctaLearn": "Meer over gebruik door bureaus",
+      "p1": "Scan klantwebsites en krijg binnen minuten een gestructureerd WCAG 2.2-rapport",
+      "p2": "Exporteer PDF- en DOCX-rapporten met het logo en de kleuren van je bureau",
+      "p3": "Prioriteer issues op ernst zodat klanten weten waar ze moeten beginnen",
+      "p4": "Plan terugkerende scans om toegankelijkheid door de tijd te monitoren",
+      "p5": "Beheer meerdere klantsites vanuit één dashboard",
+      "p6": "Verken white-label workflows voor klantgerichte rapporten"
+    },
+    "process": {
+      "title": "Wat je kunt verwachten",
+      "subtitle": "Het proces is eenvoudig. Meld je aan, word ingericht en lever toegankelijkheidsrapporten aan echte klanten.",
+      "s1": {
+        "title": "Aanmelden",
+        "description": "Vier velden: bureaunaam, website, e-mail en hoeveel klantsites je beheert. Duurt nog geen minuut."
+      },
+      "s2": {
+        "title": "Wij beoordelen de match",
+        "description": "We kijken of VexNexa praktisch past bij je workflow en reageren binnen 1 werkdag."
+      },
+      "s3": {
+        "title": "Toegang en onboarding",
+        "description": "Na acceptatie start je gratis jaar. Je scant een live site, bekijkt je eerste rapport en richt monitoring in — met persoonlijke hulp."
+      },
+      "s4": {
+        "title": "Samen de dienst uitbouwen",
+        "description": "Gebruik VexNexa op echte klantsites, deel maandelijks feedback en behoud je founding-korting zolang je blijft."
+      }
+    },
+    "notes": {
+      "title": "Belangrijk om te weten",
+      "n1": "Geautomatiseerde scans bieden waardevolle dekking, maar vervangen geen volledige handmatige audit. Afhankelijk van je eisen kan aanvullend onderzoek nodig zijn.",
+      "n2": "Het programma is beperkt tot {spots} bureaus. Zijn alle plekken bezet, dan kun je op de wachtlijst.",
+      "n3": "De founding-korting geldt zolang je abonnement actief blijft. Zeg je op en kom je later terug, dan gelden de standaardprijzen.",
+      "n4": "Testimonials, logogebruik en de case study horen bij de programma-afspraken — maar jij keurt altijd de definitieve tekst en het materiaal goed voordat iets wordt gepubliceerd."
+    },
+    "finalCta": {
+      "title": "Wil je een van de {spots} founding-plekken?",
+      "subtitle": "Vertel ons over je bureau. We beoordelen elke aanmelding en streven ernaar binnen 1 werkdag te reageren.",
+      "ctaApply": "Meld je aan als founding-bureau",
+      "ctaSample": "Bekijk voorbeeldrapport",
+      "ctaQuestion": "Stel een vraag"
     }
   }
 }

@@ -1,8 +1,18 @@
 /**
  * One-time script to seed the MollieProduct table.
  * Run: npx dotenv -e .env.migration -- npx tsx scripts/seed-mollie-products.ts
+ *
+ * Prices come from the pricing single source of truth
+ * (src/lib/billing/pricing-config.ts + src/lib/pricing.ts) — never
+ * hardcode amounts here.
  */
 import { PrismaClient } from "@prisma/client";
+import { PLAN_PRICES, type PlanKey } from "../src/lib/billing/pricing-config";
+import {
+  WEBSITE_PACK_PRICES,
+  PAGE_PACK_PRICES,
+  ASSURANCE_ADDON_PRICES,
+} from "../src/lib/pricing";
 
 const prisma = new PrismaClient();
 
@@ -13,39 +23,36 @@ interface ProductDef {
 }
 
 function buildProductDefs(): ProductDef[] {
-  const TIER_PRICES: Record<string, { monthly: number; yearly: number }> = {
-    STARTER:    { monthly: 24.99, yearly: 249 },
-    PRO:        { monthly: 59.99, yearly: 599 },
-    BUSINESS:   { monthly: 129,   yearly: 1299 },
-    PIONEER:    { monthly: 499,   yearly: 5988 },
-    ENTERPRISE: { monthly: 1500,  yearly: 18000 },
-  };
+  // FREE has no Mollie product; every other plan is seeded so existing
+  // subscriptions (incl. legacy STARTER and closed PIONEER) keep resolving.
+  const tierKeys: PlanKey[] = ["STARTER", "PRO", "BUSINESS", "PIONEER", "ENTERPRISE"];
 
   const ADDON_PRICES: Record<string, number> = {
-    EXTRA_WEBSITE_1:  15,
-    EXTRA_WEBSITE_5:  59,
-    EXTRA_WEBSITE_10: 99,
-    ASSURANCE_STARTER: 9,
-    ASSURANCE_PRO:     19,
-    PAGE_PACK_25K:    19,
-    PAGE_PACK_100K:   79,
-    PAGE_PACK_250K:   179,
+    EXTRA_WEBSITE_1: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_1,
+    EXTRA_WEBSITE_5: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_5,
+    EXTRA_WEBSITE_10: WEBSITE_PACK_PRICES.EXTRA_WEBSITE_10,
+    ASSURANCE_STARTER: ASSURANCE_ADDON_PRICES.STARTER ?? 0,
+    ASSURANCE_PRO: ASSURANCE_ADDON_PRICES.PRO ?? 0,
+    PAGE_PACK_25K: PAGE_PACK_PRICES.PAGE_PACK_25K,
+    PAGE_PACK_100K: PAGE_PACK_PRICES.PAGE_PACK_100K,
+    PAGE_PACK_250K: PAGE_PACK_PRICES.PAGE_PACK_250K,
   };
 
   const defs: ProductDef[] = [];
 
-  for (const [key, prices] of Object.entries(TIER_PRICES)) {
+  for (const key of tierKeys) {
     defs.push({
       productType: "tier",
       productKey: key,
       prices: [
-        { interval: "monthly", amount: prices.monthly },
-        { interval: "yearly",  amount: prices.yearly },
+        { interval: "monthly", amount: PLAN_PRICES[key].monthly },
+        { interval: "yearly",  amount: PLAN_PRICES[key].yearly },
       ],
     });
   }
 
   for (const [key, amount] of Object.entries(ADDON_PRICES)) {
+    if (amount <= 0) continue;
     defs.push({
       productType: "addon",
       productKey: key,

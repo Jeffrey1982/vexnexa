@@ -44,7 +44,7 @@ export function PartnerStandardsBar({
   introOverride,
   footnoteOverride,
 }: PartnerStandardsBarProps) {
-  const t = useTranslations("home.pilotBanner");
+  const t = useTranslations("home.partnerStandards");
   /** ~65% of compact bar WCAG cap (32px → ~21px). */
   const wcagMaxH = 21;
 

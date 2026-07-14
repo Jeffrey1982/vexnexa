@@ -1,15 +1,19 @@
 import { prisma } from '@/lib/prisma';
+import { FOUNDING_MAX_SPOTS } from '@/lib/billing/pricing-config';
 
 /**
- * Max pilot partner seats (capacity). Remaining = this minus APPROVED applications.
- * Prefer server-only MAX_PILOT_SPOTS; NEXT_PUBLIC_MAX_PILOT_SPOTS also works on the server.
- * Default matches the marketed offer: "first 10 agencies".
+ * Max Founding Agency Program seats (capacity). Remaining = this minus
+ * APPROVED applications. Prefer server-only MAX_PILOT_SPOTS;
+ * NEXT_PUBLIC_MAX_PILOT_SPOTS also works on the server.
+ * Default comes from pricing-config: "first 10 agencies".
  */
 export function getMaxPilotSpots(): number {
   const raw =
-    process.env.MAX_PILOT_SPOTS ?? process.env.NEXT_PUBLIC_MAX_PILOT_SPOTS ?? '10';
+    process.env.MAX_PILOT_SPOTS ??
+    process.env.NEXT_PUBLIC_MAX_PILOT_SPOTS ??
+    String(FOUNDING_MAX_SPOTS);
   const n = parseInt(raw, 10);
-  if (!Number.isFinite(n) || n < 1) return 10;
+  if (!Number.isFinite(n) || n < 1) return FOUNDING_MAX_SPOTS;
   return Math.min(999, n);
 }
 
