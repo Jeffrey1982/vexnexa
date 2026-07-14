@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { normalizeDomain, normalizeEmail } from "./domain-normalization";
+import { hashConsentToken } from "./consent-tokens";
 
 export type LeadWorkspace = {
   id: string;
@@ -200,7 +201,7 @@ type FreeScanLeadCaptureInput = {
 };
 
 export type FreeScanLeadCaptureResult =
-  | { stored: true; workspaceId: string; organizationId: string; leadId: string; scanId: string }
+  | { stored: true; workspaceId: string; organizationId: string; contactId: string; leadId: string; scanId: string }
   | { stored: false; reason: "not_configured" };
 
 function leadCaptureWorkspaceId(): string | null {
@@ -292,7 +293,7 @@ export async function getLeadCaptureStorageHealth() {
 
 function freeScanLeadExplanation(input: FreeScanLeadCaptureInput): string {
   if (input.phase !== "done" || !input.result) {
-    return "Free-scan lead captured without a completed scan. Manual follow-up required. Outreach requires separate consent or customer evidence.";
+    return "Free-scan lead captured without a completed scan. No outreach is permitted without separate consent or customer evidence.";
   }
 
   return `Free scan captured with score ${input.result.score}/100 and ${input.result.totalIssues} reported issues. Outreach requires separate consent or customer evidence.`;
@@ -347,18 +348,22 @@ export async function recordFreeScanLeadCapture(
 
   if (leadError) throw leadError;
 
-  const { error: contactError } = await supabaseAdmin.from("contacts").upsert(
-    {
-      workspace_id: workspaceId,
-      organization_id: organization.id,
-      email: normalizedEmail,
-      source_type: "free_scan_lead",
-      source_url: input.url,
-      is_personal_data: true,
-      updated_at: now,
-    },
-    { onConflict: "organization_id,email" },
-  );
+  const { data: contact, error: contactError } = await supabaseAdmin
+    .from("contacts")
+    .upsert(
+      {
+        workspace_id: workspaceId,
+        organization_id: organization.id,
+        email: normalizedEmail,
+        source_type: "free_scan_lead",
+        source_url: input.url,
+        is_personal_data: true,
+        updated_at: now,
+      },
+      { onConflict: "organization_id,email" },
+    )
+    .select("id")
+    .single();
 
   if (contactError) throw contactError;
 
@@ -409,7 +414,102 @@ export async function recordFreeScanLeadCapture(
     stored: true,
     workspaceId,
     organizationId: organization.id,
+    contactId: contact.id,
     leadId: lead.id,
     scanId: scan.id,
   };
+}
+
+export async function createFreeScanConsentRequest(input: {
+  capture: Extract<FreeScanLeadCaptureResult, { stored: true }>;
+  token: string;
+  locale: string;
+  clientIp: string;
+  userAgent: string;
+}) {
+  const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+  const { error } = await supabaseAdmin.from("lead_consent_requests").insert({
+    workspace_id: input.capture.workspaceId,
+    organization_id: input.capture.organizationId,
+    contact_id: input.capture.contactId,
+    token_hash: hashConsentToken(input.token),
+    source: "free_scan_opt_in",
+    evidence: {
+      locale: input.locale,
+      client_ip: input.clientIp,
+      user_agent: input.userAgent,
+      checkbox: true,
+      wording_version: "free_scan_nurture_v1",
+    },
+    expires_at: expiresAt,
+  });
+  if (error) throw error;
+  return { expiresAt };
+}
+
+export async function confirmLeadConsentToken(token: string) {
+  const tokenHash = hashConsentToken(token);
+  const now = new Date().toISOString();
+  const { data: request, error: requestError } = await supabaseAdmin
+    .from("lead_consent_requests")
+    .select("*")
+    .eq("token_hash", tokenHash)
+    .eq("status", "pending")
+    .gt("expires_at", now)
+    .maybeSingle();
+
+  if (requestError) throw requestError;
+  if (!request) return { confirmed: false as const, reason: "invalid_or_expired" as const };
+
+  const { data: claimed, error: claimError } = await supabaseAdmin
+    .from("lead_consent_requests")
+    .update({ status: "confirmed", confirmed_at: now })
+    .eq("id", request.id)
+    .eq("status", "pending")
+    .select("id")
+    .maybeSingle();
+  if (claimError) throw claimError;
+  if (!claimed) return { confirmed: false as const, reason: "already_used" as const };
+
+  const { error: consentError } = await supabaseAdmin.from("consent_events").insert({
+    workspace_id: request.workspace_id,
+    organization_id: request.organization_id,
+    contact_id: request.contact_id,
+    consent_type: "commercial_outreach",
+    status: "active",
+    lawful_basis: "consent",
+    source: request.source,
+    evidence: {
+      ...request.evidence,
+      consent_request_id: request.id,
+      confirmed_at: now,
+    },
+    occurred_at: now,
+  });
+  if (consentError) throw consentError;
+
+  const { data: lead, error: leadError } = await supabaseAdmin
+    .from("leads")
+    .update({ status: "opted_in", updated_at: now })
+    .eq("workspace_id", request.workspace_id)
+    .eq("organization_id", request.organization_id)
+    .select("id")
+    .single();
+  if (leadError) throw leadError;
+
+  const { error: auditError } = await supabaseAdmin.from("audit_events").insert({
+    workspace_id: request.workspace_id,
+    actor_user_id: null,
+    event_type: "commercial_outreach_consent_confirmed",
+    entity_type: "lead",
+    entity_id: lead.id,
+    metadata: {
+      contact_id: request.contact_id,
+      consent_request_id: request.id,
+      source: request.source,
+    },
+  });
+  if (auditError) throw auditError;
+
+  return { confirmed: true as const, leadId: lead.id };
 }

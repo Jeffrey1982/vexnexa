@@ -4789,7 +4789,8 @@
       "successReport": "Gesendet! Prüfe deinen Posteingang für die Scan-Zusammenfassung.",
       "successFollowUp": "Erhalten! Wir senden deinen Bericht — normalerweise innerhalb eines Werktags.",
       "error": "Das hat nicht funktioniert. Prüfe die E-Mail-Adresse und versuche es erneut.",
-      "privacy": "Eine E-Mail mit deinem Ergebnis. Kein Newsletter, kein Spam."
+      "privacy": "Eine E-Mail mit deinem Ergebnis. Kein Newsletter ohne separate Einwilligung.",
+      "marketingOptIn": "Senden Sie mir auch praktische Tipps zur Barrierefreiheit und gelegentliche Produktinformationen von VexNexa. Ich bestätige dies separat per E-Mail."
     }
   },
   "partnerApply": {

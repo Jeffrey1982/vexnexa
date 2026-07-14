@@ -86,7 +86,8 @@
       "successReport": "Verzonden! Check je inbox voor de scansamenvatting.",
       "successFollowUp": "Gelukt! We sturen je het rapport — meestal binnen één werkdag.",
       "error": "Dat ging niet goed. Controleer het e-mailadres en probeer opnieuw.",
-      "privacy": "Eén e-mail met je resultaat. Geen nieuwsbrief, geen spam."
+      "privacy": "Eén e-mail met je resultaat. Geen nieuwsbrief tenzij je daar apart voor kiest.",
+      "marketingOptIn": "Stuur mij ook praktische toegankelijkheidstips en af en toe productinformatie van VexNexa. Ik bevestig dit apart per e-mail."
     }
   },
   "nav": {

@@ -4,7 +4,11 @@ import { checkRateLimit, FREE_SCAN_LEAD_LIMIT } from "@/lib/rate-limit";
 import { normalizeUrl } from "@/lib/url";
 import { validatePublicUrl } from "@/lib/scan-url-validation";
 import { sendFreeScanLeadEmails } from "@/lib/email";
-import { recordFreeScanLeadCapture } from "@/lib/lead-intelligence/repository";
+import {
+  createFreeScanConsentRequest,
+  recordFreeScanLeadCapture,
+} from "@/lib/lead-intelligence/repository";
+import { createConsentToken } from "@/lib/lead-intelligence/consent-tokens";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,6 +20,7 @@ const LeadSchema = z.object({
   url: z.string().trim().min(1).max(2000),
   phase: z.enum(["done", "error", "rate_limited"]),
   locale: z.enum(["en", "nl", "de", "fr", "es", "pt"]).default("en"),
+  marketingConsent: z.boolean().default(false),
   result: z
     .object({
       score: z.coerce.number().int().min(0).max(100),
@@ -52,7 +57,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { email, phase, locale, result } = parsed.data;
+  const { email, phase, locale, result, marketingConsent } = parsed.data;
 
   const normalized = normalizeUrl(parsed.data.url);
   if (!normalized) {
@@ -77,6 +82,32 @@ export async function POST(req: NextRequest) {
     "unknown";
 
   const storedPhase = phase === "done" && !result ? "error" : phase;
+  let confirmMarketingUrl: string | undefined;
+
+  try {
+    const capture = await recordFreeScanLeadCapture({
+      email,
+      url: fullPageUrl,
+      phase: storedPhase,
+      locale,
+      clientIp,
+      result,
+    });
+    if (marketingConsent && capture.stored) {
+      const token = createConsentToken();
+      await createFreeScanConsentRequest({
+        capture,
+        token,
+        locale,
+        clientIp,
+        userAgent: req.headers.get("user-agent") || "unknown",
+      });
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://vexnexa.com";
+      confirmMarketingUrl = `${appUrl}/api/lead-intelligence/consent/confirm?token=${encodeURIComponent(token)}`;
+    }
+  } catch (error) {
+    console.error("[free-scan-lead] Persistence failed:", error);
+  }
 
   try {
     const sendResult = await sendFreeScanLeadEmails({
@@ -86,6 +117,7 @@ export async function POST(req: NextRequest) {
       locale,
       clientIp,
       result,
+      confirmMarketingUrl,
     });
 
     if (sendResult && (sendResult as any).error) {
@@ -101,19 +133,6 @@ export async function POST(req: NextRequest) {
       { ok: false, error: "Email could not be sent. Please try again." },
       { status: 502 }
     );
-  }
-
-  try {
-    await recordFreeScanLeadCapture({
-      email,
-      url: fullPageUrl,
-      phase: storedPhase,
-      locale,
-      clientIp,
-      result,
-    });
-  } catch (error) {
-    console.error("[free-scan-lead] Persistence failed:", error);
   }
 
   return NextResponse.json({ ok: true });

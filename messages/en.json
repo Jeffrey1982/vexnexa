@@ -86,7 +86,8 @@
       "successReport": "Sent! Check your inbox for the scan summary.",
       "successFollowUp": "Got it! We'll send your report — usually within one business day.",
       "error": "That didn't work. Check the email address and try again.",
-      "privacy": "One email with your result. No newsletter, no spam."
+      "privacy": "One email with your result. No newsletter unless you opt in.",
+      "marketingOptIn": "Also send me practical accessibility tips and occasional VexNexa product information. I will confirm this separately by email."
     }
   },
   "common": {

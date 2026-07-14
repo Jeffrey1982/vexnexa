@@ -4763,7 +4763,8 @@
       "successReport": "Envoyé ! Vérifiez votre boîte mail pour le résumé du scan.",
       "successFollowUp": "Bien reçu ! Nous vous enverrons votre rapport — généralement sous un jour ouvré.",
       "error": "Cela n'a pas fonctionné. Vérifiez l'adresse e-mail et réessayez.",
-      "privacy": "Un seul e-mail avec votre résultat. Pas de newsletter, pas de spam."
+      "privacy": "Un seul e-mail avec votre résultat. Pas de newsletter sans consentement séparé.",
+      "marketingOptIn": "Envoyez-moi également des conseils pratiques sur l’accessibilité et des informations occasionnelles sur VexNexa. Je confirmerai séparément par e-mail."
     },
     "of100": "/ 100"
   },

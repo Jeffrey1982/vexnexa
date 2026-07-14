@@ -73,10 +73,12 @@ export default async function LeadDetailPage({
   const primaryContact: any | undefined = detail.contacts[0];
   const decision = primaryContact
     ? canSendCommercialEmail({
-        contactEmail: primaryContact.email,
+      contactEmail: primaryContact.email,
+      contactId: primaryContact.id,
         organizationDomain: org.normalized_domain,
         leadStatus: lead.status,
         consentEvents: detail.consents.map((event: any) => ({
+          contactId: event.contact_id,
           consentType: event.consent_type,
           status: event.status,
           evidence: event.evidence,

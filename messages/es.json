@@ -4788,7 +4788,8 @@
       "successReport": "¡Enviado! Revisa tu bandeja para ver el resumen del escaneo.",
       "successFollowUp": "¡Recibido! Te enviaremos el informe — normalmente en un día laborable.",
       "error": "No funcionó. Revisa el email e inténtalo de nuevo.",
-      "privacy": "Un email con tu resultado. Sin newsletter, sin spam."
+      "privacy": "Un correo con tu resultado. Sin boletín salvo consentimiento separado.",
+      "marketingOptIn": "Envíame también consejos prácticos de accesibilidad e información ocasional sobre VexNexa. Lo confirmaré por separado por correo electrónico."
     },
     "of100": "/ 100"
   },

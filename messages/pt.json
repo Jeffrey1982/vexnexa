@@ -4647,7 +4647,8 @@
       "successReport": "Enviado! Verifique a caixa de entrada para o resumo da análise.",
       "successFollowUp": "Recebido! Enviaremos o relatório — normalmente no prazo de um dia útil.",
       "error": "Não funcionou. Verifique o email e tente novamente.",
-      "privacy": "Um email com o resultado. Sem newsletter, sem spam."
+      "privacy": "Um e-mail com o resultado. Sem newsletter sem consentimento separado.",
+      "marketingOptIn": "Envie-me também dicas práticas de acessibilidade e informações ocasionais sobre a VexNexa. Confirmarei separadamente por e-mail."
     },
     "of100": "/ 100"
   },
