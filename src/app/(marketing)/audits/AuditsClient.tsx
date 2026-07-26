@@ -69,21 +69,12 @@ function AuditServicesSection() {
         tp("audits.enterprise.features.implementation"),
       ],
     },
-    {
-      ...AUDIT_PRICES.FAST_FIX,
-      description: "Fast-Fix audit with prioritized remediation guidance and one audit credit.",
-      features: [
-        "Priority technical review",
-        "VNI and WCAG remediation report",
-        "Developer-ready fix guidance",
-      ],
-    },
   ];
 
   return (
     <section id="audits" className="border-y border-border bg-muted/30 py-20">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
           {audits.map((audit) => (
             <Card
               key={audit.productId}
@@ -149,14 +140,6 @@ function AuditBundlesSection() {
 
   const bundles = [
     {
-      ...AUDIT_BUNDLE_PRICES.STARTER,
-      features: [
-        tp("auditBundles.starter.features.audits"),
-        tp("auditBundles.starter.features.report"),
-        tp("auditBundles.starter.features.support"),
-      ],
-    },
-    {
       ...AUDIT_BUNDLE_PRICES.PRO,
       features: [
         tp("auditBundles.pro.features.audits"),
@@ -203,7 +186,7 @@ function AuditBundlesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {bundles.map((bundle) => (
             <Card
               key={bundle.productId}

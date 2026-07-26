@@ -72,7 +72,6 @@ export const ASSURANCE_ADDON_PRICES: Partial<Record<PlanKey, number>> = {
 
 /* ─── Handmatige Audits — eenmalig (incl. VAT) ─── */
 export const AUDIT_PRICES = {
-  FAST_FIX: { productId: "vexnexa-audit-fast-fix", price: 1500.0, label: "Fast-Fix Audit" },
   QUICK: { productId: "vexnexa-audit-quick", price: 249.0, label: "Quickscan Audit" },
   FULL: { productId: "vexnexa-audit-full", price: 549.0, label: "Full Site Audit" },
   ENTERPRISE: { productId: "vexnexa-audit-enterprise", price: 1199.0, label: "Enterprise Audit" },
@@ -80,9 +79,8 @@ export const AUDIT_PRICES = {
 
 /* ─── Audit + Monitoring Bundels — maandelijks (incl. VAT) ─── */
 export const AUDIT_BUNDLE_PRICES = {
-  STARTER: { productId: "vexnexa-starter-audit-monthly", price: 49.0, label: "Starter Audit bundel" },
   PRO: { productId: "vexnexa-pro-audit-monthly", price: 119.0, label: "Pro Audit bundel" },
-  BUSINESS: { productId: "vexnexa-business-audit-monthly", price: 279.0, label: "Business Audit bundel" },
+  BUSINESS: { productId: "vexnexa-business-audit-monthly", price: 279.0, label: "Agency Audit bundel" },
   ENTERPRISE: { productId: "vexnexa-enterprise-audit-monthly", price: 599.0, label: "Enterprise Audit bundel" },
 } as const;
 
@@ -173,6 +171,20 @@ export function formatEuro(amount: number, locale: string = "nl-NL"): string {
     currency: "EUR",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+  }).format(amount);
+}
+
+/**
+ * Format a EUR amount that may be sub-cent (e.g. overflow per-page pricing).
+ * Keeps at least 2 decimals but allows up to 3 so micro-prices like
+ * €0.002/page are not rounded away to €0.00.
+ */
+export function formatEuroFlexible(amount: number, locale: string = "nl-NL"): string {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 3,
   }).format(amount);
 }
 

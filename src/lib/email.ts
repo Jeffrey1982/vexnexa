@@ -12,6 +12,10 @@ import {
   getPlainTextVersion,
   type BaseEmailTemplate
 } from './email-templates'
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+} from './billing/pricing-config'
 
 // Initialize Resend only if API key is available
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
@@ -308,13 +312,13 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
     .join(', ')
 
   const safeCompany = companyName.replace(/[\r\n]/g, ' ').trim().slice(0, 120) || 'Unknown company'
-  const subject = `🚀 New Pilot Partner Application – ${safeCompany}`
+  const subject = `🚀 New Founding Agency Application – ${safeCompany}`
 
   const e = (s: string) => escapeHtmlForEmail(s)
 
   const html = `
         <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto;">
-          <h2 style="color: #D45A00; margin-bottom: 8px;">New Pilot Partner application</h2>
+          <h2 style="color: #D45A00; margin-bottom: 8px;">New Founding Agency application</h2>
           <p style="color: #4B5563; font-size: 14px; margin-top: 0;">Submitted via vexnexa.com/partner-apply</p>
 
           <div style="background: #F8F9FA; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -329,7 +333,7 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
           </div>
 
           <div style="background: #ffffff; padding: 20px; border: 1px solid #C0C3C7; border-radius: 8px;">
-            <h3 style="margin-top: 0; color: #1F2937;">Why join the pilot?</h3>
+            <h3 style="margin-top: 0; color: #1F2937;">Why join the program?</h3>
             <p style="white-space: pre-wrap; color: #374151; line-height: 1.6;">${e(motivation)}</p>
           </div>
 
@@ -340,7 +344,7 @@ export async function sendPilotPartnerApplicationEmail(data: PilotPartnerApplica
       `
 
   const text = `
-New Pilot Partner application (vexnexa.com/partner-apply)
+New Founding Agency application (vexnexa.com/partner-apply)
 
 Name: ${fullName}
 Agency / company: ${companyName}
@@ -349,7 +353,7 @@ ${phone ? `Phone: ${phone}\n` : ''}Agency website: ${website}
 Client websites managed: ${clientSites}
 Services offered: ${servicesLine}
 
-Why join the pilot?
+Why join the program?
 ${motivation}
 `.trim()
 
@@ -363,15 +367,15 @@ ${motivation}
 }
 
 /**
- * Confirmation to the pilot applicant — previously only info@ was notified
- * and the "reply within 24 hours" promise depended on a manual email.
+ * Confirmation to the founding agency applicant — previously only info@ was
+ * notified and the "reply within 24 hours" promise depended on a manual email.
  */
 export async function sendPilotPartnerConfirmationEmail(data: {
   email: string
   companyName: string
 }) {
   if (!resend) {
-    console.warn('RESEND_API_KEY not configured, skipping pilot confirmation email')
+    console.warn('RESEND_API_KEY not configured, skipping founding agency confirmation email')
     return null
   }
 
@@ -381,15 +385,17 @@ export async function sendPilotPartnerConfirmationEmail(data: {
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-      <h2 style="color: #1F4A2D;">We received your Pilot Partner application</h2>
+      <h2 style="color: #1F4A2D;">We received your Founding Agency application</h2>
       <p style="color: #374151; line-height: 1.6;">
         Thanks, <strong>${company}</strong> — your application is in. We review every
         application personally and reply within <strong>24 hours</strong> (usually faster).
       </p>
       <p style="color: #374151; line-height: 1.6;">
-        A quick reminder of what the pilot includes: <strong>3 months of the Agency plan
-        for the Pro price (€34.95/mo)</strong>, white-label reports under your own brand,
-        a direct line to the founder, and input on the roadmap.
+        A quick reminder of what the program includes: <strong>${FOUNDING_FREE_MONTHS} months of the
+        Agency plan for free</strong>, then a permanent ${FOUNDING_DISCOUNT_PERCENT}% founding discount,
+        white-label reports under your own brand, a direct line to the founder, and input on the
+        roadmap. In return we ask for real usage, a testimonial, one case-study interview, and
+        monthly feedback.
       </p>
       <p style="margin: 28px 0;">
         <a href="${sampleUrl}" style="display: inline-block; background: #1F4A2D; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
@@ -401,11 +407,11 @@ export async function sendPilotPartnerConfirmationEmail(data: {
       </p>
     </div>
   `
-  const text = `We received your Pilot Partner application
+  const text = `We received your Founding Agency application
 
 Thanks, ${data.companyName} — your application is in. We review every application personally and reply within 24 hours (usually faster).
 
-The pilot includes: 3 months of the Agency plan for the Pro price (€34.95/mo), white-label reports under your own brand, a direct line to the founder, and input on the roadmap.
+The program includes: ${FOUNDING_FREE_MONTHS} months of the Agency plan for free, then a permanent ${FOUNDING_DISCOUNT_PERCENT}% founding discount, white-label reports under your own brand, a direct line to the founder, and input on the roadmap. In return we ask for real usage, a testimonial, one case-study interview, and monthly feedback.
 
 View a sample white-label report: ${sampleUrl}
 
@@ -415,7 +421,7 @@ Questions in the meantime? Just reply to this email.`
     from,
     to: [data.email],
     replyTo: 'info@vexnexa.com',
-    subject: 'Your VexNexa Pilot Partner application is in — reply within 24h',
+    subject: 'Your VexNexa Founding Agency application is in — reply within 24h',
     html,
     text
   })
@@ -478,6 +484,7 @@ export interface FreeScanLeadData {
   phase: 'done' | 'error' | 'rate_limited'
   locale: 'en' | 'nl' | 'de' | 'fr' | 'es' | 'pt'
   clientIp: string
+  confirmMarketingUrl?: string
   result?: {
     score: number
     totalIssues: number
@@ -513,6 +520,18 @@ export async function sendFreeScanLeadEmails(data: FreeScanLeadData) {
   const eUrl = escapeHtmlForEmail(data.url)
   const nl = data.locale === 'nl'
   const r = data.result
+  const marketingConfirmationHtml = data.confirmMarketingUrl
+    ? `<div style="background:#F8FAFC;border:1px solid #D1D5DB;border-radius:8px;padding:16px;margin:24px 0;">
+        <p style="color:#374151;line-height:1.6;margin:0 0 12px 0;">${nl
+          ? 'Je koos ervoor om praktische toegankelijkheidstips en productinformatie te ontvangen. Bevestig dit apart:'
+          : 'You chose to receive practical accessibility tips and product information. Confirm this separately:'}</p>
+        <a href="${data.confirmMarketingUrl}" style="display:inline-block;background:#1F4A2D;color:#ffffff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;">${nl ? 'Bevestig mijn opt-in' : 'Confirm my opt-in'}</a>
+        <p style="color:#6B7280;font-size:12px;margin:12px 0 0 0;">${nl ? 'De link verloopt na 48 uur.' : 'This link expires after 48 hours.'}</p>
+      </div>`
+    : ''
+  const marketingConfirmationText = data.confirmMarketingUrl
+    ? `\n\n${nl ? 'Bevestig je aparte opt-in voor tips en productinformatie' : 'Confirm your separate opt-in for tips and product information'}:\n${data.confirmMarketingUrl}`
+    : ''
 
   let subject: string
   let bodyHtml: string
@@ -584,16 +603,16 @@ ${registerUrl}`
     bodyHtml = `
       <p style="color: #374151; line-height: 1.6;">
         ${nl
-          ? `De automatische scan van <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a> kon zojuist niet worden afgerond. We voeren de scan handmatig uit en sturen je het rapport — meestal binnen één werkdag. Je hoeft niets te doen.`
-          : `The automatic scan of <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a> could not finish just now. We will run the scan and send you the report — usually within one business day. No action needed.`}
+          ? `De automatische scan van <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a> kon zojuist niet worden afgerond. Probeer het later opnieuw; er is geen handmatige audit nodig.`
+          : `The automatic scan of <a href="${eUrl}" style="color:#1F4A2D;">${eUrl}</a> could not finish just now. Please try again later; no manual audit is required.`}
       </p>
       <p style="color: #6B7280; font-size: 13px;">
         ${nl ? 'Vragen? Beantwoord deze e-mail gewoon.' : 'Questions? Just reply to this email.'}
       </p>`
 
     bodyText = nl
-      ? `De automatische scan van ${data.url} kon zojuist niet worden afgerond. We voeren de scan handmatig uit en sturen je het rapport — meestal binnen één werkdag. Je hoeft niets te doen.`
-      : `The automatic scan of ${data.url} could not finish just now. We will run the scan and send you the report — usually within one business day. No action needed.`
+      ? `De automatische scan van ${data.url} kon zojuist niet worden afgerond. Probeer het later opnieuw; er is geen handmatige audit nodig.`
+      : `The automatic scan of ${data.url} could not finish just now. Please try again later; no manual audit is required.`
   }
 
   const visitorResult = await resend.emails.send({
@@ -604,7 +623,8 @@ ${registerUrl}`
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #1F4A2D;">${escapeHtmlForEmail(subject)}</h2>
-        ${bodyHtml}
+         ${bodyHtml}
+         ${marketingConfirmationHtml}
         <hr style="margin: 28px 0; border: none; border-top: 1px solid #E5E7EB;">
         <p style="color: #9CA3AF; font-size: 13px;">VexNexa · vexnexa.com · ${
           nl ? 'WCAG-scans, gebouwd in Nederland' : 'WCAG scanning, made in the Netherlands'
@@ -612,78 +632,10 @@ ${registerUrl}`
       </div>`,
     text: `${subject}
 
-${bodyText}
+${bodyText}${marketingConfirmationText}
 
 VexNexa · vexnexa.com`
   })
-
-  // D+3 follow-up (only after a successful scan): a short personal note
-  // from the founder with the pilot offer. Scheduled via Resend so it needs
-  // no cron or database. Recipients can opt out by replying "stop"
-  // (List-Unsubscribe header included).
-  if (data.phase === 'done' && r) {
-    try {
-      const followUpAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()
-      const pilotUrl = `${appUrl}/pilot-partner-program?utm_source=email&utm_medium=email&utm_campaign=free_scan_followup`
-      const followUpSubject = nl
-        ? `Al stappen gezet met ${host}? (score was ${r.score}/100)`
-        : `Made progress on ${host} yet? (score was ${r.score}/100)`
-
-      const followUpText = nl
-        ? `Hoi,
-
-Drie dagen geleden scande je ${host} — score ${r.score}/100 met ${r.totalIssues} gevonden problemen. Ik ben benieuwd: heb je er al iets mee kunnen doen?
-
-Twee dingen die kunnen helpen:
-
-1. Met een gratis account zie je alle problemen met herstelrichtlijnen en PDF-export: ${registerUrl}
-
-2. Run je een bureau met meerdere klantsites? De eerste 10 bureaus krijgen 3 maanden het Agency-abonnement voor de Pro-prijs (€34,95/mnd), met een directe lijn naar mij: ${pilotUrl}
-
-Vragen? Beantwoord gewoon deze mail — je krijgt mij persoonlijk.
-
-Jeffrey
-Oprichter, VexNexa
-
-PS: Geen mails meer? Beantwoord met "stop".`
-        : `Hi,
-
-Three days ago you scanned ${host} — score ${r.score}/100 with ${r.totalIssues} issues found. Curious: have you been able to act on it yet?
-
-Two things that might help:
-
-1. A free account shows every issue with remediation guidance and PDF export: ${registerUrl}
-
-2. Running an agency with multiple client sites? The first 10 agencies get 3 months of the Agency plan for the Pro price (€34.95/mo), with a direct line to me: ${pilotUrl}
-
-Questions? Just reply to this email — it reaches me personally.
-
-Jeffrey
-Founder, VexNexa
-
-PS: Don't want these emails? Reply "stop".`
-
-      await resend.emails.send({
-        from,
-        to: [data.email],
-        replyTo: 'info@vexnexa.com',
-        subject: followUpSubject,
-        text: followUpText,
-        html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #374151; line-height: 1.7; white-space: pre-wrap;">${followUpText
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(registerUrl, `<a href="${registerUrl}" style="color:#1F4A2D;">${registerUrl}</a>`)
-          .replace(pilotUrl, `<a href="${pilotUrl}" style="color:#1F4A2D;">${pilotUrl}</a>`)}</div>`,
-        scheduledAt: followUpAt,
-        headers: {
-          'List-Unsubscribe': '<mailto:info@vexnexa.com?subject=unsubscribe>'
-        }
-      })
-    } catch (followUpError) {
-      console.error('[free-scan-lead] Follow-up scheduling failed (non-blocking):', followUpError)
-    }
-  }
 
   try {
     await resend.emails.send({
@@ -696,7 +648,7 @@ PS: Don't want these emails? Reply "stop".`
           <p><strong>Email:</strong> ${escapeHtmlForEmail(data.email)}</p>
           <p><strong>Scanned URL:</strong> <a href="${eUrl}">${eUrl}</a></p>
           <p><strong>Phase:</strong> ${data.phase}${
-            data.phase !== 'done' ? ' — <strong style="color:#D45A00;">manual follow-up promised within 1 business day</strong>' : ''
+            data.phase !== 'done' ? ' — automatic scan did not complete; no manual audit promised' : ''
           }</p>
           ${
             r
@@ -711,7 +663,7 @@ PS: Don't want these emails? Reply "stop".`
 
 Email: ${data.email}
 Scanned URL: ${data.url}
-Phase: ${data.phase}${data.phase !== 'done' ? ' — manual follow-up promised within 1 business day' : ''}
+Phase: ${data.phase}${data.phase !== 'done' ? ' — automatic scan did not complete; no manual audit promised' : ''}
 ${r ? `Result: ${r.score}/100 — ${r.totalIssues} issues (${r.impactCritical}/${r.impactSerious}/${r.impactModerate}/${r.impactMinor})\n` : ''}Locale: ${data.locale}
 IP: ${data.clientIp}
 Timestamp: ${new Date().toISOString()}`
@@ -721,6 +673,41 @@ Timestamp: ${new Date().toISOString()}`
   }
 
   return visitorResult
+}
+
+export async function sendLeadNurtureEmail(data: {
+  to: string;
+  subject: string;
+  body: string;
+  unsubscribeUrl: string;
+  idempotencyKey: string;
+}) {
+  if (!resend) {
+    throw new Error('RESEND_API_KEY not configured')
+  }
+
+  const from = (process.env.RESEND_FROM_EMAIL || 'VexNexa <updates@vexnexa.com>').trim()
+  const escapedBody = escapeHtmlForEmail(data.body).replace(
+    /(https?:\/\/[^\s<]+)/g,
+    '<a href="$1" style="color:#1F4A2D;">$1</a>',
+  )
+
+  return resend.emails.send({
+    from,
+    to: [data.to],
+    replyTo: 'info@vexnexa.com',
+    subject: data.subject,
+    text: `${data.body}\n\nUnsubscribe: ${data.unsubscribeUrl}`,
+    html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#374151;line-height:1.7;">
+      <p>${escapedBody}</p>
+      <hr style="margin:28px 0;border:none;border-top:1px solid #E5E7EB;">
+      <p style="color:#6B7280;font-size:12px;">VexNexa · <a href="${data.unsubscribeUrl}" style="color:#6B7280;">Unsubscribe</a></p>
+    </div>`,
+    headers: {
+      'List-Unsubscribe': `<${data.unsubscribeUrl}>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+    },
+  }, { idempotencyKey: data.idempotencyKey })
 }
 
 /**

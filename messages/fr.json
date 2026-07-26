@@ -68,7 +68,7 @@
     "eaaMonitoring": "Surveillance EAA",
     "tagline": "Des scans WCAG qui apportent de vraies informations",
     "theme": "Thème",
-    "pilotProgram": "Programme pilote"
+    "foundingAgencies": "Programme fondateur"
   },
   "footer": {
     "brand": {
@@ -139,7 +139,6 @@
       "whiteLabelReports": "Rapports en marque blanche",
       "sampleReport": "Exemple de rapport",
       "wcagScanner": "Scanner WCAG",
-      "pilotPartner": "Programme Pilot Partner",
       "agencyMonitoring": "Surveillance pour agences",
       "government": "Secteur public",
       "bfsg": "German Accessibility Act (BFSG)",
@@ -149,7 +148,8 @@
       "dutchWebshop": "Barrierefreier Webshop",
       "dutchTesting": "Website-Barrierefreiheit testen",
       "overlayAlternative": "Overlay-Alternative",
-      "regressionTesting": "Regressionstests"
+      "regressionTesting": "Regressionstests",
+      "foundingAgencies": "Programme Founding Agency"
     },
     "disclaimer": "Analyse de contenu public • Aucun stockage de données personnelles",
     "description": "Surveillance, rapports et workflows de correction d?accessibilit? pour les ?quipes modernes.",
@@ -227,22 +227,6 @@
       "subtitle": "Créez votre compte gratuit. Lancez votre première analyse. Voyez les résultats en quelques minutes. Passez à un plan supérieur quand vous avez besoin de surveillance, rapports et gestion multi-sites.",
       "ctaPrimary": "Lancer une analyse gratuite",
       "ctaSecondary": "Voir les tarifs"
-    },
-    "testimonials": {
-      "title": "Ce que disent nos partenaires pilotes",
-      "subtitle": "Retours d'agences qui testent VexNexa dans leurs workflows.",
-      "t1": {
-        "quote": "VexNexa nous a fait gagner des heures par client. Les rapports en marque blanche semblent avoir été créés par nous.",
-        "attribution": "Partenaire pilote — Agence digitale, Pays-Bas"
-      },
-      "t2": {
-        "quote": "Nous avons enfin un workflow d'accessibilité reproductible. Analyser, rapporter, surveiller — c'est fait.",
-        "attribution": "Partenaire pilote — Studio web, Allemagne"
-      },
-      "t3": {
-        "quote": "La priorisation nous a convaincus. Nous savons exactement quoi corriger en premier pour chaque client.",
-        "attribution": "Partenaire pilote — Équipe conformité, Belgique"
-      }
     },
     "faq": {
       "q1": {
@@ -446,20 +430,6 @@
         "description": "Exportez des rapports personnalisés. Planifiez des analyses récurrentes. Recevez des notifications lors de changements de score. Construisez un processus d'amélioration continue."
       }
     },
-    "pilotBanner": {
-      "badge": "Places limitées",
-      "title": "Rejoignez le programme de partenariat pilote",
-      "subtitle": "Obtenez un accès niveau Agency, un support direct et contribuez à façonner VexNexa — tout en offrant l'accessibilité à vos clients dès le premier jour.",
-      "standardsIntro": "Livrez des rapports en marque blanche fondés sur les mêmes référentiels que ceux des équipes d'accessibilité les plus exigeantes.",
-      "standardsAria": "Références aux normes d'accessibilité",
-      "standardsPoweredBy": "Propulsé par",
-      "standardsAxeCaption": "Moteur de tests",
-      "standardsWcagCaption": "WCAG 2.2 AA",
-      "standardsEnCaption": "Cadre UE",
-      "standardsFootnote": "À titre indicatif uniquement. VexNexa n'est pas approuvé par le W3C ou Deque.",
-      "ctaPrimary": "En savoir plus",
-      "ctaSecondary": "Postuler maintenant"
-    },
     "pricingTeaser": {
       "eyebrow": "Tarification transparente",
       "title": "Des offres qui évoluent avec votre portefeuille",
@@ -540,22 +510,6 @@
         "ctaSecondary": "Voir un rapport d'exemple",
         "noCard": "Aucune carte de crédit requise pour consulter un rapport d'exemple."
       },
-      "vni": {
-        "title": "VexNexa Index (VNI)",
-        "subtitle": "Un classement de conformité de 1 à 5 étoiles pour chaque domaine de votre portefeuille.",
-        "liveLabel": "Scan du portefeuille",
-        "priorityBadge": "Priorité élevée : action requise",
-        "priorityCopy": "Les domaines classés Insolvent (1 étoile) sont signalés pour examen immédiat. Il s'agit d'un signal d'audit interne, pas d'un verdict juridique.",
-        "ranks": {
-          "insolvent": "Insolvent — 1 étoile",
-          "foundational": "Foundational — 2 étoiles",
-          "compliant": "Elite — 3 étoiles",
-          "auditReady": "Audit-Ready — 4 étoiles",
-          "leading": "Industry-Leading — 5 étoiles"
-        },
-        "targetLabel": "Objectif",
-        "disclaimer": "Les notations VNI sont issues de constatations IA-Vision automatisées combinées à la couverture des règles WCAG 2.2. Il s'agit d'un signal de risque indicatif, pas d'une certification juridique."
-      },
       "visibility": {
         "eyebrow": "Visibilité",
         "title": "On ne peut pas corriger ce que l'on ne voit pas.",
@@ -596,7 +550,7 @@
           "title": "Suivi historique de conformité",
           "body": "Historique de scans horodatés par domaine pour démontrer les progrès auprès de l'audit interne, des achats et de la direction.",
           "b1": "Courbes de tendance par critère WCAG, par domaine",
-          "b2": "Alertes de régression lorsqu'un déploiement abaisse votre VNI",
+          "b2": "Alertes de régression lorsqu'un déploiement abaisse le score d'un client",
           "b3": "Preuves exportables alignées sur les standards d'audit interne"
         },
         "portfolio": {
@@ -653,13 +607,6 @@
       "title": "Actualités sur l'accessibilité, écrites pour les créateurs.",
       "viewAll": "Voir tous les articles"
     },
-    "pilotProgram": {
-      "badge": "Agentur-Pilotprogramm",
-      "title": "Die ersten 10 Agenturen: 3 Monate Agency zum Pro-Preis",
-      "subtitle": "Erhalte den vollständigen Agency-Tarif — White-Label-Berichte, 10 Kundenseiten, Priority Support — in den ersten 3 Monaten für 34,95 €/Monat. Dazu direkter Kontakt zum Gründer und Einfluss auf die Roadmap.",
-      "cta": "Für den Pilot bewerben",
-      "ctaSecondary": "So funktioniert der Pilot"
-    },
     "reportPreview": {
       "chip": "Compliance-Bericht",
       "auditLabel": "Automatisiertes Barrierefreiheits-Audit",
@@ -697,6 +644,22 @@
       "eyebrow": "Eine Notiz vom Gründer",
       "body": "Ich habe VexNexa gestartet, weil ich von Agenturen immer wieder dasselbe hörte: Kunden brauchen Nachweise zur Barrierefreiheit, aber Audits sind langsam, teuer und schwer als wiederholbarer Service anzubieten. VexNexa macht WCAG-Monitoring unter deiner eigenen Marke praktikabel: scannen, berichten, verbessern, wiederholen. Wenn du eine Agentur führst, möchte ich wirklich hören, was es deinem Team leichter machen würde.",
       "signature": "Jeffrey, Gründer von VexNexa"
+    },
+    "foundingProgram": {
+      "badge": "Programme Founding Agency",
+      "title": "Les {spots} premières agences : {freeMonths} mois d'Agency, gratuits",
+      "subtitle": "Profitez du plan Agency complet — rapports en marque blanche, {sites} sites clients, support prioritaire — gratuit pendant {freeMonths} mois, puis une remise fondateur permanente de {discountPercent} % tant que vous restez. Le plan Agency coûte normalement {agencyPrice}/mois ; les agences fondatrices paient {foundingPrice}/mois après l'année gratuite.",
+      "cta": "Candidater comme agence fondatrice",
+      "ctaSecondary": "Comment fonctionne le programme"
+    },
+    "partnerStandards": {
+      "standardsIntro": "Livrez des rapports en marque blanche fondés sur les mêmes référentiels que ceux des équipes d'accessibilité les plus exigeantes.",
+      "standardsAria": "Références aux normes d'accessibilité",
+      "standardsPoweredBy": "Propulsé par",
+      "standardsAxeCaption": "Moteur de tests",
+      "standardsWcagCaption": "WCAG 2.2 AA",
+      "standardsEnCaption": "Cadre UE",
+      "standardsFootnote": "À titre indicatif uniquement. VexNexa n'est pas approuvé par le W3C ou Deque."
     }
   },
   "pricing": {
@@ -992,7 +955,8 @@
           "description": "Besoin de plus de sites ? Ajoutez-les à n'importe quel plan.",
           "site1": "+1 site web",
           "sites5": "+5 sites web",
-          "sites10": "+10 sites web"
+          "sites10": "+10 sites web",
+          "upgradeNote": "Plus de {agencySites} sites ? Le plan Agency en inclut {agencySites} — souvent moins cher que d'empiler des packs."
         },
         "pages": {
           "title": "Packs de volume de pages",
@@ -1069,13 +1033,6 @@
         "titleHighlight": "continus",
         "subtitle": "Combinez la surveillance automatisée avec des audits manuels",
         "cta": "Choisir un forfait",
-        "starter": {
-          "features": {
-            "audits": "1 scan rapide/trimestre",
-            "report": "Rapport basique",
-            "support": "Support par email"
-          }
-        },
         "pro": {
           "features": {
             "audits": "1 audit complet/trimestre",
@@ -1093,18 +1050,12 @@
         },
         "enterprise": {
           "features": {
-            "audits": "Audits illimités",
+            "audits": "Jusqu'à 4 audits complets par an",
             "vpat": "VPAT + documents de conformité",
             "legal": "Support juridique",
             "manager": "Responsable de compte"
           }
         }
-      },
-      "pilotBanner": {
-        "badge": "Pilote Agence",
-        "title": "Premier mois du plan Agency au prix Pro",
-        "subtitle": "Pour les 10 premières agences : toutes les fonctionnalités Agency — rapports en marque blanche, 10 sites web et support prioritaire — au prix Pro (34,95 €/mois) pendant les 3 premiers mois. Plus une ligne directe avec le fondateur et une voix sur la feuille de route.",
-        "cta": "Réserver votre place pilote"
       },
       "noCreditCard": "Aucune carte de crédit requise · Résiliable à tout moment",
       "cta": {
@@ -1119,12 +1070,12 @@
       "allPricesInclVat": "Tous les prix incluent la TVA",
       "inclVatShort": "TVA incluse",
       "pioneer": {
-        "description": "Accès partenaire Pioneer avec reporting VNI premium et workflows en marque blanche.",
+        "description": "Accès partenaire Pioneer avec reporting VexNexa Index premium et workflows en marque blanche.",
         "features": {
           "sites": "{count} sites web",
           "pages": "{count} pages/mois",
           "users": "{count} utilisateurs",
-          "vni": "Scans VNI et rapports PDF/DOCX",
+          "vni": "Scans VexNexa Index et rapports PDF/DOCX",
           "whiteLabel": "Rapports en marque blanche",
           "support": "Support prioritaire et SLA"
         }
@@ -1136,7 +1087,13 @@
         "title": "Brauchst du ein manuelles Expertenaudit?",
         "cta": "Audit-Services ansehen"
       },
-      "bestForAgencies": "Am besten für Agenturen"
+      "bestForAgencies": "Am besten für Agenturen",
+      "foundingBanner": {
+        "badge": "Programme Founding Agency",
+        "title": "Les {spots} premières agences : {freeMonths} mois d'Agency, gratuits",
+        "subtitle": "Devenez agence fondatrice et profitez du plan Agency complet — normalement {agencyPrice}/mois — gratuit pendant {freeMonths} mois, puis une remise fondateur permanente de {discountPercent} % ({foundingPrice}/mois) tant que vous restez. En échange : une utilisation réelle, des retours honnêtes et une étude de cas.",
+        "cta": "Découvrir le programme fondateur"
+      }
     },
     "addons": {
       "assurance": {
@@ -3407,13 +3364,6 @@
         "description": "Surveillance continue comme service mensuel pour vos clients."
       }
     },
-    "pilotBanner": {
-      "badge": "Places limitées",
-      "title": "Rejoignez le programme de partenariat pilote",
-      "subtitle": "Obtenez un accès niveau Agency, un support direct et contribuez à façonner VexNexa — tout en offrant l'accessibilité à vos clients dès le premier jour.",
-      "ctaPrimary": "En savoir plus",
-      "ctaSecondary": "Postuler maintenant"
-    },
     "finalCta": {
       "title": "Commencez à offrir l'accessibilité à vos clients",
       "subtitle": "Créez un compte gratuit, analysez votre premier site client et découvrez comment VexNexa s'intègre à votre workflow.",
@@ -3434,6 +3384,13 @@
       "teamCollaboration": "Outils de collaboration d'équipe",
       "title": "Conçu spécialement pour les agences",
       "whiteLabel": "Rapports en marque blanche complets"
+    },
+    "foundingBanner": {
+      "badge": "Programme Founding Agency",
+      "title": "Devenez agence fondatrice",
+      "subtitle": "Les {spots} premières agences reçoivent {freeMonths} mois du plan Agency gratuitement, puis une remise fondateur permanente de {discountPercent} % — tout en livrant l'accessibilité à leurs clients dès le premier jour.",
+      "ctaPrimary": "En savoir plus",
+      "ctaSecondary": "Candidater"
     }
   },
   "blog": {
@@ -4103,7 +4060,7 @@
     },
     "knownIssues": {
       "title": "Problèmes connus",
-      "subtitle": "Problèmes publics sélectionnés pouvant impacter les clients ou les partenaires pilotes.",
+      "subtitle": "Problèmes publics sélectionnés pouvant concerner les clients ou les agences fondatrices.",
       "currentBadge": "En cours",
       "lastChecked": "Dernière vérification",
       "fallbackTitle": "Aucun problème public actif",
@@ -4146,7 +4103,7 @@
         },
         {
           "title": "Canal de communication public lancé",
-          "body": "Les problèmes connus et les correctifs notables disposent désormais d'un lieu public unique pour les clients et les partenaires pilotes."
+          "body": "Les problèmes connus et les correctifs notables ont désormais un espace public unique pour les clients et les agences fondatrices."
         }
       ]
     },
@@ -4513,7 +4470,26 @@
     "urlHint": "Scan gratuit · Aucune carte de crédit nécessaire",
     "urlInvalid": "Saisissez une URL de site web valide, p. ex. https://exemple.com",
     "urlLabel": "URL du site web",
-    "urlPlaceholder": "https://votre-site.com"
+    "urlPlaceholder": "https://votre-site.com",
+    "console": {
+      "sampleTag": "Scan d'exemple",
+      "scanningTag": "Analyse",
+      "topFindings": "Principaux constats",
+      "needsAttention": "Attention requise",
+      "caption": "Un scan d'exemple s'affiche au chargement. Saisissez votre propre URL et un vrai scan axe-core démarre — votre score réel, sans captures d'écran inventées.",
+      "fullReport": "Voir le rapport complet",
+      "createAccount": "Créer un compte gratuit",
+      "retry": "Ouvrir le scanner complet",
+      "progress1": "Rendu de la page…",
+      "progress2": "axe-core en cours…",
+      "progress3": "Vérification du contraste…",
+      "errorGeneric": "Nous n'avons pas pu terminer ce scan. Ouvrez le scanner complet pour réessayer.",
+      "errorRateLimit": "Vous avez utilisé vos scans gratuits du jour. Créez un compte gratuit pour continuer.",
+      "issuesShort": "{count} problèmes trouvés",
+      "demoFind1": "Boutons sans nom accessible",
+      "demoFind2": "Contraste du texte inférieur à 4.5:1",
+      "demoFind3": "Champs de formulaire sans étiquette"
+    }
   },
   "pillars": {
     "actionable": {
@@ -4806,143 +4782,18 @@
       "successReport": "Envoyé ! Vérifiez votre boîte mail pour le résumé du scan.",
       "successFollowUp": "Bien reçu ! Nous vous enverrons votre rapport — généralement sous un jour ouvré.",
       "error": "Cela n'a pas fonctionné. Vérifiez l'adresse e-mail et réessayez.",
-      "privacy": "Un seul e-mail avec votre résultat. Pas de newsletter, pas de spam."
+      "privacy": "Un seul e-mail avec votre résultat. Pas de newsletter sans consentement séparé.",
+      "marketingOptIn": "Envoyez-moi également des conseils pratiques sur l’accessibilité et des informations occasionnelles sur VexNexa. Je confirmerai séparément par e-mail."
     },
     "of100": "/ 100"
   },
-  "pilotPage": {
-    "meta": {
-      "title": "Pilot Partnerprogramm | Barrierefreiheits-Monitoring & Reporting",
-      "description": "Bewirb dich als VexNexa-Pilotpartner: Die ersten 10 Agenturen erhalten 3 Monate Agency zum Pro-Preis, direkten Kontakt zum Gründer und Einfluss auf die Roadmap."
-    },
-    "hero": {
-      "badge": "Limitiertes Pilotprogramm",
-      "title": "Werde VexNexa",
-      "titleHighlight": "Pilotpartner",
-      "subtitle": "Die ersten 10 Agenturen erhalten 3 Monate Agency zum Pro-Preis (34,95 €/Monat statt 99,95 €/Monat), direkten Kontakt zum Gründer und Einfluss auf die Roadmap — und liefern ihren Kunden vom ersten Tag an White-Label-Barrierefreiheitsberichte.",
-      "ctaApply": "Pilotzugang beantragen",
-      "ctaSample": "Beispielbericht ansehen",
-      "note": "Auf 10 Pilotplätze begrenzt. Ideal für Agenturen mit aktiven Kundenwebsites. Starte mit einer Website — ohne langfristige Verpflichtung."
-    },
-    "audiences": {
-      "title": "Für wen das gedacht ist",
-      "subtitle": "Der Pilot ist für Teams gedacht, die echte Websites betreuen und einen praktischen Barrierefreiheits-Workflow wollen — keinen einmaligen Scan.",
-      "a1": {
-        "title": "Agenturen und Digitalpartner",
-        "description": "Du betreust Kundenwebsites und brauchst einen wiederholbaren Weg zum Scannen, Berichten und Monitoren von Barrierefreiheit. Der Pilot gibt dir einen echten Workflow für Team und Kunden."
-      },
-      "a2": {
-        "title": "Institutionen und öffentliche Teams",
-        "description": "Du betreibst Websites für ein breites Publikum — Bildung, Verwaltung, Gesundheitswesen oder gemeinnützige Organisationen. Der Pilot hilft dir, die Ausgangslage zu verstehen und Verbesserungen zu verfolgen."
-      },
-      "a3": {
-        "title": "EU-orientierte Unternehmen mit Compliance-Aufgaben",
-        "description": "Du brauchst laufende Barrierefreiheitsaufsicht für EAA-Bereitschaft oder interne Richtlinien. Der Pilot liefert Monitoring, Verbesserungsnachweise und klare Priorisierung."
-      }
-    },
-    "benefits": {
-      "title": "Was Pilotpartner erhalten",
-      "subtitle": "Starte mit einer Live-Website, führe den ersten Scan aus und erlebe den gesamten Reporting-Workflow — mit direkter Unterstützung von VexNexa.",
-      "b1": {
-        "title": "Scan- und Reporting-Workflows",
-        "description": "Führe WCAG 2.2 Scans auf echten Websites aus und erstelle strukturierte Berichte mit nach Schweregrad sortierten Problemen und konkreten Handlungshinweisen."
-      },
-      "b2": {
-        "title": "Gebrandete Ergebnisse",
-        "description": "Exportiere White-Label-PDF- und DOCX-Berichte mit deinem Logo — bereit für Kunden, Stakeholder oder Leitung."
-      },
-      "b3": {
-        "title": "Laufendes Monitoring",
-        "description": "Richte wiederkehrende Scans ein, um Regressionen nach Redesigns, Inhaltsänderungen oder Releases zu erkennen. Verfolge Scores über die Zeit."
-      },
-      "b4": {
-        "title": "Direkter Feedbackkanal",
-        "description": "Teile, was funktioniert, was unklar ist und was du brauchst. Pilotpartner haben direkten Kontakt zum Gründer."
-      },
-      "b5": {
-        "title": "Früher Einfluss auf Verbesserungen",
-        "description": "Dein Feedback prägt kommende Funktionen. Pilotpartner beeinflussen die Roadmap anhand echter Nutzung."
-      },
-      "b6": {
-        "title": "Setup-Unterstützung",
-        "description": "Wir helfen dir beim Start — vom ersten Scan bis zum wiederkehrenden Monitoring — damit du ab Tag eins produktiv bist."
-      }
-    },
-    "expectations": {
-      "title": "Was wir dafür erwarten",
-      "subtitle": "Das ist eine kollaborative Partnerschaft. Wir schätzen deine Zeit und dein Feedback — ohne Verpflichtungen außer ehrlichem Input.",
-      "e1": {
-        "title": "Ehrliches Produktfeedback",
-        "description": "Sag uns, was funktioniert, was verwirrend ist und was fehlt. Wir schätzen direkten, praktischen Input."
-      },
-      "e2": {
-        "title": "Kurzer Feedback-Check-in",
-        "description": "Nach der ersten Nutzung planen wir ein kurzes Gespräch, um aus deiner Erfahrung zu lernen."
-      },
-      "e3": {
-        "title": "Optionale Referenz",
-        "description": "Wenn der Pilot nützlich ist, fragen wir eventuell, ob wir die Zusammenarbeit erwähnen dürfen — nur mit deiner ausdrücklichen Zustimmung."
-      },
-      "e4": {
-        "title": "Optionale Case Study oder Logo-Nennung",
-        "description": "Nie automatisch. Nur wenn du dich wohlfühlst und einen gemeinsamen Nutzen siehst."
-      }
-    },
-    "agency": {
-      "eyebrow": "Für Agenturen",
-      "title": "Warum das gut für Agenturen funktioniert",
-      "body": "Wenn du Kundenwebsites betreust, gibt dir der Pilot einen echten Workflow zum Testen — vom Scannen und Reporting bis zum laufenden Monitoring. Prüfe, wie VexNexa in deinen Prozess passt, bevor du dich festlegst.",
-      "ctaApply": "Als Agenturpartner bewerben",
-      "ctaLearn": "Mehr über Agenturnutzung",
-      "p1": "Scans auf Kundenwebsites durchführen und in Minuten einen strukturierten WCAG 2.2 Bericht erhalten",
-      "p2": "Gebrandete PDF- und DOCX-Berichte mit Agenturlogo und Farben exportieren",
-      "p3": "Probleme nach Schweregrad priorisieren, damit Kunden wissen, wo sie beginnen sollen",
-      "p4": "Wiederkehrende Scans planen, um Barrierefreiheit über Zeit zu monitoren",
-      "p5": "Mehrere Kundenseiten in einem Dashboard verwalten",
-      "p6": "White-Label-Workflows für kundenorientierte Berichte erkunden"
-    },
-    "process": {
-      "title": "Was dich erwartet",
-      "subtitle": "Der Ablauf ist einfach. Bewerben, einrichten lassen und VexNexa auf einer echten Website nutzen.",
-      "s1": {
-        "title": "Bewerben",
-        "description": "Vier Felder: Agenturname, Website, E-Mail und Anzahl betreuter Kundenseiten. Dauert unter einer Minute."
-      },
-      "s2": {
-        "title": "Wir prüfen die Passung",
-        "description": "Wir prüfen, ob VexNexa praktisch zu deinem Workflow passt, und melden uns mit den nächsten Schritten."
-      },
-      "s3": {
-        "title": "Zugang und Onboarding",
-        "description": "Nach Annahme scannst du eine Live-Website, prüfst den ersten Bericht und richtest Monitoring ein — mit praktischer Unterstützung."
-      },
-      "s4": {
-        "title": "Auf echter Website nutzen",
-        "description": "Nutze den Pilot auf echten Kunden- oder Organisationsseiten. Gib unterwegs Feedback."
-      }
-    },
-    "notes": {
-      "title": "Wichtige Hinweise",
-      "n1": "Automatisierte Scans liefern wertvolle Abdeckung, ersetzen aber kein vollständiges manuelles Audit. Je nach Anforderungen können zusätzliche Tests nötig sein.",
-      "n2": "Pilotplätze sind begrenzt. VexNexa kann Bewerbungen priorisieren, die besonders gut zum aktuellen Funktionsumfang passen.",
-      "n3": "Der Pilot ist eine echte Produkterfahrung — kein Betatest. Du nutzt dieselben Tools und Workflows wie zahlende Kunden.",
-      "n4": "Öffentliche Referenzen, Logo-Nutzung oder Case Studies werden nie vorausgesetzt. Jede solche Zusammenarbeit braucht deine ausdrückliche Zustimmung."
-    },
-    "finalCta": {
-      "title": "Interessiert, Pilotpartner zu werden?",
-      "subtitle": "Erzähl uns von deiner Agentur. Wir prüfen jede Bewerbung und antworten in der Regel innerhalb eines Werktags.",
-      "ctaApply": "Pilotzugang beantragen",
-      "ctaSample": "Beispielbericht ansehen",
-      "ctaQuestion": "Frage stellen"
-    }
-  },
   "partnerApply": {
     "hero": {
-      "badge": "Pilot nur für Mitglieder",
-      "title": "Tritt dem exklusiven Pilot Partnerprogramm bei",
-      "subtitleFull": "Alle Pilotplätze sind derzeit vergeben. Trage dich in die Warteliste ein, um als Erste:r informiert zu werden, wenn Kapazität frei wird.",
-      "subtitle": "Nur noch {remaining} Plätze frei • 3 Monate Agency zum Pro-Preis, White-Label-Berichte unter deiner Marke und direkter Kontakt zum Gründer",
-      "ctaClaim": "Meinen Platz sichern",
+      "badge": "Programme Founding Agency",
+      "title": "Candidatez au programme Founding Agency",
+      "subtitleFull": "Toutes les places fondatrices sont actuellement prises. Rejoignez la liste d'attente pour être prioritaire si une place se libère.",
+      "subtitle": "Plus que {remaining} places • {freeMonths} mois du plan Agency gratuits, puis une remise fondateur permanente de {discountPercent} %, des rapports en marque blanche sous votre marque et une ligne directe avec le fondateur",
+      "ctaClaim": "Réserver ma place fondatrice",
       "ctaWaitlist": "Warteliste beitreten",
       "standardsIntro": "Du lieferst professionelle White-Label-Barrierefreiheitsberichte, unterstützt von axe-core® und ausgerichtet an WCAG 2.2 & EN 301 549",
       "standardsFootnote": "Nur als Referenz. VexNexa wird nicht von W3C oder Deque unterstützt."
@@ -4953,20 +4804,21 @@
       "left": "Nur noch {count, plural, one {# Platz} other {# Plätze}} frei"
     },
     "value": {
-      "v1": "3 Monate Agency zum Pro-Preis (34,95 €/Monat statt 99,95 €/Monat)",
-      "v2": "White-Label-Berichte unter deiner eigenen Marke",
-      "v3": "Direkter Kontakt zum Gründer",
-      "v4": "Direkter Einfluss auf die Roadmap",
-      "v5": "Praktische Setup-Unterstützung ab dem ersten Scan",
-      "reviewNote": "Alle Bewerbungen werden innerhalb von 24 Stunden manuell geprüft."
+      "v1": "{freeMonths} mois du plan Agency gratuits (normalement {agencyPrice}/mois)",
+      "v2": "Une remise fondateur permanente de {discountPercent} % après l'année gratuite ({foundingPrice}/mois)",
+      "v3": "Des rapports en marque blanche sous votre propre marque",
+      "v4": "Une ligne directe avec le fondateur et une influence sur la feuille de route",
+      "v5": "Un accompagnement personnalisé dès votre premier scan",
+      "reviewNote": "Alle Bewerbungen werden innerhalb von 24 Stunden manuell geprüft.",
+      "commitmentsNote": "En échange, nous demandons une utilisation réelle (au moins 2 rapports clients par mois), un témoignage après 3 mois, un entretien pour une étude de cas et des retours mensuels. <link>Voir toutes les conditions du programme</link>."
     },
     "standards": {
       "heading": "Auf führenden Branchenstandards aufgebaut",
-      "subheading": "Als Pilotpartner erhalten deine Kunden Berichte, die auf derselben Technologie basieren, der führende Accessibility-Teams weltweit vertrauen."
+      "subheading": "En tant qu'agence fondatrice, vos clients reçoivent des rapports reposant sur la même technologie que celle utilisée par les équipes d'accessibilité de référence dans le monde."
     },
     "formSection": {
-      "titleFull": "Pilotprogramm ist ausgelastet",
-      "title": "Sichere deinen Platz – nur noch {remaining} frei",
+      "titleFull": "Programme fondateur complet",
+      "title": "Réservez votre place fondatrice — plus que {remaining} disponibles",
       "subtitleFull": "Wir nehmen derzeit keine neuen Bewerbungen an.",
       "subtitle": "Kurzes Qualifizierungsformular — wir lesen jede Bewerbung persönlich."
     },
@@ -4977,7 +4829,7 @@
       "clientSites": "Wie viele Kundenwebsites betreust du derzeit?",
       "selectRange": "Bereich auswählen",
       "reviewNotice": "Deine Bewerbung wird innerhalb von 24 Stunden geprüft. Wir respektieren deinen Posteingang.",
-      "submit": "Meinen Platz sichern – nur noch {remaining, plural, one {# Platz} other {# Plätze}} frei",
+      "submit": "Candidater maintenant – plus que {remaining, plural, one {# place} other {# places}}",
       "sending": "Wird gesendet…",
       "privacy": "Deine Daten sind sicher. Wir hassen Spam genauso wie du."
     },
@@ -4988,20 +4840,20 @@
       "clientSites": "Bitte wähle aus, wie viele Kundenwebsites du betreust",
       "fixFields": "Bitte korrigiere die markierten Felder und versuche es erneut.",
       "rateLimited": "Zu viele Bewerbungen aus diesem Netzwerk. Bitte versuche es in einer Stunde erneut oder schreibe an info@vexnexa.com.",
-      "programFull": "Das Pilot Partnerprogramm ist derzeit voll. Trage dich in die Warteliste ein; wir melden uns, wenn ein Platz frei wird.",
+      "programFull": "Le programme Founding Agency est actuellement complet. Rejoignez la liste d'attente et nous vous contacterons si une place se libère.",
       "saveFailed": "Wir konnten deine Bewerbung nicht speichern. Bitte versuche es erneut oder schreibe an info@vexnexa.com.",
       "confirmationFailed": "Deine Bewerbung wurde gespeichert, aber die Bestätigungs-E-Mail konnte nicht gesendet werden. Bitte prüfe deine E-Mail-Adresse oder schreibe direkt an info@vexnexa.com.",
       "adminNotifyFailed": "Deine Bewerbung wurde gespeichert und die Bestätigungs-E-Mail gesendet, aber die interne Benachrichtigung ist fehlgeschlagen. Bitte schreibe direkt an info@vexnexa.com, damit wir sofort nachfassen können."
     },
     "success": {
-      "title": "Danke! Deine Pilotpartner-Bewerbung ist eingegangen.",
+      "title": "Merci ! Votre candidature Founding Agency a bien été reçue.",
       "body": "Wir melden uns innerhalb von 24 Stunden, um die nächsten Schritte zu besprechen.",
       "ctaSample": "White-Label-Beispielbericht ansehen",
       "ctaWhiteLabel": "White-Label-Möglichkeiten erkunden"
     },
     "waitlist": {
       "title": "Programm ist voll",
-      "body": "Die Pilotpartnerplätze sind vergeben. Trage dich in die Warteliste ein; wir kontaktieren dich, wenn ein Platz frei wird.",
+      "body": "Toutes les places fondatrices sont attribuées. Rejoignez la liste d'attente et nous vous contacterons dès qu'une place se libère.",
       "cta": "Warteliste beitreten",
       "orEmail": "Oder per E-Mail"
     }
@@ -5193,6 +5045,142 @@
         "Titres et structure de page",
         "ARIA et composants interactifs"
       ]
+    }
+  },
+  "foundingPage": {
+    "meta": {
+      "title": "Programme Founding Agency | {freeMonths} mois d'Agency gratuits",
+      "description": "Les {spots} premières agences reçoivent {freeMonths} mois du plan Agency de VexNexa gratuitement, puis une remise fondateur permanente de {discountPercent} % — en échange d'une utilisation réelle, de retours honnêtes et d'une étude de cas."
+    },
+    "hero": {
+      "badge": "Programme Founding Agency",
+      "title": "Devenez une",
+      "titleHighlight": "agence fondatrice VexNexa",
+      "subtitle": "Les {spots} premières agences reçoivent le plan Agency complet gratuitement pendant {freeMonths} mois, puis une remise fondateur permanente de {discountPercent} % tant que l'abonnement reste actif — tout en livrant à leurs clients des rapports d'accessibilité en marque blanche dès le premier jour.",
+      "ctaApply": "Candidater comme agence fondatrice",
+      "ctaSample": "Voir un rapport d'exemple",
+      "note": "Idéal pour les agences qui gèrent des sites clients en production. Chaque candidature est examinée personnellement.",
+      "spotsLeft": "{remaining} places fondatrices sur {spots} restantes"
+    },
+    "priceAnchor": {
+      "title": "Ce que vaut l'offre",
+      "normalLabel": "Prix Agency normal",
+      "normalPrice": "{agencyPrice}/mois",
+      "foundingLabel": "Agences fondatrices",
+      "year1": "Gratuit les {freeMonths} premiers mois",
+      "after": "Puis {foundingPrice}/mois — une remise fondateur permanente de {discountPercent} %, tant que votre abonnement reste actif"
+    },
+    "audiences": {
+      "title": "À qui s'adresse le programme",
+      "subtitle": "Le programme est conçu pour les agences avec des clients finaux — des équipes qui livrent des sites web et veulent proposer l'accessibilité comme service récurrent et facturable.",
+      "a1": {
+        "title": "Agences et partenaires digitaux",
+        "description": "Vous gérez des sites clients et avez besoin d'une méthode reproductible pour scanner, documenter et surveiller l'accessibilité — sous votre propre marque."
+      },
+      "a2": {
+        "title": "Studios web avec un portefeuille clients",
+        "description": "Vous maintenez plusieurs sites en production et souhaitez proposer la surveillance et les rapports à votre marque comme service continu, pas comme un scan ponctuel."
+      },
+      "a3": {
+        "title": "Cabinets de conseil en conformité EAA",
+        "description": "Vous accompagnez vos clients vers la conformité EAA et avez besoin d'une surveillance continue, de preuves d'amélioration et d'une priorisation claire."
+      }
+    },
+    "benefits": {
+      "title": "Ce que reçoivent les agences fondatrices",
+      "subtitle": "Le plan Agency complet dès le premier jour — gratuit la première année, remisé à vie ensuite, avec le support direct de l'équipe VexNexa.",
+      "b1": {
+        "title": "{freeMonths} mois d'Agency, gratuits",
+        "description": "Le plan Agency complet — normalement {agencyPrice}/mois — sans frais pendant vos {freeMonths} premiers mois. Toutes les fonctionnalités, sans restrictions."
+      },
+      "b2": {
+        "title": "Une remise fondateur permanente de {discountPercent} %",
+        "description": "À partir du mois {afterMonth}, vous payez {foundingPrice}/mois au lieu de {agencyPrice}/mois — tant que votre abonnement reste actif."
+      },
+      "b3": {
+        "title": "Livrables à votre marque",
+        "description": "Exportez des rapports PDF et DOCX en marque blanche avec votre logo — prêts à partager avec clients, parties prenantes ou direction."
+      },
+      "b4": {
+        "title": "Surveillance continue",
+        "description": "Programmez des scans récurrents pour détecter les régressions après une refonte, des changements de contenu ou une mise en production. Suivez les scores dans le temps."
+      },
+      "b5": {
+        "title": "Une ligne directe avec le fondateur",
+        "description": "Partagez ce qui fonctionne, ce qui ne fonctionne pas et ce que vous aimeriez voir. Vos retours façonnent la feuille de route sur la base d'un usage réel."
+      },
+      "b6": {
+        "title": "Onboarding personnalisé",
+        "description": "Nous vous aidons à démarrer — du premier scan à la surveillance récurrente — pour être productif dès le premier jour."
+      }
+    },
+    "expectations": {
+      "title": "Ce que nous demandons en échange",
+      "subtitle": "Pas de petites lignes — voici l'intégralité de l'accord. Une année gratuite et une remise permanente, en échange de quatre engagements concrets :",
+      "e1": {
+        "title": "Utilisation active",
+        "description": "Générez au moins 2 rapports clients par mois. C'est ce niveau d'usage réel qui rend le programme précieux pour les deux parties."
+      },
+      "e2": {
+        "title": "Témoignage et autorisation de logo",
+        "description": "Après 3 mois, un court témoignage et l'autorisation d'afficher votre logo sur notre site. Vous validez la formulation finale."
+      },
+      "e3": {
+        "title": "Un entretien pour une étude de cas",
+        "description": "Un seul entretien d'environ 30 minutes, au cours de la première année, sur votre usage de VexNexa avec vos clients."
+      },
+      "e4": {
+        "title": "Retours mensuels",
+        "description": "Un court formulaire ou un rapide échange, une fois par mois, sur ce qui fonctionne et ce qui ne fonctionne pas."
+      },
+      "inactivityNote": "Si le programme reste inutilisé pendant une période prolongée, nous vous contactons d'abord. S'il reste inactif ensuite, le statut fondateur expire afin que la place revienne à une autre agence — nous vous contactons toujours avant tout changement."
+    },
+    "agency": {
+      "eyebrow": "Pour les agences",
+      "title": "Pourquoi cela fonctionne bien pour les agences",
+      "body": "Si vous gérez des sites clients, l'année gratuite vous donne un vrai workflow à développer — du scan au rapport jusqu'à la surveillance continue — sans facture logicielle pendant que vous construisez le service. Quand le tarif fondateur démarre, la surveillance de l'accessibilité peut déjà être une offre facturable.",
+      "ctaApply": "Candidater comme agence fondatrice",
+      "ctaLearn": "En savoir plus sur l'usage en agence",
+      "p1": "Scannez les sites clients et obtenez un rapport WCAG 2.2 structuré en quelques minutes",
+      "p2": "Exportez des rapports PDF et DOCX avec le logo et les couleurs de votre agence",
+      "p3": "Priorisez les problèmes par gravité pour que vos clients sachent par où commencer",
+      "p4": "Programmez des scans récurrents pour surveiller l'accessibilité dans le temps",
+      "p5": "Gérez plusieurs sites clients depuis un seul tableau de bord",
+      "p6": "Explorez les workflows en marque blanche pour les rapports destinés aux clients"
+    },
+    "process": {
+      "title": "À quoi s'attendre",
+      "subtitle": "Le processus est simple. Candidatez, installez-vous et livrez des rapports d'accessibilité à de vrais clients.",
+      "s1": {
+        "title": "Candidater",
+        "description": "Quatre champs : nom de l'agence, site web, e-mail et nombre de sites clients gérés. Moins d'une minute."
+      },
+      "s2": {
+        "title": "Nous évaluons l'adéquation",
+        "description": "Nous vérifions si VexNexa s'intègre concrètement à votre workflow et répondons sous 1 jour ouvré."
+      },
+      "s3": {
+        "title": "Accès et onboarding",
+        "description": "Une fois accepté, votre année gratuite démarre. Vous scannez un site en production, examinez votre premier rapport et configurez la surveillance — avec un accompagnement personnalisé."
+      },
+      "s4": {
+        "title": "Développer le service ensemble",
+        "description": "Utilisez VexNexa sur de vrais sites clients, partagez vos retours chaque mois et conservez votre remise fondateur tant que vous restez."
+      }
+    },
+    "notes": {
+      "title": "À savoir",
+      "n1": "Les scans automatisés offrent une couverture précieuse mais ne remplacent pas un audit manuel complet. Selon vos exigences, des tests supplémentaires peuvent être nécessaires.",
+      "n2": "Le programme est limité à {spots} agences. Quand toutes les places sont prises, vous pouvez rejoindre la liste d'attente.",
+      "n3": "La remise fondateur s'applique tant que votre abonnement reste actif. Si vous résiliez et revenez plus tard, les tarifs standard s'appliquent.",
+      "n4": "Les témoignages, l'usage du logo et l'étude de cas font partie des engagements du programme — mais vous validez toujours la formulation et le contenu final avant toute publication."
+    },
+    "finalCta": {
+      "title": "Vous voulez l'une des {spots} places fondatrices ?",
+      "subtitle": "Parlez-nous de votre agence. Nous examinons chaque candidature et visons une réponse sous 1 jour ouvré.",
+      "ctaApply": "Candidater comme agence fondatrice",
+      "ctaSample": "Voir un rapport d'exemple",
+      "ctaQuestion": "Poser une question"
     }
   }
 }

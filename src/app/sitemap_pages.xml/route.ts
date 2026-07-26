@@ -26,7 +26,7 @@ const PAGE_PATHS = [
   '/for-agencies',
   '/government-accessibility',
   '/partner-apply',
-  '/pilot-partner-program',
+  '/founding-agencies',
   '/blog',
   '/changelog',
   '/wcag-scan',

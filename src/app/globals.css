@@ -511,6 +511,17 @@
   }
 }
 
+/* Hero scan console — the sweep bar that passes over the console while scanning.
+   Neutralised automatically by the reduced-motion block below. */
+@keyframes vnScanSweep {
+  from {
+    left: -30%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
 /* ========================================
    ACCESSIBILITY: REDUCED MOTION SUPPORT
    ======================================== */

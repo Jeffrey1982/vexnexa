@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { PartnerStandardsBar } from "@/components/marketing/PartnerStandardsBar";
 import { ScarcityCounter } from "@/components/partner-apply/ScarcityCounter";
 import { trackEvent } from "@/lib/analytics-events";
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+} from "@/lib/billing/pricing-config";
 
 export function PartnerHero({ remaining }: { remaining: number }) {
   const t = useTranslations("partnerApply.hero");
@@ -13,7 +17,7 @@ export function PartnerHero({ remaining }: { remaining: number }) {
 
   function scrollToForm() {
     document.getElementById("partner-apply-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    trackEvent("pilot_partner_apply_click", { location: "partner_apply_hero" });
+    trackEvent("founding_agency_apply_click", { location: "partner_apply_hero" });
   }
 
   return (
@@ -26,7 +30,13 @@ export function PartnerHero({ remaining }: { remaining: number }) {
           {t("title")}
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-          {isFull ? t("subtitleFull") : t("subtitle", { remaining })}
+          {isFull
+            ? t("subtitleFull")
+            : t("subtitle", {
+                remaining,
+                freeMonths: FOUNDING_FREE_MONTHS,
+                discountPercent: FOUNDING_DISCOUNT_PERCENT,
+              })}
         </p>
         <div className="mt-6 flex flex-col items-center gap-2">
           <ScarcityCounter remaining={remaining} />
@@ -35,8 +45,8 @@ export function PartnerHero({ remaining }: { remaining: number }) {
           {isFull ? (
             <Button size="lg" className="h-14 min-h-[3.5rem] px-8 text-lg font-semibold" variant="outline" asChild>
               <Link
-                href="/contact?from=pilot-waitlist"
-                onClick={() => trackEvent("pilot_partner_apply_click", { location: "partner_apply_waitlist" })}
+                href="/contact?from=founding-waitlist"
+                onClick={() => trackEvent("founding_agency_apply_click", { location: "partner_apply_waitlist" })}
               >
                 {t("ctaWaitlist")}
               </Link>

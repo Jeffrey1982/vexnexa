@@ -51,8 +51,8 @@ type ScanState =
 
 /**
  * Email capture — every visitor who typed a URL is a lead. On results it
- * mails the partial report; on error/rate-limit it promises a follow-up
- * (the founder is notified for manual delivery).
+ * The result email is transactional; marketing is a separate unchecked
+ * double opt-in choice.
  */
 function EmailCapture({
   phase,
@@ -66,6 +66,7 @@ function EmailCapture({
   const t = useTranslations("freeScan.emailCapture");
   const locale = useLocale();
   const [email, setEmail] = useState("");
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -82,6 +83,7 @@ function EmailCapture({
           url,
           phase,
           locale: ["en", "nl", "de", "fr", "es", "pt"].includes(locale) ? locale : "en",
+          marketingConsent,
           result: result
             ? {
                 score: result.score,
@@ -140,6 +142,15 @@ function EmailCapture({
           )}
         </Button>
       </form>
+      <label className="mt-3 flex cursor-pointer items-start gap-3 text-xs text-muted-foreground">
+        <input
+          type="checkbox"
+          checked={marketingConsent}
+          onChange={(event) => setMarketingConsent(event.target.checked)}
+          className="mt-0.5 h-4 w-4 rounded border-border accent-primary"
+        />
+        <span>{t("marketingOptIn")}</span>
+      </label>
       <div aria-live="polite">
         {status === "error" && (
           <p className="mt-2 text-xs font-medium text-destructive">{t("error")}</p>

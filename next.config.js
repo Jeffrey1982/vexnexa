@@ -51,6 +51,12 @@ const nextConfig = {
   // CSP headers are set in middleware.ts to avoid duplicate/conflicting policies
   async redirects() {
     return [
+      // Pilot Partner Program replaced by the Founding Agency Program
+      {
+        source: '/pilot-partner-program',
+        destination: '/founding-agencies',
+        permanent: true,
+      },
       // Common variants → canonical SEO landing page slugs
       {
         source: '/white-label-accessibility-report',

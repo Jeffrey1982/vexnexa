@@ -58,7 +58,7 @@ export default function robots(): MetadataRoute.Robots {
           '/government-accessibility',
           '/eaa-compliance-monitoring',
           '/partner-apply',
-          '/pilot-partner-program',
+          '/founding-agencies',
           '/sample-report',
           '/legal/cookies',
           '/report/*',

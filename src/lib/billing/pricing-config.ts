@@ -17,11 +17,43 @@
 export type PlanKey = "FREE" | "STARTER" | "PRO" | "BUSINESS" | "PIONEER" | "ENTERPRISE";
 export type BillingInterval = "monthly" | "yearly";
 
-/** Plans available for new self-serve signups */
-export const SELF_SERVE_PLANS: PlanKey[] = ["PRO", "BUSINESS", "PIONEER"] as const;
+/**
+ * Plans available for new self-serve signups.
+ * PIONEER is closed for new signups (existing subscriptions keep running).
+ */
+export const SELF_SERVE_PLANS: PlanKey[] = ["PRO", "BUSINESS"] as const;
 
-/** Plans shown on the public pricing page */
-export const PUBLIC_PLANS: PlanKey[] = ["FREE", "PRO", "BUSINESS", "PIONEER"] as const;
+/**
+ * Plans shown on the public pricing page.
+ * PIONEER is no longer publicly offered; the enum and prices remain for
+ * existing subscribers.
+ */
+export const PUBLIC_PLANS: PlanKey[] = ["FREE", "PRO", "BUSINESS"] as const;
+
+/* ─── Founding Agency Program ───
+ *
+ * The first FOUNDING_MAX_SPOTS agencies get FOUNDING_FREE_MONTHS months of
+ * the Agency (BUSINESS) plan for free, followed by a permanent founding
+ * discount for as long as the subscription stays active. Participation
+ * requires active use (see the /founding-agencies page for the program
+ * commitments). Billing mechanics via Mollie are decided separately —
+ * these constants drive all marketing display and future billing logic.
+ */
+export const FOUNDING_DISCOUNT = 0.3;
+export const FOUNDING_FREE_MONTHS = 12;
+export const FOUNDING_MAX_SPOTS = 10;
+
+/** Founding discount as a whole percentage for display (e.g. 30). */
+export const FOUNDING_DISCOUNT_PERCENT = Math.round(FOUNDING_DISCOUNT * 100);
+
+/**
+ * Agency (BUSINESS) price after the permanent founding discount,
+ * rounded to cents. Display + future billing only — not charged anywhere yet.
+ */
+export function getFoundingAgencyPrice(interval: BillingInterval): number {
+  const base = PLAN_PRICES.BUSINESS[interval];
+  return Math.round(base * (1 - FOUNDING_DISCOUNT) * 100) / 100;
+}
 
 export const PLAN_IDS: Record<PlanKey, string> = {
   FREE: "VN-F-0",

@@ -3,12 +3,12 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, Camera, CheckCircle2, FileText, GitBranch, ListChecks, ShieldAlert } from "lucide-react";
+import { Activity, Camera, CheckCircle2, FileText, GitBranch, ListChecks, ShieldAlert, Star } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Accessibility Scan Methodology - VexNexa",
   description:
-    "How VexNexa runs accessibility scans, maps WCAG findings, stores evidence, and separates automated checks from manual review.",
+    "How VexNexa runs accessibility scans, maps WCAG findings, stores evidence, separates automated checks from manual review, and calculates the VexNexa Index (VNI) risk rank.",
   robots: { index: true, follow: true },
 };
 
@@ -42,6 +42,14 @@ const coverage = [
   "Keyboard navigation and focus-order indicators",
   "Screen reader compatibility indicators",
   "Mobile accessibility, semantic structure and cognitive review signals",
+];
+
+const vniRanks = [
+  { stars: "1 star", label: "Insolvent", body: "Critical gaps that need immediate review." },
+  { stars: "2 stars", label: "Foundational", body: "Basics in place, but significant work remains." },
+  { stars: "3 stars", label: "Elite", body: "Solid coverage with a manageable backlog." },
+  { stars: "4 stars", label: "Audit-Ready", body: "Few remaining issues; suitable for review." },
+  { stars: "5 stars", label: "Industry-Leading", body: "Best-in-class accessibility posture." },
 ];
 
 export default function MethodologyPage() {
@@ -147,6 +155,42 @@ export default function MethodologyPage() {
             </CardContent>
           </Card>
         </aside>
+      </section>
+
+      <section id="vexnexa-index" className="mt-12 scroll-mt-24">
+        <Card className="rounded-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <Star className="h-5 w-5 text-primary" aria-hidden="true" />
+              The VexNexa Index (VNI)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6 text-sm leading-6 text-muted-foreground">
+            <p>
+              The VexNexa Index (VNI) is a risk-oriented rank layered on top of the raw scan. It combines automated{" "}
+              <strong>AI-Vision</strong> analysis — which reviews the rendered page the way a person would see it — with{" "}
+              <strong>axe-core WCAG 2.2 rule coverage</strong>, then summarises each domain as a single 1-to-5 star rating so
+              you can compare sites across a portfolio at a glance.
+            </p>
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {vniRanks.map((rank) => (
+                <li key={rank.label} className="flex gap-3 rounded-lg border border-border/60 p-3">
+                  <Star className="mt-0.5 h-4 w-4 flex-none text-primary" aria-hidden="true" />
+                  <span>
+                    <strong className="text-foreground">{rank.label}</strong>{" "}
+                    <span className="text-xs">({rank.stars})</span>
+                    <span className="mt-0.5 block">{rank.body}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p>
+              The VNI is an <strong>indicative risk signal, not a legal certification</strong>. Like every automated result,
+              it points you to where attention is needed and tracks progress over time — it does not replace the manual
+              review described above.
+            </p>
+          </CardContent>
+        </Card>
       </section>
     </main>
   );

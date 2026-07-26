@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   CheckCircle2,
@@ -16,23 +15,37 @@ import { Button } from "@/components/ui/button";
 import { normalizeUrl } from "@/lib/url";
 import { setPendingScanUrl } from "@/lib/pending-scan";
 import { trackEvent } from "@/lib/analytics-events";
-import { SampleReportPreview } from "./SampleReportPreview";
+import { ScanConsole, type ConsoleState, type Severity, type Finding } from "./ScanConsole";
 
-const severities = [
-  { key: "Critical", count: 3, token: "critical", label: "severityCritical" },
-  { key: "Serious", count: 8, token: "serious", label: "severitySerious" },
-  { key: "Moderate", count: 14, token: "moderate", label: "severityModerate" },
-  { key: "Minor", count: 6, token: "minor", label: "severityMinor" },
-] as const;
+type TFn = ReturnType<typeof useTranslations>;
+type RawExample = { id: string; impact: string; help?: string; description?: string };
+
+/** Honest sample scan shown on load — representative numbers, clearly tagged. */
+function buildDemo(t: TFn): ConsoleState {
+  return {
+    phase: "result",
+    url: "your-agency-client.nl",
+    isDemo: true,
+    score: 72,
+    total: 31,
+    counts: { critical: 3, serious: 8, moderate: 14, minor: 6 },
+    findings: [
+      { name: t("console.demoFind1"), impact: "critical", ref: "WCAG 4.1.2" },
+      { name: t("console.demoFind2"), impact: "serious", ref: "WCAG 1.4.3" },
+      { name: t("console.demoFind3"), impact: "serious", ref: "WCAG 3.3.2" },
+    ],
+  };
+}
 
 export function Hero() {
   const t = useTranslations("hero");
-  const router = useRouter();
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
+  const [scan, setScan] = useState<ConsoleState>(() => buildDemo(t));
 
-  const handleScanSubmit = (e: React.FormEvent) => {
+  const handleScanSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (scan.phase === "scanning") return;
     const normalized = normalizeUrl(url);
     if (!normalized) {
       setError(t("urlInvalid"));
@@ -40,7 +53,51 @@ export function Hero() {
     }
     setPendingScanUrl(normalized);
     trackEvent("hero_scan_submit", { location: "hero" });
-    router.push(`/free-scan?url=${encodeURIComponent(normalized)}`);
+    setScan({ phase: "scanning", url: normalized });
+
+    const retryHref = `/free-scan?url=${encodeURIComponent(normalized)}`;
+    try {
+      const res = await fetch("/api/free-scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: normalized }),
+      });
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data?.ok && data.result) {
+        const r = data.result;
+        const findings: Finding[] = (r.examples ?? []).slice(0, 3).map((ex: RawExample) => ({
+          name: ex.help || ex.description || ex.id,
+          impact: (["critical", "serious", "moderate", "minor"].includes(ex.impact)
+            ? ex.impact
+            : "moderate") as Severity,
+        }));
+        setScan({
+          phase: "result",
+          url: normalized,
+          isDemo: false,
+          score: r.score ?? 0,
+          total: r.totalIssues ?? 0,
+          counts: {
+            critical: r.impactCritical ?? 0,
+            serious: r.impactSerious ?? 0,
+            moderate: r.impactModerate ?? 0,
+            minor: r.impactMinor ?? 0,
+          },
+          findings,
+        });
+        return;
+      }
+
+      setScan({
+        phase: "error",
+        url: normalized,
+        kind: data?.code === "RATE_LIMITED" ? "rate" : "generic",
+        retryHref,
+      });
+    } catch {
+      setScan({ phase: "error", url: normalized, kind: "generic", retryHref });
+    }
   };
 
   return (
@@ -142,7 +199,7 @@ export function Hero() {
         </div>
 
         <div className="relative min-w-0">
-          <ProductPreview />
+          <ScanConsole state={scan} />
         </div>
       </div>
     </section>
@@ -166,99 +223,5 @@ function ProofPill({
       </div>
       <p className="mt-1 text-xs leading-5 text-[var(--color-hero-muted)]">{value}</p>
     </div>
-  );
-}
-
-function ProductPreview() {
-  const t = useTranslations("hero");
-
-  return (
-    <figure className="relative mx-auto w-full max-w-full lg:mx-0 lg:max-w-3xl">
-      <figcaption className="sr-only">
-        VexNexa report and scan result preview
-      </figcaption>
-
-      <div className="absolute -left-4 top-8 z-10 hidden rounded-lg border border-[var(--color-hero-border)] bg-[var(--color-hero-note-bg)] px-3 py-2 text-xs font-semibold text-[var(--color-hero-note-fg)] shadow-lg sm:block">
-        {t("auditBadge")}
-      </div>
-
-      <div
-        className="overflow-hidden rounded-xl border border-[var(--color-hero-border)] bg-[var(--color-hero-panel)]"
-        style={{ boxShadow: "var(--shadow-hero-panel)" }}
-      >
-        <div className="flex items-center gap-3 border-b border-[var(--color-hero-border)] bg-[var(--color-hero-panel-muted)] px-4 py-3">
-          <div className="flex gap-1.5" aria-hidden="true">
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-hero-border)]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-hero-border)]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-hero-border)]" />
-          </div>
-          <p className="min-w-0 flex-1 truncate font-mono text-xs text-[var(--color-hero-muted)]">
-            vexnexa.com/report/example-agency
-          </p>
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-hero-accent-fg)]">
-            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-            {t("liveLabel")}
-          </span>
-        </div>
-
-        <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="border-b border-[var(--color-hero-border)] p-5 lg:border-b-0 lg:border-r">
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <div>
-                <p className="font-medium text-[var(--color-hero-text)]">example-agency.nl</p>
-                <p className="mt-1 font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-hero-muted)]">
-                  WCAG 2.2 AA
-                </p>
-              </div>
-              <span className="rounded-full bg-[var(--color-hero-accent-bg)] px-2.5 py-1 text-xs font-semibold text-[var(--color-hero-accent-fg)]">
-                {t("scanCardDelta")}
-              </span>
-            </div>
-
-            <div className="mb-4 flex items-end gap-2">
-              <span className="font-sans text-6xl font-semibold leading-none text-[var(--color-hero-text)]">
-                72
-              </span>
-              <span className="pb-1 text-sm text-[var(--color-hero-muted)]">
-                {t("scanCardScore")}
-              </span>
-            </div>
-
-            <div
-              className="mb-5 h-1.5 overflow-hidden rounded-full bg-[var(--color-hero-panel-sunken)]"
-              aria-hidden="true"
-            >
-              <div className="h-full w-[72%] rounded-full bg-[var(--color-brand-primary)] dark:bg-[var(--color-brand-primary-dark)]" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-2" aria-label={t("scanCardLabel")}>
-              {severities.map((severity) => (
-                <div
-                  key={severity.key}
-                  className="rounded-md px-3 py-2.5 text-center"
-                  style={{
-                    background: `var(--color-${severity.token}-bg)`,
-                    color: `var(--color-${severity.token}-fg)`,
-                  }}
-                >
-                  <p className="text-xl font-semibold leading-tight">{severity.count}</p>
-                  <p className="mt-1 text-xs font-medium leading-tight">
-                    {t(severity.label)}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative min-h-[300px] bg-[var(--color-hero-panel-sunken)] p-3 sm:min-h-[440px]">
-            <SampleReportPreview />
-          </div>
-        </div>
-      </div>
-
-      <p className="mt-5 text-center font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-hero-muted)]">
-        {t("trustLabel")}
-      </p>
-    </figure>
   );
 }

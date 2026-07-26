@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Exclusive Pilot Partner Application",
+  title: "Founding Agency Program Application",
   description:
-    "Apply for the VexNexa Pilot Partner Program: full Business access, white-label reports, priority support, and roadmap influence. Limited spots; applications reviewed within 24 hours.",
+    "Apply for the VexNexa Founding Agency Program: 12 months of the Agency plan for free, then a permanent 30% founding discount. Limited spots; applications reviewed within 24 hours.",
   openGraph: {
-    title: "Exclusive Pilot Partner Application — VexNexa",
+    title: "Founding Agency Program Application — VexNexa",
     description:
-      "Claim your spot: Business-level access, white-label client reports, and direct product input. Manually reviewed within 24 hours.",
+      "Apply for a founding spot: a free year of Agency-level access, white-label client reports, and direct product input. Manually reviewed within 24 hours.",
     url: "https://vexnexa.com/partner-apply",
   },
 

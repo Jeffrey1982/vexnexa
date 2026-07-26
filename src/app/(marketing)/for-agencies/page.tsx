@@ -19,6 +19,11 @@ import {
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
 import { useTranslations } from "next-intl";
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  FOUNDING_MAX_SPOTS,
+} from "@/lib/billing/pricing-config";
 
 // Dynamic metadata will be handled by the layout or generateMetadata function
 
@@ -198,37 +203,41 @@ export default function ForAgenciesPage() {
 
       <AgencyCTAStrip location="for-agencies" />
 
-      {/* Pilot Partner Program — prominent */}
+      {/* Founding Agency Program — prominent */}
       <section className="py-16 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-y">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-5">
             <span className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-semibold">
-              {t('pilotBanner.badge')}
+              {t('foundingBanner.badge')}
             </span>
             <h2 className="text-3xl lg:text-4xl font-bold font-display">
-              {t('pilotBanner.title')}
+              {t('foundingBanner.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {t('pilotBanner.subtitle')}
+              {t('foundingBanner.subtitle', {
+                spots: FOUNDING_MAX_SPOTS,
+                freeMonths: FOUNDING_FREE_MONTHS,
+                discountPercent: FOUNDING_DISCOUNT_PERCENT,
+              })}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <TrackedCTA
-                href="/pilot-partner-program"
+                href="/founding-agencies"
                 event="agencies_page_cta_click"
-                eventProps={{ location: "pilot_banner" }}
+                eventProps={{ location: "founding_banner" }}
                 size="lg"
                 className="gradient-primary text-white"
               >
-                {t('pilotBanner.ctaPrimary')} <ArrowRight className="ml-2 h-5 w-5" />
+                {t('foundingBanner.ctaPrimary')} <ArrowRight className="ml-2 h-5 w-5" />
               </TrackedCTA>
               <TrackedCTA
-                href="/contact?from=pilot-agencies"
+                href="/partner-apply"
                 event="agencies_page_cta_click"
-                eventProps={{ location: "pilot_apply" }}
+                eventProps={{ location: "founding_apply" }}
                 size="lg"
                 variant="outline"
               >
-                {t('pilotBanner.ctaSecondary')}
+                {t('foundingBanner.ctaSecondary')}
               </TrackedCTA>
             </div>
           </div>

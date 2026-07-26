@@ -14,6 +14,7 @@ export type LeadStatus =
   | "do_not_contact";
 
 export type ConsentEvent = {
+  contactId?: string | null;
   consentType: "commercial_outreach" | "existing_customer_relationship" | string;
   status: "active" | "withdrawn" | "expired" | "revoked" | string;
   evidence?: unknown;
@@ -21,6 +22,7 @@ export type ConsentEvent = {
 };
 
 export type CommercialEmailDecisionInput = {
+  contactId?: string;
   contactEmail: string;
   organizationDomain: string;
   leadStatus: LeadStatus;
@@ -66,7 +68,15 @@ export function canSendCommercialEmail(
     return { allowed: false, reason: "Lead is marked do not contact." };
   }
 
-  const withdrawn = input.consentEvents.some(
+  const relevantEvents = input.consentEvents.filter((event) => {
+    if (!input.contactId) return true;
+    if (event.consentType === "commercial_outreach") {
+      return event.contactId === input.contactId;
+    }
+    return event.contactId == null || event.contactId === input.contactId;
+  });
+
+  const withdrawn = relevantEvents.some(
     (event) =>
       (event.consentType === "commercial_outreach" ||
         event.consentType === "existing_customer_relationship") &&
@@ -76,7 +86,7 @@ export function canSendCommercialEmail(
     return { allowed: false, reason: "Consent or customer outreach permission was withdrawn." };
   }
 
-  const eligibleEvent = input.consentEvents.find((event) => {
+  const eligibleEvent = relevantEvents.find((event) => {
     const expiresAt = event.expiresAt ? new Date(event.expiresAt) : null;
     return (
       event.status === "active" &&

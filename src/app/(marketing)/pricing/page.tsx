@@ -41,6 +41,7 @@ import {
   type PlanKey,
   type BillingCycle,
   formatEuro,
+  formatEuroFlexible,
   getDiscountBadge,
   WEBSITE_PACK_PRICES,
   PAGE_PACK_PRICES,
@@ -51,6 +52,11 @@ import {
   PLAN_DISPLAY_NAMES,
   getYearlyDiscountPercent,
   getMonthlyEquivalent,
+  toMollieAmountString,
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  FOUNDING_MAX_SPOTS,
+  getFoundingAgencyPrice,
 } from "@/lib/billing/pricing-config";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
 import { useTranslations } from "next-intl";
@@ -75,7 +81,7 @@ function PricingJsonLd() {
         "@type": "Offer",
         name: "Pro Plan",
         url: "https://vexnexa.com/pricing",
-        price: "34.95",
+        price: toMollieAmountString(PLAN_PRICES.PRO.monthly),
         priceCurrency: "EUR",
         availability: "https://schema.org/InStock",
         itemCondition: "https://schema.org/NewCondition",
@@ -116,7 +122,7 @@ function PricingJsonLd() {
         },
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "34.95",
+          price: toMollieAmountString(PLAN_PRICES.PRO.monthly),
           priceCurrency: "EUR",
           unitText: "MONTH",
           valueAddedTaxIncluded: true,
@@ -126,7 +132,7 @@ function PricingJsonLd() {
         "@type": "Offer",
         name: "Agency Plan",
         url: "https://vexnexa.com/pricing",
-        price: "99.95",
+        price: toMollieAmountString(PLAN_PRICES.BUSINESS.monthly),
         priceCurrency: "EUR",
         availability: "https://schema.org/InStock",
         itemCondition: "https://schema.org/NewCondition",
@@ -167,7 +173,7 @@ function PricingJsonLd() {
         },
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: "99.95",
+          price: toMollieAmountString(PLAN_PRICES.BUSINESS.monthly),
           priceCurrency: "EUR",
           unitText: "MONTH",
           valueAddedTaxIncluded: true,
@@ -646,6 +652,11 @@ function AddOnsAccordionContent() {
               </div>
             ))}
           </div>
+          <p className="mt-4 text-xs text-muted-foreground">
+            {tp("addons.websites.upgradeNote", {
+              agencySites: ENTITLEMENTS.BUSINESS.sites,
+            })}
+          </p>
         </CardContent>
       </Card>
 
@@ -805,7 +816,7 @@ function OverflowAccordionContent() {
                 {t("resources.extraPages")}
               </TableCell>
               <TableCell>
-                {OVERFLOW_PRICING.extraPage.amount}/
+                {formatEuroFlexible(OVERFLOW_PRICING.extraPage.amount)}/
                 {OVERFLOW_PRICING.extraPage.unit}
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
@@ -817,7 +828,7 @@ function OverflowAccordionContent() {
                 {t("resources.extraSites")}
               </TableCell>
               <TableCell>
-                {OVERFLOW_PRICING.extraSite.amount}/
+                {formatEuroFlexible(OVERFLOW_PRICING.extraSite.amount)}/
                 {OVERFLOW_PRICING.extraSite.unit}
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
@@ -829,7 +840,7 @@ function OverflowAccordionContent() {
                 {t("resources.extraUsers")}
               </TableCell>
               <TableCell>
-                {OVERFLOW_PRICING.extraUser.amount}/
+                {formatEuroFlexible(OVERFLOW_PRICING.extraUser.amount)}/
                 {OVERFLOW_PRICING.extraUser.unit}
               </TableCell>
               <TableCell className="text-muted-foreground text-sm">
@@ -1018,25 +1029,32 @@ function CTASection() {
   );
 }
 
-function PilotOfferBanner() {
+function FoundingOfferBanner() {
   const tPage = useTranslations("pricing.page");
+  const offerParams = {
+    spots: FOUNDING_MAX_SPOTS,
+    freeMonths: FOUNDING_FREE_MONTHS,
+    discountPercent: FOUNDING_DISCOUNT_PERCENT,
+    agencyPrice: formatEuro(PLAN_PRICES.BUSINESS.monthly),
+    foundingPrice: formatEuro(getFoundingAgencyPrice("monthly")),
+  };
   return (
     <section className="py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto rounded-2xl border border-border bg-card p-8 text-center shadow-sm space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-accent-foreground">
             <Sparkles className="h-4 w-4" />
-            {tPage("pilotBanner.badge")}
+            {tPage("foundingBanner.badge")}
           </div>
           <h2 className="font-sans text-2xl font-bold text-foreground">
-            {tPage("pilotBanner.title")}
+            {tPage("foundingBanner.title", offerParams)}
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            {tPage("pilotBanner.subtitle")}
+            {tPage("foundingBanner.subtitle", offerParams)}
           </p>
           <Button asChild className="bg-primary-600 text-white hover:bg-primary-700">
-            <Link href="/pilot-partner-program">
-              {tPage("pilotBanner.cta")}{" "}
+            <Link href="/founding-agencies">
+              {tPage("foundingBanner.cta")}{" "}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
@@ -1051,7 +1069,7 @@ export default function PricingPage() {
     <>
       <PricingJsonLd />
       <HeroSection />
-      <PilotOfferBanner />
+      <FoundingOfferBanner />
       <PricingCards />
       <ExpandableDetailsSection />
       <AuditsLinkSection />

@@ -130,7 +130,7 @@ Rules:
 - 900–1200 words, practical and concrete, no fluff or hype.
 - NEVER claim tools guarantee legal compliance. When relevant, note that automated scans cover part of WCAG and manual review may be needed, and that legal questions belong with a lawyer.
 - Structure: short intro (no heading), then 4–6 sections with <h2> headings, use <p>, <ul>/<li>, <strong> only. No <h1>, no inline styles, no images, no scripts.
-- Where natural (max twice), link to https://vexnexa.com/free-scan (free scan, no account) or https://vexnexa.com/pilot-partner-program (agency pilot: 3 months of the Agency plan for the Pro price) using normal <a href> tags.
+- Where natural (max twice), link to https://vexnexa.com/free-scan (free scan, no account) or https://vexnexa.com/founding-agencies (Founding Agency Program: the first 10 agencies get 12 months of the Agency plan for free, then a permanent 30% founding discount) using normal <a href> tags.
 - End with a short practical takeaway section.
 
 Return ONLY a JSON object (no markdown fences) with exactly these keys:

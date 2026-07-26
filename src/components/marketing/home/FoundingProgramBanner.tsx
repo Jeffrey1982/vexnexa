@@ -1,22 +1,46 @@
 "use client";
 
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics-events";
+import {
+  FOUNDING_DISCOUNT_PERCENT,
+  FOUNDING_FREE_MONTHS,
+  FOUNDING_MAX_SPOTS,
+  PLAN_PRICES,
+  getFoundingAgencyPrice,
+} from "@/lib/billing/pricing-config";
+import { ENTITLEMENTS } from "@/lib/billing/plans";
 
 /**
- * PilotProgramBanner — the hero offer while VexNexa is recruiting its
- * first pilot agencies. Sits directly below the hero so it is the first
+ * FoundingProgramBanner — the hero offer while VexNexa is recruiting its
+ * founding agencies. Sits directly below the hero so it is the first
  * thing a visitor sees after the scan form.
  */
-export function PilotProgramBanner() {
-  const t = useTranslations("home.pilotProgram");
+export function FoundingProgramBanner() {
+  const t = useTranslations("home.foundingProgram");
+  const locale = useLocale();
+  const fmt = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const offerParams = {
+    spots: FOUNDING_MAX_SPOTS,
+    freeMonths: FOUNDING_FREE_MONTHS,
+    discountPercent: FOUNDING_DISCOUNT_PERCENT,
+    sites: ENTITLEMENTS.BUSINESS.sites,
+    agencyPrice: fmt.format(PLAN_PRICES.BUSINESS.monthly),
+    foundingPrice: fmt.format(getFoundingAgencyPrice("monthly")),
+  };
 
   return (
     <section
-      aria-labelledby="pilot-program-heading"
+      aria-labelledby="founding-program-heading"
       className="border-y border-[var(--color-border-subtle)] bg-[var(--color-surface-warm)]"
     >
       <div className="container mx-auto px-4 py-10 sm:py-12">
@@ -27,20 +51,20 @@ export function PilotProgramBanner() {
               {t("badge")}
             </p>
             <h2
-              id="pilot-program-heading"
+              id="founding-program-heading"
               className="mt-3 font-sans text-2xl font-semibold tracking-tight text-[var(--color-ink-900)] sm:text-3xl"
             >
-              {t("title")}
+              {t("title", offerParams)}
             </h2>
             <p className="mt-2 text-base leading-7 text-[var(--color-ink-500)]">
-              {t("subtitle")}
+              {t("subtitle", offerParams)}
             </p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
             <Button size="lg" asChild className="rounded-lg">
               <Link
                 href="/partner-apply"
-                onClick={() => trackEvent("pilot_banner_click", { location: "home_banner_primary" })}
+                onClick={() => trackEvent("founding_banner_click", { location: "home_banner_primary" })}
               >
                 {t("cta")}
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
@@ -48,8 +72,8 @@ export function PilotProgramBanner() {
             </Button>
             <Button size="lg" variant="outline" asChild className="rounded-lg">
               <Link
-                href="/pilot-partner-program"
-                onClick={() => trackEvent("pilot_banner_click", { location: "home_banner_secondary" })}
+                href="/founding-agencies"
+                onClick={() => trackEvent("founding_banner_click", { location: "home_banner_secondary" })}
               >
                 {t("ctaSecondary")}
               </Link>
