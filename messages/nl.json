@@ -251,7 +251,26 @@
     "trust2": "White-label PDF & DOCX rapporten",
     "trust3": "EU-gehost, GDPR compliant",
     "imageAlt": "VexNexa toegankelijkheid scanning dashboard met gedetailleerde WCAG rapporten en issue prioritering",
-    "mockupAria": "Gestileerde voorbeeld van het VexNexa scan dashboard met een white-label rapport samenvatting kaart."
+    "mockupAria": "Gestileerde voorbeeld van het VexNexa scan dashboard met een white-label rapport samenvatting kaart.",
+    "console": {
+      "sampleTag": "Voorbeeldscan",
+      "scanningTag": "Scannen",
+      "topFindings": "Belangrijkste bevindingen",
+      "needsAttention": "Aandacht nodig",
+      "caption": "Bij laden zie je een voorbeeldscan. Vul je eigen URL in en dit draait een echte axe-core-scan — je echte score, geen verzonnen screenshots.",
+      "fullReport": "Bekijk het volledige rapport",
+      "createAccount": "Maak gratis account",
+      "retry": "Open de volledige scanner",
+      "progress1": "Pagina renderen…",
+      "progress2": "axe-core draait…",
+      "progress3": "Contrast controleren…",
+      "errorGeneric": "We konden die scan niet afronden. Open de volledige scanner om opnieuw te proberen.",
+      "errorRateLimit": "Je gratis scans van vandaag zijn op. Maak een gratis account om door te scannen.",
+      "issuesShort": "{count} problemen gevonden",
+      "demoFind1": "Knoppen zonder toegankelijke naam",
+      "demoFind2": "Tekstcontrast onder 4.5:1",
+      "demoFind3": "Formuliervelden zonder label"
+    }
   },
   "home": {
     "reportPreview": {

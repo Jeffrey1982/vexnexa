@@ -209,7 +209,26 @@
     "urlHint": "Escaneo gratuito · No se necesita tarjeta de crédito",
     "urlInvalid": "Introduce una URL de sitio web válida, p. ej. https://ejemplo.com",
     "urlLabel": "URL del sitio web",
-    "urlPlaceholder": "https://tu-sitio.com"
+    "urlPlaceholder": "https://tu-sitio.com",
+    "console": {
+      "sampleTag": "Escaneo de muestra",
+      "scanningTag": "Escaneando",
+      "topFindings": "Hallazgos principales",
+      "needsAttention": "Requiere atención",
+      "caption": "Al cargar se muestra un escaneo de muestra. Introduce tu propia URL y se ejecuta un escaneo axe-core real — tu puntuación real, sin capturas inventadas.",
+      "fullReport": "Ver el informe completo",
+      "createAccount": "Crear cuenta gratis",
+      "retry": "Abrir el escáner completo",
+      "progress1": "Renderizando la página…",
+      "progress2": "Ejecutando axe-core…",
+      "progress3": "Comprobando contraste…",
+      "errorGeneric": "No pudimos completar ese escaneo. Abre el escáner completo para intentarlo de nuevo.",
+      "errorRateLimit": "Has usado tus escaneos gratis de hoy. Crea una cuenta gratis para seguir escaneando.",
+      "issuesShort": "{count} problemas encontrados",
+      "demoFind1": "Botones sin nombre accesible",
+      "demoFind2": "Contraste de texto por debajo de 4.5:1",
+      "demoFind3": "Campos de formulario sin etiqueta"
+    }
   },
   "home": {
     "hero": {

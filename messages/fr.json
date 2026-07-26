@@ -4470,7 +4470,26 @@
     "urlHint": "Scan gratuit · Aucune carte de crédit nécessaire",
     "urlInvalid": "Saisissez une URL de site web valide, p. ex. https://exemple.com",
     "urlLabel": "URL du site web",
-    "urlPlaceholder": "https://votre-site.com"
+    "urlPlaceholder": "https://votre-site.com",
+    "console": {
+      "sampleTag": "Scan d'exemple",
+      "scanningTag": "Analyse",
+      "topFindings": "Principaux constats",
+      "needsAttention": "Attention requise",
+      "caption": "Un scan d'exemple s'affiche au chargement. Saisissez votre propre URL et un vrai scan axe-core démarre — votre score réel, sans captures d'écran inventées.",
+      "fullReport": "Voir le rapport complet",
+      "createAccount": "Créer un compte gratuit",
+      "retry": "Ouvrir le scanner complet",
+      "progress1": "Rendu de la page…",
+      "progress2": "axe-core en cours…",
+      "progress3": "Vérification du contraste…",
+      "errorGeneric": "Nous n'avons pas pu terminer ce scan. Ouvrez le scanner complet pour réessayer.",
+      "errorRateLimit": "Vous avez utilisé vos scans gratuits du jour. Créez un compte gratuit pour continuer.",
+      "issuesShort": "{count} problèmes trouvés",
+      "demoFind1": "Boutons sans nom accessible",
+      "demoFind2": "Contraste du texte inférieur à 4.5:1",
+      "demoFind3": "Champs de formulaire sans étiquette"
+    }
   },
   "pillars": {
     "actionable": {

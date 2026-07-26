@@ -46,7 +46,26 @@
     "urlLabel": "Website URL",
     "urlPlaceholder": "https://your-website.com",
     "urlHint": "Free scan · No credit card needed",
-    "urlInvalid": "Enter a valid website URL, e.g. https://example.com"
+    "urlInvalid": "Enter a valid website URL, e.g. https://example.com",
+    "console": {
+      "sampleTag": "Sample scan",
+      "scanningTag": "Scanning",
+      "topFindings": "Top findings",
+      "needsAttention": "Needs attention",
+      "caption": "Sample scan shown on load. Enter your own URL and this runs a real axe-core scan — your real score, no invented screenshots.",
+      "fullReport": "See the full report",
+      "createAccount": "Create free account",
+      "retry": "Open full scanner",
+      "progress1": "Rendering page…",
+      "progress2": "Running axe-core…",
+      "progress3": "Checking contrast…",
+      "errorGeneric": "We couldn't finish that scan. Open the full scanner to try again.",
+      "errorRateLimit": "You've used today's free scans. Create a free account to keep scanning.",
+      "issuesShort": "{count} issues found",
+      "demoFind1": "Buttons without an accessible name",
+      "demoFind2": "Text contrast below 4.5:1",
+      "demoFind3": "Form fields missing labels"
+    }
   },
   "freeScan": {
     "badge": "Free scan · No account needed",

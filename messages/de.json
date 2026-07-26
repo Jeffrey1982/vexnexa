@@ -209,7 +209,26 @@
     "urlHint": "Kostenloser Scan · Keine Kreditkarte nötig",
     "urlInvalid": "Geben Sie eine gültige Website-URL ein, z. B. https://beispiel.com",
     "urlLabel": "Website-URL",
-    "urlPlaceholder": "https://ihre-website.de"
+    "urlPlaceholder": "https://ihre-website.de",
+    "console": {
+      "sampleTag": "Beispiel-Scan",
+      "scanningTag": "Scannt",
+      "topFindings": "Wichtigste Befunde",
+      "needsAttention": "Handlungsbedarf",
+      "caption": "Beim Laden sehen Sie einen Beispiel-Scan. Geben Sie Ihre eigene URL ein, und es läuft ein echter axe-core-Scan — Ihr echter Score, keine erfundenen Screenshots.",
+      "fullReport": "Vollständigen Bericht ansehen",
+      "createAccount": "Kostenloses Konto erstellen",
+      "retry": "Vollständigen Scanner öffnen",
+      "progress1": "Seite wird gerendert…",
+      "progress2": "axe-core läuft…",
+      "progress3": "Kontrast wird geprüft…",
+      "errorGeneric": "Wir konnten den Scan nicht abschließen. Öffnen Sie den vollständigen Scanner, um es erneut zu versuchen.",
+      "errorRateLimit": "Ihre kostenlosen Scans für heute sind aufgebraucht. Erstellen Sie ein kostenloses Konto, um weiterzuscannen.",
+      "issuesShort": "{count} Probleme gefunden",
+      "demoFind1": "Schaltflächen ohne zugänglichen Namen",
+      "demoFind2": "Textkontrast unter 4,5:1",
+      "demoFind3": "Formularfelder ohne Beschriftung"
+    }
   },
   "home": {
     "hero": {
