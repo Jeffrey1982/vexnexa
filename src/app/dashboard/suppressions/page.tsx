@@ -23,7 +23,7 @@ export default async function SuppressionsPage() {
   }
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <div>
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <p className="text-sm font-medium text-emerald-700">Lead Intelligence</p>
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Suppression list</h1>
@@ -43,6 +43,6 @@ export default async function SuppressionsPage() {
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

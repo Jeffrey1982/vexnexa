@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vexnexa-v16-rebrand-cache';
+const CACHE_NAME = 'vexnexa-v17-public-report-freeze-cache';
 const STATIC_CACHE_URLS = [
   '/',
   '/manifest.json',
@@ -15,6 +15,10 @@ const STATIC_CACHE_URLS = [
 const BRAND_ASSET_RE = /^\/(?:favicon\.(?:svg|ico)|apple-touch-icon\.png|android-chrome-\d+x\d+\.png|vexnexa-[a-z-]+\.svg|manifest\.json)$/i;
 function isBrandAsset(pathname) {
   return BRAND_ASSET_RE.test(pathname) || pathname.startsWith('/brand/');
+}
+
+function isPublicReportPath(pathname) {
+  return pathname === '/report' || pathname.startsWith('/report/');
 }
 
 // API requests are NEVER cached or intercepted by the service worker.
@@ -90,6 +94,14 @@ self.addEventListener('fetch', (event) => {
   // This is critical for webhooks (e.g. Mailgun), auth callbacks, and data endpoints.
   if (url.pathname.startsWith('/api/')) {
     return; // Let browser handle ALL API requests directly – NetworkOnly
+  }
+
+  // Public reports may contain third-party scan data. They are always
+  // network-only so a withdrawn/disabled report can never reappear from an
+  // offline cache after the server starts returning 404/noindex.
+  if (isPublicReportPath(url.pathname)) {
+    event.respondWith(networkOnlyStrategy(request));
+    return;
   }
 
   // BYPASS SERVICE WORKER FOR GOOGLE RESOURCES (FAVICONS AND ANALYTICS)

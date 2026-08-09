@@ -2559,9 +2559,9 @@
     "subtitle": "Monitor your website accessibility scans and improvements",
     "newScan": {
       "title": "New Accessibility Scan",
-      "description": "Enter a URL for a 100% comprehensive accessibility scan with 8 additional categories",
-      "enhancedTitle": "✨ New: 100% Enhanced Scanning",
-      "enhancedDescription": "WCAG + 8 extra categories: keyboard navigation, screen reader tests, mobile accessibility, cognitive analysis and more."
+      "description": "Enter a URL for an automated accessibility scan with axe-core and 8 additional signal categories",
+      "enhancedTitle": "✨ Advanced automated scan",
+      "enhancedDescription": "Automated WCAG checks plus 8 signal categories: keyboard, semantic structure, mobile, cognition, motion, color vision, performance, and language."
     },
     "tabs": {
       "overview": "Overview",

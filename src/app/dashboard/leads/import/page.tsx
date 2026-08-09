@@ -22,7 +22,7 @@ export default async function LeadImportPage({
   const hasSummary = params.created !== undefined;
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <div>
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -93,6 +93,6 @@ export default async function LeadImportPage({
           </form>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

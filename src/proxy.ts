@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { apiLimiter, authLimiter } from '@/lib/rate-limit'
 import { isIndexableMarketingLocale, isMarketingPath } from '@/lib/marketing-seo'
+import { arePublicReportsEnabled } from '@/lib/public-report-policy'
 
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl
@@ -220,6 +221,15 @@ export async function proxy(request: NextRequest) {
   if (
     noindexExactPaths.has(pathname) ||
     noindexPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))
+  ) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  }
+
+  // Keep disabled public-report routes crawlable so engines can observe their
+  // 404/noindex response and remove previously indexed URLs.
+  if (
+    !arePublicReportsEnabled() &&
+    (pathname === '/report' || pathname.startsWith('/report/'))
   ) {
     response.headers.set('X-Robots-Tag', 'noindex, nofollow')
   }

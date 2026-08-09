@@ -1517,9 +1517,9 @@
     "subtitle": "Monitorea tus escaneos de accesibilidad web y mejoras",
     "newScan": {
       "title": "Nuevo escaneo de accesibilidad",
-      "description": "Ingresa una URL para un escaneo de accesibilidad 100% completo con 8 categorías adicionales",
-      "enhancedTitle": "✨ Nuevo: Escaneo mejorado 100%",
-      "enhancedDescription": "WCAG + 8 categorías extra: navegación por teclado, pruebas de lector de pantalla, accesibilidad móvil, análisis cognitivo y más."
+      "description": "Introduce una URL para realizar un análisis automatizado de accesibilidad con axe-core y 8 categorías de señales adicionales",
+      "enhancedTitle": "✨ Análisis automatizado avanzado",
+      "enhancedDescription": "Comprobaciones WCAG automatizadas y 8 categorías de señales: teclado, estructura semántica, móvil, cognición, movimiento, visión del color, rendimiento e idioma."
     },
     "tabs": {
       "overview": "Resumen",

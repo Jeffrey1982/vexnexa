@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server'
+import {
+  arePublicReportsEnabled,
+  isPublicReportIndexingEnabled,
+} from '@/lib/public-report-policy'
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
   const sitemapPaths = [
     '/sitemap_pages.xml',
     '/sitemap_blog.xml',
-    '/sitemap_reports.xml',
+    ...(arePublicReportsEnabled() && isPublicReportIndexingEnabled()
+      ? ['/sitemap_reports.xml']
+      : []),
   ]
 
   const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
@@ -18,7 +24,9 @@ ${sitemapPaths.map((path) => `  <sitemap>
   return new NextResponse(sitemapIndex, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': arePublicReportsEnabled() && isPublicReportIndexingEnabled()
+        ? 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400'
+        : 'no-store',
     },
   })
 }

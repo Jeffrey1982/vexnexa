@@ -11,6 +11,10 @@
 
 import { prisma } from '@/lib/prisma';
 import { normalizeDomain, extractDisplayDomain, isValidDomain } from '@/lib/domain-utils';
+import {
+  arePublicReportsEnabled,
+  isPublicReportIndexingEnabled,
+} from '@/lib/public-report-policy';
 
 // ── Types ────────────────────────────────────────────────
 
@@ -38,6 +42,34 @@ export interface PublicReport {
   site_id: string;
   normalized_domain: string;
   score: number | null;
+}
+
+export const PUBLIC_REPORT_PUBLICATION_GRANT_VERSION = 'public-report-publication-v1' as const;
+
+/**
+ * Deliberately strict proof that a caller made an explicit publication
+ * decision. Scan authorization alone is not a publication grant.
+ */
+export interface PublicReportPublicationGrant {
+  explicitlyAuthorized: true;
+  authorizationVersion: typeof PUBLIC_REPORT_PUBLICATION_GRANT_VERSION;
+  authorizationReference: string;
+  authorizedByUserId: string;
+  authorizedAt: Date;
+  allowIndexing?: boolean;
+}
+
+function hasValidPublicationGrant(
+  grant: PublicReportPublicationGrant | null | undefined
+): grant is PublicReportPublicationGrant {
+  return Boolean(
+    grant?.explicitlyAuthorized === true &&
+    grant.authorizationVersion === PUBLIC_REPORT_PUBLICATION_GRANT_VERSION &&
+    grant.authorizationReference.trim().length > 0 &&
+    grant.authorizedByUserId.trim().length > 0 &&
+    grant.authorizedAt instanceof Date &&
+    !Number.isNaN(grant.authorizedAt.getTime())
+  );
 }
 
 // ── Quality thresholds ───────────────────────────────────
@@ -90,6 +122,8 @@ export function shouldAllowIndexing(scan: PublishableScan): boolean {
 }
 
 export function isPublicReportIndexable(report: any): boolean {
+  if (!isPublicReportIndexingEnabled()) return false;
+
   const topViolationCount = Array.isArray(report?.top_violations)
     ? report.top_violations.length
     : 0;
@@ -155,11 +189,21 @@ export function buildPublicSummary(scan: PublishableScan): Record<string, any> {
 
 /**
  * Publish a completed scan as a public report.
- * This is safe to call on every scan completion — it handles
- * deduplication and quality gating internally.
+ * The caller must provide a separate, explicit publication grant. A completed
+ * scan, scan authorization, or quality threshold never grants publication.
  */
-export async function publishScanReport(scan: PublishableScan): Promise<PublicReport | null> {
+export async function publishScanReport(
+  scan: PublishableScan,
+  grant: PublicReportPublicationGrant
+): Promise<PublicReport | null> {
   try {
+    // Publication requires both a server-side release switch and an explicit,
+    // auditable grant. Neither a completed scan nor scan authorization is
+    // sufficient on its own.
+    if (!arePublicReportsEnabled() || !hasValidPublicationGrant(grant)) {
+      return null;
+    }
+
     // 1. Check eligibility
     if (!isScanEligibleForPublicReport(scan)) {
       console.log(`[PublicReport] Scan ${scan.id} not eligible for public report`);
@@ -182,7 +226,11 @@ export async function publishScanReport(scan: PublishableScan): Promise<PublicRe
     }
 
     // 3. Quality checks
-    const allowIndexing = shouldAllowIndexing(scan);
+    const allowIndexing = Boolean(
+      grant.allowIndexing &&
+      isPublicReportIndexingEnabled() &&
+      shouldAllowIndexing(scan)
+    );
 
     // 4. Extract public-safe data
     const topViolations = extractTopViolations(scan.raw);
@@ -271,6 +319,8 @@ export async function publishScanReport(scan: PublishableScan): Promise<PublicRe
  * Fetch the latest public report for a normalized domain.
  */
 export async function getLatestPublicReport(normalizedDomain: string): Promise<any | null> {
+  if (!arePublicReportsEnabled()) return null;
+
   try {
     const reports = await prisma.$queryRaw<any[]>`
       SELECT r.*, s.public_page_enabled, s.total_scans, s.first_scanned_at
@@ -294,6 +344,8 @@ export async function getLatestPublicReport(normalizedDomain: string): Promise<a
  * Fetch a specific public report by scan ID.
  */
 export async function getPublicReportByScanId(normalizedDomain: string, scanId: string): Promise<any | null> {
+  if (!arePublicReportsEnabled()) return null;
+
   try {
     const reports = await prisma.$queryRaw<any[]>`
       SELECT r.*, s.public_page_enabled, s.total_scans, s.first_scanned_at
@@ -317,6 +369,8 @@ export async function getPublicReportByScanId(normalizedDomain: string, scanId: 
  * Fetch scan history for a domain (for trend display).
  */
 export async function getPublicReportHistory(normalizedDomain: string, limit: number = 10): Promise<any[]> {
+  if (!arePublicReportsEnabled()) return [];
+
   try {
     const reports = await prisma.$queryRaw<any[]>`
       SELECT id, score, issues_total, published_at
@@ -338,6 +392,8 @@ export async function getPublicReportHistory(normalizedDomain: string, limit: nu
  * Fetch all indexable domains for sitemap generation.
  */
 export async function getIndexablePublicDomains(): Promise<{ normalized_domain: string; updated_at: string }[]> {
+  if (!arePublicReportsEnabled() || !isPublicReportIndexingEnabled()) return [];
+
   try {
     const domains = await prisma.$queryRaw<any[]>`
       SELECT s.normalized_domain, s.updated_at

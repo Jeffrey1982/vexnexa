@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { arePublicReportsEnabled } from '@/lib/public-report-policy'
 
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
@@ -61,7 +62,7 @@ export default function robots(): MetadataRoute.Robots {
           '/founding-agencies',
           '/sample-report',
           '/legal/cookies',
-          '/report/*',
+          ...(arePublicReportsEnabled() ? ['/report/*'] : []),
         ],
       },
       // AI crawlers are allowed on public marketing/blog content so VexNexa

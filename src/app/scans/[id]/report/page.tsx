@@ -29,6 +29,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BrandedHeader from "@/components/white-label/BrandedHeader";
 import BrandedFooter from "@/components/white-label/BrandedFooter";
+import { requireAuth } from "@/lib/auth";
 
 interface PageProps {
   params: Promise<{
@@ -36,10 +37,13 @@ interface PageProps {
   }>;
 }
 
-async function getScanDetails(id: string) {
+async function getScanDetails(id: string, userId: string) {
   try {
-    const scan = await prisma.scan.findUnique({
-      where: { id },
+    const scan = await prisma.scan.findFirst({
+      where: {
+        id,
+        site: { userId },
+      },
       include: {
         site: {
           include: {
@@ -103,8 +107,9 @@ async function getEnhancedAnalytics(scan: any) {
 
 
 export default async function PrintReportPage({ params }: PageProps) {
+  const user = await requireAuth();
   const { id } = await params;
-  const scan = await getScanDetails(id);
+  const scan = await getScanDetails(id, user.id);
 
   if (!scan) {
     notFound();

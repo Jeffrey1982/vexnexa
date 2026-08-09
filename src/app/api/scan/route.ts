@@ -19,7 +19,6 @@ import {
   analyzeSEOMetrics,
   calculateComplianceRisk,
 } from "@/lib/performance-analytics";
-import { publishScanReport } from "@/lib/public-reports";
 import { normalizeUrl } from "@/lib/url";
 import { validatePublicUrl } from "@/lib/scan-url-validation";
 import { syncScanIssuesFromViolations } from "@/lib/issues/sync-scan-issues";
@@ -500,28 +499,6 @@ async function processScanInBackground({
       }
     }
 
-    try {
-      await publishScanReport({
-        id: completedScan.id,
-        score: completedScan.score,
-        issues: completedScan.issues,
-        impactCritical: completedScan.impactCritical,
-        impactSerious: completedScan.impactSerious,
-        impactModerate: completedScan.impactModerate,
-        impactMinor: completedScan.impactMinor,
-        wcagAACompliance: completedScan.wcagAACompliance,
-        wcagAAACompliance: completedScan.wcagAAACompliance,
-        performanceScore: completedScan.performanceScore,
-        seoScore: completedScan.seoScore,
-        raw: completedScan.raw,
-        status: completedScan.status,
-        site: { url: completedScan.site?.url || siteUrl },
-        page: completedScan.page ? { url: completedScan.page.url } : null,
-        createdAt: completedScan.createdAt,
-      });
-    } catch (pubErr) {
-      console.error("[scan] Public report publish failed (non-blocking):", pubErr instanceof Error ? pubErr.message : pubErr);
-    }
   } catch (scanError: any) {
     console.error("[scan] Background scan failed:", scanError);
 

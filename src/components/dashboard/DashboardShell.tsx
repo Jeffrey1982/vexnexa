@@ -382,7 +382,9 @@ export default function DashboardShell({ user, branding, children }: DashboardSh
         </header>
 
         {/* Page content */}
-        <div className="flex-1">{children}</div>
+        <main id="main-content" tabIndex={-1} className="flex-1">
+          {children}
+        </main>
 
         {/* Slim footer */}
         <footer className="border-t border-border/60 py-4 px-4 sm:px-6">

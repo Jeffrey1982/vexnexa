@@ -163,12 +163,12 @@ export default function NewSitePage() {
             <div className="mt-8 p-4 bg-blue-50 rounded-lg">
               <h3 className="font-semibold text-blue-900 mb-2">What we&apos;ll check:</h3>
               <ul className="text-sm text-blue-800 space-y-1">
-                <li>• WCAG 2.1 accessibility compliance</li>
+                <li>• Automated axe-core checks for WCAG-related issues</li>
                 <li>• Color contrast ratios</li>
                 <li>• Alt text for images</li>
                 <li>• Keyboard navigation</li>
                 <li>• Form accessibility</li>
-                <li>• Screen reader compatibility</li>
+                <li>• Semantic structure and accessible-name indicators</li>
               </ul>
             </div>
           </CardContent>

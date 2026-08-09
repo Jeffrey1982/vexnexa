@@ -15,8 +15,18 @@ export async function GET(
   const { siteId } = await params
 
   try {
-    const site = await prisma.site.findUnique({
-      where: { id: siteId },
+    const supabase = await createClient()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return unauthorizedResponse()
+    }
+
+    const site = await prisma.site.findFirst({
+      where: {
+        id: siteId,
+        userId: user.id,
+      },
       include: {
         pages: {
           include: {
@@ -39,7 +49,7 @@ export async function GET(
     });
 
     if (!site) {
-      return NextResponse.json({ error: 'Site not found' }, { status: 404 });
+      return notFoundResponse('Site')
     }
 
     return NextResponse.json(site);

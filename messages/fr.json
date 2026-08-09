@@ -1446,9 +1446,9 @@
     "subtitle": "Surveillez vos analyses d'accessibilité et améliorations de site web",
     "newScan": {
       "title": "Nouvelle Analyse d'Accessibilité",
-      "description": "Entrez une URL pour une analyse d'accessibilité complète à 100% avec 8 catégories supplémentaires",
-      "enhancedTitle": "✨ Nouveau : Scan 100% amélioré",
-      "enhancedDescription": "WCAG + 8 catégories supplémentaires : navigation au clavier, tests de lecteur d'écran, accessibilité mobile, analyse cognitive et plus."
+      "description": "Saisissez une URL pour une analyse automatisée de l'accessibilité avec axe-core et 8 catégories de signaux supplémentaires",
+      "enhancedTitle": "✨ Analyse automatisée avancée",
+      "enhancedDescription": "Contrôles WCAG automatisés et 8 catégories de signaux : clavier, structure sémantique, mobile, cognition, mouvement, perception des couleurs, performances et langue."
     },
     "tabs": {
       "overview": "Aperçu",

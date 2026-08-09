@@ -64,7 +64,10 @@ export async function GET(request: NextRequest) {
 
 /**
  * PATCH /api/admin/public-reports
- * Toggle public visibility for a domain.
+ * Disable public visibility for a domain.
+ *
+ * Re-enabling is deliberately blocked until the request can prove separate,
+ * auditable publication consent and (when requested) domain-control consent.
  * Body: { siteId: string, publicPageEnabled: boolean }
  */
 export async function PATCH(request: NextRequest) {
@@ -81,14 +84,24 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
+    if (publicPageEnabled) {
+      return NextResponse.json(
+        {
+          error: 'Public reports cannot be enabled without recorded publication consent',
+          code: 'PUBLIC_REPORT_PUBLICATION_CONSENT_REQUIRED',
+        },
+        { status: 409 }
+      );
+    }
+
     await prisma.$executeRaw`
       UPDATE public_scan_sites
-      SET public_page_enabled = ${publicPageEnabled},
+      SET public_page_enabled = false,
           updated_at = NOW()
       WHERE id = ${siteId}
     `;
 
-    return NextResponse.json({ success: true, siteId, publicPageEnabled });
+    return NextResponse.json({ success: true, siteId, publicPageEnabled: false });
   } catch (error) {
     console.error('[Admin Public Reports] PATCH error:', error);
     return NextResponse.json(

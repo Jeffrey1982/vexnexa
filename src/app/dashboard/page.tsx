@@ -260,7 +260,7 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <div>
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 lg:py-8 space-y-6">
         {/* Greeting */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
@@ -588,6 +588,6 @@ export default async function DashboardPage() {
           </>
         )}
       </div>
-    </main>
+    </div>
   );
 }

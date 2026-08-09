@@ -110,10 +110,13 @@ function estimateVniFixTime(stats: ReturnType<typeof computeIssueStats>) {
   return days === 1 ? "~1 day" : `~${days} days`;
 }
 
-async function getScanDetails(id: string) {
+async function getScanDetails(id: string, userId: string) {
   try {
-    const scan = await prisma.scan.findUnique({
-      where: { id },
+    const scan = await prisma.scan.findFirst({
+      where: {
+        id,
+        site: { userId },
+      },
       include: {
         site: {
           include: {
@@ -219,7 +222,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
   const user = await requireAuth();
 
   const { id } = await params;
-  const scan = await getScanDetails(id);
+  const scan = await getScanDetails(id, user.id);
 
   if (!scan) {
     notFound();
@@ -390,7 +393,7 @@ export default async function ScanDetailPage({ params }: PageProps) {
               {getStatusBadge(scan.status)}
               <CopyButton text={shareUrl} size="sm">
                 <Share className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="hidden sm:inline">Share</span>
+                <span className="hidden sm:inline">Copy private link</span>
               </CopyButton>
             </div>
           </div>

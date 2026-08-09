@@ -1550,9 +1550,9 @@
     "subtitle": "Monitor uw website toegankelijkheidsscans en verbeteringen",
     "newScan": {
       "title": "Nieuwe Toegankelijkheidsscan",
-      "description": "Voer een URL in voor een 100% uitgebreide toegankelijkheidsscan met 8 extra categorieën",
-      "enhancedTitle": "✨ Nieuw: 100% Enhanced Scanning",
-      "enhancedDescription": "WCAG + 8 extra categorieën: keyboard navigatie, screen reader tests, mobile toegankelijkheid, cognitieve analyse en meer."
+      "description": "Voer een URL in voor een geautomatiseerde toegankelijkheidsscan met axe-core en 8 aanvullende signaalcategorieën",
+      "enhancedTitle": "✨ Uitgebreide geautomatiseerde scan",
+      "enhancedDescription": "Geautomatiseerde WCAG-controles plus 8 signaalcategorieën: toetsenbord, semantische structuur, mobiel, cognitie, beweging, kleurwaarneming, prestaties en taal."
     },
     "tabs": {
       "overview": "Overzicht",

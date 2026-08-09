@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server'
 import { getIndexablePublicDomains } from '@/lib/public-reports'
+import {
+  arePublicReportsEnabled,
+  isPublicReportIndexingEnabled,
+} from '@/lib/public-report-policy'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,13 +18,17 @@ function escapeXml(str: string): string {
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com'
+  const reportsEnabled = arePublicReportsEnabled()
+  const indexingEnabled = isPublicReportIndexingEnabled()
 
   let domains: { normalized_domain: string; updated_at: string }[] = []
 
-  try {
-    domains = await getIndexablePublicDomains()
-  } catch (error) {
-    console.error('[Sitemap Reports] Error fetching domains:', error)
+  if (reportsEnabled && indexingEnabled) {
+    try {
+      domains = await getIndexablePublicDomains()
+    } catch (error) {
+      console.error('[Sitemap Reports] Error fetching domains:', error)
+    }
   }
 
   const urlset = `<?xml version="1.0" encoding="UTF-8"?>
@@ -34,7 +42,12 @@ ${domains.map(d => `  <url>
   return new NextResponse(urlset, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': reportsEnabled && indexingEnabled
+        ? 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400'
+        : 'no-store',
+      ...(!reportsEnabled || !indexingEnabled
+        ? { 'X-Robots-Tag': 'noindex, nofollow' }
+        : {}),
     },
   })
 }

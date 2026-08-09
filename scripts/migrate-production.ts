@@ -175,7 +175,7 @@ async function main() {
           "first_scanned_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
           "last_scanned_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
           "latest_public_report_id" TEXT,
-          "public_page_enabled" BOOLEAN NOT NULL DEFAULT true,
+          "public_page_enabled" BOOLEAN NOT NULL DEFAULT false,
           "total_scans" INTEGER NOT NULL DEFAULT 0,
           "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
           "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -211,8 +211,8 @@ async function main() {
           "performance_score" FLOAT,
           "seo_score" FLOAT,
           "scanned_url" TEXT,
-          "is_public" BOOLEAN NOT NULL DEFAULT true,
-          "allow_indexing" BOOLEAN NOT NULL DEFAULT true,
+          "is_public" BOOLEAN NOT NULL DEFAULT false,
+          "allow_indexing" BOOLEAN NOT NULL DEFAULT false,
           "published_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
           "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
           "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -237,6 +237,54 @@ async function main() {
       console.error('⚠ Public scan tables check error (non-fatal):', error.message)
     }
   }
+
+  // This is deliberately enforced on every production migration run, not
+  // only when the tables are first created. Existing public reports must also
+  // become private until per-report publication consent exists.
+  console.log('\nEnforcing fail-closed public report state...')
+  await prisma.$executeRaw`
+    ALTER TABLE "public_scan_reports"
+      ALTER COLUMN "is_public" SET DEFAULT false,
+      ALTER COLUMN "allow_indexing" SET DEFAULT false
+  `
+  await prisma.$executeRaw`
+    ALTER TABLE "public_scan_sites"
+      ALTER COLUMN "public_page_enabled" SET DEFAULT false
+  `
+  await prisma.$executeRaw`
+    UPDATE "public_scan_reports"
+    SET "is_public" = false,
+        "allow_indexing" = false,
+        "updated_at" = CURRENT_TIMESTAMP
+    WHERE "is_public" = true OR "allow_indexing" = true
+  `
+  await prisma.$executeRaw`
+    UPDATE "public_scan_sites"
+    SET "public_page_enabled" = false,
+        "latest_public_report_id" = NULL,
+        "updated_at" = CURRENT_TIMESTAMP
+    WHERE "public_page_enabled" = true OR "latest_public_report_id" IS NOT NULL
+  `
+
+  const publicReportState = await prisma.$queryRaw<Array<{
+    public_reports: number
+    public_sites: number
+  }>>`
+    SELECT
+      (SELECT COUNT(*)::int FROM "public_scan_reports"
+        WHERE "is_public" = true OR "allow_indexing" = true) AS public_reports,
+      (SELECT COUNT(*)::int FROM "public_scan_sites"
+        WHERE "public_page_enabled" = true OR "latest_public_report_id" IS NOT NULL) AS public_sites
+  `
+
+  if (
+    (publicReportState[0]?.public_reports ?? 0) !== 0 ||
+    (publicReportState[0]?.public_sites ?? 0) !== 0
+  ) {
+    throw new Error('Public report freeze verification failed')
+  }
+
+  console.log('✅ Public report rows and defaults are fail-closed')
 }
 
 main()

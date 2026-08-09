@@ -1517,9 +1517,9 @@
     "subtitle": "Ueberwache die Barrierefreiheits-Scans und Verbesserungen deiner Website",
     "newScan": {
       "title": "Neuer Barrierefreiheits-Scan",
-      "description": "Gib eine URL fuer einen umfassenden Barrierefreiheits-Scan mit 8 zusaetzlichen Kategorien ein",
-      "enhancedTitle": "Neu: Erweiterter Scan",
-      "enhancedDescription": "WCAG + 8 zusaetzliche Kategorien: Tastaturnavigation, Screenreader-Tests, mobile Barrierefreiheit, kognitive Analyse und mehr."
+      "description": "Gib eine URL fuer einen automatisierten Barrierefreiheits-Scan mit axe-core und 8 zusaetzlichen Signalkategorien ein",
+      "enhancedTitle": "Automatisierter erweiterter Scan",
+      "enhancedDescription": "Automatisierte WCAG-Pruefungen plus 8 Signalkategorien: Tastatur, semantische Struktur, Mobilgeraete, Kognition, Bewegung, Farbsehen, Leistung und Sprache."
     },
     "tabs": {
       "overview": "Uebersicht",

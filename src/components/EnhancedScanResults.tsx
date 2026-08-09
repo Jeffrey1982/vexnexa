@@ -55,9 +55,9 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Enhanced Accessibility Score</span>
+            <span>Automated Scan Signal Score</span>
             <Badge className={getScoreBadgeColor(result.score)}>
-              {result.score}% Complete
+              {result.score}/100
             </Badge>
           </CardTitle>
         </CardHeader>
@@ -65,7 +65,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
           <div className="space-y-4">
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium">Overall Accessibility</span>
+                <span className="text-sm font-medium">Automated accessibility signals</span>
                 <span className={`text-2xl font-bold ${getScoreColor(result.score)}`}>
                   {result.score}%
                 </span>
@@ -104,7 +104,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
           </TabsTrigger>
           <TabsTrigger value="screen-reader" className="flex items-center gap-1">
             <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">Screen Reader</span>
+            <span className="hidden sm:inline">Structure</span>
           </TabsTrigger>
           <TabsTrigger value="mobile" className="flex items-center gap-1">
             <Smartphone className="h-4 w-4" />
@@ -199,7 +199,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Eye className="h-5 w-5" />
-                Screen Reader Compatibility
+                Semantic Structure Indicators
                 <Badge className={getScoreBadgeColor(result.screenReaderCompatibility.score)}>
                   {result.screenReaderCompatibility.score}%
                 </Badge>
@@ -209,7 +209,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.screenReaderCompatibility.ariaLabels}</div>
-                  <div className="text-sm text-muted-foreground">ARIA Labels</div>
+                  <div className="text-sm text-muted-foreground">ARIA-labelled Elements</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.screenReaderCompatibility.landmarks}</div>
@@ -217,7 +217,7 @@ export function EnhancedScanResults({ result, url }: EnhancedScanResultsProps) {
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-semibold">{result.screenReaderCompatibility.altTexts}</div>
-                  <div className="text-sm text-muted-foreground">Alt Texts</div>
+                  <div className="text-sm text-muted-foreground">Non-empty Alt Texts</div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center">
