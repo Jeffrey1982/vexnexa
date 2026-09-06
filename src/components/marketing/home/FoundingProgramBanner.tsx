@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/marketing/MarketingLink";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";

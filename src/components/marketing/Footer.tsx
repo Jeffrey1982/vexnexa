@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/marketing/MarketingLink";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -78,13 +78,13 @@ export function Footer({ className }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={cn("border-t border-border/40 bg-muted", className)}>
-      <div className="container mx-auto px-4 py-16">
+    <footer className={cn("border-t border-border/40 bg-[var(--color-surface-base)] [overflow-wrap:anywhere]", className)}>
+      <div className="mx-auto w-[calc(100%-40px)] max-w-[1320px] py-16 xl:w-[calc(100%-112px)]">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
           {/* Brand & Description */}
           <div className="lg:col-span-1 space-y-6">
-            <Link href="/" className="flex items-center space-x-3">
+            <Link href="/" aria-label="VexNexa home" className="flex items-center space-x-3">
               <VexnexaLogo size={48} />
             </Link>
 
@@ -171,17 +171,20 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/bfsg-compliance" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.bfsg')}
                   </Link>
-                  <Link href="/digitale-toegankelijkheid-audit" className="text-muted-foreground hover:text-primary transition-colors">
-                    {t('solutions.dutchAudit')}
-                  </Link>
-                  <Link href="/toegankelijkheid-webshop-eaa" className="text-muted-foreground hover:text-primary transition-colors">
-                    {t('solutions.dutchWebshop')}
-                  </Link>
                   <Link href="/white-label-accessibility-reports" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.whiteLabelReports')}
                   </Link>
                   <Link href="/sample-report" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.sampleReport')}
+                  </Link>
+                  <details className="group">
+                    <summary className="cursor-pointer py-1 text-sm font-medium text-foreground underline decoration-border underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{t('solutions.more')}</summary>
+                    <div className="mt-4 flex flex-col gap-3">
+                  <Link href="/digitale-toegankelijkheid-audit" prefetch={false} className="text-muted-foreground hover:text-primary transition-colors">
+                    {t('solutions.dutchAudit')}
+                  </Link>
+                  <Link href="/toegankelijkheid-webshop-eaa" prefetch={false} className="text-muted-foreground hover:text-primary transition-colors">
+                    {t('solutions.dutchWebshop')}
                   </Link>
                   <Link href="/wcag-scan" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.wcagScanner')}
@@ -207,6 +210,8 @@ export function Footer({ className }: FooterProps) {
                   <Link href="/accessibility-regression-testing" className="text-muted-foreground hover:text-primary transition-colors">
                     {t('solutions.regressionTesting')}
                   </Link>
+                    </div>
+                  </details>
                 </div>
               </div>
 

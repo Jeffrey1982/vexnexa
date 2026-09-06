@@ -5,13 +5,15 @@ import { OfflineIndicator } from '@/components/pwa/OfflineIndicator';
 import { SkipToContent } from '@/components/SkipToContent';
 import { usePWA } from '@/hooks/usePWA';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { isApplicationPath } from '@/lib/application-path';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
 }
 
-function PWAManager() {
-  const { isSupported, isRegistered, error } = usePWA();
+function PWAManager({ enabled }: { enabled: boolean }) {
+  const { isSupported, isRegistered, error } = usePWA(enabled);
 
   useEffect(() => {
     if (isSupported && isRegistered) {
@@ -25,10 +27,12 @@ function PWAManager() {
 }
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
+  const applicationServicesEnabled = isApplicationPath(usePathname());
+
   return (
-    <WhiteLabelProvider>
+    <WhiteLabelProvider enabled={applicationServicesEnabled}>
       <SkipToContent />
-      <PWAManager />
+      <PWAManager enabled={applicationServicesEnabled} />
       <OfflineIndicator />
       {children}
     </WhiteLabelProvider>

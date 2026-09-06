@@ -10,7 +10,7 @@ interface PWAStatus {
   error: string | null;
 }
 
-export function usePWA() {
+export function usePWA(enabled = true) {
   const [status, setStatus] = useState<PWAStatus>({
     isSupported: false,
     isInstalled: false,
@@ -20,7 +20,31 @@ export function usePWA() {
   });
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!enabled || typeof window === 'undefined') return;
+
+    let cancelled = false;
+    let registeredWorker: ServiceWorkerRegistration | null = null;
+    let installingWorker: ServiceWorker | null = null;
+    let refreshing = false;
+    // A first install may claim this page without invalidating any loaded assets.
+    // Reload only when replacing a worker that already controlled the page.
+    const wasControlled = 'serviceWorker' in navigator && Boolean(navigator.serviceWorker.controller);
+
+    const onControllerChange = () => {
+      if (cancelled || refreshing || !wasControlled) return;
+      refreshing = true;
+      window.location.reload();
+    };
+    const onWorkerStateChange = () => {
+      if (!cancelled && installingWorker?.state === 'installed' && navigator.serviceWorker.controller) {
+        console.log('🔄 New service worker installed; awaiting activation.');
+      }
+    };
+    const onUpdateFound = () => {
+      installingWorker?.removeEventListener('statechange', onWorkerStateChange);
+      installingWorker = registeredWorker?.installing ?? null;
+      installingWorker?.addEventListener('statechange', onWorkerStateChange);
+    };
 
     const registerServiceWorker = async () => {
       try {
@@ -47,6 +71,8 @@ export function usePWA() {
           scope: '/',
           updateViaCache: 'none',
         });
+        if (cancelled) return;
+        registeredWorker = registration;
 
         registration.update().catch((updateError) => {
           console.warn('Service Worker update check failed:', updateError);
@@ -61,30 +87,13 @@ export function usePWA() {
         }));
 
         // Handle service worker updates
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          if (newWorker) {
-            console.log('🔄 New service worker found, installing...');
-
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log('🔄 New service worker installed, prompting for reload...');
-
-                // The controllerchange handler below reloads once after activation.
-              }
-            });
-          }
-        });
+        registration.addEventListener('updatefound', onUpdateFound);
 
         // Handle service worker activation
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          refreshing = true;
-          window.location.reload();
-        });
+        navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
 
       } catch (error) {
+        if (cancelled) return;
         console.error('❌ Service Worker registration failed:', error);
         setStatus(prev => ({
           ...prev,
@@ -93,8 +102,16 @@ export function usePWA() {
       }
     };
 
-    registerServiceWorker();
-  }, []);
+    void registerServiceWorker();
+    return () => {
+      cancelled = true;
+      registeredWorker?.removeEventListener('updatefound', onUpdateFound);
+      installingWorker?.removeEventListener('statechange', onWorkerStateChange);
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
+      }
+    };
+  }, [enabled]);
 
   const updateServiceWorker = async () => {
     if (status.registration) {

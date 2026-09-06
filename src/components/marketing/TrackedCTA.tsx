@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/marketing/MarketingLink";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { trackEvent, type FunnelEvent } from "@/lib/analytics-events";
 import { cn } from "@/lib/utils";

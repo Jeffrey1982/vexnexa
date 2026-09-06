@@ -58,3 +58,16 @@ test('language switcher changes page content', async ({ page }) => {
     test.skip(true, 'no visible language switcher on current locale')
   }
 })
+
+for (const locale of ['nl', 'de']) {
+  test(`home page in ${locale} fits a 320px mobile viewport`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 760 })
+    await page.goto(`/${locale}`, { waitUntil: 'domcontentloaded' })
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    const overflow = await page.evaluate(() => (
+      document.documentElement.scrollWidth - document.documentElement.clientWidth
+    ))
+    expect(overflow).toBeLessThanOrEqual(1)
+    await expect(page.getByRole('textbox', { name: 'Website-URL', exact: true })).toBeVisible()
+  })
+}

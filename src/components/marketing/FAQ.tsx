@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useId, type ReactNode } from "react";
 import { ChevronDown, MessageSquare, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/marketing/MarketingLink";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +15,53 @@ interface FAQProps {
   items: FAQItem[];
   title?: string;
   description?: string;
+  className?: string;
 }
 
-export function FAQ({ items, title, description }: FAQProps) {
+function isSafeAnswerHref(href: string): boolean {
+  if (/[\s\\\u0000-\u001f\u007f]/.test(href)) return false;
+  if (href.startsWith("/") && !href.startsWith("//")) return true;
+
+  try {
+    return new URL(href).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+/** Support the simple links used in FAQ translations without interpreting HTML. */
+function renderAnswer(answer: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  const linkPattern = /\[([^\]\n]+)\]\(([^)\n]+)\)/g;
+  let lastIndex = 0;
+
+  for (const match of answer.matchAll(linkPattern)) {
+    const index = match.index ?? 0;
+    parts.push(answer.slice(lastIndex, index));
+    const [, label, href] = match;
+    parts.push(
+      isSafeAnswerHref(href) ? (
+        <Link
+          key={index}
+          href={href}
+          className="font-medium text-foreground underline decoration-primary/60 underline-offset-4 hover:decoration-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        >
+          {label}
+        </Link>
+      ) : (
+        match[0]
+      ),
+    );
+    lastIndex = index + match[0].length;
+  }
+
+  parts.push(answer.slice(lastIndex));
+  return parts;
+}
+
+export function FAQ({ items, title, description, className }: FAQProps) {
   const t = useTranslations("faq");
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const headingId = useId();
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -33,21 +75,19 @@ export function FAQ({ items, title, description }: FAQProps) {
     })),
   };
 
-  const toggleItem = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <>
       {items.length > 0 && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
       )}
       <section
-        className="bg-background py-20 sm:py-24"
-        aria-labelledby="faq-heading"
+        className={cn("bg-background py-20 sm:py-24", className)}
+        aria-labelledby={headingId}
       >
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-6xl">
@@ -57,7 +97,7 @@ export function FAQ({ items, title, description }: FAQProps) {
                   {t("eyebrow")}
                 </p>
                 <h2
-                  id="faq-heading"
+                  id={headingId}
                   className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
                 >
                   {title ?? t("title")}
@@ -67,7 +107,7 @@ export function FAQ({ items, title, description }: FAQProps) {
                     {description}
                   </p>
                 )}
-                <div className="mt-6 rounded-2xl border border-border bg-muted/60 p-5">
+                <div className="mt-8 border-t border-border pt-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                     <MessageSquare className="h-4 w-4 text-primary" aria-hidden />
                     {t("contactCard.title")}
@@ -77,51 +117,34 @@ export function FAQ({ items, title, description }: FAQProps) {
                   </p>
                   <Link
                     href="/contact"
-                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80"
+                    className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground underline decoration-primary/60 underline-offset-4 hover:decoration-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
                   >
                     {t("contactCard.cta")} <ArrowRight className="h-4 w-4" aria-hidden />
                   </Link>
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="border-t border-border">
                 {items.map((item, index) => (
-                  <div
+                  <details
                     key={index}
-                    className="overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-colors hover:border-primary/30"
+                    className="group border-b border-border"
                   >
-                    <button
-                      onClick={() => toggleItem(index)}
-                      className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                      aria-expanded={openIndex === index}
-                      aria-controls={`faq-answer-${index}`}
-                      id={`faq-question-${index}`}
+                    <summary
+                      className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 [&::-webkit-details-marker]:hidden"
                     >
-                      <span className="text-base font-semibold text-foreground sm:text-lg">
+                      <span className="text-base font-semibold leading-relaxed sm:text-lg">
                         {item.question}
                       </span>
                       <ChevronDown
-                        className={cn(
-                          "h-5 w-5 shrink-0 text-primary transition-transform",
-                          openIndex === index && "rotate-180",
-                        )}
+                        className="h-4 w-4 shrink-0 text-muted-foreground group-open:rotate-180"
                         aria-hidden="true"
                       />
-                    </button>
-                    <div
-                      id={`faq-answer-${index}`}
-                      className={cn(
-                        "overflow-hidden transition-all duration-300",
-                        openIndex === index ? "max-h-96" : "max-h-0",
-                      )}
-                      role="region"
-                      aria-labelledby={`faq-question-${index}`}
-                    >
-                      <div className="border-t border-border px-5 py-4 text-sm leading-relaxed text-muted-foreground">
-                        {item.answer}
-                      </div>
+                    </summary>
+                    <div className="max-w-prose pb-7 pr-8 text-base leading-7 text-muted-foreground">
+                      {renderAnswer(item.answer)}
                     </div>
-                  </div>
+                  </details>
                 ))}
               </div>
             </div>

@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Link from "@/components/marketing/MarketingLink";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import AuthButton from "@/components/auth/AuthButton";
-import { createClient } from "@/lib/supabase/client-new";
-import { User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 import { trackEvent } from "@/lib/analytics-events";
 import {
   Sheet,
@@ -22,6 +21,9 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useTranslations } from "next-intl";
 import VexnexaLogo from "@/components/brand/VexnexaLogo";
+import { stripMarketingLocale } from "@/lib/marketing-links";
+
+const AuthButton = dynamic(() => import("@/components/auth/AuthButton"));
 
 interface NavbarProps {
   className?: string;
@@ -30,26 +32,13 @@ interface NavbarProps {
 
 export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProps) {
   const t = useTranslations('nav');
-  const pathname = usePathname();
+  const pathname = stripMarketingLocale(usePathname());
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  const onScroll = useCallback(() => {
-    setScrolled(window.scrollY > 6);
-  }, []);
-
-  useEffect(() => {
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [onScroll]);
 
   const navigationItems = [
     { name: t('forAgencies'), href: "/for-agencies" },
-    { name: t('foundingAgencies'), href: "/founding-agencies" },
     { name: t('features'), href: "/features" },
     { name: t('pricing'), href: "/pricing" },
     { name: t('sampleReport'), href: "/sample-report" },
@@ -63,27 +52,24 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
     const getUser = async () => {
-      const supabase = createClient();
       try {
+        const { createClient } = await import("@/lib/supabase/client-new");
+        if (cancelled) return;
+        const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
         if (!cancelled) setUser(user);
+        if (cancelled) return;
+        const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+          if (!cancelled) setUser(session?.user ?? null);
+        });
+        subscription = data.subscription;
       } catch (error) {
         console.error('Error getting user:', error);
-      } finally {
-        if (!cancelled) setIsLoading(false);
       }
-
-      const { data } = supabase.auth.onAuthStateChange((event, session) => {
-        if (cancelled) return;
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-      });
-      subscription = data.subscription;
     };
 
     const scheduleAuthCheck = () => {
       if (cancelled) return;
-      setIsLoading(true);
       void getUser();
     };
 
@@ -112,24 +98,24 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
   return (
     <nav
       className={cn(
-        "sticky top-0 z-50 border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-base)]/88 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,background-color] duration-300",
-        scrolled && "bg-[var(--color-surface-base)]/94 shadow-[0_12px_34px_-24px_rgba(13,18,16,0.45)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.45)]",
+        "sticky top-0 z-50 border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-base)]",
         className
       )}
       aria-label="Main navigation"
     >
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="mx-auto w-[calc(100%-40px)] max-w-[1320px] xl:w-[calc(100%-112px)]">
         <div className="flex h-[4.25rem] items-center justify-between md:h-[4.75rem]">
           {/* Logo */}
           <Link
             href="/"
+            aria-label="VexNexa home"
             className="flex items-center rounded-lg outline-none ring-offset-background transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <VexnexaLogo size={40} />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center space-x-5 md:flex lg:space-x-7">
+          <div className="hidden items-center space-x-6 xl:flex">
             {navigationItems.map((item) => {
               const active =
                 item.href === "/"
@@ -141,10 +127,10 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-[var(--color-brand-primary-dark)] after:transition-all after:duration-200",
+                    "relative py-2 text-sm font-medium transition-colors underline-offset-8",
                     active
-                      ? "text-[var(--color-ink-900)] after:w-full"
-                      : "text-[var(--color-ink-500)] after:w-0 hover:text-[var(--color-ink-900)] hover:after:w-full"
+                      ? "text-[var(--color-ink-900)] underline"
+                      : "text-[var(--color-ink-500)] hover:text-[var(--color-ink-900)] hover:underline"
                   )}
                 >
                   {item.name}
@@ -154,14 +140,12 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
           </div>
 
           {/* Desktop Right Section: Social + Language + Auth */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-4">
+          <div className="hidden xl:flex items-center gap-3">
             <LanguageSelector marketingOnly={marketingLanguagesOnly} />
             <ThemeToggle />
 
             <div className="flex items-center space-x-3">
-            {isLoading ? (
-              <div className="w-20 h-8 bg-muted rounded animate-pulse"></div>
-            ) : user ? (
+            {user ? (
               <>
                 <Button
                   onClick={() => router.push('/dashboard')}
@@ -199,16 +183,16 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
+            <SheetTrigger asChild className="xl:hidden">
               <Button variant="ghost" size="icon" className="hover:bg-[var(--color-surface-warm)] hover:text-[var(--color-brand-primary-dark)] transition-all duration-200">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[320px] sm:w-[400px] overflow-y-auto">
+            <SheetContent side="right" className="w-[min(100vw,400px)] overflow-y-auto">
               <SheetHeader className="border-b border-border/20 pb-6">
                 <SheetTitle>
-                  <Link href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                  <Link href="/" aria-label="VexNexa home" className="flex items-center" onClick={() => setIsOpen(false)}>
                     <VexnexaLogo size={40} />
                   </Link>
                 </SheetTitle>
@@ -231,12 +215,7 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
 
                 {/* Auth CTAs — above fold for mobile users */}
                 <div className="pt-4 pb-2 border-t border-border/20 space-y-3">
-                  {isLoading ? (
-                    <div className="space-y-3">
-                      <div className="w-full h-12 bg-muted rounded animate-pulse"></div>
-                      <div className="w-full h-12 bg-muted rounded animate-pulse"></div>
-                    </div>
-                  ) : user ? (
+                  {user ? (
                     <>
                       <Button
                         variant="default"
@@ -248,15 +227,7 @@ export function Navbar({ className, marketingLanguagesOnly = false }: NavbarProp
                       >
                         {t('dashboard')}
                       </Button>
-                      <Button
-                        variant="outline"
-                        className="w-full h-12 font-medium text-base"
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                      >
-                        {t('signOut')}
-                      </Button>
+                      <AuthButton user={user} />
                     </>
                   ) : (
                     <>

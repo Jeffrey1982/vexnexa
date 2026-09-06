@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 interface WhiteLabelSettings {
   id?: string;
@@ -37,87 +37,111 @@ export function useWhiteLabel() {
 
 interface WhiteLabelProviderProps {
   children: React.ReactNode;
+  enabled?: boolean;
 }
 
-export function WhiteLabelProvider({ children }: WhiteLabelProviderProps) {
+export function WhiteLabelProvider({ children, enabled = true }: WhiteLabelProviderProps) {
   const [settings, setSettings] = useState<WhiteLabelSettings | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(enabled);
+  const requestRef = useRef<AbortController | null>(null);
 
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
+    if (!enabled) return;
+    requestRef.current?.abort();
+    const controller = new AbortController();
+    requestRef.current = controller;
+    setIsLoading(true);
+
     try {
-      const response = await fetch('/api/white-label');
+      const response = await fetch('/api/white-label', { signal: controller.signal });
+      if (controller.signal.aborted) return;
       
       if (!response.ok) {
         // If API call fails, set defaults and continue
         setSettings(null);
-        setIsLoading(false);
         return;
       }
       
       const data = await response.json();
+      if (controller.signal.aborted) return;
 
       if (data.success && data.whiteLabel && data.hasAccess) {
         setSettings(data.whiteLabel);
-        
-        // Apply dynamic CSS variables for theming
-        if (typeof document !== 'undefined') {
-          const root = document.documentElement;
-          root.style.setProperty('--color-primary', data.whiteLabel.primaryColor);
-          root.style.setProperty('--color-secondary', data.whiteLabel.secondaryColor);
-          root.style.setProperty('--color-accent', data.whiteLabel.accentColor);
-
-          // Only apply favicon and title changes on dashboard/app routes, not marketing pages
-          const isMarketingPage = window.location.pathname === '/' ||
-                                window.location.pathname.startsWith('/about') ||
-                                window.location.pathname.startsWith('/contact') ||
-                                window.location.pathname.startsWith('/features') ||
-                                window.location.pathname.startsWith('/pricing') ||
-                                window.location.pathname.startsWith('/legal') ||
-                                window.location.pathname.startsWith('/test') ||
-                                window.location.pathname.startsWith('/blog');
-
-          if (!isMarketingPage) {
-            // Update favicon if provided (only for dashboard/app pages)
-            if (data.whiteLabel.faviconUrl) {
-              const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
-              if (favicon) {
-                favicon.href = data.whiteLabel.faviconUrl;
-              } else {
-                const newFavicon = document.createElement('link');
-                newFavicon.rel = 'icon';
-                newFavicon.href = data.whiteLabel.faviconUrl;
-                document.head.appendChild(newFavicon);
-              }
-            }
-
-            // Update page title if company name is provided (only for dashboard/app pages)
-            if (data.whiteLabel.companyName && !document.title.includes(data.whiteLabel.companyName)) {
-              document.title = `${data.whiteLabel.companyName} - Accessibility Dashboard`;
-            }
-          }
-        }
       } else {
         setSettings(null);
       }
     } catch (error) {
+      if (controller.signal.aborted) return;
       console.error('Failed to load white label settings:', error);
       setSettings(null);
     } finally {
-      setIsLoading(false);
+      if (!controller.signal.aborted) setIsLoading(false);
     }
-  };
+  }, [enabled]);
 
   useEffect(() => {
-    loadSettings();
-  }, []);
+    if (enabled) {
+      void loadSettings();
+    } else {
+      setSettings(null);
+      setIsLoading(false);
+    }
 
-  const refresh = async () => {
-    setIsLoading(true);
-    await loadSettings();
-  };
+    return () => requestRef.current?.abort();
+  }, [enabled, loadSettings]);
+
+  useEffect(() => {
+    if (!enabled || !settings) return;
+
+    const root = document.documentElement;
+    const colors = {
+      '--color-primary': settings.primaryColor,
+      '--color-secondary': settings.secondaryColor,
+      '--color-accent': settings.accentColor,
+    };
+    const previousColors = Object.keys(colors).map((name) => [
+      name, root.style.getPropertyValue(name), root.style.getPropertyPriority(name),
+    ]);
+    for (const [name, value] of Object.entries(colors)) root.style.setProperty(name, value);
+
+    const existingFavicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    const favicon = existingFavicon ?? document.createElement('link');
+    const previousFavicon = favicon.getAttribute('href');
+    if (settings.faviconUrl) {
+      favicon.rel = 'icon';
+      favicon.setAttribute('href', settings.faviconUrl);
+      if (!existingFavicon) document.head.appendChild(favicon);
+    }
+
+    const previousTitle = document.title;
+    const brandedTitle = settings.companyName && !previousTitle.includes(settings.companyName)
+      ? `${settings.companyName} - Accessibility Dashboard`
+      : null;
+    if (brandedTitle) document.title = brandedTitle;
+
+    // The provider stays mounted on client navigation; undo only our own styling
+    // so an agency's app theme never leaks onto the public marketing site.
+    return () => {
+      for (const [name, value, priority] of previousColors) {
+        if (root.style.getPropertyValue(name) !== colors[name as keyof typeof colors]) continue;
+        if (value) root.style.setProperty(name, value, priority);
+        else root.style.removeProperty(name);
+      }
+      if (settings.faviconUrl && favicon.getAttribute('href') === settings.faviconUrl) {
+        if (!existingFavicon) favicon.remove();
+        else if (previousFavicon === null) favicon.removeAttribute('href');
+        else favicon.setAttribute('href', previousFavicon);
+      }
+      if (brandedTitle && document.title === brandedTitle) document.title = previousTitle;
+    };
+  }, [enabled, settings]);
 
   return (
-    <WhiteLabelContext.Provider value={{ settings, isLoading, refresh }}>
+    <WhiteLabelContext.Provider value={{
+      settings: enabled ? settings : null,
+      isLoading: enabled && isLoading,
+      refresh: loadSettings,
+    }}>
       {children}
     </WhiteLabelContext.Provider>
   );
