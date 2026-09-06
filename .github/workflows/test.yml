@@ -68,6 +68,11 @@ jobs:
       - name: Verify frozen scratch baseline and new migrations
         run: node scripts/ci/scratch-database.mjs
 
+      - name: Verify billing webhook concurrency on isolated database
+        run: npx vitest run src/lib/billing/webhook-lease.integration.test.ts
+        env:
+          BILLING_DATABASE_TESTS: 'true'
+
       - name: Lint
         run: npm run lint
 

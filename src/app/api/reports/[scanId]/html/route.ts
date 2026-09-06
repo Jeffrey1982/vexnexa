@@ -4,10 +4,10 @@ import { prisma } from "@/lib/prisma";
 import {
   transformScanToReport,
   renderReportHTML,
-  resolveWhiteLabelConfig,
   extractQueryOverrides,
-  getStoredWhiteLabel,
 } from "@/lib/report";
+import { resolveExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 import { assertWithinLimits } from "@/lib/billing/entitlements";
 
 export const runtime = "nodejs";
@@ -46,8 +46,7 @@ export async function GET(
     // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);
     const qp = extractQueryOverrides(url);
-    const storedWL = await getStoredWhiteLabel(user.id);
-    const resolved = resolveWhiteLabelConfig(qp, storedWL);
+    const resolved = await resolveExportWhiteLabel(user.id, qp);
 
     const reportData = transformScanToReport(
       {
@@ -83,6 +82,8 @@ export async function GET(
       },
     });
   } catch (error: unknown) {
+    const denied = exportAccessErrorResponse(error);
+    if (denied) return denied;
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("[reports/html] Error:", message);
     return NextResponse.json({ error: message }, { status: 500 });

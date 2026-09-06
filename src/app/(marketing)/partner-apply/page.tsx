@@ -1,7 +1,5 @@
-import { PartnerApplyView } from "@/components/partner-apply/PartnerApplyView";
-import { getPilotPartnerRemaining } from "@/lib/pilot-partner";
+import { FoundingProgramClosed } from "@/components/marketing/FoundingProgramClosed";
 
-export default async function PartnerApplyPage() {
-  const { remaining } = await getPilotPartnerRemaining();
-  return <PartnerApplyView remaining={remaining} />;
+export default function PartnerApplyPage() {
+  return <FoundingProgramClosed />;
 }

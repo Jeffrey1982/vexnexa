@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { parseCheckoutIntent } from "@/lib/checkout-recovery";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,6 +37,7 @@ import {
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics-events";
 import { AgencyCTAStrip } from "@/components/marketing/AgencyCTAStrip";
+import { AgencyOfferBanner } from "@/components/marketing/AgencyOfferBanner";
 import { ENTITLEMENTS, OVERFLOW_PRICING } from "@/lib/billing/plans";
 import {
   type PlanKey,
@@ -53,13 +55,9 @@ import {
   getYearlyDiscountPercent,
   getMonthlyEquivalent,
   toMollieAmountString,
-  FOUNDING_DISCOUNT_PERCENT,
-  FOUNDING_FREE_MONTHS,
-  FOUNDING_MAX_SPOTS,
-  getFoundingAgencyPrice,
 } from "@/lib/billing/pricing-config";
 import { ComparisonTable } from "@/components/marketing/ComparisonTable";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CheckoutDialog } from "@/components/checkout/CheckoutDialog";
 import { DirectCheckoutButton } from "@/components/pricing/DirectCheckoutButton";
 
@@ -237,12 +235,25 @@ function HeroSection() {
 }
 
 function PricingCards() {
+  const locale = useLocale();
   const t = useTranslations("pricing");
   const tp = useTranslations("pricing.page");
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const [checkoutPlan, setCheckoutPlan] = useState<PlanKey | null>(null);
+
+  useEffect(() => {
+    const intent = parseCheckoutIntent(new URLSearchParams(window.location.search));
+    if (!intent) return;
+    setBillingCycle(intent.billingCycle);
+    setCheckoutPlan(intent.plan);
+    // Restore the review dialog only; payment still requires an explicit click.
+    const url = new URL(window.location.href);
+    url.searchParams.delete("checkoutPlan");
+    url.searchParams.delete("billingCycle");
+    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  }, []);
 
   /** Get the display price for a plan */
   const fmtPrice = (
@@ -282,7 +293,7 @@ function PricingCards() {
       agencyPick: false,
       features: [
         `${ENTITLEMENTS.FREE.sites} ${t('plans.starter.features.site')}`,
-        `${ENTITLEMENTS.FREE.pagesPerMonth.toLocaleString()} ${t('plans.starter.features.pages')}`,
+        `${ENTITLEMENTS.FREE.pagesPerMonth.toLocaleString(locale)} ${t('plans.starter.features.pages')}`,
         `${ENTITLEMENTS.FREE.users} ${t('plans.starter.features.user')}`,
         t('plans.starter.features.pdf'),
         t('plans.starter.features.history', { count: 1 }),
@@ -306,7 +317,7 @@ function PricingCards() {
       features: [
         tp("pro.features.sites", { count: ENTITLEMENTS.PRO.sites }),
         tp("pro.features.pages", {
-          count: ENTITLEMENTS.PRO.pagesPerMonth.toLocaleString(),
+          count: ENTITLEMENTS.PRO.pagesPerMonth.toLocaleString(locale),
         }),
         tp("pro.features.users", { count: ENTITLEMENTS.PRO.users }),
         tp("pro.features.exports"),
@@ -327,7 +338,7 @@ function PricingCards() {
       features: [
         tp("business.features.sites", { count: ENTITLEMENTS.BUSINESS.sites }),
         tp("business.features.pages", {
-          count: ENTITLEMENTS.BUSINESS.pagesPerMonth.toLocaleString(),
+          count: ENTITLEMENTS.BUSINESS.pagesPerMonth.toLocaleString(locale),
         }),
         tp("business.features.users", { count: ENTITLEMENTS.BUSINESS.users }),
         tp("business.features.whiteLabel"),
@@ -410,10 +421,11 @@ function PricingCards() {
             return (
               <Card
                 key={plan.key}
+                id={plan.key === "BUSINESS" ? "agency" : undefined}
                 data-testid="plan-card"
                 data-plan={plan.key}
                 className={cn(
-                  "relative flex flex-col border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:border-primary-500",
+                  "relative flex scroll-mt-24 flex-col border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:border-primary-500",
                   plan.highlighted &&
                     "border-primary-600 shadow-xl ring-2 ring-primary-200 dark:ring-primary/30",
                   plan.agencyPick && "border-primary/50"
@@ -1029,47 +1041,12 @@ function CTASection() {
   );
 }
 
-function FoundingOfferBanner() {
-  const tPage = useTranslations("pricing.page");
-  const offerParams = {
-    spots: FOUNDING_MAX_SPOTS,
-    freeMonths: FOUNDING_FREE_MONTHS,
-    discountPercent: FOUNDING_DISCOUNT_PERCENT,
-    agencyPrice: formatEuro(PLAN_PRICES.BUSINESS.monthly),
-    foundingPrice: formatEuro(getFoundingAgencyPrice("monthly")),
-  };
-  return (
-    <section className="py-8">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto rounded-2xl border border-border bg-card p-8 text-center shadow-sm space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-accent-foreground">
-            <Sparkles className="h-4 w-4" />
-            {tPage("foundingBanner.badge")}
-          </div>
-          <h2 className="font-sans text-2xl font-bold text-foreground">
-            {tPage("foundingBanner.title", offerParams)}
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            {tPage("foundingBanner.subtitle", offerParams)}
-          </p>
-          <Button asChild className="bg-primary-600 text-white hover:bg-primary-700">
-            <Link href="/founding-agencies">
-              {tPage("foundingBanner.cta")}{" "}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function PricingPage() {
   return (
     <>
       <PricingJsonLd />
       <HeroSection />
-      <FoundingOfferBanner />
+      <AgencyOfferBanner location="pricing" />
       <PricingCards />
       <ExpandableDetailsSection />
       <AuditsLinkSection />

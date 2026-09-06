@@ -1,4 +1,35 @@
 {
+  "billingRenewal": {
+    "stoppedTitle": "Renouvellement arrêté",
+    "stoppedUntil": "Ton abonnement payant reste disponible jusqu’au {date}. Aucun autre renouvellement n’est prévu.",
+    "stoppedExpired": "Ta période payée est terminée. Le renouvellement est arrêté.",
+    "cancelDescription": "Arrête les futurs renouvellements. Ton abonnement reste disponible jusqu’à la fin de la période déjà payée.",
+    "cancelConfirm": "Arrêter le renouvellement de {plan} ? Tu conserves l’accès pendant la période déjà payée.",
+    "canceledSuccess": "Renouvellement arrêté. Ton accès payant reste disponible jusqu’à la fin de la période payée."
+  },
+  "checkoutRecovery": {
+    "pendingTitle": "Paiement reçu, activation en attente",
+    "pendingDescription": "Ton paiement a été reçu, mais l’activation de ton achat n’est pas encore confirmée. Ne paie pas à nouveau. Vérifie le statut ou contacte le support avec cette référence de paiement.",
+    "checkAgain": "Vérifier à nouveau le statut",
+    "checking": "Vérification de l’activation…",
+    "resumeDescription": "Ton compte est confirmé. Reviens vérifier l’offre sélectionnée. Aucun paiement ne sera lancé avant ta confirmation.",
+    "continueCheckout": "Vérifier mon offre"
+  },
+  "agencyOffer": {
+    "badge": "Agency pour les projets clients",
+    "title": "Vos constats. Le rapport de votre agence.",
+    "description": "Des contrôles automatisés d'accessibilité et des rapports à votre image, pour un maximum de {sites} sites clients.",
+    "price": "Agency : {price} par mois, TVA incluse",
+    "billingNote": "Abonnement mensuel payant avec renouvellement automatique. Consultez les conditions avant le paiement.",
+    "cta": "Découvrir Agency",
+    "sampleCta": "Voir un exemple de rapport",
+    "closedBadge": "Programme Founding Agency",
+    "closedTitle": "Les nouvelles candidatures Founding sont closes",
+    "closedDescription": "L'offre d'une année gratuite n'est plus disponible pour les nouvelles candidatures. Vous pouvez utiliser VexNexa avec un abonnement Agency payant.",
+    "existingTitle": "Déjà candidat ou participant ?",
+    "existingDescription": "La clôture des nouvelles candidatures ne modifie pas les accords existants ni les candidatures déjà déposées. Contactez-nous pour toute question sur votre candidature ou vos avantages convenus.",
+    "existingCta": "Question sur votre accord existant"
+  },
   "brandHome": {
     "eyebrow": "Pour les agences et les équipes numériques",
     "headline": "L’accessibilité.",

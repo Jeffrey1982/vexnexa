@@ -110,8 +110,10 @@ export async function proxy(request: NextRequest) {
     /^\/customer_authentication\//,
   ] as const
 
-  // Check if URL matches legacy Shopify pattern
-  const isShopifyUrl = SHOPIFY_PATTERNS.some(pattern =>
+  // This is the existing Mollie return route, not a legacy Shopify checkout.
+  // Keep the exception exact: retired checkout URLs must continue returning 410.
+  const isPaymentReturn = pathname === '/checkout/return' || pathname === '/checkout/return/'
+  const isShopifyUrl = !isPaymentReturn && SHOPIFY_PATTERNS.some(pattern =>
     pattern.test(pathname.toLowerCase())
   )
 
@@ -185,6 +187,10 @@ export async function proxy(request: NextRequest) {
 
     // This refreshes the session if expired and sets updated cookies
     await supabase.auth.getUser()
+  }
+
+  if (isPaymentReturn) {
+    response.headers.set('Cache-Control', 'private, no-store')
   }
 
   // Prevent indexing of ALL API routes

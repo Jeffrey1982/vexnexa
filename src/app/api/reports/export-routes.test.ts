@@ -13,7 +13,7 @@ const m = vi.hoisted(() => ({
 }))
 vi.mock('@/lib/supabase/server-new', () => ({ createClient: async () => ({ auth: { getUser: m.getUser } }) }))
 vi.mock('@/lib/auth', () => ({ requireAuth: m.requireAuth }))
-vi.mock('@/lib/prisma', () => ({ prisma: { scan: { findUnique: m.findScan }, site: { findFirst: m.findSite } } }))
+vi.mock('@/lib/prisma', () => ({ prisma: { scan: { findUnique: m.findScan }, site: { findFirst: m.findSite }, whiteLabel: { findUnique: (args: { where: { userId: string } }) => m.stored(args.where.userId) } } }))
 vi.mock('@/lib/billing/entitlements', () => ({ assertWithinLimits: m.entitlement }))
 vi.mock('@/lib/combined-report-generator', () => ({ generateCombinedReport: m.combined }))
 vi.mock('@/lib/report', async () => ({

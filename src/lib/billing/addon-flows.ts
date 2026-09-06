@@ -5,18 +5,54 @@ import { getAddOnPricing, ADDON_NAMES, calculateExtraWebsites } from "./addons"
 import { ENTITLEMENTS } from "./plans"
 import { determineTax, type TaxRegime } from "./tax"
 import { deriveVatBreakdown } from "./pricing-config"
+import { withBillingOperationLock } from "./webhook-lease"
+import { assertNoPendingAddOnFulfillment, fulfillPaidAddOn } from "./addon-fulfillment"
 
 /**
  * Purchase an add-on (extra seat or scan package)
  * Creates a Mollie subscription for recurring billing
  */
-export async function purchaseAddOn(opts: {
+type PurchaseAddOnOptions = {
   userId: string
   type: AddOnType
   quantity?: number // Only for EXTRA_SEAT, defaults to 1
   firstBillingDate?: string
-}) {
+  sourcePaymentId?: string
+  sourceCustomerId?: string
+  sourceAmount?: { currency: string; value: string }
+}
+
+export async function purchaseAddOn(opts: PurchaseAddOnOptions) {
+  const quantity = opts.quantity ?? 1
+  if (!Number.isInteger(quantity) || quantity < 1) throw new Error("Quantity must be an integer of at least 1")
+  if (opts.type !== "EXTRA_SEAT" && quantity !== 1) throw new Error("Scan packages can only be purchased with quantity 1")
+  if (opts.sourcePaymentId !== undefined && (!opts.sourcePaymentId || !opts.firstBillingDate || !opts.sourceCustomerId || !opts.sourceAmount)) {
+    throw new Error("Paid add-on fulfillment requires source payment, customer, amount and first billing date")
+  }
+  return withBillingOperationLock(opts.userId, async () => {
+    await assertNoPendingAddOnFulfillment(opts.userId, opts.sourcePaymentId)
+    if (opts.sourcePaymentId) return fulfillPaidAddOn({ ...opts, quantity, sourcePaymentId: opts.sourcePaymentId, firstBillingDate: opts.firstBillingDate!, sourceCustomerId: opts.sourceCustomerId!, sourceAmount: opts.sourceAmount! })
+    return purchaseUnpaidAddOn(opts)
+  })
+}
+
+async function purchaseUnpaidAddOn(opts: PurchaseAddOnOptions) {
   const { userId, type, quantity = 1, firstBillingDate } = opts
+
+  // A pending row may represent a successful provider call whose response or
+  // local activation was lost. Never create or increment again on a POST retry.
+  const existing = await prisma.addOn.findFirst({
+    where: { userId, type, status: { in: ["active", "pending"] } }
+  })
+  if (existing) {
+    if (existing.status === "pending") {
+      throw Object.assign(new Error("A previous add-on purchase requires reconciliation before another can be created."), { code: "ADDON_RECONCILIATION_REQUIRED" })
+    }
+    if (type === "EXTRA_SEAT") {
+      throw Object.assign(new Error("Change an existing seat bundle through its absolute quantity endpoint, not another purchase."), { code: "EXISTING_SEAT_BUNDLE" })
+    }
+    throw Object.assign(new Error("ALREADY_ACTIVE"), { code: "ALREADY_ACTIVE" })
+  }
 
   // Validate quantity
   if (quantity < 1) {
@@ -83,42 +119,6 @@ export async function purchaseAddOn(opts: {
     : { vatRate: 0.21, regime: 'NL_VAT' as TaxRegime, invoiceNote: 'BTW 21% (NL)' }
   const breakdown = deriveVatBreakdown(grossBase, tax.vatRate)
   const totalPrice = grossBase
-
-  // Check if user already has this add-on type active
-  // For seats, we can have one add-on with adjustable quantity
-  // For scan packs, we can have multiple different packs
-  if (type === "EXTRA_SEAT") {
-    const existingAddon = await prisma.addOn.findFirst({
-      where: {
-        userId,
-        type: "EXTRA_SEAT",
-        status: "active"
-      }
-    })
-
-    if (existingAddon) {
-      // Update existing seat add-on quantity
-      return await updateAddOnQuantity({
-        addOnId: existingAddon.id,
-        newQuantity: existingAddon.quantity + quantity
-      })
-    }
-  } else {
-    // Check if user already has this specific scan pack
-    const existingPack = await prisma.addOn.findFirst({
-      where: {
-        userId,
-        type,
-        status: "active"
-      }
-    })
-
-    if (existingPack) {
-      const error: any = new Error("ALREADY_ACTIVE")
-      error.code = "ALREADY_ACTIVE"
-      throw error
-    }
-  }
 
   // Reserve the record for provider metadata, but grant no capacity until
   // Mollie confirms that the recurring subscription was created.
@@ -188,6 +188,12 @@ export async function updateAddOnQuantity(opts: {
   addOnId: string
   newQuantity: number
 }) {
+  const owner = await prisma.addOn.findUnique({ where: { id: opts.addOnId }, select: { userId: true } })
+  if (!owner) throw new Error("Add-on not found")
+  return withBillingOperationLock(owner.userId, () => updateLockedAddOnQuantity(opts))
+}
+
+async function updateLockedAddOnQuantity(opts: { addOnId: string; newQuantity: number }) {
   const { addOnId, newQuantity } = opts
 
   if (newQuantity < 1) {
@@ -248,26 +254,20 @@ export async function updateAddOnQuantity(opts: {
     }
   )
 
-  // Update database
-  const updatedAddOn = await prisma.addOn.update({
-    where: { id: addOnId },
-    data: {
-      quantity: newQuantity,
-      totalPrice: newTotalPrice
-    }
+  // A provider PATCH sets an absolute quantity price and can be safely retried.
+  // Commit both local representations together so a failed write cannot lose
+  // the capacity delta on that retry.
+  return prisma.$transaction(async tx => {
+    const updatedAddOn = await tx.addOn.update({
+      where: { id: addOnId },
+      data: { quantity: newQuantity, totalPrice: newTotalPrice }
+    })
+    await tx.user.update({
+      where: { id: addOn.userId },
+      data: { extraSeats: { increment: quantityDiff } }
+    })
+    return updatedAddOn
   })
-
-  // Update user's extraSeats
-  await prisma.user.update({
-    where: { id: addOn.userId },
-    data: {
-      extraSeats: {
-        increment: quantityDiff
-      }
-    }
-  })
-
-  return updatedAddOn
 }
 
 /**

@@ -4,6 +4,9 @@ import { pdf } from "@react-pdf/renderer";
 import { requireAdminAPI } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { PDFReport } from "@/lib/pdf-generator";
+import { assertWithinLimits } from "@/lib/billing/entitlements";
+import { getExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,9 +36,8 @@ export async function GET(req: NextRequest) {
       violations = (scan.raw as any).violations || [];
     }
 
-    const whiteLabel = await prisma.whiteLabel.findUnique({
-      where: { userId: scan.site.userId },
-    });
+    await assertWithinLimits({ userId: scan.site.userId, action: "export_pdf" });
+    const whiteLabel = await getExportWhiteLabel(scan.site.userId);
 
     const brandName = whiteLabel?.companyName || "VexNexa";
     const pdfDoc = React.createElement(PDFReport, {
@@ -64,6 +66,8 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
+    const denied = exportAccessErrorResponse(error);
+    if (denied) return denied;
     console.error("Error downloading admin PDF report:", error);
     return NextResponse.json({ error: "Failed to download report" }, { status: 500 });
   }

@@ -36,6 +36,16 @@ describe('entitlement aggregation', () => {
 })
 
 describe('billing and feature gates', () => {
+  it('retains paid features until the exact cancellation period end', async () => {
+    db.user.findUnique.mockResolvedValue(user({ subscriptionCanceledAt: new Date('2026-09-01Z'), subscriptionCurrentPeriodEnd: new Date('2026-10-01Z') }))
+    await expect(assertWithinLimits({ userId: 'u1', action: 'export_word', now: new Date('2026-09-30T23:59:59Z') })).resolves.toBeUndefined()
+    await expect(assertWithinLimits({ userId: 'u1', action: 'export_word', now: new Date('2026-10-01Z') })).rejects.toMatchObject({ code: 'SUBSCRIPTION_INACTIVE' })
+  })
+  it('stops advertising paid base entitlements after the canceled paid period expires', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-10-01Z'))
+    db.user.findUnique.mockResolvedValue(user({ subscriptionCanceledAt: new Date('2026-09-01Z'), subscriptionCurrentPeriodEnd: new Date('2026-10-01Z') }))
+    expect(await getTotalEntitlements('u1')).toMatchObject({ base: { sites: 1 }, word: false })
+  })
   it.each(['past_due', 'canceled', 'failed', 'pending'])('blocks paid %s accounts before usage writes', async subscriptionStatus => {
     db.user.findUnique.mockResolvedValue(user({ subscriptionStatus }))
     await expect(assertWithinLimits({ userId: 'u1', action: 'scan' })).rejects.toMatchObject({ code: 'SUBSCRIPTION_INACTIVE', subscriptionStatus, gracePeriodDays: 0 })

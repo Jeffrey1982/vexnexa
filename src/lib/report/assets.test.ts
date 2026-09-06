@@ -7,6 +7,7 @@ import { DEFAULT_CTA, DEFAULT_WHITE_LABEL } from './types'
 
 const findUnique = vi.hoisted(() => vi.fn())
 vi.mock('@/lib/prisma', () => ({ prisma: { whiteLabel: { findUnique } } }))
+vi.mock('@/lib/billing/entitlements', () => ({ assertWithinLimits: vi.fn().mockResolvedValue(undefined) }))
 
 function png(width: number, height: number) {
   const buffer = Buffer.alloc(24)

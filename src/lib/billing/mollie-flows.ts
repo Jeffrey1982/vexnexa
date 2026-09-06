@@ -13,10 +13,12 @@ import {
 } from "./pricing-config";
 import { sendInvoiceForPayment } from "./invoice-service";
 import { purchaseAddOn } from "./addon-flows";
-import type { Customer, Payment, PaymentCreateParams } from "@mollie/api-client";
+import type { Customer, Payment, PaymentCreateParams, Subscription } from "@mollie/api-client";
 import { SequenceType } from "@mollie/api-client";
 import type { Plan as PrismaPlan } from "@prisma/client";
 import type { Plan } from "./plans";
+import { nextBillingPeriodEnd, requirePaymentDate } from "./subscription-period";
+import { withBillingOperationLock } from "./webhook-lease";
 
 /** Map billing country to Mollie locale hint (best-effort, not forced) */
 function countryToMollieLocale(country: string): string | undefined {
@@ -57,6 +59,18 @@ function countryToMollieLocale(country: string): string | undefined {
     LU: "fr_LU",
   };
   return map[country.toUpperCase()];
+}
+
+export async function assertNoPendingCoreFulfillment(userId: string, currentPaymentId?: string): Promise<void> {
+  const unresolved = await prisma.processedWebhook.findFirst({
+    where: {
+      webhookType: "core_subscription_fulfillment", status: { not: "processed" },
+      ...(currentPaymentId ? { webhookId: { not: currentPaymentId } } : {}),
+      metadata: { path: ["userId"], equals: userId },
+    },
+    select: { id: true },
+  });
+  if (unresolved) throw new Error("A previous core subscription creation is unresolved; reconcile it before another paid checkout");
 }
 
 export async function createOrGetMollieCustomer(userId: string, email: string) {
@@ -199,6 +213,7 @@ export async function createUpgradePayment(opts: {
 }) {
   try {
     const { userId, email, plan, billingCycle = "monthly" } = opts;
+    await assertNoPendingCoreFulfillment(userId);
 
     console.log("=== Creating Upgrade Payment ===");
     console.log("Input:", { userId, email, plan, billingCycle });
@@ -286,16 +301,11 @@ export async function createUpgradePayment(opts: {
       checkoutUrl: payment.getCheckoutUrl(),
     });
 
-    // Patch the redirectUrl with the real paymentId so /checkout/return can
-    // fetch the status. Non-fatal if Mollie rejects the update — the user
-    // would just land on /checkout/return without a paymentId and see an error.
-    try {
-      await mollie.payments.update(payment.id, {
-        redirectUrl: appUrl(`/checkout/return?paymentId=${payment.id}`),
-      } as Parameters<typeof mollie.payments.update>[1]);
-    } catch (updateError) {
-      console.warn("[Mollie] Failed to patch redirectUrl with paymentId:", updateError);
-    }
+    // Do not expose checkout until the customer can return to this exact
+    // payment. A created-but-unpaid payment can safely expire after failure.
+    await mollie.payments.update(payment.id, {
+      redirectUrl: appUrl(`/checkout/return?paymentId=${payment.id}`),
+    });
 
     // Persist checkout quote snapshot for invoice/audit trail
     // Derive internal VAT breakdown for accounting (21% NL VAT as default)
@@ -346,93 +356,217 @@ export async function createSubscription(opts: {
   plan: Exclude<Plan, "FREE">;
   userId: string;
   billingCycle?: BillingInterval;
+  sourcePayment: Payment;
 }) {
-  const { customerId, plan, userId, billingCycle = "monthly" } = opts;
+  return withBillingOperationLock(opts.userId, () => provisionPaidSubscription(opts));
+}
 
-  // Get the fixed VAT-inclusive amount
-  const chargedAmount = getMollieAmount(plan as PlanKey, billingCycle);
-  const planDisplayName = PLAN_DISPLAY_NAMES[plan as PlanKey] ?? plan;
-  const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Yearly";
-
-  // Check if customer has valid mandates
-  const mandates = await mollie.customerMandates.page({ customerId });
-  const validMandate = mandates.find((m: any) => m.status === "valid");
-
-  if (!validMandate) {
-    throw new Error("No valid mandate found for customer");
+async function provisionPaidSubscription(opts: {
+  customerId: string;
+  plan: Exclude<Plan, "FREE">;
+  userId: string;
+  billingCycle?: BillingInterval;
+  sourcePayment: Payment;
+}) {
+  const { customerId, plan, userId, billingCycle = "monthly", sourcePayment } = opts;
+  if (billingCycle !== "monthly" && billingCycle !== "yearly") throw new Error("Invalid subscription billing interval");
+  if (sourcePayment.status !== "paid" || sourcePayment.sequenceType !== SequenceType.first ||
+      sourcePayment.customerId !== customerId || sourcePayment.subscriptionId) {
+    throw new Error("Subscription provisioning requires a paid first payment for this customer");
   }
+  const metadata = sourcePayment.metadata as Record<string, unknown>;
+  if (metadata?.userId !== userId || planKeyFromString(String(metadata.planKey ?? metadata.plan)) !== plan) {
+    throw new Error("First payment does not match the subscription owner and plan");
+  }
+  const sourceInterval = metadata.billingInterval ?? metadata.billingCycle;
+  if (sourceInterval && sourceInterval !== billingCycle) throw new Error("First payment billing interval does not match subscription");
+  let periodEnd = nextBillingPeriodEnd(requirePaymentDate(sourcePayment.paidAt), billingCycle);
+  const sourceCreatedAt = requirePaymentDate(sourcePayment.createdAt);
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user || user.mollieCustomerId !== customerId) throw new Error("Subscription customer does not belong to user");
+  const fulfillmentKey = { webhookId: sourcePayment.id, webhookType: "core_subscription_fulfillment" };
+  const fulfillmentWhere = { webhookId_webhookType: fulfillmentKey };
+  const fulfillment = await prisma.processedWebhook.findUnique({ where: fulfillmentWhere });
+  const fulfillmentMetadata = fulfillment?.metadata as Record<string, unknown> | null;
+  if (fulfillment && (fulfillmentMetadata?.userId !== userId || fulfillmentMetadata.customerId !== customerId ||
+      fulfillmentMetadata.plan !== plan || fulfillmentMetadata.billingCycle !== billingCycle ||
+      fulfillmentMetadata.amount !== sourcePayment.amount.value || fulfillmentMetadata.currency !== sourcePayment.amount.currency)) {
+    throw new Error("Core subscription journal does not match this paid agreement");
+  }
+  await assertNoPendingCoreFulfillment(userId, sourcePayment.id);
 
-  // Cancel existing subscription if any
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { mollieSubscriptionId: true },
-  });
-  if (user?.mollieSubscriptionId) {
-    try {
-      await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, { customerId });
-    } catch (error) {
-      // Failed to cancel existing subscription
+  // Reconcile provider state even when a prior response or database write was lost.
+  // Unlike Mollie's one-hour idempotency cache, sourcePaymentId remains durable.
+  let subscription: Subscription | undefined;
+  let existing: Subscription | undefined;
+  for await (const candidate of mollie.customerSubscriptions.iterate({ customerId })) {
+    const candidateMetadata = candidate.metadata as Record<string, unknown> | null;
+    if (candidateMetadata?.sourcePaymentId === sourcePayment.id) {
+      if (candidateMetadata.userId !== userId) throw new Error("Subscription ownership mismatch");
+      if (subscription && subscription.id !== candidate.id) throw new Error("Multiple subscriptions match this first payment");
+      subscription = candidate;
+    }
+    if (candidate.id === user.mollieSubscriptionId ||
+        (candidateMetadata?.userId === userId && (!candidateMetadata.type || candidateMetadata.type === "upgrade") &&
+         (candidateMetadata.planKey || candidateMetadata.plan) && ["active", "pending", "suspended"].includes(candidate.status))) {
+      if (existing && existing.id !== candidate.id && ["active", "pending", "suspended"].includes(existing.status)) {
+        throw new Error("Multiple existing plan subscriptions require reconciliation");
+      }
+      existing = candidate;
     }
   }
+  if (!subscription && user.mollieSubscriptionId && !existing) {
+    existing = await mollie.customerSubscriptions.get(user.mollieSubscriptionId, { customerId });
+  }
+  for (const candidate of [subscription, existing]) {
+    if (!candidate) continue;
+    const candidateMetadata = candidate.metadata as Record<string, unknown> | null;
+    if (candidate.customerId !== customerId || (candidateMetadata?.userId && candidateMetadata.userId !== userId)) {
+      throw new Error("Subscription ownership mismatch");
+    }
+  }
+  if (fulfillment && !subscription) {
+    throw new Error("Core subscription creation is uncertain and no matching provider subscription is visible; reconciliation required");
+  }
+  if (subscription && fulfillmentMetadata?.subscriptionId && fulfillmentMetadata.subscriptionId !== subscription.id) {
+    throw new Error("Core subscription journal points to a different provider subscription");
+  }
+  if (subscription && existing && subscription.id !== existing.id && ["active", "pending", "suspended"].includes(existing.status)) {
+    throw new Error("A newer existing subscription must not be overwritten by an old first payment");
+  }
+  // Ordering applies to canceled/completed subscriptions too: an old first
+  // payment must never restart renewal after the customer's newer cancellation.
+  if (existing && existing.id !== subscription?.id) {
+    const existingMetadata = existing.metadata as Record<string, unknown> | null;
+    let latestSourceDate = existingMetadata?.sourcePaymentCreatedAt
+      ? requirePaymentDate(String(existingMetadata.sourcePaymentCreatedAt))
+      : requirePaymentDate(existing.createdAt);
+    if (existingMetadata?.sourcePaymentId && !existingMetadata.sourcePaymentCreatedAt) {
+      const previousSource = await mollie.payments.get(String(existingMetadata.sourcePaymentId));
+      latestSourceDate = requirePaymentDate(previousSource.createdAt);
+    }
+    // An old notification cannot downgrade or overwrite a newer paid agreement.
+    if (sourceCreatedAt <= latestSourceDate) {
+      if (existingMetadata?.sourcePaymentId) throw new Error("Older first payment conflicts with a newer paid subscription; reconciliation required");
+      if (user.mollieSubscriptionId !== existing.id || user.plan === "FREE") throw new Error("Legacy subscription requires reconciliation before granting a plan");
+      return existing;
+    }
+  }
+  if (!subscription && existing && ["active", "pending", "suspended"].includes(existing.status)) {
+    if (existing.status !== "active" || existing.customerId !== customerId) {
+      throw new Error("Existing subscription is not safe to change automatically");
+    }
+    if (user.subscriptionCanceledAt) throw new Error("Canceled paid agreement requires reconciliation before changing plan");
+    const existingEnd = user.subscriptionCurrentPeriodEnd ??
+      (existing.nextPaymentDate ? requirePaymentDate(existing.nextPaymentDate) : null);
+    if (!existingEnd) throw new Error("Cannot safely preserve the existing paid subscription period");
+    const paidAt = requirePaymentDate(sourcePayment.paidAt);
+    periodEnd = nextBillingPeriodEnd(existingEnd > paidAt ? existingEnd : paidAt, billingCycle);
+    if (periodEnd.toISOString().slice(0, 10) <= new Date().toISOString().slice(0, 10)) {
+      throw new Error("First paid period has already ended; refusing an immediate catch-up charge");
+    }
+    if (sourcePayment.amount.currency !== "EUR" || !/^\d+\.\d{2}$/.test(sourcePayment.amount.value) || Number(sourcePayment.amount.value) <= 0) {
+      throw new Error("First payment has an invalid subscription amount");
+    }
+    subscription = await mollie.customerSubscriptions.update(existing.id, {
+      customerId,
+      amount: sourcePayment.amount,
+      interval: getMollieInterval(billingCycle),
+      startDate: periodEnd.toISOString().slice(0, 10),
+      description: `VexNexa ${PLAN_DISPLAY_NAMES[plan as PlanKey] ?? plan} Plan (${billingCycle === "yearly" ? "Yearly" : "Monthly"}) — All prices include VAT`,
+      metadata: { ...metadata, sourcePaymentId: sourcePayment.id, sourcePaymentCreatedAt: sourceCreatedAt.toISOString(), sourcePaymentPeriodEnd: periodEnd.toISOString() },
+    });
+  } else if (subscription) {
+    const reconciledMetadata = subscription.metadata as Record<string, unknown> | null;
+    if (reconciledMetadata?.sourcePaymentPeriodEnd) periodEnd = requirePaymentDate(String(reconciledMetadata.sourcePaymentPeriodEnd));
+  }
 
-  // Fetch billing profile for metadata only
-  const billingProfile = await prisma.billingProfile.findUnique({
-    where: { userId },
-    select: {
-      billingType: true,
-      countryCode: true,
-      vatId: true,
-      companyName: true,
-      kvkNumber: true,
-    },
-  });
+  const planDisplayName = PLAN_DISPLAY_NAMES[plan as PlanKey] ?? plan;
+  const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Yearly";
+  if (!subscription) {
+    if (existing?.status === "canceled" && user.subscriptionCurrentPeriodEnd && user.subscriptionCurrentPeriodEnd > requirePaymentDate(sourcePayment.paidAt)) {
+      periodEnd = nextBillingPeriodEnd(user.subscriptionCurrentPeriodEnd, billingCycle);
+    }
+    const mandates = await mollie.customerMandates.page({ customerId });
+    if (!mandates.some(m => m.status === "valid")) throw new Error("No valid mandate found for customer");
+    if (periodEnd.toISOString().slice(0, 10) <= new Date().toISOString().slice(0, 10)) {
+      throw new Error("First paid period has already ended; refusing an immediate catch-up charge");
+    }
+    if (sourcePayment.amount.currency !== "EUR" || !/^\d+\.\d{2}$/.test(sourcePayment.amount.value) || Number(sourcePayment.amount.value) <= 0) {
+      throw new Error("First payment has an invalid subscription amount");
+    }
+    // A lost response is ambiguous even after Mollie's one-hour idempotency
+    // window. Never issue another create unless no create was attempted yet.
+    if (fulfillment) throw new Error("Core subscription creation is uncertain and no matching provider subscription is visible; reconciliation required");
+    await prisma.processedWebhook.create({
+      data: {
+        ...fulfillmentKey, status: "provider_pending",
+        metadata: { userId, customerId, plan, billingCycle, amount: sourcePayment.amount.value, currency: sourcePayment.amount.currency, periodEnd: periodEnd.toISOString() },
+      },
+    });
+    subscription = await mollie.customerSubscriptions.create({
+      customerId,
+      amount: sourcePayment.amount,
+      interval: getMollieInterval(billingCycle),
+      description: `VexNexa ${planDisplayName} Plan (${billingCycleLabel}) — All prices include VAT`,
+      startDate: periodEnd.toISOString().slice(0, 10),
+      webhookUrl: appUrl("/api/mollie/webhook"),
+      metadata: { ...metadata, sourcePaymentId: sourcePayment.id, sourcePaymentCreatedAt: sourceCreatedAt.toISOString(), sourcePaymentPeriodEnd: periodEnd.toISOString() },
+      idempotencyKey: `vexnexa-plan-${sourcePayment.id}`,
+    });
+  }
 
-  // Create new subscription with the EXACT fixed amount
-  const subscription = await (mollie.customerSubscriptions as any).create({
-    customerId,
-    amount: {
-      currency: "EUR",
-      value: toMollieAmountString(chargedAmount),
-    },
-    interval: getMollieInterval(billingCycle),
-    description: `VexNexa ${planDisplayName} Plan (${billingCycleLabel}) — All prices include VAT`,
-    startDate: new Date().toISOString().split("T")[0],
-    webhookUrl: appUrl("/api/mollie/webhook"),
-    metadata: buildPaymentMetadata({
-      userId,
-      planKey: plan as PlanKey,
-      billingInterval: billingCycle,
-      customerType: billingProfile?.billingType === "business" ? "company" : "individual",
-      companyName: billingProfile?.companyName ?? undefined,
-      vatNumber: billingProfile?.vatId ?? undefined,
-      kvkNumber: billingProfile?.kvkNumber ?? undefined,
-      chargedAmount,
-      billingCountry: billingProfile?.countryCode ?? "NL",
-    }),
-  });
+  const subscriptionMetadata = subscription.metadata as Record<string, unknown> | null;
+  if (subscriptionMetadata?.sourcePaymentId === sourcePayment.id &&
+      (subscription.amount.currency !== sourcePayment.amount.currency || subscription.amount.value !== sourcePayment.amount.value ||
+       subscription.interval !== getMollieInterval(billingCycle))) {
+    throw new Error("Recovered subscription billing terms do not match this paid agreement");
+  }
+  if (fulfillmentMetadata?.periodEnd) periodEnd = requirePaymentDate(String(fulfillmentMetadata.periodEnd));
 
-  // Update user in database
-  await prisma.user.update({
-    where: { id: userId },
-    data: {
-      plan: plan as PrismaPlan,
-      billingInterval: billingCycle,
-      subscriptionStatus: "active",
-      mollieSubscriptionId: subscription.id,
-      trialEndsAt: null,
-    },
+  // A replay must never erase a later cancellation or shorten paid access.
+  const canceledAt = (subscription.id === user.mollieSubscriptionId ? user.subscriptionCanceledAt : null) ??
+    (subscription.status === "canceled" ? requirePaymentDate(subscription.canceledAt) : null);
+  const currentPeriodEnd = user.subscriptionCurrentPeriodEnd && user.subscriptionCurrentPeriodEnd > periodEnd
+    ? user.subscriptionCurrentPeriodEnd : periodEnd;
+  await prisma.$transaction(async tx => {
+    await tx.user.update({
+      where: { id: userId },
+      data: {
+        plan: plan as PrismaPlan,
+        billingInterval: billingCycle,
+        subscriptionStatus: "active",
+        mollieSubscriptionId: subscription.id,
+        subscriptionCurrentPeriodEnd: currentPeriodEnd,
+        subscriptionCanceledAt: canceledAt,
+        trialEndsAt: null,
+      },
+    });
+    const journalMetadata = { userId, customerId, plan, billingCycle, amount: sourcePayment.amount.value, currency: sourcePayment.amount.currency, periodEnd: currentPeriodEnd.toISOString(), subscriptionId: subscription.id };
+    await tx.processedWebhook.upsert({
+      where: fulfillmentWhere,
+      create: { ...fulfillmentKey, status: "processed", processedAt: new Date(), metadata: journalMetadata },
+      update: { status: "processed", processedAt: new Date(), metadata: journalMetadata },
+    });
   });
 
   return subscription;
 }
 
 export async function cancelSubscription(userId: string) {
+  return withBillingOperationLock(userId, () => cancelPaidSubscription(userId));
+}
+
+async function cancelPaidSubscription(userId: string) {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: {
       id: true,
       mollieCustomerId: true,
       mollieSubscriptionId: true,
+      subscriptionCurrentPeriodEnd: true,
+      subscriptionCanceledAt: true,
+      billingInterval: true,
     },
   });
 
@@ -442,19 +576,35 @@ export async function cancelSubscription(userId: string) {
     throw new Error("No active subscription found");
   }
 
-  // Cancel subscription at Mollie
-  await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, {
+  if (user.subscriptionCanceledAt) return;
+  const subscription = await mollie.customerSubscriptions.get(user.mollieSubscriptionId, {
     customerId: user.mollieCustomerId,
   });
-
-  // Update user status
+  // Existing subscriptions may predate period tracking. Use provider evidence;
+  // never invent an expiry or remove paid access simply because it is unknown.
+  let periodEnd = user.subscriptionCurrentPeriodEnd;
+  if (!periodEnd && subscription.nextPaymentDate) periodEnd = requirePaymentDate(subscription.nextPaymentDate);
+  if (!periodEnd) {
+    const metadata = subscription.metadata as Record<string, unknown> | null;
+    if (metadata?.sourcePaymentPeriodEnd) periodEnd = requirePaymentDate(String(metadata.sourcePaymentPeriodEnd));
+    let checked = 0;
+    for await (const payment of mollie.customerPayments.iterate({ customerId: user.mollieCustomerId })) {
+      if (++checked > 250) throw new Error("Subscription payment history requires manual reconciliation");
+      if (payment.status !== "paid" || payment.subscriptionId !== subscription.id || Number(payment.amount.value) <= 0) continue;
+      const billingCycle = subscription.interval === "12 months" || user.billingInterval === "yearly" ? "yearly" : "monthly";
+      const paidEnd = nextBillingPeriodEnd(requirePaymentDate(payment.createdAt), billingCycle);
+      if (!periodEnd || paidEnd > periodEnd) periodEnd = paidEnd;
+    }
+  }
+  if (!periodEnd) throw new Error("Cannot safely determine the paid subscription period");
+  const canceled = subscription.status === "canceled" ? subscription : await mollie.customerSubscriptions.cancel(user.mollieSubscriptionId, {
+    customerId: user.mollieCustomerId,
+  });
   await prisma.user.update({
     where: { id: userId },
     data: {
-      subscriptionStatus: "canceled",
-      plan: "FREE" as PrismaPlan,
-      mollieSubscriptionId: null,
-      trialEndsAt: null,
+      subscriptionCurrentPeriodEnd: periodEnd,
+      subscriptionCanceledAt: canceled.canceledAt ? requirePaymentDate(canceled.canceledAt) : new Date(),
     },
   });
 }
@@ -476,23 +626,68 @@ export async function changePlan(opts: { userId: string; newPlan: Exclude<Plan, 
     throw new Error("User has no Mollie customer ID");
   }
 
-  // Check if user has valid mandate
-  const mandates = await mollie.customerMandates.page({ customerId: user.mollieCustomerId });
-  const validMandate = mandates.find((m: any) => m.status === "valid");
-
-  if (!validMandate) {
-    // Need new checkout flow for mandate
-    return { needCheckout: true };
+  if (newPlan === "FREE") {
+    await cancelSubscription(userId);
+    return { success: true };
   }
+  // A mandate authorizes collection, but is not evidence that a new plan was paid.
+  return { needCheckout: true };
+}
 
-  // Can create subscription directly
-  await createSubscription({
-    customerId: user.mollieCustomerId,
-    plan: newPlan as any,
-    userId,
+async function fulfillAuditCredits(payment: Payment, userId: string, credits: number): Promise<void> {
+  const marker = { webhookId: payment.id, webhookType: "audit_credit_fulfillment" };
+  try {
+    await prisma.$transaction(async tx => {
+      await tx.processedWebhook.create({ data: { ...marker, status: "processed", processedAt: new Date(), metadata: { userId, credits } } });
+      await tx.user.update({ where: { id: userId }, data: { auditCredits: { increment: credits } } });
+    });
+  } catch (error) {
+    if (!(error && typeof error === "object" && "code" in error && error.code === "P2002")) throw error;
+    const existing = await prisma.processedWebhook.findUnique({ where: { webhookId_webhookType: marker } });
+    const metadata = existing?.metadata as { userId?: string; credits?: number } | null;
+    if (existing?.status !== "processed" || metadata?.userId !== userId || metadata.credits !== credits) throw error;
+  }
+}
+
+async function recordRecurringPayment(payment: Payment, userId: string, billingCycle: BillingInterval): Promise<void> {
+  await withBillingOperationLock(userId, async () => {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || !payment.customerId || user.mollieCustomerId !== payment.customerId || !payment.subscriptionId) {
+      throw new Error("Recurring payment does not match a known subscription owner");
+    }
+    // Late payments of an obsolete subscription cannot alter the replacement plan.
+    if (user.mollieSubscriptionId !== payment.subscriptionId) return;
+    const subscription = await mollie.customerSubscriptions.get(payment.subscriptionId, { customerId: payment.customerId });
+    const metadata = subscription.metadata as Record<string, unknown> | null;
+    if (subscription.customerId !== payment.customerId || (metadata?.userId && metadata.userId !== userId)) {
+      throw new Error("Recurring subscription ownership mismatch");
+    }
+    const paymentMetadata = payment.metadata as Record<string, unknown> | null;
+    const recordedCycle = paymentMetadata?.billingInterval ?? paymentMetadata?.billingCycle;
+    const paidInterval = recordedCycle === "yearly" || (!recordedCycle && subscription.interval === "12 months") ? "yearly" : billingCycle;
+    const periodEnd = nextBillingPeriodEnd(requirePaymentDate(payment.createdAt), paidInterval);
+    // The amount and interval of live agreements come from Mollie; never reprice
+    // or recreate them from today's catalog after a successful renewal.
+    await prisma.user.updateMany({
+      where: {
+        id: userId, mollieSubscriptionId: payment.subscriptionId,
+        OR: [{ subscriptionCurrentPeriodEnd: null }, { subscriptionCurrentPeriodEnd: { lt: periodEnd } }],
+      },
+      data: { subscriptionCurrentPeriodEnd: periodEnd },
+    });
+    if (!user.subscriptionCanceledAt && subscription.status === "active" && periodEnd > new Date() &&
+        (!user.subscriptionCurrentPeriodEnd || periodEnd >= user.subscriptionCurrentPeriodEnd)) {
+      await prisma.user.updateMany({
+        where: { id: userId, mollieSubscriptionId: payment.subscriptionId, subscriptionCanceledAt: null, subscriptionCurrentPeriodEnd: { lte: periodEnd } },
+        data: { subscriptionStatus: "active", lastFailedPaymentAt: null, lastFailedPaymentReason: null },
+      });
+    } else if (subscription.status === "canceled" && subscription.canceledAt) {
+      await prisma.user.updateMany({
+        where: { id: userId, mollieSubscriptionId: payment.subscriptionId, subscriptionCanceledAt: null },
+        data: { subscriptionCanceledAt: requirePaymentDate(subscription.canceledAt) },
+      });
+    }
   });
-
-  return { success: true };
 }
 
 export async function processWebhookPayment(paymentId: string) {
@@ -523,14 +718,7 @@ export async function processWebhookPayment(paymentId: string) {
 
     if (payment.status === "paid") {
       const credits = Number.parseInt(metadata.auditCredits ?? "1", 10);
-      await prisma.user.update({
-        where: { id: metadata.userId },
-        data: {
-          auditCredits: {
-            increment: Number.isFinite(credits) && credits > 0 ? credits : 1,
-          },
-        },
-      });
+      await fulfillAuditCredits(payment, metadata.userId, Number.isFinite(credits) && credits > 0 ? credits : 1);
 
       try {
         await sendInvoiceForPayment(paymentId);
@@ -552,7 +740,6 @@ export async function processWebhookPayment(paymentId: string) {
         await prisma.user.update({
           where: { id: metadata.userId },
           data: {
-            ...(payment.status === "failed" ? { subscriptionStatus: "past_due" } : {}),
             lastFailedPaymentAt: new Date(),
             lastFailedPaymentReason: `mollie:${payment.status}`,
           },
@@ -562,13 +749,20 @@ export async function processWebhookPayment(paymentId: string) {
     }
 
     if (payment.status === "paid") {
-      const nextBillingDate = new Date();
-      nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
+      const nextBillingDate = nextBillingPeriodEnd(requirePaymentDate(payment.paidAt), "monthly");
+      if (!payment.customerId) throw new Error("Paid add-on checkout has no customer identity");
+      const rawQuantity = metadata.quantity ?? "1";
+      if (!/^[1-9]\d*$/.test(String(rawQuantity)) || !Number.isSafeInteger(Number(rawQuantity))) {
+        throw new Error("Paid add-on checkout has invalid quantity metadata");
+      }
 
       await purchaseAddOn({
         userId: metadata.userId,
         type: metadata.addOnType,
-        quantity: Number.parseInt(metadata.quantity ?? "1", 10) || 1,
+        quantity: Number(rawQuantity),
+        sourcePaymentId: payment.id,
+        sourceCustomerId: payment.customerId,
+        sourceAmount: payment.amount,
         firstBillingDate: nextBillingDate.toISOString().split("T")[0],
       });
       return "processed";
@@ -594,7 +788,12 @@ export async function processWebhookPayment(paymentId: string) {
   if (payment.status !== "paid") {
     if (isTerminalFailure) {
       try {
-        const shouldMarkPastDue = payment.status === "failed";
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+        if (!user || (payment.customerId && user.mollieCustomerId !== payment.customerId)) throw new Error("Payment owner mismatch");
+        const shouldMarkPastDue = payment.status === "failed" && payment.sequenceType === SequenceType.recurring &&
+          !!payment.subscriptionId && payment.subscriptionId === user.mollieSubscriptionId &&
+          !user.subscriptionCanceledAt && (!user.subscriptionCurrentPeriodEnd ||
+            (user.subscriptionCurrentPeriodEnd <= new Date() && nextBillingPeriodEnd(requirePaymentDate(payment.createdAt), billingCycle) > user.subscriptionCurrentPeriodEnd));
         await prisma.user.update({
           where: { id: userId },
           data: {
@@ -610,6 +809,7 @@ export async function processWebhookPayment(paymentId: string) {
         );
       } catch (recordError) {
         console.error("[Webhook] Failed to record failed-payment:", recordError);
+        throw recordError;
       }
     }
     // Open / pending / authorized statuses: do nothing — Mollie will send a
@@ -617,15 +817,14 @@ export async function processWebhookPayment(paymentId: string) {
     return isTerminalFailure ? "processed" : "pending";
   }
 
-  // Payment is successful — create subscription. createSubscription() is the
-  // canonical writer of `plan` and `subscriptionStatus="active"` on the User row.
   if (payment.customerId && plan !== "FREE") {
-    await createSubscription({
-      customerId: payment.customerId,
-      plan: plan as Exclude<Plan, "FREE">,
-      userId,
-      billingCycle,
-    });
+    if (payment.sequenceType === SequenceType.recurring) {
+      await recordRecurringPayment(payment, userId, billingCycle);
+    } else if (payment.sequenceType === SequenceType.first && !payment.subscriptionId) {
+      await createSubscription({ customerId: payment.customerId, plan: plan as Exclude<Plan, "FREE">, userId, billingCycle, sourcePayment: payment });
+    } else {
+      throw new Error("Paid plan payment has no recognized recurring sequence");
+    }
   }
 
   // Backfill BillingProfile from Mollie customer + payment metadata so we have
@@ -805,18 +1004,21 @@ import { generateAndSendInvoice } from "./invoice-service";
 
 export async function processSubscriptionWebhook(subscriptionId: string) {
   try {
-    const subscription = await (mollie.customerSubscriptions as any).get(subscriptionId);
-    const customer = await mollie.customers.get(subscription.customerId);
-    const fullSubscription = await (mollie.customerSubscriptions as any).get(subscriptionId, {
-      customerId: customer.id,
+    let owner = await prisma.user.findFirst({
+      where: { mollieSubscriptionId: subscriptionId },
+      select: { id: true, mollieCustomerId: true },
     });
-
-    console.log("[Subscription Webhook] Processing subscription:", {
-      id: fullSubscription.id,
-      status: fullSubscription.status,
-      customerId: fullSubscription.customerId,
-      metadata: fullSubscription.metadata,
-    });
+    if (!owner) {
+      const localAddOn = await prisma.addOn.findUnique({
+        where: { mollieSubscriptionId: subscriptionId },
+        select: { user: { select: { id: true, mollieCustomerId: true } } },
+      });
+      owner = localAddOn?.user ?? null;
+    }
+    if (!owner?.mollieCustomerId) return;
+    // Both IDs are required by Mollie. Resolve customer ownership locally.
+    const subscription = await mollie.customerSubscriptions.get(subscriptionId, { customerId: owner.mollieCustomerId });
+    if (subscription.customerId !== owner.mollieCustomerId) throw new Error("Subscription ownership mismatch");
 
     if (subscription.status !== "active") {
       console.log("[Subscription Webhook] Subscription not active, skipping");
@@ -829,6 +1031,7 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
       return;
     }
 
+    if (metadata.userId !== owner.id) throw new Error("Subscription metadata ownership mismatch");
     const userId = metadata.userId;
     const addOnType = metadata.addOnType;
     const addOnId = metadata.addOnId;
@@ -838,6 +1041,7 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
         id: addOnId,
         userId,
         type: addOnType,
+        mollieSubscriptionId: subscriptionId,
       },
     });
 
@@ -897,12 +1101,13 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
         console.log("[Subscription Webhook] Created CheckoutQuote for add-on:", subscriptionId);
       } catch (quoteError) {
         console.error("[Subscription Webhook] Failed to create CheckoutQuote:", quoteError);
+        throw quoteError;
       }
     }
 
     if (!invoiceQuoteId) {
       console.error('[Subscription Webhook] No invoice quote available; delivery remains retryable');
-      return;
+      throw new Error('Subscription invoice quote is unavailable; retry required');
     }
 
     try {
@@ -910,9 +1115,11 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
       console.log("[Subscription Webhook] Invoice sent:", result);
     } catch (invoiceError) {
       console.error("[Subscription Webhook] Failed to send invoice:", invoiceError);
+      throw invoiceError;
     }
   } catch (error) {
     console.error("[Subscription Webhook] Error processing subscription:", error);
+    throw error;
   }
 }
 

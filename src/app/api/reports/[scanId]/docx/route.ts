@@ -3,10 +3,8 @@ import { createClient } from "@/lib/supabase/server-new";
 import { prisma } from "@/lib/prisma";
 import {
   transformScanToReport,
-  resolveWhiteLabelConfig,
   extractQueryOverrides,
   fetchImageAsBuffer,
-  getStoredWhiteLabel,
   computeLogoDimensions,
   resolveReportLabels,
 } from "@/lib/report";
@@ -20,6 +18,8 @@ import {
   localizeWcagStatus,
 } from "@/lib/report/docx-copy";
 import { assertWithinLimits } from "@/lib/billing/entitlements";
+import { resolveExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 import type { ReportData, ReportIssue, Severity, WcagMatrixRow, TopPriorityFix } from "@/lib/report/types";
 import {
   EAA_LEARN_MORE_URL,
@@ -763,8 +763,7 @@ export async function GET(
       url.searchParams.get("language"),
     );
     const qp = extractQueryOverrides(url);
-    const storedWL = await getStoredWhiteLabel(user.id);
-    const resolved = resolveWhiteLabelConfig(qp, storedWL);
+    const resolved = await resolveExportWhiteLabel(user.id, qp);
 
     // Fetch logo as buffer for DOCX embedding
     let logoBuffer: Buffer | null = null;
@@ -808,6 +807,8 @@ export async function GET(
       },
     });
   } catch (error: unknown) {
+    const denied = exportAccessErrorResponse(error, "Word export is not available for this plan.");
+    if (denied) return denied;
     if ((error as { code?: string })?.code === "UPGRADE_REQUIRED") {
       return NextResponse.json(
         {

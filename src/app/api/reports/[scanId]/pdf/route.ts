@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { resolveExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -16,10 +18,8 @@ export async function GET(
     const {
       transformScanToReport,
       renderReportHTML,
-      resolveWhiteLabelConfig,
       extractQueryOverrides,
       fetchImageAsDataUrl,
-      getStoredWhiteLabel,
       resolveReportLabels,
     } = await import("@/lib/report");
 
@@ -51,8 +51,7 @@ export async function GET(
     // Resolve white-label: query params > stored DB settings > defaults
     const url = new URL(req.url);
     const qp = extractQueryOverrides(url);
-    const storedWL = await getStoredWhiteLabel(user.id);
-    const resolved = resolveWhiteLabelConfig(qp, storedWL);
+    const resolved = await resolveExportWhiteLabel(user.id, qp);
     const explicitLocale =
       url.searchParams.get("language") ||
       url.searchParams.get("locale") ||
@@ -133,6 +132,8 @@ export async function GET(
       },
     });
   } catch (error: unknown) {
+    const denied = exportAccessErrorResponse(error);
+    if (denied) return denied;
     const message = error instanceof Error ? error.message : "Unknown error";
     const stack = error instanceof Error ? error.stack : "";
     console.error(`[reports/pdf] ERROR: ${message}\n${stack}`);

@@ -30,6 +30,7 @@ import {
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { localizeApiError } from '@/lib/localized-api-error'
+import { authContinuationPath, safeAuthRedirect } from '@/lib/checkout-recovery'
 
 type BillingType = 'individual' | 'business'
 
@@ -37,6 +38,7 @@ export default function OnboardingPage() {
   const tError = useTranslations('apiErrors')
   const router = useRouter()
   const searchParams = useSearchParams()
+  const redirect = safeAuthRedirect(searchParams.get('redirect'), '/dashboard?welcome=true')
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -74,7 +76,7 @@ export default function OnboardingPage() {
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
-        router.push('/auth/login')
+        router.push(authContinuationPath('/auth/login', authContinuationPath('/onboarding', redirect)))
         return
       }
 
@@ -98,7 +100,7 @@ export default function OnboardingPage() {
     }
 
     loadUserData()
-  }, [supabase, router])
+  }, [supabase, router, redirect])
 
   const updateFormData = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -199,7 +201,7 @@ export default function OnboardingPage() {
       }
 
       // Redirect to dashboard with welcome
-      router.push('/dashboard?welcome=true')
+      router.push(redirect)
       router.refresh()
     } catch {
       setError(tError('network'))
@@ -209,7 +211,7 @@ export default function OnboardingPage() {
   }
 
   const handleSkip = () => {
-    router.push('/dashboard')
+    router.push(redirect)
     router.refresh()
   }
 

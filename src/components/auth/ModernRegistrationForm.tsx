@@ -1,7 +1,7 @@
 ﻿"use client";
 
-import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, useRef, useMemo } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,6 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { CountrySelect } from '@/components/ui/country-select'
 import { createClient } from '@/lib/supabase/client-new'
 import { getSiteUrl, buildAuthUrl } from '@/lib/urls'
+import { authContinuationPath, safeAuthRedirect } from '@/lib/checkout-recovery'
 import { useAuthCooldown, isRateLimitError } from '@/hooks/use-auth-cooldown'
 import { 
   User, 
@@ -110,7 +111,9 @@ export default function ModernRegistrationForm() {
   const [signupSuccess, setSignupSuccess] = useState(false)
 
   const router = useRouter()
-  const supabase = createClient()
+  const searchParams = useSearchParams()
+  const redirect = safeAuthRedirect(searchParams.get('redirect'))
+  const supabase = useMemo(() => createClient(), [])
   const formRef = useRef<HTMLFormElement>(null)
   const { isCoolingDown: isResendCooling, countdownLabel: resendCountdown, startCooldown: startResendCooldown } = useAuthCooldown('signup-resend', signupEmail)
 
@@ -120,13 +123,13 @@ export default function ModernRegistrationForm() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         // User is already logged in, redirect to dashboard
-        router.push('/dashboard')
+        router.push(redirect)
         router.refresh()
       }
     }
 
     checkAuthStatus()
-  }, [supabase, router])
+  }, [supabase, router, redirect])
 
   useEffect(() => {
     const focusFirstField = () => {
@@ -151,7 +154,7 @@ export default function ModernRegistrationForm() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${getSiteUrl()}/auth/callback?redirect=/dashboard`
+          redirectTo: `${getSiteUrl()}/auth/callback?${new URLSearchParams({ redirect })}`
         }
       })
 
@@ -273,7 +276,7 @@ export default function ModernRegistrationForm() {
         type: 'signup',
         email: signupEmail,
         options: {
-          emailRedirectTo: buildAuthUrl('/auth/callback?flow=signup'),
+          emailRedirectTo: buildAuthUrl(`/auth/callback?${new URLSearchParams({ flow: 'signup', redirect })}`),
         },
       })
       if (error) throw error
@@ -308,7 +311,7 @@ export default function ModernRegistrationForm() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: buildAuthUrl('/auth/callback?flow=signup'),
+          emailRedirectTo: buildAuthUrl(`/auth/callback?${new URLSearchParams({ flow: 'signup', redirect })}`),
           data: {
             first_name: formData.firstName,
             last_name: formData.lastName,
@@ -728,7 +731,7 @@ export default function ModernRegistrationForm() {
 
               <div className="text-center text-sm text-muted-foreground">
                 <Link
-                  href="/auth/login"
+                  href={authContinuationPath('/auth/login', redirect)}
                   className="text-primary underline underline-offset-2 hover:no-underline inline-flex items-center gap-1"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -792,7 +795,7 @@ export default function ModernRegistrationForm() {
             
             <div className="mt-4 text-center text-sm text-muted-foreground">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-primary underline underline-offset-2 hover:no-underline">
+              <Link href={authContinuationPath('/auth/login', redirect)} className="text-primary underline underline-offset-2 hover:no-underline">
                 Sign in
               </Link>
             </div>

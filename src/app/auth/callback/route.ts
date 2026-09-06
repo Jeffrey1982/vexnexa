@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server-new'
 import { NextRequest, NextResponse } from 'next/server'
+import { authContinuationPath, safeAuthRedirect } from '@/lib/checkout-recovery'
 import { ensureUserInDatabase } from '@/lib/user-sync'
 import { sendWelcomeEmail, sendNewUserNotification } from '@/lib/email'
 
@@ -40,7 +41,7 @@ function sanitizeRedirectParam(raw: string | null, fallback: string = '/dashboar
 
   // Relative path — safe
   if (raw.startsWith('/') && !raw.startsWith('//')) {
-    return raw
+    return safeAuthRedirect(raw, fallback)
   }
 
   try {
@@ -53,7 +54,7 @@ function sanitizeRedirectParam(raw: string | null, fallback: string = '/dashboar
     if (parsed.hostname === 'www.vexnexa.com') {
       parsed.hostname = 'vexnexa.com'
     }
-    return parsed.pathname + parsed.search
+    return safeAuthRedirect(parsed.pathname + parsed.search + parsed.hash, fallback)
   } catch {
     // Not a valid URL and not a relative path → discard
     return fallback
@@ -62,6 +63,8 @@ function sanitizeRedirectParam(raw: string | null, fallback: string = '/dashboar
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const requestUrl = new URL(request.url)
+  const redirect = sanitizeRedirectParam(requestUrl.searchParams.get('redirect') || requestUrl.searchParams.get('next'))
+  const loginWithError = (errorCode: string) => new URL(`${authContinuationPath('/auth/login', redirect)}&${new URLSearchParams({ error: errorCode })}`, request.url)
   const code = requestUrl.searchParams.get('code')
   const error = requestUrl.searchParams.get('error')
   const type = requestUrl.searchParams.get('type')
@@ -106,7 +109,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       )
     }
 
-    return NextResponse.redirect(new URL('/auth/login?error=oauth_error', request.url))
+    return NextResponse.redirect(loginWithError('oauth_error'))
   }
 
   if (code) {
@@ -145,7 +148,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           )
         }
 
-        return NextResponse.redirect(new URL('/auth/login?error=session_error', request.url))
+        return NextResponse.redirect(loginWithError('session_error'))
       }
 
       if (data.user) {
@@ -181,10 +184,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }
 
         // Get redirect parameter - honor both 'redirect' and 'next' params (sanitized against open redirects)
-        const redirect: string = sanitizeRedirectParam(
-          requestUrl.searchParams.get('redirect') || requestUrl.searchParams.get('next'),
-          '/dashboard'
-        )
         console.log('[Callback] callback_next=' + redirect)
 
         // Detect email verification: email_confirmed_at was set within the last 2 minutes
@@ -244,7 +243,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }
 
         if (isVerificationFlow) {
-          return NextResponse.redirect(new URL('/auth/verified', request.url))
+          return NextResponse.redirect(new URL(authContinuationPath('/auth/verified', redirect), request.url))
         }
 
         if (isNewUser) {
@@ -255,11 +254,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           if (!hasFirstName || !hasLastName) {
             // OAuth user without complete profile - redirect to onboarding
             console.log('[Callback] New OAuth user needs to complete profile')
-            return NextResponse.redirect(new URL('/onboarding', request.url))
+            return NextResponse.redirect(new URL(authContinuationPath('/onboarding', redirect), request.url))
           }
 
           // Profile is complete - redirect to dashboard with welcome
-          return NextResponse.redirect(new URL('/dashboard?welcome=true', request.url))
+          return NextResponse.redirect(new URL(redirect === '/dashboard' ? '/dashboard?welcome=true' : redirect, request.url))
         } else {
           // Redirect to the intended page for existing users
           return NextResponse.redirect(new URL(redirect, request.url))
@@ -279,7 +278,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         )
       }
 
-      return NextResponse.redirect(new URL('/auth/login?error=unexpected_error', request.url))
+      return NextResponse.redirect(loginWithError('unexpected_error'))
     }
   }
 
@@ -296,5 +295,5 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     )
   }
 
-  return NextResponse.redirect(new URL('/auth/login', request.url))
+  return NextResponse.redirect(new URL(authContinuationPath('/auth/login', redirect), request.url))
 }

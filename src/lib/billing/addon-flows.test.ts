@@ -1,10 +1,13 @@
 import { beforeEach, expect, it, vi } from 'vitest'
 const mock = vi.hoisted(() => ({
-  db: { user: { findUnique: vi.fn(), update: vi.fn() }, billingProfile: { findUnique: vi.fn() }, addOn: { findFirst: vi.fn(), findUnique: vi.fn(), findMany: vi.fn(), create: vi.fn(), update: vi.fn() }, site: { count: vi.fn() } },
+  db: { user: { findUnique: vi.fn(), update: vi.fn() }, billingProfile: { findUnique: vi.fn() }, addOn: { findFirst: vi.fn(), findUnique: vi.fn(), findMany: vi.fn(), create: vi.fn(), update: vi.fn() }, site: { count: vi.fn() }, $transaction: vi.fn() },
   mollie: { customerMandates: { page: vi.fn() }, customerSubscriptions: { create: vi.fn(), update: vi.fn(), cancel: vi.fn() } },
+  lock: vi.fn(),
 }))
 vi.mock('../prisma', () => ({ prisma: mock.db }))
 vi.mock('../mollie', () => ({ mollie: mock.mollie, appUrl: 'https://app.test', formatMollieAmount: (n: number) => n.toFixed(2) }))
+vi.mock('./webhook-lease', () => ({ withBillingOperationLock: mock.lock }))
+vi.mock('./addon-fulfillment', () => ({ assertNoPendingAddOnFulfillment: async () => undefined, fulfillPaidAddOn: vi.fn() }))
 import { purchaseAddOn, updateAddOnQuantity, cancelAddOn, getUserAddOns } from './addon-flows'
 const seat = (overrides = {}) => ({ id: 'a1', userId: 'u1', type: 'EXTRA_SEAT', quantity: 2, status: 'active', mollieSubscriptionId: 'sub1', user: { mollieCustomerId: 'c1', plan: 'PRO' }, ...overrides })
 beforeEach(() => {
@@ -12,6 +15,8 @@ beforeEach(() => {
   mock.mollie.customerMandates.page.mockResolvedValue([{ status: 'valid' }]); mock.db.billingProfile.findUnique.mockResolvedValue(null)
   mock.db.addOn.findFirst.mockResolvedValue(null); mock.db.addOn.findUnique.mockResolvedValue(seat()); mock.db.addOn.create.mockResolvedValue({ id: 'a1' }); mock.db.addOn.update.mockResolvedValue({ id: 'a1' })
   mock.mollie.customerSubscriptions.create.mockResolvedValue({ id: 'sub1' }); mock.db.addOn.findMany.mockResolvedValue([]); mock.db.site.count.mockResolvedValue(0)
+  mock.db.$transaction.mockImplementation(async work => work(mock.db))
+  mock.lock.mockImplementation(async (_userId, work) => work())
 })
 
 it.each([0, -1])('rejects non-positive purchase quantity %i before service calls', async quantity => { await expect(purchaseAddOn({ userId: 'u1', type: 'EXTRA_SEAT', quantity })).rejects.toThrow('at least 1'); expect(mock.db.user.findUnique).not.toHaveBeenCalled() })
@@ -34,18 +39,29 @@ it('does not add VAT on top of a zero-rated business pack', async () => {
   expect(mock.db.user.update).not.toHaveBeenCalled()
 })
 it('blocks duplicate active scan packs', async () => { mock.db.addOn.findFirst.mockResolvedValue({ id: 'existing' }); await expect(purchaseAddOn({ userId: 'u1', type: 'SCAN_PACK_100' })).rejects.toMatchObject({ code: 'ALREADY_ACTIVE' }); expect(mock.db.addOn.create).not.toHaveBeenCalled() })
-it('leaves failed provider attempts pending and grants capacity only on a successful retry', async () => {
+it('leaves a lost provider response pending and blocks another create on retry', async () => {
   mock.mollie.customerSubscriptions.create.mockRejectedValueOnce(new Error('provider offline'))
   await expect(purchaseAddOn({ userId: 'u1', type: 'EXTRA_SEAT' })).rejects.toThrow('provider offline')
   expect(mock.db.addOn.create).toHaveBeenCalledWith({ data: expect.objectContaining({ status: 'pending' }) })
   expect(mock.db.addOn.update).not.toHaveBeenCalled(); expect(mock.db.user.update).not.toHaveBeenCalled()
-  await purchaseAddOn({ userId: 'u1', type: 'EXTRA_SEAT' })
-  expect(mock.db.addOn.findFirst).toHaveBeenCalledWith({ where: { userId: 'u1', type: 'EXTRA_SEAT', status: 'active' } })
-  expect(mock.db.addOn.update).toHaveBeenCalledOnce(); expect(mock.db.user.update).toHaveBeenCalledOnce()
+  mock.db.addOn.findFirst.mockResolvedValue({ id: 'a1', status: 'pending' })
+  await expect(purchaseAddOn({ userId: 'u1', type: 'EXTRA_SEAT' })).rejects.toMatchObject({ code: 'ADDON_RECONCILIATION_REQUIRED' })
+  expect(mock.db.addOn.findFirst).toHaveBeenCalledWith({ where: { userId: 'u1', type: 'EXTRA_SEAT', status: { in: ['active', 'pending'] } } })
+  expect(mock.mollie.customerSubscriptions.create).toHaveBeenCalledOnce()
+  expect(mock.db.addOn.update).not.toHaveBeenCalled(); expect(mock.db.user.update).not.toHaveBeenCalled()
 })
-it('adds seats to an existing subscription rather than creating a duplicate', async () => {
-  mock.db.addOn.findFirst.mockResolvedValue({ id: 'a1', quantity: 2 }); await purchaseAddOn({ userId: 'u1', type: 'EXTRA_SEAT', quantity: 3 })
-  expect(mock.mollie.customerSubscriptions.update).toHaveBeenCalledWith('sub1', expect.objectContaining({ amount: { currency: 'EUR', value: '75.00' } })); expect(mock.db.addOn.create).not.toHaveBeenCalled()
+it('requires absolute quantity management for an existing seat bundle without incrementing on POST retry', async () => {
+  mock.db.addOn.findFirst.mockResolvedValue({ id: 'a1', quantity: 2, status: 'active' })
+  for (let i = 0; i < 2; i++) await expect(purchaseAddOn({ userId: 'u1', type: 'EXTRA_SEAT', quantity: 3 })).rejects.toMatchObject({ code: 'EXISTING_SEAT_BUNDLE' })
+  expect(mock.mollie.customerSubscriptions.update).not.toHaveBeenCalled(); expect(mock.db.addOn.create).not.toHaveBeenCalled()
+})
+it.each(['EXTRA_SEAT', 'PAGE_PACK_25K'] as const)('blocks another %s creation after provider success and local activation failure', async type => {
+  mock.db.addOn.update.mockRejectedValueOnce(new Error('database offline'))
+  await expect(purchaseAddOn({ userId: 'u1', type })).rejects.toThrow('database offline')
+  mock.db.addOn.findFirst.mockResolvedValue({ id: 'a1', status: 'pending' })
+  await expect(purchaseAddOn({ userId: 'u1', type })).rejects.toMatchObject({ code: 'ADDON_RECONCILIATION_REQUIRED' })
+  expect(mock.mollie.customerSubscriptions.create).toHaveBeenCalledOnce()
+  expect(mock.db.addOn.create).toHaveBeenCalledOnce(); expect(mock.db.user.update).not.toHaveBeenCalled()
 })
 it.each([
   [null, 'Add-on not found'], [seat({ type: 'SCAN_PACK_100' }), 'Only seat'], [seat({ status: 'canceled' }), 'inactive'], [seat({ mollieSubscriptionId: null }), 'Missing Mollie'],
@@ -57,6 +73,30 @@ it('rejects zero seats and reduces entitlement by the exact delta', async () => 
   expect(mock.db.addOn.update).toHaveBeenCalledWith({ where: { id: 'a1' }, data: { quantity: 1, totalPrice: 15 } })
 })
 it('does not change local quantity after provider update failure', async () => { mock.mollie.customerSubscriptions.update.mockRejectedValue(new Error('provider offline')); await expect(updateAddOnQuantity({ addOnId: 'a1', newQuantity: 4 })).rejects.toThrow('provider offline'); expect(mock.db.addOn.update).not.toHaveBeenCalled(); expect(mock.db.user.update).not.toHaveBeenCalled() })
+it('rolls back quantity and counter together when a local PATCH write fails, then applies an absolute retry once', async () => {
+  let row = seat(); let extraSeats = 2
+  mock.db.addOn.findUnique.mockImplementation(async () => structuredClone(row))
+  mock.db.addOn.update.mockImplementation(async ({ data }) => { Object.assign(row, data); return structuredClone(row) })
+  mock.db.user.update.mockImplementation(async ({ data }) => { extraSeats += data.extraSeats.increment })
+  mock.db.$transaction.mockImplementation(async work => {
+    const snapshot = structuredClone({ row, extraSeats })
+    try { return await work(mock.db) } catch (error) { ({ row, extraSeats } = snapshot); throw error }
+  })
+  mock.db.user.update.mockRejectedValueOnce(new Error('local counter write failed'))
+  await expect(updateAddOnQuantity({ addOnId: 'a1', newQuantity: 4 })).rejects.toThrow('local counter')
+  expect(row.quantity).toBe(2); expect(extraSeats).toBe(2)
+  await updateAddOnQuantity({ addOnId: 'a1', newQuantity: 4 })
+  await updateAddOnQuantity({ addOnId: 'a1', newQuantity: 4 })
+  expect(row.quantity).toBe(4); expect(extraSeats).toBe(4)
+  expect(mock.lock).toHaveBeenCalledWith('u1', expect.any(Function))
+  expect(mock.mollie.customerSubscriptions.update).toHaveBeenCalledTimes(3)
+  for (const [, args] of mock.mollie.customerSubscriptions.update.mock.calls) expect(args.amount.value).toBe('60.00')
+})
+it('does not PATCH provider or local quantity when another billing operation owns the lease', async () => {
+  mock.lock.mockRejectedValue(new Error('billing operation in progress'))
+  await expect(updateAddOnQuantity({ addOnId: 'a1', newQuantity: 4 })).rejects.toThrow('in progress')
+  expect(mock.mollie.customerSubscriptions.update).not.toHaveBeenCalled(); expect(mock.db.addOn.update).not.toHaveBeenCalled()
+})
 it.each([[null, 'Add-on not found'], [seat({ status: 'canceled' }), 'already canceled'], [seat({ user: { mollieCustomerId: null } }), 'Missing Mollie']])('rejects invalid cancellation state %j', async (record, message) => { mock.db.addOn.findUnique.mockResolvedValue(record); await expect(cancelAddOn('a1')).rejects.toThrow(message as string); expect(mock.mollie.customerSubscriptions.cancel).not.toHaveBeenCalled() })
 it('cancels provider billing before removing seat entitlements', async () => { await cancelAddOn('a1'); expect(mock.mollie.customerSubscriptions.cancel).toHaveBeenCalledWith('sub1', { customerId: 'c1' }); expect(mock.db.user.update).toHaveBeenCalledWith({ where: { id: 'u1' }, data: { extraSeats: { decrement: 2 } } }) })
 it('preserves entitlements when cancellation fails at provider', async () => { mock.mollie.customerSubscriptions.cancel.mockRejectedValue(new Error('offline')); await expect(cancelAddOn('a1')).rejects.toThrow('offline'); expect(mock.db.addOn.update).not.toHaveBeenCalled() })

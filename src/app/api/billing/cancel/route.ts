@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { requireAuth } from "@/lib/auth"
 import { cancelSubscription } from "@/lib/billing/mollie-flows"
 
+export const maxDuration = 60
+
 export async function POST(request: NextRequest) {
   try {
     // Verify user is authenticated

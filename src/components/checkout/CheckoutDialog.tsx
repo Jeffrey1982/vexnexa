@@ -9,7 +9,7 @@
  * "All prices include VAT" is shown clearly throughout.
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -39,7 +39,9 @@ import {
   type BillingInterval,
 } from "@/lib/billing/pricing-config";
 import { validateCompanyName } from "@/lib/billing/validation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { authContinuationPath, checkoutReturnPath } from "@/lib/checkout-recovery";
 import { localizeApiError } from "@/lib/localized-api-error";
 
 // ── Types ──
@@ -65,6 +67,8 @@ export function CheckoutDialog({
   billingCycle,
 }: CheckoutDialogProps): JSX.Element {
   const tError = useTranslations("apiErrors");
+  const locale = useLocale();
+  const router = useRouter();
   // ── State ──
   const [purchaseAs, setPurchaseAs] = useState<PurchaseAs>("individual");
   const [companyFields, setCompanyFields] = useState<CompanyFields>({
@@ -73,6 +77,7 @@ export function CheckoutDialog({
   });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const submissionInFlight = useRef(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
 
@@ -134,7 +139,7 @@ export function CheckoutDialog({
 
   // ── Submit to Mollie ──
   const handleSubmit = useCallback(async () => {
-    if (!planKey) return;
+    if (!planKey || submissionInFlight.current) return;
 
     // Only company name is required for company purchases
     if (purchaseAs === "company") {
@@ -148,6 +153,7 @@ export function CheckoutDialog({
       }
     }
 
+    submissionInFlight.current = true;
     setSubmitting(true);
     setServerError(null);
 
@@ -169,6 +175,12 @@ export function CheckoutDialog({
         body: JSON.stringify(body),
       });
 
+      if (res.status === 401 && (planKey === "PRO" || planKey === "BUSINESS")) {
+        router.push(authContinuationPath('/auth/login', checkoutReturnPath({ plan: planKey, billingCycle }, locale)));
+        setSubmitting(false);
+        return;
+      }
+
       const data = await res.json();
 
       if (!res.ok) {
@@ -177,12 +189,19 @@ export function CheckoutDialog({
         return;
       }
 
+      if (typeof data.checkoutUrl !== 'string' || !data.checkoutUrl) {
+        setServerError(tError("checkoutFailed"));
+        setSubmitting(false);
+        return;
+      }
       window.location.href = data.checkoutUrl;
     } catch {
       setServerError(tError("network"));
       setSubmitting(false);
+    } finally {
+      submissionInFlight.current = false;
     }
-  }, [planKey, billingCycle, purchaseAs, companyFields, tError]);
+  }, [planKey, billingCycle, purchaseAs, companyFields, tError, locale, router]);
 
   const billingCycleLabel = billingCycle === "monthly" ? "Monthly" : "Annual";
   const nextBillingLabel = billingCycle === "monthly" ? "/month" : "/year";

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Check } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -38,6 +38,8 @@ type LanguageSelectorProps = {
 
 export function LanguageSelector({ marketingOnly = false }: LanguageSelectorProps) {
   const t = useTranslations("nav");
+  const locale = useLocale();
+  const [hydrated, setHydrated] = React.useState(false);
   const availableLanguages = React.useMemo(
     () =>
       marketingOnly
@@ -49,11 +51,9 @@ export function LanguageSelector({ marketingOnly = false }: LanguageSelectorProp
         : languages,
     [marketingOnly]
   );
-  const [currentLanguage, setCurrentLanguage] = React.useState<Language>(availableLanguages[0] ?? languages[0]);
+  const currentLanguage = languages.find((language) => language.code === locale) ?? languages[0];
 
   const handleLanguageChange = (language: Language) => {
-    setCurrentLanguage(language);
-
     if (typeof window === "undefined") return;
     try {
       localStorage.setItem("preferred-language", language.code);
@@ -74,24 +74,10 @@ export function LanguageSelector({ marketingOnly = false }: LanguageSelectorProp
   };
 
   React.useEffect(() => {
-    try {
-      const pathMatch = window.location.pathname.match(/^\/(en|nl|de|fr|es|pt)(?=\/|$)/);
-      const cookieMatch = document.cookie.match(/NEXT_LOCALE=([^;]+)/);
-      const cookieLocale = cookieMatch ? cookieMatch[1] : null;
-      const savedLanguage =
-        (pathMatch ? pathMatch[1] : null) || cookieLocale || localStorage.getItem("preferred-language");
-      if (savedLanguage) {
-        const language =
-          availableLanguages.find((lang) => lang.code === savedLanguage) ??
-          languages.find((lang) => lang.code === savedLanguage);
-        if (language) {
-          setCurrentLanguage(language);
-        }
-      }
-    } catch {
-      // localStorage unavailable
-    }
-  }, [availableLanguages]);
+    // Radix opens on pointerdown, which cannot be replayed before hydration.
+    // Keep the SSR trigger disabled until its interaction handlers are ready.
+    setHydrated(true);
+  }, []);
 
   return (
     <DropdownMenu>
@@ -102,6 +88,7 @@ export function LanguageSelector({ marketingOnly = false }: LanguageSelectorProp
           className="px-2"
           aria-label={t("language")}
           title={currentLanguage.nativeName}
+          disabled={!hydrated}
         >
           <span className="font-mono text-xs font-semibold tracking-normal">
             {currentLanguage.shortLabel}

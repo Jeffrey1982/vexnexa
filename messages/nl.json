@@ -1,4 +1,35 @@
 {
+  "billingRenewal": {
+    "stoppedTitle": "Verlenging gestopt",
+    "stoppedUntil": "Je betaalde abonnement blijft beschikbaar tot {date}. Er staan geen verdere abonnementsverlengingen gepland.",
+    "stoppedExpired": "Je betaalde periode is afgelopen. De verlenging is gestopt.",
+    "cancelDescription": "Stop toekomstige verlengingen. Je abonnement blijft beschikbaar tot het einde van de periode waarvoor je al hebt betaald.",
+    "cancelConfirm": "De verlenging van {plan} opzeggen? Je houdt toegang gedurende de al betaalde periode.",
+    "canceledSuccess": "Verlenging gestopt. Je betaalde toegang blijft beschikbaar tot het einde van je betaalde periode."
+  },
+  "checkoutRecovery": {
+    "pendingTitle": "Betaling ontvangen, activatie volgt",
+    "pendingDescription": "Je betaling is ontvangen, maar de activatie van je aankoop is nog niet bevestigd. Betaal niet opnieuw. Controleer de status opnieuw of neem contact op met support met dit betalingskenmerk.",
+    "checkAgain": "Status opnieuw controleren",
+    "checking": "Activatie wordt gecontroleerd…",
+    "resumeDescription": "Je account is bevestigd. Ga terug om je gekozen abonnement te controleren. Er wordt pas een betaling gestart als je die zelf bevestigt.",
+    "continueCheckout": "Mijn gekozen abonnement bekijken"
+  },
+  "agencyOffer": {
+    "badge": "Agency voor klantgerichte bureaus",
+    "title": "Jouw bevindingen. Jullie rapport.",
+    "description": "Geautomatiseerde toegankelijkheidscontroles en rapporten in jullie huisstijl, voor maximaal {sites} klantwebsites.",
+    "price": "Agency: {price} per maand, inclusief btw",
+    "billingNote": "Betaald maandabonnement met automatische verlenging. Bekijk de voorwaarden vóór het afrekenen.",
+    "cta": "Bekijk Agency",
+    "sampleCta": "Bekijk voorbeeldrapport",
+    "closedBadge": "Founding Agency-programma",
+    "closedTitle": "Nieuwe founding-aanmeldingen zijn gesloten",
+    "closedDescription": "De gratis-jaaractie is niet meer beschikbaar voor nieuwe aanmeldingen. Je kunt VexNexa blijven gebruiken met een betaald Agency-abonnement.",
+    "existingTitle": "Al aangemeld of deelnemer?",
+    "existingDescription": "De sluiting voor nieuwe aanmeldingen verandert niets aan bestaande afspraken of eerder ingediende aanvragen. Neem contact op bij vragen over je aanvraag of toegezegde voordelen.",
+    "existingCta": "Vraag over je bestaande afspraak"
+  },
   "brandHome": {
     "eyebrow": "Voor bureaus en digitale teams",
     "headline": "Toegankelijkheid.",

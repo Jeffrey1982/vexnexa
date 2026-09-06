@@ -3,6 +3,8 @@ import { requireAuth } from "@/lib/auth"
 import { cancelAddOn, updateAddOnQuantity } from "@/lib/billing/addon-flows"
 import { prisma } from "@/lib/prisma"
 
+export const maxDuration = 60
+
 /**
  * PATCH /api/billing/addons/[addonId]
  * Update add-on (adjust seat quantity)

@@ -32,6 +32,8 @@ model User {
   profileCompleted        Boolean                 @default(false)
   plan                    Plan                    @default(FREE)
   subscriptionStatus      String                  @default("active")
+  subscriptionCurrentPeriodEnd DateTime?           @db.Timestamptz(3)
+  subscriptionCanceledAt  DateTime?                 @db.Timestamptz(3)
   trialEndsAt             DateTime?
   trialStartsAt           DateTime?
   trialOrigin             String?
@@ -912,6 +914,8 @@ model ProcessedWebhook {
   attempts     Int       @default(1)
   metadata     Json?
   processedAt  DateTime?
+  processingToken String?
+  processingStartedAt DateTime? @db.Timestamptz(3)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
