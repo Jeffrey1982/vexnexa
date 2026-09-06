@@ -1,5 +1,6 @@
 // src/app/api/scan/route.ts
 import { after, NextResponse } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { EnhancedAccessibilityScanner, type EnhancedScanResult } from "@/lib/scanner-enhanced";
 import { discoverInternalLinksFromPage } from "@/lib/crawler";
@@ -120,12 +121,17 @@ async function scanWithDeadline(
 ) {
   const remainingMs = Math.max(1, deadlineMs - Date.now());
 
-  return Promise.race([
-    scanner.scanUrl(url, { enableAiImageAnalysis, includeVNI }),
-    new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error("Deep scan reached the 90s safety limit")), remainingMs)
-    ),
-  ]);
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      scanner.scanUrl(url, { enableAiImageAnalysis, includeVNI }),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => reject(new Error("Deep scan reached the 90s safety limit")), remainingMs);
+      }),
+    ]);
+  } finally {
+    if (timeout !== undefined) clearTimeout(timeout);
+  }
 }
 
 function aggregateDeepScanResults(
@@ -606,9 +612,12 @@ export async function POST(req: Request) {
       }
     }
 
-    const body = await req.json();
-    const { url } = body;
-    const includeVNI = Boolean(body?.includeVNI);
+    const parsedBody = z.object({ url: z.string().min(1), includeVNI: z.boolean().optional() })
+      .safeParse(await req.json().catch(() => null));
+    if (!parsedBody.success) {
+      return NextResponse.json({ ok: false, error: "A website URL and an optional boolean includeVNI are required." }, { status: 400 });
+    }
+    const { url, includeVNI = false } = parsedBody.data;
     const normalizedUrl = normalizeUrl(url);
     if (!normalizedUrl) {
       return NextResponse.json({ ok: false, error: "Please enter a valid website URL." }, { status: 400 });
@@ -711,6 +720,9 @@ export async function POST(req: Request) {
     console.error("Scan request failed:", e);
 
     if (e instanceof Error) {
+      if (e.message === "Authentication required") {
+        return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+      }
       if (e.message === "User not found") {
         return NextResponse.json(
           {
@@ -727,12 +739,12 @@ export async function POST(req: Request) {
           { status: 402 }
         );
       }
-      if ((e as any).code === "LIMIT_REACHED") {
+      if ((e as any).code === "LIMIT_REACHED" || (e as any).code === "FREE_LIMIT_REACHED") {
         return NextResponse.json(
           {
             ok: false,
             error: e.message,
-            code: "LIMIT_REACHED",
+            code: (e as any).code,
             limit: (e as any).limit,
             current: (e as any).current,
           },

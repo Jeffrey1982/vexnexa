@@ -51,6 +51,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       });
     }
 
+    // Explicit payment references must belong to the authenticated customer.
+    // Never let a caller trigger billing or inspect a subscription via another
+    // customer's payment ID.
+    if (paymentId) {
+      const ownedQuote = await prisma.checkoutQuote.findFirst({
+        where: {
+          userId: user.id,
+          product: 'assurance',
+          molliePaymentId: paymentId,
+        },
+        select: { id: true },
+      });
+      if (!ownedQuote) {
+        return NextResponse.json(
+          { ok: false, error: 'NO_PENDING_PAYMENT', message: 'No assurance payment found for this user.' },
+          { status: 404 }
+        );
+      }
+    }
+
     // No subscription yet — look up the most recent assurance CheckoutQuote
     // for this user (created at payment time in createAssuranceCheckoutPayment).
     if (!paymentId) {

@@ -15,8 +15,9 @@ env:
   # install only what the job needs in the Playwright step.
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
   # Dummy env so modules that read env at import time don't crash.
-  DATABASE_URL: postgresql://test:test@localhost:5432/test
-  DIRECT_URL: postgresql://test:test@localhost:5432/test
+  DATABASE_URL: postgresql://test:test@localhost:5432/vexnexa_ci_scratch
+  DIRECT_URL: postgresql://test:test@localhost:5432/vexnexa_ci_scratch
+  CI_SCRATCH_DATABASE_IS_SAFE: 'true'
   NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
   NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
   SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
@@ -35,7 +36,7 @@ jobs:
         env:
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
-          POSTGRES_DB: test
+          POSTGRES_DB: vexnexa_ci_scratch
         ports:
           - 5432:5432
         options: >-
@@ -61,14 +62,17 @@ jobs:
       - name: Validate Prisma schema
         run: npx prisma validate
 
-      - name: Apply migrations to scratch database
-        run: npx prisma migrate deploy
+      - name: Test scratch database safety guards
+        run: node --test scripts/ci/scratch-database.test.mjs
 
-      - name: Check migration status
-        run: npx prisma migrate status
+      - name: Verify frozen scratch baseline and new migrations
+        run: node scripts/ci/scratch-database.mjs
 
       - name: Lint
         run: npm run lint
+
+      - name: Generate Next.js route types
+        run: npx next typegen
 
       - name: Type-check
         run: npx tsc --noEmit
@@ -121,6 +125,20 @@ jobs:
     timeout-minutes: 30
     # Run E2E only on PRs and pushes to main; skip on draft PRs to save minutes.
     if: github.event.pull_request.draft != true
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: vexnexa_ci_scratch
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v4
 
@@ -141,14 +159,18 @@ jobs:
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
 
+      - name: Prepare isolated E2E database
+        run: node scripts/ci/scratch-database.mjs
+
       - name: Build Next.js app
         run: npm run build
 
       - name: Run Playwright E2E
         run: npm run test:e2e:local
         env:
-          # Start with production build rather than dev server for speed.
+          # Authenticated fixtures require the guarded development login route.
           TEST_ENV: local
+          E2E_DATABASE_IS_SAFE: 'true'
 
       - name: Upload Playwright report
         if: failure()

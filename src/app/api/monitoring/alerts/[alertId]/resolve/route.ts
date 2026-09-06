@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
+import { requireDevelopment } from "@/lib/dev-only";
 
 interface RouteParams {
   params: Promise<{
@@ -8,6 +9,8 @@ interface RouteParams {
 }
 
 export async function POST(req: NextRequest, { params }: RouteParams) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
   const { alertId } = await params;
 
   try {

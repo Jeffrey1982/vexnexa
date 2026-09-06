@@ -1,0 +1,19 @@
+// @vitest-environment node
+import { beforeEach, afterEach, expect, it, vi } from 'vitest'
+import type { InvoiceData } from './invoice-template'
+const mock = vi.hoisted(() => ({ html: '', toBlob: vi.fn() }))
+vi.mock('@react-pdf/renderer', async () => {
+  const { createElement } = await import('react')
+  const { renderToStaticMarkup } = await import('react-dom/server')
+  const Component = ({ children }: { children?: React.ReactNode }) => createElement('div', null, children)
+  return { Document: Component, Page: Component, Text: Component, View: Component, StyleSheet: { create: (style: unknown) => style }, pdf: (element: React.ReactNode) => { mock.html = renderToStaticMarkup(element); return { toBlob: mock.toBlob } } }
+})
+import { generateInvoicePdfBuffer, generateInvoiceNumber } from './invoice-pdf'
+const invoice = (overrides: Partial<InvoiceData> = {}): InvoiceData => ({ invoiceDate: '2026-09-06', paymentId: 'tr_123456', customerName: 'Test User', customerEmail: 'user@example.test', customerType: 'individual', customerCountry: 'NL', product: 'subscription', description: 'Pro Plan', baseAmount: 28.88, vatAmount: 6.07, totalAmount: 34.95, currency: 'EUR', taxRatePercent: 21, taxMode: 'vat_standard', ...overrides })
+beforeEach(() => { vi.resetAllMocks(); mock.html = ''; mock.toBlob.mockResolvedValue({ arrayBuffer: async () => Uint8Array.from([37, 80, 68, 70]).buffer }) })
+afterEach(() => vi.restoreAllMocks())
+it('passes invoice amounts and stable reference to renderer and returns its bytes', async () => { expect(await generateInvoicePdfBuffer(invoice())).toEqual(Buffer.from('%PDF')); expect(mock.html).toContain('VNX-20260906-123456'); expect(mock.html).toContain('€28.88'); expect(mock.html).toContain('€6.07'); expect(mock.html).toContain('€34.95'); expect(mock.html).toContain('VAT (21%)'); expect(mock.toBlob).toHaveBeenCalledOnce() })
+it('renders company addresses and reverse-charge evidence', async () => { await generateInvoicePdfBuffer(invoice({ invoiceNumber: 'CUSTOM', companyName: 'Example GmbH', vatId: 'DE123', vatIdValid: true, registrationNumber: 'REG1', taxMode: 'reverse_charge', vatAmount: 0, taxNotes: 'Accounting note', addressLine1: 'Street 1', addressCity: 'Berlin', addressPostal: '10115', addressRegion: 'Berlin' })); expect(mock.html).toContain('CUSTOM'); expect(mock.html).toContain('DE123'); expect(mock.html).toContain('✓'); expect(mock.html).toContain('Street 1'); expect(mock.html).toContain('10115 Berlin'); expect(mock.html).toContain('Reverse Charge'); expect(mock.html).toContain('Accounting note'); expect(mock.html).toContain('REG1') })
+it('omits optional merchant tax identifiers and uses outside-EU VAT labels', async () => { await generateInvoicePdfBuffer(invoice({ merchantName: 'Custom Merchant', merchantAddress: 'Custom Address', merchantVatId: '', merchantKvk: '', vatId: 'US123', vatIdValid: false, taxMode: 'no_tax', vatAmount: 0, paymentId: undefined, customerCountry: '' })); expect(mock.html).toContain('Custom Merchant'); expect(mock.html).toContain('Custom Address'); expect(mock.html).toContain('Outside EU'); expect(mock.html).not.toContain('Payment reference'); expect(mock.html).not.toContain('KvK:'); expect(mock.html).not.toContain('✓') })
+it('propagates renderer failure instead of returning an empty invoice', async () => { mock.toBlob.mockRejectedValue(new Error('render failed')); await expect(generateInvoicePdfBuffer(invoice())).rejects.toThrow('render failed') })
+it('generates deterministic invoice numbers from payment IDs and bounded fallback IDs', () => { expect(generateInvoiceNumber('2026-09-06', 'tr_abcdef')).toBe('VNX-20260906-ABCDEF'); expect(generateInvoiceNumber('2026-09-06', 'tr_abcdef')).toBe('VNX-20260906-ABCDEF'); vi.spyOn(Math, 'random').mockReturnValue(0.123456789); expect(generateInvoiceNumber('2026-09-06')).toMatch(/^VNX-20260906-[A-Z0-9]{6}$/) })

@@ -88,8 +88,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const updateData: any = {}
 
     if (frequency !== undefined) updateData.frequency = frequency
-    if (dayOfWeek !== undefined) updateData.dayOfWeek = frequency === 'weekly' ? dayOfWeek : null
-    if (dayOfMonth !== undefined) updateData.dayOfMonth = frequency === 'monthly' ? dayOfMonth : null
+    const effectiveFrequency = frequency ?? scheduledScan.frequency
+    if (dayOfWeek !== undefined) updateData.dayOfWeek = effectiveFrequency === 'weekly' ? dayOfWeek : null
+    if (dayOfMonth !== undefined) updateData.dayOfMonth = effectiveFrequency === 'monthly' ? dayOfMonth : null
     if (timeOfDay !== undefined) updateData.timeOfDay = timeOfDay
     if (active !== undefined) updateData.active = active
     if (emailOnComplete !== undefined) updateData.emailOnComplete = emailOnComplete

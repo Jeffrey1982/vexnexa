@@ -2,11 +2,11 @@ import { prisma } from "./prisma";
 
 export interface PerformanceMetrics {
   performanceScore: number;
-  firstContentfulPaint: number;
-  largestContentfulPaint: number;
-  cumulativeLayoutShift: number;
-  firstInputDelay: number;
-  totalBlockingTime: number;
+  firstContentfulPaint: number | null;
+  largestContentfulPaint: number | null;
+  cumulativeLayoutShift: number | null;
+  firstInputDelay: number | null;
+  totalBlockingTime: number | null;
 }
 
 export interface SEOMetrics {
@@ -38,7 +38,7 @@ export interface ComplianceRisk {
 }
 
 // Enhanced Google PageSpeed Insights API integration
-export async function getPerformanceMetrics(url: string): Promise<PerformanceMetrics> {
+export async function getPerformanceMetrics(url: string): Promise<PerformanceMetrics | null> {
   const API_KEY = process.env.PAGESPEED_API_KEY;
 
   // If API key is available, use real PageSpeed Insights
@@ -47,6 +47,7 @@ export async function getPerformanceMetrics(url: string): Promise<PerformanceMet
       const response = await fetch(
         `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&strategy=desktop&category=PERFORMANCE`,
         {
+          signal: AbortSignal.timeout(30_000),
           headers: {
             'User-Agent': 'VexNexa Performance Analyzer'
           }
@@ -59,67 +60,30 @@ export async function getPerformanceMetrics(url: string): Promise<PerformanceMet
         const categories = lighthouseResult?.categories;
         const audits = lighthouseResult?.audits;
 
-        if (categories?.performance && audits) {
+        const score = categories?.performance?.score;
+        if (typeof score === 'number' && Number.isFinite(score) && score >= 0 && score <= 1 && audits) {
+          const measurement = (key: string): number | null => {
+            const value = audits[key]?.numericValue;
+            return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+          };
           return {
-            performanceScore: Math.round(categories.performance.score * 100),
-            firstContentfulPaint: audits['first-contentful-paint']?.numericValue || 0,
-            largestContentfulPaint: audits['largest-contentful-paint']?.numericValue || 0,
-            cumulativeLayoutShift: audits['cumulative-layout-shift']?.numericValue || 0,
-            firstInputDelay: audits['first-input-delay']?.numericValue || audits['max-potential-fid']?.numericValue || 0,
-            totalBlockingTime: audits['total-blocking-time']?.numericValue || 0
+            performanceScore: Math.round(score * 100),
+            firstContentfulPaint: measurement('first-contentful-paint'),
+            largestContentfulPaint: measurement('largest-contentful-paint'),
+            cumulativeLayoutShift: measurement('cumulative-layout-shift'),
+            firstInputDelay: measurement('first-input-delay') ?? measurement('max-potential-fid'),
+            totalBlockingTime: measurement('total-blocking-time')
           };
         }
       }
     } catch (error) {
-      console.warn('PageSpeed Insights API failed, using fallback:', error);
+      console.warn('PageSpeed Insights metrics unavailable');
     }
   }
 
-  // Fallback: Generate realistic metrics based on URL characteristics and accessibility patterns
-  const domain = new URL(url).hostname;
-  const seed = hashCode(url);
-  const random = seededRandom(seed);
-
-  // Base score influenced by domain characteristics
-  let baseScore = 60;
-  if (domain.includes('gov')) baseScore += 15; // Government sites tend to be slower
-  if (domain.includes('edu')) baseScore += 10; // Education sites
-  if (domain.includes('cdn') || domain.includes('static')) baseScore += 20; // CDN optimized
-  if (url.includes('amp')) baseScore += 15; // AMP pages are faster
-
-  const performanceScore = Math.max(10, Math.min(100, Math.round(baseScore + (random() - 0.5) * 30)));
-
-  // Generate correlated metrics (better performance = better metrics)
-  const scoreFactor = performanceScore / 100;
-  const inverseFactor = (100 - performanceScore) / 100;
-
-  return {
-    performanceScore,
-    firstContentfulPaint: Math.round(800 + (inverseFactor * 2200) + (random() * 400)),
-    largestContentfulPaint: Math.round(1200 + (inverseFactor * 3800) + (random() * 600)),
-    cumulativeLayoutShift: Math.round((inverseFactor * 0.25 + random() * 0.05) * 1000) / 1000,
-    firstInputDelay: Math.round(50 + (inverseFactor * 250) + (random() * 50)),
-    totalBlockingTime: Math.round(100 + (inverseFactor * 400) + (random() * 100))
-  };
-}
-
-// Hash function for consistent seeded random
-function hashCode(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-  return Math.abs(hash);
-}
-
-// Seeded random number generator
-function seededRandom(seed: number) {
-  return function() {
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed / 233280;
-  };
+  // Missing measurements stay missing. Never persist invented performance
+  // scores as if they came from a completed PageSpeed measurement.
+  return null;
 }
 
 // Analyze SEO correlation with accessibility

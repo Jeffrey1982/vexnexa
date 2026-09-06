@@ -111,7 +111,8 @@ export async function PATCH(
     }
 
     // Recalculate nextRunAt if schedule params changed
-    const needsRecalc = body.frequency || body.daysOfWeek || body.dayOfMonth || body.timeOfDay || body.timezone || body.startsAt || body.endsAt;
+    const needsRecalc = ['frequency', 'daysOfWeek', 'dayOfMonth', 'timeOfDay', 'timezone', 'startsAt', 'endsAt']
+      .some((field) => body[field] !== undefined);
     if (needsRecalc) {
       const freq = (data.frequency || existing.frequency) as Frequency;
       const nextRunAt = calculateNextRunAt({

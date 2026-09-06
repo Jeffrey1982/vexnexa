@@ -60,7 +60,9 @@ export async function generateActions(
     });
   }
 
-  if (breakdown.p2SearchVisibility.components.avgPosition > 35) {
+  // avgPosition is a normalized 0–50 quality score, not a raw search rank:
+  // rank 30 maps to 25, and ranks beyond page three map below 25.
+  if (breakdown.p2SearchVisibility.components.avgPosition < 25) {
     actions.push({
       pillar: 'P2',
       key: 'poor_avg_position',

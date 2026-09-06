@@ -80,7 +80,8 @@ export async function getCurrentUser(): Promise<any> {
       profileCompleted: dbUser.profileCompleted,
       marketingEmails: dbUser.marketingEmails,
       productUpdates: dbUser.productUpdates,
-      isAdmin: dbUser.isAdmin || user.user_metadata?.is_admin === true,
+      // user_metadata is writable by the account owner, not an admin authority.
+      isAdmin: dbUser.isAdmin === true,
       createdAt: dbUser.createdAt,
       updatedAt: dbUser.updatedAt,
       supabaseUser: user
@@ -99,7 +100,7 @@ export async function getCurrentUser(): Promise<any> {
     profileCompleted: !!(user.user_metadata?.first_name && user.user_metadata?.last_name),
     marketingEmails: user.user_metadata?.marketing_emails !== false,
     productUpdates: user.user_metadata?.product_updates !== false,
-    isAdmin: user.user_metadata?.is_admin === true,
+    isAdmin: false,
     createdAt: new Date(user.created_at),
     updatedAt: new Date(),
     supabaseUser: user
@@ -125,11 +126,11 @@ export async function getUserFromRequest() {
  * Centralized admin check for all admin routes.
  * Uses TWO methods to determine admin status:
  *
- * 1. Supabase user_metadata.is_admin flag (preferred)
+ * 1. The server-managed database isAdmin field
  * 2. Email allowlist (fallback)
  *
  * To add an admin:
- * - Option A: Set is_admin=true in Supabase user metadata (recommended)
+ * - Option A: Grant the admin role through the server-managed database
  * - Option B: Add email to ADMIN_EMAILS env var (comma-separated)
  *
  * @throws Redirects to /unauthorized if not authenticated or not admin
@@ -148,7 +149,7 @@ export async function requireAdmin() {
   const adminEmails = adminEmailsEnv.split(',').map(email => email.trim()).filter(Boolean);
   adminEmails.push('jeffrey.aay@gmail.com');
 
-  // Check admin status via DB field, Supabase metadata, OR email allowlist
+  // Check admin status via the server-managed DB field or email allowlist.
   const isAdmin = user.isAdmin || adminEmails.includes(user.email);
 
   if (!isAdmin) {

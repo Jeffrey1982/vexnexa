@@ -1,54 +1,81 @@
 # Playwright E2E tests
 
-## Running
+## Public checks (no database writes)
 
-```bash
-npm run test:e2e           # default: local dev
-npm run test:e2e:local     # explicit local dev
-npm run test:e2e:staging   # against staging (requires env)
-npm run test:e2e:ui        # Playwright UI mode (watch + debug)
+```sh
+npm run test:e2e -- e2e/smoke.spec.ts e2e/auth.spec.ts
 ```
 
-## Environments
+These tests cover marketing routes, responsive layout, an actual language
+change, login validation, and the unauthenticated dashboard gate. The invalid
+login response is intercepted in the browser: no credentials reach a real
+Supabase service, no account is created, and no email is sent.
 
-### Local (default)
+The default URL is `http://localhost:3000`. Public checks can reuse an existing
+local preview. Set `E2E_LOCAL_PORT=3001` to use a separate port.
 
-Runs against `http://localhost:3000`. Playwright auto-starts `npm run dev`
-if no server is already listening. Uses the dev-only `/api/dev/login`
-route to sign in the fixture user `e2e@vexnexa.test` without email
-verification.
+## Authenticated local checks
 
-Prereqs:
-- Postgres running + `DATABASE_URL` set
-- Supabase local (or test project) accessible
-- A seeded user with email `e2e@vexnexa.test`. Add to `prisma/seed.mjs`
-  behind a `NODE_ENV !== 'production'` guard.
+The full suite starts a **development** server, because `/api/dev/login` is
+deliberately unavailable in production. Do not add a production auth bypass.
+That route creates the fixture user `e2e@vexnexa.test`, a site record and one
+completed scan with score 92. It does not crawl `example.com` or call a scanner.
+The tests verify the stored data, sites navigation, findings and HTML report.
+Missing data fails the suite; it is never silently skipped.
 
-### Staging
+Requirements:
 
-```bash
-export TEST_ENV=staging
-export STAGING_URL=https://staging.vexnexa.com
-export E2E_USER_EMAIL=e2e+runner@vexnexa.com
-export E2E_USER_PASSWORD=****
-npm run test:e2e:staging
+- A disposable PostgreSQL database named `vexnexa_ci_scratch` on loopback.
+- `DATABASE_URL` and `DIRECT_URL` explicitly set to the same scratch connection.
+- `E2E_DATABASE_IS_SAFE=true` as an explicit opt-in to fixture writes.
+- The schema initialized by the guarded CI scratch helper.
+
+Fixture runs never reuse an existing preview server, since its environment may
+point at a real database. The safety check rejects remote hosts, other database
+names, missing opt-in and mismatched connections before calling dev-login.
+
+GitHub Actions provisions the database and calls
+`node scripts/ci/scratch-database.mjs` before Playwright. See
+[`scripts/ci/README.md`](../scripts/ci/README.md) for its frozen baseline and
+forward-migration checks. This does not reconcile production migration history.
+
+For an equivalent disposable local run, provision that database first and set
+the following in PowerShell (credentials below are deliberately fake examples):
+
+```powershell
+$env:CI = 'true'
+$env:CI_SCRATCH_DATABASE_IS_SAFE = 'true'
+$env:E2E_DATABASE_IS_SAFE = 'true'
+$env:E2E_LOCAL_PORT = '3001'
+$env:DATABASE_URL = 'postgresql://test:test@localhost:5432/vexnexa_ci_scratch'
+$env:DIRECT_URL = $env:DATABASE_URL
+$env:NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321'
+$env:NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
+$env:SUPABASE_SERVICE_ROLE_KEY = 'test-service-role-key'
+$env:MOLLIE_API_KEY = 'test_ci_key'
+node scripts/ci/scratch-database.mjs
+npm run test:e2e:local
 ```
 
-The fixture performs a real UI login instead of using the dev route. The
-test account should have a permanent free-tier plan and a handful of
-completed scans so the scan-flow test has data to assert against.
+The scratch helper requires an empty/disposable database, explicit `CI=true`
+and the safety flag. It does not load repository `.env` files or reset databases.
 
-## Files
+## Staging
 
-- `fixtures.ts`      — shared `test` export with `authedPage` fixture
-- `smoke.spec.ts`    — unauthenticated public pages (no login needed)
-- `auth.spec.ts`     — login / signup error handling & auth gate
-- `scan-flow.spec.ts`— dashboard navigation + scan results page
+Staging must be explicitly configured with `TEST_ENV=staging`, an HTTPS
+`STAGING_URL` (not `vexnexa.com`), `E2E_USER_EMAIL` and `E2E_USER_PASSWORD`.
+The dedicated test account must already have at least one completed scan.
+The fixture uses normal UI login; dev-login is never called on staging.
+Run `npm run test:e2e:staging` only against an authorized test deployment.
 
 ## Troubleshooting
 
-- `Dev login failed: 404` → the `/api/dev/login` route hasn't been added.
-  The fixture assumes it exists; if you prefer UI-login everywhere, set
-  `TEST_ENV=staging` and provide E2E creds even locally.
-- Flaky tests → increase `expect.timeout` in `playwright.config.ts` or
-  wrap selectors in `page.waitForSelector`.
+- `E2E_DATABASE_IS_SAFE` / scratch validation error: configure the disposable
+  local database explicitly, or run only public checks. Do not enable a remote
+  database override to bypass the guard.
+- `Dev login failed: 404`: a production server was used. Use the development
+  server on a separate port; the production restriction is intentional.
+- No completed scan / scans API failure: inspect the scratch setup and dev-login
+  output. The tests now fail these cases instead of reporting misleading success.
+- Reports, traces and failure screenshots are written to `playwright-report`
+  and `test-results`; CI uploads the report on failure.

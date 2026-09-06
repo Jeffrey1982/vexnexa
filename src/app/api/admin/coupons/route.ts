@@ -51,10 +51,10 @@ export async function GET(request: NextRequest) {
         },
       ];
     } else if (status === 'expired') {
-      where.OR = [
+      where.AND = [{ OR: [
         { isActive: false },
         { expiresAt: { lte: new Date() } },
-      ];
+      ] }];
     }
 
     const coupons = await prisma.coupon.findMany({

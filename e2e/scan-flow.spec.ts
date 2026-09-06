@@ -1,12 +1,31 @@
 /**
  * Core scan flow E2E.
  *
- * Covers the critical user journey: login → dashboard → create or pick a
- * site → start a scan → view the results page. Uses the `authedPage`
- * fixture which handles login differently per environment.
+ * Covers login → dashboard → sites → stored scan results → report preview.
+ * Local development uses a completed fixture scan, never a real website scan.
+ * Missing fixture data is a failure, not a reason to silently skip coverage.
  */
 
-import { test, expect } from './fixtures'
+import type { Page } from '@playwright/test'
+import { test, expect, TEST_ENV } from './fixtures'
+
+async function getCompletedScan(page: Page): Promise<{ id: string; score: number; site: { url: string } }> {
+  const response = await page.request.get('/api/scans?limit=20')
+  expect(response.status(), 'Authenticated scans API must succeed').toBe(200)
+  const body = await response.json()
+  expect(body.ok).toBe(true)
+  expect(Array.isArray(body.scans)).toBe(true)
+  const scan = body.scans.find((item: { status: string }) => item.status === 'COMPLETED')
+  expect(scan, 'The E2E account must contain a completed fixture scan').toBeTruthy()
+  expect(typeof scan.id).toBe('string')
+  expect(typeof scan.score).toBe('number')
+  if (TEST_ENV === 'local') {
+    expect(scan.site.url).toBe('https://example.com/')
+    expect(scan.score).toBe(92)
+    expect(scan.issues).toBe(1)
+  }
+  return scan
+}
 
 test('dashboard shows the sites overview to an authed user', async ({ authedPage }) => {
   await authedPage.goto('/dashboard', { waitUntil: 'domcontentloaded' })
@@ -14,30 +33,41 @@ test('dashboard shows the sites overview to an authed user', async ({ authedPage
   await expect(
     authedPage.getByRole('heading', { level: 1 }).first(),
   ).toBeVisible({ timeout: 10_000 })
+  const scan = await getCompletedScan(authedPage)
+  await expect(authedPage.locator(`main a[href="/scans/${scan.id}"]:visible`).first()).toBeVisible()
 })
 
 test('user can navigate to the sites list', async ({ authedPage }) => {
   await authedPage.goto('/dashboard', { waitUntil: 'domcontentloaded' })
-  const sitesLink = authedPage.getByRole('link', { name: /sites?/i }).first()
-  if (await sitesLink.isVisible().catch(() => false)) {
-    await sitesLink.click()
-    await expect(authedPage).toHaveURL(/sites/)
+  const sitesLink = authedPage.locator('a[href="/sites"]:visible').first()
+  await expect(sitesLink).toBeVisible()
+  await sitesLink.click()
+  await expect(authedPage).toHaveURL(/\/sites(?:\?|$)/)
+  await expect(authedPage.getByRole('heading', { name: 'Sites', exact: true })).toBeVisible()
+  const scan = await getCompletedScan(authedPage)
+  await expect(authedPage.getByText(scan.site.url, { exact: true })).toBeVisible()
+})
+
+test('scan results render the stored findings and score', async ({ authedPage }) => {
+  const scan = await getCompletedScan(authedPage)
+  const response = await authedPage.goto(`/scans/${scan.id}`, { waitUntil: 'domcontentloaded' })
+  expect(response?.status()).toBe(200)
+  await expect(authedPage.getByText('Scan Details', { exact: true })).toBeVisible()
+  await expect(authedPage.getByText('Total Issues', { exact: true }).first()).toBeVisible()
+  if (TEST_ENV === 'local') {
+    await expect(authedPage.getByLabel('Accessibility score: 92 out of 100').first()).toBeVisible()
+    await expect(authedPage.getByText('Images must have alternate text', { exact: true }).first()).toBeVisible()
   }
 })
 
-test('scan results page renders for a finished scan (if any)', async ({ authedPage }) => {
-  // Drive via API so this test isn't flaky against the exact dashboard
-  // UI — scans list endpoint returns the latest scan id the test user
-  // has access to.
-  const res = await authedPage.request.get('/api/scans?limit=1')
-  if (!res.ok()) {
-    test.skip(true, `scans API returned ${res.status()} — nothing to assert`)
+test('stored scan has a populated HTML report preview', async ({ authedPage }) => {
+  const scan = await getCompletedScan(authedPage)
+  const response = await authedPage.goto(`/scans/${scan.id}/report-v2`, { waitUntil: 'domcontentloaded' })
+  expect(response?.status()).toBe(200)
+  await expect(authedPage.getByRole('heading', { name: 'Premium Compliance Report', exact: true })).toBeVisible()
+  const report = authedPage.frameLocator('iframe[title="Accessibility Compliance Report"]')
+  await expect(report.getByText(new URL(scan.site.url).hostname, { exact: false }).first()).toBeVisible()
+  if (TEST_ENV === 'local') {
+    await expect(report.getByText('Images Missing Alternative Text', { exact: true }).first()).toBeVisible()
   }
-  const body = await res.json().catch(() => null)
-  const scan = body?.scans?.[0] ?? body?.data?.[0] ?? body?.[0]
-  if (!scan?.id) {
-    test.skip(true, 'no scan available for this test user')
-  }
-  await authedPage.goto(`/scans/${scan.id}`, { waitUntil: 'domcontentloaded' })
-  await expect(authedPage.locator('main, [role="main"]').first()).toBeVisible()
 })

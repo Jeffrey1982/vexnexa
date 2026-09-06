@@ -1,0 +1,31 @@
+{
+  "baselineDate": "2026-09-06",
+  "purpose": "CI-only frozen Prisma schema; not production migration history",
+  "baselineSha256": "931de17c9bfe3e8e39dc9b2431a3d1398644eaa4829f8605df944f72890996a6",
+  "legacyMigrations": {
+    "20250101_add_team_collaboration": "9a9057e839ae0a07c0266c480c0a2d7696d683ed778ed6a113438cdbdc6bf2c4",
+    "20250101000000_google_health_score": "d1a328fe482d11e7dcc2bceef713c7869c943e1648d291bf0fc09a8c2ce9bea7",
+    "20250105_add_logging_models": "9914017bd97bc70b7760fcf6e4b4be16a0067ece6433ad79c02150bd514711ab",
+    "20250105_add_scheduled_scans": "23d13bc150077757415504e2f46cc41cfff06b97775d0c5be66889945343ad47",
+    "20250209_add_page_volume_packs": "30d56fedb30ed4bfe6e0cf22fccdece99b75e2a0962a1b38a03b2e647ba339b4",
+    "20250209_pricing_restructure_v2": "43da7579657e24dcfc306ed5f0e70a7354ba7129a2ab7081744c427fdd366f93",
+    "20250220_add_assurance_scheduling": "98345c1218c638ada173793492d64af7f24ea1d001ba00df2c594b76b8e353cc",
+    "20250220_add_billing_profile_and_tax": "c803625fb8468e16df10c7f0ddc517ed528fec775a9f940a80aba22ed8425e53",
+    "20250220_add_coupon_system": "9b686c43e52bb7a2c34175250dbfb09cd0e731321da5f833fce1e472008d1387",
+    "20250908145135_init": "de38492c7f31c2075b7ec4a34bf02717dd236ee108817aef053f35a6427b1424",
+    "20251204_add_missing_indexes": "ed6421b887e7e0138c6dbe6a9071bab719676204a459d97838f674da107e0c82",
+    "20251204_add_soft_deletes": "0ae0806c56a4f264d4177ec04781e88eab7ba64a5d1045acc1b873b299aadc71",
+    "20260324_add_contact_reason_source": "1cf5f1affea6ba56f7d00127235ac418fd94dc91c153117b02cf7505e5dc4177",
+    "20260324_add_invoice_fields": "81df930866d6472b1cc8351ab7dc3b5eccb572cc4f923b62d14f5942abb0c88e",
+    "20260327_partner_applications": "2df2dbec6bc95b3173f0c988f26e5554d4163f0cf6a51c0ee80e98a7352f6b78",
+    "20260328_partner_application_status_enum": "711b85520b33fbf1a20e62c19f11ce330f104def3d89f4abd3060c61c9ff6f35",
+    "20260426000000_fix_google_health_schema_drift": "da301f794fbfc9f9f44185e0dc1a71c0c3904bad6da6ed03579bd2de5c67b76d",
+    "20260426120000_add_last_login_and_processed_webhook": "a0dd47c6c535bfea3ae6cc102bf3e1af211ab045344dd7d4f76ff477b643b109",
+    "20260427120000_add_failed_payment_tracking": "05086155ee4e7522966e5fdb27669a8ab6d928dcf4e2d4d4bb4ae52d79677801",
+    "20260430_add_audit_credits": "ba7a6c77e663c1032ce622446d131e2c455b8ae89192a57db5163fa47f604f01",
+    "20260430_add_pioneer_plan": "f2e5adc816e52355ec7d70db9fa053673e6d54b5cce4fda0225835c27c724041",
+    "20260502000000_make_admin_user_note_admin_nullable": "a0ab8394260f2b7e972e5d7fa3e3d31a83311b8d3afae34e2c61f4b75f26117c",
+    "20260502020000_add_issue_lifecycle_evidence": "166590a539259a41fe5cb520b7aa6158d6f96b912bd8e27f51e3904875687e72",
+    "20260503090000_add_status_updates": "fa248c5d821b411656ed115ee737412a72da1c972f534d2afa6ed1bf280a1c27"
+  }
+}

@@ -25,13 +25,14 @@ async function handler(_request: NextRequest) {
   let failure: string | null = null;
   let score: number | null = null;
   let issues: number | null = null;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
 
   try {
     const result = await Promise.race([
       scanner.scanUrl(HEALTH_CHECK_URL, { enableAiImageAnalysis: false, includeVNI: false }),
-      new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error(`Scan exceeded ${SCAN_TIMEOUT_MS / 1000}s`)), SCAN_TIMEOUT_MS)
-      ),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(`Scan exceeded ${SCAN_TIMEOUT_MS / 1000}s`)), SCAN_TIMEOUT_MS);
+      }),
     ]);
 
     const looksMock =
@@ -49,6 +50,7 @@ async function handler(_request: NextRequest) {
   } catch (error: any) {
     failure = error?.message || "Scan crashed without a message.";
   } finally {
+    if (timeout !== undefined) clearTimeout(timeout);
     await scanner.close().catch(() => undefined);
   }
 

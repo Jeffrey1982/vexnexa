@@ -855,6 +855,7 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
       return;
     }
 
+    let invoiceQuoteId = existingQuote?.id;
     if (!existingQuote) {
       try {
         const billingProfile = await prisma.billingProfile.findUnique({
@@ -871,7 +872,7 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
         const totalAmount = parseFloat(subscription.amount.value);
         const vatBreakdown = deriveVatBreakdown(totalAmount, 0.21);
 
-        await prisma.checkoutQuote.create({
+        const createdQuote = await prisma.checkoutQuote.create({
           data: {
             userId,
             product: "addon",
@@ -892,14 +893,20 @@ export async function processSubscriptionWebhook(subscriptionId: string) {
             molliePaymentId: subscriptionId,
           },
         });
+        invoiceQuoteId = createdQuote.id;
         console.log("[Subscription Webhook] Created CheckoutQuote for add-on:", subscriptionId);
       } catch (quoteError) {
         console.error("[Subscription Webhook] Failed to create CheckoutQuote:", quoteError);
       }
     }
 
+    if (!invoiceQuoteId) {
+      console.error('[Subscription Webhook] No invoice quote available; delivery remains retryable');
+      return;
+    }
+
     try {
-      const result = await generateAndSendInvoice(existingQuote?.id || subscriptionId, { force: false });
+      const result = await generateAndSendInvoice(invoiceQuoteId, { force: false });
       console.log("[Subscription Webhook] Invoice sent:", result);
     } catch (invoiceError) {
       console.error("[Subscription Webhook] Failed to send invoice:", invoiceError);

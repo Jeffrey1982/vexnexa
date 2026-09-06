@@ -113,7 +113,7 @@ export async function GET(req: Request) {
       analyticsData.risk = await getRiskAssessment(filteredWhere);
     }
     if (metrics.includes("benchmarks")) {
-      analyticsData.benchmarks = await getBenchmarkComparison(user.id, siteId);
+      analyticsData.benchmarks = await getBenchmarkComparison(filteredWhere);
     }
 
     return NextResponse.json({
@@ -449,9 +449,9 @@ async function getRiskAssessment(whereCondition: any) {
   };
 }
 
-async function getBenchmarkComparison(userId: string, siteId?: string | null) {
+async function getBenchmarkComparison(whereCondition: any) {
   const userStats = await prisma.scan.aggregate({
-    where: { site: { userId }, ...(siteId ? { siteId } : {}), status: "COMPLETED" },
+    where: whereCondition,
     _avg: { score: true, wcagAACompliance: true, performanceScore: true },
   });
 

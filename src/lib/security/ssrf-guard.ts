@@ -74,13 +74,25 @@ function isPrivateIPv4(ip: string): boolean {
 /** Does an IPv6 address fall inside a loopback / link-local / unique-local range? */
 function isPrivateIPv6(ip: string): boolean {
   if (net.isIPv6(ip) === false) return false
-  const lower = ip.toLowerCase()
-  if (lower === '::1' || lower === '::') return true                     // loopback / unspecified
-  if (lower.startsWith('fe80:') || lower.startsWith('fe80::')) return true // link-local
-  if (lower.startsWith('fc') || lower.startsWith('fd')) return true        // ULA fc00::/7
-  // IPv4-mapped IPv6: ::ffff:x.x.x.x — re-check the embedded v4
-  const v4MappedMatch = lower.match(/^::ffff:([\d.]+)$/)
-  if (v4MappedMatch && isPrivateIPv4(v4MappedMatch[1])) return true
+  // Expand before checking ranges. URL normalizes dotted mapped addresses to
+  // hexadecimal (e.g. ::ffff:127.0.0.1 becomes ::ffff:7f00:1).
+  let normalized = ip.toLowerCase().split('%')[0]
+  normalized = normalized.replace(/(\d+)\.(\d+)\.(\d+)\.(\d+)$/, (_match, a, b, c, d) =>
+    `${((Number(a) << 8) | Number(b)).toString(16)}:${((Number(c) << 8) | Number(d)).toString(16)}`)
+  const [left, right] = normalized.split('::')
+  const head = left ? left.split(':') : []
+  const tail = right ? right.split(':') : []
+  const groups = (right === undefined ? head : [
+    ...head, ...Array(8 - head.length - tail.length).fill('0'), ...tail,
+  ]).map((group) => Number.parseInt(group, 16))
+
+  if (groups.slice(0, 7).every((group) => group === 0) && groups[7] <= 1) return true
+  if ((groups[0] & 0xffc0) === 0xfe80) return true // Full link-local fe80::/10
+  if ((groups[0] & 0xfe00) === 0xfc00) return true // Unique-local fc00::/7
+  if (groups.slice(0, 5).every((group) => group === 0) && groups[5] === 0xffff) {
+    const embeddedIPv4 = [groups[6] >> 8, groups[6] & 0xff, groups[7] >> 8, groups[7] & 0xff].join('.')
+    return isPrivateIPv4(embeddedIPv4)
+  }
   return false
 }
 

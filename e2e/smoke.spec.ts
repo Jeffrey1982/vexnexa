@@ -51,12 +51,13 @@ test('pricing page shows at least 3 plans', async ({ page }) => {
 
 test('language switcher changes page content', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
-  const switcher = page
-    .getByRole('button', { name: /language|taal|nederlands|english/i })
-    .first()
-  if (!(await switcher.isVisible().catch(() => false))) {
-    test.skip(true, 'no visible language switcher on current locale')
-  }
+  const heading = page.getByRole('heading', { level: 1 })
+  const englishHeading = await heading.innerText()
+  await page.getByRole('button', { name: 'Language', exact: true }).click()
+  await page.getByRole('menuitem', { name: /Nederlands/ }).click()
+  await expect(page).toHaveURL(/\/nl(?:\?|$)/)
+  await expect(heading).toContainText('Toegankelijkheid')
+  await expect(heading).not.toHaveText(englishHeading)
 })
 
 for (const locale of ['nl', 'de']) {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
+import { requireDevelopment } from "@/lib/dev-only";
 
 interface AlertRule {
   id: string;
@@ -80,6 +81,8 @@ let alertRules: AlertRule[] = [
 ];
 
 export async function GET(req: NextRequest) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
   try {
     const user = await requireAuth();
 
@@ -101,6 +104,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
   try {
     const user = await requireAuth();
     const ruleData = await req.json();

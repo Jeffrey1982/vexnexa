@@ -1,10 +1,12 @@
 name: Post-deploy smoke test
 
 # Vercel reports deploys back to GitHub as deployment_status events.
-# When a production deploy succeeds, hit the live site and fail loudly
-# if a critical page, SEO signal, or API contract is broken.
+# Check the public production contract after a successful production deploy.
 on:
   deployment_status:
+
+permissions:
+  contents: read
 
 jobs:
   smoke:
@@ -16,75 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test the smoke checker
+        run: node --experimental-strip-types --test scripts/production-smoke.test.mjs
       - name: Check critical pages and APIs
         env:
           BASE_URL: https://vexnexa.com
-        run: |
-          set -euo pipefail
-          fail=0
-
-          check() {
-            local path="$1" expect_body="${2:-}"
-            local url="${BASE_URL}${path}"
-            local body status
-            body=$(curl -sS --max-time 30 -w '\n%{http_code}' "$url") || {
-              echo "FAIL $path - request failed"; fail=1; return
-            }
-            status=$(echo "$body" | tail -n1)
-            body=$(echo "$body" | sed '$d')
-            if [ "$status" != "200" ]; then
-              echo "FAIL $path - HTTP $status (expected 200)"; fail=1; return
-            fi
-            if [ -n "$expect_body" ] && ! echo "$body" | grep -q "$expect_body"; then
-              echo "FAIL $path - HTTP 200 but marker '$expect_body' not found"; fail=1; return
-            fi
-            echo "OK $path"
-          }
-
-          check "/" "Backed by evidence"
-          check "/pricing" "Agency"
-          check "/free-scan"
-          check "/audits"
-          check "/pilot-partner-program"
-          check "/partner-apply"
-          check "/api/health" '"ok":true'
-          check "/robots.txt" "sitemap"
-          check "/sitemap.xml" "sitemapindex"
-          check "/sitemap_pages.xml" "/audits"
-
-          pages_sitemap=$(curl -sS --max-time 30 "${BASE_URL}/sitemap_pages.xml") || {
-            echo "FAIL /sitemap_pages.xml - request failed"; fail=1; pages_sitemap=""
-          }
-
-          for locale in de fr es pt; do
-            if echo "$pages_sitemap" | grep -q "hreflang=\"$locale\""; then
-              echo "FAIL /sitemap_pages.xml - unfinished marketing locale '$locale' is exposed in hreflang"
-              fail=1
-            fi
-            if echo "$pages_sitemap" | grep -q "${BASE_URL}/$locale/"; then
-              echo "FAIL /sitemap_pages.xml - unfinished marketing locale '$locale' has URL entries"
-              fail=1
-            fi
-          done
-
-          if echo "$pages_sitemap" | grep -q 'hreflang="en"' && echo "$pages_sitemap" | grep -q 'hreflang="nl"'; then
-            echo "OK /sitemap_pages.xml marketing hreflang policy"
-          else
-            echo "FAIL /sitemap_pages.xml - expected en/nl hreflang entries"
-            fail=1
-          fi
-
-          # Lead endpoint must be alive and validating (400 on bad input,
-          # not 404/500). This sends no email because the email is invalid.
-          lead_status=$(curl -sS --max-time 30 -o /dev/null -w '%{http_code}' \
-            -X POST "${BASE_URL}/api/free-scan/lead" \
-            -H 'Content-Type: application/json' \
-            -d '{"email":"not-an-email"}')
-          if [ "$lead_status" = "400" ]; then
-            echo "OK /api/free-scan/lead (validation active)"
-          else
-            echo "FAIL /api/free-scan/lead - HTTP $lead_status (expected 400)"
-            fail=1
-          fi
-
-          exit $fail
+        run: node --experimental-strip-types scripts/production-smoke.mjs

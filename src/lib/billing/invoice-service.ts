@@ -209,7 +209,7 @@ async function sendInvoiceEmail(opts: {
   if (!resend) {
     console.error('[Invoice] ❌ RESEND_API_KEY not configured - email will not be sent');
     console.error('[Invoice] Check that RESEND_API_KEY environment variable is set');
-    return null;
+    throw new Error('Invoice email delivery is unavailable: RESEND_API_KEY is not configured');
   }
 
   console.log(`[Invoice] ✅ Resend client initialized, sending email...`);
@@ -296,6 +296,7 @@ VexNexa B.V. · Netherlands · vexnexa.com
   } else {
     console.error('[Invoice] ❌ Email send failed:', result);
     console.error('[Invoice] Response:', JSON.stringify(result, null, 2));
+    throw new Error(result?.error?.message ?? 'Invoice email provider did not return a message ID');
   }
 
   return result as { data?: { id: string } } | null;

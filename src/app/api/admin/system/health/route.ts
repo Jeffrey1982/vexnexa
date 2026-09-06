@@ -45,13 +45,14 @@ export async function GET(request: NextRequest) {
     // Supabase auth health
     try {
       const authStart = Date.now()
-      await supabase.auth.getUser()
+      const { error: authError } = await supabase.auth.getUser()
+      if (authError) throw authError
       healthChecks.checks.authentication = {
         status: 'healthy',
         responseTime: Date.now() - authStart,
       }
     } catch (error) {
-      healthChecks.status = 'degraded'
+      if (healthChecks.status !== 'unhealthy') healthChecks.status = 'degraded'
       healthChecks.checks.authentication = {
         status: 'unhealthy',
         error: error instanceof Error ? error.message : 'Unknown error',

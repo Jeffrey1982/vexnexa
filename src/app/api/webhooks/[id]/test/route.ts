@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server-new'
 import { prisma } from '@/lib/prisma'
 import { successResponse, errorResponse, unauthorizedResponse, notFoundResponse, forbiddenResponse } from '@/lib/api-response'
 import { createHmac } from 'crypto'
+import { assertPublicHttpUrl } from '@/lib/security/ssrf-guard'
 
 /**
  * POST /api/webhooks/[id]/test - Test webhook endpoint
@@ -51,10 +52,17 @@ export async function POST(
       .update(payloadString)
       .digest('hex')
 
-    // Send test webhook
+    // Validate at dispatch time, including DNS: stored endpoints can change.
+    // No outbound request or delivery statistics mutation for unsafe targets.
+    const target = await assertPublicHttpUrl(webhook.url)
+    if (!target.ok) return errorResponse(target.error, 400)
+
+    // Do not follow redirects to destinations that were never validated.
     try {
-      const response = await fetch(webhook.url, {
+      const response = await fetch(target.url.href, {
         method: 'POST',
+        redirect: 'error',
+        signal: AbortSignal.timeout(10_000),
         headers: {
           'Content-Type': 'application/json',
           'X-Webhook-Signature': signature,

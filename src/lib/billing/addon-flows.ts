@@ -120,16 +120,16 @@ export async function purchaseAddOn(opts: {
     }
   }
 
-  // Create add-on record in database FIRST (immediate activation)
+  // Reserve the record for provider metadata, but grant no capacity until
+  // Mollie confirms that the recurring subscription was created.
   const addOn = await prisma.addOn.create({
     data: {
       userId,
       type,
       quantity,
-      status: "active",
+      status: "pending",
       pricePerUnit: pricing.pricePerUnit,
-      totalPrice,
-      activatedAt: new Date()
+      totalPrice
     }
   })
 
@@ -155,10 +155,11 @@ export async function purchaseAddOn(opts: {
     }
   })
 
-  // Update add-on with Mollie subscription ID
-  await prisma.addOn.update({
+  // Activate only after provider success. Failed attempts remain pending and
+  // cannot pass the active-only entitlement or duplicate-purchase filters.
+  const activatedAddOn = await prisma.addOn.update({
     where: { id: addOn.id },
-    data: { mollieSubscriptionId: subscription.id }
+    data: { mollieSubscriptionId: subscription.id, status: "active", activatedAt: new Date() }
   })
 
   // Update user's extraSeats field for quick access (denormalized)
@@ -174,7 +175,7 @@ export async function purchaseAddOn(opts: {
   }
 
   return {
-    addOn,
+    addOn: activatedAddOn,
     subscription
   }
 }

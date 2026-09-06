@@ -167,12 +167,17 @@ export async function unsubscribeLeadNurture(token: string) {
     .from("contacts").select("email").eq("id", delivery.contact_id).single();
   if (contactError) throw contactError;
   const now = new Date().toISOString();
-  await Promise.all([
+  const updates = await Promise.all([
     supabaseAdmin.from("suppression_entries").upsert({ workspace_id: delivery.workspace_id, normalized_email: contact.email, reason: "unsubscribe", source: "lead_nurture_unsubscribe" }, { onConflict: "workspace_id,normalized_email" }),
     supabaseAdmin.from("consent_events").insert({ workspace_id: delivery.workspace_id, organization_id: delivery.organization_id, contact_id: delivery.contact_id, consent_type: "commercial_outreach", status: "withdrawn", lawful_basis: "consent_withdrawn", source: "lead_nurture_unsubscribe", evidence: { delivery_lead_id: delivery.lead_id }, occurred_at: now }),
     supabaseAdmin.from("leads").update({ status: "unsubscribed", updated_at: now }).eq("id", delivery.lead_id),
     supabaseAdmin.from("lead_nurture_deliveries").update({ status: "cancelled", updated_at: now }).eq("workspace_id", delivery.workspace_id).eq("contact_id", delivery.contact_id).in("status", ["reserved", "failed"]),
     supabaseAdmin.from("audit_events").insert({ workspace_id: delivery.workspace_id, actor_user_id: null, event_type: "lead_unsubscribed", entity_type: "lead", entity_id: delivery.lead_id, metadata: { contact_id: delivery.contact_id, source: "one_click" } }),
   ]);
+  // Supabase resolves failed writes with { error }, rather than rejecting.
+  // Never acknowledge an unsubscribe that failed to persist its blocking state.
+  for (const update of updates) {
+    if (update.error) throw update.error;
+  }
   return true;
 }

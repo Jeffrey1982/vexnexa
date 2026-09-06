@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
+import { requireDevelopment } from "@/lib/dev-only";
 
 interface RouteParams {
   params: Promise<{
@@ -12,6 +13,8 @@ interface RouteParams {
 let alertRules: any[] = [];
 
 export async function PATCH(req: NextRequest, { params }: RouteParams) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
   const { ruleId } = await params;
 
   try {
@@ -46,6 +49,8 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
 }
 
 export async function DELETE(req: NextRequest, { params }: RouteParams) {
+  const devCheck = requireDevelopment();
+  if (devCheck) return devCheck;
   const { ruleId } = await params;
 
   try {

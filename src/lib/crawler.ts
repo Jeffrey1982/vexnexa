@@ -323,12 +323,12 @@ async function processUrl(crawlId: string, urlId: string, url: string, depth: nu
         previousScanId: previousScan?.id,
 
         // Performance metrics
-        performanceScore: performanceMetrics.performanceScore,
-        firstContentfulPaint: performanceMetrics.firstContentfulPaint,
-        largestContentfulPaint: scanResult.largestContentfulPaintMs || performanceMetrics.largestContentfulPaint,
-        cumulativeLayoutShift: performanceMetrics.cumulativeLayoutShift,
-        firstInputDelay: performanceMetrics.firstInputDelay,
-        totalBlockingTime: performanceMetrics.totalBlockingTime,
+        performanceScore: performanceMetrics?.performanceScore ?? null,
+        firstContentfulPaint: performanceMetrics?.firstContentfulPaint ?? null,
+        largestContentfulPaint: scanResult.largestContentfulPaintMs ?? performanceMetrics?.largestContentfulPaint ?? null,
+        cumulativeLayoutShift: performanceMetrics?.cumulativeLayoutShift ?? null,
+        firstInputDelay: performanceMetrics?.firstInputDelay ?? null,
+        totalBlockingTime: performanceMetrics?.totalBlockingTime ?? null,
         pageWeightBytes: scanResult.totalPageWeightBytes,
         domNodeCount: scanResult.domNodeCount,
         qualityWarnings: scanResult.qualityWarnings as any,
