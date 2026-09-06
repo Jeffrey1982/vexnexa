@@ -66,7 +66,11 @@ test('stored scan has a populated HTML report preview', async ({ authedPage }) =
   expect(response?.status()).toBe(200)
   await expect(authedPage.getByRole('heading', { name: 'Premium Compliance Report', exact: true })).toBeVisible()
   const report = authedPage.frameLocator('iframe[title="Accessibility Compliance Report"]')
-  await expect(report.getByText(new URL(scan.site.url).hostname, { exact: false }).first()).toBeVisible()
+  // The domain also appears in the hidden running print header. Assert the
+  // actual cover metadata, which is visible in both report styles.
+  const coverDomain = report.locator('.cover-page .cover-domain-block .cover-domain-value')
+  await expect(coverDomain).toHaveText(new URL(scan.site.url).hostname)
+  await expect(coverDomain).toBeVisible()
   if (TEST_ENV === 'local') {
     await expect(report.getByText('Images Missing Alternative Text', { exact: true }).first()).toBeVisible()
   }
