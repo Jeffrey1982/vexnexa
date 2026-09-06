@@ -1,4 +1,35 @@
 {
+  "billingRenewal": {
+    "stoppedTitle": "Renewal stopped",
+    "stoppedUntil": "Your paid plan remains available until {date}. No further subscription renewals are scheduled.",
+    "stoppedExpired": "Your paid period has ended. Renewal is stopped.",
+    "cancelDescription": "Stop future renewals. Your plan stays available until the end of the period you have already paid for.",
+    "cancelConfirm": "Cancel renewal of {plan}? You keep access for the period already paid for.",
+    "canceledSuccess": "Renewal stopped. Your paid access remains available until the end of your paid period."
+  },
+  "checkoutRecovery": {
+    "pendingTitle": "Payment received, activation pending",
+    "pendingDescription": "Your payment was received, but we have not yet confirmed activation of your purchase. Do not pay again. Check the status again or contact support with this payment reference.",
+    "checkAgain": "Check status again",
+    "checking": "Checking activation…",
+    "resumeDescription": "Your account is confirmed. Return to review your selected plan. No payment will be started until you confirm it.",
+    "continueCheckout": "Review my selected plan"
+  },
+  "agencyOffer": {
+    "badge": "Agency for client-facing teams",
+    "title": "Your findings. Your agency's report.",
+    "description": "Automated accessibility checks and reports in your own branding, for up to {sites} client websites.",
+    "price": "Agency: {price} per month, including VAT",
+    "billingNote": "Paid monthly subscription with automatic renewal. Review the terms before checkout.",
+    "cta": "View Agency plan",
+    "sampleCta": "View sample report",
+    "closedBadge": "Founding Agency Program",
+    "closedTitle": "New founding applications are closed",
+    "closedDescription": "The free-year offer is no longer available for new applications. You can still use VexNexa with a paid Agency subscription.",
+    "existingTitle": "Already applied or participating?",
+    "existingDescription": "Closing new applications does not change existing agreements or previously submitted applications. Contact us if you have a question about your application or agreed benefits.",
+    "existingCta": "Ask about your existing agreement"
+  },
   "brandHome": {
     "eyebrow": "For agencies & digital teams",
     "headline": "Accessibility.",

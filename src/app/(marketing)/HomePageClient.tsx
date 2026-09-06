@@ -3,7 +3,7 @@ import { ArrowRight, Check, FileText, ScanLine, Activity } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { FAQ } from "@/components/marketing/FAQ";
 import { Hero } from "@/components/marketing/home/Hero";
-import { FoundingProgramBanner } from "@/components/marketing/home/FoundingProgramBanner";
+import { AgencyOfferBanner } from "@/components/marketing/AgencyOfferBanner";
 import { FounderNote } from "@/components/marketing/home/FounderNote";
 import { RecoveryRedirect } from "@/components/marketing/home/RecoveryRedirect";
 import { TrackedCTA } from "@/components/marketing/TrackedCTA";
@@ -61,7 +61,7 @@ export default async function HomePage() {
           <div className={s.trendLabels}><span>{t("statusBefore")}</span><span>{t("statusAfter")}</span></div><figcaption>{t("chartLabel")}</figcaption>
         </figure>
       </section>
-      <div className={s.offer}><FoundingProgramBanner /></div>
+      <div className={s.offer}><AgencyOfferBanner location="home" /></div>
       <div className={s.faq}><FAQ items={faqItems} /></div>
       <div className={s.founder}><FounderNote /></div>
       <section className={s.finalCta} aria-labelledby="final-heading"><div className={s.wrap}>

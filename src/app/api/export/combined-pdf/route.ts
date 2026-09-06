@@ -5,6 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { generateCombinedReport } from "@/lib/combined-report-generator";
 import { renderToStream } from "@react-pdf/renderer";
 import { CombinedPDFReport } from "@/lib/pdf-generator-combined";
+import { assertWithinLimits } from "@/lib/billing/entitlements";
+import { resolveExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,7 +21,6 @@ export async function GET(req: Request) {
     const siteId = searchParams.get("siteId");
     const scanId = searchParams.get("scanId") || undefined;
     const auditId = searchParams.get("auditId") || undefined;
-    const brandName = searchParams.get("brandName") || "VexNexa";
 
     if (!siteId) {
       return NextResponse.json(
@@ -41,6 +43,10 @@ export async function GET(req: Request) {
         { status: 404 }
       );
     }
+
+    await assertWithinLimits({ userId: user.id, action: "export_pdf" });
+    const branding = await resolveExportWhiteLabel(user.id, { company: searchParams.get("brandName") ?? undefined });
+    const brandName = branding.whiteLabelConfig.companyNameOverride || "VexNexa";
 
     // Generate combined report data
     const reportData = await generateCombinedReport(siteId, scanId, auditId);
@@ -74,6 +80,8 @@ export async function GET(req: Request) {
       }
     });
   } catch (e: any) {
+    const denied = exportAccessErrorResponse(e);
+    if (denied) return denied;
     console.error("Failed to generate combined PDF:", e);
     return NextResponse.json(
       { ok: false, error: e.message || "Failed to generate PDF" },

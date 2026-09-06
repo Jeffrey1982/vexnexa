@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react'
+import { authContinuationPath } from '@/lib/checkout-recovery'
 
 type MolliePaymentStatus =
   | 'open'
@@ -24,16 +25,18 @@ type ApiResponse = {
   billingInterval: string | null
   type?: string | null
   isOneOffCheckout?: boolean
+  fulfillmentStatus?: 'pending' | 'fulfilled'
   user: { plan: string; subscriptionStatus: string }
 }
 
 type UiState =
   | { kind: 'processing' }
+  | { kind: 'pending'; canRetry: boolean }
   | { kind: 'paid' }
   | { kind: 'canceled' }
   | { kind: 'expired' }
   | { kind: 'failed' }
-  | { kind: 'error'; message: string; paymentId?: string }
+  | { kind: 'error'; message: string; paymentId?: string; canRetry?: boolean }
 
 const POLL_INTERVAL_MS = 1500
 const POLL_TIMEOUT_MS = 30_000
@@ -41,42 +44,51 @@ const REDIRECT_DELAY_MS = 1500
 
 export default function CheckoutReturnClient() {
   const t = useTranslations('checkout.return')
+  const tRecovery = useTranslations('checkoutRecovery')
   const searchParams = useSearchParams()
   const router = useRouter()
   const paymentId = searchParams.get('paymentId') ?? searchParams.get('id')
 
   const [state, setState] = useState<UiState>({ kind: 'processing' })
-  const startedAtRef = useRef<number>(Date.now())
-  const cancelledRef = useRef<boolean>(false)
+  const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
-    if (!paymentId) {
+    if (!paymentId || !/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
       setState({ kind: 'error', message: 'missing_id' })
       return
     }
 
-    cancelledRef.current = false
-    startedAtRef.current = Date.now()
+    let cancelled = false
+    const startedAt = Date.now()
+    const controller = new AbortController()
+    let pollTimer: ReturnType<typeof setTimeout> | undefined
+    let redirectTimer: ReturnType<typeof setTimeout> | undefined
+    let requestTimer: ReturnType<typeof setTimeout> | undefined
+    setState({ kind: 'processing' })
 
     const poll = async () => {
-      if (cancelledRef.current) return
+      if (cancelled) return
 
       try {
+        requestTimer = setTimeout(() => controller.abort(), 10_000)
         const res = await fetch(
           `/api/mollie/payment-status?id=${encodeURIComponent(paymentId)}`,
-          { cache: 'no-store' }
+          { cache: 'no-store', signal: controller.signal }
         )
+        clearTimeout(requestTimer)
+        if (cancelled) return
 
         if (!res.ok) {
           // 401 = session expired, 403 = not the owner, 404 = not found
           if (res.status === 401) {
-            router.push(`/auth/login?redirect=/checkout/return?paymentId=${paymentId}`)
+            router.push(authContinuationPath('/auth/login', `/checkout/return?${new URLSearchParams({ paymentId })}`))
             return
           }
           setState({
             kind: 'error',
             message: `http_${res.status}`,
             paymentId,
+            canRetry: res.status === 429 || res.status >= 500,
           })
           return
         }
@@ -100,8 +112,9 @@ export default function CheckoutReturnClient() {
           return
         }
 
-        // Paid AND webhook has already upgraded the user → redirect
-        if (data.status === 'paid' && (data.user.plan !== 'FREE' || data.isOneOffCheckout)) {
+        // The exact payment must have been fulfilled. A different paid plan or
+        // a timeout is never evidence that the purchased product is activated.
+        if (data.status === 'paid' && data.fulfillmentStatus === 'fulfilled') {
           setState({ kind: 'paid' })
           scheduleRedirect('/dashboard?checkout=success')
           return
@@ -109,44 +122,63 @@ export default function CheckoutReturnClient() {
 
         // Otherwise: still processing (open / pending / authorized, OR
         // paid but webhook hasn't propagated yet). Keep polling until timeout.
-        const elapsed = Date.now() - startedAtRef.current
+        const elapsed = Date.now() - startedAt
         if (elapsed >= POLL_TIMEOUT_MS) {
-          // After 30s: if Mollie says paid, send the user to dashboard anyway
-          // (the webhook may catch up in the background). Otherwise show error.
           if (data.status === 'paid') {
-            setState({ kind: 'paid' })
-            scheduleRedirect('/dashboard?checkout=success')
+            setState({ kind: 'pending', canRetry: true })
           } else {
             setState({
               kind: 'error',
               message: 'timeout',
               paymentId,
+              canRetry: true,
             })
           }
           return
         }
 
-        setTimeout(poll, POLL_INTERVAL_MS)
+        if (data.status === 'paid') setState({ kind: 'pending', canRetry: false })
+        pollTimer = setTimeout(poll, POLL_INTERVAL_MS)
       } catch (err) {
+        if (cancelled) return
         const message = err instanceof Error ? err.message : 'unknown'
-        setState({ kind: 'error', message, paymentId })
+        setState({ kind: 'error', message, paymentId, canRetry: true })
+      } finally {
+        clearTimeout(requestTimer)
       }
     }
 
     const scheduleRedirect = (target: string) => {
-      setTimeout(() => {
-        if (!cancelledRef.current) router.push(target)
+      redirectTimer = setTimeout(() => {
+        if (!cancelled) router.push(target)
       }, REDIRECT_DELAY_MS)
     }
 
     void poll()
 
     return () => {
-      cancelledRef.current = true
+      cancelled = true
+      controller.abort()
+      clearTimeout(pollTimer)
+      clearTimeout(redirectTimer)
+      clearTimeout(requestTimer)
     }
-  }, [paymentId, router])
+  }, [paymentId, router, attempt])
 
   // Render
+  if (state.kind === 'pending') {
+    return (
+      <ResultCard
+        icon={<Clock className="h-10 w-10 text-amber-600 dark:text-amber-400" />}
+        iconBg="bg-amber-100 dark:bg-amber-900/30"
+        title={tRecovery('pendingTitle')}
+        subtitle={tRecovery('pendingDescription')}
+        paymentRef={paymentId ?? undefined}
+        retry={{ label: state.canRetry ? tRecovery('checkAgain') : tRecovery('checking'), disabled: !state.canRetry, onClick: () => setAttempt(value => value + 1) }}
+        secondary={{ href: '/contact', label: t('action.contactSupport') }}
+      />
+    )
+  }
   if (state.kind === 'processing') {
     return (
       <Card className="w-full max-w-xl">
@@ -216,6 +248,7 @@ export default function CheckoutReturnClient() {
       title={t('error.title')}
       subtitle={t('error.subtitle')}
       paymentRef={state.paymentId}
+      retry={state.canRetry ? { label: tRecovery('checkAgain'), onClick: () => setAttempt(value => value + 1) } : undefined}
       primary={{ href: '/dashboard', label: t('action.dashboard') }}
       secondary={{ href: '/contact', label: t('action.contactSupport') }}
     />
@@ -230,9 +263,10 @@ function ResultCard(props: {
   paymentRef?: string
   primary?: { href: string; label: string }
   secondary?: { href: string; label: string }
+  retry?: { label: string; disabled?: boolean; onClick: () => void }
 }) {
   return (
-    <Card className="w-full max-w-xl">
+    <Card className="w-full max-w-xl" role="status" aria-live="polite">
       <CardHeader className="text-center pb-2">
         <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${props.iconBg}`}>
           {props.icon}
@@ -240,7 +274,7 @@ function ResultCard(props: {
         <CardTitle className="text-2xl font-bold">{props.title}</CardTitle>
         <CardDescription className="text-base pt-2">{props.subtitle}</CardDescription>
       </CardHeader>
-      {(props.primary || props.secondary || props.paymentRef) && (
+      {(props.primary || props.secondary || props.paymentRef || props.retry) && (
         <CardContent className="space-y-4 pt-2">
           {props.paymentRef && (
             <div className="rounded-lg border bg-muted/40 p-3 text-center text-xs font-mono break-all">
@@ -248,6 +282,11 @@ function ResultCard(props: {
             </div>
           )}
           <div className="flex flex-col gap-2">
+            {props.retry && (
+              <Button className="w-full min-h-12 h-auto whitespace-normal" onClick={props.retry.onClick} disabled={props.retry.disabled}>
+                {props.retry.label}
+              </Button>
+            )}
             {props.primary && (
               <Button asChild className="w-full h-12">
                 <Link href={props.primary.href}>{props.primary.label}</Link>

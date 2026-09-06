@@ -7,6 +7,11 @@ import { prisma } from '@/lib/prisma';
 import { checkKeyedRateLimitDistributed } from '@/lib/rate-limit';
 import { sendPilotPartnerApplicationEmail, sendPilotPartnerConfirmationEmail } from '@/lib/email';
 import { getMaxPilotSpots } from '@/lib/pilot-partner';
+import {
+  FOUNDING_APPLICATIONS_OPEN,
+  FOUNDING_APPLICATIONS_CLOSED_CODE,
+  FOUNDING_APPLICATIONS_CLOSED_MESSAGE,
+} from '@/lib/founding-program';
 import type { Prisma } from '@prisma/client';
 
 const CLIENT_SITE_VALUES = ['1-5', '6-20', '21-50', '50+'] as const;
@@ -60,6 +65,10 @@ export type PartnerApplyState =
       fieldErrors?: Record<string, string>;
       /** True when capacity (approved partners) has been reached */
       programFull?: boolean;
+      /** Intake closure is independent of capacity or historical benefits. */
+      programClosed?: boolean;
+      code?: typeof FOUNDING_APPLICATIONS_CLOSED_CODE;
+      message?: string;
     };
 
 function assertResendDelivered(result: unknown, label: string) {
@@ -81,6 +90,18 @@ export async function submitPartnerApplication(
   _prev: PartnerApplyState,
   formData: FormData
 ): Promise<PartnerApplyState> {
+  // Enforce this on every submission, including forms opened before closure.
+  // Do not read contact details, call external services or write any records.
+  if (!FOUNDING_APPLICATIONS_OPEN) {
+    return {
+      ok: false,
+      errorKey: 'programClosed',
+      programClosed: true,
+      code: FOUNDING_APPLICATIONS_CLOSED_CODE,
+      message: FOUNDING_APPLICATIONS_CLOSED_MESSAGE,
+    };
+  }
+
   const h = await headers();
   const ip = getClientIp(h);
 

@@ -128,9 +128,9 @@ Angle: ${topic.angle}
 
 Rules:
 - 900–1200 words, practical and concrete, no fluff or hype.
-- NEVER claim tools guarantee legal compliance. When relevant, note that automated scans cover part of WCAG and manual review may be needed, and that legal questions belong with a lawyer.
+- Describe VexNexa as automated accessibility checks and white-label reporting for agencies, not a fully automated compliance solution. Automated checks do not find every issue; human review and remediation remain necessary. NEVER claim tools guarantee full accessibility or legal compliance. Legal questions belong with a lawyer.
 - Structure: short intro (no heading), then 4–6 sections with <h2> headings, use <p>, <ul>/<li>, <strong> only. No <h1>, no inline styles, no images, no scripts.
-- Where natural (max twice), link to https://vexnexa.com/free-scan (free scan, no account) or https://vexnexa.com/founding-agencies (Founding Agency Program: the first 10 agencies get 12 months of the Agency plan for free, then a permanent 30% founding discount) using normal <a href> tags.
+- Where natural (max twice), link to https://vexnexa.com/for-agencies (the paid Agency plan: automated accessibility checks and white-label reporting) or https://vexnexa.com/pricing (current paid plans) using normal <a href> tags. Do not invent prices, promotions, free Agency access, trial periods, or discounts.
 - End with a short practical takeaway section.
 
 Return ONLY a JSON object (no markdown fences) with exactly these keys:
@@ -148,6 +148,10 @@ function parseDraft(raw: string): DraftPayload {
   for (const key of ["title", "metaTitle", "metaDescription", "excerpt", "html"]) {
     if (typeof parsed[key] !== "string" || !parsed[key].trim()) {
       throw new Error(`Model response missing "${key}"`);
+    }
+    // Reject stale campaign copy in new model output; never rewrite stored drafts.
+    if (/\bfounding\b|\bpilot[\s-]*(?:partner[\s-]*)?program(?:me|ma)?\b/i.test(parsed[key])) {
+      throw new Error("Model response includes a retired founding/pilot promotion");
     }
   }
   return parsed as DraftPayload;

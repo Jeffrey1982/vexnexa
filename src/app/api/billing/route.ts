@@ -7,6 +7,10 @@ import { prisma } from "@/lib/prisma";
 export async function GET() {
   try {
     const user = await requireAuth();
+    const renewal = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { subscriptionCurrentPeriodEnd: true, subscriptionCanceledAt: true },
+    });
 
     // Get current usage (monthly increment counters)
     const usage = await getCurrentUsage(user.id);
@@ -40,6 +44,8 @@ export async function GET() {
         email: user.email,
         plan: user.plan,
         subscriptionStatus: user.subscriptionStatus,
+        subscriptionCurrentPeriodEnd: renewal?.subscriptionCurrentPeriodEnd ?? null,
+        subscriptionCanceledAt: renewal?.subscriptionCanceledAt ?? null,
       },
       usage,
       entitlements,

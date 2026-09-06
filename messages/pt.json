@@ -1,4 +1,35 @@
 {
+  "billingRenewal": {
+    "stoppedTitle": "Renovação interrompida",
+    "stoppedUntil": "O teu plano pago permanece disponível até {date}. Não estão agendadas mais renovações da subscrição.",
+    "stoppedExpired": "O teu período pago terminou. A renovação está interrompida.",
+    "cancelDescription": "Interrompe as renovações futuras. O teu plano permanece disponível até ao fim do período que já pagaste.",
+    "cancelConfirm": "Cancelar a renovação de {plan}? Manténs o acesso durante o período já pago.",
+    "canceledSuccess": "Renovação interrompida. O teu acesso pago permanece disponível até ao fim do período pago."
+  },
+  "checkoutRecovery": {
+    "pendingTitle": "Pagamento recebido, ativação pendente",
+    "pendingDescription": "O teu pagamento foi recebido, mas a ativação da compra ainda não foi confirmada. Não pagues novamente. Verifica o estado ou contacta o suporte com esta referência de pagamento.",
+    "checkAgain": "Verificar o estado novamente",
+    "checking": "A verificar a ativação…",
+    "resumeDescription": "A tua conta está confirmada. Revê o plano selecionado. Não será iniciado nenhum pagamento até o confirmares.",
+    "continueCheckout": "Rever o meu plano"
+  },
+  "agencyOffer": {
+    "badge": "Agency para projetos de clientes",
+    "title": "As tuas observações. O relatório da tua agência.",
+    "description": "Verificações automatizadas de acessibilidade e relatórios com a tua marca, para até {sites} sites de clientes.",
+    "price": "Agency: {price} por mês, IVA incluído",
+    "billingNote": "Subscrição mensal paga com renovação automática. Consulta as condições antes de pagar.",
+    "cta": "Ver Agency",
+    "sampleCta": "Ver relatório de exemplo",
+    "closedBadge": "Programa Founding Agency",
+    "closedTitle": "As novas candidaturas Founding estão encerradas",
+    "closedDescription": "A oferta de um ano gratuito já não está disponível para novas candidaturas. Podes utilizar o VexNexa com uma subscrição Agency paga.",
+    "existingTitle": "Já te candidataste ou participas?",
+    "existingDescription": "O encerramento de novas candidaturas não altera os acordos existentes nem as candidaturas já submetidas. Contacta-nos se tiveres dúvidas sobre a candidatura ou os benefícios acordados.",
+    "existingCta": "Perguntar sobre o acordo existente"
+  },
   "brandHome": {
     "eyebrow": "Para agências e equipas digitais",
     "headline": "Acessibilidade.",

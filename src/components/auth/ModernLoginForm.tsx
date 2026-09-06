@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { createClient } from '@/lib/supabase/client-new'
 import { getSiteUrl } from '@/lib/urls'
+import { authContinuationPath, safeAuthRedirect } from '@/lib/checkout-recovery'
 import { useTranslations } from 'next-intl'
 import {
   Mail,
@@ -101,7 +102,7 @@ export default function ModernLoginForm() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         // User is already logged in, redirect to dashboard or intended page
-        const redirect = searchParams.get('redirect') || '/dashboard'
+        const redirect = safeAuthRedirect(searchParams.get('redirect'))
         router.push(redirect)
         router.refresh()
       }
@@ -158,7 +159,7 @@ export default function ModernLoginForm() {
       if (error) throw error
 
       // Check for redirect parameter - force dashboard if no specific redirect
-      const redirect = searchParams.get('redirect') || '/dashboard'
+      const redirect = safeAuthRedirect(searchParams.get('redirect'))
       console.log('🔐 Login successful, redirecting to:', redirect)
 
       // Add delay to ensure session is fully established
@@ -178,7 +179,7 @@ export default function ModernLoginForm() {
     setError('')
 
     try {
-      const redirect = searchParams.get('redirect') || '/dashboard'
+      const redirect = safeAuthRedirect(searchParams.get('redirect'))
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -360,7 +361,7 @@ export default function ModernLoginForm() {
                 type="button"
                 variant="outline"
                 className="h-12 w-full border-2 border-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground"
-                onClick={() => router.push('/auth/register')}
+                onClick={() => router.push(authContinuationPath('/auth/register', safeAuthRedirect(searchParams.get('redirect'))))}
               >
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />

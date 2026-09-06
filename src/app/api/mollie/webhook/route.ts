@@ -1,207 +1,62 @@
-import { NextRequest, NextResponse } from "next/server"
-import crypto from "crypto"
-import { processWebhookPayment, processSubscriptionWebhook } from "@/lib/billing/mollie-flows"
-import { prisma } from "@/lib/prisma"
+import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'node:crypto';
+import { processWebhookPayment, processSubscriptionWebhook } from '@/lib/billing/mollie-flows';
+import { claimWebhookLease, finishWebhookLease } from '@/lib/billing/webhook-lease';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
-/**
- * Mollie webhook handler.
- *
- * Hardening guarantees:
- *  1. Signature verification (HMAC-SHA256) is required in production.
- *  2. Idempotency: every (webhookId, webhookType) pair is logged in
- *     `ProcessedWebhook`. A second delivery for an already-processed pair
- *     short-circuits to 200 OK without re-running side effects.
- *  3. The handler ALWAYS returns 200 (success or expected failure) so Mollie
- *     does not enter an aggressive retry loop on permanent errors. Transient
- *     failures are recorded in ProcessedWebhook with status="failed" so an
- *     operator (or a retry job) can replay them.
- */
+function retryResponse() {
+  // Mollie retries non-2xx deliveries. Never acknowledge a lost/failed payment
+  // activation as successful: that would require a manual repair later.
+  return NextResponse.json({ success: false, retry: true }, { status: 503, headers: { 'Retry-After': '60' } });
+}
+
 export async function POST(request: NextRequest) {
-  const receivedAt = new Date().toISOString()
-
   try {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Mollie webhook received at', receivedAt)
+    const body = await request.text();
+    const form = new URLSearchParams(body);
+    const id = form.get('id');
+    const type = form.get('type') ?? 'payment';
+    if (!id || !/^(tr|sub|chr|ord|mdt|cst|pay)_[A-Za-z0-9]+$/.test(id)) {
+      return NextResponse.json({ success: true, ping: true });
+    }
+    if (!['payment', 'subscription'].includes(type)) {
+      return NextResponse.json({ error: 'Unsupported webhook type' }, { status: 400 });
     }
 
-    // 1. Read raw body (needed for signature verification AND ping detection)
-    const body = await request.text()
-
-    // 2. Parse Mollie's form-encoded body FIRST so we can short-circuit pings
-    //    BEFORE running signature verification. Test pings from the Mollie
-    //    dashboard either have no body, an empty/synthetic id, or a different
-    //    signature scheme — we don't want to reject those with 401.
-    const formData = new URLSearchParams(body)
-    const id = formData.get('id')
-    const type = formData.get('type') ?? 'payment' // Mollie defaults to 'payment' if absent
-
-    console.log('[Mollie Webhook] Received:', { type, id, receivedAt })
-
-    // Real Mollie webhook ids always carry a known prefix
-    // (tr_*, sub_*, chr_*, ord_*, mdt_*, cst_*, pay_*). Anything else
-    // (missing id, "hook.ping", "test", etc.) is a dashboard test/ping.
-    const isRealMollieId =
-      typeof id === 'string' &&
-      /^(tr|sub|chr|ord|mdt|cst|pay)_[A-Za-z0-9]+$/.test(id)
-
-    if (!id || !isRealMollieId) {
-      console.log('[Mollie Webhook] Test/ping received, acknowledging:', { id, type })
-      return NextResponse.json({ success: true, ping: true })
+    // Standard Mollie payment notifications are verified by fetching the
+    // payment from Mollie inside the worker, never by trusting the payload.
+    // Preserve optional signing for installations with an upstream signer.
+    const secret = process.env.MOLLIE_WEBHOOK_SECRET;
+    const required = process.env.MOLLIE_WEBHOOK_REQUIRE_SIGNATURE === 'true';
+    const signature = request.headers.get('mollie-signature') ?? request.headers.get('x-mollie-signature');
+    if (required && !secret) {
+      console.error('[Mollie Webhook] Required signature secret is not configured');
+      return retryResponse();
     }
-
-    // 3. Verify HMAC signature (graceful) — only for real payloads.
-    //
-    // Mollie does NOT sign webhooks by default; their security model is "secret
-    // URL". Webhook signing is an opt-in feature that must be enabled in the
-    // Mollie dashboard / via support. We support three modes:
-    //
-    //   a. Header present + MOLLIE_WEBHOOK_SECRET set → verify strictly,
-    //      reject on mismatch (real attack signal).
-    //   b. Header missing + MOLLIE_WEBHOOK_REQUIRE_SIGNATURE=true → reject 401.
-    //   c. Header missing + flag false (default) → accept, log a warning so an
-    //      operator can detect signing-misconfiguration without breaking
-    //      production payments.
-    const webhookSecret = process.env.MOLLIE_WEBHOOK_SECRET
-    const requireSignature =
-      process.env.MOLLIE_WEBHOOK_REQUIRE_SIGNATURE === 'true'
-    const signature =
-      request.headers.get('mollie-signature') ??
-      request.headers.get('x-mollie-signature')
-
-    if (signature && webhookSecret) {
-      const expectedSignature = crypto
-        .createHmac('sha256', webhookSecret)
-        .update(body)
-        .digest('hex')
-
-      // Use timing-safe compare to avoid leaking the secret via timing oracles
-      const sigBuf = Buffer.from(signature, 'hex')
-      const expBuf = Buffer.from(expectedSignature, 'hex')
-      if (
-        sigBuf.length !== expBuf.length ||
-        !crypto.timingSafeEqual(sigBuf, expBuf)
-      ) {
-        console.error('[Mollie Webhook] Invalid signature — rejecting')
-        return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
+    if (required && !signature) return NextResponse.json({ error: 'Missing signature' }, { status: 401 });
+    if (signature && secret) {
+      const expected = crypto.createHmac('sha256', secret).update(body).digest();
+      if (!/^[a-fA-F0-9]{64}$/.test(signature) || !crypto.timingSafeEqual(Buffer.from(signature, 'hex'), expected)) {
+        return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
       }
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[Mollie Webhook] Signature verified ✓')
-      }
-    } else if (!signature && requireSignature) {
-      console.error(
-        '[Mollie Webhook] Missing signature header but MOLLIE_WEBHOOK_REQUIRE_SIGNATURE=true — rejecting'
-      )
-      return NextResponse.json({ error: 'Missing signature' }, { status: 401 })
-    } else if (!signature) {
-      // Default path: Mollie sent no signature. Accept but log so we know.
-      console.warn(
-        '[Mollie Webhook] No signature header (Mollie default behaviour). Accepting; relying on URL secrecy. Set MOLLIE_WEBHOOK_REQUIRE_SIGNATURE=true to enforce.'
-      )
-    } else if (signature && !webhookSecret) {
-      console.warn(
-        '[Mollie Webhook] Signature header present but MOLLIE_WEBHOOK_SECRET not configured — skipping verification.'
-      )
     }
 
-    // 4. Idempotency: check ProcessedWebhook before doing real work
-    const existing = await prisma.processedWebhook.findUnique({
-      where: {
-        webhookId_webhookType: { webhookId: id, webhookType: type },
-      },
-    })
-
-    if (existing && existing.status === 'processed') {
-      console.log('[Mollie Webhook] Already processed, skipping:', { id, type })
-      return NextResponse.json({ success: true, idempotent: true })
-    }
-
-    // Upsert to "received" — ensures we have a row even if the worker crashes
-    await prisma.processedWebhook.upsert({
-      where: {
-        webhookId_webhookType: { webhookId: id, webhookType: type },
-      },
-      create: {
-        webhookId: id,
-        webhookType: type,
-        status: 'received',
-      },
-      update: {
-        status: 'received',
-        attempts: { increment: 1 },
-        errorMessage: null,
-      },
-    })
-
-    // 5. Dispatch to the correct worker
+    const claim = await claimWebhookLease({ webhookId: id, webhookType: type }, type === 'subscription');
+    if (claim.state === 'processed') return NextResponse.json({ success: true, idempotent: true });
+    if (claim.state === 'busy') return retryResponse();
     try {
-      let processingResult: "processed" | "pending" | void = undefined
-
-      if (type === 'payment') {
-        processingResult = await processWebhookPayment(id)
-      } else if (type === 'subscription') {
-        await processSubscriptionWebhook(id)
-      } else {
-        console.warn('[Mollie Webhook] Unknown type, recording as processed:', type)
-      }
-
-      if (processingResult === "pending") {
-        return NextResponse.json({ success: true, pending: true })
-      }
-
-      // 6. Mark as processed
-      await prisma.processedWebhook.update({
-        where: {
-          webhookId_webhookType: { webhookId: id, webhookType: type },
-        },
-        data: {
-          status: 'processed',
-          processedAt: new Date(),
-          errorMessage: null,
-        },
-      })
-
-      return NextResponse.json({ success: true })
-    } catch (workerError) {
-      const message = workerError instanceof Error ? workerError.message : String(workerError)
-      console.error('[Mollie Webhook] Worker error:', message)
-
-      // Record the failure so an operator can replay or inspect
-      await prisma.processedWebhook
-        .update({
-          where: {
-            webhookId_webhookType: { webhookId: id, webhookType: type },
-          },
-          data: {
-            status: 'failed',
-            errorMessage: message.slice(0, 1000),
-          },
-        })
-        .catch((logErr) => {
-          console.error('[Mollie Webhook] Failed to record worker failure:', logErr)
-        })
-
-      // Return 200 so Mollie does not retry forever; the row in ProcessedWebhook
-      // is the single source of truth for "this needs human attention".
-      return NextResponse.json({ success: false, error: 'Worker error logged' })
+      const result = type === 'payment' ? await processWebhookPayment(id) : await processSubscriptionWebhook(id);
+      await finishWebhookLease(claim.lease, result === 'pending' ? 'pending' : 'processed');
+      return NextResponse.json({ success: true, ...(result === 'pending' ? { pending: true } : {}) });
+    } catch (error) {
+      console.error('[Mollie Webhook] Processing failed; provider retry requested');
+      await finishWebhookLease(claim.lease, 'failed', error instanceof Error ? error.message : 'Processing failed').catch(() => undefined);
+      return retryResponse();
     }
-  } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('=== Webhook Processing Error ===')
-      console.error('Error:', error)
-      console.error('Stack:', error instanceof Error ? error.stack : 'No stack')
-    } else {
-      console.error('Mollie webhook processing failed:', {
-        timestamp: new Date().toISOString(),
-        error: error instanceof Error ? error.message : 'Unknown error',
-      })
-    }
-
-    // Still return 200 so Mollie doesn't retry permanent errors aggressively.
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    })
+  } catch {
+    console.error('[Mollie Webhook] Notification could not be persisted; provider retry requested');
+    return retryResponse();
   }
 }

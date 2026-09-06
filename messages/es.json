@@ -1,4 +1,35 @@
 {
+  "billingRenewal": {
+    "stoppedTitle": "Renovación detenida",
+    "stoppedUntil": "Tu plan de pago seguirá disponible hasta el {date}. No hay más renovaciones programadas.",
+    "stoppedExpired": "Tu período pagado ha terminado. La renovación está detenida.",
+    "cancelDescription": "Detén las futuras renovaciones. Tu plan seguirá disponible hasta que termine el período que ya has pagado.",
+    "cancelConfirm": "¿Cancelar la renovación de {plan}? Mantendrás el acceso durante el período ya pagado.",
+    "canceledSuccess": "Renovación detenida. Tu acceso de pago seguirá disponible hasta que termine tu período pagado."
+  },
+  "checkoutRecovery": {
+    "pendingTitle": "Pago recibido, activación pendiente",
+    "pendingDescription": "Hemos recibido tu pago, pero aún no hemos confirmado la activación de tu compra. No vuelvas a pagar. Comprueba el estado de nuevo o contacta con soporte indicando esta referencia de pago.",
+    "checkAgain": "Comprobar el estado de nuevo",
+    "checking": "Comprobando la activación…",
+    "resumeDescription": "Tu cuenta está confirmada. Revisa el plan seleccionado. No se iniciará ningún pago hasta que lo confirmes.",
+    "continueCheckout": "Revisar mi plan"
+  },
+  "agencyOffer": {
+    "badge": "Agency para proyectos de clientes",
+    "title": "Tus hallazgos. El informe de tu agencia.",
+    "description": "Comprobaciones automatizadas de accesibilidad e informes con tu marca, para hasta {sites} sitios de clientes.",
+    "price": "Agency: {price} al mes, IVA incluido",
+    "billingNote": "Suscripción mensual de pago con renovación automática. Revisa las condiciones antes de pagar.",
+    "cta": "Ver Agency",
+    "sampleCta": "Ver informe de ejemplo",
+    "closedBadge": "Programa Founding Agency",
+    "closedTitle": "Las nuevas solicitudes Founding están cerradas",
+    "closedDescription": "La oferta de un año gratuito ya no está disponible para nuevas solicitudes. Puedes utilizar VexNexa con una suscripción Agency de pago.",
+    "existingTitle": "¿Ya enviaste una solicitud o participas?",
+    "existingDescription": "El cierre de nuevas solicitudes no modifica los acuerdos existentes ni las solicitudes ya enviadas. Contáctanos si tienes preguntas sobre tu solicitud o los beneficios acordados.",
+    "existingCta": "Consultar tu acuerdo existente"
+  },
   "brandHome": {
     "eyebrow": "Para agencias y equipos digitales",
     "headline": "Accesibilidad.",

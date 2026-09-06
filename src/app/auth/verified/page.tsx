@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import VerifiedClient from './VerifiedClient'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Email verified | VexNexa',
@@ -10,5 +11,5 @@ export const metadata: Metadata = {
 }
 
 export default function VerifiedPage(): JSX.Element {
-  return <VerifiedClient />
+  return <Suspense><VerifiedClient /></Suspense>
 }

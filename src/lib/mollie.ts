@@ -40,6 +40,11 @@ export function getMollieClient() {
     if (!apiKey) {
       throw new Error("MOLLIE_API_KEY environment variable is required")
     }
+    // Preview deployments must not create live charges or send their customers
+    // into a different production webhook version. Configure a test_ key there.
+    if (process.env.VERCEL_ENV === "preview" && !apiKey.startsWith("test_")) {
+      throw new Error("Mollie preview deployments require a test-mode API key")
+    }
     mollieClient = createMollieClient({ apiKey })
   }
   return mollieClient

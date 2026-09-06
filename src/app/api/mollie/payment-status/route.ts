@@ -3,8 +3,12 @@ import { requireAuth } from "@/lib/auth"
 import { mollie } from "@/lib/mollie"
 import { prisma } from "@/lib/prisma"
 import type { Plan as PrismaPlan } from "@prisma/client"
+import { AddOnType } from "@prisma/client"
+import { AUDIT_BUNDLE_PRICES, AUDIT_PRICES } from "@/lib/pricing"
 
 export const dynamic = 'force-dynamic'
+
+const auditProductIds = new Set<string>([...Object.values(AUDIT_PRICES), ...Object.values(AUDIT_BUNDLE_PRICES)].map(product => product.productId))
 
 /**
  * GET /api/mollie/payment-status?id=tr_xxx
@@ -24,7 +28,7 @@ export async function GET(request: NextRequest) {
     const user = await requireAuth()
 
     const paymentId = request.nextUrl.searchParams.get('id')
-    if (!paymentId || typeof paymentId !== 'string' || !paymentId.startsWith('tr_')) {
+    if (!paymentId || !/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
       return NextResponse.json({ error: 'Missing or invalid payment id' }, { status: 400 })
     }
 
@@ -37,7 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     const metadata = (payment.metadata ?? {}) as Record<string, string>
-    if (metadata.userId && metadata.userId !== user.id) {
+    if (!metadata.userId || metadata.userId !== user.id) {
       // Don't leak existence of someone else's payment
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
@@ -47,15 +51,47 @@ export async function GET(request: NextRequest) {
     // either Mollie's status is terminal AND (for paid) the webhook has run.
     const dbUser = await prisma.user.findUnique({
       where: { id: user.id },
-      select: { plan: true, subscriptionStatus: true },
+      select: { plan: true, subscriptionStatus: true, mollieSubscriptionId: true, subscriptionCurrentPeriodEnd: true },
     })
+
+    const processed = await prisma.processedWebhook.findUnique({
+      where: { webhookId_webhookType: { webhookId: paymentId, webhookType: 'payment' } },
+      select: { status: true },
+    })
+    const purchasedPlan = metadata.planKey ?? metadata.plan ?? null
+    const isOneOffCheckout = metadata.type === 'audit_payment' || metadata.type === 'addon_checkout'
+    const paidPeriodCurrent = !dbUser?.subscriptionCurrentPeriodEnd || dbUser.subscriptionCurrentPeriodEnd.getTime() > Date.now()
+    const planActivated = !!purchasedPlan && purchasedPlan !== 'FREE' && dbUser?.plan === purchasedPlan &&
+      dbUser.subscriptionStatus === 'active' && !!dbUser.mollieSubscriptionId && paidPeriodCurrent
+    let oneOffFulfilled = false
+    if (isOneOffCheckout && payment.status === 'paid' && processed?.status === 'processed') {
+      const marker = await prisma.processedWebhook.findUnique({
+        where: { webhookId_webhookType: { webhookId: paymentId, webhookType: metadata.type === 'audit_payment' ? 'audit_credit_fulfillment' : 'addon_payment_fulfillment' } },
+        select: { status: true, metadata: true },
+      })
+      const proof = marker?.metadata && typeof marker.metadata === 'object' && !Array.isArray(marker.metadata)
+        ? marker.metadata as Record<string, unknown> : null
+      if (marker?.status === 'processed' && proof !== null && proof.userId === user.id) {
+        if (metadata.type === 'audit_payment') {
+          const credits = Number(metadata.auditCredits)
+          oneOffFulfilled = auditProductIds.has(metadata.productId) && Number.isSafeInteger(credits) && credits > 0 && proof.credits === credits
+        } else {
+          const quantity = Number(metadata.quantity)
+          oneOffFulfilled = Object.values(AddOnType).includes(metadata.addOnType as AddOnType) && Number.isSafeInteger(quantity) && quantity > 0 &&
+            proof.type === metadata.addOnType && proof.quantity === quantity && typeof proof.addOnId === 'string' && !!proof.addOnId &&
+            typeof proof.subscriptionId === 'string' && !!proof.subscriptionId
+        }
+      }
+    }
+    const fulfilled = payment.status === 'paid' && processed?.status === 'processed' && (isOneOffCheckout ? oneOffFulfilled : planActivated)
 
     return NextResponse.json({
       paymentId: payment.id,
       status: payment.status, // 'open' | 'pending' | 'authorized' | 'paid' | 'canceled' | 'expired' | 'failed'
       type: metadata.type ?? null,
-      isOneOffCheckout: metadata.type === 'audit_payment' || metadata.type === 'addon_checkout',
-      plan: (metadata.planKey ?? metadata.plan ?? null) as string | null,
+      isOneOffCheckout,
+      fulfillmentStatus: fulfilled ? 'fulfilled' : 'pending',
+      plan: purchasedPlan,
       billingInterval: (metadata.billingInterval ?? metadata.billingCycle ?? null) as string | null,
       user: {
         plan: dbUser?.plan ?? ('FREE' as PrismaPlan),

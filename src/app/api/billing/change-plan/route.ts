@@ -4,6 +4,8 @@ import { requireAuth } from "@/lib/auth"
 import { changePlan, createUpgradePayment } from "@/lib/billing/mollie-flows"
 import { PRICES } from "@/lib/billing/plans"
 
+export const maxDuration = 60
+
 const ChangePlanSchema = z.object({
   plan: z.enum(["STARTER", "PRO", "BUSINESS"])
 })

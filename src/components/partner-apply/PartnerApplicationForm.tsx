@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import type { PartnerApplyState } from "@/app/actions/partner-application";
+import { FOUNDING_APPLICATIONS_OPEN } from "@/lib/founding-program";
+import { FoundingProgramClosed } from "@/components/marketing/FoundingProgramClosed";
 
 type PartnerApplicationFormProps = {
   formAction: (payload: FormData) => void;
@@ -22,6 +24,7 @@ export function PartnerApplicationForm({
   remaining,
 }: PartnerApplicationFormProps) {
   const t = useTranslations("partnerApply");
+  if (!FOUNDING_APPLICATIONS_OPEN || (!state.ok && state.programClosed)) return <FoundingProgramClosed />;
   const fe = state.ok ? undefined : state.fieldErrors;
 
   // Field errors arrive as key names within partnerApply.errors so they

@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types";
 import { formatDate } from "@/lib/format";
 import { requireAuth } from "@/lib/auth";
+import { getExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 import { calculateWCAGCompliance } from "@/lib/analytics";
 
@@ -40,10 +42,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Scan not found" }, { status: 404 });
     }
 
+    if (scan.site.userId !== user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     // Get white-label settings for branding
-    const whiteLabel = await prisma.whiteLabel.findUnique({
-      where: { userId: user.id }
-    });
+    const whiteLabel = await getExportWhiteLabel(user.id);
 
     // Use white-label branding or fallback to VexNexa
     const brandName = whiteLabel?.companyName || 'VexNexa';
@@ -757,6 +761,8 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error: any) {
+    const denied = exportAccessErrorResponse(error);
+    if (denied) return denied;
     console.error("PDF export error:", error);
 
     return NextResponse.json(

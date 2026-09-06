@@ -12,7 +12,7 @@ import {
   type PlanKey,
   type BillingInterval,
 } from "@/lib/billing/pricing-config";
-import { createOrGetMollieCustomer } from "@/lib/billing/mollie-flows";
+import { assertNoPendingCoreFulfillment, createOrGetMollieCustomer } from "@/lib/billing/mollie-flows";
 import { mollie, appUrl, isMollieTestMode } from "@/lib/mollie";
 import type { PaymentCreateParams } from "@mollie/api-client";
 import { SequenceType } from "@mollie/api-client";
@@ -94,6 +94,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         { status: 400 }
       );
     }
+
+    // Do not invite another payment while an earlier paid activation is uncertain.
+    await assertNoPendingCoreFulfillment(user.id);
 
     // Get the FIXED amount from the single source of truth
     const chargedAmount = getMollieAmount(plan as PlanKey, billingCycle as BillingInterval);
@@ -178,13 +181,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // Patch redirectUrl with the real paymentId so /checkout/return can fetch
-    // the status. Non-fatal on failure.
+    // the status. Never send the customer to pay if this return path is broken.
     try {
       await mollie.payments.update(payment.id, {
         redirectUrl: appUrl(`/checkout/return?paymentId=${payment.id}`),
       } as Parameters<typeof mollie.payments.update>[1]);
     } catch (updateError) {
       console.warn("[create-payment] Failed to patch redirectUrl with paymentId:", updateError);
+      throw new Error("Could not prepare a verifiable payment return URL");
     }
 
     // Persist checkout quote snapshot for invoice/audit trail

@@ -6,12 +6,16 @@ import { requireAuth } from "@/lib/auth";
 import { mollie, appUrl, formatMollieAmount } from "@/lib/mollie";
 import { createOrGetMollieCustomer } from "@/lib/billing/mollie-flows";
 import { getAddOnPricing, ADDON_NAMES } from "@/lib/billing/addons";
+import { prisma } from "@/lib/prisma";
+import { assertNoPendingAddOnFulfillment } from "@/lib/billing/addon-fulfillment";
 
 export const dynamic = "force-dynamic";
 
 const AddOnPaymentSchema = z.object({
   type: z.nativeEnum(AddOnType),
   quantity: z.number().int().min(1).optional().default(1),
+}).refine(({ type, quantity }) => type === AddOnType.EXTRA_SEAT || quantity === 1, {
+  message: "Non-seat add-ons must have quantity 1", path: ["quantity"],
 });
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -28,6 +32,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     const { type, quantity } = validation.data;
+    await assertNoPendingAddOnFulfillment(user.id);
+    if (type === AddOnType.EXTRA_SEAT) {
+      const existingSeats = await prisma.addOn.findFirst({ where: { userId: user.id, type: AddOnType.EXTRA_SEAT, status: { in: ["active", "pending"] } } });
+      if (existingSeats) {
+        return NextResponse.json({ error: "An existing seat bundle must be changed through seat quantity management, not a new prepaid checkout.", code: "EXISTING_SEAT_BUNDLE" }, { status: 409 });
+      }
+    }
     const pricing = getAddOnPricing(type);
     const amount = pricing.pricePerUnit * quantity;
     const customer = await createOrGetMollieCustomer(user.id, user.email);
@@ -58,6 +69,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       } as Parameters<typeof mollie.payments.update>[1]);
     } catch (updateError) {
       console.warn("[create-addon-payment] Failed to patch redirectUrl:", updateError);
+      // Do not offer a payable checkout whose return cannot verify this payment.
+      throw updateError;
     }
 
     const checkoutUrl = payment.getCheckoutUrl();

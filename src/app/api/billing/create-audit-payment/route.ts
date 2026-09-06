@@ -76,6 +76,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       } as Parameters<typeof mollie.payments.update>[1]);
     } catch (updateError) {
       console.warn("[create-audit-payment] Failed to patch redirectUrl:", updateError);
+      throw new Error("Could not prepare a verifiable payment return URL");
     }
 
     const checkoutUrl = payment.getCheckoutUrl();

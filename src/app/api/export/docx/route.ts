@@ -17,6 +17,8 @@ import {
 import { Violation, computeIssueStats, getTopViolations } from "@/lib/axe-types";
 import { formatDate } from "@/lib/format";
 import { requireAuth } from "@/lib/auth";
+import { getExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 import { assertWithinLimits, addPageUsage } from "@/lib/billing/entitlements";
 import {
   EAA_IMPORTANT_NOTE_BODY,
@@ -158,6 +160,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Scan not found" }, { status: 404 });
     }
 
+    if (scan.site.userId !== user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     // Extract violations
     let violations: Violation[] = [];
     if (scan.raw && typeof scan.raw === 'object' && 'violations' in scan.raw) {
@@ -169,9 +175,7 @@ export async function POST(req: NextRequest) {
     const siteUrl = scan.page?.url || scan.site.url;
 
     // Fetch white-label settings for the user
-    const whiteLabel = await prisma.whiteLabel.findUnique({
-      where: { userId: user.id }
-    });
+    const whiteLabel = await getExportWhiteLabel(user.id);
 
     const brandName = whiteLabel?.companyName || "VexNexa";
     const primaryColor = (whiteLabel?.primaryColor || "#1F4A2D").replace('#', '');
@@ -659,6 +663,8 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error) {
+    const denied = exportAccessErrorResponse(error);
+    if (denied) return denied;
     console.error("Word export failed:", error);
     
     // Handle billing errors

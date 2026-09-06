@@ -2,6 +2,7 @@ import { ENTITLEMENTS } from "./plans"
 import { prisma } from "../prisma"
 import { calculateExtraScans, calculateExtraSeats, calculateExtraWebsites, hasActiveAssurance } from "./addons"
 import { planIncludesAssurance, type PlanKey } from "../pricing"
+import { hasPaidSubscriptionAccess, type SubscriptionAccess } from "./subscription-period"
 
 export function getEntitlements<P extends keyof typeof ENTITLEMENTS>(plan: P): (typeof ENTITLEMENTS)[P] {
   return ENTITLEMENTS[plan]
@@ -9,9 +10,9 @@ export function getEntitlements<P extends keyof typeof ENTITLEMENTS>(plan: P): (
 
 const BLOCKED_BILLING_STATUSES = new Set(["past_due", "canceled", "failed"])
 
-function assertRevenueAccess(user: { plan: string; subscriptionStatus: string }, action: string): void {
+function assertRevenueAccess(user: SubscriptionAccess & { plan: string }, action: string, now = new Date()): void {
   if (user.plan === "FREE") return
-  if (user.subscriptionStatus === "active") return
+  if (hasPaidSubscriptionAccess(user, now)) return
 
   const e: any = new Error(
     BLOCKED_BILLING_STATUSES.has(user.subscriptionStatus)
@@ -38,7 +39,7 @@ export async function getTotalEntitlements(userId: string): Promise<Record<strin
 
   if (!user) throw new Error("User not found")
 
-  const plan = user.plan as keyof typeof ENTITLEMENTS
+  const plan = (user.plan !== "FREE" && !hasPaidSubscriptionAccess(user) ? "FREE" : user.plan) as keyof typeof ENTITLEMENTS
   const baseEntitlements = ENTITLEMENTS[plan]
 
   // Calculate add-ons
@@ -135,7 +136,7 @@ export async function assertWithinLimits(opts: {
   })
   if (!user) throw new Error("User not found")
 
-  assertRevenueAccess(user, opts.action)
+  assertRevenueAccess(user, opts.action, now)
 
   const plan = user.plan as keyof typeof ENTITLEMENTS
   const baseEnt = ENTITLEMENTS[plan]

@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { authContinuationPath, parseCheckoutIntent, safeAuthRedirect } from '@/lib/checkout-recovery'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client-new'
 import type { User } from '@supabase/supabase-js'
@@ -12,6 +14,10 @@ export default function VerifiedClient(): JSX.Element {
   type SupabaseClientType = ReturnType<typeof createClient>
 
   const router: RouterType = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = safeAuthRedirect(searchParams.get('redirect'))
+  const resumingCheckout = !!parseCheckoutIntent(new URL(redirect, 'https://redirect.invalid').searchParams)
+  const tRecovery = useTranslations('checkoutRecovery')
   const supabase: SupabaseClientType = useMemo((): SupabaseClientType => createClient(), [])
 
   const [secondsLeft, setSecondsLeft] = useState<number>(15)
@@ -30,7 +36,7 @@ export default function VerifiedClient(): JSX.Element {
         if (cancelled) return
 
         if (!data.user) {
-          router.replace('/auth/login?error=session_expired')
+          router.replace(`${authContinuationPath('/auth/login', redirect)}&error=session_expired`)
           return
         }
 
@@ -44,10 +50,10 @@ export default function VerifiedClient(): JSX.Element {
         }, 1000)
 
         timeoutId = window.setTimeout((): void => {
-          router.replace('/dashboard')
+          router.replace(redirect)
         }, 15000)
       } catch {
-        router.replace('/auth/login?error=session_error')
+        router.replace(`${authContinuationPath('/auth/login', redirect)}&error=session_error`)
       }
     }
 
@@ -58,10 +64,10 @@ export default function VerifiedClient(): JSX.Element {
       if (intervalId !== undefined) window.clearInterval(intervalId)
       if (timeoutId !== undefined) window.clearTimeout(timeoutId)
     }
-  }, [router, supabase])
+  }, [router, supabase, redirect])
 
   const handleGoNow = (): void => {
-    router.replace('/dashboard')
+    router.replace(redirect)
   }
 
   return (
@@ -78,7 +84,7 @@ export default function VerifiedClient(): JSX.Element {
             </h1>
 
             <p className="mt-3 text-sm md:text-base text-[#5A5A5A] dark:text-[#C0C3C7] max-w-prose">
-              Your account is confirmed. We’ll take you to your dashboard automatically.
+              {resumingCheckout ? tRecovery('resumeDescription') : 'Your account is confirmed. We’ll take you to your dashboard automatically.'}
             </p>
 
             <p className="mt-4 text-sm text-[#5A5A5A] dark:text-[#C0C3C7]">
@@ -110,7 +116,7 @@ export default function VerifiedClient(): JSX.Element {
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Button size="lg" className="w-full sm:w-auto gradient-primary text-white" onClick={handleGoNow}>
-              Go to dashboard now
+              {resumingCheckout ? tRecovery('continueCheckout') : 'Go to dashboard now'}
             </Button>
             <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
               <Link href="/">Back to home</Link>

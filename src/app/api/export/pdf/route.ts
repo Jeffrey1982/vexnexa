@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { pdf } from "@react-pdf/renderer";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
+import { getExportWhiteLabel } from "@/lib/report/get-stored-white-label";
+import { exportAccessErrorResponse } from "@/lib/report/export-error";
 import { assertWithinLimits } from "@/lib/billing/entitlements";
 import { PDFReport } from "@/lib/pdf-generator";
 
@@ -68,9 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Fetch white-label settings for the user
-    const whiteLabel = await prisma.whiteLabel.findUnique({
-      where: { userId: user.id }
-    });
+    const whiteLabel = await getExportWhiteLabel(user.id);
 
     const brandName = whiteLabel?.companyName || "VexNexa";
     const primaryColor = whiteLabel?.primaryColor || "#1F4A2D";
@@ -112,6 +112,8 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error) {
+    const denied = exportAccessErrorResponse(error);
+    if (denied) return denied;
     console.error("PDF generation error:", error);
     return NextResponse.json(
       { error: "Failed to generate PDF" },

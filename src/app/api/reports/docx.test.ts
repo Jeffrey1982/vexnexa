@@ -9,7 +9,7 @@ import type { ReportData } from '@/lib/report/types'
 
 const m = vi.hoisted(() => ({ getUser: vi.fn(), scan: vi.fn(), stored: vi.fn(), image: vi.fn(), entitlement: vi.fn() }))
 vi.mock('@/lib/supabase/server-new', () => ({ createClient: async () => ({ auth: { getUser: m.getUser } }) }))
-vi.mock('@/lib/prisma', () => ({ prisma: { scan: { findUnique: m.scan } } }))
+vi.mock('@/lib/prisma', () => ({ prisma: { scan: { findUnique: m.scan }, whiteLabel: { findUnique: (args: { where: { userId: string } }) => m.stored(args.where.userId) } } }))
 vi.mock('@/lib/billing/entitlements', () => ({ assertWithinLimits: m.entitlement }))
 vi.mock('@/lib/report', async () => ({
   ...(await import('@/lib/report/transform')), ...(await import('@/lib/report/resolve-white-label')),

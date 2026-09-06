@@ -1,4 +1,35 @@
 {
+  "billingRenewal": {
+    "stoppedTitle": "Verlängerung beendet",
+    "stoppedUntil": "Dein bezahlter Tarif bleibt bis zum {date} verfügbar. Es sind keine weiteren Abonnementverlängerungen geplant.",
+    "stoppedExpired": "Dein bezahlter Zeitraum ist abgelaufen. Die Verlängerung ist beendet.",
+    "cancelDescription": "Beende zukünftige Verlängerungen. Dein Tarif bleibt bis zum Ende des bereits bezahlten Zeitraums verfügbar.",
+    "cancelConfirm": "Verlängerung von {plan} kündigen? Du behältst den Zugang für den bereits bezahlten Zeitraum.",
+    "canceledSuccess": "Verlängerung beendet. Dein bezahlter Zugang bleibt bis zum Ende deines bezahlten Zeitraums verfügbar."
+  },
+  "checkoutRecovery": {
+    "pendingTitle": "Zahlung erhalten, Aktivierung ausstehend",
+    "pendingDescription": "Deine Zahlung ist eingegangen, aber die Aktivierung deines Kaufs wurde noch nicht bestätigt. Bezahle nicht erneut. Prüfe den Status erneut oder kontaktiere den Support mit dieser Zahlungsreferenz.",
+    "checkAgain": "Status erneut prüfen",
+    "checking": "Aktivierung wird geprüft…",
+    "resumeDescription": "Dein Konto ist bestätigt. Überprüfe jetzt deinen ausgewählten Tarif. Eine Zahlung wird erst gestartet, wenn du sie selbst bestätigst.",
+    "continueCheckout": "Ausgewählten Tarif überprüfen"
+  },
+  "agencyOffer": {
+    "badge": "Agency für Kundenprojekte",
+    "title": "Eure Ergebnisse. Euer Agenturbericht.",
+    "description": "Automatisierte Barrierefreiheitsprüfungen und Berichte in eurem Design, für bis zu {sites} Kundenwebsites.",
+    "price": "Agency: {price} pro Monat, inklusive MwSt.",
+    "billingNote": "Kostenpflichtiges Monatsabonnement mit automatischer Verlängerung. Bedingungen vor dem Kauf prüfen.",
+    "cta": "Agency ansehen",
+    "sampleCta": "Beispielbericht ansehen",
+    "closedBadge": "Founding-Agency-Programm",
+    "closedTitle": "Neue Founding-Bewerbungen sind geschlossen",
+    "closedDescription": "Das kostenlose erste Jahr ist für neue Bewerbungen nicht mehr verfügbar. VexNexa kann weiterhin mit einem kostenpflichtigen Agency-Abonnement genutzt werden.",
+    "existingTitle": "Bereits beworben oder dabei?",
+    "existingDescription": "Die Schließung für neue Bewerbungen ändert keine bestehenden Vereinbarungen oder bereits eingereichten Bewerbungen. Bei Fragen zur Bewerbung oder zugesagten Vorteilen kontaktiert uns bitte.",
+    "existingCta": "Frage zur bestehenden Vereinbarung"
+  },
   "brandHome": {
     "eyebrow": "Für Agenturen und digitale Teams",
     "headline": "Barrierefreiheit.",

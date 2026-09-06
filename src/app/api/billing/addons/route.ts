@@ -3,6 +3,8 @@ import { requireAuth } from "@/lib/auth"
 import { getUserAddOns, purchaseAddOn } from "@/lib/billing/addon-flows"
 import { AddOnType } from "@prisma/client"
 
+export const maxDuration = 60
+
 const PURCHASABLE_ADD_ONS = new Set<AddOnType>([
   AddOnType.EXTRA_SEAT,
   AddOnType.EXTRA_WEBSITE_1,
@@ -79,7 +81,7 @@ export async function POST(req: NextRequest) {
         redirectUrl,
         action
       },
-      { status: error?.code === "TRIAL_USER" ? 403 : 500 }
+      { status: error?.code === "TRIAL_USER" ? 403 : ["EXISTING_SEAT_BUNDLE", "ADDON_RECONCILIATION_REQUIRED"].includes(errorCode) ? 409 : 500 }
     )
   }
 }

@@ -33,14 +33,18 @@ import { WebsiteCapacityCard } from "@/components/billing/WebsiteCapacityCard";
 import { PLAN_PRICES, formatEurPrice, type BillingInterval } from "@/lib/billing/pricing-config";
 
 import { AddOnType } from "@prisma/client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { localizeApiError } from "@/lib/localized-api-error";
+import { localizeMarketingHref } from "@/lib/marketing-links";
+import { hasPaidSubscriptionAccess } from "@/lib/billing/subscription-period";
 
 interface UserData {
   id: string;
   email: string;
   plan: "FREE" | "STARTER" | "PRO" | "BUSINESS";
   subscriptionStatus: string;
+  subscriptionCurrentPeriodEnd: string | null;
+  subscriptionCanceledAt: string | null;
 }
 
 interface UsageData {
@@ -152,6 +156,8 @@ function FeatureRow({ label, included }: { label: string; included: boolean }) {
 
 export default function BillingPage() {
   const tError = useTranslations("apiErrors");
+  const tRenewal = useTranslations("billingRenewal");
+  const locale = useLocale();
   const [authUser, setAuthUser] = useState<any>(null);
   const supabase = createClient();
 
@@ -196,6 +202,8 @@ export default function BillingPage() {
         email: data.user.email,
         plan: data.user.plan,
         subscriptionStatus: data.user.subscriptionStatus,
+        subscriptionCurrentPeriodEnd: data.user.subscriptionCurrentPeriodEnd ?? null,
+        subscriptionCanceledAt: data.user.subscriptionCanceledAt ?? null,
       });
 
       setUsage({
@@ -246,15 +254,15 @@ export default function BillingPage() {
         return;
       }
 
-      setSuccess("Subscription cancelled successfully");
+      setSuccess(tRenewal("canceledSuccess"));
       // Refresh all billing data from server
       await loadUserData();
 
     } catch {
       setError(tError("network"));
+    } finally {
+      setActionLoading(null);
     }
-
-    setActionLoading(null);
   };
 
   const PLAN_RANK: Record<string, number> = { FREE: 0, STARTER: 1, PRO: 2, BUSINESS: 3 };
@@ -355,7 +363,13 @@ export default function BillingPage() {
     );
   }
 
-  const planEntitlements = ENTITLEMENTS[user.plan as keyof typeof ENTITLEMENTS] || ENTITLEMENTS.FREE;
+  const paidAccess = user.plan === "FREE" || hasPaidSubscriptionAccess({
+    subscriptionStatus: user.subscriptionStatus,
+    subscriptionCurrentPeriodEnd: user.subscriptionCurrentPeriodEnd ? new Date(user.subscriptionCurrentPeriodEnd) : null,
+    subscriptionCanceledAt: user.subscriptionCanceledAt ? new Date(user.subscriptionCanceledAt) : null,
+  });
+  const displayStatus = !paidAccess && user.subscriptionStatus === "active" ? (user.subscriptionCanceledAt ? "canceled" : "expired") : user.subscriptionStatus;
+  const planEntitlements = !paidAccess ? ENTITLEMENTS.FREE : ENTITLEMENTS[user.plan as keyof typeof ENTITLEMENTS] || ENTITLEMENTS.FREE;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -404,27 +418,27 @@ export default function BillingPage() {
                 <div className="flex items-center gap-2">
                   <h3 className="text-2xl font-bold">{PLAN_NAMES[user.plan]}</h3>
                   <Badge
-                    variant={user.subscriptionStatus === "active" ? "default" : "secondary"}
+                    variant={displayStatus === "active" ? "default" : "secondary"}
                     className="capitalize"
                   >
-                    {user.subscriptionStatus === "active" && <CheckCircle className="h-3 w-3 mr-1" />}
-                    {user.subscriptionStatus === "canceled" && <XCircle className="h-3 w-3 mr-1" />}
-                    {user.subscriptionStatus}
+                    {displayStatus === "active" && <CheckCircle className="h-3 w-3 mr-1" />}
+                    {displayStatus === "canceled" && <XCircle className="h-3 w-3 mr-1" />}
+                    {displayStatus}
                   </Badge>
                 </div>
                 <p className="text-muted-foreground">
                   {user.plan === "FREE"
                     ? "Free forever"
-                    : `${fmtPlanPrice(user.plan as any)} per month`
+                    : fmtPlanPrice(user.plan)
                   }
                 </p>
               </div>
 
-              {user.plan !== "FREE" && (
+              {user.plan !== "FREE" && user.subscriptionCurrentPeriodEnd && (
                 <div className="text-right">
-                  <p className="text-sm text-muted-foreground">Next invoice</p>
+                  <p className="text-sm text-muted-foreground">Paid through</p>
                   <p className="font-semibold">
-                    {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+                    {new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(user.subscriptionCurrentPeriodEnd))}
                   </p>
                 </div>
               )}
@@ -651,7 +665,22 @@ export default function BillingPage() {
           </Card>
 
           {/* Cancel Subscription */}
-          {user.plan !== "FREE" && user.subscriptionStatus === "active" && (
+          {user.subscriptionCanceledAt && (
+            <Card className="md:col-span-2">
+              <CardHeader><CardTitle>{tRenewal("stoppedTitle")}</CardTitle></CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  {user.subscriptionCurrentPeriodEnd && new Date(user.subscriptionCurrentPeriodEnd).getTime() > Date.now()
+                    ? tRenewal("stoppedUntil", { date: new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(user.subscriptionCurrentPeriodEnd)) })
+                    : tRenewal("stoppedExpired")}
+                </p>
+                <Button asChild variant="outline" className="mt-4">
+                  <Link href={localizeMarketingHref("/pricing#agency", locale)}>View plans</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+          {user.plan !== "FREE" && user.subscriptionStatus === "active" && !user.subscriptionCanceledAt && (
             <Card className="md:col-span-2">
               <CardHeader>
                 <CardTitle className="text-destructive">Cancel Subscription</CardTitle>
@@ -660,7 +689,7 @@ export default function BillingPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Your subscription will be cancelled immediately and you will be downgraded to the free plan.
+                      {tRenewal("cancelDescription")}
                     </p>
                   </div>
 
@@ -674,8 +703,7 @@ export default function BillingPage() {
                       <DialogHeader>
                         <DialogTitle>Cancel subscription?</DialogTitle>
                         <DialogDescription>
-                          Are you sure you want to cancel your {PLAN_NAMES[user.plan]} subscription?
-                          You will be immediately downgraded to the free plan with limited features.
+                          {tRenewal("cancelConfirm", { plan: PLAN_NAMES[user.plan] })}
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>
