@@ -41,7 +41,7 @@ jobs:
             echo "OK $path"
           }
 
-          check "/" "on autopilot"
+          check "/" "Backed by evidence"
           check "/pricing" "Agency"
           check "/free-scan"
           check "/audits"
