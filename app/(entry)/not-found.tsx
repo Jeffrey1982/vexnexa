@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function NotFound(){return <main style={{fontFamily:'system-ui',maxWidth:600,padding:'80px 24px',margin:'0 auto',color:'#142d48'}}><p>VexNexa</p><h1>404 · Page not found</h1><p>This page is no longer here. Discover our games or contact the studio.</p><p><Link href="/en">VexNexa Game Studio →</Link></p><p><Link href="/nl">Nederlands →</Link></p><Link href="/en/support">Support</Link></main>;}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2560" height="560" viewBox="0 0 1280 280">
+<title>IpiWow</title>
+<desc>Original rounded IpiWow lettering in ocean blue and sunshine gold, with a journey trail and discovery stars.</desc>
+<defs>
+<linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#69dbf4"/><stop offset="1" stop-color="#29b6e8"/></linearGradient>
+<linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe780"/><stop offset="1" stop-color="#ffc32c"/></linearGradient>
+<path id="letter-I" d="M8 0H83Q94 0 94 12V21Q94 32 83 32H69V116H83Q94 116 94 128V136Q94 148 83 148H8Q-3 148-3 136V128Q-3 116 8 116H22V32H8Q-3 32-3 21V12Q-3 0 8 0Z"/>
+<path id="letter-p" fill-rule="evenodd" d="M13 42H34Q46 42 46 54V57Q60 40 82 40C119 40 139 64 139 94C139 129 117 151 84 151Q63 151 49 137V169Q49 182 35 182H13Q0 182 0 169V55Q0 42 13 42ZM70 75C54 75 48 84 48 96C48 111 56 119 70 119C86 119 92 110 92 96C92 83 85 75 70 75Z"/>
+<path id="letter-i" d="M24-2C40-2 48 7 48 21C48 35 40 44 24 44C9 44 0 35 0 21C0 7 9-2 24-2ZM13 57H35Q48 57 48 70V135Q48 148 35 148H13Q0 148 0 135V70Q0 57 13 57Z"/>
+<path id="letter-W" d="M13 0H39Q51 0 54 13L76 95L101 14Q105 2 117 2H134Q145 2 149 14L174 95L196 13Q199 0 211 0H236Q250 0 246 16L208 132Q203 148 187 148H170Q155 148 150 133L125 65L101 133Q96 148 80 148H64Q48 148 43 132L3 16Q-2 0 13 0Z"/>
+<path id="letter-o" fill-rule="evenodd" d="M67 41C109 41 134 61 134 96C134 133 109 151 67 151C25 151 0 133 0 96C0 61 25 41 67 41ZM67 75C52 75 44 83 44 96C44 110 52 118 67 118C82 118 90 110 90 96C90 83 82 75 67 75Z"/>
+<path id="letter-w" d="M13 44H35Q46 44 49 55L63 104L80 58Q84 47 96 47H110Q122 47 126 58L143 104L157 55Q160 44 171 44H192Q207 44 202 59L176 133Q171 148 156 148H142Q127 148 122 135L103 93L84 135Q79 148 65 148H50Q35 148 30 133L3 59Q-2 44 13 44Z"/>
+<g id="first"><use xlink:href="#letter-I" transform="translate(131 49) rotate(-3 47 74)"/><use xlink:href="#letter-p" transform="translate(250 49) rotate(1.5 68 94)"/><use xlink:href="#letter-i" transform="translate(412 47) rotate(-2 24 74)"/></g>
+<g id="wow"><use xlink:href="#letter-W" transform="translate(482 47) rotate(-1 125 74)"/><use xlink:href="#letter-o" transform="translate(747 48) rotate(3 67 96)"/><use xlink:href="#letter-w" transform="translate(900 49) rotate(-2 103 96)"/></g>
+</defs>
+<!-- A small lift keeps the mark lively on the daylight palette. -->
+<g transform="translate(0 8)" fill="#176888" stroke="#176888" stroke-width="9" stroke-linejoin="round"><use xlink:href="#first"/><use xlink:href="#wow"/></g>
+<g stroke="#153f64" stroke-width="6" stroke-linejoin="round"><use xlink:href="#first" fill="url(#ocean)"/><use xlink:href="#wow" fill="url(#sun)"/></g>
+<g fill="none" stroke="#fffef8" stroke-width="5" stroke-linecap="round" opacity="0.8"><path d="M148 63H171"/><path d="M509 60H521"/><path d="M779 105Q793 98 807 101"/></g>
+<path d="M469 226Q769 266 1077 224" fill="none" stroke="#7acdc6" stroke-width="5" stroke-linecap="round"/>
+<circle cx="455" cy="224" r="6" fill="#28a992"/>
+<g fill="#ffc32c" stroke="#153f64" stroke-width="4" stroke-linejoin="round"><path d="M109 14L114 29L130 34L114 40L109 55L103 40L88 34L103 29Z"/><path d="M1154 86L1162 108L1184 116L1162 124L1154 146L1146 124L1124 116L1146 108Z"/></g>
+<g fill="#37bddb"><circle cx="1119" cy="48" r="6"/><path d="M84 172L88 183L100 187L88 191L84 203L80 191L68 187L80 183Z"/></g>
+</svg>

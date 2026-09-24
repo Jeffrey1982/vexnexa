@@ -1,41 +1,16 @@
-# VexNexa Design Context
+# VexNexa Studio Design
 
-## Visual Direction
+## Approved north star
+The user-approved mockup from 24 September 2026: warm ivory header, oversized navy condensed headline on a sky-cyan hero, two tilted actual IpiWow screens and a large smiling globe mascot. Mint hills establish a playful horizon. A product spotlight, navy studio strip and compact seven-language footer follow.
 
-The public site should feel like an audit desk: paper, ink, evidence, status marks, and product screenshots. Use product artifacts as the visual centerpiece instead of abstract illustrations.
+## Tokens and typography
+Full palette based on IpiWow's existing sky blue, mint green and sunshine yellow, with dark navy text and warm ivory surfaces. Use OKLCH tokens and strong text contrast. Barlow Condensed bold for display headings, Atkinson Hyperlegible Next for body and interface text. No gradient text. Existing IpiWow SVG wordmark is preserved as supplied.
 
-## Color
+## Composition
+Asymmetric desktop hero: headline and call to action on the left, actual app screens and mascot on the right. On narrow screens, stack text above the scene without clipping controls or shrinking type excessively. Preserve real semantic text and links. Phone frames and landscape shapes are code-native; app screens and mascot are sourced assets.
 
-Core palette:
+## Interaction and accessibility
+Visible focus, skip link, native-language navigation and correct document language. At least44px targets. Subtle transform/opacity feedback only; no motion necessary for understanding. Respect reduced motion. Contact has visible labels, server validation, explicit pending/success/error states, safe retries and no marketing consent.
 
-- Ink: near-black text and primary actions.
-- Paper: warm off-white backgrounds and report surfaces.
-- Emerald: trust, compliance, progress, and success.
-- Amber: audit notes, highlights, and attention without alarm.
-- Red, amber, green, and neutral severity colors for scan findings.
-
-Avoid collapsing unrelated roles into the same emerald. Color should clarify state and hierarchy.
-
-## Typography
-
-Use the sans family for primary marketing headlines and body copy. Reserve monospace for WCAG tags, URLs, scores, technical labels, and evidence-style metadata.
-
-Headlines should be large, confident, and left-aligned on brand surfaces. Body copy should stay readable, with short lines and clear hierarchy.
-
-## Layout
-
-Prefer product-led asymmetry over centered stacks. The homepage hero should show the product/report preview in the first viewport.
-
-Cards are acceptable for discrete proof points, FAQ rows, pricing options, and dashboard widgets. Avoid long repeated grids that use the same icon, title, paragraph structure.
-
-## Motion
-
-Use motion sparingly. Prefer fast opacity and transform transitions. Respect reduced-motion preferences.
-
-## Components
-
-Primary CTAs should feel decisive: dark ink or emerald, high contrast, clear labels.
-
-Secondary CTAs should use borders or quieter fills.
-
-Cookie and system banners should be compact and should not block primary product evidence on mobile.
+## Implementation boundary
+Active routes live in root app/ and use studio/ modules. Existing src/ is legacy SaaS source, excluded from active routing and typechecking. Browser verification must cover narrow mobile, tablet and desktop, all seven languages, contact validation and retired route isolation.

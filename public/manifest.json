@@ -1,77 +1,10 @@
 {
-  "name": "VexNexa - Accessibility Testing Platform",
+  "name": "VexNexa Game Studio",
   "short_name": "VexNexa",
-  "description": "Professional accessibility testing and compliance monitoring platform for websites",
-  "start_url": "/dashboard",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#14B8A6",
-  "orientation": "portrait-primary",
-  "categories": ["productivity", "developer", "utilities"],
-  "lang": "en",
-  "icons": [
-    {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "New Scan",
-      "short_name": "Scan",
-      "description": "Start a new accessibility scan",
-      "url": "/dashboard?action=scan",
-      "icons": [
-        {
-          "src": "/android-chrome-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "View Reports",
-      "short_name": "Reports",
-      "description": "View accessibility reports",
-      "url": "/dashboard?tab=reports",
-      "icons": [
-        {
-          "src": "/android-chrome-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Team Collaboration",
-      "short_name": "Teams",
-      "description": "Collaborate with your team",
-      "url": "/teams",
-      "icons": [
-        {
-          "src": "/android-chrome-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ],
-  "features": [
-    "cross-platform",
-    "offline",
-    "push-notifications"
-  ],
-  "prefer_related_applications": false,
-  "scope": "/",
-  "protocol_handlers": [
-    {
-      "protocol": "web+vexnexa",
-      "url": "/scan?url=%s"
-    }
-  ]
+  "description": "Games to discover. Made by VexNexa.",
+  "start_url": "/nl",
+  "display": "browser",
+  "background_color": "#fffbef",
+  "theme_color": "#87dff0",
+  "icons": [{"src":"/favicon.svg","sizes":"any","type":"image/svg+xml"}]
 }

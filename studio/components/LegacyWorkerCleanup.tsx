@@ -1,0 +1,3 @@
+'use client';
+import {useEffect} from 'react';
+export function LegacyWorkerCleanup(){useEffect(()=>{if(!('serviceWorker' in navigator))return; void navigator.serviceWorker.getRegistrations().then(async registrations=>{for(const registration of registrations){const worker=registration.active??registration.waiting??registration.installing;if(worker&&new URL(worker.scriptURL).origin===window.location.origin&&new URL(worker.scriptURL).pathname==='/sw.js'){await registration.update().catch(()=>undefined);await registration.unregister();}}if('caches' in window){for(const key of await caches.keys()){if(key.startsWith('vexnexa-'))await caches.delete(key);}}}).catch(()=>undefined);},[]);return null;}

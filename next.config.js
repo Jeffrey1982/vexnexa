@@ -1,85 +1,16 @@
-const withNextIntl = require('next-intl/plugin')('./src/i18n.ts');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'https://vexnexa.com',
-  },
-  outputFileTracingIncludes: {
-    '/*': ['node_modules/@sparticuz/chromium/**'],
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'www.google.com',
-        port: '',
-        pathname: '/s2/favicons/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.gstatic.com',
-        port: '',
-        pathname: '/faviconV2/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.w3.org',
-        port: '',
-        pathname: '/WAI/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.supabase.co',
-        port: '',
-        pathname: '/**',
-      },
-    ],
-  },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Externalize playwright-core for server builds
-      config.externals = config.externals || [];
-      config.externals.push({
-        'playwright-core': 'commonjs playwright-core',
-      });
-    }
-    return config;
-  },
-  // CSP headers are set in middleware.ts to avoid duplicate/conflicting policies
-  async redirects() {
-    return [
-      // Pilot Partner Program replaced by the Founding Agency Program
-      {
-        source: '/pilot-partner-program',
-        destination: '/founding-agencies',
-        permanent: true,
-      },
-      // Common variants → canonical SEO landing page slugs
-      {
-        source: '/white-label-accessibility-report',
-        destination: '/white-label-accessibility-reports',
-        permanent: true,
-      },
-      {
-        source: '/accessibility-monitoring-for-agencies',
-        destination: '/accessibility-monitoring-agencies',
-        permanent: true,
-      },
-      {
-        source: '/wcag-compliance-reports',
-        destination: '/wcag-compliance-report',
-        permanent: true,
-      },
-      {
-        source: '/accessibility-checker',
-        destination: '/website-accessibility-checker',
-        permanent: true,
-      },
-    ]
+  poweredByHeader: false,
+  // Plain-text Resend delivery does not need its optional React-email renderer.
+  serverExternalPackages: ['resend'],
+  images: { formats: ['image/avif', 'image/webp'] },
+  async headers() {
+    return [{ source: '/:path*', headers: [
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'X-Frame-Options', value: 'DENY' },
+      { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+    ] }];
   },
 };
-
-module.exports = withNextIntl(nextConfig);
+module.exports = nextConfig;
