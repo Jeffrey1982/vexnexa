@@ -6,108 +6,41 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  # Keep Playwright from downloading browsers during `npm install` — we
-  # install only what the job needs in the Playwright step.
-  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-  # Dummy env so modules that read env at import time don't crash.
-  DATABASE_URL: postgresql://test:test@localhost:5432/vexnexa_ci_scratch
-  DIRECT_URL: postgresql://test:test@localhost:5432/vexnexa_ci_scratch
-  CI_SCRATCH_DATABASE_IS_SAFE: 'true'
-  NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
-  SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
-  MOLLIE_API_KEY: test_ci_key
-  ADMIN_DASH_SECRET: ci-admin-secret
-  NEXT_PUBLIC_APP_URL: http://localhost:3000
+  NEXT_TELEMETRY_DISABLED: '1'
+  # The studio needs no database, billing provider or mail credential in CI.
+  RESEND_API_KEY: ''
 
 jobs:
   quality:
-    name: Quality gate
+    name: Studio quality gate
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-          POSTGRES_DB: vexnexa_ci_scratch
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit --no-fund
-
-      - name: Generate Prisma client
-        run: npx prisma generate
-
-      - name: Validate Prisma schema
-        run: npx prisma validate
-
-      - name: Test scratch database safety guards
-        run: node --test scripts/ci/scratch-database.test.mjs
-
-      - name: Verify frozen scratch baseline and new migrations
-        run: node scripts/ci/scratch-database.mjs
-
-      - name: Verify billing webhook concurrency on isolated database
-        run: npx vitest run src/lib/billing/webhook-lease.integration.test.ts
-        env:
-          BILLING_DATABASE_TESTS: 'true'
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Generate Next.js route types
-        run: npx next typegen
-
-      - name: Type-check
-        run: npx tsc --noEmit
-
-      - name: Build Next.js app
-        run: npx next build
-
-  unit:
-    name: Unit tests + coverage
-    runs-on: ubuntu-latest
-    needs: quality
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
+          node-version: '22'
           cache: npm
-
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit --no-fund
-
-      - name: Generate Prisma client
-        run: npx prisma generate
-
-      - name: Run unit tests with coverage
+      - name: Lint active studio source
+        run: npm run lint
+      - name: Type-check
+        run: npm run typecheck
+      - name: Test public smoke checker
+        run: npm run test:smoke
+      - name: Unit tests and unchanged coverage thresholds
         run: npm run test:coverage
-
+      - name: Build database-free studio
+        run: npm run build
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
@@ -116,69 +49,26 @@ jobs:
           path: coverage/
           retention-days: 14
 
-      - name: Comment coverage summary on PR
-        if: github.event_name == 'pull_request' && always()
-        uses: davelosert/vitest-coverage-report-action@v2
-        with:
-          json-summary-path: coverage/coverage-summary.json
-          working-directory: .
-
   e2e:
-    name: Playwright E2E (local)
+    name: Studio browser tests
     runs-on: ubuntu-latest
-    needs: quality
-    timeout-minutes: 30
-    # Run E2E only on PRs and pushes to main; skip on draft PRs to save minutes.
-    if: github.event.pull_request.draft != true
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-          POSTGRES_DB: vexnexa_ci_scratch
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
+          node-version: '22'
           cache: npm
-
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit --no-fund
-
-      - name: Generate Prisma client
-        run: npx prisma generate
-
-      - name: Install Playwright browsers
+      - name: Install browser
         run: npx playwright install --with-deps chromium
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
-
-      - name: Prepare isolated E2E database
-        run: node scripts/ci/scratch-database.mjs
-
-      - name: Build Next.js app
+      - name: Build database-free studio
         run: npm run build
-
-      - name: Run Playwright E2E
-        run: npm run test:e2e:local
-        env:
-          # Authenticated fixtures require the guarded development login route.
-          TEST_ENV: local
-          E2E_DATABASE_IS_SAFE: 'true'
-
-      - name: Upload Playwright report
-        if: failure()
+      - name: Test seven languages and safe contact flow
+        run: npm run test:e2e
+      - name: Upload browser report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
